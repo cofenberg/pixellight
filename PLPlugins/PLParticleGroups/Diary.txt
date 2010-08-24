@@ -1,0 +1,274 @@
+﻿>> 19.10.2008
+[CO]
+- 'Neuer' Partikel Effekt Namens 'PGFume', im Grunde ist es 'PGSmoke' mit einem Material das 'abdunkelt' statt 'aufhellt'
+  für schwarzen Rauch... die Partikel Effekte sollte man generell nochmal kräftig überarbeiten damit man u.a. mehr Einstell
+  möglichkeiten hat.
+
+
+
+>> 07.09.2008
+[CO]
+- "PLParticleGroups1" zu "PLParticleGroups" gemacht
+
+
+
+>> 24.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 20.10.2007
+[CO]
+- Einige 'const' eingefügt
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 04.08.2007
+[CO]
+- Alle diese speziellen Partikel Effekte bauen nun auf eine 'Physik'-Basis Klasse auf so das diese Partikel, wenn diese
+  in einer Physik Welt sind z.B. sich die korrekte Gravitation holen können. Da man bei den Partikel Implementationen so
+  frei wie möglich sein sollte habe ich soetwas wie Gravitation nicht in PLEngine::SNParticleGroup eingebaut.
+
+
+
+>> 23.07.2007
+[CO]
+- Einige Zeiger auf Referenzen umgestellt
+
+
+
+>> 19.04.2007
+[CO]
+- Ein paar 'return' entfernt
+- Header Änderungen
+- 'using namespace' Änderungen
+
+
+
+>> 11.02.2007
+[CO]
+- Auf VC 2005 umgestellt
+
+
+
+>> 28.01.2007
+[CO]
+- VC Projekt-Dateien wie besprochen in die jeweiligen Grundordner verschoben
+
+
+
+>> 27.01.2007
+[SB]
+- CMake Projektdateien für alle PLPlugins-Projekte hinzugefügt 
+
+
+
+>> 14.10.2006
+[SW]
+- Alle Projekte: finale version für das visibility attribute feature vom gcc
+
+
+
+>> 25.09.2006
+[CO]
+- Projekte auf PLBool umgestellt
+
+
+
+>> 14.09.2006
+[CO]
+- Beseitige Warnungen die erscheinen wenn der Compiler auf Warnungs-Level 4 gestellt wird
+
+
+
+>> 22.05.2006
+[CO]
+- Überall auf String Klasse umgestellt
+
+
+
+>> 21.05.2006
+[SB]
+- Projekte an FS-Änderungen angepaßt
+
+
+
+>> 17.05.2006
+[CO]
+- An ForceUpdate Flag angepaßt
+
+
+
+>> 14.05.2006
+[SB]
+- An PLGeneral Änderungen angepaßt
+
+
+
+>> 12.04.2006
+[CO]
+- Fügte dort wo angebracht noch geschützte Konstruktoren & Destruktoren ein
+
+
+
+>> 03.04.2006
+[CO]
+- Räumte die Codes etwas auf: Leerzeichen, Tabs, ein paar auskommentierte Codes 
+  entfernt, ein paar Klassen/Strukturen hatten noch einen 'T'-Prefix
+
+
+
+>> 02.03.2006
+[CO]
+- Alles an Renderer Änderungen angepasst
+- Dort wo möglich werden nun die statischen Objekte von z.B. Quaternion verwendet statt neue Temporäre Objekte zu erzeugen
+
+
+
+>> 25.02.2006
+[CO]
+- Alles an Quaternion Änderungen angepasst
+
+
+
+>> 25.02.2006
+[SB]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 24.02.2006
+[CO]
+- Stellte wie dort wo möglich/sinnig von globalen Definitionen auf Klassen abhängige enum Definitionen um
+
+
+
+>> 23.02.2006
+[CO]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 22.02.2006
+[CO]
+- Die Haupt-Header der Projekte haben nun am Anfang des Namens wieder ein PL
+- Doxygen Makefiles angepasst
+- Alles an PLMath Änderungen angepasst
+
+
+
+>> 21.02.2006
+[CO]
+- Alles an aktuelle PLMath Änderungen angepasst (ein paar Dinge sind noch nicht ganz ok)
+
+
+
+>> 10.02.2006
+[CO]
+- Alles an Stack & PLMath Änderungen angepasst
+
+
+
+>> 06.02.2006
+[CO]
+- Alles auf String::Format() umgestellt + dort wo möglich von %f auf %g umgestellt da dadurch nur das nötigste ausgegeben wird
+
+
+
+>> 28.01.2006
+[CO]
+- Projekte auf Namespace umgestellt
+
+
+
+>> 27.01.2006
+[CO]
+- Alles an PLMesh & PLEngine Änderungen angepasst
+
+
+
+>> 26.01.2006
+[CO]
+- Alles an PLSound & PLRenderer Änderungen angepasst
+
+
+
+>> 23.01.2006
+[CO]
+- An uint32 Änderungen angepasst
+
+
+
+>> 20.01.1006
+[CO]
+- Alles an PLMath & PLGui Änderungen angepasst
+
+
+
+>> 18.01.2006
+[CO]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 21.12.2005
+[CO]
+- An PLTSNParticleGroup Änderungen angepasst
+
+
+
+>> 30.03.2005
+[CO]
+- PLEntityPackage1 und PLParticleGroups1 wurden auf den neuen Kommentar-Style umgestellt. Ich denke, das es praktisch ist
+  wenn man auch von diesen 'Packages' ne nette kleine Doku hat. So weis man genau was drin iss. :)
+  Die Dateien von PLVideoTexture wurden in PLVideoTextureWin32 umbenannt da die Implemenation dieser Video Textur so NUR
+  unter Windows laufen wird. Unter Linux muss man da wohl nen extra Entity schreiben. Aber am Entity Namen selbst wurde
+  nichts geändert.
+  PLODEEntities nicht angepasst da es gelöscht wird sobald PLPhysics fertig ist, dort werden dann auch diverse Entities mit
+  Physik Eigenschaften liegen.
+
+
+
+>> 08.03.2005
+[CO]
+- Unter 'Actual/Bin/PLRuntime/Data/PLParticleGroups1.pak' liegen nun die Standard-Daten dieser Entities.
+- Ein paar neue Partikel-Effekte hinzugefügt, musste nach soo langer Zeit endlich mal wieder ein wenig
+  damit herumspielen. ;-)
+
+
+
+>> 05.03.2005
+[CO]
+- Diverse Entities aus PLTests etwas überarbeitet und in PLEntityPackage1 verschoben. An diesen Entities muss man mit der
+  Zeit noch weiterfeilen bis alles Optimal ist.
+  Desweiteren wird es dann das beste sein wenn jedes Entity-Packet auch mit einem pak-File daherkommt wo seine Standard-Daten
+  drin sind so das man SOFORT nach dem erzeugen im WE was sehen kann. Für PLEntityPackage1 hab ich gleich mal so nen Päckchen
+  zusammengeschnürrt und unter 'Actual/Bin/PLRuntime/Data/PLEntityPackage1.pak' abgelegt.
+
+
+
+>> 28.02.2005
+[CO]
+- RTTI Entity Namen gesetzt und an VarChanged angepasst.
+
+
+
+>> 22.02.2005
+[SB]
+- Alle Projekte an die neuen RTTI-Makros angepaßt
+
+
+
+>> 17.02.05
+[CO]
+- Legte PLPlugins Ordner an in dem derzeit folgende Entity-Plugins sind:
+  - PLEntityPackage1: Entity Sammlung 1
+  - PLODEEntities: Entities mit implementierter ODE-Physik
+  - PLParticleGroups1: Partikel Effekte Sammlung 1

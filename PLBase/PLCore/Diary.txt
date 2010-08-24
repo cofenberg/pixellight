@@ -1,0 +1,1276 @@
+>> 16.08.2010
+[SB]
+- ConsoleApplication: Basispfad für Daten, die direkt im Runtime-Verzeichnis liegen, korrigiert.
+  Das mit den Paketen ist ja schön und gut, aber es ist super unpraktisch, damit zu arbeiten, wenn man z.B. gerade
+  an den darin enthaltenen Daten selbst arbeiten will, da man dann ständig alles entpacken und wieder packen müsste.
+  Darum sollte es zumindest die Möglichkeit geben, die Daten aus einem Zip-File einfach an Ort und Stelle zu entpacken,
+  und danach sollte noch alles so laufen wie mit dem Zip-File. Da aber die Zip-Files selber im Unterverzeichnis "Data"
+  liegen, musste dieses natürlich noch dem Runtime-Pfad hinzugefügt werden, damit das klappt.
+
+
+
+>> 15.08.2010
+[SB]
+- Core: Unter Linux wird nun die Umgebungsvariable PL_RUNTIME ausgelesen.
+  Wenn diese gesetzt ist, wird das darin enthaltene Verzeichnis als
+  PixelLight-Runtime verwendet, ansonsten wird in /usr/ und /usr/local gesucht.
+  Um dies möglichst einfach zu machen, gibt es ausserdem das Script profile,
+  welches dieses Verzeichnis ausgehend vom aktuellen Verzeichnis setzt.
+  Natürlich kann man auch in seiner .profile oder .bashrc-Datei im
+  Homeverzeichnis diese Variable automatisch beim Systemstart setzen lassen,
+  damit man dies nicht immer wieder per Hand ausführen muss.
+  Somit ist es nun wieder möglich, einfach so aus den Sourcen heraus zu
+  arbeiten, ohne immer mittels "make install" das SDK im System installieren
+  zu müssen.
+
+
+
+>> 12.08.2010
+[SB]
+- Core: Unter Linux wird nun erst geschaut, ob "/usr/local/share/pixellight/Runtime" existiert, wenn ja, wird dieses
+  als Runtime-Directory verwendet, ansonsten wird angenommen, dass ein global installiertes Runtime im Pfad
+  "/usr/share/pixellight/Runtime" zu finden ist. Bei mir hat das damit schonmal geklappt, dass die Plugins aus
+  diesem lokalen Runtime verwendet wurden, die konnten dann aber nicht geladen werden, weil wohl die automatisch
+  geladenen dynamischen Bibliotheken, welche sich entsprechend in /usr/local/lib/ befinden, nicht automatisch
+  geladen werden konnten. Dies lässt sich aber durch ausführen des Befehls "ldconfig /usr/local/lib" beheben.
+  Momentan besteht dann noch das Problem, dass jetzt die dynamischen Abhängigkeiten wie Cg, Newton oder OpenAL
+  natürlich nicht gefunden werden können.
+
+
+
+>> 07.08.2010
+[SB]
+- ConsoleApplication: OnDeInit() wird wie OnInit() nun außerhalb aufgerufen, damit es sicher als letztes aufgerufen wird.
+
+
+ 
+>> 06.08.2010
+[SB]
+- ConsoleApplication: OnInit(), also die für die eigentliche Applikation bestimmte lokale Init-Methode, wird nun
+  nicht mehr im Rahmen von Init() aufgerufen, sondern ist fest in der Run-Methode verdrahtet. Hintergrund ist,
+  dass diese Methode als aller letztes aufgerufen werden muss, damit sie einen Sinn ergibt, alle Basisklassen
+  müssen also die Chance haben, sich vorher komplett inizialisiert zu haben. Das würde aber heißen, dass niemand
+  einfach Init() von der Basisklasse aufrufen kann, sondern immer alles neu implementieren müsste, damit die
+  Reihenfolge stimmt. Darum musste OnInit() verschoben werden, damit dies nicht mehr nötig ist.
+
+
+
+>> 05.08.2010
+[CO]
+- LoadableManager ist kein Loadable mehr, Kopie der alten Version liegt im Archive (Removed_LoadableFromLoadablaManager_05082010)
+
+
+
+>> 05.08.2010
+[SB]
+- ConsoleApplication: LastCrashed und Speichern/Laden von LoadableManager-Pfaden entfernt.
+
+
+
+>> 04.08.2010
+[SB]
+- ConsoleApplication: Behandlung von Log- und Config-Dateien implementiert. Die Schwierigkeit hierbei ist es,
+  gleichzeitig ein vernünftiges Standardverhalten zu implementieren, und es trotzdem dem Applikationsprogrammierer
+  möglichst einfach zu machen, später alles abzuändern oder ganz auszuschalten, ohne dass er dafür große Teile
+  komplett neu schreiben muss. Es gibt daher für das meiste jetzt Optionen in ConsoleApplication, die verwendet
+  werden können, um Standardeinstellungen abzuändern:
+  - MultiUser: Gibt an, ob Config und Log im User-Verzeichnis gespeichert werden sollen
+  - AppDataSubdir: Gibt das Unterverzeichnis im DataDir an (wenn leergelassen, wird es in Run() auf der Applikationsnamen gesetzt)
+  - LogName: Dateiname für Log (wenn leergelassen, wird Applikationsname mit '.log' verwendet)
+  - ConfigName: Dateiname für Config (wenn leergelassen, wird Applikationsname mit '.cfg' verwendet)
+  Hierüber kann man also ziemlich einfach z.B. den Dateinamen von Log oder Config abändern, ohne gleich die
+  gesamte Main-Methode neuschreiben zu müssen. Wenn z.B. LogName oder ConfigName auf "" gesetzt werden, heißt das,
+  dass diese Datei überhaupt nicht verwendet werden soll. Zusätzlich gibt es auch noch die Kommandozeilen-Optionen,
+  die in jedem Fall vorrang haben (will jemand auch das nicht, sollte er die Option im Konstruktor entfernen).
+- ConsoleApplication: Es wird nun alles bereits im Konstruktor gesetzt, damit es möglichst einfach wird, das Verhalten
+  zu verändern, indem man einfach im Konstruktor alles so setzt, wie man das haben will. Der einzige dadurch notwendig
+  gewordene Hack besteht darin, dass beim Späteren Aufruf von SetName() auch noch automatisch die Dateinamen für Log
+  und Config angepasst werden, falls diese so aussehen, als wären sie noch auf ihren Default-Wert gesetzt.
+- ConsoleApplication: Wenn die Konfigurationsdatei nicht geladen werden konnte, wird jetzt in einem zweiten Schritt
+  dennoch der Dateiname gesetzt, damit eine neu erzeugte Config später gespeichert werden kann. Hierbei wird es wieder
+  erst mit dem User-Data-Dir versucht, dann mit dem Applikationsverzeichnis. Wenn der ConfigName auf "" steht, wird
+  gar keine Config verwendet. Ein auf der Kommandzeile übergebener Pfad hat immer Vorrang, und wenn er nicht
+  existiert oder fehlerhaft ist, so werden trotzdem keine Standardpfade mehr versucht. Analog zur Config auch die
+  Log-Methode angepasst, nur dass hier kein Dateiname gesetzt wird, wenn das Log nicht zu öffnen ging (ergibt hier
+  keinen Sinn).
+- ConsoleApplication: Option 'UseRuntime' hinzugefügt, die bestimmt, ob automatisch nach einer installierten
+  PixelLight-Runtime gesucht werden soll, von der dann die Plugins und Datenpakete verwendet werden. Wie bisher
+  kann das auch über die Config-Option eingestellt werden, wenn diese gefunden wird, wird diese Flag entsprechend
+  gesetzt.
+- ConsoleApplication: Weitere virtuelle Methoden eingebaut, um dem Programmierer möglichst viele Möglichkeiten zu
+  geben, das Standardverhalten der Applikation abzuändern:
+  - OnInitCmdLine() wird nach dem Parsen der Kommandozeile aufgerufen und ist dafür da, die gesetzen Optionen abzufragen
+  - OnInitPlugins() wird nach dem Laden der Config aufgerufen und ist zum Laden der Plugins da
+  - OnInitData() wird nach OnInitPlugins() aufgerufen und ist zum Setzen der Datenpfade da
+- Methode ScanPackages() aus GuiApplication direkt nach LoadableManager verschoben. Da diese Funktion recht universell
+  ist und sicherlich auch ausserhalb des Application-Frameworks verwendet werden kann, sollte sie auch gleich im
+  LoadableManager vorliegen, auf dem sie ja auch operiert. Name und Kommentar analog zu ClassManager::ScanPlugins()
+  angepasst.
+- Core: Der Runtime-Pfad unter Linux ist nun erstmal festgelegt auf "/usr/share/pixellight/Runtime". Später könnte
+  man hier vielleicht noch anhand der aktuell verwendeten Bibliothek oder deren Version unterscheiden... (könnten
+  ja theoretisch mal mehrere Runtimes gleichzeitig installiert sein)
+- Folgende Config-Items von EngineGeneralConfig nach CoreConfigGroup verschoben, da sie universell für alle
+  Applikationen wichtig sind: UsePixelLightRuntime, FirstRun, LastCrashedMessage, LastCrashed, Language.
+  Dabei LoadLibsFromRuntime in UsePixelLightRuntime umbenannt, da es hier nicht nur um die Libs geht (wobei man hier
+  genauer von Plugins sprechen sollte), sondern gleichzeitig auch um die Daten im Runtime-Verzeichnis.
+- Alles wichtige von GuiApplication nach ConsoleApplication verschoben.
+
+
+
+>> 03.08.2010
+[SB]
+- Application überarbeitet. Statt "About" gibt es nun "Version", welches man bei den meisten Applikationen als
+  Kommandozeilenoption finden kann (-a für about eher nicht). Die eigentliche Funktionalität wurde von Run()
+  in die virtuellen Methoden Init(), Main() und DeInit() verschoben, da es ansonsten für abgeleitete Klassen
+  nicht möglich ist, das Verhalten der Applikation zu modifizieren (z.B. wenn überhaupt kein Log geöffnet oder
+  die Kommandozeile nicht geparsed werden soll - das ist in der bisherigen Lösung nicht zu verhindern).
+  Die Idee dabei ist, dass in den drei Methoden Init(), Main() und DeInit() das eigentliche Gerüst für die
+  Ausführung der Applikation implementiert wird, dies wird also von der jeweilige Basisklasse (z.B. Application,
+  GuiApplication oder SceneApplication) entsprechend modifiziert. Konkrete Programm-Applikationen dagegen sollten
+  diese Methoden dagegen möglichst nicht mehr verändern müssen, sondern statt dessen nur einzelne Schritte verändern,
+  welche in zusätzlichen virtuellen Methoden bereitgestellt werden (z.B. OnRun(), OnInitLog() etc.). Diese
+  Methoden werden von den Basisapplikationen aus aufgerufen. Nur wenn man wirklich grundlegend die Arbeitsweise
+  der Applikation ändern will, muss man dann Main() etc. anpassen.
+- Neue Application-Klasse in ConsoleApplication umbenannt. Diese Änderung wollte ich sowieso machen, damit man nicht
+  mehr ständig das Problem mit gleichen Namen hat, da wir die Klassen in konkreten Programm ja auch immer "Application"
+  nennen, und das daher immer in Konflikt gerät. Ausserdem wird es so leichter, die Klassen nach und nach umzustellen,
+  da erstmal beides nebeneinander existieren kann.
+- ConsoleApplication: Option m_bMultiUser hinzugefügt, mit der bestimmt wird, ob das Multi-User-Environment des Systems
+  verwendet werden soll, oder nicht. In dem Falle wird immer zuerst versucht, z.B. Config oder Log-Dateien im
+  entsprechenden User-Verzeichnis abzulegen, erst dann wird als Fallback z.B. das Application- oder das aktuelle
+  Verzeichnis verwendet. Diese Option ist standardmäßig eingeschaltet und sollte wohl nur noch in Sonderfällen
+  ausgeschaltet werden, da alle aktuellen Systeme mittlerweile darauf ausgelegt sind.
+
+
+
+>> 02.08.2010
+[SB]
+- ApplicationContext hinzugefügt. Damit die Application-Klasse möglichst übersichtlich bleibt, sollten hier nicht
+  so viele Daten und Methoden auf einem Haufen sein, denn das macht es immer gleich um einiges schwerer, den
+  Aufbau einer Klasse zu verstehen. Die Laufzeit-Informationen der Klasse, also z.B. die wichtigen Verzeichnisse
+  sowie die übergebenen Parameter, wurden daher in die neue Context-Klasse verschoben. Die Daten, die dagegen die
+  Applikation selber bestimmen (wie z.B. Name und Titel) bleiben aber in der Klasse selbst.
+- Application: Name hinzugefügt. Bisher gab es nur den Titel, der Name einer Applikation sollte aber auch noch
+  gesetzt werden, da dieser meist kürzer ist als der ausgeschriebene Titel. Wenn kein Name angegeben wird, so wird
+  der Name aus dem Dateinamen der Applikation extrahiert (z.B. "TestApp.exe" -> "TestApp").
+
+
+
+>> 01.08.2010
+[SB]
+- Config-Klassen in eigenes Verzeichnis "Config" verschoben. Bitte die Application-Verzeichnisse nicht immer mit
+  zusätzlichen Klassen belasten, insbesondere, wenn diese ganz locker auch für sich selber stehen können.
+- Timer-Klassen entfernt, da veraltet und zur Zeit sowieso nicht mehr verwendet. In PLGui liegen ja schon Timer-Klassen
+  bereit, wenn man das also mal braucht, müsste man sich nur noch einmal vernünftig überlegen, wie man darauf ausserhalb
+  von PLGui am besten zugreifen könnte.
+
+
+
+>> 17.07.2010
+[CO]
+- XML basierendes Chunk PixelLight Dateiformat hinzugefügt, Dateiendung ist "xchunk" statt "chunk" für Binäre Dateien
+
+
+
+>> 15.07.2010
+[CO]
+- Nachdem ich die letzten Stunden damit verbrachte die Projekte und Daten entsprechend anzupassen... Suchpfade wie besprochen
+  aus dem Loadable Manager entfernt. Zukünftig muss man also z.B. "Data/Textures/MyTexture.dds" statt "MyTexture.dds" schreiben.
+
+
+
+>> 08.06.2010
+[CO]
+- LoadableManager::OnClassLoaded: Hier darf die Klasse wirklich nur in eine Liste eingetragen werden, da man noch nichtmal
+  davon ausgehen kann das "IsDerivedFrom" immer funktioniert da z.B. eine benötigte Basisklasse erst etwas später registriert
+  werden könnte... das war bei mir unter Linux natürlich gerade der Fall, und dann war einfach der Loadable Type "Scene"
+  unbekannt und es konnten keine Szenen eingeladen werden.
+
+
+
+>> 02.06.2010
+[SB]
+- Bei der Verwendung von Enums im RTTI wird nun nicht mehr stur der Basistypus verwendet, da dies dazu führen würde,
+  dass z.B. bei Methoden auch die Signatur so verändert wird, dass überall der Basistypus erwartet wird (Bsp.: Wird eine
+  Methode, oder ein Event z.B. mit der Signatur(void, EnumType<EEnum>) angemeldet, so würde für die tatsächliche Methode
+  die Signatur (void, int) erwartet). Das ist verwirrend, daher wurde die Behandlung von Enums nun so verändert, dass
+  jetzt überall der tatsächliche Enum-Typus verwendet wird.
+- Neuer Typ-Wrapper EnumTypePlain<> eingebaut, der für direkte Enum-Typen verwendet wird, also solche, die nicht am
+  RTTI angemeldet wurden. Wenn man nun bspw. Type<EEnum> schreibt, wird intern Type< EnumTypePlain<EEnum> > verwendet,
+  welches es ermöglicht, dieses als Typus im RTTI zu verwenden (dann hat man natürlich z.B. keine Umwandlung in Strings
+  unter Verwendung der Enum-Namen, kann aber ansonsten diesen Typus wie gewohnt verwenden).
+- RTTI-Makros für Enums angepasst: Normale enums werden nun ohne den Basistypus deklariert, also z.B. pl_enum(EEnum)
+  statt pl_enum(EEnum, int). Nur in dem speziellen Fall, dass "unechte" Enums z.B. mit floats erzeugt werden sollen,
+  muss auch der Basistyp mit angegeben werden, hierfür kann nun das Makro pl_enum_direct() verwendet werden.
+  Es ist zu beachten, dass der Name in enums nun nicht mehr völlig frei gewählt werden kann, sondern immer der angegebene
+  Typus unter dem exakten Namen auch existieren muss (also entweder ein echtes enum oder z.B. eine leere Klasse). Damit
+  sind einige beabsichtigte oder unbeabsichtige Unstimmigkeiten, die es bisher gab (z.B. Enum hieß EFlag wurde aber
+  als EStyle angemeldet) nicht mehr möglich.
+
+
+
+>> 01.06.2010
+[SB]
+- RTTI: Bei der Verwendung von Enums z.B. in Events kam es bislang noch zu Fehlermeldungen durch den Compiler.
+  Der Grund dafür war, dass noch nicht überall konsequent die tatsächlichen Typen verwendet wurden, welche von
+  Type::_Type ermittelt werden (bei Var<T> war dies schon der Fall, aber bei allen Functoid- und Event-Typen noch nicht).
+  Wenn bspw. ein Enum verwendet wird, ist der Typus ja EnumType<T> - dies ist aber nur ein Pseudo-Typus, der nicht wirklich
+  verwendet werden darf (EnumType<T> als Parameter in einer Funktion ergibt keinen Sinn). Daher wird in Type::_Type der
+  Typus auf den jeweiligen tatsächlichen Typus gemappt, dieser Typus muss dann verwendet werden.
+  Als Faustregel kann festgehalten werden: In Template-Parametern sollte immer der Eingabetyp unverändert weitergereicht
+  werden, erst wenn es zur Verwendung kommt (z.B. als Variable oder als Funktionsparameter), muss dann der jeweilige
+  korrekte Typ verwendet werden.
+
+
+
+>> 30.05.2010
+[SB]
+- RTTI: Beim Einbinden von RTTI-Klassen in andere Projekte, kam es zu dem Problem, dass diese Klassen dann mehrfach
+  am System angemeldet wurden, weil die entsprechenden Template-Klassen vom Compiler dann mehrfach instanziiert werden
+  (in jedem Projekt, in dem die Klassen eingebunden werden, also nicht nur in dem Projekt, das sie exportiert).
+  Aufgrund der RTTI-Makros ist es leider nicht einfach möglich, diese Templates dann zu exportieren, darum wurden die
+  RTTI-Makros nun so erweitert, dass man wie bei DLL-Exports eine Definition dafür verwendet, um festzustellen, ob die
+  jeweilige Klasse gerade importiert oder exportiert wird. Für solche Projekte, die niemals in andere Projekte eingebunden
+  werden (z.B. reine Plugins, die nur dynamisch über das Plugin-System eingeladen werden, oder Applikation, die gar nicht
+  in andere Projekte eingeladen werden), kann das Makro pl_rtti_export verwendet werden. Alle anderen Bibliotheken sollten
+  im Header-Datei ähnlich zu PLXXX_API ein Makro definieren, das jeweils auf 1 oder 0 gesetzt wird für Import oder Export.
+  Die Projekte wurden entsprechend umgestellt.
+
+
+
+>> 27.05.2010
+[SB]
+- Workaround für Linux bzw. GCC eingebaut, da es leider sonst folgenden, ziemlich dubiosen Linker-Fehler gibt:
+    ../../../PLBase/PLCore/libPLCoreStat.a(ClassManager.cpp.o):
+    In function `PLCore::Event<PLCore::Module const*, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType>::Emit(PLCore::Module const*) const':
+    ClassManager.cpp:(.text._ZNK6PLCore5EventIPKNS_6ModuleENS_8NullTypeES4_S4_S4_S4_S4_S4_S4_S4_S4_S4_S4_S4_S4_S4_E4EmitES3_[PLCore::Event<PLCore::Module const*, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType>::Emit(PLCore::Module const*) const]+0x1a):
+    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType>'
+  Dieser Fehler ist wirklich sehr eigenartig, weshalb ich annehme, dass es sich um einen Fehler im Compiler handeln könnte:
+    - Der Fehler tritt z.B. mit Event<Module*>, Event<int> und allen anderen Typen auf
+    - Der Fehler tritt *nicht* mit Event<Class*> auf, den Grund hierfür konnte ich aber nicht finden
+    - Der Fehler tritt auf, sobald der Operator () vom Functor aufgerufen werden soll
+    - Sobald der entsprechende Functor<T> in der Klasse Event oder in einer Methode instanziiert wird, verschwindet der
+      Fehler. Es muss aber eine richtige Instanz sein, eine Typendeklaration, ein Zeiger oder eine Referenz reichen hier
+      nicht aus, was wirklich eigenartig ist
+    - Wenn statt des Functor()-Aufrufes eine neue Methode im EventHandler eingebaut wird, die wiederum Functor()
+      aufruft, tritt der Fehler ebenso auf und kann ebenso behoben werden, indem dann in der neuen Methode innerhalb von
+      EventHandler der Functor instanziiert wird. Komischer Weise reicht hier aber eine Instanziierung innerhalb der Klasse
+      dann nicht mehr aus (zumal hier ja der Functor auch bereits instanziiert wird!).
+  Es scheint also so, als ob unter bestimmten Voraussetzungen die Template-Klasse vom Compiler nicht richtig instanziiert
+  wird, weshalb es dann zu dieser wenig hilfreichen Fehlermeldung kommt (diese Fehlermeldung wird normaler Weise darauf
+  zurückgeführt, wenn z.B. eine virtuelle Methode, meist z.B. ein virtueller Destruktor, nicht implementiert wurde. Dies
+  scheint mir hier aber nicht der Grund zu sein, zumal hier der Zusammenhang mit Templates besteht. Darum und aufgrund
+  der unlogisch wirkenden Verhaltensweisen des Fehlers, halte ich einen Compiler-Bug für möglich).
+  -> Als Workaround wird nun der Functor in der Emit-Methode einmal statisch instanziiert. Habe dafür im CMake-Projekt
+  auch gleiche eine neue Präprozessor-Definition eingefügt, die mitteilt, wenn der GCC zum Compilieren verwendet wird
+  (ifdef LINUX wäre hier eigentlich falsch, darum lieber ifdef GCC, zumal man theoretisch auch den GCC für Windows
+  verwenden kann).
+- CMake-Projekt so angepasst, dass PLCoreStat nur noch von PLGeneralStat abhängig ist, und nicht mehr wie bisher von
+  PLGeneral.
+- ClassManager::GetClasses() gibt nun keine Liste mehr zurück, sondern füllt eine übergeben Liste, um unnötige Kopier-
+  operationen zu vermeiden.
+
+
+
+>> 27.05.2010
+[CO]
+- Log liegt wieder in PLGeneral
+- "Application::Run": Hier wird nun das Log anhand von Kommandozeilen Parametern initialisiert, ich denke es ist das beste das
+  direkt hier zu machen statt z.B. erst in "PLGui::GuiApplication"
+- "Application::OnPrintVersion()" in "Application::OnPrintAbout()" umbenannt damit es keine Konflikte mit "v" als Kommendozeilen
+  Parameter für "Verbose" gibt (uh, "v" scheint nen Standard-Parameter zu sein http://de.wikipedia.org/wiki/Verbose :)
+
+
+
+>> 24.05.2010
+[CO]
+- Bugfix: "ResourceManager<AType>::SetResourceName": Umbenannte Elemente sollten nur in m_mapResources eingefügt werden, wenn
+  diese kurz zurvor ausgetragen wurden
+
+
+
+>> 22.05.2010
+[CO]
+- "Type<T*>", "Type<T&>" und "Type<Object*>": ConvertToString/ConvertFromString arbeitet nun mit uint32/uint64.
+  Über die Definition "X64_ARCHITECTURE" wird bei uns festgelegt das es 64 Bit ist, "X64" war mir dann Namenskonflikt
+  mäßig doch etwas zu Riskant. :D
+
+
+
+>> 21.05.2010
+[SB]
+- TypeInfo: Neben IsEnumType() gibt es nun ebenfalls IsFlagType(), um Flags von Enums unterscheiden zu können.
+  Im Falle von Flags gibt IsEnumType() nun dort auch 'false' zurück - das scheint mir ein wenig logischer, natürlich
+  muss man hier aber wissen, dass auch bei IsFlagType() == 'true' die Methoden zum Auslesen der Enums natürlich
+  funktionieren. Mann könnte das auch anders herum machen, so dass IsEnumType() in beiden Fällen 'true' zurückgibt, dann
+  würde man "Flag" sozusagen als Sonderfall von "Enum" ansehen. Momentan habe ich es aber wie oben beschrieben gelöst.
+- Class: ClassName (Name mit Namespace) wird nun noch gesondert als String gespeichert, damit beim Zugriff darauf nicht
+  immer dynamisch neue Strings zusammengestellt werden müssen.
+- Log, LoadableManager und Localization: Template-Instanz so verändert, dass es sich auch mit gcc compilieren lässt.
+  Bei so einer expliziten Instanziierung von Templates ist zu beachten, dass es nicht erlaubt ist, diese innerhalb
+  eines fremden Namespaces vorzunehmen. Da Singleton zum namespace PLGeneral gehört, muss also eine Spezialisierung
+  innerhalb von PLGeneral oder ausserhalb aller Namespaces vorgenommen werden, aber *nicht* z.B. innerhalb von PLCore.
+  Wie so oft geht dies zwar unter VC, unter z.B. dem gcc aber nicht, daher sollte hier in Zukunft darauf geachtet werden,
+  Template-Instanziierungen immer ausserhalb fremder Namespaces vorzunehmen.
+
+
+
+>> 20.05.2010
+[CO]
+- LoadableManager: Neue Klassen werden erst dann, wenn diese benötigt werden korrekt Eingetragen. Trägt man sofort bei
+  erhalten des ClassManager::EventClassLoaded Ereignisses ein, so kann es sein das eine Klasse noch nicht vollständig
+  initialisiert ist und dann die Loader Registierung nicht klappt.
+- LoadableType speichert nun ebenfalls die RTTI Klasse von der alle Loader Implementationen dieses Types abgeleitet sein
+  müssen. Diese Klasse wird z.B. in Loadable verwendet um zu sehen ob der Loader Typ, der über eine Dateiendung ermittelt
+  wurde, wirklich zum Loadable Typ passt der gerade eingeladen werden soll... sonst könnte man einem Mesh sagen es solle
+  sich doch bitte aus diesem Bild hier laden - klar, probieren kann ich es als Benutzer immer noch, das System grinst mich
+  in dem Fall aber nur dämlich an. *g*
+
+
+
+>> 19.05.2010
+[CO]
+- Loadable System von "PLGeneral::Parameters" befreit. Gestern Abend schwierte mir im Kopf eine Loader-Lösung herum die mit
+  RTTI Methoden arbeitet, heute in aller früh setzte ich das mal um und passte entsprechend alle Loader an. Das Ergebnis
+  gefällt mir sogar... Die einzelnen Loader-Basis Klassen wie z.B. "ConfigLoader" sind nun superschlank, ja praktisch leer.
+  Die konkreten Loader-Implementationen wie z.B. "ConfigLoaderPL" sind nun ebenfalls etwas schlanker da dort keine Dynamischen
+  Parameter mehr geparst werden. Es gibt nun einfach öffentliche Load/Save Methoden, die man also auch ganz ohne RTTI nutzen kann.
+  Ebenfalls kann es LoadParams/SaveParams Methoden geben - wenn ein Format noch besondere Optionen anbietet, wie z.B. welche
+  Kompression beim Speichern verwendet werden soll. Wenn man es ganz wild treiben will, kann man die Methoden Namen auch frei
+  wählen, beim Resourcen-Laden muss man dann allerdings die Methoden Namen angeben. Es stehen nun also deutlich mehr Nutzungsmöglichkeiten
+  zur Verfügung und die Implementationen sind schlanker geworden + man kann in den RTTI Methoden Kommentaren nachlesen was es
+  für weitere besondere Format abhängige Parameter gibt und was die machen.
+
+
+
+>> 17.05.2010
+[CO]
+- "Log" von PLGeneral nach PLCore verschoben
+
+
+
+>> 16.05.2010
+[SB]
+- ClassManager: GetClasses() kann nun auch nur Klassen aus einem bestimmten Modul zurückgeben. Damit ist diese Methode
+  nun immer mehr zur zentralen Such-Funktion für Klassen geworden, was ich auch ganz sinnvoll finde. Kommentare an
+  anderen Stellen eingefügt, um auf diese zentrale Suchfunktion hinzuweisen.
+
+
+
+>> 16.05.2010
+[CO]
+- PLCore::Object::IsInstanceOf in der Art erweitert das ebenfalls "true" zurückgegeben wird wenn die beiden zu testenden
+  Klassen identisch sind
+
+
+
+>> 15.05.2010
+[SB]
+- RTTI: Ein mit ModifyAttr überschriebenes Attribut setzt nun den Default-Value in Abhängigkeit vom Storage-Type
+  des Basis-Attributes. Wenn das Basis-Attribut also den GetSet-Storage gesetzt hat, wird auch im überschriebenen
+  Attribut der Default-Wert *nicht* mehr gesetzt, so dass es nicht mehr zu Problemen im Konstruktor kommen sollte.
+  Ist dagegen DirectValue als Basis-Storage gesetzt, so wird der Default-Wert gesetzt, da es hier keine Probleme gibt.
+  Ich habe es zwar noch nicht ausprobiert, aber das ganze sollte auch über beliebig viele Ebenen funktionieren,
+  da der StorageType der Basisklasse hier jeweils durchgereicht wird :-)
+- Constructor: IsDefaultConstructor() eingebaut
+- Class: HasConstructor() und HasDefaultConstructor() eingebaut
+- Class: IsDerivedFrom() gibt nun bei der eigenen Klasse "false" zurück, damit der Name exakt stimmt
+- ClassManager: GetDerivedClasses() akzeptiert nun mehrere Parameter, mit denen man bestimmten kann, ob die Basisklasse
+  selbst mit aufgeführt werden soll, ob rekursiv oder nicht rekursiv gesucht wird, sowie ob abstrakte Klassen, also solche
+  ohne Konstrukturen, mit aufgeführt werden sollen oder nicht.
+- Class und ClassManager: Das Auflisten der abgeleiteten Klassen wurde noch einmal gründlich überarbeitet. Es ist nun die
+  von Christian eingebaute Lösung, die nur auf den Namen operiert, verwendet worden, da mir aufgefallen ist, dass das
+  InitClass()-Schema in Bezug auf abgeleitete Klassen ja gar nicht richtig funktionieren kann. Denn wenn die Klasse
+  initialisiert wird, trägt sie sich zwar in die Liste ihrer Basisklasse ein, aber damit kann man ja noch nicht sicherstellen,
+  dass die eigenen abgeleiteten Klassen bereits initialisiert wurden. Die Liste an abgeleiteten Klassen bleibt also leer,
+  da man die entsprechenden Klassen vorher initialisieren müsste, womit sich die Katze in den Schwanz beißt ;-)
+  Darum wurde die Liste von abgeleiteten Klassen nun aus Class entfernt, statt dessen wird die Suchmethode aus
+  ClassManager verwendet, um an die Liste von abgeleiteten Klassen zu kommen, wenn diese abgefragt wird.
+- ClassManager: GetDerivedClasses() in GetClasses() umbenannt.
+
+
+
+>> 14.05.2010
+[SB]
+- NullType nach TypeTraits.h verschoben
+- InvalidType in TypeTraits.h hinzugefügt. Dies ist ein Template, das alle nicht unterstützten Typen repräsentiert
+- TypeTraits: Einige Templates hinzugefügt, um den Typus eines, äh, Typus festzustellen:
+  - IsConvertible, mit dem man feststellen kann, ob zwei Typen ineinander konvertierbar sind.
+  - IsEnum, mit dem man feststellen kann, ob es sich bei einem Typen um ein enum handelt
+  - TypeClassification, welches Informationen über den Typus in Form von bools in einer Klasse speichert
+  - CheckType, welches den geeigneten Typus für nicht-standard-Typen auswählt (z.B. <int> für enums)
+  - IsBaseClass, welches ermittelt, ob eine Klasse eine Basisklasse einer anderen Klasse ist
+  - CheckBaseClass, welches einen Compiler-Fehler hervorruft, wenn eine Klasse nicht von einer Basisklasse abgeleitet ist
+- Type und DefaultValue: Es werden nun die neuen Templates verwendet, um neben den Standardtypen weitere, nicht-standard-Typen
+  zu unterstützen. So werden nun z.B. auch enums unterstützt, in diesem Falle wird der Typus einfach wie ein int behandelt.
+  So etwas wie Event<EEnum> sollte daher nun verwendet werden können.
+- RTTI: Es wird nun ein Compilerfehler erzeugt, wenn im RTTI-Makro nicht angegebene Klasse nicht von der angegebenen
+  Basisklasse abgeleitet wurde. Damit werden nun Fehler leichter entdeckt, z.B. wenn die Klasse selbst als Basisklasse
+  angegeben wurde etc. Was allerdings noch nicht entdeckt werden würde, wäre z.B., wenn zwar eine korrekte Basisklasse
+  angegeben wurde, dazwischen aber noch weitere Klassen sind (z.B. A->B->C, und es wird angegeben, C sei von A abgeleitet!).
+
+
+
+>> 11.05.2010
+[CO]
+- Bis auf SceneNode und SceneNodeModifier ist nun alles auf das neue PLCore2 umgestellt, also Klassenmäßig Halbzeit :D
+- Wie in einer EMail besprochen: "type_flag" in "pl_flag_type", "type_enum" in "pl_enum_type" und "ret_type" in "pl_ret_type" umbenannt
+
+
+
+>> 08.05.2010
+[SB]
+- TypeTraits.h hinzugefügt: Hier wird es einige generelle templates geben, um Abfragen auf Typen zur Compile-Time
+  zu ermöglichen.
+- Rtti.h: Es waren noch einige Änderungen notwendig, damit das Projekt wieder mit gcc zu compilieren ist. Die
+  erzeugten Storage-Templates für ein Attribut sind so geschrieben, dass sie nur valide sind, wenn der entsprechende
+  Storage-Type auch wirklich ausgewählt wurde (es gibt z.B. keine Methoden GetMyVar()/SetMyVar(), wenn MyVar nicht
+  mit dem Storage-Typus GetSet deklariert wurde). Im template-code wurde jedoch für jedes Attribut das entsprechende
+  Template verwendet, wenn auch nur als Typus für andere Templates, wo es später verworfen wurde. Für den gcc reicht
+  dies jedoch aus, um das Template zu spezialisieren, was natürlich zu einem Fehler führt. Aus diesem Grunde wird
+  nun das template SpecializeIfEqual<> verwendet, welches eine Template-Class nur dann spezialisiert, wenn eine
+  bestimmte Bedingung erfüllt ist. Damit lässt sich PLCore2 nun auch unter Linux wieder compilieren.
+- IntegralType nach TypeTraits.h verschoben
+- Traits.h entfernt
+
+
+>> 07.05.2010
+[CO]
+- "Chunk" und "Localization" samt dazugehörigen Klassen von PLGeneral nach PLCore verschoben da hier RTTI Funktionalität
+  benötigt wird die zukünftig erst ab PLCore zur Verfügung steht. Habe das erstmal in einem "Tools"-Unterordner gelassen.
+- "Loader"/"Loadable" von PLGeneral nach PLCore verschoben
+- "Resource" von PLGeneral nach PLCore verschoben
+- Wie schon bei PLGeneral, hat nun auch PLCore eine statische Version da z.B. PLProject und der 3ds Max Exporter nun PLCore
+  benötigen, aber nicht von einer dll abhängig sein sollten. Hoffentlich hab ich "CMakeLists.txt" korrekt erweitert, naja
+  werds spätestens beim nächsten PL SDK übersetzen merken. *g*
+
+
+
+>> 06.05.2010
+[CO]
+- Umstellung von PixelLight auf PLCore2 begonnen
+- "Core", "ThreadTimer", "Timer", "TimerImpl", "TimerWindows", "Config", "ConfigLoader", "ConfigLoaderPL", "CoreConfigGroup"
+  vom alten PLCore ins neue kopiert damit sich die Umstellarbeiten auf das neue RTTI Konzentrieren können.
+- Params um Copy-Constructor und Copy-Operator erweitert da ansonnsten an einigen Stellen der VisualStudio Team Edition Compiler
+  Warnungen ausgab, während der *normale* VisualStudio Compiler nix sagte
+
+
+
+>> 05.05.2010 (PLCore2)
+[SB]
+- RTTI: pl_enum_end() in pl_enum_end geändert
+- RTTI: Fehler in pl_enum() behoben - wenn der Wert 0 definiert war, funktionierte die Umwandlung von Name->Wert nicht
+  mehr, da hier eine Abfrage fehlte.
+- RTTI: Die Behandlung von Flags und Enums musste noch einmal gründlich überarbeitet werden, da es bspw. so nicht
+  möglich war, Enums in einer Klasse zu definieren und in der gleichen Klasse auch gleich zu verwenden. Daher habe
+  ich die interne Verwaltung von Enums nun so verändert, dass das enum nicht mehr durch eine Spezialisierung
+  von PLCore2::EnumType<> definiert wird, sondern statt dessen eine einfache Klasse erzeugt wird, die dann als
+  Template-Parameter weitergereicht wird. Das vereinfacht vieles und bedeutet letztlich für die Anwendung:
+  - pl_enum() kann nun prinzipiell überall verwendet werden. Auch in Namespaces, und auch in Klassen :-)
+  - pl_enum_value_namespace() wurde deswegen wieder entfernt, da es nicht mehr benötigt wird
+  - pl_enum_value_direct() wurde hinzugefügt, dies kann verwendet werden, wenn der zu definierende Enum-Typ kein echter
+    C++-Enum-Typ ist - letztlich kann dies verwendet werden, um beliebige Definitionen zu machen. Anwendungsfall sollte
+    vor allem sein, wenn man enum definieren will, die nicht den Datentyp 'int' haben (z.B. float)
+  - Überall, wo man auf ein enum zugreifen will, muss man nun zwangläufig auch das Makro type_enum() verwenden,
+    da dies jetzt nicht mehr nur ein PLCore2::EnumType< > um den Namen legt, sondern auch den Namen so verändert,
+    dass auf die erzeugte RTTI-Enum-Klasse verwiesen wird.
+  - Für den direkten Zugriff auf RTTI-Enums ist jetzt die Klasse PLCore2::EnumType< > zuständig. Wie eben erwähnt muss
+    hier immer type_enum() verwendet werden, um also z.B. die Anzahl an Elementen eines enums abzufragen, benutzt man
+    also: type_enum(EnumName)::GetNumOfEnumValues();
+- Bespiele für Enums erweitert: U.a. Verwendung von Enums in Klassen und Definition von float-enums.
+- RTTI: Die Basisklasse muss in pl_class() nun ohne Anführungszeichen angegeben werden.
+- VarAccess und VarStorage noch einmal gründlich überarbeitet und ein wenig überschaubarer gemacht. Der zugrunde
+  liegende Storage-Typ (z.B. StorageDirectValue oder StorageGetSet) wird nun so weit wie möglich mitgereicht,
+  damit dann an letzter Stelle das jeweilige Template anhand der Klasse entscheiden kann, was zu tun ist. Auch
+  der StorageChoose wurde entsprechend umgeändert.
+- Neben StorageDirectValue und StorageGetSet gibt es nun noch einen weiteren Storage-Typ: StorageModifyAttr.
+  Dieser Typus kann verwendet werden, um Variablen in abgeleiteten Klassen zu überschreiben, und dabei in die gleiche
+  Variable zu schreiben. Es wird also eigentlich die Variable der Basisklasse verwendet, jedoch im RTTI die Daten aus
+  der abgeleiteten Klasse verwendet (z.B. Default-Value, Enum etc.). Wenn dies verwendet werden soll, muss daher der
+  Typus der Variablen in der Basisklasse und in der abgeleiteten Klasse identisch sein. Wenn statt dessen StorageDirectValue
+  verwendet wird, ist es zwar auch möglich, Variablen zu überschreiben und dabei den Typus zu ändern, dies sind dann
+  jedoch in Wirklichkeit zwei Variablen, die nur den gleichen Namen haben.
+- Beispiel für das Überschreiben von Variablen hinzugefügt.
+- RTTI: Auf vielfachen Wunsch einer einzelnen Person kann nun bei Enums zu jedem Wert auch noch eine Beschreibung
+  mit angegeben werden. Diese kann bei statischem Zugriff über EnumType<T>::GetEnumDescription(sName), oder bei
+  dynamischem Zugriff über DynTypeInfo::GetEnumDescription(sName) abgefragt werden.
+- Var: Methode Default() hinzugefügt. Die Methode gibt direkt den Default-Wert zurück, benutzt also direkt den
+  jeweiligen Datentyp. Wie bei Get() und Set() ist diese Methode nur vorhanden, wenn man direkten Zugriff auf die
+  Variable hat. Über DynVar gibt es die Methode GetDefault(), welche den Default-Value als String zurückgibt (ist
+  nicht anders möglich, da hier der tatsächliche Datentyp noch nicht bekannt ist).
+
+
+
+>> 04.05.2010 (PLCore2)
+[SB]
+- Var: Es kann jetzt auch der Default-Konstruktor verwendet werden.
+- RTTI: 'pl_enum'-Makro erweitert, so dass die dadurch erzeugte EnumType-Klasse ein wenig mehr Komfort bietet.
+- RTTI: 'pl_enum_base' eingebaut. Mit diesem Makro können bei der Deklaration eines Enum-Typs alle Werte eines anderen
+  Enums übernommen werden, hiermit können also Datentypen "erweitert" werden.
+- RTTI: Neben 'pl_enum_value' gibt es nun auch 'pl_enum_value_namespace', das verwendet werden kann, wenn der enum-Typ
+  innerhalb eines Names (oder auch einer Klasse) liegt. RTTI-Enums müssen immer im globalen Scope deklariert werden,
+  also auch ausserhalb von namespaces, hiermit können jedoch dann auch solche Enums angemeldet werden, die selbst
+  innerhalb eines namespaces liegen.
+- Neue Klassen DynTypeInfo und TypeInfo erstellt. Diese sind im Gegensatz zu den Type<>-Klassen nicht statisch, sondern
+  haben ein virtuelles Interface und können daher dynamisch (polymorph) verwendet werden. Dies wird wohl so aussehen,
+  dass man von einer Variable per GetTypeInfo() eine Referenz auf ein solches TypeInfo-Objekt zurückbekommt, und
+  davon dann noch einmal die wichtigsten Typen-Informationen abfragen kann. Hier noch einmal die ganzen Konvertierungs-
+  funktionen einzubauen, scheint mir nicht sinnvoll, zumal man dies auch direkt innerhalb von Var machen kann, und
+  es ausserdem hier schwierig wird, da der tatsächliche Typ ja nicht bekannt ist. Deshalb kann man hier erstmal nur
+  noch einmal Typ-ID und Namen abfragen.
+- Var: GetType() hinzugefügt, welche eine statische Instanz von TypeInfo<T> für den jeweiligen Daten zurückgibt.
+- DynTypeInfo: Es kann nun neben dem eigentlichen Datentyp auch abgefragt werden, ob es sich um einen Enum-Datentyp
+  handelt (Enum und Flag ist auf dieser Ebene das gleiche). Falls ja, kann abgefragt werden, welche Enum-Werte es gibt,
+  hier bekommt man dann eine Liste von Namen zurück. Es ist leider nicht möglich, hier auch gleich die Werte für
+  die Enum-Namen abzufragen, aus dem Grunde, dass hierfür ja der Datentyp bekannt sein müsste. Um das zu erreichen,
+  muss man also entweder Zugriff auf den jeweiligen Header haben und EnumType<ENUM> verwenden, oder den Umweg über
+  eine Variable gehen, da man ja nun die Namen kennt, die man setzen kann.
+- DynTypeInfo: Methode GetEnumValue() hinzugefügt, mit der man nun doch auf den Wert eines Enum-Names zugreifen kann,
+  allerdings nur als String (s.o., der Typus ist hier nicht bekannt). Das sollte jedoch helfen, um z.B. in einem Dialog
+  neben dem Enum-Namen auch dessen Wert anzeigen zu können.
+- Object: Umbenennung der Methoden, um mehrere oder alle Attribute eines Objektes gleichzeitig setzen oder auslesen
+  zu können in SetValues()/GetValues() und SetValuesXml()/GetValuesXml(). Auch wenn man hier letztlich auf Attribute
+  zugreift, sind diese Methoden mehr als reine zugriffsmethoden auf Attribute und stellen den Kern des RTTI dar. Daher
+  sollten diese Methoden von den anderen Attribut-Methoden getrennt sein und zudem einen möglichst einfachen und gut
+  zu merkenden Namen haben :-)
+- Object: Methoden SetAttributeDefault() und SetDefaultValues() hinzugefügt. Diese Methoden setzen einen bzw. alle
+  Attribute auf ihren jeweiligen Default-Wert.
+
+
+
+>> 29.04.2010 (PLCore2)
+[SB]
+- Klassen können nun noch zusätzliche Properties haben, also Key/Value-Pairs, die an einer *Klasse* (!) dranhängen
+  und zur Laufzeit abgefragt werden können. Dies dient dazu, zusätzliche Infos zu einer Klasse bereitzuhalten, bspw.
+  können Loader so bekannt geben, welche Dateitypen sie unterstützen oder eine Klasse kann beliebige andere Infos
+  über sich preisgeben. Properties können in abgeleiteten Klassen überschrieben werden. Definiert werden Properties
+  über das neue Makro pl_property. Leider müssen alle Properties innerhalb von pl_properties und pl_properties_end
+  eingeklammert werden - anders war das mit den RTTI-Makros leider nicht zu lösen, ohne dass es unnötig kompliziert
+  geworden wäre.
+- RTTI: Analog zu 'pl_properties' und 'pl_properties_end' heißt es nun 'pl_class_end' anstelle von 'pl_class_end()',
+  da es so einfach irgendwie netter aussieht.
+
+
+
+>> 24.04.2010 (PLCore2)
+[CO]
+- Im "pl_module"-Makro "Unknown" Initialisierungen eingebaut da ansonnsten durch "ClassManager::RegisterModule" die
+  Module Initialisierungen komplett überschrieben werden und am Ende wieder leere Strings vorhanden waren :/
+
+
+
+>> 23.04.2010 (PLCore2)
+[CO]
+- Params: "DefaultValue<x>::Default();" eingefügt + Rückgabewert im Konstruktor initialisiert
+
+
+
+>> 23.04.2010 (PLCore2)
+[SB]
+- DynFunc, Func: Call(DynParams &cParams) erwartet ein Params-Objekt, welches nicht const ist. Unter Windows wird dies
+  scheinbar auch akzeptiert, wenn man z.B. Call(Params<int, int>(10)) aufruft - zwar geht hier natürlich z.B. der
+  Rückgabewert verloren, aber der Aufruf findet dennoch statt, und theoretisch kann man das auf dem Stack befindliche
+  Params-Objekt wohl auch manipulieren, auch wenn man davon natürlich im Nachhinein nichts mehr hat, weil man es nicht
+  wieder auslesen kann :-) Unter Linux mit dem aktuellen gcc klappt dies allerdings nicht, hier wird ein so übergebener
+  Parameter wohl grundsätzlich als const angesehen. Aus diesem Grund musste ich leider zusätzlich noch eine zweite
+  Methode hinzufügen: Call(const DynParams &cParams). Die macht natürlich das gleiche wie im nicht-const Fall, mit
+  dem Unterschied, dass hier keine Rückgabewerte geschrieben werden. Deswegen musste diese Methode nicht nur in DynFunc,
+  sondern auch in allen 34 Spezialisierungen von Func<T> implementiert werden :-( Sollte jemandem hier eine einfachere
+  Lösung einfallen, bitte Bescheid sagen...
+- DynEvent, Event: Gleiche Problematik wie bei DynFunc, Func. Da Events jedoch niemals einen Rückgabewert haben können,
+  reicht es hier aus, wenn die Parameter immer als const übergeben werden. Emit(DynParams&) wurde also überall zu
+  Emit(const DynParams&) gemacht.
+- Constructor: Auch hier die gleiche Problematik. Überall wo nötig wurde daher Create(DynParams&) in Create(const DynParams&)
+  geändert. Auch an allen anderen Stellen, z.B. Object und Class, wurden nun wenn nötig zweite Varianten der jeweiligen
+  Methoden hinzugefügt, damit man überall Parameter sowohl const als auch nicht-const übergeben kann.
+- Func: Bei den Änderungen gab es noch einige kleinere Fehler, wo einfach von const nach non-const gecastet wurde, was
+  hier definitiv nicht erwünscht ist. Nun habe ich hoffentlich alles erwischt (bitte nochmal drüber schauen!)
+- Constructor: Hier gab es sogar ein noch größeres Problem, weil zwar der Aufruf im Prinzip nur ein const-Parameters
+  benötigt, jedoch der Rückgabewert in diesem Fall ja intern verwendet wird. Ich habe das nun so gelöst, dass an einen
+  Constructor immer const-Parameters übergeben werden, diese intern aber kopiert werden und somit ein non-const
+  Parameters-Objekt entsteht, welches an den Functoid weitergegeben wird. Dort ist dann der Rückgabewert, also der Zeiger
+  auf das neu erstellte Object, als Return-Value gespeichert, welches dann wiederum zurückgegeben werden kann. Nach
+  meinen bisherigen Tests scheint das auch zu funktionieren, besonders schön ist die Lösung natürlich nicht.
+- ClassManager und Class: Methode GetModule() eingebaut.
+- ClassManager: Es wird nun bei duplizierten Klassennamen (Konflikten zwischen zwei Klassen gleichen Namens und
+  Namespaces) eine Warnung ins Log geschrieben.
+- Module: Name, Beschreibung usw. werden nun alle mit "Unknown" initialisiert. Sollte ein Projekt also nicht die Makros
+  nutzen, um Infos über das Modul zu setzen, wird dieses in der Liste und z.B. im Log als "Unknown" auftauchen
+- RTTI: Makro pl_current_module_id() hinzugefügt als Shortcut, um die ID des aktuellen Modules abzufragen.
+- RTTI: Slots werden nun, genauso wie Methoden, beim Anmelden am RTTI umbenannt. Für den Slot "OnMyEvent" wird also
+  jetzt ein Objekt namens 'SlotOnMyEvent' angelegt, dafür wird der aufgerufenen Methode kein automatisches "On" mehr
+  vornangestellt. Dies ist nun konsistent mit den Methoden, man gibt also einfach auch beim Slot den Namen der Methode
+  an, die aufgerufen werden soll, und erhält ein Feld mit 'Slot' davor. Als Konvention für uns würde ich vorschlagen,
+  dass alle Slots immer der Konvention "On[EventName]" folgen sollten.
+
+
+
+>> 22.04.2010 (PLCore2)
+[SB]
+- Functor: Einige Fehler in den partiellen Spezialisierungen behoben (R statt void)
+- DefaultValue: Fehlende Datentypen nachgetragen.
+- Class, Object, RTTI: Wie Christian richtig anmerkte, war die Verwendung von Event/Signal und EventHandler/Slot noch
+  nicht konsequent umgesetzt. Habe das nun behoben, es sollte nun also völlig analog sein zu Attributes und Methods.
+- DynEvent: virtual void Emit(DynParams&) war nicht als const deklariert - in den abgeleiteten Klassen aber schon, wodurch
+  die virtuelle Funktion nicht korrekt überschrieben wurde (sondern das natürlich als neue Funktion galt).
+- Class: GetAttribute(), GetMethod() etc. geben nun const-Zeiger auf die jeweiligen Descriptoren zurück. Zwar geschehen
+  dann zwischenzeitlich const-casts, da man letztlich von dem Descriptor ja auch wieder auf das jeweilige Member-Objekt
+  kommen kann, aber ich denke, das ist hier ok. Das mit const ist nicht immer so ganz sauber hinzubekommen, fürchte ich.
+
+
+
+>> 21.04.2010 (PLCore2)
+[SB]
+- Fehler behoben, die beim Übersetzen mit gcc unter Linux aufgedeckt wurden.
+- PLCore2 lässt sich nun unter Linux übersetzen.
+
+
+
+>> 15.04.2010 (PLCore2)
+[SB]
+- Class: Die Namen etc. müssen nun direkt im Konstruktor übergeben werden, da ansonsten die Klasse bereits
+  angemeldet wird, bevor ihre Daten gesetzt wurden, der Name ist also leer. Makros etc. entsprechend angepasst.
+- Func: Einige Warnungen behoben
+- Object: Wir nun auch beim RTTI angemeldet
+
+
+
+>> 14.04.2010 (PLCore2)
+[SB]
+- RTTI-Makros: Probleme behoben, die auftraten, sobald das RTTI über mehr als eine Bibliothek hinweg verwendet wurde.
+  Dies führte zu unaufgelösten externen Referenzen, diese Probleme wurden nun durch leichte Änderungen im RTTI behoben
+  (hoffentlich auch für andere Compiler zu gebrauchen).
+- RTTI-Makros: Die Basisklasse kann nun auch mit angegeben werden (*hust*)
+- Basisklasse Config erstellt (noch leer).
+- Basisklasse Application erstellt (noch leer).
+
+
+
+>> 13.04.2010 (PLCore2)
+[SB]
+- Klasse Module erstellt, welche die Informationen über ein Modul speichert. Für jedes Module (Applikation/Bibliothek) wird
+  automatisch eine Instanz von Module erstellt und beim ClassManager angemeldet. Ein Module beinhaltet dann bspw. auch eine
+  Liste aller Klassen, die zu diesem Modul gehören.
+- Funktionalität zum Laden und Verwalten von Plugins hinzugefügt.
+- Type-Wrapper für Pointer-Typen hinzugefügt.
+- ClassManager: Events hinzugefügt für das Anmelden/Abmelden von Klassen und Modulen. Dies kann z.B. verwendet, wenn eine
+  Komponente darüber informiert werden muss, wenn es neue Klassen von einer bestimmten Basisklasse gibt etc.
+- RTTI: Eine Makros hinzugefügt, die zwar nicht notwendig sind, aber die Definitionen besser zu lesen machen.
+  ret_type() markiert einen Rückgabewert und sollte für die Deklaration von Methoden verwendet werden, um den Rückgabetyp
+  von den Argument-Typen zu unterscheiden. type_enum() und type_flag() sind Wrapper-Makros, die anstelle der ansonsten
+  recht langen und unübersichtlichen Templates verwendet werden sollten.
+- Weitere statische Datentypen zum RTTI hinzugefügt: double, int8, int16, int32, uint8, uint16, uint32
+
+
+
+>> 12.04.2010 (PLCore2)
+[SB]
+- Klassen-Template ModuleID hinzugefügt, welches dafür zuständig ist, jedem Modul (z.B. eine Applikation oder Bibliothek)
+  eine eindeutige Modul-ID zu beschaffen.
+- ModuleMain.h hinzugefügt. Dieser Header sollte genau einmal in einem Projekt eingebunden werden und die darin enthaltenen
+  Makros verwendet werden, um das Modul zu beschreiben (Name, Beschreibung etc.).
+- Makros und Klassen für die Deklaration und Registrierung von Modulen hinzugefügt.
+
+
+
+>> 11.04.2010 (PLCore2)
+[SB]
+- Einige Fehler in Type<EnumType> behoben.
+- Type<FlagType> implementiert (Flag-Types sind wie Enums, erlauben aber die Kombination von Werten).
+- EnumTypes kann jetzt auch bei der Deklaration von Attributen verwendet werden (hier gab es noch kleinere Fehler, die
+  das bisher verhinderten).
+- Object, Class: Methoden hinzugefügt, um den Typus von Objekten abzufragen und z.B. zu erfragen, ob eine Klasse von
+  einer anderen abgeleitet ist oder ein Objekt von einem bestimmten Typus ist.
+
+
+
+>> 10.04.2010 (PLCore2)
+[SB]
+- Klasse ParamParser erstellt und implementiert. Diese Helfer-Klasse kann verwendet werden, um Parameter-Strings
+  zu parsen, wie z.B. "Param0=\"Hello\" Param1=10". Die Klasse bietet dann ein einfaches Interface, um über die
+  gefundenen Parameter sowie ihrer Werte zu iterieren und diese auszulesen. Da diese Funktionalität an sehr verschiedenen
+  Stellen benötigt wird, sollte es hier eine wiederverwendbare Klasse geben :-)
+- Params: Statische Funktion FromString hinzugefügt, welche ein Params-Objekt mit den im String angegebenen Parametern
+  erzeugt und zurückgibt. Damit ist es möglich, bspw. eine Funktion mit den Parametern als String aufzurufen:
+    cFunc.Call(Params<int, float>::FromString("Param0=10 Param1='1.5'")); // Parameter names are not important
+- DynFunc, Func: Neue virtuelle Methode Call(const String&) hinzugefügt, die es erlaubt, eine Methoden mit einem
+  Parameter-String aufzurufen, ohne im Vorfeld die Signatur der Funktion kennen zu müssen.
+- Klasse ParamParserXml erstellt und implementiert. Diese arbeitet analog zu ParamParser, lies die Parameter aber
+  im XML-Format ein, z.B.:
+    <?xml version=\"1.0\" ?>
+    <Call Param0=\"1\" Param1=\"2.5\"/>
+- Params: Statisch Funktion FromXML hinzugefügt (analog zu FromString).
+- DynFunc, Func: Neue virtuelle Methode Call(const XmlElement&) hinzugefügt (analog zu String&).
+- Var, Type: Werte können nun auch gesetzt werden, indem ein Pointer auf eine andere dynamische Variable gegeben wird,
+  anstelle eines statischen Typs (äquivalent zu Func, wo DynParam übergeben werden kann). Neben z.B. pVar->SetInt()
+  gibt es nun also auch pVar->SetVar(pVar2).
+- Objekt: Interface um einige Komfort-Funktionen erweitert, z.B. SetAttribute(), CallMethod() etc (Abkürzungen für
+  den längeren Weg :-))
+- Objekt: Methoden hinzugefügt, um alle Variablen zu laden oder zu speichern (per String oder XML).
+
+
+
+>> 08.04.2010 (PLCore2)
+[SB]
+- Neue Klasse MemberDesc erstellt. Dies ist die Basisklasse für alle Member einer Klasse wie z.B. Attribute, Method etc.
+  Dies erleichtert es beispielsweise, über alle Member einer Klasse zu iterieren, ohne für jeden Member-Typus eine eigene
+  Schleife schreiben zu müssen.
+- Class: Methodik implementiert, um Member von Klassen in abgeleiteten Klassen zu vererben, die (hoffentlich) sowohl
+  simpel als auch mächtig ist. Zunächst werden alle Member einer Klasse über Selbst-Initialisierung nur bei der Klasse
+  selbst registriert und dort in einer Liste "eigener Member" gespeichert. Da hier das Static-Initialization-Dilemma
+  einsetzt, die Reihenfolge in der sich die Member registrieren also nicht vorhergesehen werden kann, muss damit gerechnet
+  werden, dass später noch weitere Member der eigenen Klasse oder einer Basisklasse hinzukommen können. Um dieses Problem
+  zu lösen, gilt die Klasse zunächst so lange als nicht initialisiert, bis versucht wird, auf die Member der Klasse
+  zuzugreifen. Erst dann wird die Klasse initialisiert, was dazu führt, dass sie alle ihre Member aufzählt und internen
+  Listen von Attributen, Methoden etc. aufbaut, welche dann für den Zugriff auf die Member verwendet werden. Dabei werden
+  auch die Member der Basisklassen mit aufgezählt, wodurch auch die Reihenfolge der Member die richtig ist. Wenn nun später
+  noch Member zu einer Klasse hinzugefügt werden, die bereits initialisiert wurde, führt dies dazu, dass diese Klasse sofort
+  wieder de-initialisiert wird und dann wieder als nicht initialisiert gilt, bis ein Zugriff auf die Klasse erfolgt, der
+  wieder zu einer Initialisierung führt (wodurch dann auch wieder alle Member korrekt aufgelistet werden). Auf diese Weise
+  sollte sichergestellt sein, dass immer alle Member bekannt sind, auch wenn diese sich erst später angemeldet haben. Auch
+  ist zu hoffen, dass eine Klasse nicht zu häufig initialisiert und wieder de-initialisiert werden muss, da dies eigentlich
+  nur dann passieren kann, wenn eine Klasse zu früh initialisiert wird (auf das RTTI sollte also möglichst erst ab der
+  Main-Funktion zugegriffen werden). Zudem führt dieses System dazu, dass Klassen, auf die überhaupt gar nicht zugegriffen
+  wird im Laufe des Programmes, auch niemals ihre Member initialisieren müssen, was ein zusätzlicher Gewinn ist :-)
+- Class, Object: Methoden für den Zugriff auf alle Member hinzugefügt (sowohl Listen aller Member sowie einzelne Member).
+
+
+
+>> 07.04.2010 (PLCore2)
+[SB]
+- Klasse FuncDesc hinzugefügt, welche einen Descriptor für Funktionen und Methoden innerhalb einer Klasse darstellt.
+- RTTI-Makros für die Deklarations von Methoden hinzugefügt.
+- Klasse EventDesc hinzugefügt, welche einen Descriptor für Events und Signals innerhalb einer Klasse darstellt.
+- Klasse EventHandlerDesc hinzugefügt, welche einen Descriptor für EventHandler und Slots innerhalb einer Klasse darstellt.
+- RTTI-Makros für Events und EventHandlers hinzugefügt. 
+- Klasse Constructor wurde in FuncConstructor umbenannt, da dies auch nur ein spezieller Funtoid ist, der ein Objekt
+  erzeugt.
+- Neue Klassen Constructor und ConstructorDesc implementiert, welche sich analog zu Attributen und Methoden um die Deklaration
+  von Konstruktoren in Klassen kümmern. Constructor kann hier allerdings nicht komplett Analog zu den anderen genannten
+  Klassen sein, da im Gegensatz zu Attributen und Methoden ein Constructor bei Class und nicht bei Object angesiedelt sein
+  muss (ein Konstruktor wird von einer *Klasse* aufgerufen und gibt ein Objekt zurück, ein Constructor auf ein schon
+  bestehendes Objekt anzuwenden, ergibt dagegen keinen Sinn). Daher unterscheidet sich die Klasse ConstructorDesc hier etwas
+  von den anderen Konstruktoren, indem sie z.B. nicht nur den Konstruktor beschreibt (Name etc.), sondern gleichzeitig
+  auch die Instanz des eigentlichen Konstruktor-Functoids beinhaltet. 
+  so speichert bspw.
+- RTTI-Makros für Konstruktoren hinzugefügt.
+- Methoden hinzugefügt, um Instanzen von Klassen zu erzeugen:
+  - ConstructorDesc stellt die Methode Create() zu verfügung, welche den jeweiligen Konstruktor aufruft
+  - Class hat drei weitere Create()-Methoden, mit denen alle Konstruktoren einer Klasse aufgerufen werden können.
+    Hier kann entweder der Default-Konstruktor aufgerufen werden, oder es wird entweder per Namen oder per Signatur nach
+    einem bestimmten Konstruktor gesucht.
+
+
+
+>> 06.04.2010 (PLCore2)
+[SB]
+- Event und EventHandler implementiert. Ein Event-Handler verhält sich zunächst einmal genau so wie ein Funktor, stellt
+  aber zusätzliche Funktionalität bereit, die es erlaubt, Events und EventHandler miteinander zu verknüpfen. Wenn ein
+  Event ausgelöst wird, werden automatisch alle angemeldeten EventHandler aufgerufen. Events und EventHandler wissen
+  über gegenseitige Verbindungen bescheid, so dass Verbindungen automatisch entfernt werden, wenn eine der beiden Seiten
+  beispielsweise gelöscht wurde.
+- Klassen Event und EventHandler so verändert, dass hier immer der Rückgabetypus void festgelegt ist. Während bei generellen
+  Functoiden und Functoren ein beliebiger Rückgabetypus verwendet werden kann, ergibt dies bei Events nicht so richtig
+  viel Sinn. Was soll beispielsweise ein Event zurückgeben, wenn mehrere EventHandler aufgerufen wurden und jeder davon
+  einen anderen Rückgabewert zurückgeliefert hat? Der Einfachheit halber haben daher nun alle Events und EventHandler den
+  Rückgabetyp void.
+- Kommentierung für RTTI-Makros erweitert.
+
+
+
+>> 05.04.2010 (PLCore2)
+[SB]
+- Statische Funktions-Pointer (FuncFuncPtr) und Memberfunktions-Pointer (FuncMemPtr) als Ableitung von Func implementiert.
+  Diese Funktions-Pointer, welche die Basis für Functoren sind, verhalten sich also genau so wie andere Functoide, tragen
+  intern aber einen Zeigen auf eine Funktion mit sich herum :-)
+- Functor implementiert. Ein Funktor ist ein spezieller Typus eines Functoids, der einen Zeiger auf eine andere
+  Funktion beinhaltet. Wenn der Functor aufgerufen wird, ruft er die jeweils gespeicherte Funktion auf, stellt damit
+  also eine Art generischen Funktionspointer dar.
+- Func: Virtuelle Methode Clone() hinzugefügt, die benötigt wird, wenn eine Kopie eines Functoids angefertig werden soll.
+  Dies wird von Functor verwendet, wenn eine Funktion einem Functor zugewiesen oder ein Functor kopiert werden soll.
+- Basisklasse Constructor von ClassConstructor entfernt, statt dessen ClassConstructor in Constructor umbenannt.
+
+
+
+>> 04.04.2010 (PLCore2)
+[SB]
+- Attributen müssen nun immer mit einen Zeiger auf das Object initialisiert werden. Das wäre zwar eigentlich nur für
+  die Attribute notwendig, welche Get/Set-Methoden verwenden, aber dann wäre das ganze inkonsistent, weil manche Attribute
+  initialisiert werden müssten, andere aber nicht. Es scheint mir daher sinnvoller, dies bei allen Attributen einheitlich
+  zu gestalten, zumal man manchmal auch aus anderen Gründen den Zeiger auf das Object gebrauchen kann.
+- Variablen: Alle Klassen noch einmal durchgesehen und die Dokumentation überarbeitet.
+- Functor: Basisklasse DynFunc erstellt, diese Klasse steht allgemein für alle typisierten Funktionen bzw. Funktionsobjekte.
+- Functor: Basisklasse DynParams erstellt, diese Klasse stellt die Basis für typisierte Parameter dar.
+- "Functor" in "Func" umbenannt und alle Klassen und Ordner angepasst.
+- Funktions-Objekte (Functoide) und Konstruktoren implementiert.
+
+
+
+>> 29.03.2010 (PLCore2)
+[SB]
+- Type: Es werden nun keine Funktions-Templates, sondern statt dessen normale Funktionen mit festgelegten Namen verwendet.
+  Jeder Typ muss hier die Umwandlungs-Funktionen für alle bekannten statischen Typen zur Verfügung stellen (ConvertToInt(),
+  ConvertFromInt() etc.). Dies ist notwendig, da es ansonsten nicht möglich wäre, Standardtypen wie z.B. int in nicht-standard
+  Typen umzuwandeln, da es ja bspw. kein Type<int>::ConvertToMyType() gibt. 
+- Klasse Types entfernt, welche zuvor verwendet wurde, um zwischen Type-ID und Type-Name umzuwandeln. Leider sind diesem
+  Mapping natürlich die nicht-standard Typen unbekannt, weshalb das ganze System nicht sehr sinnvoll ist. Statt dessen hat
+  nun jeder Typus die entsprechenden Methoden GetTypeID() und GetTypeName() zur Verfügung zu stellen.
+- Klasse Attribute in Var umbenannt.
+- Klasse TypedVarDesc entfernt, da diese nicht wirklich notwendig ist zwischen VarDesc und VarDesc_VARNAME.
+- Enumerations zum RTTI Typensystem hinzugefügt.
+
+
+
+>> 28.03.2010 (PLCore2)
+[SB]
+- Tools: Klasse CompileError erstellt. Dies ist ein Template, das verwendet werden kann, um Compiler-Fehler zu erzeugen.
+  Hierbei gibt es zwei Versionen, das eine Mal wird der Fehler in jedem Fall erzeugt, das andere Mal hängt dies noch
+  von einer Kondition ab (es wird nur dann ein Fehler generiert, wenn eine bestimmte Aussage zutrifft).
+
+
+
+>> 27.03.2010 (PLCore2)
+[SB]
+- Die Helferklassen für Access und Storage wurden umbenannt und in eigene Header-Dateien verschoben: TypedAttrAccess.h and TypedAttrStorage.h
+- Template Signatur erstellt (dieses stellt den 'Typus' von Funktionen dar)
+- Basisklasse für Functoide und Konstruktoren erstellt (noch lange nicht einsatzbereit)
+
+
+
+>> 26.03.2010 (PLCore2)
+[SB]
+- Klassen, in denen keine Attribute definiert wurden, werden nun auch korrekt am System angemeldet.
+- Attribute können nun Default-Werte haben.
+- Attribute können nun als read/write oder read-only definiert werden.
+- Attribute haben nun Zuweisungs- und Conversion-Operatoren. Man kann daher nun z.B. direkt
+  'AttrInt = 3' oder 'int nValue = AttrInt' schreiben.
+- Helferklassen eingebaut, um den Storage-Type eine Attributes festzulegen:
+  - StorageDirectValue speichert den Wert eines Attributes direkt innerhalb einer privaten Variable.
+  - StorageGetSet ruft zum Setzen oder Abfragen des Wertes die jeweilige Get- oder Set-Methode des Objektes
+    auf, hier wird der Wert also nur indirekt gesetzt und keine eigene Variable instanziiert.
+  Bis jetzt ist nur StorageDirectValue implementiert.
+- Externer Storage-Type wurde implementiert. Hierfür muss eine externe Klasse angegeben werden, welche die
+  notwendigen Get()/Set()-Methoden für das jeweilige Attribut zur Verfügung stellt. Diese Klasse wird dann
+  vom Attribut verwendet, um auf den Inhalt der Variablen zuzugreifen, die eigentliche Speicherung der Daten
+  kann innerhalb dieser Klasse also beliebig implementiert werden.
+
+
+
+>> 25.03.2010 (PLCore2)
+[SB]
+- RTTI makros für Klassen und Attribute erstellt.
+- Attr: GetDesc() wurde nun als virtuelle Funktion innerhalb der Basisklasse implementiert, somit ist es nun immer
+  möglich, an den Descriptor zu gelangen, sobald man einen Zeiger auf ein Attribut hat.
+- Class: Namespace und Description hinzugefügt.
+- ClassManager hinzugefügt.
+
+
+
+>> 24.03.2010 (PLCore2)
+[SB]
+- Erste einfache template-basierte RTTI Funktionalität implementiert. Es ist bereits möglich, Attribute von Klassen
+  zu definieren und auf diese zuzugreifen. Alles ist komplett template-basiert, bisher wurden noch keinerlei Makros
+  verwendet (natürlich werden später auch wieder Makros zur Verfügung gestellt, um die Verwendung der Templates
+  hinter einfacheren Konstrukten zu verstecken, aber die eigentlich Funktionalität wird hoffentlich nur auf
+  Templates basieren und keine Makro-Tricks mehr beinhalten wie z.B. Pointer-Arithmetik zum Ausrechnen von
+  Speicheradressen o.ä.).
+- Auflisten und Abfragen von Attribute-Descriptoren (bei der Klasse) und Attributen (beim Objekt) wurde implementiert.
+
+
+
+>> 23.03.2010 (PLCore2)
+[SB]
+- Mit neuem System angefangen, daher erst einmal wieder in einem separaten Projekt (PLCore2), damit das alte PLCore
+  zunächst einmal parallel erhalten bleiben kann, ohne dass es Konflikte gibt.
+- Mit neuem RTTI begonnen, welches dieses Mal zum Großteil auf C++ templates basieren soll:
+  - Type eingebaut als statischen Wrapper für die C++ Datentypen
+  - Types ist eine statische Helfer-Klasse, die es bspw. erlaubt, Type-IDs in Strings umzuwandeln u.ä.
+  - TypedAttr ist ein Class-Template für typisierte Attribute (also Variablen, die direkt einen Wert besitzen)
+  - Attribute ist eine virtuelle Basisklasse für Attribute
+
+
+
+>> 14.03.2010
+[CO]
+- "Config", "ConfigLoader" und "ConfigLoaderPL" von PLGeneral nach PLCore ins Application-Verzeichnis verschoben. Zukünftig
+  sind "Konfigurationen" ausschließlich in Verbindung mit Application-Instanzen zu sehen. Ich konnte keinen Grund finden,
+  wieso z.B. die Renderer-Klasse ein Konfigurations-Objekt haben sollte - dafür kann man genauso gut einfache Funktionen
+  und oder das RTTI nutzen! "Konfiguration" sind eigentlich ja nur dann Interessant wenn man als Anwendungs-Programmierer Einstellungen
+  "von Außen" über eine Text-Datei einstellbar haben will, oder Programm-Einstellungen wegspeichern und wiederherstellen will.
+  Was es jedoch an relevanten Programm-Einstellungen gibt, weis eigentlich nur ein Anwendungs-Programmierer. Man kann schlecht
+  *alles* was die einzelnen Komponenten an Variablen haben wegspeichern, das würde auch gar keinen Sinn machen. Als Anwendungs-Programmierer
+  kann das sogar total lästig und unerwünscht werden wenn die "Engine" von sich aus Dateien rausschreibt - denn es kann sehr wohl
+  auch mal Anwendungen geben die sich rein passiv zu verhalten haben, also nur von einer Festplatte lesen sollen, aber nix schreiben
+  oder gar neue Dateien anlegen.
+  Das Application-Framework bring natürlich wieder so Konfigurations-Objekte rein, aber das ist ja alles als Vereinfachung gedacht so
+  das man sich nicht mehr um alles kümmern muss. Dies ist allerdings nicht fest in *PL verwurschtelt*, sondern man kann auch gut ohne
+  diese Framework arbeiten und hat dann volle Kontrolle.
+- "Config" ist kein Singleton mehr
+- "Application" besitzt nun eine "Config"-Instanz. Das Konfigurations-System als solches ist also momentan noch so wie gehabt, nur das
+  es kein Singleton mehr ist, sondern jede Application-Instanz eine eigene Konfigurations-Instanz besitzt. Des Weiteren nutzen nur noch
+  Application-Instanzen Konfiguration und nicht mehr alle möglichen PixelLight-Komponenten. Dies stellt daher denke ich schonmal
+  eine Verbesserung da.
+
+
+
+>> 22.01.2010
+[SB]
+- Application::GetApplication(): Export in DLL hinzugefügt.
+
+
+
+>> 03.09.2009
+[CO]
+- "Event::Emit()": Der Zeiger auf den nächsten Event Handler wird nun auf dem Stack zwischengespeichert bevor der Functor
+  aufgerufen wird... da man damit rechnen muss das innerhalb des Functors der aktuelle Event Handler gelöscht wird sollte
+  man diesen dann nach dem Functor nicht mehr nutzen. Damit ist es nun möglich in Functoren soweit problemlos Event Handler
+  während eines Emits zu löschen - neue hinzufügen wird natürlich je nach Situation immer noch für Anomalien sorgen.
+  (aber wohl weniger wahrscheinlich welche die in Crashs resultieren :)
+
+
+
+>> 26.08.2009
+[CO]
+- "TimerWindows::TimerFunction()": Ich hatte hier gerade das Problem das ein "einmalig Feuern Timer" mehrmals feuerte...
+  kann mir das noch nicht richtig erklären, aber wenn ich in der Callback Funktion hier ZUERST den Timer stoppe und dann
+  das Event abgebe geht das hier momentan. Seltsam seltsam...
+
+
+
+>> 20.06.2009
+[SB]
+- CMakeFiles.txt: TimerWindows darf aber bitteschön auch nur unter Windows eingebunden werden :-)
+
+
+
+>> 17.06.2009
+[CO]
+- "Timer", "TimerImpl", "TimerWindows" und "ThreadTimer" von PLGui3 hierhin kopiert, aber in PLGui3 noch genauso drinnen
+  gelassen. Habe die Klassen erstmal in den Grundordner gelegt da mir kein brauchbarer Name für einen Unterordner einfiel
+  - da kommen ja noch einige Klassen bei Zeiten hinzu und dann findet sich sicherlich ne nette Gruppe der sich der Timer
+  anschließen kann. :D
+  Da "ThreadTimer::Run()" in einem Thread läuft kann der Timer allerdings zu jeder Zeit feuern... etwas das sicherlich
+  schnell Problematisch werden kann. Eventuell wäre ne art von "TimerManager"/"TimerScheduler" Klasse nett über die
+  man die Timer Synchronisieren kann... also quasi in der Art "So Leute, wer bereit ist - FEEEUER!". *g*
+  Was beim Threaded Timer auch noch ein Problem ist, ist das "Stoppen" da die genutzte "Sleep()" nicht unterbrochen
+  wird und der Timer erstmal ablaufen muss.
+- "ThreadTimer::StartTimer()" und "ThreadTimer::StopTimer()": Der Thread wird hier gestartet und "abgewürgt", damit
+  wird der Timer bei stop sofort angehalten. Damit verhält es sich wie "TimerWindows". Ich hatte mir zuerst die
+  Windows Funktion "QueueUserAPC()" angeschaut aber irgendwie wurde das zuviel des guten.
+
+
+
+>> 03.06.2009
+[CO]
+- "Application": Neue Funktion "IsRunning()" gibt zurück ob die Anwendung gerade läuft
+
+
+
+>> 12.04.2009
+[SB]
+- Application: Neue Methode OnKill() hinzugefügt, die aufgerufen wird, wenn das Betriebssystem versucht, die Applikation zu beenden. Standardmäßig ist
+  diese Methode so implementiert, dass sie sofort Exit() aufruft und die Applikation damit zwangsweise beendet. Durch Überschreiben dieser Methode kann
+  aber z.B. dafür gesorgt werden, dass erst einmal die aktuelle Aufgabe zu Ende gebracht wird und sich die Applikation hinterher ordentlich beendet.
+- Application: Unter Linux wird nun das Signal SIGTERM aufgefangen und dann die Methode OnKill() aufgerufen.
+- Application: Zugriffsmethoden für die Versions-Variable hinzugefügt.
+- Application: Einen statischen Pointer auf die aktuelle Application-Instanz hinzugefügt. Wenn es anders geht, sollte dies zwar nicht unbedingt verwendet
+  werden, aber solange man darauf achtet, immer nur *eine* Application zur Zeit zu haben, bietet dies nun eine sehr einfach Methode, um schnell an diese
+  wichtige Application-Instanz und damit auf alle anderen Dinge darin heranzukommen :-)
+
+
+
+>> 11.04.2009
+[SB]
+- Application: An Änderungen von CommandLine angepasst.
+
+
+
+>> 03.12.2008
+[CO]
+- "64 Bit 'Bugfix': Core::GetRuntimeDirectory()" vom "25.08.2008" rückgängig gemacht da Windows das
+  'normalerweise' Automatisch macht.
+  Im 3ds Max Scene Exporter muss der alte Hack drinnen bleiben da man auf einem 64 Bit OS ein 32 Bit PL SDK
+  Installieren kann... und dann ein 64 Bit 3ds Max nutzt, das sucht dann nach dem Registry Eintrag um automatisch
+  feststellen zu können wo der PLSceneViewer liegt - und findet das dann natürlich nicht da es in einem
+  "Magischen" 'Wow6432Node'-Unterordner abgelegt wurde. :D
+
+
+
+>> 03.12.2008
+[SB]
+- Neue Config-Klasse für PLCore hinzugefügt und erst einmal nur die Einstellung "LoadLibsFromRuntime" aus PLEngine hierher verschoben.
+  Ansonsten hat man das Problem, dass eine Applikation, die noch nicht von PLEngine abhängig ist, auch diese Option nicht kennt und daher
+  nicht die Plugins im PL-Runtime sucht. Daher muss diese Einstellung so früh wie möglich kommen, damit ist das Problem erstmal behoben.
+  Jetzt müssen wir möglichst schnell die ganze Config-Problematik nochmal sauber angehen, ansonsten haben wir bald ein echtes Problem ...
+  
+  
+  
+>> 05.09.2008
+[CO]
+- Application: "GetName()" in "GetTitle()" umbenannt
+- Application: "GetFilename()" in "GetExecutableFilename()" umbenannt
+- Application: "OnHelp()" in "OnPrintHelp()" umbenannt
+- Application: "OnVersion()" in "OnPrintVersion()" umbenannt
+- Application: GetExitCode(), SetExitCode(), IsShutDown(), ShutDown(), OnShutDown() in PLGui::Application verschoben
+- Application: Neue Funktion: GetStartupDirectory(), gib das aktuelle Verzeichniss zurück das beim aufruf des Applikation
+  Verzeichnisses eingestellt war
+- Application: 'OnInit()' in 'GuiApplication' verschoben
+- Application: 'Title' muss nun über 'SetTitle()' gesetzt werden und kann nicht mehr direkt im Konstruktor übergeben werden
+
+
+
+>> 29.09.2008
+[SB]
+- Application: Verwaltung von Kommandozeilen-Optionen durch eine Instanz von CommandLine hinzugefügt. Es werden ausserdem gleich
+  einige Standardoptionen hinzugefügt: "--version" zeigt Programmname und Version an, "--help" zeigt alle zur Verfügung stehenden
+  Optionen an. Das Verhalten dieser Kommandos kann wie üblich über virtuelle Funktionen überschrieben werden.
+  Ich möchte es hier dem Programmierer so einfach wie möglich machen und ausserdem dafür sorgen, dass PL-Applikationen
+  gleich so viel Komfort wie möglich bieten. Oftmals stößt man auf Programme, wo alles gut gemacht ist, aber dann fehlen solche
+  Standarddinge wie "--version" oder Kommandozeilenoptionen überhaupt. Bei PL ist das nun gleich standardmäßig drin, es sei denn
+  ein Programmierer baut dies bewusst wieder aus, was natürlich auch möglich sein sollte (CommandLine.Clear()). 
+
+
+
+>> 28.09.2008
+[SB]
+- Application: Der Executable-Dateiname und die Argumente werden jetzt nicht mehr im Constructor sondern bei Run übergeben.
+  Alle Projekte wurden entsprechend angepasst. Da bei dieser Reihenfolge ChangeIntoAppDirectory() nicht mehr vernünftig von
+  Aussen aufgerufen werden kann, habe ich dies nun erstmal in GuiApplication::OnInit() eingebaut. Dies sollte auf jeden Fall
+  von der Application selbst entschieden werden, und nicht von Aussen aufgerufen werden.
+
+
+
+>> 25.08.2008
+[CO]
+- 64 Bit 'Bugfix': Core::GetRuntimeDirectory(): Macht ein 32 Bit Programm bei einem 64 Bit OS in der Registry herum, so landen dessen
+  Einträge in einem 'Wow6432Node'-Unterordner. Also statt 'SOFTWARE\\PixelLight\\PixelLight-SDK' dann
+  'SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-SDK' ... nicht das es zu einfach wird. *g*
+
+
+
+>> 23.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 12.08.2008
+[CO]
+- Dadurch das "SimpleList" von PLGeneral nun keine Virtuelle-Tabelle mehr besitzt wurden Event und EventHandler Instanzen noch
+  kompakter. Vorher:
+    Event        = 12 Byte
+    EventHandler = 20 Byte
+  nun
+    Event        = 8 Byte
+    EventHandler = 12 Byte
+  ... ich denke NOCH weiter runter mit dem Speicherverbrauch ohne coole Funktionalität einbüßen zu müssen können wir nicht mehr.
+  Event ist nun dank "SimpleList" also nur noch halb so 'groß' wie vorher, EventHandler sogar nur noch ein drittel so groß. :D
+- Entfernte 'm_nNumOfHandlers' im Event, dadurch ist ein Event nun nur noch 4 Byte groß - mal schaun ob man da noch irgendwo
+  reduzieren kann... *g*
+  Das entfernen wurde möglich da ich Zugriff auf die internen "SimpleList" Daten nun public machte - so kann man 'sehr Performant'
+  über die Daten iterieren - genau das was man hier ssseeeeehr oft macht, und daher wäre das über einen Iterator gehen der intern
+  Dynamsich erzeugt werden muss nicht zumutbar gewesen.
+
+
+
+>> 10.08.2008
+[CO]
+- Event und EventHandler Klassen von "List" auf das neue "SimpleList" umgestellt. Vorher
+    Event        = 16 Byte
+    EventHandler = 36 Byte
+  jetzt
+    Event        = 8 Byte (+ 4, siehe unten)
+    EventHandler = 20 Byte
+  -> Änderte an ein paar Stellen die Verwendung der Liste damit möglichst keine 'ineffizienten' Operatoren genutzt werden.
+  Spendierte Event 'm_nNumOfHandlers' das 'GetNumOfElements()' aufrufe bei SimpleList vermeitet - denn diese Operation ist nun
+  langsam. Es lohnt denke ich hier aber 4 Byte für bessere Performance zu investieren, denn 'GetNumOfElements()' wäre sonst
+  'sehr häuftig' aufgerufen worden. Event ist nun also 12 Byte, aber immer noch 4 Byte kleiner als vorher (davon können wir uns
+  ein Eis kaufen gehen *g*)... und bei jedem EventHandler den man einhängt spart man nochmal durch die schlankere "SimpleList"
+  Implemenation. Lohnt sich also denke ich.
+
+
+
+>> 09.08.2008
+[SB]
+- Events: Mittels ConnectBind() können nun auch EventHandler an Events eines anderen Typs gebunden werden, wobei die
+  Parameter analog zu bind() gebunden werden. Intern wird hier einfach ein EventHandler vom richtigen Typ erzeugt und
+  mit dem Event verbunden. Damit dieser dynamisch erzeugte EventHandler auch wieder gelöscht wird, brauchte es leider
+  eine Klasse mit virtuellem Destruktor, die in eine Liste beim EventHandler eingetragen wird. Dies wird aber nur dann
+  benötigt, wenn wirklich mal ein Event 'umgebogen' wird, im Normalfall bleibt die Liste leer. Ich hoffe, dass dies so
+  am besten ist und damit übereinstimmt, wie Events und Handlers größtenteils benutzt werden. Sollte sich herausstellen,
+  dass man die meiste Zeit ConnectBind benutzt, sollte man sich vielleicht eine andere Lösung überlegen, die 'teurer' ist
+  für den Normalfall, dafür aber 'billiger' für den Bind-Fall. Bitte beachten, dass die Functors und Events zur Zeit noch
+  getestet werden, einiges ist noch nicht so stabil wie es sein soll (z.B. wenn man mal die falsche Anzahl Parameter übergibt).
+  Das überarbeite ich gerade nochmal, die Funktionalität sollte aber so bleiben wie sie ist.
+
+
+
+>> 06.08.2008
+[CO]
+- 'ShutDown()' und 'IsShutDown()' Methoden in die 'Application'-Klasse eingebaut. Dies ist identisch zu dem was in
+  der alten 'PLEngine::PL'-Klasse ist und das wie ich finde schon immer sehr gut funktionierte. Fügte desweiteren
+  eine virtuelle 'OnShutDown'-Methode hinzu die innerhalb 'ShuwDown()' aufgerufen wird.
+- 'Application'-Klasse: "OnRun()" Implementationen geben im 'normalfall' "GetExitCode()" zurück, nur im Fehlerfall was
+  eigenes wie z.B. "-1" - so kann ein User der nur die Application Klassen nutzt über "SetExitCode()" einen Error Code
+  setzen der zurückgegeben werden soll
+
+
+
+>> 03.08.2008
+[CO]
+- 'Application'-Klasse um 'Name' erweitert, dies ist recht nützlich da man dann z.B. direkt anhand dieses Namens z.B.
+  den Standard-Titel eines Fensters setzen kann.
+- 'Base'-Verzeichniss mit alter Event und Functor Implementation gelöscht
+
+
+
+>> 02.08.2008
+[SB]
+- Bind-Funktionalität für Funktoren hinzugefügt. Damit ist es möglich, Parameter eines Funktors zu binden, also
+  auf einen festen Wert zu setzen und damit die Signatur einer Funktion zu verändern. Diese Implementation erlaubt
+  es auch, Eingabeparameter und gebundene Werte frei festzulegen und damit die Reihenfolge, Anzahl und Art
+  der Parameter des neu erzeugten Funktors fast beliebig bestimmen zu können. Ergebnis der Bind-Funktion ist
+  ein Funktor, dessen Signatur durch die verwendeten Parameter komplett festgelegt ist und der daher selbst
+  wieder typensicher ist.
+
+  Anwendung:
+    Beispielsweise kann man auf diese Weise einen weiteren Parameter hinzufügen, um z.B. bei Events noch
+    einen Zeiger auf das Objekt mitzuliefern, das dieses Event erzeugte (z.B. Window* oder SceneNode*).
+    Durch die Verwendung von bind wird ein Funktor erzeugt, der wieder kompatibel zum Event des jeweiligen Objektes
+    ist.
+
+  Verwendung:
+    bind(f, t0, t1, ...)
+    - f: Eingabe-Funktor, der letztlich mit geänderten Parametern aufgerufen wird
+    - t0: Wert für Parameter 0
+    - t1: Wert für Parameter 1
+	- etc.
+
+    Anstelle von echten Werten für Parameter können Platzhalter verwendet werden, um die Parameter
+    des erzeugten Funktors durchzureichen:
+	- _0: Platzhalter für Parameter 0
+	- _1: Platzhalter für Parameter 1
+	- etc.
+
+  Beispiele:
+	// Define a test functor of type void(int, float)
+	Functor<void, int, float> f(Function);
+
+	// Call directly
+	f(1234, 0.25f);
+
+	// Bind first parameter -> getting functor of type void(float)
+	bind(f, 1234, _0)(0.25f);
+
+	// Bind second parameter -> getting functor of type void(int)
+	bind(f, _0, 0.25f)(1234);
+
+	// Bind both parameters -> getting functor of type void()
+	bind(f, 1234, 0.25f)();
+
+	// Exchange parameters -> getting functor of type void(float, int)
+	bind(f, _1, _0)(0.25f, 1234);
+
+	// Just to show the resulting functor's type
+	Functor<void, float> f2 = bind(f, 100, _0);
+	f2(0.1f);
+
+
+
+>> 29.07.2008
+[SB]
+- FunctorTools hinzugefügt und Funktionen erstellt, um einen Funktor zu erzeugen. Das dient vor allem der
+  Übersichtlichkeit, damit man nicht ständig die ganzen Template-Parameter schreiben muss, gerade wenn man
+  später mit bind etc. die Funktoren noch ineinander schachteln muss. Ich habe mich dabei an die üblichen
+  Benennungen gehalten, die man in den meisten anderen Signal/Slot Implementationen findet: ptr_fun()
+  erzeugt einen Funktor für eine statische Funktion, mem_fun() erzeugt einen Funktor für eine Memberfunktion.
+- 'Types' in 'Traits' umbenannt, was eine übliche Bezeichnung für solche Typendefinitions-Klassen ist. Die Klasse
+  heisst nun FunctorTraits und wurde ausserdem in eine eigene Headerdatei ausgelagert, die allerdings "Traits.h" heißt.
+  Zusätzlich wurde auch noch Functor selbst in die Klasse aufgenommen, damit man alle benötigten Datentypen dort beisammen hat.
+- Analog zum Functor auch bei den Events Types in Traits umbenannt.
+- Weitere Klassen umbenannt:
+    FuncImpl   -> FunctorImpl (Dateiname ist trotzdem "Impl.h" und nicht "FunctorImpl.h", damit alle Impl's beisammen stehen)
+    FuncTyped  -> ImplTyped
+    FuncPtr    -> ImplFunPtr
+    FuncMemPtr -> ImplMemPtr
+  sowie
+    FunctorTools -> Tools
+
+
+
+>> 28.07.2008
+[SB]
+- Functor und Events nochmal überarbeitet und übersichtlicher gestaltet (mehrere Dateien).
+- Beide Klassen sind nun erstmal so einfach wie möglich gestaltet, dass heißt möglichst wenig Ableitungen und
+  dadurch auch weniger virtuelle Destruktoren. Mal schauen, ob es für das neue RTTI notwendig ist, diese Klassen doch
+  noch einmal aufzubohren (und dadurch evtl. doch wieder einiges virtuell machen zu müssen), ich fände es aber schön,
+  wenn die Klassen so bleiben könnten, wie sie jetzt sind.
+- ManagedEventHandler entfernt, da mir das nie wirklich gefallen hat (leicht unsicher, falls das falsch benutzt worden wäre).
+  EventHandler sollten lieber als direktes Attribut einer Klasse instanziiert werden statt über new, und falls es doch
+  jemand dynamisch braucht, muss er eben selber dafür sorgen, dass die erzeugten Objekte auch wieder gelöscht werden.
+- Sowohl Functor als auch EventHandler haben nun wieder einen Default Konstruktor. Es ist zwar schön, wenn es keine Probleme
+  gab ohne Default-Konstruktor, jedoch nimmt uns das die Möglichkeit, Funktoren oder EventHandler beispielsweise in einer
+  Liste zu speichern oder in anderen Situationen, wo es notwendig ist, zunächst einmal das Objekt über den Default-Konstruktor
+  zu initialisieren und den wirklichen Wert erst später zuzuweisen. Da beide Klassen so gestaltet sind, dass es problemlos
+  möglich ist, zunächst einmal ein leeres Objekt zu erzeugen und erst später einen Zeiger auf eine wirkliche Funktion zu setzen,
+  sollten wir uns diese Möglichkeit nicht unnötig verbauen. Abgesehen davon hat das Entfernen des Default-Konstruktors
+  von EventHandler das Problem nicht wirklich gelöst, weil das eigentliche Problem im Functor lag und nicht im EventHandler,
+  ein leerer Functor hätte daher immernoch zum Crash geführt. Das wurde nun behoben, da ein leerer Functor jetzt eine Null-Funktion
+  aufruft, anstatt wie bisher einfach abzustürzen :-)
+- Ein EventHandler kann nun auch auf mehrere Events hören, womit es größtenteils wirklich unnötig sein sollte, EventHandler dynamisch
+  zu erzeugen. Christian: Bitte nochmal genau meine Implementation durchschauen, da bei so etwas leicht Fehler passieren (NxM Beziehung,
+  beide Objekte müssen sich im Destruktor aus der Liste des jeweils anderen Objektes austragen, das wird leicht ganz schön kniffelig).
+
+
+
+>> 04.07.2008
+[CO]
+- EventHandler: Standard Konstruktor entfernt da es ansonnsten einen Crash gibt wenn man einen nicht Initialisierten
+  EventHandler nutzt - eine Situation die es auf jedenfall zu vermeiden gilt. Habe bei mir diesen Konstruktor schon seit
+  Wochen auskommentiert und es gab keine Probleme.
+
+
+
+>> 21.06.2008
+[SB]
+- Neue Klasse Core hinzugefügt, die statische Funktionen bereitstellt, um Informationen über die gesamte
+  PixelLight-Installation abzufragen (z.B. Installationspfad, Versionsnummer etc.). GetRuntimeDirectory
+  wurde von PLEngine hierher verschoben, und überall, wo der Installationspfad abgefragt wurde, wird nun
+  diese Funktion verwendet (sowas sollte wenn möglich immer zentral an einer Stelle sein und nich dupliziert
+  werden).
+- Die Informationen über das aktuelle SDK werden nun aus der Datei PixelLight.h genommen, die im Verzeichnis
+  /PixelLight zu finden ist (siehe PLSDK)
+
+
+
+>> 05.04.2008
+[SB]
+- Mit der Arbeit am Application-Framework begonnen. Die Klasse Application ist die Basisklasse und wrappt
+  die Hauptfunktion des Programmes. Alles weitere wird durch Spezialisierungen in anderen Projekten (z.B. PLGui)
+  hinzugefügt.
+
+
+
+>> 05.02.2008
+[SB]
+- Auf Basis der Funktoren ein Event-System im Signal/Slot bzw. Event/Delegate Stil erstellt.
+  Das ganze funktioniert so:
+    void TestEvent(int nParam) { /* do something here */ }
+  Event<int> cEvent;
+  EventHandler<int> cHandler1(TestEvent);
+  cEvent.Connect(&cHandler1);
+  cEvent.Emit(1);
+  Dabei ist zu beachten, dass ein EventHandler natürlich ein ganz normales Objekt ist, das dementsprechend verwaltet werden muß.
+  Wenn man also z.B. ein EventHandler per new erzeugt, muß man diesen auch wieder löschen. Um das zu vereinfachen, gibt es
+  die Basisklasse EventObserver und die spezialisierte Klasse ManagedEventHandler. Wann immer ein ManagedEventHandler für eine
+  Memberfunktion einer Klasse erzeugt wird, die von EventObserver abgeleitet ist, kümmert sich diese automatisch um das spätere
+  Löschen des Handlers:
+    class Test : public EventObserver {
+      Test() {
+        // Diese Instanz wird automatisch später gelöscht
+        g_pMainWindow.OnAlienEvent.Connect(new ManagedEventHandler<int>(&Test::OnAlien, this));
+    }
+    void OnAlien(int nParam) {
+    }
+  }
+- Projekt PLCore begonnen und zunächst Functor und Event dorthin verschoben.

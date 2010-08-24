@@ -1,0 +1,69 @@
+\chapter{Tools}
+
+
+
+
+\section{Localization System}
+There's a language system within PixelLight. Whenever you use language dependent texts you should use the macro \emph{PLT()} or \emph{PL\_TEXT()} if the text is within a special group. This way you mark language dependent texts.
+
+\begin{lstlisting}[caption=Localization usage example]
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/Main.h>
+#include <PLGeneral/System/System.h>
+#include <PLGeneral/System/Console.h>
+#include <PLCore/Tools/Localization.h>
+#include <PLCore/Tools/LocalizationGroup.h>
+
+
+//[-------------------------------------------------------]
+//[ Namespaces                                            ]
+//[-------------------------------------------------------]
+using namespace PLGeneral;
+using namespace PLCore;
+
+
+//[-------------------------------------------------------]
+//[ Program entry point                                   ]
+//[-------------------------------------------------------]
+int PLMain(const String &sFilename, const Array<String> &lstArguments)
+{
+  // Use the executable directory as the current directory
+  System::GetInstance()->SetCurrentDir(Url(sFilename).CutFilename());
+
+  // Setup the localization system
+  String sGroup = "MyApplication";
+  String sLanguage = "German";
+  Localization::GetInstance()->SetLanguage(sLanguage);
+  LocalizationGroup *pLocalizationGroup =
+    Localization::GetInstance()->AddGroup(sGroup);
+  if (pLocalizationGroup)
+    pLocalizationGroup->Load(sGroup + '_' + sLanguage + ".loc");
+
+  // Get the console
+  const Console &cConsole = System::GetInstance()->GetConsole();
+
+  // Show a translated text
+  cConsole.Print(PL_TEXT("Hello", sGroup));
+  cConsole.Print(PL_TEXT("This is a test", sGroup));
+
+  // Wait until a key is hit
+  cConsole.Print("\nPress any key to quit...\n");
+  cConsole.GetCharacter();
+
+  // Done
+  return 0;
+}
+\end{lstlisting}
+
+
+\paragraph{File format}
+PixelLight localization files have the extension \emph{loc}.
+
+
+
+
+\section{Configuration system}
+\paragraph{File format}
+PixelLight configuration files have the extension \emph{cfg}.

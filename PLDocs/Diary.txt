@@ -1,0 +1,942 @@
+>> 05.08.2010
+[CO]
+- PLGeneral Doku nochmal durchgeschaut
+- PLCore Doku nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- PLFeatures nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- PLScene nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- PLSound & PLPhysics Doku wo nötig aktualisiert (+ natürlich Rechtschreibkorrektur)
+- PLGui & PLNetwork nochmal gesichtet, da diese Dokumente derzeit praktisch leer sind, war das schnell erledigt *g*
+- PLGraphics Doku nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- PLMath Doku nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- PLMesh Doku nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- 3ds Max Scene Exporter Doku wo nötig aktualisiert (+ natürlich Rechtschreibkorrektur)
+- Coding Conventions nochmal mit hilfe einer Rechtschreibkorrektur durchgeschaut
+- PLRenderer Doku wo nötig aktualisiert (+ natürlich Rechtschreibkorrektur)
+... uff, so, die Dokus müssten nun wieder aktuell sein und zumindestens Fehler die eine automatische Rechtschreibprüfung finden kann,
+    müssten nun weg sein (hab daneben noch ein paar kleinigkeiten gefunden wo ich es mittlerweile besser weis :)
+
+
+
+>> 04.08.2010
+[CO]
+- PLInput Doku wo nötig aktualisiert
+
+
+
+>> 03.08.2010
+[CO]
+- "PLDeferredRendering"-Doku in "PLScene"-Doku eingearbeitet
+- "PLScene"-Doku überflogen und wo nötig aktualisiert (war stellenweise ziemlich out-of-date :/)
+
+
+
+>> 20.07.2010
+[CO]
+- PLInput Doku (derzeit eher eine kleine Beispielsammlung, aber besser als nix :) an PLInput Refactoring angepasst
+
+
+
+>> 16.07.2010
+[CO]
+- Alte PLGui Doku mit in "Removed_PLGui2_02072010.zip" Archiviert, die PLGui Doku ist fürs erste nur ein leeres Platzhalter Dokument
+
+
+
+>> 15.07.2010
+[CO]
+- PLEngine Doku in PLScene umbenannt, neue, noch leere Doku für PLEngine hinzugefügt
+
+
+
+>> 01.07.2010
+[CO]
+- PLFeatures aktualisiert, da kann man sicherlich noch viel aufbessern, aber schonmal besser und vorallem aktueller als vorher
+
+
+
+>> 16.06.2010
+[CO]
+PLCore Doku:
+- Endlich an die "pl_enum"-Änderung angepasst
+- "Automatic Data Type Conversion"-Abschnitt in der "Basic Components"-Sektion hinzugefügt
+- "Enumerating RTTI Classes"-Abschnitt in der "Classes, Modules And Plugins"-Sektion hinzugefügt
+
+
+
+>> 31.05.2010
+[CO]
+PLCore Doku:
+- An RTTI Klassen Export angepasst
+- "3.2 Modules And Plugins": "Defining A New Module" etwas Erweitert
+- "Common Pitfalls": "RTTI Method And String Reference Parameter" hinzugefügt
+- "3.3.1 Attribute": "Overwriting Attributes Within Derived Classes": Unten zum Thema GetSet/ModifyAttr noch etwas Erweitert
+- "3.1 Classes": "Defining A New Class": Unten noch Erwähnt das "pl_class" die eingetragene Basisklasse prüft und gegebenenfalls
+  einen Compilerfehler ausgibt - das ist ein ziemlich cooles Feature das nicht unerwähnt bleiben darf :D
+
+
+
+>> 28.05.2010
+[CO]
+- PLDocs Arbeiten ("Motivation" & "Externe Abhängigkeiten")
+- PLCore: An "Common Pitfalls" gearbeitet
+- Im Titel der LaTex PixelLight Dokumentationen, PixelLightAPI und im SDKBrowser wird von CMake nun automatisch die
+  aktuelle PL Version eingetragen so das man auch im nachhinein weis für welche PL Version ein Dokument ist.
+  Das geschieht innerhalb von "CMakeLists.txt" im Grundorder - habe bei "PixelLight.h.in" gespickt. Die veränderte
+  Datei landed wieder im Original Ordner damit das funktioniert, dies ist aber denke ich ok.
+
+
+
+>> 20.05.2010
+[CO]
+- Teile von PLGeneral nach PLCore verschoben
+
+
+
+>> 17.05.2010
+[CO]
+- An PLCore Dokumentation gearbeitet
+
+
+
+>> 16.05.2010
+[CO]
+- PLCore Dokumentation: "Overwriting Attributes Within Derived Classes" Beispiel-Code etwas erweitert
+
+
+
+>> 13.05.2010
+[CO]
+- PLCore Dokumentation: Mit "PLCore::DynVar" gemachte Erfahrungen in der Dokumentation erwähnt
+- PLCore Dokumentation: "Overwriting Attributes Within Derived Classes" ist nun Lesbar
+- PLCore Dokumentation: "Accessing Attributes By Using Getter And Setter Methods" Abschnitt erweitert
+
+
+>> 07.05.2010
+[CO]
+- PLCore2 Dokumentation in PLCore umbenannt
+
+
+
+>> 06.05.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 05.05.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 02.05.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 01.05.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 24.04.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+- CodingConventions um Event Handler & Slot Namenskonventionen ergänzt
+- CodingConventions um Event & Signal Namenskonventionen ergänzt
+- CodingConventions um Dynamische Parameter Namenskonventionen ergänzt
+
+
+
+>> 23.04.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 22.04.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 21.04.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 20.04.2010
+[CO]
+- An PLCore2 Dokumentation gearbeitet
+
+
+
+>> 19.04.2010
+[CO]
+- PLCore2 Dokumentation auf Basis von PLCore angefangen
+
+
+
+>> 12.03.2010
+[CO]
+- PixelLab samt Plugins entfernt
+
+
+
+>> 30.01.2010
+[CO]
+- PLDocs: PLGeneral:
+  - Keine Nutzung von "\\" in LaTex da es von allen Seiten heist das sei Teufelswerk und LaTex mache alles richtig
+  - PLDocs: Nutzung von "\emph{}" statt ' bzw. `
+  - PLDocs: Nutzung von "\ldots" statt "..."
+  - PLDocs: Nutzung von "\textbackslash\textbackslash\" statt "\\\"
+  - PLDocs: Nutzung von "\textasciicircum" statt "^"
+
+
+
+>> 29.10.2009
+[CO]
+- PLEngine Kapitel 1 "First PixelLight application" entfernt da hoffnungslos veraltet. Da eine minimal
+  Anwendung erstellen dank des Application Frameworks mittlerweile nicht mehr sonderlich aufwändig ist
+  und es auch massig Beispiele gib habe ich mich dazu entschlossen hier erstmal nix neues zu schreiben.
+- PLRenderer: Alle Kapitel die nochmal komplett überarbeitet werden müssen erstmal auskommentiert damit
+  in der aktuellen Dokumentation nix irreführendes drinnen steht. Den Rest durchgeschaut und wo nötig
+  aktualisiert.
+- PLGui Dokumentation erstmal als veraltet Markiert
+
+
+
+>> 27.10.2009
+[CO]
+- PLEngine Doku gesichtet und wo nötig aktualisiert. Das erste Kapitel muss noch neu geschrieben werden.
+
+
+
+>> 24.10.2009
+[CO]
+- CodingConventions Doku gesichtet und wo nötig aktualisiert
+- CodingConventions: 'Headers' ist nun ein eigenes Kapitel
+- CodingConventions: Sektion über allgemeine Namens Konventionen hinzugefügt
+- CodingConventions: Sektion 'Reuseability and adding new stuff' hinzugefügt, das ist etwas das eigentlich
+  nicht erwähnt werden müsste... aber erwähnen wir es lieber wenn dann irgendwann mal 'neue' hinzukommen und
+  diese gezwungen werden sich zuerst dieses Dokument durchzulesen...
+- CodingConventions: Sektion 'General' hinzugefügt
+- CodingConventions: Sektion 'Keep it simple!' hinzugefügt
+- CodingConventions: Sektion 'Const correctness' hinzugefügt
+- CodingConventions: 'Documentation' ist nun ein eigenes Kapitel
+- PLMesh Doku gesichtet und wo nötig aktualisiert... hier ist zwar nun gerade nicht mehr sonderlich viel drinnen,
+  aber wenigstens isses aktuell :D
+
+
+
+>> 22.10.2009
+[CO]
+- Alle Dokumente verwenden nun 'chapter', damit stimmt nun im Inhaltsverzeichniss die Nummerierung
+- Alle Dokumente verwenden nun Syntax Highlighting bei Code Beispielen, auch die Dokus die ich noch sichten und
+  aktualsieren muss ("CodingConventions.pdf" & "PLGui.pdf" & "PLRenderer.pdf" & "PLMesh.pdf" & "PLEngine.pdf")
+
+
+
+>> 21.10.2009
+[CO]
+- PL3dsMaxSceneExport Doku gesichtet und wo nötig aktualisiert
+- PixelLab Doku gesichtet und wo nötig aktualisiert... auch wenn PixelLab selbst hoch experimentell ist
+- In PLGeneral werden nun experimentell die Codes über andere LaTex Tags dargestellt so das man direkt
+  C++ Syntax Highlighting hat... wenn das so ok ist werd ich die anderen Dokumente ebenfalls darauf umstellen
+- In PLGeneral wird nun experimentell 'chapter' verwendet - damit stimmt die Nummerierung im Inhaltsverzeichniss
+
+
+
+>> 20.10.2009
+[CO]
+- PLGeneral Doku gesichtet und wo nötig aktualisiert
+
+
+
+>> 24.09.2009
+[CO]
+- PLFeatures Doku gesichtet und wo nötig aktualisiert
+
+
+
+>> 23.09.2009
+[CO]
+- PLNetwork Doku ist nun zumindestens nicht mehr komplett leer...
+- PLDatabase Doku gesichtet, es war soweit alles noch aktuell
+- PLSound Doku gesichtet und wo nötig aktualisiert
+- PLPhysics Doku gesichtet und wo nötig aktualisiert
+- PLCore Doku ist nun zumindestens nicht mehr komplett leer...
+
+
+
+>> 22.09.2009
+[CO]
+- PLGraphics Doku müsste nun erstmal halbwechs akzeptabel sein
+- PLMath Doku gesichtet und wo nötig aktualisiert
+- PLInput Doku ist nun zumindestens nicht mehr komplett leer...
+
+
+
+>> 15.09.2009
+[CO]
+- "PLMaterialGuide": "0.2.5 Cube maps" & "0.2.6 3D textures" & "0.2.7 Mipmapping" & "0.2.8 Compression" nach
+  "PLGraphics" verschoben
+- "PLRenderer": "Renderer"-Teil in "General" umbenannt
+- "PLMaterialGuide": "0.2.4 Rectangle textures" nach "PLRenderer", "General" verschoben
+- "PLMaterialGuide": Kapitel 2 "Textures" nach PLRenderer verschoben (High Level Teil)
+- "PLMaterialGuide": Kapitel 3 "Material" nach PLRenderer verschoben (High Level Teil) und in "Effect" umbenannt
+- "PLMaterialGuide": Kapitel 4 "Material format" nach PLRenderer verschoben (High Level Effects Teil)
+- "PLMaterialGuide": Kapitel 1 "Introduction" nach PLRenderer verschoben (High Level Effects Teil)
+- "PLMaterialGuide": Kapitel 5 "Shaders" nach PLRenderer verschoben (High Level Teil)
+- "PLMaterialGuide": Kapitel 6 "FAQ" nach PLRenderer verschoben (High Level Teil)
+- "PLMaterialGuide" Dokumentation gelöscht. Der aktuelle (veraltete) Inhalt wurde in andere Dokumente verschoben wo
+  das besser aufgehoben ist damit das zusammen ist was zusammen gehört.
+
+
+
+>> 14.09.2009
+[CO]
+- "SDKBrowser" aktualisiert
+- "PLGeneral" umsortiert so das man einzelnde Kapitel hat, sonst wird das einfach unübersichtlich
+- "Export variables"-Abschnitt von "PLEngine" nach "PLGeneral" verschobend und in "RTTI variables" umbenannt
+
+
+
+>> 13.09.2009
+[CO]
+- "PLGraphics.pdf": Aktualisiert, da ist zwar noch sehr wenig drinnen - aber wenigstens isses nun wieder aktuell :D
+
+
+
+>> 09.07.2009
+[CO]
+- Alles von PLCore in PLGeneral Dokumentation verschoben da diese Dinge derzeit noch dort liegen und auch noch nicht
+  abzusehen ist wann es verschoben wird
+
+
+
+>> 09.03.2009
+[CO]
+- "SDKBrowser" veraltete Informationen aktualisiert
+- "PixelLight_PackageDiagram" aktualisiert
+- Doxygen Konfigurationsdateien aller Projekte aktualisiert
+
+
+
+>> 06.12.2008
+[CO]
+- PLRenderer Dokumentation aktualisiert
+- Da die PLInput Dokumentation hoffnungslos veraltet ist und davon überhaupt nix mehr ersthaft brauchbar ist machte ich
+  das von "out of date" zu "under construction", sprich, leere Dokumentation die noch geschrieben werden muss. Besser als
+  'falsch Informationen'. :D
+
+
+
+>> 23.11.2008
+[CO]
+- PLFeatures: Plugins Sektion aktualsiert
+
+
+
+>> 11.11.2008
+[CO]
+- PL3dsMaxSceneExport: Verschob den einen 'FAQ'-Punkt ins Wiki wo bereits alle anderen FAQ's liegen, aktualisierte die Dokumentation
+
+
+
+>> 06.08.2008
+[CO]
+- Lizenz Information bei SDK browser in die Startseite eingebaut "Creative Commons Attribution-Share Alike 3.0 Unported License"
+
+
+
+>> 04.08.2008
+[CO]
+- Lizenz Information bei PixelLightAPI in den Footer eingebaut "Creative Commons Attribution-Share Alike 3.0 Unported License"
+
+
+
+>> 31.07.2008
+[CO]
+- Die Dokumentationen nutzen nun "Creative Commons Attribution-Share Alike 3.0 Unported License"
+
+
+
+>> 23.07.2008
+[CO]
+- CodingConventions: '[TODO]' etc. erklärt, ich hoffe ich hab nix vergessen. 'Debugging options for Visual Studio' kurz
+  erwähnt - das super wenn man das noch genauer Beschreiben würde.
+
+
+
+>> 27.06.2008
+[CO]
+- 'Common/Title.tex' hinzugefügt: Dies ist die Titel-Seite die bei jeder Dokumentation bis auf den Titel identisch ist, darum lieber
+  einmal zentral halten :D
+- 'Common/Preamble.tex' hinzugefügt: Diverse LaTex Einstellungen die bei allen Dokumenten gleich sind
+- 'Styles.sty' und 'Tools.sty' liegen nun einmal im 'Common'-Verzeichniss anstatt in jedem Dokumentations-Verzeichniss nochmal. Zwar
+  muss man in 'Common/Preamble.tex' '../Common/Tools' schreiben damit die Dateien gefunden werden - ist so herum denke ich aber trotzdem
+  besser.
+- 'Common/Preamble.tex' '\documentclass[a4paper,12pt]{article}' durch '\documentclass[a4paper,12pt]{book}' ersetzt damit man diese Datei
+  auch in 'PLGui' und 'PLFeatures' nutzen kann ohne Fehlermeldungen zu bekommen
+- PixelLightAPI: 'pl_logo.jpg' durch 'PLLogo.png' ersetzt - gleiche Dateigröße, keine unschönen Grafik-Artefakte
+
+
+
+>> 24.06.2008
+[CO]
+- SDKBrowser: Informationen wie die SDK Versions Nummer aufgebaut ist aktualisiert
+
+
+
+>> 21.06.2008
+[CO]
+- PLGeneral Dokumentation: Schrieb noch ein wenig was zum Dateisystem, sind zwar hauptsächlich Beispiel-Codes aber besser als nix
+- Generell: An fast allen Stellen (außer dort wo nicht wirklich Sinnvoll :) 'engine' zu 'framework', 'subsystem/system' zu 'component'
+  damit wir nicht mit zuvielen Begriffen um uns werfen
+- An vielen Stellen 'PL' durch 'PixelLight' ersetzt, manchmal sind weniger Abkürzungen lesbar *g*
+- PLSound Dokumentation aktualisiert
+- PLPhysics Dokumentation aktualisiert, zwar genauso wie PLSound noch 'sehr' klein - nun aber wenigstens wieder up-to-date :D
+- Ein wenig was in die PLGraphics Dokumentation geschrieben, ist zwar noch nicht berauschend viel - aber besser als ein komplett
+  leeres Dokument
+- PLDatabase: Ein Beispiel wie eine Datenbank verwendet wird in die Dokumentation geschrieben, ebenfalls nur ein erster kleiner Schritt
+- SDKBrowser: 'Components': 'Core backends' heraus genommen da dies zuviele Informationen auf einmal in der 'Einführenden Dokumentation'
+  sind. Diese Informationen kann man nun in den jeweiligen Dokumentationen der Komponenten nachlesen.
+- SDKBrowser: 'Installation': 'Examples' vereinfacht, genauere Infos muss man in den jeweiligen Komponenten Dokumentationen nachlesen,
+  das hier soll nur die 'Idee' vermitteln
+
+
+
+>> 20.06.2008
+[CO]
+- PixelLab Dokumentation aktualsiert. Zwar ist dieses Tool noch total Experimentell, eine aktuelle Dokumentation ist aber trotzdem nett.
+- PL3dsMaxSceneExport Dokumentation nochmal durchgeschaut
+- PLMath Dokumentation aktualsiert
+
+
+
+>> 19.06.2008
+[CO]
+- SDKBrowser 'License' linkt nun 'in das SDK'. Im SDK liegen nun die GPL und die LGPL Texte - beide da das letztere
+  ja nur eine Erweiterung ist und man schon den 'gesammten Lizenz Text' haben sollte. :D
+  Habe desweiteren noch das LGPL Logo hinzugefügt und ein paar Begriffe aktualisiert.
+
+
+
+>> 18.06.2008
+[SB]
+- Docs-PLGeneral: Habe einen winzigen Fehler behoben, der beim Übersetzen mit LaTeX zu einer Fehlermeldung führte, die dann
+  durch 'Enter' bestätigt werden muss. Das ist zwar nicht weiter schlimm, wenn man selber das Übersetzen startet und überwacht,
+  aber beim automatischen Übersetzen für z.B. nightly-builds ist dies ein großes Problem, da das Übersetzen dann einfach nicht
+  durchläuft aber auch nicht von selber abbricht, da auf eine Tastatureingabe gewartet wird. Wir müssen daher jetzt dringed darauf
+  auchten, dass beim Übersetzen der LaTeX-Dokumente keinerlei Fehler auftreten, durch die das Übersetzen unterbrochen wird.
+
+
+
+>> 11.06.2008
+[CO]
+- Alte "PL_API" Dokumentation nun endlich mal komplett aus dem Repository genommen und beim mir lokal abgelegt + Florian
+  das per Mail geschickt... er wird das was hiervon noch brauchbar ist ins Wiki übernehmen wo diese Informationen wohl
+  besser reinpassen.
+
+
+
+>> 01.05.2008
+[CO]
+- SDKBrowser um 'License' erweitert (linkt momentan noch 'nach außen')
+
+
+
+>> 12.04.2008
+[CO]
+- PL_SDK_Browser: Um 'FAQ' erweitert. Hier gibts bereits 3-Punkte die immer wieder gefragt werden bzw. auftreten.
+
+
+
+>> 08.04.2008
+[CO]
+- PL_SDK_Browser: 'JavaScripts.js' noch etwas Robuster gemacht so das es besser mit Leerzeichen in Dateinamen zurecht kommt...
+  Installierte man das PL-SDK nach z.B. 'c:\Program Files\...' (wie Vista das als Default Vorschlägt) passierte nix wenn
+  man Links zu Dateien oder Programmen anklickte - das Leerzeichen machte hier natürlich Probleme. Ich musste etwas im Java
+  Skript herumspielen bis ich eine brauchbare Lösung fand: '&quot;' einfügen für ein Maskiertes " und schon ist das Leerzeichen
+  Problem weg. :)
+- PL_SDK_Browser: Stefan Schwarz ist den Text mal durchgegangen und hat Englisch Fehler korrigiert, sieht ziemlich gut aus was
+  er gemacht hat finde ich :D
+- PLFeatures: Stefan Schwarz ist den Text mal durchgegangen und hat Englisch Fehler korrigiert
+
+
+
+>> 28.03.2008
+[CO]
+- Entfernte wie gestern besprochen die 'bat'-Dateien und die 'temp'-Verzeichnisse. Will man die Dokumentationen erzeugen so
+  lässt man sich von CMake unter Windows VC-Projekte erzeugen die man dann nutzen kann.
+
+
+
+>> 27.03.2008
+[SB]
+- Habe den inhalt meines alten Latex-Frameworks in den Ordner "Doc-Sample" verschoben. Das kann nun einfach als
+  Beispiel verwendet werden, wenn man z.B. eine neue Doku anlegen möchte. Auch die CMakeLists.txt ist vorhanden
+  und kann ebenfalls als beispiel verwendet werden. Diese Test-Doku wird auch immer mit übersetzt, allerdings nicht
+  nach Bin kopiert und auch nicht mit installiert (die entsprechenden Anweisungen sind auskommentiert).
+
+
+
+>> 02.03.2008
+[CO]
+- Der Inhalt von "FileFormats" wird nun über CMake ins 'Bin/Doc/FileFormats'-Verzeichniss kopiert
+
+
+
+>> 26.02.2008
+[CO]
+- 'PLBase'-Dokumentation in einzelnde Dokumentationen für jedes Projekt gesplittet
+- 'PL_API'-Dokumentation in einzelnde Dokumentationen für jedes Projekt gesplittet
+PL_SDK_Browser:
+- "file_formats.html" hoffentlich noch ein Stückchen übersichtlicher gemacht, die XML DTD Dateien in
+  "Bin/Doc/FileFormats" müsste man noch prüfen bzw. schreiben
+
+
+
+>> 21.02.2008
+[CO]
+- Etwas an den Dokus weitergearbeitet, zukünftig liegen im 'Doc/FileFormats' jeweils pro Format eine Beispiel Datei
+  + die XML DTD was bis jetzt direkt in die pdf Dokumentationen eingearbeitet war
+
+
+
+>> 10.02.2008
+[CO]
+- PLCore und PLInput in die von Doxygen automatisch erzeugte gesammt Code Dokumentation "PixelLightAPI" aufgenommen
+- "PixelLight_PackageDiagram" aktualisiert (u.a. PLInput hinzugefügt)
+- PL_SDK_Browser aktualisiert (u.a. PLCore und PLInput hinzugefügt)
+- "make.bat"-Dateien der LaTex Dokumentationen aktualisiert (..."\Bin\Doc\"...)
+- PLFeatures aktualisiert (u.a. PLCore und PLInput hinzugefügt)
+
+
+
+>> 27.01.2008
+[CO]
+Eine UML Fassung des PL Packet Diagrammes wie es nach den geplanten Umbauten aussehen könnte hinzugefügt. PLSound liegt
+also wie PLPhysics 'unter' der Engine und kommt als reines 'Plugin' daher - 'PLEngine weis also nix von Sound Dingen'.
+Stefan, hab ich das mit 'PLCore' korrekt in die Hierarchie eingebaut?
+
+
+
+
+>> 24.01.2008
+[CO]
+Da ich mich momentan u.a. auf die Software Engineering Prüfung vorbereiten muss und UML einer der
+Inhalte ist, habe ich angefangen (wie schonmal angedeutet) UML Diagramme für PixelLight zu erstellen.
+Ein 'Use Case' + 'Package Diagram' für PixelLight als Gesammtwerk + ein 'Class Diagram' für PLRenderer
+wie ich mir das nach dem 'Redesign' dieser Komponente vorstelle. Habe neben den Visio Dateien auch
+alles als png Exportiert abgespeichert.
+
+
+
+>> 29.12.2007
+[CO]
+CodingConventions:
+- Fing endlich die "Coding-Conventions"-Dokumentation an. Einige Teile aus PLBase habe ich nun hierhin verschoben.
+  (noch nix am Text selbst geändert)
+
+
+
+>> 19.11.2007
+[CO]
+PL3dsMaxSceneExport:
+- Dokumentation anhand der Team Wiki Texte aktualisiert
+
+
+
+>> 17.11.2007
+[CO]
+- PLFeatures Änderung von '02.08.2007' wieder rückgängig gemacht da es leider nix brachte diese Dokumentation im
+  Team Wiki zu halten - sprich, das verleitete nicht dazu das jeder dort dran feilte + es wurden pdf-Versionen
+  angefragt, und dann lieber eine alte pdf-Version genutzt als das aktuelle im Wiki. :(
+  Habe das auch direkt in die CMake-Dateien eingetragen - hoffentlich korrekt.
+- 'PLLogo.eps' sowie 'Contact.tex' liegen in einem seperaten Ordner da viele Dokumentation diese immer gleichen
+  Daten nutzten... daher sollte das nur einmalig Vorliegen damit man nicht immer alles seperat per Hand ändern muss
+
+
+
+>> 27.10.2007
+[CO]
+SDK Browser:
+- 'Installation'-Teil aus 'Introduction' zu einem eigenständigem Punkt gemacht da dies etwas nicht gerade unwichtiges ist
+- Im 'Installation'-Teil einen kurzen Abschnitt über 'Authenticity' eingefügt
+- 'Project Dependences'-Diagram noch etwas verändert so das es keine sich überschneidenden Linien mehr gibt
+
+
+
+>> 23.10.2007
+[CO]
+'PLGui'-Dokumentation ist wieder halbwechs aktuell:
+- "Including PLGui into your project": Hier nahm ich das mit dem Include heraus da es mittlerweile unnötig ist IMMER den
+  Projekt Haupt-Header per Hand einzufügen.
+- "Version management" komplett herausgenommen. Dazu steht in PLBase ein wenig was + mittlerweile kann man release & debug
+  Versionen problemlos mischen wenn man sich an die in PLBase-Doku (in dem allerhand grundliegende und allgemeine Dinge stehen)
+  beschriebenen Spielregeln hält - das in dieser Dokumentation hier nochmal niederzulegen wäre wohl nicht so gut. Im
+  grunde könnte man "Compiler and project settings" und "Including PLGui" ebenfalls heraus nehmen da dies gerade genannte
+  Grundlagen sind die in allen Projekten gleich sind - habe es aber erstmal drinnen gelassen.
+
+
+
+>> 20.10.2007
+[CO]
+- 'make.bat' der Dokumentationen an die SDK Änderungen angepasst
+- 'PLBase'-Dokumentation ist wieder halbwechs aktuell, auch wenn dort natürlich noch einiges an Arbeit reingesteckt werden
+  muss
+
+
+
+>> 19.10.2007
+[CO]
+- "plsdk_overview.png" in "ProjectDependences.png" umbenannt und ins Verzeichniss "PL_SDK_Browser" verschoben. Dieses Diagramm
+  befindet sich nun im "SDK Browser" im Unterpunkt "Engine modules".
+- "SDK Browser" an die SDK Änderungen angepasst
+
+
+
+>> 08.09.2007
+[CO]
+- "plsdk_overview.uml" hinzugefügt das ich mit StarUML erstellt habe um eine aktuelle Projekt-Übersicht zu haben
+
+
+
+>> 02.08.2007
+[CO]
+- PLFeatures entfernt und auf das Team Wiki verschoben wo sich das besser gemeinsam ausarbeiten lässt
+
+
+
+>> 11.05.2007
+[CO]
+SDK Browser:
+- An TransformGizmoControllers.scene Änderung angepasst
+- 'PLSampleChatIRC' hinzugefügt
+- "engine_modules.html" um PLNetworkIRC & PLSoundFMODEx & PLImageLoaderEXR & PLPlugins_idSoftware erweitert
+- PLDatabase bei 'Core backends' hinzugefügt
+
+
+
+>> 09.05.2007
+[CO]
+- Alte Diary Einträge von ab "21.02.04" einsortiert
+
+
+
+>> 09.03.2007
+[CO]
+- SDK Browser um PLNetwork & PLSampleChat erweitert
+
+
+
+>> 11.09.2006
+[CO]
+- Features-Doku etwas aktualisiert
+
+
+
+>> 26.08.2006
+[CO]
+- Der SDK Browser ist nun im Grunde so wie ich mir das vorgestellt hatte, man kann direkt von dort heraus auch Szenen 'anschauen'.
+
+
+
+>> 20.08.2006
+[CO]
+3ds Max Scene Tutorials:
+- 'Cells and portals'-Tutorial hochgeladen
+
+
+
+>> 15.08.2006
+[CO]
+3ds Max Scene Tutorials:
+- Materials-Tutorial hochgeladen
+
+
+
+>> 14.08.2006
+[CO]
+- Lud die aktuellen 3ds Max Scene Tutorials hoch. Die ersten 3 Tuts sind soweit bereits recht brauchbar.
+
+
+
+>> 13.08.2006
+[CO]
+PL SDK Browser:
+- Beispiele welche mindestens eine DirectX 9 Kompatible Karten benötigen von den einfacheren Beispielen getrennt
+
+
+
+>> 02.08.2006
+[CO]
+- Fing damit an einen PL SDK Browser auf Basis der aktuellen PL SDK Dokumentation zu basteln. PL_SDK wurde entfernt.
+
+
+
+>> 12.06.2006
+[CO]
+- PLBase: Ein paar RTTI Bedienungsfehler die ich selbst schon oft gemacht habe in die Dokumentation geschrieben.
+
+
+
+>> 23.05.2006
+[CO]
+- Legte neue Dokumentation für PLBase an welche derzeit nur aus Texten besteht welche ich aus der PL_API Dokumentation
+  dorthin verschob. Das muss nun natürlich alles schrittweise überarbeitet & erweitert werden. :)
+
+
+
+>> 20.05.2006
+[CO]
+PLMaterialGuide:
+- An heutige Texture Änderungen angepasst. Fügte noch 2 kleinere Abschnitte zu Mipmapping & Kompression hinzu.
+
+
+
+>> 10.04.2006
+[CO]
+- PL_API Dokumentation: An Namespace, String und Vektor Änderungen angepasst
+
+
+
+>> 12.03.2006
+[CO]
+- Erweiterte die PL SDK Dokumentation um ein Kapitel in welchem die verschiedenen Beispiel-Programme von der komplexität 
+  her aufgelistet werden + jeweils eine kleine Beschreibung. Diese Beschreibungen stammen direkt aus den jeweilgen 
+  'Main.cpp' Dateien und sollten auch immer übereinstimmen.
+
+
+
+>> 09.02.2006
+[CO]
+- Stefan machte mich darauf aufmerksam das im Repository fälschlicherweise einige Verknüpfungen zu make.bat Dateien lagen, 
+  das hab ich total übersehen - nahm diese Verknüpfungen aus dem Repository.
+
+
+
+>> 03.01.2006
+[CO]
+PL API Doku:
+- Neue Sektion: 'Graphs and paths'
+
+
+
+>> 12.12.2005
+[CO]
+PL API Doku:
+- Neue Sektion über Scene Node Namen hinzugefügt
+
+
+
+>> 02.12.2005
+[CO]
+PL API Doku:
+- Fügte eine Sektion über Namens Konventionen für Szene System relavante Dinge hinzu
+
+
+
+>> 17.11.2005
+[CO]
+PL API Doku:
+- Fügte zwei kleine Abschnitte über Strings & XML hinzu
+
+
+
+>> 03.11.2005
+[CO]
+Material Doku:
+- An neues XML Material Format angepasst
+
+
+
+>> 27.10.2005
+[CO]
+- Fand heraus wie man die PixelLightAPI.chm Code Dokumentation DIREKT in VC 2003 einbinden kann. Dafür sind leider einige 
+  Schritte per Hand nötig... weis nicht ob man das so ohne weiteres Automatisieren kann. Im EngineTeams Ordner unter 
+  'UsedTools' habe ich zwei benötige Tools hinzugefügt + die Readme entsprechend erweitert, dort stehen alle nötigen 
+  Schritte. Am Ende bekommt man PixelLightAPI.msi heraus welches man komfortabel Installieren kann, danach finden sich 
+  auch PL Dinge in der VC Dokumentation wieder so das man z.B. bei Engine Funktionen einfach F1 drücken kann um Informationen 
+  darüber zu erhalten - nette Sache das. Bei jedem SDK Update auch ein Upate dieser VC PL Dokumentation mitzuliefern wäre
+  also wohl nicht drinen oder total umständlich - auch für den User da er dann jedesmal diese Doku erst Deinstallieren 
+  und dann das neuen Installieren müsste. Aber aktuelle Doku Versionen für jedens 'Haupt'-Release sollte reichen. :)
+  Wenn wir uns dafür Entscheiden diesen Luxus für Coder im SDK anzubieten müssten wir uns noch nen geschickteren Namen 
+  dafür ausdenken wie z.B. PixelLightVCDocumentation.msi oder so, damit der Name in z.B. dem Uninstall Dialog sinnig ist.
+
+
+
+>> 25.10.2005
+[CO]
+Material Doku:
+- plt-Format Teil aktualisiert
+PL API Doku:
+- terrain-Format Teil aktualisiert
+
+
+
+>> 24.10.2005
+[CO]
+- Feature Liste etwas erweitert
+- PL SDK Doku um eine Liste aller PL eigenen Datei Formate erweitert
+PL API Doku:
+- 'Sky file format' Teil aktualisiert
+- 'Post process effects' hat neue Untersektion 'Post process file format'
+
+
+
+>> 18.10.2005
+[CO]
+- Aktualisierte in PLMaterialGuide das Kapitel 'Material format'
+
+
+
+>> 12.10.2005
+[CO]
+- 3ds Max Model Exporter Dokumentation überarbeitet und zu LaTex Projekt gemacht. Jens meinte er käme damit schon irgendwie 
+  klar falls er Änderungen an der Doku machen will - und so ist's einheitlich.
+- 3ds Max Scene Exporter Dokumentation hinzugefügt
+
+
+
+>> 07.10.2005
+[CO]
+- Scene Nodes & Model Teil von PL_API aktualisiert. Somit müssten nun alle Dokumentationen wieder soweit auf dem aktuellen 
+  Stand der Dinge sein.
+
+
+
+>> 07.09.2005
+[CO]
+- Etwas an PL_API weitergewerkelt, u.a. lässt es sich nun fehlerfrei übersetzen. Veraltete PLEntities Doku gelöscht, die 
+  Beschreibungen einiger Scene Nodes welche der Engine beiliegen ist nun direkt in der PL_API Dokumentation.
+
+
+
+>> 25.08.2005 - 29.08.2005
+[CO]
+- Arbeitete etwas an PL_API weiter. Die brauchbaren Teile aus den Dokus PLEntities und PLRenderer aktualierte ich und 
+  verschob diese dort hinein. Löschte PLRenderer da derzeit einfach zu wenig um das in einer eigenen Doku zu haben, und ich 
+  glaub auch in Zukunft wird da nicht soo viel noch hinzukommen. Löschte ebenfalls Mesh Guide da derzeit sowieso leer - und 
+  sonderlich viel werden wir da wohl auch fürs nicht schreiben, das kann dann ebenfalls direkt in PL_API mit rein. So haben 
+  wir nicht zu viele einzelne leere/fast leere Dokus was etwas blöde aussieht, sollte PL_API irgendwann mal aus allen fugen 
+  Platzen können wir zu diesem Zeitpunkt das Material neu Ordnen.
+  An PL_API der Doku selbst muss ich noch einiges machen...
+- Löschte PLModelEditor + PLWorldEditor und legte neue Doku Namens PixelLab an, dort liegt alles Editor mäßige beisammen - 
+  ist derzeit natürlich noch nicht so sonderlich viel.
+
+
+
+>> 28.07.2005
+[CO]
+- Passte Make-Files an die neue Projekt Struktur an
+- Feature Liste aktualisiert - vorallem der Entity-Teil war total veraltet ;-)
+- PL_SDK überarbeitet, fügte auch einen kleinen Credits-Teil ein - das gehört irgendwie mit rein
+- PLGui: Die letzten 3 noch nicht wirklich vorhandenen Kapitel vom Dokument ausgeschlossen, sieht nicht so toll aus wenn da
+         noch total leere Dinge sind. Ich glaub Kapitel 3 könnten wir uns mittlerweile komplett Sparen - das kann man in
+         PLGui.chm Nachlesen wenn man will.
+- PLMaterialGuide an kleine Änderungen angepasst
+
+
+
+>> 08.04.2005
+[CO]
+- Die automatischen Dokus haben nun einen eigenen 'footer'. Dieser liegt in 'EngineTeam/doc' da er von allen Dokus verwendet
+  wird. Leider must man dort einmal in 'footer.html' den korrekten Pfad angeben wo 'pl_logo.jpg' konkret liegt.
+
+
+
+>> 26.12.2004
+[CO]
+- Docs/Intern/Diagrams/PLSdk.vsd überarbeitet damit Stephan nen genauen Überblick über alles und das zu Portierende
+  hat
+
+
+
+>> 16.05.04
+[CO]
+- Features-Doku: Renderer-Teil aktualisiert
+- Material-Doku: Material Format Teil aktualisiert, desweiteren FAQ hinzugefügt - dad hatte ich schon vor geraumer
+                 Zeit geschrieben und habs jetzt in die Material Doku gepackt
+- Die Dokus gehen nun alle fehlerfrei übersetzten - so langsam hab ich den dreh bei LaTex raus ;-)
+
+
+
+>> 12.05.04
+[CO]
+- Material-Doku: Die Bilder 3DTex_1.eps und 3DTex_2.eps durch Jens neue Grafiken ersetzt
+
+
+
+>> 10.05.04
+[CO]
+- Material Doku aktualisiert/erweitert (noch nicht komplett)
+- Im Intern-Doku Ordner findet man nun in Diagrams diverse Diagramme
+
+
+
+>> 18.03.04
+[CO]
+- PL Features Doku aktualisiert
+
+
+
+>> 21.02.04
+[CO]
+- PL_API Doku: - Sektion 2 -> Coding standard erweitert
+               - Entity Sektion: Export variables -> Um Variable Annotations Beschreibung erweitert
+
+
+
+>> 03.02.04
+[CO]
+- Passte PL User Guide an die Material Änderungen an
+
+
+
+>> 03.01.04
+[CO]
+- PL User Guide Doku: Material Teil angepasst
+
+
+
+>> 02.01.04
+[CO]
+- PLGui Doku: Kap 2: GuiWindowListener: Angepasst
+
+
+
+>> 30.12.03
+[CO]
+- PLGui Dok, Kap. 2.3.12 Class ID: Bei Beispiel Klammern eingefügt damit weniger verwirr
+
+
+
+>> 20.12.03
+[CO]
+- PLGui Doku: Kap 2: GuiWindowListener um neue Funktion erweitert
+- PLGui Doku: Kap 2: PopupMenu bei 'Window options' hinzugefügt
+
+
+
+>> 10.12.03
+[CO]
+- Docs -> Features -> Sound Features aktualisiert
+       -> API Doku um Sound Backend erweitert
+
+
+
+>> 29.11.03
+[CO]
+- Ging die Dokus nochmal durch um kleine Ungereimtheiten zu beseitigen
+
+
+
+>> 22.11.03
+[CO]
+- Lud auch die Docs mit FTPvc hoch damit man sehen kann ob bzw. was geändert wurde.

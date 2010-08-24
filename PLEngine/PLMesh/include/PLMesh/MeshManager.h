@@ -1,0 +1,192 @@
+/*********************************************************\
+ *  File: MeshManager.h                                  *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLMESH_MESHMANAGER_H__
+#define __PLMESH_MESHMANAGER_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/Tools/ResourceManager.h>
+#include "PLMesh/MeshHandler.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLMesh {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class SkeletonManager;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    This is a manager for the mesh resource
+*
+*  @note
+*    - Unloads unused resources automatically by default
+*/
+class MeshManager : public PLCore::ResourceManager<Mesh> {
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*/
+		PLMESH_API MeshManager(PLRenderer::Renderer &cRenderer);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLMESH_API virtual ~MeshManager();
+
+		/**
+		*  @brief
+		*    Returns the used renderer
+		*
+		*  @return
+		*    Pointer to the renderer the meshes should use, can be NULL
+		*/
+		PLMESH_API PLRenderer::Renderer *GetRenderer() const;
+
+		/**
+		*  @brief
+		*    Creates the mesh and adds the required LODs
+		*
+		*  @return
+		*   The created mesh, NULL on error
+		*
+		*  @note
+		*    - If the mesh is created, the 'Material' is added automatically
+		*/
+		PLMESH_API Mesh *CreateMesh();
+
+		/**
+		*  @brief
+		*    Creates a new mesh resource
+		*
+		*  @param[in] sName
+		*    Resource name, if empty an unused name is set automatically
+		*  @param[in] bStatic
+		*    Static mesh? (better performance!)
+		*
+		*  @return
+		*    Pointer to the created resource, NULL if there was an error
+		*
+		*  @note
+		*    - If there's already a resource with this name, this resource is returned
+		*/
+		PLMESH_API Mesh *CreateMesh(const PLGeneral::String &sName, bool bStatic = true);
+
+		/**
+		*  @brief
+		*    Creates a mesh resource using a mesh creator
+		*
+		*  @param[in] sName
+		*    Mesh creator class name (for instance "MeshCreatorSphere")
+		*  @param[in] bStatic
+		*    Static mesh? (better performance!)
+		*  @param[in] sParameters
+		*    Mesh creator parameters. (for instance "Radius='4.0' Detail='20'")
+		*    This parameters depend on the used mesh creator.
+		*
+		*  @return
+		*    Pointer to the created resource, NULL if there was an error
+		*    (maybe unknown class or the class is not derived from 'MeshCreator')
+		*/
+		PLMESH_API Mesh *CreateMesh(const PLGeneral::String &sName, bool bStatic, const PLGeneral::String &sParameters);
+
+		/**
+		*  @brief
+		*    Load mesh
+		*
+		*  @param[in] sFilename
+		*    Mesh filename. It's also possible to create meshes dynamically.
+		*    "Create MeshCreatorSphere Name=\"Sphere\" Radius=\"4.0\" Detail=\"20.0\""
+		*    For instance will use the mesh creator class 'MeshCreatorSphere'
+		*    to create a mesh with the name 'Sphere' and some parameters.
+		*  @param[in] sParams
+		*    Optional load method parameters, can be an empty string
+		*  @param[in] sMethod
+		*    Optional name of the load method to use, can be an empty string
+		*  @param[in] bReloadMesh
+		*    Force mesh itself to be reloaded?
+		*  @param[in] bStatic
+		*    Static mesh? (better performance!)
+		*
+		*  @return
+		*    The loaded mesh, NULL on error
+		*/
+		PLMESH_API Mesh *LoadMesh(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "", bool bReloadMesh = false, bool bStatic = true);
+
+		/**
+		*  @brief
+		*    Returns the skeleton manager
+		*
+		*  @return
+		*    The skeleton manager
+		*/
+		PLMESH_API SkeletonManager &GetSkeletonManager() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLRenderer::Renderer *m_pRenderer;			/**< Renderer the manager is using (always valid!) */
+		SkeletonManager		 *m_pSkeletonManager;	/**< Skeleton manager (always valid!) */
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::ResourceManager functions     ]
+	//[-------------------------------------------------------]
+	private:
+		virtual Mesh *CreateResource(const PLGeneral::String &sName);
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLMesh
+
+
+#endif // __PLMESH_MESHMANAGER_H__

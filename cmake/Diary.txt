@@ -1,0 +1,336 @@
+>> 02.08.2010
+[CO]
+- "external_check_unpack" teil aus "external_check_done" entfernt und zu eigenem Makro gemacht
+- "external_check_download" Prüfsumme entfernt
+- "external_check_download": Verbesserung von Stefan eingebaut so das keine Pfade wie z.B. "/External/Windows_X86_32//name.tar.gz" zustande kommen können
+  ("if(dir)" klappte merkwürdigerweise nicht...)
+- "external_install_done": "external_pack_tar" wieder entfernt und in eigenes Makro Namens "external_install_pack" verschoben
+- "CMAKETOOLS_CURRENT_BUILT_FILE" Variable für die "Built-Datei" hinzugefügt
+- In den einzelnden Projekt-Schritten wird nun erstmal immer eine "if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})" Abfrage gestartet, wenn die "built"-Datei
+  vorhanden ist, wird nichts weiter unternommen
+- External: "Fetch.cmake", "Build.cmake", "Configure.cmake" und "Install.cmake" für alle Externals hinzugefügt, auch für die, die keine öffentlichen Quellcodes
+  haben... ansonnsten stimmen die Projektabhängigkeiten nicht und die Packete werden nicht runtergeladen und entpackt
+
+
+
+>> 01.08.2010
+[CO]
+- "CMAKETOOLS_CURRENT_EXT" hinzugefügt in dem das Verzeichnis steht in dem die Ergebnisse aller Externals landen
+  (z.B. "H:\PixelLight\_pixellight_local\External2\_Windows_x86_32")
+  Zuerst wollte ich das "CMAKETOOLS_CURRENT_EXTERNALS" nennen, das mochte CMake aber nicht und kannte diese Variable schlichtweg
+  nie. (eventuell Längenbeschränkung bei Variablenamen?)
+- "external_check" Makro hinzugefügt, ein besser Name als "check" viel mir auch nach längerem Überlegen nicht ein :/
+    -> Dieses Makro kann schonmal vorhandene External Packete entpacken
+- "PixelLight.cmake" um "PL_EXTERNAL_REPORITY", "PL_EXTERNAL_USER" und "PL_EXTERNAL_PASS" erweitert für die Quelle und Zugangsdaten wo
+  die externen vorübersetzten Packete heruntergeladen werden sollen
+- Das Makro "external_check_download" läd das zum External gehörende Packet runter, bis auf die Prüfsumme wird alles automatisch ermittelt...
+  die Prüfsumme muss allerdings dann Plattformabhängig übergeben werden da es unterschiedliche Dateien sind
+- "external_check_done" entpackt nur noch, wenn das entsprechende Unterverzeichnis noch nicht vorhanden ist
+- "external_check_download" um Unterverzeichnis erweitert
+- In den jeweiligen External Verzeichnissen befindet sich nun noch eine "built" Datei welche kennzeichnet das dieses Projekt nutzbar ist
+
+
+
+>> 31.07.2010
+[CO]
+- "CMAKETOOLS_CURRENT_DEST_DIR" derart geändert das die fertigen libs und includes in z.B. "External2\_Windows_x86_32\freetype" landen
+- "external_pack_tar" hinzugefügt
+- In "external_install_done" wird "external_pack_tar" aufgerufen so das die Daten der externen Abhängigkeit gepackt werden
+
+
+
+>> 17.01.2009
+[SB]
+- Die Option CMAKETOOLS_USE_SYSTEM_LIBS hinzugefügt, die dafür sorgt, dass die externen Abhängigkeiten nicht aus dem
+  Externals-Verzeichnis genommen werden, sondern statt dessen die entsprechenden Bibliotheken auf dem System gesucht
+  und verwendet werden. Unter Linux sollte dies der übliche Weg sein, denn wenn wir später z.B. vernünftige Pakete für
+  Linux-Distributionen bereitstellen wollen, sollte das Paket "pixellight" entsprechend abhängig sein vom Paket "zlib",
+  "pcre" etc. und nicht noch einmal eigene Versionen dieser Bibliotheken mitbringen und installieren. Da es so etwas leider
+  unter Windows nicht gibt, müssen wir hier eine Fallunterscheidung machen, daher diese Option.
+- Externals2: Alle Externals unterstützen nun die Option CMAKETOOLS_USE_SYSTEM_LIBS und suchen die Bibliothek im System,
+  falls diese Option gesetzt wurde, ansonsten wird das externe Projekt lokal gebaut und verwendet. Eine Ausnahme macht
+  TinyXML, da dies keine Bibliothek ist, die in den üblichen Linux-Feeds zu finden wäre, da sie wohl immer nur intern in
+  Projekten eingesetzt wird und es daher keine Pakete dafür gibt. Hier gibt es eine eigene Option CMAKETOOLS_TINYXML_SYSTEM_LIB,
+  nur wenn diese gesetzt ist, wird im System nach TinyXML gesucht, ansonsten nicht.
+- Entsprechende Find-Scripte für CMake für die externen Abhängigkeiten hinzugefügt.
+- PLGui aus CMAKETOOLS_MINIMAL entfernt, da der Linux-Port von PLGui2 sich nicht übersetzen lässt und das ganze ja auch noch
+  niemals vernünftig unter Linux lief. Da wir in Zukunft sowieso nur noch PLGui3 einsetzen werden, lohnt es sich nicht, das
+  noch irgendwie zum Übersetzen zu bekommen.
+- Die Option PL_NATIVE_PLPROJECT hinzugefügt. Fürs Cross-Compilieren muss diese Option auf 0 gesetzt werden, um anzuzeigen,
+  dass das übersetzte PLProject nicht auf dem System, auf dem gebaut wird, ausführbar ist. Momentan wird PLPRoject hier
+  daher einfach nicht verwendet, was momentan auch nicht problematisch ist. Später braucht es dafür natürlich eine Lösung,
+  vorausgesetzt es bleibt überhaupt bei einer ähnlichen Lösung wie PLProject, schwebt mir da momentan vor, einfach eine zweite
+  Variante in perl oder python zu schreiben, die man dann auf jedem System ausführen kann. Aber evtl. finden wir da auch noch
+  eine völlig andere Lösung, die das alles überflüssig macht.
+
+
+
+>> 13.07.2009
+[SB]
+- Cross-Compiling: Die benötigten Umgebungsvariablen (CC, CXX und PATH) werden nun nicht mehr auf der Kommandozeile übergeben,
+  da dies nicht immer zu funktionieren scheint, sondern vor dem Aufruf des jeweiligen Kommandos per ENV{} gesetzt. Dies scheint
+  zu funktionieren, da ich mit dieser Methode unsere Basisbibliotheken nun erfolgreich für ARMV4 compilieren konnte :-) 
+- Cross-Compiling: Eine Variable eingebaut die anzeigt, dass beim Cross-Compiling nur bestimmte Projekte eingebunden werden
+  sollen, da momentan die meisten Projekte sich noch nicht cross-compilieren lassen.
+
+
+
+>> 12.07.2009
+[SB]
+- Kleinen Logikfehler beim Auslesen der SVN-Revisionsnummer behoben.
+- sfk.exe in ein eigenes Verzeichnis verschoben, damit im Hauptverzeichnis nur noch die zu installierenden Tools liegen.
+- Die Abhängigkeiten der Projekte überprüft und bei Docs-Projekten das Exclude-Flag herausgenommen. Nach meinem
+  Test müsste es nun ausreichen, das Target "Pack-SDK" zu bauen, wobei auch alle Abhängigkeiten automatisch gebaut werden
+  sollten. Bitte ausprobieren und Bescheid sagen, ob's nun klappt :-)
+
+
+
+>> 10.07.2009
+[SB]
+- PixelLight.cmake im Hauptverzeichnis gelöscht und in die Datei PixelLight/PixelLight.cmake eingebaut. Das verwirrt nur, wenn
+  hier zwei Dateien vorhanden sind, und ich finde es auch in Ordnung, wenn die Projektdaten und Versionsinformationen zusammen
+  mit den weiteren Makros etc. in einer Datei stehen. Die Versionsinformationen stehen aber oben und fallen damit ins Auge :-)
+- Archivformat für Linux auf 'tar.gz' gesetzt, da mir die Shellscripte nicht wirklich gefallen. Da kann man sich zur Not eigene
+  Scripte schreiben, um das Installieren zu vereinfachen.
+
+
+
+>> 08.07.2009
+[SB]
+- CMakeTools: Variablen CMAKETOOLS_CURRENT_SHARED_LIB_VERSION und CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION hinzugefügt.
+  Diese enthalten die Namen von versionierten Bibliotheken. Z.B.:
+  CMAKETOOLS_CURRENT_SHARED_LIB				= "libPLGeneral.so"
+  CMAKETOOLS_CURRENT_SHARED_LIB_VERSION		= "libPLGeneral.so.0.8.4"
+  CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION	= "libPLGeneral.so.0"
+- Beim Erstellen des Builds unter Linux werden bisher die erstellten Libraries in das Bin-Verzeichnis kopiert. Zusätzlich müssen
+  aber auch noch die symbolischen Links erzeugt werden, da ansonsten der so-name und der Dateiname nicht übereinstimmen und
+  die Bibliothek daher von einer Applikation, die dagegen linkt, nicht gefunden wird. Habe dies als if(LINUX)-Block hinzugefügt
+  und in allen Projekten angepasst. Man könnte später darüber nachdenken, diese Blöcke auch noch als eigenes Makro zur Verfügung
+  zu stellen, da auch hier im Prinzip immer das gleiche passiert ("copy_target_lib" ö.ä.).
+- buildtool: Erkennung des Betriebssystems eingebaut und damit das Bin-Verzeichnis ermittelt. Beim 'Clean'-Kommando wird nun
+  das jeweilige Bin-Verzeichnis gelöscht, damit ist nun endlich eine einfache Methode vorhanden, alles beim Compilieren erzeugte
+  automatisch und projektunabhängig zu löschen.
+ 
+
+
+>> 06.07.2009
+[SB]
+- Zwei neue Kommandos in CmakeTools.cmake: copy_file und copy_files. Diese werden nun benutzt, um Dateien, die zu einem Projekt
+  gehören, in das jeweilige Bin-Verzeichnis zu kopieren.
+- Alle Projekte um das Kopieren der benötigten Bin-Dateien erweitert.
+- Änderungen auch unter Windows getestet.
+- maketool: 'clean-bin' entfernt. Es ist nun ja zum Glück einfach, dies per Hand zu tun, indem man einfach das entsprechende
+  Verzeichnis (Bin-<Platform>) löscht.
+
+
+
+>> 05.07.2009
+[SB]
+- Leider hat sich das Cross-Compilieren doch als noch etwas komplizierter herausgestellt. Zwar war dies bisher schon möglich,
+  ist aber noch nicht wirklich komfortabel. Dadurch, dass einfach alles ins Bin-Verzeichnis geschrieben wird, können zwei
+  unterschiedliche Konfigurationen nicht im gleichen Verzeichnis gehalten werden, da sie sich gegenseitig die Binaries
+  überschreiben, und da diese natürlich inkompatibel sind, meckert dann der Compiler. Darum wäre es beim derzeitigen
+  System nötig, für jede Konfiguration eine eigene Arbeitskopie vom Repository auszuchecken, was auf Dauer einfach zu
+  umständlich ist. Deswegen habe ich nochmals alle CMake-Scripte überarbeitet (*gähn*), und folgende Änderungen eingebaut:
+  - Die Ausgabedateien werden nicht mehr nach 'Bin' kopiert, sondern in ein eigenes Bin-Verzeichnis pro Konfiguration,
+    z.B. 'Bin-Windows', 'Bin-Linux', 'Bin-Linux-om' etc.
+  - Das Verzeichnis 'Bin' bleibt weiter bestehen und beinhaltet alle zusätzlichen Abhängigkeiten, die dann aus diesem
+    Verzeichnis heraus in das jeweilige Bin-Verzeichnis kopiert werden. Dieses Verzeichnis wird auch weiterhin von
+    den VC-Projekten als Ziel verwendet, so dass sich nun auch VC und CMake nicht mehr in die Quere kommen (es dürfte
+	in Zukunft also wieder reichen, das Projekt nur einmal ausgecheckt zu haben).
+  - Die CMake-Scripte legen zusätzlich ihre notwendigen Ausgabeverzeichnisse selber an und kopieren ebenfalls die notwendigen
+    Daten mit in ihr Bin-Verzeichnis herüber.
+  - PLProject ist ein unangenehmer Sonderfall, denn dieses Programm wird ja beim Übersetzen, also auf der Host-Maschine,
+    ausgeführt. Darum müsste dieses Projekt eigentlich mit dem Host-Compiler, nicht mit dem Target-Compiler, compiliert
+    werden, was CMake aber nicht direkt unterstützt. Daher habe ich das so angepasst, dass nicht das mit dem cross-compiler
+    compilierte PLProject ausgeführt wird, sondern das mit dem Namen des Host-Systems. Das hat zur Folge, dass man vor dem
+    Cross-Compilieren einmal per Hand dafür sorgen muss, dass zumindest bis PLProject auch für das Host-System übersetzt
+    wird, was aber nicht weiter schlimm ist. Danach wird dann das richtige PLProject verwendet.
+
+
+
+>> 04.07.2009
+[SB]
+- Variablen für die Installationspfade nochmal überarbeitet und (hoffentlich) für sinnvolle Pfade unter Linux vorbereitet.
+- Installationspfade unter Linux festgelegt. Wie erwähnt unterscheiden sich die Konvention dafür, wo Programme und Bibliotheken
+  auf einem System installiert werden, von Windows und Linux deutlich voneinander. Während es unter Windows üblich ist, alles,
+  was zu einem Programm gehört, zentral in einem Verzeichnis (z.B. 'C:\Programme\PixelLight') abzulegen, gibt es unter Linux
+  vordefinierte Pfade, an denen üblicher Weise Programme, Bibliotheken, usw. abgelegt werden sollten (/usr/bin, /usr/lib etc.)
+  Ich habe mich nun erstmal für folgende Installationspfade entschieden:
+  - Dynamische Bibliotheken, die keine Plugins sind (PLGeneral, PLEngine etc.): 	/usr/[local]/lib
+  - Programme, die zum SDK gehören (PixelLab, PLProject):							/usr/[local]/bin
+  - Dokumentation:																	/usr/[local]/share/doc
+  - Includes:																		/usr/[local]/include
+  - Copyright, Readme etc.:															/usr/[local]/share/pixellight
+  - Runtime (Data und Plugins):														/usr/[local]/share/pixellight/runtime
+  - Tools (Data und Plugins):														/usr/[local]/share/pixellight/tools
+  - Samples:																		/usr/[local]/share/pixellight/samples
+  - Samples (Binaries):																/usr/[local]/share/pixellight/samples/bin
+  - Samples (Data und Plugins):														/usr/[local]/share/pixellight/samples/bin
+  Das meiste befindet sich also möglichst zentral in /usr/[local]/share/pixellight, nur die Bibliotheken und die Applikationen,
+  die zum SDK gehören, befinden sich in den jeweiligen Verzeichnissen wie unter Linux üblich. Man könnte auch die Samples natürlich
+  noch nach /usr/[local]/bin verschieben, allerdings weiß ich nicht ob das nötig ist, denn das sind für mich eigentlich nicht
+  direkt installierte Applikationen wie z.B. PixelLab. Das könnte man aber später ändern, falls das sinnvoll erscheint. Ebenfalls
+  fraglich ist die Position der Plugins - da scheint es keine wirklich verbindliche Norm zu geben, jedenfalls habe ich bei anderen
+  Programmen schon verschiedene Stellen für Plugins gehen, z.B. /usr/[local]/share oder aber /usr/[local]/lib. Da hier jedoch
+  noch mehr Dateien, wie z.B. Data, dazugehören, fand ich es in /usr/[local]/share schöner. Auf jeden Fall läst sich PixelLight
+  nun unter Linux ganz normal installieren, so dass hinterher alle Bibliotheken, Programme usw. gefunden und benutzt werden können.
+- Für Linux werden nun endlich auch Installationspakete erstellt. Dies sind tar.gz-Dateien, die aber direkt in ein Shellscript
+  eingepackt sind, welches das Archiv selbständig entpackt. Zum Installieren muss also nur die .sh-Datei als root ausgeführt werden.
+- Definition von CMAKETOOLS_CONFIG_NO_INLINE_ASM angepasst. Ist diese Option eingeschaltet, wird nun die Präprozessor-Variable
+  NO_INLINE_ASM gesetzt (ohne PL_, da ein Teil von CMakeTools und damit unabhängig von PixelLight).
+- Links und Verweise auf PLTools/PixelLab angepasst.
+- Kleiner Fehler behoben.
+
+
+
+>> 03.07.2009
+[SB]
+- CMakeTools: Unter Linux wird nun bei CMake die Variable LINUX definiert.
+- Überall konsequent if(WIN32) und if(LINUX) verwendet, statt wie bisher noch if(MSVC) etc, d.h. im Moment gehe ich einfach mal
+  vereinfachend davon aus, dass unter Windows immer MSVC und unter Linux immer GCC verwendet wird. Natürlich könnte man
+  später z.B. auch mingw unter Windows verwenden, aber dann werden sowieso noch weitere Fallunterscheidungen nötig sein,
+  die man dann vernünftig konstruieren muss. Und da diese Fälle im Moment sowieso noch nicht abgedeckt werden, ist es so
+  erstmal einfacher und klarer.
+- Installationsanweisungen überarbeitet. Die Pakete heissen nun nur noch SDK, Runtime und Docs (statt PL_SDK etc.).
+  Damit bei einem "make install" nicht Dateien doppelt installiert werden, sind die Komponenten nun disjunkt voneinander,
+  'Runtime', 'SDK' und 'Docs' beinhalten also nun gemeinsam alle Dateien, statt wie bisher wo 'Docs' und 'Runtime' einen
+  Teil von 'SDK' darstellten. Installierte man also nur 'SDK', bekäme man nun den Runtime-Teil nicht mehr automatisch dazu,
+  aus diesem Grund wurde 'Pack-SDK.cmake' so angepasst, dass es alle Subsets installiert.
+- Da die Art und Weise, wo Dateien im Dateisystem abgelegt werden, unter Linux und Windows grundsätzlich verschieden ist,
+  werden in 'PixelLight.cmake' nun alle wichtigen Installationspfade in Variablen gespeichert und je nach System
+  unterschiedlich gesetzt. So ist es möglich, unterschiedliche Zielpfade ohne doppelte Installationsanweisungen im Projekt
+  anzugeben.
+- Alle Projekte angepasst und die notwendigen Installationspfade festgelegt.
+- Installationspfade unter Windows angepasst und wo sich Fehler eingeschlichen hatten korrigiert, es sollte nun größtenteils
+  dem entsprechen, wie es vorher war. Nur an wenigen Stellen sind einige Dateien hinzugekommen, und statt des Ordners
+  'PixelLab' gibt es nun den Ordner 'Tools'. Hier müssen noch die Pfade im Startmenü und im SDKBrowser angepasst werden.
+
+
+
+>> 02.07.2009
+[SB]
+- CMakeTools: Jedes Projekt hat nun ebenfalls noch eine eigene Versionsnummer, die in den Variablen CMAKETOOLS_CURRENT_VERSION_MAJOR,
+  ..._MINOR und ..._PATCH gespeichert werden. Beim Aufruf von define_project() werden sie mit den Werten des Gesamtprojektes
+  initialisiert, können aber später durch den Aufruf von set_project_version() geändert werden.
+- CMakeTools: Die Versionsinformation des aktuellen Projektes wird dazu genutzt, die Version sowie die so-version von Bibliotheken
+  und Programmen zu setzen. Unter Linux führt dies bspw. dazu, dass automatisch symbolische Links angelegt werden, damit man
+  auch gegen bestimmte Versionen einer Bibliothek linken kann.
+- Pack-Scripte angepasst.
+- Pack-Projekte umgestellt.
+- Die CMake-Scripte sind nun soweit alle umgearbeitet, allerdings sind die meisten Install-Kommandos noch auskommentiert, da ich
+  zunächst unter Linux ausprobieren möchte, wie man es dort am geschicktesten mit dem Installieren und dem Bauen von Paketen
+  handhaben sollte.
+
+
+
+>> 01.07.2009
+[SB]
+- PLSDK/Tools umgestellt.
+- PLGui umgestellt.
+- PLNetwork umgestellt.
+- Lab umgestellt.
+- PLEngine umgestellt.
+- WindowsMSVC.cmake: Flag /TP für das Compilieren für C++ entfernt, da es ab und zu doch mal C-Dateien gibt, die dann
+  ohne dieses Flag compiliert werden müssen, da es ansonsten Fehler beim Linken gibt (siehe "name-wrangling", "extern C" etc.).
+  Ausserdem ist CMake schlau genug, das Flag selbständig hinzuzufügen, so dass man dem hier nicht in die Quere kommen sollte.
+- Plugins umgestellt.
+- PLSamples umgestellt.
+- PLSamples2 umgestellt.
+- PLTests umgestellt.
+- PLTools umgestellt.
+
+
+
+>> 30.06.2009
+[SB]
+- Neuen Ordner 'Platforms' für Scripte erstellt, in denen z.B. die Default-Einstellungen für bestimmte Plattformen
+  und Systeme definiert werden können. Hier gibt es erstmal WindowsMSVC.cmake und LinuxGCC.cmake, die z.B. Variablen
+  für die Compilereinstellungen, Default-Libraries etc. enthalten. Diese Scripte sind allerdings so aufgebaut, dass
+  sie nur Angebote darstellen, aber niemals automatisch irgend etwas verändern sollten. Es liegt also weiterhin am
+  jeweiligen CMake-Script für ein konkretes Projekt, ob es z.B. die hier definierten Variablen verwenden will, oder
+  nicht. Das gibt die notwendige Flexibilität, in besonderen Projekten auch einmal andere Einstellungen zu verwenden,
+  wenn dies aus irgend einem Grund notwendig ist.
+- Den Prefix bei den meisten Makros entfernt.
+- Externals: Namen der Variablen angepasst und alle External-Scripte angepasst.
+- CMAKETOOLS_PROJECT_ in CMAKETOOLS_CURRENT_ umbenannt.
+- Compiler-Einstellungen für Windows anhand der VC-Projekte und der von Christian angelegten Datei CompilerSettings.txt
+  vorgenommen. Die Einstellungen sollten nun eigentlich so sein, wie beim VC-Projekt.
+- Die Standardeinstellungen für Compiler und Linker werden von CMake nicht überschrieben, sondern es können nur weitere
+  Einstellungen hinzugefügt werden. Dies führte zu den Warnungen ("overridden option XYZ"), da dann zwei widersprüchliche
+  Optionen gleichzeitig in den Kommandozeilenoptionen übergeben wurden. Dieses Problem löse ich nun dadurch, dass ich
+  die CMake-Variable mit den Standardeinstellungen komplett lösche, und somit nur noch unsere eigenen Einstellungen
+  verwendet werden sollten. Bisher gibt es hiermit keine Probleme, allerdings ist diese Lösung nicht so schön, da dies
+  eigentlich interne CMake-Variablen sind, die auch nicht richtig dokumentiert sind und die man eigentlich nicht anfassen
+  sollte. Eine andere Möglichkeit habe ich bei CMake jedoch nicht finden können :-(
+- Namen und Benamungsschema für alle CMakeTools-Variablen noch einmal überarbeitet.
+- Anhand von PLGeneral das "Template" für CMake-Projekte umgestaltet. Es ist nun um einiges kürzer, da die meisten
+  Projekteinstellungen nun zentral in den Plattform-Dateien definiert und hier nur eingesetzt werden. Nur dort, wo man
+  nicht die Standardeinstellungen haben möchte oder zusätzliche Einstellungen vornehmen muss, müssen diese noch direkt
+  im jeweiligen Projekt hinzugefügt werden. Dadurch fallen auch viele Fallunterscheidungen raus, so dass z.B. die CMakeLists.txt
+  von PLGeneral nun rund 100 Zeilen kürzer ist als zuvor.
+- Eigene Makros für das Erstellen von Libraries oder Applikationen hinzugefügt. In diesen Makros lässt sich leicht alles
+  notwendige abkapseln, was ansonsten in jedem Projekt wieder neu gemacht werden muss, ausserdem lassen sich so auch die
+  Interna ändern, ohne jedes Script wieder per Hand anpassen zu müssen.
+- Neues Makro build_library: Erstellt eine Bibliothek, entweder statisch oder dynamisch, was per Flag übergeben was muss.
+  Unter Windows werden dann bei DLLs noch automatisch die notwendigen Einstellungen hinzugefügt, so dass dies nicht mehr im
+  Script selber gemacht werden muss und auch die Standardeinstellungen aus WindowsMSVC.cmake nun wieder für Libraries und
+  Applications identisch sind (WIN32_COMPILE_DEFS_DLL und WIN32_LINKER_FLAGS_DLL konnten daher wieder entfernt werden).
+- Neues Makro build_application: Erstellt eine Applikation, wobei für Windows das Subsystem angegeben werden muss. Auch in diesem
+  Falle werden im Makro selbst noch die entsprechenden Einstellungen für Compiler und Linker gesetzt, was auch hier vieles
+  vereinfacht. Das Makro cmaketools_set_subsystem konnte entfernt werden, ebenso die Flags, die vorher in jedem Projekt per
+  Hand entsprechend angepasst werden mussten, wenn man den Subsystem-Typus mal geändert hat.
+- Makros build_library und build_application so angepasst, dass nicht nur Einstellungen für den jeweiligen Typus oder Subsystem
+  hinzugefügt werden, sondern auch eventuell vorherige und nun unpassende Einstellungen wieder entfernt werden. Dies ist notwendig,
+  wenn mehrere Targets im gleichen Projekt erstellt werden sollten (z.B. bei PLGeneral die dynamische und die statische Variante).
+- Makros build_library und build_application um Angabe des Namens erweitert. Dies ist zwar irgendwie redundant, da es ja schon
+  bei define_project passiert, jedoch kann der Name sich wie im Falle von PLGeneralStat auch einmal ändern. Normalerweise wird
+  hier einfach die Variable CMAKETOOLS_CURRENT_TARGET übergeben, so dass man den Namen später nur an einer einzigen Stelle zu
+  ändern braucht. Nur in speziellen Fällen, wie bei PLGeneral, fällt dies dann überhaupt ins Gewicht.  
+- Makro define_project aufgeteilt und Teile davon in das neues Makro set_target_name ausgegliedert. Dieses neue Makros setzt
+  nur die Namen des Targets und allem, was dazugehört, und wird auch dann noch einmal aufgerufen, wenn eine Applikation oder
+  eine Bibliothek gebaut werden, da sich dabei ja der Name nochmal ändern kann. In diesem Fall werden nun alle wichtigen Variablen
+  an den neuen Namen angepasst.
+- PLGeneral an alle Änderungen angepasst, die Bibliothek lässt sich nun wieder ohne Probleme und erstmals auch ohne jegliche
+  Fehlermeldungen vom Compiler bauen :-) Auch die Unterteilung in Dynamic und Static funktioniert wieder und drückt sich
+  nun auch durch eine saubere Aufteilung in der Projektdatei aus. Damit dürfte das Build-System (für Applikationen) nun
+  erstmal wieder fertig sein.
+- Makro add_link_directories hinzugefügt, da man dies bei allen anderen Projekten ausser PLGeneral eben doch braucht ;-)
+- Alle Projekte aus PLBase umgestellt. 
+
+
+
+>> 29.06.2009
+[SB]
+- Eigenes Diary für die CMake-Scripts angefangen.
+- Das CMake-Framework hat nun erstmal den Namen 'CMakeTools' bekommen und wird wie bisher im Verzeichnis 'cmake'
+  beheimatet sein. Da dieses Framework sich auch gut für andere Projekte eignet, werden alle Makros und Variablen nicht
+  wie bisher mit PL_ beginnen, sondern mit 'CMAKETOOLS_' bzw. 'cmaketools_'. PixelLight-Spezifische Makros und Variablen,
+  welche allerdings ziemlich wenig sein sollten, werden in ein eigenen Script ausgelagert.
+- Scripte von CMakeTools geordnet, umbenannt und vereinheitlicht. Die Benamung und Kommentierung innerhalb der
+  Dateien wurde angepasst. Ausserdem wurden alle Scripte auf die inzwischen übliche Form von CMake umgestellt, Makros
+  und Funktionen mit kleinen Buchstaben zu schreiben, statt wie früher komplett in Großbuchstaben. In allen SCripten
+  werden nun ausserdem Tabs zur Einrückung verwendet statt zweier Leerzeichen.
+- Funktionalitäten in 'Scripts' und 'Modules' ausgelagert und auch hier wieder vieles vereinheitlicht.
+- Eine Sample-Toolchain hinzugefügt, die als Basis für die Definition von eigenen Toolchains verwendet werden soll.
+  Damit klar ist, dass dies nur ein Sample und nichts lauffähiges ist, wird mit einem Fehler abgebrochen, sobald diese
+  Toolchain verwendet werden soll.
+- Einen eigenen Ordner 'PixelLight' erstellt, in dem die Script zu finden sind, die sich direkt auf PixelLight beziehen.
+- 'Packages' als Unterordner in den Hauptordner verschoben, da es sich hierbei um die Definitionen für die konkreten
+  PixelLight-Pakete handelt, welche zum konkreten Projekt gehören, und nicht um allgemeine Scripte, welche zum CMake-Framework
+  gehören würden.
+- Der Vollständigkeit und Konsistenz wegen die zwei Makros 'cmaketools_add_include_directories' und 'cmaketools_add_link_directories'
+  hinzugefügt. Diese rufen allerdings nur die direkten CMake-Kommandos auf und fügen keine weitere Funktionalität hinzu (da dies
+  hier bisher nicht nötig ist).
+- Der Abschnitt 'Library directories' wird aus den Projekten entfernt, wenn hier keine Verzeichnisse eingetragen werden (was wohl
+  in fast allen Projekten mittlerweile der Fall sein sollte, da es besser ist, mit dem absoluten Pfad auf Libraries zu verweisen)
+- CMakeTools.cmake: Wenn ein Unix-System gefunden wird, wird nun die Variable LINUX definiert. Dies ist zwar irgendwie nicht
+  korrekt, aber ich finde es genauso blöd, in eine if(UNIX)-Klamme dann sowas wie set_name(package-Linux) zu schreiben. So sind
+  die Scripte nun schon einmal korrekt, und später könnte man hier eine genauere Unterscheidung von Linux und anderen Unix'en
+  einbauen.
+- Fallunterscheidungen sollten nun immer so aussehen:
+    if(WIN32)
+    elseif(LINUX)
+    endif
+- Das Prefix 'cmaketools_' bei den wichtigsten Makros entfernt, da dies einfach hübscher aussieht. Vermutlicht wird dies
+  noch wieder vereinheitlicht, solange keine Namenskonflikte mit standard CMake-Befehlen entstehen.

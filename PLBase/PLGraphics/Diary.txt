@@ -1,0 +1,982 @@
+>> 17.04.2010
+[CO]
+- Image: = Operator: Auch Dateiname und URL von Loadable werden nun kopiert
+
+
+
+>> 21.01.2010
+[SB]
+- ImageToolsWindows: Beim Einladen von Bitmaps mit Alpha-Blending gab es einen Fehler, durch den die Farbe von allen
+  (halb-)transparenten Pixeln auf schwarz gesetzt wurde. Dies fällt natürlich nur bei Alphawerten > 0 auf, also nicht
+  ganz transparenten Bereichen (simpler Integer-Divisions-Fehler). Nun werden transparente Bilder wird richtig eingeladen.
+
+
+
+>> 05.12.2009
+[SB]
+- ImageToolsLinux entfernt, da mir nicht mehr einleuchtet, warum diese Funktionalität hier vonnöten sein soll.
+  Die Funktionen zum Einladen von Pixmaps wurde daher nach PLGui verschoben, da sie zumindest im Moment auch nur dort
+  verwendet wird.
+
+
+
+>> 12.09.2009
+[CO]
+- "ImageBuffer": Neue statische Hilfsfunktion "IsAlphaChannelColorFormat()" -> Prüft ob ein übergebenes Color Format
+  einen Alpha Kanal besitzt
+- "ImageBuffer": Neue statische Hilfsfunktion "GetAlphaChannelColorFormat()" -> Gibt eine Color Format Version mit Alpha
+  Kanal zurück
+- "ImageBuffer": Neue statische Hilfsfunktion "GetNoneAlphaChannelColorFormat()" -> Gibt eine Color Format Version ohne
+  Alpha Kanal zurück
+- "IEConvert" implementiert. Die Implementation ist leider etwas umfangreicher da man jeden Fall der Farbumwandlung getrennt
+  betrachten muss - ich wüsste nicht wie ich das durch z.B. ein Template universell machen könnte. Aber wenigstens hab ich
+  es hinbekommen die Typen variationen über ein Template Namens "ConvertData" zusammenzufassen... sonst wären die Kombinationen
+  für eine "per Hand Implemetation" unerträglich geworden. *g*
+  Sollte ein Bild eine Palette haben, so wird diese automatisch "aufgelöst".
+- "IEColorKey" implementiert
+- "ImageLoader::Load()": Auskommentierten Code entfernt da im neuen PLGraphics derzeit keine Optionen mehr drinnen sind um ein
+  Bild nach dem Laden automatisch noch zu verändern... und ich weis auch nicht ob wir das wieder einbauen sollten da es nicht
+  ganz sooo übersichtlich ist soetwas hier drinnen zu haben.
+- "Image": "GetNumOfComponents()" und "SetColorKey()" entfernt da hier denk ich nicht mehr benötigt
+- "ImageLoaderTGA::Load()": Läd nun auch tga Dateien mit Palette und kann tga mit "standard Palette" (= 256 Einträge) speichern
+- "ImageData::Decompress()" Implementiert
+- "IEScale::Apply()": Derzeit ist komprimieren von Daten noch nicht implementiert, darum sollten momentan die skalierten Daten
+  nicht komprimiert werden
+- "IEScale::Apply()": Unterstützung für verschiedene Daten Typen eingebaut
+- "IEMonochrome": Unterstützung für verschiedene Daten Typen und BGR eingebaut
+- "ImagePart": Neue Funktion "DeleteMipmaps()": Löscht alle Mipmaps bis auf die erste
+- "ImagePart::BuildMipmaps()": Löscht nun schonmal alle Mipmaps bis auf die erste so das man mit z.B. skalierten Bildern keine
+  Mipmap konflikte bekommt
+
+
+
+>> 10.09.2009
+[CO]
+- "ImagePart" & "ImagePalette": "virtual" bei Destruktor entfernt da wenn ich das richtig sehe das nicht dazu gedacht
+  ist je abgeleitet zu werden
+- Neue "ImageEffect" Implementation: "IERemovePalette" -> Wandelt eine Palette in RGB um
+- Bugfix: "ImageLoaderTGA::Load()": Beim dekodieren von RLE Packeten war noch ein Fehler drinnen der zum Crash führen
+  konnte. Überarbeitete und vorallem kommentiere daher den Code gaaanz genau.
+- Bugfix: "ImageLoaderDDS::Load()": Es konnte vorkommen das Rot und Blau Kanäle vertauscht waren, hui iss das alles
+  umfangreich von den kombinations möglichkeiten :/
+
+
+
+>> 05.09.2009
+[CO]
+- "ImageLoaderDDS::Load()": Schon beim lesen der dds Signatur kann es zu Problemen kommen da es einige Tools gibt die
+  hier etwas nicht ganz korrekt machen - ich richte mich hier nun nach der DevIL dds Implementation
+- "ImageLoaderDDS" unterstützt nun weitere dds Formate, auch hier wieder auf DevIL Code aufbauend, der auf NVIDIA Code
+  aufbaut der auf... *g*
+
+
+
+>> 15.08.2009
+[CO]
+- "ImageLoaderTGA": 16 Bit TGA Dateien scheinen nun korrekt eingelesen zu werden
+
+
+
+>> 07.07.2009
+[CO]
+- "IEFlipXAxis" & "IEFlipYAxis" hinzugefügt um ein Bild entlang einer gegebenen Achse zu vertauschen. "IEFlipZAxis"
+  könnte man zwar auch noch hinzufügen - aber da ich soetwas selbst noch nie benötigt habe hab ichs erstmal weggelassen.
+- "ImageLoaderTGA::Save()": Bild muss beim speichern y vertauscht werden
+
+
+
+>> 29.05.2009
+[CO]
+- "ImageLoaderTGA::Load()": Autsch, hier war noch ein dummer Bug drinnen wodurch 768 Bytes gelesen wurden wenn
+  "sHeader.IDLength" nicht Null war... das dürfte erklären wieso das Bild in dem Fall in der x-Achse verschoben
+  war. *g*
+- Support für 3D Bilder hinzugefügt. Das macht die Sache zwar nicht umbedingt einfacher - muss aber umbedingt noch
+  mit rein und lieber früher als später. Die größe von Bildern wird nun über "PLMath::Vector3i" gehandhabt - das
+  ist so gängig und z.B. OpenGL kann man die Daten mit einer Dimension mehr direkt so übergeben.
+  -> Noch offene "[TODO] PLGraphics2: 3D image"-Punkte in allen Projekten abgearbeitet.
+
+
+
+>> 28.05.2009
+[CO]
+- "ImageLoaderTGA": 16 Bit TGA scheint nun korrekt zu funktionieren (war ein dämlicher Fehler drinnen)
+- Neuer Image Effekt: "IEScale": Zum Skalieren, das ist bis jetzt nur sehr grundliegend, mir war's nur wichtig
+  das Skalieren es prinzipiell wieder nutzbar ist
+- "ImageEffects": Neue Funktion: "Scale()"
+- "ImagePart::DeleteMipmap()" minimal Effektiver gemacht
+
+
+
+>> 27.05.2009
+[CO]
+- "PLGraphics" übern Jordan geschickt
+- "PLGraphics2" in "PLGraphics" umbenannt
+- "ImageLoaderTGA", "ImageLoaderDDS" und "ImageLoaderBMP" ändern BGR(A) beim laden automatisch zu RGB(A). Ich weis
+  nicht ob wir das für immer so lassen sollten... aber im Augenblick vereinfacht das unser Leben erstmal. :D
+- "ImageLoaderTGA::Load()": "sHeader.IDLength" kann auch mal nicht Null sein und dann muss man einige Bytes nach
+  dem Header überspringen
+
+
+
+>> 26.05.2009
+[CO]
+- "ImageData::CreateImage()": "m_nCompressedSize" wird berechnet
+- "ImageBuffer": Neue statische Funktion: "GetMipmapSize()" gibt die größe einer gewünschten Mipmap zurück
+- "ImageLoaderDDS" zum laden und speichern von "dds"-Bildern hinzugefügt... es fehlt allerdings noch einiges
+- Alle Projekte auf PLGraphics2 umgestellt. Stellen die noch nicht umgestellt werden konnten mit
+  "[TODO] PLGraphics2" + Grund markiert.
+
+
+
+>> 24.05.2009
+[CO]
+- "ImageLoaderJPG" zum laden und speichern von "jpg"-Bildern hinzugefügt. Für den Klassen-Namen entschied ich mich
+  für "ImageLoaderJPG" und nicht für "ImageLoaderJPEG" damit das der Dateiendung entspricht die zumindestens mir am
+  geläufigsten ist. :D
+  Ich hoffe das die Implementation soweit ok ist und nicht irgendwo Speicherlecks sind... libjpeg ist im Grunde
+  einfach zu nutzen solange man mit "FILE" arbeitet - aber wenn nicht wirds etwas aufwändiger. :/
+
+
+
+>> 19.05.2009
+[SB]
+- ImageLoaderPNG: Beim Einladen wird GrayscaleA nun wieder unverändert eingeladen, da wir dieses Format nun auch direkt
+  unterstützen. Es müsste allerdings noch mit einem Testbild getestet werden, ob das Einladen dieses Formats wie gewünscht
+  funktioniert.
+
+
+
+>> 16.05.2009
+[CO]
+- "ImageLoaderTGA" zum laden und speichern von "tga"-Bildern hinzugefügt. Auch hier gibts leider noch ein paar
+  [TODO] Punkte, aber das Grundliegende geht.
+
+
+
+>> 15.05.2009
+[SB]
+- Color: GetLuminance() eingebaut. Eigentlich gehört das in Color und kann hier bestimmt mal nützlich sein. Und hier
+  finde ich den Begriff Luminance() auch ok, da er besser beschreibt, dass die Helligkeit eines Farbwertes berechnet wird.
+  Was dann dabei herauskommt, ist viel allgemeiner eine Graustufenmap (ob da nun vorher Luminanzwert aus Farben berechnet
+  werden oder ganz etwas anderes ist dabei ja offen). Ich hoffe mal auf diese Formel können wir uns einigen *g*
+- Methoden für Zugriff auf BitsPerPixel etc. leicht modifiziert. Die Methoden sollten zunächst mal statisch sein, denn die
+  Information kann man auch sehr gut benötigen, *bevor* man überhaupt einen ImageBuffer erzeugt hat, und da diese Information
+  nur vom Datentyp und Farbmodus abhängt, braucht es auch keinen Buffer dafür. Ich habe lange drüber nachgedacht, wo solche
+  Methoden hinsollen, z.B. in eine eigene Tools-Klasse, habe sie nun aber erstmal in ImageBuffer gelassen, da mir eine eigene
+  Klasse für sowas auch nicht sehr intuitiv erscheint. Zusätzlich habe ich die nicht-statischen Versionen in ImageBuffer
+  behalten, da das natürlich sehr praktisch ist, wenn man bereits einen ImageBuffer hat und genau dessen Daten abfragen will.
+- Die Namen habe ich auch nochmal etwas geändert und verkürzt :-)
+- DataFormat: Integrale Datentypen auf DataByte (8 Bit) und DataWord (16 Bit) beschränkt. Wenn praktischer Nutzen da ist,
+  können wir auch noch 32 Bit hinzunehmen, das habe ich in der Praxis allerdings noch niemals gesehen (außer für float/double, die ja noch
+  extra sind). Negative Integer-Werte bei Bilddaten scheinen mir jedenfalls nicht sinnvoll.
+- ECheckConsistency: Werte entfernt, die nicht mehr benötigt werden.
+
+
+
+>> 15.05.2009
+[CO]
+- "EColorFormat::ColorGrayscaleA" hinzugefügt
+- "ECompression": "CompressionDXT1", CompressionDXT3", "CompressionDXT5", "CompressionATI1N" und "CompressionATI2N"
+  hinzugefügt die vom kommenden dds-Loader unterstützt werden
+- "ImageBuffer::GetNumOfComponentsPerPixel()" hinzugefügt
+- "ImageBuffer::GetNumOfBytesPerPixelComponent()" hinzugefügt
+- "ImageBuffer::GetNumOfPixels()" hinzugefügt, könnte/sollte man einmal vorberechnen
+- "ImageBuffer::GetNumOfBytesPerPixel()" hinzugefügt, könnte/sollte man einmal vorberechnen
+- "ImageBuffer::GetNumOfBytesPerRow()" hinzugefügt, könnte/sollte man einmal vorberechnen
+- "ImageLoaderPNG::Save()" Implementiert, es fehlen allerdings noch ein paar Fallunterscheidungen für etwas weniger
+  alltäglich genutzte Formate
+- "ImageLoaderBMP" zum laden und speichern von "bmp"-Bildern hinzugefügt. Es gibt hier leider einige Variationen
+  da intern die Daten als BGR gespeichert werden, man muss "Line Padding" berücksichtigen und das Bild kann in der
+  y-Achse gespiegelt sein. Wollte das nicht alles in eine Overkill Schleife stopfen und habe daher getrennte
+  Implementationen gemacht damit das überschaubar bleibt. Die Implementation für Graustufen Bilder ist noch nicht
+  ganz fertig... denke ich...
+  Achtung, beim einladen kommen BGR Bilder raus! Hier bräuchten wir eventuell noch einen Mechanismus über den der
+  Benutzer einstellen kann das eingeladene Bilder in einem bestimmten Format vorliegen sollen.
+- "ImageLoaderPPM" zum laden und speichern von "ppm"-Bildern hinzugefügt. Da Text basierend einfache Implementation
+  die ich schon für eine FH Übung machen musste... aber Performance ist vergleichsweise schlecht.
+
+
+
+>> 14.05.2009
+[SB]
+- Wie besprochen ImageFrame und ImageLayer entfernt, was die Komplexität deutlich verringert :-)
+  Falls man später einmal tatsächlich Animationen braucht, kann man dafür leicht eine eigene Klasse bauen, die auf
+  Image aufbaut. Die meisten Images sind jedoch statisch, weshalb man den Overhead für Animationen nicht in der Basisklasse
+  für Images mitschleppen sollte. Und die Verwendung von Layern scheint für unseren Anwendungsfall auch nicht besonders sinnvoll,
+  da wir ja keine Bildbearbeitungssoftware schreiben wollen, in der man auf einzelne Layer zugreifen können müsste, sondern im
+  allgemeinen die Daten des gesamten Bildes benötigen. Dafür müsste es dann wieder eine "Merge"-Operation geben, die automatisch
+  dafür sorgt, dass alle Layer zusammengemerged werden, was wieder einiges an Aufwand bedeuten würde. Daher ist es für uns sinnvoller,
+  diesen Mergen in einem Schritt beim Einladen zu machen, wenn ein Bildformat in einzelnen Layern daherkommt, aber Layer ansonsten
+  nicht direkt zu unterstützen.
+- Projekt in Unterordner aufgeteilt, um die Struktur und den Aufbau der Bibliothek klarer zu machen. Ich finde, das hilft beim
+  Erlernen einer neuen Bibliothek enorm weiter, wenn diese vernünftig strukturiert ist. Zwar sollte es nicht zu verschachtelt
+  werden, aber wenn sich der grobe Aufbau auch in entsprechenden Unterordnern wiederfindet, ist dies meist hilfreich.
+
+
+
+>> 13.05.2009
+[CO]
+- "IEMonochrome::Apply()": Formel zum Umrechnen von "Farbe" in "Helligkeit" (= Luminance = Y) in eine relativ
+  verbreite Formel geändert die das Menschliche Sehvermögen berücksichtigt
+
+
+
+>> 13.05.2009
+[SB]
+- Basisklasse ImageEffect für allgemeine Image-Effekte erstellt. Die Basisklasse stellt virtuelle Funktionen zur Verfügung,
+  um ein Effekt auf beliebige Teile eines Bildes anzuwenden. Überlicher Weise wird ein Effekt auf einem einzelnen
+  ImageBuffer ausgeführt, in diesem Fall muss dann in der abgeleiteten Klasse auch nur diese Methode überschrieben werden.
+  Alle anderen Methoden sind so implementiert, dass der Effekt dann automatisch auf alle Untergruppen angewendet wird,
+  wobei z.B. auch automatisch wieder Mipmaps neu erzeugt werden etc. Jeder Effekt hat aber die Möglichkeit, dieses Verhalten
+  zu überschreiben, z.B. mag es Effekte geben, die nur auf bestimmten Teilgruppen (z.B. Layers oder Frames) Sinn ergeben.
+  In dem Fall sollte die entsprechende Methode implementiert und die anderen, nicht mehr zutreffenden Methoden, leer
+  implementiert werden (mit Rückgabe von false).
+- ApplyEffect() in allen Image-Klassen hinzugefügt. Mit dieser Methode können Effekte auf ganze Bilder, oder beliebige
+  Teile von Bildern (Parts, Frames, etc.) angewendet werden.
+- ImageLayer: BuildMipmaps() hinzugefügt aber noch nicht implementiert.
+- ImageEffectWrapper eingebaut: Das ist ein Effekt, der intern nur wieder einen anderen Effekt aufruft. Das ist zwar
+  nicht sonderlich elegant, aber nützlich, um Effekte dynamisch erzeugen zu können, ohne sich die Frage nach dem
+  späteren Löschen des Objektes machen zu müssen. Die Klasse soll also dann eingesetzt werden, wenn ein Effekt nicht
+  direkt benutzt sondern dynamisch erzeugt wird, in dem Falle kann dann ein Objekt von ImageEffectWrapper() auf dem Stack
+  erzeugt werden, das direkt zurückgegeben wird (und intern für das Erzeugen und Löschen des dynamischen Effekts sorgt).
+- IEConvert: Effekt für das Konvertieren von Datentyp/Farbmodus eines Bildes hinzugefügt (noch nicht implementiert).
+- IEMonochrome: Effekt für das Umwandeln eines Bildes in Grautöne eingebaut. Eigentlich könnte dies auch über IEConvert
+  gemacht werden, allerdings ist der Unterschied, dass dieser Effekt den Farbmodus des Bildes nicht ändert. Ist noch
+  nicht vollständig implementiert, da noch nicht alle Bildtypen unterstützt werden.
+- IEFilter: Basisklasse für Effekte, die auf Image-Filtern basieren hinzugefügt (noch nicht implementiert).
+- IEColorKey: Effekt der alle Pixel einer bestimmten Farbe transparent macht hinzugefügt (noch nicht implementiert).
+- ImageEffects: Statische Klasse eingebaut, die einen leichten Zugriff auf die vordefinierten Effekte ermöglicht.
+
+
+
+>> 12.05.2009
+[SB]
+- Methode CheckConsistency() in allen Image-Klassen eingebaut. Die Methode gibt einen Statuswert von Typ ECheckConsistency
+  zurück, der in PLGraphics.h definiert ist. Einige Checks habe ich bereits implementiert, es fehlen aber noch sehr viele,
+  u.a. alles was mit Mipmaps zu tun hat und einiges anderes, was ich jeweils mit [TODO] gekennzeichnet habe.
+
+
+
+>> 11.05.2009
+[SB]
+- ImageBuffer: Create() kann man nun auch gleich den Kompressionstypus mit übergeben, Standard ist CompressionNone.
+- ImageBuffer: Beim Zugriff auf die Daten mittel GetData() oder GetCompressedData() gibt es nun jeweils zwei Varianten,
+  nämlich const und nicht-const. Die const-Version gibt auch einen const-Zeiger zurück und geht davon aus, dass auf den
+  Puffer nur lesend zugegriffen wird, aber nichts verändert wird. Die nicht-const Variante dagegen geht davon aus, dass
+  der Puffer auch verändert wird, und wertet daher den Aufruf von GetData()/GetCompressedData() auch gleich als
+  Veränderung dieses Puffers. Daher wird z.B. der jeweils andere Puffer (komprimiert/unkomprimiert) als ungültig gelöscht,
+  da sich die Daten verändert haben könnten.
+- Logik für den Zugriff auf komprimierte/dekomprimierte Daten eingebaut. Beim Erzeugen eines Bildes wird zunächt einmal
+  überhaupt kein Puffer erzeugt, dies geschieht erst beim jeweiligen Aufruf von GetData()/GetCompressedData(). Dann wird
+  der jeweilige Puffer erzeugt und kann beschrieben werden. Dabei wird auch gleichzeitig die Komprimierung/Dekomprimierung
+  der Daten durchgeführt, sollte es den jeweils anderen Puffer schon geben. Wenn von aussen auf einen der Puffer schreibend
+  zugegriffen wird, wird der jeweils andere ungültig und daher gelöscht. Die passiert aber nicht bei einem direkten Aufruf
+  von Compress() oder Decompress(), da hier ja die Daten zwischen den Puffern konsistent bleiben. Ich hoffe, das funktioniert
+  so und mir ist da nicht irgendwo noch ein Logikfehler unlaufen :-)
+- ImageBuffer mit dem gleichen Interface wie ImageData erstellt. Ein ImageBuffer hat einen Zeiger auf ImageData, welches
+  die eigentlichen Daten enthält und zwischen mehreren ImageBuffern geteilt werden kann. Intern werden die Befehle nur an
+  ImageData weitergereicht, wobei immer dann, wenn die Daten dabei verändert werden (können), zuvor der ImageBuffer
+  einzigartig gemacht wird, also die geteilte Nutzung zwischen mehreren ImageBuffern aufgelöst und eine Kopie vom
+  ImageData-Objekt angefertigt wird (genauso wie in String/StringBuffer).
+- Überall Copy-Constructor und Assignment-Operator hinzugefügt. Beim Kopieren eines Images werden alle Objekte bis
+  zu einschließlich ImageBuffer tatsächlich kopiert, also neue Objekte erzeugt und deren Inhalte kopiert. Dies dürfte
+  zwar nicht übermäßig schnell sein, da hier dynamischer Speicher allokiert und Listen gefüllt werden müssen, dafür
+  sollte es aber ziemlich wenig Speicher verbrauchen. Im ImageBuffer greift dann die bereits beschriebene Methode,
+  dass die eigentlichen ImageData-Objekte geteilt werden. Bei einer Kopie eines Images werden also erstmal keine Puffer
+  unnötig erzeugt oder gar kopiert, sondern die ImageData-Objekte werden so lange geteilt, bis an einer Stelle tatsächlich
+  die Daten verändert werden. Erst dann wird eine echte Kopie angelegt.
+
+
+
+>> 10.05.2009
+[SB]
+- ImageBuffer in zwei Klassen aufgeteilt: ImageBuffer und ImageData. ImageBuffer steht für genau ein einzelnes
+  Bild, das man bearbeiten will, also ein 2D oder 3D Array von Pixeln, die man abfragen oder bearbeiten kann.
+  Dabei ist ImageBuffer sozusagen das "logische" Interface dafür, die eigentlichen Daten liegen dann aber in
+  ImageData, welches nach Vorbild von PLGeneral::String von mehreren ImageBuffern geteilt werden kann. Wird also
+  ein Bild kopiert, wird erstmal nur der Pointer auf das gleiche ImageData-Objekt gesetzt. Erst, wenn an irgend
+  einer Stelle tatsächlich die Bildaten oder sonst eine Eigenschaft des Bildes (z.B. Größe, Typus, Palette) verändert
+  werden soll, wird eine echte Kopie vom ImageBuffer angefertigt und die ImageBuffer zeigen nun auf unterschiedliche
+  Objekte von ImageData.
+- Weitere Testbilder hinzugefügt, auch in ImageData::CreateTestImage() kann nun übergeben werden, welches Testbild
+  erzeugt werden soll (hier natürlich nur die Testbilder, die aus nur einem Bild bestehen)
+- ImageData auf Basis von ImageBuffer erstellt und erweitert. Es werden nun denke ich alle wichtigen Daten gespeichert
+  und im Klasseninterface zu Verfügung gestellt. Auch der Zugriff auf komprimierte Daten ist im Interface bereits
+  vorgesehen, aber noch nicht implementiert. Dafür werden intern zwei Puffer verwaltet, einer für unkomprimierte und
+  einer für komprimierte Daten. Dabei werden beide Puffer erst in dem Moment angelegt, wenn sie wirklich gebraucht
+  werden, also z.B. beim Aufruf von GetData() oder GetCompressedData(). So sollte es später möglich sein, z.B. gleich
+  die komprimierten Daten aus einer Datei unverändert in den Puffer zu schreiben, ohne Daten unnötig zu dekomprimieren
+  (oder andersherum zu komprimieren). Sobald auf den jeweils anderen Puffer zugegriffen werden soll, wird wenn möglich
+  komprimiert/dekomprimiert. Das Verändern von Daten in einem der beiden Puffer führt automatisch dazu, dass der andere
+  Puffer ungültigt und daher gelöscht wird. Beim nächsten Zugriff auf diesen Puffer würde dieser daher wieder neu erzeugt
+  werden, damit die Daten niemals inkonsisten werden können.
+
+
+
+>> 09.05.2009
+[SB]
+- Erkennen und Umwandeln verschiedener Image-Modi implementiert. PNG unterstützt einige Bildtypen, die wir denke ich
+  nicht unterstützen wollen, z.B. 1, 2 oder 4 Bit Graustufenbilder. Wird so ein Modus beim Einlesen erkannt, werden
+  die Einstellungen von libpng dazu verwendet, diese gleich beim Einladen entsprechend umzuwandeln. Ich habe dies mit
+  einigen wie ich hoffe eher untypischen Bildtypen ausprobiert: 2 Bit Schwarz/Weiß, 8 Bit Palette und Graustufen + Alphakanal.
+  In allen Fällen wurde der Modus korrekt erkannt und umgewandelt. Damit sind wir hoffentlich auf der sicheren Seite
+  mit merkwürdigen Bildformaten :-)
+- Klasse ColorPalette zur Verwaltung von Farbpaletten eingebaut.
+- ImageLoaderPNG: Einladen von Paletten implementiert. Wenn ein Image tatsächlich mit einer Palette daherkommt, muss
+  ausserdem das Verwenden der Transparenzinformation deaktiviert werden, da wir ansonsten doch wieder mit einer
+  Palette + Alphakanal dastehen. In diesem Fall wäre es wohl am sinnvollsten, das Bild einfach in RGBA umzuwandeln,
+  nur leider weiß ich zur Zeit noch nicht, wie man dies im Vorfeld herausbekommt. Ich möchte aber nicht generell jedes
+  Bild mit Palette in RGB umwandeln, auch wenn dies am einfachsten wäre.
+- ImageToolsWindows: PLConvertToHBitmap() ist nun nicht mehr auf RGBA festgelegt sondern konvertiert die Farbdaten
+  entsprechend. Dies wird wohl demnächst in eine generelle Convert()-Funktion verschoben werden, zur Zeit ist es aber
+  zum Testen am einfachsten, das hier zu machen. Die Methode müsste nun mit allen Farbformaten klarkommen, auch Paletten
+  funktionieren nun.
+
+
+
+>> 08.05.2009
+[SB]
+- libpng übersetzt und in die Externals aufgenommen. ImageLoaderPNG begonnen, erstmal wird nur das Laden unterstützt.
+- EColorFormat: ColorColorIndex in ColorPalette und ColorLuminance in ColorGrayscale umbenannt. Solche Begriffe
+  sollten so eindeutig und verständlich wie möglich sein, damit bei der Benutzung keiner rätseln muss, was womit
+  gemeint ist. Z.B. Luminance blieb mir ziemlich schleierhaft, ich denke aber mal, dass hier einfache Graustufenwerte
+  (1 Komponente pro Pixel) gemeint sind :-)
+- Einladen von PNGs implementiert.
+
+
+
+>> 07.05.2009
+[SB]
+- Enums aus der Klasse Image in die Headerdatei PLGraphics.h verschoben. Ich finde es mittlerweile besser, wenn solche
+  Definitionen global sind, zumal sich vieles nicht eindeutig einer Klasse zuordnen lässt und deswegen der Zugriff
+  darauf auch aus anderen Klassen heraus erfolgen muss, was dann unnötige Includierungen zur Folge hat. Dank des
+  Namespaces dürfte es hier auch keine Namensprobleme geben, daher definiere ich nun erstmal alles, was zu der
+  Bibliothek gehört, global in dieser Headerdatei.
+- Klassenstruktur für Images, Sub-Images, Animationen, Layer und Mipmaps erstellt. Diese ist nun komplett hierarchisch,
+  mit eigenen Klassen und Listen für jeden Subtypus. Zunächst hatte ich mir überlegt, ob man dies anders aufbauen
+  könnte, besonders da wohl die meisten Images nur genau ein Subimage, einen Animationsframe usw. beinhalten dürften.
+  Das hätte allerdings sehr vieles schwierig gemacht, da man sich bei so einer Struktur auf sehr wenig verlassen kann und
+  so inkonsistenzen noch häufiger werden würden sowie die Verwaltung von den eigentlichen ImageBuffern deutlich
+  erschwert werden würde. Daher nun erstmal dieser komplett hierarchische Ansatz, der bisher recht gut aufzugehen
+  scheint, wir können ja mal schauen, was für Probleme es in der Praxis mit diesem Ansatz gibt.
+- Verwaltung von Parts, Frames, Layers und Mipmaps implementiert, Methoden zum Hinzufügen und Löschen der jeweiligen
+  Teile sind funktionsfähig.
+- CreateTestImage() um ID erweitert, durch die zwischen mehreren Testbildern ausgewählt werden kann (z.B. einfaches
+  Testbild mit genau einem Buffer, Test-Cubemap etc.). TestImageStatic steht bereits zur Verfügung und wurde entsprechend
+  des neuen Interfaces umgeschrieben.
+
+
+
+>> 06.05.2009
+[SB]
+- Rewrite der Bibliothek als "PLGraphics2" begonnen. Bei diesem Rewrite geht es darum, eigene Klassen und
+  Datenstrukturen zur Verfügung zu stellen, anstatt wie bisher nur Wrapper-Klassen für DevIL. Die Bibliothek
+  soll in ihrer Struktur eine komplett eigenständige Image-Library werden, die zunächst von keiner anderen
+  Image-Bibliothek abhängig ist. Natürlich werden wir am Anfang lange nicht so viel bieten können wie z.B. DevIL,
+  deswegen sollen dann z.B. Loader und ImageEffekte von DevIL durchaus wieder eingebaut werden. Dann allerdings
+  nur noch als lose Plugins, so dass das Projekt an sich unabhängig bleibt und man diese Plugins auch abschalten kann
+  und dennoch eine grundlegende, wenn auch deutlich eingeschränkte Image-Funktionalität, behält. Wenn möglich sollte
+  PLGraphics2 nur sehr kurz "neben" PLGraphics existieren und dann so schnell wie möglich ausgetauscht werden.
+
+
+
+>> 10.04.2009
+[CO]
+- "FromString"-Funktionen nutzen nun Reguläre Ausdrücke anstatt den Tokenizer und sind dadurch flotter
+
+
+
+>> 25.01.2009
+[CO]
+- Color3 & Color4: Die vorgegebenen Farben entsprechen nun dem "HTML 4/VGA"-Standard... ist denke ich nicht verkehrt einen weit verbreiteten
+  Standard zu nehmen. (auch wenn ich erstmal dumm drein schaute als ich merkte das 'Lime' das ist was ich sonst als 'Grün' bezeichnete *g*)
+
+
+
+>> 23.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 11.07.2008
+[CO]
+- Image::Scale(): Hier war in meinem 'Mipmap-Trick' ein kleiner Logik/Implementations fehler drinnen der sich sehr
+  einfach lösen lies... kann keine passende Mipmap gefunden werden soll natürlich 'normal skaliert' werden...
+
+
+
+>> 23.02.2008
+[CO]
+- Color3: Neue Funktion: 'SwapRB', verschoben aus 'PLGeneral::Tools::FlipRB3()'
+- Color4: Neue Funktion: 'SwapRB', verschoben aus 'PLGeneral::Tools::FlipRB4()'
+
+
+
+>> 17.02.2008
+[CO]
+- Copy-Operators und Copy-Constructors hinzugefügt
+
+
+
+>> 10.09.2007
+[CO]
+- Image: Verschob einige reine 'Effekt'-Funktionen in eine seperate Klasse Namen 'ImageEffects'. Sind nun in der Image-Klasse
+  selbst zwar 'nur' 17 Funktionen weniger, aber das macht die Sache schonmal wenigstens 'etwas' überschaubarer.
+- Image: Neue Funktion: CreateSubImage() fügt ein weiteres Unter-Bild hinzu... dies wird benötigt wenn man als User sich
+  z.B. eine CubeMap zusammenbasteln will. Allerdings war diese Funktion in DevIL natürlich nicht Dokumentiert so das man sich
+  den Code davon anschauen musste um rauszufinden wie genau das abläuft.
+
+
+
+>> 06.09.2007
+[CO]
+- Image: GetBoolean(), GetInteger() und SetInteger() Parameter auf EMode umgestellt
+
+
+
+>> 05.09.2007
+[CO]
+Image:
+- Mode_TypeSet: Default Einstellung ist nun 'true' da man die Daten 'meistens' als Type_UnsignedByte braucht.
+- 'ImageLoader::Load()' korrigiert nun wenn nötig nach dem Laden bestimmte Dinge. Z.B. läd ImageLoaderEXR ein Bild mit
+  Typ 'float' - das kann nun wenn gewünscht/benötigt automatisch umgewandelt werden. (wobei der DevIL Loader das wie gehabt
+  bereits intern automatisch macht)
+
+
+
+>> 28.08.2007
+[CO]
+- Color4: Konstruktor für 'Color3 + Alpha' hinzugefügt
+
+
+
+>> 24.08.2007
+[CO]
+- Image-Klasse: Bei 'EMode' ist nun alles Kommentiert:
+  - 'EQuantMode' Aufzählungstyp hinzugefügt
+  - 'Mode_QuantMode', 'Mode_NeuSample' und 'Mode_QuantMaxIndexs' Dokumentiert
+
+
+
+>> 23.08.2007
+[CO]
+- Image-Klasse: Bei 'EMode' ist nun alles bis auf 3 Einträge Kommentiert:
+  - Nahm 'Mode_Compression' heraus da ich in DevIL nicht rausfinden konnte wofür das eigentlich verwendet wird
+  - 'Mode_Interlace' ebenfalls aus dem gleichen Grund wie oben heraus genommen
+  - 'Mode_JpgFormat' herausgenommen. DevIL kennt zwar die Einstellungen 'IL_JFIF' und 'IL_EXIF', in den Codes iss das jedoch
+    auskommentiert und wird daher nicht genutzt... konnte auch in 'Paint.NET' das ich zur Bildbearbeitung nutze keine solche
+    Einstell-Option finden - daher kann man wohl annehmen das dies überflüssig ist. :)
+  - 'Mode_PcdPicNum' entfernt da wir das Format 'pcd' nicht unterstützen
+  - 'Mode_SgiRle' entfernt da wir das Format 'sgi' nicht unterstützen. Hatte gerade nochmal getestet ob DevIL das korrekt
+    laden könnte... googelte eine weile um ein Bild in dem Format zu finden, fand aber nix. Dann fragte ich kurz im PL-Chat
+    und Ardi meinte "max kann das, aber wozu brauchst du so ein uralt format?". Also mal schnell was kleines in dem Bild
+    Format aus 3ds Max gerendert, 3ds Max konnte das Bild selbst auch wieder korrekt laden. Probierte dann das mit DevIL
+    zu laden und irgendwie bekam ich nur eine Fehlermeldung. Hm, scheint also entweder 'kaputt' zu sein dieser DevIL Code,
+    oder es gibt Varianten und es werden nur wenige unterstützt. Da ich praktisch kaum Infos über 'sgi' finden konnte + die
+    'uralt'-Aussage von Ardri zeigten mir das wir darauf verzichten können.
+  - 'Mode_OffX' und 'Mode_OffY' Dokumentiert (nicht prall, aber besser als ?? :)
+  - 'ECubeSide' hinzugefügt und 'Mode_CubeFlags' in 'Mode_CubeSide' umbenannt + Dokumentiert... dieses gibt an welche Cube
+     Map Seite ein Bild ist wenn dieses als solches eine Cube Map ist. (und NICHT irgendwelche ominösen 'Cube Map Flags' wie
+     es in den DevIL Codes Dokumentiert ist oder der Variable Name andeutet!)
+  - 'EPaletteType' hinzugefügt das über 'Mode_PaletteType' verwendet wird
+  - 'Mode_BPC', 'PngAlphaIndex', 'Mode_Origin' und 'Mode_PlaneSize' Dokumentiert (musste dafür etwas in den DevIL Codes wühlen :)
+  - In der Klassen Dokumentation den Link auf die DevIL Seite 'http://www.imagelib.org' entfernt da dieser scheinbar nur
+    noch eine Tote Startseite ist.
+- Merkte gerade das der DevIL-Loader falsch geschrieben war: 'ImageLoaderDevil' zu 'ImageLoaderDevIL' gemacht da dies nix mit
+  dem 'Teufel' zu tun hat, sondern für "Developer's Image Library" steht *g* (musste wegen Windows löschen und neu einfügen)
+
+
+
+>> 18.08.2007
+[CO]
+- Unterstützte Bildformate nach der Reihenfolge sortiert in welcher häufigkeit diese (zumindestens bei uns) verwendet werden:
+  dds, png, tga, jpg, bmp, gif, tif, pcx, hdr, cut, ico, psp, raw, psd
+
+
+
+>> 17.08.2007
+[CO]
+- Über die Image-Klasse lassen sich nun 'sehr' Effizient in DXT1, DXT3 oder DXT5 Komprimierte Bilder einladen und an die
+  GPU übergeben ohne das die CPU dekomprimiert, oder die GPU komprimiert... das beschleunigt die Ladezeiten der Texturen
+  unglaublich stark. Jens Kabine läd nun in ca. 1 Sekunden (würde noch schneller gehen, aber derzeit sind ein paar Texturen
+  noch so das diese Dekomprimiert werden MÜSSEN) was vorher noch 10 Sekunden dauerte und vor ein paar Wochen 50 Sekunden!
+  Als das SO langsam lud war das schon ziemlich frustrierend und an ein optisches aufmotzen der Szene oder gar anhand dieser
+  bestimmte Funktionalitäten zu Debuggen war nicht wirklich drinnen weil die Kiste schlichteg nur noch am Rattern war. Nun
+  macht es um einiges mehr fun an PL weiterzuarbeiten da Ladezeiten nun um einges erträglicher sind. Das waren also
+  Änderungen die sich definitiv gelohnt haben. :D
+  Das die GPU die Daten nicht komprimieren muss wenn diese durch z.B. dds direkt eingeladen wurden iss ja nun schon einige
+  Zeit drinnen, und das war auch sehr 'sauber' zu Realisieren.
+  Das die CPU die Daten nicht dekomprimieren muss ist leider nicht ganz so sauber wie ich es gerne gehabt hätte - denn dafür
+  musste ich einen kleinen und überschaubaren Hack direkt in DevIL einbauen. Das war unumgänglich da DevIL derzeit nichts in
+  der Richtung bietet auch wenn man das in den DevIL Foren häufiger liest das Leute das gerne 'richtig und universell' drinnen
+  hätten. Würde man DevIL überall 'direkt' nutzen wäre diese meine aktuelle Lösung absolut nicht ok gewesen da Funktionen
+  sich nicht mehr wie erwartet verhalten hätten. Da wir allerdings DevIL in eine eigene Image-Klasse 'eingehüllt' haben ist
+  das kein Problem da diese Klasse nun alles weitere übernimmt. Sprich, wenn die Daten nur komprimiert vorliegen, aber der
+  User über GetData() unkomprimierte Daten verlangt oder eine Operation ausführt welche nur auf unkomprimierten Daten möglich
+  ist, so dekomprimiert die Klasse nun automatisch 'on the fly' so das sich alles wie gehabt bedienen lässt.
+  DevIL selbst hatte lustigerweise bereits eine entsprechende Funktion um ein komprimiertes Bild zu dekomprimieren:
+  ilDxtcDataToImage()... + in den Foren sind derzeit wiedermal Diskussionen ob man das endlich richtig in DevIL einbauen sollte,
+  kann also sein das ich diese meine Hacks irgendwann rausnehmen kann - und bis dahin reicht das so. :D
+
+
+
+>> 16.08.2007
+[CO]
+- Image:Scale-Funktion einen weiteren Parameter hinzugefügt über den man Einstellen kann ob wenn möglich direkt Mipmaps
+  als skalierte Version verwendet werden dürfen. Dieser Trick bietet einige viele Vorteile wie z.B.
+  - Man muss nicht aufwändig Speicher anlegen und über filter Skalieren, sondern einfach nur nun nicht mehr benötigte
+    Mipmaps killen
+  - Mipmaps bleiben erhalten (falls ein Grafiker da etwas spezielles gemalt hat, SDK Scene 'plfx_Effects.scene')
+  - Kompression der Mipmaps bleibt erhalten
+  - Das skalieren von Cube Maps klappt darüber... denn DevIL kickt ansonnsten einfach diese Daten so das Cube Map skalieren
+    NICHT geht (SDK Scene 'ReflectionCubeMap.scene')
+  -> All diese Punkte sind extrem hilfreich wenn Texturen automatisch verkleinert werden. Damit geht das Laden der verkleinerten
+     Texturen nicht langsamer sondern mindestens genauso flott, wenn nicht sogar noch etwas flotter da weniger Daten
+     zur GPU geschickt werden. Wenn ich bei Jens Kabiene die Textur Qualität halbbierte dauerte das Laden ohne diesen Trick
+     2 Sekunden, mit 1.5 Sekunden... nicht die Welt, aber wenigstens etwas. :D
+     Laden muss man leider allerdings trotzdem die Mipmaps die eventuell gleich danach durch Skalieren gelöscht werden...
+     das wäre zuviel herumgehacke innerhalb von DevIL.
+
+
+
+>> 15.08.2007
+[CO]
+- Schaffte es endlich das DevIL CVS-Repository auszuschecken... nach langem herumprobieren klappte es am Ende unter Linux
+  mit der einfachen Konsole. :D
+  Lud den Inhalt dieses Repositories in den PLGraphics external Ordner um von dort aus übersetzen und ändern zu können +
+  per Hand Öffentliche DevIL Updates einspielen zu können + selbst eventuelle Änderungen machen und nachvollziehen zu können.
+- In diesem DevIL-Ordner liegt nun ein spezielles Diary in dem DevIL Änderungen festgehalten werden damit nix durcheinander
+  kommt.
+- PLGraphics nutzt nun die aktuellsten verfügbaren DevIL Codes... der gestern erwähnte 'flip'-Bug iss wie es aussieht bereits
+  behoben worden. :D
+- Im DevILGuard Konstruktor werden nun über 'ilSetMemory()' eigene Speicher Funktionen gesetzt so das auch DevIL den
+  PL Memory Manager nutzt
+
+
+
+>> 14.08.2007
+[CO]
+- Wagte heute nochmals den Versuch DevIL selbst zu übersetzen um eine statische Variante zu erzeugen damit nicht mehr 3
+  DevIL dll's so verlohren im Runtime-Ordner liegen. Das war leider einiges an Aufwand da man auch erst externe Libs
+  zusammenfuzzeln und ebenfalls selbst übersetzen musste da VC 2005 ansonnsten die Libs nicht mochte + in einer DevIL
+  Datei musste man die Compiler-Optimierungen deaktivieren da das ansonnsten nicht übersetzbar war. (ZU viele 'case' für
+  den MS-Compiler *g*)
+  Aber ich denke das hat sich gelohnt - und war auch mal ne Erfahrung die einem wiedermal zeigt wie fein es doch ist nicht
+  immer alles selbst zusammensuchen zu müssen wenn man z.B. PL nutzt. :)
+  Ein weiterer noch wichtiger Grund für das selbst Übersetzen: Um aktuelle Bug Fixes 'einspielen' zu können... derzeit
+  iss nen merkwürdiger Bug drinnen der große Bilder beim 'flippen' kaputt macht, (sieht man gut an 'Soldier_normal.tga')
+  mal schaun ob das bereits in der aktuellsten Version (von der es allerdings noch keine übersetze Version gibt) behoben wurde.
+  Zudem will ich mich mal dran probieren in DevIL/PLGraphics etwas einzubauen das eine zwanghafte Dekomprimierung von dds-Daten
+  verhintert und das nach dem 'Lazy-Evolution'-Schema abläuft... also erst wenn dekomprimierte Daten benötigt werden wird
+  dekomprimiert! Momentan haut man da leider noch beim Textur einladen einiges an Resoucen heraus da auch Dekomprimiert wird
+  wenn das überhaupt nicht nötig ist sondern die Daten direkt so an die GPU weitergeleitet werden. (also viel Arbeit rein
+  für den Mülleimer) Zwar bringen dds-Texturen auch jetzt schon eine deutliche Ladezeit verbesserung, (in Jens Kabiene nun
+  10 statt 50 Sekunden!) aber so ganz glücklich bin ich mit der Leistung noch nicht. Gerade wenn man Texturen 'on the fly'
+  für z.B. große Szenen nachschaufeln will iss das noch etwas zu langsam - bin mal gespannt was man da noch rausholen kann
+  wenn die Daten nicht mehr unnötig umgewühlt werden... und noch spannender isses ob man das halbwechs sauber Implementieren
+  kann ohne zu hacken. In der Ogre3D-Engine wird hier wie ich gerade gesehen habe ein dds-Hack eingebaut so das Daten direkt
+  durchgejagt werden können - keine sonderlich pralle Lösung, mal schaun ob ich das besser hinbekomme. *g*
+
+
+
+>> 02.08.2007
+[CO]
+- DevIL aktualisiert
+
+
+
+>> 06.06.2007
+[CO]
+- Wo möglich/sinnig Zeiger durch Referenzen ersetzt
+
+
+
+>> 25.05.2007
+[CO]
+- Color3 & Color4: 'GetColor'-Funktionen in 'GetRGB' und 'SetColor'-Funktionen in 'SetRGB' und umbenannt. Das gleiche in
+  Color4 mit 'A' am Ende - diese Funktions-Namen sind wesentlich aussagekräftiger und zudem nun konsistent zu z.B. den
+  'SetXYZ' Vektor Funktionen in PLMath.
+
+
+
+>> 09.04.2007
+[CO]
+- Nahm weitere 'return' heraus
+
+
+
+>> 08.04.2007
+[CO]
+- Formte einge Codes um so das man weniger 'return' benötigt was die Sache etwas übersichtlicher macht
+
+
+
+>> 16.03.2007
+[CO]
+- Color3 & Color4: GetR_() usw. in GetRInt() usw. umbenannt da '_' relativ wenig aussagt + einige Kommentare genauer gemacht
+
+
+
+>> 20.12.2006
+[SB]
+- Die Funktion ConvertToHBitmap von DevIL hat leider die Eigenschaft, daß sie den Alpha-Wert bei RGBA Images
+  "aus Performance-Gründen" entfernt. Habe daher eine eigene Methode hinzugefügt, die ein RGBA Image in eine HBITMAP
+  konvertiert, wobei die RGB Werte wie von Windows gewünscht mit dem Alpha-Wert vormultipliziert werden und der
+  Alpha-Wert selbst erhalten bleibt. Damit funktionieren die Transparenzen in PLGui nun endlich wie erwartet.
+  Es wäre mit der Zeit sicherlich hilfreich, eine komplette Version von ConvertToHBitmap zu implementieren, die auch alle
+  anderen Farbtypen berücksichtigt, anstatt wie jetzt eine Fallunterscheidung zu machen. 
+
+
+
+>> 18.12.2006
+[SB]
+- Farben können nun undefiniert sein, was so viel bedeutet wie "es ist keine Farbe gesetzt". Das wird in Color3 und Color4 durch
+  die statische Instanz Null ausgedrückt, der Wert dafür ist (-1, -1, -1[, -1]). Ob eine Farbe definiert ist, kann über
+  IsValid() abgefragt werden. Das wird z.B. in der Gui benutzt, um zu ermöglichen, daß ein User z.B. eine Fensterfarbe nicht
+  definiert, in dem Fall wird dann die Standardfarbe benutzt. Gleichzeitig soll der User natürlich auch weiterhin die Möglichkeit
+  haben, die Fensterfarbe auf transparent zu setzen, daher muß es hier zwei unterschiedliche Werte geben.
+- Eine transparente Farbe gibt es jetzt nur noch in Color4, wobei eine Farbe dann als Transparent angesehen wird, wenn alpha = 0.
+  Dafür wurde die statische Instanz Color4::Transparent hinzugefügt.
+- In allen Projekten nach (-1 -1 -1) gesucht und durch Transparent ersetzt. Für Null und Transparent (und ähnliche Fälle)
+  sollten immer die vordefinierten Konstanten benutzt werden, falls sich doch einmal der interne Wert ändern sollte.
+
+
+
+>> 27.10.2006
+[CO]
+- Passte Image-Klasse & Image-Loader an das neue Loader System an. Neben den Load & Save Funktionen mit Dateiname, gib es
+  nun auch alternative Funktionen welche man direkt eine bereits geöffnete Datei übergeben kann. Nahm 'load from memory'
+  komplett heraus da wir es derzeit nicht benötigen, und das später sicherlich mit dem neuen FS universeller geht.
+  (memory mapped files)
+
+
+
+>> 20.10.2006
+[CO]
+- Image: Ich versuchte gerade Stundenlang verzeifelt Reflection Mapping im Shader Szene Renderer einzubauen, aber ich konnte
+  machen was ich wollte - das Ergebniss stimmte nie. Dann kam ich auf den Gedanken nochmals zu prüfen ob die CubeMap korrekt
+  eingeladen wurde... und siehe da, die CubeMap wurde nicht korrekt geladen! Nachforschungen brachten zutage das sich anscheinend
+  DevIL Funktionen wie z.B. ilActiveImage() in der neuen Version minimal im Verhalten geändert haben. Gibt man dort nun 0 als
+  Parameter, so wird auf das Primäre Bild zurückgeschaltet egal ob man auf Mipmap 0 von Bild 2 setzt... wie ich DevIL so langsam
+  HASSE, immer wieder so neue merkwürdigkeiten! (die Hacken herum das sich die Balken biegen...)
+  Nachdem ich hier nun 'Sicherheitsabfragen' einbaute ging das mit der CubeMap zum Glück endlich wieder...
+
+
+
+>> 14.10.2006
+[SW]
+- dummen Fehler in der function XCreateMask in ImageToolsLinux.cpp behoben.
+  Durch diesen Fehler wurden die Mask-Images nicht mehr erstellt. Was in Grafik-fehlern
+  bei der Darstellung von Images mit transparenter farbe sichtbar wurde.
+
+
+
+>> 28.09.2006
+[CO]
+- Wie gewünscht den PLGeneral Ordner 'Graphics' zu einem eigenständigen Projekt Namen 'PLGraphics' gemacht und alle Projekte
+  entsprechend angepasst. (die Anpassungen waren Zeitaufwändiger als das auskoppeln von PLGraphics selbst :)
+  Wie üblich kannn ich *nicht* garantieren das die Linux-Post-Anpassungen zu 100% korrekt sind, bei soo vielen Änderungen ist
+  das ohne das ein Compiler prüft fast nicht Fehlerfrei auf einmal hinzubekommen. :(
+
+
+
+>> 26.09.2006
+[SW]
+- ImageLoaderDevil. in der RC2 version von 1.6.8 ist der parameter für den Dateinamen von ilSave nicht mehr const habe das geändert.
+
+
+
+>> 10.09.2006
+[CO]
+- ImageLoaderDevil um ein paar Log Ausgaben erweitert
+
+
+
+>> 28.07.2006
+[CO]
+- Image OS Tool Funktionen in eigene Klassen verschoben
+
+
+
+>> 21.07.2006
+[CO]
+- Stephan fand den Grund für einige der unschönen #undefs die derzeit in diversen Codes nötig sind: In Image.h werden Linux
+  Header eingebunden was hier nicht wirklich passieren sollte. Daher verschob ich die Platformabhängigen Image-Konvertierfunktionen
+  in jeweils SystemLinux ('verschönerte' die Codes dabei gleich noch etwas) und SystemWin32. Auch das 'initialisieren' von DevIL
+  geschieht nun hier anstatt in ClassManager... so wird das zwar in jedem 'System' gemacht, aber da ists einfach wie ich finde am
+  besten aufgehoben.
+
+
+
+>> 16.07.2006
+[CO]
+- Color3 & Color4: fR, fG, fB und fA entfernt + fügte statische Variablen Black, Red, Green, Blue etc. Desweiteren
+  entfernte ich die hässlichen Color-Makros aus PLRenderer::Types.h und verteilte diese auf die Color-Klassen als Hilfs-Funktionen.
+  Statt z.B. PLColorRGBAGetF(0.0f, 0.0f, 1.0f, 1.0f) schreibt man nun Color4(0.0f, 0.0f, 1.0f, 1.0f).ToUInt32() oder in diesem Falle
+  am besten gleich Color4::Blue.ToUInt32()... das ist doch gleich viel Lesbarer so. :)
+  Für ToUInt32() gibts noch ne statische Variante da man dies im Zusammenhang mit dem Renderer echt häufig braucht. Für
+  die meisten spezialisierten Makros gibts keinen Ersatz, da müsste es völlig ausreichend sein uint32 in Color4 zu 'füllen'
+  und alles weitere über das Interface dieser Klasse zu regeln. Auch gibt es statische Hilfs-Funktionen wie z.B. RedFromUInt32()
+  welche einzelnde Farb-Komponenten von uint32 zurückgeben, dies wird gerade im OpenGL Renderer recht häuftig benötigt.
+
+
+
+>> 04.06.2006
+[CO]
+- Image: Neue Funktion: IsFormatLoadSupported(): Prüft ob ein gegebenes Format unterstützt wird -> das macht mir das Leben in
+  PLMesh::Material::Load() etwas einfacher. Da dies mit den 'Loadern' mittlerweile recht wichtig geworden ist, sollten wir schaun
+  obs nicht möglich ist in PLGeneral eine Loader Basis Klasse zu schreiben - die dann möglichst intern auch nicht jeeedesmal so eine
+  super komplexe Implementation hat wie das momentan der Fall ist. Also eine Liste an RTTI Klassen füllen etc. - das ist ziemlicher
+  Overhead da es jeeedesmal gemacht werden muss wenn man etwas Laden will. :(
+
+
+
+>> 23.05.2006
+[CO]
+- Image: Die ganzen enums in die Image Klasse verschoben damit nicht mehr so viele globale Definitionen herumfahren. Passte
+  alle Projekte an diese Änderung an.
+- Machte ImageLoader::IsFormatSupported() statisch
+
+
+
+>> 20.05.2006
+[CO]
+- Image: DevIL bietet selbst leider nur PLeImageMode_SizeOfData um die Anzahl der Bytes herauszubekommen die das Bild belegt. Allerdings
+  wird hier keine Kompression berücksichtigt wodurch diese Info nicht immer brauchbar ist. Auch ist es nicht möglich ohne
+  tausend Umwege direkt an die komprimierten Daten zu kommen. DevIL hält intern zwei Versionen eines Bildes, einmal
+  unkomprimiert und einmal die komprimierte Fassung welche aber nur behalten wird wenn PLeImageMode_KeepDXTCData true ist. Ich brauchte
+  eine halbe Ewigkeit um herauszufinden WIE man an die Komprimierten Daten kommt - also ich muss schon sagen DevIL ist Chaos
+  pur. :/
+  Nach dem verzweifelten Versuch DevIL selbst zu übersetzen was aber aufgrund der X abhängigkeiten zu Externen Libs welche wiederum
+  abhänigkeiten zu anderen Libs hatten und man alles selbst zusammenfischen und übersetzen mussten was natürlich absolut nicht
+  klappen wollte, fand ich per Zufall in den DevIL Codes, das man auch DIREKT an das aktuelle aktive Bild kommen kann.
+  Dafür muss man den Header 'devil_internal_exports.h' einbinden, nun kann man die Funktion ilGetCurImage() verwenden und schon
+  kommt man an alle Infos... was für ein Programmierstyle. ;-)
+  Damit das in unser Image Interface passt, fügte ich einmal PLeImageMode_SizeOfDXTCData hinzu mit dem man rausfinden kann wieviel
+  Bytes das komprimierte Bild belegt, + GetDXTCData() um an die komprimierten Daten zu kommen. Wenn man eine z.B. dds Textur
+  einläd wird diese also leider intern von DevIL IMMER zwanghaft dekomprimiert ob man das nun braucht oder nicht, aber dummerweise
+  gibts derzeit keine Möglichkeit um das zu verhindern. :(
+- Image: Änderte PLeImageDXTC_3DC in PLeImageDXTC_ATI2N, zum einen heißt das bei uns im Renderer genauso, und zum anderen ist das irgendwie
+  einheitlicher. (gibt ja auch PLeImageDXTC_ATI1N :)
+
+
+
+>> 19.05.2006
+[CO]
+- Image: Nachdem ich die DevIL Codes etwas durchstöbert hatte (Dokus sind ja praktisch nicht vorhanden) fand endlich heraus
+  wieso das mit den Mipmaps scheinbar nicht korrek Funktionierte, also z.B. soetwas:
+    pImage->SetActiveMipmap(nLevel);
+    uint32 nWidth  = pImage->GetInteger(PLeImageMode_Width);
+    uint32 nHeight = pImage->GetInteger(PLeImageMode_Height);
+  Da DevIL NICHT OOP ist, sondern intern einen Zeiger auf das gerade aktive Bild hat, muss man als User das aktuelle Bild
+  über ilBindImage(), ilActiveImage(), ilActiveLayer() und ilActiveMipmap() setzen. Wobei jedoch wie es aussieht die Reihenfolge
+  der letzten 3 Dinge beliebig ist... normalerweise macht aber nur die angegebene Reihenfolge sinn würd ich mal sagen, wobei
+  ich mir nicht sicher bin ob 'layer' nicht vor 'image' kommt. Da unsere Image Klasse OOP ist, schrieb ich mir damals eine kleine
+  interne Bind()-Funktion welche jedesmal bevor intern eine DevIL Funktion aufgerufen wird verwendet damit das aktuelle DevIL Bild
+  korrekt gesetzt wird. In SetActiveMipmap() verwendete ich dann diese Bind() Funktion + ilActiveMipmap() um die aktuelle Mipmap
+  Textur zu aktivieren. Sobald ich dann z.B. GetInteger() aufrief wurde wieder in Bind() ilBindImage() ausgeführt, also das aktuelle
+  DevIL Bild gesetzt... aber nun ist wieder alles zurückgesetzt. Hier bleibt wohl nichts anderes übrig als in Image selbst
+  'active image', 'active layer' und 'active mipmap' zu speichern und dann in Bind() alle 4 entsprechende Funktionen in einer von uns
+  festgelegten Reihenfolge aufzurufen damit das korrekte DevIL Bild gesetzt ist.
+- Image: Versuchte die Verwendung von ilGetError() zum feststellen ob ein Fehler aufgetreten ist auf ein Minimum zu reduzieren.
+  Die meisten Funktionen geben netterweise einen Boolschen Wert zurück welcher angibt ob ein Fehler aufgetreten ist. Ist so ein
+  Rückgabewert mal nicht vorhanden, entferne ich zur Sicherheit alle möglicherweise bereits auf dem DevIL Fehlerstack liegenden
+  Fehler bevor ich die eigentliche DevIL Funktion und danach ilGetError() aufrufe. Diese Fehlerbehandlung zu verbessern war nun
+  wirklich mal nötig. :)
+
+
+
+>> 16.05.2006
+[SB]
+- Image-Klassen auf Strings umgestellt
+
+
+
+>> 14.05.2006
+[SW]
+- POD-warnungen gefixed. Und linux build update für devil-1.68-RC1 und tinyxml-update
+
+
+
+>> 03.05.2006
+[CO]
+- Image: GetInteger() & SetInteger(): PLeImageMode_FormatMode & PLeImageMode_TypeMode, umwandlung von PL Enum zu DevIL 
+  Enum und zurück hinzugefügt.
+
+
+
+>> 17.04.2006
+[CO]
+- Stellte auf DevIL 1.6.8 um, wird momentan nicht mehr statisch eingebunden (was irgendwie leider ein ziemliches chaos war)
+- Image: SetInteger(), GetInteger(): Setzen und geben nun korrekte Dxtc Formate zurück
+
+
+
+>> 20.03.2006
+[CO]
+- Image Loader Kommentar verbessert (da stand in den cpp noch etwas von Mesh Loader... :)
+
+
+
+>> 15.03.2006
+[CO]
+- ImageLoader: Load() & Save() Funktionen der Basis Klasse machen nun nichts mehr, verschob die Funktionalität 
+  direkt in Image. Desweiteren sind nun alle Funktionen der Image Loader Klassen protected - denn NUR Image hat 
+  darauf zuzugreifen. Bei der Gelegenheit schaute ich gleich mal die Graphics Dateien durch und verbesserte Leerzeichen/Tab 
+  Anwendungen.
+- ImageLoader: Neue Funktion: GetFormatList(): Gibt eine Liste aller derzeit bekannten Formate zurück. Dabei werden 
+  die Informationen jeweils in einer Struktur zusammengefasst zurückgeben - eine andere Möglichkeit viel mir nicht ein. 
+  Dabei werden die einzelnen Formate selbst zurückgeben, also z.B. bmp, jpg etc. und NICHT Image Loader - denn mich als 
+  User interessiert nur welche Formate es gibt, und nicht wer für deren Management verantwortlich ist. Bei sDescription 
+  kann unsere String Klasse mal wieder so richtig ihre Muskeln Spielen lassen - denn hier gibts im Fall von z.B. den DevIL
+  Fomaten ja jeweils nur einen internen String. :)
+  Mesh Editor: EditMaterials.cpp, Material Editor: Edit.cpp, Engine: GuiDebugTexture.cpp, GuiDebugMaterial.cpp verwenden 
+  nun diese neue Funktion um die Filter des Datei Dialoges Dynamisch zu füllen.
+
+
+
+>> 17.01.2006
+[SB]
+- Color3/4, Image und die ImageLoader nach 'PLGeneral/Graphics' verschoben
+- Beim Durchschauen von PLTImage und PLTImageLoader merkte ich, daß diese Klassen etwas konfus sind. Wir haben hier wieder den Fall,
+  daß die Zuständigkeiten der Klassen nicht eindeutig sind: PLTImage lädt die meisten Dateitypen selbst, nur bei einem unbekannten Dateityp
+  wird der PLTImageLoader verwendet, der nach einem Plugin für das entsprechende Format sucht. Das führt unter anderem dazu, daß ich
+  PLTImageLoader nicht verwenden kann, um die DevIL-Datentypen zu laden, was das ganze System wieder uneinheitlich macht.
+  Außerdem sind solche Verschränkungen immer problematisch, da die Aufrufe zwischen den einzelnen Schichten dann leicht durcheinander gehen.
+  Also: Bitte IMMER darauf achten, daß die Klassen nicht durcheinander gehen - wenn es einen ImageLoader gibt, was sehr gut ins Plugin-System
+  paßt, so sollte dieser auch ALLE Dateitypen laden, während die Image-Klasse dann nur für das Bild selber da ist und nicht für's Laden.
+  Auf diese Weise rufen die Klassen sich nicht gegenseitig auf, sondern es wird beim Laden immer der Loader verwendet.
+- Die Laderoutinen aus PLTImage wurden in die Klasse PLTImageLoaderDevil verschoben, die Load-Funktionen innerhalb von PLTImage ruft einfach
+  nur den ImageLoader auf
+- PLeImageType entfernt, da dies fast nur intern verwendet wurde und außerdem nicht mit der Erweiterbarkeit durch PLTImageLoader in Einklang steht.
+  Beim Laden aus einer Resource wird statt dessen nun der Typus als String übergeben
+- ImageLoader können nun auch mehrere Extensions angeben
+- Einige Funktionen verschoben etc., statt strlwr zu verwenden wird mit stricmp() verglichen
+
+
+
+>> 16.08.2005
+[CO]
+- Kleine Änderung der Image-Loader Klassen: Schlägt das Laden mit der gefundenen Lade Klasse fehlt wird nun nach 
+  weiteren passenden Klassen gesucht - könnte ja sein das es z.B. verschiedene Bild Formate gibt welche aber gleiche 
+  Endungen haben. Beim Speichern kann man da aber leider nicht so ohne weiteres zwischen Bild Formaten mit gleichen 
+  Datei Endungen unterscheiden. :)
+
+
+
+>> 16.04.2005
+[CO]
+- Erweiterte PLTImage mit PLTImageLoader das genauso funktioniert wie PLTMeshLoader in der ModelLib. Beim Laden/Speichern
+  wird zuerst geprüft ob es sich um ein Format handelt welches direkt so von PLTImage eingeladen/gespeichert werden kann. 
+  Ist dies nicht der Fall wird versucht das Bild über ein PLTImageLoader Plugin zu laden/speichern.
+  Implementierte gleich ein Image Loader Plugin welches HDR Bilder einladen kann.
+
+
+
+>> 20.03.2005
+[SB]
+- PLTImage: Hack wieder ausgebaut da der simple Fehler beim Lesen behoben werden konnte
+
+
+
+>> 20.03.2005
+[CO]
+PLTImage:
+- Fügte intern nach jedem DevIL Funktions Aufruf ilGetError() hinzu. Wird das nicht gemacht, konnte es in Load()
+  probleme geben wenn bereits ein Fehlercode intern eingetragen war, in diesem Fall gab Load() zurück das das Laden
+  fehlschlug obwohl alles funktionierte.
+  Irgendwo in den Zip-File Funktionen ist etwas noch nicht ganz ok. Bei ein paar Bildern wie z.B.
+  "standardflare.tga" funktioniert das Einladen aus einer Zip-Datei nicht, bei "standardfont.jpg" hingegen gehts.
+  Da ich den Fehler einfach nicht finden konnte, aber auch nicht wie bisher IMMER die gesammte Datei erst in den 
+  Speicher laden will um dann das Bild dort heraus zu laden, entschloss ich mich in PLTImage::Load() nun erstmal für
+  nen Hack. Zuerst wird versucht das Bild direkt mit den überladenen DevIL File Funktionen zu laden, schlägt das 
+  fehl wird die Datei in den Speicher geladen und das Bild dann von dort geladen. Stefan, wenn du Zeit und Lust hast
+  kannste ja mal schaun ob du das Problem in den Zip-File Funktionen finden kannst... muss irgendwo in Tell() oder 
+  Read() sein, denn mehr Funktionen werden beim Laden eines Bildes nicht aufgerufen ehe aufgrund eines Fehlers das 
+  Einladen fehlschlägt.
+
+
+
+>> 05.02.2005
+[CO]
+- PLTImage: DevIL Datei Funktionen mit PLTFile überladen so das nun DIREKT aus den Dateien geladen werden kann. So spart
+  man sich alles in einen extra Buffer auszulagern. Ein paar Bilder machen allerdings irgendwie noch probleme wenn
+  diese aus einer Zip-Datei geladen werden. Beispiele standardcorona.tga, standardflare.tga, kopiert man z.B.
+  standardcorona.tga in den Data/Textures Unterordner so kann die Textur geladen werden. Mouse.bmp will irgendwie
+  überhaupt noch nicht... anscheinend irgendwo stimmen in den Codes ein paar Details noch nicht - aber jetzt
+  hab ich erstmal die Schnauze voll von diesem Dummen Problem und mach einfach weiter. :)
+
+
+
+>> 30.12.2004
+[SW] + [CO]
+PLTImage:
+- Um Linux Funktionen CreatePixmapFromData() und FreePixmap() erweitert welche von GuiImage verwendet werden.
+- Load() - Funktionen auf neues FS umgestellt
+
+
+
+>> 22.12.2004
+[CO]
+- Stellte PLTImage Load() & Save() auf PLTFSTools::GetFileNameEnding() um
+
+
+
+>> 26.11.2004
+[CO]
+- Bei Color und Vector Klassen DEFINE_BASECLASS(PLTBase) hinzugefügt
+- PLTImage um SetColorKey() erweitert, momenten wird nur ein Bild Typ unterstützt (unsigned byte) aber das 
+  sollte erstmal reichen - denn in der Engine selbst wird eigentlich nur dieser Typ verwendet. :)
+  (die anderen Typen erweitert man dann wenn man Zeit & Lust hat oder es wirklich benötigt wird :)
+
+
+
+>> 03.10.04
+[CO]
+- PLTImage um weitere nützliche Funktionen erweitert
+
+
+
+>> 30.09.04
+[CO]
+- Implementierte die letzten paar nützlichen Dinge in PLTImage. So gut DevIL auch sein mag - seine Dokumentation ist total
+  mies so das ich alle Informationen kreuz und qeuer zusammensuchen musste und auch teils direkt in den Codes nachschaun musste
+  wie etwas funktioniert.
+  Danach stellte ich PLGui und die Engine auf PLTImage um. Es gibt zwar noch ein paar kleinigkeiten an PLTImage zu verbessern aber
+  im Prinzip funktioniert alles schon sehr gut und ist endlich etwas sauberer.
+
+
+
+>> 29.09.04
+[CO]
+- Implementierte endlich mal das Image Zeug direkt in PLGeneral so das dies aus PLGui draußen ist. Übersetzte DevIL als statische
+  libs welche in PLGeneral direkt eingebunden werden - jedoch hab es beim Linken ein paar kleinere Probleme welche ich aber durch
+  etwas herumfummeln lösen konnte... keine Ahnung wie ich das besser machen könnte. :(
+  Im UsedLibs Ordner liegt alles aktuelle - auch die DevIL Header & Libs welche ich kontret in PLGeneral verwende.
+  Schrieb einen Devil Wrapper, im Prinzip läuft nun alles nach OOP über PLTImage - damit kann man nun dann auch endlich
+  den Textur Code in der Engine und im Renderer verbessern so das auch Texturen je nach bedarf skaliert werden können.
+  Somit kann man nun endlich den vollen Funktionsumfang von DevIL geniesen und das Design bleibt übersichtlich - zudem 
+  liegen nun in PLRuntime 3 dlls weniger was auch die Übersichtlichkeit etwas fördert. :)
+  (devil.dll, ilu.dll und ilut.dll wurden aus PLRuntime entfernt)
+  Hab 'fast' alle Funktionen von DevIL im Wrapper übernommen, nur einige welche mir als unnötig erschienen etc. hab ich
+  erstmal drausen gelassen. Insgesammt bietet PLTImage wirklich eine ganze menge an möglichkeiten die Bilder zu bearbeiten,
+  von Filtern über Farbverfälschungen bis hin zu 'normalen' Dingen wie Skalieren, rotieren etc.
+  Das Initialisieren & Deinitialisieren von DevIL hab ich mal in PLTSystem gepackt - mir viel kein besserer Ort ein. Einen
+  extra Image Manager will ich in PLGeneral nicht einbauen, es müsste reichen wenn PLGui seine OS abhängigen Images managed
+  und die Engine & der Renderer ihre Texturen.
+
+
+
+>> 29.08.2004
+[SB]
+- Anhand von PLTColor3 habe ich die oben genannte Funktion getestet, was zunächst nicht funktionierte, da die neuen
+  Color-Klassen zwar korrekt vom RTTI-Interface abgeleitet wurden, aber nicht an PLTSystem angemeldet wurden.
+  Beim Umstellen von Klassen auf das RTTI bitte nie nie nie vergessen, IMPLEMENT_CLASS() zu verwenden :-)
+
+
+
+>> 28.08.2004
+[CO]
+- Hab nun den Farben eigene Klassen (PLTColor3 und PLTColor4) spendiert so das diese nicht mehr mehr oder weniger einfache
+  Vektoren sind. Achtung, hab nun aus PLTVector3 etc. die Farb Dinge herausgenommen, dadurch musste ich ein paar weitere Codes anpassen.

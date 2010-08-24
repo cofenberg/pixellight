@@ -1,0 +1,92 @@
+﻿>> 17.09.2008
+[CO]
+PLDatabaseSQLite
+- 64 Bit Support hinzugefügt
+PLDatabaseMySQL
+- Auf neue Version "MySQL 5.0.67" umgestellt
+- 64 Bit Support hinzugefügt, hier mit "libmySQL.dll" aber leider auch wieder die gleiche Sache wie bei Cg und bei OpenAL...
+  64 Bit und 32 Bit dlls haben den gleichen Namen... fügte daher erstmal auch hier ein '64' im Namen ein.
+
+
+
+>> 23.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 17.02.2008
+[SB]
+PLDatabase + Backends:
+- Einige Änderungen an den Linux-Libs vorgenommen, so dass sich nun alles wieder unter Linux übersetzen lässt.
+- Die PostgreSQL-Libraries konnten irgendwie nicht verwendet werden, jedenfalls mochte gcc einfach die Lib nicht.
+  Die jetzt verwendete Version funktioniert unter meinem Ubuntu wunderbar und stammt von:
+    /binary/v8.3.0/linux/rpms/redhat/rhel-5-i386/postgresql-devel-8.3.0-1PGDG.rhel5.i686.rpm
+
+
+
+>> 17.02.2008
+[CO]
+PLDatabase + Backends:
+- Copy-Operators und Copy-Constructors hinzugefügt
+
+
+
+>> 10.02.2008
+[CO]
+- Ein weiteres PLDatabase-Backend Namens "PLDatabaseNull" hinzugefügt das wie die anderen vergleichbaren Backends für Sound,
+  Renderer und Physik rein gar nüschts macht
+
+
+
+>> 05.06.2007
+[CO]
+PLDatabase + Implementationen:
+- Wo möglich/sinnig Zeiger durch Referenzen ersetzt
+
+
+
+>> 19.05.2007
+[CO]
+PLDatabase:
+- Konstruktoren der Implementationen 'private' gemacht da man von diesen nicht weiter ableiten können soll + damit man
+  Instanzen NUR über Database::Create() erzeugen kann
+
+
+
+>> 09.04.2007
+[CO]
+- Nahm weitere 'return' heraus
+
+
+
+>> 08.04.2007
+[CO]
+- Formte einge Codes um so das man weniger 'return' benötigt was die Sache etwas übersichtlicher macht
+
+
+
+>> 11.02.2007
+[CO]
+- In PLDatabaseSQLite gibts noch Linker Probleme
+
+
+
+>> 27.09.2006
+[CO]
+- Datenbank-Dinge liegen nun wie besprochen in eigenen Projekten
+
+
+
+>> 08.09.2006
+[CO]
+- Variant um Vergleichs-Operatoren erweitert damit ich das auch Problemlos in den Datenbank-Codes einsetzen kann.
+- Aktuelle Datenbank Klassen hochgeladen... Sonderlich viel geht allerdings *noch* nicht, das muss ich noch alles erweitern.
+
+
+
+>> 06.09.2006
+[CO]
+- Fing heute mit unseren abstrakten Datenbank Klassen an über die man recht komfortabel mit Datenbanken herum jonglieren
+  kann. Da aller guten Dinge 3 sind, arbeite ich dabei auch gleich eine MySQL, SQLite und PostgreSQL Implementation aus...
+  wenn 3-Implementation über das Interface gehen, werden bestimmt auch weitere keine Probleme machen. :)

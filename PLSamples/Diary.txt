@@ -1,0 +1,92 @@
+>> 15.08.2010
+[SB]
+- In allen Samples SetName() und SetAppDataSubdir() eingebaut.
+
+
+
+>> 04.06.2010
+[SB]
+- Gui-Test aus 99Test entfernt und in ein eigenes neues Projekt 98GuiTest verschoben. Dies sind alles nur interne Tests,
+  deswegen auch die Nummerierung von 99 an rückwärts, die später entfernt werden und nicht als Samples mit ausgeliefert
+  werden. Eventuell wäre es sinnvoll, dann z.B. 99Test zu "retten" und z.B. nach PLTests zu verschieben, da hier doch
+  einiges an sinnvollen Dingen zum Testen von PLCore enthalten ist. Zunächst einmal ist es jedoch am einfachsten, diese
+  Projekte hier zu behalten, damit man möglichst einfach ausprobieren und testen kann :-)
+
+
+
+>> 24.05.2010
+[CO]
+- PLSamples2 in PLSamples umbenannt und ins SDK eingefügt
+
+
+
+>> 25.04.2010
+[SB]
+- Sample 04Dirs hinzugefügt: Demonstriert die Abfrage und Verwendung von Verzeichnisnamen, z.B. aktuelles
+  Verzeichnis, Home-Verzeichnis etc.
+
+
+
+>> 23.04.2010
+[SB]
+- 99Test: Klasse TestClass1 hinzugefügt, um ganz gewollt einen Namenskonflikt mit der Klasse gleichen Namens aus 99TestPlugin herbeizuführen.
+- 99Test: Es wird nun eine Log-Datei geschrieben.
+
+
+
+>> 22.04.2010
+[SB]
+- 99Test: Test für Signals hinzugefügt.
+
+
+
+>> 19.04.2010
+[CO]
+- 99TestPlugin: Tests für das neue PLCore hinzugefügt. (Port von PLTestPlugin)
+
+
+
+>> 18.04.2010
+[SB]
+- 99Test: Tests für das neue PLCore hinzugefügt.
+
+
+
+>> 16.04.2009
+[SB]
+- Gui Samples hinzugefügt. Das erste (20Gui) zeigt nur die Verwendung von GuiApplicatino und öffnet ein leeres Fenster.
+  Das zweite Sample (21GuiWidgets) wird anhand eines eigenen Test-Fensters möglichst viele der PLGui-Widgets demonstrieren.
+  Hierfür baue ich auf dem PLGui3-Test auf.
+- PLGui3-Daten von Bin/Lab nach Bin/PLSamples2 verschoben und PLGui3Test gelöscht.
+- 21GuiWidgets: So umgebaut, dass nun eine eigene Fensterklasse verwendet wird, die alle Elemente enthält, anstatt wie bisher
+  statische und gloable Variablen in einer .cpp Datei. Das sind immer die Fälle, wo man "mal eben schnell" was testen will und
+  dann auf vernünftiges OOP verzichtet, die einem dann später viel unnötige Arbeit bereiten ;-) 
+
+
+
+>> 13.04.2009
+[SB]
+- Sample 03Signals hinzugefügt: Demonstriert, wie man den Handler für das Beenden des Tasks
+  überschreibt, damit die Applikation vor dem Beenden noch die aktuelle Aufgabe zu Ende führen
+  kann und dann die Applikation ordentlich beendet. Dieses Sample ist bisher nur unter Linux
+  sinnvoll, da unter Windows so weit ich weiß kein Signal beim Abschiessen eines Prozesses
+  existiert, welches man abfangen könnte (jedenfalls nicht vor GuiApplication).
+- Sample 99Test hinzugefügt - zum wilden Ausprobieren :-D
+
+
+
+>> 12.04.2009
+[SB]
+- Neue Sammlung von Samples begonnen. Die sind erstmal nur für uns selbst, darum wird auch noch
+  nichts davon im SDK mitgeliefert oder installiert. Diese Samples dienen hauptsächlich dazu,
+  Schritt für Schritt den Aufbau des Application-Frameworks zu zeigen. In jedem Sample gibt
+  es daher eine Application-Klasse, die Schritt für Schritt um weitere Komponenten erweitert
+  wird. Anhand dessen können alle wichtigen Komponenten des Application-Frameworks demonstriert
+  werden, und für uns ist es gut, um das Framework dabei vernünftig aufzubauen und zu erweitern.
+  Die Ausrichtung ist also etwas anders als bei unseren bisherigen Samples, und sollen diese daher
+  nicht unbedingt ersetzen. Wir müssen uns dann später also überlegen, was wir aus diesen Samples
+  machen wollen :-)
+- Sample 01Application hinzugefügt: Demonstriert die Verwendung von Application für eine
+  Kommandozeilen-Applikation ("Hello World")
+- Sample 02CommandLine hinzugefügt: Demonstriert die Verwendung von CommandLine, um
+  Kommandozeilenparameter für die Applikation zu definieren.

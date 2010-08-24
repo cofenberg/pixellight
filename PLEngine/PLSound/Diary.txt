@@ -1,0 +1,525 @@
+﻿>> 07.08.2010
+[CO]
+- SoundManager: Eigene Config entfernt, spezielle Einstellungen müssen nun wie schon bei PLPhysics auch über das RTTI der Klasse gesetzt werden
+
+
+
+>> 24.07.2010
+[CO]
+- PLSoundOpenAL: Sound-Streams stoppten bisher komplett wenn die Buffer leerliefen und nicht rechtzeitig wieder aufgefüllt wurden. Dieser
+  Fall wird nun berücksichtigt so das der Sound dann, sobald die Buffer wieder gefüllt sind, weiterläuft.
+- PLSoundOpenAL: Die in "StreamOgg::FillBuffer()" verwendete Buffer größe ist nun etwas größer so das ein ogg Stream Sound nicht immer
+  anhält sobald etwas auch nur für einen kurzen Moment ins stocken kommt. (weil z.B. etwas nachgeladen wird)
+  StreamWav war schon soweit ok - es werden immer so ca. 2 sec pro Buffer (Front/Back) zwischengespeichert.
+- Beim zerstören der Sound Resourcen gab es probleme, da nicht alle Resourcen zerstört wurden...
+- PLSoundOpenAL::Source: 2D Sounds Implementiert
+- PLSoundOpenAL: "2D Channel" Sound Dateien gehen scheinbar nicht in 3D Abspielen, also mit Entfernungs-Abschwächung etc. (fand ich durch Testen heraus...)
+
+
+
+>> 23.07.2010
+[CO]
+- PLSoundOpenAL::SoundManager::Update(): ARGH, kein wunder das die Sounds nicht aus der richten Richtung kamen, die Komponenten des
+  Up-Vektor wurden total falsch übergeben
+
+
+
+>> 22.07.2010
+[CO]
+- SNMSound: Sound wurde nicht korrekt plaziert
+- Das erste mal seit einer halben Ewigkeit mal wieder ein wenig was an PLSound gemacht. Von der Terminoloy her orientiere ich mich nun
+  an OpenAL da dies unsere Haupt-Sound API ist.
+- "Source::SetMinRange" durch "Source::SetReferenceDistance" ersetzt
+- "Source::SetMaxRange" durch "Source::SetMaxDistance" ersetzt
+- "Source::RolloffFactor" hinzugefügt
+
+
+
+>> 14.03.2010
+[CO]
+- "SoundManager" hat eigene "Config"-Instanz. Eigentlich wollte ich "Config" nur noch in "Application" Dingen nutzen... hier weis ich
+  aber gerade noch nicht so recht wie es anderst besser ginge. :/
+
+
+
+>> 08.03.2009
+[CO]
+- Die Scene Node Modifier Implementationen berücksichtigen nun endlich wieder den "Active"-Zustand. Dies hab ich nun so realisiert das
+  Event Handler "Disconnected" werden sobald ein Scene Node Modifier inaktiv wird und beim Aktive werden sich wieder "Connecten".
+
+
+
+>> 26.01.2009
+[CO]
+- 'SCSound' & 'SNSound': Berücksichtigt nun das Positionen in verschiedenen Scene Containern liegen können... muss
+  ich mir allerdings nochmal genau anschaun da ich mit dem Ergebniss noch nicht so recht zufrieden bin.
+
+
+
+>> 17.09.2008
+[CO]
+PLSoundOpenAL:
+- 64 Bit Versionen von "OpenAL32.dll" und "wrap_oal.dll" hinzugefügt... natürlich heißen die 64 Bit Versionen genauso wie
+  die 32 Bit Versionen und wurden vom Installer automatisch in die Windows Verzeichnisse kopiert wo ich diese wieder herausfischen
+  musste. Ich benannte die 64 Bit dlls erstmal um damit wir die schonmal zur Hand haben - laufen wird es aber sicherlich nicht...
+  da wir für Cg das 'gleiche' Problem haben muss ich mir mal was nettes überlegen... also einige gehen wirklich den riskanten
+  Weg bei dem man auch nicht paralell 32 Bit und 64 Bit haben kann was gerade zum Testen und vergleichen sehr hilfreich ist. Zum
+  Glück lag dem OpenAL SDK die 64 Bit lib Version von OpenAL bei... libogg und libvorbis musste ich nochmal für 64 Bit übersetzen
+  - und da libvorbis Assembler Code drinnen hat musste ich eine minimal Funktion ummoddeln. Hoffe mal das läuft alles noch... ist
+  immer wieder ein Spaß mit anderen Libs zu arbeiten. *würg*
+
+
+
+>> 16.09.2008
+[CO]
+PLSoundFMODEx:
+- Auf aktuelle Version "4.18.03" umgestellt, "FMOD_Memory_Initialize" hat am Ende einen neuen weiteren Parameter
+- 64 Bit Fassung hinzugefügt
+
+
+
+>> 24.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 05.07.2008
+[CO]
+- Ein paar kleinere Detail-Verbesserungen in den Sound Backend Implementationen
+
+
+
+>> 21.06.2008
+[CO]
+PLSoundOpenAL:
+- Fand gerade heraus das man für OpenAL neben 'OpenAL32.dll' auch 'wrap_oal.dll' benötigt. Legte das zum Plugin in den Runtime Ordner -
+  endlich ist man nicht mehr gezwungen OpenAL aus seinem System zu Installieren wie man das überall lies das es umbedingt nötig sei.
+
+
+
+>> 30.05.2008
+[CO]
+- In den Sound Backends wird "Data/Sounds/" nicht mehr automatisch Dateinamen hinzugefügt - dies muss man nun also erstmal per Hand machen
+  was weniger Problematisch ist. Noch habe ich keinen wirklich brauchbaren Weg gefunden um die API abhängigen unterstützten Sound Formate
+  an das Loadable System 'anzustöppeln'. (wüsste nicht wie man das ohne totalen Overhead 'normieren' könnte)
+  Problematisch ist das eigentlich nur bei
+    DEFINE_VAR(PL_VAR_FILENAME, m_sSound, "Sound", "", "Name of the sound which should be played (full path, supported file formats are API dependent)", "Ext='mp3 ogg wav mid midi it mod s3m xm'", "")
+  sprich "Ext='mp3 ogg wav mid midi it mod s3m xm'" da dies 'statisch' ist, aber 'dynamisch' sein sollte. Eventuell können wir das mit
+  Funktionen des überarbeiteten RTTI lösen indem dann 'dynamisch Ext' gesetzt wird bzw. man die Anfrage dieses Strings 'in eine Funktion umleiten'
+  kann die dann ermittelt welche Formate von der aktuell verwendeten Sound API unterstützt werden.
+- SNSound: Die Sound Quelle wird nun über ein Position Event aktualisiert anstatt über die Scene Node Update Funktion
+- SNMSound hinzugefügt damit man auch einen Sound einfach an eine bereits vorhandene Node anhängen kann was sehr handlich ist
+- An 2D/3D Sounds etwas weitergebastelt, noch nicht optimal, aber schonmal besser als vorher
+
+
+
+>> 25.04.2008
+[CO]
+- Copy-Operators und Copy-Constructors hinzugefügt
+
+
+
+>> 18.04.2008
+[CO]
+- Wie besprochen Sound-Dinge komplett aus PLEngine herausgenommen und Komponenten nach PLSound verschoben. PLSound 'integriert' sich nun
+  genauso wie 'PLPhysics' komplett über einen Scene Container. Als netten Seiteneffekt kann man nun 'Volume', 'Pitch' und 'Listener'
+  des Sound Managers direkt über den Debug Dialog ansteuern, gerade letzteres war bis jetzt immer ein Problem da 'Listener' nicht wirklich
+  schön und universell gesetzt werden konnte.
+
+
+
+>> 23.03.2008
+[CO]
+- Die Backends können die Sound-Dateien nun wieder finden. Noch natürlich keine 'Perfekte' Lösung, aber es geht wenigstens wieder. :D
+
+
+
+>> 13.02.2008
+[CO]
+PLSoundFMOD:
+- SoundFMODConfig: 'Output' Wert +1 damit man keine negative Zahl als Typ haben kann
+
+
+
+>> 18.01.2008
+[CO]
+PLSoundOpenAL:
+- Source::Play(): Falls ein Stream nicht geöffnet werden kann, darf die Sound-Quelle natürlich auch nicht über AddActiveSource()
+  dem Sound Manager als gerade aktive Sound-Quelle hinzugefügt werden
+
+
+
+>> 02.11.2007
+[SB]
+PLSoundFModEx:
+- Dann nehmen wir eben die mitgelieferte libfmodex.so :-) Wo wir auf einem Linux dann die ganzen dynamischen Libs unterbringen,
+  müssen wir uns später eh noch überlegen.
+
+
+
+>> 02.11.2007
+[CO]
+- 'PLSoundFMod' in 'PLSoundFMOD' umbenannt da dies von der groß/kleinschreibung so korrekt ist - keine Ahnung wieso ich
+  das damals anderst schrieb.
+PLSoundFMOD:
+- Von 'FMOD 3.74' auf 'FMOD 3.75' umgestellt... wie bei den anderen Projekten die 'externes' nutzen liegt nicht ALLES
+  entpackt vor, sondern 'nur' wirklich das was man zum Übersetzen braucht - sonst wirds zuviel des guten. Die herunter
+  geladenen SDK's liegen wie bei den anderen Projekten nochmal im 'Original' vor damit man alles Griffbereit hat und
+  auch auf der sicheren Seite ist falls es diese Fassung mal nicht mehr Online gibt. (weitergeben können wir diese
+  Dinge in den meisten Fällen sicherlich nicht, aber das ist eine andere Thematik :)
+PLSoundFMODEx:
+- Von 'FMOD Ex 4.06.01' auf 'FMOD Ex 4.08.07' umgestellt. Für Linux habe ich auch 'fmodapi40807linux.tar.gz' hinzugefügt...
+  allerdings noch nicht 'eingespielt' da ich 'libfmodex.a' nicht finden konnte...
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 08.09.2007
+[CO]
+PLSoundOpenAL:
+- LoadOGG() & StreamOgg::OpenStream(): Stellte hier ebenfalls auf den Runtime-Stack um damit das etwas Eleganter ist. Bis
+  jetzt wurde hier die Struktur mit den Infos dynamisch erzeugt, und dann in "SoundManagerOpenAL::close_func_mem()" wieder
+  zerstört.
+
+
+
+>> 15.08.2007
+[CO]
+PLSound:
+- FMod-Sound Backend verwendet nun den PL Memory Manager
+- FMODEx-Sound Backend verwendet nun den PL Memory Manager
+
+
+
+>> 01.08.2007
+[CO]
+PLSoundOpenAL:
+- StreamWav: In der neuen 'DarkAge'-Szene viel mir auf das die abgespielte wav-Musik beim OpenAL Backend nach 1-2 Sekunden
+  stoppte obwohl es weitergehen 'müsste'. Sieht so aus als ob der 'feste' Zwischenbuffer in StreamWav::FillBuffer() zu
+  klein für dieses (unkomprimierte! :) 16 Bit Stero Wav Teil war. Da man für nur gut 2 Sekunden Buffern bereits ca. 350 KB
+  benötigt entschied ich mich dafür das ein Wav-Stream selbst dafür verantwortlich ist einen Zwischenbuffer anzulegen der
+  groß genug ist. Glücklicherweise steht im wav-Header netterweise gleich wieviele Bytes eine Sekunde benötigt so das man
+  diese Information sofort nutzen kann. Jeder Wav-Stream hat dabei einen eigenen Buffer damit man eventuellen Multithreading
+  Problemen gleich von anfang an aus dem Weg geht... ist zwar nen ziemlicher Speicherfresser so ein wav-Stream, aber selbst
+  schuld wer das nutzt, 'ogg' iss viel schlanker und eleganter. :D
+
+
+
+>> 08.07.2007
+[CO]
+PLSound + Backends:
+- Wo möglich/sinnig von Zeiger auf Referenzen umgestellt... bei Zeiten muss ich hier auch noch ein paar Dinge vereinfachen.
+  Z.B. beim SoundManager die Add/Remove Funktionen (nur 'ausklingen' aber nicht löschen) herausnehmen. Das macht nicht
+  wirklich Sinn da diese Dinge einfach 'fest' zusammenhängen und alles wird nur umständlicher wenn es künstlich locker
+  vorgegaufelt wird. (beim Renderer die gleiche Thematik :)
+
+
+
+>> 19.05.2007
+[CO]
+PLSound + Backends:
+- Ein paar Konstruktoren & Destruktoren hinzugefügt, ein paar Dinge 'private' gemacht + sichergestellt das in den Konstruktoren
+  auch ohne RTTI alle Variablen korrekt Initialisiert werden (... in der Richtung werde ich nächste Woche in den Pfingsferien
+  noch etwas machen...)
+
+
+
+>> 09.04.2007
+[CO]
+PLSound + Backends & PLPhysics + Backends:
+- Einige 'return' entfernt
+
+
+
+>> 16.03.2007
+[CO]
+PLSound + Backends:
+- Header & Namespace Änderungen wie in z.B. PLBase
+- Z.B. 'Sound.h' in 'SoundManager.h' umbenannt damit Klassen & Datei Namen zusammenpassen
+- Backends nutzen nun (wie z.B. PLPhysics) eigene Namespaces, das ist so einfach netter :)
+
+
+
+>> 25.12.2006
+[CO]
+PLSound:
+- Die Sound Backends nutzen fürs erste den festen Pfad "Data/Sounds/" zum laden bis ich das überarbeitet habe damit das
+  universeller wird
+- "Neues" Sound Backend hinzugefügt: FMOD Ex... Das 'alte' FMod wird nicht mehr weiterentwickelt, sondern das wurde komplett
+  neu aufgebaut und nennt sich nun 'FMOD Ex'. Da die alte Version jedoch noch offiziell unterstützt wird, und wir bereits ein
+  Plugin dafür geschrieben hatten sollten wir das erstmal nicht löschen. (warum etwas löschen wo man Arbeit reingesteckt hat,
+  das aber nicht stört wenn noch Support vom Entwickler dafür da ist? :)
+  Da die FMod Versionen absolut unterschiedlich sind ging das nicht anderst als ein neues Projekt anzufangen. Nun haben wir
+  wieder Support für ne aktuelle Version davon... das andere ist bereits etliche Jahre alt. Diese neue Version hat einige
+  wirklich Interessante Features wie 'Geometrien' damit der Sound hinter Wänden gedämpft wird... bei Zeiten müssen wir mal
+  unser Sound Interface erweitern um mehr Funktionlität zu unterstützen. *g* (das ist momentan nur das Grundliegendste)
+- OpenAL aktualsiert, das war auch schon wieder über ein Jahr alt... wie die Zeit davon rennt... :(
+  Code Änderungen waren hier zum Glück nicht nötig.
+
+
+
+>> 22.09.2006
+[CO]
+- PLSound + Backends auf PLBool umgestellt
+
+
+
+>> 17.06.2006
+[CO]
+Sound Projekte:
+- Machte die Konstruktoren der Sound Resourcen Protected so das man diese Resourcen NUR noch über den Sound Manager erzeugen kann
+PLSoundOpenAL
+- Ersetzte die STL vector Klasse durch unsere eigene Array Klasse
+
+
+
+>> 22.05.2006
+[CO]
+- Stellen wo Tokenizer::Start() verwendet wird angepasst
+- Überall auf String Klasse umgestellt
+- 'using namespace' an ein paar Stellen wo man ohne nicht gerade an tausend Stellen z.B. PLGeneral schreiben muss entfernt
+- Ein paar Variablen Namen angepasst wo man z.B. einen Zeiger auf Zeiger hat (also z.B. **ppMyPointer)
+- Ein paar #include entfernt/hinzugefügt
+- PLSoundOpenAL: Gut das Stephan gestern dieses wav Problemchen gefunden hat, denn beim Wav Streaming gabs das ebenfalls :)
+
+
+
+>> 21.05.2006
+[SW]
+- PLSoundOpenAL: der Wav-Loader setzt jetzt das passende Format(Stereo16Bit/8Bit oder Mono16Bit/8Bit) für Openal
+
+
+
+>> 21.05.2006
+[SB]
+- Projekte an FS-Änderungen angepaßt
+
+
+
+>> 19.05.2006
+[SW]
+PLSoundOpenAL:
+- eignen Wav-loader hinzugefügt. Da die bisjetzt verwendeten alut* funktionen als
+  depricated markiert sind. Bis jetzt unterstüzt dieser Loader nur uncompressed Wav-Dateien.
+
+
+
+>> 17.05.2006
+[SW]
+- OpenAL und FMod SoundBackends sind nun unter linux lauffähig
+  Das OpenAL backend hat momentan asound(alsa) nicht statisch eingebunden.
+  Deshalb müsste man prüfen ob es auch unter anderen systemen läuft, wenn sich
+  die version der asound datei unterscheidet.  
+
+
+
+>> 16.05.2006
+[CO]
+- An PLGeneral Änderungen angepaßt
+
+
+
+>> 20.03.2006
+[CO]
+- SoundManager: Neue Funktion GetFormatList(): Gibt eine Liste aller Sound Datei Formate zurück die das aktuelle Backend 
+  einladen und abspielen kann. Passte GuiDebugSound::Initialize() daran an so das die vom Sound Backend unterstützten 
+  Formate dynamisch in den Datei Filter eingetragen werden.
+
+
+
+>> 12.03.2006
+[SW]
+PLSound(Null):
+- build-system für linux eingerichtet.
+
+
+
+>> 22.02.2006
+[CO]
+- Die Haupt-Header der Projekte haben nun am Anfang des Namens wieder ein PL
+- Doxygen Makefiles angepasst
+- Alles an PLMath Änderungen angepasst
+- PLE_SSA Definitionen in Source verschoben und umbenannt
+
+
+
+>> 25.01.2006
+[CO]
+- PLSound auf Namespace umgestellt
+
+
+
+>> 23.01.2006
+[CO]
+- An uint32 Änderungen angepasst
+
+
+
+>> 19.01.1006
+[CO]
+- Alles an PLMath Änderungen angepasst
+
+
+
+>> 18.01.2006
+[CO]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 11.06.2005
+[CO]
+- Stellte das OpenAL Backend auf die neue OpenAL Version 1.1 Beta um
+
+
+
+>> 11.05.2005
+[CO]
+- PLSound verwendet nun ebenfalls PLTConfig und jedes Backend Speichert seine eigenen Einstellungen
+
+
+
+>> 23.03.2005
+[CO]
+PLSoundOpenAL:
+- ogg.dll, vorbis.dll und vorbisfile.dll werden nun direkt statisch in PLSoundOpenAL.dll gelinkt. So hat man 
+  ein paar lose dll's weniger welche man durcheinander bringen kann. ;-)
+
+
+
+>> 21.03.2005
+[CO]
+- PLSound auf neuen Kommentar-Style umgestellt über den man nun automatisch Dokumentationen erzeugen lassen kann.
+
+
+
+>> 24.02.2005
+[CO]
+- PLSoundOpenAL: Streaming für wav implementiert... hat sogar gleich auf anhieb suber funktioniert. :)
+
+
+
+>> 04.02.2005
+[CO]
+- Fügte CreateResource() hinzu da PLTSoundBase abstrakt ist und vom Manager selbst die konkrete Instanz
+  erzeugt werden muss. Daher MUSS nun jeder Manager CreateResource() selbst implementieren!
+
+
+
+>> 02.02.2005
+[CO]
+- Auf ResourceManager umgestellt. Schutz gegen doppelte Sound Buffer ist nur beim Erzeugen eines solchen Objektes
+  möglich. Wird ein Sound Buffer per Hand geladen ist es möglich Buffer mit doppelten Daten zu haben... wirklich abfangen
+  etc. lässt sich das nicht - zudem wäre es vielleicht auch nicht erwünscht das abzufangen. :)
+  Derzeit stören mich noch die zwei Handler Klassen, für SoundResource und für die Buffer-Resource, wie man das besser 
+  machen kann weis ich momentan noch nicht. PLTSoundBufferHandler wird eigentlich nur intern in PLTSoundSource verwendet.
+  PLTSoundResource wollte ich nicht von PLTResourceManager ableiten da NUR die Buffer und nicht die Sourcen gemanaged werden
+  sollen - zudem würde es probleme bei der Funktion PLTResourceManager::Create() geben. Aber vielleicht kann man das auch
+  so lassen - denn sogesehen muss man sich normalerweise nur um Sound Sources kümmen und nicht um die verwendeten Buffer.
+
+
+
+>> 30.01.2005
+[CO]
+- Benannte PLTSound in PLTSoundAPI um damit es in der Engine keine Namens Probleme gibt... zudem ist der
+  Name sowieso passender. :)
+
+
+
+>> 19.01.2005
+[CO]
+- PLSoundOpenAL: Implementierte Streaming
+- Neue Funktion: PLTSound::GetStatistics() gibt u.a. zurück wie viele Sound-Quellen gerade aktiv sind
+
+
+
+>> 17.01.2005
+[CO]
+- Neues Teilprojekt: PLSound ist ähnlich aufgebaut wie PLRenderer und ist u.a. für das Einladen und Abspielen von 
+  Sounds verantwortlich. Richtiges Sound-Management muss ähnlich wie bei den Texturen/Meshs in der Engine selbst
+  gemacht werden. PLSoundFMod und PLSoundOpenAL wurden neu geschrieben und arbeiten nun für PLSound anstatt für
+  die Engine. Desweiteren neues Sound-Backend PLSoundNull hinzugefügt welches verwendet wird wenn kein Sound
+  verwendet werden soll. (vergleichbar mit PLRendererNull)
+  Ich habe gleich FMod UND OpenAL implementiert da FMod zwar sehr umfangreich ist, aber dafür für kommerzielle Software
+  Lizens Gebühren bezahlt werden MÜSSEN. (und nicht gerade wenig :) OpenAL+Ogg hingegen ist 'frei', aber dafür bietet 
+  dieses Backend derzeit 'nur' Support für wav und ogg Dateien... aber das reicht ja normalerweise immer... somit kann 
+  sich der Kunde also selbst Entscheiden was genau er verwenden will, und diese Backends sollten wir dann OpenSource 
+  machen damit wir da keine Rechtlichen Probleme bekommen - auf jedenfall sollte man bei Zeiten bei den FMod 
+  Typen nachfragen ob wir das Backend 'anbieten' dürfen ohne als Engine Entwickler selbst was zahlen zu müssen. In
+  dem Fall das auch wir dann was Zahlen müssen nur weil wir so ein Plugin anbieten, sollten wir das Backend nicht 
+  offiziell zum SDK dazulegen sondern entweder zum extra herunterladen anbieten, oder 'unter der Hand' rausgeben - also wenn
+  nen Kunde das als Basis nehmen möchte. :)
+  PLSound bietet im Vergleich zum alten PL-Sound System richtig viele nette Features, z.B. ist es möglich für einzelne Quellen
+  oder global die Abspielgeschwindigkeit zu erhöhen/verlangsamen was z.b. bei SlowMotion Effekten sicherlich gut rüberkommen
+  wird. Wie stark der Dopplereffekt ist lässt sich ebenfalls einstellen. :)
+- Im OpenAL Backend ist das Streaming noch nicht implementiert, im FMod Backend klappt das hingegen schon super :)
+-> Achtung, diese Backends laufen nun natürlich nicht mehr mit dem alten Sound System aus der Engine zusammen. Desweiteren
+   müssen die FMod dlls aktualisiert werden. Für das OpenAL Backend werden weitere dll's benötigt -> Im PLRuntime Ordner
+   liegen diese aktualisierten/neuen dlls. Im Tests Ordner (bin und source) liegt ein neues Test Projekt für PLSound.
+
+
+
+>> 19.12.2004
+[CO]
+- Sound Backends: main.cpp an Plugin in Module Makro Umbenennung angepasst
+
+
+
+>> 14.12.2004
+[SB]
+- Plugin-Definitionen der Renderer-Plugins sowie der Sound-Plugins teilweise wiederhergestellt sowie Includes angepaßt,
+  bei den Plugin-Definitionen war wohl einiges durcheinander gekommen
+
+
+
+>> 20.11.2004
+[CO]
+- Sound System auf RTTI umgestellt, somit können nun auch PLSoundFMod.dll etc. in PLRuntime liegen.
+  PLTSoundManager::GetBackendList() wurde entfernt da nun überflüssig... schon erstaunlich wie die einzelnen Systeme durch das
+  RTTI schlagartig sauber werden, und vorallem ist die Umstellung jedesmal supereinfach. :)
+
+
+
+>> 10.11.04
+[CO]
+- Implementierte OpenAL Sound Backend damit man dann gleich diverse Backends hat um das Plugin System solcher
+  API's zu testen :) (implementierung noch nicht vollständig...)
+- PLTSoundManagerBackend Destruktor ist nun korrekt
+
+
+
+>> 14.12.03
+[CO]
+- Sound Manager: Fehler behoben wenn kein Sound Backend gefunden wurde
+
+
+
+>> 10.12.03
+[CO]
+- Das Sound System verwendet nun Backends anstatt FMod direkt in der Engine zu verwenden und dadurch die verwendung dieser
+  nicht kostenlosen API zu erzwingen. Das jeweilige Backend erzeugt seinen eigenen Engine Konfigurations-Dialog. Wird kein
+  Sound Backend gefunden so ist es nicht möglich Sounds etc. abzuspielen. Wird ein Sound Backend wie z.B. FMod verwendet
+  jedoch die fmod.dll nicht gefunden so wird jedeglich das Sound-System deaktiviert - das Programm kann jedoch ausgeführt
+  werden.
+- Neues Sub-Projekt: PLSoundFMod -> FMod Sound Backend -> standard.pak um Backend Sprach Dateien erweitert
+
+
+
+>> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+
+[SB] Der Rückgabewert von PLTSound::Play() war beim Abspielen vom mods undefiniert, dies wurde behoben, so daß der
+     Rückgabewert nun -1 ist
+[CO] PLTSoundHandler: Hat nun eine eigene Position und Geschwindigkeit -> Diese Daten werden verwendet wenn der Sound
+     Handler an kein Entity gebunden ist um den Sound platzieren zu können
+[CO] Fatalerweise war ein SoundHandler automatisch auch ein Entity was grobe Probleme verursachte. Ein Entity Handler
+     kann nun statdessen an ein Entity gebunden werden.
+[CO] PLTSoundHandler: Sounds werden nun nur noch abgespielt wenn das Sound Entity Aktiv & Sichtbar ist
+[CO] Sound-Manager: Bei Veränderung der Einstellungen (z.B. Sound Device) wird das Sound System nun neu gestartet
+[CO] Sounds & Musik aus zip-Datei ladbar gemacht (jeah, mp3s direkt aus dem Speicher streamen... gibt sicherlich noch etwas
+     mehr Performance ;-)

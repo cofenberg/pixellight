@@ -1,0 +1,388 @@
+/*********************************************************\
+ *  File: SceneContainer.h                               *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLSCENE_SCENECONTAINER_H__
+#define __PLSCENE_SCENECONTAINER_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/Container/Pool.h>
+#include <PLCore/Tools/Loadable.h>
+#include "PLScene/Scene/SceneNode.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLScene {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class SceneQuery;
+class SceneHierarchy;
+class SceneQueryManager;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Scene container node (group node) class which is using scene nodes
+*
+*  @remarks
+*    This is a root or inner node of the scene graph.
+*
+*  @note
+*    - The 'scene node space' axis aligned bounding box should always cover all scene nodes of this container
+*    - Within Get(<Name>) you can also use 'absolute names' instead of 'relative' names. 'Root.MyScene.MyNode'
+*      for instance will return the scene node 'MyNode' within the scene container 'MyScene' which is a
+*      subnode of 'Root'. 'MyScene.MyNode' will return the node 'MyNode' of the container 'MyScene' which is
+*      an element of the current container. 'Parent.MyNode' will return the scene node 'MyNode' within the parent
+*      scene container. 'Parent' returns the parent scene container, 'This' returns THIS container, 'Root' will return
+*      the root scene container itself.
+*    - Use "GetSceneContext()->GetRoot()" to get the 'root' node in which you can insert your scenes
+*    - Derived classes should use a 'SC'-prefix (example: SCCell)
+*    - By default, all draw function flags are set
+*/
+class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneNode>, public PLCore::Loadable {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class SceneNode;
+	friend class SceneLoader;
+	friend class SceneContext;
+
+
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Scene node flags (SceneNode flags extension)
+		*/
+		enum EFlags {
+			NoRecursion = 1<<10	/**< Do NOT take the scene nodes of this container into account when for instance
+									 rendering the scene. 'SCRenderToTexture' for example sets this flag. */
+		};
+		pl_enum(EFlags)
+			pl_enum_base(SceneNode::EFlags)
+			pl_enum_value(NoRecursion, "Do NOT take the scene nodes of this container into account when for instance rendering the scene. 'SCRenderToTexture' for example sets this flag.")
+		pl_enum_end
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLS_RTTI_EXPORT, SceneContainer, "PLScene", PLScene::SceneNode, "Scene container node (group node) class which is using scene nodes")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_attribute(Hierarchy,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
+		// Overwritten SceneNode variables
+		pl_attribute(Flags,		pl_flag_type(EFlags),	0,													ReadWrite,	GetSet,	"Flags",																"")
+		pl_attribute(AABBMin,	PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,	"Minimum position of the 'scene node space' axis aligned bounding box",	"")
+		pl_attribute(AABBMax,	PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,	"Maximum position of the 'scene node space' axis aligned bounding box",	"")
+		// Overwritten Loadable variables
+		pl_attribute(Filename,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI get/set functions                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API PLGeneral::String GetHierarchy() const;
+		PLS_API void SetHierarchy(const PLGeneral::String &sValue);
+		PLS_API void SetFilename(const PLGeneral::String &sValue);
+
+
+	//[-------------------------------------------------------]
+	//[ Events                                                ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<float>	EventLoadProgress;	/**< Scene load progress event. Current load progress as parameter - if not within 0-1 loading is done */
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		PLS_API SceneContainer();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLS_API virtual ~SceneContainer();
+
+		/**
+		*  @brief
+		*    Creates a new scene node
+		*
+		*  @param[in] sClass
+		*    Name of the scene node class to create an instance from
+		*  @param[in] sName
+		*    Scene node name
+		*  @param[in] sParameters
+		*    Optional parameter string
+		*
+		*  @return
+		*    Pointer to the new scene node or NULL if something went wrong
+		*    (maybe unknown class or the class is not derived from SceneNode)
+		*
+		*  @note
+		*    - If the desired name is already in use, the name is chosen automatically
+		*/
+		PLS_API SceneNode *Create(const PLGeneral::String &sClass, const PLGeneral::String &sName = "",
+								 const PLGeneral::String &sParameters = "");
+
+		/**
+		*  @brief
+		*    Calculates and sets the axis align bounding box in 'scene node space'
+		*
+		*  @remarks
+		*    Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of
+		*    this container, you can use this function to calculate and set this a bounding box automatically.
+		*/
+		PLS_API void CalculateAABoundingBox();
+
+		/**
+		*  @brief
+		*    Calculates a transform matrix to bring a transformation from 'this scene container' into 'another scene container'
+		*
+		*  @param[in]  cContainer
+		*    'Target' scene container
+		*  @param[out] mTransform
+		*    Receives the transform matrix, may contain an invalid matrix on error
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLS_API bool GetTransformMatrixTo(SceneContainer &cContainer, PLMath::Matrix3x4 &mTransform);
+
+		//[-------------------------------------------------------]
+		//[ Hierarchy functions                                   ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Creates the scene hierarchy of this scene container
+		*
+		*  @param[in] sClass
+		*    Class name of the scene hierarchy to create, if empty this function will do nothing
+		*
+		*  @return
+		*    Pointer to the created scene hierarchy of this scene container. This is NEVER
+		*    NULL - if no special hierarchy is used the default hierarchy 'PLScene::SHList'
+		*    is used instead which is in fact only a simple list which is using the container directly.
+		*
+		*  @note
+		*    - This hierarchy is destroyed by this scene container automatically
+		*    - All current container scene nodes are added to the hierarchy automatically
+		*      and the hierarchy is created
+		*/
+		PLS_API SceneHierarchy *CreateHierarchy(const PLGeneral::String &sClass = "PLScene::SHList");
+
+		/**
+		*  @brief
+		*    Returns the scene hierarchy of this scene container
+		*
+		*  @return
+		*    Pointer to the scene hierarchy of this scene container,
+		*    can NEVER be NULL!
+		*
+		*  @remarks
+		*    Before the hierarchy is returned, scene nodes are refreshed if required. So, do NOT
+		*    backup the returned pointer, call this function if you need a pointer to the hierarchy!
+		*/
+		PLS_API SceneHierarchy *GetHierarchyInstance();
+
+		//[-------------------------------------------------------]
+		//[ Query functions                                       ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Creates a scene query
+		*
+		*  @param[in] sClass
+		*    Class name of the scene query to create
+		*
+		*  @remarks
+		*    Have a look at SceneQuery for scene query remarks. If your created
+		*    query is no longer required you can destroy it using the DestroyQuery()
+		*    functions. But note that if you need a query frequently it's not a good
+		*    idea to create & destroy it every time you perform this query. For instance
+		*    queries for rendering the scene will store different current rendering information,
+		*    in this case it would be terrible to create & destroy the query every frame!
+		*    Maybe the rendering algorihms doesn't work correctly if this is done because
+		*    sometimes they will need information from the previous frame!
+		*    Such queries should be created once and then be used all the time. Use
+		*    SceneQueryHandler to hold your pointer to the query. If the container is destroyed
+		*    your pointer is set to NULL automatically.
+		*    If for instance the scene hierarchy was changed some queries like render queries have
+		*    to update some internal data. The internal scene query manager of the scene container
+		*    will inform it's queries in such a case.
+		*    The created scene query can ONLY operate on this scene container and it's child scene nodes/
+		*    containers. Therefore you can limit your queries to for instance to a single room instead
+		*    using the hold scene. Use the scene root (GetRootContainer()) to access the complete scene.
+		*
+		*  @return
+		*    Pointer to the created scene query operating on this scene container,
+		*    NULL on error (maybe unknown class or the class is not derived from
+		*    'SceneQuery')
+		*/
+		PLS_API SceneQuery *CreateQuery(const PLGeneral::String &sClass);
+
+		/**
+		*  @brief
+		*    Destroys a scene query
+		*
+		*  @param[in] cQuery
+		*    Scene query to destroy
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (invalid query :)
+		*/
+		PLS_API bool DestroyQuery(SceneQuery &cQuery);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Adds a node
+		*
+		*  @param[in] cNode
+		*    Reference to the node that should be added
+		*  @param[in] sName
+		*    Node name
+		*  @param[in] bInitNode
+		*    Should the node be initialized?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - If the node name is already used another unused node name will be used instead!
+		*    - Use this function only in special cases!
+		*/
+		bool Add(SceneNode &cNode, const PLGeneral::String &sName = "", bool bInitNode = true);
+
+		/**
+		*  @brief
+		*    Removes a node
+		*
+		*  @param[in] cNode
+		*    Reference to the node that should be removed
+		*  @param[in] bDeInitNode
+		*    Should the node be de-initialized?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - The node object itself is still there after it is de-initialized
+		*      and removed from the manager!
+		*    - Use this function only in special cases!
+		*/
+		bool Remove(SceneNode &cNode, bool bDeInitNode = true);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		// Private data
+		PLGeneral::String  m_sHierarchy;	/**< Class name of the scene container hierarchy */
+		SceneContext	  *m_pSceneContext;	/**< The scene context this scene container is in (should be always valid!) */
+		SceneHierarchy	  *m_pHierarchy;	/**< Scene hierarchy, can be NULL */
+		SceneQueryManager *m_pQueryManager;	/**< Scene query manager, can be NULL */
+
+		/** List of scene nodes which need a scene hierarchy refresh */
+		PLGeneral::Pool<SceneNode*> m_lstHierarchyRefresh;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNode functions                 ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void InitFunction();
+		PLS_API virtual void DeInitFunction();
+		PLS_API virtual void UpdateFunction();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLGeneral::ElementManager functions    ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API virtual bool DeInit();
+		PLS_API virtual bool Update();
+		PLS_API virtual SceneNode *Get(PLGeneral::uint32 nIndex = 0) const;
+		PLS_API virtual SceneNode *Get(const PLGeneral::String &sName) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLCore::Loadable functions             ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLS_API virtual bool Load(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLS_API virtual bool Unload();
+		PLS_API virtual PLGeneral::String GetLoadableTypeName() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLCore::Loadable functions          ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual bool CallLoadable(PLGeneral::File &cFile, PLCore::Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[-------------------------------------------------------]
+	private:
+		PLS_API virtual SceneNode *CreateElement(const PLGeneral::String &sName);
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLScene
+
+
+#endif // __PLSCENE_SCENECONTAINER_H__

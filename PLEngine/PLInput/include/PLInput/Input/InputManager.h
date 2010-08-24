@@ -1,0 +1,305 @@
+/*********************************************************\
+ *  File: InputManager.h                                 *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLINPUT_INPUTMANAGER_H__
+#define __PLINPUT_INPUTMANAGER_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/Base/Singleton.h>
+#include <PLGeneral/Container/List.h>
+#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/Base/Event/Event.h>
+#include "PLInput/PLInput.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class Thread;
+	class Mutex;
+}
+namespace PLInput {
+	class InputManager;
+	class Provider;
+	class Device;
+	class Keyboard;
+	class Mouse;
+	class Control;
+}
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::InputManager>;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Input manager
+*
+*  @remarks
+*    The input manager stores all available devices that are present on the computer and
+*    controls the update of input messages.
+*/
+class InputManager : public PLGeneral::Singleton<InputManager> {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class PLGeneral::Singleton<InputManager>;
+	friend class Provider;
+	friend class Control;
+
+
+	//[-------------------------------------------------------]
+	//[ Public events                                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<bool>	EventOnDetectDevices;	/**< Called when device detection has started or stopped */
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Update input manager once per frame
+		*
+		*  @remarks
+		*    This function must be called once per frame to allow devices to update their status
+		*    and to process input messages read from these devices. This is also done to make sure
+		*    that input messages are processed synchronously in the main thread, rather than sending
+		*    messages from other threads asynchronously.
+		*/
+		PLINPUT_API void Update();
+
+		/**
+		*  @brief
+		*    Detect devices
+		*
+		*  @param[in] bReset
+		*    If 'true', delete all input devices and re-detect them all. Otherwise,
+		*    only new and removed input devices will be detected.
+		*
+		*  @remarks
+		*    bReset = true should only be used if really necessary, because existing
+		*    input handlers will most certainly lose their connection to the device.
+		*/
+		PLINPUT_API void DetectDevices(bool bReset = false);
+
+		/**
+		*  @brief
+		*    Get list of input providers
+		*
+		*  @return
+		*    Provider list
+		*/
+		PLINPUT_API const PLGeneral::List<Provider*> &GetProviders() const;
+
+		/**
+		*  @brief
+		*    Get list of detected input providers
+		*
+		*  @return
+		*    Provider list
+		*/
+		PLINPUT_API PLGeneral::List<Provider*> &GetProviders();
+
+		/**
+		*  @brief
+		*    Get a specific input provider
+		*
+		*  @param[in] sProvider
+		*    Name of provider
+		*
+		*  @return
+		*    Provider, or NULL if it doesn't exist
+		*/
+		PLINPUT_API Provider *GetProvider(const PLGeneral::String &sProvider);
+
+		/**
+		*  @brief
+		*    Get list of devices
+		*
+		*  @return
+		*    Device list
+		*/
+		PLINPUT_API PLGeneral::List<Device*> &GetDevices();
+
+		/**
+		*  @brief
+		*    Get a specific device
+		*
+		*  @param[in] sDevice
+		*    Name of device
+		*
+		*  @return
+		*    Device, or NULL if it doesn't exist
+		*/
+		PLINPUT_API Device *GetDevice(const PLGeneral::String &sDevice) const;
+
+		/**
+		*  @brief
+		*    Get default keyboard device
+		*
+		*  @return
+		*    Default keyboard, can be NULL
+		*/
+		PLINPUT_API Keyboard *GetKeyboard() const;
+
+		/**
+		*  @brief
+		*    Get default mouse device
+		*
+		*  @return
+		*    Default mouse, can be NULL
+		*/
+		PLINPUT_API Mouse *GetMouse() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		InputManager();
+
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		InputManager(const InputManager &cSource);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~InputManager();
+
+		/**
+		*  @brief
+		*    Destroy all input providers and devices
+		*/
+		void Clear();
+
+		/**
+		*  @brief
+		*    Detect devices from a specific provider
+		*
+		*  @param[in] sProvider
+		*    Name of provider
+		*  @param[in] bReset
+		*    If 'true', delete all input devices and re-detect them all. Otherwise,
+		*    only new and removed input devices will be detected.
+		*
+		*  @remarks
+		*    If the provider is already present, it's Detect()-method will be called. Otherwise,
+		*    a new instance of the provider will be created, then Detect() will be called as well.
+		*/
+		void DetectProvider(const PLGeneral::String &sProvider, bool bReset);
+
+		/**
+		*  @brief
+		*    Add a new input device
+		*
+		*  @param[in] pDevice
+		*    Input device
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool AddDevice(Device *pDevice);
+
+		/**
+		*  @brief
+		*    Remove device
+		*
+		*  @param[in] pDevice
+		*    Input device
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool RemoveDevice(Device *pDevice);
+
+		/**
+		*  @brief
+		*    Update control
+		*
+		*  @param[in] pControl
+		*    Input control
+		*
+		*  @remarks
+		*    This marks the control as being updated recently, which will fire a message
+		*    in the next Update()-call.
+		*/
+		void UpdateControl(Control *pControl);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		// Providers and devices
+		PLGeneral::List<Provider*>						 m_lstProviders;		/**< List of providers */
+		PLGeneral::HashMap<PLGeneral::String, Provider*> m_mapProviders;		/**< Hash map of providers */
+		PLGeneral::List<Device*>						 m_lstDevices;			/**< List of devices */
+		PLGeneral::HashMap<PLGeneral::String, Device*>	 m_mapDevices;			/**< Hash map of devices */
+		PLGeneral::Mutex								*m_pMutex;				/**< Mutex for reading/writing input messages */
+		PLGeneral::List<Control*>						 m_lstUpdatedControls;	/**< List of controls that have been updated (message list) */
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLInput
+
+
+#endif // __PLINPUT_INPUTMANAGER_H__

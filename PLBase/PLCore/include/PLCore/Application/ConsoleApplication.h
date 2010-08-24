@@ -1,0 +1,573 @@
+/*********************************************************\
+ *  File: ConsoleApplication.h                           *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLCORE_CONSOLE_APPLICATION_H__
+#define __PLCORE_CONSOLE_APPLICATION_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/Tools/Version.h>
+#include <PLGeneral/Tools/CommandLine.h>
+#include "PLCore/Application/ApplicationContext.h"
+#include "PLCore/Config/Config.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Application class
+*
+*  @remarks
+*    An application class is a template for all kind of applications.
+*    It controls the main loop of the program and provides all typical data that
+*    is needed for an application. Derived classes are provided for specific tasks,
+*    e.g. GUI or server applications.
+*
+*    This class provides a most basic framework for console applications.
+*    It keeps the filename and startup directory of the executable for later use and
+*    provides a name, title and version of the application. It also provides an instance
+*    of the command line parser to work with command line parameters (see CommandLine
+*    for further explanations).
+*/
+class ConsoleApplication {
+
+
+	//[-------------------------------------------------------]
+	//[ Public data types                                     ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Signal
+		*/
+		enum ESignal {
+			SignalInterrupt = 1,	/**< Application interrupted (caused by ctrl-c) */
+			SignalTerm,				/**< Exit application */
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Get pointer to current application
+		*
+		*  @return
+		*    Pointer to application
+		*
+		*  @remarks
+		*    The global application pointer is set when the constructor of an Application
+		*    is called and reset when it's destructor is called. While this makes it safe
+		*    to use two or more Application instances after each other, you should *never*
+		*    use more than one Application instance at a time!
+		*/
+		PLCORE_API static ConsoleApplication *GetApplication();
+
+
+	//[-------------------------------------------------------]
+	//[ Private static data                                   ]
+	//[-------------------------------------------------------]
+	private:
+		static ConsoleApplication *g_pApplication;		/**< Pointer to the current application instance */
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLCORE_API ConsoleApplication();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API virtual ~ConsoleApplication();
+
+		/**
+		*  @brief
+		*    Get application context
+		*
+		*  @return
+		*    Application context
+		*/
+		PLCORE_API const ApplicationContext &GetApplicationContext() const;
+
+		/**
+		*  @brief
+		*    Get application name
+		*
+		*  @return
+		*    Name of the application
+		*/
+		PLCORE_API PLGeneral::String GetName() const;
+
+		/**
+		*  @brief
+		*    Set application name
+		*
+		*  @param[in] sName
+		*    Name of the application
+		*/
+		PLCORE_API void SetName(const PLGeneral::String &sName);
+
+		/**
+		*  @brief
+		*    Get application title
+		*
+		*  @return
+		*    Title of the application
+		*/
+		PLCORE_API PLGeneral::String GetTitle() const;
+
+		/**
+		*  @brief
+		*    Set application title
+		*
+		*  @param[in] sTitle
+		*    Title of the application
+		*/
+		PLCORE_API void SetTitle(const PLGeneral::String &sTitle);
+
+		/**
+		*  @brief
+		*    Get version of application
+		*
+		*  @return
+		*    Version of the program
+		*/
+		PLCORE_API const PLGeneral::Version &GetVersion() const;
+
+		/**
+		*  @brief
+		*    Set version of application
+		*
+		*  @param[in] cVersion
+		*    Version of the program
+		*/
+		PLCORE_API void SetVersion(const PLGeneral::Version &cVersion);
+
+		/**
+		*  @brief
+		*    Check if application uses multi-user environment
+		*
+		*  @return
+		*    'true' if multi-user environment is used, else 'false'
+		*/
+		PLCORE_API bool GetMultiUser() const;
+
+		/**
+		*  @brief
+		*    Set if application uses multi-user environment
+		*
+		*  @param[in] bMultiUser
+		*    'true' if multi-user environment is used, else 'false'
+		*
+		*  @remarks
+		*    By default, multi-user environment is used.
+		*    If on, e.g. config and log files are loaded and saved in the user directory
+		*/
+		PLCORE_API void SetMultiUser(bool bMultiUser);
+
+		/**
+		*  @brief
+		*    Check if application uses the PixelLight runtime
+		*
+		*  @return
+		*    'true' if PixelLight runtime is used, else 'false'
+		*/
+		PLCORE_API bool GetUseRuntime() const;
+
+		/**
+		*  @brief
+		*    Set if application uses the PixelLight runtime
+		*
+		*  @param[in] bUseRuntime
+		*    'true' if PixelLight runtime is used, else 'false'
+		*
+		*  @remarks
+		*    By default, the PixelLight runtime is used. If so, the plugins contained in the
+		*    installed runtime directory will be loaded and data packages will be added to the
+		*    loadable manager. If you don't want to scan for and use an installed PixelLight
+		*    runtime version, set this to false. Note also that a default configuration option
+		*    exists for this, if it is found it will set the value of this flag.
+		*/
+		PLCORE_API void SetUseRuntime(bool bUseRuntime);
+
+		/**
+		*  @brief
+		*    Get name of config file
+		*
+		*  @return
+		*    Config filename (only filename, not a path!)
+		*/
+		PLCORE_API PLGeneral::String GetConfigName() const;
+
+		/**
+		*  @brief
+		*    Set name of config file
+		*
+		*  @param[in] sConfigName
+		*    Config filename (only filename, not a path!)
+		*
+		*  @remarks
+		*    Default is "<appname>.cfg"
+		*/
+		PLCORE_API void SetConfigName(const PLGeneral::String &sConfigName);
+
+		/**
+		*  @brief
+		*    Get name of log file
+		*
+		*  @return
+		*    Log filename (only filename, not a path!)
+		*/
+		PLCORE_API PLGeneral::String GetLogName() const;
+
+		/**
+		*  @brief
+		*    Set name of log file
+		*
+		*  @param[in] sLogName
+		*    Log filename (only filename, not a path!)
+		*
+		*  @remarks
+		*    Default is "<appname>.log"
+		*/
+		PLCORE_API void SetLogName(const PLGeneral::String &sLogName);
+
+		/**
+		*  @brief
+		*    Get subdirectory for application data files
+		*
+		*  @return
+		*    Subdirectory (relative path)
+		*/
+		PLCORE_API PLGeneral::String GetAppDataSubdir() const;
+
+		/**
+		*  @brief
+		*    Set subdirectory for application data files
+		*
+		*  @param[in] sSubdir
+		*    Subdirectory (relative path)
+		*
+		*  @remarks
+		*    Default is "<appname>" (Windows) resp. ".<appname>" (Linux).
+		*    If you change this, you should use System::GetDataDirName(), to convert your name
+		*    into the typical style for the used OS.
+		*/
+		PLCORE_API void SetAppDataSubdir(const PLGeneral::String &sSubdir);
+
+		/**
+		*  @brief
+		*    Returns the configuration instance
+		*
+		*  @return
+		*    The configuration instance
+		*/
+		PLCORE_API Config &GetConfig();
+
+		/**
+		*  @brief
+		*    Returns whether or not the application is currently running
+		*
+		*  @return
+		*    'true' if the application is currently running, else 'false'
+		*/
+		PLCORE_API bool IsRunning() const;
+
+		/**
+		*  @brief
+		*    Exit application
+		*
+		*  @param[in] nResult
+		*    Return code for application
+		*
+		*  @remarks
+		*    This will set the application return code and set m_bRunning to 'false', so that the application
+		*    should exit as soon as possible. To immediatly terminate the execution, use System::Exit()
+		*/
+		PLCORE_API void Exit(int nResult);
+
+		/**
+		*  @brief
+		*    Run the application
+		*
+		*  @param[in] sExecutableFilename
+		*    Absolute application executable filename
+		*  @param[in] lstArguments
+		*    List of arguments to the program
+		*
+		*  @return
+		*    Exit code
+		*/
+		PLCORE_API int Run(const PLGeneral::String &sExecutableFilename, const PLGeneral::Array<PLGeneral::String> &lstArguments);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual ConsoleApplication functions        ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Initialization function that is called prior to Main()
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' which will stop the application
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Parse the command line (m_cCommandLine), set your options in the constructor
+		*    - Call OnInitLog()
+		*    - Call OnInitCmdLine()
+		*    - Call OnInitConfig()
+		*    - Call OnInitPlugins()
+		*    - Call OnInitData()
+		*    - Call OnInit()
+		*    - Return and go on with Main()
+		*/
+		PLCORE_API virtual bool Init();
+
+		/**
+		*  @brief
+		*    Main function
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
+		*/
+		PLCORE_API virtual void Main();
+
+		/**
+		*  @brief
+		*    De-initialization function that is called after Main()
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Call OnDeInit()
+		*    - Save configuration
+		*    - Close log
+		*/
+		PLCORE_API virtual void DeInit();
+
+		/**
+		*  @brief
+		*    Called when application should initialize it's log
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Open log file according to parameter '--logfile' (default: <appname>.log)
+		*    - Set verbose mode according to parameter '--verbose'
+		*/
+		PLCORE_API virtual void OnInitLog();
+
+		/**
+		*  @brief
+		*    Called when application should check command line options
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Check for command line errors or the parameters --help or --version
+		*      - On '--help' or on error, call OnPrintHelp() and exit
+		*      - On '--version', call OnPrintVersion() and exit
+		*
+		*  @notes
+		*    - To end the application here, use Application::Exit()
+		*/
+		PLCORE_API virtual void OnInitCmdLine();
+
+		/**
+		*  @brief
+		*    Called when application should initialize it's configuration
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Load configuration from file <appname>.cfg
+		*    - Save config file name to ApplicationContext
+		*    - If a config has been loaded or created:
+		*      - Read 'FirstRun' and call OnFirstRun() if set
+		*      - Read 'UsePixelLightRuntime' and update m_bUseRuntime accordingly
+		*/
+		PLCORE_API virtual void OnInitConfig();
+
+		/**
+		*  @brief
+		*    Called when application should load it's plugins
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Scan for plugins in application directory non-recursivly
+		*    - Scan for plugins in application directory "Plugins/" recursivly
+		*    - If UseRuntime is set to 'true':
+		*      - Load plugins from PixelLight runtime directory
+		*/
+		PLCORE_API virtual void OnInitPlugins();
+
+		/**
+		*  @brief
+		*    Called when application should set it's data paths
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Set '.' as base path in LoadableManager
+		*    - Scan for packages in "Data/" directory
+		*    - Set application directory as base path in LoadableManager
+		*    - Scan for packages in application directory "Data/" directory
+		*    - If UseRuntime is set to 'true':
+		*      - Set PixelLight runtime directory as base path in LoadableManager
+		*      - Scan for data packages in PixelLight runtime directory
+		*    - Get current language and load PixelLight localization file
+		*/
+		PLCORE_API virtual void OnInitData();
+
+		/**
+		*  @brief
+		*    Called when application should de-initialize itself
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
+		*/
+		PLCORE_API virtual void OnDeInit();
+
+		/**
+		*  @brief
+		*    Called when application should initialize itself
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Write some general information into the log
+		*    - Reset timing class
+		*/
+		PLCORE_API virtual void OnInit();
+
+		/**
+		*  @brief
+		*    Function that is called when the program has been started for the first time
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Write message into log
+		*/
+		PLCORE_API virtual void OnFirstProgramStart();
+
+		/**
+		*  @brief
+		*    Function that is called to display a help message about the application
+		*
+		*  @remarks
+		*    The default implementation prints the application title and it's command line
+		*    options onto the screen
+		*/
+		PLCORE_API virtual void OnPrintHelp();
+
+		/**
+		*  @brief
+		*    Function that is called to display version information of the application
+		*
+		*  @remarks
+		*    The default implementation prints the application title and version that is
+		*    stored in Application
+		*/
+		PLCORE_API virtual void OnPrintVersion();
+
+		/**
+		*  @brief
+		*    Function that is called when a signal has arrive
+		*
+		*  @param[in] nSignal
+		*    Signal
+		*  @return
+		*    'true' to go on with the signal (e.g. terminate application), 'false' to cancel
+		*
+		*  @remarks
+		*    This function is called when the operation system has sent a signal to the process.
+		*    Use this to make your application exit gracefully, e.g. set a flag that lets your main function exit
+		*    after finishing the current task and cleaning up the application. Otherwise, your process is likely to
+		*    be killed by the system.
+		*
+		*  @remarks
+		*    The default implementation sets m_bRunning to 'false', be sure to react to this flag!
+		*/
+		PLCORE_API virtual bool OnSignal(ESignal nSignal);
+
+
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Signal handler callback
+		*
+		*  @param[in] nSignal
+		*    Signal
+		*/
+		static void SignalHandler(int nSignal);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		ApplicationContext		m_cApplicationContext;	/**< Application context */
+		PLGeneral::String		m_sName;				/**< Name of application */
+		PLGeneral::String		m_sTitle;				/**< Title of application */
+		PLGeneral::Version		m_cVersion;				/**< Version of application */
+		bool					m_bMultiUser;			/**< Use multi-user environment? */
+		bool					m_bUseRuntime;			/**< Use PixelLight runtime? */
+		PLGeneral::String		m_sConfigName;			/**< File name (not path) of config */
+		PLGeneral::String		m_sLogName;				/**< File name (not path) of log */
+		PLGeneral::String		m_sAppDataSubdir;		/**< Subdirectory for application data */
+		Config					m_cConfig;				/**< Configuration instance */
+		PLGeneral::CommandLine	m_cCommandLine;			/**< Command line arguments */
+		bool					m_bRunning;				/**< Is the application currently running? */
+		int						m_nResult;				/**< Return code */
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLCore
+
+
+#endif // __PLCORE_CONSOLE_APPLICATION_H__

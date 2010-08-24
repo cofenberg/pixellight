@@ -1,0 +1,23 @@
+\chapter{WiiMote}
+Accessing a WiiMote is quite simple:
+
+\begin{lstlisting}[caption=WiiMote usage example]
+// Get WiiMote input device
+WiiMote *pWiiMote = (WiiMote*)InputManager::GetInstance()->GetDevice("WiiMote0");
+if (pWiiMote && (pWiiMote->ButtonA.IsPressed())) {
+  // Get the current time difference
+  const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
+
+  // Get orientation
+  const float fX = float(pWiiMote->OrientX.GetValue() * fTimeDiff * Math::DegToRad);
+  const float fY = float(pWiiMote->OrientY.GetValue() * fTimeDiff * Math::DegToRad);
+  const float fZ = float(pWiiMote->OrientZ.GetValue() * fTimeDiff * Math::DegToRad);
+
+  // Get a quaternion representation of the rotation delta
+  Quaternion qRotInc;
+  EulerAngles::ToQuaternion(fX, fY, fZ, qRotInc);
+
+  // Set new rotation
+  qNewRotation = qOldRotation * qRotInc;
+}
+\end{lstlisting}

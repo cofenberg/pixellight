@@ -1,0 +1,14 @@
+\chapter{Keyboard}
+Accessing a keyboard is quite simple:
+
+\begin{lstlisting}[caption=Keyboard usage example]
+// Get keyboard input device
+Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+if (pKeyboard) {
+  // Update movement vector
+  if (pKeyboard->KeyUp.IsPressed())
+    vMovement += vDirVector;
+  if (pKeyboard->KeyDown.IsPressed())
+    vMovement -= vDirVector;
+}
+\end{lstlisting}

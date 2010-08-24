@@ -1,0 +1,186 @@
+Changes in PixelLight 0.9.2-R1 (released on August 23, 2010 - first public PixelLight release)
+- Feature: The PLGui project was replaced by it's third complete refactoring
+- Feature: Added XML versions of the PixelLight chunk and the PixelLight mesh file format
+- Feature: Linux port improvements, PixelLight now runs as a whole under Linux as well
+- Feature: OpenGL ES 2.0 renderer backend for mobile devices
+- Feature: Initial support for the mobile platform Maemo (used for example by Nokia N900)
+- Feature: PLInput now also supports device output controls such as rumble and force-feedback effects as well as control over device LEDs
+- Feature: PLInput now also supports virtual devices for device control mapping
+- Change: Application framework refactoring
+- Change: PLInput refactoring
+- Change: Renamed PLEngine project into PLScene
+- Change: Added new PLEngine project
+- Change: Merged PLCompositingFixedFunctions and PLCompositingShaders into one common PLCompositing project
+- Bugfix: Various bugfixes within PLSound and it's backend implementations like PLSoundOpenAL
+- Removed: Debug dialog (new "ingame"-edit features will follow with one of the next PixelLight versions)
+- Removed: Loadable type search paths, write for example "Data/Meshes/MyMesh.mesh" instead of "MyMesh.mesh"
+
+
+Changes in PixelLight 0.9.1-R3 (released on July 01, 2010)
+- Feature: PLRenderer now contains a complete new font interface
+- Change: "PLRenderer::DrawHelpers" refactoring, internally, there's a fixed functions and shaders based implementation
+
+
+Changes in PixelLight 0.9.1-R2 (released on June 22, 2010)
+- Feature: PLRenderer now contains a complete new shader interface with vertex, geometry and fragment shader support
+- Feature: PLRendererOpenGL supports now the shader languages GLSL and Cg instead of just Cg
+- Change: Moved the fixed functions based scene renderer passes from PLEngine into the new plugin project PLCompositingFixedFunctions
+- Change: Moved the shaders based scene renderer passes from PLEngine into the new plugin project PLCompositingShaders
+- Change: "PLRendererOpenGL::RendererOpenGL" renamed into "PLRendererOpenGL::Renderer", same for PLDatabase, PLSound and PLPhysics
+- Change: To enhance the flexibility, PLRenderer and it's backends no longer dependent on PLGui
+- Change: "SRPForwardDepth" was replaced by the more universal "SRPDiffuseOnly"
+- Change: "SRPForwardAmbient" was replaced by the more universal "SRPDirectionalLighting"
+- Change: "SRPForwardLighting" was replaced by the more universal "SRPLighting"
+
+
+Changes in PixelLight 0.9.1-R1 (released on June 1, 2010)
+- Feature: PLCore now contains a complete new, even more powerful RTTI system which comes with an extensive documentation
+- Feature: "EffectWeight" parameter added to all post process effect scene node modifiers to blend the effect smoothly in/out
+- Feature: New samples for programmers
+- Change: Previous samples renamed into demos and refactored
+- Change: Due RTTI usage, "Loader"/"Loadable" and associated classes moved from PLGeneral to PLCore
+- Change: Due RTTI usage, "Resource" and associated classes moved from PLGeneral to PLCore
+- Change: Due RTTI usage, "Chunk" and associated classes moved from PLGeneral to PLCore
+- Change: Due RTTI usage, "Localization" and associated classes moved from PLGeneral to PLCore
+- Change: "PLEngine::SceneNode" is now using the new "PLMath::Transform3" which can be accessed by using "PLEngine::SceneNode::GetTransform()"
+- Change: The PixelLight documentation CC licence is now "Attribution-NonCommercial-ShareAlike 3.0 Unported" instead of "Attribution-Share Alike 3.0 Unported"
+- Change: "PLSceneViewer" moved from "PLSamples" to "PLTools" and was renamed into the more general "PLViewer"
+- Change: Moved "3dsMax" directory into the "Tools" directory
+- Change: "PLGeneral::Log" moved from the directory "Tools" into the directory "Log"
+- Change: The standard log filename is now "PLLog.txt" instead of "pllog.log"
+- Removed: Old RTTI system within PLGeneral
+- Removed: Depreciated "ExtendedSceneApplication", use picking classes "Picking", "PickingResult" and "MousePicking" instead
+
+
+Changes in PixelLight 0.9.0-R2 (released on Mai 4, 2010)
+- Feature: PLMath::Half offers methods to deal with half values (16 bit floating point)
+- Feature: SNMPhysicsUpdateVelocity added, if this scene node modifier is added, static bodies influence dynamic bodies if they move
+- Change: PLRenderer::TextureBuffer interface improvements
+- Bugfix: Fixed situations within the deferred scene renderer resulting in NANs
+- Removed: Scene node PLEngine::SNClear, this functionality is now done by the scene renderer pass PLEngine::SRPBegin
+
+
+Changes in PixelLight 0.9.0-R1 (released on April 16, 2010)
+- Feature: New PLXmlText project, define website like GUI content using XML files
+- Feature: New scene renderer "Deferred.sr" for modern deferred rendering
+- Feature: "Horizon Based Ambient Occlusion" (HBAO) support for the deferred scene renderer
+- Feature: "High Definition Ambient Occlusion" (HDAO) support for the deferred scene renderer
+- Feature: "Glow" support for the deferred scene renderer
+- Feature: "Depth Of Field" (DOF) support for the deferred scene renderer
+- Feature: "God Rays" support for the deferred scene renderer
+- Feature: "EdgeAA" support for the deferred scene renderer for simple anti-aliasing
+- Feature: "Depth fog" support for the deferred scene renderer
+- Feature: Added "Reinhard Tone Mapping" for converting rendered images from HDR into LDR
+- Feature: HDR gamma correction for linear space to sRGB space conversion when the rendering is done
+- Feature: Logarithmic average luminance calculation for automatic HDR exposure
+- Feature: HDR light adaptation, simulates the gradual adaptation of the human eye to different lighting conditions
+- Feature: HDR bloom
+- Change: The material parameter "ReflectionMapColor" was renamed into the more universal "ReflectionColor"
+- Change: "PLGeneral::Config" is no longer a singleton
+- Change: PLRenderer refactoring: Legacy features moved into a new "FixedFunctions" interface, update our plfx-files if required
+- Bugfix: PLRendererOpenGL multi-render-targets support is now working
+- Bugfix: "ShaderLighting.sr", "Spherical Environment Mapping" fixed
+- Removed: Out-of-date PixelLab and it's plugins PLGuiEditor, PLMaterialEditor, PLMeshEditor, PLRagdollEditor, PLSceneEditor
+- Removed: Support within PLRenderer for legacy accumulation buffer, use render to texture instead
+
+
+Changes in PixelLight 0.8.5
+- Feature: New picking classes "Picking", "PickingResult" and "MousePicking" for "ExtendedSceneApplication" replacement
+- Feature: Added "delayed loading" within "PLEngine::SNMesh" for initially invisible scene nodes
+- Feature: Added "delayed loading" within "PLRendererOpenGL::Font2D" and "PLRendererOpenGL::Font3D"
+- Feature: Minor performance improvements on various places
+- Feature: "Windows 7" detection and general compatibility tests
+- Feature: Added anti-aliasing (multisample) support to the OpenGL renderer
+- Feature: Added a view rotation offset to "PLEngine::SNCamera", can for example be used together with a head tracker system
+- Feature: Added "PLEngine::SQByName" scene query to enumerate scene nodes by their name using a regular expression
+- Feature: Added "PLEngine::SQByClassName" scene query to enumerate scene nodes by their class name using a regular expression
+- Feature: 3ds Max 2010 scene exporter added
+- Change: "PLGui::OnMouseButtonDoubleClick()" now also fires a "OnMouseButtonDown()", which was omitted in previous versions
+- Change: Scene node modifier implementations are using their "active"-state again
+- Change: Renamed "SpaceNavigator" into "SpaceMouse"
+- Change: Added "PLEngine::SceneContext" class
+- Change: Removed legacy "PLEngine::PL" class
+- Change: Removed legacy selection buffer feature from "PLRenderer"
+- Change: "PLGeneral::CommandLine" refactoring
+- Change: "PLEngine::SNBitmap" renamed into "PLEngine::SNBitmap2D" and derived from new abstract class "PLEngine::SNBitmap"
+- Change: New "PLEngine::SNBitmap3D" scene node for none camera aligned bitmaps
+- Change: "PLEngine::SNText" renamed into "PLEngine::SNText2D" and derived from new abstract class "PLEngine::SNText"
+- Change: New "PLEngine::SNText3D" scene node for none camera aligned texts
+- Change: Removed "PLEngine::SNBillboard", "PLEngine::SNBillboardCylindrical" and "PLEngine::SNBillboardSpherical"
+- Change: Added "PLEngine::SNMBillboard", "PLEngine::SNMBillboardCylindrical" and "PLEngine::SNMBillboardSpherical"
+- Change: PLGraphics completely rewritten to get rid of the DevIL image library dependency
+- Bugfix: Minor bugfixing on various places
+
+
+Changes in PixelLight 0.8.4
+- Feature: "RenderApplication": Added: "IsFullscreen()", "SetFullscreen()" and "OnFullscreenMode()"
+- Feature: Added within "ExtendedSceneApplication" an optional maximum picking distance
+- Feature: You can now also use "AltGr + Return" within "RenderFrame" to toggle fullscreen mode
+- Feature: 3ds Max scene exporter supports now the "Subtractive Transparency" parameter of the standard material
+- Feature: "ShaderLighting" scene renderer: "SNMPostProcessGlow" post process effect added
+- Feature: "ShaderLighting" scene renderer: Added support for the new material parameters "Glow" and "GlowMap"
+- Feature: New scene node modifier "SNMCameraZoom" for camera zoom
+- Change: "BasicSceneApplication::SetCamera()" automatically performs advanced actions
+- Change: "RenderFrame" is no longer automatically changing the visibility of the OS mouse cursor
+- Change: SceneNode: Renamed "GetCommonParent()" into "GetCommonContainer()"
+- Change: SceneNode: Renamed "GetRootNode()" into "GetRootContainer()"
+- Change: The default setting for "RenderState::DstBlendFunc" is now "BlendFunc::InvSrcAlpha" instead of "BlendFunc::One"
+- Change: "SNMPositionKeyframeAnimation" & "SNMRotationKeyframeAnimation" & "SNMScaleKeyframeAnimation" are now using binary "chunk"-files
+- Change: By default, the ingame GUI font depends on the virtual GUI size instead of the window size
+- Change: "SceneContainer::Get("")" no longer returns "the current node", instead it returns "NULL", use "SceneContainer::Get("This")" instead
+- Bugfix: Mouse movement was frame rate dependent due to polling policy
+- Bugfix: "SceneContainer::GetTransformMatrixTo()" wasn't always working correctly
+- Bugfix: 3ds Max scene exporter failed to export keyframes for certain nodes
+- Bugfix: 3ds Max scene exporter user property "OriginalNormals" removed because no longer required
+
+
+Changes in PixelLight 0.8.3
+- Feature: Added "ExtendedSceneApplication" application class offering for example picking functions
+- Feature: "ShaderLighting" scene renderer: Added support for the new material parameter "OpacityOcclusion"
+- Feature: Scene renderers: Added support for the new material parameters "SrcBlendFunc" & "DstBlendFunc"
+- Feature: Added "SpaceNavigator"-support in "SNMMouseLookController", "SNMMoveController" and "SNMMouseOrbitingController"
+- Feature: 3ds Max scene exporter supports now the "Index Of Refraction" parameter of the standard material
+- Feature: 3ds Max scene exporter supports now node multimaterial per instance (will result in "skin"-files)
+- Feature: 3ds Max scene exporter automatically creates a camera (with default modifiers) for active viewport without an assigned camera node
+- Feature: 3ds Max scene exporter "Publish"-option added (adding "PLSceneViewer" to the exported data so have a "runnable package")
+- Change: PLPhysicsNewton is now using "Newton Game Dynamics 2 Beta 18"
+- Change: Improved and extended "SNMOrbiting", "SNMMouseOrbitingController", "SNMMouseLookController" and "SNMMoveController"
+- Change: "BasicSceneApplication": Added "SaveScreenshot()", "MakeScreenshotFilenameRecommendation()" and "LoadScene()"
+- Change: "SceneContainer": Added "GetTransformMatrixTo()"
+- Change: "SceneNode": Added "GetCommonParent()"
+- Bugfix: "ShaderLighting" scene renderer DOF post process (SNMPostProcessDepthOfField) support was broken
+- Bugfix: "ShaderLighting" scene renderer "Opacity" support was broken
+
+
+Changes in PixelLight 0.8.2
+- Feature: Added support for embedding a GuiApplication (or any derived classes) into other windows or programs
+- Feature: "ShaderLighting" scene renderer now supports directional lights
+- Feature: "ShaderLighting" scene renderer now supports fresnel reflection
+- Feature: Added "SNAntiPortal", it's similar to a "cell portal", but nodes seen through it are not drawn (occlusion culling)
+- Feature: Added special scene node modifier "SNMOrbiting" for orbiting and "SNMMouseOrbitingController" for orbiting by using the mouse
+- Feature: 3ds Max scene exporter "anti-portal"-support added
+- Feature: 3ds Max scene exporter has now point cache support ("PC2" file format version 1) -> adds "<point cache filename>_<frame>" named morph targets
+- Feature: 3ds Max 2009 scene exporter added
+- Feature: 3ds Max scene exporter toolbar added ("PixelLight Scene Exporter Toolbar")
+- Feature: 3ds Max scene exporter "Normal Bump" texture map support added
+- Feature: PixelLight Browser Plugins (for Internet Explorer and Mozilla Firefox) are usable again, but only show a static demonstration for now
+- Change: Renamed "SNPortal" into "SNCellPortal"
+- Bugfix: "Two Sided Lighting" of the "ShaderLighting" scene renderer produced dark silhouettes in certain situations
+
+
+Changes in PixelLight 0.8.1
+- Feature: Main application framework design is now complete
+- Change: Look direction of SNCamera and SNSpotLight changed to positive z-axis ("Flags="FlipXAxis|FlipZAxis"" normally no longer required)
+- Change: SNMMoveController & SNMMouseMoveController: Renamed "DefaultSpeed" into "Speed"
+- Change: Renamed the directory "Data/Meshs" into "Data/Meshes"
+- Change: 3ds Max exporter: Removed "Flags" key in the user properties (use "Vars" instead)
+- Bugfix: 3ds Max scene exporter was in some situations exporting wrong texture coordinates when using multi-materials
+- Bugfix: 3ds Max scene exporter was in some situations exporting wrong textures when using multi-materials
+- Bugfix: 3ds Max scene exporter wasn't resetting everything when using the "Default"-button in the dialog
+
+
+Changes in PixelLight 0.8.0
+- PixelLight SDK for Windows released
+- Bug fixed: PLInput could cause a crash on 64bit systems (see http://support.microsoft.com/kb/946924/en/)
+- Lots of bugfixes
+- Improved 3ds Max exporter to avoid typical pitfalls

@@ -1,0 +1,215 @@
+/*********************************************************\
+ *  File: TypeObjectPtr.inl                              *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLCORE_TYPE_OBJECTPTR_INL__
+#define __PLCORE_TYPE_OBJECTPTR_INL__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Object;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Type wrapper for 'Object*'
+*/
+template <>
+class Type<Object*> {
+
+
+	//[-------------------------------------------------------]
+	//[ Public static type information                        ]
+	//[-------------------------------------------------------]
+	public:
+		// Type
+		typedef Object *_Type;
+
+		// Type ID
+		static const int TypeID = TypeObjectPtr;
+
+		// Get type name
+		static PLGeneral::String GetTypeName() {
+			return "Object*";
+		}
+
+		// Convert var to pointer
+		static Object *ConvertFromVar(const DynVar *pValue)
+		{
+			// [TODO] Should be as big as possible (uint32/uint64)
+			return (Object*)pValue->GetInt();
+		}
+
+		// Convert pointer to bool
+		static bool ConvertToBool(Object *pValue)
+		{
+			return (bool)(pValue != NULL);
+		}
+
+		// Convert bool to pointer
+		static Object *ConvertFromBool(bool bValue)
+		{
+			return NULL;
+		}
+
+		// Convert pointer to int
+		static int ConvertToInt(Object *pValue)
+		{
+			return (int)(pValue);
+		}
+
+		// Convert int to pointer
+		static Object *ConvertFromInt(int nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to int8
+		static PLGeneral::int8 ConvertToInt8(Object *pValue)
+		{
+			return (PLGeneral::int8)(PLGeneral::uint32)(pValue);
+		}
+
+		// Convert int8 to pointer
+		static Object *ConvertFromInt8(PLGeneral::int8 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to int16
+		static PLGeneral::int16 ConvertToInt16(Object *pValue)
+		{
+			return (PLGeneral::int16)(PLGeneral::uint32)(pValue);
+		}
+
+		// Convert int16 to pointer
+		static Object *ConvertFromInt16(PLGeneral::int16 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to int32
+		static PLGeneral::int32 ConvertToInt32(Object *pValue)
+		{
+			return (PLGeneral::int32)(pValue);
+		}
+
+		// Convert int32 to pointer
+		static Object *ConvertFromInt32(PLGeneral::int32 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to uint8
+		static PLGeneral::uint8 ConvertToUInt8(Object *pValue)
+		{
+			return (PLGeneral::uint8)(PLGeneral::uint32)(pValue);
+		}
+
+		// Convert uint8 to pointer
+		static Object *ConvertFromUInt8(PLGeneral::uint8 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to uint16
+		static PLGeneral::uint16 ConvertToUInt16(Object *pValue)
+		{
+			return (PLGeneral::uint16)(PLGeneral::uint32)(pValue);
+		}
+
+		// Convert uint16 to pointer
+		static Object *ConvertFromUInt16(PLGeneral::uint16 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to uint32
+		static PLGeneral::uint32 ConvertToUInt32(Object *pValue)
+		{
+			return (PLGeneral::uint32)(pValue);
+		}
+
+		// Convert uint32 to pointer
+		static Object *ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to float
+		static float ConvertToFloat(Object *pValue)
+		{
+			// No conversion from pointer types in non-integral types!
+			return 0.0f;
+		}
+
+		// Convert float to pointer
+		static Object *ConvertFromFloat(float fValue)
+		{
+			// No conversion from pointer types in non-integral types!
+			return NULL;
+		}
+
+		// Convert pointer to double
+		static double ConvertToDouble(Object *pValue)
+		{
+			// No conversion from pointer types in non-integral types!
+			return 0.0;
+		}
+
+		// Convert double to pointer
+		static Object *ConvertFromDouble(double dValue)
+		{
+			// No conversion from pointer types in non-integral types!
+			return NULL;
+		}
+
+		// Convert pointer to string
+		static PLGeneral::String ConvertToString(Object *pValue)
+		{
+			#ifdef X64_ARCHITECTURE
+				return PLGeneral::String() + (PLGeneral::uint64)pValue;
+			#else
+				return PLGeneral::String() + (PLGeneral::uint32)pValue;
+			#endif
+		}
+
+		// Convert string to pointer
+		static Object *ConvertFromString(const PLGeneral::String &sString)
+		{
+			#ifdef X64_ARCHITECTURE
+				return (Object*)sString.GetUInt64();
+			#else
+				return (Object*)sString.GetUInt32();
+			#endif
+		}
+
+
+};
+
+
+#endif // __PLCORE_TYPE_OBJECTPTR_INL__

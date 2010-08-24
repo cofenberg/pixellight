@@ -1,0 +1,1339 @@
+﻿>> 24.06.2010
+[CO]
+- Vector3: To2DCoordinate() muss man nun direkt die fertige Matrize übergeben - die man oft bereits genauso in der Form hat :D
+
+
+
+>> 28.05.2010
+[CO]
+- Bugfix: Bei "GraphPath" gab es noch Probleme bei geschlossenen Pfaden beim Übergang zwischen letzten, und ersten Knoten
+
+
+
+>> 14.05.2010
+[CO]
+- Neue Klasse "Transform3": Das hatte ich nun schon seit längerem vor, jetzt gerade durch die RTTI Umstellungen wurde es
+  noch sinnvoller... SceneNode Transform Dinge liegen nun im allgemeineren "Transform3". Dadurch kann man es in der SceneNode
+  "schöner" ans neue RTTI anbinden ohne Methoden Namenskonflikte zu bekommen, Transformationen lassen sich "mal schnell so
+  zwischen SceneNodes kopieren" und "Transform3" ist generell auch unabhängig von SceneNode hier und da sicherlich ganz praktisch.
+  Ziel der Klasse ist/war es nicht so Speicherkompakt wie möglich zu sein, dafür kann man genauso gut direkt Matrix3x4 nutzen, Ziel
+  war es, eine Klasse zu haben die intern nach dem "Lazy Evaluation"-Schema die Transform Darstellung in verschiedene Darstellungsformen
+  effektiv umrechnen kann, so wie es bereits seit Ewigkeiten bei der SceneNode gemacht wurde.
+
+
+
+>> 03.05.2010
+[SB]
+- Half: Konstanten für die Werte 0 und 1 als half-Datentyp hinzugefügt. So kann man zumindest testweise irgendwo eine
+  1.0 hineinschreiben, das hilft schonmal, solange die float->half-Konvertierung noch nicht eingebaut ist.
+
+
+
+>> 03.05.2010
+[CO]
+- Math::Saturate() stellt sicher das ein Wert zwischen 0 und 1 liegt
+
+
+
+>> 01.05.2010
+[CO]
+- Half-Hilfsklasse hinzugefügt, ist noch nicht komplett - aber u.a. NAN Test geht bereits. Anstatt einen gesamten Half-Datentyp zu
+  implementieren, entschloss ich mich dazu nur Hilfs-Funktionen anzubieten, das sollte fürs erste reichen *Keep It Simple*
+
+
+
+>> 24.03.2010
+[CO]
+- "Math::GetRandFloat()" war bisher mit "float (GetRand()%10000)/10000.0f" implementiert was ziemlich merkwürdig aussah, nun
+  ists "rand()/float(RAND_MAX)" und der Ergebnis ist korrekt
+
+
+
+>> 24.08.2009
+[CO]
+- Ich dachte gerade ich seh nicht recht als ich den z-Komponenten vergleich in "bool Vector3i::operator ==(const Vector3i &vV) const"
+  sah... denn der war natürlich falsch... lustig das dies bis jetzt noch nicht aufgefallen ist... :D
+
+
+
+>> 02.08.2009
+[CO]
+- "AABoundingBox": Neue Funktion "ValidateMinMax()": Stellt sicher das minimum und maximum korrekt sind
+- "AABoundingBox" um diverse Operatoren erweitert... da man in 3D recht häufig mit dieser Klasse Arbeitet ist etwas Luxus nicht verkehrt :D
+
+
+
+>> 28.05.2009
+[CO]
+- "Vector2i" & "Vector3i": Hier fehlten größer/kleiner Vergleichsoperatoren
+
+
+
+>> 10.04.2009
+[CO]
+- "FromString"-Funktionen nutzen nun Reguläre Ausdrücke anstatt den Tokenizer und sind dadurch flotter
+
+
+
+>> 10.02.2009
+[CO]
+- 'Matrix3x4' & ''Matrix4x4': 'RotateVector()': Hier gabs noch eine ganz böse Falle in die man Tappen konnte: Wenn die Matrize eine nicht
+  einheitliche Skalierung hat wurde nicht korrekt rotiert! In z.B. 'PLEngine::SQCull' schlug das dann bitterböse zu wenn man einen Container
+  mit nicht einheitlicher Skalierung hatte und dann die Frustum Ebenen in diesen Container umgerechnet wurden... denn dann passten die nicht
+  mehr immer und Scene Node verschwanden einfach so vom Bildschirm. :/
+  Will man 'sicher' rotieren, so MUSS man die Inverse-Transpose Transform Matrize nehmen wodurch die Skalierung 'verschwindet' - sprich, '1 1 1'
+  wird. Machte diese Funktionen nicht mehr Inline und fügte einen 'bUniformScale' Parameter der standardmäßig auf 'false' steht - wenn man
+  GANZ GENAU weis das man eine einheitliche Skalierung vorliegen hat kann man das auf 'true' setzen und die Funktion kann etwas flotter ihre
+  Arbeit erledigen, ist man sich nicht sicher sollte man die Finger von dem Parameter lassen. :D
+- Spendierte 'Matrix3x3' ebenfalls 'RotateVector()' damit man nicht mehr so schnell über das oben erwähnte Problem stolpert
+- 'Plane' an die oben erwähnte Problematik angepasst
+
+
+
+>> 17.01.2009
+[CO]
+- 'Math': 'Round()'-Funktion hinzugefügt da diese angefragt wurde
+
+
+
+>> 03.01.2009
+[CO]
+- Flexiblere 'Vector3::To2DCoordinate()'-Implementation
+
+
+
+>> 23.12.2008
+[CO]
+- 'Intersect::SphereLine()' & 'Intersect::SphereRay()' & 'Intersect::SphereSphere()': Wo möglich teures Wurzel ziehen entfernt
+
+
+
+>> 09.11.2008
+[CO]
+- PlaneSet: Neue Funktion: 'CreateViewPlanes()' erzeugt anhand einer Liste von Vertices und einem 'Betrachtungs-Punkt' einen Frustum.
+  Wird z.B. bei der erzeugung eines Portal-Frustums genutzt.
+
+
+
+>> 25.10.2008
+[CO]
+- Diverse Standard-Konstruktoren kommentiert damit man weis was die 'Default-Einstellungen' sind ohne im Code nachschaun zu müssen
+
+
+
+>> 18.10.2008
+[CO]
+- Intersect::AABoxLine(): Kann nun auf Wunsch zurückgeben 'wo' die Kollision auftrat
+- Intersect::TriangleRay() etwas optimiert
+- Vector3::IsPointInTriangle() etwas optimiert
+
+
+
+>> 11.09.2008
+[CO]
+- GraphPath::GetPos() in GraphPath::GetPosByNodeIndex() umbenannt damit klar ist wie die Position ermittelt wird
+- Neue Funktion: GraphPath::GetPosByPercentageAlongPath(), diese Funktion ermittelt eine Position anhand des
+  'Prozent des abgelaufenen Weges'... etwas das wohl gängiger ist da sich die Objekte dann immer gleich schnell
+  bewegen - unabhängig davon wie lang die jeweiligen Teilstrecken sind. Die Implementation ist noch nicht fertig,
+  funktioniert aber bereits für den 'Rolltreppe'-Test sehr gut. :D
+
+
+
+>> 10.09.2008
+[CO]
+- GraphPath::GetPos(): Hier konnte es passieren das über 'nCurrentNode' auf einen ungültigen Index zugegriffen wurde
+
+
+
+>> 23.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 10.07.2008
+[CO]
+- ConfigLoaderPL & LocalizationLoaderPL: Um Format Versions Informationen erweitert
+
+
+
+>> 17.05.2008
+[CO]
+- Vector3: Zwei neue Funktionen Namens 'To2DCoordinate()' und 'To3DCoordinate()' hinzugefügt die 'Get2DCoordinate() 'und 'Get3DCoordinate()'
+  vom Renderer Interface ersetzen.
+
+
+
+>> 17.02.2008
+[CO]
+- Copy-Operators und Copy-Constructors hinzugefügt
+
+
+
+>> 15.02.2008
+[CO]
+- Wie gestern von Stefan gewünscht noch Vector3i hinzugefügt
+
+
+
+>> 20.09.2007
+[CO]
+- EulerAngles: Hatte dran gedacht - und es dann doch vergessen... bei 'ToMatrix()' sollten natürlich nicht benötige Elemente
+  ebenfalls auf 'Identity' gesetzt werden damit man immer eine korrekte Rotations-Matrize hat, auch wenn dort bereits mal
+  etwas drinnen stand.
+
+
+
+>> 18.09.2007
+[CO]
+- Mittlerweile habe ich es hinbekommen das der 3ds Max Exporter Position und Skalierung wie es aussieht IMMER korrekt
+  Exportiert. Rotationen werden dort ebenfalls nun endlich korrekt berechnet... aber es gab (-> man beachte die
+  Vergangenheitsform *g*) noch heftige Probleme beim umrechnen von 'Quaternion' zu 'Euler Winkel' wie wir die Rotationen in
+  unserem Szene-Format speichern. Ich überlegte ersthaft ob man auf 'Euler Winkel' im Szene System verzichten sollte...
+  allerdings ist es nicht wirklich möglich Rotationen in Matrizen oder Quaternion Form als Mensch per Text Editor zu
+  bearbeiten + man bräuchte einen konvertierungs Dialog in z.B. dem Debug Dialog damit die Rotationen 'bedienbar' wären.
+  Ziemlich viel extra Arbeit + wenig elegant.
+  Daher schaute ich mir vor ein paar Tagen nochmal die Sache mit den Umrechungen an und prüfte ob dies halbwechs brauchbar
+  zu realsieren ist. Über Google fand ich recht schnell (und häufig!) 'http://www.graphicsgems.org/gemsiv/euler_angle/' -
+  sogar im 3ds Max SDK werden die verschiedenen Funktionen von 'Ken Shoemake' zum umrechnen verwendet. Ich hätte mich
+  nun einige Wochen dransetzen können um zu versuchen diesen Stoff halbwechs zu verstehen... allerdings bin ich mir ziemlich
+  sicher das dieses Unternehmen ohne Erfolg geblieben wäre - diese Mathematik ist eine Welt für sich. :(
+  Da diese Sache aber nun endlich nach Jahren sitzen MUSS, entschloss ich mich dazu auf Basis dieser frei verwendbaren
+  Implementation eine 'Euler Angle Conversion' Hilfs-Klasse zu schreiben. Nach etwas hin und her entschloss ich mich dazu
+  das diese Euler Winkel umrechnungen zukünftig NUR noch über diese Klasse ablaufen - sprich, Quaternion und Matrizen haben
+  keine entsprechenden Funktionen mehr. ('FromEulerAngleX()' zählt nicht wirklich da dies Grundliegenst ist! :)
+  Wirklich 'umständlich' ist es nicht diese Hilfs-Klasse zu nutzen + da es 24 verschiedene Möglichkeiten bei Euler Winkel
+  gibt kann im Grunde jeder nutzen was er will. In PL wird 'XYZs' verwendet das 'fast' die gleichen Ergebnisse liefert wie
+  die alten Umrechnungen... dreht man z.B. im Debug Dialog an den Rotationen, sind die Ergebnisse sind nun ENDLICH genauso
+  wie man es, bzw. wie ich es erwarten würde. Rechtlich sollte es keine Probleme geben da diese Implementation wie erwähnt
+  absolut frei Nutzbar ist + ich habe in dieser Hilfs-Klasse ausführlich Dokumentiert worauf die Codes basieren.
+  Ich bin nun wirklich SEHR zufrieden wie das mit den Euler Winkeln klappt - sogar der 3ds Max Exporter ist um einiges
+  einfacher geworden da ich zum Umrechnen direkt Funktionen von 3ds Max nehmen kann ohne selbst chaotisch herumwurtschteln
+  zu müssen... endlich sieht das 'sauber' aus. :D
+  -> Passte alle Projekte an diese Änderung an + bei ein paar Szenen mussten Rotationen angepasst werden.
+- Matrix4x4: PerspectiveFov() & PerspectiveFovInfinite(): Implementation minimal geändert, diese Vorgehensweise sieht man
+  häufiger
+- Nahm die letzten 'Increase'-Funktionen aus den Matrizen-Klassen heraus. Diese Funktionen wurden schon seit langem nicht
+  mehr wirklich verwendet da diese Dinge auch einfach ohne spezielle Funktionen gehen... weniger ist mehr. *g*
+
+
+
+>> 17.09.2007
+[CO]
+- AABoundingBox: Fügte noch einen Konstruktor hinzu der nur einen Vektor als Parameter hat - das ist recht praktisch wenn
+  man einfach Minimum und Maximum auf einen gleichen Wert stellen will
+
+
+
+>> 15.09.2007
+[CO]
+- Ging dieses Projekt nochmal durch, Verbesserte divese kleinigkeiten und arbeite einige [TODO] ab
+- Intersect::IsPlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir): Nahm den 'vRayPos'-Parameter
+  heraus da dieser hier total Witzlos ist... Ebene und Strahl sind beide 'unendlich' und die Position hat daher auf das
+  Ergebniss keinen Einfluss! (der Parameter wurde daher auch nicht verwendet :)
+- Nahm die Sphere aus PlaneSet heraus da dies die Sache nur unnötig verkompliziert. Solche 'vorherige grobe Tests' können
+  'übergeordnete' Gebilde sowieso viel besser handhaben... so wie es z.B. in PLEngine::SNSpotLight der Fall ist.
+- Octree::CheckOctree() heraus genommen da nicht richtig Implementiert und auch irgendwie Sinnfrei
+- Rectangle::GetCenter() wird nun genauso wie die gleichnamige AABoundingBox-Funktion über '(vMax+vMin)/2' berechnet
+  anstatt über (vMax-vMin)/2
+
+
+
+>> 14.09.2007
+[CO]
+- Vector3 & Vector4: ProjectPlane()-Implementation aufgeräumt
+
+
+
+>> 01.08.2007
+[CO]
+- Nachdem ich gestern Abend die Arbeiten am x-Scene Importer erstmal gefrustet aufgegeben hatte da zur Laufzeit je nach
+  Blickwinkel Objekte 'verschwanden' weil diese laut Sichtbarkeits-Test nicht mehr sichtbar waren, probierte ich heute
+  morgen erneut mein Glück. (solche 'merkwürdigen Dinge' provozieren mich immer koste es was es wolle rauszubekommen WARUM
+  dem so ist *g*) Nach einigem herumspielen mit der Importierten x-Szene zur Laufzeit stellte ich fest das dieses
+  'Problem' nur auftritt sobald ein Scene-Container Skalierung hat. Ich verfolgte das Problem bis zu dem Punkt in SQCull
+  zurück indem der Frustum in den neuen Container umgerechnet wird... und genau da, also bei der Plane*Matrix Operation war
+  etwas noch nicht ok. Es wurde hier nicht berücksichtigt das eine Matrize auch 'skaliert' sein kann, und genau das muss man
+  bei der Normale Ebenen eben beachten. Daher wird diese Normale der Ebene nach dem Umrechnen (Re-)normalisiert, und zwar
+  bevor mit dieser Information D berechnet wird - sieht da nun gehts. :D
+  Es zahlt sich immer wieder aus neues einzubauen/auszuprobieren und bei auftretenden Problemen hartnäckig zu bleiben. :)
+
+
+
+>> 31.07.2007
+[CO]
+- Matrix3x4::Matrix3x4(const Matrix4x4 &mM): Upsala, da hatte ich wohl vergessen die letzte Spalte zu übernehmen, merkwürdig
+  das soetwas gravierendes bis jetzt noch nicht aufgefallen war
+- Matrizen-Klassen: GetXAxis() & GetYAxis() & GetZAxis() liefern nicht mehr normalisierte Vektoren zurück da man ansonnsten
+  die längen Information eines Vektors verliert die man eventuell aber haben will. Da ein Vektor sehr schnell über 'Normalize()'
+  Normalisiert werden kann, ist das aber kein Drama das wenn nötig schnell 'selbst' zu machen.
+- Matrizen-Klassen: Die 'GetScale()'-Funktionen arbeiten nun halbwechs universell - nur den Fall das eine oder zwei Achsen
+  negativ sind kann man leider nicht wirklich behandeln.
+- Matrizen-Klassen: Nahm die SetScale() und IncScale() Funktionen heraus da diese leider nicht wirklich universell nutzbar
+  sind und sich 'nur' auf eine ganz einfache Skalier-Matrize beziehen. Diese Funktionen verwirren wohl eher als das diese
+  hilfreich sind... zudem ist soetwas superschnell selbst gemacht wenn mal benötigt.
+
+
+
+>> 06.06.2007
+[CO]
+- Wo möglich/sinnig Zeiger durch Referenzen ersetzt
+
+
+
+>> 05.06.2007
+[CO]
+- Quaternion ans RTTI angestöppelt
+
+
+
+>> 10.05.2007
+[CO]
+- Sortierte ins Diary so richtig alte Einträge aus "PLSDK/internal/old_diaries.zip" ein
+
+
+
+>> 09.05.2007
+[CO]
+- Sortierte ins Diary alte Einträge aus "PLSDK/internal/old_diaries.zip" von ab "02.04.04" ein
+
+
+
+>> 21.04.2007
+[CO]
+- SWAP-Makros entfernt, gerade in den inline-Implementationen war das *sehr* unschön da dann diese Makros direkt in alle
+  anderen Codes reinrutschten. (defines haben ja quasi eingebaute Vorfahrt *g*) Ich mache das 'swap' mit Absicht per Hand
+  und nicht über z.B. 'Math::Swap()' um möglichst wenig lokale Variablen + Funktionsaufrufe zu nutzen da dies absolut
+  grundliegende Funktionen sind und diese so flott und übersichtlich wie möglich sein sollten.
+- Vector2i ein paar statische Variablen vergleichbar zu Vector2 spendiert + die RTTI Variablen anbindung passte nicht da
+  PL_VAR_FLOAT anstatt PL_VAR_INT verwendet wurde
+
+
+
+>> 09.04.2007
+[CO]
+- Nahm weitere 'return' heraus
+
+
+
+>> 08.04.2007
+[CO]
+- Formte einge Codes um so das man weniger 'return' benötigt was die Sache etwas übersichtlicher macht
+
+
+
+>> 01.04.2007
+[CO]
+- Intersect::SphereAABox(): AABBox Volumen Test heraus genommen da eine AABBox durchaus bei einer Achse 0 sein kann und dadurch
+  der Test dann komplett versagt
+
+
+
+>> 11.03.2007
+[CO]
+PLMath:
+- Header Änderungen gemacht. Wenn durch etwas z.B. Standard-Lib Header reinkommen, wird auf inline verzichtet damit diese
+  nicht in die allgemeinen PL Header reinrutschen und probleme machen können. Dadurch konnte ich z.B. den '_isnan/_finite'
+  Define-Hack von 'PLMathLinux.h' in Math.cpp verschieben so das der User davon nix mehr mitbekommt. Dadurch verliert man
+  eventuell 'minimal' an Effektivit, aber der 'saubere Header' Vorteil überwiegt definitiv. :)
+- Wie besprochen wird nun direkt IMMER 'using namespace' in cpp Dateien verwendet sobald das benötigt wird. Dadurch das die
+  Header mittlerweile 'sauberer' sind gibts auch praktisch keine unerwarteten Namens Konflikte mehr mit z.B. OS Headern.
+- In Intersect konnte eine ganze menge vereinfacht werden
+
+
+
+>> 13.01.2007
+[CO]
+- AABoundingBox::GetCenter(): Die Berechnung muss natürlich (vMax+vMin)/2 und nicht (vMax-vMin)/2 heißen, igh, das dies
+  bis jetzt noch nicht aufgefallen ist *g*
+
+
+
+>> 12.01.2007
+[CO]
+- Vector2i: fV zu vV gemacht damit der Prefix stimmt
+- AABoundingBox::CalculateSurface() Optimiert (Breite, Höhe und Tiefe wird nur noch einmal berechnet + weniger Multiplikationen)
+- AABoundingBox: Neue Funktionen:
+  - GetLongestAxisLength(): Macht im Prinzip das gleiche wie GetLongestAxis(), gibt aber direkt die längste Länge zurück
+  - GetEnclosingRadius(): Ermittelt den Radius den eine Sphere die im Ursprung positioniert ist haben muss um die gesammte
+                          Bounding Box zu umschließen
+  - GetInsideRadius(): Ermittelt den Radius den eine Sphere die im Ursprung positioniert ist haben muss um in der Bounding Box
+                       zu liegen (kleiner als GetEnclosingRadius()!)
+
+
+
+>> 09.01.2007
+[SB]
+- Neue Integer-Vektor Klasse Vector2i aus PLGui hierher verschoben. Wird benutzt, um ganzzahlige Positionen und Größen
+  zu speichern.
+
+
+
+>> 13.12.2006
+[CO]
+- Math: IsNotANumber() und IsFinite() hinzugefügt damit man recht bequem Prüfen kann ob ein float einen gültigen Wert hat
+  oder 'Unendlich' ist. '_isnan()' und '_finite()' sind leider Compiler abhängig, von daher ist es sinnig Wrapper für diese
+  Funktionen zu haben. (unter Linux wirds sicherlich nur 'isnan()' und 'finite()' heißen) Anfangs wollte ich es in
+  PLGeneral ablegen da dies absolut Grundliegend ist, da wir es dort aber noch nicht brauchen und diese Funktionen recht
+  gut in PLMath::Math passen legte ich es dort ab.
+
+
+
+>> 11.10.2006
+[SB]
+- Dem hinzugefügten Copy-Konstruktor einen Kommentar verpaßt und die Reihenfolge in der Source-Datei angepaßt. Dies
+  sind zwar Kleinigkeiten aber dennoch wichtig :-)
+
+
+
+>> 11.10.2006
+[SW]
+- copy-ctor in Polygon hinzugefügt, damit die blöde undefined reference in der vtable aus PLEngine verschwindet.
+
+
+
+>> 08.10.2006
+[CO]
+- Vektor Klassen um Funktionen erweitert welche jeweils die größte/kleinste Komponente oder den Wert davon zurückgeben.
+
+
+
+>> 03.10.2006
+[CO]
+- Matrix3x4 & Matrix4x4 um GetTranslation(float *pfV) Funktion erweitert. Es gab bereits entsprechende Set & Increase Funktionen
+  + so kann man beqeuem auch ohne ein Temporäres Objekt arbeiten - wenn man will. Das gleiche für GetScale().
+
+
+
+>> 26.09.2006
+[CO]
+- Auf PLBool umgestellt (war wie erwartet nur sehr wenig) + ein paar kleinere Style anpassungen, hauptsächlich Leerzeichen & Tabs
+
+
+
+>> 12.09.2006
+[CO]
+- Vektor Klassen um String-Konstruktor erweitert damit man Komfortabel Vektoren direkt beim erzeugen über einen String
+  füllen kann.
+
+
+
+>> 04.09.2006
+[CO]
+- AABoundingBox: Neue Funktion: GetLongestAxis(): Gibt die längste Achse zurück
+
+
+
+>> 24.08.2006
+[CO]
+- Machte heute endlich mal den Prefix für Matrizen einheitlich zu 'm', da kürzer als 'mat' und kürzer ist bei Matrizen
+  definitiv sinniger da man dort häufig mal mit einem haufen von Elemente jonglieren muss... und da wird's schnell mal
+  unüberlichtlich wenn die Namen zu lang sind. (und 2 Buchstaben mehr machen da bereits wirklich einen unterschied :)
+  Bei der Umstellung merkte ich auch, das die eigentlichen Matrizen Variablen Namen nicht wirklich einheitlich oder nichts sagend
+  (z.B. 'mT') waren obwohl man eigentlich nur meistes mit einer Handvoll gängier Matrizen Typen Arbeitet. Unsere Matrizen Variablen
+  heißen nun überwiegend mTrans, mRot, mWorld, mView, mProj... für allgemeine Transform Matrizen (Rotation, Position & Skalierung),
+  für nur Rotation, für Welt-Matrize, View-Matrize (Kamera...) und Projektions Matrize. Voll ausschreiben wäre hier sicherlich
+  nicht gut gewesen da es dann wieder schnell unübersichtlich wird. :(
+
+
+
+>> 27.07.2006
+[CO]
+- Nahm 'MathDefs.h' heraus, diese Konstanten befinden sich nun in der Math Klasse zusammen mit der neuen Konstante RandMax...
+  so ist alles beisammen was zusammen gehört. Desweiteren wird nun groß/kleinschreibung verwendet, also statt 'PIHALF'
+  nun 'PiHalf'.
+
+
+
+>> 23.07.2006
+[CO]
+- Verschob die Inc-Hilfsfunktionen der Matrizen Klassen in die cpp-Dateien und optimierte die IncEulerAngle*()-Funktionen
+  da sich diese Berechnungen recht start reduzieren lassen. Da bei den anderen Hilfs-Funktionen nicht soo viel herausfällt,
+  lohnt das Auflösen hier wohl weniger. (kann man aber später noch machen wenn man Zeit & Lust hat :)
+
+
+
+>> 18.07.2006
+[CO]
+- Bei den Vektor-Klassen fehlte bei GetNormalized() noch ein return, uff, wie konnt ich das nur übersehen??
+
+
+
+>> 16.07.2006
+[CO]
+- Diverse statische Klassenvariablen wie z.B. Matrix4x4::IDENTITY werden nun mit groß/kleinschreibung geschrieben.
+
+
+
+>> 14.07.2006
+[CO]
+- Rectangle::ClipByRectangle(): War noch nicht ganz ok: Man muss natürlich auch noch prüfen ob bereits min/max komplett
+  außerhalb ist. Das gleiche in AABoundingBox::ClipByAABox().
+
+
+
+>> 30.06.2006
+[CO]
+- Machte die Konstante 'EPSILON' kleiner und nahm dort wo es unnötig/gefährlich ist 'EPSILON' heraus. In z.B. Vector3::Normalize()
+  machte das sogar richtige Probleme wenn der Vektor seeehr klein war, dann wurde einfacht nicht Normalisiert - dort war
+  das ja nur für eine Sicherheitsabfrage drinnen um Teilungen durch 0 zu vermeiden, das geht auch wenn man direkt auf 0
+  Testet... und hat dann auch keine unschönen & ärgerlichen Seiteneffekte. :)
+
+
+
+>> 27.06.2006
+[CO]
+- Nahm AABoundingBox::CalculatePlanes() heraus da man auch ohne Probleme PlaneSet::CreateBox() dafür nutzen kann. Feilte
+  noch etwas an dieser Klasse.
+- Neue Klasse 'Rectangle'. Diese Klasse wird vorallem für 'Renderer Scissor Rectangles' verwendet um unnötige Fragmente
+  vorzeitig verwerfen zu können.
+
+
+
+>> 26.06.2006
+[CO]
+- Matrix3x4 & Matrix4x4: Neue Funktion: View() -> Erzeugt eine View Matrix
+
+
+
+>> 23.05.2006
+[CO]
+- Ein paar Vektor-Konstruktoren hinzugefügt
+
+
+
+>> 21.05.2006
+[CO]
+- Math um weitere Funktionen für Logarithmen erweitert - brauchte ich heute zum Berechnen der Anzahl von Mipmaps im Renderer.
+
+
+
+>> 18.05.2006
+[CO]
+- Matrizen: FromEulerAnglesXYZ(): Matrizen Multiplikationsreihenfolge von X*Y*Z in Y*X*Z geändert. Von allen möglichen
+  Kombinationen war XYZ wohl bei unserem Koordinaten System die ungünstige da y nach 'oben' zeigt und der Gimbal Lock so
+  recht ungeschickt ins Spiel kam. Ich fragte mich schon die ganze Zeit über wieso in 3ds Max die Reihenfolge ZXY ist, nun
+  weis ich es... in diesem Programm ist das Koordinaten System zu unserem (und auch dem üblicheren :) um 90° an der x-Achse
+  gedreht wodurch z nach 'oben' zeigt. Jetzt passt auch das mit dem roll, pitch und yaw korrekt, also so wie man es z.B. aus
+  Flugsimulatoren her kennt... bei der Gelegenheit fügte ich bei Vector3 als Kommentar noch andere gängige Bezeichnungen
+  für diese Winkel hinzu, Heading stand ja bereits dabei. Als Kommentar steht in dieser Funktion wie gehabt die 'triviale'
+  Umrechnung der Winkel in eine Matrize. Die 'optimierte' Version musste ich nun neu berechnen, als Kommentar hab ich dabei
+  die einzelnen Schritte drinnen gelassen welche ich bei der Vereinfachung machte, so kann man das wenigstens schön
+  nachvollziehen. :)
+- Quaternion: FromEulerAnglesXYZ() optimiert
+
+
+
+>> 16.05.2006
+[SB]
+- Graph Klassen an Änderungen angepaßt
+
+
+
+>> 03.05.2006
+[CO]
+- Matrix3x4: Invertierung stimmte noch nicht ganz. Sobald noch Skalierung mit ins Spiel kam stimmte das Ergebniss nicht mehr.
+  Daher nahm ich die Matrix4x4 Invertierung, entfernte die letzte Reihe, setzte wx=0, wy=0, wz=0, ww=1 ein und löste auf so
+  das wir kompakte Berechnungen haben. Matrix3x3, Matrix3x4 und Matrix4x4 Invertierungen sind nun nahezu identisch, es fallen
+  bei den einfacheren Matrizen jeweils nur ein paar Berechnungen heraus. Überall wird nun auch geprüft ob die Determinante
+  1 ist - in diesem Fall geht das Invertieren um einiges einfacher.
+
+
+
+>> 25.04.2006
+[CO]
+- Line etwas erweitert
+
+
+
+>> 24.04.2006
+[CO]
+- Intersect: Neue Funktion: AABoxAABox()
+
+
+
+>> 23.04.2006
+[CO]
+- Neuer Matrizen Typ: Matrix3x4: Da man recht oft NUR Rotation und Position in einer Matrize speichert ist die vierte Reihe
+  immer ungenutzt. In dem Fall sollte man nun immer diese 3x4 Matrize nutzen um 16 Bytes sowie überflüssige Rechenoperationen
+  zu sparen. Da eine 3x4*3x4 Matrizen Multiplikation nicht definiert ist, mache ich daraus eine 3x4*4x4 Multiplikation indem
+  ich einfach eine (0, 0, 0, 1) Reihe anhänge und dann das was wegfällt weglasse. Da dies sicherlich nicht üblich bzw. auf
+  anhieb klar ist hab ich das in der Funktions Dokumentation beschrieben - nur damit keiner am Ende aufschreit "HEY das ist
+  aber Mathematisch NICHT Korrekt, woher sollte ich das wissen?!". ;-)
+  Bei der Gelegenheit machte ich gleich die Matrizen Multiplikationen übersichtlicher, das mit dem Integer Index war ja
+  kaum zu lesen.
+
+
+
+>> 19.04.2006
+[CO]
+- Plane: Neue Funktionen:
+  - GetSide() -> Gibt die Seite der Ebene zurück auf der sich ein Punkt befindet
+  - ClipEdge() -> Schneitet eine Kante entsprechend der Ebene 'ab'
+- Polygon: Neue Funktionen: AddVertex(), IsInFront() und Clip()
+
+
+
+>> 18.04.2006
+[CO]
+- Plane: * und *= Operatoren (Matrix3x3/Matrix4x4) so Optimiert das möglichst wenig Temporäre Variablen verwendet werden. Da
+  das Szene System nun dank Zellen & Portale oft Ebenen in andere Vektorräume bringen muss, ist es mir einfach wichtig das
+  diese Funktionen so flott wie möglich sind. Die nicht Optimierten, verständlicheren Varianten sind noch als Kommentare drinnen.
+
+
+
+>> 13.04.2006
+[CO]
+- Plane um * und *= Operatoren für Matrix3x3 erweitert
+- Line um * und *= Operatoren für Matrix3x3/Matrix4x4 erweitert
+
+
+
+>> 30.03.2006
+[CO]
+- Matrix4x4: PerspectiveOffCenter(): Near & Far Ebenen wurden nicht korrekt berechnet. Daher wurde in z.B. 'Mirror.scene' 
+  beim Spiegel die Near Ebene nicht korrekt gesetzt... und so wurde auch noch zeug 'hinter dem Spiegel' in die Textur 
+  gerendert was dann natürlich zu sichtbaren Grafikfehlern führte. :)
+
+
+
+>> 27.03.2006
+[CO]
+- Vektoren um *= Operatoren für Matrix3x3, Matrix4x4 und Quaternion erweitert. Vector3*=Quaternion liefert momentan andere 
+  Ergebnisse als Quaternion*Vector3... momentan ist das bei *= für das korrekte Skinning nötig da beim Exportieren aus 
+  Max momentan noch die Matrizen nicht ganz ok sind  - ich arbeite gerade daran das zu verbessern.
+- Das aufräumen von Quaternion fertiggestellt, nahm ein paar komplexere Funktionen heraus die wir derzeit nicht brauchen. 
+  Sobald man diese Funktionen mal brauchen sollte, kann man diese später ja problemlos sorfältig hinzufügen.
+... PLMath müsste somit nun einigermaßen Sauber sein. Was mit den perlin noise Funktionen + Quadtrees & Octrees passieren 
+soll schauen wir uns dann am besten später an.
+
+
+
+>> 15.03.2006
+[CO]
+- Matrix4x4: SetTranslationMatrix(): ARGH!, 'natürlich' müssen die Diagonal Elemente der Matrize 1 sein - denn sonst ändert 
+  sich hier ja nicht nur die Translation. ;-) (hab dran gedacht, aber es nicht geschrieben, brrr)
+  Fügte bei der Gelegenheit auch noch gleich eine Variante hinzu der man einen Vektor übergeben kann - so kann man, falls 
+  man einen Vektor hat diesen direkt verwenden anstatt mühselig die einzelnen Komponenten durchzugeben.
+
+
+
+>> 13.03.2006
+[CO]
+- An Matrizen und Quaternion Klassen weitergearbeitet
+
+
+
+>> 12.03.2006
+[CO]
+- Fand heraus wieso der Monitor im PLSampleInGameGui Beispiel so kaputte Schatten warf: Diese Anordnung des 
+  Schattenwurfes kam mir verdächtig bekannt vor - und tatsächlich, für Shadow Volumes war die Lichtquelle IM Schatten
+  werfenden Objekt was natürlich dann genau solchen Schrott  produziert. Die Lichtquelle wird in den Objekt Space 
+  umgerechnet ... und genau hier gabs ein Problem. Da der Monitor recht start verkleinert ist, ist die Determinante in 
+  Matrix4x4::GetInverted() sehr klein und eine Einheitsmatrize wurde zurückgegeben was natürlich dann nicht ok war. Es 
+  wird nun geprüft ob die Determinante genau gleich 0 ist um eine Teilung durch 0 zu vermeiden... hier reichts ja wirklich 
+  wenn man GENAU auf 0 prüft.
+
+
+
+>> 10.03.2006
+[CO]
+- Matrix3x3: Copy Constructor für Matrix4x4 hinzugefügt
+
+
+
+>> 06.03.2006
+[CO]
+- Vektor Klassen: union Zugriffe Dokumentiert, bei Vektor 2 & 4 roll etc. herausgenommen da dies normalerweise nur bei 
+  3D Vektoren üblich ist. fPitch und fYaw vertauscht damit das bei uns korrekt passt.
+- Matrizen & Quaternionen: Habe etwas an den Rotier-Funktionen weitergearbeitet, aber irgendwo ist noch immer der Wurm 
+  drinnen denn die entspechenden Tests liefern teils noch falsche Ergebnisse - also diese Rotier Dinge können einem echt 
+  heftige Kopfschmerzen bereiten. :(
+
+
+
+>> 04.03.2006
+[CO]
+- Als ich in PLMesh den Md5 Importer wieder fitt machte merkte ich das Quaternion::ToRotationMatrix() fälschlicherweise 
+  Transponiert war. Kam mir ja schon in NewtonBody::PhysicsSetTransform() Spanisch vor das ich die Matrize Transponiert 
+  übergeben musste und auch NewtonBody::InformedOnRotation() geht nun so wie man es erwartet... Verdammt, egal wie sehr 
+  man aufpasst, soetwas passiert soetwas von unverschämt schnell, bin mal gespannt was intensivere Mathe Tests die ja noch 
+  anstehen so an verdrehern ans Tageslicht bringen. ;-)
+
+
+
+>> 02.03.2006
+[CO]
+- Dort wo möglich werden nun die statischen Objekte von z.B. Quaternion verwendet statt neue Temporäre Objekte zu erzeugen
+
+
+
+>> 01.03.2006
+[CO]
+- Math: Fügte Min/Max Funktionen für uint32 hinzu und ersetzte in den Projekten die Makros durch diese Funktionen. Die 
+        Makros waren hier irgendwie praktischer da universeller. ;-)
+- Math: Fügte Floor & Ceil Funktionen hinzu
+- Matrizen Klassen um SetShearing() Funktion erweitert. Diese erzeugt eine sogenannte 'shearing matrix' welche einzelnde 
+  Achsen verzerrt so das z.B. Modelle schief aussehen.
+- Vector4: Nahm Reflect() heraus da hier eher unüblich
+- Vector3: Fügte Refract() hinzu und verbesserte Reflect()
+
+
+
+>> 28.02.2006
+[CO]
+- Leerzeichen/Tabs durchgeschaut und dort wo es nicht ok war verbessert
+Matrizen Klassen:
+- SetRotation(float, float, float, float) in FromAxisAngle() umbenannt damit ersichtlicher ist was diese Funktion macht. 
+  SetRotation(Vector3, Vector3, Vector3) in FromAxis() umbenannt.
+  Die anderen SetRotationX() etc. Funktionen in FromEulerAngleX() etc. umbenannt.
+  Im Quaternion heisen diese Funktion genauso und ich finde diese Namen recht nett und es sind auch gängige Namen für 
+  diese Funktionen.
+- Neue Funktion: ToAxisAngle() Gegenstück zu FromAxisAngle()
+- Neue Funktion: ToAxis() Gegenstück zu FromAxis(), einzelne Achsen kann man wie gehabt über z.B. GetXAxis() abfragen
+- Fügte GetRow(), SetRow(), GetColumn(), SetColumn() Funktionen hinzu
+
+
+
+>> 26.02.2006
+[CO]
+- Nahm Rotate() bei den Vektor Klassen heraus da überflüssig (macht man besser über Matrix*Vector)
+- Fügte bei den Matrizen Klassen noch eine Multiplikation mit einem 2D Vektor hinzu
+- Nahm SetDirection() aus den Matrizen Klassen da mittlerweile überflüssig - das gleiche lässt sich auch besser über 
+  LookAt() machen. SetDirection() wurde nur an 3 Stellen in den gesammten Projekten verwendet, daher war hier auch keine 
+  große Anpassung nötig. :)
+- Matrix4x4:FromQuatTrans() Optimiert
+- Matrix4x4:SetReflection() verbessert
+- Matrix4x4:SetShadowProjection() verbessert. Diese Funktion ist zwar heutzutage nicht mehr wirklich wichtig, aber könnte 
+  trotzdem mal nützlich sein z.B. Modelle auf eine Ebene zu Projezieren :)
+- Matrix4x4:RestrictedProjection() verbessert
+- Bei ein paar Includes fehlte noch das 'PLMath/' am Anfang - als ich die Includes der anderen Projekte überflog fand ich 
+  auch noch ein paar Stellen wo fälschlicherweise "" anstatt <> verwendet wurde.
+
+
+
+>> 25.02.2006
+[CO]
+- Fing damit an die Quaternion Klasse zu überarbeiten
+
+
+
+>> 23.02.2006
+[CO]
+- Matrix4x4: Invert(), GetInverted(): Hier waren beim setzen der neuen Matrize die Reihen und Spalten vertauscht... nun 
+  geht u.a. auch das InGameGui Beispiel wieder sauber.
+- Quaternion::SetMatrix(): Diese Funktion war fehlerhaft, verstehen tue ich es momentan noch nicht wirklich, mir ists nun 
+  erstmal wichtig das alles soweit sauber läuft, danach werd ich mich genauer mit der Materie befassen... also um in etwa 
+  zu verstehen wie die Quaternions intern funktionieren und WARUM es funktioniert - diese Funktionen verwenden ist ja 
+  hingegen sehr einfach. In den nächsten Tagen werd ich mich mal etwas in diese Quaternion Materie einlesen.
+
+
+
+>> 22.02.2006
+[CO]
+- Haupt-Header von 'Math.h' in 'PLMath.h' umbenannt
+- Doxygen Makefile angepasst
+- Wie mit Stefan besprochen die 'Tools' Klasse in 'Math' umbenannt und um weitere Funktionen wie Sin(), Sqrt() etc. 
+  erweitert. Somit wird NUR noch innerhalb der Math-Inlines '#include <math.h>' eingebunden, sonst nirgends mehr! Passte 
+  alle Projekte an diese Änderungen an. Wenn ich nichts übersehen habe, so werden nun nur noch Mathe Funktionen wie z.B. 
+  sin über diese Klasse verwendet.
+
+
+
+>> 18.02.2006 - 21.02.2006
+[CO]
+Matrizen Klassen überarbeitet:
+- Dokumentierte die union Element Zugriffsmöglichkeiten - hier kann sehr schnell etwas durcheinander kommen. Intern werden 
+  die Elemente so gespeichert wie es OpenGL macht, (column major) so kann man sofort die Daten an OpenGL übergeben. Beim 
+  'xx...' Zugriff war Row/Column vertauscht. Statt 
+    struct {
+      float xx, xy, xz;
+      float yx, yy, yz;
+      float zx, zy, zz;
+    };
+  steht hier nun 
+    struct {
+      float xx, yx, zx;
+      float xy, yy, zy;
+      float xz, yz, zz;
+    };
+  Nun kann man wie es in der Mathematik üblich über z.B. 'yz' auf Reihe 2 (y) Spalte 3 (z) zugreifen. (mit 1 angefangen :)
+  'xx...' ist der bevorzugte Zugriff der auch in den Implementationen verwendet wird, das ist so wie man es von der 
+  Mathematik her gewohnt ist, und so kann relativ wenig durcheinanderkommen. :)
+- Nahm ein paar nicht Eindeutige oder überflüssige Funktionen heraus
+- Änderte ein paar Funktions Namen so das bereits anhand des Namens ersichtlicher ist was genau diese Funktion macht
+- Ordnete die Funktionen im Interface neu und fügte ausführliche Kommentare hinzu
+- Überarbeitete die einzelnen Funktionen wie z.B. Invert(), Transpose() etc.
+- Von Funktionen wie z.B. PerspectiveFovRH()/PerspectiveFovLH() gibt es nun NUR noch PerspectiveFov() was die 'right hand' 
+  Version der Funktion ist. Da unsere Matrizen auf 'right hand' ausgelegt sind war die 'left hand' Version nicht wirklich 
+  brauchbar und verwirrte nur.
+- Fügte ein paar weitere übliche Matrizen Operatoren hinzu wie +, +=, -, -= etc. ... auch wenn diese in der Praxis meistens 
+  total nutzlos sind. ;-)
+- Fügte an einigen Stellen bei in den Kommentaren '\n' und '@code'+'@endcode' ein damit die über Doxygen erzeugte 
+  Dokumentation ok aussieht
+... diese Rundumerneuerung der Matrizen Klassen war wirklich längst überfällig. :)
+Passte alle Projekte an so das alles wie früher läuft. Noch bin ich nicht komplett fertig mit den Vektor & Matrizen 
+Änderungen, aber jetzt brauch ich erstmal 1-2 Tage etwas Abstand davon. Diese Klassen also noch nicht genaustens 
+unter die Lupe nehmen. :)
+
+
+
+>> 17.02.2006
+[CO]
+- Vektor Klassen:
+  - GetAngle(): Hier fehlte arccosine
+  - Vector2: ProjectVector() hinzugefügt
+
+
+
+>> 16.02.2006
+[CO]
+- Vektor Klassen:
+  - Kommentierte wie besprochen einige Operatoren welche ansonnsten nicht ganz eindeutig sind. Die anderen Operatoren welche 
+    selbsterklärend sein müssten hab ich Kommentarlos gelassen - ansonnsten bläht sich das Interface krass auf und wird 
+    dadurch etwas unübersichtlich.
+  - Vector2::SetLength() verbessert
+
+
+
+>> 15.02.2006
+[CO]
+- Vektor Klassen:
+  - Nahm wie besprochen union fX..., X... heraus. Zukünftig wird man wohl fast immer nur vV.x schreiben. 
+    Fügte u/v etc. union hinzu. Bei Vektor 2 nahm ich fS... heraus... u/v sollte völlig reichen. 
+    (der 'gemeine' Grafiker spricht ja meist von uv-mapping)
+  - fVector zu fV gemacht, fHeading in fYaw umbenannt da ein gängigerer Name dafür
+- Matrix Klassen:
+  - Änderte wie besprochen fMatrix in fM, fMatrix44 in fM44, fXX... in xx und nahm f11... heraus
+- Nahm Makros wie z.B. 'PL_MIN' aus MathDefs.h heraus und fügte entsprechende Funktionen in die Mathe Tool 
+  Klasse ein. Die meisten dieser Tool Funktionen sind inline. (meistens ja nur einzeiler :)
+  Es gibt auch eine Abs() Funktion welche von nun an anstatt absf() verwendet werden sollte... da inline spart man sich 
+  einen Funktions aufruf. Momentan überlege ich mir ob wir nicht alle gängigen Mathe Lib Funktionen wie sqrt, pow etc. 
+  in diese Tool Klasse packen sollten damit alles sauber beisammen ist. (das sieht man in anderen Engines auch öfters)
+- Passte alle Projekte an die Änderungen an
+- Bugfix für Var::CheckMinMax() & Base::SetVars(): Merkte das beim Post Processing Beispiel der ASCII Shader nicht ging... 
+  es stellte sich heraus das in den erwähnten Funktionen nach der Abfrage 'cTokenizer.GetNextToken().GetLength() == 1' 
+  natürlich bereits der nächste Token ermittelt wurde. '} else nMin = cTokenizer.GetToken().GetInt();' darf dann natürlich 
+  nicht nochmal den nächsten Token ermitteln. :)
+  Dieser Bug machte sich also nur dann bemerkbar wenn man ohne Quotes Werte zuwies wie z.B. 'Name=HeHo'.
+
+
+
+>> 14.02.2006
+[CO]
+- Vector4: Nahm 'operator ==(const Vector3 &vV)' und 'operator !=(const Vector3 &vV)' Funktionen heraus da etwas 
+  verwirrend und zudem wegen Rechenungenauigkeiten praktisch unbrauchbar :)
+- Vector3: Nahm 'operator ==(const Vector4 &vV)' und 'operator !=(const Vector4 &vV)' Funktionen heraus da etwas 
+  verwirrend und zudem wegen Rechenungenauigkeiten praktisch unbrauchbar :)
+- Vector3: Nahm 'operator *(const Matrix3x3 &mM)' &  'operator *(const Matrix4x4 &mM)' & 'operator *(const Quaternion &qQ)' &
+  'operator *=(const Matrix3x3 &mM)' & 'operator *=(const Matrix4x4 &mM)' & 'operator *=(const Quaternion &qQ)' heraus. Die 
+  entsprechenden Matrix & Quaternion Funktionen müssten völlig ausreichend sein. 
+- Passte alle Projekte an die Änderungen an
+
+
+
+>> 13.02.2006
+[CO]
+- Neue Funktion: Tools::AreEqual(): Prüft mit Tolleranz ob zwei gegebene Zahlen gleich sind (das braucht man ja öfters)
+- Matrizen Klassen:
+  - Fügte statische Member Variablen ZERO & IDENTITY hinzu
+  - LoadIdentity() heist nun SetIdentity(), man könnte mittlerweile zwar auch diese Funktion weglassen und IDENTITY 
+    zuweisen, aber da dies etwas so grundliegendes ist, würde ich diese Funktion wirklich gerne drinnen lassen.
+  - Nahm operator =(float fValue)' wie Stefan es wollte heraus (ich selbst hätte es gerne drinnen gelassen)
+  - SetRotationX() & SetRotationY() & SetRotationZ() bekommen nun als Parameter Radiant statt Grad + setzen andere 
+    Elemente auf 0 so das man durch diese Funktionen korrekte Rotations Matrizen bekommt
+- Vektor Klassen:
+  - Fügte statische Member Variablen ZERO & ONE & UNIT_X & UNIT_Y & UNIT_Z & UNIT_W & NEGATIVE_UNIT_X & NEGATIVE_UNIT_Y & 
+    NEGATIVE_UNIT_Z & NEGATIVE_UNIT_W hinzu
+  - Nahm 'Vector(float f)' & 'Vector &operator =(float fD)' + die float Vergleiche wie Stefan es wollte heraus (ich selbst 
+    hätte es gerne drinnen gelassen) Die Vergleiche mit anderen Vektoren lies ich aber drinnen... andere Engines wie Ogre 
+    haben ebenfalls solche Funktionen, dann kann es also nicht soo daneben sein...
+  - Bei ein paar Funktionen gibt es Namensprobleme mit den Parametern, denn z.B. wäre 'fX' total passend für Parameter Namen,
+    jedoch gibts ja bereits Klassen Variablen mit solchen Namen. Daher haben diese Parameter Namen wie z.B. 'fXT'... this-> 
+    kann man ja z.B. beim Constructor nicht verwenden. Da mir diese Namen aber nicht wirklich gefallen schreibe ich 
+    zumindestens im Interface 'fX' statt 'fXT' - ich hoffe das stört keinen das die Parameter Namen hier im Interface etwas 
+    anderst sind als in der eigentlichen Implementation.
+  - Entfernte die Funktion DotProduct() (auf sich selbst) da dies mißverstanden werden könnte. Stattdessen muss man nun 
+    v.DotProduct(v) oder GetSquaredLength() schreiben
+- Passte alle Projekte an die Änderungen an. An einigen Stellen ist das nun leider ohne =(float) Operatoren umständlicher 
+  und mehr Schreibarbeit :(
+
+
+
+>> 10.02.2006
+[CO]
+- Räume die drei Vektor Klassen etwas auf... Kommentare erweitert welche mir hier wirklich sehr wichtig sind damit man 
+  bestimmte Regeln schnell nachschauen kann oder nochmal genau nachlesen kann was eine Funktion denn eigentlich macht, 
+  darum fallen hier die Kommentare etwas übiger aus. Hab auch hier und da ein paar nette ASCII Grafiken 'gemalt'. Nahm bei 
+  Vector4 ein paar Funktionen heraus die nicht auf 4D Vektoren definiert sind, hier wurde sowieso die w-Komponente 
+  ignoriert.
+- Nahm in Tools.h die Vektor Hilfsfunktionen heraus. Zum einen waren diese einfach zu eingeschränkt da NUR für Vektoren 
+  mit 3 Komponenten, und zum anderen kann man das auch schnell per Hand machen wenn man das wirklich braucht. Meistens 
+  wird man sowieso direkt die Vektor Klassen verwenden. :)
+- MathDefs.h: Machte Definitionen wie z.B. PL_PI zu Konstanten damit das mit den Namespace auch klappt.
+
+
+
+>> 05.02.2006
+[SB]
+- Auf String::Format() umgestellt
+
+
+
+>> 03.02.2006
+[SW]
+- Linux build: build-system auf die sources Änderung angepasst.
+
+
+
+>> 29.01.2006
+[CO]
+- Prüfte über Doxygen ob die Kommentare soweit ok sind und verbesserte ein paar Stellen
+
+
+
+>> 22.01.2006
+[CO]
+- An uint32 Änderungen angepasst
+
+
+
+>> 21.01.2006
+[SB]
+- Codes an neuen Tokenizer angepaßt
+
+
+
+>> 19.01.2006
+[CO]
+- Alles auf Namespaces umgestellt
+- Nahm bei den Vektor Klassen das 'D' am Ende des Namen heraus
+
+
+
+>> 03.01.2006
+[CO]
+- Überarbeitete die 'Graph'-Klassen: Diese verwenden nun das Resource Manager Template. Ein Graph hat diverse Knoten 
+  welche miteinander verbunden sind - dies kann im einfachsten Fall ein einfacher Pfad sein, oder ein 'Wege Netz'. 
+  PLTGraphPath ist wie gehabt ein 'Pfad', also eine Liste an aufeinanderfolgenden Knoten - ein Pfad kann von einem Graphen 
+  erzeugt werden (Thema Pathfinding) oder direkt vom User erzeugt werden. Graphen & Pfade lassen sich auch in einem xml 
+  Format laden/speichern. Will man z.B. Objekte einen bestimmten Weg ablaufen lassen, so reicht hier ein vordefinierter 
+  Pfad völlig... wenn es aber etwas komplexer wird, und Objekte Dynamisch Pfade berechnen können müssen um, z.B. den Spieler 
+  zu verfolgen, so muss vorher ein Graph erzeugt werden. Für's erste muss man diese Graphen wohl per Hand anlegen - später 
+  könnte ich mir aber auch 'automatische Graphen-Generatoren' welche z.B. selbstständig ein brauchbares Wegenetz für eine 
+  Scene erzeugen. Für einfaches Pathfinding müsste dieses System einigermaßen brauchbar sein. Ich überlegte mir eine ganze 
+  Weile ob diese Sache in PLMath oder direkt in der Engine Implementiert sein soll, aber da dies Eindeutig in den 
+  Mathematischen Bereich gehört, und Dinge wie Gui, Renderer etc. nicht benötigt werden ist das wohl in PLMath am besten 
+  aufgehoben... zudem ist in der Engine ja auch ohne dies bereits genug anderes. ;-)
+
+
+
+>> 28.12.2005
+[CO]
+- Nahm PLTCollisionVolume, PLTCollisionBox und PLTCollisionSphere heraus da dies so in dieser Form nicht mehr benötigt wird.
+- Erweiterte/Verbesserte etwas die Kommentare der Vektor Klassen
+
+
+
+>> 30.11.2005
+[CO]
+- An PLTVector3D & PLTQuaternion ein paar kleinigkeiten verbessert/erweitert
+
+
+
+>> 19.10.2005
+[CO]
+- Neue Klasse: PLTMathTools dort sind nun einige allgemeine Mathe Tools sauber in einer Klasse zusammengefasst
+- Neue Klasse: PLTIntersect: Hier sind nun alle möglichen Intersection Funktionen zusammengefasst. Vorher waren diese 
+  Funktionen überall verstreut wie z.B. in PLTSphere, PLTLine etc. - das war zwar sauber OOP, jedoch musste man dann 
+  entsprechende Funktionen in allen Kombinationen in allen Klassen einbauen. Z.B. eine Sphere/Box Abfrage in PLTSphere und 
+  eine Box/Sphere in PLTBoundingBox... das nervte schon etwas, war doppelt gemoppelt und irgendwie unübersichtlich und zudem 
+  war das mit den Funktions-Namen nie wirklich Einheitlich. Nun kann man auf einen Blick sehen für was für Intersection 
+  Funktionen bereit gestellt werden - man will einen SphereBox Test machen? Ok, dann sucht man nun einfach nach SphereBox 
+  und schon hat man die Funktion. :)
+  Passte gleich alle Codes entsprechend an.
+
+
+
+>> 29.09.2005
+[CO]
+- Erweiterte PLTQuaternion um ein paar praktische Hilfs Funktionen 
+
+
+
+>> 10.09.2005
+[CO]
+- Vektoren: Neue Funktion GetSquaredDistance()
+
+
+
+>> 07.06.2005
+[CO]
+- Neue Klasse: PLTAABoundingBox: Eine ganz einfache Achsen ausgerichtete Bounding Box, also nur min&max 
+  Positionen + ein paar Tool Methoden. (PLTBoundingBox ist für einige Aufgabenbereiche nen totaler Overhead :)
+- Benannte PLTPath in PLTGraphPath und PLTNode in PLTGraphNode an. Mit PLTPath kam es unter Linux superschnell
+  zu Konflikten (welche sich in supermerkwürdigen Bugs bemerkbar machten) mit der gleichnamigen Path Resource in der Engine.
+
+
+
+>> 26.04.2005
+[CO]
+- PLTPlaneSet: IsConvex() müsste nun so ok sein - liefert jedenfalls die Erwarteten Resultate... was aber nicht
+  das fehlen von Fehlern beweist. ;-) Stefan, bitte schau nochmal drüber das ich da nichts verpeilt habe.
+  Bei CreateViewPlanes() und CreateSelectionPlanes() kann man nun noch Optional angeben ob es sich bei der 
+  Projection Matrix um eine Matrix ohne Far Plane oder nicht handelt. Wüsste nicht wie man das sicher aus 
+  der übergebenen Projection Matrix ablesen könnte um was für einen Typ es sich handelt.
+
+
+
+>> 23.04.2005
+[CO]
+- PLTPlaneSet: Neue Funktionen: CreateBox() -> Die Funktion stammt aus PLEngine::PLTArea und erzeug 6 Ebenen
+  welche ein Box Volumen einschließen... da dies recht universell brauchbar ist, ists in PLTPlaneSet besser
+  aufgehoben. :) CalculateBox() ermittelt die Bounding Box welche das (eventuell) von den gebildete Volumen
+  einschließt. (vergleichbar mit CalculateSphere())
+
+
+
+>> 31.03.2005
+[CO]
+- PLMath auf neuen Kommentar-Style umgestellt. Diverse Kommentare müssen mit der Zeit noch erweitert werden.
+
+
+
+>> 12.02.2005
+[CO]
+- PLTPlane::GetDistance() für PLTVector4D hinzugefügt
+- PLTPlaneSet::IsPointIn() für PLTVector4D hinzugefügt, desweiteren gibts nun ArePointsIn() das gleich eine ganze Liste
+  von Punkten testet
+- PLTVector4D etwas erweitert
+- PLTMatrix4x4::PerspectiveInfiniteFovRH() funktioniert nun korrekt. Dies kommt bei den Shadow Volumes zum Einsatz um 
+  Backcap Grafikfehler zu beseitigen.
+
+
+
+>> 04.02.2005
+[CO]
+- PLTMatrix4x4: Neue Funktion: RestrictedProjection() erzeugt eine Projection-Matrix welche Multipliziert mit einer normalen 
+  Projection-Matrix diese 'einschränkt'. Wird z.B. im Renderer beim Selektieren verwendet.
+- PLTFrustum::Update() wurde umbenannt und liegt nun in PLTPlaneSet::CreateViewPlanes(), desweiteren befindet sich in
+  PLTPlaneSet nun auch CreateSelectionPlanes() was früher direkt im Renderer lag - so ist's universeller. Das 
+  erstellen der "Selection-Planes" ist nun sehr viel einfacher realisiert als früher.
+
+
+
+>> 12.02.2005
+[CO]
+- Kleine Änderungen an Matrix3x3, Vector3D und Quaternion... man merkt erst immer wenn man konkret damit Arbeitet wenn
+  etwas noch nicht stimmt. *gruml*
+
+
+
+>> 11.02.2005
+[CO]
+- PLTVector3D um Multiplikations-Operatoren mit Quaternionen erweitert
+
+
+
+>> 07.02.2005
+[CO]
+- PLTQuaternion um ein paar Funktionen erweitert
+
+
+
+>> 24.12.2004
+[CO]
+- Fehler in PLTPlaneSet::Create() behoben
+
+
+
+>> 22.12.2004
+[CO]
+- PLTQuaternion um vergleichs Operatoren erweitert
+
+
+
+>> 21.12.2004
+[CO]
+- PLMath.cpp eingefügt und alles auf PLContainer umgestellt
+
+
+
+>> 26.11.2004
+[CO]
+- ClosestPointOnLine(), IsPointInTriangle(), ClosestPointOnTriangle() von PLCollisionTools in PLTVector3D verschoben
+  da diese Funktionen eindeutig dorthin gehören. :)
+  PLIntersectRayPlane() herausgenommen da eine solche Funktion bereits in PLTPlane ist. (PLTPlane::GetDistance())
+  PLIsTriangleCollision() nach PLTRay verschoben und in CheckTriangle() umbenannt.
+  PLTangentPlaneNormalOfEllipsoid in PLTPlane::ComputeTangentPlaneOfEllipsoid() verschoben.
+  -> PLCollisionTools.h & PLCollisionTools.cpp da nun unnötig aus der PLMathLib entfernt.
+  -> Folgende Dateien mussten angepasst werden: PLMeshHandler.cpp, landscape_collider.cpp (ODE Entities)
+
+
+
+>> 24.11.2004
+[CO]
+- Graphen mit Knoten und Pfaden implementiert. (PLTGraph, PLTNode, PLTPath)
+  Ein Graph hat eine bestimmte Anzahl von Knoten welche ihre
+  Nachbarn selbst speichern und wissen von dem diese ein Nachbar sind. Wird beispielsweise dann die Position
+  eines Knotens verändert werden automatisch alle nötigen vorberechneten Entfernungen zu andereren Knoten neu
+  berechnet. Über den Graph kann man sich einen kürzesten Weg von einen Knoten zum anderen suchen
+  lassen. Das Ergebniss wird dann als Pfad zurückgegeben der auf die Knoten des Graphen zeigt. Alternativ kann ein 
+  Pfad auch unabhängig von Graphen sein und managed seine Knoten dann selbst.
+  Die Dinge mit den Pfade können dann also aus der Engine raus - das gehört mehr zur Math-Lib. In die Engine selbst
+  könnte man vielleicht gerade noch einen Graph/Pfad Manager implementieren über welchen man u.a. diese Visualisieren
+  lassen kann.
+  Noch sind diese Klassen nicht komplett ausgereift, z.B. fehlt im Graph selbst noch das Pathfinding.
+
+
+
+>> 19.11.2004
+[CO]
+- Import/Export an PLGeneral Style angepasst, PLMathDll.h gelöscht
+
+
+
+>> 18.11.04
+[SW]
+- Komplett auf linux portiert
+
+
+
+>> 29.10.04
+[CO]
+- Vektor Klassen um weitere Vergleichsoperatoren erweitert
+- Matrix Klassen bei CompareTranslation() etc. um optionale Epsilon-Umgebung erweitert um Rechenungenauigkeiten
+  kompensieren zu können
+
+
+
+>> 04.10.04
+[CO]
+- PLTPlane: Transformation durch eine Matrix verbessert
+
+
+
+>> 28.09.04
+[CO]
+- Ein paar Funktionen verbessert/erweitert, in der Matrix Klasse sind aber glaub ich noch nen paar Fehler da beispielsweise
+  das Transformieren von Ebenen nicht mehr funktioniert... rotieren allein funktioniert dort, aber sobald noch eine Postions-
+  verschiebung hinzukommt...
+
+
+
+>> 16.09.2004
+[CO]
+- PLTPlane: Neue Funktion LineIntersection()
+- PLTMatrix3x3 & PLTMatrix4x4: Neue Konstruktoren bei denen man die Koeffizenten direkt angeben kann
+  Ebenfalls Transform Funktionen verbessert - das Transformieren bei einer Perspective Matrix funktionierte
+  vorher nicht.
+  Desweiteren Funktionen für Rechts- und Linkshändige Matrixen eingebaut damit die Mathe Dinge möglichst universell sind.
+- Vektor Operatoren hinzugefügt so das nun auch scalar*vektor möglich ist anstatt nur vektor*scalar.
+
+
+
+>> 26.08.2004
+[SB]
+- Habe PLTCollisionTypeBase in PLTCollisionVolume umbenannt, sowie die darin verwendeten Datentypen angepaßt
+  (unsigned long anstatt DWORD bei Flags)
+
+
+
+>> 24.08.2004
+[CO]
+- PLTPlaneSet: Neue Funktionen: IsTriangleIn() prüft ob ein Dreieck im Frustum ist, CalculateSphere() berechnet eine Sphere welche
+  das Plane Set (wenn Convex :) einhüllt.
+
+
+
+>> 18.08.2004
+[CO]
+- Passte PLTVector2D, PLTVector3D, und PLTVector4D an das RTTI an, PLMath ist nun von PLGeneral abhängig.
+
+
+
+>> 08.08.2004
+[CO]
+- PLCollisionBox, PLCollisionSphere und PLCollisionTypeBase aus der Engine in PLMath verschoben da u.a. in der 
+  ModelLib PLTCollisionBox verwendet wird.
+
+
+
+>> 03.08.2004
+[CO]
+- Packte diverse Basis Kollisions Funktionen aus der Engine in PLMath PLCollisionTools da einige diverer Funktionen
+  z.B. in der ModelLib benötigt werden aber die Engine selbst dort ja nicht eingebunden werden soll.
+- PLPerlinNoise -> Neue loose Hilfs Funktionen für Perlin Noise. Diese Funktionen braucht man z.B. um 3D Texturen
+  für Shader Effekte zu erzeugen. (siehe EntityElectro bei den Test-Entities)
+
+
+
+>> 26.07.2004
+[CO]
+- PLTMatrix4x4: Neue Funktion: PerspectiveInfinite() -> Berechnet eine Perspective Matrix, jedoch ohne Far Plane
+  (braucht man z.B. für Shadow Volumes...)
+  Desweiteren Funktion zum berechnen der Determinante hinzugefügt - kann man vielleicht mal gebrauchen -
+  da wir es im letzten Semester dran hatten hatte ich irgendwie den Zwang das einzubauen. ;-)
+
+
+
+>> 25.07.2004
+[CO]
+- PLTMatrix4x4: SetReflection() setzt eine Reflection Matrix (braucht man z.B. bei Spiegeln oder
+  reflektierendes Wasser...)
+
+
+
+>> 22.06.04
+[CO]
+- PLTPlaneSet -> Die Test Funktionen sind nun Virtuell und werden z.B. in PLTArea überladen wo dann z.B. ein
+  zu testender Punkt in den Objekt Space gebracht wird.
+
+
+
+>> 17.06.04
+[CO]
+- PLTPlane hat nun operationen zum multiplizieren mit einer 4x4 matrix
+
+
+
+>> 13.06.04
+[CO]
+- PLTOctree: Update Funktionen können nun Optional ein Bitset erhalten in welches diese aktuelle Sichtbarkeits
+  Informationen setzen können.
+- PLTBoundingBox & PLTOctree: PLTFrustum prüfungen auf PLTPlaneSet geändert da dann universeller einsetzbar
+
+
+>> 10.06.04
+[CO]
+- PLMathTools: Neue Funktion: PLInvVec() -> Vektor Invertieren -> diese Funktionen werden verwendet wenn man nicht
+  mit den Vektor Klassen Arbeiten kann bzw. das zu umständlich wäre
+
+
+
+>> 02.04.04
+[CO]
+- PLTMatrix4x4: Neue Funktion: Orthographic() -> Erzeugt eine Orthographische Matrix
+
+
+
+>> 20.02.04
+[CO]
+- Neue Klasse: PLTMatrix3x3 -> das gleiche wie PLTMatrix4x4 nur kleiner, falls man z.B. NUR Rotationen speichern will
+- Überall dort von PLTMatrix4x4 auf PLTMatrix3x3 umgestellt wo man nur mit Rotationen speichert z.B. bei der Entity Rotations
+  Matrix.
+  PLTMatrix3x3 einzuführen damit nicht mehr Speicher verbraucht wird als wirklich benötigt.
+
+
+
+>> 25.01.04
+[CO]
+- PLTPlane: PLTVector3D aus Union herausgenommen und durch normalen float Array fN ersetzt da der Linux Compiler
+  keine Union Members mit Konstruktoren erlaubt. (vielleicht ist das aber auch nur ein MS eigner Weg :)
+  -> Codes in denen PLTPlane verwendet wird entsprechend angepasst.
+
+
+
+>> 21.01.04
+[CO]
+- Neues PL-Subprojekt: PLMath -> Dort liegen nun alle Mathe relevanten Dinge sauber in einem eigenen Projekt zusammen
+  welches zudem noch Plattform unabhängig ist. Mathe-Klassen die bis jetzt in PLGeneral lagen hierin verschoben.
+
+
+
+>> 03.01.04
+[CO]
+- PLTMatrix4x4: Neuer Operator: [] -> Damit kann man bequem auf ein Element der Matrix zugreifen
+
+
+
+>> 25.12.03
+[CO]
+- PLTMatrix4x4 um vergleichs Operatoren und Funktionen erweitert
+
+
+
+>> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+
+[CO] PLTMath::GetNearestPowerOfTwo erweitert, man kann nun auch die nächst größere Zahl zurückgeben lassen
+[CO] PLMath: Inline Vektor Hilfs Funktionen eingebaut
+[CO] PLTBoundingBox: Problem beim Skalieren der BB's behoben
+[CO] PLTVector3D und PLTQuaternion leicht erweitert
+[CO] PLMath: Funktionen wie PLDotProduct() herausgenommen da diese durch die besseren Compiler Optimierungen mittlerweile
+     überflüssig geworden sind!
+[CO] PLTBoundingBox: Neue Funktion: Draw() -> Zeichnet die Bounding Box
+[CO] PLTPlane: Neue Funktionen: Normalize() -> Normalisiert die Ebene Lerp() -> Berechnet eine interpolierte Ebene
+     PlaneIntersection() -> Verbessert
+[CO] PLTMatrix4x4 um weiteren Konstruktor erweitert
+[CO] PLTMath: Neue Funkton: RotateAxes() -> Rotiert zwei Vektoren um ihre Achse (kommt z.B. bei Rotierenden Partikeln
+     zum Einsatz)
+[CO] Vektor Klassen besser Dokumentiert
+[CO] PLTPlane: Neue Funktion: PlaneIntersection() -> Berechnet den Schnittpunkt zwischen 3 Ebenen, oder eine
+     Schnittgerade zwischen 2 Ebenen
+[CO] Math: Neue Klasse: PLTRay
+[SB] PLTVector2D: Die Variable fV wurde in fVector umbenannt, da in der Klasse zwei Variablen mit diesem Namen vorhanden
+     waren (einmal als Array für den Zugriff auf alle Werte und einmal als Textur-Koordinate). Um eine konsistente
+     Namensgebung zu erhalten, wurden alle ähnlichen Variablen in anderen Klassen ebenfalls umbenannt
+[CO] PLTPlaneSet: Neue Funktion: GetSphere() -> Liefert die Sphere zurück welche den von den Ebenen eingeschlossenen
+     Raum umgibt. Wird intern verwendet um zu testen ob sich überhaupt etwas in der nähe des inneren befindet bevor man
+     dann jede Ebene prüfen muss.
+[CO] Neue Klasse: PLTSphere -> Eine Sphere mit diversen Funktionen
+[CO] PLTFrustum: Neue Funktionen: Push()'n'Pop() -> Damit kann der aktuelle Frustum 'hinterlegt' werden oder das letzte
+     Backup zum aktuellen Frustum gemacht werden
+[CO] PLTPlaneSet intern auf PLTDynamicList umgestellt
+[CO] PLTPlane erweitert
+[CO] Überall den Right-Direction Vektor zum Left-Direction Vektor gemacht. Nun entsprechen alle Richtungs-Vektoren den
+     Koordinaten System achsen. Z ist der Richtungs-Vektor, Y der Up-Vektor und X der Left-Vektor. (Achsen müssen nicht
+     mehr Invertiert werden wie dies früher z.B. bei PLTMatrix.GetZAxis() der Fall war, nun ist alles schön einheitlich :)
+[CO] PLTBoundingBox um Base-Rotations-Matrix sowie um eine Finale Matrix erweitert -> Modell Format BB um Rotation
+     erweitert (aktuelle Modelle auf dem Server)
+[CO] Wenn eine Bounding Box an einen Anker Punkt gebunden ist diese immer korrekt platzieren (Rotation macht noch probleme??)
+[CO] PLTMatrix4x4: Neue Funktionen eingebaut: FrustumInv() und PerspectiveInv()
+[CO] PLTMath::GetSign() durch Makro PL_SIGN ersetzt (da typ unabhängig :)
+[CO] PLTBoundingBox: Kann nun auch Skaliert werden, zudem kann die BB einen Namen haben
+[CO] PLTOctree um Kollisions-Tests erweitert. Ruft man z.B. CheckSphere() auf so kann man dann auch
+     PLTMesh::m_cGeometryVisibility auslesen welche Geometrien mit der Sphere kollidieren.... vorher muss
+     m_cGeometryVisibility jedoch komplett auf 0 gesetzt werden
+[SB] PLTBoundingBox: Funktion zum Testen der Kollision während einer Bewegung eingebaut
+[CO] PLTOctree auf PLTBoudingBox umgestellt. Der Octree lässt sich nun mit einem Entity verschieben usw.
+[CO] Neue Funktion: PLTBoundingBox::CheckFrustum() -> prüft ob sich die BB im Frustum befindet
+[CO] PLTBoundingBox::GetBoundingSphere() rückgabe Wert durch 2 geteilt um den korrekten Radius zu bekommen
+[CO] Path-Format umgeschrieben damit dann auch in World Format verwendbar. Findet der World-Loader eine Pfad-Sektion so
+     wird diese dann vom Pfad selbst ausgelesen. Somit kann man dann Pfade in world-Files definieren oder extern in
+     seperaten path-files. (wobei der Syntax gleich bleibt :)
+[CO] PLTPath & PLTPathNode erweitert
+[CO] Vektor Konstruktoren erweitert so das man den gesammten Vektor mit einer Zahl initialisieren kann
+[SB] Die Funktion Frustum() in PLTMatrix4x4 war zwar mathematisch korrekt, berücksichtige jedoch nicht, daß bei uns
+     (wie bei OpenGL) die Matrizen transponiert gespeichert werden dies wurde korrigiert
+[CO] PLTPlaneSet Funktionen erweitert
+[CO] PLTMatrix4x4: Neue Funktionen: Frustum(), Perspective() -> vergleichbar mit OpenGL Befehlen wie gFrustum usw. ->
+     ein weiterer kleiner Schritt in die API unabhängigkeit :)
+[SB] PLTBoundingBox: Die Methoden zum Zeichnen der Bounding Box wurden herausgenommen, diese sind nun im Renderer zu
+     finden
+[SB] PLTBoundingBox: Neue Funktion GetBoundingSphere() eingebaut, welche den Radius der Kugel zurückgibt, die die
+     Bounding Box komplett umschließt
+[CO] Neue Tool-Klasse eingebaut: PLTOctree
+[CO] Neue Vektor-Klasse: PLTVector4D... ein 4D-Vektor ist manchmal praktisch beim übergeben von Shader-Parameter,
+     desweiteren lassen sich die Vektor-Klassen nun auch als Farbe-ansprechen. (PLTColor3 & PLTColor4)
+[CO] Neue Funktion in PLTMatrix4x4: SetDirection() -> Funktion welche einen richtungs-Vektor in eine rotations-Matrix
+     konvertiert... deine Funktion ist enorm praktisch und wird häufiger gebraucht!! :)
+[CO] Path manager um standard Pfad erweitert (damit nie ungültigen Zeiger)
+[CO] An vielen Stellen PLBOUNDINGBOX durch PLTBoundingBox ersetzt
+[CO] PLTBoundingBox u.a. um Copy-Operator erweitert
+[CO] Neue Tool-Klasse PLTQuadtree -> Loose Quadtree Klasse, verwendet Basis Klasse PLTQuadtreePatch um je nach Bounding
+     Boxes die Sichtbarkeit zu ermitteln
+[CO] Neue Tool-Klasse: PLTPlaneSet -> Eine Anzahl von Ebenen welche eine einen konvexen Raum bilden. (sollten :) Im
+     Prinzip das was früher direkt in PLTFrustum war... nur auf das nötige Reduziert. -> Stellte PLTFrustum auf diese
+     Klasse um.
+[CO] PLTMatrix4x4 -> Neue Funktion: ProjectShadow() -> Berechnet eine Schatten Projektions Matrix
+[CO] Neue Funktion: PLTPlane::GetSide()
+[CO] Überarbeitete PLTPlane-Klasse
+[CO] Die Zufalls Funktionen sind nun in der PLTMath anstatt der PLTTools Klasse... sind ja eindeutig mathematisch...
+[SB] PLTMatrix4x4: Fehler in SetRotation() behoben, die Einträge wurden falsch herum gespeichert (transponierte matrix)
+[CO] PLTMatrix4x4: IncRotation() Funktion eingebaut 
+[CO] Path System eingebaut (kann später mit Pathfinding usw. erweitert werden :)
+[SB] Neue Klasse für orientierte bounding boxes (OBB). Zur Kollisionserkennung wird die "Seperating Axes"-Theorie
+     verwendet, welche eine effiziente Kollisionsabfrage zwischen OBBs möglich macht
+[SB] habe die Matrixklasse stark verändert und die Funktionen vereinheitlicht. Die Funktion Transform wurde korrigiert
+     und berücksichtigt nun die transponierte Speicherung der Matrix
+[CO] Frustum Funktionen in eine eigene Klasse

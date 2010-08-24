@@ -1,0 +1,381 @@
+/*********************************************************\
+ *  File: Octree.h                                       *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLMATH_OCTREE_H__
+#define __PLMATH_OCTREE_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLMath/BoundingBox.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class Bitset;
+}
+namespace PLMath {
+	class PlaneSet;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLMath {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Base octree class
+*
+*  @remarks
+*    Visualization of the coordinate system and were the octree
+*    sectors are:
+*    @code
+*                             top _\                  back
+*       y               ____________\__________________|
+*       |                           |\ 0  \ 1  \       |
+*       |                           | \----\----\
+*       |                           |  \_3__\_2__\_____|
+*       |________ x     ____________|  | 3  | 2  |     |
+*       \                   bottom _\  |____|____|    front
+*        \                           \ |    |    |
+*         \                           \|_7__|_6__|
+*         z                           ||         ||
+*                                     ||         ||
+*                                 left |         | right
+*                                      |         |
+*
+*    Sector position description:
+*           x       y         z
+*     0.  left     top       back
+*     1.  right    top       back
+*     2.  right    top       front
+*     3.  left     top       front
+*     4.  left     bottom    back
+*     5.  right    bottom    back
+*     6.  right    bottom    front
+*     7.  left     bottom    front
+*
+*    -x = left     +x = right
+*    -y = bottom   +y = top
+*    -z = back     +z = front
+*    @endcode
+*/
+class Octree {
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLMATH_API Octree();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLMATH_API virtual ~Octree();
+
+		/**
+		*  @brief
+		*    Returns whether the octree is build or not
+		*
+		*  @return
+		*    'true' if the octree is build, else 'false'
+		*/
+		PLMATH_API bool IsBuild() const;
+
+		/**
+		*  @brief
+		*    Initializes the octree
+		*
+		*  @param[in] pParent
+		*    Parent octree, can be NULL
+		*  @param[in] nSubdivide
+		*    Subdivide
+		*  @param[in] nMinGeometries
+		*    Minimum geometries per octree
+		*  @param[in] nIDOffset
+		*    ID offset
+		*
+		*  @note
+		*    - You should destroy the old octree before you initialize the new one!
+		*/
+		PLMATH_API void Init(Octree *pParent = NULL,
+							 int nSubdivide = -1, PLGeneral::uint32 nMinGeometries = 0, PLGeneral::uint32 nIDOffset = 0);
+
+		/**
+		*  @brief
+		*    Destroys the octree
+		*/
+		PLMATH_API void Destroy();
+
+		/**
+		*  @brief
+		*    Returns the subdivision level
+		*
+		*  @return
+		*    Subdivision level
+		*/
+		PLMATH_API PLGeneral::uint32 GetLevel() const;
+
+		/**
+		*  @brief
+		*    Returns whether the octree is currently visible or not
+		*
+		*  @return
+		*    'true' if the octree is visible, else 'false'
+		*/
+		PLMATH_API bool IsVisible() const;
+
+		/**
+		*  @brief
+		*    Sets whether the octree is currently visible or not
+		*
+		*  @param[in] bVisible
+		*    Should the octree be visible?
+		*/
+		PLMATH_API void SetVisible(bool bVisible = true);
+
+		/**
+		*  @brief
+		*    Returns the octrees bounding box
+		*
+		*  @return
+		*    Bounding box
+		*/
+		PLMATH_API const BoundingBox &GetBoundingBox() const;
+
+		/**
+		*  @brief
+		*    Returns the subdivide
+		*
+		*  @return
+		*    Subdivide
+		*/
+		PLMATH_API int GetSubdivide() const;
+
+		/**
+		*  @brief
+		*    Returns the minimum number of geometries per octree
+		*
+		*  @return
+		*    Minimum number of geometries per octree
+		*/
+		PLMATH_API PLGeneral::uint32 GetMinGeometries() const;
+
+		/**
+		*  @brief
+		*    Returns the current position
+		*
+		*  @return
+		*    Current position
+		*/
+		PLMATH_API const Vector3 &GetPos() const;
+
+		/**
+		*  @brief
+		*    Set the current position
+		*
+		*  @param[in] vPos
+		*    New position
+		*/
+		PLMATH_API void SetPos(const Vector3 &vPos);
+
+		/**
+		*  @brief
+		*    Returns the current scale
+		*
+		*  @return
+		*    Current scale
+		*/
+		PLMATH_API const Vector3 &GetScale() const;
+
+		/**
+		*  @brief
+		*    Set the current scale
+		*
+		*  @param[in] vScale
+		*    New scale
+		*/
+		PLMATH_API void SetScale(const Vector3 &vScale);
+
+		/**
+		*  @brief
+		*    Returns the current rotation matrix
+		*
+		*  @return
+		*    Current rotation matrix
+		*/
+		PLMATH_API const Matrix3x3 &GetRot() const;
+
+		/**
+		*  @brief
+		*    Set the current rotation matrix
+		*
+		*  @param[in] mRot
+		*    New rotation matrix
+		*/
+		PLMATH_API void SetRot(const Matrix3x3 &mRot);
+
+		/**
+		*  @brief
+		*    Updates the visibility information of the octree
+		*
+		*  @param[in]  cPlaneSet
+		*    Plane set to check
+		*  @param[out] pBitset
+		*    Optional (can be NULL) bitset which can for instance be filled in CustomVisible() and
+		*    CustomInvisible() with current visibility information
+		*
+		*  @remarks
+		*    The result must be handled in the derived octree class.
+		*    The function it will call CustomVisible()/CustomInvisible()
+		*    to mark an octree as visible or invisible.
+		*/
+		PLMATH_API void UpdateVisibility(const PlaneSet &cPlaneSet, PLGeneral::Bitset *pBitset = NULL);
+
+		/**
+		*  @brief
+		*    Check whether a sphere intersects with this octree
+		*
+		*  @param[in] vPos
+		*    Center of the sphere
+		*  @param[in] fRadius
+		*    Radius of the sphere
+		*
+		*  @see
+		*    - UpdateVisibility()
+		*/
+		PLMATH_API void CheckSphere(const Vector3 &vPos, float fRadius);
+
+		/**
+		*  @brief
+		*    Check whether a box intersects with this octree
+		*
+		*  @param[in] cBox
+		*    Box to test
+		*
+		*  @see
+		*    - UpdateVisibility()
+		*/
+		PLMATH_API void CheckBox(const BoundingBox &cBox);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLGeneral::uint32	m_nIDOffset;		/**< ID offset from parent (0-7) */
+		PLGeneral::uint32   m_nID;				/**< Octree ID */
+		Octree			   *m_pTopmost;			/**< Topmost octree (always valid!) */
+		Octree			   *m_pParent;			/**< Octree parent, can be NULL */
+		PLGeneral::uint32	m_nLevel;			/**< Node level (0 = topmost) */
+		PLGeneral::uint32   m_nNumOfChildren;	/**< Number of children */
+		Octree			  **m_ppChild;			/**< The children, can be NULL */
+		BoundingBox			m_cBoundingBox;		/**< Octree bounding box */
+		Vector3				m_vPos;				/**< World position (m_vPos+m_vBBCenter = real world position) */
+		Vector3				m_vBBCenter;		/**< Orginal bounding box center */
+		bool				m_bVisible;			/**< Is the octree visible? */
+		bool				m_bBuild;			/**< is the octree build? */
+		int					m_nSubdivide;		/**< Subdivide */
+		PLGeneral::uint32   m_nMinGeometries;	/**< Minimum nuber of geometries per octree */
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		Octree(const Octree &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		Octree &operator =(const Octree &cSource);
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual functions                             ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Custom visible function
+		*
+		*  @param[out] pBitset
+		*    Optional bitset, can be NULL
+		*
+		*  @note
+		*    - Is called during UpdateVisibility() if the octree is visible
+		*/
+		PLMATH_API virtual void CustomVisible(PLGeneral::Bitset *pBitset = NULL);
+
+		/**
+		*  @brief
+		*    Destructor
+		*
+		*  @param[out] pBitset
+		*    Optional bitset, can be NULL
+		*
+		*  @note
+		*    - Is called during UpdateVisibility() if the octree is invisible
+		*/
+		PLMATH_API virtual void CustomInvisible(PLGeneral::Bitset *pBitset = NULL);
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLMath
+
+
+#endif // __PLMATH_OCTREE_H__

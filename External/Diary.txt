@@ -1,0 +1,221 @@
+>> 14.08.2010
+[CO]
+- Über "FindCg.cmake" kann ein installiertes Cg-SDK gefunden und verwendet werden (CMAKETOOLS_USE_SYSTEM_LIBS)
+- Über "FindOpenGL.cmake" werden die Standard-OpenGL Header gesucht, unter Windows Visual Studio bekam ich einen leeren Pfad,
+  was aber wohl ok ist da diese Header direkt bei Visual Studio mitkommen und auch gefunden werden. (CMAKETOOLS_USE_SYSTEM_LIBS)
+  Die "anderen" OpenGL Header "glext.h", "glxext.h" und "wglext.h" liegen wenn ich das richtig sehe üblicherweise so nicht auf dem
+  System. Diese Header lassen sich allerdings frei öffentlich herunterladen und dürfen auch so weitergegeben werden... ich überlegte
+  zuerst ob eine öffentliche "OpenGL.tar.gz"-Version in der nur diese 3 Header liegen gut wäre - andererseits hätte man dann zwei
+  "OpenGL.tar.gz"-Packete, das eine nur mit den 3 öffentlichen Headern, das andere für uns mit allem. Daher entschied ich mich für
+  eine andere Lösung um es möglichst einfach zu machen das selbst übersetzen zu können: "External\Recommended\OpenGL"
+  Hier liegen nun glext.h", "glxext.h" und "wglext.h" so das diese nicht mehr selbst heruntergeladen und eingepflegt werden müssen,
+  PLRendererOpenGL holt sich die Header aus diesem Verzeichnis. Ich denke noch einfach kann man es dem Benutzer nicht machen.
+  Das ist hier nun zwar etwas anderst als bei den restlichen Externals, diese Header sind allerdings auf Multiplatform ausgelegt
+  und alle anderen Lösungen erschienen mir zu umständlich.
+
+
+
+>> 03.08.2010
+[CO]
+- Altes "External" in "Removed_External_03082010.zip" Archiviert. "External2" in "External" umbenannt und entsprechend alle
+  VC Projekte und CMake Dateien angepasst.
+
+
+
+>> 27.07.2010
+[CO]
+- "BlueZ" und "libhid" entfernt da durch Stefans PLInput Refactoring nicht mehr verwendet
+
+
+
+>> 24.06.2010
+[CO]
+- FTGL entfernt da wir diese Bibliothek Technisch bedingt nicht mehr nutzen können (Shader Thematik)
+
+
+
+>> 16.03.2010
+[CO]
+- Update auf "Cg Toolkit 2.2, February 2010 Release"
+
+
+
+>> 17.01.2009
+[SB]
+- Include-Pfade für externe Bibliotheken angepasst, damit die Header bei der Verwendung von System-Bibliotheken auch
+  gefunden werden. Unter Linux werden die Bibliotheken und Includes ja in feste Verzeichnisse installiert, und so findet
+  sich z.B. der ZLib-Header in '/usr/include/zlib.h'. Daher lautet der korrekte include-Befehl #include <zlib.h>, nicht
+  <zlib/zlib.h>. Da wir die üblichen Dateipfade unter Linux nicht ändern können, müssen wir daher unsere Verwendung
+  unter Windows anpassen, damit dies identisch ist. Die Projektdateien für VC wurden daher entsprechend angepasst. 
+
+
+
+>> 14.10.2009
+[CO]
+- "Plugins/Max2010" hinzugefügt für 3ds Max 2010 Scene Exporter
+
+
+
+>> 11.06.2009
+[SB]
+- libjpeg für Linux hinzugefügt.
+- OpenGL-Header für Linux: Habe glext.h aus dem Windows-Verzeichnis herüberkopiert, da die neueren Extensions im Linux-Header
+  fehlten und ich nach wie vor nicht weiss, woher man sich diese Header denn nun "korrekter Weise" besorgen sollte. Offenbar
+  funktioniert dieser Header auch, da sich nun wieder alles übersetzen liess, obwohl die Header nun sicherlich aus zwei
+  verschiedenen Quellen stammen.
+
+
+
+>> 27.05.2009
+[CO]
+- "Base/DevIL" entfernt da das neue PLGraphics2 das nicht mehr verwendet und ich momentan offen gesagt auch kein
+  Bedürfniss habe ein ImageLoader Plugin zu schreiben das über DevIL tonnen weiterer Bildformate hinzufügt... DevIL
+  will ich nun erstmal ein weilchen lang nicht mehr sehen. :D
+
+
+
+>> 24.05.2009
+[CO]
+- "Base/jpg" (libjpeg) für PLGraphics2 hinzugefügt. Wow, an der Lib hat sich seit 11 Jahren nix mehr getan...
+  "aktuelle Version" = "Version 6b 27-Mar-1998". :D
+  -> Die Linux Variante fehlt noch.
+  -> Die Bibliothek kann "frei" genutzt werden, nutzt aber scheinbar keine bekannte Lizenz.
+
+
+
+>> 10.05.2009
+[SB]
+- "Base/png" (libpng) für PLGraphics2 hinzugefügt.
+
+
+
+>> 08.03.2009
+[CO]
+- Auf "Cg Toolkit 2.1, February 2009 Release" umgestellt
+
+
+
+>> 04.02.2009
+[SB]
+- "Backends/OpenGLES" zunächst einmal nur für Windows hinzugefügt. Hier liegt das "OpenGL ES 2.0" kompatible Emulator-SDK,
+  um für OpenGL ES auf dem normalen PC entwickeln zu können.
+
+
+
+>> 26.12.2008
+[CO]
+- In "Backends/Newton" liegt nun "Newton Game Dynamics 2 Beta 18" (für Linux gabs die neuere Version irgendwie noch nicht + 64 Bit war auch
+  noch das gleiche)
+
+
+
+>> 28.11.2008
+[CO]
+- "Plugins/Max2009" hinzugefügt für 3ds Max 2009 Scene Exporter
+
+
+
+>> 11.11.2008
+[CO]
+- "Plugins/Max8" entfernt da wir keinen Support mehr für 3ds Max 8 anbieten
+
+
+
+>> 24.10.2008
+[CO]
+- Auf Cg 2.1 umgestellt
+
+
+
+>> 30.07.2008
+[CO]
+- "LicenseOverview.txt" hinzugefügt damit wir alle Lizenzen im Überblick haben, fügte desweiteren alle Lizenz Texte hinzu die ich fand -
+   ein paar ? gibts allerdings noch...
+
+
+
+>> 29.05.2008
+[CO]
+- "Backends/NovodeX" entfernt und dafür das aktuelle "Backends/PhysX" hinzugefügt
+
+
+
+>> 16.05.2008
+[CO]
+- "lib3ds" von "Base" in "Plugins" verschoben da der 3ds Mesh Loader nun in "PLDefaultFileFormats" statt direkt in "PLMesh" liegt
+
+
+
+>> 18.04.2008
+[CO]
+- "Backends/FreeType" und "Backends/FTGL" hinzugefügt das von "PLRendererOpenGL" genutzt wird
+
+
+
+>> 16.02.2008
+[CO]
+- "Base/WindowsDDK" hinzugefügt das von den "HID"-Klassen in "PLInput" genutzt wird
+
+
+
+>> 11.02.2008
+[CO]
+- "Plugins/Max8" und "Plugins/Max2008" hinzugefügt die vom 3ds Max "PL3dsMaxSceneExport" und dem veraltetem "PL3dsMaxModelExport"
+  genutzt werden. Überlegte zuerst ob man dafür noch einen weiteren Ordner machen sollte, aber ich denke im Plugin-Ordner kann man
+  es erstmal lassen - ist ja nur ein 'reines Plugin', wenn auch nicht direkt für 'PixelLight' selbst. Rausgeben darf man diese
+  Dateien natürlich unter keinen Umständen. Kein seperater Include Unterordner da man ansonnsten nicht mehr ohne weiteres in den
+  Projekten zwischen den SDK-Versionen 'umschalten' kann.
+
+
+
+>> 10.02.2008
+[CO]
+- "Backends/NovodeX" hinzugefügt das von "PLPhysicsNovodeX" genutzt wird
+- "Backends/DirectX9" hinzugefügt das von "PLRendererD3D9" genutzt wird. Konnte die Includes leider nicht wie überall
+  in einen eigenen Ordner packen da Cg das sonst nicht findet.
+- "Backends/Cg" hinzugefügt das von "PLRendererOpenGL" und "PLRendererD3D9" genutzt wird + Lib aktualisiert... sieht so
+  aus als dürfte man das sogar weitergeben :D
+- "Backends/OpenAL" hinzugefügt das von "PLSoundOpenAL" genutzt wird + Lib aktualisiert (zumindestens Win32 Fassung)
+- "Plugins/OpenEXR" hinzugefügt das von "PLImageLoaderEXR" genutzt wird. Lib nicht aktualisiert da mir das hier zu wild wurde.
+  Leider war es auch hier nicht möglich die Includes in einen seperaten Unterordner zu packen da in den Headern mit "<>"
+  gearbeitet wird. ^^
+  Sieht so aus als dürfte man das sogar weitergeben. :D
+- "Base/DevIL" hinzugefügt das von "PLGraphics" in der Image-Klasse genutzt wird. Sieht so aus als dürfte man das weitergeben.
+  Leider konnte ich den Includes Ordner nicht "DevIL" nennen sondern musste das bei "IL" lassen da in den Headern mit diesem
+  Unterordner gearbeitet wird. :/
+- "Base/PCRE" hinzugefügt das von "PLGeneral" in der "RegEx"-Klasse für Reguläre Ausdrücke genutzt wird. Sieht so aus als dürfte
+  man das weitergeben. Es gibt davon mittlerweile eine neue Version, verzichtete aber erstmal auf ein Update damit ich heute noch
+  fertig werde mit diesen umschaufel Arbeiten.
+- "Base/zlib" hinzugefügt das von "PLGeneral" in den ZIP Datei Klassen genutzt wird. Sieht so aus als dürfte man das weitergeben.
+  Es gibt davon mittlerweile eine neue Version, verzichtete aber erstmal auf ein Update damit ich heute noch fertig werde mit
+  diesen umschaufel Arbeiten.
+- "Backends/SQLite" hinzugefügt das von "PLDatabaseSQLite" genutzt wird + Lib aktualisiert. (für Linux müsste man die neue
+  Version noch übersetzen) Sieht so aus als dürfte man das weitergeben.
+- "Backends/MySQL" hinzugefügt das von "PLDatabaseMySQL" genutzt wird + Lib aktualisiert. (für Linux müsste man noch aktualisieren)
+  Sieht so aus als dürfte man das weitergeben.
+- "Backends/PostgreSQL" hinzugefügt das von "PLDatabasePostgreSQL" genutzt wird + Lib aktualisiert und mich wieder mal gewundert
+  wie irrsinnig viele dll's das Teil braucht. (für Linux müsste man noch aktualisieren)
+  Sieht so aus als dürfte man das weitergeben.
+- "Backends/libogg" hinzugefügt das von "PLSoundOpenAL" genutzt wird + Lib aktualisiert (für Linux müsste man die neue
+  Version noch übersetzen) Sieht so aus als dürfte man das weitergeben.
+- "Backends/libvorbis" hinzugefügt das von "PLSoundOpenAL" genutzt wird + Lib aktualisiert (für Linux müsste man die neue
+  Version noch übersetzen) Sieht so aus als dürfte man das weitergeben.
+- "Plugins/avifile" hinzugefügt das von der Linux Version von "PLSceneNodes1" in der "SNVideoTexture"-Klasse verwendet wird. Sieht
+  so aus als dürfte man das weitergeben.
+
+
+
+>> 09.02.2008
+[CO]
+- Nach Stefans Vorschlag liegen nun alle 'Externen/Third Party'-Daten hier in diesem Ordner. Im Grundordner habe ich noch ein
+  "Todo.txt" angelegt, das sollte ausreichend sein diese eine Datei.
+- "Base/TinyXML" hinzugefügt das von in den XML-Klassen in "PLGeneral" genutzt wird, aktualsiert hatte die Lib bereits vor
+  ein paar Stunden
+- "Backends/OpenGL" hinzugefügt das von "PLRendererOpenGL" genutzt wird + Win32: "glext.h", "glxext.h" und "wglext.h" aktualisiert
+- "Backends/FMOD" hinzugefügt das von "PLSoundFMOD" genutzt wird
+- "Backends/FMODEx" hinzugefügt das von "PLSoundFMODEx" genutzt wird + Lib aktualisiert
+- "Base/lib3ds" hinzugefügt das von der "MeshLoader3ds" Mesh Loader Klasse innerhalb von "PLMesh" genutzt wird + Lib aktualisiert...
+  "lib3ds_matrix_mul" wurde durch "lib3ds_matrix_mult" ersetzt und die Parameter von "Lib3dsIoReadFunc" und "Lib3dsIoWriteFunc"
+   wurden verändert
+- "Backends/Newton" hinzugefügt das von "PLPhysicsNewton" genutzt wird
+- "Backends/ODE" hinzugefügt das von "PLPhysicsODE" genutzt wird

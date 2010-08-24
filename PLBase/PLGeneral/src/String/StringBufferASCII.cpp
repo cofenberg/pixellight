@@ -1,0 +1,873 @@
+/*********************************************************\
+ *  File: StringBufferASCII.cpp                          *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#ifdef LINUX
+	#include <wchar.h>
+	#include "PLGeneral/PLGeneralLinuxWrapper.h"
+#endif
+#include "PLGeneral/String/UTF8Tools.h"
+#include "PLGeneral/String/StringBufferUnicode.h"
+#include "PLGeneral/String/StringBufferUTF8.h"
+#include "PLGeneral/String/StringBufferASCII.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+StringBufferASCII::StringBufferASCII(char szString[], uint32 nLength) : StringBuffer(nLength, String::ASCII),
+	m_pszString(szString),
+	m_pUnicode(NULL),
+	m_pUTF8(NULL)
+{
+}
+
+/**
+*  @brief
+*    Constructor
+*/
+StringBufferASCII::StringBufferASCII(const wchar_t szString[], uint32 nLength) : StringBuffer(nLength, String::ASCII),
+	m_pszString(new char[nLength + 1]),
+	m_pUnicode(NULL),
+	m_pUTF8(NULL)
+{
+	// We need to convert the given Unicode string into an ASCII one
+	wcstombs(m_pszString, szString, nLength + 1);
+}
+
+/**
+*  @brief
+*    Constructor
+*/
+StringBufferASCII::StringBufferASCII(utf8 szString[], uint32 nLength, uint32 nNumOfBytes) : StringBuffer(nLength, String::ASCII),
+	m_pszString(NULL),
+	m_pUnicode(NULL),
+	m_pUTF8(NULL)
+{
+	// Get the number of bytes the ASCII string requires
+	m_nLength = UTF8Tools::Escape(NULL, 0, szString, 0);
+
+	// Get the ASCII string
+	m_pszString = new char[m_nLength + 1];
+	UTF8Tools::Escape(m_pszString, m_nLength + 1, szString, 0);
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+StringBufferASCII::~StringBufferASCII()
+{
+	if (m_pUnicode) m_pUnicode->Release();
+	if (m_pUTF8) m_pUTF8->Release();
+	delete [] m_pszString; // (there MUST by such a string :)
+}
+
+/**
+*  @brief
+*    Sets the string
+*/
+bool StringBufferASCII::SetString(char szString[], uint32 nLength)
+{
+	// The Unicode version is now dirty
+	if (m_pUnicode) {
+		m_pUnicode->Release();
+		m_pUnicode = NULL;
+	}
+
+	// The UTF8 version is now dirty
+	if (m_pUTF8) {
+		m_pUTF8->Release();
+		m_pUTF8 = NULL;
+	}
+
+	// Kill the old string (there MUST by such a string :)
+	delete [] m_pszString;
+
+	// Set new string
+	m_pszString = szString;
+	m_nLength   = nLength;
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Sets a character
+*/
+void StringBufferASCII::SetCharacter(char nCharacter)
+{
+	// Optimization: If we have our own unique string buffer instance in the required format we 'just'
+	// cut it down to use a single character... this is faster then allocation/deallocation and we ignore
+	// the potential 'waste' if memory if the old string buffer was 'larger'
+
+	// We know there MUST be at least one character, so the following is 'safe'
+	m_pszString[0] = nCharacter;
+	m_pszString[1] = '\0';
+
+	// Just ignore the 'old stuff' behind the first character (=> NO memory leak!)
+	m_nLength = 1;
+
+	// The Unicode version is now dirty
+	if (m_pUnicode) {
+		m_pUnicode->Release();
+		m_pUnicode = NULL;
+	}
+
+	// The UTF8 version is now dirty
+	if (m_pUTF8) {
+		m_pUTF8->Release();
+		m_pUTF8 = NULL;
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual StringBuffer functions                 ]
+//[-------------------------------------------------------]
+String::EFormat StringBufferASCII::GetFormat() const
+{
+	return String::ASCII;
+}
+
+StringBufferASCII *StringBufferASCII::GetASCII()
+{
+	return this;
+}
+
+StringBufferUnicode *StringBufferASCII::GetUnicode()
+{
+	// Is there already a current Unicode version?
+	if (!m_pUnicode) {
+		// Nope, let's create one
+		m_pUnicode = new StringBufferUnicode(m_pszString, m_nLength);
+		m_pUnicode->AddReference();
+	}
+
+	// Return it
+	return m_pUnicode;
+}
+
+StringBufferUTF8 *StringBufferASCII::GetUTF8()
+{
+	// Is there already a current UTF8 version?
+	if (!m_pUTF8) {
+		// Nope, let's create one
+		m_pUTF8 = new StringBufferUTF8(m_pszString, m_nLength);
+		m_pUTF8->AddReference();
+	}
+
+	// Return it
+	return m_pUTF8;
+}
+
+uint32 StringBufferASCII::GetNumOfBytes() const
+{
+	// For ASCII: number of bytes = length :)
+	return m_nLength;
+}
+
+StringBuffer *StringBufferASCII::Clone() const
+{
+	char *pszClone = new char[m_nLength + 1];
+	strncpy(pszClone, m_pszString, m_nLength + 1);
+	return new StringBufferASCII(pszClone, m_nLength);
+}
+
+StringBuffer *StringBufferASCII::Duplicate()
+{
+	// Do we need to clone this string buffer?
+	if (GetRefCount() > 1) return Clone();
+	else {
+		// The Unicode version is now dirty
+		if (m_pUnicode) {
+			m_pUnicode->Release();
+			m_pUnicode = NULL;
+		}
+
+		// The UTF8 version is now dirty
+		if (m_pUTF8) {
+			m_pUTF8->Release();
+			m_pUTF8 = NULL;
+		}
+
+		// Just return this string buffer
+		return (StringBuffer*)this;
+	}
+}
+
+bool StringBufferASCII::IsLessThan(const char szString[], uint32 nLength) const
+{
+	return (strncmp(m_pszString, szString, (m_nLength < nLength) ? m_nLength : nLength) < 0);
+}
+
+bool StringBufferASCII::IsLessThan(const wchar_t szString[], uint32 nLength) const
+{
+	// We need to convert this ASCII string into an Unicode one :(
+	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+	bool bResult = (wcsncmp(pUnicode, szString, (m_nLength < nLength) ? m_nLength : nLength) < 0);
+	delete [] pUnicode;
+	return bResult;
+}
+
+bool StringBufferASCII::IsGreaterThan(const char szString[], uint32 nLength) const
+{
+	return (strncmp(m_pszString, szString, (m_nLength < nLength) ? m_nLength : nLength) > 0);
+}
+
+bool StringBufferASCII::IsGreaterThan(const wchar_t szString[], uint32 nLength) const
+{
+	// We need to convert this ASCII string into an Unicode one :(
+	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+	bool bResult = (wcsncmp(pUnicode, szString, (m_nLength < nLength) ? m_nLength : nLength) > 0);
+	delete [] pUnicode;
+	return bResult;
+}
+
+bool StringBufferASCII::Compare(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
+{
+	if (!nPos && !nCount) {
+		// Compare hole strings
+		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
+		else					  return !strcmp(m_pszString, szString);
+
+	} else {
+		// Check start position
+		if (nPos >= m_nLength) return false; // Strings are not equal
+
+		// Compare strings (count can be > maximum string length)
+		if (nCount)	return !strncmp(&m_pszString[nPos], szString, nCount);
+		else		return !strcmp (&m_pszString[nPos], szString);
+	}
+}
+
+bool StringBufferASCII::Compare(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
+{
+	if (!nPos && !nCount) {
+		// Compare hole strings
+		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
+		else {
+			// We need to convert this ASCII string into an Unicode one :(
+			wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+			mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+			bool bResult = !wcscmp(pUnicode, szString);
+			delete [] pUnicode;
+			return bResult;
+		}
+
+	} else {
+		// Check start position
+		if (nPos >= m_nLength) return false; // Strings are not equal
+
+		// We need to convert this ASCII string into an Unicode one :(
+		wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+		mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+
+		// Compare strings (count can be > maximum string length)
+		bool bResult;
+		if (nCount)	bResult = !wcsncmp(&pUnicode[nPos], szString, nCount);
+		else		bResult = !wcscmp (&pUnicode[nPos], szString);
+		delete [] pUnicode;
+		return bResult;
+	}
+}
+
+bool StringBufferASCII::CompareNoCase(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
+{
+	if (!nPos && !nCount) {
+		// Compare hole strings
+		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
+		else					  return !_stricmp(m_pszString, szString);
+
+	} else {
+		// Check start position
+		if (nPos >= m_nLength) return false; // Strings are not equal
+
+		// Compare strings (count can be > maximum string length)
+		if (nCount)	return !_strnicmp(&m_pszString[nPos], szString, nCount);
+		else		return !_stricmp (&m_pszString[nPos], szString);
+	}
+}
+
+bool StringBufferASCII::CompareNoCase(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
+{
+	if (!nPos && !nCount) {
+		// Compare hole strings
+		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
+		else {
+			// We need to convert this ASCII string into an Unicode one :(
+			wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+			mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+			bool bResult = !_wcsicmp(pUnicode, szString);
+			delete [] pUnicode;
+			return bResult;
+		}
+
+	} else {
+		// Check start position
+		if (nPos >= m_nLength) return false; // Strings are not equal
+
+		// We need to convert this ASCII string into an Unicode one :(
+		wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+		mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+
+		// Compare strings (count can be > maximum string length)
+		bool bResult;
+		if (nCount)	bResult = !_wcsnicmp(&pUnicode[nPos], szString, nCount);
+		else		bResult = !_wcsicmp (&pUnicode[nPos], szString);
+		delete [] pUnicode;
+		return bResult;
+	}
+}
+
+bool StringBufferASCII::IsAlphabetic() const
+{
+	const char *pszString    = m_pszString;
+	const char *pszStringEnd = pszString + m_nLength;
+	for (; pszString<pszStringEnd; pszString++)
+		if (!isalpha((unsigned char)*pszString)) return false; // The string is not alphabetic
+
+	// The string is alphabetic
+	return true;
+}
+
+bool StringBufferASCII::IsAlphaNumeric() const
+{
+	const char *pszString    = m_pszString;
+	const char *pszStringEnd = pszString + m_nLength;
+	for (; pszString<pszStringEnd; pszString++)
+		if (!isalpha((unsigned char)*pszString) && !isdigit((unsigned char)*pszString)) return false; // The string is not alpha-numeric
+
+	// The string is alpha-numeric
+	return true;
+}
+
+bool StringBufferASCII::IsNumeric() const
+{
+	const char *pszString    = m_pszString;
+	const char *pszStringEnd = pszString + m_nLength;
+	for (; pszString<pszStringEnd; pszString++)
+		if (!isdigit((unsigned char)*pszString)) return false; // The string is not numeric
+
+	// The string is numeric
+	return true;
+}
+
+bool StringBufferASCII::IsSubstring(const char szString[], uint32 nLength) const
+{
+	return strstr(m_pszString, szString) != NULL;
+}
+
+bool StringBufferASCII::IsSubstring(const wchar_t szString[], uint32 nLength) const
+{
+	// We need to convert this ASCII string into an Unicode one :(
+	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+	bool bResult = wcsstr(pUnicode, szString) != NULL;
+	delete [] pUnicode;
+	return bResult;
+}
+
+int StringBufferASCII::IndexOf(const char szString[], uint32 nPos, uint32 nLength) const
+{
+	const char *pszPos = strstr(&m_pszString[nPos], szString);
+	return pszPos ? int(pszPos - m_pszString) : -1;
+}
+
+int StringBufferASCII::IndexOf(const wchar_t szString[], uint32 nPos, uint32 nLength) const
+{
+	// We need to convert this ASCII string into an Unicode one :(
+	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+	const wchar_t *pszPos = wcsstr(&pUnicode[nPos], szString);
+	int nResult = pszPos ? int(pszPos - pUnicode) : -1;
+	delete [] pUnicode;
+	return nResult;
+}
+
+int StringBufferASCII::LastIndexOf(const char szString[], int nPos, uint32 nLength) const
+{
+	// Find substring
+	const char *pszStringStart = m_pszString;
+	const char *pszStringT     = pszStringStart + nPos;
+	for (; pszStringT>=pszStringStart; pszStringT--) {
+		if (!strncmp(pszStringT, szString, nLength))
+			return int(pszStringT - pszStringStart); // We have found something
+	}
+
+	// No substring
+	return -1;
+}
+
+int StringBufferASCII::LastIndexOf(const wchar_t szString[], int nPos, uint32 nLength) const
+{
+	// We need to convert this ASCII string into an Unicode one :(
+	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+
+	// Find substring
+	const wchar_t *pszStringStart = pUnicode;
+	const wchar_t *pszStringT     = pszStringStart + nPos;
+	for (; pszStringT>=pszStringStart; pszStringT--) {
+		if (!wcsncmp(pszStringT, szString, nLength)) {
+			int nResult = int(pszStringT - pszStringStart);
+			delete [] pUnicode;
+			return nResult; // We have found something
+		}
+	}
+	delete [] pUnicode;
+
+	// No substring
+	return -1;
+}
+
+StringBuffer *StringBufferASCII::GetSubstring(uint32 nPos, uint32 nCount) const
+{
+	char *pszNewString = new char[nCount + 1];
+	strncpy(pszNewString, m_pszString + nPos, nCount);
+	pszNewString[nCount] = '\0';
+	return new StringBufferASCII(pszNewString, nCount);
+}
+
+StringBuffer *StringBufferASCII::ToLower()
+{
+	// Look for the first character that is NOT lower case
+	const char *pszString    = m_pszString;
+	const char *pszStringEnd = pszString + m_nLength;
+	for (; pszString<pszStringEnd; pszString++) {
+		// Is this already a lower character?
+		if (!islower(*pszString)) {
+			// Nope, now we have to clone the string buffer :(
+			StringBufferASCII *pClone = (StringBufferASCII*)Duplicate();
+
+			// Start with an offset - we KNOW the characters before will not be changed!
+			_strlwr(pClone->m_pszString + (pszString - m_pszString));
+
+			// Return the new, lower case string buffer
+			return pClone;
+		}
+	}
+
+	// If we are here, nothing was changed and we can just return this string buffer
+	return this;
+}
+
+StringBuffer *StringBufferASCII::ToUpper()
+{
+	// Look for the first character that is NOT upper case
+	const char *pszString    = m_pszString;
+	const char *pszStringEnd = pszString + m_nLength;
+	for (; pszString<pszStringEnd; pszString++) {
+		// Is this already a upper character?
+		if (!isupper(*pszString)) {
+			// Nope, now we have to clone the string buffer :(
+			StringBufferASCII *pClone = (StringBufferASCII*)Duplicate();
+
+			// Start with an offset - we KNOW the characters before will not be changed!
+			_strupr(pClone->m_pszString + (pszString - m_pszString));
+
+			// Return the new, upper case string buffer
+			return pClone;
+		}
+	}
+
+	// If we are here, nothing was changed and we can just return this string buffer
+	return this;
+}
+
+StringBuffer *StringBufferASCII::Delete(uint32 nPos, uint32 nCount)
+{
+	// Characters are deleted by moving up the data following the region to delete
+	uint32  nNewLength   = m_nLength - nCount;
+	char   *pszNewString = new char[nNewLength + 1];
+	if (nPos) strncpy(pszNewString, m_pszString, nPos);
+	strncpy(&pszNewString[nPos], m_pszString + nPos + nCount, nNewLength - nPos);
+	pszNewString[nNewLength] = '\0';
+
+	// Return the new string buffer
+	if (GetRefCount() > 1) return new StringBufferASCII(pszNewString, nNewLength);
+	else {
+		// Just modify and return this string buffer
+		SetString(pszNewString, nNewLength);
+		return this;
+	}
+}
+
+StringBuffer *StringBufferASCII::Insert(const char szString[], uint32 nPos, uint32 nCount)
+{
+	// Compose the new string
+	uint32  nNewLength   = m_nLength + nCount;
+	char   *pszNewString = new char[nNewLength + 1];
+	if (nPos) strncpy(pszNewString, m_pszString, nPos);
+	strncpy(&pszNewString[nPos],		  szString,			  nCount);
+	strncpy(&pszNewString[nPos + nCount], &m_pszString[nPos], m_nLength - nPos);
+	pszNewString[nNewLength] = '\0';
+
+	// Return the new string buffer
+	if (GetRefCount() > 1) return new StringBufferASCII(pszNewString, nNewLength);
+	else {
+		// Just modify and return this string buffer
+		SetString(pszNewString, nNewLength);
+		return this;
+	}
+}
+
+StringBuffer *StringBufferASCII::Insert(const wchar_t szString[], uint32 nPos, uint32 nCount)
+{
+	// Compose the new string (we need to convert this ASCII string into an Unicode one)
+	uint32   nNewLength   = m_nLength + nCount;
+	wchar_t *pszNewString = new wchar_t[nNewLength + 1];
+	if (nPos) mbstowcs(pszNewString, m_pszString, nPos);
+	wcsncpy(&pszNewString[nPos], szString, nCount);
+	mbstowcs(&pszNewString[nPos + nCount], &m_pszString[nPos], m_nLength - nPos);
+	pszNewString[nNewLength] = L'\0';
+
+	// Return the new Unicode string buffer
+	return new StringBufferUnicode(pszNewString, nNewLength);
+}
+
+StringBuffer *StringBufferASCII::Replace(char nOld, char nNew, uint32 &nReplaced)
+{
+	char *pszString    = m_pszString;
+	char *pszStringEnd = m_pszString + m_nLength;
+
+	// Search for the first character which should be replaced
+	nReplaced = 0;
+	for (; pszString<pszStringEnd; pszString++) {
+		if (*pszString == nOld) {
+			// Fork string buffer when the first character has been found
+			StringBufferASCII *pClone = (StringBufferASCII*)Duplicate();
+
+			// Set pointers to new location
+			pszString    = pClone->m_pszString + (pszString - m_pszString);
+			pszStringEnd = pClone->m_pszString + m_nLength;
+
+			// Replace characters
+			for (; pszString<pszStringEnd; pszString++) {
+				if (*pszString == nOld) {
+					*pszString = nNew;
+					nReplaced++;
+				}
+			}
+
+			// Return the new string buffer
+			return pClone;
+		}
+	}
+
+	// If we are here, nothing was changed and we can just return this string buffer
+	return this;
+}
+
+StringBuffer *StringBufferASCII::Replace(wchar_t nOld, wchar_t nNew, uint32 &nReplaced)
+{
+	char *pszString    = m_pszString;
+	char *pszStringEnd = m_pszString + m_nLength;
+	wchar_t nUnicode;
+
+	// Search for the first character which should be replaced
+	nReplaced = 0;
+	for (; pszString<pszStringEnd; pszString++) {
+		mbtowc(&nUnicode, pszString, 1);
+		if (nUnicode == nOld) {
+			// Create an Unicode string buffer when the first character has been found
+			StringBufferUnicode *pClone = new StringBufferUnicode(m_pszString, m_nLength);
+
+			// Set pointers to new location
+			wchar_t *pszStringUnicode    = pClone->m_pszString + (pszString - m_pszString);
+			wchar_t *pszStringUnicodeEnd = pClone->m_pszString + m_nLength;
+
+			// Replace characters
+			for (; pszStringUnicode<pszStringUnicodeEnd; pszStringUnicode++) {
+				if (*pszStringUnicode == nOld) {
+					*pszStringUnicode = nNew;
+					nReplaced++;
+				}
+			}
+
+			// Return the new string buffer
+			return pClone;
+		}
+	}
+
+	// If we are here, nothing was changed and we can just return this string buffer
+	return this;
+}
+
+StringBuffer *StringBufferASCII::Replace(const char szOld[], uint32 nOldLength, const char szNew[], uint32 nNewLength, uint32 &nReplaced)
+{
+	// Check for only character replace
+	if (nOldLength == 1 && nNewLength == 1)
+		return Replace(szOld[0], szNew[0], nReplaced);
+
+	// First, get the number of substrings to replace
+	nReplaced = 0;
+	const char *pszString = m_pszString;
+	const char *pszEnd    = m_pszString + m_nLength;
+	while (pszString<pszEnd) {
+		if (!strncmp(pszString, szOld, nOldLength)) {
+			nReplaced++;
+			pszString += nOldLength;
+		} else pszString++;
+	}
+
+	// Jipi, no substrings, no further work to do :)
+	if (!nReplaced) return this; // Nothing was changed and we can just return this string buffer
+
+	// Get and check the new length
+	uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
+	if (!nFinalLength) return NULL; // The string is now empty!
+
+	// Create the new string
+	char *pszNewString  = new char[nFinalLength + 1];
+	char *pszNewStringT = pszNewString;
+	uint32 nSkipped = 0;
+	pszString = m_pszString;
+	for (uint32 i=0; i<nReplaced; i++) {
+		// Find substring
+		while (strncmp(pszString, szOld, nOldLength)) {
+			pszString++;
+			nSkipped++;
+		}
+
+		// Copy previous none substring characters
+		if (nSkipped) {
+			strncpy(pszNewStringT, pszString - nSkipped, nSkipped);
+			pszNewStringT += nSkipped;
+		}
+
+		// Insert new substring
+		strncpy(pszNewStringT, szNew, nNewLength);
+		pszNewStringT += nNewLength;
+		pszString += nOldLength;
+		nSkipped = 0;
+	}
+
+	// Copy the rest of the old string to the new string
+	if (*pszString != '\0') {
+		uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
+		strncpy(pszNewStringT, pszString, i);
+		pszNewStringT += i;
+	}
+
+	// Add terminating zero
+	*pszNewStringT = '\0';
+
+	// Return the new string buffer
+	if (GetRefCount() > 1) return new StringBufferASCII(pszNewString, nFinalLength);
+	else {
+		// Just modify and return this string buffer
+		SetString(pszNewString, nFinalLength);
+		return this;
+	}
+}
+
+StringBuffer *StringBufferASCII::Replace(const wchar_t szOld[], uint32 nOldLength, const wchar_t szNew[], uint32 nNewLength, uint32 &nReplaced)
+{
+	// Check for only character replace
+	if (nOldLength == 1 && nNewLength == 1)
+		return Replace(szOld[0], szNew[0], nReplaced);
+
+	// We need to convert this ASCII string into an Unicode one :(
+	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
+	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
+
+	// First, get the number of substrings to replace
+	nReplaced = 0;
+	const wchar_t *pszString = pUnicode;
+	const wchar_t *pszEnd    = pUnicode + m_nLength;
+	while (pszString<pszEnd) {
+		if (!wcsncmp(pszString, szOld, nOldLength)) {
+			nReplaced++;
+			pszString += nOldLength;
+		} else pszString++;
+	}
+
+	// Jipi, no substrings, no further work to do :)
+	if (!nReplaced) {
+		delete [] pUnicode;
+		return this; // Nothing was changed and we can just return this string buffer
+	}
+
+	// Get and check the new length
+	uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
+	if (!nFinalLength) {
+		delete [] pUnicode;
+		return NULL; // The string is now empty!
+	}
+
+	// Create the new string
+	wchar_t *pszNewString  = new wchar_t[nFinalLength + 1];
+	wchar_t *pszNewStringT = pszNewString;
+	uint32 nSkipped = 0;
+	pszString = pUnicode;
+	for (uint32 i=0; i<nReplaced; i++) {
+		// Find substring
+		while (wcsncmp(pszString, szOld, nOldLength)) {
+			pszString++;
+			nSkipped++;
+		}
+
+		// Copy previous none substring characters
+		if (nSkipped) {
+			wcsncpy(pszNewStringT, pszString - nSkipped, nSkipped);
+			pszNewStringT += nSkipped;
+		}
+
+		// Insert new substring
+		wcsncpy(pszNewStringT, szNew, nNewLength);
+		pszNewStringT += nNewLength;
+		pszString += nOldLength;
+		nSkipped = 0;
+	}
+
+	// Copy the rest of the old string to the new string
+	if (*pszString != L'\0') {
+		uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
+		wcsncpy(pszNewStringT, pszString, i);
+		pszNewStringT += i;
+	}
+
+	// Add terminating zero
+	*pszNewStringT = L'\0';
+
+	// Cleanup
+	delete [] pUnicode;
+
+	// Return the new Unicode string buffer
+	return new StringBufferUnicode(pszNewString, nFinalLength);
+}
+
+StringBuffer *StringBufferASCII::SetCharacter(uint32 nIndex, char nCharacter)
+{
+	// Do we need to clone this string buffer?
+	if (m_pszString[nIndex] == nCharacter) return this; // Nothing was changed
+	else {
+		// We have to clone the string buffer :(
+		StringBufferASCII *pClone = (StringBufferASCII*)Duplicate();
+
+		// Set the new character
+		pClone->m_pszString[nIndex] = nCharacter;
+
+		// Return the new string buffer
+		return pClone;
+	}
+}
+
+StringBuffer *StringBufferASCII::SetCharacter(uint32 nIndex, wchar_t nCharacter)
+{
+	// Get this character as Unicode
+	wchar_t nThisCharacterUnicode;
+	mbtowc(&nThisCharacterUnicode, &m_pszString[nIndex], 1);
+
+	// Do we need to clone this string buffer?
+	if (nThisCharacterUnicode == nCharacter) return this; // Nothing was changed
+	else {
+		// Create an Unicode string buffer when the first character has been found
+		StringBufferUnicode *pClone = new StringBufferUnicode(m_pszString, m_nLength);
+
+		// Set the new character
+		pClone->m_pszString[nIndex] = nCharacter;
+
+		// Return the new string buffer
+		return pClone;
+	}
+}
+
+StringBuffer *StringBufferASCII::TrimLeading()
+{
+	const char *pszString = m_pszString;
+	while (*pszString == ' ' || *pszString == '\t') pszString++;
+	if (pszString == m_pszString) {
+		// Nothing to change
+		return this;
+	} else {
+		// Get the number of characters to delete
+		uint32 nCount = uint32(pszString - m_pszString);
+
+		// Is the string now empty?
+		if (nCount == m_nLength) return NULL;			   // The string is now empty
+		else					 return Delete(0, nCount); // Return the new string buffer
+	}
+}
+
+StringBuffer *StringBufferASCII::TrimTrailing()
+{
+	const char *pszEnd    = m_pszString + m_nLength - 1;
+	const char *pszString = pszEnd;
+	while (*pszString == ' ' || *pszString == '\t') pszString--;
+	if (pszString == pszEnd) {
+		// Nothing to change
+		return this;
+	} else {
+		// Get the number of characters to delete
+		uint32 nCount = uint32(pszEnd - pszString);
+
+		// Is the string now empty?
+		if (nCount == m_nLength) return NULL;												 // The string is now empty
+		else					 return Delete(uint32(pszString - m_pszString) + 1, nCount); // Return the new string buffer
+	}
+}
+
+StringBuffer *StringBufferASCII::RemoveLineEndings()
+{
+	const char *pszEnd    = m_pszString + m_nLength - 1;
+	const char *pszString = pszEnd;
+	while (*pszString == '\r' || *pszString == '\n') pszString--;
+	if (pszString == pszEnd) {
+		// Nothing to change
+		return this;
+	} else {
+		// Get the number of characters to delete
+		uint32 nCount = uint32(pszEnd - pszString);
+
+		// Is the string now empty?
+		if (nCount == m_nLength) return NULL;												 // The string is now empty
+		else					 return Delete(uint32(pszString - m_pszString) + 1, nCount); // Return the new string buffer
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLGeneral

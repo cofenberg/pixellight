@@ -1,0 +1,35 @@
+Cg Toolkit 2.2, February 2010 Release
+- Used by the renderer backend "PLRendererD3D9" (external Windows dependencies: "cg.dll" and "cgD3D9.dll")
+- Used by the renderer backend "PLRendererOpenGL" (external Windows dependencies: "cg.dll" and "cgGL.dll")
+- We're sorry, but due to legal issues we can't provide you with a downloadable package
+- Download from: http://developer.nvidia.com/object/cg_toolkit.html
+- When using the CMake "CMAKETOOLS_USE_SYSTEM_LIBS" option, just install the Cg SDK
+- When not using the CMake "CMAKETOOLS_USE_SYSTEM_LIBS" option:
+	- Here's what you need for the Windows platform and where to put the files:
+		- "External\_Windows_x86_32\Cg\include\Cg"
+			- "cg.h"
+			- "cg_bindlocations.h"
+			- "cg_datatypes.h"
+			- "cg_enums.h"
+			- "cg_errors.h"
+			- "cg_profiles.h"
+			- "cgD3D9.h"
+			- "cgGL.h"
+			- "cgGL_profiles.h"
+		- "External\_Windows_x86_32\Cg\lib"
+			- "cg.lib"
+			- "cgD3D9.lib"
+			- "cgGL.lib"
+	- Here's what you need for the Linux platform and were to put the files:
+		- "External\_Linux_x86_32\Cg\include\Cg"
+			- "cg.h"
+			- "cg_bindlocations.h"
+			- "cg_datatypes.h"
+			- "cg_enums.h"
+			- "cg_errors.h"
+			- "cg_profiles.h"
+			- "cgGL.h"
+			- "cgGL_profiles.h"
+		- "External\_Linux_x86_32\Cg\lib"
+			- "libCg.so"
+			- "libCgGL.so"

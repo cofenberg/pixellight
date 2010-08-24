@@ -1,0 +1,169 @@
+\chapter{PLEngine}
+
+
+
+
+\section{PLInput}
+\begin{itemize}
+\item{Aimed at modern input devices (6DOF tracking devices)}
+\item{The input component gives you a feature rich access to standard devices like keyboard, mouse and joystick/joypad}
+\item{Wii Remote support}
+\item{SpaceMouse (SpaceNavigator, SpacePilot and so on) support}
+\item{Device output controls such as rumble and force-feedback effects as well as control over device LEDs}
+\item{Internally HID, Bluetooth and special OS functionality is used}
+\end{itemize}
+
+
+
+
+\section{PLRenderer}
+\begin{itemize}
+\item{Dynamic API design\footnote{The PixelLight SDK comes with Null and OpenGL (using FreeType (\url{http://www.freetype.org/}) for font support) backends, within the repository there's also a OpenGL ES 2.0 backend and an experimental Direct3D 9 backend}}
+\item{Multiple output windows}
+\item{Render to texture (RTT, also rendering to floating-point for HDR buffer is possible)}
+\item{Multiple render targets for rendering into different textures at the same time (MRT)}
+\item{Primitives are drawn through vertex and index buffers for maximum performance}
+\item{Vertex streaming for combining the data of different vertex buffers}
+\item{1D, 2D (and rectangle), 3D and cube textures}
+\item{Mipmaps and texture compression support. These can be created automatically on the fly or used from given dds data, for instance, for maximum control and best loading times.}
+\item{Abstract GPU program interface with support for vertex, geometry and fragment shaders\footnote{The OpenGL renderer backend supports GLSL and Cg (\url{http://developer.nvidia.com/object/cg_toolkit.html}) as shader languages}}
+\item{Fonts and draw helpers so it's easy to draw lines, images and so on}
+\item{Interface for fixed functions to support legacy graphics cards without, or just limited shader support}
+\item{A lot of standard functions like stencil, blend, fog, point sprites, anisotropic texture filtering and much more not worth to be mentioned in here because it's just standard must have stuff}
+\item{GPU program generator class for Über-shaders}
+\end{itemize}
+
+
+\subsection{Texturing}
+\begin{itemize}
+\item{Different texture creator plugins (for instance blank texture, normalization cube map, angle cube map...)}
+\item{The image class of PLGraphics is used to load and save textures which makes things quite comfortable}
+\item{Alpha blended textures which can be loaded through formats like tga automatically. It is also possible to define a color key by providing a RGB and tolerance value to describe transparent areas}
+\item{Maximum texture size is only limited by hardware, today nearly every card has at least textures with a size of 2048x2048, a GeForce4 for instance has maximum texture size of 4096x4096... and ATI Radeon HD 5870 up to 16384x16384... }
+\item{Textures are automatically resized through the framework if their size is too large for the given hardware or if its dimensions are invalid (no power of 2). Moreover, there is a texture quality option in the configuration where the user can change the texture quality in order to gain more performance}
+\item{Procedural texturing}
+\item{Different texture animation techniques are provided, e.g. changing textures, texture matrix and color animations for a maximum freedom of creativity}
+\end{itemize}
+
+
+\subsection{Materials \& effects}
+\begin{itemize}
+\item{PixelLight comes with a powerful material \& effect system which enables you to create amazing effects like Normal-Mapping etc.}
+\item{Each material consists of different flexible properties like color, shininess etc.}
+\item{In addition to the main effect properties, it is possible to setup a lot of options like blending, culling, polygon offset etc. for each material}
+\item{You can use as many texture layers as supported by hardware. Today there are at least 2 texture layers available, but a GeForce4 for instance has 4 and the latest hardware even has up to 16! Each texture layer can be animated which opens a huge animation freeness.}
+\item{The effect system supports different techniques (fallbacks), passes were you can assigned shaders to each pass etc.}
+\end{itemize}
+
+
+
+
+\section{PLMesh}
+
+
+\subsection{Meshes}
+\begin{itemize}
+\item{Own flexible binary chunk based mesh format. The mesh library comes with different mesh import plugins for 3ds, lwo, ase, obj, smd, x (any many more) - through the nature of PixelLight it's no problem to implement more importer and exporter by self.}
+\item{Meshes can consist of different geometries and therefore it's possible to have a mesh with different materials per geometry.}
+\item{Mesh animations can be mixed together, therefore different animation channels for vertex and skeleton animations are provided per mesh}
+\item{Different mesh creator plugins (for instance sphere, cube, cylinder, disk, torus...)}
+\end{itemize}
+
+
+\subsection{Animation system}
+\begin{itemize}
+\item{All animation types are handled equally, meaning that the same animation interface is used to control vertex, skeleton, texture etc. animation. So every animation type can be accessed in the same way and with the same features!}
+\item{Animations can cause events at certain frames. Those events will be sent to their owner entity which can react on it}
+\item{Vertex (morph targets, can for example be used for facial animations) and skeleton animation system with multiple weights per vertex}
+\item{Blending of different animations}
+\end{itemize}
+
+
+
+
+\section{PLScene}
+
+
+\subsection{Scene system}
+The dynamic and universal hierarchical scene system consists of scene nodes and scene containers. (composite design pattern) A scene node is the most basic scene element, and a scene container manages such scene nodes. A scene container can also manage child scene containers for a hierarchical scene. Within a scene container, a scene hierarchy like a KD-tree can be used to manage/access the scene nodes in a more effective way. Scene queries operate on this scene description. For instance, there is a query which returns all scene nodes intersecting a line or plane set. To make the system more efficient, scene nodes can have different modifiers. For instance, you can use a physics scene node modifier to give your scene node a physical behaviour. Physics are NOT fixed build in the scene graph itself - it comes through such plugins to make the framework more universal.
+\begin{itemize}
+\item{Powerfull 'scene node modifier' concept allowing to add as many modifiers to scene nodes you want taking for instance control over the position of the node, controlling morph targets of meshes and so on - the possibilities are nearly unlimited!}
+\item{Because the RTTI is used nearly everywhere in PixelLight, the scene system can be extended without any effort and components can be reused in other projects}
+\item{KD-tree and list scene hierarchy plugins provided}
+\item{Line/plane set intersection and culling queries provided as well as multiple other queries}
+\item{Scenes can be rendered using no culling at all, frustum culling or coherent hierarchical occlusion culling for more complex scenes}
+\item{A comfortable post process manager class and a lot of prepared post processing effects are provided. Adding bloom, grey scale or even visualizing the scene using ASCII characters is no problem at all. You can combine existing effects to create a new one.}
+\item{Various useful scene nodes like camera, light, sky, terrain, ingame gui, mirror and so on are built in}
+\item{The sky scene node comes with multiple sky layers and creates impressive animated and atmospheric backgrounds like hills, where slowly moving clouds appear behind them}
+\item{The terrain scene node is using GeoMipMapping to create easily usable, impressive and large landscapes}
+\item{The scene format is a simple XML text format and therefore it's nearly version change save}
+\item{Lights can have coronas, lens flares or can even blind the screen looking into them! Lights can also project images over the scene, like a projector, which produces impressive effects! Because nearly all content in the framework is managed in the same way, you can also project a video texture over the scene where you will see a movie!}
+\end{itemize}
+
+
+\subsection{Compositing system}
+Scenes are rendered using a realtime compositing system. For example a first layer may clear the screen color to black, another may write down depth information and ambient color, a next may add lighting, another one fog and so on. The system is using the PixelLight RTTI, as such, it's expandable and can be heavily configured\footnote{Adding new layers, changing layer order, changing layer attributes, everything directly while a program is running}.
+\begin{itemize}
+\item{There are fixed functions and shaders based compositing layers to support a broad range of graphics cards}
+\item{Fixed function: For legacy hardware without shader support and just fixed build in graphics features}
+\item{Forward: A classic forward renderer using shaders. Each object is drawn per light again.}
+\item{Deferred: A modern deferred renderer approach performing for example lighting in image space}
+\item{Scene rendering is usually using Über-shaders to enable many shader features, while using just the currently required features}
+\item{Several types of light sources: directional, omnidirectional, spot, omnidirectional projective and projective spot}
+\item{Shadow mapping}
+\item{Post process system with 'build in' effects like 'Depth Of Field' (DOF) and many effects as plugins}
+\item{HDR, Reinhard tone mapping, light adaptation, HDR bloom}
+\item{Glow}
+\item{Volumetric light scattering and depth fog}
+\item{Screen-Space Ambient Occlusion (SSAO) with implementations for HBAO\footnote{Horizon Based Ambient Occlusion} and HDAO\footnote{High Definition Ambient Occlusion}}
+\item{Gamma correction}
+\item{Layers with debug information like wireframe, scene node icons, scene node names and so on}
+\item{Many material features like diffuse and opacity mapping, normal mapping, detail normal mapping, parallax mapping, two sided lighting, specular and gloss mapping, ambient occlusion mapping, light mapping, emissive mapping, glow mapping, fresnel reflection, spherical environment mapping, cubic environment mapping, reflectivity mapping}
+\end{itemize}
+
+
+\subsection{Particle groups}
+\begin{itemize}
+\item{Particle groups are usual scene nodes}
+\item{They emit and manage particles. Each particle can be customized in an easy way in order to create unique effects}
+\item{Each particle group can only have one material for all its particles for performance reasons. But because you are able to set the texture coordinates for each particle individually, you are able to put many different particle images into one texture and then cut them out to create fast and amazing particle effects}
+\item{The texture coordinate setting of the particles can be done automatically. You only have to define the rows and columns of the single sub-textures in the main material and then you are able to set the used sub texture by its index. With this technique it is also possible to create particles with animated textures!}
+\item{Because the material of the particle group itself can also be animated there are even more particle animation possibilities!}
+\item{Advanced particle effects like distorted particles (beams, lasers etc), rotation of the individual particles, particles with individual orientation etc. are possible}
+\item{Point sprite support for maximum performance}
+\item{Because the RTTI is used, no extra particle editor is required - just tweak the variables}
+\end{itemize}
+
+
+
+
+\section{PLSound}
+\begin{itemize}
+\item{Abstract and universal sound API\footnote{The PixelLight SDK comes with Null and OpenAL (\url{http://www.openal.org/}) backends, within the repository are also experimental FMOD (\url{http://www.fmod.org/}) and FMOD Ex (\url{http://www.fmod.org/}) backends.}}
+\item{2D and 3D sound}
+\item{Streaming}
+\item{Global volume and pitch control (for instance to slow down the sound playback)}
+\end{itemize}
+
+
+
+
+\section{PLPhysics}
+\begin{itemize}
+\item{Abstract and universal physics API\footnote{The PixelLight SDK comes with Null and Newton Game Dynamics (\url{http://www.newtondynamics.com/}) backends, within the repository are also experimental Open Dynamics Engine (\url{http://www.ode.org/}) and PhysX (\url{http://developer.nvidia.com/object/physx.html}, backends.}}
+\item{Ragdoll scene node (also called 'online animation', 'articulated character')}
+\item{Physics tool scene nodes}
+\item{Physics tool scene node modifiers: Normally you add physics to a scene node by just adding a physics scene node modifier to it}
+\end{itemize}
+
+
+
+
+\section{PLEngine}
+
+
+\begin{itemize}
+\item{High-level application classes}
+\item{Comfortable picking features}
+\item{Screenshot tool class}
+\end{itemize}

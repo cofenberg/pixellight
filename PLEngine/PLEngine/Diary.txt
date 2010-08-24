@@ -1,0 +1,92 @@
+>> 20.08.2010
+[CO]
+- GUI Nachrichten werden nicht mehr direkt in "RenderApplication::Main()" verarbeitet sondern nun in "RenderApplication::Update(" -
+  Hintergrund ist, das z.B. beim Laden einer Szene Events gefeuert werden, eine Anwendung kann dann "Update" aufrufen damit der
+  Fensterinhalt aktualisiert wird und man z.B. den aktuellen Ladefortschritt sehen kann... und hier sollte natürlich dann auch
+  das GUI mitaktualisiert werden, damit mit müssten die GUI & Ladebildschirm Probleme behoben sein.
+  (... und man kann nun auch direkt beim Ladebildschirm bereits über Alt-Return den Vollbildmodus wechseln...)
+
+
+
+>> 19.08.2010
+[CO]
+- "ModTrapMouse" Widget Modifier hinzugefügt und dafür das fest eingebaute "RenderWindow::OnActivate" entfernt.
+  "RenderApplication::OnCreateMainWindow()" fügt automatisch diesen Modifier hinzu so das das Standardverhalten unangetastet bleibt,
+  ich als Benutzer habe nun aber die Möglichkeit habe diese Verhalten zu verändern um es flexibel den jeweiligen Projektanforderungen
+  anpassen zu können.
+- Bugfix: "WindowConnection::SetDisplayMode()": Ein wechseln von Vollbild in einen anderen Vollbildmodus klappte bisher nicht ganz korrekt
+  da die Widget größe nicht korrekt angepasst wurde
+
+
+
+>> 08.08.2010
+[SB]
+- RenderApplication: EventHandler hinzugefügt, der darüber informiert wird, wenn das Hauptfenster aktiviert oder
+  deaktiviert wird. Dies wird dann dazu verwendet, um den VirtualInputController zu deaktivieren, solange das
+  Hauptfenster nicht aktiv ist. Dadurch ist nun endlich das Problem gelöst, dass die Steuerung der Applikation auch
+  im Hintergrund weitergeht, obwohl man zwischenzeitlich den Task wechselt und z.B. in einem ExplorerFenster arbeitet.
+  Dies war sehr nervig und ist auch vielen negativ aufgefallen. In Zukunft könnte man das noch erweitern, und in
+  bestimmten Applikationen (z.B. Spielen) gleich komplett auf "Pause" schalten, wenn das Fenster deaktiviert wurde.
+
+
+
+>> 07.08.2010
+[SB]
+- RenderApplication: Es wird nun ein virtueller Input-Controller erzeugt, der für die Steuerung der Applikation verwendet
+  werden kann.
+- SceneApplication: Der virtuelle Input-Controller wird automatisch beim SceneContext angemeldet.
+
+
+
+>> 06.08.2010
+[SB]
+- Neue Tool-Klasse Screenshot erstellt und die Funktionalität aus BasicSceneApplication dort hinein kopiert.
+  In BasicScreenApplication wird diese Klasse nun auch gleich instanziiert und kann über die Methode
+  GetScreenshotTool() abgerufen werden. So kann die Funktionalität auch ohne diese Basisklasse verwendet
+  werden, einzig die verwendeten RendererContext und SurfacePainter müssen dann von außen gesetzt werden.
+- BasicSceneApplication: Der Screenshot-Pfad wird nun beim Initialisieren gesetzt, und zwar auf das Datenverzeichnis,
+  falls m_bMultiUser aktiviert ist, ansonsten auf das aktuelle Verzeichnis.
+
+
+
+>> 05.08.2010
+[SB]
+- SampleApplication entfernt, da das leider niemals implementiert und verwendet wurde.
+- RenderApplication2 auf Basis der neuen Application-Basisklassen erstellt.
+- SceneApplication2 auf Basis der neuen Application-Basisklassen erstellt.
+- BasicSceneApplication2 auf Basis der neuen Application-Basisklassen erstellt.
+
+
+
+>> 04.08.2010
+[CO]
+- RenderWindow-Konstruktor: Hier wurde vergessen "SetWindowState(StateFullscreen)" aufzurufen wenn ein Fenster direkt im Vollbild-Modus
+  starten soll... und dann sah man gar nichts. Ich hatte erstmal das schlimmste Befürchtet, aber das es nun doch nur soetwas kleines war,
+  Schwein gehabt. *g*
+
+
+
+>> 01.08.2010
+[SB]
+- Config und Gui-Klassen (Widgets und Windows) aus Application in eigene Verzeichnisse verschoben. Das Application-Framework
+  ist wie ich finde ein sehr wichtiger Bestandteil der Engine, der so sauber und einfach wie möglich gehalten sein sollte,
+  damit man da überhaupt noch durchblicken kann. Deswegen bitte nicht noch weitere Dinge in die Application-Verzeichnisse
+  hineinschieben, die nicht wirklich ganz eng dazu gehören (über Config hätte man reden können, aber die Gui-Klassen
+  sind ganz klar eigenständige Komponenten)
+
+
+
+>> 26.07.2010
+[CO]
+- BasicSceneApplication: Kameras die gerade nicht verwendet werden, werden nun direkt komplett deaktiviert statt nur "Eingefrohren" -
+  so wird z.B. auch eine Physik-Sphere die um eine Kamera liegt mit deaktiviert... kommt etwas dumm wenn man dann mit einer anderen
+  Kamera gegen unsichtbare Konkurenz-Kameras prallt. *g*
+
+
+
+>> 14.07.2010
+[CO]
+- Altes PLEngine Projekt in PLScene umbenannt
+- Neues PLEngine Projekt angelegt, hier fließen alle Fäden zusammen
+- Application Framework Klassen aus PLScene nach PLEngine verschoben
+- Die Picking-Klassen liegen nun in einem eigenen Ordner

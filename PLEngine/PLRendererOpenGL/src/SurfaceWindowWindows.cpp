@@ -1,0 +1,364 @@
+/*********************************************************\
+ *  File: SurfaceWindowWindows.cpp                       *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLGeneral/Log/Log.h>
+#include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/ContextWindows.h"
+#include "PLRendererOpenGL/SurfaceWindow.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLGeneral;
+using namespace PLMath;
+namespace PLRendererOpenGL {
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the private GDI device context
+*/
+HDC SurfaceWindow::GetDevice() const
+{
+	return m_hDC;
+}
+
+/**
+*  @brief
+*    Returns the visual
+*/
+HDC SurfaceWindow::GetVisual() const
+{
+	return m_hDC;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLRenderer::SurfaceWindow functions    ]
+//[-------------------------------------------------------]
+bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
+{
+	WORD nRamp[256*3];
+
+	if (!GetDeviceGammaRamp(m_hDC, nRamp)) return false; // Error!
+	float fRGB[3] = {1.0f, 1.0f, 1.0f};
+	for (int i=0; i<3; i++) {
+		float fSum = 0.0;
+		int   nCount = 0;
+		int   nMin   = 256*i;
+		int   nMax   = nMin+256;
+		for (int j=nMin; j<nMax; j++) {
+			if (j != 0 && nRamp[j] != 0 && nRamp[j] != 65536) {
+				double B = (j % 256)/256.0;
+				double A = nRamp[j]/65536.0;
+				float  C = (float)(Math::Log(A)/Math::Log(B));
+				fSum += C;
+				nCount++;
+			}
+		}
+		fRGB[i] = fSum/nCount;
+	}
+	fRed   = fRGB[0];
+	fGreen = fRGB[1];
+	fBlue  = fRGB[2];
+
+	// Done
+	return true;
+}
+
+bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
+{
+	// Clamp color components
+	if (fRed   < 0.01f) fRed   = 0.01f;
+	if (fGreen < 0.01f) fGreen = 0.01f;
+	if (fBlue  < 0.01f) fBlue  = 0.01f;
+	if (fRed   > 4.0f)  fRed   = 4.0f;
+	if (fGreen > 4.0f)  fGreen = 4.0f;
+	if (fBlue  > 4.0f)  fBlue  = 4.0f;
+
+	WORD nRamp[256*3];
+	float fRGB[3] = {fRed, fGreen, fBlue};
+	for (int i=0; i<3; i++) {
+		int nMin = 256*i;
+		int nMax = nMin+256;
+		for (int j=nMin; j<nMax; j++)
+			nRamp[j] = (WORD)(Math::Pow((float)((j % 256)/256.0), (float)fRGB[i])*65536);
+	}
+
+	return SetDeviceGammaRamp(m_hDC, nRamp) != 0;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLRenderer::Surface functions         ]
+//[-------------------------------------------------------]
+bool SurfaceWindow::Init()
+{
+	// First check if there is a window
+	const handle nWindow = GetWindow();
+	if (nWindow) {
+		// Initialize OpenGL window
+		int nBitsPerPixel = 16;
+
+		// Get color depth
+		if (m_bIsFullscreen) {
+			// Find correct display mode
+			uint32 nDisplayMode = 0;
+			bool bFound = false;
+			DEVMODE DevMode;
+			while (EnumDisplaySettings(NULL, nDisplayMode++, &DevMode)) {
+				// Get required information
+				if (m_sDisplayMode.vSize.x	  == (int)DevMode.dmPelsWidth  &&
+					m_sDisplayMode.vSize.y	  == (int)DevMode.dmPelsHeight &&
+					m_sDisplayMode.nColorBits == DevMode.dmBitsPerPel &&
+					(!m_sDisplayMode.nFrequency || m_sDisplayMode.nFrequency  == DevMode.dmDisplayFrequency)) {
+					bFound = true;
+					break;
+				}
+			}
+			if (bFound) {
+				// Get color depth from settings
+				nBitsPerPixel = m_sDisplayMode.nColorBits;
+
+				// Change display settings
+				PL_LOG(Info, "Go into fullscreen mode")
+				GetRenderer().BackupDeviceObjects();
+				if (ChangeDisplaySettings(&DevMode, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) {
+					PL_LOG(Error, "Couldn't set display mode!")
+
+					// Error!
+					return false;
+				}
+				GetRenderer().RestoreDeviceObjects();
+			} else {
+				PL_LOG(Error, "No correct display setting was found, can't change to fullscreen!")
+				m_bIsFullscreen = false;
+			}
+		}
+
+		// Get desktop color depth
+		if (!m_bIsFullscreen) {
+			HDC hDeskTopDC = GetDC(NULL);
+			nBitsPerPixel = GetDeviceCaps(hDeskTopDC, BITSPIXEL);
+			ReleaseDC(NULL, hDeskTopDC);
+		}
+
+		// Setup pixel format
+		PIXELFORMATDESCRIPTOR pfd = {
+			sizeof(PIXELFORMATDESCRIPTOR),						// Size of this pixel format descriptor
+			1,													// Version number
+			PFD_DRAW_TO_WINDOW |								// Format must support window
+			PFD_SUPPORT_OPENGL |								// Format must support OpenGL
+			PFD_DOUBLEBUFFER,									// Must support double buffering
+			PFD_TYPE_RGBA,										// Request an RGBA format
+			(UCHAR)nBitsPerPixel,								// Select our color depth
+			0, 0, 0, 0, 0, 0,									// Color bits ignored
+			0,													// No alpha buffer
+			0,													// Shift bit ignored
+			0,													// No accumulation buffer
+			0, 0, 0, 0,											// Accumulation bits ignored
+			(BYTE)GetRenderer().GetCapabilities().nZBufferBits,	// Z-buffer (depth buffer)  
+			(BYTE)GetRenderer().GetCapabilities().nStencilBits,	// Stencil buffer bits
+			0,													// No auxiliary buffer
+			PFD_MAIN_PLANE,										// Main drawing layer
+			0,													// Reserved
+			0, 0, 0												// Layer masks ignored
+		};
+
+		// Setup OpenGL device context
+		PL_LOG(Info, "Setup OpenGL device context")
+
+		// Get multisample antialiasing samples per pixel
+		const uint32 nMultisampleAntialiasingSamples = ((Renderer&)GetRenderer()).GetMultisampleAntialiasingSamples();
+
+		// Search for a suitable pixel format
+		int nAttribs[] = {
+			WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
+			WGL_ACCELERATION_ARB,   WGL_FULL_ACCELERATION_ARB,
+			WGL_DOUBLE_BUFFER_ARB,  GL_TRUE,
+			WGL_COLOR_BITS_ARB,     nBitsPerPixel,
+			WGL_DEPTH_BITS_ARB,     GetRenderer().GetCapabilities().nZBufferBits,
+			WGL_STENCIL_BITS_ARB,   GetRenderer().GetCapabilities().nStencilBits,
+			WGL_ACCUM_BITS_ARB,     0,
+			WGL_SAMPLE_BUFFERS_ARB, nMultisampleAntialiasingSamples ? GL_TRUE : GL_FALSE,
+			WGL_SAMPLES_ARB,        nMultisampleAntialiasingSamples,
+			0,						0
+		};
+		int nPixelFormats[256];
+		uint32 nPFormats = 0;
+		int nBestFormat  = 0;
+		int nBestSamples = 0;
+
+		// Get window device context
+		m_hDC = ::GetDC((HWND)nWindow);
+		if (m_hDC) { // Did we get a device context?
+			// Choose pixel format
+			PL_LOG(Info, "Search for a suitable pixel format")
+			if (wglChoosePixelFormatARB) {
+				// Test through multiple color bits in case the desired value is not available
+				int nCurrentBitsPerPixel = nBitsPerPixel;
+				while (nCurrentBitsPerPixel && (!wglChoosePixelFormatARB(m_hDC, nAttribs, NULL, sizeof(nPixelFormats)/sizeof(int), nPixelFormats, &nPFormats) || !nPFormats)) {
+					switch (nCurrentBitsPerPixel) {
+						case 32:
+							nCurrentBitsPerPixel = 24;
+							break;
+
+						case 24:
+							nCurrentBitsPerPixel = 16;
+							break;
+
+						case 16:
+						default:
+							nCurrentBitsPerPixel = 0;
+							break;
+					}
+					nAttribs[7] = nCurrentBitsPerPixel;	// Select our color depth
+				}
+				if (nPFormats) {
+					int nMinDiff = 0x7FFFFFFF;
+					int nAttrib  = WGL_SAMPLES_ARB;
+					int nSamples;
+
+					// Search for the pixel format with the closest number of multisample samples to the requested
+					for (uint32 i=0; i<nPFormats; i++) {
+						wglGetPixelFormatAttribivARB(m_hDC, nPixelFormats[i], 0, 1, &nAttrib, &nSamples);
+						int nDiff = Math::Abs(nSamples - (int)nMultisampleAntialiasingSamples);
+						if (nDiff < nMinDiff) {
+							nMinDiff	 = nDiff;
+							nBestFormat  = i;
+							nBestSamples = nSamples;
+						}
+					}
+				}
+			}
+
+			// Use fallback
+			if (!nPFormats) {
+				nPixelFormats[0] = ChoosePixelFormat(m_hDC, &pfd);
+				if (!nPixelFormats[0]) { // Did Windows find a matching pixel format?
+					PL_LOG(Error, "Can't find a suitable pixel format")
+					DeInit();
+
+					// Error!
+					return false;
+				}
+			}
+
+			// Enable multisampling
+			if (nBestSamples > 0)
+				glEnable(GL_MULTISAMPLE_ARB);
+
+			// Set the pixel format
+			PL_LOG(Info, "Set the pixel format")
+			if (SetPixelFormat(m_hDC, nPixelFormats[nBestFormat], &pfd)) { // Are we able to set the pixel format?
+				// Backup gamma
+				GetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+
+				// Done
+				return true;
+			} else {
+				PL_LOG(Error, "Can't set the pixel format")
+				DeInit();
+			}
+		} else {
+			PL_LOG(Error, "Can't setup OpenGL device context")
+			DeInit();
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+void SurfaceWindow::DeInit()
+{
+	// First check if there is a window
+	const handle nWindow = GetWindow();
+	if (nWindow) {
+		// We're going to perform a cruel act - so give OpenGL a chance to flush and finish it's data...
+		// just so be on the safe side, you never now...
+		glFinish();
+
+		// If this is the current render target, make the main window to the new current one
+		Renderer &cRenderer = (Renderer&)GetRenderer();
+		if (cRenderer.GetRenderTarget() == this)
+			cRenderer.SetRenderTarget(NULL);
+
+		// Reset gamma
+		SetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+
+		// Release the Windows DC
+		if (m_hDC && !ReleaseDC((HWND)nWindow, m_hDC))
+			PL_LOG(Error, "Release OpenGL device context failed")
+		m_hDC = NULL;
+
+		// Is fullscreen?
+		if (m_bIsFullscreen) {
+			// Reset display settings
+			PL_LOG(Info, "Set display mode to default")
+			GetRenderer().BackupDeviceObjects();
+			ChangeDisplaySettings(NULL, CDS_RESET);
+			GetRenderer().RestoreDeviceObjects();
+		}
+	}
+}
+
+bool SurfaceWindow::MakeCurrent(uint8 nFace)
+{
+	if (m_hDC) {
+		// Get the OpenGL render context
+		ContextWindows *pContextWindows = (ContextWindows*)((Renderer&)GetRenderer()).GetContext();
+		if (pContextWindows) {
+			// Get the OpenGL render context
+			HGLRC pHGLRC = pContextWindows->GetRenderContext();
+			if (pHGLRC) {
+				// Enable/disable multisample
+				GetRenderer().SetRenderState(PLRenderer::RenderState::MultisampleEnable, (GetRenderer().GetCapabilities().nMultisampleAntialiasingSamples > 1));
+
+				// Make this surface current
+				return (wglMakeCurrent(m_hDC, pHGLRC) == TRUE);
+			}
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+bool SurfaceWindow::Present()
+{
+	return m_hDC && SwapBuffers(m_hDC) == TRUE;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLRendererOpenGL

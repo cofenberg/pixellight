@@ -1,0 +1,141 @@
+>> 23.10.2009
+[SB]
+- Netzwerk-Basisklassen nach PLGeneral verschoben. Dieses Projekt ist damit zwar erstmal leer, bleibt jedoch erhalten,
+  da ich mir sicher bin, das man dafür später noch Verwendung haben wird. Beispielsweise könnten hier Basisklassen
+  für typische Netzwerk-Komponenten erstellt werden (z.B. Messenger, Chat, ...), welche dann von spezialisierten Backends
+  wie PLIRC oder PLJabber implementiert werden. Auch wird es natürlich Basisklassen für die Netzwerksynchronisation brauchen,
+  welche später die Grundlage für die tatsächliche Netzwerkfunktionalität in der Engine bieten wird. Daher ist es denke
+  ich sinnvoll, dieses Projekt gleich beizubehalten, wenn es auch derzeit nicht genutzt wird.
+
+
+
+>> 22.10.2009
+[SB]
+- Buffer: Option m_bRemoveDelimiters hinzugefügt. Damit kann festgelegt werden, ob die Zeilenenden in einem
+  Protokoll automatisch entfernt werden sollen, oder in den zurückgegebenen Strings drin bleiben sollen. In manchen
+  Protokollen ist es wichtig, dass diese Zeichen nicht entfernt werden, da z.B. eine Leerzeile eine besondere
+  Bedeutung hat. Wenn die Zeilenenden aber entfernt werden, könnte nicht mehr zwischen eine leeren Zeile ("\r\n") und
+  einem leeren String ("") unterschieden werden, der zurückgegeben wird um anzuzeigen, dass noch keine weitere Zeile
+  gelesen wurde.
+
+
+
+>> 23.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 17.02.2008
+[CO]
+- Copy-Operators und Copy-Constructors hinzugefügt
+
+
+
+>> 14.02.2008
+[CO]
+- 'SocketAddress' und 'Socket' heraus genommen da diese mittlerweile in PLGeneral liegen. (oder gabs einen speziellen Grund wieso
+  das auch dort noch lag?) Wenn ich das richtig sehe gibts kein 'Socket::Create()' mehr und das wird inter automatisch erzeugt,
+  darum entfernte ich die entsprechenden Funktions aufrufe.
+
+
+
+>> 09.02.2008
+[CO]
+- Warnung "warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead.
+  To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details." beseitigt indem ich 'strncpy'
+  durch 'MemoryManager::Copy' ersetzte - da wird nicht lange gezögert *g*
+
+
+
+>> 07.06.2007
+[CO]
+- Wo möglich/sinnig Zeiger durch Referenzen ersetzt
+
+
+
+>> 11.05.2007
+[CO]
+- Im Server-Destruktor muss man noch zur Sicherheit 'StopHost()' aufrufen da dieser Aufruf vom Host-Destruktor aus
+  dummerweise in der Host Implementation von StopHost() landet und daher wenns mal mies läuft nicht sauber aufgeräumt wird
+- Im Destruktor von Socket() wird nun zur Sicherheit 'Close()' aufgerufen... etwas später nach merkwürdigen 'Problemen'
+  merkte ich das ich nicht ganz verstanden hatte was bei Sockets abgeht. Natürlich darf man das hier NICHT automatisch
+  schließen. Damit ich das nicht nochmal mache fügte ich ein entsprechendes Kommentar in diesem Destruktor ein. *g*
+  Das gleiche in der Create()-Funktion wo es ebenfalls nicht angebracht ist automatisch Close() aufzurufen.
+- Socket::Close() liefert nun anstatt 'int' ein 'bool' zurück welches nur angibt ob alles gut ging oder nicht, denn mit der
+  Implementations abhängigen Fehler ID sollte der User nicht in Kontakt kommen bzw. er kann damit im allgemeinen nix
+  anfangen da er nix von der konkreten Implementation weis. (bzw. wissen sollte *g*)
+  Das gleiche beim Rückgabewert der Bind() und Listen() Funktionen.
+- Socket::Create() gibt nun einen Fehler-Code zurück
+- Socket::m_nSocket ist nun auf INVALID_SOCKET wenn 'ungültig'
+- Connection::OnReceive(): Der übergebene Buffer mit den erhaltenen Daten ist nun 'const' da dieser Buffer selbst nicht
+  direkt manipuliert werden 'sollte' (könnte wenns dumm läuft irgendwann mal unfeine Seiteneffekte erzeugen)
+- Stellte auf PLBool um damit das erstmal Einheitlich ist
+- Erweiterte die Kommentare so das möglichst keine Fragen mehr offen bleiben was z.B. Parameter machen/was zurückgegeben
+  wird etc. Einiges muss man aber bei Zeiten auf jeden Fall noch genauer Beschreiben, vorallem ein paar kleine hintergrund
+  Informationen.
+
+
+
+>> 21.04.2007
+[CO]
+- Socket::Recv() in Socket::Receive() umbenannt (man spart nicht wirklich was und muss sich nen kürzel merken)
+- Klassen Beschreibungen anhand von Stefans Konzept vom 08.03.2007 hinzugefügt/erweitert
+
+
+
+>> 18.04.2007
+[CO]
+- Sobald man in 'PLGeneralLinuxIncludes.h' das von z.B. 'gethostbyname' benötigte '#include <netdb.h>' einband bekam man
+  in '/usr/include/netdb.h:661' einen merkwürdigen Compiler-Fehler.
+  Stephan und ich fanden zusammen über herumstochern heraus das die Compiler Option '-U__GNUG__' dafür verantwortlich ist,
+  nahm man diese jedoch heraus wurde 'NULL' zu '__null' umdefiniert und man bekam bei virtuellen-Funktionen Probleme wenn
+  '= NULL' verwendet wurde, daher die '= NULL zu = 0'-Änderungen von oben. :)
+- PLNetwork & PLNetworkIRC lassen sich nun auch unter Linux übersetzen
+
+
+
+>> 09.04.2007
+[CO]
+- Nahm weitere 'return' heraus
+
+
+
+>> 08.04.2007
+[CO]
+- Formte einge Codes um so das man weniger 'return' benötigt was die Sache etwas übersichtlicher macht
+
+
+
+>> 31.03.2007
+[CO]
+- Host::RemoveConnection(): Hm, hier fehlte das austragen der Connection aus der Liste (absicht?)
+- OS/Standard-Header werden nun nur noch in den Implementationen eingebunden
+- Ein paar Sicherheits-Tests in 'Socket'-Klasse eingebaut
+- Globale 'Initialize()'-Funktion entfernt da es etwas unhandlich ist das Manuell aufzurufen. Das läuft nun wie bei Image
+  über einen globalen Guard.
+
+
+
+>> 29.03.2007
+[CO]
+- Einige einfache Stellen auf unsere String-Klasse umgestellt
+- Connection: SendMsg() ist durch unsere String Klasse nun überflüssig
+- Connection: In Send() gabs wenn ich das richtig sah ein Speicherleck da der Daten-Speicher nicht wieder freigegeben wurde
+  - durch die String Klasse natürlich nun kein Thema mehr :)
+
+
+
+>> 09.03.2007
+[CO]
+Neues Projekt: PLNetwork:
+Stefan schickte mir gestern per E-Mail PLNetwork das er vor 3 Jahren oder so schon mal geschrieben und immer mal wieder kurz
+aktualisiert hatte. Wie besprochen Integrierte ich dieses Projekt in PixelLight. Machte auch ein paar erste kleine Änderungen
+die Funktionsmäßig aben nix ändern sollten: (solche Änderungen sind ganz nebenbei optimal zum in etwas einarbeiten *g*)
+- Host: Ersetzte die stl vector Klasse durch unsere List Klasse
+- Socket::Close(): Hier stimmte glaube ich etwas nicht ganz, da z.B. gleich bei 'closesocket' die Funktion verlassen wurde, und
+  etwas weiter unten dann (nicht wirklich *g*) die Variablen zurückgesetzt wurden
+- Änderte ein paar Variablen wie z.B. 'Port' in uint32 damit man gleich von vorne an keine negativen Werte bekommen kann
+- Passte hier und da minimal den Code Style an die anderen Projekte an
+- Machte hier gleich die Änderungen die wir für alle Projekte machen wollen, also nur 'using namespace...' in cpp, ein Header
+  hat selbst wirklich ALLES zu definieren/includieren was er selbst braucht - inklusive des Lib-Headers der eigenen Lib

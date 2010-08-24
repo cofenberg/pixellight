@@ -1,0 +1,484 @@
+/*********************************************************\
+ *  File: ResourceManager.inl                            *
+ *      Resource manager template implementation
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Resource.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the name of the manager
+*/
+template <class AType>
+PLGeneral::String ResourceManager<AType>::GetManagerName() const
+{
+	return m_sManagerName;
+}
+
+/**
+*  @brief
+*    Sets the name of the manager
+*/
+template <class AType>
+bool ResourceManager<AType>::SetManagerName(const PLGeneral::String &sName)
+{
+	// Check parameter
+	if (sName.GetLength()) {
+		// Set new name
+		m_sManagerName = sName;
+
+		// Done
+		return true;
+	} else return false; // Error!
+}
+
+/**
+*  @brief
+*    Creates a new resource
+*/
+template <class AType>
+AType *ResourceManager<AType>::Create(const PLGeneral::String &sName)
+{
+	// Check whether this resource is already within the manager
+	AType *pResource = Get(sName);
+	if (pResource) return pResource;
+
+	// Get name
+	if (!sName.GetLength()) {
+		// Find an unused resource name
+		PLGeneral::String sNewName = "0";
+		for (int i=1; Get(sNewName); i++)
+			sNewName = i;
+
+		// Create and return the new resource
+		return CreateResource(sNewName);
+	}
+
+	// Create and return the new resource
+	return CreateResource(sName);
+}
+
+/**
+*  @brief
+*    Unload a resource
+*/
+template <class AType>
+bool ResourceManager<AType>::Unload(AType &cResource)
+{
+	// Parameter check
+	if (!cResource.IsProtected()) {
+		// Is this a valid resource?
+		const AType *pResource = m_mapResources.Get(cResource.GetName());
+		if (pResource && &cResource == pResource) {
+			// Remove the resource
+			if (m_pStandardResource == &cResource) m_pStandardResource = NULL;
+			m_mapResources.Remove(cResource.GetName());
+			m_lstResources.Remove(&cResource);
+			cResource.m_pManager = NULL;
+
+			// Destroy the resource
+			cResource.DeleteResource();
+
+			// Done
+			return true;
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
+*    Unload unused resources
+*/
+template <class AType>
+PLGeneral::uint32 ResourceManager<AType>::UnloadUnused()
+{
+	PLGeneral::uint32 nUnloaded = 0;
+
+	// Unload unused resources
+	for (PLGeneral::uint32 i=0; i<m_lstResources.GetNumOfElements(); i++) {
+		// Get resource
+		AType *pResource = m_lstResources[i];
+
+		// Remove resource if it isn't used and not protected
+		if (!pResource->GetNumOfHandlers() && !pResource->IsProtected()) {
+			Remove(*pResource);
+			pResource->DeleteResource();
+			nUnloaded++;
+			i--;
+		}
+	}
+
+	// Return the number of unloaded resources
+	return nUnloaded;
+}
+
+/**
+*  @brief
+*    Returns whether unused resource are unloaded automatically or not
+*/
+template <class AType>
+bool ResourceManager<AType>::GetUnloadUnused() const
+{
+	return m_bUnloadUnused;
+}
+
+/**
+*  @brief
+*    Sets whether unused resource are unloaded automatically or not
+*/
+template <class AType>
+void ResourceManager<AType>::SetUnloadUnused(bool bUnloadUnused)
+{
+	m_bUnloadUnused = bUnloadUnused;
+}
+
+/**
+*  @brief
+*    Get the standard resource
+*/
+template <class AType>
+AType *ResourceManager<AType>::GetStandard() const
+{
+	// Return standard resource
+	return m_pStandardResource;
+}
+
+/**
+*  @brief
+*    Set the standard resource
+*/
+template <class AType>
+bool ResourceManager<AType>::SetStandard(AType *pResource)
+{
+	// Is this a valid resource?
+	if (pResource) {
+		const AType *pFoundResource = m_mapResources.Get(pResource->GetName());
+		if (pFoundResource && pResource == pFoundResource) {
+			// If unused resources should be destroyed, check whether the previous standard
+			// resource is now unused (if there's one :)
+			if (m_bUnloadUnused && m_pStandardResource && !m_pStandardResource->GetNumOfHandlers())
+				m_pStandardResource->DeleteResource(); // Kill this resource NOW
+		} else return false; // Error!
+	}
+
+	// Set new standard resource
+	m_pStandardResource = pResource;
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Returns the number of resources within the manager
+*/
+template <class AType>
+PLGeneral::uint32 ResourceManager<AType>::GetNumOfElements() const
+{
+	return m_lstResources.GetNumOfElements();
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual functions                              ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Clear the manager, delete all resources
+*/
+template <class AType>
+bool ResourceManager<AType>::Clear(bool bProtectedToo)
+{
+	// Clear
+	if (bProtectedToo) {
+		while (m_lstResources.GetNumOfElements()) {
+			AType *pResource = m_lstResources[0];
+			pResource->DeleteResource();
+		}
+	} else {
+		for (PLGeneral::uint32 i=0; i<m_lstResources.GetNumOfElements(); i++) {
+			AType *pResource = m_lstResources[i];
+			if (!pResource->IsProtected()) {
+				pResource->DeleteResource();
+				i--;
+			}
+		}
+	}
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Loads a resource
+*/
+template <class AType>
+AType *ResourceManager<AType>::LoadResource(const PLGeneral::String &sFilename)
+{
+	// IS there already a resource with this name?
+	AType *pResource = Get(sFilename);
+	if (pResource) return pResource;
+
+	// Create a new resource
+	pResource = Create(sFilename);
+	if (pResource) {
+		// Load the resource
+		if (pResource->Load(sFilename))
+			return pResource; // Return the new resource
+		else delete pResource;
+	}
+
+	// Error!
+	return NULL;
+}
+
+/**
+*  @brief
+*    Initializes the manager
+*/
+template <class AType>
+bool ResourceManager<AType>::Init()
+{
+	// Standard implementation, please overwrite in derived class
+	return true; // Done
+}
+
+/**
+*  @brief
+*    De-initializes the manager
+*/
+template <class AType>
+bool ResourceManager<AType>::DeInit()
+{
+	// Standard implementation, please overwrite in derived class
+	Clear();
+	return true; // Done
+}
+
+/**
+*  @brief
+*    Updates the manager
+*/
+template <class AType>
+bool ResourceManager<AType>::Update()
+{
+	// Standard implementation, please overwrite in derived class
+	return true; // Done
+}
+
+/**
+*  @brief
+*    Copy operator
+*/
+template <class AType>
+ResourceManager<AType> &ResourceManager<AType>::operator =(const ResourceManager<AType> &cSource)
+{
+	// Setup manager
+	SetManagerName(cSource.GetManagerName());
+	Clear();
+
+	// Copy resources
+	for (PLGeneral::uint32 i=0; i<cSource.GetNumOfElements(); i++) {
+		const AType *pSourceResource = cSource.Get(i);
+		AType *pResource = Create(((Resource<AType>*)pSourceResource)->GetName());
+		*pResource = *pSourceResource;
+	}
+
+	// Return pointer
+	return *this;
+}
+
+/**
+*  @brief
+*    Returns the resource at the given index
+*/
+template <class AType>
+AType *ResourceManager<AType>::Get(PLGeneral::uint32 nIndex) const
+{
+	return m_lstResources[nIndex];
+}
+
+/**
+*  @brief
+*    Returns the resource with the given name
+*/
+template <class AType>
+AType *ResourceManager<AType>::Get(const PLGeneral::String &sName) const
+{
+	// Search for an object with that name
+	return m_mapResources.Get(sName);
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+template <class AType>
+ResourceManager<AType>::ResourceManager() :
+	m_pStandardResource(NULL),
+	m_bUnloadUnused(false)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+template <class AType>
+ResourceManager<AType>::~ResourceManager()
+{
+	// Clear manager
+	Clear();
+}
+
+/**
+*  @brief
+*    Sets the unique resource name
+*/
+template <class AType>
+bool ResourceManager<AType>::SetResourceName(AType &cResource, const PLGeneral::String &sName)
+{
+	// Set new name?
+	if (cResource.m_sName != sName) {
+		// Check if the name is already used
+		if (Get(sName))
+			return false; // Error!
+
+		// Remove the resource from the name hash list
+		bool bManagerElement = false;
+		if (cResource.GetManager())
+			bManagerElement = m_mapResources.Remove(cResource.m_sName);
+
+		// Set new name
+		if (sName.GetLength())
+			cResource.m_sName = sName;
+		else {
+			// Find an unused resource name
+			PLGeneral::String sNewName = "0";
+			for (int i=1; Get(sNewName); i++)
+				sNewName = i;
+
+			// Set this name
+			cResource.m_sName = sNewName;
+		}
+
+		// Update the resource manager name hash list
+		if (bManagerElement)
+			m_mapResources.Add(cResource.m_sName, &cResource);
+	}
+
+	// Done
+	return true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Adds a resource
+*/
+template <class AType>
+bool ResourceManager<AType>::Add(AType &cResource)
+{
+	// Check parameter
+	if (cResource.GetManager() && cResource.GetManager() != this)
+		return false; // Error!
+
+	// Is this resource already within a manager?
+	if (!cResource.GetManager()) {
+		// Check resource name, managed resources MUST have valid names
+		if (cResource.GetName().GetLength()) {
+			// Check whether there's already a resource with this name
+			if (m_mapResources.Get(cResource.GetName())) return false; // Error!
+		} else {
+			// Find an unused resource name
+			PLGeneral::String sNewName = "0";
+			for (int i=1; Get(sNewName); i++)
+				sNewName = i;
+
+			// Set this name
+			cResource.SetName(sNewName);
+		}
+
+		// Add resource to list
+		if (!m_lstResources.Add(&cResource)) return false; // Error!
+		cResource.m_pManager = this;
+
+		// Add resource to hash lists
+		m_mapResources.Add(cResource.GetName(), &cResource);
+	}
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Removes a resource
+*/
+template <class AType> 
+bool ResourceManager<AType>::Remove(AType &cResource)
+{
+	// Is this a valid resource?
+	const AType *pResource = m_mapResources.Get(cResource.GetName());
+	if (pResource && &cResource == pResource) {
+		// Remove the resource
+		if (m_pStandardResource == &cResource) m_pStandardResource = NULL;
+		m_mapResources.Remove(cResource.GetName());
+		m_lstResources.Remove(&cResource);
+		cResource.m_pManager = NULL;
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLCore

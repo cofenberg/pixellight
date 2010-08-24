@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{fancybox}
+\usepackage[alsoload=binary, mode=text,loctolang={DE:german},decimalsymbol=comma]{siunitx}	% Units (bit, byte and so on)
+\usepackage{../Common/Tools}
+\usepackage{../Common/Styles}
+\usepackage[dvipdfm]{graphicx}
+\usepackage{a4wide}
+\flushbottom
+
+\sloppy	% Avoid writing over linebreak
+\hbadness=10000
+\clubpenalty = 10000 % schliesst Schusterjungen aus
+\widowpenalty = 10000 % schliesst Hurenkinder aus
+\pagenumbering{roman}
+
+% Links
+\usepackage[dvipdfm, colorlinks=true, urlcolor=black, linkcolor=black]{hyperref}
+\urlstyle{same} % Use normal font for Urls
+\usepackage[all]{hypcap} % Link to the image, not the image caption
+
+% Table
+\usepackage{tabularx}
+\usepackage{threeparttablex}
+\usepackage{booktabs}
+\usepackage{ltxtable}
+
+% Code listening
+\usepackage{color,listings}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{lightgray}{gray}{0.95}
+\lstset{language=C++,
+captionpos=b,
+frame=single,
+basicstyle=\ttfamily,
+keywordstyle=\color{blue},
+commentstyle=\color{darkgreen},
+stringstyle=\color{red},
+backgroundcolor=\color{lightgray},
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+breaklines=true,
+showstringspaces=false,
+tabsize=2,
+emph={double,bool,int,unsigned,char,true,false,void},
+emphstyle=\color{blue},
+emph={Assert,Test},
+emphstyle=\color{red},
+emph={[2]\using,\#define,\#ifdef,\#endif}, emphstyle={[2]\color{blue}}
+}

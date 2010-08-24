@@ -1,0 +1,50 @@
+>> 21.08.2010
+[CO]
+- "PLViewerStandalone" hinzugefügt welches sich von "PLViewer" nur darin unterscheidet das es "SetMultiUser(true)" aufruft
+
+
+
+>> 20.08.2010
+[CO]
+- "PLViewerConfig" hinzugefügt mit "DefaultScene", dadurch lässt sich die Default-Szene von außen über die Konfiguration einstellen
+
+
+
+>> 10.08.2010
+[CO]
+- "MultiUser" Komandozeilen Parameter in "Standalone" umbenannt
+
+
+
+>> 09.08.2010
+[CO]
+- "MultiUser" Komandozeilen Parameter hinzugefügt, darüber lässt sich von außen Einstellen ob z.B. Log & Config direkt bei
+  der exe liegen sollen, oder sauber im User-Verzeichnis. Für "Standalone"-Szenen die man packen und schnell mal so mit PLViewer
+  weitergeben will ist das recht Praktisch. Diesen Parameter werte ich momentan in "Application::OnInitLog()" und nicht in
+  "Application::OnInitCmdLine()" aus damit sich dieser Parameter auch auf das Log auswirkt.
+
+
+
+>> 06.08.2010
+[SB]
+- Mit Escape kann das Programm nun beendet werden.
+
+
+
+>> 17.07.2010
+[CO]
+- Bugfix: Basispfad "" sollte nicht entfernt werden -> Dies ist das aktuelle Verzeichnis, das normalerweise direkt das Verzeichnis
+  ist in dem die exe liegt... so können z.B. noch PLViewer Daten geladen werden
+
+
+
+>> 03.07.2010
+[CO]
+- PLViewer auf neues PLGui3 umgestellt, GUI Dinge erstmal rausgenommen
+
+
+
+>> 23.05.2010
+[CO]
+- "PLSceneViewer" aus PLSamples nach PLTools verschoben und in "PLViewer" umbenannt. Zukünftig wird dieses kleine Tool nicht
+  nur Szenen, sondern auch Texturen etc. Anzeigen können.

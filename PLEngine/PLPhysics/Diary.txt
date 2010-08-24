@@ -1,0 +1,1127 @@
+>> 19.08.2010
+[CO]
+PLPhysicsNewton:
+- Innerhalb von PLPhysicsNewton wird "NewtonBodySetFreezeState" nur noch über die Methode "BodyImpl::SetNewtonBodyFreezeState" aufgerufen,
+  die einen Physik Körper allerdings nur "auftauen" kann wenn dieser gleichzeitig Aktiv ist (Thematik deaktivierte Scene Nodes oder
+  Scene Node Modifier)
+
+
+
+>> 08.08.2010
+[SB]
+- Übergangslösung für alle SceneNodes und Modifier, die Input-Devices verwenden (siehe PLScene-Diary vom 08.08.2010)
+
+
+
+>> 25.07.2010
+[CO]
+- "SNMPhysicsCharacter::NotifyUpdate()": Der übergebene Bewegungsvektor wird nur noch normalisiert wenn dieser größer ist als 1...
+  dadurch sind z.B. mit einer SpaceMouse feinere Abstufungen in der Bewegungsgeschwindigkeit möglich
+- SNMPhysicsCharacterController::SpaceMouseTranslationFactor hinzugefügt damit von Außen eingestellt werden kann wie sensibel
+  die SpaceMouse zum herumbewegen sein soll
+- SNMPhysicsCharacter/SNMPhysicsCharacterController um "Schleichen" erweitert (damit verhält sich das nun konsitent zu PLScene::SNMMoveController)
+
+
+
+>> 24.07.2010
+[CO]
+- "SNMPhysicsCharacter::YMovement" Flag hinzugefügt, ist dieses Flag gesetzt, findet eine Bewegung entlang aller Achsen statt
+  (ansonnsten nur auf der x/z-Ebene)
+- SNMPhysicsCharacterController verhält sich nun ähnlich wie PLScene::SNMMoveController, sprich, auch Bild-hoch/runter Tasten
+  werden verwendet
+
+
+
+>> 20.07.2010
+[CO]
+- SNMPhysicsBodyMesh/World::CreateBodyMesh -> Die Optimierung der Meshes ist nun Standardmäßig deaktiviert da dies *sehr* viel
+  Zeit in anspruch nehmen kann. In meinem Fall mit Optimierung des Meshes 30 sec Ladezeit, ohne 5 sec... ein Gewaltiger unterschied
+  ohne das ich ersthaft bei Newton Game Dynamics einen Geschwindigkeitsvorteil zur Laufzeit feststellen konnte.
+
+
+
+>> 30.05.2010
+[CO]
+- SNMPhysicsBody: "m_bFrozen" und "NotifyUpdate()" entfernt, das waren noch Überbleibsel von früher
+
+
+
+>> 29.04.2010
+[CO]
+- PLPhysicsNewton nutzt nun die aktuellste Version "Newton 2.20 Archemedia Open Beta". (wow, die machen eine mehrjährige Beta *g*)
+  Die API hat sich nur minmal verändert, hauptsächlich neue Funktions Parameter. "NewtonBodySetMatrix()" hingegen scheint nun Physik
+  Körper aufzuwecken, ich konnte nirgends ne Doku oder Beschreibung dazu finden, früher weckte es jedenfalls nicht auf.
+- PLPhysicsNewton::BodyMesh unterstützt nun den "TwoSided" Material Parameter. Zwar bleiben Objekte immer noch hin und wieder in Meshes
+  hängen, mit der Erweiterung ist es aber schonmal bei zweiseitigen Materialien besser geworden.
+- Neuen Physik Scene Node Modifier Namens SNMPhysicsUpdateVelocity hinzugefügt, dieser registiert Bewegungen der Scene Node und passt
+  die Geschwindigkeit des Physik Körpers entsprechend an so das die Physik Engine mitbekommen kann das, und wie schnell sich der Körper
+  bewegt hat. Damit kann man z.B. bewegte Plattformen, Förderbänder oder Rolltreppen realisieren.
+- PLPhysicsNewton:WorldNewton: Wird die lineare oder Winkel Geschwindigkeit eines Physik Körpers von außen per Hand gesetzt, werden
+  bei statischen Physik Körpern (Masse = 0) alle Physik Körper "aufgeweckt" die gerade in Kontakt stehen.
+
+
+
+>> 05.05.2009
+[CO]
+- "SNRagdoll" ändert direkt Skeleton Werte und der Mesh Handler bekommt davon natürlich nix mit und weis nicht
+  das das Mesh nun aktualisiert werden muss. Daher wird nun "MeshHandler::MeshUpdateRequired()" aufgerufen wo
+  nötig.
+
+
+
+>> 27.03.2009
+[CO]
+- "World": "CreateBodyConvexHull()" und "CreateBodyMesh()" bekommen nun zusätzlich als Parameter die zu verwendende
+  "MeshManager"-Instanz
+
+
+
+>> 25.03.2009
+[CO]
+- "SNMPhysicsCharacterController": SpaceMouse berücksichtigte noch kein 'Achsen vertauschen'
+
+
+
+>> 14.03.2009
+[CO]
+- "SNMPhysicsCharacterController": "SpaceNavigator"-Support hinzugefügt
+
+
+
+>> 08.03.2009
+[CO]
+- Die Scene Node Modifier Implementationen berücksichtigen nun endlich wieder den "Active"-Zustand. Dies hab ich nun so realisiert das
+  Event Handler "Disconnected" werden sobald ein Scene Node Modifier inaktiv wird und beim Aktive werden sich wieder "Connecten".
+
+
+
+>> 27.12.2008
+[CO]
+PLPhysicsNewton:
+- 'BodyImpl::SetMass()' berechnet nun über 'NewtonConvexCollisionCalculateInertialMatrix()' alles nötige so das abgeleitete Klassen
+ 'SetMass()' nicht mehr zangsläufig implementieren müssen
+
+
+
+>> 26.12.2008
+[CO]
+PLPhysicsNewton:
+- 'BodyConvexHull::SetMass()': Nutzt nun 'NewtonConvexCollisionCalculateInertialMatrix()' was zu deutlich besseren Ergebnissen führt
+- 'BodyConvexHull::BodyConvexHull()': Hier fehlte bei 'pCollision' eine Abfrage auf NULL... denn es kann auch sein das 'NewtonCreateConvexHull()'
+  NULL zurückgibt... hatte das gerade und das war natürlich ziemlich übel wenn man das nicht abfragt. :/
+
+
+
+>> 07.12.2008
+[CO]
+PLPhysicsNewton:
+- Auf 'Newton 2 Beta 17' umgestellt. Die Version ist zwar noch nicht öffentlich, aber es wird Zeit das wir auf diese
+  neue Version umstellen. Von der alten Newton Version gibt es keine 64 Bit Version, aber ich will nun endlich eine haben damit wir mit
+  unserem 64 Bit SDK vorankommen.
+  Das Umstellen war etwas Tricky da sich einige Funktionen verändert haben oder ganz rausfolgen... probleme machte auch das sich nun
+  zwei 'schlafende' Physik Objekte gegenseitig aufwecken können - diese Dinge muss man nun selbst handhaben.
+- 64 Bit Version von 'Newton 2 Beta 17' hinzugefügt. Leider heist die 64 Bit Version von 'Newton.dll' ebenfalls 'Newton.dll' so das ich
+  wie bei Cg das erstmal in 'Newton64.dll' umbenannte. (ist so natürlich nicht lauffähig!)
+PLPhysics:
+- 'Body': 'EventTransform'-Event hinzugefügt das ausgelöst wird sobald von seiten der Physik die Transformation verändert wurde. Z.B.
+  'SNMPhysicsBody' reagiert darauf und aktualisiert seine Scene Node.
+- 'Element': 'IsBody()' & 'IsJoint()' & 'IsSensor()' hinzugefügt
+- 'World': EventContact'-Event hinzugefügt das ausgelöst wird sobald von seiten der Physik ein (soweit akzeptierter) Kontakt zwischen
+  zwei Körpern festgestellt wurde. Dieses Event bekommt eine Instanz der neuen 'ContactInformation'-Klasse mit die weitere Informationen
+  enthält und über die man auch den Kontakt 'verwerfen' kann.
+PLPhysicsPhysX:
+- 'WorldPhysX::UpdateSimulation()': Nutzt nun das neue Body 'EventTransform'-Event - PhysX kann zum Glück mitteilen WO sich etwas änderte.
+PLPhysicsPhysX:
+- 'WorldODE::UpdateSimulation()': Nutzt nun das neue Body 'EventTransform'-Event - konnte leider nix finden das mir irgendwie mitteilen kann
+  welche Körper gerade verändert wurden - also geh ich nach dem Simulations-Schritt einfach stumpfsinnig alle Physik Körper durch und versende
+  ein 'EventTransform'-Event an aktive Körper. (sich sich wohl potentiell verändert haben, ansonnsten würden se schlafen *g*)
+
+
+
+>> 25.09.2008
+[CO]
+- SCPhysicsWorld: 'SetAABoundingBox()' ist schon seit längerem keine virtuelle SceneNode Funktion mehr - drum klappte das hier
+  natürlich auch nicht mehr. Stellte es auf ein Event um.
+
+
+
+>> 12.09.2008
+[CO]
+- PLPhysics::SNMPhysicsBody: 'CollisionGroup' hinzugefügt, ist zwar etwas umständlich aber es funktioniert so erstmal... z.B. für eine
+  Rolltreppe wo die Stufen Physik Objekte sind, aber die Stufen nicht miteinander kollidieren sollen... eine 'NoCollision'-Liste wäre
+  allerdings ebenfalls mehrarbeit. *g*
+- PLPhysicsNewton::WorldNewton::GenericContactBegin() & PLPhysicsODE::WorldODE::OnCollision: Es muss auch möglich sein das Objekte einer
+  gleichen 'CollisionGroup' nicht miteinander kollidieren können
+- GroupCollision: Standardmäßig sind kollisionen zweier Objekte der gleichen Gruppe deaktiviert, außer für die erste Gruppe... das ist zwar
+  nicht wirklich toll, erleichtert aber etwas einfache Anwendungen wo nur ein paar Objekte nicht miteinander kollidieren sollen.
+- SNPhysicsMouseInteraction::UpdateFunction(): Verbessert, bis jetzt machte das bei 'großen' Szenen bzw. einer sehr merkwürdigen Szene
+  Skalierung probleme
+
+
+
+>> 24.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 23.08.2008
+[SB]
+- SNMPhysicsCharacterController: Flag 'NoJump' hinzugefügt, damit man in manchem Fällen das Springen ausschalten kann.
+
+
+
+>> 17.08.2008
+[CO]
+- SCPhysicsWorld: Am Freitag hatte ich eine Szene bei der man direkt beim Start durch den Boden fiel und dem ging ich heute mal nach.
+  Es stellte sich heraus das bei 'PLPhysicsNewton' es scheinbar an der 'WorldThread'-Implementation liegt. Ohne Multi-Threading gab es
+  keine Probleme. Ich versuchte dem Problem auf die Schliche zu kommen, schaffte es aber bis jetzt nicht rauszubekommen was nicht ok
+  ist. Daher entschloss ich mich lieber Multi-Threading Standardmäßig nicht zu nutzen - lieber den sicheren Weg nehmen. Das muss ich
+  mir bei Zeiten nochmal genauer anschaun. So wie es aussieht bekommt die nächste 'Newton' Version ebenfalls direkt internen Multi-Threading
+  Support, das probier ich dort dann nochmal aus - ich nehme mal an das meine eigene Multi-Threading Implementation für Physik alles
+  andere als Optimal ist... ist nicht ohne diese Thematik.
+
+
+
+>> 18.07.2008
+[CO]
+- RagdollLoaderPL: Um Format Versions Informationen erweitert
+
+
+
+>> 29.05.2008
+[CO]
+- 'PLPhysicsNovodeX' in 'PLPhysicsPhysX' umbenannt da diese API mittlerweile so genannt wird und auch Februar 2008 den Besitzer gewechselt
+   hat. (von Ageia zu NVIDIA)
+   Anschließend an das neue SDK angepasst, Interessanterweise musste ich nur ein paar Zeilen auskommentieren und schon ging es wieder...
+   und das obwohl das alte SDK weit über ein Jahr alt war. :D
+   'PhysXLoader.dll' habe ich in den 'Runtime/Plugins/PLPhysics' Ordner kopiert obwohl auf dem System 'zwanghaft' PhysX Installiert
+   sein MUSS damit sich was tut. Würde man diese dll nicht dort reinkopieren bekäme man eines von Windows gewischt da die dll nicht gefunden
+   werden kann wenn PhysX nicht installiert ist - sehr unschön. Das ist wohl ein Punkt der bei einem Projekt gegen diese Physik API sprechen
+   kann - sprich, wenn es unzumutbar ist das z.B. ein Kunde sich PhysX erstmal auf seinem Rechner installieren muss... Spieler kann man soetwas
+   schonmal zumuten und die aktuellen Games machen das auch direkt so. (musste 'PhysX SDK System Software' schonmal installieren für ein Spiel,
+   ärgerte mich aber etwas da ich es ja eigentlich nicht wollte!)
+
+
+
+>> 24.05.2008
+[CO]
+PLPhysics:
+- Body: Neue Funktion: GetAABoundingBox() Gibt die Globale Achsen ausgerichtete Bounding Box des Physik Objektes zurück
+- Neuer Sensor-Typ: SensorAABoundingBox
+- SNMPhysicsCharacter::Jump(): Mit hilfe von 'Body::GetAABoundingBox()' und 'SensorAABoundingBox' wird nun geprüft ob sich der Character gerade
+  auf dem Boden befindet -> nur dann ist Springen erlaubt! Das klappt schon ziemlich gut, aber irgendwie kann man hin und wieder auch noch kurz
+  in der Luft springen... mal schaun ob man das irgendwann noch "komplett sauber" hinbekommt. Ich denke aber man kann das erstmal so lassen - ist
+  auf jedenfall um längen besser als vorher. :D
+- SNMPhysicsCorrectDistance::InformedOnUpdate(): Es sollte natürlich besser der 'BlendOutTarget' Physik Körper genommen werden als der von 'Target'
+  da intern 'BlendOutTarget' immer das darstellt was ausgeblendet werden soll und das daher im Normallfall auch den Physik Körper hat der bei der
+  Abstandsmessung ignoriert werden soll. Nun ist das 'springen' in der Cartoon-Szene ganz ordentlich - bis jetzt sprang dann oft die Kamera ganz
+  nah an den Character da der Physik Körper des 'Helden' bei der Abstandsmessung nicht ignoriert wurde wie das eigentlich sein sollte.
+
+
+
+>> 23.05.2008
+[CO]
+PLPhysics:
+- SCPhysicsWorld & World: Neue RTTI Variable bzw. Funktionen 'SimulationQuality': Damit kann man Einstellen ob die Simulation genau aber dafür langsam,
+  oder so schnell wie möglich aber dafür ungenau... oder etwas dazwischen sein soll.
+- SNMPhysicsCharacter: Springen funktioniert nun recht ordentlich indem ich keine 'Kraft' hinzufüge sondern einfach die aktuelle Geschwindigkeit
+  manipuliere
+
+
+
+>> 15.04.2008
+[CO]
+PLPhysics:
+- SNMPhysicsBodySphere & SNMPhysicsBodyEllipsoid: "Radius" ist als Default nun 0 und in dem Fall wird automatisch ein Radius gewählt
+  der 'in' der Scene Node Bounding Box liegt + kann für Debugging Visualisiert werden
+
+
+
+>> 12.04.2008
+[CO]
+PLPhysics:
+- SNMPhysicsCharacterController: Springen geht nun über die 'Space'-Taste
+
+
+
+>> 11.04.2008
+[CO]
+PLPhysics:
+- SNMPhysicsBodyBox: Kann nun für Debug zwecke die Physik-Box Visualisieren. Das sollte bei Zeiten für alle Physik-Modifier Implementiert
+  werden da es enorm hilfreich ist sehen zu können wo genau das Physik Objekt ist.
+- Body: Neue Funktionen 'IsActive()' und 'SetActive()'. Ursprünglich wollte ich diese Funktionen nicht anbieten da scheinbar keine Physik
+  API solche (eigentlich grundliegenden) Funktionen hat und man es halbwechs über kombination von 'Freeze' und 'Disable Collision' hinbekommen
+  kann. Allerdings ist das so herum auf dauer ziemlich umständlich und auch Fehleranfällig, daher habe ich nun diese 'Luxus'-Funktionen eingefügt.
+- SNMPhysicsBody: Bekommt nun über 'InformedOnActive()' mit ob die Scene Node aktiviert/deaktiviert wurde - ist dies der Fall, so wird ebenfalls
+  der Physik Körper aktiviert/deaktiviert was irgendwie Sinnvoll erscheint. *g*
+- Performance verbesserung: SNMPhysicsBody::InformedOnUpdate(): Hier braucht man inverse Container Transform Matrizen mittlerweile nicht mehr
+  dynamisch berechnen sondern kann direkt 'SceneNode::GetInverseTransformMatrix()' nutzen
+- SNPhysicsMouseInteraction: Kommt nun auch mit verschachtelten Containern klar so das man nun auch in der 'Dungeon'-Szene mit der Maus problemlos
+  Physik Objekte herumschupsen kann :D
+- SNMPhysicsBody: Wird 'PositionOffset' verändert sieht man nun 'immer' sofort die Auswirkung, selbst wenn das Physik Objekt gerade 'schläft'
+- SNMPhysicsBody: 'PositionOffset' ist nun wie man es erwarten würde am lokalen Knoten Koordinaten System ausgerichtet
+- SNMPhysicsBodyBox: Das Debug-Zeichnen der Physik Kiste klappt nun auch wenn verschachtelte Container genutzt werden
+
+
+
+>> 10.04.2008
+[CO]
+PLPhysics:
+- SNMPhysicsBodyBox: Default Wert von 'Dimension' ist nun ein Null-Vektor + da dies eine 'ungültige' größe ist wird hier nun 'automatisch'
+  die Bounding Box der Scene Node genommen an der der Modifier hängt. Dies ist extrem Praktisch da man recht oft 'einfach mal schnell
+  SNMPhysicsBodyBox' an eine Node hängen will um diese zu einer Physik-Box zu machen. Bis jetzt musste man dann 'immer' noch umständlich
+  'Dimension' korrekt per Hand reinfummeln. (unzumutbar für Grafiker!) Dies ist nun nur noch in Sonderfällen nötig, z.B. wenn eine Achse
+   der Scene Node Bounding Box 'Null' ist und es daher schnell passieren kann das das Objekt dann 'durch den Boden fällt'. (wie beim 'Zaun'
+  in der Cartoon Szene)
+
+
+
+>> 05.04.2008
+[CO]
+PLPhysicsNewton:
+- WorldThread: Endlich mal wieder was brauchbares in einer Vorlesung gelernt ("Paralelle Systeme")... Klassen Variablen die 'von Außen', also
+  durch einen anderen Thread verändert werden könnten sollte man mit 'volatile' versehen damit der Compiler diese Variablen nicht 'optimiert' -
+  sprich, diese eventuell in Registern eines Threads liegen und dann natürlich nix davon mitbekommen das das 'Original' im Hauptspeicher verändert
+  wurde. In unserem Fall hier würde das dann 'WorldThread::Run()' betreffen was übel wäre wenn der Compiler hier die Klassen Variablen in Registern
+  cachen würde - wow, soetwas kann sicherlich schnell heftig nach hinten losgehen und dann versteht man die Welt nicht mehr. Je mehr ich mich
+  (zwangsläufig wegen der einen Vorlesung) mit Threading befasst desto mehr Angst bekommt ich davor. *g*
+  Ein paar 'volatile' fügte ich noch in ein paar anderen Projekten ein wo ich mir 'recht sicher' bin das dies 'Problematische' Stellen sind. Davon
+  gibts sicher noch noch ein paar weitere... z.B. in PLInput. Aber noch bin ich mir nicht zu '100%' sicher was 'wirklich Problematisch' ist und wie
+  das im Detail alles abläuft, also was in Registern laden kann und was nicht.
+
+
+
+>> 02.03.2008
+[CO]
+PLPhysicsNewton:
+- BodyMesh::OpenFile(): An die FS Änderungen angepasst so das es wieder korrekt läuft
+
+
+
+>> 28.02.2008
+[CO]
+- Wo es problemlos ging aufs neue Input-System umgestellt
+
+
+
+>> 19.10.2007
+[CO]
+- Einige 'const' eingefügt
+
+
+
+>> 22.09.2007
+[CO]
+PLPhysics:
+- SNMPhysicsBody & SNRagdoll setzen die Position von Scene Nodes nicht mehr direkt über 'SetPosition()' sondern verwenden nun
+  'MoveTo()' damit auch Portal-Übergänge 'automatisch' funktionieren... das klappte sofort alles erstaunlich gut so das ich
+  mich nun in der Kabiene von Jens über Physik herum bewegen kann und auch durch Portale wie man es erwarten würde in andere
+ 'Räume' laufen kann.
+PLPhysicsNewton:
+- WorldNewton::SetWorldSize(): Als auch die Szene & z.B. Physik Kontainer Bounding Box der Kabiene passend Exportiert wurde
+  blieb man beim herumbewegen in der Kabiene plötzlich mitten in der Luft hängen als ob man die Welt 'verlassen' hätte -
+  sehr sehr merkwürdig... als ich dann die übergebene Welt Größe mit 2 multiplizierte trat dies nicht mehr auf. Ich google
+  eifrig und experimentierte etwas, konnte aber nicht rausfinden was da los ist... denn die übergeben Bounding Box MÜSSTE
+  stimmen.
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 07.09.2007
+[CO]
+PLPhysicsODE:
+- Auf "ODE 0.8.1 rc1" umgestellt. "ODE 0.5" das bis jetzt verwendet wurde hatte bereits einige Jährchen auf dem Buckel. :D
+  Bis auf eine kleinigkeit mit dem setzen der Masse (siehe unten) ging alles noch wie gehabt. Habe ODE zum testen lokal auch
+  mal selbst übersetzt - und siehe da, es ging auf Anhieb korrekt, das nenne ich mal Vorbildlich! :D
+  Hab schon ein seit einem weilchen nix mehr mit ODE gemacht, und ich muss sagen die Lib hat sich gut weiterentwickelt.
+  Da es von ODE bereits übersetze Versionen gibt, hab ich erstmal diese genommen... müsste auch direkt unter VC 7 gehen. Wie
+  gehabt wird eine dll genutzt und keine statische Variante da es hier recht wahrscheinlich ist das ein User spezielle Physik
+  Dinge einer API nutzen will welche nicht im universellen PL Physik Interface vorhanden sind.
+- WorldODE-Konstruktor: Hier wird die Speicherverwaltung von ODE nun auf unsere 'umgeleitet'
+- BodyImpl::SetMass(): Setzt KEINE ODE Masse mehr, denn für die Masse muss man noch die Struktur des Körpers kennen... in
+  der neuen ODE Version MÜSSEN diese Werte alle stimmen, ansonnsten bekommt man einen Crash. Daher darf nun z.B. nur noch
+  BodyBox::SetMass() die konkrete ODE Masse setzen.
+
+
+
+>> 27.08.2007
+[CO]
+PLPhysicsNewton:
+- Bugfix: BodyImpl::Flush(): Uhh, hier wurde zwar das eine Flag zurückgesetzt... aber der Körper wurde nicht aus der
+  entsprechenden World-Liste entfernt. Das dies bis jetzt noch nicht aufgefallen war... merkte das gerade erst als ich
+  im Ragdoll Editor ein Ragdoll einlud, und beim starten der Simulation dann einen Crash hatte.
+
+
+
+>> 23.08.2007
+[CO]
+PLPhysics:
+- Räumte endlich mal die 'Joint'-Klasse auf und verteilte die bislang öffentlichen Variablen auf JointHinge und JointUniveral.
+
+
+
+>> 21.08.2007
+[CO]
+PLPhysics:
+- Alle Scene Node Modifier sind nun von SNMPhysics abgeleitet. Das macht die Sache u.a. im System-Dialog wo man sich die
+  Klassen Hierarisch anzeigen lassen kann etwas übersichtlicher.
+
+
+
+>> 15.08.2007
+[CO]
+PLPhysics:
+- NovodeX-Physics Backend verwendet nun den PL Memory Manager
+- ODE-Physics Backend verwendet nun den PL Memory Manager, bzw. würde wenn "dSetAllocHandler()", "dSetReallocHandler()" und
+  "dSetFreeHandler()" in der aktuelle verwendeten Version verfügbar wären - hab mit dem Dependency Walker nachgeschaut,
+  warum auch immer wurde das nicht Exportiert. Egal, die verwendete ODE Version iss sowieso Uralt und muss bei Zeiten
+  aktualisiert werden.
+
+
+
+>> 04.08.2007
+[CO]
+PLPhysics:
+- SNPhysicsCloth wieder in SNCloth umbenannt und in PLSceneNodes1-Plugin zurückverschoben da dies dort einfach besser
+  reinpasst... diese Node interagiert nicht mit der 'richtigen Physik' und darum passte es da einfach nicht wirklich.
+  Später kommt auf jedenfall noch ein 'richtiges' SNPhysicsCloth her, also einfache Kleidung (einfach = erstmal nur wieder
+  Patches :) die 'wirklich' mit der restlichen Physik Interagiert. (also aus Bodies & Joints aufgebaut ist)
+  PLPhysicsWind nahm ich erstmal komplett heraus. In PLPhysics sollten nur Dinge sein die mit der 'universellen Physik'
+  arbeiten.
+- Nahm die 'Physics' heraus da dies Einstellungen sind die pro Welt gemacht werden sollten, wenn überhaupt. Das wurde
+  im Grunde derzeit nur von SNPhysicsCloth genutzt.
+
+
+
+>> 28.07.2007
+[CO]
+PLPhysics:
+- SCPhysicsWorld: Neue Variable: 'CacheDirectory': Hier kann man ein rein optionales Verzeichniss eintragen in dem Physik
+  Daten dieser Szene wenn möglich zwischengespeichert werden sollen. Die Newton-Physik Implementation nutzt dies bereits für
+  'collision meshs' da es gerade bei größeren Teilen schonmal etwas dauern kann bis alles Erzeugt wurde. Im günstigsten Fall
+  kann man darüber die Ladezeiten bei vielen/großen Physik Meshs deutlich verbessern. Dies ist allerdings wirklich nur rein
+  Optional und sollte hauptsächlich für 'finale Szenen' verwendet werden... denn das kann auch durchaus mal zu Problemen
+  führen wenn ein Meshs verändert wurde, aber im Physik Cache noch die alte Version genutzt wird, oder im ungünstigsten Fall
+  sind auch eventuell Namens-Konflikte denkbar. Man sollte also vorsichtig sein wenn man das nutzt, aber gerade für Dinge die
+  man rausgeben will sollte man versuchen das zu nutzen - will man das es auch gleich beim ersten mal sehr schnell läd um
+  z.B. jemanden damit zu beeindrucken, so kann man diese gebufferten Daten gleich mitliefern.
+  In einer meiner Test-Szenen beschleunigt dieses zwischenbuffern die Ladezeit von 7.1 Sekunden zu 2.7 Sekunden, das ist
+  also durchaus 'spürbar'. :D
+
+
+
+>> 18.07.2007
+[CO]
+PLPhysics + Backends:
+- Wo möglich/sinnig von Zeiger auf Referenzen umgestellt. Hatte dies bereits vor einigen Tagen angefangen, kam aber nur
+  superlangsam voran da ich dank Prüfungs-Maraton immer nur hier und da mal ein paar Minuten Zeit hatte... aber nicht
+  komplett auf PL verzichten wollte da dies eine nette Abwechslungs zum dauerpauken darstellt. Am Freitag steht noch
+  eine Prüfung in Digitaltechnik an, danach hab ich endlich wieder etwas über 2 Monate rein für PL Zeit. *sabber*
+
+
+
+>> 17.05.2007
+[CO]
+PLPhysics:
+- SNMPhysicsCorrectDistance & SNPhysicsMouseInteraction aus PLSamples in PLPhysics verschoben. Beide Dinge haben sich als
+  recht brauchbar erwiesen und sind gerade für 'Prototyping' oder 'Debugging' wirklich sehr gut einsetzbar.
+
+
+
+>> 21.04.2007
+[CO]
+PLPhysics:
+- SNMPhysicsBody verwendete für interne zwecke die nach außen im RTTI sichtbare Variable 'Flags' was natürlich nicht ok war
+
+
+
+>> 14.04.2007
+[CO]
+PLPhysics:
+- Modifiers berücksichtigen ob diese gerade aktiv sind oder nicht
+PLPhysicsNewton:
+- WorldThread::~WorldThread(): Bei 'Join' ein Timeout gesetzt da es ansonnsten bei mir immer mal wieder passierte das sich
+  z.B. ein Programm nicht mehr sauber beendete
+
+
+
+>> 08.04.2007
+[CO]
+PLPhysics + Backends:
+- 'using namespace' Änderungen, dort wo das alte Input System verwendet wird gabs natürlich wieder OS Namenskonflikte :/
+
+
+
+>> 04.04.2007
+[CO]
+PLPhysicsODE + PLPhysicsNovodeX:
+- Header-Änderungen + Codes noch hier und da etwas aufgeräumt
+
+
+
+>> 03.04.2007
+[CO]
+PLPhysics + PLPhysicsNull + PLPhysicsNewton:
+- Header-Änderungen + Codes noch hier und da etwas aufgeräumt
+
+
+
+>> 03.03.2007
+[CO]
+PLPhysics:
+- Fügte die Scene Node Modifier SNMPhysicsForce und SNMPhysicsTorque hinzu
+
+
+
+>> 21.02.2007
+[CO]
+PLPhysicsODE:
+- WorldODE::ErrorHandler: Hier kann es nun keinen Buffer Überlauf mehr geben. Fügte in diesem VC 2005 Projekt bei den
+  Compiler Optionen "/D "_CRT_SECURE_NO_DEPRECATE"" ein damit keine unnötigen Warnungen kommen.
+
+
+
+>> 11.02.2007
+[CO]
+- Auf VC 2005 umgestellt
+
+
+
+>> 28.01.2007
+[CO]
+- VC Projekt-Dateien wie besprochen in die jeweiligen Grundordner verschoben
+
+
+
+>> 27.01.2007
+[SB]
+- CMake Projektdateien für alle PLEngine-Projekte hinzugefügt 
+
+
+
+>> 25.01.2007
+[CO]
+PLPhysicsNewton:
+- Physik aktualisierung überarbeitet: WorldNewton nutzt nun nur noch Funktionen von WorldUpdate, davon ist WorldThread
+  abgeleitet welches die Physik aktualisierung in einem seperatem Thread ablaufen lässt. WorldNewton selbst muss sich
+  nicht darum kümmern ob die Physik Simulation in einem seperatem Thread abläuft oder nicht was die Sache ein wenig
+  transparenter macht.
+- 'm_nThreadPriorityClass' um 'None'-Option erweitert, ist das gewählt, so ist die Simulation in einem seperatem Thread
+  unerwünscht... was aber nicht zwanghaft bedeutet das die jeweilige Physik Implementation diesen wunsch berücksichtigen muss.
+  (falls z.B. PhysX genutzt wird... da hat man nicht wirklich viel Kontrolle drüber :)
+- Bugfix: BodyImpl: Cached nun ebenfalls noch ob der Physik Körper gerade eingefrohren ist oder nicht. Nutzt man direkt die
+  Newton Funktion, kann es wenn ein Thread für die Simulation genutzt wird zu problemen kommen.
+  WorldNewton::PhysicsBodyActivationState() ist die entsprechende neue Callback-Funktion welche von Newton aufgerufen wird
+  wenn sich am Active-Status eines Physik Objektes etwas ändert.
+PLPhysics:
+- Bugfix: SNMPhysicsBody::InformedOnUpdate(): Es konnte passieren das Scene Nodes nicht an der gleichen Position waren wie
+  deren Physik Körper. Hauptsächlich passierte es wenn ein Physik Körper in einem Frame noch aktiv war, aber in dem anderen
+  nicht mehr, dann wurde die Scene Node nicht mehr an die aktuellste Position des Physik Körpers angepasst - im Extremfall
+  wenn man ein Physik Objekt 'hochwirft' und dann den Bildschirm Modus ändert (Physik Simulation läuft im eventuellem
+  seperatem Thread fröhlich weiter :) konnte man sehr schön sehen das die entsprechende Scene Node dann 'in der Luft hing'.
+
+
+
+>> 16.01.2007
+[CO]
+PLPhysics + Verwendung:
+- Bei World::SetSimulationActive()-Verwendung fügte ich noch Abfragen hinzu, ist zwar normalerweise unnötig da die Implementation
+  eventuell intern Prüft, aber sicher ist sicher. :)
+- Bugfix: SNRagdoll::CreatePhysics(): Hier fehlte das hinzufügen von 'No Collision'
+- SNRagdoll::CreatePhysicsRagdoll(): Nutzt nun direkt SNRagdoll::CreatePhysics()
+- World::SetSimulationSpeed(): Der übergebene Wert MUSS größer als 0 sein, ist das nicht der Fall, liefern diese Funktionen nun
+  einen Fehler zurück -> Gleiche Problematik wie bei PLGeneral::Timer: SetTimeScaleFactor(), SetSlowMotionFactor() und
+  SetCustomSlowMotionFactor()
+
+
+
+>> 01.12.2006
+[CO]
+PLPhysics:
+- Machte einige 'protected' Klassen Bereiche 'private' - vorallem in den Backend Klassen wo man in den meisten Fällen nicht
+  weiter ableiten können soll. Private Funktionen erscheinen üblicherweise nicht in den mit Doxygen erzeugten Dokus und
+  müssen normalerweise auch nicht Exportiert werden - somit sind mehr Komponenten vor dem User 'verborgen'.
+
+
+
+>> 25.11.2006
+[CO]
+PLPhysics:
+- Ragdoll Loader + Implementation für unser eigenes Format hinzugefügt
+
+
+
+>> 24.11.2006
+[CO]
+- Alle Projekte an das Loadable-System angepasst
+
+
+
+>> 11.11.2006
+[CO]
+PLPhysics & PLPhysicsNewton:
+- Änderte ein paar kleinigkeiten so das die Simulation nun auch bei sehr niedriger FPS noch brauchbar bleibt
+
+
+
+>> 10.11.2006
+[CO]
+PLPhysics:
+- SNRagdoll um 'AutoFreeze', 'UseGravity' und 'InitFrozen' Einstellung erweitert so das ein Ragdoll auch z.B. von Anfang an
+  aktiv sein kann
+- RagdollJoint::GetCurrentAnchor(): Falls kein Physik Joint vorhanden ist da es sich z.B. um den Root Joint handelt, so muss
+  die aktuelle Joint Position per Hand ausgerechnet werden.
+PLPhysicsNewton:
+- BodyImpl::Flush(): 'Freeze' und 'Unfreeze' Flags wurden nicht berücksichtigt, dadurch konnte es vorkommen das Physik Körper
+  beim Start 'schliefen' obwohl diese eigentlich aktiv sein sollten.
+- BodyConvexHull & BodyMesh: Für die Kollisions-Meshs & Hüllen MUSS für den Map Namen auch die Skalierung berücksichtig werden da
+  Physik Objekte nicht skaliert werden können und daher pro Skalierung jeweils ein Mesh erzeugt werden MUSS.
+
+
+
+>> 03.11.2006
+[CO]
+PLPhysics:
+- PLPhysics:::SCPhysicsWorld und PLPhysicsNewton::WorldNewton um Thread Priorität Einstellungen erweitert. Stellt man die
+  Priorität des Physik Threads sehr niedrig, tritt üblicherweise ein spürbares 'ruckeln' auf. Im Normalfall sollte man daher
+  der Physik die gleiche Priorität geben wie der Hauptanwendung.
+
+
+
+>> 28.10.2006
+[CO]
+PLPhysics:
+- SNMPhysicsCharacterController: Eingebaut das man die X & Z Achsen vertauschen kann, dies wird z.B. benötigt wenn man den
+  Modifier an eine Kamera hängt.
+
+
+
+>> 14.10.2006
+[SW]
+Alle Projekte: finale version für das visibility attribute feature vom gcc.
+
+
+
+>> 11.10.2006
+[SB]
+Wieder diverse Anpassungen:
+- Überbleibsel aus einem alten Merge-Error aus dieser Datei entfernt
+- Unnötigen [DEBUG]-Kommentar entfernt
+- PLLOCAL entfernt - dieses Makro nutzen wir nicht!
+- Eingefügte Konstruktoren und Destruktoren mit Kommentaren versehen und in die richtige Reihenfolge gebracht
+
+
+
+>> 11.10.2006
+[SW]
+Alle Projekte: Die projekte verwenden das neue visibility feature vom gcc, wenn vorhanden.
+
+
+
+>> 08.10.2006
+[CO]
+PLPhysics:
+- Joint: Funktionen für 'Brechbare'-Verbindungen hinzugefügt, allerdings muss noch einiges an Arbeit in die
+  Joint-Implementationen gesteckt werden.
+
+
+
+>> 04.10.2006
+[CO]
+PLPhysics:
+- An ein paar Stellen (ColorX & VectorX) "String::Format(" durch ".ToString()" ersetzt
+- Erstes einfaches 'Sensor System' eingebaut und eine Raycast-Implementation hinzugefügt. 'Sensor' kann man für einfache
+  Kollisions Tests der Art "Trifft meine Kanone das Ziel direkt?" verwendet werden... sobald das Event System in PLGeneral
+  ausgearbeitet ist wird man damit aber noch einiges mehr machen können wie z.B. 'Trigger' die ein Event aussenden sobald
+  etwas z.B. einen 'Laserstrahl' durchkreuzt oder durch ein bestimmtes Volumen geht.
+  Das System ist noch nicht fertig & durchgetestet, da mein Studium in dieser Woche angefangen hat und am Anfang ein paar
+  Organisatorische Dinge wie üblich Zeit fressen fand ich nicht sooo viel Zeit für PL. Machte aber trotzdem nen bischn
+  was um die Programmier-Entzugsentscheinungen etwas zu mildern - und da ich auf das Error-System gerade weniger Lust hatte,
+  mich etwas an Physik weiterwerkeln aber reizte machte ich dort etwas. *g*
+
+
+
+>> 03.10.2006
+[CO]
+PLPhysics:
+- Body: Neue Funktionen: GetTransformMatrix() & SetTransformMatrix(): Zum auslesen/setzen der kompletten Body Transform Matrix
+
+
+
+>> 22.09.2006
+[CO]
+- PLPhysics + Backends auf PLBool umgestellt
+
+
+
+>> 13.09.2006
+[CO]
+- Dort wo PLRenderer::Buffer::Lock verwendet wird sollte immer mit angegeben werden was für Operationen auf dem Buffer stattfinden
+  werden so das der Renderer intern das möglichst geschickt handhaben kann. Fügte dort wo das noch nicht der Fall war jeweils
+  einen entsprechenden Lock-Typ ein... der jedoch wirklich nur als 'Verwendung-Hinweis' zu verstehen ist. Gibt man 'Read' an
+  kann man trotzdem noch Schreiben, aber eventuell nicht mehr ganz sooo Performant - das hängt von einigen Faktoren ab. :)
+
+
+
+>> 05.09.2006
+[CO]
+PLPhysics:
+- SNPhysicsWind und PLPhysicsCloth aus PLSceneNodes1 in PLPhysics verschoben da diese Nodes dort definitiv besser reinpassen
+- PLEngine::Physics-Klasse nach PLPhysics verschoben und zu einem Singleton gemacht. Dort lassen sich ein paar Globale Physik
+  Einstellungen vornehmen - die genutzt werden können, oder nicht. Später kann man das eventuell komplett rausnehmen und
+  dann müssen z.B. auch Partikel Effekte welche durch 'Wind' beeinflusst werden können in einem Physik-Container liegen.
+  Aber momentan ist es so das einfachste. :)
+
+
+
+>> 09.08.2006
+[CO]
+PLPhysics:
+- SNMPhysicsCharacter & SNMPhysicsCharacterController noch minimal erweitert. U.a. kann nun auf Wunsch die Rotation einer anderen
+  Scene Node für die Bewegungsrichtung verwendet werden. Damit kann man auch sehr schnell einen Experimentellen Marble
+  Madness Klone *komplett* über das Szene Format machen. ;-) Siehe neue Beispiel Szene 'PhysicsManiacMarble' im SDK. Dort verwende
+  ich für 'die Steuerung' eine Dummy Node die an die Murmel gehängt wird so das die Position dieser Dummy Node automatisch angesteuert
+  wird. Rotation wird aber *nicht* übernommen. Die Dummy Node 'schaut' wiederum über einen Modifier immer 'in die Kamera'. Der
+  'Physics Character Controller' Modifier der Murmel verwendet als Bewegungsachsen nicht die Rotation der Scene Node an der der
+  Modifier hängt, sondern die Rotation dieser Dummy Node. Und schon kann man die Murmel abhängig vom akuellen Kamera Blickwinkel
+  korrekt herumbewegen.
+  Wirklich erstaunlich was KOMPLETT über das Szene Format machbar ist wenn man nur entsprechen Komponenten zur verfügung stellt
+  die möglichst universell eingesetzt werden können.
+
+
+
+>> 08.08.2006
+[CO]
+PLPhysicsNewton:
+- WorldThread: Wenn der Timer gerade Pausiert ist, sollte auch die Physik im seperatem Thread pausieren. Läuft die Simulation
+  nicht über einen eigenen Thread, wurde auch vorher schon 'automatisch' Pausiert.
+
+
+
+>> 29.07.2006
+[CO]
+PLPhysics:
+- Body: Neue Funktionen: GetCenterOfMass() und SetCenterOfMass() damit kann man das Zentrum der Masse verschieben.
+PLPhysicsODE:
+- BodyBox und BodySphere setzen nun entsprechend ihres Body Types korrekte Massen.
+
+
+
+>> 24.07.2006
+[CO]
+PLPhysics:
+- Nahm ein paar überflüssige 'using namespace PLGeneral;' heraus
+- Neuer Scene Node Modifier SNMPhysicsCharacter: Bietet Grundfunktionen für einen Character. Davon abgeleitet ist
+  SNMPhysicsCharacterController was ähnlich zu SNMMoveController eine Grundsteuerung anbietet was gerade für erste 'Gehversuche'
+  in der Richtung recht gut zu gebrauchen ist. Ebenfalls Code aus PLPlayground der sich recht gut als Modifier eignet.
+
+
+
+>> 01.06.2006
+[CO]
+- Lies alle Projekte nach häufigen Englisch Fehlern durchsuchen auf die mich Stefan vor geraumer Zeit hinwies, hauptsächlich
+  'kown', 'were' und 'byself'.
+- Schaute alle Stellen bei denen in Interfaces '-1' vorkommt durch und dort wo möglich änderte ich es (sammt Implementation)
+  in <0 damit das etwas/allgemeiner Sicherer ist.
+
+
+
+>> 31.05.2006
+[CO]
+PLPhysics:
+- SCPhysicsWorld: Stephan viel auf, das hier noch ein paar Sicherheitsabfragen fehlten falls die konkrete Physik Welt nicht
+  erzeugt werden konnte, erweiterte es entsprechend.
+
+
+
+>> 30.05.2006
+[CO]
+PLPhysicsNewton:
+- BodyImpl Destruktor: Stellte sicher das der Körper in keiner Liste zu verarbeitender Körper mehr steht
+
+
+
+>> 29.05.2006
+[CO]
+PLPhysics;
+- SNMPhysicsBodyMesh & SNMPhysicsBodyConvexHull: Ist 'MeshFilename' ein leerer String, so wird der String 'MeshFilename'
+  (falls vorhanden) der Scene Node des Modifiers verwendet. Das ist sehr praktisch da recht oft das 'Grafische' Mesh
+  auch für die Kollision verwendet wird und so muss man es nicht jedesmal nochmal angeben was vorallem handlich ist wenn
+  eine Szene in Max erzeugt wird.
+- SCPhysicsWorld: Überläd die Load() Funktion. Bevor geladen wird ist es höchst Sinnig die Simulation erstmal zu stoppen 
+  und nach dem Laden wieder zu starten. Denn ansonnsten muss z.B. im Newton Plugin jeeedesmal wenn ein Körper hinzugefügt
+  wird die Simulation gestoppt, und danach wieder gestartet werden da die Simulation in einem seperatem Thread läuft... böse
+  ist das beim Stoppen natürlich da erst auf den Thread gewartet werden muss was die Ladezeiten unerträglich machen kann. ;-)
+- SNMPhysicsBody: Berücksichtigt nun bei dem übergeben/übernehmen von Physik Positionen & Rotationen auch, das die eigentliche
+  Physik Simulation in einem anderen Szene Kontainer ablaufen kann als der, in dem die Scene Node ist. Sprich, in dem Fall
+  muss dann jeweils umgerechnet werden. Das funktioniert sogar ganz wunderbar. Hab gerade zum ersten mal in der Dungeon Szene
+  einen Krug herumkullern lassen. In Max markierte ich einfach aaaalle Nodes mit Mesh und schrieb in die User Properties:
+    Mod=Class="SNMPhysicsBodyMesh"
+  Sprich, hängte den Nodes einen Modifier an welche diese als statische Physik Meshs auszeichnet. Danach noch einem Krug
+  zum Testen diesen Modifier anhängen:
+    Mod=Class="SNMPhysicsBodyConvexHull" Mass="1" AutoFreeze="0" InitFreezed="0"
+  Und schon fällt dieser Krug zu Boden sobald man die Szene in PL laufen lässt... aber natürlich auch nur, wenn diese Szene
+  in einen SCPhysicsWorld Kontainer eingeladen wird. :)
+  Jetzt muss ich 'nur' noch einen Szene Renderer mit netter Shader Beleuchtung ausarbreiten und dann hätte ich eigentlich auch
+  schon alles wichtige was es zum Thema 'Szene in Max erzeugen, Exportieren und in PL Darstellen' gibt Implementiert und durchgetestet.
+PLPhysicsNewton:
+- Die Newton Welt hat nun jeweils eine Hash Map für Convex Kollisions & Mesh Objekte. In der Praxis verwendet man ja oft
+  das gleiche Mesh, und in dem Fall muss keine neue Kollisions Geometry angelegt werden was die Ladezeiten verkürzt und
+  den Speicher minimal entlastet.
+- CreateBodyConvexHull() & CreateBodyMesh() prüfen ob das erzeugen erfolgreich war. Konnte z.B. das Mesh nicht geladen werden,
+  so kann auch kein Newton Körper erzeugt werden. Bei den anderen Körper Typen sollte so eine Abfrage unnötig sein, denn
+  wenn dort kein Newton Körper erzeugt werden konnte, läuft irgendetwas sowieso total daneben. ;-)
+
+
+
+>> 24.05.2006
+[CO]
+PLPhysics:
+- Body: Neue Funktionen GetFreezeThreshold()/SetFreezeThreshold() -> Darüber kann man etwas genauer Einstellen ab WANN ein
+  Körper einfriert. Bei Ragdoll z.B. könnte es sein das man diese Werte erhöhen muss, daher ist es wichtig das man dies
+  im Interface einstellen kann.
+- World: Neue Funktionen GetBodyPairFlags()/SetBodyPairFlags() -> Jede Körper/Körper Kombination kann bestimmte Flags haben,
+  z.B. ob zwei Körper miteinander Kollidieren können oder nicht. Diese Paare werden dabei in den meisten Plugins in Hash Maps
+  verwaltet so das dies sogar recht flott von dannen geht. Nur bei NovodeX musste man nix mit Hash Maps machen, denn diese API
+  hat Praktischerweise bereits ebenfalls so eine Funktion. :)
+- Body: Neue Funktionen GetNumOfPartners() & GetPartner(): Wurde über World::SetBodyPairFlags() ein Flags für ein Körper Paar
+  gesetzt, so kann man über diese Funktionen die Partner des Körpers herausbekommen. Dies war hauptsächlich deshalb nötig da
+  wenn ein Körper gelöscht wird er sich quasi 'beim Partner' abmelden muss. Jedoch passiert dies komplett intern so das man
+  davon in den 'öffentlichen' Interfaces nix sieht.
+- World & Body: Körper können nun in 32 verschiedene Kollisions Gruppen aufgeteilt werden und in World kann eingestellt werden
+  welche Kollisions Gruppe mit welcher Kollidieren kann. Das ist sehr praktisch wenn man generell Körper eines bestimmten Types
+  nicht mit Körpern eines anderen Types Kollidieren lassen will ohne all diese Körper jedesmal per SetBodyPairFlags() entsprechend
+  einzustellen. NovodeX stellt bereits eine Funktion dafür bereit, bei den anderen Plugins schrieb ich was eigenes.
+- Body: Neue Funktionen: GetCollisionActive() & SetCollisionActive(): Hierüber kann man einstellen ob ein Körper Kollidieren
+  kann oder nicht. Insgesammt gibt es nun also 3 Möglichkeiten zu vermeiden das eine Kollision zwischen zwei Körpern stattfindet:
+  1. Mindestens einer der beiden Körper kann nicht Kollidieren. (Body::GetCollisionActive())
+  2. Die Körper sind in unterschiedlichen Kollisions Gruppen die nicht miteinander kollidieren können.
+     (Body::GetCollisionGroup() & World::GetGroupCollision())
+  3. Die Kollision genau dieser beiden Körper wurde ausdrücklich deaktiviert. (World::GetBodyPairFlags() -> World::Ignore gesetzt)
+  ... das sollte wirklich reichen, und diese Bedingungen scheinen auch recht gängig & sinnig zu sein.
+
+
+
+>> 23.05.2006
+[CO]
+PLPhysics:
+- SNRagdoll verwendet nun nur noch PLPhysics, die zwei Ragdoll Klassen im Newton Plugin durften nun gehen. :)
+  Ein paar Interfaces muss ich nun Schrittweise erweitern & aufräumen, denn Ragdoll stellt schon etwas größere Anforderungen
+  an die Interfaces als 'nur' ein paar herumkullerde Kugeln. Desweiteren läuft das Ragdoll momentan noch nicht wieder Optimal.
+  Zum Beispiel dürfen durch Joints verbundene Körper NICHT Interagieren, ansonnsten ist die Performance im Keller da zuviele
+  Kontakte erzeugt werden.
+
+
+
+>> 22.05.2006
+[CO]
+- Stellen wo Tokenizer::Start() verwendet wird angepasst
+
+
+
+>> 21.05.2006
+[SB]
+- Projekte an FS-Änderungen angepaßt
+
+
+
+>> 18.05.2006
+[SW]
+PLPhysicODE und PLPhysicNewton:
+- die unnötigen .sconsign dateien aus dem repos gelöscht
+
+
+
+>> 16.05.2006
+[CO]
+- An PLGeneral Änderungen angepaßt
+
+
+
+>> 14.05.2006
+[SW]
+- linux build-system für PLPhysics,PLPhysicsODE und PLPhysicsNewton hinzugefügt
+
+
+
+>> 14.05.2006
+[SB]
+- An PLGeneral Änderungen angepaßt
+
+
+
+>> 11.05.2006
+[SB]
+- An PLGeneral Änderungen angepaßt (DEFINE_GROUP entfernt, GetClasses())
+
+
+
+>> 11.05.2006
+[CO]
+PLPhysics:
+- ODE & NovodeX Joints Implementiert
+- Body: Neue Funktionen zum setzen & lesen von aktueller Linearer & Winkel Geschwindigkeit + für Kraft einwirkung hinzugefügt.
+  Letzteres lies sich im ODE Plugin am einfachsten Implementieren und im Newton Plugin war es am aufwändigsten.
+
+
+
+>> 10.05.2006
+[CO]
+- Verbrachte die letzten Tage damit die Physik Implementation zu überarbeiten. In der Engine selbst liegt nun abolut NICHTS
+  Physik mäßiges mehr - durch das Scene System ist im Engine Projekt sowieso schon genug drinnen. ;-)
+  'Über' der Engine liegt nun ein neues Projekt Namens 'PLPhysics'. Dies ist vergleichbar mit PLSound/PLRenderer. Den 'Kern'
+  bildet jeweils eine 'Physik Welt' was auch oft 'Simulator' genannt wird. Diese Welt ist ein 'Manager' und Factory Entwurfsmuster
+  like kann man Physik Körper & Verbindungen erzeugen lassen. Die Grundliegenden Physik API Wrapper Klassen sind so einfach
+  wie möglich gehalten, also nur die Welt selbst ist ans RTTI angebunden - bei den einzelnen Körpern & Gelenken würde das
+  nicht wirklich einen Nutzen bringen. Neben diesen grundliegendsten Physik Klassen für die direkte Physik Verwendung 'per'
+  Hand liegen in diesem Physik Projekt noch 'Anbindungen' das Scene System. Wie bei den grundliegenden Physik Klassen bildet
+  hier der 'Physics world scene node container' das Kernstück + Scene Nodes wie Ragdoll. Da sich die Physik Scene Node Modifier
+  als eine sehr feine Sache herausgestellt haben behilt ich dieses Konzept bei. Diese Modifier sind dabei Physik API unabhängig
+  da diese wirklich nur PLPhysics nutzen. Die Modifier selbst bieten noch ein paar weitere Optionen wie beispielsweise einen Offset
+  für die Position, diese Dinge würden in PLPhysics selbst nicht so viel sinn machen. Auch sind Joint Modifier im gegensatz zu den
+  eigentlichen Physik Joints relativ zur Scene Node automatisch welche als Parent des Joints fungiert. Das hat sich einfach als praktisch
+  herausgestellt da man so die Joints viel einfacher korrekt Positionieren kann, und macht man Kopien einer Scene Node sammt 
+  Modifier, so passt auch alles gleich.
+  Hab gleich 4 'Backends' (Null, Newton, NovodeX & ODE) geschrieben um das Design zu prüfen. Bei Newton hab ich diesmal die Physik
+  Simulation in einen eigenen Thread gelegt, NovodeX macht das mit Threads intern automatisch. Das mit Simulation in extra Thread selbst
+  implementieren war etwas tricky, denn jedesmal wenn man kritische Operationen durchführt wie das hinzufügen/löschen von Objekten, so
+  muss man sicherstellen das die Simulation gerade NICHT läuft. Diverse Daten werden zwischengespeichert damit der User jederzeit zugriff
+  darauf hat. In der Update Funktion der Physik Welt findet dann die Synchronisation statt. Die Implementation des Newton Backends ist
+  bereits recht brauchbar und im Prinzip sind alle Funktionen die das PLPhysics Interface anbietet hier bereits implementiert. Es werden
+  bei den PLPhysics Interfaces noch ein paar Funktionen hinzukommen, die Backend Implementationen sind noch nicht ganz fertig und auch die
+  Ragdoll Scene Node muss noch an PLPhysics angepasst werden. Die BodyImpl & JointImpl Klassen sind nötig damit man nicht für jeden
+  Body & Joint Typ jedesmal alles im Backend neu Implementieren muss. Insgesammt umfassen diese 5 neuen Physik Projekte derzeit 233 Dateien
+  und 24,248 Zeilen Code.
+
+
+
+>> 09.05.2006
+[SB]
+- Externe Libraries nach "external" verschoben und die Projekte entsprechend angepaßt
+
+
+
+>> 10.05.2006
+[CO]
+- Entfernte die Physik Plugin Projekte PLNewton, PLODE und PLNovodeX -> Dies sind nun Backends vom neuen PLPhysics Projekt
+  welches im PLEngine Ordner liegt.
+
+
+
+>> 03.05.2006
+[CO]
+PLNewton:
+- NewtonBodyHeighField: Kann nun NUR noch an SNTerrain2 Scene Nodes angehängt werden, durch diese Einschränkung kann man
+  dann direkt die bereits vorhandene Heightmap verwenden anstatt diese nochmals neu einzuladen. Das Terrain selbst wird
+  bei Zeiten nochmal überarbeitet so das wir eine Terrain Node haben welche alles kann.
+
+
+
+>> 02.05.2006
+[CO]
+PLNewton:
+- NewtonBody: Neue RTTI Variable: AutoFreeze -> Damit lässt sich einstellen ob ein Körper automatisch 'einfrieren' kann.
+  (was NICHT immer erwünscht ist :)
+
+
+>> 10.04.2006
+[CO]
+PLNewton:
+- NewtonWorld: InitFunction() -> Verwendet nun die Axis Aligned Bounding Box des Scene Containers um die Newton Physik Welt
+  größe einzustellen. SetAABoundingBox() überschrieben damit auch die Physik Welt größe aktualisiert wird.
+
+
+
+>> 20.03.2006
+[CO]
+- Auf Newton 1.52 umgestellt
+
+
+
+>> 19.03.2006
+[CO]
+- SNRagdoll: Berücksichtig nun auch Skalierung sowie start Position. Das Ragdoll selbst wird im Ragdoll Editor im Object 
+  Space erzeugt und so liegen auch die Ragdoll Daten selbst vor. Sobald die Physik Objekte erzeugt werden, werden noch 
+  die Ragdoll Scene Node Skalierung & start Position mit eingerechnet. Wenn man dann die Positionen der Physik Objekte 
+  ausliest um die Skeleton Joint Positionen im Objekt Space zu bekommen, muss man das natürlich wieder zurückrechnen.
+
+
+
+>> 18.03.2006
+[CO]
+- Erweiterte die Physik Körper Scene Node Modifier um die Möglichkeit einen Offset zwischen Physik Position & Scene Node 
+  Position hinzuzufügen. Dies ist z.B. dann nötig wenn ein verwendetes Modell nicht zentriert ist.
+
+
+
+>> 17.03.2006
+[CO]
+- PLNewton: Kleinigkeiten bei den Rotationen umrechnen verbessert
+- Ragdoll funktioniert nun endlich. Da hier nun die absoluten Werte direkt übertragen werden war es recht schnell funktions 
+  fähig gemacht. Der Fehler muss wirklich irgendwo in diesem x mal States relativ zueinander machen gelegen haben.
+
+
+
+>> 23.02.2006
+[CO]
+PLNewton:
+- Verbesserte die Newton Rotation zu PL Rotation Umrechnung. Statt über Euler Winkel zu gehen was ja nicht ganz 
+  unproblematisch ist, wird nun die Transponierte Newton Matrize zum füttern eines Quaternions verwendet... zuerst 
+  waren jedoch dann die Objekte hin und wieder lustig 'verzogen', die SetMatrix() Funktion des Quaternions war noch nicht 
+  ok - nun ist das übertragen der Rotation der Physik Objekte auf Scene Nodes endlich sauber. :)
+
+
+
+>> 04.01.2006
+[CO]
+- PLNewton auf neues Newton SDK umgestellt. Jeder Physik Körper speichert nun noch sein Volumen. (wird für z.B. den Auftrieb 
+  in Flüssigkeiten benötigt)
+
+
+
+>> 21.12.2005
+[CO]
+- PLTNewtonWorld & PLTODEWorld: Wenn der Zeit Skalierungs Faktor kleiner als 1 ist wird die Physik 'Schrittweite' mit diesem 
+  Wert multipliziert damit die Bewegungen weiterhin 'flüssig' erscheinen.
+
+
+
+>> 19.11.2005
+[CO]
+PLNewton:
+- HeighField-Body für Terrain hinzugefügt
+
+
+
+>> 28.09.2005
+[CO]
+- Physik Plugins um Joints erweitert welche super einfach zu Implementieren waren und sehr einfach zu verwenden sind - 
+  ok, ich denke dies ist nen weiterer Beweis dafür das das Scene Node & Modifier Design voll aufgeht. ;-)
+  Im Prinzip müssten die ODE Joints gehen, aber momentan funktionieren die meisten irgendwie nicht so recht. Aber irgendwann 
+  bekomm ich das schon noch sauber zum laufen. (generell ist das ODE Plugin momentan ja noch nicht ganz soo brall)
+- Fügte NovodeX Physik (http://www.novodex.com/) Plugin hinzu... war ne sache von ein paar Stunden, also erstmal schnell in 
+  die API einarbeiten um zu Wissen wie man dort bestimmte Dinge nennt (vorallem bei den Joints haben die total andere Namen)
+  schnell nen neues Plugin anlegen und noch nen bischn Testen. Dieses API ist deshalb Interessant da diese gleich intern auf 
+  Multithreading ausgelegt ist - und diese Firma entwickelt auch den GPU Prozessor, welcher wohl erstmal wie ich las NUR mit 
+  dieser Physik API zusammenarbeiten wird. Soweit ich Informiert bin API muss nur für Kommerzielle Projekte lizensiert 
+  werden und vom Umfang und Bedienung her ist es Newton etwas überlegen. Also wenn man Kommerzielle Projekte hat wo auch 
+  genug Kapital da ist so das man sich nicht scheuen muss für extra API's (Physik, Bäume etc.) extra Kohle auszugeben ist 
+  denk ich NovodeX keine wirklich schlechte Wahl.
+  Die Grundliegenden Namen wie Body oder World hab ich so gelassen wie bei den anderen Physik Plugins so das dies etwas 
+  Einheitlich ist auch wenn NovodeX hier von Actoren und Scenen spricht.
+  Und falls uns jemand fragen sollte 'ob PixelLight denn die Physik GPU unterstützt' können wir das nun mit einem 'ja' 
+  Beantworten da dieses Physik API dad Regelt wobei die intern dafür ne art von Front & Back Buffer verwenden. Nun haben 
+  wir auch 3 Physik Plugins - neben den jeweils 3 Sound und Renderer Plugins, also wenn das man kein vorzeigbarer Umfang ist. 
+  Jetzt noch das Netzwerk und Skript Projekt und PixelLight sollte Umfangmäßig keine Wünsche mehr offen lassen. (Tools sind 
+  eine andere Geschichte :)
+  Mit Skripten beschäftige ich mich bereits seit einiger Zeit, eine eigene Skript Sprache wie damals für Second Evolution 
+  macht wohl weniger Sinn da einfazu ZU Aufwändig. Stattdessen werkle ich nebenbei etwas an einem Skript Projekt das ähnlich 
+  wie die Physik & Sound Plugins funktionieren soll. Ein möglichst Einheitliches Interface für die gängigsten Funktionen so 
+  das man API Unabhängig Skript Funktionen starten kann etc. Und sobald spezielle Dinge gemacht werden muss man wieder auf 
+  die konkrete Skript Sprache casten. (und die eigentlichen Skripte sind ja eh Sprach abhängig :) Zusammen mit dem 
+  Hauptprojekt implementiere ich gleich noch Backends für Lua & Python - anhand derer kann ich sehen wie man was 
+  vereinheitlichen kann. Wenn alles klappt kann man so ganz einfach Lua, Python oder was weis ich noch Skripte gleichzeitig 
+  verwenden, beim Laden wird dann die Extension geprüft und dann automatisch von einem entsprechenden Skript Manager geladen.
+  Vorallem für PixelLab werden Skripte wohl sehr Sinnig sein, momentan schwebt mir z.B. für das 'Clone Nodes' im Scene 
+  Editor eine optional Skript Gesteuerte klone Funktion vor. Derzeit kann man hier die neuen Nodes nur in einem bestimmten 
+  Abstand platzieren lassen - über ein Skript hätte man dann wirklich VOLLE Kontrolle darüber wie genau diese Klone erzeugt 
+  werden. Z.B. das diese kreisförmig Platziert werden und sich die Rotation & Skalierung sowie weitere Scene Node abhängigen 
+  Parameter ändern... ohne Skripte wäre das nicht wirklich  möglich und gerade soetwas dürfte verdammt Praktisch sein. Und 
+  wenn ein Grafiker z.B. 1000 Bäume auf einmal erzeugen will die alle etwas anderst aussehen etc. so schreibt er sich ganz 
+  einfach nen kleines Klon Skript in seiner Bevorzugten Skript Sprache. Aber bis da was konkretes steht wirds wohl noch etwas 
+  dauern da dies derzeit keine Priorität hat.
+
+
+
+>> 21.08.2005
+[CO]
+PLODE:
+- Neuer Modifier: PLTODEBodyTriMesh: Vergleichbar zu PLTNewtonBodyTreeCollision des Newton Plugins
+- ODE selbst wird nun nicht mehr als Statische Lib eingebunden sondern wie Newton als dll verwendet da
+  der User selbst direkt ODE Funktionen verwenden können muss.
+
+
+
+>> 27.07.2005
+[CO]
+- Neue Teil-Projekte:
+  PLNewton & PLODE: Hierin befinden sich z.B. Newton/ODE Physik Scene Nodes und Scene Node Modifier. Diese Projekte sind nur
+  zur vereinfachten Verwendung dieser Physik API's in PL gedacht - nicht als vollständige 'Wrapper'. Sobald man 'etwas' mehr
+  Physik Spielereien realisieren will muss man direkt die API abhängigen Funktionen verwenden.
+
+
+>> 12.04.2005
+[CO]
+- PLODEEntities gelöscht... diese Entities liegen nun direkt in PLPhysics mit einem etwas anderen Namen.
+
+
+
+>> 07.04.2005
+[CO]
+- Lud ebenfalls PLPhysics hoch welches sich erst in der Anfangs-Phase befindet und noch nicht funktionsfähig ist. Ein paar 
+  Dinge muss ich noch anderst Designen und auch das abstrakte Interface für die Engine schreiben, und dann müssen noch viele
+  viele Funktionen hinzugefügt werden etc. Im Prinzip halt nen richtiger ODE Wrapper für saubere OOP Bedienung + neue 
+  praktische Features... das scheinen sehr viele so zu machen. :)
+  Die Entities welche derzeit in PLODEEntities liegen werden in aktualisierter Form dann direkt in PLPhysics liegen, und ich 
+  glaub ich werde dann auch PLTCloth dorthin verschieben. Später kann (und sollte da miese Performance :) man dieses Entity
+  nochmal überarbeiten/erweitern so das es direkt mit der Physik interagieren kann.
+  PLPhysics es liegt nun schon lange genug nur auf meiner Platte herum, und Schaden tuts ja nicht wenns auf dem Server liegt
+  ... und daran werd ich die nächsten Wochen verstärkt arbeiten da durch die Physik ja die für Spiele wichtigsten Dinge
+  entstehen und der aktuelle Physik Support der Engine eher unbefriedigend ist da man komplexere Dinge direkt mit ODE 
+  Funktionen machen MUSS... aber das waren ja meine allerersten Gehversuche mit Physik.
+  Hatte die vergangenen Tage auch nen Radgoll Test gemacht (liegt ebenfalls auf dem Server :) - die Mesh Skeleton Joints 
+  entsprechend mit diesen Physik Joints zu aktualieren klappt aber derzeit 'noch' nicht. Da durch Radgoll meist nicht alle
+  Joints animiert werden und von diesen dann nur die Absoluten Werte vorliegen muss ich dann intern ein paar Dinge herum
+  rechnen. Ich glaub ich weis schon ziemlich genau wie es richtig funktionieren wird, und das werd ich die Tage dann auch mal
+  ausprobieren. In PLPhysics wird dann also auch ein Radgoll Entity liegen.
+
+
+
+>> 22.02.2005
+[SB]
+- Alle Projekte an die neuen RTTI-Makros angepaßt
+
+
+
+>> 17.02.05
+[CO]
+- Legte PLPlugins Ordner an in dem derzeit folgende Entity-Plugins sind:
+  - PLODEEntities: Entities mit implementierter ODE-Physik
+
+
+
+>> 21.01.2005
+[SB]
+- PLODEEntities auf RTTI umgestellt
+  - Ebenfalls Umbenennung von "Physic" nach "Physics"
+
+
+
+>> 20.03.04
+[CO]
+- PLODEEntities aktualisiert - dort ist nun alles was dieses Backend benötigt.
+- PLEntity.cpp und PLPhysicHandler.h wurden minimal verändert.
+
+
+
+>> 16.03.04
+[CO]
+PLODEEntities:
+- erweitert
+- Neues Entity: PLTODETerrain -> Terrain welches zudem eine ODE Geometry erzeugt damit Terrain Kollisionen
+  möglich sind
+
+
+
+>> 24.02.04
+[CO]
+- Erstellte ein neues Entity Projekt namens PLODEEntities, dort befinden sich alle ODE relevanten Entities aber z.B. auch
+  eine Ableitung vom Physik Handler. Diverse Standard Entities welche automatisch einen solchen Physik Handler haben werden
+  angeboten. Jedoch ist es auch möglich jedem anderen beliebigen Entity einen solchen Physik Handler zu übergeben welcher dann
+  das Physikalische verhalten etc. übernimmt.

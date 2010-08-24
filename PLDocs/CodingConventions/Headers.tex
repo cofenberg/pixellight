@@ -1,0 +1,190 @@
+\chapter{Headers}
+
+
+
+
+\section{Overview}
+During the development of PixelLight we take especially care of the headers because the time the projects need to compile depends heavily on how the headers are build up and how platform and API independent the project is.
+
+First of all, we use the old fashion \emph{.h}-file extension to mark header files - \emph{hpp} would be the \emph{correct} extension for C++, but it's not widely used.
+
+We have several rules for our header files. See below. At the first look some or all may look extreme, maybe even crazy to you - but it works REALLY well and solves many problems occurring when using such \emph{nasty} headers directly.
+
+
+
+
+\section{\emph{Header guard} and \emph{\#pragma once}}
+Each header has to use definitions and \emph{\#pragma once} - the last one is enough and the preferred way to go, but not each compiler does support it.
+
+\begin{lstlisting}[caption=Header guard]
+#ifndef __PLGENERAL_STRING_H__
+#define __PLGENERAL_STRING_H__
+#pragma once
+// ...
+#endif // __PLGENERAL_STRING_H__
+\end{lstlisting}
+
+
+
+
+\section{Layout}
+We have a strict layout for the header files so someone now's exactly were to look for something. Additionally we use blocks\footnote{You can also call them \emph{eye catcher} if you want to} with a width of 60 characters to subdivide the header into sections: (includes, classes, functions)
+
+\begin{lstlisting}[caption=Code section comment blocks]
+//[-------------------------------------------------------]
+//[ <Section name>                                        ]
+//[-------------------------------------------------------]
+\end{lstlisting}
+
+This is also used inside class definitions to mark private, public, etc. class parts. Further we tried to make the code as clean and well designed as possible because when working with THAT many lines of codes it would break your neck if the code is ugly because you will need longer find certain sections and understand the code itself.
+
+Below you can see the complete header layout. If a block is not required, do not use it in a header.
+
+\begin{lstlisting}[caption=Complete header layout]
+/*********************************************************\
+ *  File: <Filename>.h                                   *
+\*********************************************************/
+
+
+#ifndef __<PROJECT_HEADERNAME>_H__
+#define __<PROJECT_HEADERNAME>_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+<Includes required by this header>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+<All your forward declarations required by this header>
+
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+<Definitions. Because they are namespace independent they are put in right here. You can also call them 'Macros', 'Macro definitions' and so on - but it has to be clear that this are '#define' things that are best avoided if possible!>
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace <Project name> {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+<If there are only forward declarations within the same namespace you can also put them in here, else put them into the forward declarations block above>
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+<Template instance(s)>
+
+
+//[-------------------------------------------------------]
+//[ Global functions                                      ]
+//[-------------------------------------------------------]
+<Global functions - normally there's no reason to use those!>
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+<All your classes>
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // <Project name>
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+<Internal includes like for instance template implementations>
+
+
+#endif // __PROJECT_HEADERNAME_H__
+\end{lstlisting}
+
+
+
+
+\section{OS and API}
+To be as platform and API independent as possible, we keep the usage of OS and API headers - even so called \emph{standard headers} to a minimum. As a nice side effect, the compiler time becomes much shorter because this mentioned headers often come with an extreme overhead and we reduce unsolvable name conflicts - there are many headers out there using ton's of definitions that don't work with namespaces and introducing annoying name problems! A general rule for our PixelLight headers is to never ever include such headers in own public headers the application programmer will work with when it's possible to avoid this usage.
+
+
+
+
+\section{Forward declarations}
+Use \emph{forward declarations} whenever possible instead of includes when something is just referred without the need of knowing exactly what it. Here's a compact example class:
+
+\begin{lstlisting}[caption=Using forward declaration]
+class MyInterface {
+    void SetName(const PLGeneral::String &sName);
+};
+\end{lstlisting}
+
+Someone can now just throw in an include like:
+
+\begin{lstlisting}[caption=Include]
+#include <PLGeneral/String/String.h>
+\end{lstlisting}
+
+But now, your header depends on another one and \emph{PLGeneral/String/String.h} is always processed if your header is used, even if the string class is never used! Even worse, if \emph{PLGeneral/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively NOT productive!
+
+Now someone may cry out \emph{Use cool precompiled headers!}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple! We grab the problem on it's root by doing for example the following:
+
+\begin{lstlisting}[caption=Forward declaration]
+namespace PLGeneral {
+    class String;
+}
+\end{lstlisting}
+
+
+
+
+\section{Completeness}
+Each header must provide all information the compiler needs to compile it! So, add includes or if possible the preferred \emph{forward declarations}.
+
+
+
+
+\section{Namespaces}
+Except for headers for the final application, each header has to put it's content into a appropriate namespace.
+
+\begin{lstlisting}[caption=Namespace definition]
+namespace PLGeneral {
+  class MyClass {
+  };
+} // PLGeneral
+\end{lstlisting}
+
+It's not allowed to use \emph{using namespace} - this may introduce ugly name conflicts in other projects!
+
+
+
+
+\section{Number of classes}
+Whenever advisable, do only put one class into one header. The name of the header and the name of the class have to be equal. Within seldom situations when it's really a good idea, you can put multiple classes into one header, but as mentioned, do this only if you are sure this is a good way to go.
+
+
+
+
+\section{Template implementations}
+When defining templates within a header, do not put it's implementation into the same file, too! Normally, templates are not really good readable, the implementation directly in the same file would not increase the readability! (maybe it would even scare of the reader :)
+
+Put the template implementation in special files with the same filename as the header, but with the file extension \emph{.inl}. Include this file at the bottom of the template header.
+
+
+
+
+\section{Definitions}
+Do only use \emph{\#define} within a header if there's no other way to do it. Normally \emph{enum}, \emph{typedef} or something like \emph{static const int MyConstant} will also do the job and beside will respect namespaces!

@@ -1,0 +1,274 @@
+/*********************************************************\
+ *  File: BasicSceneApplication.h                        *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLENGINE_BASICSCENE_APPLICATION_H__
+#define __PLENGINE_BASICSCENE_APPLICATION_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLRenderer/Renderer/TextureBuffer.h>
+#include <PLScene/Scene/SceneNodeHandler.h>
+#include "PLEngine/Tools/Screenshot.h"
+#include "PLEngine/Application/SceneApplication.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLScene {
+	class SNCamera;
+	class SNKeyValue;
+	class SceneQuery;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLEngine {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Basic scene application class
+*
+*  @remarks
+*    An application class that provides a standard scene graph for usual 3D applications and offers functionality
+*    to load in whole scenes at once as well as load screen handling and screenshot capturing.
+*/
+class BasicSceneApplication : public SceneApplication {
+
+
+	//[-------------------------------------------------------]
+	//[ Public static data                                    ]
+	//[-------------------------------------------------------]
+	public:
+		PL_API static const PLGeneral::String DefaultSceneRenderer;	/**< The used default (and very basic) scene renderer */
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sSceneFilename
+		*    Filename of the scene to load
+		*/
+		PL_API BasicSceneApplication(const PLGeneral::String &sSceneFilename = "");
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PL_API virtual ~BasicSceneApplication();
+
+		/**
+		*  @brief
+		*    Returns the scene container (the 'concrete scene')
+		*
+		*  @return
+		*    Scene container, can be NULL
+		*/
+		PL_API PLScene::SceneContainer *GetScene() const;
+
+		/**
+		*  @brief
+		*    Sets the scene container (the 'concrete scene')
+		*
+		*  @param[in] pContainer
+		*    New scene container, can be NULL
+		*/
+		PL_API void SetScene(PLScene::SceneContainer *pContainer);
+
+		/**
+		*  @brief
+		*    Loads a scene
+		*
+		*  @param[in] sFilename
+		*    Filename of the scene to load
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    This function will use the current set scene container (the 'concrete scene') to load
+		*    in given scene data. It will temporarily add a new base path so all scene data can be found
+		*    even if the scene to load is not within the application directory.
+		*    Supported 'SNKeyValue' information:
+		*      Key                       Value
+		*      'SceneRenderer'           'Class name of the scene renderer to use'
+		*      'SceneRendererVariables'  '<Variable>=<Value>'
+		*      'ClearColor'              '<red> <green> <blue> <alpha>' (all floating point values from 0-1)
+		*      'StartCamera'             '<name of the start camera scene node>' (name is relative to the loaded scene container)
+		*
+		*  @note
+		*    - If currently the edit dialog is opened, it will be closed automatically to avoid update problems
+		*/
+		PL_API bool LoadScene(const PLGeneral::String &sFilename);
+
+		/**
+		*  @brief
+		*    Get scene camera
+		*
+		*  @return
+		*    Scene camera, can be NULL
+		*/
+		PL_API PLScene::SNCamera *GetCamera() const;
+
+		/**
+		*  @brief
+		*    Get screenshot tool
+		*
+		*  @return
+		*    Screenshot tool
+		*/
+		PL_API Screenshot &GetScreenshotTool();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual BasicSceneApplication functions        ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Sets the scene camera
+		*
+		*  @param[in] pCamera
+		*    New scene camera, can be NULL
+		*
+		*  @note
+		*    - Deactivates automatically the current set camera and activates the new camera
+		*    - Sets this camera also within the 'SPScene' surface painter instance
+		*/
+		PL_API virtual void SetCamera(PLScene::SNCamera *pCamera);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual ConsoleApplication functions        ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Initialization function that is called prior to Main()
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' which will stop the application
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that SceneApplication::Init() does
+		*    - Initialize screenshot tool
+		*    - Return and go on with Main()
+		*/
+		PL_API virtual bool Init();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneApplication functions          ]
+	//[-------------------------------------------------------]
+	protected:
+		PL_API virtual void OnCreateRootScene();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual BasicSceneApplication functions     ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Function that is called to create the application's scene container
+		*
+		*  @param[in] cContainer
+		*    Scene container where the 'concrete scene' should be created in
+		*
+		*  @note
+		*    - The default implementation creates an controllable camera and a simple mesh scene node
+		*/
+		PL_API virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when a scene node was found
+		*
+		*  @param[in] cQuery
+		*    Query found the scene node
+		*  @param[in] cSceneNode
+		*    Found scene node
+		*/
+		void NotifySceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
+
+		/**
+		*  @brief
+		*    Called on load progress
+		*
+		*  @param[in] fLoadProgress
+		*    Load progress (0.0-1.0)
+		*/
+		void NotifyLoadProgress(float fLoadProgress);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	EventHandlerSceneNode;
+		PLCore::EventHandler<float>											EventHandlerLoadProgress;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLScene::SceneNodeHandler					   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
+		PLScene::SceneNodeHandler					   m_cCameraHandler;			/**< Scene node handler for the camera */
+		PLGeneral::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
+		PLGeneral::String							   m_sStartCamera;				/**< Name of the given start camera */
+		PLScene::SceneNode							  *m_pFirstFoundCamera;			/**< First found camera, can be NULL */
+		PLGeneral::Array<const PLScene::SNKeyValue*>   m_lstPostKeys;				/**< Keys to process AFTER all other */
+		bool										   m_bHasLoadScreen;			/**< Is there a load screen? */
+		Screenshot									   m_cScreenshot;				/**< Screenshot tool */
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLEngine
+
+
+#endif // __PLENGINE_BASICSCENE_APPLICATION_H__

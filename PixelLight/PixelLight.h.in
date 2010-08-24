@@ -1,0 +1,26 @@
+/*********************************************************\
+ *  File: PixelLight.h                                   *
+ *      Main PixelLight configuration header
+\*********************************************************/
+
+
+#ifndef __PIXELLIGHT_CONFIG_H__
+#define __PIXELLIGHT_CONFIG_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ PixelLight configuration                              ]
+//[-------------------------------------------------------]
+// PixelLight project
+#define PIXELLIGHT_NAME				"${CMAKETOOLS_PROJECT_NAME}"
+#define PIXELLIGHT_SUFFIX			"${CMAKETOOLS_CONFIG_SUFFIX}"
+
+// PixelLight version
+#define PIXELLIGHT_VERSION_MAJOR	${CMAKETOOLS_PROJECT_VERSION_MAJOR}
+#define PIXELLIGHT_VERSION_MINOR	${CMAKETOOLS_PROJECT_VERSION_MINOR}
+#define PIXELLIGHT_VERSION_PATCH	${CMAKETOOLS_PROJECT_VERSION_PATCH}
+#define PIXELLIGHT_VERSION_RELEASE "${CMAKETOOLS_PROJECT_VERSION_RELEASE}"
+
+
+#endif // __PIXELLIGHT_CONFIG_H__

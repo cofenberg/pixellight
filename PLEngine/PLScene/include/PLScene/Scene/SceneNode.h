@@ -1,0 +1,1069 @@
+/*********************************************************\
+ *  File: SceneNode.h                                    *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLSCENE_SCENENODE_H__
+#define __PLSCENE_SCENENODE_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/Base/Element.h>
+#include <PLGeneral/Base/ElementHandler.h>
+#include <PLGeneral/Base/ElementManager.h>
+#include <PLCore/Base/Object.h>
+#include <PLMath/Sphere.h>
+#include <PLMath/Transform3.h>
+#include <PLMath/AABoundingBox.h>
+#include "PLScene/PLScene.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class Renderer;
+}
+namespace PLMesh {
+	class MeshHandler;
+}
+namespace PLScene {
+	class VisNode;
+	class SceneContext;
+	class SceneContainer;
+	class SceneHierarchy;
+	class SceneNodeModifier;
+	class SceneHierarchyNodeItem;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLScene {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Abstract scene node (leaf node) class
+*
+*  @remarks
+*    This is a leaf node of the scene graph. The node transformation is relative to the
+*    container the node is in.
+*
+*  @note
+*    - '.' characters within 'concrete' scene node names are NOT allowed (SceneNode::SetName())
+*    - The name 'Root' is NOT allowed for scene nodes, this name is reserved for the 'scene root container'
+*    - The name 'Parent' is NOT allowed for scene nodes, this name is reserved for the 'parent scene container'
+*    - The name 'This' is NOT allowed for scene nodes, this name is reserved for the 'this scene node'
+*    - The name of the 'root scene container' can NOT be changed
+*    - Derived classes should use a 'SN'-prefix (example: SNLight)
+*/
+class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class SNFog;
+	friend class SCCell;
+	friend class SNLight;
+	friend class SNPortal;
+	friend class SNCamera;
+	friend class SQRender;
+	friend class SceneContext;
+	friend class SceneContainer;
+	friend class SceneHierarchy;
+	friend class SceneHierarchyNode;
+	friend class SceneHierarchyNodeItem;
+	friend class PLGeneral::ElementManager<SceneNode>;
+
+
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API static const PLGeneral::String IconSceneNode;	/**< 'Data/Textures/IconSceneNode.dds' string */
+
+		/**
+		*  @brief
+		*    Scene node flags
+		*/
+		enum EFlags {
+			Inactive         = 1<<0,	/**< This scene node is currently NOT active */
+			Invisible        = 1<<1,	/**< This scene node is currently NOT visible */
+			Frozen           = 1<<2,	/**< This scene node is currently frozen and therefore not updated */
+			NoPause          = 1<<3,	/**< Do NOT perform pause if the timer is paused.
+											 All scene nodes should perform a pause if the timer is paused!
+											 Exceptions for this should ONLY be special scene nodes like e.g. a camera node:
+											 If the camera node is set to not perform the pause, it can still
+											 be moved around while the game/simulation is paused) */
+			Automatic        = 1<<4,	/**< This scene node was created automatically during runtime and should
+											 not be saved with the scene. Such scene nodes are also hidden for instance
+											 within the scene editor. */
+			NoCulling        = 1<<5,	/**< No visibility culling for this node, please (the container the node is in may still be culled...) */
+			NoLighting       = 1<<6,	/**< No lighting for this node, please */
+			CanOcclude       = 1<<7,	/**< This scene node can occlude other scene nodes */
+			CastShadow       = 1<<8,	/**< Shadow caster */
+			ReceiveShadow    = 1<<9		/**< Shadow receiver */
+		};
+		pl_enum(EFlags)
+			pl_enum_value(Inactive,			"This scene node is currently NOT active")
+			pl_enum_value(Invisible,		"This scene node is currently NOT visible")
+			pl_enum_value(Frozen,			"This scene node is currently frozen and therefore not updated")
+			pl_enum_value(NoPause,			"Do NOT perform pause if the timer is paused. All scene nodes should perform a pause if the timer is paused! Exceptions for this should ONLY be special scene nodes like e.g. a camera node: If the camera node is set to not perform the pause, it can still be moved around while the game/simulation is paused)")
+			pl_enum_value(Automatic,		"This scene node was created automatically during runtime and should not be saved with the scene. Such scene nodes are also hidden for instance within the scene editor.")
+			pl_enum_value(NoCulling,		"No visibility culling for this node, please (the container the node is in may still be culled...)")
+			pl_enum_value(NoLighting,		"No lighting for this node, please")
+			pl_enum_value(CanOcclude,		"This scene node can occlude other scene nodes")
+			pl_enum_value(CastShadow,		"Shadow caster")
+			pl_enum_value(ReceiveShadow,	"Shadow receiver")
+		pl_enum_end
+
+		/**
+		*  @brief
+		*    Scene node debug flags
+		*/
+		enum EDebugFlags {
+			DebugEnabled               = 1<<0,	/**< Debug mode is enabled (if this flag isn't set, no debug information is drawn at all) */
+			DebugNoDrawEvent           = 1<<1,	/**< Do not create a draw debug event */
+			DebugContainerAABBox       = 1<<2,	/**< Draw (the white) container space axis aligned bounding box */
+			DebugContainerSphere       = 1<<3,	/**< Draw container space bounding sphere */
+			DebugNoLocalCoordinateAxis = 1<<4,	/**< Do not draw the local coordinate axis */
+			DebugNoName                = 1<<5,	/**< Do not draw the name of the scene node */
+			DebugNoAABBox              = 1<<6,	/**< Do not draw (the yellow) axis aligned bounding box */
+			DebugText                  = 1<<7	/**< Draw some basic debug text information */
+		};
+		pl_enum(EDebugFlags)
+			pl_enum_value(DebugEnabled,					"Debug mode is enabled (if this flag isn't set, no debug information is drawn at all)")
+			pl_enum_value(DebugNoDrawEvent,				"Do not create a draw debug event")
+			pl_enum_value(DebugContainerAABBox,			"Draw (the white) container space axis aligned bounding box")
+			pl_enum_value(DebugContainerSphere,			"Draw container space bounding sphere")
+			pl_enum_value(DebugNoLocalCoordinateAxis,	"Do not draw the local coordinate axis")
+			pl_enum_value(DebugNoName,					"Do not draw the name of the scene node")
+			pl_enum_value(DebugNoAABBox,				"Do not draw (the yellow) axis aligned bounding box")
+			pl_enum_value(DebugText,					"Draw some basic debug text information")
+		pl_enum_end
+
+		/**
+		*  @brief
+		*    Draw function flags
+		*/
+		enum EDrawFunctionFlags {
+			UseDrawPre         = 1<<0,	/**< Use DrawPre()-function */
+			UseDrawSolid       = 1<<1,	/**< Use DrawSolid()-function */
+			UseDrawTransparent = 1<<2,	/**< Use DrawTransparent()-function */
+			UseDrawDebug       = 1<<3,	/**< Use DrawDebug()-function */
+			UseDrawPost        = 1<<4	/**< Use DrawPost()-function */
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLS_RTTI_EXPORT, SceneNode, "PLScene", PLCore::Object, "Abstract scene node (leaf node) class")
+		pl_attribute(Icon,				PLGeneral::String,			IconSceneNode,						ReadWrite,	DirectValue,	"Scene node icon",																													"Type='Material Effect Image TextureAni'")
+		pl_attribute(Flags,				pl_flag_type(EFlags),		0,									ReadWrite,	GetSet,			"Flags",																															"")
+		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,									ReadWrite,	GetSet,			"Debug flags",																														"")
+		pl_attribute(Position,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Position",																															"")
+		pl_attribute(Rotation,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Initial rotation in degree, [0, 360]",																								"Inc=1")
+		pl_attribute(Scale,				PLMath::Vector3,			PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,			"Scale",																															"")
+		pl_attribute(MaxDrawDistance,	float,						0.0f,								ReadWrite,	DirectValue,	"Maximum draw distance of the scene node to the camera, if 0 do always draw, if negative, do always draw this node before other",	"")
+		pl_attribute(AABBMin,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Minimum position of the 'scene node space' axis aligned bounding box",																"")
+		pl_attribute(AABBMax,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Maximum position of the 'scene node space' axis aligned bounding box",																"")
+		pl_attribute(Name,				PLGeneral::String,			"",									ReadWrite,	GetSet,			"Optional scene node name. If not defined, a name is chosen automatically",															"")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI get/set functions                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API virtual PLGeneral::uint32 GetFlags() const;
+		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLS_API virtual PLGeneral::uint32 GetDebugFlags() const;
+		PLS_API virtual void SetDebugFlags(PLGeneral::uint32 nValue);
+		PLS_API const PLMath::Vector3 &GetPosition() const;
+		PLS_API void SetPosition(const PLMath::Vector3 &vValue);
+		PLS_API const PLMath::Vector3 &GetRotation() const;
+		PLS_API void SetRotation(const PLMath::Vector3 &vValue);
+		PLS_API const PLMath::Vector3 &GetScale() const;
+		PLS_API void SetScale(const PLMath::Vector3 &vValue);
+		PLS_API const PLMath::Vector3 &GetAABBMin() const;
+		PLS_API void SetAABBMin(const PLMath::Vector3 &vValue);
+		PLS_API const PLMath::Vector3 &GetAABBMax() const;
+		PLS_API void SetAABBMax(const PLMath::Vector3 &vValue);
+
+
+	//[-------------------------------------------------------]
+	//[ Events                                                ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<>											EventDestroy;			/**< Scene node destruction event */
+		PLCore::Event<>											EventActive;			/**< Scene node active state change event */
+		PLCore::Event<>											EventVisible;			/**< Scene node visible state change event */
+		PLCore::Event<>											EventContainer;			/**< Scene node parent container change event */
+		PLCore::Event<>											EventAABoundingBox;		/**< Scene node axis aligned bounding box change event */
+		PLCore::Event<>											EventInit;				/**< Scene node initialization event */
+		PLCore::Event<>											EventDeInit;			/**< Scene node de-initialization change event */
+		PLCore::Event<>											EventUpdate;			/**< Scene node update event */
+		PLCore::Event<>											EventDrawn;				/**< Scene node draw event */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPre;			/**< Scene node pre-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawSolid;			/**< Scene node solid-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawTransparent;	/**< Scene node transparent-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawDebug;			/**< Scene node debug-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPost;			/**< Scene node post-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the scene context the scene node is in
+		*
+		*  @return
+		*    The scene context the scene node is in, can but shouldn't be NULL
+		*
+		*  @note
+		*    - Do NOT use this function inside a SceneNode-constructor
+		*/
+		PLS_API SceneContext *GetSceneContext() const;
+
+		/**
+		*  @brief
+		*    Returns the scene container the scene node is in
+		*
+		*  @return
+		*    Scene container this node is in, or NULL if this is the root node
+		*
+		*  @note
+		*    - You can also use GetManager() from PLGeneral::Element directly
+		*/
+		PLS_API SceneContainer *GetContainer() const;
+
+		/**
+		*  @brief
+		*    Sets the scene container the scene node is in
+		*
+		*  @param[in] cSceneContainer
+		*    Scene container this node is in
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Position, rotation, scale etc. are NOT manipulated, ONLY the container is changed!
+		*/
+		PLS_API bool SetContainer(SceneContainer &cSceneContainer);
+
+		/**
+		*  @brief
+		*    Returns the scene root container
+		*
+		*  @return
+		*    Scene root container, (this scene container can be the root scene container) NULL on error
+		*
+		*  @remarks
+		*    This function searches for the scene root container (scene container without a parent) and returns it.
+		*/
+		PLS_API SceneContainer *GetRootContainer() const;
+
+		/**
+		*  @brief
+		*    Gets the common container of this and another scene node
+		*
+		*  @param[in] cSceneNode
+		*    The other scene node
+		*
+		*  @return
+		*    Common container, or NULL
+		*/
+		PLS_API SceneContainer *GetCommonContainer(SceneNode &cSceneNode) const;
+
+		/**
+		*  @brief
+		*    Returns the scene hierarchy this scene node is linked into
+		*
+		*  @return
+		*    Scene hierarchy this scene node is linked into, NULL on error
+		*/
+		PLS_API SceneHierarchy *GetHierarchy() const;
+
+		/**
+		*  @brief
+		*   Returns the unique absolute name of the scene node
+		*
+		*  @return
+		*    Unique absolute name of the scene node (for instance 'Root.MyScene.MyNode')
+		*
+		*  @note
+		*    - This function 'constructs' the absolute scene node name. For performance
+		*      reasons DON'T call this function a few million times per frame!
+		*/
+		PLS_API PLGeneral::String GetAbsoluteName() const;
+
+		/**
+		*  @brief
+		*    Is the scene node initialized?
+		*
+		*  @return
+		*    'true' if the scene node is initialized, else 'false'
+		*/
+		PLS_API bool IsInitialized() const;
+
+		/**
+		*  @brief
+		*    Returns whether the scene node is active or not
+		*
+		*  @return
+		*    'true' if the scene node is active, else 'false'
+		*/
+		PLS_API bool IsActive() const;
+
+		/**
+		*  @brief
+		*    Sets whether the scene node is active or not
+		*
+		*  @param[in] bActive
+		*    Should the scene node be active?
+		*
+		*  @note
+		*    - Sets/unsets the 'Inactive'-flag
+		*/
+		PLS_API void SetActive(bool bActive = true);
+
+		/**
+		*  @brief
+		*    Returns whether the scene node is visible or not
+		*
+		*  @return
+		*    'true' if the scene node is visible, else 'false' (invisible/inactive)
+		*
+		*  @remarks
+		*    If the scene node is not active it's automatically invisible but
+		*    the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently'
+		*    on screen, it just means 'can be seen in general'.
+		*/
+		PLS_API bool IsVisible() const;
+
+		/**
+		*  @brief
+		*    Sets whether the scene node is visible or not
+		*
+		*  @param[in] bVisible
+		*    Should the scene node be visible?
+		*
+		*  @note
+		*    - Sets/unsets the 'Invisible'-flag
+		*
+		*  @see
+		*    - IsVisible()
+		*/
+		PLS_API void SetVisible(bool bVisible = true);
+
+		/**
+		*  @brief
+		*    Returns whether the scene node is frozen or not
+		*
+		*  @return
+		*    'true' if the scene node is frozen, else 'false'
+		*/
+		PLS_API bool IsFrozen() const;
+
+		/**
+		*  @brief
+		*    Sets whether the scene node is frozen or not
+		*
+		*  @param[in] bFrozen
+		*    Should the scene node be frozen?
+		*
+		*  @note
+		*    - Sets/unsets the 'Frozen'-flag
+		*/
+		PLS_API void SetFrozen(bool bFrozen = true);
+
+		/**
+		*  @brief
+		*    Gets the scene node draw function flags
+		*
+		*  @return
+		*    Scene node draw function flags (see EDrawFunctionFlags)
+		*/
+		PLS_API PLGeneral::uint8 GetDrawFunctionFlags() const;
+
+		/**
+		*  @brief
+		*    Sets the scene node draw function flags
+		*
+		*  @param[in] nFlags
+		*    New scene node draw function flags which should be set (see EDrawFunctionFlags)
+		*/
+		PLS_API void SetDrawFunctionFlags(PLGeneral::uint8 nFlags);
+
+		//[-------------------------------------------------------]
+		//[ Transformation                                        ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Gets the node transform
+		*
+		*  @return
+		*    Node transform
+		*
+		*  @remarks
+		*    This function will get/set ONLY the scene node transform. No cell-portal check
+		*    etc. is performed! When just 'moving' the node, use MoveTo() instead.
+		*/
+		inline const PLMath::Transform3 &GetTransform() const;
+		inline PLMath::Transform3 &GetTransform();
+
+		/**
+		*  @brief
+		*    Moves the node to a new position
+		*
+		*  @param[in] vPosition
+		*    New node position
+		*
+		*  @remarks
+		*    Unlike 'SetPosition()' this function checks whether or not the node
+		*    passes a cell-portal while 'moving' from the current position to the new one.
+		*/
+		PLS_API void MoveTo(const PLMath::Vector3 &vPosition);
+
+		//[-------------------------------------------------------]
+		//[ Bounding volume                                       ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns the axis align bounding box in 'scene node space'
+		*
+		*  @return
+		*    The axis align bounding box in 'scene node space'
+		*
+		*  @note
+		*    - The 'scene node space' can be seen as 'object space' :)
+		*    - Use GetContainerAABoundingBox() to get this bounding box in
+		*      'scene container space' (see it as 'world space' :)
+		*    - This axis align bounding box is recalculated internally if required
+		*    - Within the default implementation, the axis align bounding box
+		*      is not recalculated
+		*/
+		PLS_API const PLMath::AABoundingBox &GetAABoundingBox();
+
+		/**
+		*  @brief
+		*    Sets the axis align bounding box in 'scene node space'
+		*
+		*  @param[in] cAABoundingBox
+		*    The axis align bounding box in 'scene node space'
+		*
+		*  @see
+		*    - GetAABoundingBox()
+		*/
+		PLS_API void SetAABoundingBox(const PLMath::AABoundingBox &cAABoundingBox);
+
+		/**
+		*  @brief
+		*    Returns the current axis align bounding box in 'scene container space'
+		*
+		*  @return
+		*    The current axis align bounding box in 'scene container space'
+		*
+		*  @note
+		*    - If position, rotation, scale or the bounding box itself was changed, the
+		*      current axis align bounding box in 'scene container space' is recalculated
+		*      internally before it is returned
+		*
+		*  @see
+		*    - GetAABoundingBox()
+		*/
+		PLS_API const PLMath::AABoundingBox &GetContainerAABoundingBox();
+
+		/**
+		*  @brief
+		*    Returns the bounding sphere in 'scene node space'
+		*
+		*  @return
+		*    The bounding sphere in 'scene node space'
+		*
+		*  @note
+		*    - This sphere recalculated internally if the bounding box was changed
+		*    - Within the default implementation, the bounding sphere is calculated
+		*      by using the the bounding box
+		*    - Note that it's not guaranteed that this sphere totally includes the axis align bounding box
+		*      in any space. A derived class may deside that another radius fit's the needs
+		*      better - for instance a light is using it's radius.
+		*
+		*  @see
+		*    - GetAABoundingBox()
+		*/
+		PLS_API const PLMath::Sphere &GetBoundingSphere();
+
+		/**
+		*  @brief
+		*    Returns the current bounding sphere in 'scene container space'
+		*
+		*  @return
+		*    The current bounding in 'scene container space'
+		*
+		*  @note
+		*    - If position, rotation, scale or the bounding box itself was changed, the current bounding
+		*      sphere in 'scene container space' is recalculated internally before it is returned
+		*    - Note that it's not guaranteed that this sphere totally includes the axis align bounding box
+		*      in 'scene container space' (that's no bug or so :)
+		*
+		*  @see
+		*    - GetBoundingSphere()
+		*/
+		PLS_API const PLMath::Sphere &GetContainerBoundingSphere();
+
+		//[-------------------------------------------------------]
+		//[ Instance of                                           ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns whether this scene node is a scene container (SceneContainer) or not
+		*
+		*  @return
+		*    'true' if this scene node is a scene container, else 'false'
+		*
+		*  @note
+		*    - More performant than IsInstanceOf("PLScene::SceneContainer")
+		*/
+		inline bool IsContainer() const;
+
+		/**
+		*  @brief
+		*    Returns whether this scene node is a cell (SCCell) or not
+		*
+		*  @return
+		*    'true' if this scene node is a cell, else 'false'
+		*
+		*  @note
+		*    - More performant than IsInstanceOf("PLScene::SCCell")
+		*/
+		inline bool IsCell() const;
+
+		/**
+		*  @brief
+		*    Returns whether this scene node is a portal (SNPortal) or not
+		*
+		*  @return
+		*    'true' if this scene node is a portal, else 'false'
+		*
+		*  @note
+		*    - More performant than IsInstanceOf("PLScene::SNPortal")
+		*/
+		inline bool IsPortal() const;
+
+		/**
+		*  @brief
+		*    Returns whether this scene node is a camera (SNCamera) or not
+		*
+		*  @return
+		*    'true' if this scene node is a camera, else 'false'
+		*
+		*  @note
+		*    - More performant than IsInstanceOf("PLScene::SNCamera")
+		*/
+		inline bool IsCamera() const;
+
+		/**
+		*  @brief
+		*    Returns whether this scene node is a light (SNLight) or not
+		*
+		*  @return
+		*    'true' if this scene node is a light, else 'false'
+		*
+		*  @note
+		*    - More performant than IsInstanceOf("PLScene::SNLight")
+		*/
+		inline bool IsLight() const;
+
+		/**
+		*  @brief
+		*    Returns whether this scene node is a fog (SNFog) or not
+		*
+		*  @return
+		*    'true' if this scene node is a fog, else 'false'
+		*
+		*  @note
+		*    - More performant than IsInstanceOf("PLScene::SNFog")
+		*/
+		inline bool IsFog() const;
+
+		//[-------------------------------------------------------]
+		//[ Modifier                                              ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns the number of modifiers
+		*
+		*  @param[in] sClass
+		*    Modifier class name to return the number of instances from, if empty
+		*    return the total number of modifier.
+		*
+		*  @return
+		*    Number of modifiers
+		*/
+		PLS_API PLGeneral::uint32 GetNumOfModifiers(const PLGeneral::String &sClass = "") const;
+
+		/**
+		*  @brief
+		*    Adds a modifier
+		*
+		*  @param[in] sClass
+		*    Modifier class name of the modifier to add
+		*  @param[in] sParameters
+		*    Optional parameter string
+		*
+		*  @return
+		*    Pointer to the modifier instance if all went fine, else NULL
+		*    (maybe unknown/incompatible modifier)
+		*/
+		PLS_API SceneNodeModifier *AddModifier(const PLGeneral::String &sClass, const PLGeneral::String &sParameters = "");
+
+		/**
+		*  @brief
+		*    Returns a modifier
+		*
+		*  @param[in] sClass
+		*    Modifier class name of the modifier to return
+		*  @param[in] nIndex
+		*    Modifier index, used if sClass is empty or if there are multiple instances
+		*    of this modifier class
+		*
+		*  @return
+		*    The requested modifier, NULL on error
+		*/
+		PLS_API SceneNodeModifier *GetModifier(const PLGeneral::String &sClass, PLGeneral::uint32 nIndex = 0) const;
+
+		/**
+		*  @brief
+		*    Removes a modifier
+		*
+		*  @param[in] cModifier
+		*    Modifier to remove
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe invalid modifier)
+		*/
+		PLS_API bool RemoveModifier(SceneNodeModifier &cModifier);
+
+		/**
+		*  @brief
+		*    Removes a modifier
+		*
+		*  @param[in] sClass
+		*    Modifier class name of the modifier to remove
+		*  @param[in] nIndex
+		*    Modifier index, used if sClass is empty or if there are multiple instances
+		*    of this modifier class
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe invalid modifier)
+		*/
+		PLS_API bool RemoveModifier(const PLGeneral::String &sClass, PLGeneral::uint32 nIndex = 0);
+
+		/**
+		*  @brief
+		*    Clears all modifiers
+		*/
+		PLS_API void ClearModifiers();
+
+		//[-------------------------------------------------------]
+		//[ Misc                                                  ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Updates the scene node
+		*
+		*  @note
+		*    - Done by the engine but in some situations it can be
+		*      useful to update only a desired scene node
+		*/
+		PLS_API void UpdateNode();
+
+		/**
+		*  @brief
+		*    Returns whether the scene node was visible since it's last update or not
+		*
+		*  @return
+		*    'true' if the scene node was drawn since it's last update, else 'false'
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API bool GetDrawn() const;
+
+		/**
+		*  @brief
+		*    Sets that the scene node was drawn since it's last update
+		*
+		*  @note
+		*    - It's recommended to call this function BEFORE you draw anything
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API void SetDrawn();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual functions                              ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns a pointer to the mesh handler
+		*
+		*  @return
+		*    Pointer to the mesh handler, NULL if there's no mesh handler
+		*
+		*  @note
+		*    - Returns NULL by default, function can be implemented in derived classes
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler();
+
+		/**
+		*  @brief
+		*    This function is called before any solid parts of the scene are drawn
+		*
+		*  @param[in] cRenderer
+		*    The used renderer
+		*  @param[in] pVisNode
+		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @remarks
+		*    The DrawPre(), DrawSolid(), DrawTransparent(), DrawDebug() and DrawPost() allows custom draw
+		*    calls inside a scene rendering process. The function names indicate when each function is called
+		*    during scene rendering. It's not predictable which render states are currently set if these functions
+		*    are called and these draw functions will NOT interact automatically with 'uniform lighting and shadowing'
+		*    performed on nodes providing a mesh. (GetMeshHandler()) So, try to avoid using these functions whenever
+		*    possible and provide a scene node mesh instead. The default implementation does only call SetDrawn() and then
+		*    informing the listeners, functions can be implemented in derived classes - only DrawDebug() provides a default
+		*    implementation to draw for instance the bounding box of the scene node. From outside, this draw functions
+		*    should ONLY be called if a node is active & visible & 'on the screen' & the draw function of the function is
+		*    set. (see GetDrawFunctionFlags()) It's recommended to call these functions ONLY from inside a scene renderer!
+		*    If you don't call the base implementation of a scene node draw function inside your derived draw function
+		*    or if you are rendering the mesh of the node, you should call SetDraw() to mark this node as drawn. After
+		*    the scene node was updated, this drawn-flag is reset automatically. Use this this information to avoid
+		*    useless scene node updates. For instance do not update particle effects or other dynamic meshes if they are
+		*    currently 'invisible'.
+		*
+		*  @note
+		*    - Should only be called if the draw function flag 'UseDrawPre' is set
+		*/
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+
+		/**
+		*  @brief
+		*    This function is called when the solid parts of the scene are drawn
+		*
+		*  @param[in] cRenderer
+		*    The used renderer
+		*  @param[in] pVisNode
+		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+
+		/**
+		*  @brief
+		*    This function is called when the transparent parts of the scene are drawn
+		*
+		*  @param[in] cRenderer
+		*    The used renderer
+		*  @param[in] pVisNode
+		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+
+		/**
+		*  @brief
+		*    This function is called when the debug parts of the scene are drawn
+		*
+		*  @param[in] cRenderer
+		*    The used renderer
+		*  @param[in] pVisNode
+		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @note
+		*    - Should only be called if the 'UseDrawDebug' draw flag and the 'DebugEnabled' debug flag is set
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+
+		/**
+		*  @brief
+		*    This function is called after transparent parts of the scene are drawn
+		*
+		*  @param[in] cRenderer
+		*    The used renderer
+		*  @param[in] pVisNode
+		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @see
+		*    - DrawPre()
+		*/
+		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		PLS_API SceneNode();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLS_API virtual ~SceneNode();
+
+		/**
+		*  @brief
+		*    The current axis align bounding box is dirty and must be updated if used next time
+		*/
+		PLS_API void DirtyAABoundingBox();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNode functions                 ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    This function is called when the scene node gets initialized
+		*/
+		PLS_API virtual void InitFunction();
+
+		/**
+		*  @brief
+		*    This function is called when the scene node gets de-initialized
+		*/
+		PLS_API virtual void DeInitFunction();
+
+		/**
+		*  @brief
+		*    Updates the axis align bounding box in 'scene node space'
+		*
+		*  @remarks
+		*    This function is called when the axis align bounding box needs to be calculated. One can overwrite
+		*    the default implementation to calculate the axis align bounding box in another way. The default
+		*    implementation is empty. (current set axis align bounding box is still used)
+		*
+		*  @note
+		*    - We recommend to use 'SetAABoundingBox()' inside your own implementation to set the new axis align
+		*      bounding box, this function will take care of all other required updates
+		*/
+		PLS_API virtual void UpdateAABoundingBox();
+
+		/**
+		*  @brief
+		*    Returns the bounding sphere in 'scene node space'
+		*
+		*  @param[out] cSphere
+		*    Receives the bounding sphere in 'scene node space'
+		*
+		*  @remarks
+		*    This function is called when the sphere needs to be calculated. One can overwrite
+		*    the default implementation to calculate the sphere in another way.
+		*/
+		PLS_API virtual void GetBoundingSphere(PLMath::Sphere &cSphere);
+
+		/**
+		*  @brief
+		*    Returns the current bounding sphere in 'scene container space'
+		*
+		*  @param[out] cSphere
+		*    Receives the current bounding in 'scene container space'
+		*
+		*  @see
+		*    - GetBoundingSphere()
+		*/
+		PLS_API virtual void GetContainerBoundingSphere(PLMath::Sphere &cSphere);
+
+		/**
+		*  @brief
+		*    This function is called when the scene node is updated
+		*
+		*  @note
+		*    - The base implementation is empty
+		*/
+		PLS_API virtual void UpdateFunction();
+
+
+	//[-------------------------------------------------------]
+	//[ Private definitions                                   ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Flags which hold ínternal information
+		*/
+		enum EInternalFlags {
+			// Recalculate
+			RecalculateAABoundingBox		   = 1<<0,	/**< Recalculation of the current axis align bounding box required */
+			RecalculateContainerAABoundingBox  = 1<<1,	/**< Recalculation of the current axis align bounding box in 'scene container space' required */
+			RecalculateBoundingSphere		   = 1<<2,	/**< Recalculation of the bounding sphere in 'scene node space' required */
+			RecalculateContainerBoundingSphere = 1<<3,	/**< Recalculation of the current bounding sphere in 'scene container space' required */
+			RecalculateHierarchy			   = 1<<4,	/**< Recalculation of the scene hierarchy for this scene node is required */
+			// Scene node types (to avoid RTTI checks in performance critical situations)
+			ClassContainer					   = 1<<5,	/**< Derived from 'SceneContainer' */
+			ClassCell						   = 1<<6,	/**< Derived from 'SCCell' */
+			ClassPortal						   = 1<<7,	/**< Derived from 'SNPortal' */
+			ClassCamera						   = 1<<8,	/**< Derived from 'SNCamera' */
+			ClassLight						   = 1<<9,	/**< Derived from 'SNLight' */
+			ClassFog						   = 1<<10,	/**< Derived from 'SNFog' */
+			// Misc
+			Initialized						   = 1<<11,	/**< The scene node is initialized */
+			DestroyThis						   = 1<<12,	/**< The scene node should be destroyed */
+			Drawn							   = 1<<13	/**< The scene node was drawn since it's last update */
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Initializes the scene node
+		*/
+		void InitSceneNode();
+
+		/**
+		*  @brief
+		*    De-Initializes the scene node
+		*/
+		void DeInitSceneNode();
+
+		/**
+		*  @brief
+		*    Call this function if the scene node bounding box was changed and the
+		*    hierarchy the scene node is in needs an update
+		*
+		*  @note
+		*    - The hierarchy refresh will be done by the scene container if the
+		*      scene hierarchy is used the next time
+		*/
+		void HierarchyRefreshRequired();
+
+		/**
+		*  @brief
+		*    Called on position transform change
+		*/
+		void OnPosition();
+
+		/**
+		*  @brief
+		*    Called on rotation transform change
+		*/
+		void OnRotation();
+
+		/**
+		*  @brief
+		*    Called on scale transform change
+		*/
+		void OnScale();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerPosition;
+		PLCore::EventHandler<> EventHandlerRotation;
+		PLCore::EventHandler<> EventHandlerScale;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::uint32					 m_nFlags;							/**< Flags */
+		PLGeneral::uint32					 m_nDebugFlags;						/**< Debug flags */
+		PLMath::Vector3						 m_vRotation;						/**< Initial rotation in degree, [0, 360] */
+		PLMath::AABoundingBox				 m_cAABoundingBox;					/**< Axis align bounding box in 'scene node space' */
+		PLGeneral::uint8					 m_nDrawFunctionFlags;				/**< Scene node draw function flags */
+		PLGeneral::uint32					 m_nCounter;						/**< Internal scene node counter */
+		PLGeneral::uint16					 m_nInternalFlags;					/**< Internal flags */
+		PLMath::Transform3					 m_cTransform;						/**< 3D transform */
+		PLMath::AABoundingBox				 m_cContainerAABoundingBox;			/**< Current axis align bounding box in 'scene container space' */
+		PLMath::Sphere						 m_cBoundingSphere;					/**< Bounding sphere in 'scene node space' */
+		PLMath::Sphere						 m_cContainerBoundingSphere;		/**< Current bounding sphere in 'scene container space'*/
+		PLGeneral::List<SceneNodeModifier*>  m_lstModifiers;					/**< List of scene node modifiers */
+		SceneHierarchyNodeItem				*m_pFirstSceneHierarchyNodeItem;	/**< The first scene hierarchy node item, can be NULL */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLGeneral::Element functions           ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API virtual bool Delete(bool bProtectedToo = false);
+		PLS_API virtual bool SetName(const PLGeneral::String &sName);
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLGeneral::Element functions          ]
+	//[-------------------------------------------------------]
+	private:
+		PLS_API virtual void DeleteElement();
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLScene
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLScene/Scene/SceneNode.inl"
+
+
+#endif // __PLSCENE_SCENENODE_H__

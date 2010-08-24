@@ -1,0 +1,64 @@
+﻿>> 15.03.2010
+[SB]
+- SNMPostProcessBrighten noch etwas überarbeitet: Es kann nun eine beliebige Farbe angegeben werden, die über das Bild
+  geblendet wird. Auch wird nicht mehr simpel addiert, sondern vernünftiges Alpha-Blending verwendet. Der Grad der
+  Transparenz kann dabei über einen weiteren Parameter mit angegeben werden (natürlich hätte sich hier auch einfach
+  Color4 angeboten, aber irgendwie fand ich es so verständlicher).
+
+
+
+>> 14.03.2010
+[SB]
+- Neuen PostProcess-Effekt hinzugefügt: SNMPostProcessBrightPass (brightpass.cg, war bisher nur Teil anderer Effekte)
+- Neuen PostProcess-Effekt hinzugefügt: SNMPostProcessBrighten. Dieser neue Effekt addiert ganz simpel einen bestimmten
+  Wert auf den Farbwert jeden Pixels, wodurch das Bild aufgehellt wird, so als sei eine transparente weiße Fläche vor
+  dem Bild.
+
+
+
+>> 02.08.2009
+[CO]
+- Sharpen Post Process hinzugefügt (zwei Varianten)
+
+
+
+>> 08.03.2009
+[CO]
+- Die Scene Node Modifier Implementationen berücksichtigen nun endlich wieder den "Active"-Zustand. Dies hab ich nun so realisiert das
+  Event Handler "Disconnected" werden sobald ein Scene Node Modifier inaktiv wird und beim Aktive werden sich wieder "Connecten".
+
+
+
+>> 01.03.2009
+[CO]
+- An "SNMPostProcess" Änderung angepasst
+
+
+
+>> 09.11.2008
+[CO]
+- SNMPostProcessBloom: Default-Werte etwas 'dezenter' gemacht damit das Bloom nicht stört sondern nur die Optik minimal aufbessert
+
+
+
+>> 11.04.2008
+[CO]
+- Implementationen stark vereinfacht + nur noch 'SNMPostProcessOldFilm' nutzt 'InformedOnUpdate()', der Rest geht komplett über 'VarChanged()'
+
+
+
+>> 20.10.2007
+[CO]
+- Einige 'const' eingefügt
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 09.08.2007
+[CO]
+- Legte in PLPlugins ein neues Projekt Namens 'PLPostProcessEffects' an -> siehe PLEngine Diary Eintrag von heute.

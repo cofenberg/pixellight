@@ -1,0 +1,739 @@
+diff -cr tinyxml-old/Makefile tinyxml-patched/Makefile
+*** tinyxml-old/Makefile	2007-05-07 00:41:23.000000000 +0200
+--- tinyxml-patched/Makefile	2009-06-18 18:48:01.000000000 +0200
+***************
+*** 8,21 ****
+  #****************************************************************************
+  
+  # DEBUG can be set to YES to include debugging info, or NO otherwise
+! DEBUG          := YES
+  
+  # PROFILE can be set to YES to include profiling info, or NO otherwise
+  PROFILE        := NO
+  
+  # TINYXML_USE_STL can be used to turn on STL support. NO, then STL
+  # will not be used. YES will include the STL files.
+! TINYXML_USE_STL := YES
+  
+  #****************************************************************************
+  
+--- 8,21 ----
+  #****************************************************************************
+  
+  # DEBUG can be set to YES to include debugging info, or NO otherwise
+! DEBUG          := NO
+  
+  # PROFILE can be set to YES to include profiling info, or NO otherwise
+  PROFILE        := NO
+  
+  # TINYXML_USE_STL can be used to turn on STL support. NO, then STL
+  # will not be used. YES will include the STL files.
+! TINYXML_USE_STL := NO
+  
+  #****************************************************************************
+  
+***************
+*** 81,87 ****
+  # Targets of the build
+  #****************************************************************************
+  
+! OUTPUT := xmltest
+  
+  all: ${OUTPUT}
+  
+--- 81,87 ----
+  # Targets of the build
+  #****************************************************************************
+  
+! OUTPUT := libtinyxml.a
+  
+  all: ${OUTPUT}
+  
+***************
+*** 90,96 ****
+  # Source files
+  #****************************************************************************
+  
+! SRCS := tinyxml.cpp tinyxmlparser.cpp xmltest.cpp tinyxmlerror.cpp tinystr.cpp
+  
+  # Add on the sources for libraries
+  SRCS := ${SRCS}
+--- 90,96 ----
+  # Source files
+  #****************************************************************************
+  
+! SRCS := tinyxml.cpp tinyxmlparser.cpp tinyxmlerror.cpp tinystr.cpp
+  
+  # Add on the sources for libraries
+  SRCS := ${SRCS}
+***************
+*** 102,108 ****
+  #****************************************************************************
+  
+  ${OUTPUT}: ${OBJS}
+! 	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
+  
+  #****************************************************************************
+  # common rules
+--- 102,108 ----
+  #****************************************************************************
+  
+  ${OUTPUT}: ${OBJS}
+! 	${AR} $@ ${OBJS} ${LIBS} ${EXTRA_LIBS}
+  
+  #****************************************************************************
+  # common rules
+diff -cr tinyxml-old/tinyxml.cpp tinyxml-patched/tinyxml.cpp
+*** tinyxml-old/tinyxml.cpp	2007-05-07 00:41:23.000000000 +0200
+--- tinyxml-patched/tinyxml.cpp	2009-06-18 18:48:01.000000000 +0200
+***************
+*** 32,37 ****
+--- 32,42 ----
+  #include "tinyxml.h"
+  
+  
++ // [CHANGED] Added
++ TIXMLDESTROYCALLBACK TiXmlBase::TiXmlDestroyCallback = NULL;
++ // [CHANGED]
++ 
++ 
+  bool TiXmlBase::condenseWhiteSpace = true;
+  
+  // Microsoft compiler security
+***************
+*** 160,166 ****
+  void TiXmlNode::CopyTo( TiXmlNode* target ) const
+  {
+  	target->SetValue (value.c_str() );
+! 	target->userData = userData; 
+  }
+  
+  
+--- 165,178 ----
+  void TiXmlNode::CopyTo( TiXmlNode* target ) const
+  {
+  	target->SetValue (value.c_str() );
+! 
+! 
+! // [CHANGED] Removed
+! //	target->userData = userData; 
+! // [CHANGED]
+! 
+! 
+! 	target->location = location;
+  }
+  
+  
+***************
+*** 186,192 ****
+  	assert( node->parent == 0 || node->parent == this );
+  	assert( node->GetDocument() == 0 || node->GetDocument() == this->GetDocument() );
+  
+! 	if ( node->Type() == TiXmlNode::DOCUMENT )
+  	{
+  		delete node;
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+--- 198,204 ----
+  	assert( node->parent == 0 || node->parent == this );
+  	assert( node->GetDocument() == 0 || node->GetDocument() == this->GetDocument() );
+  
+! 	if ( node->Type() == TiXmlNode::TINYXML_DOCUMENT )
+  	{
+  		delete node;
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+***************
+*** 210,216 ****
+  
+  TiXmlNode* TiXmlNode::InsertEndChild( const TiXmlNode& addThis )
+  {
+! 	if ( addThis.Type() == TiXmlNode::DOCUMENT )
+  	{
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+  		return 0;
+--- 222,228 ----
+  
+  TiXmlNode* TiXmlNode::InsertEndChild( const TiXmlNode& addThis )
+  {
+! 	if ( addThis.Type() == TiXmlNode::TINYXML_DOCUMENT )
+  	{
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+  		return 0;
+***************
+*** 228,234 ****
+  	if ( !beforeThis || beforeThis->parent != this ) {
+  		return 0;
+  	}
+! 	if ( addThis.Type() == TiXmlNode::DOCUMENT )
+  	{
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+  		return 0;
+--- 240,246 ----
+  	if ( !beforeThis || beforeThis->parent != this ) {
+  		return 0;
+  	}
+! 	if ( addThis.Type() == TiXmlNode::TINYXML_DOCUMENT )
+  	{
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+  		return 0;
+***************
+*** 260,266 ****
+  	if ( !afterThis || afterThis->parent != this ) {
+  		return 0;
+  	}
+! 	if ( addThis.Type() == TiXmlNode::DOCUMENT )
+  	{
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+  		return 0;
+--- 272,278 ----
+  	if ( !afterThis || afterThis->parent != this ) {
+  		return 0;
+  	}
+! 	if ( addThis.Type() == TiXmlNode::TINYXML_DOCUMENT )
+  	{
+  		if ( GetDocument() ) GetDocument()->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
+  		return 0;
+***************
+*** 292,297 ****
+--- 304,317 ----
+  	if ( replaceThis->parent != this )
+  		return 0;
+  
++ 	if ( withThis.ToDocument() ) {
++ 		// A document can never be a child.	Thanks to Noam.
++ 		TiXmlDocument* document = GetDocument();
++ 		if ( document ) 
++ 			document->SetError( TIXML_ERROR_DOCUMENT_TOP_ONLY, 0, 0, TIXML_ENCODING_UNKNOWN );
++ 		return 0;
++ 	}
++ 
+  	TiXmlNode* node = withThis.Clone();
+  	if ( !node )
+  		return 0;
+***************
+*** 502,508 ****
+  
+  
+  TiXmlElement::TiXmlElement (const char * _value)
+! 	: TiXmlNode( TiXmlNode::ELEMENT )
+  {
+  	firstChild = lastChild = 0;
+  	value = _value;
+--- 522,528 ----
+  
+  
+  TiXmlElement::TiXmlElement (const char * _value)
+! 	: TiXmlNode( TiXmlNode::TINYXML_ELEMENT )
+  {
+  	firstChild = lastChild = 0;
+  	value = _value;
+***************
+*** 511,517 ****
+  
+  #ifdef TIXML_USE_STL
+  TiXmlElement::TiXmlElement( const std::string& _value ) 
+! 	: TiXmlNode( TiXmlNode::ELEMENT )
+  {
+  	firstChild = lastChild = 0;
+  	value = _value;
+--- 531,537 ----
+  
+  #ifdef TIXML_USE_STL
+  TiXmlElement::TiXmlElement( const std::string& _value ) 
+! 	: TiXmlNode( TiXmlNode::TINYXML_ELEMENT )
+  {
+  	firstChild = lastChild = 0;
+  	value = _value;
+***************
+*** 520,526 ****
+  
+  
+  TiXmlElement::TiXmlElement( const TiXmlElement& copy)
+! 	: TiXmlNode( TiXmlNode::ELEMENT )
+  {
+  	firstChild = lastChild = 0;
+  	copy.CopyTo( this );	
+--- 540,546 ----
+  
+  
+  TiXmlElement::TiXmlElement( const TiXmlElement& copy)
+! 	: TiXmlNode( TiXmlNode::TINYXML_ELEMENT )
+  {
+  	firstChild = lastChild = 0;
+  	copy.CopyTo( this );	
+***************
+*** 881,894 ****
+  }
+  
+  
+! TiXmlDocument::TiXmlDocument() : TiXmlNode( TiXmlNode::DOCUMENT )
+  {
+  	tabsize = 4;
+  	useMicrosoftBOM = false;
+  	ClearError();
+  }
+  
+! TiXmlDocument::TiXmlDocument( const char * documentName ) : TiXmlNode( TiXmlNode::DOCUMENT )
+  {
+  	tabsize = 4;
+  	useMicrosoftBOM = false;
+--- 901,914 ----
+  }
+  
+  
+! TiXmlDocument::TiXmlDocument() : TiXmlNode( TiXmlNode::TINYXML_DOCUMENT )
+  {
+  	tabsize = 4;
+  	useMicrosoftBOM = false;
+  	ClearError();
+  }
+  
+! TiXmlDocument::TiXmlDocument( const char * documentName ) : TiXmlNode( TiXmlNode::TINYXML_DOCUMENT )
+  {
+  	tabsize = 4;
+  	useMicrosoftBOM = false;
+***************
+*** 898,904 ****
+  
+  
+  #ifdef TIXML_USE_STL
+! TiXmlDocument::TiXmlDocument( const std::string& documentName ) : TiXmlNode( TiXmlNode::DOCUMENT )
+  {
+  	tabsize = 4;
+  	useMicrosoftBOM = false;
+--- 918,924 ----
+  
+  
+  #ifdef TIXML_USE_STL
+! TiXmlDocument::TiXmlDocument( const std::string& documentName ) : TiXmlNode( TiXmlNode::TINYXML_DOCUMENT )
+  {
+  	tabsize = 4;
+  	useMicrosoftBOM = false;
+***************
+*** 908,914 ****
+  #endif
+  
+  
+! TiXmlDocument::TiXmlDocument( const TiXmlDocument& copy ) : TiXmlNode( TiXmlNode::DOCUMENT )
+  {
+  	copy.CopyTo( this );
+  }
+--- 928,934 ----
+  #endif
+  
+  
+! TiXmlDocument::TiXmlDocument( const TiXmlDocument& copy ) : TiXmlNode( TiXmlNode::TINYXML_DOCUMENT )
+  {
+  	copy.CopyTo( this );
+  }
+***************
+*** 923,956 ****
+  
+  bool TiXmlDocument::LoadFile( TiXmlEncoding encoding )
+  {
+- 	// See STL_STRING_BUG below.
+- 	//StringToBuffer buf( value );
+- 
+  	return LoadFile( Value(), encoding );
+  }
+  
+  
+  bool TiXmlDocument::SaveFile() const
+  {
+- 	// See STL_STRING_BUG below.
+- //	StringToBuffer buf( value );
+- //
+- //	if ( buf.buffer && SaveFile( buf.buffer ) )
+- //		return true;
+- //
+- //	return false;
+  	return SaveFile( Value() );
+  }
+  
+  bool TiXmlDocument::LoadFile( const char* _filename, TiXmlEncoding encoding )
+  {
+- 	// There was a really terrifying little bug here. The code:
+- 	//		value = filename
+- 	// in the STL case, cause the assignment method of the std::string to
+- 	// be called. What is strange, is that the std::string had the same
+- 	// address as it's c_str() method, and so bad things happen. Looks
+- 	// like a bug in the Microsoft STL implementation.
+- 	// Add an extra string to avoid the crash.
+  	TIXML_STRING filename( _filename );
+  	value = filename;
+  
+--- 943,959 ----
+***************
+*** 1284,1290 ****
+  }
+  
+  
+! TiXmlComment::TiXmlComment( const TiXmlComment& copy ) : TiXmlNode( TiXmlNode::COMMENT )
+  {
+  	copy.CopyTo( this );
+  }
+--- 1287,1293 ----
+  }
+  
+  
+! TiXmlComment::TiXmlComment( const TiXmlComment& copy ) : TiXmlNode( TiXmlNode::TINYXML_COMMENT )
+  {
+  	copy.CopyTo( this );
+  }
+***************
+*** 1382,1388 ****
+  TiXmlDeclaration::TiXmlDeclaration( const char * _version,
+  									const char * _encoding,
+  									const char * _standalone )
+! 	: TiXmlNode( TiXmlNode::DECLARATION )
+  {
+  	version = _version;
+  	encoding = _encoding;
+--- 1385,1391 ----
+  TiXmlDeclaration::TiXmlDeclaration( const char * _version,
+  									const char * _encoding,
+  									const char * _standalone )
+! 	: TiXmlNode( TiXmlNode::TINYXML_DECLARATION )
+  {
+  	version = _version;
+  	encoding = _encoding;
+***************
+*** 1394,1400 ****
+  TiXmlDeclaration::TiXmlDeclaration(	const std::string& _version,
+  									const std::string& _encoding,
+  									const std::string& _standalone )
+! 	: TiXmlNode( TiXmlNode::DECLARATION )
+  {
+  	version = _version;
+  	encoding = _encoding;
+--- 1397,1403 ----
+  TiXmlDeclaration::TiXmlDeclaration(	const std::string& _version,
+  									const std::string& _encoding,
+  									const std::string& _standalone )
+! 	: TiXmlNode( TiXmlNode::TINYXML_DECLARATION )
+  {
+  	version = _version;
+  	encoding = _encoding;
+***************
+*** 1404,1410 ****
+  
+  
+  TiXmlDeclaration::TiXmlDeclaration( const TiXmlDeclaration& copy )
+! 	: TiXmlNode( TiXmlNode::DECLARATION )
+  {
+  	copy.CopyTo( this );	
+  }
+--- 1407,1413 ----
+  
+  
+  TiXmlDeclaration::TiXmlDeclaration( const TiXmlDeclaration& copy )
+! 	: TiXmlNode( TiXmlNode::TINYXML_DECLARATION )
+  {
+  	copy.CopyTo( this );	
+  }
+diff -cr tinyxml-old/tinyxml.h tinyxml-patched/tinyxml.h
+*** tinyxml-old/tinyxml.h	2007-05-07 00:41:23.000000000 +0200
+--- tinyxml-patched/tinyxml.h	2009-06-18 18:51:27.000000000 +0200
+***************
+*** 109,118 ****
+  
+  
+  /**
+  	If you call the Accept() method, it requires being passed a TiXmlVisitor
+  	class to handle callbacks. For nodes that contain other nodes (Document, Element)
+  	you will get called with a VisitEnter/VisitExit pair. Nodes that are always leaves
+! 	are simple called with Visit().
+  
+  	If you return 'true' from a Visit method, recursive parsing will continue. If you return
+  	false, <b>no children of this node or its sibilings</b> will be Visited.
+--- 109,119 ----
+  
+  
+  /**
++ 	Implements the interface to the "Visitor pattern" (see the Accept() method.)
+  	If you call the Accept() method, it requires being passed a TiXmlVisitor
+  	class to handle callbacks. For nodes that contain other nodes (Document, Element)
+  	you will get called with a VisitEnter/VisitExit pair. Nodes that are always leaves
+! 	are simply called with Visit().
+  
+  	If you return 'true' from a Visit method, recursive parsing will continue. If you return
+  	false, <b>no children of this node or its sibilings</b> will be Visited.
+***************
+*** 170,175 ****
+--- 171,193 ----
+  
+  const TiXmlEncoding TIXML_DEFAULT_ENCODING = TIXML_ENCODING_UNKNOWN;
+  
++ 
++ // [CHANGED] Added
++ #if defined(_WIN32_WCE)
++     #define F_CALLBACKAPI _cdecl
++ #elif defined(WIN32)
++     #define F_CALLBACKAPI __stdcall
++ #else
++     #define F_CALLBACKAPI __attribute__((stdcall))
++ #endif
++ /* 
++     Callback types
++ */
++ class TiXmlBase;
++ typedef void (F_CALLBACKAPI *TIXMLDESTROYCALLBACK)(TiXmlBase *pBase);
++ // [CHANGED]
++ 
++ 
+  /** TiXmlBase is a base class for every class in TinyXml.
+  	It does little except to establish that TinyXml classes
+  	can be printed and provide some utility functions.
+***************
+*** 198,206 ****
+  	friend class TiXmlElement;
+  	friend class TiXmlDocument;
+  
+  public:
+! 	TiXmlBase()	:	userData(0)		{}
+! 	virtual ~TiXmlBase()			{}
+  
+  	/**	All TinyXml classes can print themselves to a filestream
+  		or the string class (TiXmlString in non-STL mode, std::string
+--- 216,237 ----
+  	friend class TiXmlElement;
+  	friend class TiXmlDocument;
+  
++ 
++ // [CHANGED] Added
+  public:
+! 	static TIXMLDESTROYCALLBACK TiXmlDestroyCallback;
+! 	virtual ~TiXmlBase() { if (TiXmlDestroyCallback) TiXmlDestroyCallback(this); }
+! // [CHANGED]
+! 
+! 
+! public:
+! 	TiXmlBase()	:	userData(0) {}
+! 
+! 
+! // [CHANGED] Removed
+! //	virtual ~TiXmlBase()					{}
+! // [CHANGED]
+! 
+  
+  	/**	All TinyXml classes can print themselves to a filestream
+  		or the string class (TiXmlString in non-STL mode, std::string
+***************
+*** 462,474 ****
+  	*/
+  	enum NodeType
+  	{
+! 		DOCUMENT,
+! 		ELEMENT,
+! 		COMMENT,
+! 		UNKNOWN,
+! 		TEXT,
+! 		DECLARATION,
+! 		TYPECOUNT
+  	};
+  
+  	virtual ~TiXmlNode();
+--- 493,505 ----
+  	*/
+  	enum NodeType
+  	{
+! 		TINYXML_DOCUMENT,
+! 		TINYXML_ELEMENT,
+! 		TINYXML_COMMENT,
+! 		TINYXML_UNKNOWN,
+! 		TINYXML_TEXT,
+! 		TINYXML_DECLARATION,
+! 		TINYXML_TYPECOUNT
+  	};
+  
+  	virtual ~TiXmlNode();
+***************
+*** 814,819 ****
+--- 845,851 ----
+  	#ifdef TIXML_USE_STL
+  	const std::string& ValueStr() const	{ return value; }				///< Return the value of this attribute.
+  	#endif
++ 	const TIXML_STRING& ValueTStr() const { return value; }
+  	int				IntValue() const;									///< Return the value of this attribute, converted to an integer.
+  	double			DoubleValue() const;								///< Return the value of this attribute, converted to a double.
+  
+***************
+*** 1004,1010 ****
+  		attribute into the specified type. Very easy, very powerful, but
+  		be careful to make sure to call this with the correct type.
+  		
+! 		NOTE: This method doesn't work correctly for 'string' types.
+  
+  		@return TIXML_SUCCESS, TIXML_WRONG_TYPE, or TIXML_NO_ATTRIBUTE
+  	*/
+--- 1036,1042 ----
+  		attribute into the specified type. Very easy, very powerful, but
+  		be careful to make sure to call this with the correct type.
+  		
+! 		NOTE: This method doesn't work correctly for 'string' types that contain spaces.
+  
+  		@return TIXML_SUCCESS, TIXML_WRONG_TYPE, or TIXML_NO_ATTRIBUTE
+  	*/
+***************
+*** 1155,1163 ****
+  {
+  public:
+  	/// Constructs an empty comment.
+! 	TiXmlComment() : TiXmlNode( TiXmlNode::COMMENT ) {}
+  	/// Construct a comment from text.
+! 	TiXmlComment( const char* _value ) : TiXmlNode( TiXmlNode::COMMENT ) {
+  		SetValue( _value );
+  	}
+  	TiXmlComment( const TiXmlComment& );
+--- 1187,1195 ----
+  {
+  public:
+  	/// Constructs an empty comment.
+! 	TiXmlComment() : TiXmlNode( TiXmlNode::TINYXML_COMMENT ) {}
+  	/// Construct a comment from text.
+! 	TiXmlComment( const char* _value ) : TiXmlNode( TiXmlNode::TINYXML_COMMENT ) {
+  		SetValue( _value );
+  	}
+  	TiXmlComment( const TiXmlComment& );
+***************
+*** 1209,1215 ****
+  		normal, encoded text. If you want it be output as a CDATA text
+  		element, set the parameter _cdata to 'true'
+  	*/
+! 	TiXmlText (const char * initValue ) : TiXmlNode (TiXmlNode::TEXT)
+  	{
+  		SetValue( initValue );
+  		cdata = false;
+--- 1241,1247 ----
+  		normal, encoded text. If you want it be output as a CDATA text
+  		element, set the parameter _cdata to 'true'
+  	*/
+! 	TiXmlText (const char * initValue ) : TiXmlNode (TiXmlNode::TINYXML_TEXT)
+  	{
+  		SetValue( initValue );
+  		cdata = false;
+***************
+*** 1218,1231 ****
+  
+  	#ifdef TIXML_USE_STL
+  	/// Constructor.
+! 	TiXmlText( const std::string& initValue ) : TiXmlNode (TiXmlNode::TEXT)
+  	{
+  		SetValue( initValue );
+  		cdata = false;
+  	}
+  	#endif
+  
+! 	TiXmlText( const TiXmlText& copy ) : TiXmlNode( TiXmlNode::TEXT )	{ copy.CopyTo( this ); }
+  	void operator=( const TiXmlText& base )							 	{ base.CopyTo( this ); }
+  
+  	// Write this text object to a FILE stream.
+--- 1250,1263 ----
+  
+  	#ifdef TIXML_USE_STL
+  	/// Constructor.
+! 	TiXmlText( const std::string& initValue ) : TiXmlNode (TiXmlNode::TINYXML_TEXT)
+  	{
+  		SetValue( initValue );
+  		cdata = false;
+  	}
+  	#endif
+  
+! 	TiXmlText( const TiXmlText& copy ) : TiXmlNode( TiXmlNode::TINYXML_TEXT )	{ copy.CopyTo( this ); }
+  	void operator=( const TiXmlText& base )							 	{ base.CopyTo( this ); }
+  
+  	// Write this text object to a FILE stream.
+***************
+*** 1278,1284 ****
+  {
+  public:
+  	/// Construct an empty declaration.
+! 	TiXmlDeclaration()   : TiXmlNode( TiXmlNode::DECLARATION ) {}
+  
+  #ifdef TIXML_USE_STL
+  	/// Constructor.
+--- 1310,1316 ----
+  {
+  public:
+  	/// Construct an empty declaration.
+! 	TiXmlDeclaration()   : TiXmlNode( TiXmlNode::TINYXML_DECLARATION ) {}
+  
+  #ifdef TIXML_USE_STL
+  	/// Constructor.
+***************
+*** 1346,1355 ****
+  class TiXmlUnknown : public TiXmlNode
+  {
+  public:
+! 	TiXmlUnknown() : TiXmlNode( TiXmlNode::UNKNOWN )	{}
+  	virtual ~TiXmlUnknown() {}
+  
+! 	TiXmlUnknown( const TiXmlUnknown& copy ) : TiXmlNode( TiXmlNode::UNKNOWN )		{ copy.CopyTo( this ); }
+  	void operator=( const TiXmlUnknown& copy )										{ copy.CopyTo( this ); }
+  
+  	/// Creates a copy of this Unknown and returns it.
+--- 1378,1387 ----
+  class TiXmlUnknown : public TiXmlNode
+  {
+  public:
+! 	TiXmlUnknown() : TiXmlNode( TiXmlNode::TINYXML_UNKNOWN )	{}
+  	virtual ~TiXmlUnknown() {}
+  
+! 	TiXmlUnknown( const TiXmlUnknown& copy ) : TiXmlNode( TiXmlNode::TINYXML_UNKNOWN )		{ copy.CopyTo( this ); }
+  	void operator=( const TiXmlUnknown& copy )										{ copy.CopyTo( this ); }
+  
+  	/// Creates a copy of this Unknown and returns it.
+***************
+*** 1423,1436 ****
+  	#ifdef TIXML_USE_STL
+  	bool LoadFile( const std::string& filename, TiXmlEncoding encoding = TIXML_DEFAULT_ENCODING )			///< STL std::string version.
+  	{
+- //		StringToBuffer f( filename );
+- //		return ( f.buffer && LoadFile( f.buffer, encoding ));
+  		return LoadFile( filename.c_str(), encoding );
+  	}
+  	bool SaveFile( const std::string& filename ) const		///< STL std::string version.
+  	{
+- //		StringToBuffer f( filename );
+- //		return ( f.buffer && SaveFile( f.buffer ));
+  		return SaveFile( filename.c_str() );
+  	}
+  	#endif
+--- 1455,1464 ----
+Nur in tinyxml-patched/: tinyxml.h~.
+diff -cr tinyxml-old/tinyxmlparser.cpp tinyxml-patched/tinyxmlparser.cpp
+*** tinyxml-old/tinyxmlparser.cpp	2007-05-07 00:41:23.000000000 +0200
+--- tinyxml-patched/tinyxmlparser.cpp	2009-06-18 18:48:01.000000000 +0200
+***************
+*** 422,427 ****
+--- 422,435 ----
+  						 || *p == '_'
+  						 || *p == '-'
+  						 || *p == '.'
++ 
++ 
++ // [CHANGED]
++ 						 || *p == '['
++ 						 || *p == ']'
++ // [CHANGED]
++ 
++ 
+  						 || *p == ':' ) )
+  		{
+  			//(*name) += *p; // expensive
+***************
+*** 1379,1385 ****
+  		value.append( p, 1 );
+  		++p;
+  	}
+! 	if ( p ) 
+  		p += strlen( endTag );
+  
+  	return p;
+--- 1387,1393 ----
+  		value.append( p, 1 );
+  		++p;
+  	}
+! 	if ( p && *p ) 
+  		p += strlen( endTag );
+  
+  	return p;

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Scene Version="1">
+    <Node Class="PLScene::SNCamera" Name="FreeCamera" Position="3.0 0.0 8.0" Rotation="0.0 180.0 0.0">
+        <Modifier Class="PLScene::SNMMouseLookController" />
+        <Modifier Class="PLScene::SNMRotationFixRoll" />
+        <Modifier Class="PLScene::SNMMoveController" Speed="4.0" />
+    </Node>
+    <Node Class="PLScene::SNMesh" Name="Cube" Position="2.0 0.0 0.0" Mesh="Create PLMesh::MeshCreatorCube Material='Create PLRenderer::TextureCreatorRandom2D'" />
+    <Node Class="PLScene::SNMesh" Name="Cube" Position="4.0 0.0 0.0" Mesh="Create PLMesh::MeshCreatorCube Material='Create PLRenderer::TextureCreatorSpot2D'" />
+</Scene>

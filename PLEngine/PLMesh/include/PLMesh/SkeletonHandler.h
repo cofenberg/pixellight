@@ -1,0 +1,322 @@
+/*********************************************************\
+ *  File: SkeletonHandler.h                              *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLMESH_SKELETONHANDLER_H__
+#define __PLMESH_SKELETONHANDLER_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/Container/Array.h>
+#include <PLCore/Tools/ResourceHandler.h>
+#include "PLMesh/Joint.h"
+#include "PLMesh/JointHandler.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGraphics {
+	class Color4;
+}
+namespace PLRenderer {
+	class Font;
+	class Renderer;
+}
+namespace PLMesh {
+	class Skeleton;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLMesh {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Skeleton handler code
+*
+*  @remarks
+*  @verbatim
+*    Skeleton handler animation example:\n
+*    ResetJointStates();           // Reset current joint states\n
+*    ApplyJointStates(2, 3, 0.5f); // Apply frame 2.5 of the skeleton animation to the current joint states\n
+*    ApplyJointStates(cRun);       // Apply the current joint states of the skeleton animation handler\n
+*                                  // cRun to the current joint states. Note that we want to add the delta \n
+*                                  // values from cRun, so, within this handler the base joint states are NOT added!\n
+*    ApplyBaseJointStates();       // Apply base joint states to get the final pose\n
+*    CalculateStates();            // Complete the current joint states
+*  @endverbatim
+*/
+class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLMESH_API SkeletonHandler();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLMESH_API virtual ~SkeletonHandler();
+
+		/**
+		*  @brief
+		*    Draws the joints
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cColor
+		*    Color to use
+		*  @param[in] mWorldViewProjection
+		*    World view projection matrix to use
+		*  @param[in] fPointSize
+		*    Point size
+		*/
+		PLMESH_API void DrawJoints(PLRenderer::Renderer &cRenderer, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mWorldViewProjection, float fPointSize = 1.0f) const;
+
+		/**
+		*  @brief
+		*    Draws the joint names
+		*
+		*  @param[in] cFont
+		*    Font to use
+		*  @param[in] cColor
+		*    Color to use
+		*  @param[in] mWorldViewProjection
+		*    World view projection matrix to use
+		*/
+		PLMESH_API void DrawJointNames(PLRenderer::Font &cFont, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mWorldViewProjection) const;
+
+		/**
+		*  @brief
+		*    Draws the skeleton
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cColor
+		*    Color to use
+		*  @param[in] mWorldViewProjection
+		*    World view projection matrix to use
+		*  @param[in] fLineWidth
+		*    Line width
+		*/
+		PLMESH_API void DrawSkeleton(PLRenderer::Renderer &cRenderer, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mWorldViewProjection, float fLineWidth = 1.0f) const;
+
+		//[-------------------------------------------------------]
+		//[ Joint states                                          ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns the current joint handlers
+		*
+		*  @return
+		*    Current joint handlers
+		*/
+		PLMESH_API PLGeneral::Array<JointHandler> &GetJointHandlers();
+		PLMESH_API const PLGeneral::Array<JointHandler> &GetJointHandlers() const;
+
+		/**
+		*  @brief
+		*    Returns a joint handler by name
+		*
+		*  @param[in] sJointName
+		*    Name of the joint to return the handler from
+		*
+		*  @return
+		*    Joint handler, NULL on error
+		*/
+		PLMESH_API JointHandler *GetJointHandler(const PLGeneral::String &sJointName) const;
+
+		/**
+		*  @brief
+		*    Returns the base joint handlers
+		*
+		*  @return
+		*    Base joint handlers
+		*/
+		PLMESH_API PLGeneral::Array<JointHandler> &GetBaseJointHandlers();
+
+		/**
+		*  @brief
+		*    Returns a base joint handler by name
+		*
+		*  @param[in] sJointName
+		*    Name of the base joint to return the handler from
+		*
+		*  @return
+		*    Base joint handler, NULL on error
+		*/
+		PLMESH_API JointHandler *GetBaseJointHandler(const PLGeneral::String &sJointName) const;
+
+		/**
+		*  @brief
+		*    Resets all current joint states
+		*
+		*  @param[in] bForceAll
+		*    If 'true', user controlled joints are reset, too
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*/
+		PLMESH_API bool ResetJointStates(bool bForceAll = false);
+
+		/**
+		*  @brief
+		*    Resets all base joint states to the skeleton 'orginal' base joint states
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*/
+		PLMESH_API bool ResetBaseJointStates();
+
+		/**
+		*  @brief
+		*    Applies the joint states from the given skeleton animation frame
+		*    to the current joint states
+		*
+		*  @param[in] nFrame
+		*    Skeleton animation frame
+		*  @param[in] fWeight
+		*    Weight (0.0-1.0)
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*/
+		PLMESH_API bool ApplyJointStates(PLGeneral::uint32 nFrame, float fWeight = 1.0f);
+
+		/**
+		*  @brief
+		*    Applies the blended joint states from the given joint animation frames
+		*    to the current joint states
+		*
+		*  @param[in] nFrame1
+		*    Skeleton animation frame 1
+		*  @param[in] nFrame2
+		*    Skeleton animation frame 2
+		*  @param[in] fTime
+		*    Skeleton animation time (0.0-1.0)
+		*  @param[in] fWeight
+		*    Weight (0.0-1.0)
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*/
+		PLMESH_API bool ApplyJointStates(PLGeneral::uint32 nFrame1, PLGeneral::uint32 nFrame2, float fTime, float fWeight = 1.0f);
+
+		/**
+		*  @brief
+		*    Applies the current joint states from the given joint handler
+		*    to the current joint states
+		*
+		*  @param[in] cSkeletonHandler
+		*    Skeleton handler to use
+		*  @param[in] fWeight
+		*    Weight (0.0-1.0)
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*
+		*  @note
+		*    - In order to apply the pSkeletonHandler joint states correctly, it should
+		*      only consist of deltas. (ApplyBaseJointStates() not done...)
+		*/
+		PLMESH_API bool ApplyJointStates(SkeletonHandler &cSkeletonHandler, float fWeight = 1.0f);
+
+		/**
+		*  @brief
+		*    Applies the base joint states to the current joint states
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*/
+		PLMESH_API bool ApplyBaseJointStates();
+
+		/**
+		*  @brief
+		*    Calculates all current absolute joint states
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
+		*
+		*  @note
+		*    - Before applying this skeleton handler on for instance a mesh you have to call
+		*      this function to calculate all current absolute joint states!
+		*/
+		PLMESH_API bool CalculateStates();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Recursive joint state calculations
+		*
+		*  @param[in] cJointHandler
+		*    Current joint handler to process
+		*  @param[in] pParentJointHandler
+		*    Current parent joint handler to process, can be NULL
+		*/
+		void RecCalculateStates(JointHandler &cJointHandler, JointHandler *pParentJointHandler = NULL);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::Array<JointHandler> m_lstBaseJointHandlers;	/**< Base joint handlers */
+		PLGeneral::Array<JointHandler> m_lstJointHandlers;		/**< Current joint handlers */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLCore::ResourceHandler functions      ]
+	//[-------------------------------------------------------]
+	public:
+		PLMESH_API virtual bool SetResource(Skeleton *pResource = NULL);
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLMesh
+
+
+#endif // __PLMESH_SKELETONHANDLER_H__

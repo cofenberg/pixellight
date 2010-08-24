@@ -1,0 +1,2942 @@
+>> 30.07.2010
+[CO]
+- MeshLoaderPLXml kann nun genauso viel wie MeshLoaderPL
+
+
+
+>> 29.07.2010
+[CO]
+- MeshLoaderPLXml: Laden der Mesh Daten ist nun implementiert, Skelett & Animations Daten einlesen folgt noch
+
+
+
+>> 23.07.2010
+[CO]
+- "ShadowMesh" entfernt da irgendwie unbrauchbar. Für Shadow Volumes machte es damals wirklich Sinn ein seperates Mesh für Schatten zu haben
+  so das möglichst keine doppelten Vertices vorhanden waren - ansonnsten sah man in den Schatten schnell sehr unschöne "Risse". (Rechenungenauigkeiten)
+  Bei Shadow Mapping brachte das nicht mehr wirklich viel Vorteile - ein großer Nachteil blieb allerdings, und der Nachteil wird immer heftiger je
+  komplexer Meshes werden: Das erzeugen des optimierten Shadow Meshes. Das dauerte schonmal Sekunden bis hin zu Minuten. Ich hätte nun versuchen
+  können das nochmal neu und performanter zu machen - da wir das aber nicht wirklich brauchen spar ich mir die Arbeit. Die entfernte Klasse ist im
+  Archive unter "Removed_PLMesh_ShadowMesh_23072010.zip" zu finden.
+
+
+
+>> 18.07.2010
+[CO]
+- XML basierendes Mesh PixelLight Dateiformat hinzugefügt, Dateiendung ist "xmesh" statt "mesh" für Binäre Dateien
+	-> Laden muss noch implementiert werden
+
+
+
+>> 17.06.2010
+[CO]
+- Da PLRenderer nicht länger von PLGui abhängig ist, ist auch PLMesh nicht länger abhängig von PLGui
+
+
+
+>> 14.03.2010
+[CO]
+- "MeshConfig" entfernt, "TextureQuality", "TextureMipmaps" und "TextureCompression" liegen nun in "PLEngine::RendererConfig" wo man
+  diese Einstellungen wohl eher vermuten würde weilse dort einfach richtig reinpassen. :D
+
+
+
+>> 03.08.2009
+[CO]
+- "MeshCreator" Implementationen: Fügte wie von Stefan vorgeschlagen überall noch einen "Offset" hinzu
+
+
+
+>> 08.06.2009
+[SB]
+- MeshCreatorCylinder: Über die Option 'Closed' kann nun bestimmt werden, dass der Zylinder geschlossen sein soll, also oben
+  und unten noch jeweils eine Ebene auf den Zylinder gesetzt wird.
+- MeshCreatorCappedCylinder: 'Offset'-Vektor hinzugefügt.
+- MeshCreatorCylinder: Die eine Kappe des Zylinders musste noch gedreht werden, damit sie nach aussen zeigt und somit auch ohne
+  TwoSided-Material sichtbar ist.
+
+
+
+>> 31.05.2009
+[SB]
+- MeshCreatorCylinder: Einen zusätzlichen Vector 'Offset' hinzugefügt, durch den man den Mittelpunkt des erstellten Kegels
+  beeinflussen kann. Für Testzwecke ist (0, 0, 0) im Schwerpunkt des Objektes ja sehr sinnvoll, aber wenn man z.B. einen
+  Lichtkegel anzeigen möchte, will man z.B. den Nullpunkt an der "Spitze" des Kegels haben, damit das positionieren und
+  rotieren nicht unnötig verkompliziert wird.
+
+
+
+>> 30.05.2009
+[SB]
+- MeshCreatorCylinder: So verändert, dass der Triangle-Strip wirklich geschlossen ist, also die letzten beiden Indizes
+  wieder auf die ersten beiden Vertices zeigen. Bisher wurde bis 2*pi durchgerechnet, so dass die letzten beiden Vertices
+  rechnerisch mit den ersten beiden Vertices zusammen fallen müssten, was aber aufgrund von Rechenungenauigkeiten nicht
+  immer der Fall ist. Dadurch entstand eine kleine Lücke, die nun nicht mehr vorhanden ist.
+
+
+
+>> 06.05.2009
+[CO]
+- "MeshHandler::Update()": Hier muss umbedingt vermieden werden das das Mesh "ständig" aktualisiert wird sobald es
+  ein Animation Manager besitzt - auch wenn sich rein gar nichts änderte.
+  Dieses "nur aktualisieren wenn nötig" ist allerdings hier enorm Tricky da das System sehr "offen" ist und Mesh
+  Daten sogar komplett von außen über den Mesh Manager und nicht über einen Mesh Handler verändert werden können.
+  Darum ist hier ein komplett "vor dem Benutzer verborgenes Update-System" nicht möglich. Funktionen wie z.B.
+  "GetBaseMorphTargetWeights()", "GetMorphTargetWeights()" und Animations-Änderungen setzen zur Sicherheit selbständig
+  das 'Dirty'-Flag. Ändert man hingegen "direkt" das Mesh, so kann man das leider nicht mitbekommen da wir solche
+  Änderungen nicht bis runter in den Vertex Buffer mitverfolgen können. Hier muss der Benutzer, wenn er durch
+  den "MeshHandler durchgreift" und Dinge macht die etwas tiefer in die Materie gehen "MeshUpdateRequired()"
+  aufrufen damit der Mesh Handler weis das er seinen interen Vertex Buffer aktualisieren muss. Das sollte aber eher
+  selten der Fall sein das man diese Funktion per Hand aufrufen muss.
+  Ich habe diese Änderung im Grunde bereits vor einer Woche gemacht und das bis jetzt liegen lassen um nochmal etwas
+  drüber nachzudenken ob es nicht anderst geht, mir fällt aber nichts besseres ein... und ständiges Update ist
+  leider KEINE Option da es einfach zuviel Performance verheizt. :/
+- "AnimationManager" in "MeshAnimationManager" umbenannt da es auch nicht Mesh bezogene "AnimationManager" geben
+  kann
+- "MeshHandler" hört auf das "PLRenderer::AnimationManager::EventAnimationFrameChange"-Event und setzt das
+  "mesh update required"-Flag
+
+
+
+>> 10.04.2009
+[CO]
+- "MeshHandler::GetBoundingBox()" & "MeshHandler::GetBoundingSphere()" entfernt da hier im Grunde überflüssig, das
+   wird besser in einer 'darüberliegenden Schicht' gemanaged. "MeshHandler::SetMesh()" geht dadurch flotter da hier
+   bis jetzt unnötigerweise immer noch die Mesh Bounding Box und Bounding Sphere ermittelt wurde obwohl nie benötigt.
+
+
+
+>> 02.04.2009
+[CO]
+- "MeshHandler::FindTriangle()" um weiteren optionalen Parameter erweitert über den man bestimmen kann welche
+  Geometrien berücksichtigt werden sollen
+
+
+
+>> 27.03.2009
+[CO]
+- "MeshManager" ist kein Singleton mehr, "PLEngine::SceneContext" hält nun eine "MeshManager"-Instanz
+- "MeshHandler::Load()" nach "MeshManager::LoadMesh()" verschoben da "MeshHandler" selbst nicht weis wo der/die "MeshManager"
+  liegt/liegen...
+- "MeshCreator:Create()" bekommt nun eine Referenz auf ein bereits vorhandenes Mesh und weis dadurch was vom "MeshManager"
+
+
+
+>> 26.03.2009
+[CO]
+- "SkeletonManager" ist kein Singleton mehr, "MeshManager" hält nun eine "SkeletonManager"-Instanz da ich einen "MeshContext"
+  für unnötig halte...
+
+
+
+>> 24.03.2009
+[CO]
+- "MeshHandler": Parameter im Konstruktor entfernt, der Renderer wird intern automatisch gesetzt sobald ein Mesh
+  gesetzt wird
+
+
+
+>> 26.02.2009
+[CO]
+- 'MeshLODLevel': Neue Funktionen: 'CalculateBoundingBox()' & 'CalculateBoundingSphere()' -> Berechnen eine Bounding Box/Sphere die gegebenen
+  Geometrien umschließt
+
+
+
+>> 19.02.2009
+[CO]
+- 'ShadowMesh::ShadowMesh()': Für das Füllen der Shadow Maps verwende ich spezielle Shadow Meshes und nicht die
+  Meshes die auch zum 'sichtbaren normalen' Zeichnen genutzt werden. Dadurch wird u.a. der Datentransfer beim
+  Shadow Map erzeugen etwas reduziert... derzeit werden hier allerdings auch noch Beziehungen von Dreiecken und
+  Kanten Informationen berechnet was bei größeren Meshes natürlich seine Zeit in Anspruch nimmt - da wir die Infos
+  aber derzeit nicht benötigen und das zu lang dauert hab ich dieses Feature erstmal auskommentiert... das muss
+  später wenn nötig 'on demand' passieren.
+
+
+
+>> 30.12.2008
+[CO]
+- MeshHandler::FindTriangle(): Autsch, böser Bug: Hatte bei den optimierten Varianten vergessen den Index-Offset von Geometrien zu berücksichtigen
+  ... darum klappte Picking hin und wieder nicht...
+
+
+
+>> 04.11.2008
+[CO]
+- MeshLoaderPL::ReadMeshFile(): Das 'überspringen' unbekannter Chunks war fehlerhaft da 'Size' eines Chunks
+  die 'gesammte' Chunk Byte größe ist, also INKLUSIVE des 8 Byte Chunk Headers. Machte die Dokumentation
+  in 'MeshFile::Chunk' entsprechend genauer.
+- 'MeshLoaderPL::ReadMeshFile()' -> 'nPos' entfernt da nicht wirklich noch sinnvoll
+
+
+
+>> 18.10.2008
+[CO]
+- MeshHandler::FindTriangle(): Etwas optimiert indem mit 'Squared Distance' statt mit 'Distance' gearbeitet wird - so spart man sich
+  langsames Wurzel ziehen + es wird nun 'direkt' auf dem Vertex Buffer gearbeitet anstatt ständig die Vertex Buffer Funktionen zu
+  nutzen. Bei dieser Funktion kann & muss man noch deutlich mehr optimieren da dies sehr schnell zum Flaschenhals wird - aber das hier
+  waren nun erstmal Dinge die ohne viel Chaos gemacht werden konnten. :D
+
+
+
+>> 24.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 16.05.2008
+[CO]
+- "Nicht PL" Mesh und Skeleton Loader in neues "PLDefaultFileFormats"-Projekt verschoben
+- Wie besprochen 'Mesh'-Unterordner entfernt da mittlerweile nicht mehr nötig
+
+
+
+>> 06.04.2008
+[CO]
+- 'Texture', 'Shader', 'Effect', 'Material' + ein paar Animations-Klassen (da von 'Texture' benötigt) von PLMesh nach PLRenderer verschoben. Passte
+  alle Projekte entsprechend an so das alles wieder lauffähig ist.
+
+
+
+>> 04.04.2008
+[CO]
+- Material Klasse minimal erweitert: Ein Material kann intern nun weitere Materialien haben - auf den ersten Blick mag das
+  'merkwürdig' aussehen, ein Grafiker mag eventuell sofort an '3ds Max Multi-Material' denken... aber das ist im Grunde
+  nur eine einfache konsequente Weiterentwicklung eines Konzeptes das voll und ganz positiv aufgegangen ist. Ein Material
+  kann dazu genutzt genutzt werden um 'Effect'-Parameter zu 'variieren' ohne immer den gesammten Effekt neu zu schreiben.
+  Es werden also nur 'Parameter überschrieben' wenn man es so sehen will. Oder man gibt nur Parameter ohne Effekt an um
+  allgemeine Material Eigenschaften universell zu beschreiben ohne aber vorzugeben WIE konkret diese umgesetzt werden MÜSSEN -
+  z.B. ein Scene Renderer interpretiert diese Parameter dann.
+  Genau das habe ich nun weiterverfolgt so das ein Material ein paar 'eigene' Parameter haben kann, und weitere 'Einstellungen'
+  die immer für bestimmte Dinge gleich sein sollten' von einen anderen Material 'übernimmt'. Ein Material ist und bleibt
+  also im Grunde ein einfache anhäufung von Parametern, aber nicht alle müsse direkt in einem einigen Material vorliegen.
+  Ich habe das natürlich nicht aus reinem selbstzweck Implementiert da sich 'theoretisch dadurch neue Möglicheiten eröffnen
+  könnten und anderes vereinfacht werden könnte', sondern der Wunsch dafür entstand beim überarbeiten des 3ds Max Scene
+  Exporter LightMaps Tutorials. Viele Meshs teilen sich ein und das selbe Material, z.B. 'Brick.mat'. Arbeite ich nun aber
+  mit Lightmaps kann ein Parameter, nämlich 'LightMap' von Mesh zu Mesh varieren während aber alles andere gleich bleibt
+  und auch gleich bleiben muss da es 'ja eigentlich alles das gleiche Material ist'.
+  Bis jetzt wurde das so gehandhabt das einfach das gesammte Material dupliziert wurde und 'nur' ein einziger Parameter
+  einen neuen Wert bekam... aber wenn ich nun 'Brick.mat' als solches verändern wollte, musste ich die Änderung ebenfalls
+  in ALLEN Kopien nochmal von Hand machen was einfach zu viel Zeit und Nerven kostet. *g*
+  Dazu kommt noch das 3ds Max 'automatisch' die Material Namen ändert wenn ich Lightmaps erzeugen lasse + es trotzdem am
+  Ende Namens konflikte gibt so das das arbeiten mit Lightmaps aus 3ds Max heraus ein reines Chaos war das Nerven und Zeit
+  ohne Ende kostete. Diese Problematik köchelte nun schon sehr lange vor sich hin und ich konnte nicht wirklich ein schöne
+  Lösung finden mit der ich Leben könnte... bis auf vorhin als ich damit anfing das entsprechende Tutorial zu überarbeiten.
+  "Einfach wie gehabt LightMap im per-Instance-Material setzen, ABER die restlichen Parameter Einstellungen von dem Origial
+  Material anfragen ohne diese selbst zu Verwalten". Gesagt getan. Funktioniert ganz wunderbar.
+  Dadurch das von außen üblicherweise nur "Material::GetParameter()" genutzt wird musste auch nix groß angepasst werden.
+  Diese Funktion schaut wie bisher ob der Parameter direkt im Material definitert ist. Falls das nicht der Fall ist, wird
+  nicht sofort geschaut ob ein Effekt vorhanden ist und ob dort eventuell so ein Parameter liegt - sondern es wird zuerst
+  eine Liste mit Materialien durchlaufen und geschaut ob der angefragte Parameter dort zu finden ist. Im Grunde also eine
+  sehr Elegante und vorallem einfache Lösung. :D
+
+
+
+>> 12.02.2008
+[CO]
+- Nahm 'TriStripper'-Lib 'erstmal' komplett raus. Die aktuelle Version von http://users.pandora.be/tfautre/softdev/tristripper/
+  konnte man wie es sein sollte als statische Lib übersetzen. Dies ging auch Problemlos - was dann aber überhaupt nicht problemlos
+  ging war das einbinden in PLMesh. Ich bekam haufenweise std Linker Fehler die ich schlichtweg nicht beseitigen konnte, nach
+  einer Stunde gab ichs auf und warf das kurzerhand komplett raus - das war mir dann einfach zu Dämlich.
+
+
+
+>> 27.12.2007
+[CO]
+- Texture::Load(): Rectangle Texturen sollten natürlich ebenfalls die Flags korrekt übergeben werden...
+
+
+
+>> 19.10.2007
+[CO]
+- Einige 'const' eingefügt
+
+
+
+>> 07.10.2007
+[CO]
+- Versuchte AnimationManagerSoftware-Implementation etwas überschaubarer zu machen... Performance mäßig kein unterschied
+- [TODO]-Punkte von SNMMeshJoint abgearbeitet. Es ist nun möglich die Rotation zu limitieren so das sich z.B. ein Kopf nicht
+  um 360° drehen kann. Die Rotation wird zudem nun nicht mehr direkt auf 'Ziel' gesetzt sondern wird 'weich' Interpoliert.
+  Anhand der SKD Beispiel-Szene 'SceneNodeModifiers.scene' und 'PhysicsCharacterController.scene' (konnte nicht wiederstehen *g*)
+  kann man gut sehen das die Implementation nun recht gut funktioniert.
+
+
+
+>> 21.09.2007
+[CO]
+- Material::Load(): Hat ein Material keinen speziellen Effekt, so wird nun Standardmäßig nicht mehr versucht einen passenden
+  Default-Effekt zu finden. Dieses 'automatische Effekt finden'-Sache war zwar recht nett während das mit den Szene Renderern
+  noch in der schwer Experimentellen Phase war, da die Szene Renderer mittlerweile jedoch recht brauchbar sind und das Konzept
+  bis jetzt erstaunlich gut klappt, machte das mit diesen Standard-Effekten eher probleme als Nutzen zu bringen. Normalerweise
+  sollte man immer versuchen keine eigenen 'Effekte' zu erzwingen, sondern lieber die verschiedenen Szene Renderer ihren Job
+  selbst machen lassen da diese den besten Überblick haben wie was am optimalsten Darzustellen ist. 'Effekte' sind eher für
+  superspezielle Materialien gedacht, nutzt man soetwas hat man die 'volle Kontrolle' darüber WIE das Material gerendert wird...
+  + natürlich auch einiges (nicht unbedeutende) Nachteile. (Komplexität, kein "Unified Lighting & Shadowing"...)
+  Am "02.06.2006" als ich das System ausarbeitete hatte ich dazu genauers geschrieben.
+  Die 'Effekt-Strings' in EffectManager lies ich erstmal drinnen, auch wenn diese innerhalb von PL nicht wirklich verwendet
+  werden... allerdings könnten diese recht handlich sein wenn man 'mal schnell' was einfaches in der Richtung machen will.
+  Mittlerweile spricht nicht mehr wirklich etwas dagegen IMMER 'SRShaderLighting' zu nutzen da dieser Szene Renderer jede Menge
+  an Funktionalität bring und recht skalierbar ist. 'SRBasic' und 'SRBasicLighting' bleiben allerdings drinnen damit man auch ein
+  paar supereinfache Szene Renderer hat wo man davon ausgehen kann das dieses auf im grunde jedem Computer halbwechs ordentlich
+  laufen. (außer man hat eine Kiste aus den absoluten Anfängen der Computerei *g*)
+- SNMesh::LoadSkin(): Ist als 'Skin' nur eine einfache Textur gegeben, wird diese für ALLE Materialien verwendet, nicht nur
+  für das erste... will man mehr Kontrolle, so muss man sich eine 'skin'-Datei anlegen.
+
+
+
+>> 19.09.2007
+[CO]
+- Parameter: GetValue1f() hinzugefügt welches direkt den Wert als float zurückgibt... recht praktisch und konsistent zu den
+  anderen Funktionen.
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 14.09.2007
+[CO]
+- MeshHandler: Neue Debug-Funktionen: 'DrawTangents()' & 'DrawBinormals()' -> Damit kann man sich die Tangent und Binormal
+  Vektoren Visualisieren lassen
+
+
+
+>> 10.09.2007
+[CO]
+- Nahm heute endlich mal die 'Collision Boxes' aus der Mesh Klasse. Das war schon seit Jahren nicht mehr richtig Implementiert
+  und bis jetzt gabs auch keinen Grund dafür das wieder sauber zu machen... das ist irgendwie einfach absolut unnötig. Was
+  Sinnvoll sein 'könnte', wäre eine Bounding Box pro Geometry, oder pro Joint... ist aber derzeit auch nicht wirklich wichtig
+  und darum mache ich in der Richtung auch erstmal nix.
+
+
+
+>> 08.09.2007
+[CO]
+- XRootBinary-Konstruktor: ... Runtime-Stack...
+
+
+
+>> 26.08.2007
+[CO]
+- Nachdem ich mich gestern etwas mit 'Normal Map Compression' beschäftigte und ich Ideen wie man das in PL handhaben könnte
+  Abens kurz mit Jens (da er ja damit arbeiten muss :) durchlaberte, machte ich mich heute daran etwas brauchbares zu Realisieren.
+  Dafür änderte ich etwas die art 'wie' bzw. 'wann' Texturen Komprimiert werden. Bis jetzt wurden automatisch alle Texturen
+  komprimiert, außer es war für eine Textur über eine 'plt'-Datei ausdrücklich verboten oder Textur Kompression was generell
+  deaktiviert. Man musste sich also nicht wirklich groß drum kümmern, hatte dafür aber auch nicht wirklich viel Kontrolle.
+  Aber gerade wenns um z.B. 'Normal Map Compression' geht, braucht man sehr wohl Kontrolle bei der Thematik. Da wir mittlerweile
+  wo es geht immer nur dds-Texturen nutzen die direkt Komprimierte Daten liefern können, baute ich das nun so um das 'standardmäßig'
+  das genutzt wird das die geladenen Daten nutzen. Daten werden also beim laden nicht automatisch verändert, sondern so wie
+  gegeben übernommen. Hat den großen Vorteil das sich z.B. ein Grafiker beim ersten anschaun in PL nicht wundern muss das
+  seine Textur an bestimmten Stellen nicht genauso aussieht wie er es gemacht hatte da es durch eine automatisch Kompression
+  verfälscht wurde. Lade ich nun also z.B. eine 'tga' Textur ein, liegen die Daten NICHT automatisch komprimiert auf der
+  GPU, sondern bei solchen Formaten wird als Standard nicht komprimiert. Verwende ich hingegen ein Format das DXT-Kompression
+  kennt wie z.B. dds, wird als standard versucht diese Kompression zu übernehmen. Ist die dds Datei also z.B. in DXT5 komprimiert,
+  wird das direkt automatisch übernommen. Ist in z.B. DXT4 komprimiert, was wir nicht unterstützen, so wird dekomprimiert.
+  Damit man das ganze noch etwas im Detail steuern kann wenn das absolut nötig ist, kann man Kompression wie gehabt in 'plt'
+  Datein Einstellen... nun aber nicht mehr über einen einfachen Boolschen Wert, sondern dort kann man nun 'Default', 'DXT1',
+  'DXT3', 'DXT5', 'DXT5_xGxR' oder 'None' Eintragen. Ist nix eingetragen, wird 'Default' verwendet. Trägt man 'None' ein,
+  wird nie komprimiert, und wenn die Datei in z.B. der dds Datei bereits komprimierz sind, werden diese dekomprimiert.
+  Über 'DXT1', 'DXT3', 'DXT5' kann man ein bestimmtes Kompressions Format 'erzwingen'. 'DXT5_xGxR' ist ein Spezialfall der
+  aussagt das die Daten 'DXT5' komprimiert sind, oder werden sollen, aber 'Swizzled DXT5' verwendet wird. Sprich, das ist
+  eine mittlerweile recht gänige Art wie man Normal Maps Komprimieren kann und z.B. 'The Compensator' von ATI unterstützt
+  dieses Format dirkt, so das Grafiker sehr komfortabel damit arbeiten können. Da bei DXT5 grün mehr Bits hat als die anderen
+  Komponenten + Alpha nicht stark komprimiert wird, werden dort x und y von normalisierten Vektoren abgelegt. In den Shadern
+  muss dieses spezielle Format berücksichtig werden und der Normalen Vektor errechnet werden was aber nicht viel aufwand ist.
+  Zwar gibt es mittlerweile spezielle Kompressions Format für Normal Maps, jedoch gehen die jeweils nur auf bestimmten GPU's
+  von bestimmten Herstellern + ich kann das nicht testen da meine Karte das überhaupt nicht kann. Darum entschied ich mich
+  gegen die verwendung eines solchen Formats, und für etwas 'universelles'.
+  Somit haben wir nun eigentlich in Sachen Texturen alles was man so braucht. Im Falle von Normal Maps kann man wie gehabt
+  'übliche' Texturen nutzen die z.B. in 'tga' gespeichert sind. In dem Fall hätte man unkomprimierte Normal Maps die viel
+  Speicher auf der GPU belegen, aber GENAU das sind was der Grafiker erstellt hat. Speichert ein Grafiker das in dds als
+  z.B. DXT1, wird das übernommen - das ist dann im Verwantwortungsbereich des jeweiligen Grafikers, der dann z.B. sagt das
+  dies ok ist da es bei einer bestimmten Normal Map nicht wirklich auffällt. Soll eine Normal Map komprimiert sein, aber
+  keinen zu großen Qualitätsverlust haben den man bei diesen Maps SEHR schnell sehen kann, so konvertiert man diese Textur
+  über z.B. 'The Compensator' ins 'DXT5 xGxR'-Format und legt der Normal Map eine 'plt'-Datei bei die PL mitteilt das die
+  Textur so gespeichert ist.
+- Material::Load(): Support für Normal Map Kompression hinzugefügt
+- Textur-Klassen Kommentar etwas erweitert
+- EffectManager::SetRenderer(): Hier wird nur noch ein Default-Effekt geladen, und nicht mehr mehrere... weis gar nicht
+  mehr warum ich das damals Einbaute, auf jedenfall iss das irgendwie ziemlich unnötig. :D
+- EffectTechnique: Destruktor muss natürlich NICHT virtual sein, hatte ich gestern gar nicht gemerkt
+
+
+
+>> 24.08.2007
+[CO]
+- EffectPassLayer: Destruktor muss natürlich NICHT virtual sein :D
+- Nahm Effect::Technique heraus und machte es zu einer eigenen Klasse Namens 'EffectTechnique'. Das ist so herum um einiges
+  übersichtlicher und macht weniger Probleme. Dadurch können ein paar unschöne [TODO] raus + man muss den EffectPass-Header
+  nicht mehr einbinden.
+- EffectPass: Konstruktur und Destruktur endlich privat gemacht, '=='-Operator entfernt
+
+
+
+>> 31.07.2007
+[CO]
+- Verbrachte die letzten Tage (ok, iss mittlerweile ne Woche draus geworden *g*) damit einen 'richtigen' x-Format importer
+  zu schreiben - bis jetzt hatten wir nur etwas höchst dürftiges und Experimentelles. Ich brauchte etwas länger da dieses
+  Format leider 'minimal' umständlich ist und zudem davon Binär & Text Versionen vorhanden sind, die jedoch im Grunde
+  gleich sind. Je mehr ich mich mit der Sache beschäftigte, desto klarer Kristalisierte sich heraus das ein paar
+  Hilfs-Klassen her mussten damit das halbwechs vernümpftig und übersichtlich zu Implementieren ist:
+  - In den 'XProcessor'-Dateien befinden sich Hilfs-Klassen um die Informationen aus einer Binär- oder Text-Datei auszulesen
+    so das 'MeshLoaderX' nur noch diese Informationen verarbeiten muss anstatt sich auch noch darum zu kümmern 'wie' man
+    überhaupt an diese Informationen kommt.
+  - In den 'XBinaryParser'-Dateien befinden sich Hilfs-Klassen um eine x-Binär-Datein in einzelne 'Token' zu zerlegen die man
+    dann weiterverarbeitet. Dies wird nur von 'XProcessorBinary' genutzt, aber ohne diese seperate Hilfs-Klasse wäre das etwas
+    unübersichtlich geworden.
+  Durch diese Aufgabenteilung ist die Implementation von 'MeshLoaderX' recht kompakt und übersichtlich geworden... +
+  da dieses Format Hierarisch ist und Instanzing unterstützt eignet es sich ebenfalls auch als Scene-Format...
+  Animationen fehlen noch + ein paar kleinigkeiten sind noch nicht ganz optimal, (das format lässt leider SEHR viele Freiheiten
+  die man alle berücksichtigen muss) das werde ich dann demnächst angehen - aber der erste x-Teil iss endlich soweit fertisch.
+  *schweiß von der Stirn wisch*
+
+
+
+>> 20.07.2007
+[CO]
+Heute morgen war meine letzte Prüfung des 2'ten Semesters - ab jetzt steht erstmal wieder PL rund um die Uhr an... bin
+schon schwer gespannt wieviel von meiner ToDo-Liste ich in der Vorlesungsfreien Zeit abarbeiten kann. ;-)
+- Header Dateien nochmals durchgeschaut und Kommentare verbessert/aktualisiert, const eingefügt, Zeiger zu Referenzen gemacht
+  wo möglich/sinnig, unnötige Leerzeichen/Tabs entfernt, hier und da ein paar Funktionen verschoben damit die Reihenfolge in
+  der Header und Source Datei gleich ist.
+
+
+
+>> 23.05.2007
+[CO]
+- Gleiche Änderungen wie gestern
+
+
+
+>> 22.05.2007
+[CO]
+- Gleiche Änderungen wie gestern
+
+
+
+>> 21.05.2007
+[CO]
+Effekt-Komponente:
+- Ein paar 'const' eingefügt
+- Ein paar Konstruktoren & Destruktoren hinzugefügt, ein paar Dinge 'private' gemacht + sichergestellt das in den Konstruktoren
+  auch ohne RTTI alle Variablen korrekt Initialisiert werden
+- Ein paar Zeiger zu Referenzen gemacht damit man den 'NULL'-Fall wo überhaupt nicht möglich auch nicht berücksichigen muss
+- EffectPass-Interface aufgeräumt
+-> Uh, merkte gerade das durch diese säuberungen in der Beispiel-Szene 'PhysicsPlayground.scene' der merkwürdige Grafik-Bug
+   mit teils falsch gesetzten States verschwunden ist sobald das Wasser sichtbar wurde... das zeigt mal wieder deutlich das
+   es sich definitiv lohnt immer mal wieder klar Schiff zu machen. *g*
+
+
+
+>> 10.05.2007
+[CO]
+- Sortierte ins Diary so richtig alte Einträge aus "PLSDK/internal/old_diaries.zip" ein
+
+
+
+>> 09.05.2007
+[CO]
+- Alte Diary Einträge von ab "21.03.04" einsortiert
+
+
+
+>> 13.04.2007
+[CO]
+- Einige 'return' entfernt
+- Im Konstruktor von 'Mesh' wurden standardmäßig bereits ein paar Infos generiert, welche aber in den meisten Fällen durch
+  z.B. Loader oder Creator Klassen sofort wieder gelöscht wurden nur um diese kurz darauf nochmal selbst anzulegen. Daher
+  nahm ich das erzeugen einiger Standard Daten aus dem Mesh Konstruktor. Passte alles entsprechend an + fügte bei Verwendung
+  von GetLODLevel() + GetMorphTarget() Sicherheitsabfragen ein. (einige Stellen fehlen noch...)
+
+
+
+>> 07.04.2007
+[CO]
+- MeshLoaderMd5 & SkeletonAniLoaderMd5 & MeshLoaderMd2 & MeshLoaderQ3Bsp in das neue PLPlugins Projekt
+ 'PLPlugins_idSoftware' verschoben
+
+
+
+>> 31.03.2007
+[CO]
+- Parameter: Neue Funktion: SetManagerParameterValue(): Setzt den Wert des Parameters bei einem anderen Parameter
+- EffectPass::BindShader(): Nutzt die neue Funktion von oben damit man nicht über Strings gehen muss was zwar universell,
+  aber natürlich sehr langsam ist und daher hier absolut nicht geeignet ist
+
+
+
+>> 30.03.2007
+[CO]
+- MeshLoaderMd2 nun doch auf unsere String Klasse umgestellt da unter Linux manche String Funktionen anderst heißen und ich
+  einfach genug von dem C-String-Funktionen herumgehacke hatte.
+- Projekt weiter etwas aufgeräumt
+
+
+
+>> 24.03.2007
+[CO]
+- MeshLoaderM3d & MeshLoaderObj & MeshLoaderPL & MeshLoaderSmd & MeshLoaderT3d & MeshLoaderMd2: Ich fand gerade ein paar
+  Stellen welche die Ladezeiten unnötig verlängerten... in den vorne genannten Mesh Loadern wurden Materialien erst über
+  'Create()' erzeugt was an sich ok ist da wenn ein Material mit dem Name bereits vorhanden ist nix passiert - aber danach
+  wurde 'Load()' bei dem Material aufgerufen wodurch das Material erneut geladen wurde, und das immer und immer wieder.
+  Statt 'Create()' wird an diesen Stellen nun 'LoadResource()' verwendet welches eine Resource erzeugt und läd falls noch
+  nicht vorhanden, wenn vorhanden so passiert nix weiteres. Wieder so nen Fall wo man sich wundert das einem das nicht
+  schon früher aufgefallen ist. :(
+- MeshLoader & MeshCreator Implementationen: Konnte ein Material nicht geladen werden, so wird ein neues (leeres) Material
+  erzeugt damit die Material ID's sich nicht verschieben + der Material Name an sich erhalten bleibt
+
+
+
+>> 23.03.2007
+[CO]
+- Material ist nicht mehr von ParameterManager abgeleitet da dies über Mehrfachvererbungen einfach zu unübersichtlich war.
+  ParameterManager ist nun ein eingebettetes Objekt von Material - ein netter Seiten-Effekt ist, das die Header komplexität
+  von Material & Effect durch die Änderung abgenommen hat. :)
+- Machte in der Effect-Klasse die gleiche Änderung wie in der Material-Klasse
+- Material: GetParam() in GetParameter() umbenannt da es nun keinen Namens-Konflikt mehr mit ParameterManager gibt
+- TextureAni: Hier fehlte ein direkter Aufruf der Unload-Funktion
+- TextureAni: Unload(): Der Texture Handler des Texture Frame muss natürlich auch noch gelöscht werden
+
+
+
+>> 18.03.2007
+[CO]
+- Header & Namespace Änderungen wie in z.B. PLBase, bin damit aber heute leider noch nicht ganz fertig geworden. :(
+
+
+
+>> 06.03.2007
+[CO]
+- EffectLoaderFX::Load() darf natürlich den Buffer nicht löschen über den die String Klasse die Kontrolle übernommen hat
+
+
+
+>> 21.02.2007
+[CO]
+- MeshLoaderMd2::Load(): Hier werden weiterhin klassische c-strings genutzt da das MD2 Format diese direkt so nutzt und das
+  in diesem Loader in dem einen Teil auch ok ist - fügte noch einen kleinen Buffer Überlauf Test ein, sicher ist sicher. :)
+- MeshLoaderPL: Beim Speichern wird auf Buffer Überlauf geprüft - bei Zeiten müssen wir das hier wirklich ändern so das
+  beliebig lange oder kurze Strings in Mesh-Dateien gespeichert werden können + auch Unicode nutzen können
+- MeshLoaderLwo nutzt weiterhin klassische c-strings, baute aber einen Buffer Überlauf Test ein
+- Compiler Option "/D "_CRT_SECURE_NO_DEPRECATE"" hinzugefügt
+
+
+
+>> 11.02.2007
+[CO]
+- Auf VC 2005 umgestellt
+- lib3ds: Mit VC 2005 neu übersetzt damit der Linker nicht meckert
+
+
+
+>> 28.01.2007
+[CO]
+- VC Projekt-Dateien wie besprochen in die jeweiligen Grundordner verschoben
+
+
+
+>> 27.01.2007
+[SB]
+- CMake Projektdateien für alle PLEngine-Projekte hinzugefügt 
+
+
+
+>> 21.01.2007
+[CO]
+- Animations Klassen aufgeräumt und dort wo nötig die Implementation komplett überarbeitet. Nun klappt auch das Rückwärts
+  Abspielen problemlos.
+- Das Interface von TextureAni etwas erweitert so das z.B. TextureAniLoaderPL kein Friend mehr ist. Das ist zwar immer noch
+  ein recht 'lockeres' Interface, aber ich denke das sollte momentan völlig ausreichend sein.
+- TextureAniLoaderPL::Save(): Implementiert
+- AnimationInfo: GetFrames() in GetNumOfFrames() umbenannt
+
+
+
+>> 19.01.2007
+[CO]
+- Bugfix: TextureCreatorAngleCubeMap: R und B Komponenten waren vertauscht (wunderte mich schon die ganze Zeit wieso
+  das im Horzion Mapping Shader nicht so ablief wie es eigentlich müsste :)
+
+
+
+>> 24.12.2006
+[CO]
+- MeshLoaderObj so umgeformt das der Header möglichst 'sauber' ist (also frei von Dingen die ein User NIE sehen sollte :)
+  + weniger Instanz-Variablen in der Klasse (die einzelnen Funktionen machten das nur unnötig kompliziert)
+- MeshLoaderAse, MeshLoaderSmd, MeshLoaderM3d, MeshLoaderT3d, MeshLoaderObj und SkeletonAniLoaderSmd auf Tokenizer umgestellt.
+  Der Tokenizer unterscheider dabei zwischen groß/kleinschreibung.
+- In den Mesh Loadern wurden Materialien bis jetzt über die 'LoadResource()' Funktion geladen und dann dem Mesh hinzugefügt.
+  Konnte eine Resource nicht geladen werden, so wurde das Material dem Mesh auch nicht hinzugefügt... und da die Mesh Geometrien
+  nur Material Indices nutzen kam dann alles durcheinander. Daher wird nun zuerst ein Material erzeugt, geladen und erst am
+  Ende dem Mesh hinzugefügt so das auf jedenfall ein Material hinzugefügt wird.
+
+
+
+>> 22.12.2006
+[CO]
+Allgemein:
+- An ein paar Stellen wurde der Element Typ von Index Buffern nicht korrekt gesetzt da die Anzahl der Indices, und nicht
+  die Anzahl der Vertices verwendet wurde... aber der Typ gibt natürlich den größten speicherbaren Vertex Index an. :)
+- Nahm einige Code Umformungen vor (hauptsächlich bei for-Schleifen) um die Lesbarkeit zu erhöhen
+Mesh und Skeleton Loader aufgeräumt:
+- Da von Loadern nur jeweils eine Instanz im Loadable System Registriert wird, sollten für die Thread Sicherheit keine pro
+  Instanz Variablen in den Klassen genutzt werden. In 'MeshLoaderPL' sind das zwar nun einige Parameter die man in den
+  Funktionen weitergeben muss, aber das geht kaum anderst. :(
+- Hilfs-Strukturen etc. in die cpp-Dateien verschoben, diese Dinge sollte man NICHT 'von Außen' sehen können da wirklich
+  nur rein Intern und teils nicht sonderlich schön anzusehen *g*
+- Bei ein paar Loadern wurde noch die übergebene Datei per Hand geschlossen, oder der Reference Count veringert ohne das
+  dieser erhöht wurde
+- Wo nötig und 'problemlos' (ohne das zuviel durcheinander kommt :) auf die String Klasse umgestellt
+
+
+
+>> 17.12.2006
+[CO]
+- Shader und Texture: Die verwendete Renderer Resource wurde nicht gelöscht... bei Zeiten müssen wir das mit den Handlern/
+  Smart Pointern wirklich universell machen/nutzen :)
+
+
+
+>> 16.12.2006
+[CO]
+- ShaderHandler: Nahm Update() und Custum-Funktionen heraus da dies mittlerweile überflüssig ist
+- EffectPass::Bind(): Der 'Set fill mode'-Teil ist mittlerweile überflüssig da es dafür den 'FixedFillMode'-Render State
+  gibt der von außen gesetzt werden kann um einen bestimmten Füll-Modus zu erzwingen
+- ReloadTextures() aus Effect entfernt und dafür in ParameterManager ReloadTextures() hinzugefügt. ReloadTextures() aus
+  EffectPass entfernt. Material Implementiert eine eigene spezialisierte Variante von ReloadTextures() da auch die Texturen
+  des eventuell verwendeten Effektes neu geladen werden müssen... Da jedoch ein und die selbe Textur in verschiedenen
+  Parametern verwendet werden kann (zwar nicht wirklich sinnig, aber möglich :) sammle ich zerst alle Texturen und lade
+  dann diese neu. Macht man das nicht, würden diese Texturen dann mehrmals hintereinander neu geladen werden was wirklich
+  nicht sein muss. :)
+- MeshHandler::Load(): 'bReloadMesh' wird wieder genutzt und 'bStatic' wird wenn nötig dem Mesh Loader als Parameter übergeben
+- Material und Texture 'merken' sich nun korrekt den absoluten Dateinamen der Datei aus der diese geladen wurden. Das muss
+  hier leider per Hand Implementiert werden da dies *sehr* spezielle Loadable-Typen sind.
+- In Texture::Load() wurde der Name der Resource über SetName() verändert was nicht korrekt ist - das war noch ein
+  Relikt aus der Zeit als Resourcen Name = Datei Name war :)
+- EffectPassLayer::BindTexture(): Hat ein Textur Handler keine Textur, (z.B. weil man diese über den Debug Dialog
+  herausgewürgt hat *g*) so wird versucht die Standard Textur zu verwenden damit man wenigstens etwas 'vorhersagbares' sehen kann.
+
+
+
+>> 09.12.2006
+[CO]
+- Fügte an einigen Stellen 'pRenderer->SetFontSize()' und 'pRenderer->SetFont2D(PLEngine::PL::GetDefaultFont2D())' ein da
+  man nie weis was gerade Eingestellt ist...
+
+
+
+>> 26.11.2006
+[CO]
+- Shader Loader + Implementation für das Cg Format hinzugefügt
+- Texture Animation Loader + Implementation für unser eigenes Format hinzugefügt
+
+
+
+>> 25.11.2006
+[CO]
+- Material Loader + Implementation für unser eigenes Format hinzugefügt
+
+
+
+>> 24.11.2006
+[CO]
+- Alle Projekte an das Loadable-System angepasst
+
+
+
+>> 10.11.2006
+[CO]
+- 'User controlled' Information von Joint in JointHandler verschoben da dies 'natürlich' pro Instanz gespeichert werden muss...
+  viel wie üblich erst auf als ich es mal konkret Einsetzen wollte: In 'PhysicsPlayground.scene' fügte ich noch einen
+  Ragdoll Soldaten ein, und dann viel das sofort auf das da etwas noch nicht stimmte. *g*
+
+
+
+>> 04.11.2006
+[CO]
+- Texture: Wenn die Textur Qualität 0 ist werden wie gehabt KEINE Texturen eingeladen - aber da man nur mit 'weißen Texturen'
+  recht wenig 3D erkennen kann (vorallem ohne Beleuchtung) wird diesen Texturen dann die Default Texture zugewiesen.
+
+
+
+>> 03.11.2006
+[CO]
+- MeshCreatorSphere: 'Detail' muss derzeit durch 2 Teilbar sein, ansonnsten klappt das nicht optimal - da muss man später mal
+  schaun ob man das noch besser hinbekommt.
+
+
+
+>> 28.10.2006
+[CO]
+- Texture::Load(): Hier gabs noch etwas das die Ladezeiten etwas verlängerte: Die Suche nach einer 'plt'-Datei für eine Textur!
+  Da man 'nur' einen relativen Textur Namen hat, musste das FS natürlich sehr viel herumsuchen - vorallem wenn es so eine Datei
+  überhaupt nicht für eine bestimmte Textur gibt. Habe das nun etwas umformuliert so das ZUERST das erste Bild geladen wird und
+  dann der absolute Dateiname von dieser Datei genommen wird um nach einer entspechenden plt-Datei zu suchen. Da es sich dadurch
+  um einen absoluten Dateinamen handelt, muss das FS nicht mehr so wild herumsuchen + das ist etwas sicherer so da diese plt-Datei
+  immer im gleichen Verzeichniss liegen MUSS wie die Bild-Datei zu der diese gehört!
+
+
+
+>> 27.10.2006
+[CO]
+- Passte EffectLoader, MeshLoader, SkeletonAniLoader und PLEngine::SceneLoader an das neue Loader
+  System an.
+
+
+
+>> 20.10.2006
+[CO]
+- Spendierte der Mesh Klasse eine 'allgemeine Bounding Box' die auch in unserem Mesh Format gespeichert wird. So *muss* man
+  nicht jedesmal CalculateBoundingBox() (selbst pro Instanz...) aufrufen wenn man die Bounding Box des Meshs haben will. Zwar
+  wird diese BB vorallem im zusammenspiel mit Animationen nicht immer ganz korrekt sein, aber gerade bei statischen Meshs die
+  den großteil der Meshs ausmachen ist dies eine ziemlich nette Sache. (alte PL-Meshs können noch eingeladen werden :)
+
+
+
+>> 19.10.2006
+[CO]
+- MeshHandler: Nahm die Debug Flags heraus. Die Draw() Funktion zeichnet nun NUR noch das Mesh und KEINE Debug Informationen
+  mehr. Dafür gibts hier nun spezielle Debug-Zeichen Funktionen die gezielt von außen aufgerufen werden können.
+
+
+
+>> 14.10.2006
+[SW]
+Alle Projekte: finale version für das visibility attribute feature vom gcc.
+
+
+
+>> 11.10.2006
+[SB]
+Wieder diverse Anpassungen:
+- Überbleibsel aus einem alten Merge-Error aus dieser Datei entfernt
+- Unnötigen [DEBUG]-Kommentar entfernt
+- PLLOCAL entfernt - dieses Makro nutzen wir nicht!
+- Eingefügte Konstruktoren und Destruktoren mit Kommentaren versehen und in die richtige Reihenfolge gebracht
+
+
+
+>> 11.10.2006
+[SW]
+Alle Projekte: Die projekte verwenden das neue visibility feature vom gcc, wenn vorhanden.
+
+
+
+>> 04.10.2006
+[CO]
+- An ein paar Stellen (ColorX & VectorX) "String::Format(" durch ".ToString()" ersetzt
+
+
+
+>> 28.09.2006
+[SW]
+- Linux-port Folgende Project an Änderungen von PLBase angepasst: PLRenderer, PLMesh, PLRendererOpenGL
+- fehlende Predefinition in SkeletonHandler.h hinzugefügt (blöder M$ compiler ;) )
+
+
+
+>> 24.09.2006
+[CO]
+- PLMesh auf PLBool umgestellt
+
+
+
+>> 13.09.2006
+[CO]
+- Dort wo PLRenderer::Buffer::Lock verwendet wird sollte immer mit angegeben werden was für Operationen auf dem Buffer stattfinden
+  werden so das der Renderer intern das möglichst geschickt handhaben kann. Fügte dort wo das noch nicht der Fall war jeweils
+  einen entsprechenden Lock-Typ ein... der jedoch wirklich nur als 'Verwendung-Hinweis' zu verstehen ist. Gibt man 'Read' an
+  kann man trotzdem noch Schreiben, aber eventuell nicht mehr ganz sooo Performant - das hängt von einigen Faktoren ab. :)
+
+
+
+>> 13.09.2006
+[CO]
+- Beseitige Warnungen die erscheinen wenn der Compiler auf Warnungs-Level 4 gestellt wird
+
+
+
+>> 11.09.2006
+[CO]
+- In den MeshCreator Implementationen wird 'bStatic' nun korrekt verwendet anstatt wie bisher einfach ignoriert :)
+
+
+
+>> 04.09.2006
+[CO]
+- Texture um 3 neue Funktionen GetOriginalWidth(), GetOriginalHeight() und GetOriginalDepth() erweitert. In PLSample2DGame
+  zeigte es sich, das es durchaus praktisch ist das man die Original größe der Textur abfragen kann - also bevor diese
+  eventuell skaliert wurde damit die GPU damit klar kommt. Kann man z.B. vorallem dann gut gebrauchen wenn man Textur
+  Koordinaten Dynamisch erzeugt für z.B. eine Bitmap Animation.
+
+
+
+>> 24.08.2006
+[CO]
+- EffectLoaderPL::Save(): Die String verwendung bei Vertex/Fragment Shader speichern verbessert
+
+
+
+>> 13.08.2006
+[CO]
+- Texture::Load(): Falls Cube Map Texturen als einzelnde Bilder eingeladen werden, wird nun zur Sicherheit sichergestellt
+  das Größe & Format mit dem ersten Bild übereinstimmen. So langsam müsste dieses Textur System eigentlich Narren-sicher sein. ;-)
+  Fand desweiteren endlich heraus wieso ich bei über dds eingeladenen CubeMaps innerhalb von TextureCubeOpenGL +y und -y
+  vertauschen musste wodurch aber z.B. Dynamisch erzeugte Cube Maps nun verdreht waren: pImage->SetInteger(Image::Mode_OriginSet, true)
+  machte Probleme, also das Einheitliche Ausrichten von Texturen! Setzt man das auf 'false', passt das mit den CubeMaps, aber
+  dann sind plötzlich u.a. jpg Bilder in y gespiegelt... jedes Bildformat handhabt das leider intern etwas anderst. Ich sehe hier
+  momentan leider keine andere Möglichkeit als abzufragen ob das ein dds-Bild ist. Wenn ja, so wird der Ursprung NICHT angepasst,
+  ansonnsten wird er angepasst... sehr dämliche Sache... :( (eventuell ein DevIL Bug??)
+
+
+
+>> 31.07.2006
+[CO]
+- Texture::Load(): bAllowResize war immer noch nicht ganz ok denn es konnte sein das der User resize auf false stellte, aber
+  die GPU die gegeben Textur so nicht handhaben konnte. bAllowResize ist nun NUR noch dazu da um zu prüfen ob der User es
+  zulässt das diese Textur verkleinert wird wenn die Textur Qualität heruntergesetzt werden soll. Aber Skaliert wird nun
+  IMMER sobald die GPU die Textur in der gegebenen größe nicht handhaben kann - außer der User erzwingt über die 'force'
+  Einstellungen eine bestimmte größe, aber das ist dann wirklich auf Eigenverantwortung. :)
+
+
+
+>> 28.07.2006
+[CO]
+PLMesh
+- Texture::Load(): Handelt es sich bei der eingeladenen Textur um eine Cube Map die man z.B. über das dds-Format direkt in einer
+  Datei speichern kann wird das nun erkannt. Man hat nun also zwei Möglichkeiten um Cube Maps 'in die Engine zu bringen':
+  1. Direkt über eine Cube Map dds-Textur oder 2. über das plt-Format wird bekannt gegeben das dies eine Cube Map ist und
+  die anderen Seiten als einzelnde Dateien vorliegen. Gerade letzteres ist beim direkten Szene Basteln in Max für Grafiker
+  wohl etwas zu umständlich.
+
+
+
+>> 25.07.2006
+[CO]
+- MeshHandler::Load(): Bei 'automatischen Texturen' was das auslesen des Name-Parameters noch nicht an die Tokenizer Änderungen
+  von vor langem korrekt angepasst. (das gleiche bei TextureHandler::Load()) In 'PLSampleSimpleScene' wird die Sphere-Node
+  nun wieder korrekt erzeugt.
+- Texture::Load(): Wenn keine Rectangle Texturen unterstützt werden, muss neben bRectangleTexture natürlich auch bAllowResize
+  auf true gesetzt werden, egal was jemand über eine plt-Datei eingestellt hatte. Gut das Stephan dies aufgefallen ist. :)
+- Texture::Load(): Verwendet nun jeweils für den aktuellen Textur Typ gegebenen maximalen Werte
+
+
+
+>> 09.07.2006
+[CO]
+- EffectPass::Bind(): Wird eine Textur Einheit derzeit nicht benötigt, so ist es besser auch die Sampler & Texture Stage States
+  zurückzusetzen - ansonnsten kann es gerade mit Render To Textur zu Problemen durch gerade nicht korrekt gesetzte States kommen.
+
+
+
+>> 03.07.2006
+[CO]
+- Fügte 'preview surface painter' für Effect & Material & Texture & Mesh hinzu. Dies wurde früher in den Debug Dialogen der
+  Engine gemacht, und im Mesh Editor nochmals für Materialien. Das ist nun also schön universell überall einsetzbar. :)
+
+
+
+>> 29.06.2006
+[CO]
+- Mesh::Load(): Nahm das mit dem automatischen hinzufügen von FS Pfaden heraus. Das macht der User besser selbst wenn er das
+  mal brauchen sollte. (PLSampleContainer & Scene Editoren machen das selbst)
+
+
+
+>> 18.06.2006
+[CO]
+- Verschob die ShadowMesh-Klasse aus PLEngine in PLMesh. Jedes MeshLODLevel kann nun noch ein Shadow Mesh haben. Ein Shadow
+  Mesh ist eine 'optimierte' Mesh Variante die NUR Positionen berücksichtigt. In dieser Klasse werden genauso wie in der
+  MeshLODLevel-Klasse nur Indices gespeichert. Da bei 'normalen' Meshs recht häufig mehrere Vertices mit der gleichen Position
+  aber mit z.B. unterschiedlichen Normalen/Textur Koordinaten vorhanden sind, ist dieses Mesh gerade bei Shadow Volumes von
+  nöten da ohne solche speziellen Indices sichtbare 'Lücken' im Schatten entstehen. Auch für Shadow Mapping kann man das
+  für etwas Effizienteres Zeichnen verwenden und beim PerPixelLighting Renderer kann man diesen Optimierten Index Buffer
+  sogar für das 'Early Out' verwenden so das insgesammt weniger Vertices verarbeitet werden müssen.
+
+
+
+>> 11.06.2006
+[CO]
+- Material: Neue Funktion: GetParam(): Diese Funktion sucht zuerst im Material nach einem Parameter mit dem gegebenen Namen.
+  Wird dort keiner gefunden, so wird im verwendeten Effekt nachgesehen. Da ich bereits an diversen Stellen in den Projekten
+  per Hand jeweils schaute woher ich den Parameter bekomme, erschien mir so eine Funktion als sehr nützlich... allerdings gefällt
+  mir der Funktionsname noch nicht wirklich, aber mir viel einfach nichts besseres ein. GetParameter() des Managers einfach 
+  überladen wäre auf jedenfall nicht gut, denn da die Effekte von mehreren Materialien verwendet werden sollte man die Parameter
+  von dort nur ändern wenn man weis was man tut, daher muss das über eine eigene Funktion gemacht werden.
+- In TextureHandler::Load() gabs noch einen kleinen verdreher wodurch es sein konnte das Texturen ohne Dateiendung (da z.B.
+  Dynamisch) nicht korrekt verwendet wurden. Die Dynamischen Texturen sind momentan sowieso noch etwas Problematisch im
+  zusammenspiel mit Textur Handler da es sein kann das eine Dynamische Textur noch nicht erzeugt wurde, aber z.B. eine Scene
+  Node diese bereits in einem Effekt nutzen will.
+
+
+
+>> 10.06.2006
+[CO]
+- Fing an den fx Loader zu Implementieren. Zuerst wusste ich gar nicht wo ich anfangen sollte, denn meine Hauptfrage war:
+  'Wie trenne ich den Shader Code den man Cg gibt von den Effekt Einstellungen ohne das irgendetwas schiefgeht??' Zum
+  Glück kam ich auf die Idee einfach mal auszuprobieren was der Cg Compiler so macht wenn ich ihm direkt die fx Datei gebe,
+  ob er meckert da für ihn unbekanntes drinnen steht, oder ob er sich NUR die Codes anschaut welche mit der Einstiegsfunktion
+  zusammenhängen. Das letztere ist der Fall - und das macht den fx Loader krass einfacher da ich nun nur noch die bei uns
+  verwendeten Effekt Parameter & Einstellungen herauspicken muss was ja nur eine kleine Fingerübung ist. :)
+  Das mit den Parameter & Shader auslesen scheint bereits zu klappen, das mit den verschiedenen Render & Sampler States kommt
+  als nächstes.
+
+
+
+>> 09.06.2006
+[CO]
+- EffectManager: UseStandardEffect() in Use(<Filename>) umbenannt. Als Parameter übergibt man den Dateinamen des Effekts
+  welcher 'verwendet' werden soll. Dabei ist es ratsam NUR die standard Effekte 'Default' oder 'DiffuseMap' zu verwenden für
+  die es im Effekt Manager bereits vorgegebene Strings gibt. Diese Standard Effekte sind SEHR nützlich da diese bekannte
+  Render States setzen. Will man z.B. NUR eine einfache Linie für z.B. Debugging Zwecke zeichen, ruft man zuerst einmal
+  EffectManager::GetInstance()->Use(EffectManager::Default) auf - nun weis man das alle Render States korrekt sind und derzeit
+  auch gerade keine Textur verwendet wird. Wenn möglich sollte man aber natürlich lieber Effekte über Materialien verwenden,
+  aber manchmal wäre das einfach zu umständlich. :)
+- MaterialManager: Nahm 'UseStandardMaterial()' heraus da mittlerweile witzlos. Wenn man standard Render States haben möchte,
+  verwendet man direkt den Effekt Manager ohne Umwege zu machen.
+- Die Shader Texturen werden nicht mehr in EffectPass::BindShader() gesetzt. Dies passiert von nun an in EffectPassLayer::Bind()
+  was auch ganz nebenbei den Vorteil hat, das man den Texturen in den Effekten keine Semantic mehr geben muss.
+- Material::Load(): Gibt man ein Material an das aber keinen Effekt hat, so sucht sich das System automatisch selbst einen
+  passenden Default Effekt so das dieses Material IMMER auch ohne komplexen Szene Renderer Darstellbar ist. Ist im Material
+  Beispielsweise ein 'DiffuseMap' UND ein 'NormalMap' Parameter, so wählt das System automatisch einen NormalMapping-Effekt
+  aus... und schwwuuupp, schon hat man nen nett ausgeleuchtes Shader Material welches zudem noch von der Primären Lichtquelle
+  beeinflusst wird. (siehe Soldier.mat)
+
+
+
+>> 07.06.2006
+[CO]
+- Verschob Parameter & Parameter Manager Klassen von PLRenderer in PLMesh, konkret in den Material Ordner... hätte auch genauso
+  gut in den Effekt Ordner gepasst, aber da iss ja schon einges drinnen, und woanderst woll ich das nicht hinpacken. :()
+  Grund: Wenn der Parameter eine Textur ist, ist es normalerweise gleich eine 'Mesh Textur' und keine einfache 'Renderer Textur'
+  und in dem Fall muss diese mit einem Texture Handler verwaltet werden. Bis jetzt standen im plfx Format in jedem EffectPassLayer
+  direkt Textur Namen, es wurde also pro Pass ein Texture Handler verwendet. Jedoch muss es möglich sein das ein Material problemlos
+  eine eigene Textur übergibt welche im Effekt verwendet werden soll - so wie das bei den anderen Parametern auch der Fall ist.
+  Daher gibt man von nun an in einer Effekt Pass Schicht nicht mehr DIREKT einen Textur Namen an, sondern NUR noch einen Textur
+  Parameter Name. Es ist zwar 'etwas' mehr Schreibarbeit da man diesen Textur Parameter schreiben muss der in einer Pass Schicht
+  verwendet wird, so passt das jedoch besser ins Design und wie gesagt kann nun ein Material auch Texturen eines Effektes
+  'überschreiben' was sehr wichtig ist damit dieses System sich voll entfalten kann.
+- Passte die Effekt-Dateien der verschiedenen Projekte an. Fing an dort wo möglich Effekte durch Materialien zu ersetzen welche
+  einen gemeinsamen Effekt nutzen, aber nur z.B. eine andere Textur verwenden. Wird als Material NUR eine einfache Textur übergeben,
+  so wird bereits ein Standard Effekt der NUR eine einfache Textur verwendet eingesetzt - und einfach über dieses Material die
+  verwendete Textur 'überschrieben'... das funktioniert sogar so wie geplant. :)
+
+
+
+>> 06.06.2006
+[CO]
+- Neue Klasse: EffectPassLayer: Bis jetzt wurde als Effekt Pass Schicht direkt ein Textur Handler verwendet was ich mittlerweile
+  weniger gut finde. Daher gibts hierfür nun eine extra Klasse. Die Textur Handler Klasse ist so wie diese derzeit ist sowieso
+  totales Chaos & Overhead ohne Ende... momentan ist diese Klasse u.a. 340 KB groß da ihn ihr auch ganz nebenbei direkt noch
+  Textur Animationen gespeichert und gemanged werden. SamplerStates und TextureStageStates flogen nun aus dem Textur Handler
+  heraus - das ist NUR Sache einer Effekt Pass Schicht mit diesen States zu jonglieren. (Textur Handler größe nun: 304 KB)
+- Neue Klasse: TextureAni: Anstatt Textur Animations Informationen DIREKT in einem Textur Handler zu speichern werden diese
+  Animationen nun als 'Textur Resource' angesehen was ja auch korrekt ist. TextureAni ist dabei von Textur abgeleitet und stellt
+  nur eine 'Textur Erweiterung' dar. Diese 'Animierten Texturen' werden dabei wie gehabt genauso verwendet wie 'normale Texturen'.
+  Über die Textur Funktion 'IsAnimated()' kann man abfragen ob die Textur Animiert ist - in dem Fall kann man dann nach 'TextureAni'
+  casten um an die Animations Informationen zu kommen.
+- Textur Handler: Wie im Punkt oben bereits geschrieben, wurden die Animations Informationen aus den Handlern genommen. Handler
+  'verwenden' nur noch die 'Textur Animation'-Resourcen. In der Textur Handler Klasse ist nun auch eine eingebettete Animations
+  Status Klasse - NUR wenn eine Textur auch wirklich Animationen hat, wird eine Instanz dieser Animations Status Klasse erzeugt.
+  Durch diese Änderungen ist die Textur Handler Klasse an sich nur noch 16 KB groß anstelle von 340 KB - solange keine Textur
+  Animation verwendet wird ist das nun also stolze 324 KB schlanker... und in den meisten Fällen wird keine Textur Animation
+  verwendet. Das war wirklich allerhöchste Zeit das mal auszumisten. Ganz Optimal ist das alles zwar immer noch nicht, aber schonmal
+  sehr viel besser als vorher - ich verbessere das alles nur Schrittweise damit es immer alles noch läuft. Das gesammte Textur,
+  Shader, Effekt & Material System auf einmal komplett umzukrempeln wäre bestimmt schnell nach hinten losgegangen. ;-)
+- Texture Manager: 'Hold Texture Data' entfernt, Texture: GetNumOfImages() und GetImage() entfernt -> Die konkreten Textur Daten
+  werden NUR vom Renderer verwaltet. Alles was in Texture::Load() also gemacht wird ist so eine Renderer Textur zu erzeugen, danach
+  kann man NUR darüber Daten zurücklesen oder andere Daten hochladen, alles andere ist ein Chaos.
+- TextureManager: CreateTexture() mit den zig tausend Parametern und CreateTexture2() entfernt da mittlerweile veraltet und sehr
+  umständlich. Das geht mittlerweile viel schöner & flexibler indem man sich einfach eine 'leere Textur' erzeugt, sich eine Renderer
+  Textur mithilfe der Image-Klasse erstellt und diese dann der Textur als Resource zuweist.
+
+
+
+>> 05.06.2006
+[CO]
+- Passte alle Projekte an die Änderungen der letzten Tage an so das alles wieder soweit halbwechs ordentlich läuft. Wie gehabt
+  verwenden Meshs, Partikel Effekte NUR Materialien, allerdings reicht es meistens völlig wenn man dann dort als Datei direkt
+  einen Effekt oder eine Textur übergibt. Ein Material muss man eigentlich NUR anlegen wenn man z.B. die Default Parameter
+  Einstellungen des verwendeten Effekts 'überschreiben' will.
+  Den Szene Renderer 'SRPerPixelLighting' passte ich nicht an und schloss ihn erstmal vom Übersetzen aus. Hier lohnt das umstellen
+  nicht da ich diese Klasse sowieso komplett neu schreiben werde sobald die Arbeiten am Material & Effekt System soweit abgeschlossen
+  sind was hoffentlich in ein paar Tagen der Fall ist.
+  Das aktuelle Effekt System ist größtenteils noch das was früher Material hies und hier muss ich noch einiges überarbeiten/sauber
+  machen. Und generell ist vieles Material/Effekt betreffende noch nicht komplett fertig, also nicht wundern wenn etwas noch nicht
+  geht oder merkwürdig/umständlich aussieht. Ich wollte nun einfach mal wieder die Codes angleichen bevor ich mich an die 'Details'
+  mache.
+- Wie vor einigen Monaten mit Stefan besprochen, muss man nun wenn man 'automatische' Meshs/Texturen verwenden will 'Create'
+  am Anfang schreiben. So verschwinden ein paar 'verwirrende Fehler' im Log.
+- Texturen, Meshs, Shader, Effekte und Materialien lassen sich NUR noch über den entsprechenden Manager erzeugen. Beim erzeugen
+  der jeweiligen Resource wird NICHT mehr gleich anhand des Resource Namens versucht die Resource zu laden - das stellte sich nämlich
+  als ziemlich problematisch heraus. In den jeweiligen Handlern wird nun also in der Load Funktion zuerst geprüft obs im Manager bereits
+  eine Resource mit dem Namen gibt, wenn nicht, so wird eine neue Resource erzeugt, danach wird versucht diese zu laden. Schlägt
+  dieses Laden fehl, so wird die Resource wieder zerstört - ob das Laden glückte oder nicht konnte man nicht wirklich rausfinden wenn
+  die Resource sich selbst bereits beim erzeugen zu laden versuchte, was ganz nebenbei auch ziemlich problematisch war wenn die
+  Resource z.B. automatisch erzeugt wurde und der Name kein Dateiname war, sondern einfach NUR ein Name. :)
+  Auch 'einzigartige' Meshs wo man ganz genau weis das man diese NUR in z.B. SNSkyLayer verwendet werden nun in den Mesh
+  Manager 'eingelinkt' damit das einheitlich ist.
+  Erweiterte den Resource Manager in PLGeneral um eine neue Funktion Namens 'LoadResource', diese Funktion läd eine Resource gleich
+  nach dem erzeugen während 'Create' wirklich NUR eine Resource erzeugt... vor dieser Trennung war das einfach nur ein Chaos.
+- MeshLODLevel.cpp: Deaktvierte eine nervende Compiler Warnung welche durch den verwendeten Triangle Stripper erzeugt wird
+
+
+
+>> 04.06.2006
+[CO]
+- Ein Effekt kann NUR noch einen Effekt Laden, übergibt man hier wie früher etwas anderes, so wird nun ein Fehler zurückgegeben.
+  Beim Material hingegen kann man neben einem Material auch direkt einen Effekt oder eine Textur zum Laden angeben. Es wäre
+  nicht gut dem Grafiker aufzuzwingen IMMER für ALLES NUR Material Dateien anzulegen, auch wenn nur eine einfache Textur
+  verwendet wird. Material Datei einladen ist klar, übergibt man eine 'plfx', so wird einfach nur dem Material dieser Effekt
+  zugewiesen. Wird eine z.B. dds-Textur übergeben, so wird ein 'DiffuseMap' Parameter im Material angelegt und ein Standard
+  Effekt verwendet der nur eine normale Textur darstellen kann.
+- Wie schon erwähnt 'sollte' (man muss aber nicht :) man sich an bestimmte gängige Parameter Namen für z.B. Texturen halten damit
+  alles möglichst universell nutzbar ist. Daher fügte ich der Material Klasse ein paar Statische String-Definitionen für DiffuseMap,
+  NormalMap und SpecularMap bei - quasi als hilfe für die Namensrichtlinie. :)
+- Verschob Creator/Loader Klassen Ordner in den jeweiligen Typ Ordner damit das etwas aufgeräumter ist. Diese Loader/Creator
+  Klassen werden sowieso NUR intern aufgerufen.
+- Fügte Effect Loader hinzu. Derzeit gibts nur einen Loader der das 'plfx' Effekt Format laden & speichern kann. Später wird auf
+  jedenfall noch ein fx-Loader hinzukommen damit auch CgFX Effekte direkt in PL verwendet werden können.
+
+
+
+>> 03.06.2006
+[CO]
+- Arbeitete die meiste Zeit des Tages am Parameter System. Es stellte sich heraus, das dies sogar recht brauchbar ist und auch
+  etwas universeller als vorher gedacht. Da ich in PLMesh keinen schönen Platz dafür finden konnte, verschob ich es in PLRenderer
+  und dabei konnte ich es sogar mit den Shadern 'kombinieren' was ich gestern noch für umständlich gehalten hatte. Der Trick
+  der ganzen Sache bestand darin, das vorherige Shader Interface zu nehmen und alles Parameter mäßige in eine Abstrakte Basis
+  Parameter Klasse zu packen - also praktisch fast alles aus der Shader Klasse. ;-)
+  Nannte diese Klasse 'Parameters', ich fand einfach keinen passenderen Namen auch wenns bereits in PLGeneral so eine Klasse gibt
+  und man nun Namespaces angeben muss falls es zu Namenskollisionen kommt. Shader ist davon abgleitet, implementiert aber nix. Da
+  die OpenGL & D3D Cg Shader Implementationen bis auf ein paar kleinigkeiten fast identisch sind, fügte ich wieder ein Cg Shader Backend
+  ein von den die konkreten API Shader abgeleitet sind. In PLRenderer liegt desweiteren nun noch ein 'ParameterManager' der ebenfalls
+  dieses Parameters-Interface implementiert, aber statt direkt an z.B. Cg angekoppelt zu sein managed er seine Parameter über eine
+  eigene Parameter-Klasse welche die Werte etc. direkt selbst speichern, also das was die früheren Renderer Shader auch machten und
+  auch das alte Material System. (war früher also zweimal Implementiert) Die neuen Material & Effekt Klassen sind vom Parameter Manager
+  abgeleitet - und schon kann man diese gaanz genauso bedienen wie auch die Renderer Shader und auch das Laden & Speichern von Parametern
+  ist bereits im Parameter Manager implementiert so das in PLMesh Parameter mäßig praktisch nix zu machen ist. :)
+  Das Interface der Parameter Klasse die vom Parameter Manager verwendet wird bietet 'nochmals' Funktionen zum setzen/lesen
+  der Werte - der Manager der das Parameters Interface erfüllen MUSS, verwendet nur diese Funktionen, und da diese schonmal da
+  sind spricht eigentlich nichts dagegen diese Funktionen public zu halten so das der User auch direkt Parameter setzen kann ohne
+  dies zwanghaft über das Parameter Manager Interface zu machen. Hin und wieder ist das sogar ganz praktisch, z.B. dann wenn man erstmal
+  'schaun' will ob es einen bestimmten Parameter gibt bevor man kompliziertes Zeug ausrechnen will für dessen Wert. In dem Fall lässt
+  man sich einfach einen Zeiger auf das Paramter Objekt zurückgeben, und wenn so ein Zeiger da ist, kann man dann den Parameter setzen.
+  Ansonnsten müsste man erstmal über das Parameter Interface abfragen obs so einen Parameter gibt, danach herumrechnen und Wert setzen -
+  wobei dann natürlich intern nochmal ein Parameter mit dem gewünschten Namen gesucht werden darf. (intern doppelte Arbeit :)
+  Zufammenfassend sieht das 'Parameter System' nun also so aus:           
+                                 Parameters
+                                 |        |
+                            Shader        Parameter Manager (+ eigene Parameter Klasse)
+                               |          |               |
+                 ShaderCgBackend      Material          Effect
+                 |             |
+           ShaderOpenGL     ShaderD3D
+  Da nun alles über ein einheitliches Interface ansprechbar ist lässt sich die Sache recht nett bedienen, und die Implementationen
+  der Klassen in PLMesh sind super einfach. Auch das 'übergeben' von Parameter Werten von z.B. einem Material an den verwendeten
+  Effekt, oder vom Effekt zu den konkreten Shader Parametern (was gleich an z.B. Cg geht) ist so nun recht einfach - was ja der Hintergedanke
+  bei diesem Umbauten war. Aber noch wichtiger: Man kann nun sehr Effizient DIREKT Shader Parameter setzen ohne das diese von einem
+  eigenen System noch großartig gemanaged werden - die Anfragen gehen also direkt an z.B. Cg. Dies ist z.B. für GPU Skinned Mesh oder
+  auch für die meiten Post Processing Effekte SEHR praktisch - denn dort hat man es oft mit weit über 100 Parametern zu tun die Dynamisch
+  gefüttert werden wollen. Früher MUSSTEN diese Parameter erstmal im alten Material 'bekannt gemacht' werden damit man diese nutzen konnte,
+  also ein unding für diese Menge an Parametern. Für die zwei gerade erwähnten Anwendungen werden in Zukunft Parameter mit fest vorgegeben
+  Namen erwartet, und dann wird z.B. der Post Process Manager die aktuellen Dynamischen Einstellungen DIREKT an den Shader übergeben.
+- Die Material Klasse hat genauso wie die Effekt Klasse Funktionen zum setzen von Render Passes etc. Dabei verweisen diese
+  intern NUR auf den verwendeten Effekt weiter. So hielten sich die Anpassungen der anderen Codes erstmal in Grenzen, ob das später drinnen
+  bleibt wird sich zeigen, aber bis jetzt bringt das eigentlich nur Vorteile. Stellte alles bis auf die Tools (die erst wenn das System
+  fertig ist :) so um, das sich alles wieder übersetzen lässt damit ich einen Eindruck bekommen konnte wie das derzeit aussieht. Dort wo am
+  alten Material Einstellungen gemacht wurden, muss nun der Effekt des Materials verwendet werden. Den Rest des Tages machte ich mir
+  konkretere Gedanken zu der Material/Effekt beziehung.
+
+
+
+>> 02.06.2006
+[CO]
+- -> Dies ist etwas mehr Text geworden da es einfach etwas mehr zu sagen/erklären gibt. Das auf mehere Tage zu verteilen
+  -> hätte es nicht Übersichtlicher gemacht. Da die Überareitung der Materialien nun schon seit längerem nötig ist, und wir uns
+  -> auch bereits viele Gedanken zu diesem wichtigen System gemacht haben ist der ausführlichere Text zum nachlesen wie was wo
+  -> warum gemacht wurde sicherlich nicht schlecht. :)
+  Unser 'altes' Material heißt von nun an 'Effect' und die Dateiendung ist statt 'mat' nun 'plfx'. Zum einen ist dieser Name
+  für das was dieses System Darstellt sehr gängig, aber der Hauptgrund für die Namensänderung war, das ich den Namen 'Material'
+  für ein 'neues' übergeordnetes System brauche zu dem ich später noch mehr Schreibe. 'plfx' als Datenendung müsste man sich
+  gut merken können, das CgFX Format (fx) hat ja einen ähnlichen Namen und ist generell unserem 'fx'-Format recht ähnlich und
+  beide stellen vom Konzept her das gleiche da. Beschreiben als den kompletten 'Rendering' Prozess inklusive verschiedener
+  Darstellungstechniken, diversen Render Schritten und natürlich die ganzen verwendeten Render States + Texturen, Shader etc.
+  - die ganze Dröhnung halt. ;-)
+  Wie bereits vor Jahren hatte ich wieder kurz mit dem Gedanken gespielt unser eigenes 'Effect'-Format zu kicken und stattdessen
+  das CgFX Format und eventuell gleich noch die CgFX Lib zu verwenden. Allerdings kam ich davon sehr schnell wieder ab, denn das
+  CgFX Format ist bei weitem nicht so schick wie unser eigenes XML Format, aber noch viel schlimmer ist: Es gibt unterschiede
+  im Format wenn man OpenGL oder D3D verwenden will - also unterschiedliche Einstellungen was für PixelLight eine zumutung wäre
+  da wir ja alles möglichst auf 'universell' auslegen. Und die CgFX Lib selbst hat sich zwar in den letzten Jahren weiterentwickelt,
+  aber das ist bei weitem noch nicht so gut das ich selbst es verwenden wollte - wie vorher werden States selbstständig geändert
+  und da unser Renderer sich die jeweils aktuellen States selbst merkt, müsste man dann umständlich sicherstellen das NACH dem
+  Shader wieder die korrekten Werte gesetzt sind - insgesammt hätte das in einem ziemlichen Chaos geendet... da ists einfacher
+  wie gehabt das komplett eigene System zu verwenden. :)
+  Natürlich gibts für das 'CgFX' Format einen großen Pluspunkt: Es gibt einige sehr gute und noch dazu kostenlose Editoren 
+  (direkt von NVIDIA :) um 'fx' Dateien komfortabel zu erstellen und man kann sich das was diese Effekte produzieren auch leicht
+  ansehen. Ein weiterer Pluspunkt ist, das man diese 'Effekte' auch direkt in Max verwenden kann, der Grafiker sieht dann also
+  gleich beim erstellen seiner Grafiken wie es in Realtime aussieht und kann daher effektiver 'Tweeken' was den Workflow verbessert.
+  Jens hat da ja schon kräftig von geschwärmt und es ist wirklich eine sehr nette Sache. Daher werd ich auf jedenfall noch
+  'Loader'-Klassen für das Effect Format schreiben das genauso abläuft wie bei den Mesh Loadern etc. Und dann schreib ich einfach
+  einen 'fx'-Loader und schon können wir problemlos auch direkt diese CgFX Effekte einladen. Auf das Parsen dieser Dateien
+  freu ich mich jetzt schon. *würg* Und dann sind auch die Lade & Speicher Funktionen für unser eigenes Format endlich sauber
+  in ne extra Klasse verpackt.
+
+  Da ich gerade sowieso nun alle unsere alten Material Dateien in 'Effect' Dateien umschreiben muss, (nur kleinere Anpassungen :)
+  entschloss ich mich dazu auch gleich noch ein paar kleine Änderungen an unserem Format zu machen damit das mit dem zukünftigen
+  neuen Material Format harmonisiert und einfach etwas schicker ist. Das betrifft nun erstmal nur die 'Globalen Parameter'. Diese
+  liegen zukünftig in einem <Parameters></Parameters> Block. Da es öfters mal etwas mehr Parameter werden, fördert das zum einen
+  die Übersicht, und zum anderen hat's der Effect Loader dann auch etwas einfacher da er NUR innerhalb dieser Blöcke Parameter
+  erwartet. Zudem werden die Parameter nun minimal anderst geschrieben: statt
+    <Parameter Name="Base" Type="texture" Semantic="Texture0" />
+  schreibt man nun
+   <Texture Name="Base" Semantic="Texture0" />
+  statt 
+    <Parameter Name="ambient" Type="float" Value="0.1" />
+  von nun an
+    <Float Name="ambient">0.1</Float>
+  Der 'Daten Typ' ist nun als der Tab Name. Die 'Werte' (falls keine Semantic angegeben ist) stehen 'in' den Tabs.
+
+  Und nun zu dem oben erwähnten neuen Material System:
+  Da Effekte in den meisten Fällen NICHT benötigt werden und auch einem Shader Szene Renderer das Leben schwerer machen,
+  musste etwas 'einfacheres' her... allein schon weil auch die Grafiker mit den Effekten nicht wirklich sofort klarkommen
+  da diese Effekte doch schon recht in die Renderer Innereien gehen. Derzeit muss man das auch noch mit einem Text Editor
+  schreiben was für nicht Coder ja eine zumutung ist. Ein Grafiker will in den meisten Fällen 'nur' eine einfache Textur
+  verwenden, oder im Falle von Per Pixel Lighting eine 'Diffuse-' und 'Normalmap' angeben müssen, mehr NICHT. Und ein Szene
+  Renderer will eigentlich auch 'nur' wissen welche z.B. Diffuse & Normal Map er für welches Mesh nehmen soll. Das Effekt
+  System war hierfür totaler Overhead und machte es auch schlichtweg unmöglich einen Performanten Shader Szene Renderer zu
+  schreiben, denn ein Szene Renderer will/sollte komplett selbst über die ganzen Render States herrschen können, ein Effekt
+  jedoch kann im Prinzip ALLE States verändern was die Sache für den Szene Renderer nicht gerade einfach macht.
+  Das neue Material ist daher eigentlich einer Config Datei sehr änlich. Es bietet also NUR eine Handvoll an Einstellmöglichkeiten.
+  Da ich das System aber NICHT von vorne weg auf bestimmte Attribute beschränken wollte wie z.B. Slots für Diffuse- oder
+  Normalmaps, kommt hierfür ein neues Parameter System zum Einsatz das genauso auch in den Effekten verwendet wird - da hatte ich
+  einfach kein Bock das mehrmals zu Implementieren. ;-)
+  Das derzeitge Material Format sieht in Aktion folgendermaßen aus:
+    <?xml version="1.0"?>
+      <Material>
+        <Texture Name="DiffuseMap">Monster_d.dds<Texture>
+        <Texture Name="NormalMap">Monster_n.dds<Texture>
+        <Float Name="SpecularPower">16<Float>
+        <Effect>Monster.plfx<Effect>
+      </Material>
+  Der 'Globale Parameter' Teil im plfx-Format folgendermaßen:
+    <Parameters>
+      <Float4x4 Name="mvp" Semantic="WorldViewProjection" />
+      <Float4x4 Name="worldI" Semantic="WorldI" />
+      <Float3 Name="lightPos">20.0 130.0 20.0</Float3>
+      <Texture Name="Normal" Semantic="Texture1" />
+    </Parameters>
+  Wie man sehen kann praktisch Identisch - und es sind auch die gleichen Codes die damit herumjonglieren durch den neuen
+  'Parameter Manager' in PLMesh von denen jeweils die Material & Effekt Klasse abgeleitet sind. Nicht von
+    <Effect>Monster.plfx<Effect>
+  verwirren lassen. Da es auch weiterhin möglich sein soll direkt einen Effekt zu verwenden muss das Material Format diesen
+  extra Effect-Tab haben - mit dem Parameter System hat das nix zu tun. 'Effect' wird in der Praxis dann wohl eher sehr selten
+  verwendet. Dabei werd ich dann versuchen das das Material Effekt Parameter kontrollieren kann. Bei z.B.
+    <Texture Name="DiffuseMap">Monster_d.dds<Texture>
+  Schrieb ich 'Name="DiffuseMap"' statt 'Semantic="DiffuseMap"' da Semantics 'fest' in den Grundliegenden Projekten implementiert
+  sind. Allerdings gibt dieses grundliegende System von sich NICHT feste Attribute vor, und ganz nebenbei hätte man dann nicht
+  mehr so schön direkt die Renderer Shader Semantics übernehmen können. Der konkret Verwendete Szene Renderer eines Projektes
+  gibt dann also vor wie hier die Namen zu sein haben, und je nach komplexität des Szene Renderes variert die Anzahl und Art
+  der Einstellmöglichkeiten auch heftig. Der Grundliendste Szene Renderer kennt z.B. NUR eine einfache Diffuse Textur während
+  ein hochkomplexer Szene Renderer neben den üblichen Maps auch noch etwas weniger gängie Maps wie z.B. HorzionMaps unterstützen
+  könnte damit man sich selbst beschattendes Normal Mapping realieren kann. Bei den Attribut Namen sollte man aber trozdem schaun
+  das jeder Szene Renderer für gleiche z.B. Textur Typen auch gleiche Namen nimmt so das die Materialien möglichst bei allen 
+  Szene Renderern funktionieren. Zu den Szene Renderern mehr wenns daran geht einen netten Shader intensiven zu schreiben. :)
+
+  Das Parameter System, verwaltet also wie oben angesprochen Parameter welche aus Typ, Name und Semantic bestehen. Material und
+  Effekt Klasse sind davon abgeleitet. Früher war das direkt in der Effekt Klasse fest implementiert. Da dieses System NICHT
+  DIREKT etwas mit den Renderer Shadern zu tun hat, auch wenn es auf den ersten Blick so aussehen mag, konnte man das nicht
+  bereits im Renderer oder gar den Renderer Shadern Implementieren - denn diese sollen so einfach wie möglich bleiben. Das
+  System speichert wie früher die Renderer Shader oder die alten Effect Parameter die aktuellen Werte selbst. Parameter liegen
+  einzelnd vor. Bei den Shader Renderern gibts ja NUR die Shader Klasse damit man direkt ohne Umwege der API Parameterwerte
+  übergeben kann, oder sich aktuelle Werte zurückliefern lassen kann. Damit man jedoch trotzdem nicht allles mit den Typen &
+  der Semantic neu implementieren musste, verwendet das Parameter System die gleichen Typen & Semantic Defintionen wie die Shader.
+  Aus diesem Grund hab ich auch die 'String zu Typ und umkehrt' Funktionen Statisch gemacht damit man diese auch von außen ohne
+  Shader Objekt nutzen kann. Das Effekt System selbst übergibt dann ja seine Einstellungen an die von ihm verwendeten Shader, und
+  da ists dann sehr praktisch wenn die gleichen Dinge verwendet werden, und die Shader Parameter Semantic muss NUR gesetzt/geändert
+  werden wenn sich beim Effekt was tut - denn die restliche Zeit sind diese Parameter ja 'automatisch' immer auf den gewünschten
+  Renderer States. Dadurch das also diese ganzen Typ & Semantic Dinge nicht NUR vom Renderer Shader genutzt werden haben die heftigen
+  Optimierungen darinen wirklich einen Sinn. Und das laden & speichern von Effekten/Materialien geht auch schöner zu Implementieren,
+  und ist vorallem etwas flotter da nicht tausende von Dinge miteinander verglichen werden müssen. :)
+
+  So, das sollte fürs erste reichen, in den folgenden Tagen wirds soweit möglich nur noch kleine Fortschrittseinträge und
+  kleinere Anmerkungen geben.
+
+
+
+>> 01.06.2006
+[CO]
+- Lies alle Projekte nach häufigen Englisch Fehlern durchsuchen auf die mich Stefan vor geraumer Zeit hinwies, hauptsächlich
+  'kown', 'were' und 'byself'.
+- Schaute alle Stellen bei denen in Interfaces '-1' vorkommt durch und dort wo möglich änderte ich es (sammt Implementation)
+  in <0 damit das etwas/allgemeiner Sicherer ist.
+
+
+
+>> 22.05.2006
+[CO]
+- Stellen wo Tokenizer::Start() verwendet wird angepasst
+
+
+
+>> 21.05.2006
+[SB]
+- Projekte an FS-Änderungen angepaßt
+
+
+
+>> 20.05.2006
+[CO]
+- Texture: Min/Max Einstellungen für die Tiefe hinzugefügt damit Breite, Höhe und Tiefe gleich behandelt werden.
+  Die Textur Kompression wird nun aus einem eingeladenen (z.B. dds) Bild soweit möglich übernommen. Im 'plt' Format
+  kann man einstellen ob das Bild Komprimiert werden soll oder nicht - wenn das Bild aber bereits komprimiert eingeladen
+  wurde, so wird diese Einstellung ignoriert, denn es hätte absolut keinen Sinn das Bild dann zwanghaft zu dekomprimieren...
+  denn der Qualitätsverlust ist ja bereits da. :)
+  Wird das Bild hier z.B. herunterskaliert bevor man es an den Renderer übergibt, so verliert man die Komprimierte Version +
+  die Mipmaps.
+-> Da nun das übernehmen der Mipmaps & Kompression aus z.B. einem dds Bild funktioniert, sollte man vorallem bei größeren 
+   Szenen in denen sehr viele Texturen verwendet werden soweit möglich NUR dds Bilder verwenden da dies die Ladezeiten
+   spürbar verkürzt... von der Datei direkt in die Hände der GPU. ;-)
+
+
+
+>> 16.05.2006
+[CO]
+- An PLGeneral Änderungen angepaßt
+
+
+
+>> 15.05.2006
+[CO]
+- Fehlerhafte -1 zuweisungen verbessert
+
+
+
+>> 14.05.2006
+[SB]
+- An PLGeneral Änderungen angepaßt
+
+
+
+>> 11.05.2006
+[SB]
+- An PLGeneral Änderungen angepaßt (DEFINE_GROUP entfernt, GetClasses())
+
+
+
+>> 09.05.2006
+[SB]
+- Externe Libraries nach "external" verschoben und die Projekte entsprechend angepaßt
+
+
+
+>> 17.04.2006
+[CO]
+- Texture::Load(): Hier muss mit der neuen DevIL Version nun geprüft werden ob das Bild eine Farb Palette verwendet, wenn
+  ja, so muss es umgerechnet werden um als Textur verwendet werden zu können.
+
+
+
+>> 13.04.2006
+[CO]
+- MeshLoaderMd2: Der erste Frame darf NICHT als Relativ markiert werden, sonst klappt u.a. das berechnen der Mesh Bounding
+  Box nicht wirklich. :)
+
+
+
+>> 23.03.2006
+[CO]
+- SkeletonHandler: ResetJointStates() hat nun einen optionalen Parameter über den man das zurücksetzen von vom Benutzer 
+  gesteuerter Joints erzwingen kann, was aber standardmäßig NICHT gemacht wird.
+- Skeleton::UpdateJointInformation(): Hier werden nun auch die initialen absoluten Werte der Joints berechnet
+
+
+
+>> 21.03.2006
+[CO]
+- MeshMorphTarget::CalculateTangentSpaceVectors() liefert nun etwas korrekter aussehende Resultate, die Ergebnisse von 
+  MeshMorphTarget::CalculateNormals() sind leider noch nicht immer zufriedenstellend, die direkt aus Max Exportierten 
+  Normalen sind besser und darum sollte man diese derzeit auch direkt so wie diese Exportiert wurden übernehmen ohne in 
+  z.B. dem Mesh Editor nochmal die Normalen Berechen zu lassen.
+
+
+
+>> 20.03.2006
+[CO]
+- Mesh Klasse um Save-Funktion erweitert. Die Basis-Klasse Mesh Loader läd und speichert nun selbst nichts mehr, das macht 
+  nun die Mesh Klasse. Mesh Loader Funktionen protected gemacht da nur die Mesh Klasse darauf zugreifen sollte.
+  Mesh Klasse um GetFormatList() Funktion erweitert welche alle ladbaren Mesh Formate zurückgibt.
+  Skeleton Klasse um Load() & Unload() Funktionen aus PLGeneral::Resource erweitet + eigene Save&Load-Funktionen + 
+  GetFormatList() Funktion hinzugefügt. Skeleton Animation Manager genauso wie die Mesh Loader Klasse geändert.
+  Dort wo entsprechende Resourcen Filter in Datei Dialoge eingetragen werden, wird nun jeweils GetFormatList() verwendet 
+  um Dynamisch die einladbaren/speicherbaren Formate einzutragen.
+  GetFormatList(), Load() & Save()... das ist bei den Image, Mesh & Skeleton Klassen eigentlich immer gleich, vielleicht 
+  wäre eine universelle Loader Klasse angebracht?
+
+
+
+>> 18.03.2006
+[CO]
+- MeshMorphTarget: BuildTrianglePlaneList(), CalculateNormals() & CalculateTangentSpaceVectors(): Wenn in einem Morph Target 
+  Vertex ID's definiert sind beeinflusst dieses Morpht Target NUR bestimmte Vertices - in diesem Fall können wir NICHT 
+  z.B. die Ebenen berechnen lassen. Sind keine solchen ID's vorhanden, so handelt es sich entweder um den Basis Frame oder 
+  um Morph Animationen wie bei dem Md2 Format - sprich, wirklich komplette Frames, dann kann man natürlich solche Dinge 
+  berechnen lassen.
+
+
+
+>> 17.03.2006
+[CO]
+- AnimationManager: Hier kann man nun selbst einstellen ob die Basis Joint States auf die aktuellen Joint States angewand 
+  werden sollen oder nicht. Da bei uns die Animationen alle relativ zu einem Basis Frame sind, ist dieser Wert standardmäßig 
+  auf 1. Aber falls man mal selbst die Joint States per Hand ansteuert kann es vorkommen das diese nicht relativ zu dem 
+  Basis Frame sind.
+  Joint kann man nun ein 'user controlled' flag setzen. Bei SetUserControlled() hätte ich sehr gerne den Standardwert auf 
+  'false' gesetzt, aber dann könnte das wieder vom Namen her verwirren. Normallerweise werden die aktuellen absoluten Werte 
+  der Joints automatisch jedesmal errechnet, aber im Falle von z.B. Radgoll ist das total umständlich, also alle absoluten 
+  Werte zu relativen umrechnen und danach wieder automatisch die absoluten Werte ermitteln lassen... auf dem Weg kann 
+  verdammt viel schiefgehen (und tat es leider auch immer. :() Desweiteren ist das auch nicht so prall wenn Physik 
+  gesteuerte Joints noch vordefinierte Animationen drübergeknallt bekommen, denn dann passen diese Joints nicht mehr zu den 
+  Physik Objekten und die Sache wird witzlos. Einige Joints können nun also direkt per Hand komplett gesteuert werden während 
+  andere Joints wie üblich relativ sind und immer noch wie gehabt von vordefinierten Animationen gesteuert werden können. 
+  Und bei diesen vom Animations System gesteuerten Joints kann man wie gehabt selbst noch offsets ändern um z.B. den Kopf 
+  per Hand noch etwas zu drehen.
+
+
+
+>> 16.03.2006
+[CO]
+- AnimationManagerSoftware::Apply(): Gab es mal Vertices welche keine Gewichte hatten, so funktionierte das gesammte 
+  Skinning nicht da der Vertex Gewichte Zeiger nicht aktualisiert wurde. Das mag zwar alles etwas umständlich wirken, aber 
+  jede Möglichkeit hier noch etwas zu tunen macht das das CPU Skinning flotter... das sind dann was hochkommt meist einiges 
+  an FPS mehr!
+- MeshLoaderPL::WriteSkeleton(): w, x, y, z Reihenfolge passt nun wieder
+
+
+
+>> 10.03.2006
+[CO]
+- Texture: Ist die Texture Qualität auf 0 gesetzt, werden nun überhaupt keine Texturen mehr geladen - außer die Texturen 
+  welche als nicht skalierbar Markiert wurden. (z.B. die Schrift :) Dies kann Debuggen recht hilfreich sein da sich u.a. 
+  die Ladezeiten verkürzen... desweiteren sieht es einfach nur noch cool aus wenn alles weis ist und man Bloom und 
+  Motion Blur aktiviert hat, hab nen paar Screenshots gemacht und auf die Team Seite unter 
+  "'Ohne Texturen' (060310) Screenshots" gesetzt.
+
+
+
+>> 04.03.2006
+[CO]
+- Verbesserte den Obj-Mesh Importer etwas, das mit den Faces ist bei diesem Format wirklich ziemlich heftig. Zum einen 
+  können Polygone hier auch mal mehr als 3 Vertices haben, oder keine Texture Koordinaten/Normalen oder die Textur 
+  Koordinaten sind plötzlich Negativ was dann soviel heißt wie "bitte nehme die letzte Texture Koordinate" etc.
+- Md5-Mesh Importer geht wieder richtig, der Importer musste noch etwas an die neue Tokenizer Klasse angepasst werden
+
+
+
+>> 02.03.2006
+[CO]
+- Dort wo möglich werden nun die statischen Objekte von z.B. Quaternion verwendet statt neue Temporäre Objekte zu erzeugen
+
+
+
+>> 28.02.2006
+[CO]
+- Ein paar Leerzeichen/Tabs verbessert
+
+
+
+>> 25.02.2006
+[CO]
+- Alles an Quaternion Änderungen angepasst
+
+
+
+>> 25.02.2006
+[SB]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 24.02.2006
+[CO]
+- Stellte wie dort wo möglich/sinnig von globalen Definitionen auf Klassen abhängige enum Definitionen um. Beim Renderer 
+  hab ich erstmal nichts gemacht da diese Umstellung dort eine größere Sache wird.
+
+
+
+>> 23.02.2006
+[CO]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 22.02.2006
+[CO]
+- Die Haupt-Header der Projekte haben nun am Anfang des Namens wieder ein PL
+- Doxygen Makefiles angepasst
+- Alles an PLMath Änderungen angepasst
+
+
+
+>> 21.02.2006
+[CO]
+- Alles an aktuelle PLMath Änderungen angepasst (ein paar Dinge sind noch nicht ganz ok)
+
+
+
+>> 10.02.2006
+[CO]
+- Alles an Stack & PLMath Änderungen angepasst
+
+
+
+>> 06.02.2006
+[CO]
+- Alles auf String::Format() umgestellt + dort wo möglich von %f auf %g umgestellt da dadurch nur das nötigste ausgegeben wird
+
+
+
+>> 27.01.2006
+[CO]
+- PLModel Projekt in PLMesh umbenannt
+- Auf Namespaces umgestellt
+
+
+
+>> 26.01.2006
+[CO]
+- An Renderer Änderungen angepasst
+
+
+
+>> 23.01.2006
+[CO]
+- An uint32 Änderungen angepasst
+
+
+
+>> 19.01.1006
+[CO]
+- Alles an PLMath Änderungen angepasst
+
+
+
+>> 18.01.2006
+[CO]
+- Alles an PLGeneral Änderungen angepasst
+
+
+
+>> 13.01.2006
+[CO]
+- Stellte alle Projekte 'über' PLGui auf die neue String Klasse um - nur an den stellen wo String Variablen vom RTTI genutzt 
+  werden wird noch die alte Klasse verwendet.
+
+
+
+>> 04.01.2006
+[CO]
+- Änderte die Mesh Creator Klassen so, das alle Meshs 'zentriert' sind und bei standard Einstellungen alle eine einheitliche 
+  Größe haben
+
+
+
+>> 01.01.2006
+[CO]
+- Passte überall das aktuelle Jahr an, also von 2002-2006
+
+
+
+>> 30.12.2005
+[CO]
+- Fand in den verschiedenen Projekten noch ein paar Stellen wo nun PLTString verwendet werden kann, und stellte entsprechend 
+  um
+
+
+
+>> 29.12.2005
+[CO]
+- PLTMeshHandler: Nahm den alten Hack mit dem extra Position Buffer heraus da dies mittlerweile nicht mehr nötig ist. 
+  (Renderer Buffer haben mittlerweile intern bei bedarf einen 'Shadow Buffer')
+- PLTMeshHandler::GetTrianglePlaneList(): Hier wird nun nur falls nötig die aktuelle Liste berechnet - vorher wurde diese 
+  bei Animierten Meshs IMMER in PLTMeshHandler::Update() neu berechnet... ob diese nun benötigt wurde oder nicht. Momentan 
+  werden diese Daten nur von PLTShadowVolume verwendet, hat ein Animiertes Mesh keine Shadow Volumes fällt das etwas 
+  aufwändige neu berechnen dieser Daten nun komplett weg was der Performance sehr zugute kommt.
+
+
+
+>> 23.12.2005
+[CO]
+- PLTMesh: Um 'GetLoaded()' Funktion erweitert damit man feststellen kann ob das Mesh eingeladen oder zur Laufzeit erzeugt 
+  wurde... ansonnsten ist das prüfen in PLTMeshHandler::Load() ob ein automatisches Mesh erzeugt werden soll total 
+  umständlich/unsicher.
+
+
+
+>> 16.12.2005
+[CO]
+- Stellte überall wo es sinnvoll ist auf PLTString um.
+
+
+
+>> 16.12.2005
+[CO]
+- Stellte überall wo es sinnvoll ist auf PLTString um.
+
+
+
+>> 14.12.2005
+[CO]
+- Neuer Model Importer für 't3d': Dies ist eigentlich eher ein Level/Map Format, aber Modell bleibt Modell. Fügte diesen 
+  Importer hinzu da ich ein brauchbares Innenlevel in diesem Format fand, anhand dessen man gut das Darstellen von größeren 
+  Innenlevels implementieren/ausprobieren kann.
+- Neuer Model Importer für 'bsp': Da es enorm viele Quake3 Levels im Netz gibt, fügte ich einen kleinen Modell Importer für 
+  Quake3 Maps hinzu. Nur Vertices, Faces und Lightmaps werden geladen - danach hat man also ein 'Level' Modell. 
+... ich schrieb diese zwei neuen Modell Importer da ich nun langsam das Darstellen/Managen größerer Innenlevels angehen will. 
+(u.a. kommt dann auch das mit den Octrees aus der Mesh Klasse raus) Danach hätten wir im Scene System das wichtigste und 
+hier müssten wir dann nur noch Feilen/Erweitern bzw. alles kräftig durchtesten. Sobald ich für PixelLight ein halbwechs 
+brauchbares System zum Darstellen großer Statischer Innenräume ausgearbeitet habe, hat man also genug 'Daten' um dieses zu 
+Füttern. 'Eigene' statische Innenräume werden dann später wohl komplett in Max erzeugt und als einfaches Modell Exportiert... 
+danach wird z.B. ein entsprechendes Engine Tool diese 'Rohdaten' vorverarbeiten, so, das dieses große Modell Performant in 
+Echtzeit Dargestellt werden kann. Dieses Modell wird zum Rendern in kleinere Handliche Stücke zerlegt, nicht zu 
+kleine, aber auch nicht zu große. Zusätzlich wird wohl noch z.B. ein BSP für dieses Level-Modell (was getrennt von den 
+universellen Scene Hierachien läuft) erzeugt für schnelle Kollisions-Abfragen. Hier muss ich dann ähnlich wie beim Terrain 
+für die Physik APIs entsprechende 'Plugins' schreiben... aber soll der User selbst auch ohne eine Physik Engine prüfen 
+lassen können ob/wo z.B. ein Strahl dieses Statische Level Modell schneidet OHNE das ALLE Dreiecke geprüft werden müssen so 
+wie das momentan bei den Meshs der Fall ist. Zusätzlich kann ich mir vorstellen, das auch noch ein PVS für dieses Level 
+Modell erzeugt wird, Dynamisches Occlusion Culling ist zwar nett - aber leider Performance mäßig bei weeeiiitem nicht so 
+Effizent wie ein vorberechnetes PVS - vorallem wenn die Scene mehrmals pro Frame aus verschiedenen Perspektiven gezeichnet 
+werden soll. Zusammenfassend gesehen werd ich wohl diese 'Statische Level Modelle' als einen neuen Scene Container 
+Implementieren, diese Node selbst Managed dann das Level Modell, und im Container sind dann wie üblich zusätzliche 
+Dynamische Scene Nodes welche anhand einer Scene Hierarchy gemanaged werden. (ob dies dann in Kombination mit dem 
+statischen PVS geht wird sich dann zeigen :)
+Ähnlich wird es dann beim Terrain ablaufen - mit etwas Glück lässt sich da etwas halbwechs Universelles machen... so, das 
+am Ende in einer Scene mehrere solcher 'Level'/'Terrain'-Scene Container sein können. Ich denke bis das dann soweit 
+funktioniert wird das Jahr rum sein, aber DAS muss nun endlich sein damit die 'Engine' gut rüberkommt... kleine Test 
+Scenen mit einer Handvoll Objekten kann jeder Newbie auch komplett ohne Engine auf den Bildschirm bringen. ;-)
+
+
+
+>> 09.12.2005
+[CO]
+- PLTTextureManager & PLTTexture: Fügte die Möglichkeit hinzu eine bereits bestehende Renderer Texture Resource an den 
+  Texture Manager zu 'binden'. Dies wurde nötig damit man die Dynamischen Texturen von z.B. PLTSCRenderToTexture bequem und 
+  universell über das Texture System verwenden kann.
+
+
+
+>> 04.12.2005
+[CO]
+- Sobald ein Fragment Shader Texturen verwendet wird es etwas Tricky da man vorher nicht weis in welcher Textur Unit eine 
+  Textur von Cg am Ende landet. Daher muss man nach dem setzen des Shader Parameters abfragen in welcher Textur Unit die 
+  Textur nun 'sitzt' und den Renderer entsprechend darüber Informieren. Wird dies nicht gemacht sind die Infos über die 
+  aktuell gesetzen Texturen eventuell falsch was sich dann in falschen Texturen beim Rendern äußert.
+
+
+
+>> 20.11.2005
+[SB]
+- Aufrufe von PLTContainer::Add() angepaßt
+- Include <Log.h> eingefügt
+
+
+
+>> 17.11.2005
+[CO]
+- PLTSkeletonHandler um 3 Funktionen für das Visualisieren des Skeletons erweitert.
+- Wie vorhin im Chat besprochen, hab ich die Variablen Parameter bei Funktionen entfernt. Da dies im Prinzip überall wo 
+  Strings übergeben werden praktisch wäre, es aber ein totaler Overhead wäre das überall einzubauen, ist dieses halb/halb 
+  weniger schön. Über ein Temporäres PLTString Objekt kann man sich ebenfalls einen String zusammenbasteln und diesen dann 
+  den Funktionen übergeben - zudem hat PLTString intern extra Abfragen so das es nie einen Buffer Overflow geben kann wie 
+  es bei den alten Variablen Parameter Strings möglich war. (das war hier immer ein großes Risko)
+
+
+
+>> 14.11.2005
+[CO]
+- Optimierte PLTAnimationManagerSoftware::Apply() da dies superschnell zum Flaschenhals werden kann. Bei den schön zu 
+  Bedienenden Matrix/Vertex Formeln fallen viele Temporäre Variablen an, daher löste ich diese Terme auf. Verhinderte zu 
+  viele Abfragen, beseitigte kompliziertere Arrays. Die unoptimierte Version ist immer noch als Kommentar vorhanden da 
+  diese etwas besser lesbar ist. (aber die Optimierte Version ist auch nicht wirklich unlesbar :)
+  Hier meine Testergebnisse: (PLSampleSkeletonAnimation, kein Gui, Licht nicht bewegt, standard Ansicht, es wird keine 
+                              Animation abgespielt... so konnte man relativ gut die Performance messen :)
+  - Ein Troll: ohne Optimierung 83 FPS, mit Optimierung 109 FPS (ohne Skinning: 128 FPS)
+  - 10 Trolle: ohne Optimierung 13 FPS, mit Optimierung 21 FPS (ohne Skinning: 34 FPS)
+  ... die Optimierung hat sich also gelohnt. Das Troll Modell an sich ist dabei ein Extremfall: 
+  Vertices: 4634, Maximale Anzahl an Gewichten eines Vertices 6, Dreicke 6147 (die Anzahl der Dreiecke ist Skinning nicht 
+  relevant :)
+  Dabei werden hier Position, Normal, Tangent und Binormal animiert, also ebenfalls volles Rohr an zu verarbeitenden Daten.
+  In konkreten Spielen hat ein Modell soweit ich weis ca. 2000-3000 Dreiecke, und wohl 1500-2000 Vertices. Das 'Pinky'-Modell 
+  aus Doom 3 hat bei uns Importiert 1718 Dreicke und 1041 Vertices, ca. 2 Gewichte pro Vertex - nur so als Referenz. :)
+  Desweiteren kommt in der Praxis wohl noch LOD zum Einsatz wodurch der Skinning Aufwand etwas Reduziert wird. Ich denke 
+  allem in allem ist nun die Skinning Performance brauchbar... und falls mal ein Grafiker meckert das die Performance bei 
+  seinem eigentlich recht Detailarmen Character (nur 5000 Vertices für eine normale Figur und 4 Gewichte pro Vertex ;-) 
+  so lam sei, können wir auf die aktuellen Games verweisen... also das diese auch nicht mehr mit Software Skinning packen.
+
+
+
+>> 10.11.2005
+[CO]
+- PLTMesh: In Clear() und im Copy-Operator war noch ein heftig mieses phuibah... der Name wurde einfach zurückgesetzt ohne 
+  das der Mesh Manager etwas mitbekam, dies war wohl noch ein Überbleibsel von früher wo es noch keinen Manager gab. Das 
+  dieser heftigt Bug nicht schon viel früher aufgefallen ist. ;-)
+- Es gab noch ein anderes Resource Namen Problem bei den Modellen: Wurde ein Mesh erzeugt wie z.B.
+  PLTMesh *pMesh = PLTMeshManager::GetInstance()->Create("MyScene\MyMesh.mesh"); 
+  so wurde der Name erstmal korrekt gesetzt... jedoch wurde dann im Mesh Loader 'PLTMeshLoaderPL' der Mesh Name auf den 
+  'korrigierten' Mesh Namen, also 'MyScene/MyMesh.mesh' gesetzt. Beim nächsten mal wenn 'MyScene\MyMesh.mesh' geladen werden 
+  sollte war dann natürlich keine Resource mit diesem Namen bekannt. In den anderen Mesh Loadern das gleiche - hab dort nun 
+  überall das mit dem Mesh Namen setzten rausgenommen da dort der Resourcen Name nicht gesetzt werden soll, es soll 'nur' 
+  geladen werden... dieser asoziale Bug verpetzte freudlicherweise gleich einen weiteren seiner Artgenossen, denn es kam 
+  hier zum Crash was aufgrund dieses Bugs nicht hätte passieren dürfen... die Resource wäre nur erneut geladen worden, und 
+  über Get() nie gefunden worden. ;-)
+  Dieser noch fettere Bug lag in PLTResourceManager<AType>::SetResourceName(). (im PLGeneral Diary steht mehr dazu)
+
+
+
+>> 08.11.2005
+[CO]
+- Wird ein Shader Profile z.B. im Material definiert, so wird dieses nun korrekt verwendet. Gibt man z.B. als Vertex Shader 
+  Profile 'arbvp1' an, so wird versucht den Shader mit diesem Profile zu übersetzen, ist der Profile nicht vorhanden oder 
+  ist der Shader z.B. zu komplex für das angegebene Profile so schlägt das laden des Shaders fehl.
+
+
+
+>> 07.11.2005
+[CO]
+- PLTMesh: Besitzt nun eine Liste von Skeleton Handlers anstatt nur eines einzigen. Da diverse Skeletons (mit Animationen) 
+  im Mesh direkt mitgespeichert werden können, muss in PLTMesh vermerkt werden welche dieses sind... denn ansich werden 
+  alle Skeletons vom globalem Skeleton Manager verwaltet da man diese meist universell nutzen kann. Das erste Skeleton ist 
+  dabei immer das 'Base Skeleton'... alle anderen können z.b. nur aus aus paar Joints bestehen welche beeinflusst werden 
+  sollen.
+- Tangent & Binormal Informationen werden nun innerhalb der Vertex Buffer in PL_VAS_TANGENT bzw. PL_VAS_BINORMAL gespeichert 
+  und nicht mehr in den Textur Koodinaten. Früher hatte ich diese extra Vertex Attribute noch nicht im Renderer da ich damals 
+  nicht wusste wo diese genau normalerweise gespeichert werden. In OpenGL kann man diese über glVertexAttribPointerARB Kanal 
+  14 & 15 übergeben... über solche Infos stolpert man leider nur per Zufall. (stolperte damals in Cg_Toolkit.pdf über diese 
+  Information :) In Cg kann man diese Daten dann über die TANGENT und BINORMAL genauso wie die Normalen über NORMAL 
+  abfragen... diese Informationen irgendwo in den Textur Koordinaten zu speichern wie es viele machen hatte mir noch nie 
+  sonderlich zugesagt. Da diese Informationen mittlerweile ähnlich wichtig sind/üblich sind wie Normalen ist es gut das 
+  dies nun 'sauber' Definiert ist.
+- PLTMeshMorphTarget: CalculateTangentSpaceVectors() kann man nun als Parameter übergeben welche Informationen erzeugt 
+  werden sollen. Z.B. reicht es im Prinzip schon NUR Tangent Informationen zu erzeugen, in einem Vertex Shader kann man dann 
+  mithilfe der Normalen & Tangente über ein Kreuzprodukt die Binormale berechnen... aber Standardmäßig werden Tangent UND 
+  Binormale erzeugt.
+- PLTAnimationManager: Sind Tangent/Binormal Informationen vorhanden, so werden diese genauso wie die Normalen Animiert.
+
+
+
+>> 02.11.2005
+[CO]
+- mat-Format auf XML umgestellt, passte wie üblich auch gleich alle Materialien an. Nun sind alle Text basierenden Formate 
+  von PixelLight auf XML umgestellt... ok, am 'path'-Format hab ich noch nichts gemacht, aber da das Pfad System derzeit 
+  sowieso total veraltet ist und komplett überarbeitet werden muss hätte es wenig Sinn gemacht an diesem Format was zu 
+  ändern.
+  Insgesamt gesehen sind die lade & speicher Implementationen der verschiedenen Text Formate nun erheblich kompakter & 
+  robuster als vorher.
+
+
+
+>> 01.11.2005
+[CO]
+- tani-Format auf XML umgestellt & alle tani-Dateien angepasst
+
+
+
+>> 25.10.2005
+[CO]
+- Stellte 'plt'-Format auf XML um. Im Prinzip gibts hier 'nur' 4 Elemente mit verschiedenen bekannten Attributen, das müsste 
+  so aber völlig ausreichend sein.
+
+
+
+>> 21.10.2005
+[CO]
+- Hat nun eine eigene Config-Datei in der bereits diverse Texture Einstellungen stehen welche früher in den Engine Configs lagen.
+
+
+
+>> 14.10.2005
+[CO]
+- PLTTextureHandler::Load() intern um eine Sicherheitsabfrage erweitert, ohne konnte es zum Crash kommen wenn eine Resource 
+  nicht geladen werden konnte
+- PLTMeshHandler::Update() intern um eine Sicherheitsabfrage erweitert, ohne konnte es zum Crash kommen wenn eine Resource 
+  nicht geladen werden konnte - erzeugte man z.B. im Scene Editor PLTObject kam es gleich zum Crash da Standardmäßig kein 
+  Mesh File angegeben ist.
+... insgesammt nun also 5 Potentielle Crashs weniger... ;-)
+
+
+
+>> 06.10.2005
+[CO]
+- Etwas an einigen Mesh Loadern gefeilt
+
+
+
+>> 04.10.2005
+[CO]
+- PLTAnimationInfo um Funktion GetSourceName() erweitert. Diese wird z.B. in PLTSkeleton oder PLTMorphTargetAni konkret 
+  Implementiert und gibt den Animations-Resourcen Namen zurück. PLTAnimationManager::Apply() verwendete bis jetzt den Namen 
+  der abgespielten Animation (PLTAnimation) - dies war jedoch ziemlich ungeschickt da man dadurch eine Animations-Resource 
+  nicht mehrmals abspielen konnte. Eine konkrete abgespielte Animation musste den gleichen Namen wie die davon verwendete 
+  Animations-Resource haben musste. Ich denke es wird sich zeigen ob das nun so Handhabbar ist, oder ob dieses Animation 
+  Playback System nochmal etwas überarbeitet werden muss.
+
+
+
+>> 25.09.2005
+[CO]
+ModelLib:
+- PLTMeshLoaderObj: Falls mehrere Frames (wie beim Taxi Modell :) vorhanden sind werden die Morph Targets nun Relative 
+  eingefügt.
+- PLTMeshLoaderMd2 & PLTMeshLoaderMd5: Zwei kleine Bugs behoben welche zu Fehlerhaften Animationen führten
+- Performance einiger Mesh Loader etwas Verbessert
+- PLTMeshLoader: Wenn die Variable 'AddSearchPath' auf 1 steht wird das Verzeichniss in dem sich das zu ladende Mesh befindet 
+  während dem Laden des Meshs als Suchpfade für Texturen, Materialien und Shader verwendet. Dies macht das Laden von Meshs 
+  nochmal etwas komfortabler - oft will man im ME nur mal schnell ein Mesh anschaun und da ist's nervend wenn man dem Editor 
+  zuerst sagen muss wo genau er nach den Texturen suchen soll.
+
+
+
+>> 03.09.2005
+[CO]
+- Stellte die internen Hash Optimier Klassen auf Listen um, denn Arrays sind hier nicht so prall und machen schnell Probleme 
+  wenn man nicht beachtet das man auf Array Element keine direkten Zeiger halten sollte da sich diese beim nächsten Array 
+  Resize ungültig werden. ;-)
+
+
+
+>> 27.08.2005
+[CO]
+- PLTTexture & Texture Creator Klassen an Renderer Texture Änderungen angepasst. Is die Texture selbst nicht komprimiert, so
+  versucht PLTTexture standardmäßig ein geeignetes Internes Texture Format mit Texture Kompression zu finden. Natürlich 
+  lässt sich das auch wie früher über das plt Format auf Wunsch unterdrücken so das z.B. keine Kompression verwendet wird.
+
+
+
+>> 20.08.2005
+[CO]
+- Hab nun lib3ds einmal als statische Lib übersetzt und alles was man so dafür braucht in den Libs Ordner gepackt. 
+  Die ModelLib verwendet diese statische Lib.
+
+
+
+>> 16.08.2005
+[CO]
+- PLTMeshHandler um Load() Funktion erweitert welche automatisch wie bei PLTTextureHandler die Resource erzeugt, zuerst
+  wird versucht diese zu laden, schlägt dies fehl wird versucht diese mit Hilfe eines Mesh Creators zu erzeugen.
+- PLTMaterialCreator: Neue Variable 'Material' welche das verwendete Material Festhält.
+- Generelle kleine Änderung der Loader Klassen: Schlägt das Laden mit der gefundenen Lade Klasse fehlt wird nun nach 
+  weiteren passenden Klassen gesucht - könnte ja sein das es z.B. verschiedene Model Formate gibt welche aber gleiche 
+  Endungen haben. Beim Speichern kann man da aber leider nicht so ohne weiteres zwischen Model Formaten mit gleichen 
+  Datei Endungen unterscheiden. :)
+- PLTMeshLoaderPL: Dort wo möglich werden nun direkt die GESAMMTEN Daten eines Arrays auf einmal gelesen/geschrieben.
+
+
+
+>> 01.08.2005
+[CO]
+- Neue Textur Creator Klasse: PLTTextureCreatorSpot2D
+- Neue Mesh Creator Klasse: PLTMeshCreatorFlashlight -> 'Taschenlampen' Mesh welches z.B. zum Debug Visualisieren einer 
+  Spot Lichtquelle verwendet werden kann.
+
+
+
+>> 15.07.2005
+[CO]
+- Ein paar Ordner wie 'lib3ds' oder 'TriStripper' haben nun vorne ein '_'. Steht am Anfang eines Namens ein '_' oder '.' so
+  werden diese vom 'CreateSDK.py'-Skript ignoriert
+
+
+
+>> 14.07.2005
+[CO]
+- Fügte Lightwave (lwo) Mesh Loader hinzu
+- ASO Mesh Loader: Problem mit Doppelten Material Namen gehoben (sscanf ist hier nicht so prall zum Parsen...) und beim 
+  erzeugen der Geometrien werden nun alle fehlerhaften Material Indices auf -1 gesetzt so das auch diese Geometrien noch
+  erzeugt werden.
+- PLTMeshLODLevel::JoinGeometries(): 2 Bugs behoben - die verwendeten Bitsets wurden nicht korrekt Initialisiert...
+- Alle Image Loader Plugins: Überall dort wo es möglich ist wird als Index Typ short anstatt int verwendet
+
+
+
+>> 11.07.2005
+[CO]
+- PLTMeshHandler::FindGeometries() kann man nun Optional den Kamera Richtungs Vektor übergeben falls Backfaces ignoriert
+  werden sollen.
+
+
+
+>> 19.05.2005
+[CO]
+- Neues Mesh Creator Plugin: PLTMeshCreatorCappedCylinder
+- Neues Texture Creator Plugin: PLTTextureCreatorBlank2D
+
+
+
+>> 16.05.2005
+[CO]
+- Neue Mesh Creator Klasse: PLTMeshCreatorTeapot -> Erzeugt ein Mesh von >>DER<< Teekanne. :)
+  Intern erzeug ich das Mesh nicht Dynamisch über Patches sondern habe die Vertex & Index Daten dort schon vorliegen da 
+  dies einfacher und schneller zu realisieren war. Wenn man später mal Zeit und Lust hat kann man sich ja an eine Dynamische
+  Version wagen.
+
+
+
+>> 07.05.2005
+[CO]
+- PLTTextureHandler::Load() so erweitert das es nun auch automatich Texturen über PLTTextureCreator erzeugen kann.
+  Als Texture Name geht nun auch z.B. "PLTTextureCreatorASCII3D Name=ASCII3D ASCIIFilename=PostProcess/Font.tga".
+  Hier wird dann PLTTextureCreatorASCII3D als Creator verwendet der eine Textur Namens 'ASCII3D' erzeugt.
+
+
+
+>> 26.04.2005
+[CO]
+Fügte Texture-Creator Klasse hinzu welche sich genauso bedienen lässt wie die Mesh-Creator Klasse. Derzeit gibt es zwei
+davon Abgeleitete Konkrete Klassen:
+- PLTTextureCreatorNormalizationCubeMap: Erzeugt eine Normalization Cube Map welche in PLTSMPerPixelLighting in Shadern 
+  dafür verwendet wird um Vektoren sehr Performant (aber mit Qualitäts-Verlust) zu Normalisieren.
+- PLTTextureCreatorTurbulence3D: Erzeugt eine 3D Turbulence Texture welche derzeit von PLTElectro (in PLEntityPackage1)
+  in einem Shader verwendet wird.
+
+
+
+>> 25.04.2005
+[CO]
+- Verschob die Vertex Gewichte aus PLTLODLevel in PLTMesh, dort passts zwar irgendwie auch nicht rein, aber immer noch 
+  besser als in PLTMeshMorphTarget oder gar PLTLODLevel. Denn dort haben nur Geometry/Index Dinge was zu suchen. 
+  In PLTMeshMorphTarget kommen nur die Morph Target Dinge rein, hier nehmen wir nun einfach mal an das alle Morph Targets
+  gleich viele Vertices haben und auch wenn ein Skeleton vorhanden ist gleiche Joints verwenden. Ausnahme hier sind die
+  'delta' Morph Targets, also jene welche nur Vertices speichern welche sich geändert haben.
+  Entfernte die per LOD Vertex Buffer aus PLTMeshMorphTarget.
+  Musste leider das Mesh Format wieder minimal Ändern.
+  PLTMesh::BuildLOD() ist nun Implementiert und verwendet die Klasse CProgressiveMesh welche in PLProgressiveMesh.h liegt.
+  Woher dieser Code stammt steht im Header - der einfach halber hab ich diesen Code so mal übernommen damit wir endlich mal
+  zumindestens ein einfaches vorberechnetes LOD haben. Das LOD lässt man am besten im ME erzeugen. Wie man diese LODs aus
+  Max Exportieren kann weis ich noch nicht - aber Praktisch wäre es, denn dann können die Grafiker selbst Hand an diese LODs
+  anlegen.
+  Später, wenn wir die Mesh-Klasse dann nochmal überarbeiten werden wir denk ich mal was eigenes Implementieren. Wäre gut 
+  wenn dieses Überarbeiten noch vor dem ersten 'Offiziellen' PL Release gemacht werden würde damit die ModelLib dann soweit 
+  sauber  ist. Bis dahin müssten alle Features drin sein und Funktionieren - das dann 'sauber zu Designen' sollte keine soo 
+  Zeitaufwändige Sache mehr sein.
+
+
+
+>> 20.04.2005
+[CO]
+- Behob ein paar kleine Bugs in PLTLODLevel Funktionen welche Octree taugliche Geometrien erzeugen - diese Bugs
+  kamen wohl durch das umstellen auf die neuen Listen-Klassen rein. (war ja klar das so eine Umstellung Bugs nach sich zieht)
+
+
+
+>> 19.04.2005
+[CO]
+- PLTTexture::Load() um Rectangle Texturen erweitert
+
+
+
+>> 06.04.2005
+[CO]
+- 'MilkShape 3D ASCII' mesh importer hinzugefügt
+
+
+
+>> 05.04.2005
+[CO]
+- Problem im MD5 & Smd Importer mit dem Skeleton behoben, MD5 & Smd Skeleton Animation Importer reimplementiert.
+  Leider gibts in beiden Importern noch kleinere Probleme. (sieht noch nicht zu 100% so aus wie es sollte :)
+
+
+
+>> 04.04.2005
+[CO]
+- PLTShader::Load() -> Dem eingeladenen Programm wird am Ende '\0' hinzugefügt um Cg Compiler probleme zu 
+  beseitigen.
+
+
+
+>> 29.03.2005
+[CO]
+- PLModelLib wurde auf neuen Kommentar-Style umgestellt
+
+
+
+>> 07.03.2005
+[CO]
+- Stellte PLTMeshCreator auf RTTI um. Das automatische Erzeugen von Meshs funktioniert nun vergleichbar mit 
+  dem Mesh-Loader was alles sehr viel flexibler macht. (Anpassungen in PLSampleEntities, PLTSky und dem WE)
+  Wir haben derzeit 11 Geometry-Typen, bei einigen ist bereits Support für Fill, Line, Silhouette und Point 
+  implementiert... damit kann man glaub ich schon ein wenig was anfangen. :)
+  Wenn man hin und wieder etwas Zeit & Lust hat, kann man diese Geometry-Typen weiter ausbauen, also Support
+  für verschiedene Darstellungs-Modi(Fill, Line...), weitere Parameter, Optimieren so das keine doppelten 
+  Vertices vorhanden sind sondern dort geschickt mit Indices gearbeitet wird + weitere Geometry Typen.
+- Über PLTMeshManager::CreateMesh() kann man komfortabel einen Mesh automatisch erzeugen lassen.
+
+
+
+>> 28.02.2005
+[CO]
+- ASE-Importer hinzugefügt
+
+
+
+>> 25.02.2005
+[CO]
+- PLTMeshCreator::CreateCone() - Funktioniert nun richtig. CreateCylinder() entfernt da erstens diese Funktion
+  noch nicht implementiert war, und zweitens kann man einen Cylinder auch locker über CreateCone() erzeugen.
+- PLTMesh & PLTMeshHandler: Neue Funktion SetMaterial()
+
+
+
+>> 23.02.2005
+[CO]
+- Damit die Textur Animationen in PLTTextureHandler erstmal wieder gehen baute ich einen Manager namens 
+  PLTAniInfoManager ein welche Animations Informationen Managed. Das Texture Animations System werd ich später 
+  wenn Zeit ist nochmal überarbeiten... mir war es jetzt erstmal wichtig das es auf die schnelle wieder wie 
+  früher funktioniert.
+
+
+
+>> 22.02.2005
+[CO]
+- Stellte PLTMaterialPass::Parse() auf RTTI um - das tat richtig weh diese irrsinnig vielen Zeilen Code 
+  durch eine Handvoll RTTI Zeilen zu ersetzen. ;-)
+- Implementierte das Speichern von Materialien, dank RTTI State Wrapper war auch das zu bewältigen. Alle Werte 
+  welche auf Default sind werden nicht mitgespeichert.
+
+
+
+>> 20.02.2005
+[CO]
+- Stellte PLTMaterial und PLTTextureHandler auf die neuen RTTI Wrapper Klassen aus dem Renderer um. Das Laden 
+  von Materialien wird nun weniger Aufwändig aufwendig als vorher. :)
+
+
+
+>> 19.02.2005
+[CO]
+- Überall wo vorher PLTMaterial direkt verwendet wurde wird nun PLTMaterialHandler verwendet
+
+
+
+>> 18.02.2005
+[CO]
+- Alle Material-Dinge liegen nun in einem neuen Ordner Namens PLMaterial. In PLTexture hatte da nicht wirklich was zu suchen 
+  da Material Texturen, Shader etc. zu einem übergeordneten Gebilde vereint.
+- Baute einen Material-Manager ein da dadurch vieles Erleichtert wird - zudem irgendwie Logisch da ein Material wie eine 
+  Textur eine Resource ist welche von mehrern Dingen verwendet wird. Falls benötigt kann man sich ja jederzeit intern ne 
+  individuelle Kopie erzeugen lassen.
+- Da es beim Material nun Design Probleme gab mit den Material-Basis-Klassen und der Material-Factory aus dem Renderer welche 
+  für die ModelLib benötigt wurden, verschob ich folgende Manager in die ModelLib: Shader, Texture, Material.
+  Da früher das mit den Materialien aufgrund des damals in der Engine liegenden FS in der Engine bleiben musste, musste 
+  das früher so ungeschickt gelöst werden. Nun liesen sich diese Manager aber total problemlos einfach in das unter der 
+  Engine liegende Projekt verschieben. Dieses Chaos war mir schon lange nen Dorn im Auge und nun hat ich nen Grund das zu
+  verbessern. ;-)
+
+
+
+>> 14.02.2005
+[CO]
+- Skeleton-Teil im Mesh-Format aktualisiert und Max-Exporter entsprechend angepasst
+- Am Animation Manager weitergearbeitet. Eine Animation muss nun so heißen wie die konkrete Skeleton/Morph Target Animation
+  welche dadurch abgespielt wird. Dadurch gibs zwar Konflikte wenn eine Skeleton/Morph Target Animation gleiche Namen haben
+  ... aber soetwas sollte man einfach vermeiden! Denn würde man da konkret Unterschiede machen, würde das mit dem Resourcen
+  Manager Templates nicht mehr funktionieren und generell wäre dann alles nicht mehr so schön zu Bedienen wie es nun der
+  Fall ist. Animation ist nun für den User einfach EINE Animation, was für nen Typ von Animation braucht ihn im Normfall
+  nicht zu Interessieren! Man erzeugt nun einfach über seinen Animation Manager mit Create("run") z.B. die Animation 'run',
+  gibts ein Skeleton mit diesem Namen so wird dieses verwendet und hat dieses Skeleton verschiedene Frames werden diese zum
+  abgespielen verwendet. Anschließend kann man bei der erzeugten Animation wie immer Abspielmodus, Geschwindigkeit setzen und
+  zusätzlich noch einstellen wie stark diese Animation in das Gesammtergebniss miteinfließen soll. Man hat nun selbst die 
+  Wahl ob man gleich beim Initialisieren alle Animationen erzeugt und die gerade nicht aktiven Deaktiviert bzw. deren 
+  Gewichtung auf 0 setzt oder die Animationen wenn benötigt erzeugt und dann wieder löscht oder vorhandene Animationen 
+  je nach Gebrauch ändert... z.B. kann man ja jederzeit den Namen einer Animation ändern, danach sollte man zwar diese 
+  neu starten damit die start/end-Frames passen, muss das aber nicht - nen Crash gibts da nämlich keinen wenn man etwas 
+  nicht sooo ordentlich macht. ;-)
+  Der Software Animations Manager funktioniert nun prima und ich konnte problemlos mehrere Morph Targets durch Animationen 
+  gesteuert + Skinned Mesh darauf mit mehreren Skeleton Animationen darstellen. Sicherlich kann man überall noch Opimieren, 
+  aber dad kommt erst wenn wirklich alles steht. :)
+- PLTAnimationBase von dem PLTJointTargetAni und PLTJointAni abgeleitet sind ist nun von PLTAnimationInfo abgeleitet. Somit
+  kommt also jede Animation gleich mit diversen Informationen über sich daher und somit lässt sich nun eine Animation noch 
+  einfacher Abspielen. Über PLTMeshHandler kann man ganz bequem an eine solche Animations Information kommen.
+  Einfach z.B. pAnimation->Start(pMH->GetAnimationInfo(pAnimation->GetName())) und schon wird eine Animation mit standard
+  Einstellungen abgespielt. PLTMesh::GetAnimationPool() wurde entfernt da man diese Animation Information nun direkt über 
+  die Morph Target Animation bekommt.
+
+
+
+>> 13.02.2005
+[CO]
+- PLMeshCreator in PLTMeshCreator. Verwendet nun MeshManager für Renderer und Material Factory. PLTSky in PLEntities musste
+  angepasst werden.
+- Standard Mesh Resource wird nun selbst beim Initialisieren des Mesh Managers mit dem PLMeshCreator erzeugt - so gibts keine
+  Probleme damit wenn man mal das Mesh-Format aufräumt etc. und dadurch alle alten Meshs nicht mehr verwendbar sind. Hin und
+  wieder wird das sicherlich vorkommen wenn man keine 'altlasten' im Code mehr mit herumschleppen will. Ansonnsten ist das
+  Format ja so flexibel das dies kompatible bleiben kann.
+- Mesh Format entrümpelt, die alten Mesh können nun nicht mehr eingeladen werden. Das würde nötig da sich nun am Skeleton 
+  System ja einiges geändert hat, ich aber nicht mehr alle Altlasten mitschleppen wollte was ja auch derzeit unnötig ist da
+  ja quasi nur ich mit den Mesh herumwurschtel. ;-)
+- Tüftelte die konkrete Animation von Morph&Joint-Animationen aus. Es gibt nun eine allgemeine Animations-Klasse welche
+  Keys (float-array) für alle Frames hat. Davon abgeleitet wird dann jeweils Morph-Animation und Joint-Animation.
+  Morph-Animation hat eine Liste von MorphTargets welche von dieser Animation beeinflusst werden und dann durch die Animations
+  Basis Klasse für jeden Frame die Keys welche hier Anzeigen zu wie stark ein Morph-Target gerade aktiv ist. Joint-Animation
+  hat eine Liste an Joints welche beinflusst werden und dort konkret welche Joint-Komponenten, und wieder die Frames Liste
+  mit den Keys. Da ein Skelett von Joint-Animation abgeleitet ist hat dieses hier IMMER so viele Joints wie das Skelett.
+  Diese Animations-Klassen sind desweiteren dafür verantwortlich die Animations-Delta-Daten konkret zu einer übergebenen
+  Liste von z.B. Joint-Handlers hinzuzufügen. Somit ist nun die 'Animation' sauber in eigene Klassen unterteilt.
+- Jeder MeshHandler kann nun einen Animations-Manager haben. Dieser ist konkret für das Abspielen, kombinieren etc. der 
+  verschiedenen Animationen zuständig. Auch ist er es der dann konkret den Vertex Buffer des Meshs auf seine neuen Werte 
+  setzt oder einem Animations-Shader die Werte übergibt. Intern kombiniert er also alle Animationen und anschließend
+  Morph-Targets & Skinned mesh. Somit wurde also all das komplizierte Animations-Zeug aus PLTMeshHandler ausgelagert - die 
+  arme Klasse hat ja auch ohne dies schon genug um die Ohren. ;-)
+  Von der Animation-Manager Basisklasse wird eine Software und Hardware Variante abgeleitet - bei Bedarf kann man jederzeit 
+  nen neuen Animation-Manager schreiben falls einem das gegebene nicht ausreichen sollte. Noch sind diese Manager nicht 
+  sonderlich weit, daran werd ich morgen weiterarbeiten. Mittlerweile werden die Resource-Manager Templates wirklich extrem
+  oft verwendet - erstaunlich auf wie viele Dinge sich das Anwenden lässt.
+
+
+
+>> 12.02.2005
+[CO]
+- Das Skeleton-Animation System erstmal wieder lauffähig gemacht und den Max-Exporter angepasst um zu sehen ob alles soweit
+  funktioniert... und nun geht das mit den Skeleton-Animationen wieder.
+
+
+
+>> 11.02.2005
+[CO]
+- Skeleton-System grundliegend neu Designed. Ein Skeleton ist gleichbedeutent mit einer (ganze oder teil) Skeleton-Animation.
+  Dort werden die Joints und Keyframes definiert. Ein Mesh hat also intern ein eigenes Skeleton mit all seinen Joints, aber
+  normalerweise ohne Keyframes. Und dann werden noch viele verschiedene Skeletons eingeladen welche quasi 'Sub-Skeletons'
+  darstellen und Keyframes für bestimmte (oder alle :) Joints bieten. Somit kann man sogesehen ALLE Skeleton Animationen
+  dynamisch auf alle Skeletons Anwenden und gespeichert werden diese Animationen nur einmal. Es wird also viele Skeleton
+  Handler für ein Mesh mit seinen Skeleton Animationen geben, wobei jeder Handler EINE grund Animation darstellt. Erst am
+  Ende werden alle kombiniert. Natürlich können NUR Joints mit gleichen Namen kombiniert werden - aber haben Skeletons
+  gleiche Joint Namen können diese im Prinzip anderst aufgebaut werden, und sobald es ähnliche Teilstücke gibt kann man eine 
+  Definierte Animation dafür immer Anwenden. (z.B. Fuß/Arm Animation)
+  Ein Skeleton ist nun ein Joint-Manager. Ein Joint ist von einem Joint-State abgeleitet (wo die normalerweise statischen
+  Basis-Daten eines Joints gespeichert werden) welches nun neben den relativen Daten noch die absoluten hat, sowie
+  'Joint Space'-Daten welche man für das neue Skinning braucht. Damit spart man sich 
+  nun die per-Weight position, normale etc. was total umständlich und so nicht für GPU Skinning zu gebrauchen war. Jetzt hat
+  man nur noch pro Joint eine 3x3-Rotations Matrix und eine Transformation - kann man der GPU gut als uniform Array übergeben.
+  Dort wird noch keine Skalierung berücksichtig, das würde alles nochmal etwas komplizierter machen und da man das
+  normalerweise sowieso nicht braucht hab ich das erstmal weggelassen. Ein Vertex hat ein Index auf eine Joint-Matrix und
+  einen float-Wert der angibt wie start dieses Gewicht miteinfließt. Diese Daten werden dem Shader zukünftig über 
+  PL_VAS_BLENDINDICES und PL_VAS_BLENDWEIGHT übergeben... so wie es jetzt gemacht wird ist also 'Standard' und die GPU
+  hat extra Daten-Streams dafür - auch in Cg gibts spezielle Semantics... man braucht also diese Extra Daten nicht in
+  den Textur Koordinaten unterbringen. Ähnlich zu den Tangent-Space Vektoren wo zukünftig PL_VAS_TANGENT und PL_VAS_BINORMAL
+  verwendet wird - das macht die Sache schonmal übersichtlicher. :)
+  Man kann nun sogar weniger Gewichtige Dinge für mehr Performance weglassen. Wie ich sah ist es für die Normalen üblich nur
+  die ersten 2 Gewichte oder so zu berücksichtigen da man dort dann mehr Performance hat aber der Unterschied normalerweise
+  nicht sichtbar ist... im Shader kann das dann ja jeder so machen wie er will. Ich denke für die Morph-Targets werd ich 
+  normalerweise, und vorallem wenn man diese in der GPU mit Skinning verwendet NUR die Postionen berücksichtigen und keine
+  Normalen. Einerseits wird man den Unterschied kaum bemerken, mehr Performance - aber der Hauptgrund ist, das man nur eine
+  bestimmte Anzahl von Daten an nen Shader geben kann. Will ich also 5 Morph-Targets kombinieren + Skinning muss ich also 
+  bereits 5 Textur Koordinaten dafür hinhalten. Würde ich noch die Normalen hinzufügen wären es gleich 10 - und sobald 
+  Tangent Space Vektorn noch mit ins Spiel kommen wären es 20 Textur Koordinaten... und damit kommen dann die aktuellen GPUs
+  auch schon nicht mehr zurecht - totaler Overhead. Darum wohl dort normalerweise NUR Deltas von Position. Handelt es sich 
+  um eine reine Morph-Animation kann man es ja anderst machen, das sollte dem User überlassen werden, und wer weis was die 
+  Zukunft noch alles so mit sich bringt. :)
+  Der neue Joint Handler ist ebenfalls von Joint-State abgeleitet und speichert die dynamischen 'per Instance'-Daten des
+  Joints, desweiteren ist er für die Berechnung der aktuellen Joint Daten zusändig. Der Skeleton-Manager hat zwei Joint
+  Handler Listen, einmal die gundliegenden Basis-Daten, quasi die Standard-Pose welche aber dynamisch geändert werden kann,
+  und die aktuellen Joint Daten welche normalerweise nur Deltas zu dieser Basis-Pose sind und erst ganz am Ende wird diese
+  Basis-Bose zu den aktuellen Joint Daten hinzugezählt. Danach werden Rekursiv im Skeleton Handler alle aktuellen Joint-Daten
+  wie z.B. die absolute Position, aktuelle Transform-Matrix etc. berechnet. Nun kann man dieses Skeleton auf ein Mesh
+  'anwenden'.
+  Das einstellen EINES Skeleton Handlers wird nun also im üblichen z.B. so Ablaufen:
+    ResetJointStates();           // Aktuelle Joint-Daten zurücksetzen (alles auf 0)
+    ApplyJointStates(2, 3, 0.5f); // Zähle die interpolierte Deltas der Frames 2 und 3 auf die aktuellen Join-Daten.
+    ApplyJointStates(pRun);       // Zähle die aktuellen Joint-Daten des Skeleton Handlers 'pRun' zu diesen hinzu, dabei 
+                                     ist zu beachten das in pRun die Basis-Daten NICHT bereits hinzugezählt werden würden, NUR
+                                     Deltas! :)
+    ApplyBaseJointStates();       // Basis-Daten für Finale-Positionen hinzuzählen
+    CalculateStates();            // Alle Joint-Daten rekursive aktuelisieren
+    ApplySkeleton(...);           // Aktuelle Joint-Daten auf einen Vertex Buffer anwenden
+  ... das lässt also enorm Freiheiten, so kann man auch problos per Hand Daten ändern um z.B. den Kopf zur Kamera zu drehen.
+  Aber im 'normalfall' sollte der User nicht gezwungen sein direkt mit den verschiedenen Skeleton Handler zu jonglieren um 
+  sich ne Finale Animation zu 'mixen'. Da muss ich noch nen 'Aufsatz' austüfteln der einem die ganze Arbeit abnimmt und
+  möglichst komfortabel zu Bedienen ist. Aber das mach ich erst sobald alles soweit läuft da dies sogsehen ja nen Extra 
+  System ist welches wie erwähnt 'nur' ein 'aufsatz' sein soll.
+
+
+
+>> 08.02.2005
+[CO]
+- Skeleton Manager & Handler hinzugefügt. Mesh & Mesh Handler auf Skeleton Handler umgestellt. Zukünftigt werden
+  die Skeleton-Animationen in PLTSkeletonHandler gemanaged und nicht mehr direkt in PLTMeshHandler. So sind die
+  Aufgaben weiter sauber aufgeteilt - und ganz nebenbei kann man so nun auch das Skeleton ganz einfach für
+  andere Zwecke 'mißbrauchen'. :)
+
+
+
+>> 05.02.2005
+[CO]
+- 3ds Mesh-Loader auf neues FS umgestellt
+
+
+
+>> 04.02.2005
+[CO]
+- Fügte Mesh-Manager hinzu, hier und da müssten noch ein paar Dinge besser Aufgebaut werden, aber es geht
+  erstmal... und nachdem ich die Animations Teile überarbeitet habe kann man ja nen paar Design-Technische
+  Dinge besser machen.
+
+
+
+>> 01.02.2005
+[CO]
+- Passte an FS Namens Änderungen an
+
+
+
+>> 19.01.2005
+[SW]
+- Kleine Anpassungen so das alles auch unter Linux übersetzbar ist.
+
+
+
+>> 13.01.2005
+[CO]
+- Morph targets müssen nun im Mesh noch unverwendete Namen besitzen da man Morph Targets auch über
+  den Namen wie z.B. 'Angry' zurückbekommen kann.
+  ... bis jetzt ist noch nicht alles mit den verschiedenen Animations-Arten komplett korrekt implementiert...
+
+
+
+>> 12.01.2005
+[CO]
+- Erweiterte MorphTarget Informationen um Name und ob es relative zum basis MorphTarget ist
+- Im Mesh Format kann man nun auch vergleichbar mit Skeleton Animations Morph Targets Animations
+  speichern - sprich, zu welchem Zeitpunkt wieviel Prozent eines MorphTargets aktiv ist.
+
+
+
+>> 11.01.2005
+[CO]
+- Machte ein paar kleinere Bug-Fixes
+- Optimierte PLTSkeleton::ApplySkeleton() da diese Funktion sehr viel Performance frisst
+
+
+
+>> 09.01.2005
+[CO]
+- Alles noch an ein paar Änderungen angepasst.
+
+
+
+>> 26.12.2004
+[CO]
+- PLTSkeleton: Die Joints kann man nun nur noch über Interface funktionen handhaben - nicht mehr direkt über PLTArray.
+- Diverse kleine Bugfixes... die Listen umstellung war wirklich heftig ;-)
+
+
+
+>> 25.12.2004
+[CO]
+- Kleinere Bugs durch das umstellen auf PLContainer in PLRenderer und PLModelLib behoben - nun müssten diese zwei Projekte
+  eigentlich wieder soweit funktionieren - auf jedenfall laufen die entsprechenden Test Projekte. ;-)
+
+
+
+>> 22.12.2004
+[CO]
+- PLModelLib an neue Container Klassen angepasst, bei ModelLib auch gleich alles auf das neue FS
+  umgestellt damit diese Lib unabhängig von der Engine ist. Da ich es nicht Testen konnte ist es möglich das hier 
+  und da noch Fehler drin sind, hab mich zwar angestrengt möglichst nichts zu übersehen, aber das gelingt ja meistens
+  nur sehr selten. :(
+
+
+
+>> 19.12.2004
+[CO]
+- main.cpp an Plugin in Module Makro Umbenennung angepasst
+
+
+
+>> 13.12.2004
+[CO]
+- An RTTI Änderungen angepasst.
+
+
+
+>> 10.12.2004
+[CO]
+- Smd Mesh Importer um Skeleton erweitert, desweiteren Smd Skeleton Animation Importer hinzugefügt ->
+  nun lässt sich der alte SpaceTaxi Passagier wieder Animiert darstellen. :)
+
+
+
+>> 07.12.2004
+[CO]
+- Skeleton Animationen können nun im PL Format geladen/gespeichert werden - dabei ist es später möglich 
+  solche Animationen auch in seperaten Dateien abzuspeichern damit diese von mehreren Meshs verwendet
+  werden können. Zudem funktioniert nun auch der Max Exporter soweit das man auch Skinned Meshs exportieren kann.
+
+
+
+>> 05.12.2004
+[CO]
+- PLTAnimationInfo und PLTAnimation aktualisiert, es wird nun u.a. der Abspielmodus in Flags gespeichert.
+  -> PLTextureHandler.cpp musste angepasst werden.
+- PLTMeshLoaderPL: Um Laden/Speichern von Anker Punkten, Animationen, Skeleton und Gewichten erweitert. Da die
+  Gewichte im LODLevel gespeichert werden musste ich eine kleine Änderung an der Format Struktur machen, änderte
+  die Mesh Format Versions Nummer auf 2, alte Meshs können aber dank kleiner Abfrage trotzdem noch geladen werden.
+  Noch bin ich mir nicht so sicher ob das wie ich es derzeit mit dem Skeleton, den Gewichten etc. mache so optimal ist
+- ich denke erst am Ende wenn man Skeleton Animationen abspielen kann wird man erkennen wie man was besser
+  implementieren kann. :)
+
+
+
+>> 04.12.2004
+[CO]
+- PLMeshFile.h etwas besser kommentiert, dort ist nun auch die Format Beschreibung, so, das alles was man über 
+  das PL Mesh Format wissen muss in dieser Datei steht - hilfreich für die Export Programmierung wenn man nicht
+  erst alle Infos zusammensuchen muss. ;-)
+
+
+
+>> 26.11.2004
+[CO]
+- Kleine verfeinerungen in den Mesh Importern (u.a. bei PLTList::Add() prüfung ob schon Eingetragen deaktiviert)
+- Passte alles an die von uns in PLGeneral selbst definierten Datentypen an.
+
+
+
+>> 19.11.2004
+[CO]
+- lib3ds: Compiler cast Warnungen beseitigt
+
+
+
+>> 23.10.04
+[CO]
+PLTMesh:
+- CalculateTangentSpaceVectors() -> Kann man nun optional als Parameter mitgeben in welchen Textureinheiten die 
+  Berechneten Daten abgelegt werden sollen.
+- Den Mesh Draw Funktionen kann man nun als Parameter übergeben ob auch Materialien verwendet werden sollen oder nicht -
+  manchmal ist es Praktisch die Mesh eigenen Materialien komplett ignorieren zu können.
+
+
+
+>> 28.09.04
+[CO]
+- Führte Joint States ein - damit liesen sich nun die meisten Skeleton Animation Probleme lösen. Ich denke das Skeleton System
+  ist nun fertig, ich wüsste nicht was man noch dran machen könnte - leider heist das noch nicht das das komplette Animations System
+  fertig ist das das Skeleton System an sich total umabhängig von allem anderen ist. Es berechnet anhand übergebener Animations Daten
+  die aktuellen Joint States welche in einem Array außerhalb liegen. Anschließend könnte man diese Joint States noch mit Joint States
+  anderer Animationen mischen und anschließend dem Skeleton einen Vertex Buffer, die Joint States und die Vertex Gewichte übergeben so
+  das das Skeleton System dann den Vertex Buffer mit den aktuellen Daten füllt. Anschließend könnte der Mesh Handler dann noch Vertex Animationen
+  in diesen Vertex Buffer einarbeiten - aber das interessiert das Skeleton System nüsch. ;-)
+
+
+
+>> 27.09.04
+[CO]
+- Implementierte die Animationen von Skeletons. Dabei hab ich mich an der dafür anscheinend gängigen Methode orientiert
+  und handhabe einzelne Animationen in einzelnen Dateien. So kann man in ein Skelett Animationen 'einklingen' - und eine
+  Skeleton Animation kann so auch für mehere Meshs verwendet werden - vorrausgesetzt natürlich die Joint Struktur stimmt
+  überein. :)
+  Die Animationen werden dann wie die üblichen Mesh Resourcen von allen Mesh Handlern verwendet und werden über ihre Namen
+  angesprochen - es ist also nicht möglich zweimal Skeleton Animationen mit gleichen Dateinamen einzuladen da der Dateiname
+  als Animations Name dient.
+  Für die einzelnen Skeleton Animationen innerhalb des Animation Pools von PLTSkeleton hab ich mich dazu entschieden das so 
+  ähnlich zu machen wie es in Doom3 der Fall ist - Key Frames sind relativ zum Basis Frame und zu ihren Eltern, zumdem werden
+  NUR Key Frame Daten zu Joints in einem Frame gespeichert welche diesen auch wirklich beeinflussen. So hat man auf der einen Seite
+  einen geringeren Speicherbedarf und was noch wichtiger ist Animationen killen sich nicht gegenseitig solange diese nicht an den
+  gleichen Joints herumwerkeln. ;-)
+  Zum einladen von Skeleton Animationen hab ich einen Skeleton Animation Loader nach dem Mesh Loader prinzip implementiert - 
+  und natürlich gleich einen md5ani importer implementiert um Test Daten zu haben. Ich denke so wie es jetzt ist müsste es ok
+  und flexibel sein - könnte ja mal sein das man Key Frames in einem Studio oder so aufnimmt das sein eigenes Format hat und so kann
+  man leicht die Skeleton Animationen aus alle möglichen Formaten einlesen.
+  Mit Vertex Animationen kommen die Skeleton Animationen jedoch noch in konflikt - momentan weis ich noch nicht so recht wie man das
+  gleichzeitige abspielen realisieren könnte, dafür muss man aber ganz bestimmt das Vertex Animations System umschreiben... fürs erste
+  ist es nicht soo wichtig, das können wir auch später noch machen das alles perfekt zusammenspielt. Momentan seh ich auch keinen soo großen
+  Sinn darin gleichzeitig Vertex & Skeleton Animationen abspielen zu können, jedoch ist es gut das beides im Mesh verfügbar ist so das man
+  entweder das eine oder das andere verwenden kann - wie gesagt kann man sich das später nochmal genau anschaun. :)
+
+
+
+>> 25.09.04
+[CO]
+- Implementierte Mesh Skinning. Dies ist vom Mesh selbst unabhängig und 'füttert' sozusagen nur PLTMeshHandler mit
+  aktuellen Daten - wie früher. PLTJoint und PLTWeight sind dabei Triviale Klassen welche quasi nur als Datenhalter
+  fungieren und sonst keine besonderen Funktionen haben. Ich entschloss mich für den Namen Joint statt Bone da man Joint
+  recht of im Zusammenhang mit Mesh Skinning liest - desweiteren heisen ODE 'verbindungen' ebenfalls Joints. :)
+  PLTMesh um Skeleton Funktionen erweitert: GetSkeleton() & SetSkeleton() -> Zum ermitteln und setzen eines Skeletons...
+  damit kann man quasi ein Skeleton in ein Mesh 'einklingen' - falls erwünscht, standardmäßig hat ein Mesh aber kein Skeleton.
+  Das Skeleton selbst ist LOD abhängig - in PLTMeshLODLevel ist nun eine Liste mit Gewichten pro Vertex, ein Mesh Handler
+  kann Optional auch eine eigene Liste mit Vertex Gewichten haben, ansonnsten verwendet es wie bei den Vertex Buffern direkt
+  die Daten aus PLTMeshLODLevel. Um die Gewichte pro Vertex übersichtlich Managen zu können verwende ich eine extra Klasse
+  namens PLTVertexWeights welche Indices auf die Gewichte eines Vertices verwaltet.
+  Ich versuchte alles so einfach und übersichtlich wie möglich zu implementieren... hoffentlich hat das einigermaßen geklappt. ;-)
+  Wird ein Mesh mit Skeleton eingeladen sollten die Vertices immer zu beginn auf die Default Pose gesetzt werden damit man das Mesh
+  selbst dann korrekt darstellen kann selbst wenn der User sich um das Skeleton nicht kümmern will, also im Prinzip nur ein statisches
+  Mesh haben möchte.
+- Md5 Importer hinzugefügt, kann, sollte man wohl später irgendwo anderst hin schieben aber momentan sind Doom3 Modelle super
+  zum testen von Mesh Skinning, Schatten und PerPixelLighting. :)
+
+
+
+>> 10.09.04
+[CO]
+- PLTMeshHandler: Mesh Handler haben nun eine Bounding Box und eine Bounding Sphere, es stellte sich als Praktischer heraus
+  wenn Mesh Handler eigene solche Informationen haben da z.B. die Kollision Sphere eines Entities oft nicht mit der Sphere
+  des Meshs übereinstimmt. (entweder beabsichtigt oder z.B. die Sphere Position ist eine andere)
+  Zudem werden diese Informationen auch für die Shadow Volumes benötigt - dort wollte ich aber das diese Shadow Volumes
+  nur vom Mesh Handler und nichts von Entities wissen müssen.
+
+
+
+>> 09.09.04
+[CO]
+- Neuen Mesh Importer: PLTMeshLoaderX -> Für Direct3D Meshs, zwar noch ein ziemlich einfach gehaltener Importer
+  aber für meine Zwecke weitere Modelle zum Testen importieren zu können mehr als ausreichend. :)
+- Neben CalculateBoundingBox() zum berechnen der Bounding Box eines VertexBuffers/Meshs gibt es nun noch
+  CalculateBoundingSphere() welche die Bounding Sphere berechnet.
+  In PLTObject und dem ODE äquivalent wird nun der Entity Kollisions Radius mit hilfe dieser neuen Funktion berechnet anstatt den
+  Radius der Bounding Box zu nehmen welcher meist größer ist.
+
+
+
+>> 08.09.04
+[CO]
+- PLTMeshLODLevel um Triangle List und Edge List und PLTMeshMorphTarget um Triangle Planes erweitert, wobei das letztere
+  bei Animationen immer wieder aktualisiert werden muss. Es gibt jeweils eine Funktion welche die entsprechene Liste aktualisiert
+  und eine welche die entsprechende Liste zurückgibt. Diese 3 neuen Informationen werden u.a. bei Kollisions-Abfragen,
+  LOD berechnungen und Shadow Volumes eingesetzt.
+  In 'PLMesh.h' sind zwei entsprechende Strukturen PLTMeshTriangle und PLTMeshEdge welche für diese neuen Informationen
+  benötigt werden.
+  PLTMeshHandler bietet Funktionen um die aktuellen Informationen direkt und komfortabel auszulesen. Zudem kann ein
+  Mesh Handler wenn er ein Animiertes Mesh hat eigene Triangle Planes haben! (bzw. muss haben! :)
+
+
+
+>> 04.09.04
+[CO]
+- Mesh Loader sind nun RTTI Plugins.
+- Verschob das Standard Material in den Renderer damit die ModelLib Engine unabhängier ist
+  (betrifft: PLEngine, PLRenderer, PLModelLib, PLEntities, PLTests)
+
+
+
+>> 25.08.04
+[CO]
+- PLTMeshHandler: Neue Funktion: FindGeometries() -> Gibt eine Liste aller Geometrien zurück die innerhalb eines Plane Sets
+  sind
+
+
+
+>> 15.08.04
+[CO]
+- Fügte Event Listener hinzu welche z.B. von PLTAnimation Informiert wird wenn von einer Animation ein Event
+  ausgelöst wird. Könnte man später mit universeller Listener Klasse aus PLGeneral vereinheitlichen...
+
+
+
+>> 12.08.04
+[CO]
+- PLTMeshLODLevel::SplitGeometries() und PLTMeshLODLevel::JoinGeometries () verbessert
+
+
+
+>> 11.08.04
+[CO]
+- Überarbeitete den 3ds Importer da der aktuelle leider viel zu wenig Meshs korrekt importieren konnte und zudem
+  noch viiiiiel zu langsam so das der importer praktisch nicht zu gebrauchen war. Hab nun 
+  einen komplett neuen geschrieben der lib3ds verwendet um ein Model einzuladen. Anschließend müssen diverse
+  Sonderfälle etc. behandelt werden - hab nun sicherlich gut 40 verschiedene 3ds Modelle aus dem Netz ausgetestet
+  und rund 38 gingen nun problemlos zu importieren, bei einem crashte lib3ds intern was wohl darauf hindeuete das das File
+  ansich wohl schrott war und bei dem anderem waren Teile nicht korrekt transformiert. Da die 3ds Modelle irgendwie sehr
+  oft ohne Texturen sondern nur mit internen Material einstellungen darherkommen erzeuge ich auch noch gegebenenfalls
+  entsprechende Materialien so das die Modelle immer so korrekt wie möglich dargestellt werden. Natürlich kann man dann
+  ein Mesh welches solche automatisch erzeugen Materialien verwendet nicht so speichern sondern muss dann erst noch die
+  PL Materialien korrekt benennen und dann speichern - generell sollte es also vermieden werden auf die Max-Materialien 
+  zu setzen sondern lieber gleich Texturen verwenden. Aber für Präsentationszwecke etc. kann man ja auch direkt in PL
+  so nen 3ds Model einladen so das die Material Geschichte auch kein Thema ist.
+  Ok, nun haben die Grafiker keine ausreden mehr das sie ja keine Modelle in PL einladen könnten - denn das klappt nun
+  für statische Modelle über das 3ds Format ziemlich problemlos! ;-)
+  Hab die lib3ds Codes direkt in einen Unterordner von PLMeshLoader gepackt da es so einfacher zu verwenden ist als wenn
+  man umständlich mit ner extra Lib herumjonglieren muss.
+- Hab nen neuen Ordner namens 'UsedLibs' erstellt in dem nun alles über die derzeit verwendeten Libs 3dslib und
+  TriStripper steht.
+
+
+
+>> 08.08.04
+[CO]
+- Implementierte Collision Boxes in PLTMesh - später wäre es ideal wenn man etwas universelles wie z.B.
+  'CollisionBody' einbauen würde so das dann im Mesh ein beliebiger Körper beschrieben werden kann dem man dann
+  noch optional diverse Phyisk Einstellungen verpassen könnte. So wäre es dann möglich das man im Model Editor
+  gleich die Collision/Physik Bodies im Mesh korrekt einrichtet welche dann z.B. an Bones gebunden werden für
+  z.B. Physikalisch korrekt Sterbesquenzen -> Der ME hätte somit also noch eine weitere wichtige Aufgabe! ;-)
+  Aber fürs erste lass ich es so damit man im ME wieder soviel machen kann wie früher - ausgebaut wird später...
+  Die Anker Punkte, Collision Boxes etc. werden auch im PL Mesh Format noch nicht gespeichert - fürs erste reicht
+  es wenn man im ME wieder alles ausprobieren kann und sobald man sich sicher ist das es so dann ok ist kann
+  man es im Format speichern. (nicht das sich die Meshs wieder so oft wegen kleinigkeiten ändern :)
+- Md2 Importer hinzugefügt da es haufenweise Md2 Modelle gibt und wir somit fürs erste genug Test Modelle mit
+  zumindestens Vertex Animationen zum Testen importieren können.
+
+
+
+>> 07.08.04
+[CO]
+- PLTMeshHandler: Hat nun Funktionen zum lesen/setzen von Debug Flags anstatt das man diese in der Draw
+  Funktion übergeben kann - so können es die Editoren leichter verwenden.
+- Stellt auf neues Log in PLGeneral um
+
+
+
+>> 03.08.04
+[CO]
+- PLTMeshHandler: Neue Funktion: FindTriangle() -> Findet das erste Dreieck einer Geometry das von einer Linie 
+  'geschnitten' wird.
+
+
+
+>> 01.08.04
+[CO]
+- PLTMeshLODLevel::SplitGeometries() kann man nun optional eine Liste aufzuteilender Geometrien mitgeben.
+  Neue Funktion: JoinGeometries() -> Verbindet Geometrien mit gleichen Eigenschaften zu einer Geometry.
+- Diverse Copy Operatoren hinzugefügt -> Nun lassen sich auch komplette Meshs kopieren
+
+
+
+>> 31.07.04
+[CO]
+- PLTMesh: Neue Material Funktionen welche man z.B. in den Editoren braucht
+- PLTMeshHandler: ClearMaterials() und AddMaterial() sind nun privat da die Materialien im Mesh Handler
+  mit den Materialien des eigentlichen Meshs soweit übereinstimmen sollten
+
+
+
+>> 30.07.04
+[CO]
+- PLTMeshLoader: Die Basis Klasse kann nun direkt verwendet werden und prüft intern ob das Model-Format
+  bekannt ist -> komfortabler zu verwenden als zuvor...
+
+
+
+>> 15.07.04
+[CO]
+- PLTMeshLODLevel::GenerateStrips() stellte Funktion von NvTriStrip auf TriStripper um - diese Lib ist schneller
+  und vorallem stabiler - im PLMesh/TriStripper Ordner sind weitere Infos über die Lib. (liegt dort da es nur
+  in einer Funktion verwendet wird... also sseeehr speziell ist :)
+- PLTMeshLODLevel::SplitGeometries() kann nun alternativ auch die einzelnen Dreiecke so weit wie möglich in eine
+  Geometry packen
+- Den alten TriStrip Code in Backup/Old/Model/TriStrip.zip gesteckt
+
+
+
+>> 22.06.04
+[CO]
+- COldModelLoader entfernt (PLOldModelLoader.cpp, PLOldModelLoader.h, PLModelLoad.cpp) da man dies mittlerweile dank
+  funktionierender Importer nicht mehr braucht und man es ansonnsten nochmals hätte anpassen müssen damit es
+  die Engine selbst nicht mehr benötigt... habs in Backups/Old/PLModel gepackt.
+- PLMeshCreator: Muss man nun zuerst über SetRenderer() den Renderer übergeben werden mit dem die Meshs erzeugt
+  werden sollen. So herum fand ich es praktisch da man dann nicht für jede Create Funktion noch einen extra
+  Renderer Parameter übergeben muss...
+- Material auf Material Base und auf Material Factory umgestellt
+  --> Wenn man alle Mesh Loader von der Erzeugung auschließt kann man PLModelLib nun auch ohne PLEngine.lib
+      übersetzen... die Mesh Loader selbst benötigen noch die File Funktionen welche derzeit noch in der Engine
+      selbst sind. (aber nicht mehr lange - buhahahha :)
+      Das nächst wichtige ist nun also alles auf das FS umzustellen. :)
+
+
+
+>> 19.06.04
+[CO]
+- PLTMesh und PLTMeshMorphTarget um Funktion zum Berechnen der Bounding Box erweitert (CalculateBoundingBox())
+
+
+
+>> 17.06.04
+[CO]
+- Mesh Format: In LODLevel stehen nun noch zwei Octree Informationen - mehr Infos braucht man nicht und da
+  wird sich wohl nichts mehr dran ändern.
+- PLTMeshHandler::UpdateVisibility() erwartet nun ein Plane Set mit dem auf sichtbarkeit getestet werden soll.
+  Dieses muss im Mesh eigenen Vektor raum liegen... PLTObject::EntityDrawSolidFunction() hab ich mal nen Test
+  dazu gemacht...
+
+
+
+>> 16.06.04
+[CO]
+- Mesh Zeichnen beschleunigt - nun werden Materialien und Pässe wenn diese zum ersten mal verwendet werden
+  gebunden - werden bestimmte Materalien NIE verwendet da z.B. alle Geometrien welche diese verwenden unsichtbar
+  sind.
+
+
+
+>> 15.06.04
+[CO]
+- PLTMeshLODLevel: Neue Funktion: SplitGeometries() reist alle Geometrien auseinander so das jede Geometry NUR
+  noch aus einem Dreieck besteht
+  GenerateOctreeGeometries() -> Passt die Geometrien optimal an einen gegebenen Octree an
+  --> Das mit den Octrees klappt nun wieder komplett wie früher. Lässt sich optimal am Bunker
+      ausprobieren, hab dazu in PLTObject Tests implementiert.
+
+
+
+>> 13.06.04
+[CO]
+- Octree reimplementiert. Generell ist ein Octree nur als 'Aufsatz' für einen möglichen Sichtbarkeitstest
+  für Geometrien zu sehen. Jedes LOD level kann einen solchen Octree haben, zudem hält das LOD level nun 
+  intern fest welche Geometrien sichtbar sind und welche nicht - was man gegebenenfalls auch per Hand ändern
+  kann, aber im normalfall ist ein Octree bei Statischen Meshs dafür verantwortlich das in diesem Bitset immer
+  alles korrekt gesetzt ist. In der alten Geometry Klasse wurde noch eine Liste aller Octrees gespeichert in
+  der diese Geometry ist - da man diese Information aber nicht wirklich benötigt hab ich es draußen gelassen.
+  Somit betrifft ein möglicher Octree NUR PLTMeshLODLevel. :)
+  Mal schaun wie das mit den Octrees mit dem aktuellen Mesh Design zusammenpasst - aber ich denke es ist OK.
+  Die Octrees an sich sind ja recht unabhängig und daher hab ich auch den Namen 'Mesh Octree' gelassen.
+  -> Die Octree funktionalität ist noch nicht komplett überprüft da ich noch eine Funktion implementieren muss
+     welche die Geometrien Octree 'freundlich' macht - das machte früher der Modell Editor... :)
+
+
+
+>> 11.06.04
+[CO]
+- Die Funktion PLTMeshHandler::Update() aktualisiert Animations Relevante Informationen, zudem wird
+  gegebenenfalls bei z.B. Animationen ein eigener VertexBuffer mit den aktuellen berechneten Mesh Daten
+  akualisiert. Vertex Animationen sind bereits implementiert was man z.B. am Taxi Modell Testen kann.
+- PLTMeshHandler hat ein paar Tool-Funktionen mit dem man z.B. die aktuelle LOD Geometrien oder den aktuellen
+  Vertex Buffer abfragen kann.
+- PLTMesh::Draw() -> Sollte nur in Spezialfällen verwendet werden. Z.b. in PLTParticleGroup wo ein Mesh
+  Handler einfach nur umständlich wäre. Im normalfall sollte ein Mesh Handler das darstellen lassen etc.
+  übernehmen da er u.a. auch individuelle Materialien verwenden kann.
+
+
+
+>> 10.06.04
+[CO]
+- Tangent Space Vektoren werden nun korrekt berechnet
+- CalculateNormals() & CalculateTangentSpaceVectors() werden nun in den Morph Targets selbst berechnet
+- Ein paar alte Modell Klassen in PLMesh gepackt und aktualisiert:
+  AnimationFrameInfo, AnimationInfo, Animation, AnimationEvent, AnchorPoint
+- Animation und Anker Punkt Pool zu PLTMesh hinzugefügt, ich denke wir können die Lösung mit PLTPool lassen
+  da sich diese recht bequem verwenden lässt und diese zwei Dinge wirklich nur Informationen behinhalten und
+  Mesh ansonnsten nicht direkt mit diesen Informationen arbeitet. In GetAnimationPool() machte ich noch die 
+  Anmerkung das ein 'Animations Frame' im Mesh einem Morph Target entspricht. Momentan bin ich noch etwas
+  unsicher ob man vielleicht nicht nur noch von Morph Targets sprechen und die Klassen etc. enstprechend
+  umbenennen sollte. Jedoch verbinde ich den Begriff 'Morph Target' mit einer Sammlung von Daten und 'Frame'
+  mit einer art Index auf diese Daten... eine Animation hat mehrere Frames wobei jedoch ein Morph Target in
+  mehreren Frames verwendet werden kann... brrr...
+- Kleines Mesh Diagramm erzeugt damit man das Mesh-Design nochmal klar vor Augen hat
+  (../Docs/Intern/Diagrams/Mesh.vsd)
+- Angefangen das Animations System zu implementieren. PLTMesh hat NUR allgemeine Daten und ist somit eine
+  art von Resource. PLTMeshHandler hingegen implementiert alles was für jede 'Mesh instance' individuell ist.
+  Die Anzahl der Animations Kanäle kann man optional im PLTMeshHandler Konstruktor einstellen, standart ist wie
+  gehabt 4.
+
+
+
+>> 09.06.04
+[CO]
+- Obj Importer: Kann nun auch MorphTargets einladen - das Taxi Modell hat z.B. Frames. :)
+  Momentan bin ich am überlegen ob ich das einladen von möglicherweise vorhandenen normalen ganz aus
+  diesem Importer lassen soll, denn das in kombination mit den MorphTargets und der tatsache das 
+  man im Face noch die Normalen Indices angeben kann wird das doch alles recht umständlich.
+  -> PLTMesh::Draw() Kleinen Test Code für MorphTargets, nun könnte man eigentlich schonmal die Klassen
+     implementieren welche die Animationen steuern...
+
+
+
+>> 07.06.04
+[CO]
+- Obj Importer: Werden negative Textur Coord Indices gegeben werden diese nun korrigiert. (Lightwave
+  scheint solche negativen Texture Coord Indices auszuspucken)
+
+
+
+>> 04.06.04
+[CO]
+- PLTMeshLoader: Beim Laden kann nun angegeben werden ob das Mesh Statisch sein soll (bessere Performance!)
+- PLTMeshLoaderObj: Ausgebaut. Kann nun auch Jans Test Modell einladen welches im Core/Temp Ordner in
+  Material.zip liegt!
+
+
+
+>> 03.06.04
+[CO]
+- ModelLib: - PLTMesh: Neue Funktion: CalculateTangentSpaceVectors() berechnet alle Tangent Space Vektoren welche für das
+                       BumpMapping benötigt werden
+            - Die Importer weiter verfeinert
+            - PLTMeshLODLevel: Neue Funktion: GenerateStrips() optimiert die Geometrien durch Triangle Strips, intern
+              wird dafür die NvTriStrip Lib Bibliothek verwendet da ich damit schon Erfahrung sammeln konnte. :)
+
+
+
+>> 03.06.04
+[SB]
+- Kommentierungen angepaßt in PLTGeometry, PLTMesh, PLTMeshHandler, PLTMeshLODLevel, PLTMeshMorphTarget
+- PLTMeshMorphTarget: Fehler in ResizeVertexBuffers() behoben und PLTMeshLoaderPL angepaßt
+- PLTMeshCreator: Private Bereiche wieder eingeführt
+- PLTGeometry: Pointer auf PLTMesh entfernt, da dieser nicht benötigt wird
+- PLTMesh: Draw-Flags an den üblichen PL-Style angepaßt
+
+
+
+>> 02.06.04
+[CO]
+- 3ds Importer implementiert. In PLTests neues 3ds Test Modell + Texture hochgeladen. (face.3ds & face.bmp)
+
+
+
+>> 29.05.04-31.05.04
+[SB] & [CO]
+- Nach dem Treffen zwischen Stefan und Christian können nun wieder Modelle importiert (derzeit smd und obj) werden und als
+  PL eigenes Format gespeichert und wieder geladen werden. Generell werden wir nun von Mesh sprechen und das neue Format hat
+  daher die Endung 'mesh'.
+- Beim importieren werden doppelte Vertices beseitigt.
+- Das Mesh LOD wurde zum erstenmal ausgetestet :)
+
+
+
+>> 29.05.04
+[CO]
+- PLMeshCreator so umgebaut das diese Klasse nun auch die LODs eines Meshs füllen kann
+
+
+
+>> 27.05.04
+[CO]
+- PLTGeometry: Neue Funktion: GetNumOfTriangles() -> Gibt die Anzahl der Dreiecke der Geometry zurück
+- PLTMeshLODLevel: Neue Funktion: GetTriangle() -> Gibt die Indices eines Dreiecks einer Geometry zurück
+
+
+
+>> 25.05.04
+[CO]
+- PLTMesh kann man beim Zeichnen des Meshs noch Flags mitgeben um z.b. Vertices und Normalen anzeigen zu lassen
+- PLMeshCreator: Neue Funktionen: CreateTriangle(), CreateQuad() und CreateBezierPatch()... ich sollte nun
+  UMBEDINGT mal austüfteln wie man die Creator Klasse geschickt umbauen kann, so das diese auch komfortabel
+  LODs erzeugen kann. ;-)
+
+
+
+>> 21.05.04
+[CO]
+- Das Projekt in PLEngine/Source hochgeladen (siehe auch PLTests)
+
+
+
+>> 20.05.04
+[CO]
+- CMesh neue Funktion: UpdateMaterials() -> Aktualisiert alle Materialien (für z.B. Animationen)
+- CMeshMorphTarget: Behob kleinen Fehler bei verwendung von Arrays -> Mit GetNumOfElements() erhält
+  man die Anzahl der Elemente, mit GetSize() die größe des Arrays in Bytes. (ungünstige Namenswahl?)
+- Passte Klassennamen und ein paar Kommentare an PL Style an
+- Singleton Namens PLMeshCreator implementiert welches Automatisch Meshs wie Box, Sphere etc. erzeugen kann
+
+
+
+>> 21.03.04
+[SB]
+- Die Klassen PLTMesh und PLTModel verwenden nun die neuen Vertex- und Indexbuffer. Dies
+  ist der erste Schritt zur Umstellung des Modellformates
+
+
+
+>> 11.02.04
+[CO]
+- PLTTextureManager: Neue Funktion: CreateTexture2() -> Im gegensatz zu CreateTexture() erzeugt diese Funktion nur die
+  Texture selbst ohne diese auch gleich automatisch anzupassen und zur GPU zu laden -> Praktisch wenn man nur mal Texture
+  Daten ändern und speichern will. ;-)
+
+
+
+>> 03.02.04
+[CO]
+- Überarbeite nochmals das Material System da sich CgFX (dank schlechter Umsetzung) in der Praxis als nicht wirklich
+  brauchbar rausstellte. CgFX und der Effekt Manager wurden nun entfernt und durch ein eigenes System ersetzt welches im
+  Prinzip das gleiche kann wie CgFX - nur gibts halt keine Plugins für z.B. Max um die Effekte direkt zu exportieren.
+  Jedoch kann man im Modell Editor das Material ja ausreichend Bearbeiten so das dies für die Grafiker kein Problem sein
+  sollte.
+  Unser Material besteht nun aus verschiedenen Techniken welche mehrere Pässe haben können. Jeder
+  Pass kann mehere Texturschichten haben - wie bisher. Jedoch wurde der Pass um Shader Einstellungen erweitert in dem man
+  einem Pass ein Vertex und/oder Fragment zuweisen kann. Globale Shader Parameter lassen sich direkt im Material Format
+  ähnlich wie bei dem fx-Format einstellen - zudem ist es auch möglich weitere Eigenschaften dieser Parameter dort zu
+  definieren wie z.B. die Eigenschaften von entsprechenden Gui-Elementen zum manipulieren des Parameter im z.B. Material
+  Editor des Modell Editors.
+  Nun haben wir ein sauberes, universelles und mächtiges Material System das zudem sehr viel kompatibler sein müsste
+  als das alte. :)
+
+
+
+>> 09.01.04
+[CO]
+- PLTTextureManager::CreateTexture() um Rectangle Texture Parameter erweitert
+
+
+
+>> 03.01.04
+[CO]
+- PLTShader: Neue Funktion: IsVertexShader() -> Gibt zurück ob es sich um eine Vertex oder Fragment Shader handelt
+- Neue Manager Eingebaut: PLTEffectManager -> Dieser verwaltet CgFX Effekte - lassen sich im Prinzip genauso verwenden
+  wie die normalen Cg Shader welche bereits lange implementiert sind. Jedoch setzen diese auch gleich alle Render States
+  etc. so das der gesammte Effekt korrekt aktiviert ist. Zudem haben Effekte einige Parameter deren Semantik bekannt ist
+  und diese Parameter werden dann automatisch korrekt gesetzt ohne das man dies per Hand machen muss.
+- Material System der Engine überarbeitet so das nun im Material auch CgFX Effekte verwendet werden können. Insgesammt
+  sind die Änderungen zu umfangreich um diese hier nochmal niederschreiben zu können. Der Code ist gut Dokumentiert -
+  desweiteren habe ich in der API Dokumentation ein neues Kapitel namens 'Material, shader and effects' hinzugefügt.
+- PLTFont auf Material umgestellt
+
+
+
+>> 30.12.03
+[CO]
+- PLTTextureManager::CreateTexture() -> Dort kann man nun noch optional die Anzahl der Farb Komponenten angeben
+- PLTShaderManager::Init() -> Eine interne Cg Callback Funktion wird nun verwendet um bei Cg Fehlern eine Nachricht
+  ins Log zu schreiben
+
+
+
+>> 25.12.03
+[CO]
+- PLTModelHandler: Die BB und Octrees werden nun nur noch aktualisiert wenn sich diese auch geändert haben
+
+
+
+>> 22.12.03
+[CO]
+- Die Octrees in PLTMesh werden nun korrekt erstellt und lassen sich problemlos mit dem Entity Positionieren, Skalieren
+  und Rotieren
+
+
+
+>> 20.12.03
+[CO]
+- Fehler in PLTTexture::Load() behoben welcher u.a. zum Crash führen konnte wenn eine nicht ladebare Textur geladen werden
+  sollte
+
+
+
+>> 29.11.03
+[CO]
+- In fast allen Projekten gab es durch empfindlichere Compiler Einstellungen diverse Warnungen welche nun behoben sind
+
+
+
+>> 24.11.03
+[CO]
+- Löste ein kleines Problem mit Proceduralen Texturen, dort verursachten nicht aktualisierte Mipmaps merkwürdige
+  Textur Probleme. PLTTextureManager::CreateTexture() um 3 weitere Parameter erweitert so das man Mipmaps etc. deaktivieren
+  kann. PLTTexture::Upload() um langsamere Mipmap Erzeugung erweitert - Bei Proceduralen Texturen sollte die Mipmaps aus
+  Performance gründen deaktiviert sein da ansonnsten jedesmal noch die Mipmap Texturen erzeugt werden müssen.
+
+
+
+>> 23.11.03
+[CO]
+- In PLTTextureHandler steht nun der Wrapping Modus standardmäßig auf PL_CLAMP_TO_EDGE - damit sind auf meiner Radion Karte
+  die Textur Übergangsprobleme gelöst... hoffentlich war das auch für den 'großen' Fehler bei Stefan verantwortlich...
+  wenn nicht so muss ich mir wohl nochmal den Sphere Mapping Code anschaun... :(
+
+
+
+>> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+
+[CO] plt-Format erweitert: unter General -> FitLower kann nun pro Textur festlegen ob diese beim Autoskalieren
+     vergrößert oder verkleinert wird. Wird nichts extra angegeben so werden die Einstellungen im Texture Manager
+     verwendet (default: nächst kleinere passende Texture größe wählen)
+[CO] PLTTexture::ScaleImage: Passt nun die größe der Textur entsprechend den Einstellungen im Texture Manager an
+[CO] PLTMaterial erweitert
+[CO] PLTMesh::AllocateNormals: Wie beim Anlagen von Textur Koordinaten oder Farb werten muss man bei den Normalen nun nicht
+     mehr die Anzahl der Vertices angeben -> jeder Vertex hat eine Normale (die normalen von Polygonen werden hier ja nicht
+     gespeichert!)
+[CO] PLTModel: CalculateNormals() -> Zeigt optional einen Fortschritts Balken an
+[CO] PLTModelHandler: Neues Debug Flag: PLeModelHandlerFlagDebugShowOctree -> Zeigt den Modell Octree an
+[CO] PLTModel: GetMaterials() -> Hat nun einen weiteren Parameter mit dem man bereits geladene Materialen überladen kann
+[CO] PLTMesh & PLTGeometry: Fehler mit den Vertex Buffern behoben, es wird nun immer korrekt geprüft ob diese Extension
+     vorhanden ist
+[CO] PLTModelHandler: Neue Funktion: GetAnimationInfo() -> Liefert einen Zeiger auf eine Animations Information zurück,
+     falls keine mit entsprechenden Namen gefunden wurde, so wird standardmäßig eine Warnung ins Log geschrieben
+[CO] PLTAnimation: Is kein Entity gesetzt so erhalten nun alle Entities ein erzeugtes Event. Die Event erzeugung läst
+     sich mit SetEvents() deaktivieren.
+[CO] PLTMesh an neue extension angepasst -> Mit SetStatic() ann man den zustand ändern
+[CO] PLTGeometry entsprechend erweitert um die neue Extension verwenden zu können -> Mit SetStatic() kann man den
+     zustand ändern
+[CO] PLTexture: Das Konvertieren beim Laden von Texturen ins richtige Format etwas optimiert (je kürzer die Ladezeiten
+     desto besser, und diese kleinigkeiten summieren sich recht schnell :)
+[CO] PLTMeshGeometry: CreateTorus() & CreateDome() funktioniert nun richtig
+[CO] plt-Format eingebaut, dient zum überladen von Materialien bei Modellen
+[CO] tani-Format umgeschrieben
+[CO] plt-format umgeschrieben. Alle Alpha-Test Funktionen sind nun im Textur Handler und können über das Material
+     eingestellt werden.
+[CO] PLTTextureManager: Neue Funktionen: GetHoldTextureData() & SetHoldTextureData() -> Damit kann man einstellen ob ein
+     Backup der Textur im System speicher gehalten werden soll nachdem diese zur Grafikkarte geladen wurde... nur in
+     manchen fällen wird dies benötigt, ansonnsten kann man den Speicher damit etwas schonen :)
+[CO] PLTTexture: Neue Funktionen: GetData() gibt einen Zeiger auf die Texture Daten zurück   Upload() -> Läd die Textur
+     Daten auf die Grafik Karte  ->-> Damit ist nun Procedural Texturing möglich (sie Beispielprogramm)   -> auch kann
+     man nun problemlos Videos in Texturen abspielen lassen (siehe EntityVideoTexture in PLTEntities und Anwendung im
+     Beispielprogramm)
+[CO] PLTTexture: Cube Maps eingebaut -> Wird im plt-file '[General] CubeMap=1' gesetzt und ist die Extension
+     GL_ARB_texture_cube_map vorhanden (heutzutage standard :) so ist die Textur eine Cube Map und die anderen 5
+     dazugehörenden Texturen werden automatisch eingeladen (Texture Name + ID)
+[CO] Material & Texture System erweitert / umgebaut, auch die Formate wurden verändert. Nun eröffnen sich noch mehr
+     möglichkeiten... vorallem kann man nun einzelne Material Textur-Layer genauer einstellen
+[CO] PLTMaterial um weitere Einstellungen erweitert (nun kann man Oberflächen glänzender usw. machen :)
+[CO] PLTAnchorPoint: Es gibt nun zwei verschiedene Arten von Anker Punkten: Vertex & Bone Anker wobei Bone-Anker den
+     Vorteil haben das man auch eine Rotation bekommt :)  (Bone-Anker sind also für Waffen positionen usw. die bessere
+     Wahl :)
+[CO] PLTGeometry: Hat nun auch einen Namen
+[CO] Im Modell Format können nun auch mehrere Bounding Boxes gespeichert werden, desweiteren kann jede BB noch einen
+     Namen und Flags haben -> bereits in ST zeigt sich ja das die BB's eine recht wichtige Sache sind :)  Bounding
+     Boxes können an Anker Punkte gebunden werden -> Neues Modell Format v7
+[CO] PLTMeshGeometry ausgebaut: Normalen werden nun nach Wunsch mitberechnet CreateSphere() funktioniert nun Neue
+     Funktion: CreateSuperEllipse() -> kann verschiedene Körper erzeugen welche über zwei Parameter definiert werden
+[CO] PLTModelHandler::FindTriangle() verbessert
+[CO] PLTMesh: Die Sichtbarkeits-aktualisierung ist nun in einer eigenen Funktion (UpdateVisibility) da diese Tests direkt
+     vor dem Zeichnen gemacht werden müssen, die Kamera sich also nicht mehr ändert, zudem kann es sein das
+     m_cGeometryVisibility während Update() noch zu anderen zwecken verwendet wird (Kollisions-Erkennung)
+[CO] Neue Modell-Version 6: In Geometry sind zwei Einstellungen hinzugekommen. bActive -> Ob eine Geometry aktiviert ist,
+     nCustomFlags -> User Flags für die Geometry
+[CO] Behob kleinen Fehler in PLTModelHandler::Draw() -> die View-Matrix wurde nicht immer zurückgesetzt
+[CO] In PLTTexture werden nun nur noch Debug-Log Informationen ausgegeben
+[SB] Falscher (wenn auch vom Compiler tolerierter) C++ Syntax in PLModelLoad.cpp wurde korrigiert
+[CO] Zwei neue Material-Einstellungen: DepthTest -> Um den Tiefen Test ein bzw. auszuschalten   DepthMask -> Um festzulegen ob
+     in den Tiefen Buffer geschrieben werden soll oder nicht
+[SB] Das Modellformat wurde um eine Bounding Box erweitert, außerdem wurden im Header einige Bytes für weitere
+     Änderungen reserviert
+[SB] Im ModelHandler wurde eine weitere BoundingBox für Kollisionszwecke eingebaut (CollisionBoundingBox), da die
+     Bounding Boxes für Sichtbarkeit und die für Kollisionsabfragen nicht immer identisch sind
+[SB] Im Modell wird nun eine Bounding Box gespeichert, welche über GetBoundingBox() abgefragt werden kann
+[CO] Neues Model Format: Version 5 -> Im Header werden zwei weitere Octree Informationen gespeichert
+[CO] Größere Statische Meshs (z.B. Räume) können nun über PLTMeshOctree besser auf Sichtbarkeit hin überprüft werden
+[SB] Die Bone Animations funktionieren nun wieder korrekt, die Berechnung des Meshs muß beim Abspielen von Bone
+     Animations erzwungen werden, da ansonsten die relative Bewegung der Bones kumulativ auf das Mesh angewendet wird
+     und dieses folglich zerreißt ;-)
+[SB] Habe einen Fehler in PLTAnimation gefunden, durch den rückwärts abgespielte Animationen zwischen Frame 0 und 1 nicht
+     angezeigt werden. Dieser Fehler wird nun erst einmal umgangen, indem GetNextFrame() nun wieder frame+1 zurückgibt,
+     jedoch könnten hierdurch andere Animationen nicht mehr korrekt laufen, die Animationsklasse muß also nochmal komplett
+     überarbeitet werden
+[CO] Modell-Format um Animations-Informationen erweitert -> Alle Modelle mit Animationen sind nicht mehr ladbar! Die
+     anderen können weiterverwendet werden.
+[CO] Über die Animation Information kann für jeden Frame (PLTAnimationFrameInfo) seine Interpolations-Zeit angegeben
+     werden... gibt man dafür einen negativen Wert ein, so wird ein Frame nicht interpoliert... so kann man z.B. 'zucken'
+     realisieren... generell eröffnen sich dadurch neue Animations-Technische Möglichkeiten! ;-)
+[CO] Texture Handler haben nun auch Farb-Animationen
+[CO] Shader System eingebaut welches das CG-Shader Skript von NVIDIA verwendet (www.cgshaders.com) -> notwendige Header,
+     Libs usw. sind im Lib-Ordner auf dem Server
+[CO] In plt-Dateien kann man nun auch die Alpha-Funktion einstellen
+[CO] Model Handler: Mesh wird nun nur noch bei bedarf aktualisiert
+[CO] Im Material kann man nun die Blend-Funktion einstellen. Die Engine Blend Konstanten haben momemtan zur vereinfachung
+     OpenGL werte. Die Material Blend Dokumentation ist von der MSDN Dokumentation übernommen damit die Grafiker mehr
+     Informationen über die Blend Funktionen haben.
+[CO] PLTModelHander -> Update Funktion eingebaut -> dort wird auch das Mesh aktualisiert
+[CO] Neue Tool-Klasse PLTMeshGeometry welche verschiedene Geometrien wie z.B. eine Box als Mesh erzeugt -> müsste noch
+     erweitert werden
+[CO] PLTGeometry -> Active Flag eingebaut damit man eine Geometry auch Deaktivieren kann
+[CO] Texture Handler haben nun auch Textur Matrix Animationen
+[CO] Texture Handler haben nun auch eine Textur Transformations Matrix welche automatisch beim Textur Binden verwendet
+     wird -> Textur Erscheinungsbild kann zusätzlich verändert werden -> Die Shader werden bei ihren Animationen diese
+     Textur Matrix verändern um Animationen zu erzeugen
+[CO] Animation Event ins Model Format aufgenommen -> Keine neue Model Format Version da sich nur etwas in den Animationen
+     geändert hat... also nur alle Modelle mit Animationen müssen neu konvertiert werden
+[CO] PLTAnimation: Neue Funktion: SetCurrentFrame() zum setzen des aktuellen Animations Frames... ist manchmal ganz
+     praktisch dies selbst einstellen zu können. :)
+[CO] PLTAnimation kann nun Events an ein Entity schicken welches mit der Animation verbunden ist
+[CO] Neue Klasse: PLTAnimationEvent -> Verwaltet ein Animations Event. Wird z.B. in PLTAnimationInfo verwendet.
+[CO] Animationen haben nun eine Event Funktion durch welche diese Nachrichten an Entites senden können. Könnte man z.B.
+     brauchen wenn bei einem bestimmten Animations Frame ein Schritt-Geräusch beim Auftreten zu hören soll.
+[CO] PLTAnimation: Neue Funktionen zum einstellen des abspiel Geschwindigkeits Faktor -> Manipulations möglichkeit für
+     die standard abspiel Geschwindigeit
+[CO] Texture Animationen (wechselnde Texturen) eingebaut welche durch den Texture Handler verwaltet und in Text Dateien
+    (tani) definiert werden. Die Animationen lassen sich mit den gleichen funktionen steuern wie die Modell-Animationen...
+     sogar einzelne Texture Animation Frames können wiederum Textur Animationen sein... es sind also auch komplexere
+     Animation möglich! :)
+[CO] PLTAnimationInfo wie auch PLTAnimation sind nun universell einsetzbar und werden für Model, Textur usw. Animationen
+     einheitlich verwendet
+[CO] Stellte PLTModel auf neue Pool Klasse um (Animations Informationen & Anker Punkte)
+[CO] PLTMeshTriangle: Statt der Ebenen Normalen wird nun die komplette Ebende auf der das Dreieck liegt gespeichert ->
+     Neue Funktion: PLTMeshTriangle::GetPlane()
+[CO] PLTAnimation: Neue Funktionen: Pause(), GetName() und bei Start(PLTAnimationInfo*) kann man nun noch angeben ob
+     eine Animation neu gestartet werden soll wenn diese gerade schon läuft (bei der 'normalen' Start Funktion wäre das
+     zuviel des guten, denn wenns etwas mehr sein soll so sollte man auf jedenfall die PLTAnimationInfo-Klasse verwenden! :)
+[CO] Im Material kann nun eingestellt werden ob dieses 'glühen' soll oder nicht
+[CO] Die Material farbe lässt sich nun Einstellen
+[CO] Texturen mit Alpha Kanal verwenden nun automatisch den Color key
+[CO] PLTTextureManager -> Es ist nun möglich mit CreateTexture() während der Laufzeit eine Textur zu erstellen.
+     Desweiteren lässt sich beim Laden / Erstellen noch der Gamma Wert einstellen
+[CO] PLTTexture -> Falls ein Texture Name keine Dateiendung hat so wird nun automatisch versucht eine passende Textur zu finden
+[CO] Neue Klasse eingebaut: PLTAnimationInfo -> Dort werden alle Informationen über eine Animation abgelegt... also Start & End
+     frame usw. Damit lassen sich Animationen leichter ansprechen -> Diese Informationen werden im Model Format gespeichert
+     neuer wert 'nAnimations' im Model Header benötigt. Desweiteren hat nun jeder Vertex Frame eigene Vertex Normalen damit
+     alles stimmt -> daher neues Model Format 4
+[CO] Der Geometry Typus wird nun nicht mehr mit OpenGL spezifischen Werten gefüttert sondern mit eigenen Engine-Werten
+[SB] Habe die Klasse ModelFile, welche die Beschreibung des .Model Dateiformates enthält, in PLTModelFile umbenannt
+[CO] PLTModel: Neue Funktion IsTextFormat()
+[CO] PLTMaterial: Neue Funktion: Reload() und GetFilename()
+[CO] PLTModel: Neue Funktionen: AddMaterial(), DeleteMaterial(), GetVertexFrame(), GetGeometry() um direkte Zeiger auf die
+     Daten des Orginal Models zu bekommen
+[CO] PLTModel: Neue Funktionen: GetVertexFrames(), GetBoneFrames()
+[CO] Nam GetNumOfVertices() & GetNumOfGeometry() & GetNumOfTriangles() aus PLTMesh heraus da man diese Werte auch direkt über
+     das entsprechende DataSet bekommen kann
+[CO] Folgende Model Handler Debug-Flags haben nun eine Funktion: PLeModelHandlerFlagDebugShowVertices,
+     PLeModelHandlerFlagDebugShowNormals, PLeModelHandlerFlagDebugShowVertexNumbers, PLeModelHandlerFlagDebugShowBones,
+     PLeModelHandlerFlagDebugShowBoneNames, PLeModelHandlerFlagDebugShowSkeleton, PLeModelHandlerFlagDebugShowAnchorPoints
+[CO] Im Model Handler gibt es nun ein zweites Flag für Debug zwecke
+[CO] Erweiterte die Dokumentation um eine Beschreibung des Text Model Formats
+[CO] Anchor points in PLTModel eingebaut
+[CO] Bone Namen werden nun in PLTBone gespeichert. In PLTSkeleton befindet sich eine Bone Hash Table, so lassen sich Bones
+     nun komfortabel ansprechen.
+[SB] Converter: Tool zum Zentrieren von Models eingebaut
+[SB] Converter: Beim Import aus .3ds Dateien werden nun ebenfalls mehrere Texturen innerhalb eines Models importiert, außerdem
+     wird das lokale Koordinatensystem eines Objektes ausgelesen
+[SB] Converter: Beim Import aus .obj Dateien werden nun auch verschiedene Texturen innerhalb eines Models richtig importiert
+[SB] PLTTexture: Color Keys können nun mit einem Toleranzwert eingelesen werden
+[CO] Model Text Dateien können nun ebenfalls eingeladen werden. Es wird automatisch geprüft ob das Modell im Binär oder Text
+     Format vorliegt.
+[SB] Converter: OBJ Importer wurde so erweitert, daß durch den neuen (inoffiziellen) tag "frame" Animationen innerhalb von
+    .obj Dateien definiert werden können
+[SB] Converter: 3DS Importer hinzugefügt, Animationen werden noch nicht unterstützt
+[SB] PLTAnimation: Zusätzliches Flag "Running" eingefügt, da die Bedeutung von "Active" nicht deutlich genug war, "Running"
+     bedeutet, daß die Animation gerade abgespielt wird, "Active" bedeutet, daß der Status der Animation (auch wenn sie gerade
+     nicht abgespielt wird) beim Anzeigen des Models einberechnet wird
+[CO] PLTTextureHandler: Bind() um die Textur als die aktuelle Renderer Textur zu setzen
+[CO] PLTTexture: BindOpenGLTexture() in Bind() umbenannt
+[SB] Converter: Neue Importfunktion, um Dateien des .Model-Formats Version 2 in die neue Version 3 zu konvertieren. Außerdem
+     habe ich die Tools angepaßt, so daß auch die Anchorpoints kopiert werden
+[SB] Model: Es werden nun die Vertexnormalen aus den Model Dateien eingelesen, die Funktion zum Berechnen der Normalen ist
+     weiterhin vorhanden, wird aber nicht mehr automatisch ausgeführt
+[SB] Model File Format V3, es werden nun die Vertexnormalen bereits im Model gespeichert, um die Ladezeiten zu verkürzen. Der
+     Converter wurde entsprechend angepaßt. Außerdem wurde das Dateiformat um die Struktur AnchorPoint erweitert, welche es
+     ermöglicht, Referenzpunkte mit Namen zu erzeugen, auf die dann in der Engine zugegriffen werden kann
+[CO] Funktion zum Testen ob ein Strahl ein Modell Dreieck schneidet eingebaut
+[SB] Kleinen Fehler in der Materialklasse behoben (Back-Culling wurde nicht initialisiert, dafür stand Front-Culling immer
+     auf true)
+[CO] Specular Mappig eingebaut (für Glanzeffekte... mini Textur plt Erweiterung :)
+[CO] Material Erweiterungen: Backface culling einstellbar  Silhouetten  CelShading
+[CO] Baute in den Model & Texture Manager Dialogen den Szene Manager ein, nun funktionieren die ansichten wieder
+[CO] Baute Material-Klasse PLTMaterial ein. Diese kann mehere Texturschichten sowie extra informationen über das Material
+     beinhalten. Texture in Mesh, Geometry & Co. wurde in Material umbenannt.
+[CO] Modelle und Texturen auf die neue PLTFile Klasse umgestellt
+[SB] PLTMesh: Das Mesh besitzt nun ein Texturenset, welches die aktuellen Texturen des Meshs enthält. Diese werden beim Laden
+     vom Model kopiert, können später aber natürlich ausgewechselt werden. Hierbei waren auch einige andere Änderungen notwendig,
+     z.B. das Speichern der Texturnummer in PLTGeometry und geringfügige Änderungen beim Laden des Models.
+[SB] Converter: Bei MS3D-Modellen wird die Y-Texturkoordinate nun gespiegelt, da dies bei einigen Modellen anscheinend
+     erforderlich ist
+[SB] Converter: Bug im MS3D-Import behoben, der zu einem Absturz bei Dateien ohne Skelettanimationen führte
+[SB] Converter: Samples wieder eingebaut
+[SB] Converter: Neues Tool "Decode Model", welches aus einer .Model-Datei eine .Txt-Datei erzeugt
+[SB] Converter: Statt des Tools "SwapMD2" gibt es nun das Tool "ScaleModel", welches es ermöglicht, eine .Model-Datei zu skalieren
+[SB] Converter: Vereinheitlichung der Namen im gesamten Programm (Bezeichnungen und Klassennamen sind nun einheitlich), weitere
+     kleine Veränderungen (PACK_STRUCT wird nun benutzt)
+[SB] Converter: Habe die Klasse COutputModel komplett überarbeitet, die Daten können nun in fast beliebiger Reihenfolge eingegeben
+     werden und produzieren eine korrekte .Model Datei
+[SB] Entfernen der Klassen PLTVertex und PLTVertexInfo und entsprechendes Umstellen der Klasse PLTModel[SB] PLTRenderer: Bei der
+     Initialisierung wird nun GL_RESCALE_NORMAL verwendet, um Probleme mit den Lichtberechnungen bei skalierten Objekten zu verhindern
+[SB] PLTMesh: Berechnung der Normalenvektoren des Meshs wurde implementiert
+[CO] In PLTMesh werden die Daten (Vertices, Textur Koordinaten usw) nun in einzelnen PLTDataSet gespeichert
+[CO] In PLTMesh ist nun ein Flag mit welchem bestimmt wird welche Daten verwendet werden sollen
+[SB] Converter: Bei der Konvertierung von .MD2 werden die Optimierungen berücksichtigt
+[SB] Converter: Wurde an das neue Dateiformat angepaßt
+[SB] Skelettanimation wurden eingebaut
+[SB] Neues Dateiformat wurde eingebaut (.Model V2)
+[SB] Einbau von Geometry-Klassen (PLTMesh usw)
+[SB] PLTModel wurde komplett überarbeitet
+[CO] eigene Textur Skalations funktion in 'ASTextureScale.cpp' durch 'gluScaleImage' ersetzt
+[CO] Tex-Textur Format hinzugefügt

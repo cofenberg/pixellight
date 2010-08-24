@@ -1,0 +1,57 @@
+\chapter{Renderer backends}
+This chapter deals with the different renderer backends shipping with the PixelLight SDK.
+
+
+
+
+\section{Null}
+\begin{itemize}
+\item The null renderer backend is for situations were you don't need \emph{real} rendering output. It consists of dummy functions which will try to \emph{emulate} the set \& get functions that good as possible.
+\item PixelLight component name: PLRendererNull
+\item Used dll's: \emph{PLRendererNull.dll}
+\end{itemize}
+
+
+
+
+\section{OpenGL}
+\begin{itemize}
+\item This is the preferred renderer backend of the PixelLight team because OpenGL\footnote{More information about OpenGL can be found at \url{http://www.opengl.org/}} provides some nice features like line width and it's also supported by other operation systems like Linux.
+\item PixelLight component name: PLRendererOpenGL
+\item Used dll's: \emph{PLRendererOpenGL.dll}, \emph{cg.dll} and \emph{cgGL.dll}
+\item FreeType\footnote{FreeType can be downloaded from \url{http://www.freetype.org/}} is used for font support.
+\end{itemize}
+
+Here's a list of some general notes:
+\begin{itemize}
+\item Normally when using rectangle textures (none power of 2) under OpenGL, you have to work with none normalized texture coordinates - but because we don't want to deal with texture coordinates for rectangle textures in a special way, within the backend the texture matrix is scaled. So, you always work with normalized texture coordinates. But if you use rectangle textures within a shader, you should take the texture matrix within your vertex shader into account!
+\end{itemize}
+
+
+
+
+\section{OpenGL ES 2.0}
+\begin{itemize}
+\item Currently not within the official PixelLight SDK
+\item OpenGL ES 2.0 renderer backend for mobile devices
+\item PixelLight component name: PLRendererOpenGLES
+\item FreeType\footnote{FreeType can be downloaded from \url{http://www.freetype.org/}} used for font support.
+\end{itemize}
+
+
+
+
+\section{Direct3D 9}
+\begin{itemize}
+\item Currently not within the official PixelLight SDK
+\item This Direct3D 9\footnote{For more Direct3D information, please have a look at \url{http://www.microsoft.com/downloads/Browse.aspx?displaylang=de&categoryid=2}} renderer backend is for \emph{Microsoft Windows} systems only, and has some missing features.
+\item PixelLight component name: PLRendererD3D9
+\item Used dll's: \emph{PLRendererD3D9.dll}, \emph{cg.dll} and \emph{cgD3D9.dll} and DirectX 9 must be installed
+\end{itemize}
+
+Here's a list of some general notes:
+\begin{itemize}
+\item No line width support. \emph{SetLineWidth()} has no effect and \emph{GetLineWidth()} will always return 1
+\item Because D3D doesn't have any constant color, \emph{SetColor()} must be emulated within this backend using for instance a vertex shader
+\end{itemize}
+Further, within this backend there are still some bugs to fix.

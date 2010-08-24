@@ -1,0 +1,47 @@
+﻿>> 24.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 16.05.2008
+[CO]
+- "PLPlugins_idSoftware" in "PLDefaultFileFormats" umbenannt
+- Mesh und Scene Loader aus PLMesh und PLEngine nach "PLDefaultFileFormats" verschoben
+- "EffectLoaderFX" Effect Loader aus PLRenderer nach "PLDefaultFileFormats" verschoben
+
+
+
+>> 20.10.2007
+[CO]
+- Einige 'const' eingefügt
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 23.07.2007
+[CO]
+- Einige Zeiger auf Referenzen umgestellt
+
+
+
+>> 19.04.2007
+[CO]
+- Ein paar 'return' entfernt
+- Header Änderungen
+- 'using namespace' Änderungen
+
+
+
+>> 07.04.2007
+[CO]
+Neues Projekt: PLPlugins_idSoftware:
+- In diesem seperaten Plugin-Projekt befinden sich nun die verschiedenen Loader für Quake2, Quake3 und Doom3 - diese wollte
+  ich einfach nicht mehr direkt in PLMesh haben. So vermeidet man auch eventuelle Rechtliche Probleme + kann locker andere
+  diese Plugins weiterentwickeln lassen so das sich später eventuell ganze Doom3-Level direkt einladen und darstellen
+  lassen können.

@@ -1,0 +1,265 @@
+/*********************************************************\
+ *  File: HIDWindows.cpp                                 *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLInput/Backend/HID/HIDWindows.h"
+#include "PLInput/Backend/HID/HIDDeviceWindows.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLGeneral;
+namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+HIDWindows::HIDWindows()
+{
+	// Get device interface GUID
+	HidD_GetHidGuid(&m_sGUID);
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+HIDWindows::~HIDWindows()
+{
+	// Clear devices
+	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)
+		delete m_lstDevices[i];
+	m_lstDevices.Clear();
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual HIDImpl functions                     ]
+//[-------------------------------------------------------]
+void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
+{
+	// Clear devices
+	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)
+		delete m_lstDevices[i];
+	m_lstDevices.Clear();
+
+	// Create handle
+	HDEVINFO hDevInfo = SetupDiGetClassDevs(&m_sGUID, NULL, NULL, DIGCF_DEVICEINTERFACE);
+	if (!hDevInfo) return;
+
+	// Get device interface
+	SP_DEVICE_INTERFACE_DATA sDevice;
+	sDevice.cbSize = sizeof(sDevice);
+	uint32 nDevice = 0;
+	while (SetupDiEnumDeviceInterfaces(hDevInfo, NULL, &m_sGUID, nDevice, &sDevice))
+	{
+		// Allocate buffer for device interface details
+		DWORD nDetailsSize = 0;
+		SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, NULL, 0, &nDetailsSize, NULL);
+		BYTE *pBuffer = new BYTE[nDetailsSize];
+		SP_DEVICE_INTERFACE_DETAIL_DATA *sDeviceDetail = (SP_DEVICE_INTERFACE_DETAIL_DATA*)pBuffer;
+		sDeviceDetail->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
+
+		// Get device interface details
+		if (SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, sDeviceDetail, nDetailsSize, &nDetailsSize, NULL)) {
+			// Create device
+			HIDDeviceWindows *pDevice = new HIDDeviceWindows();
+			pDevice->m_sName = sDeviceDetail->DevicePath;
+
+			// Open device to get detailed information
+			HANDLE hDevice = CreateFile(sDeviceDetail->DevicePath, GENERIC_READ | GENERIC_WRITE,
+										FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+			if (hDevice != INVALID_HANDLE_VALUE) {
+				// Get device attributes
+				HIDD_ATTRIBUTES sAttrib;
+				sAttrib.Size = sizeof(sAttrib);
+				if (HidD_GetAttributes(hDevice, &sAttrib)) {
+					// Set device attributes
+					pDevice->m_nVendor	= sAttrib.VendorID;
+					pDevice->m_nProduct	= sAttrib.ProductID;
+
+					// Get preparsed data
+					if (HidD_GetPreparsedData(hDevice, &pDevice->m_pPreparsedData) == TRUE) {
+						// Get device capabilities
+						HIDP_CAPS sCaps;
+						if (HidP_GetCaps(pDevice->m_pPreparsedData, &sCaps) == HIDP_STATUS_SUCCESS) {
+							// Save capabilities
+							pDevice->m_nUsage						= sCaps.Usage;
+							pDevice->m_nUsagePage					= sCaps.UsagePage;
+							pDevice->m_nInputReportSize				= sCaps.InputReportByteLength;
+							pDevice->m_nOutputReportSize			= sCaps.OutputReportByteLength;
+							pDevice->m_nFeatureReportByteLength		= sCaps.FeatureReportByteLength;
+							pDevice->m_nNumberLinkCollectionNodes	= sCaps.NumberLinkCollectionNodes;
+							pDevice->m_nNumberInputButtonCaps		= sCaps.NumberInputButtonCaps;
+							pDevice->m_nNumberInputValueCaps		= sCaps.NumberInputValueCaps;
+							pDevice->m_nNumberInputDataIndices		= sCaps.NumberInputDataIndices;
+							pDevice->m_nNumberOutputButtonCaps		= sCaps.NumberOutputButtonCaps;
+							pDevice->m_nNumberOutputValueCaps		= sCaps.NumberOutputValueCaps;
+							pDevice->m_nNumberOutputDataIndices		= sCaps.NumberOutputDataIndices;
+							pDevice->m_nNumberFeatureButtonCaps		= sCaps.NumberFeatureButtonCaps;
+							pDevice->m_nNumberFeatureValueCaps		= sCaps.NumberFeatureValueCaps;
+							pDevice->m_nNumberFeatureDataIndices	= sCaps.NumberFeatureDataIndices;
+
+							// Enumerate buttons
+							if (sCaps.NumberInputButtonCaps > 0) {
+								USHORT nSize = sCaps.NumberInputButtonCaps;
+								PHIDP_BUTTON_CAPS pButtons = new HIDP_BUTTON_CAPS[nSize];
+								if (HidP_GetButtonCaps(HidP_Input, pButtons, &nSize, pDevice->m_pPreparsedData) == HIDP_STATUS_SUCCESS) {
+									for (int i=0; i<nSize; i++) {
+										// Save button control
+										HIDCapability sCapability;
+										sCapability.m_nLinkCollection = pButtons[i].LinkCollection;
+										sCapability.m_nUsagePage	  = pButtons[i].UsagePage;
+										sCapability.m_nUsage		  = pButtons[i].NotRange.Usage;
+										sCapability.m_nReportID		  = pButtons[i].ReportID;
+										sCapability.m_nDataIndex	  = pButtons[i].NotRange.DataIndex;
+										if (pButtons[i].IsRange) {
+											sCapability.m_nUsageMin		= pButtons[i].Range.UsageMin;
+											sCapability.m_nUsageMax		= pButtons[i].Range.UsageMax;
+											sCapability.m_nDataIndexMin = pButtons[i].Range.DataIndexMin;
+											sCapability.m_nDataIndexMax = pButtons[i].Range.DataIndexMax;
+											sCapability.m_nBitSize	    = 1;
+										} else {
+											sCapability.m_nUsageMin		= pButtons[i].NotRange.Usage;
+											sCapability.m_nUsageMax		= pButtons[i].NotRange.Usage;
+											sCapability.m_nDataIndexMin = pButtons[i].NotRange.DataIndex;
+											sCapability.m_nDataIndexMax = pButtons[i].NotRange.DataIndex;
+											sCapability.m_nBitSize	    = 1;
+										}
+
+										// Add button control
+										pDevice->m_lstInputButtons.Add(sCapability);
+									}
+								}
+								delete [] pButtons;
+							}
+
+							// Enumerate input values
+							if (sCaps.NumberInputValueCaps > 0) {
+								USHORT nSize = sCaps.NumberInputValueCaps;
+								PHIDP_VALUE_CAPS pValues = new HIDP_VALUE_CAPS[nSize];
+								if (HidP_GetValueCaps(HidP_Input, pValues, &nSize, pDevice->m_pPreparsedData) == HIDP_STATUS_SUCCESS) {
+									for (int i=0; i<nSize; i++) {
+										// Save input value control
+										HIDCapability sCapability;
+										sCapability.m_nLinkCollection = pValues[i].LinkCollection;
+										sCapability.m_nUsagePage	  = pValues[i].UsagePage;
+										sCapability.m_nUsage		  = pValues[i].NotRange.Usage;
+										sCapability.m_nReportID		  = pValues[i].ReportID;
+										sCapability.m_nDataIndex	  = pValues[i].NotRange.DataIndex;
+										sCapability.m_nBitSize		  = pValues[i].BitSize;
+										if (pValues[i].IsRange) {
+											sCapability.m_nUsageMin		= pValues[i].Range.UsageMin;
+											sCapability.m_nUsageMax		= pValues[i].Range.UsageMax;
+											sCapability.m_nDataIndexMin = pValues[i].Range.DataIndexMin;
+											sCapability.m_nDataIndexMax = pValues[i].Range.DataIndexMax;
+										} else {
+											sCapability.m_nUsageMin		= pValues[i].NotRange.Usage;
+											sCapability.m_nUsageMax		= pValues[i].NotRange.Usage;
+											sCapability.m_nDataIndexMin = pValues[i].NotRange.DataIndex;
+											sCapability.m_nDataIndexMax = pValues[i].NotRange.DataIndex;
+										}
+										sCapability.m_nLogicalMin  = (uint16)pValues[i].LogicalMin;
+										sCapability.m_nLogicalMax  = (uint16)pValues[i].LogicalMax;
+										sCapability.m_nPhysicalMin = (uint16)pValues[i].PhysicalMin;
+										sCapability.m_nPhysicalMax = (uint16)pValues[i].PhysicalMax;
+
+										// Add input value control
+										pDevice->m_lstInputValues.Add(sCapability);
+									}
+								}
+								delete [] pValues;
+							}
+
+							// Enumerate output values
+							if (sCaps.NumberOutputValueCaps > 0) {
+								USHORT nSize = sCaps.NumberOutputValueCaps;
+								PHIDP_VALUE_CAPS pValues = new HIDP_VALUE_CAPS[nSize];
+								if (HidP_GetValueCaps(HidP_Output, pValues, &nSize, pDevice->m_pPreparsedData) == HIDP_STATUS_SUCCESS) {
+									for (int i=0; i<nSize; i++) {
+										// Save output value control
+										HIDCapability sCapability;
+										sCapability.m_nUsagePage   = pValues[i].UsagePage;
+										sCapability.m_nUsage	   = pValues[i].NotRange.Usage;
+										sCapability.m_nReportID    = pValues[i].ReportID;
+										sCapability.m_nDataIndex   = pValues[i].NotRange.DataIndex;
+										sCapability.m_nBitSize	   = pValues[i].BitSize;
+										sCapability.m_nLogicalMin  = (uint16)pValues[i].LogicalMin;
+										sCapability.m_nLogicalMax  = (uint16)pValues[i].LogicalMax;
+										sCapability.m_nPhysicalMin = (uint16)pValues[i].PhysicalMin;
+										sCapability.m_nPhysicalMax = (uint16)pValues[i].PhysicalMax;
+
+										// Add output value control
+										pDevice->m_lstOutputValues.Add(sCapability);
+									}
+								}
+								delete [] pValues;
+							}
+						}
+					}
+				}
+
+				// Close device handle
+				CloseHandle(hDevice);
+
+				// Device found	
+				m_lstDevices.Add(pDevice);
+				  lstDevices.Add(pDevice);
+			} else {
+				// Get error message
+				/*
+				DWORD nError = GetLastError();
+				LPTSTR s;
+				::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+								NULL, nError, 0, (LPTSTR)&s, 0, NULL);
+				::LocalFree(s);
+				*/
+
+				// Destroy device
+				delete pDevice;
+			}
+		}
+
+		// Delete buffer
+		delete [] pBuffer;
+
+		// Next device
+		nDevice++;
+	}
+
+	// Close info handle
+	SetupDiDestroyDeviceInfoList(hDevInfo);
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLInput

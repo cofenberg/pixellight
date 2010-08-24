@@ -1,0 +1,299 @@
+/*********************************************************\
+ *  File: XmlTextElement.cpp                             *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/File/Url.h>
+#include <PLGeneral/String/ParseTools.h>
+#include <PLGeneral/Xml/XmlDocument.h>
+#include <PLGeneral/Xml/XmlElement.h>
+#include <PLGui/Gui/Gui.h>
+#include "PLXmlText/XmlText/XmlTextView.h"
+#include "PLXmlText/XmlText/XmlTextRenderer.h"
+#include "PLXmlText/XmlText/XmlTextElement.h"
+#include "PLXmlText/XmlText/XmlTextBreak.h"
+#include "PLXmlText/XmlText/XmlTextImage.h"
+#include "PLXmlText/XmlText/XmlTextList.h"
+#include "PLXmlText/XmlText/XmlTextListElement.h"
+#include "PLXmlText/XmlText/XmlTextSection.h"
+#include "PLXmlText/XmlText/XmlTextText.h"
+#include "PLXmlText/XmlText/XmlTextTextNode.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLGeneral;
+using namespace PLGraphics;
+using namespace PLMath;
+using namespace PLGui;
+namespace PLXmlText {
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+XmlTextElement::XmlTextElement(XmlTextElement *pParent) :
+	m_pXmlText(pParent ? pParent->m_pXmlText : NULL),
+	m_pParent(pParent)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+XmlTextElement::~XmlTextElement()
+{
+	// Unload document
+	Clear();
+}
+
+/**
+*  @brief
+*    Load XML file
+*/
+void XmlTextElement::Load(const String &sFilename)
+{
+	// Clear document
+	Clear();
+
+	// Load file
+	XmlDocument cXml;
+	if (cXml.Load(sFilename)) {
+		// Get root node
+		XmlNode *pRootNode = cXml.GetFirstChildElement();
+
+		// Parse this node
+		Parse(*pRootNode);
+	}
+}
+
+/**
+*  @brief
+*    Draw element and all children to screen
+*/
+void XmlTextElement::Draw(XmlTextRenderer &cRenderer)
+{
+	// Draw this element
+	OnDraw(cRenderer);
+}
+
+/**
+*  @brief
+*    Get size of XMLText content (looks for the first section)
+*/
+Vector2i XmlTextElement::GetSize() const
+{
+	// Get size of this element
+	return OnGetSize();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Clear element and all children
+*/
+void XmlTextElement::Clear()
+{
+	// Delete children
+	for (uint32 i=0; i<m_lstChildren.GetNumOfElements(); i++) {
+		delete m_lstChildren[i];
+	}
+
+	// Clear list
+	m_lstChildren.Clear();
+}
+
+/**
+*  @brief
+*    Parse Xml node
+*/
+void XmlTextElement::Parse(XmlNode &cXmlNode)
+{
+	// Parse this element
+	OnParse(cXmlNode);
+
+	// Parse child elements
+	XmlNode *pChildNode = cXmlNode.GetFirstChild();
+	while (pChildNode) {
+		// Create child element
+		XmlTextElement *pChild = NULL;
+		if (pChildNode->GetType() == XmlNode::Element) {
+			// We found a XML element
+			XmlElement *pElement = (XmlElement*)pChildNode;
+			String sElement = pElement->GetValue();
+
+			// Create element
+				 if (sElement.CompareNoCase("Br"))			pChild = new XmlTextBreak(this);
+			else if (sElement.CompareNoCase("Image"))		pChild = new XmlTextImage(this);
+			else if (sElement.CompareNoCase("List"))		pChild = new XmlTextList(this);
+			else if (sElement.CompareNoCase("ListElement"))	pChild = new XmlTextListElement(this);
+			else if (sElement.CompareNoCase("Section"))		pChild = new XmlTextSection(this);
+			else if (sElement.CompareNoCase("Text"))		pChild = new XmlTextText(true, this);
+			else if (sElement.CompareNoCase("Style"))		pChild = new XmlTextText(false, this);
+		} else if (pChildNode->GetType() == XmlNode::Text) {
+			// Create text
+			pChild = new XmlTextTextNode(this);
+		}
+
+		// Did we create a new child element?
+		if (pChild) {
+			// Add child element to list
+			m_lstChildren.Add(pChild);
+
+			// Parse child element
+			pChild->Parse(*pChildNode);
+		}
+
+		// Get next XML node
+		pChildNode = pChildNode->GetNextSibling();
+	}
+}
+
+/**
+*  @brief
+*    Draw all children
+*/
+void XmlTextElement::DrawChildren(XmlTextRenderer &cRenderer)
+{
+	// Draw child elements
+	for (uint32 i=0; i<m_lstChildren.GetNumOfElements(); i++) {
+		m_lstChildren[i]->Draw(cRenderer);
+	}
+}
+
+/**
+*  @brief
+*    Parse HTML compatible color value
+*/
+Color4 XmlTextElement::GetColor(const String &sColor)
+{
+	// Get lower case color string
+	String sColor_  = sColor;
+	sColor_.ToLower();
+
+	// Predefined color?
+	if (sColor_ == "aqua")			return Color4((uint8)  0, 255, 255, 255);
+	else if (sColor_ == "black")	return Color4((uint8)  0,   0,   0, 255);
+	else if (sColor_ == "blue")		return Color4((uint8)  0,   0, 255, 255);
+	else if (sColor_ == "fuchsia")	return Color4((uint8)255,   0, 255, 255);
+	else if (sColor_ == "gray")		return Color4((uint8)128, 128, 128, 255);
+	else if (sColor_ == "green")	return Color4((uint8)  0, 128,   0, 255);
+	else if (sColor_ == "lime")		return Color4((uint8)  0, 255,   0, 255);
+	else if (sColor_ == "maroon")	return Color4((uint8)128,   0,   0, 255);
+	else if (sColor_ == "navy")		return Color4((uint8)  0,   0, 128, 255);
+	else if (sColor_ == "olive")	return Color4((uint8)128, 128,   0, 255);
+	else if (sColor_ == "purple")	return Color4((uint8)128,   0, 128, 255);
+	else if (sColor_ == "red")		return Color4((uint8)255,   0,   0, 255);
+	else if (sColor_ == "silver")	return Color4((uint8)192, 192, 192, 255);
+	else if (sColor_ == "teal")		return Color4((uint8)  0, 128, 128, 255);
+	else if (sColor_ == "white")	return Color4((uint8)255, 255, 255, 255);
+	else if (sColor_ == "yellow")	return Color4((uint8)255, 255,   0, 255);
+
+	// Color in form #RGB
+	else if (sColor.GetSubstring(0, 1) == "#" && sColor.GetLength() == 4) {
+		uint8 nR = ParseTools::ParseHexValue(sColor.GetSubstring(1, 1) + sColor.GetSubstring(1, 1));
+		uint8 nG = ParseTools::ParseHexValue(sColor.GetSubstring(2, 1) + sColor.GetSubstring(2, 1));
+		uint8 nB = ParseTools::ParseHexValue(sColor.GetSubstring(3, 1) + sColor.GetSubstring(3, 1));
+		return Color4(nR, nG, nB, 255);
+	}
+
+	// Color in form #RRGGBB
+	else if (sColor.GetSubstring(0, 1) == "#" && sColor.GetLength() == 7) {
+		uint8 nR = ParseTools::ParseHexValue(sColor.GetSubstring(1, 2));
+		uint8 nG = ParseTools::ParseHexValue(sColor.GetSubstring(3, 2));
+		uint8 nB = ParseTools::ParseHexValue(sColor.GetSubstring(5, 2));
+		return Color4(nR, nG, nB, 255);
+	}
+
+	// Invalid color, return Black
+	return Color4::Black;
+}
+
+/**
+*  @brief
+*    Load image file
+*/
+Image XmlTextElement::LoadImage(Gui &cGui, const String &sFilename)
+{
+	// Compose file name
+	String sName = sFilename;
+	if (!Url(sName).IsAbsolute()) sName = m_pXmlText->GetDocumentRoot() + sName;
+
+	// Load image
+	return Image(cGui, sName);
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual XmlTextElement functions            ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Draw element
+*/
+void XmlTextElement::OnParse(XmlNode &cXmlNode)
+{
+	// To be implemented in derived classes
+}
+
+/**
+*  @brief
+*    Draw element
+*/
+void XmlTextElement::OnDraw(XmlTextRenderer &cRenderer)
+{
+	// Draw children
+	DrawChildren(cRenderer);
+}
+
+/**
+*  @brief
+*    Get element size
+*/
+Vector2i XmlTextElement::OnGetSize() const
+{
+	// Get size of children
+	for (uint32 i=0; i<m_lstChildren.GetNumOfElements(); i++) {
+		// Get size of child element
+		Vector2i vChildSize = m_lstChildren[i]->GetSize();
+		if (vChildSize.x > 0 || vChildSize.y > 0) return vChildSize;
+	}
+
+	// No child element with a size, return (0, 0)
+	return Vector2i::Zero;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLXmlText

@@ -1,0 +1,801 @@
+/*********************************************************\
+ *  File: ImageData.cpp                                  *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImagePalette.h"
+#include "PLGraphics/Image/ImageBuffer.h"
+#include "PLGraphics/Image/ImageData.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLGeneral;
+using namespace PLMath;
+namespace PLGraphics {
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+ImageData::ImageData() :
+	m_nDataFormat(DataByte),
+	m_nColorFormat(ColorRGB),
+	m_nCompression(CompressionNone),
+	m_pData(NULL),
+	m_nDataSize(0),
+	m_pCompressedData(NULL),
+	m_nCompressedSize(0),
+	m_pPalette(NULL)
+{
+}
+
+/**
+*  @brief
+*    Copy constructor
+*/
+ImageData::ImageData(const ImageData &cSource) :
+	m_nDataFormat(cSource.m_nDataFormat),
+	m_nColorFormat(cSource.m_nColorFormat),
+	m_nCompression(cSource.m_nCompression),
+	m_vSize(cSource.m_vSize),
+	m_pData(NULL),
+	m_nDataSize(cSource.m_nDataSize),
+	m_pCompressedData(NULL),
+	m_nCompressedSize(cSource.m_nCompressedSize),
+	m_pPalette(NULL)
+{
+	// Copy image data
+	if (cSource.m_pData && m_nDataSize) {
+		m_pData = new uint8[m_nDataSize];
+		MemoryManager::Copy(m_pData, cSource.m_pData, m_nDataSize);
+	}
+
+	// Copy compressed image data
+	if (cSource.m_pCompressedData && m_nCompressedSize) {
+		m_pCompressedData = new uint8[m_nCompressedSize];
+		MemoryManager::Copy(m_pCompressedData, cSource.m_pCompressedData, m_nCompressedSize);
+	}
+
+	// Copy palette
+	if (cSource.m_pPalette) {
+		m_pPalette = new ImagePalette(*cSource.m_pPalette);
+	}
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+ImageData::~ImageData()
+{
+	// Clear data
+	Clear();
+}
+
+/**
+*  @brief
+*    Assignment operator
+*/
+ImageData &ImageData::operator =(const ImageData &cSource)
+{
+	// Clear data
+	Clear();
+
+	// Copy image data
+	m_nDataFormat		= cSource.m_nDataFormat;
+	m_nColorFormat		= cSource.m_nColorFormat;
+	m_nCompression		= cSource.m_nCompression;
+	m_vSize				= cSource.m_vSize;
+	m_pData				= NULL;
+	m_nDataSize			= cSource.m_nDataSize;
+	m_pCompressedData	= NULL;
+	m_nCompressedSize	= cSource.m_nCompressedSize;
+	m_pPalette			= NULL;
+
+	// Copy image data
+	if (cSource.m_pData && m_nDataSize) {
+		m_pData = new uint8[m_nDataSize];
+		MemoryManager::Copy(m_pData, cSource.m_pData, m_nDataSize);
+	}
+
+	// Copy compressed image data
+	if (cSource.m_pCompressedData && m_nCompressedSize) {
+		m_pCompressedData = new uint8[m_nCompressedSize];
+		MemoryManager::Copy(m_pCompressedData, cSource.m_pCompressedData, m_nCompressedSize);
+	}
+
+	// Copy palette
+	if (cSource.m_pPalette) {
+		m_pPalette = new ImagePalette(*cSource.m_pPalette);
+	}
+
+	// Return this
+	return *this;
+}
+
+/**
+*  @brief
+*    Create image
+*/
+void ImageData::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression)
+{
+	// Clear old data
+	Clear();
+
+	// Set compression type
+	m_nCompression = nCompression;
+
+	// Check size
+	if (vSize.x > 0 && vSize.y > 0 && vSize.z > 0) {
+		// Calculate size of image buffer
+		const uint32 nSize			= ImageBuffer::GetBytesPerPixelComponent(nDataFormat);
+		const uint32 nComponents	= ImageBuffer::GetComponentsPerPixel(nColorFormat);
+		m_nDataSize					= vSize.x * vSize.y * vSize.z * nComponents * nSize;
+
+		// Set image data
+		m_nDataFormat	= nDataFormat;
+		m_nColorFormat	= nColorFormat;
+		m_nCompression	= nCompression;
+		m_vSize			= vSize;
+
+		// Calculate the size of the compressed image buffer
+		CalculateCompressedImageBufferSize();
+	} else {
+		// Error: Invalid size
+	}
+}
+
+/**
+*  @brief
+*    Clear data
+*/
+void ImageData::Clear()
+{
+	// Destroy image data
+	if (m_pData) delete [] m_pData;
+	m_pData		= NULL;
+	m_nDataSize = 0;
+
+	// Destroy compressed image data
+	if (m_pCompressedData) delete [] m_pCompressedData;
+	m_pCompressedData = NULL;
+	m_nCompressedSize = 0;
+
+	// Destroy palette
+	if (m_pPalette) delete m_pPalette;
+	m_pPalette = NULL;
+
+	// Reset image data
+	m_nDataFormat	= DataByte;
+	m_nColorFormat	= ColorRGB;
+	m_nCompression	= CompressionNone;
+	m_vSize			= Vector3i::Zero;
+}
+
+/**
+*  @brief
+*    Create a test image
+*/
+void ImageData::CreateTestImage(ETestImage nTestImage)
+{
+	// Get test image ID
+	switch (nTestImage) {
+		// Simple blue test image (256x256, RGB)
+		case TestImage2DSimple:
+		{
+			// Create 256x256 RGB image
+			CreateImage(DataByte, ColorRGB, Vector3i(256, 256, 1));
+			CreateBuffer();
+
+			// Write data
+			for (int y=0; y<256; y++) {
+				for (int x=0; x<256; x++) {
+					m_pData[y*256*4+x*3+0] = 0;
+					m_pData[y*256*4+x*3+1] = 0;
+					m_pData[y*256*4+x*3+2] = 255;
+				}
+			}
+			break;
+		}
+
+		// Gradient colored test image (256x256, RGB)
+		case TestImage2DGradient:
+		{
+			// Create 256x256 RGB image
+			CreateImage(DataByte, ColorRGB, Vector3i(256, 256, 1));
+			CreateBuffer();
+
+			// Write data
+			for (int y=0; y<256; y++) {
+				for (int x=0; x<256; x++) {
+					m_pData[y*256*4+x*3+0] = x;
+					m_pData[y*256*4+x*3+1] = 0;
+					m_pData[y*256*4+x*3+2] = y;
+				}
+			}
+			break;
+		}
+
+		// Two-colored checkers test image (256x256, RGB)
+		case TestImage2DCheckers:
+		{
+			// Create 256x256 RGB image
+			CreateImage(DataByte, ColorRGB, Vector3i(256, 256, 1));
+			CreateBuffer();
+
+			// Write data
+			for (int y=0; y<256; y++) {
+				for (int x=0; x<256; x++) {
+					const bool bYellow = ((y/32)%2 == 0) ? !((x/32)%2 == 0) : ((x/32)%2 == 0);
+					m_pData[y*256*4+x*3+0] = bYellow ? 255 : 0;
+					m_pData[y*256*4+x*3+1] = bYellow ? 255 : 0;
+					m_pData[y*256*4+x*3+2] = 0;
+				}
+			}
+			break;
+		}
+	}
+}
+
+/**
+*  @brief
+*    Get data format
+*/
+EDataFormat ImageData::GetDataFormat() const
+{
+	// Return format
+	return m_nDataFormat;
+}
+
+/**
+*  @brief
+*    Get color format
+*/
+EColorFormat ImageData::GetColorFormat() const
+{
+	// Return color format
+	return m_nColorFormat;
+}
+
+/**
+*  @brief
+*    Get compression type
+*/
+ECompression ImageData::GetCompression() const
+{
+	// Return compression type
+	return m_nCompression;
+}
+
+/**
+*  @brief
+*    Set compression type
+*/
+void ImageData::SetCompression(ECompression nCompression)
+{
+	// Compression type changed?
+	if (m_nCompression != nCompression) {
+		// Safe image data if necessary
+		if (m_pCompressedData && !m_pData) {
+			// We only have compressed data, so decompress it in order to save it
+			Decompress();
+		}
+
+		// Destroy compressed image data
+		DestroyCompressedBuffer();
+
+		// Set new compression type
+		m_nCompression = nCompression;
+
+		// Calculate the size of the compressed image buffer
+		CalculateCompressedImageBufferSize();
+	}
+}
+
+/**
+*  @brief
+*    Get image size
+*/
+Vector3i ImageData::GetSize() const
+{
+	// Return size
+	return m_vSize;
+}
+
+/**
+*  @brief
+*    Check if uncompressed data is available
+*/
+bool ImageData::HasData() const
+{
+	// Check if image buffer is valid
+	return (m_pData != NULL);
+}
+
+/**
+*  @brief
+*    Get size of image data
+*/
+uint32 ImageData::GetDataSize() const
+{
+	// Return size of image data
+	return m_nDataSize;
+}
+
+/**
+*  @brief
+*    Get image data
+*/
+const uint8 *ImageData::GetData() const
+{
+	// Make sure that buffer is created
+	if (!m_pData) {
+		// Create buffer
+		((ImageData*)this)->CreateBuffer();
+
+		// If we already have compressed image data, decompress it
+		if (m_pCompressedData) ((ImageData*)this)->Decompress();
+	}
+
+	// Return image data
+	return m_pData;
+}
+
+uint8 *ImageData::GetData()
+{
+	// Make sure that buffer is created
+	if (!m_pData) {
+		// Create buffer
+		((ImageData*)this)->CreateBuffer();
+
+		// If we already have compressed image data, decompress it
+		if (m_pCompressedData) Decompress();
+	}
+
+	// Invalidate compressed image buffer, because uncompressed data is going to be modified
+	DestroyCompressedBuffer();
+
+	// Return image data
+	return m_pData;
+}
+
+/**
+*  @brief
+*    Check if compressed data is available
+*/
+bool ImageData::HasCompressedData() const
+{
+	// Check if compressed image buffer is valid
+	return (m_pCompressedData != NULL);
+}
+
+/**
+*  @brief
+*    Get size of compressed image data
+*/
+uint32 ImageData::GetCompressedDataSize() const
+{
+	// Return size of compressed image data
+	return m_nCompressedSize;
+}
+
+/**
+*  @brief
+*    Get compressed image data
+*/
+const uint8 *ImageData::GetCompressedData() const
+{
+	// Make sure that compressed buffer is created
+	if (!m_pCompressedData) {
+		// Create compressed buffer
+		((ImageData*)this)->CreateCompressedBuffer();
+
+		// If we already have uncompressed image data, compress it
+		if (m_pData) ((ImageData*)this)->Compress();
+	}
+
+	// Return compressed image data
+	return m_pCompressedData;
+}
+
+uint8 *ImageData::GetCompressedData()
+{
+	// Make sure that compressed buffer is created
+	if (!m_pCompressedData) {
+		// Create compressed buffer
+		((ImageData*)this)->CreateCompressedBuffer();
+
+		// If we already have uncompressed image data, compress it
+		if (m_pData) Compress();
+	}
+
+	// Invalidate uncompressed image buffer, because compressed data is going to be modified
+	DestroyBuffer();
+
+	// Return compressed image data
+	return m_pCompressedData;
+}
+
+/**
+*  @brief
+*    Compress image data
+*/
+bool ImageData::Compress()
+{
+	// Make sure that both buffers are created
+	CreateBuffer();
+	CreateCompressedBuffer();
+
+	// [TODO] Implement
+	return false;
+}
+
+/**
+*  @brief
+*    Decompress image data
+*/
+bool ImageData::Decompress()
+{
+	// Make sure that both buffers are created
+	CreateBuffer();
+	CreateCompressedBuffer();
+
+	// Get the number of components per pixel
+	const uint32 nComponentsPerPixel = ImageBuffer::GetComponentsPerPixel(m_nColorFormat);
+
+	// A block can not be smaller than 4 pixel
+	const int nWidth  = (m_vSize.x < 4) ? m_vSize.x : 4;
+	const int nHeight = (m_vSize.y < 4) ? m_vSize.y : 4;
+
+	// Decompress
+	const uint8 *pCompressedData = m_pCompressedData;
+	switch (m_nCompression) {
+		case CompressionDXT1:
+			// Loop trough all block rows
+			for (int y=0; y<m_vSize.y; y+=4) {
+				// Loop trough all blocks within the current row
+				for (int x=0; x<m_vSize.x; x+=4) {
+					// Get the current destination block start
+					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+
+					// Decode the current DXT color block
+					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+					pCompressedData += 8;
+				}
+			}
+			break;
+
+		case CompressionDXT3:
+			// Loop trough all block rows
+			for (int y=0; y<m_vSize.y; y+=4) {
+				// Loop trough all blocks within the current row
+				for (int x=0; x<m_vSize.x; x+=4) {
+					// Get the current destination block start
+					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+
+					// Decode the current DXT3 alpha block
+					DecodeDXT3AlphaBlock(pnCurrentDestination + 3, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
+					pCompressedData += 8;
+
+					// Decode the current DXT color block
+					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+					pCompressedData += 8;
+				}
+			}
+			break;
+
+		case CompressionDXT5:
+			// Loop trough all block rows
+			for (int y=0; y<m_vSize.y; y+=4) {
+				// Loop trough all blocks within the current row
+				for (int x=0; x<m_vSize.x; x+=4) {
+					// Get the current destination block start
+					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+
+					// Decode the current DXT5 alpha block
+					DecodeDXT5AlphaBlock(pnCurrentDestination + 3, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
+					pCompressedData += 8;
+
+					// Decode the current DXT color block
+					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+					pCompressedData += 8;
+				}
+			}
+			break;
+
+		case CompressionATI1N:
+			// Loop trough all block rows
+			for (int y=0; y<m_vSize.y; y+=4) {
+				// Loop trough all blocks within the current row
+				for (int x=0; x<m_vSize.x; x+=4) {
+					// Get the current destination block start
+					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+
+					// Decode the current DXT5 alpha block
+					DecodeDXT5AlphaBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, 1, m_vSize.x);
+					pCompressedData += 8;
+				}
+			}
+			break;
+
+		case CompressionATI2N:
+			// Loop trough all block rows
+			for (int y=0; y<m_vSize.y; y+=4) {
+				// Loop trough all blocks within the current row
+				for (int x=0; x<m_vSize.x; x+=4) {
+					// Get the current destination block start
+					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+
+					// Decode the current DXT5 alpha block
+					DecodeDXT5AlphaBlock(pnCurrentDestination,     pCompressedData + 8, nWidth, nHeight, 2, m_vSize.x*2);
+					DecodeDXT5AlphaBlock(pnCurrentDestination + 1, pCompressedData,     nWidth, nHeight, 2, m_vSize.x*2);
+					pCompressedData += 16;
+				}
+			}
+			break;
+	}
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Set color palette
+*/
+void ImageData::SetPalette(ImagePalette *pPalette)
+{
+	// Destroy old palette
+	if (m_pPalette) {
+		delete m_pPalette;
+		m_pPalette = NULL;
+	}
+
+	// Set new palette
+	m_pPalette = pPalette;
+}
+
+/**
+*  @brief
+*    Get color palette
+*/
+const ImagePalette *ImageData::GetPalette() const
+{
+	// Return palette
+	return m_pPalette;
+}
+
+/**
+*  @brief
+*    Get color palette
+*/
+ImagePalette *ImageData::GetPalette()
+{
+	// Return palette
+	return m_pPalette;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Create image buffer
+*/
+void ImageData::CreateBuffer()
+{
+	// Check if size is valid and buffer has not been created before
+	if (m_nDataSize > 0 && !m_pData) {
+		// Create image buffer
+		m_pData = new uint8[m_nDataSize];
+	}
+}
+
+
+/**
+*  @brief
+*    Create compressed image buffer
+*/
+void ImageData::CreateCompressedBuffer()
+{
+	// Check if size is valid and buffer has not been created before
+	if (m_nCompressedSize > 0 && !m_pCompressedData) {
+		// Create compressed image buffer
+		m_pCompressedData = new uint8[m_nCompressedSize];
+	}
+}
+
+/**
+*  @brief
+*    Destroy image buffer
+*/
+void ImageData::DestroyBuffer()
+{
+	// Destroy image data
+	if (m_pData) {
+		delete [] m_pData;
+		m_pData = NULL;
+	}
+}
+
+/**
+*  @brief
+*    Destroy compressed image buffer
+*/
+void ImageData::DestroyCompressedBuffer()
+{
+	// Destroy compressed image data
+	if (m_pCompressedData) {
+		delete [] m_pCompressedData;
+		m_pCompressedData = NULL;
+	}
+}
+
+/**
+*  @brief
+*    Calculates the size of the compressed image buffer
+*/
+void ImageData::CalculateCompressedImageBufferSize()
+{
+	// Initialize the compressed size
+	m_nCompressedSize = 0;
+
+	// Calculate the size depending on the used compression
+	switch (m_nCompression) {
+		// DXT formats divide the texture buffer into 4x4 blocks, each block has a fixed number of bytes
+		case CompressionDXT1:
+		case CompressionATI1N:
+			// Avoid slow division by using bit-shift
+			m_nCompressedSize = ((m_vSize.x + 3) >> 2) * ((m_vSize.y + 3) >> 2) * 8;
+		//	m_nCompressedSize = ((m_vSize.x + 3) / 4) * ((m_vSize.y + 3) / 4) * 8;
+			break;
+
+		case CompressionDXT3:
+		case CompressionDXT5:
+		case CompressionATI2N:
+			// Avoid slow division by using bit-shift
+			m_nCompressedSize = ((m_vSize.x + 3) >> 2) * ((m_vSize.y + 3) >> 2) * 16;
+		//	m_nCompressedSize = ((m_vSize.x + 3) / 4) * ((m_vSize.y + 3) / 4) * 16;
+			break;
+	}
+
+	// Each slice of a 3D image is handled as usual 2D image
+	m_nCompressedSize *= m_vSize.z;
+}
+
+/**
+*  @brief
+*    Decodes a DXT color block
+*/
+void ImageData::DecodeDXTColorBlock(uint8 *pnDestination, const uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const
+{
+	// This implementation is basing on code from Humus (http://www.humus.name)
+
+	const uint16 c0 = *(uint16*)pnSource;
+	const uint16 c1 = *(uint16*)(pnSource + 2);
+
+	uint8 nColors[4][3];
+
+	nColors[0][0] = ((c0 >> 11) & 0x1F) << 3;
+	nColors[0][1] = ((c0 >>  5) & 0x3F) << 2;
+	nColors[0][2] =  (c0        & 0x1F) << 3;
+
+	nColors[1][0] = ((c1 >> 11) & 0x1F) << 3;
+	nColors[1][1] = ((c1 >>  5) & 0x3F) << 2;
+	nColors[1][2] =  (c1        & 0x1F) << 3;
+
+	if (c0 > c1 || nCompression == CompressionDXT5) {
+		for (int i=0; i<3; i++) {
+			nColors[2][i] = (2*nColors[0][i] +   nColors[1][i] + 1)/3;
+			nColors[3][i] = (  nColors[0][i] + 2*nColors[1][i] + 1)/3;
+		}
+	} else {
+		for (int i=0; i<3; i++) {
+			nColors[2][i] = (nColors[0][i] + nColors[1][i] + 1) >> 1;
+			nColors[3][i] = 0;
+		}
+	}
+
+	pnSource += 4;
+	for (int y=0; y<nHeight; y++) {
+		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
+		uint32 nIndexes = pnSource[y];
+		for (int x=0; x<nWidth; x++) {
+			const uint32 nIndex = nIndexes & 0x3;
+			pnCurrentDestination[nRedIndex]  = nColors[nIndex][0];
+			pnCurrentDestination[1]          = nColors[nIndex][1];
+			pnCurrentDestination[nBlueIndex] = nColors[nIndex][2];
+			nIndexes >>= 2;
+
+			pnCurrentDestination += nXOffset;
+		}
+	}
+}
+
+/**
+*  @brief
+*    Decodes a DXT3 alpha block
+*/
+void ImageData::DecodeDXT3AlphaBlock(uint8 *pnDestination, const uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset) const
+{
+	// This implementation is basing on code from Humus (http://www.humus.name)
+
+	for (int y=0; y<nHeight; y++) {
+		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
+		uint32 nAlpha = ((uint16*)pnSource)[y];
+		for (int x=0; x<nWidth; x++) {
+			*pnCurrentDestination = (nAlpha & 0xF)*17;
+			nAlpha >>= 4;
+			pnCurrentDestination += nXOffset;
+		}
+	}
+}
+
+/**
+*  @brief
+*    Decodes a DXT5 alpha block
+*/
+void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset) const
+{
+	// This implementation is basing on code from Humus (http://www.humus.name)
+
+	const uint8 a0 = pnSource[0];
+	const uint8 a1 = pnSource[1];
+	uint64 nAlpha = (*(uint64 *) pnSource) >> 16;
+
+	for (int y=0; y<nHeight; y++) {
+		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
+		for (int x=0; x<nWidth; x++) {
+			const int k = ((uint32)nAlpha) & 0x7;
+			if (k == 0){
+				*pnCurrentDestination = a0;
+			} else if (k == 1){
+				*pnCurrentDestination = a1;
+			} else if (a0 > a1){
+				*pnCurrentDestination = ((8 - k)*a0 + (k - 1)*a1)/7;
+			} else if (k >= 6){
+				*pnCurrentDestination = (k == 6) ? 0 : 255;
+			} else {
+				*pnCurrentDestination = ((6 - k)*a0 + (k - 1)*a1)/5;
+			}
+			nAlpha >>= 3;
+
+			pnCurrentDestination += nXOffset;
+		}
+		if (nWidth < 4)
+			nAlpha >>= (3*(4 - nWidth));
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLGraphics

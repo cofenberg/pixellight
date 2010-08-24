@@ -1,0 +1,420 @@
+/*********************************************************\
+ *  File: BinominalHeap.inl                              *
+ *      Binominal heap template implementation
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLGeneral/Container/BinominalHeapIterator.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+
+
+//[-------------------------------------------------------]
+//[ Tree implementation                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+template <class KeyType, class ValueType, class Comparer>
+BinominalHeap<KeyType, ValueType, Comparer>::Tree::Tree(KeyType Key, ValueType Value) :
+	m_nDegree(0),
+	m_pNextSibling(NULL),
+	m_pChild(NULL),
+	m_Key(Key),
+	m_Value(Value)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+template <class KeyType, class ValueType, class Comparer>
+BinominalHeap<KeyType, ValueType, Comparer>::Tree::~Tree()
+{
+	// Destroy child
+	if (m_pChild) {
+		delete m_pChild;
+		m_pChild = NULL;
+	}
+
+	// Destroy sibling
+	if (m_pNextSibling) {
+		delete m_pNextSibling;
+		m_pNextSibling = NULL;
+	}
+}
+
+/**
+*  @brief
+*    Union
+*/
+template <class KeyType, class ValueType, class Comparer>
+typename BinominalHeap<KeyType, ValueType, Comparer>::Tree &BinominalHeap<KeyType, ValueType, Comparer>::Tree::Union(Tree &cTree)
+{
+	Tree *pThisTree;
+
+// First: Merge the siblings of the two trees (left degree > right degree)
+	// For the tree's we have to swap the data :(
+	if (m_nDegree < cTree.m_nDegree) {
+		// Swap
+		uint32 nDegree = m_nDegree;
+		m_nDegree = cTree.m_nDegree;
+		cTree.m_nDegree = nDegree;
+
+		pThisTree = m_pNextSibling;
+		m_pNextSibling = cTree.m_pNextSibling;
+		cTree.m_pNextSibling = pThisTree;
+
+		pThisTree = m_pChild;
+		m_pChild = cTree.m_pChild;
+		cTree.m_pChild = pThisTree;
+
+		KeyType Key = m_Key;
+		m_Key = cTree.m_Key;
+		cTree.m_Key = Key;
+
+		ValueType Value = m_Value;
+		m_Value = cTree.m_Value;
+		cTree.m_Value = Value;
+	}
+	// Now merge all other trees
+	pThisTree = m_pNextSibling;
+	Tree *pOtherTree   = &cTree;
+	Tree *pCurrentTree = this;
+	while (pThisTree && pOtherTree) {
+		if (pOtherTree->m_nDegree > pThisTree->m_nDegree) {
+			pCurrentTree->m_pNextSibling = pOtherTree;
+			pOtherTree = pOtherTree->m_pNextSibling;
+		} else {
+			pCurrentTree->m_pNextSibling = pThisTree;
+			pThisTree = pThisTree->m_pNextSibling;
+		}
+		pCurrentTree = pCurrentTree->m_pNextSibling;
+	}
+	while (pThisTree) {
+		pCurrentTree->m_pNextSibling = pThisTree;
+		pThisTree = pThisTree->m_pNextSibling;
+		pCurrentTree = pCurrentTree->m_pNextSibling;
+	}
+	while (pOtherTree) {
+		pCurrentTree->m_pNextSibling = pOtherTree;
+		pOtherTree = pOtherTree->m_pNextSibling;
+		pCurrentTree = pCurrentTree->m_pNextSibling;
+	}
+
+// Second: Combine trees of same degree
+	Tree *pRoot = this;
+	pThisTree  = this;
+	pOtherTree = pThisTree->m_pNextSibling;
+	while (pOtherTree) {
+		// Same degree?
+		if (pThisTree->m_nDegree == pOtherTree->m_nDegree) {
+			// Compare keys, the tree with the 'greater' key gets a child of the other one
+			if (Comparer::IsGreater(pThisTree->m_Key, pOtherTree->m_Key)) {
+				// 'pThisTree' will become a child of 'pOtherTree'
+				pThisTree->m_pNextSibling = NULL;
+				if (pThisTree == pRoot)
+					pRoot = pOtherTree;
+				if (pOtherTree->m_pChild) {
+					pOtherTree->m_pChild->Union(*pThisTree);
+					pOtherTree->m_nDegree = pOtherTree->m_pChild->m_nDegree+1;
+				} else {
+					pOtherTree->m_nDegree++;
+					pOtherTree->m_pChild = pThisTree;
+				}
+				// Next pair, please
+				pThisTree  = pOtherTree;
+				pOtherTree = pOtherTree->m_pNextSibling;
+			} else {
+				// 'pOtherTree' will become a child of 'pThisTree'
+				pThisTree->m_pNextSibling = pOtherTree->m_pNextSibling;
+				if (pOtherTree == pRoot)
+					pRoot = pThisTree;
+				pOtherTree->m_pNextSibling = NULL;
+				if (pThisTree->m_pChild) {
+					pThisTree->m_pChild->Union(*pOtherTree);
+					pThisTree->m_nDegree = pThisTree->m_pChild->m_nDegree+1;
+				} else {
+					pThisTree->m_nDegree++;
+					pThisTree->m_pChild = pOtherTree;
+				}
+				// Update the pair
+				pOtherTree = pThisTree->m_pNextSibling;
+			}
+		} else {
+			// Next pair, please
+			pThisTree  = pOtherTree;
+			pOtherTree = pOtherTree->m_pNextSibling;
+		}
+	}
+
+	// Return root node
+	return *pRoot;
+}
+
+
+//[-------------------------------------------------------]
+//[ BinominalHeap implementation                          ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+template <class KeyType, class ValueType, class Comparer>
+BinominalHeap<KeyType, ValueType, Comparer>::BinominalHeap() :
+	m_nNumOfElements(0),
+	m_pRoot(NULL)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+template <class KeyType, class ValueType, class Comparer>
+BinominalHeap<KeyType, ValueType, Comparer>::~BinominalHeap()
+{
+	Clear();
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Copy constructor
+*/
+template <class KeyType, class ValueType, class Comparer>
+BinominalHeap<KeyType, ValueType, Comparer>::BinominalHeap(const BinominalHeap<KeyType, ValueType, Comparer> &cSource) :
+	m_nNumOfElements(0),
+	m_pRoot(NULL)
+{
+	// Not implemented
+}
+
+template <class KeyType, class ValueType, class Comparer>
+Heap<KeyType, ValueType> &BinominalHeap<KeyType, ValueType, Comparer>::operator =(const BinominalHeap<KeyType, ValueType, Comparer> &cHeap)
+{
+	// Not implemented
+
+	// Return this instance
+	return *this;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual Iterable functions                     ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Comparer>
+Iterator<ValueType> BinominalHeap<KeyType, ValueType, Comparer>::GetIterator(uint32 nIndex) const
+{
+	Iterator<ValueType> cIterator(*(new BinominalHeapIterator<KeyType, ValueType, Comparer>(*this, nIndex)));
+	return cIterator;
+}
+
+template <class KeyType, class ValueType, class Comparer>
+ConstIterator<ValueType> BinominalHeap<KeyType, ValueType, Comparer>::GetConstIterator(uint32 nIndex) const
+{
+	ConstIterator<ValueType> cIterator(*(new BinominalHeapIterator<KeyType, ValueType, Comparer>(*this, nIndex)));
+	return cIterator;
+}
+
+template <class KeyType, class ValueType, class Comparer>
+Iterator<ValueType> BinominalHeap<KeyType, ValueType, Comparer>::GetEndIterator() const
+{
+	Iterator<ValueType> cIterator(*(new BinominalHeapIterator<KeyType, ValueType, Comparer>(*this)));
+	return cIterator;
+}
+
+template <class KeyType, class ValueType, class Comparer>
+ConstIterator<ValueType> BinominalHeap<KeyType, ValueType, Comparer>::GetConstEndIterator() const
+{
+	ConstIterator<ValueType> cIterator(*(new BinominalHeapIterator<KeyType, ValueType, Comparer>(*this)));
+	return cIterator;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual Heap functions                         ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Comparer>
+void BinominalHeap<KeyType, ValueType, Comparer>::Clear()
+{
+	// Destroy the root tree
+	if (m_pRoot) {
+		delete m_pRoot;
+		m_pRoot			 = NULL;
+		m_nNumOfElements = 0;
+	}
+}
+
+template <class KeyType, class ValueType, class Comparer>
+bool BinominalHeap<KeyType, ValueType, Comparer>::IsEmpty() const
+{
+	return (m_nNumOfElements == 0);
+}
+
+template <class KeyType, class ValueType, class Comparer>
+uint32 BinominalHeap<KeyType, ValueType, Comparer>::GetNumOfElements() const
+{
+	return m_nNumOfElements;
+}
+
+template <class KeyType, class ValueType, class Comparer>
+bool BinominalHeap<KeyType, ValueType, Comparer>::Add(const KeyType &Key, const ValueType &Value)
+{
+	// Create a new binominal tree
+	Tree *pTree = new Tree(Key, Value);
+
+	// Union the new tree with the root tree
+	m_pRoot = m_pRoot ? &m_pRoot->Union(*pTree) : pTree;
+
+	// Increase the number of elements
+	m_nNumOfElements++;
+
+	// Done
+	return true;
+}
+
+template <class KeyType, class ValueType, class Comparer>
+bool BinominalHeap<KeyType, ValueType, Comparer>::GetTop(ValueType *pValue, KeyType *pKey) const
+{
+	// Are there any elements?
+	if (!m_nNumOfElements)
+		return false; // Error!
+
+	// Either the root tree or one of it's siblings must be the top
+	Tree *pTop = m_pRoot, *pNext = pTop->m_pNextSibling;
+	while (pNext) {
+		// Do we have found a new top tree?
+		if (Comparer::IsGreater(pTop->m_Key, pNext->m_Key))
+			pTop = pNext;
+
+		// Next sibling, please
+		pNext = pNext->m_pNextSibling;
+	}
+
+	// Return value and key of the top tree
+	if (pValue)
+		*pValue = pTop->m_Value;
+	if (pKey)
+		*pKey   = pTop->m_Key;
+
+	// Done
+	return true;
+}
+
+template <class KeyType, class ValueType, class Comparer>
+bool BinominalHeap<KeyType, ValueType, Comparer>::ExtractTop(ValueType *pValue, KeyType *pKey)
+{
+	// Are there any elements?
+	if (!m_nNumOfElements)
+		return false; // Error!
+
+// First: Find the top tree
+	// Either the root tree or one of it's siblings must be the top
+	Tree *pTop = m_pRoot, *pPreviousTop = NULL, *pPrevious = m_pRoot, *pNext = pTop->m_pNextSibling;
+	while (pNext) {
+		// Do we have found a new top tree?
+		if (Comparer::IsGreater(pTop->m_Key, pNext->m_Key)) {
+			pPreviousTop = pPrevious;
+			pTop         = pNext;
+		}
+
+		// Next sibling, please
+		pPrevious = pNext;
+		pNext     = pNext->m_pNextSibling;
+	}
+
+// Second: Return value and key of the top tree
+	if (pValue)
+		*pValue = pTop->m_Value;
+	if (pKey)
+		*pKey   = pTop->m_Key;
+
+// Third: Remove the top tree from the sibling list
+	// Update sibling connectivity
+	if (pPreviousTop)
+		pPreviousTop->m_pNextSibling = pTop->m_pNextSibling;
+	else
+		m_pRoot = pTop->m_pNextSibling;
+
+// Fourth: Reverse the sibling sequence of the child
+	pPrevious = pTop->m_pChild;
+	if (pPrevious) {
+		pNext = pPrevious->m_pNextSibling;
+		pPrevious->m_pNextSibling = NULL;
+		while (pNext) {
+			// Backup sibling
+			Tree *pTemp = pNext->m_pNextSibling;
+
+			// Update sibling connectivity
+			pNext->m_pNextSibling = pPrevious;
+
+			// Next sibling, please
+			pPrevious = pNext;
+			pNext     = pTemp;
+		}
+
+		// Fifth: Union the tree with the head tree
+		// ... 'pPrevious' now holds our 'new' tree...
+		m_pRoot = m_pRoot ? &m_pRoot->Union(*pPrevious) : pPrevious;
+	}
+
+	// Destroy the node of the top tree...
+	pTop->m_pNextSibling = NULL; // Do NOT delete the sibling
+	pTop->m_pChild		 = NULL; // Do NOT delete the child
+	delete pTop;
+
+// ... and finally, decrease the number of elements
+	m_nNumOfElements--;
+
+	// Done
+	return true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual Heap functions                        ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Comparer>
+Heap<KeyType, ValueType> &BinominalHeap<KeyType, ValueType, Comparer>::operator =(const Heap<KeyType, ValueType> &cHeap)
+{
+	// Not implemented
+
+	// Return this instance
+	return *this;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLGeneral

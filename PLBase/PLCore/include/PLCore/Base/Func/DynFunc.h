@@ -1,0 +1,158 @@
+/*********************************************************\
+ *  File: DynFunc.h                                      *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLCORE_DYNFUNC_H__
+#define __PLCORE_DYNFUNC_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLGeneral/String/String.h>
+#include <PLGeneral/Xml/XmlElement.h>
+#include "PLCore/PLCore.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class DynParams;
+class FuncDesc;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Virtual base class for function objects (functoids)
+*
+*  @remarks
+*    This is the virtual base class to access functions and function objects dynamically.
+*    It is a virtual interface that allows you to call a function or function like object
+*    regardless of it's actual type (e.g. static function, method of an object or function object).
+*/
+class DynFunc {
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLCORE_API DynFunc();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API virtual ~DynFunc();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual DynFunc functions                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Get function descriptor
+		*
+		*  @return
+		*    Descriptor (can be NULL)
+		*/
+		PLCORE_API virtual const FuncDesc *GetDesc() const;
+
+		/**
+		*  @brief
+		*    Get signature as string
+		*
+		*  @return
+		*    Signature as string
+		*/
+		PLCORE_API virtual PLGeneral::String GetSignature() const;
+
+		/**
+		*  @brief
+		*    Call function
+		*
+		*  @param[in] cParams
+		*    Parameters
+		*/
+		PLCORE_API virtual void Call(DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Call function
+		*
+		*  @param[in] cParams
+		*    Parameters
+		*/
+		PLCORE_API virtual void Call(const DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Call function
+		*
+		*  @param[in] sParams
+		*    Parameters as string
+		*/
+		PLCORE_API virtual void Call(const PLGeneral::String &sParams);
+
+		/**
+		*  @brief
+		*    Call function
+		*
+		*  @param[in] cElement
+		*    Parameters as XML
+		*/
+		PLCORE_API virtual void Call(const PLGeneral::XmlElement &cElement);
+
+		/**
+		*  @brief
+		*    Clone function object
+		*
+		*  @return
+		*    Copy of this functoid (can be NULL!)
+		*/
+		PLCORE_API virtual DynFunc *Clone() const;
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLCore
+
+
+#endif // __PLCORE_DYNFUNC_H__

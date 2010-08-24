@@ -1,0 +1,101 @@
+\chapter{PLBase}
+
+
+
+
+\section{PLGeneral}
+
+
+\subsection{Text processing}
+\begin{itemize}
+\item{An advanced dynamic string class with ASCII, Unicode and UTF-8 support + extensive UTF-8 tool class}
+\item{An advanced tokenizer which allows you to parse texts without any effort}
+\item{XML classes (DOM) making it comfortable to load, edit and save XML files\footnote{Internally TinyXML (\url{http://www.sourceforge.net/projects/tinyxml/}) is used to make parsing robust}}
+\item{Regular expression class\footnote{Internally PCRE (\url{http://www.pcre.org/}) is used}}
+\item{Extensive command line parser}
+\end{itemize}
+
+
+\subsection{System}
+\begin{itemize}
+\item{Multi threading functionality (thread, semaphore, mutex)}
+\item{Dynamic/shared libraries}
+\item{Pipes}
+\item{Class for comfortable processes interaction}
+\item{Easy access to system information like used OS, user name, available memory, etc.}
+\item{Access to environment variables}
+\item{Basic OS console functions}
+\item{Class for working with the registry (if the OS has one)}
+\end{itemize}
+
+
+\subsection{Network}
+\begin{itemize}
+\item{Basic universal standard network functionality like sockets}
+\end{itemize}
+
+
+\subsection{File system}
+\begin{itemize}
+\item{File class for access to standard OS files, archives like zip\footnote{Internally zlib (\url{http://www.zlib.org/}) is used} and even http with password support and other special access settings}
+\item{Quite universal design. For instance, it is possible to open a file within an archive from an http server.}
+\item{Comfortable URL-class taking the pain when dealing with filenames, especially when you want to work platform independent}
+\item{Access to the OS standard streams using the file class}
+\item{File search functionality with filters (wildcard, regular expression)}
+\end{itemize}
+
+
+\subsection{A huge set of additional tools}
+\begin{itemize}
+\item{Log with flexible implementation so we can output into a file (unformatted text, XML, html) or into the console}
+\item{Unified abstract checksum interface. (the SDK comes with a MD5, CRC32 and SHA-1 plugin) Supports checksum from string, memory or files.}
+\item{General list interface with concrete implementations for linked list, array, bitset and so on}
+\item{Many basic tool classes like stack, queue, hash map, heap, quick sort, singleton, iterator etc.}
+\item{PixelLight comes with an efficient resource manager template system which is used by several managers, e.g. textures, meshes, sounds, paths, shaders etc. }
+\item{PixelLight provides an advanced timing class which offers a lot of timing relevant functions. Time difference since the last frame with clamp functionality, past time since start, slow motion, pause, freeze, FPS limiter, stopwatch}
+\item{Basic memory manager so you can mix release and debug builds as good as possible}
+\end{itemize}
+
+
+
+
+\section{PLCore}
+\begin{itemize}
+\item{Generic functor class (delegate, a form of type-safe function pointer, 'callback')}
+\item{Event system}
+\item{RTTI and plugin system}
+\item{Loadable system. EVERYTHING that can be loaded and saved is not limited to just one 'hacked in' file format. Hence, it is possible to add, for instance, a loader plugin for your own mesh or image file formats in a quite universal way!}
+\item{Localization system}
+\item{Configuration system}
+\end{itemize}
+
+
+
+
+\section{PLDatabase}
+\begin{itemize}
+\item{Abstract unified database interfaces\footnote{The PixelLight SDK comes with Null and SQLite (\url{http://sqlitebrowser.sourceforge.net/}) backends, within the repository are also experimental MySQL (\url{http://www.mysql.com/}) and PostgreSQL (\url{http://www.postgresql.org/}) backends.}}
+\end{itemize}
+
+
+
+
+\section{PLGraphics}
+\begin{itemize}
+\item{Extensive image class which is able to load and save the image formats dds, png\footnote{Using libpng \url{http://www.libpng.org/}}, tga, jpg\footnote{Using libjpeg \url{http://www.ijg.org/}}, ppm and bmp by default. Further formats can be added without any effort.}
+\item{Comfortable rgb and rgba color classes}
+\end{itemize}
+
+
+
+
+\section{PLMath}
+\begin{itemize}
+\item{Various comfortable and feature rich vector classes for 2D, 3D and 4D vectors}
+\item{Easily usable 3x3, 3x4 and 4x4 matrices with also offers important functions, like converting a direction vector into a rotation matrix}
+\item{Quaternions}
+\item{Planes}
+\item{Bounding box (AABB and OBB)}
+\item{Advanced Euler angles conversion tool class (from/to rotation matrix, from/to quaternion -> and all for multiple axis orders)}
+\item{Helper functions like transforming a 2D coordinate to an 3D and backward to, for example, find out were in the 3D world the 2D mouse cursor is in}
+\end{itemize}

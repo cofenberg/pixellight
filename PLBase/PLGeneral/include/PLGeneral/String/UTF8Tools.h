@@ -1,0 +1,487 @@
+/*********************************************************\
+ *  File: UTF8Tools.h                                    *
+ *
+ *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLGENERAL_UTF8TOOLS_H__
+#define __PLGENERAL_UTF8TOOLS_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLGeneral/PLGeneral.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Static class with UTF8 tool functions
+*/
+class UTF8Tools {
+
+
+	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns whether the given character is an octal digit
+		*
+		*  @param[in] nCharacter
+		*    Character to check
+		*
+		*  @return
+		*    'true' if the given character is an octal digit, else 'false'
+		*/
+		inline static bool IsOctalDigit(char nCharacter);
+
+		/**
+		*  @brief
+		*    Returns whether the given character is a hex digit
+		*
+		*  @param[in] nCharacter
+		*    Character to check
+		*
+		*  @return
+		*    'true' if the given character is a hex digit, else 'false'
+		*/
+		inline static bool IsHexDigit(char nCharacter);
+
+		/**
+		*  @brief
+		*    Returns whether the given character is the start of an UTF8 sequence or not
+		*
+		*  @param[in] nCharacter
+		*    Character to check
+		*
+		*  @return
+		*    'true' if the given character is the start of a UTF8 sequence, else 'false'
+		*/
+		inline static bool IsSequenceStart(utf8 nCharacter);
+
+		/**
+		*  @brief
+		*    Returns the number of bytes a given character requires
+		*
+		*  @param[in] nCharacter
+		*    Character to check
+		*
+		*  @return
+		*    Returns the number of bytes the given character requires
+		*/
+		PLGENERAL_API static uint8 GetNumOfCharacterBytes(utf8 nCharacter);
+
+		/**
+		*  @brief
+		*    Returns the number of bytes a given wide character requires
+		*
+		*  @param[in] nWideCharacter
+		*    Wide character to check
+		*
+		*  @return
+		*    Returns the number of bytes the given wide character requires
+		*/
+		PLGENERAL_API static uint8 GetNumOfCharacterBytes(wchar_t nWideCharacter);
+
+		/**
+		*  @brief
+		*    Returns a character as wide character
+		*
+		*  @param[in] pnCharacter
+		*    Pointer to character to return, if NULL '\0' will be returned
+		*
+		*  @return
+		*    The character as wide character
+		*/
+		PLGENERAL_API static wchar_t GetWideCharacter(const utf8 *pnCharacter);
+
+		/**
+		*  @brief
+		*    Returns the next character as wide character
+		*
+		*  @param[in] ppszString
+		*    String where to return the next wide character from, MUST be valid!
+		*
+		*  @return
+		*    The next character as wide character
+		*
+		*  @note
+		*    - The given string pointer is updated
+		*/
+		PLGENERAL_API static wchar_t GetNextWideCharacter(const utf8 **ppszString);
+
+		/**
+		*  @brief
+		*    Moves to the next character
+		*
+		*  @param[in] ppszString
+		*    String where to move to the next character, MUST be valid!
+		*
+		*  @return
+		*    Number of skipped bytes
+		*/
+		PLGENERAL_API static uint8 MoveToNextCharacter(const utf8 **ppszString);
+
+		/**
+		*  @brief
+		*    Moves to the previous character
+		*
+		*  @param[in] ppszString
+		*    String where to move to the previous character, MUST be valid!
+		*
+		*  @return
+		*    Number of skipped bytes
+		*/
+		PLGENERAL_API static uint8 MoveToPreviousCharacter(const utf8 **ppszString);
+
+		/**
+		*  brief
+		*    Character index => byte offset
+		*
+		*  @param[in] pszString
+		*    Pointer to string to use, if NULL '0' will be returned
+		*  @param[in] nCharacterIndex
+		*    Character index, MUST be valid!
+		*
+		*  @return
+		*    Byte offset
+		*/
+		PLGENERAL_API static uint32 CharacterIndexToByteOffset(const utf8 *pszString, uint32 nCharacterIndex);
+
+		/**
+		*  brief
+		*    Byte offset => character index
+		*
+		*  @param[in] pszString
+		*    Pointer to string to use, if NULL '0' will be returned
+		*  @param[in] nOffset
+		*    Byte offset, MUST be valid!
+		*
+		*  @return
+		*    Character index
+		*/
+		PLGENERAL_API static uint32 ByteOffsetToCharacterIndex(const utf8 *pszString, uint32 nOffset);
+
+		/**
+		*  @brief
+		*    Returns the number of bytes a given string requires
+		*
+		*  @param[in] pszString
+		*    Pointer to string to check, if NULL '0' will be returned
+		*  @param[in] nCount
+		*    Number of string character to take into account, if 0, take all characters into account
+		*
+		*  @return
+		*    Returns the number of bytes the given string requires
+		*/
+		PLGENERAL_API static uint32 GetNumOfStringBytes(const utf8 *pszString, uint32 nCount = 0);
+
+		/**
+		*  @brief
+		*    Returns the number of characters within a given string
+		*
+		*  @param[in] pszString
+		*    Pointer to string to check, if NULL '0' will be returned
+		*
+		*  @return
+		*    The number of characters within a given string
+		*/
+		PLGENERAL_API static uint32 GetNumOfCharacters(const utf8 *pszString);
+
+		/**
+		*  @brief
+		*    Returns the number of characters within a given string
+		*
+		*  @param[in] pszString
+		*    Pointer to string to check, if NULL '0' will be returned
+		*  @param[in] nNumOfBytes
+		*    String size in bytes, MUST be valid!
+		*
+		*  @return
+		*    The number of characters within a given string
+		*/
+		PLGENERAL_API static uint32 GetNumOfCharacters(const utf8 *pszString, uint32 nNumOfBytes);
+
+		/**
+		*  @brief
+		*    Returns the number of characters and bytes within a given string
+		*
+		*  @param[in]  pszString
+		*    Pointer to string to check, if NULL '0' will be returned
+		*  @param[out] nNumOfBytes
+		*    Receives the string size in bytes
+		*
+		*  @return
+		*    The number of characters within a given string
+		*/
+		PLGENERAL_API static uint32 GetNumOfCharactersAndBytes(const utf8 *pszString, uint32 &nNumOfBytes);
+
+		/**
+		*  @brief
+		*    Returns a pointer to the first occurrence of the given wide character in the given string, or NULL if not found
+		*
+		*  @param[in]  pszString
+		*    Pointer to string to use, if NULL 'NULL' will be returned
+		*  @param[in]  nWideCharacter
+		*    Wide character to find
+		*  @param[out] pnCharacterIndex
+		*    Receives the character index of found character returned, if not NULL
+		*
+		*  @return
+		*    Pointer to the first occurrence of the given wide character in the given string, or NULL if not found
+		*/
+		PLGENERAL_API static const utf8 *FindCharacter(const utf8 *pszString, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
+
+		/**
+		*  @brief
+		*    Same as the above, but searches a buffer of a given size instead of a NULL-terminated string
+		*
+		*  @param[in]  pszString
+		*    Pointer to string to use, if NULL 'NULL' will be returned
+		*  @param[in]  nNumOfBytes
+		*    String size in bytes, MUST be valid!
+		*  @param[in]  nWideCharacter
+		*    Wide character to find
+		*  @param[out] pnCharacterIndex
+		*    Receives the character index of found character returned, if not NULL
+		*
+		*  @return
+		*    Pointer to the first occurrence of the given character in the given string, or NULL if not found
+		*/
+		PLGENERAL_API static const utf8 *FindCharacter(const utf8 *pszString, uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
+
+		/**
+		*  @brief
+		*    Single wide character character to UTF8
+		*
+		*  @param[out] pszDestination
+		*    Receives the converted character, MUST be large enough to keep the result! If NULL '0' will be returned.
+		*  @param[in]  nWideCharacter
+		*    Wide character to convert
+		*
+		*  @return
+		*    Returns the number of bytes of the converted wide character
+		*
+		*  @note
+		*    - Use GetNumOfCharacterBytes() to get the number of bytes a wide character requires
+		*/
+		PLGENERAL_API static uint8 FromWideCharacter(utf8 *pszDestination, wchar_t nWideCharacter);
+
+		/**
+		*  @brief
+		*    Wide character string to UTF8
+		*
+		*  @param[out] pszDestination
+		*    Receives the converted string, MUST be large enough to hold the result or NULL!
+		*  @param[in]  nNumOfBytes
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
+		*    (+1 if a terminating NULL should be added)
+		*  @param[in]  pszSource
+		*    Pointer to wide character string to convert, if NULL '0' will be returned and 'destination' not manipulated
+		*  @param[in]  nSourceLength
+		*    Number of source characters, or '0' if NULL-terminated
+		*
+		*  @return
+		*    The number of used destination bytes (excluding the terminating NULL)
+		*
+		*  @note
+		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
+		*      (excluding the terminating NULL) is returned
+		*/
+		PLGENERAL_API static uint32 FromWideCharacterString(utf8 *pszDestination, uint32 nNumOfBytes, const wchar_t *pszSource, uint32 nSourceLength);
+
+		/**
+		*  @brief
+		*    UTF8 to wide character string
+		*
+		*  @param[out] pszDestination
+		*    Receives the converted string, MUST be large enough to hold the result! If NULL '0' will be returned.
+		*  @param[in]  nLength
+		*    Length of the destination buffer, MUST be valid! (including the terminating NULL)
+		*  @param[in]  pszSource
+		*    Pointer to wide character string to convert, if NULL '0' will be returned and 'destination' not manipulated
+		*  @param[in]  nSourceNumOfBytes
+		*    Number of source bytes to process, or '0' if NULL-terminated
+		*
+		*  @return
+		*    Number of converted characters
+		*
+		*  @note
+		*    - Only works for valid UTF8, i.e. no 5- or 6-byte sequences
+		*/
+		PLGENERAL_API static uint32 ToWideCharacterString(wchar_t *pszDestination, uint32 nLength, const utf8 *pszSource, uint32 nSourceNumOfBytes);
+
+		/**
+		*  @brief
+		*    Given a wide character, convert it to an ASCII escape sequence stored in the given destination buffer
+		*
+		*  @param[out] pszDestination
+		*    Will received the converted result, MUST be large enough to hold the result or NULL!
+		*  @param[in]  nNumOfBytes
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
+		*  @param[in]  nWideCharacter
+		*    Wide character to convert
+		*
+		*  @return
+		*    Number of characters within the destination buffer (excluding the terminating NULL)
+		*
+		*  @note
+		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
+		*      (excluding the terminating NULL) is returned
+		*/
+		PLGENERAL_API static uint32 EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, wchar_t nWideCharacter);
+
+		/**
+		*  @brief
+		*    Converts an UTF8 string to an ASCII string with escape sequences
+		*
+		*  @param[out] pszDestination
+		*    Will received the converted result, MUST be large enough to hold the result or NULL!
+		*  @param[in]  nNumOfBytes
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
+		*  @param[in]  pszSource
+		*    Pointer to source to read from, if NULL '0' will be returned and 'destination' not manipulated
+		*  @param[in]  bEscapeQuotes
+		*    If 'true', quote characters will be preceded by backslashes as well
+		*
+		*  @return
+		*    Number of characters within the destination buffer (excluding the terminating NULL)
+		*
+		*  @note
+		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
+		*      (excluding the terminating NULL) is returned
+		*/
+		PLGENERAL_API static uint32 Escape(char *pszDestination, uint32 nNumOfBytes, const utf8 *pszSource, bool bEscapeQuotes);
+
+		/**
+		*  @brief
+		*    Assuming 'pszSource' points to the character after a backslash, read an escape sequence,
+		*    storing the result in 'nDestination' and returning the number of input characters processed
+		*
+		*  @param[out] nDestination
+		*    Will receive the result
+		*  @param[in]  pszSource
+		*    Pointer to source to read from, if NULL '0' will be returned and 'destination' not manipulated
+		*
+		*  @return
+		*    Number of read characters (excluding the terminating NULL)
+		*/
+		PLGENERAL_API static uint32 ReadEscapeSequence(wchar_t &nDestination, const char *pszSource);
+
+		/**
+		*  @brief
+		*    Converts a string with literal \uxxxx or \Uxxxxxxxx characters to UTF8
+		*
+		*  @param[out] pszDestination
+		*    Will received the converted result, MUST be large enough to hold the result or NULL!
+		*  @param[in]  nNumOfBytes
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
+		*    (+1 if a terminating NULL should be added)
+		*  @param[in]  pszSource
+		*    Pointer to source string to convert, if NULL '0' will be returned and 'destination' not manipulated
+		*
+		*  @return
+		*    The resulting length in bytes of the converted string (excluding the terminating NULL)
+		*
+		*  @note
+		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
+		*      (excluding the terminating NULL) is returned
+		*/
+		PLGENERAL_API static uint32 Unescape(utf8 *pszDestination, uint32 nNumOfBytes, const char *pszSource);
+
+		/**
+		*  @brief
+		*    Compares two UTF8 strings (case sensitive)
+		*
+		*  @param[in] pszFirst
+		*    Pointer to first string for comparison, if NULL '0' will be returned
+		*  @param[in] pszSecond
+		*    Pointer to second string for comparison, if NULL '0' will be returned
+		*  @param[in] nCount
+		*    Amount of character to compare, can be 0 if the whole strings should be compared
+		*
+		*  @return
+		*    -1 if the first string is smaller then the second one
+		*     0 if both strings are equal
+		*     1 if the first string is greater then the second one
+		*/
+		PLGENERAL_API static int Compare(const utf8 *pszFirst, const utf8 *pszSecond, uint32 nCount = 0);
+
+		/**
+		*  @brief
+		*    Find a substring in a UTF8 string
+		*
+		*  @param[in] pszSource
+		*    Pointer to the string which should be searched through, if NULL 'NULL' will be returned
+		*  @param[in] pszSubstring
+		*    Pointer to the substring to be searched for, if NULL 'NULL' will be returned
+		*
+		*  @return
+		*    A pointer to the start position of the substring or NULL if the search fails
+		*/
+		PLGENERAL_API static utf8 *FindSubstring(const utf8 *pszSource, const utf8 *pszSubstring);
+
+		/**
+		*  @brief
+		*    Copies the given UTF8 source string into the destination string
+		*
+		*  @param[out] pszDestination
+		*    Will receive the copied string, if NULL 'NULL' will be returned
+		*  @param[in]  pszSource
+		*    Pointer to the source string, if NULL 'NULL' will be returned
+		*  @param[in]  nCount
+		*    Amount of character to copy, can be 0 if the whole strings should be copied
+		*
+		*  @return
+		*    A pointer to 'szDestination' (always valid!)
+		*
+		*  @note
+		*    - If 'nCount' is 0 or the source string is < 'nCount' then the '\0'-terminator is also copied
+		*/
+		PLGENERAL_API static utf8 *Copy(utf8 *pszDestination, const utf8 *pszSource, uint32 nCount = 0);
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLGeneral
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGeneral/String/UTF8Tools.inl"
+
+
+#endif // __PLGENERAL_UTF8TOOLS_H__

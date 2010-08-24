@@ -1,0 +1,42 @@
+%----- Chapter: Introduction ---------------------
+\chapter{Introduction}
+
+
+\paragraph{Motivation}
+\emph{PLGeneral} is the most basic library of PixelLight. In here, you'll find container implementations like linked lists, arrays up to hash maps. Strings, files, checksum, XML, log and interfaces for the general interaction with the used operation system are also available. Usually, every PixelLight basing project is using \emph{PLGeneral} features because they are just essential and by using it, one can avoid to implement linked lists, strings etc. multiple times within multiple projects which would just be inefficient and error prone.\footnote{When using external third party libraries, it's usually fact that they implement their own linked lists, strings and so on - this shouldn't be the case for PixelLight based projects.}
+
+
+
+
+\section{External Dependences}
+\emph{PLGeneral} is using some open source third party libraries which are static linked. As a result, the resulting \emph{PLGeneral} library has no additional external shared library dependencies.
+
+
+\paragraph{zlib}
+\begin{itemize}
+\item ZIP library
+\item \emph{zlib} license
+\item Version \emph{1.2.3}
+\item Used by the zip file classes
+\item Downloaded from \url{http://www.zlib.org/}
+\end{itemize}
+
+
+\paragraph{PCRE}
+\begin{itemize}
+\item Regular expression library
+\item \emph{BSD} license
+\item Version \emph{8.10}
+\item Used by the \emph{RegEx} class
+\item Downloaded from \emph{http://www.pcre.org/}
+\end{itemize}
+
+
+\paragraph{TinyXML}
+\begin{itemize}
+\item XML library
+\item \emph{zlib/libpng} license
+\item Version \emph{2.5.3}
+\item Used by the XML classes
+\item Downloaded from \url{http://www.sourceforge.net/projects/tinyxml/}
+\end{itemize}

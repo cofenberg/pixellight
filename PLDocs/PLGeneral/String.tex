@@ -1,0 +1,128 @@
+\chapter{String}
+
+
+
+
+\section{String class}
+Sequences of characters, also called \emph{strings}, are often used and frequently come with some nasty features like memory leaks, buffer overruns (security risk!) or even crash's if you are not careful. Also dealing with Unicode is normally not that much fun\ldots so we wrote a comfortable string class making our and especially your life much easier!
+
+The \emph{String}-class uses a \emph{copy on change}-technique - therefore copying one string into another one is quite fast because the internal string buffer is shared as long as a string doesn't change. As result comparing strings can also be very fast and the internal string buffer can be ASCII OR Unicode in a quite flexible way. As long as you DON'T save your source codes in an UTF8 format you can also use the ASCII extension Ansi. (characters: 128-256) But with an UTF8 format, this may cause serious problems and you should use Unicode instead ASCII for characters above 128 to avoid encoding troubles!
+
+Here's a short usage example how to use the \emph{String}-class and how do deal with ASCII/Unicode/UTF8:
+
+\begin{lstlisting}[caption=ASCII/Unicode/UTF8 string example]
+// Test string instance
+String sS;
+
+// Set string to 'Mini' as ASCII
+sS = "Mini";
+
+// Concatenate 'Me' (ASCII) with the string
+sS += " Me";
+
+// Get pointer to ASCII string content
+const char *pS = sS.GetASCII();
+
+// Get pointer to ASCII string content
+// (same as above but not recommended)
+const char *pS = sS;
+
+// Set string to 'Mini' as Unicode
+sS = L"Mini";
+
+// Set string to 'nihon' (= Japanese)
+// as Unicode by using masked characters
+sS = L"\u65e5\u672c\u8a9e";
+
+// Set string to 'Mini' as UTF8
+sS = (const utf8*)"Mini";
+\end{lstlisting}
+
+As you can see the well known \emph{char*} and \emph{wchar\_t} are used for ASCII and Unicode strings - but wait, that's this? \emph{utf8}? Because the compiler can distinguish \emph{char*} and \emph{wchar\_t} by using \emph{L} in front of strings, but not ASCII from UTF8, we introduced the \emph{utf8} data type. If the compiler should interpret a given string as UTF8, cast it to \emph{utf8}. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";} or even \emph{String sS = (const utf8*)"Mini";} It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode/UTF8 for you, so you can even mix strings with different internal formats!
+
+We strongly recommend to use only this class when working with strings and not using for instance \emph{c}-functions like \emph{strcmp()}. Do also avoid to use the string data you can get from the \emph{String::GetASCII()} directly to search for substrings and so on - use the provided string functions instead. By doing so, the string class will automatically take care of tricky stuff mentioned above.
+
+In general, it's a good idea to use functions like \emph{String::GetASCII()} to get the \emph{internal data} only if really required, for instance if the string data is given to another non PixelLight system.
+
+
+\paragraph{Strings and dynamic variable parameters}
+Often it's required to give for instance a function a string which is composed of different substrings. For instance \emph{DrawText("My text")} is trivial, \emph{DrawText("\%d: My text '\%s'", 1, "Text")} will only work if the function supports dynamic variable parameters. For PixelLight, we decided to NOT providing such functions with dynamic variable parameters for various reasons. Instead, one can compose own strings by hand or by using the \emph{PLGeneral::String}-class. With \emph{String} the previous example would look like this \emph{DrawText(String::Format("\%d: My text '\%s'", 1, "Text"))}. \emph{String::Format} will compose the string for you and there can't be a buffer overflow if the resulting string gets to long.
+
+Here's an example how to use this string class and how not:
+
+\begin{lstlisting}[caption=Valid and invalid string usage example]
+String sOldString = "Moin";
+String sNewString;
+
+// NOT correct! (pointer to string object
+// instead of string content is used...)
+sNewString = String::Format("Old string: %s", sOldString);
+
+// Correct
+sNewString = String::Format("Old string: %s", sOldString.GetASCII());
+
+// Even better because for example Unicode safe
+sNewString = "Old string: " + sOldString;
+\end{lstlisting}
+
+
+\paragraph{Strings as function parameters}
+When using strings as function parameters and/or return values we recommend the following solution:
+
+\begin{lstlisting}[caption=String as function parameter and return value]
+String GetOtherString(const String &sString);
+\end{lstlisting}
+
+The string parameter is given as reference which is quite performant as you may now. The returned string on the other hand is an object on the runtime stack - please note that this is not performance critical because the internal string data is NOT copied, it's only shared as long as possible! By doing so, you can avoid tricky situations like giving a function a reference to it's own internal string you received from another function of the same class.
+
+Example:
+
+\begin{lstlisting}[caption=Error prone string usage example]
+class StringMessUp {
+  public:
+    const String &GetFilename() const
+    {
+      return m_sFilename;
+    }
+    void Cleanup()
+    {
+      m_sFilename = "";
+    }
+    void Load(const String &sFilename)
+    {
+      Cleanup();
+      m_sFilename = sFilename;
+    }
+  private:
+    String m_sFilename;
+};
+
+// Somewhere in the deep of the codes...
+StringMessUp cInstance;
+
+// ...
+cInstance.Load("Test.ext");
+\end{lstlisting}
+
+Often a clean up or similar is used as shown in the situation above - but in this case the programmer was careless and will get a surprise if we tests the code with \emph{cInstance.Load(cInstance.GetFilename());} for reloading. Think a moment about this\ldots right, because \emph{sFilename} is in fact a reference to the internal \emph{m\_sFilename} that is cleared within this \emph{Load()}-function before loading, \emph{sFilename} is now empty, too - and nothing is loaded.
+
+
+
+
+\section{Regular Expression}
+Regular expressions are an universal and powerful tool to deal with string operations like \emph{seach for}. Here's a compact example how to use regular expressions to check whether or not a string is a substring of another one:
+
+\begin{lstlisting}[caption=Regular expression example]
+  String sBeer = "BeerNumber99";
+  RegEx cRegEx("^BeerNumber.*$");
+  if (cRegEx.Match(sBeer))
+    sBeer = "Drunk";
+\end{lstlisting}
+
+Because the string \emph{BeerNumber99} matches the expression \emph{\textasciicircum BeerNumber.*\$} the beer is now gone. Strings like \emph{\_BeerNumber99} or \emph{Number99} don't match the given expression.
+
+
+
+
+\section{Wildcard}
+It's practical to only support regular expressions or wildcards, but not both - so you don't need multiple implementations. Usually it's best to support regular expressions because they are more powerful than wildcards. Wildcards on the other side are more compact and users may already be familiar with them through \emph{Microsoft Windows} - therefore we added \emph{PLGeneral::RegEx::WildcardToRegEx()} so one can convert a given wildcard into an regular expression\footnote{Wildcard: \emph{BeerNumber*} = regular expression: \emph{\textasciicircum BeerNumber.*\$}} and then passing this to a function.
