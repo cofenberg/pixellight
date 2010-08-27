@@ -426,7 +426,7 @@ macro(external_run_cmake dir)
 
 	# Execute 'cmake'
 	execute_process(
-		COMMAND ${CMAKE_COMMAND} . -G "${generator}" ${toolchain} ${options}
+		COMMAND ${CMAKE_COMMAND} . -G "${generator}" -DCMAKE_BUILD_TYPE:STRING=RELEASE ${toolchain} ${options}
 		WORKING_DIRECTORY ${dir}
 		OUTPUT_FILE ${TEMP_LOG}
 	)

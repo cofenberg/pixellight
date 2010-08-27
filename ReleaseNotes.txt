@@ -1,3 +1,7 @@
+Changes in PixelLight 0.9.2-R2 (released on August 27, 2010)
+- Bugfix (Windows): Wrong dependency to debug version of MSVC runtime fixed (libfreetype)
+
+
 Changes in PixelLight 0.9.2-R1 (released on August 23, 2010 - first public PixelLight release)
 - Feature: The PLGui project was replaced by it's third complete refactoring
 - Feature: Added XML versions of the PixelLight chunk and the PixelLight mesh file format

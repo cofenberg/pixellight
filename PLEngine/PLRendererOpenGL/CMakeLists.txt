@@ -215,6 +215,7 @@ endif()
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLRenderer/cg.dll "${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLRenderer/cgGL.dll "${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/"
 		)
 	elseif(LINUX)
@@ -249,7 +250,8 @@ install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/${CMAKETOOLS_CURRENT_PL
 # External dependencies, but only when not using system-libs
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
-		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/cgGL.dll
+		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/cg.dll
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/cgGL.dll
 			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer	COMPONENT Runtime
 		)
 	elseif(LINUX)
