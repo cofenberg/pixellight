@@ -65,12 +65,16 @@ SurfaceWindow::~SurfaceWindow()
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
 	#ifdef WIN32
-		m_hDC(NULL)
+		m_hDC(NULL),
 	#endif
 	#ifdef LINUX
-		m_nWindow(NULL)
+		m_nWindow(NULL),
 	#endif
+		m_bGammaChanged(false)
 {
+	// Initialize gamma backup
+	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
+
 	// Just copy over the given information
 	m_sDisplayMode = sDisplayMode;
 

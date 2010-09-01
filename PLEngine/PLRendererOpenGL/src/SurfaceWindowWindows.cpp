@@ -112,6 +112,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 			nRamp[j] = (WORD)(Math::Pow((float)((j % 256)/256.0), (float)fRGB[i])*65536);
 	}
 
+	// Gamma was changed...
+	m_bGammaChanged = true;
+
+	// Call the OS gamma ramp function
 	return SetDeviceGammaRamp(m_hDC, nRamp) != 0;
 }
 
@@ -280,6 +284,7 @@ bool SurfaceWindow::Init()
 			if (SetPixelFormat(m_hDC, nPixelFormats[nBestFormat], &pfd)) { // Are we able to set the pixel format?
 				// Backup gamma
 				GetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+				m_bGammaChanged = false;
 
 				// Done
 				return true;
@@ -311,8 +316,11 @@ void SurfaceWindow::DeInit()
 		if (cRenderer.GetRenderTarget() == this)
 			cRenderer.SetRenderTarget(NULL);
 
-		// Reset gamma
-		SetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+		// Reset gamma - but only when the gamma was changed by using "SetGamma()"
+		if (m_bGammaChanged) {
+			SetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+			m_bGammaChanged = false;
+		}
 
 		// Release the Windows DC
 		if (m_hDC && !ReleaseDC((HWND)nWindow, m_hDC))

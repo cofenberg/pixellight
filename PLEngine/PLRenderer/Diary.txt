@@ -1,3 +1,11 @@
+>> 01.09.2010
+[CO]
+PLRendererOpenGL:
+- SurfaceWindow: Gamma wird am Ende nur noch zurückgesetzt, wenn Gamma durch "SetGamma()" verändert wurde. Sollte das setzen von Gamma
+  unerwartet mal Probleme machen, so hat man nun wenigstens keine Probleme, wenn man von der Anwendung aus nie Gamma verändert :D
+
+
+
 >> 20.08.2010
 [CO]
 PLRendererOpenGL:

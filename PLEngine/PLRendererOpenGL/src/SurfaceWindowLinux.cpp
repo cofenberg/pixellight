@@ -73,6 +73,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 			// Get the X server display connection
 			Display *pDisplay = pContextLinux->GetDisplay();
 
+			// Gamma was changed...
+			m_bGammaChanged = true;
+
+			// Call the OS gamma ramp function
 			XF86VidModeGamma gamma;
 			gamma.red   = fRed;
 			gamma.green = fGreen;
@@ -100,6 +104,7 @@ bool SurfaceWindow::Init()
 
 		// Backup gamma
 		GetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+		m_bGammaChanged = false;
 
 		// [TODO] Linux: Mode change currently not working correctly
 /*		// Is fullscreen?
@@ -177,8 +182,11 @@ void SurfaceWindow::DeInit()
 		if (cRenderer.GetRenderTarget() == this)
 			cRenderer.SetRenderTarget(NULL);
 
-		// Reset gamma
-		SetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+		// Reset gamma - but only when the gamma was changed by using "SetGamma()"
+		if (m_bGammaChanged) {
+			SetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
+			m_bGammaChanged = false;
+		}
 /*
 		// [TODO] Linux: Mode change currently not working correctly
 		// Is fullscreen?
