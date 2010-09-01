@@ -90,7 +90,7 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
+build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 
 ##################################################
 ## Dependencies
