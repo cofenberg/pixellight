@@ -88,7 +88,7 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 
 	{ // Render targets
 		// Create the render target. We will create a very low resolution 2D texture buffer to see funny pixels.
-		m_pRenderTarget = cRenderer.CreateSurfaceTextureBuffer2D(Vector2i(64, 64), TextureBuffer::R8G8B8, SurfaceTextureBuffer::Depth, nMaxColorTargets);
+		m_pRenderTarget = cRenderer.CreateSurfaceTextureBuffer2D(Vector2i(64, 64), TextureBuffer::R8G8B8, SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing, nMaxColorTargets);
 		if (m_pRenderTarget && nMaxColorTargets > 1) {
 			// Set additional color render targets
 			if (nMaxColorTargets > 1 && !m_pColorTarget1) {
@@ -521,6 +521,9 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Draw
 			cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 		}
+
+		// Change the backface culling back to the default setting
+		cRenderer.SetRenderState(RenderState::CullMode, Cull::CCW);
 	}
 
 	// Increase the rotation by the current time difference (time past since the last frame)

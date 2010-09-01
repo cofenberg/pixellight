@@ -1,3 +1,12 @@
+>> 01.09.2010
+[CO]
+- PLDemoRendererRTT: So wie es aussieht gibts noch probleme mit Multisample und Multi Render Targets, dass ist allerdings
+  auch etwas tricky. (allgemein bekannt)
+  Daher deaktivierte ich in SPRTTShaders erstmal Multisample für das in Texturen Rendern, damit ist nun ein unschöner Grafik
+  Bug weg.
+
+
+
 >> 15.08.2010
 [SB]
 - Überall, wo SetAppDataSubdir() gesetzt wird, wird nun auch - wie es bereits in der Doku steht - die Funktion
