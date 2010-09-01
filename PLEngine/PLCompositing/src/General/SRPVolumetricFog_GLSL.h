@@ -96,8 +96,8 @@ void main()\n\
 #endif\n\
 \n\
 	// Calculate the fog factor\n\
-	float k  = clamp(dot(FogPositionVS, VertexPositionVS)/dot(VertexPositionVS, VertexPositionVS), 0, 1);\n\
+	float k  = clamp(dot(FogPositionVS, VertexPositionVS)/dot(VertexPositionVS, VertexPositionVS), 0.0f, 1.0f);\n\
 	vec4  pl = vec4(k*VertexPositionVS - FogPositionVS, 1.0);\n\
-	gl_FragColor.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, 0, 1);\n\
+	gl_FragColor.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, 0.0f, 1.0f);\n\
 	gl_FragColor.a = 1;\n\
 }";

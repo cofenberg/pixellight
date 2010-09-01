@@ -224,7 +224,7 @@ uniform lowp vec3 LightColor;	// Light color\n\
 		// Light and normal are assumed to be normalized\n\
 		// constants.x = R0 [0..1]\n\
 		// constants.y = Power, always >0\n\
-		highp float cosAngle = clamp(1 - dot(light, normal), 0, 1); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+		highp float cosAngle = clamp(1.0f - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
 		return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
 	}\n\
 #endif\n\
@@ -241,7 +241,7 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		viewVector = vec3(0, 0, 1);\n\
 \n\
 	// Diffuse term\n\
-	highp float diffuse = clamp(dot(lightVector, normalVector), 0, 1);\n\
+	highp float diffuse = clamp(dot(lightVector, normalVector), 0.0f, 1.0f);\n\
 	#ifdef FS_DIFFUSERAMPMAP\n\
 		diffuse *= texture1D(DiffuseRampMap, diffuse).x;\n\
 	#endif\n\
@@ -259,7 +259,7 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		#undef FLT_MIN\n\
 \n\
 		// Specular term\n\
-		highp float specular = pow(clamp(dot(halfVector, normalVector), 0, 1), specularExponent);\n\
+		highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent);\n\
 		lowp vec3 specularLighting = specular*specularColor*lightColor;\n\
 		#ifdef FS_SPECULARRAMPMAP\n\
 			specularLighting *= texture1D(SpecularRampMap, specular).x;\n\
@@ -502,7 +502,7 @@ void main()\n\
 					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
 					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3( TexelSize, -TexelSize,  TexelSize))) ? 0.16666667f : 0.0f;\n\
 					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize,  TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow = clamp(shadow, 0, 1);\n\
+					shadow = clamp(shadow, 0.0f, 1.0f);\n\
 				#else\n\
 					// Unpack\n\
 					highp float depthValue = texPCF(ShadowMap, shadowVector);\n\
@@ -615,7 +615,7 @@ void main()\n\
 		lowp vec3 lightingColor = BlinnPhong(normalize(lightVector), lightColor, -normalize(position), normal, diffuseColor, specularColor, specularExponent);\n\
 \n\
 		// Apply attenuation\n\
-		lightingColor *= clamp(1 - distance/LightRadius, 0, 1);\n\
+		lightingColor *= clamp(1.0f - distance/LightRadius, 0.0f, 1.0f);\n\
 	#endif\n\
 \n\
 	// Calculate the fragment color\n\

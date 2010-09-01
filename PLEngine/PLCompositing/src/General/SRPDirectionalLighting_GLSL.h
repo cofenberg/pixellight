@@ -243,7 +243,7 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 		// Light and normal are assumed to be normalized\n\
 		// constants.x = R0 [0..1]\n\
 		// constants.y = Power, always >0\n\
-		highp float cosAngle = clamp(1 - dot(light, normal), 0, 1); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+		highp float cosAngle = clamp(1.0f - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
 		return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
 	}\n\
 #endif\n\
@@ -261,7 +261,7 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 			viewVector = vec3(0, 0, 1);\n\
 \n\
 		// Diffuse term\n\
-		highp float diffuse = clamp(dot(lightVector, normalVector), 0, 1);\n\
+		highp float diffuse = clamp(dot(lightVector, normalVector), 0.0f, 1.0f);\n\
 		#ifdef FS_DIFFUSERAMPMAP\n\
 			diffuse *= texture1D(DiffuseRampMap, diffuse).x;\n\
 		#endif\n\
@@ -279,7 +279,7 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 			#undef FLT_MIN\n\
 \n\
 			// Specular term\n\
-			highp float specular = pow(clamp(dot(halfVector, normalVector), 0, 1), specularExponent);\n\
+			highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent);\n\
 			lowp vec3 specularLighting = specular*specularColor*lightColor;\n\
 			#ifdef FS_SPECULARRAMPMAP\n\
 				specularLighting *= texture1D(SpecularRampMap, specular).x;\n\
@@ -509,11 +509,11 @@ void main()\n\
 			f = (f - DOFParams.y)/(DOFParams.z - DOFParams.y);\n\
 \n\
 			// Clamp the far blur to a maximum blurriness\n\
-			f = clamp(f, 0, DOFParams.w);\n\
+			f = clamp(f, 0.0f, DOFParams.w);\n\
 		}\n\
 \n\
 		// Scale and bias into [0, 1] range\n\
-		alphaValue = clamp(f*0.5f + 0.5f, 0, 1);\n\
+		alphaValue = clamp(f*0.5f + 0.5f, 0.0f, 1.0f);\n\
 	#endif\n\
 \n\
 	// Calculate the fragment color\n\
