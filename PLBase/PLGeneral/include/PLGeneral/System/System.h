@@ -291,6 +291,9 @@ class System : public Singleton<System> {
 		*
 		*  @return
 		*    'true', if all went fine, else 'false'
+		*
+		*  @note
+		*    - Whenever possible, do not manipulate the current directory, this may backfire when you don't expect it
 		*/
 		PLGENERAL_API bool SetCurrentDir(const String &sPath);
 

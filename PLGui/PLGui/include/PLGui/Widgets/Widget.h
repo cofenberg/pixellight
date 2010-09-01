@@ -552,6 +552,9 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*
 		*  @param[in] bTopmost
 		*    'true' if the widget is topmost, else 'false'
+		*
+		*  @note
+		*    - Whenever possible, do not use topmost, this may backfire when you don't expect it
 		*/
 		PLGUI_API void SetTopmost(bool bTopmost);
 
