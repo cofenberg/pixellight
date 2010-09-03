@@ -1,8 +1,10 @@
 >> 03.09.2010
 [CO]
-- Wie schon bei OpenGL ES, werden nun auch bei Cg die dlls (hier "cg.dll", "cgGL.dll" und "cgD3D9.dll") bei CMake Install
+- Wie schon bei OpenGL ES, werden nun auch bei Cg die dlls (hier "cg.dll", "cgGL.dll" und "cgD3D9.dll") bei CMake Check/Install
   ins Runtime Verzeichnis kopiert, und liegen nicht schon im direkt frisch geklonten git Repository
 - Von "Cg Toolkit 2.2, February 2010 Release" auf "Cg Toookit 3.0 - July 2010" umgestellt
+- CMake Check/Install kopiert nun "newton.dll" (Newton), "ode.dll" (ODE) und "PhysXLoader.dll" (PhysX) in das entsprechende
+  Runtime Verzeichnis
 
 
 
