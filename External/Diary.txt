@@ -5,6 +5,8 @@
 - Von "Cg Toolkit 2.2, February 2010 Release" auf "Cg Toookit 3.0 - July 2010" umgestellt
 - CMake Check/Install kopiert nun "newton.dll" (Newton), "ode.dll" (ODE) und "PhysXLoader.dll" (PhysX) in das entsprechende
   Runtime Verzeichnis
+- CMake Check/Install kopiert nun "fmod.dll" (FMOD), "fmodex.dll" (FMOD Ex) und "OpenAL32.dll"&"wrap_oal.dll" (OpenAL) in
+  das entsprechende Runtime Verzeichnis
 
 
 
