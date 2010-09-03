@@ -14,6 +14,12 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 
 	# Unpack the package
 	external_check_unpack()
+
+	# For Windows, copy the required dlls into the runtime directory
+	if(WIN32)
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/libmysql.dll" "${PL_BIN_DIR}/../Bin/PLRuntime/Plugins/PLDatabase")	# Bin
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/libmysql.dll" "${PL_BIN_DIR}/PLRuntime/Plugins/PLDatabase")			# Bin-Windows
+	endif()
 endif()
 
 # Done

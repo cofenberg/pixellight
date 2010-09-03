@@ -7,6 +7,7 @@
   Runtime Verzeichnis
 - CMake Check/Install kopiert nun "fmod.dll" (FMOD), "fmodex.dll" (FMOD Ex) und "OpenAL32.dll"&"wrap_oal.dll" (OpenAL) in
   das entsprechende Runtime Verzeichnis
+- CMake Check/Install kopiert nun alles nötige in das PLDatabase Runtime Verzeichnis
 
 
 
