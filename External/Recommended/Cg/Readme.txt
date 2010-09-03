@@ -1,4 +1,4 @@
-Cg Toolkit 2.2, February 2010 Release
+Cg Toookit 3.0 - July 2010
 - Used by the renderer backend "PLRendererD3D9" (external Windows dependencies: "cg.dll" and "cgD3D9.dll")
 - Used by the renderer backend "PLRendererOpenGL" (external Windows dependencies: "cg.dll" and "cgGL.dll")
 - We're sorry, but due to legal issues we can't provide you with a downloadable package
@@ -8,14 +8,8 @@ Cg Toolkit 2.2, February 2010 Release
 	- Here's what you need for the Windows platform and where to put the files:
 		- "External\_Windows_x86_32\Cg\include\Cg"
 			- "cg.h"
-			- "cg_bindlocations.h"
-			- "cg_datatypes.h"
-			- "cg_enums.h"
-			- "cg_errors.h"
-			- "cg_profiles.h"
-			- "cgD3D9.h"
 			- "cgGL.h"
-			- "cgGL_profiles.h"
+			- "cgD3D9.h"
 		- "External\_Windows_x86_32\Cg\lib"
 			- "cg.lib"
 			- "cgD3D9.lib"
@@ -23,13 +17,7 @@ Cg Toolkit 2.2, February 2010 Release
 	- Here's what you need for the Linux platform and were to put the files:
 		- "External\_Linux_x86_32\Cg\include\Cg"
 			- "cg.h"
-			- "cg_bindlocations.h"
-			- "cg_datatypes.h"
-			- "cg_enums.h"
-			- "cg_errors.h"
-			- "cg_profiles.h"
 			- "cgGL.h"
-			- "cgGL_profiles.h"
 		- "External\_Linux_x86_32\Cg\lib"
 			- "libCg.so"
 			- "libCgGL.so"
