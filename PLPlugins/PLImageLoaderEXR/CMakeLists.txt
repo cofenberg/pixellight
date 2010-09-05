@@ -128,22 +128,14 @@ if(LINUX)
 	)
 endif()
 
-# Import library
-if(WIN32)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} "${PL_BIN_DIR}/Lib"
-	)
-endif()
-
 ##################################################
 ## Install
 ##################################################
 
 # Library
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLGraphics		COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLGraphics		COMPONENT Runtime
-	ARCHIVE DESTINATION ${PL_INSTALL_LIB}								COMPONENT SDK
+	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLGraphics	COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLGraphics	COMPONENT Runtime
 )
 
 # Plugin file
