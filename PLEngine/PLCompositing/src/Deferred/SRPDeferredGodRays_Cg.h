@@ -17,56 +17,79 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - DISCARD: Use discard
 \*********************************************************/
 
 
-const static char *pszDeferredGodRays_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredGodRays_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+// Cg fragment shader source code
+static const PLGeneral::String sDeferredGodRays_Cg_FS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
-// Main function\n\
+// Programs\n\
 FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
-	 , uniform int         NumerOfSamples	// Number of samples, must be >0\n\
+	 , uniform int         NumberOfSamples	// Number of samples, must be >0\n\
 	 , uniform float       Density		    // Density, must be >0\n\
 	 , uniform float       Weight		    // Weight\n\
 	 , uniform float       Decay		    // Decay\n\
 	 , uniform float2      LightPosition	// Screen space light position, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 	 , uniform float3      Color			// Color\n\
-	 , uniform samplerRECT Texture)			// Texture\n\
+	 , uniform samplerRECT Map)				// Texture\n\
 {\n\
 	FS_OUTPUT OUT;\n\
 \n\
 	// Calculate vector from pixel to light source in screen space\n\
-	float2 texUV = IN.texUV;\n\
+	float2 texUV = IN.TexCoord;\n\
 	float2 deltaTexUV = texUV - LightPosition;\n\
 \n\
 	// Divide by number of samples and scale by control factor\n\
-	deltaTexUV *= 1.0f/NumerOfSamples*Density;\n\
+	deltaTexUV *= 1.0f/NumberOfSamples*Density;\n\
 \n\
 	// Store initial sample\n\
-	float3 color = texRECT(Texture, IN.texUV).rgb;\n\
+	float3 color = texRECT(Map, IN.TexCoord).rgb;\n\
 \n\
 	// Set up illumination decay factor\n\
 	float illuminationDecay = 1;\n\
 \n\
 	// Evaluate summation\n\
-	for (int i=0; i<NumerOfSamples; i++) {\n\
+	for (int i=0; i<NumberOfSamples; i++) {\n\
 		// Step sample location along ray\n\
 		texUV -= deltaTexUV;\n\
 \n\
 		// Retrieve sample at new location\n\
-		float3 sample = texRECT(Texture, texUV).rgb;\n\
+		float3 sample = texRECT(Map, texUV).rgb;\n\
 \n\
 		// Apply sample attenuation scale/decay factors\n\
 		sample *= illuminationDecay*Weight;\n\
@@ -82,13 +105,14 @@ FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
 	float3 resultingColor = color*Color;\n\
 \n\
 	// Use discard?\n\
-#ifdef DISCARD\n\
+#ifdef FS_DISCARD\n\
 	if (resultingColor.r == 0 && resultingColor.g == 0 && resultingColor.b == 0)\n\
 		discard;\n\
-#else\n\
-	OUT.color = float4(resultingColor, 1);\n\
 #endif\n\
+\n\
+	// Set fragment color\n\
+	OUT.Color0 = float4(resultingColor, 1);\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

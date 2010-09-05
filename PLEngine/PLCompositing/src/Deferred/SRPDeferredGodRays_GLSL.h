@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SRPDeferredGBufferDebug_GLSL.h                 *
+ *  File: SRPDeferredGodRays_GLSL.h                      *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,7 +21,7 @@
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sDeferredGBufferDebug_GLSL_VS = "\
+static const PLGeneral::String sDeferredGodRays_GLSL_VS = "\
 // GLSL preprocessor directives\n\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\
@@ -43,8 +43,8 @@ void main()\n\
 	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
 }";
 
-// GLSL fragment shader source code
-static const PLGeneral::String sDeferredGBufferDebug_GLSL_FS = "\
+// GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+static const PLGeneral::String sDeferredGodRays_GLSL_FS = "\
 // GLSL preprocessor directives\n\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\
@@ -52,51 +52,57 @@ static const PLGeneral::String sDeferredGBufferDebug_GLSL_FS = "\
 varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp float			NearPlane;	// Camera near plane distance\n\
-uniform highp float			Range;		// Distance between camera far and new plane (never 0!)\n\
-uniform highp sampler2DRect Map;		// Input texture containing the data to visualize\n\
+uniform highp int			NumberOfSamples;	// Number of samples, must be >0\n\
+uniform highp float			Density;			// Density, must be >0\n\
+uniform highp float			Weight;				// Weight\n\
+uniform highp float			Decay;				// Decay\n\
+uniform highp vec2			LightPosition;		// Screen space light position, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+uniform lowp  vec3			Color;				// Color\n\
+uniform lowp  sampler2DRect	Map;				// Map\n\
 \n\
 // Programs\n\
-// Decodes a 2 component normal vector to a 3 component normal vector\n\
-vec3 decodeNormalVector(vec2 normal)\n\
-{\n\
-	vec2 fenc = normal*4 - 2;\n\
-	float f = dot(fenc, fenc);\n\
-	float g = sqrt(1 - f/4);\n\
-	vec3 n;\n\
-	n.xy = fenc*g;\n\
-	n.z = 1 - f/2;\n\
-	return n;\n\
-}\n\
-\n\
-// Program entry point\n\
 void main()\n\
 {\n\
-	// Fetch the required texel data and set the RGB output color\n\
-#ifdef FS_SHOW_BLACK\n\
-	gl_FragColor.rgb = 0;\n\
-#elif defined FS_SHOW_ALBEDO\n\
-	gl_FragColor.rgb = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
-#elif defined FS_SHOW_AMBIENTOCCLUSION\n\
-	gl_FragColor.rgb = texture2DRect(Map, VertexTexCoordVS).aaa;\n\
-#elif defined FS_SHOW_NORMALS\n\
-	gl_FragColor.rgb = decodeNormalVector(texture2DRect(Map, VertexTexCoordVS).rg);\n\
-#elif defined FS_SHOW_DEPTH\n\
-	// Normalized the linear view space depth, else we can't inspect the depth properly\n\
-	gl_FragColor.rgb = vec3((texture2DRect(Map, VertexTexCoordVS).b - NearPlane)/Range);\n\
-#elif defined FS_SHOW_SPECULAR_COLOR\n\
-	gl_FragColor.rgb = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
-#elif defined FS_SHOW_SPECULAR_EXPONENT\n\
-	gl_FragColor.rgb = vec3(texture2DRect(Map, VertexTexCoordVS).a/128);\n\
-#elif defined FS_SHOW_SELFILLUMINATION\n\
-	gl_FragColor.rgb = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
-#elif defined FS_SHOW_GLOW\n\
-	gl_FragColor.rgb = texture2DRect(Map, VertexTexCoordVS).aaa;\n\
-#else\n\
-	// Invalid state, should never ever happen!\n\
-	gl_FragColor.rgb = 0;\n\
+	// Calculate vector from pixel to light source in screen space\n\
+	vec2 texUV = VertexTexCoordVS;\n\
+	vec2 deltaTexUV = texUV - LightPosition;\n\
+\n\
+	// Divide by number of samples and scale by control factor\n\
+	deltaTexUV *= 1.0f/NumberOfSamples*Density;\n\
+\n\
+	// Store initial sample\n\
+	vec3 color = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
+\n\
+	// Set up illumination decay factor\n\
+	float illuminationDecay = 1;\n\
+\n\
+	// Evaluate summation\n\
+	for (int i=0; i<NumberOfSamples; i++) {\n\
+		// Step sample location along ray\n\
+		texUV -= deltaTexUV;\n\
+\n\
+		// Retrieve sample at new location\n\
+		vec3 sample = texture2DRect(Map, texUV).rgb;\n\
+\n\
+		// Apply sample attenuation scale/decay factors\n\
+		sample *= illuminationDecay*Weight;\n\
+\n\
+		// Accumulate combined color\n\
+		color += sample;\n\
+\n\
+		// Update exponential decay factor\n\
+		illuminationDecay *= Decay;\n\
+	}\n\
+\n\
+	// Output final color with a further scale control factor\n\
+	vec3 resultingColor = color*Color;\n\
+\n\
+	// Use discard?\n\
+#ifdef FS_DISCARD\n\
+	if (resultingColor.r == 0 && resultingColor.g == 0 && resultingColor.b == 0)\n\
+		discard;\n\
 #endif\n\
 \n\
-	// Alpha is always 1\n\
-	gl_FragColor.a = 1;\n\
+	// Set fragment color\n\
+	gl_FragColor = vec4(resultingColor, 1.0f);\n\
 }";

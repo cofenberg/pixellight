@@ -71,6 +71,7 @@ float3 decodeNormalVector(float2 normal)\n\
 	return n;\n\
 }\n\
 \n\
+// Program entry point\n\
 FS_OUTPUT main(VS_OUTPUT   IN			// Interpolated output from the vertex stage\n\
 	 , uniform float	   NearPlane	// Camera near plane distance\n\
 	 , uniform float	   Range		// Distance between camera far and new plane (never 0!)\n\

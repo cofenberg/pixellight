@@ -30,8 +30,17 @@
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
 #include <PLGraphics/Color/Color3.h>
-#include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -78,14 +87,15 @@ class SRPDeferredGodRays : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGodRays, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering god rays effect (volumetric light scattering as a post-process)")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(NumerOfSamples,	PLGeneral::uint32,		20,											ReadWrite,	DirectValue,	"Number of samples, higher is better but costs more performance",			"")
-		pl_attribute(Density,			float,					0.3f,										ReadWrite,	DirectValue,	"Density",																	"")
-		pl_attribute(Weight,			float,					0.2f,										ReadWrite,	DirectValue,	"The weight constant to influences the brightness",							"")
-		pl_attribute(Decay,				float,					0.9f,										ReadWrite,	DirectValue,	"Exponential decay attenuation coefficient",								"")
-		pl_attribute(LightPosition,		PLMath::Vector2,		PLMath::Vector2(0.5f, 0.5f),				ReadWrite,	DirectValue,	"Light position on screen, lower/left is (0,0) and upper/right is (1,1)",	"")
-		pl_attribute(Color,				PLGraphics::Color3,		PLGraphics::Color3(0.15f, 0.15f, 0.15f),	ReadWrite,	DirectValue,	"God rays color",															"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",											ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(NumberOfSamples,	PLGeneral::uint32,		20,											ReadWrite,	DirectValue,	"Number of samples, higher is better but costs more performance",																		"")
+		pl_attribute(Density,			float,					0.3f,										ReadWrite,	DirectValue,	"Density",																																"")
+		pl_attribute(Weight,			float,					0.2f,										ReadWrite,	DirectValue,	"The weight constant to influences the brightness",																						"")
+		pl_attribute(Decay,				float,					0.9f,										ReadWrite,	DirectValue,	"Exponential decay attenuation coefficient",																							"")
+		pl_attribute(LightPosition,		PLMath::Vector2,		PLMath::Vector2(0.5f, 0.5f),				ReadWrite,	DirectValue,	"Light position on screen, lower/left is (0,0) and upper/right is (1,1)",																"")
+		pl_attribute(Color,				PLGraphics::Color3,		PLGraphics::Color3(0.15f, 0.15f, 0.15f),	ReadWrite,	DirectValue,	"God rays color",																														"")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,				pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",																	"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -107,37 +117,43 @@ class SRPDeferredGodRays : public SRPDeferred {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bDiscard
-		*    Use discard
-		*
-		*  @return
-		*    The fragment shader, NULL on error
+		*    Fragment shader flags, flag names become to source code definitions
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bDiscard);
+		enum EFragmentShaderFlags {
+			FS_DISCARD = 1<<0	/**< Use discard */
+		};
 
 		/**
 		*  @brief
-		*    Destroys all currently used shaders
+		*    Direct pointers to uniforms & attributes of a generated program
 		*/
-		void DestroyShaders();
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pNumberOfSamples;
+			PLRenderer::ProgramUniform *pDensity;
+			PLRenderer::ProgramUniform *pWeight;
+			PLRenderer::ProgramUniform *pDecay;
+			PLRenderer::ProgramUniform *pLightPosition;
+			PLRenderer::ProgramUniform *pColor;
+			PLRenderer::ProgramUniform *pMap;
+		};
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool										m_bFragmentShader[2];	/**< Generic fragment shader build? [Discard] */
-		PLRenderer::ShaderHandler					m_cFragmentShader[2];	/**< Generic fragment shader mode [Discard] */
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;			/**< List of all used shaders */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

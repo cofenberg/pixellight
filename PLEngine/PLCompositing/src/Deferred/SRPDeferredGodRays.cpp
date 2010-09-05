@@ -24,10 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <float.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
@@ -59,16 +59,16 @@ pl_implement_class(SRPDeferredGodRays)
 *    Default constructor
 */
 SRPDeferredGodRays::SRPDeferredGodRays() :
-	NumerOfSamples(this),
+	ShaderLanguage(this),
+	NumberOfSamples(this),
 	Density(this),
 	Weight(this),
 	Decay(this),
 	LightPosition(this),
 	Color(this),
-	Flags(this)
+	Flags(this),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -77,72 +77,9 @@ SRPDeferredGodRays::SRPDeferredGodRays() :
 */
 SRPDeferredGodRays::~SRPDeferredGodRays()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the fragment shader
-*/
-Shader *SRPDeferredGodRays::GetFragmentShader(Renderer &cRenderer, bool bDiscard)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bDiscard];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bDiscard]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredGodRays.cg";
-
-		// [TODO] Currently, "discard" produces pixel chaos using glslf, but we really need glslf because we're using real loops...
-		bDiscard = false;
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bDiscard) {
-			sDefines += "#define DISCARD\n";
-			sName    += "[Discard]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredGodRays_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredGodRays_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredGodRays_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bDiscard] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredGodRays::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -152,77 +89,161 @@ void SRPDeferredGodRays::DestroyShaders()
 void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
 	// Skip black god rays, they have no visible incluence!
-	if (Color.Get() != Color3::Black && NumerOfSamples != 0) {
+	if (Color.Get() != Color3::Black && NumberOfSamples != 0) {
 		// Get the instance of the "PLCompositing::SRPDeferredGBuffer" scene renderer pass and check whether or not color target 3 has real information in it
 		SRPDeferredGBuffer *pSRPDeferredGBuffer = GetGBuffer();
 		if (pSRPDeferredGBuffer && pSRPDeferredGBuffer->IsColorTarget3Used()) {
 			// Get the fullscreen quad instance
 			FullscreenQuad *pFullscreenQuad = pSRPDeferredGBuffer->GetFullscreenQuad();
 			if (pFullscreenQuad) {
-				// Get the texture buffer to use
-				TextureBufferRectangle *pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3);
-				if (pTextureBuffer) {
-					// Reset all render states to default
-					cRenderer.GetRendererContext().GetEffectManager().Use();
+				// Get the vertex buffer of the fullscreen quad
+				VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
+				if (pVertexBuffer) {
+					// Get the texture buffer to use
+					TextureBufferRectangle *pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3);
+					if (pTextureBuffer) {
+						// Get the shader language to use
+						String sShaderLanguage = ShaderLanguage;
+						if (!sShaderLanguage.GetLength())
+							sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-					// Get and set the fragment shader
-					Shader *pFragmentShader = GetFragmentShader(cRenderer, !(GetFlags() & NoDiscard));
-					if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-						// Get and set the fragment shader program
-						ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-						cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+						// Create the program generator if there's currently no instance of it
+						if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+							// If there's an previous instance of the program generator, destroy it first
+							if (m_pProgramGenerator) {
+								delete m_pProgramGenerator;
+								m_pProgramGenerator = NULL;
+							}
 
-						{ // Set the "NumerOfSamples" fragment shader parameter
-							static const String sNumerOfSamples = "NumerOfSamples";
-							pFragmentShaderProgram->SetParameter1i(sNumerOfSamples, (NumerOfSamples > 0) ? NumerOfSamples : 1);
+							// Choose the shader source codes depending on the requested shader language
+							String sDeferredGodRays_VS;
+							String sDeferredGodRays_FS;
+							if (sShaderLanguage == "GLSL") {
+								#include "SRPDeferredGodRays_GLSL.h"
+								sDeferredGodRays_VS = sDeferredGodRays_GLSL_VS;
+								sDeferredGodRays_FS = sDeferredGodRays_GLSL_FS;
+							} else if (sShaderLanguage == "Cg") {
+								#include "SRPDeferredGodRays_Cg.h"
+								sDeferredGodRays_VS = sDeferredGodRays_Cg_VS;
+								sDeferredGodRays_FS = sDeferredGodRays_Cg_FS;
+							}
+
+							// Create the program generator
+							if (sDeferredGodRays_VS.GetLength() && sDeferredGodRays_FS.GetLength())
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_VS, "glslv", sDeferredGodRays_FS, "glslf", true);
 						}
 
-						{ // Set the "Density" fragment shader parameter
-							static const String sDensity = "Density";
-							pFragmentShaderProgram->SetParameter1f(sDensity, (Density > FLT_MIN) ? Density : FLT_MIN);
-						}
+						// If there's no program generator, we don't need to continue
+						if (m_pProgramGenerator) {
+							// Reset all render states to default
+							cRenderer.GetRendererContext().GetEffectManager().Use();
 
-						{ // Set the "Weight" fragment shader parameter
-							static const String sWeight = "Weight";
-							pFragmentShaderProgram->SetParameter1f(sWeight, Weight);
-						}
+							// Reset the program flags
+							m_cProgramFlags.Reset();
 
-						{ // Set the "Decay" fragment shader parameter
-							static const String sDecay = "Decay";
-							pFragmentShaderProgram->SetParameter1f(sDecay, Decay);
-						}
+							// Set program flags
+							if (!(GetFlags() & NoDiscard))
+								PL_ADD_FS_FLAG(m_cProgramFlags, FS_DISCARD)
 
-						{ // Set the "LightPosition" fragment shader parameter
-							static const String sLightPosition = "LightPosition";
-							pFragmentShaderProgram->SetParameter2f(sLightPosition, LightPosition.Get().x*pTextureBuffer->GetSize().x, LightPosition.Get().y*pTextureBuffer->GetSize().y);
-						}
+							// Get a program instance from the program generator using the given program flags
+							ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
 
-						{ // Set the "Color" fragment shader parameter
-							static const String sColor = "Color";
-							pFragmentShaderProgram->SetParameter3fv(sColor, Color.Get());
-						}
+							// Make our program to the current one
+							if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+								// Set pointers to uniforms & attributes of a generated program if they are not set yet
+								GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+								if (!pGeneratedProgramUserData) {
+									pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+									Program *pProgram = pGeneratedProgram->pProgram;
+									// Vertex shader attributes
+									static const String sVertexPosition = "VertexPosition";
+									pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+									// Vertex shader uniforms
+									static const String sTextureSize = "TextureSize";
+									pGeneratedProgramUserData->pTextureSize		= pProgram->GetUniform(sTextureSize);
+									// Fragment shader uniforms
+									static const String sNumberOfSamples = "NumberOfSamples";
+									pGeneratedProgramUserData->pNumberOfSamples	= pProgram->GetUniform(sNumberOfSamples);
+									static const String sDensity = "Density";
+									pGeneratedProgramUserData->pDensity			= pProgram->GetUniform(sDensity);
+									static const String sWeight = "Weight";
+									pGeneratedProgramUserData->pWeight			= pProgram->GetUniform(sWeight);
+									static const String sDecay = "Decay";
+									pGeneratedProgramUserData->pDecay			= pProgram->GetUniform(sDecay);
+									static const String sLightPosition = "LightPosition";
+									pGeneratedProgramUserData->pLightPosition	= pProgram->GetUniform(sLightPosition);
+									static const String sColor = "Color";
+									pGeneratedProgramUserData->pColor			= pProgram->GetUniform(sColor);
+									static const String sMap = "Map";
+									pGeneratedProgramUserData->pMap				= pProgram->GetUniform(sMap);
+								}
 
-						{ // Set the "Texture" fragment shader parameter
-							static const String sTexture = "Texture";
-							const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, pTextureBuffer);
-							if (nStage >= 0) {
-								cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-								cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-								cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-								cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-								cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+								// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+								if (pGeneratedProgramUserData->pVertexPosition)
+									pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+								// Set texture size
+								if (pGeneratedProgramUserData->pTextureSize)
+									pGeneratedProgramUserData->pTextureSize->Set(pTextureBuffer->GetSize());
+
+								// Set number of samples
+								if (pGeneratedProgramUserData->pNumberOfSamples)
+									pGeneratedProgramUserData->pNumberOfSamples->Set((NumberOfSamples > 0) ? NumberOfSamples : 1);
+
+								// Set density
+								if (pGeneratedProgramUserData->pDensity)
+									pGeneratedProgramUserData->pDensity->Set((Density > FLT_MIN) ? Density : FLT_MIN);
+
+								// Set weight
+								if (pGeneratedProgramUserData->pWeight)
+									pGeneratedProgramUserData->pWeight->Set(Weight);
+
+								// Set decay
+								if (pGeneratedProgramUserData->pDecay)
+									pGeneratedProgramUserData->pDecay->Set(Decay);
+
+								// Set light position
+								if (pGeneratedProgramUserData->pLightPosition)
+									pGeneratedProgramUserData->pLightPosition->Set(LightPosition.Get().x*pTextureBuffer->GetSize().x, LightPosition.Get().y*pTextureBuffer->GetSize().y);
+
+								// Set color
+								if (pGeneratedProgramUserData->pColor)
+									pGeneratedProgramUserData->pColor->Set(Color.Get());
+
+								// Map
+								if (pGeneratedProgramUserData->pMap) {
+									const int nTextureUnit = pGeneratedProgramUserData->pMap->Set(pTextureBuffer);
+									if (nTextureUnit >= 0) {
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+									}
+								}
+
+								// Setup renderer
+								const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+								cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+								cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+								cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+								cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+								cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
+								// Set blend mode
+								if (!(GetFlags() & NoBlending)) {
+									cRenderer.SetRenderState(RenderState::BlendEnable,	true);
+									cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
+									cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::One);
+								}
+
+								// Draw the fullscreen quad
+								cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+								// Restore fixed fill mode render state
+								cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 							}
 						}
-
-						// Set blend mode
-						if (!(GetFlags() & NoBlending)) {
-							cRenderer.SetRenderState(RenderState::BlendEnable,	true);
-							cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
-							cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::One);
-						}
-
-						// Draw the fullscreen quad
-						pFullscreenQuad->Draw(pTextureBuffer->GetSize());
 					}
 				}
 			}
