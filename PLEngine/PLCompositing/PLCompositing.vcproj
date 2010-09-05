@@ -469,6 +469,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Deferred\SRPDeferredGBufferDebug_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Deferred\SRPDeferredGlow.cpp"
 				>
 			</File>

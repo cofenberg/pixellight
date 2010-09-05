@@ -24,10 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <float.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Scene/SNCamera.h>
@@ -59,10 +59,10 @@ pl_implement_class(SRPDeferredGBufferDebug)
 *    Default constructor
 */
 SRPDeferredGBufferDebug::SRPDeferredGBufferDebug() :
-	Mode(this)
+	ShaderLanguage(this),
+	Mode(this),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -71,114 +71,9 @@ SRPDeferredGBufferDebug::SRPDeferredGBufferDebug() :
 */
 SRPDeferredGBufferDebug::~SRPDeferredGBufferDebug()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the fragment shader for the requested debug mode
-*/
-Shader *SRPDeferredGBufferDebug::GetFragmentShader(Renderer &cRenderer, bool bBlack)
-{
-	// Get the mode
-	const uint32 nMode = bBlack ? UnknownMode : Mode;
-
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[nMode];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[nMode]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredGBufferDebug.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bBlack) {
-			sDefines += "#define SHOW_BLACK\n";
-			sName    += "[ShowBlack]";
-		} else {
-			switch (Mode) {
-				case ShowAlbedo:
-					sDefines += "#define SHOW_ALBEDO\n";
-					sName    += "[ShowAlbedo]";
-					break;
-
-				case ShowAmbientOcclusion:
-					sDefines += "#define SHOW_AMBIENTOCCLUSION\n";
-					sName    += "[ShowAmbientOcclusion]";
-					break;
-
-				case ShowNormals:
-					sDefines += "#define SHOW_NORMALS\n";
-					sName    += "[ShowNormals]";
-					break;
-
-				case ShowDepth:
-					sDefines += "#define SHOW_DEPTH\n";
-					sName    += "[ShowDepth]";
-					break;
-
-				case ShowSpecularColor:
-					sDefines += "#define SHOW_SPECULAR_COLOR\n";
-					sName    += "[ShowSpecularColor]";
-					break;
-
-				case ShowSpecularExponent:
-					sDefines += "#define SHOW_SPECULAR_EXPONENT\n";
-					sName    += "[ShowSpecularExponent]";
-					break;
-
-				case ShowSelfIllumination:
-					sDefines += "#define SHOW_SELFILLUMINATION\n";
-					sName    += "[ShowSelfIllumination]";
-					break;
-
-				case ShowGlow:
-					sDefines += "#define SHOW_GLOW\n";
-					sName    += "[ShowGlow]";
-					break;
-			}
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredGBufferDebug_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredGBufferDebug_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredGBufferDebug_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[nMode] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredGBufferDebug::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -193,90 +88,175 @@ void SRPDeferredGBufferDebug::Draw(Renderer &cRenderer, const SQCull &cCullQuery
 		// Get the fullscreen quad instance
 		FullscreenQuad *pFullscreenQuad = pSRPDeferredGBuffer->GetFullscreenQuad();
 		if (pFullscreenQuad) {
-			// Get the texture buffer to use
-			TextureBufferRectangle *pTextureBuffer = NULL;
-			switch (Mode) {
-				case ShowAlbedo:
-					// RGB components of RT0
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(0);
-					break;
+			// Get the vertex buffer of the fullscreen quad
+			VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
+			if (pVertexBuffer) {
+				// Get the shader language to use
+				String sShaderLanguage = ShaderLanguage;
+				if (!sShaderLanguage.GetLength())
+					sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-				case ShowAmbientOcclusion:
-					// A component of RT0
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(0);
-					break;
-
-				case ShowNormals:
-					// RG components of RT1
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
-					break;
-
-				case ShowDepth:
-					// B component of RT1
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
-					break;
-
-				case ShowSpecularColor:
-					// RGB components of RT2
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(2);
-					break;
-
-				case ShowSpecularExponent:
-					// A component of RT2
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(2);
-					break;
-
-				case ShowSelfIllumination:
-					// RGB components of RT3
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3);
-					break;
-
-				case ShowGlow:
-					// A component of RT3
-					pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3);
-					break;
-			}
-
-			// Reset all render states to default
-			cRenderer.GetRendererContext().GetEffectManager().Use();
-
-			// Get and set the fragment shader
-			Shader *pFragmentShader = GetFragmentShader(cRenderer, (pTextureBuffer == NULL));
-			if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-				// Get and set the fragment shader program
-				ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-				cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
-
-				{ // Set the "CameraNarPlane" fragment shader parameter
-					static const String sCameraNarPlane = "CameraNarPlane";
-					pFragmentShaderProgram->SetParameter1f(sCameraNarPlane, SNCamera::GetCamera() ? SNCamera::GetCamera()->ZNear : 0.1f);
-				}
-
-				{ // Set the "CameraRange" fragment shader parameter and ensure that the parameter is never ever 0
-					static const String sCameraRange = "CameraRange";
-					float fCameraRange = SNCamera::GetCamera() ? (SNCamera::GetCamera()->ZFar - SNCamera::GetCamera()->ZNear) : FLT_MIN;
-					if (fCameraRange < FLT_MIN)
-						fCameraRange = FLT_MIN;
-					pFragmentShaderProgram->SetParameter1f(sCameraRange, fCameraRange);
-				}
-
-				// Set texture buffer
-				if (pTextureBuffer) {
-					static const String sTexture = "Texture";
-					const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, pTextureBuffer);
-					if (nStage >= 0) {
-						cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-						cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-						cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-						cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-						cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+				// Create the program generator if there's currently no instance of it
+				if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+					// If there's an previous instance of the program generator, destroy it first
+					if (m_pProgramGenerator) {
+						delete m_pProgramGenerator;
+						m_pProgramGenerator = NULL;
 					}
 
-					// Draw the fullscreen quad
-					pFullscreenQuad->Draw(pTextureBuffer->GetSize());
-				} else {
-					// Draw the fullscreen quad
-					pFullscreenQuad->Draw(PLMath::Vector2i::Zero);
+					// Choose the shader source codes depending on the requested shader language
+					String sDeferredGBufferDebug_VS;
+					String sDeferredGBufferDebug_FS;
+					if (sShaderLanguage == "GLSL") {
+						#include "SRPDeferredGBufferDebug_GLSL.h"
+						sDeferredGBufferDebug_VS = sDeferredGBufferDebug_GLSL_VS;
+						sDeferredGBufferDebug_FS = sDeferredGBufferDebug_GLSL_FS;
+					} else if (sShaderLanguage == "Cg") {
+						#include "SRPDeferredGBufferDebug_Cg.h"
+						sDeferredGBufferDebug_VS = sDeferredGBufferDebug_Cg_VS;
+						sDeferredGBufferDebug_FS = sDeferredGBufferDebug_Cg_FS;
+					}
+
+					// Create the program generator
+					if (sDeferredGBufferDebug_VS.GetLength() && sDeferredGBufferDebug_FS.GetLength())
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBufferDebug_VS, "arbvp1", sDeferredGBufferDebug_FS, "arbfp1", true);
+				}
+
+				// If there's no program generator, we don't need to continue
+				if (m_pProgramGenerator) {
+					// Reset the program flags
+					m_cProgramFlags.Reset();
+
+					// Get the texture buffer to use and the program flags
+					TextureBufferRectangle *pTextureBuffer = NULL;
+					switch (Mode) {
+						case ShowAlbedo:
+							// RGB components of RT0
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(0);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_ALBEDO)
+							break;
+
+						case ShowAmbientOcclusion:
+							// A component of RT0
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(0);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_AMBIENTOCCLUSION)
+							break;
+
+						case ShowNormals:
+							// RG components of RT1
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_NORMALS)
+							break;
+
+						case ShowDepth:
+							// B component of RT1
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_DEPTH)
+							break;
+
+						case ShowSpecularColor:
+							// RGB components of RT2
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(2);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_SPECULAR_COLOR)
+							break;
+
+						case ShowSpecularExponent:
+							// A component of RT2
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(2);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_SPECULAR_EXPONENT)
+							break;
+
+						case ShowSelfIllumination:
+							// RGB components of RT3
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_SELFILLUMINATION)
+							break;
+
+						case ShowGlow:
+							// A component of RT3
+							pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3);
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_GLOW)
+							break;
+
+						default:
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_BLACK)
+							break;
+					}
+
+					// Reset all render states to default
+					cRenderer.GetRendererContext().GetEffectManager().Use();
+
+					// Get a program instance from the program generator using the given program flags
+					ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
+
+					// Make our program to the current one
+					if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+						// Set pointers to uniforms & attributes of a generated program if they are not set yet
+						GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+						if (!pGeneratedProgramUserData) {
+							pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+							Program *pProgram = pGeneratedProgram->pProgram;
+							// Vertex shader attributes
+							static const String sVertexPosition = "VertexPosition";
+							pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+							// Vertex shader uniforms
+							static const String sTextureSize = "TextureSize";
+							pGeneratedProgramUserData->pTextureSize		= pProgram->GetUniform(sTextureSize);
+							// Fragment shader uniforms
+							static const String sNearPlane = "NearPlane";
+							pGeneratedProgramUserData->pNearPlane		= pProgram->GetUniform(sNearPlane);
+							static const String sRange = "Range";
+							pGeneratedProgramUserData->pRange			= pProgram->GetUniform(sRange);
+							static const String sMap = "Map";
+							pGeneratedProgramUserData->pMap				= pProgram->GetUniform(sMap);
+						}
+
+						// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+						if (pGeneratedProgramUserData->pVertexPosition)
+							pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+						// Set texture size
+						if (pGeneratedProgramUserData->pTextureSize)
+							pGeneratedProgramUserData->pTextureSize->Set(pTextureBuffer ? pTextureBuffer->GetSize() : PLMath::Vector2i::Zero);
+
+						// Near plane
+						if (pGeneratedProgramUserData->pNearPlane)
+							pGeneratedProgramUserData->pNearPlane->Set(SNCamera::GetCamera() ? SNCamera::GetCamera()->ZNear : 0.1f);
+
+						// Set the range parameter and ensure that the parameter is never ever 0
+						if (pGeneratedProgramUserData->pRange) {
+							float fRange = SNCamera::GetCamera() ? (SNCamera::GetCamera()->ZFar - SNCamera::GetCamera()->ZNear) : FLT_MIN;
+							if (fRange < FLT_MIN)
+								fRange = FLT_MIN;
+							pGeneratedProgramUserData->pRange->Set(fRange);
+						}
+
+						// Map
+						if (pGeneratedProgramUserData->pMap) {
+							const int nTextureUnit = pGeneratedProgramUserData->pMap->Set(pTextureBuffer);
+							if (nTextureUnit >= 0) {
+								cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+								cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+								cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+								cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+								cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+							}
+						}
+
+						// Setup renderer
+						const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+						cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+						cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+						cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+						cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+						cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
+						// Draw the fullscreen quad
+						cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+						// Restore fixed fill mode render state
+						cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
+					}
 				}
 			}
 		}

@@ -17,31 +17,48 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - SHOW_ALBEDO:            Show albedo
- *  - SHOW_AMBIENTOCCLUSION:  Show ambient occlusion
- *  - SHOW_NORMALS:           Show normals
- *  - SHOW_DEPTH:             Show depth
- *  - SHOW_SPECULAR_COLOR:    Show specular color
- *  - SHOW_SPECULAR_EXPONENT: Show specular exponent
- *  - SHOW_SELFILLUMINATION:  Show self illumination
- *  - SHOW_GLOW:              Show glow
 \*********************************************************/
 
 
-const static char *pszDeferredGBufferDebug_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredGBufferDebug_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+// Cg fragment shader source code
+static const PLGeneral::String sDeferredGBufferDebug_Cg_FS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
+// Programs\n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
 float3 decodeNormalVector(float2 normal)\n\
 {\n\
@@ -54,40 +71,41 @@ float3 decodeNormalVector(float2 normal)\n\
 	return n;\n\
 }\n\
 \n\
-// Main function\n\
-FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
-	 , uniform float	   CameraNarPlane	// Camera far plane distance\n\
-	 , uniform float	   CameraRange		// Distance between camera far and new plane (never 0!)\n\
-	 , uniform samplerRECT Texture)			// Input texture containing the data to visualize\n\
+FS_OUTPUT main(VS_OUTPUT   IN			// Interpolated output from the vertex stage\n\
+	 , uniform float	   NearPlane	// Camera near plane distance\n\
+	 , uniform float	   Range		// Distance between camera far and new plane (never 0!)\n\
+	 , uniform samplerRECT Map)			// Input texture containing the data to visualize\n\
 {\n\
 	FS_OUTPUT OUT;\n\
-	OUT.color.a = 1;\n\
 \n\
 	// Fetch the required texel data and set the RGB output color\n\
-#ifdef SHOW_BLACK\n\
-	OUT.color.rgb = 0;\n\
-#elif defined SHOW_ALBEDO\n\
-	OUT.color.rgb = texRECT(Texture, IN.texUV).rgb;\n\
-#elif defined SHOW_AMBIENTOCCLUSION\n\
-	OUT.color.rgb = texRECT(Texture, IN.texUV).a;\n\
-#elif defined SHOW_NORMALS\n\
-	OUT.color.rgb = decodeNormalVector(texRECT(Texture, IN.texUV).rg);\n\
-#elif defined SHOW_DEPTH\n\
+#ifdef FS_SHOW_BLACK\n\
+	OUT.Color0.rgb = 0;\n\
+#elif defined FS_SHOW_ALBEDO\n\
+	OUT.Color0.rgb = texRECT(Map, IN.TexCoord).rgb;\n\
+#elif defined FS_SHOW_AMBIENTOCCLUSION\n\
+	OUT.Color0.rgb = texRECT(Map, IN.TexCoord).a;\n\
+#elif defined FS_SHOW_NORMALS\n\
+	OUT.Color0.rgb = decodeNormalVector(texRECT(Map, IN.TexCoord).rg);\n\
+#elif defined FS_SHOW_DEPTH\n\
 	// Normalized the linear view space depth, else we can't inspect the depth properly\n\
-	OUT.color.rgb = (texRECT(Texture, IN.texUV).b - CameraNarPlane)/CameraRange;\n\
-#elif defined SHOW_SPECULAR_COLOR\n\
-	OUT.color.rgb = texRECT(Texture, IN.texUV).rgb;\n\
-#elif defined SHOW_SPECULAR_EXPONENT\n\
-	OUT.color.rgb = texRECT(Texture, IN.texUV).a/128;\n\
-#elif defined SHOW_SELFILLUMINATION\n\
-	OUT.color.rgb = texRECT(Texture, IN.texUV).rgb;\n\
-#elif defined SHOW_GLOW\n\
-	OUT.color.rgb = texRECT(Texture, IN.texUV).a;\n\
+	OUT.Color0.rgb = (texRECT(Map, IN.TexCoord).b - NearPlane)/Range;\n\
+#elif defined FS_SHOW_SPECULAR_COLOR\n\
+	OUT.Color0.rgb = texRECT(Map, IN.TexCoord).rgb;\n\
+#elif defined FS_SHOW_SPECULAR_EXPONENT\n\
+	OUT.Color0.rgb = texRECT(Map, IN.TexCoord).a/128;\n\
+#elif defined FS_SHOW_SELFILLUMINATION\n\
+	OUT.Color0.rgb = texRECT(Map, IN.TexCoord).rgb;\n\
+#elif defined FS_SHOW_GLOW\n\
+	OUT.Color0.rgb = texRECT(Map, IN.TexCoord).a;\n\
 #else\n\
 	// Invalid state, should never ever happen!\n\
-	OUT.color.rgb = 0;\n\
+	OUT.Color0.rgb = 0;\n\
 #endif\n\
+\n\
+	// Alpha is always 1\n\
+	OUT.Color0.a = 1;\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

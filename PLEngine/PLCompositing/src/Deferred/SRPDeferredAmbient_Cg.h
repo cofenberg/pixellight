@@ -68,7 +68,6 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	 )\n\
 {\n\
 	FS_OUTPUT OUT;\n\
-	OUT.Color0.a = 1;\n\
 \n\
 	// Fetch the required texel data\n\
 	float4 sample = texRECT(AlbedoMap, IN.TexCoord);\n\
@@ -89,6 +88,9 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 #ifdef FS_SELFILLUMINATION\n\
 	OUT.Color0.rgb += texRECT(SelfIlluminationMap, IN.TexCoord).rgb;\n\
 #endif\n\
+\n\
+	// Alpha is always 1\n\
+	OUT.Color0.a = 1;\n\
 \n\
 	// Done\n\
 	return OUT;\n\

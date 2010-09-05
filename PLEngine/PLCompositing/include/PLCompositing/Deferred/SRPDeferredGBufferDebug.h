@@ -29,8 +29,17 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color3.h>
-#include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -86,7 +95,8 @@ class SRPDeferredGBufferDebug : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGBufferDebug, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering GBuffer debug")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(Mode,	pl_enum_type(EMode),	ShowAlbedo,	ReadWrite,	DirectValue,	"Debug mode",	"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",			ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(Mode,				pl_enum_type(EMode),	ShowAlbedo,	ReadWrite,	DirectValue,	"Debug mode",																															"")
 	pl_class_end
 
 
@@ -108,37 +118,47 @@ class SRPDeferredGBufferDebug : public SRPDeferred {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the fragment shader for the requested debug mode
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bBlack
-		*    Just draw black?
-		*
-		*  @return
-		*    The fragment shader for the requested debug mode, NULL on error
+		*    Fragment shader flags, flag names become to source code definitions
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bBlack);
+		enum EFragmentShaderFlags {
+			FS_SHOW_ALBEDO			  = 1<<0,	/**< Show albedo */
+			FS_SHOW_AMBIENTOCCLUSION  = 1<<1,	/**< Show ambient occlusion */
+			FS_SHOW_NORMALS			  = 1<<2,	/**< Show normals */
+			FS_SHOW_DEPTH			  = 1<<3,	/**< Show depth */
+			FS_SHOW_SPECULAR_COLOR	  = 1<<4,	/**< Show specular color */
+			FS_SHOW_SPECULAR_EXPONENT = 1<<5,	/**< Show specular exponent */
+			FS_SHOW_SELFILLUMINATION  = 1<<6,	/**< Show self illumination */
+			FS_SHOW_GLOW			  = 1<<7,	/**< Show glow */
+			FS_SHOW_BLACK			  = 1<<8	/**< Show black */
+		};
 
 		/**
 		*  @brief
-		*    Destroys all currently used shaders
+		*    Direct pointers to uniforms & attributes of a generated program
 		*/
-		void DestroyShaders();
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pNearPlane;
+			PLRenderer::ProgramUniform *pRange;
+			PLRenderer::ProgramUniform *pMap;
+		};
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool										m_bFragmentShader[NumOfModes];	/**< Fragment shader per debug mode build? */
-		PLRenderer::ShaderHandler					m_cFragmentShader[NumOfModes];	/**< Fragment shader per debug mode */
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;					/**< List of all used shaders */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]
