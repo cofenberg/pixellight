@@ -83,7 +83,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_nDummyNativeWindow(NULL),
 	m_hDummySurface(NULL)
 	#ifdef LINUX
-		,m_pDisplay(NULL)
+		, m_pDisplay(NULL)
 	#endif
 {
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
@@ -200,9 +200,9 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 					m_sCapabilities.nMultisampleAntialiasingSamples = nMultisampleAntialiasingSamples;
 
 					// Init data
-					m_fDepthBoundsZMin   = 0.0f;
-					m_fDepthBoundsZMax   = 0.0f;
-					m_nVertexOffset = 0;
+					m_fDepthBoundsZMin = 0.0f;
+					m_fDepthBoundsZMax = 0.0f;
+					m_nVertexOffset    = 0;
 
 					// The default value of '4' is NOT desired and would make tricky problems (memory leaks and so on)
 					glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

@@ -137,7 +137,7 @@ class SNGun : public PLSound::SNSound {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions         ] 
+	//[ Private virtual PLScene::SceneNode functions          ] 
 	//[-------------------------------------------------------]
 	private:
 		virtual void UpdateFunction();
