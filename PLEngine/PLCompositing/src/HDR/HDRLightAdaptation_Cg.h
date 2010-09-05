@@ -43,9 +43,9 @@ FS_OUTPUT main(VS_OUTPUT		 IN					// Interpolated output from the vertex stage\n
 	// Get the previous and current average luminance\n\
 	float previouAverageLuminance = tex2D(PreviousTexture, float2(0.5f, 0.5f)).r;\n\
 	float currentAverageLuminance = tex2D(CurrentTexture,  float2(0.5f, 0.5f)).r;\n\
-	// [TODO] Use lerp()!\n\
+\n\
 	// Adapt the luminance using Pattanaik's technique\n\
-	OUT.color = previouAverageLuminance + (currentAverageLuminance - previouAverageLuminance)*Factor;\n\
+	OUT.color = lerp(previouAverageLuminance, currentAverageLuminance, Factor);\n\
 \n\
 	// Done\n\
 	return OUT;\n\

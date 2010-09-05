@@ -625,6 +625,10 @@
 				RelativePath=".\src\HDR\SRPEndHDR_Cg.h"
 				>
 			</File>
+			<File
+				RelativePath=".\src\HDR\SRPEndHDR_GLSL.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="General"

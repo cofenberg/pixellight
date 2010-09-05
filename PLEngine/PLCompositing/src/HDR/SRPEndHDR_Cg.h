@@ -17,45 +17,64 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - TONE_MAPPING:                  Perform tone mapping
- *    - AUTOMATIC_AVERAGE_LUMINANCE: Perform light adaptation (TONE_MAPPING must be set, too)
- *  - BLOOM:                         Add bloom
- *  - GAMMA_CORRECTION:              Perform gamma correction
 \*********************************************************/
 
 
-const static char *pszEndHDR_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sEndHDR_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+static const PLGeneral::String sEndHDR_Cg_FS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
-// Main function\n\
+// Programs\n\
 FS_OUTPUT main(VS_OUTPUT   IN						// Interpolated output from the vertex stage\n\
-#ifdef TONE_MAPPING\n\
+#ifdef FS_TONE_MAPPING\n\
 	 , uniform float3      LuminanceConvert			// Luminance convert\n\
 	 , uniform float       Key						// Key, must be >=0\n\
 	 , uniform float       WhiteLevel				// White level, must be >=0\n\
-	#ifdef AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
 	 , uniform sampler2D   AverageLuminanceTexture	// Automatic average luminance texture\n\
 	#else\n\
 	 , uniform float       AverageLuminance			// User set average luminance\n\
 	#endif\n\
 #endif\n\
-#ifdef BLOOM\n\
+#ifdef FS_BLOOM\n\
 	 , uniform float       BloomFactor				// Bloom factor\n\
 	 , uniform float       BloomDownscale			// Bloom downscale\n\
 	 , uniform samplerRECT BloomTexture				// Bloom texture\n\
 #endif\n\
-#ifdef GAMMA_CORRECTION\n\
+#ifdef FS_GAMMA_CORRECTION\n\
 	 , uniform float       InvGamma					// Inversed gamma correction value, must be >0\n\
 #endif\n\
 	 , uniform samplerRECT HDRTexture)				// HDR texture\n\
@@ -63,15 +82,15 @@ FS_OUTPUT main(VS_OUTPUT   IN						// Interpolated output from the vertex stage\
 	FS_OUTPUT OUT;\n\
 \n\
 	// Fetch the required texel data\n\
-	float4 sample = texRECT(HDRTexture, IN.texUV);\n\
+	float4 sample = texRECT(HDRTexture, IN.TexCoord);\n\
 \n\
 	// Perform tone mapping\n\
-#ifdef TONE_MAPPING\n\
+#ifdef FS_TONE_MAPPING\n\
 	// Convert RGB to luminance\n\
 	float pixelLuminance = dot(sample.rgb, LuminanceConvert);\n\
 \n\
 	// Get the average luminance\n\
-	#ifdef AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
 		float averageLuminance = tex2D(AverageLuminanceTexture, float2(0.5f, 0.5f)).r;\n\
 	#else\n\
 		#define averageLuminance AverageLuminance\n\
@@ -85,22 +104,22 @@ FS_OUTPUT main(VS_OUTPUT   IN						// Interpolated output from the vertex stage\
 	scaledLuminance = (scaledLuminance*(1 + (scaledLuminance/pow(keyOverLuminance*WhiteLevel, 2)))) / (1 + scaledLuminance);\n\
 \n\
 	// Set LDR color\n\
-	OUT.color = float4(saturate(sample.rgb*scaledLuminance), sample.a);\n\
+	OUT.Color0 = float4(clamp(sample.rgb*scaledLuminance, 0.0f, 1.0f), sample.a);\n\
 #else\n\
 	// Just copy over the color\n\
-	OUT.color = sample;\n\
+	OUT.Color0 = sample;\n\
 #endif\n\
 \n\
 	// Add bloom\n\
-#ifdef BLOOM\n\
-	OUT.color = saturate(OUT.color + texRECT(BloomTexture, IN.texUV/BloomDownscale)*BloomFactor);\n\
-#endif BLOOM\n\
+#ifdef FS_BLOOM\n\
+	OUT.Color0 = clamp(OUT.Color0 + texRECT(BloomTexture, IN.TexCoord/BloomDownscale)*BloomFactor, 0.0f, 1.0f);\n\
+#endif\n\
 \n\
 	// Perform gamma correction (linear space -> sRGB space)\n\
-#ifdef GAMMA_CORRECTION\n\
-	OUT.color.rgb = pow(OUT.color.rgb, InvGamma);\n\
+#ifdef FS_GAMMA_CORRECTION\n\
+	OUT.Color0.rgb = pow(OUT.Color0.rgb, InvGamma);\n\
 #endif\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

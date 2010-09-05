@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color3.h>
-#include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLScene/Compositing/General/SRPEnd.h>
 #include "PLCompositing/PLCompositing.h"
 
@@ -37,6 +37,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLRenderer {
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 namespace PLScene {
 	class FullscreenQuad;
 }
@@ -107,6 +111,7 @@ class SRPEndHDR : public PLScene::SRPEnd {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPEndHDR, "PLCompositing", PLScene::SRPEnd, "HDR render pipeline finishing scene renderer pass")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_attribute(ShaderLanguage,		PLGeneral::String,		"",												ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",		"")
 		pl_attribute(LuminanceConvert,		PLGraphics::Color3,		PLGraphics::Color3(0.2125f, 0.7154f, 0.0721f),	ReadWrite,	DirectValue,	"Luminance convert (tone mapping)",																											"")
 		pl_attribute(Key,					float,					0.72f,											ReadWrite,	DirectValue,	"Key value, midzone luminance (tone mapping)",																								"")
 		pl_attribute(WhiteLevel,			float,					100.0f,											ReadWrite,	DirectValue,	"The smallest luminance that will be mapped to pure white, values above 'burn out' (tone mapping)",											"")
@@ -140,34 +145,53 @@ class SRPEndHDR : public PLScene::SRPEnd {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bToneMapping
-		*    Perform tone mapping
-		*  @param[in] bAutomaticAverageLuminance
-		*    Automatic average luminance
-		*  @param[in] bBloom
-		*    Add bloom
-		*  @param[in] bGammaCorrection
-		*    Perform gamma correction
-		*
-		*  @return
-		*    The fragment shader, NULL on error
+		*    Fragment shader flags, flag names become to source code definitions
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bToneMapping, bool bAutomaticAverageLuminance, bool bBloom, bool bGammaCorrection);
+		enum EFragmentShaderFlags {
+			FS_TONE_MAPPING					   = 1<<0,	/**< Perform tone mapping */
+				FS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<1,	/**< Perform light adaptation (FS_TONE_MAPPING must be set, too) */
+			FS_BLOOM						   = 1<<2,	/**< Add bloom */
+			FS_GAMMA_CORRECTION				   = 1<<3	/**< Perform gamma correction */
+		};
 
 		/**
 		*  @brief
-		*    Destroys all currently used shaders
+		*    Direct pointers to uniforms & attributes of a generated program
 		*/
-		void DestroyShaders();
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pLuminanceConvert;
+			PLRenderer::ProgramUniform *pKey;
+			PLRenderer::ProgramUniform *pWhiteLevel;
+			PLRenderer::ProgramUniform *pAverageLuminanceTexture;
+			PLRenderer::ProgramUniform *pAverageLuminance;
+			PLRenderer::ProgramUniform *pBloomFactor;
+			PLRenderer::ProgramUniform *pBloomDownscale;
+			PLRenderer::ProgramUniform *pBloomTexture;
+			PLRenderer::ProgramUniform *pInvGamma;
+			PLRenderer::ProgramUniform *pHDRTexture;
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLScene::FullscreenQuad				*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be NULL */
+		HDRAverageLuminance					*m_pHDRAverageLuminance;	/**< HDR logarithmic average luminance calculation component, can be NULL */
+		HDRLightAdaptation					*m_pHDRLightAdaptation;		/**< HDR light adaptation calculation component, can be NULL */
+		HDRBloom							*m_pHDRBloom;				/**< HDR bloom calculation component, can be NULL */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]
@@ -175,19 +199,6 @@ class SRPEndHDR : public PLScene::SRPEnd {
 	//[-------------------------------------------------------]
 	protected:
 		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLScene::FullscreenQuad						*m_pFullscreenQuad;				/**< Fullscreen quad instance, can be NULL */
-		HDRAverageLuminance							*m_pHDRAverageLuminance;		/**< HDR logarithmic average luminance calculation component, can be NULL */
-		HDRLightAdaptation							*m_pHDRLightAdaptation;			/**< HDR light adaptation calculation component, can be NULL */
-		HDRBloom									*m_pHDRBloom;					/**< HDR bloom calculation component, can be NULL */
-		bool										 m_bFragmentShader[2][2][2][2];	/**< Fragment shader build? [ToneMapping][AutomaticAverageLuminance][Bloom][GammaCorrection] */
-		PLRenderer::ShaderHandler					 m_cFragmentShader[2][2][2][2];	/**< Fragment shader mode [ToneMapping][AutomaticAverageLuminance][Bloom][GammaCorrection] */
-		PLGeneral::List<PLRenderer::ShaderHandler*>  m_lstShaders;					/**< List of all used shaders */
 
 
 };
