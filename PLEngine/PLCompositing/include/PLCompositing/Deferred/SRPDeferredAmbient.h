@@ -30,7 +30,17 @@
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -77,9 +87,10 @@ class SRPDeferredAmbient : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredAmbient, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering ambient")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(AmbientColor,	PLGraphics::Color3,		PLGraphics::Color3(0.2f, 0.2f, 0.2f),	ReadWrite,	DirectValue,	"Ambient color",	"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",										ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(AmbientColor,		PLGraphics::Color3,		PLGraphics::Color3(0.2f, 0.2f, 0.2f),	ReadWrite,	DirectValue,	"Ambient color",																														"")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,			pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",			"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -101,41 +112,41 @@ class SRPDeferredAmbient : public SRPDeferred {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the fragment shader for the requested visualisation mode
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bAlbedo
-		*    Albedo used?
-		*  @param[in] bAmbientOcclusion
-		*    Ambient occlusion used?
-		*  @param[in] bSelfIllumination
-		*    Self illumination used?
-		*
-		*  @return
-		*    The fragment shader for the requested visualisation mode, NULL on error
+		*    Fragment shader flags, flag names become to source code definitions
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bAlbedo, bool bAmbientOcclusion, bool bSelfIllumination);
+		enum EFragmentShaderFlags {
+			FS_ALBEDO			= 1<<0,	/**< Use albedo data */
+			FS_AMBIENTOCCLUSION	= 1<<1,	/**< Use ambient occlusion data */
+			FS_SELFILLUMINATION	= 1<<2	/**< Self illumination data used */
+		};
 
 		/**
 		*  @brief
-		*    Destroys all currently used shaders
+		*    Direct pointers to uniforms & attributes of a generated program
 		*/
-		void DestroyShaders();
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pAmbientColor;
+			PLRenderer::ProgramUniform *pAlbedoMap;
+			PLRenderer::ProgramUniform *pSelfIlluminationMap;
+		};
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool										m_bFragmentShader[2][2][2];	/**< Fragment shader build? [Albedo][AmbientOcclusion][SelfIllumination] */
-		PLRenderer::ShaderHandler					m_cFragmentShader[2][2][2];	/**< Fragment shader mode [Albedo][AmbientOcclusion][SelfIllumination] */
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;				/**< List of all used shaders */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

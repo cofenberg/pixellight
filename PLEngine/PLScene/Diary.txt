@@ -1,3 +1,10 @@
+>> 05.09.2010
+[CO]
+PLCompositing:
+- SRPDeferredAmbient verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+
+
+
 >> 20.08.2010
 [CO]
 - Ingame GUI um "CaptureMouse" Support erweitert

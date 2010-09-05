@@ -160,8 +160,8 @@ class SRPDiffuseOnly : public PLScene::SRPDiffuseOnly {
 		*/
 		struct GeneratedProgramUserData {
 			// Vertex shader attributes
-			PLRenderer::ProgramAttribute *VertexPosition;
-			PLRenderer::ProgramAttribute *VertexTexCoord0;
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			PLRenderer::ProgramAttribute *pVertexTexCoord0;
 			// Vertex shader uniforms
 			PLRenderer::ProgramUniform *pObjectSpaceToClipSpaceMatrix;
 			// Fragment shader uniforms

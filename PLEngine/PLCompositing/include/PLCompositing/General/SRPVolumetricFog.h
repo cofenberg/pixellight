@@ -248,8 +248,8 @@ class SRPVolumetricFog : public PLScene::SceneRendererPass {
 		*/
 		struct GeneratedProgramUserData {
 			// Vertex shader attributes
-			PLRenderer::ProgramAttribute *VertexPosition;
-			PLRenderer::ProgramAttribute *VertexTexCoord0;
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			PLRenderer::ProgramAttribute *pVertexTexCoord0;
 			// Vertex shader uniforms
 			PLRenderer::ProgramUniform *pObjectSpaceToWorldSpaceMatrix;
 			PLRenderer::ProgramUniform *pObjectSpaceToClipSpaceMatrix;

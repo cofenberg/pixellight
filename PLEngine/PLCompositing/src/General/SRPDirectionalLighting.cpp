@@ -28,7 +28,6 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/RenderStates.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -528,17 +527,17 @@ void SRPDirectionalLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQu
 								Program *pProgram = pGeneratedProgram->pProgram;
 								// Vertex shader attributes
 								static const String sVertexPosition = "VertexPosition";
-								pGeneratedProgramUserData->VertexPosition					= pProgram->GetAttribute(sVertexPosition);
+								pGeneratedProgramUserData->pVertexPosition					= pProgram->GetAttribute(sVertexPosition);
 								static const String sVertexTexCoord0 = "VertexTexCoord0";
-								pGeneratedProgramUserData->VertexTexCoord0					= pProgram->GetAttribute(sVertexTexCoord0);
+								pGeneratedProgramUserData->pVertexTexCoord0					= pProgram->GetAttribute(sVertexTexCoord0);
 								static const String sVertexTexCoord1 = "VertexTexCoord1";
-								pGeneratedProgramUserData->VertexTexCoord1					= pProgram->GetAttribute(sVertexTexCoord1);
+								pGeneratedProgramUserData->pVertexTexCoord1					= pProgram->GetAttribute(sVertexTexCoord1);
 								static const String sVertexNormal = "VertexNormal";
-								pGeneratedProgramUserData->VertexNormal						= pProgram->GetAttribute(sVertexNormal);
+								pGeneratedProgramUserData->pVertexNormal					= pProgram->GetAttribute(sVertexNormal);
 								static const String sVertexTangent = "VertexTangent";
-								pGeneratedProgramUserData->VertexTangent					= pProgram->GetAttribute(sVertexTangent);
+								pGeneratedProgramUserData->pVertexTangent					= pProgram->GetAttribute(sVertexTangent);
 								static const String sVertexBinormal = "VertexBinormal";
-								pGeneratedProgramUserData->VertexBinormal					= pProgram->GetAttribute(sVertexBinormal);
+								pGeneratedProgramUserData->pVertexBinormal					= pProgram->GetAttribute(sVertexBinormal);
 								// Vertex shader uniforms
 								static const String sNormalScale = "NormalScale";
 								pGeneratedProgramUserData->pNormalScale						= pProgram->GetUniform(sNormalScale);
@@ -895,19 +894,19 @@ void SRPDirectionalLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQu
 								pGeneratedProgramUserData->pEyePos->Set(cVisNode.GetInverseWorldMatrix()*(cVisContainer.GetWorldMatrix()*cCullQuery.GetCameraPosition()));
 
 							// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-							if (pGeneratedProgramUserData->VertexPosition)
-								pGeneratedProgramUserData->VertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
-							if (pGeneratedProgramUserData->VertexTexCoord0)
-								pGeneratedProgramUserData->VertexTexCoord0->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord, 0);
-							if (pGeneratedProgramUserData->VertexTexCoord1)
-								pGeneratedProgramUserData->VertexTexCoord1->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord, 1);
-							if (pGeneratedProgramUserData->VertexNormal) {
-								pGeneratedProgramUserData->VertexNormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Normal);
+							if (pGeneratedProgramUserData->pVertexPosition)
+								pGeneratedProgramUserData->pVertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+							if (pGeneratedProgramUserData->pVertexTexCoord0)
+								pGeneratedProgramUserData->pVertexTexCoord0->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord, 0);
+							if (pGeneratedProgramUserData->pVertexTexCoord1)
+								pGeneratedProgramUserData->pVertexTexCoord1->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord, 1);
+							if (pGeneratedProgramUserData->pVertexNormal) {
+								pGeneratedProgramUserData->pVertexNormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Normal);
 								if (m_cProgramFlags.GetFragmentShaderFlags() & FS_NORMALMAP) {
-									if (pGeneratedProgramUserData->VertexTangent)
-										pGeneratedProgramUserData->VertexTangent->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Tangent);
-									if (pGeneratedProgramUserData->VertexBinormal)
-										pGeneratedProgramUserData->VertexBinormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Binormal);
+									if (pGeneratedProgramUserData->pVertexTangent)
+										pGeneratedProgramUserData->pVertexTangent->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Tangent);
+									if (pGeneratedProgramUserData->pVertexBinormal)
+										pGeneratedProgramUserData->pVertexBinormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Binormal);
 								}
 							}
 

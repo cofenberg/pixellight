@@ -26,7 +26,6 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/RenderStates.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -201,9 +200,9 @@ void SRPDiffuseOnly::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, con
 									Program *pProgram = pGeneratedProgram->pProgram;
 									// Vertex shader attributes
 									static const String sVertexPosition = "VertexPosition";
-									pGeneratedProgramUserData->VertexPosition					= pProgram->GetAttribute(sVertexPosition);
+									pGeneratedProgramUserData->pVertexPosition					= pProgram->GetAttribute(sVertexPosition);
 									static const String sVertexTexCoord0 = "VertexTexCoord0";
-									pGeneratedProgramUserData->VertexTexCoord0					= pProgram->GetAttribute(sVertexTexCoord0);
+									pGeneratedProgramUserData->pVertexTexCoord0					= pProgram->GetAttribute(sVertexTexCoord0);
 									// Vertex shader uniforms
 									static const String sObjectSpaceToClipSpaceMatrix = "ObjectSpaceToClipSpaceMatrix";
 									pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix	= pProgram->GetUniform(sObjectSpaceToClipSpaceMatrix);
@@ -213,44 +212,44 @@ void SRPDiffuseOnly::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, con
 									static const String sAlphaReference = "AlphaReference";
 									pGeneratedProgramUserData->pAlphaReference					= pProgram->GetUniform(sAlphaReference);
 								}
-
-								// Diffuse color - but only if this is not a z write only render pass
-								if (!(GetFlags() & ZWriteOnly)) { 
-									if (pGeneratedProgramUserData->pDiffuseColor) {
-										pParameter = pMaterial->GetParameter(sDiffuseColor);
-										if (pParameter) {
-											float fDiffuseColor[3] = { 1.0f, 1.0f, 1.0f };
-											pParameter->GetValue3f(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2]);
-											pGeneratedProgramUserData->pDiffuseColor->Set(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2], fOpacity);
-										} else {
-											pGeneratedProgramUserData->pDiffuseColor->Set(1.0f, 1.0f, 1.0f, fOpacity);
+								if (pGeneratedProgramUserData) {
+									// Diffuse color - but only if this is not a z write only render pass
+									if (!(GetFlags() & ZWriteOnly)) { 
+										if (pGeneratedProgramUserData->pDiffuseColor) {
+											pParameter = pMaterial->GetParameter(sDiffuseColor);
+											if (pParameter) {
+												float fDiffuseColor[3] = { 1.0f, 1.0f, 1.0f };
+												pParameter->GetValue3f(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2]);
+												pGeneratedProgramUserData->pDiffuseColor->Set(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2], fOpacity);
+											} else {
+												pGeneratedProgramUserData->pDiffuseColor->Set(1.0f, 1.0f, 1.0f, fOpacity);
+											}
 										}
 									}
-								}
 
-								// Diffuse map
-								if (pGeneratedProgramUserData->pDiffuseMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(pDiffuseMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										SetupTextureFiltering(cRenderer, nTextureUnit);
+									// Diffuse map
+									if (pGeneratedProgramUserData->pDiffuseMap) {
+										const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(pDiffuseMap);
+										if (nTextureUnit >= 0) {
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
 
-										// Set the "AlphaReference" fragment shader parameter
-										if (pGeneratedProgramUserData->pAlphaReference)
-											pGeneratedProgramUserData->pAlphaReference->Set(fAlphaReference);
+											// Set the "AlphaReference" fragment shader parameter
+											if (pGeneratedProgramUserData->pAlphaReference)
+												pGeneratedProgramUserData->pAlphaReference->Set(fAlphaReference);
+										}
 									}
-								}
-								if (pGeneratedProgramUserData) {
+
 									// Set object space to clip space matrix uniform
 									if (pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix)
 										pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(cVisNode.GetWorldViewProjectionMatrix());
 
 									// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-									if (pGeneratedProgramUserData->VertexPosition)
-										pGeneratedProgramUserData->VertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
-									if (pGeneratedProgramUserData->VertexTexCoord0)
-										pGeneratedProgramUserData->VertexTexCoord0->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord);
+									if (pGeneratedProgramUserData->pVertexPosition)
+										pGeneratedProgramUserData->pVertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+									if (pGeneratedProgramUserData->pVertexTexCoord0)
+										pGeneratedProgramUserData->pVertexTexCoord0->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord);
 
 									// Draw the geometry
 									cRenderer.DrawIndexedPrimitives(

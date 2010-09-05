@@ -17,58 +17,79 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - ALBEDO:           Use albedo data
- *  - AMBIENTOCCLUSION: Use ambient occlusion data
- *  - SELFILLUMINATION: Self illumination data used
 \*********************************************************/
 
 
-const static char *pszDeferredAmbient_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredAmbient_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+// Cg fragment shader source code
+static const PLGeneral::String sDeferredAmbient_Cg_FS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
-// Main function\n\
-FS_OUTPUT main(VS_OUTPUT   IN						// Interpolated output from the vertex stage\n\
-	 , uniform float3      AmbientColor				// Ambient color\n\
-	 , uniform samplerRECT AlbedoTexture			// Albedo texture\n\
-#ifdef SELFILLUMINATION\n\
-	 , uniform samplerRECT SelfIlluminationTexture	// Self illumination texture\n\
+// Programs\n\
+FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n\
+	 , uniform float3      AmbientColor			// Ambient color\n\
+	 , uniform samplerRECT AlbedoMap			// Albedo texture\n\
+#ifdef FS_SELFILLUMINATION\n\
+	 , uniform samplerRECT SelfIlluminationMap	// Self illumination texture\n\
 #endif\n\
 	 )\n\
 {\n\
 	FS_OUTPUT OUT;\n\
-	OUT.color.a = 1;\n\
+	OUT.Color0.a = 1;\n\
 \n\
 	// Fetch the required texel data\n\
-	float4 sample = texRECT(AlbedoTexture, IN.texUV);\n\
+	float4 sample = texRECT(AlbedoMap, IN.TexCoord);\n\
 \n\
 	// Apply albedo and ambient color\n\
-#ifdef ALBEDO\n\
-	OUT.color.rgb = sample.rgb*AmbientColor;\n\
+#ifdef FS_ALBEDO\n\
+	OUT.Color0.rgb = sample.rgb*AmbientColor;\n\
 #else\n\
-	OUT.color.rgb = AmbientColor;\n\
+	OUT.Color0.rgb = AmbientColor;\n\
 #endif\n\
 \n\
 	// Apply ambient occlusion\n\
-#ifdef AMBIENTOCCLUSION\n\
-	OUT.color.rgb *= sample.a;\n\
+#ifdef FS_AMBIENTOCCLUSION\n\
+	OUT.Color0.rgb *= sample.a;\n\
 #endif\n\
 \n\
 	// Apply self illumination\n\
-#ifdef SELFILLUMINATION\n\
-	OUT.color.rgb += texRECT(SelfIlluminationTexture, IN.texUV).rgb;\n\
+#ifdef FS_SELFILLUMINATION\n\
+	OUT.Color0.rgb += texRECT(SelfIlluminationMap, IN.TexCoord).rgb;\n\
 #endif\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

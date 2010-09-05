@@ -298,12 +298,12 @@ class SRPDirectionalLighting : public PLScene::SRPDirectionalLighting {
 		*/
 		struct GeneratedProgramUserData {
 			// Vertex shader attributes
-			PLRenderer::ProgramAttribute *VertexPosition;
-			PLRenderer::ProgramAttribute *VertexTexCoord0;
-			PLRenderer::ProgramAttribute *VertexTexCoord1;
-			PLRenderer::ProgramAttribute *VertexNormal;
-			PLRenderer::ProgramAttribute *VertexTangent;
-			PLRenderer::ProgramAttribute *VertexBinormal;
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			PLRenderer::ProgramAttribute *pVertexTexCoord0;
+			PLRenderer::ProgramAttribute *pVertexTexCoord1;
+			PLRenderer::ProgramAttribute *pVertexNormal;
+			PLRenderer::ProgramAttribute *pVertexTangent;
+			PLRenderer::ProgramAttribute *pVertexBinormal;
 			// Vertex shader uniforms
 			PLRenderer::ProgramUniform *pNormalScale;
 			PLRenderer::ProgramUniform *pObjectSpaceToViewSpaceMatrix;

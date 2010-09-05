@@ -103,6 +103,91 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|x64"
+			OutputDirectory="build/debug64"
+			IntermediateDirectory="build/debug64"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/"
+				PreprocessorDefinitions="WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLCOMPOSITING_EXPORTS"
+				MinimalRebuild="true"
+				ExceptionHandling="0"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+				ShowIncludes="false"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="PLGeneralD64.lib PLCoreD64.lib PLMathD64.lib PLGraphicsD64.lib PLGuiD64.lib PLInputD64.lib PLRendererD64.lib PLMeshD64.lib PLSceneD64.lib"
+				OutputFile="$(OutDir)/PLCompositingD64.dll"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="../../Bin/Lib/"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(OutDir)/PLCompositingD64.pdb"
+				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="2"
+				ImportLibrary="$(OutDir)/PLCompositingD64.lib"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin&#x0D;&#x0A;copy build\debug64\PLCompositingD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\&#x0D;&#x0A;copy build\debug64\PLCompositingD64.lib ..\..\Bin\Lib\&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="build/release"
 			IntermediateDirectory="build/release"
@@ -195,91 +280,6 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin&#x0D;&#x0A;copy build\release\PLCompositing.dll ..\..\Bin\PLRuntime\Plugins\PLScene\&#x0D;&#x0A;copy build\release\PLCompositing.lib ..\..\Bin\Lib\&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|x64"
-			OutputDirectory="build/debug64"
-			IntermediateDirectory="build/debug64"
-			ConfigurationType="2"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/"
-				PreprocessorDefinitions="WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLCOMPOSITING_EXPORTS"
-				MinimalRebuild="true"
-				ExceptionHandling="0"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="0"
-				WarningLevel="4"
-				DebugInformationFormat="3"
-				ShowIncludes="false"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="PLGeneralD64.lib PLCoreD64.lib PLMathD64.lib PLGraphicsD64.lib PLGuiD64.lib PLInputD64.lib PLRendererD64.lib PLMeshD64.lib PLSceneD64.lib"
-				OutputFile="$(OutDir)/PLCompositingD64.dll"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../Bin/Lib/"
-				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/PLCompositingD64.pdb"
-				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="2"
-				ImportLibrary="$(OutDir)/PLCompositingD64.lib"
-				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin&#x0D;&#x0A;copy build\debug64\PLCompositingD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\&#x0D;&#x0A;copy build\debug64\PLCompositingD64.lib ..\..\Bin\Lib\&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -398,6 +398,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Deferred\SRPDeferredAmbient_Cg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Deferred\SRPDeferredAmbient_GLSL.h"
 				>
 			</File>
 			<File

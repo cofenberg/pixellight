@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
@@ -57,10 +57,11 @@ pl_implement_class(SRPDeferredAmbient)
 *    Default constructor
 */
 SRPDeferredAmbient::SRPDeferredAmbient() :
+	ShaderLanguage(this),
 	AmbientColor(this),
-	Flags(this)
+	Flags(this),
+	m_pProgramGenerator(NULL)
 {
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -69,77 +70,9 @@ SRPDeferredAmbient::SRPDeferredAmbient() :
 */
 SRPDeferredAmbient::~SRPDeferredAmbient()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the fragment shader for the requested visualisation mode
-*/
-Shader *SRPDeferredAmbient::GetFragmentShader(Renderer &cRenderer, bool bAlbedo, bool bAmbientOcclusion, bool bSelfIllumination)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bAlbedo][bAmbientOcclusion][bSelfIllumination];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bAlbedo][bAmbientOcclusion][bSelfIllumination]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredAmbient.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bAlbedo) {
-			sDefines += "#define ALBEDO\n";
-			sName    += "[Albedo]";
-		}
-		if (bAmbientOcclusion) {
-			sDefines += "#define AMBIENTOCCLUSION\n";
-			sName    += "[AmbientOcclusion]";
-		}
-		if (bSelfIllumination) {
-			sDefines += "#define SELFILLUMINATION\n";
-			sName    += "[SelfIllumination]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredAmbient_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredAmbient_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredAmbient_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bAlbedo][bAmbientOcclusion][bSelfIllumination] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredAmbient::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -154,63 +87,147 @@ void SRPDeferredAmbient::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// Get the fullscreen quad instance
 		FullscreenQuad *pFullscreenQuad = pSRPDeferredGBuffer->GetFullscreenQuad();
 		if (pFullscreenQuad) {
-			// Get the texture buffer to use
-			TextureBufferRectangle *pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(0);
-			if (pTextureBuffer) {
-				// Reset all render states to default
-				cRenderer.GetRendererContext().GetEffectManager().Use();
+			// Get the vertex buffer of the fullscreen quad
+			VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
+			if (pVertexBuffer) {
+				// Get the texture buffer to use
+				TextureBufferRectangle *pTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(0);
+				if (pTextureBuffer) {
+					// Get the shader language to use
+					String sShaderLanguage = ShaderLanguage;
+					if (!sShaderLanguage.GetLength())
+						sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-				// Use stencil buffer?
-				if (!(GetFlags() & NoStencil)) {
-					// Enable stencil test - ignore pixels tagged with 1 within the stencil buffer
-					cRenderer.SetRenderState(RenderState::StencilEnable, true);
-					cRenderer.SetRenderState(RenderState::StencilRef,    1);
-					cRenderer.SetRenderState(RenderState::StencilFunc,   Compare::NotEqual);
-				}
+					// Create the program generator if there's currently no instance of it
+					if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+						// If there's an previous instance of the program generator, destroy it first
+						if (m_pProgramGenerator) {
+							delete m_pProgramGenerator;
+							m_pProgramGenerator = NULL;
+						}
 
-				// Self illumination used?
-				const bool bSelfIllumination = pSRPDeferredGBuffer->IsColorTarget3Used() && !(GetFlags() & NoSelfIllumination);
+						// Choose the shader source codes depending on the requested shader language
+						String sDeferredAmbient_VS;
+						String sDeferredAmbient_FS;
+						if (sShaderLanguage == "GLSL") {
+							#include "SRPDeferredAmbient_GLSL.h"
+							sDeferredAmbient_VS = sDeferredAmbient_GLSL_VS;
+							sDeferredAmbient_FS = sDeferredAmbient_GLSL_FS;
+						} else if (sShaderLanguage == "Cg") {
+							#include "SRPDeferredAmbient_Cg.h"
+							sDeferredAmbient_VS = sDeferredAmbient_Cg_VS;
+							sDeferredAmbient_FS = sDeferredAmbient_Cg_FS;
+						}
 
-				// Get and set the fragment shader
-				Shader *pFragmentShader = GetFragmentShader(cRenderer, !(GetFlags() & NoAlbedo), !(GetFlags() & NoAmbientOcclusion), bSelfIllumination);
-				if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-					// Get and set the fragment shader program
-					ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-					cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
-
-					{ // Set the "AmbientColor" fragment shader parameter
-						static const String sAmbientColor = "AmbientColor";
-						pFragmentShaderProgram->SetParameter3fv(sAmbientColor, AmbientColor.Get());
+						// Create the program generator
+						if (sDeferredAmbient_VS.GetLength() && sDeferredAmbient_FS.GetLength())
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_VS, "arbvp1", sDeferredAmbient_FS, "arbfp1", true);
 					}
 
-					 // Set the "AlbedoTexture" fragment shader parameter
-					if (!(GetFlags() & NoAlbedo) || !(GetFlags() & NoAmbientOcclusion)) {
-						static const String sAlbedoTexture = "AlbedoTexture";
-						const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sAlbedoTexture, pTextureBuffer);
-						if (nStage >= 0) {
-							cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-							cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-							cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-							cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-							cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+					// If there's no program generator, we don't need to continue
+					if (m_pProgramGenerator) {
+						// Reset all render states to default
+						cRenderer.GetRendererContext().GetEffectManager().Use();
+
+						// Use stencil buffer?
+						if (!(GetFlags() & NoStencil)) {
+							// Enable stencil test - ignore pixels tagged with 1 within the stencil buffer
+							cRenderer.SetRenderState(RenderState::StencilEnable, true);
+							cRenderer.SetRenderState(RenderState::StencilRef,    1);
+							cRenderer.SetRenderState(RenderState::StencilFunc,   Compare::NotEqual);
+						}
+
+						// Reset the program flags
+						m_cProgramFlags.Reset();
+
+						// Albedo used?
+						if (!(GetFlags() & NoAlbedo))
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_ALBEDO)
+
+						// Ambient occlusion used?
+						if (!(GetFlags() & NoAmbientOcclusion))
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_AMBIENTOCCLUSION)
+
+						// Self illumination used?
+						if (pSRPDeferredGBuffer->IsColorTarget3Used() && !(GetFlags() & NoSelfIllumination))
+							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SELFILLUMINATION)
+
+						// Get a program instance from the program generator using the given program flags
+						ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
+
+						// Make our program to the current one
+						if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+							// Set pointers to uniforms & attributes of a generated program if they are not set yet
+							GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+							if (!pGeneratedProgramUserData) {
+								pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+								Program *pProgram = pGeneratedProgram->pProgram;
+								// Vertex shader attributes
+								static const String sVertexPosition = "VertexPosition";
+								pGeneratedProgramUserData->pVertexPosition		= pProgram->GetAttribute(sVertexPosition);
+								// Vertex shader uniforms
+								static const String sTextureSize = "TextureSize";
+								pGeneratedProgramUserData->pTextureSize			= pProgram->GetUniform(sTextureSize);
+								// Fragment shader uniforms
+								static const String sAmbientColor = "AmbientColor";
+								pGeneratedProgramUserData->pAmbientColor		= pProgram->GetUniform(sAmbientColor);
+								static const String sAlbedoMap = "AlbedoMap";
+								pGeneratedProgramUserData->pAlbedoMap			= pProgram->GetUniform(sAlbedoMap);
+								static const String sSelfIlluminationMap = "SelfIlluminationMap";
+								pGeneratedProgramUserData->pSelfIlluminationMap	= pProgram->GetUniform(sSelfIlluminationMap);
+							}
+
+							// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+							if (pGeneratedProgramUserData->pVertexPosition)
+								pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+							// Set texture size
+							if (pGeneratedProgramUserData->pTextureSize)
+								pGeneratedProgramUserData->pTextureSize->Set(pTextureBuffer->GetSize());
+
+							// Ambient color
+							if (pGeneratedProgramUserData->pAmbientColor)
+								pGeneratedProgramUserData->pAmbientColor->Set(AmbientColor.Get());
+
+							// Albedo map
+							if (pGeneratedProgramUserData->pAlbedoMap) {
+								const int nTextureUnit = pGeneratedProgramUserData->pAlbedoMap->Set(pTextureBuffer);
+								if (nTextureUnit >= 0) {
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+								}
+							}
+
+							// Self illumination map
+							if (pGeneratedProgramUserData->pSelfIlluminationMap) {
+								const int nTextureUnit = pGeneratedProgramUserData->pSelfIlluminationMap->Set(pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3));
+								if (nTextureUnit >= 0) {
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+								}
+							}
+
+							// Setup renderer
+							const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+							cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+							cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+							cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+							cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+							cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
+							// Draw the fullscreen quad
+							cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+							// Restore fixed fill mode render state
+							cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 						}
 					}
-
-					// Set the "SelfIlluminationTexture" fragment shader parameter
-					if (bSelfIllumination) {
-						static const String sSelfIlluminationTexture = "SelfIlluminationTexture";
-						const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sSelfIlluminationTexture, pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(3));
-						if (nStage >= 0) {
-							cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-							cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-							cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-							cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-							cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
-						}
-					}
-
-					// Draw the fullscreen quad
-					pFullscreenQuad->Draw(pTextureBuffer->GetSize());
 				}
 			}
 		}
