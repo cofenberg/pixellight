@@ -7,6 +7,7 @@ PLCompositing:
 - SRPDeferredGodRays verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 - SRPDeferredEdgeAA verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 - SRPEndHDR verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+- SRPDeferredHBAO verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 
 
 

@@ -17,24 +17,46 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - USE_NORMAL:  Use per fragment normal vector
 \*********************************************************/
 
 
-const static char *pszDeferredHBAO_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredHBAO_Cg_VS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION)	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+static const PLGeneral::String sDeferredHBAO_Cg_FS = "\
+// Definitions\n\
 #define M_PI 3.14159265f\n\
 \n\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV    : TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
@@ -127,106 +149,106 @@ float falloff(float r, float attenuation)\n\
 }\n\
 \n\
 // Main function\n\
-FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n\
-	 , uniform int		   g_NumSteps			// Number of steps (for example 8)\n\
-	 , uniform int		   g_NumDir				// Number of directions (for example 16)\n\
-	 , uniform float	   g_R					// Radius of influence (for example 1)\n\
-	 , uniform float	   g_inv_R				// 1/g_R (for example 1)\n\
-	 , uniform float	   g_sqr_R				// g_R*g_R (for example 1)\n\
-	 , uniform float	   g_AngleBias			// Angle bias (for example 0.523599)\n\
-	 , uniform float	   g_TanAngleBias		// Tangent of angle bias (for example 0.57735026)\n\
-	 , uniform float	   g_Contrast			// Contrast (for example 2.5)\n\
-	 , uniform float	   g_Attenuation		// Attenuation (for example 1)\n\
-	 , uniform float2	   g_FocalLen			// Focal length (for example 1.7309455 x 2.4142134)\n\
-	 , uniform float2	   g_InvFocalLen		// 1/g_FocalLen (for example: 0.57771897 x 0.4142136)\n\
-	 , uniform float2	   g_Resolution			// Resolution of the input texture data (for example 636 x 456)\n\
-	 , uniform float2	   g_InvResolution		// 1/g_Resolution (for example 0.001572327f x 0.0021929825f)\n\
-	 , uniform float2	   RandomUVScale		// UV scale for the random normals texture\n\
-	 , uniform sampler2D   RandomNormalsTexture	// RGB texture with random normals\n\
-	 , uniform samplerRECT NormalDepthTexture)	// RG=normal vector, B=linear view space length\n\
+FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
+	 , uniform int		   NumSteps			// Number of steps (for example 8)\n\
+	 , uniform int		   NumDir			// Number of directions (for example 16)\n\
+	 , uniform float	   Radius			// Radius of influence (for example 1)\n\
+	 , uniform float	   InvR				// 1/Radius (for example 1)\n\
+	 , uniform float	   SqrR				// Radius*Radius (for example 1)\n\
+	 , uniform float	   AngleBias		// Angle bias (for example 0.523599)\n\
+	 , uniform float	   TanAngleBias		// Tangent of angle bias (for example 0.57735026)\n\
+	 , uniform float	   Contrast			// Contrast (for example 2.5)\n\
+	 , uniform float	   Attenuation		// Attenuation (for example 1)\n\
+	 , uniform float2	   FocalLen			// Focal length (for example 1.7309455 x 2.4142134)\n\
+	 , uniform float2	   InvFocalLen		// 1/FocalLen (for example: 0.57771897 x 0.4142136)\n\
+	 , uniform float2	   Resolution		// Resolution of the input texture data (for example 636 x 456)\n\
+	 , uniform float2	   InvResolution	// 1/Resolution (for example 0.001572327f x 0.0021929825f)\n\
+	 , uniform float2	   RandomUVScale	// UV scale for the random normals texture\n\
+	 , uniform sampler2D   RandomNormalsMap	// RGB texture with random normals\n\
+	 , uniform samplerRECT NormalDepthMap)	// RG=normal vector, B=linear view space length\n\
 {\n\
 	FS_OUTPUT OUT;\n\
 \n\
 	// Fetch the required texel data\n\
-	float4 sample = texRECT(NormalDepthTexture, IN.texUV*g_Resolution);\n\
+	float4 sample = texRECT(NormalDepthMap, IN.TexCoord*Resolution);\n\
 \n\
 	// Reconstruct view-space position\n\
-	float3 P = uv_to_eye(IN.texUV, sample.b, g_InvFocalLen);\n\
+	float3 P = uv_to_eye(IN.TexCoord, sample.b, InvFocalLen);\n\
 \n\
-	// Project the radius of influence g_R from view space to texture space.\n\
+	// Project the radius of influence Radius from view space to texture space.\n\
 	// The scaling by 0.5f is to go from [-1,1] to [0,1].\n\
-	float2 step_size = 0.5f * g_R * g_FocalLen / P.z;\n\
+	float2 step_size = 0.5f * Radius * FocalLen / P.z;\n\
 \n\
 	// Early out if the projected radius is smaller than 1 pixel.\n\
-	float numSteps = min(g_NumSteps, min(step_size.x * g_Resolution.x, step_size.y * g_Resolution.y));\n\
+	float numSteps = min(NumSteps, min(step_size.x * Resolution.x, step_size.y * Resolution.y));\n\
 	if (numSteps < 1) {\n\
-		OUT.color = 1;\n\
+		OUT.Color0 = 1;\n\
 		return OUT;\n\
 	}\n\
 	step_size = step_size / (numSteps + 1);\n\
 \n\
 	// Nearest neighbor pixels on the tangent plane\n\
-	#ifdef USE_NORMAL\n\
+	#ifdef FS_NORMAL\n\
 		// Reconstruct view-space normal vector\n\
 		float3 N = decodeNormalVector(sample.rg);\n\
 		N.z = -N.z; // If this is not done, we get wrong results\n\
 \n\
 		float4 tangentPlane = float4(N, dot(P, N));\n\
-		float3 Pr = tangent_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2( g_InvResolution.x,                  0), g_InvFocalLen, tangentPlane);\n\
-		float3 Pl = tangent_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2(-g_InvResolution.x,                  0), g_InvFocalLen, tangentPlane);\n\
-		float3 Pt = tangent_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2(                 0,  g_InvResolution.y), g_InvFocalLen, tangentPlane);\n\
-		float3 Pb = tangent_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2(                 0, -g_InvResolution.y), g_InvFocalLen, tangentPlane);\n\
+		float3 Pr = tangent_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2( InvResolution.x,                0), InvFocalLen, tangentPlane);\n\
+		float3 Pl = tangent_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2(-InvResolution.x,                0), InvFocalLen, tangentPlane);\n\
+		float3 Pt = tangent_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2(               0,  InvResolution.y), InvFocalLen, tangentPlane);\n\
+		float3 Pb = tangent_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2(               0, -InvResolution.y), InvFocalLen, tangentPlane);\n\
 	#else\n\
-		float3 Pr = fetch_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2( g_InvResolution.x,                  0), g_InvFocalLen);\n\
-		float3 Pl = fetch_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2(-g_InvResolution.x,                  0), g_InvFocalLen);\n\
-		float3 Pt = fetch_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2(                 0,  g_InvResolution.y), g_InvFocalLen);\n\
-		float3 Pb = fetch_eye_pos(NormalDepthTexture, g_Resolution, IN.texUV + float2(                 0, -g_InvResolution.y), g_InvFocalLen);\n\
+		float3 Pr = fetch_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2( InvResolution.x,                0), InvFocalLen);\n\
+		float3 Pl = fetch_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2(-InvResolution.x,                0), InvFocalLen);\n\
+		float3 Pt = fetch_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2(               0,  InvResolution.y), InvFocalLen);\n\
+		float3 Pb = fetch_eye_pos(NormalDepthMap, Resolution, IN.TexCoord + float2(               0, -InvResolution.y), InvFocalLen);\n\
 	#endif\n\
 \n\
 	// Screen-aligned basis for the tangent plane\n\
 	float3 dPdu = min_diff(P, Pr, Pl);\n\
-	float3 dPdv = min_diff(P, Pt, Pb) * (g_Resolution.y * g_InvResolution.x);\n\
+	float3 dPdv = min_diff(P, Pt, Pb) * (Resolution.y * InvResolution.x);\n\
 \n\
 	// (cos(alpha), sin(alpha), jitter)\n\
-	float3 rand = tex2D(RandomNormalsTexture, IN.texUV*RandomUVScale).xyz;\n\
+	float3 rand = tex2D(RandomNormalsMap, IN.TexCoord*RandomUVScale).xyz;\n\
 \n\
 	float aoFinal = 0;\n\
-	float alpha = 2 * M_PI / g_NumDir;\n\
+	float alpha = 2 * M_PI / NumDir;\n\
 \n\
 	// Calculate the AO\n\
-	for (int d=0; d<g_NumDir; d++) {\n\
+	for (int d=0; d<NumDir; d++) {\n\
 		float angle = alpha * d;\n\
 		float2 dir = float2(cos(angle), sin(angle));\n\
 		float2 deltaUV = rotate_direction(dir, rand.xy) * step_size.xy;\n\
 \n\
 		{ // Accumulated horizon occlusion - Normal quality\n\
 			// Randomize starting point within the first sample distance\n\
-			float2 uv = IN.texUV + snap_uv_offset(rand.z * deltaUV, g_Resolution, g_InvResolution);\n\
+			float2 uv = IN.TexCoord + snap_uv_offset(rand.z * deltaUV, Resolution, InvResolution);\n\
 \n\
 			// Snap increments to pixels to avoid disparities between xy\n\
 			// and z sample locations and sample along a line\n\
-			deltaUV = snap_uv_offset(deltaUV, g_Resolution, g_InvResolution);\n\
+			deltaUV = snap_uv_offset(deltaUV, Resolution, InvResolution);\n\
 \n\
 			// Compute tangent vector using the tangent plane\n\
 			float3 T = deltaUV.x * dPdu + deltaUV.y * dPdv;\n\
-			float tanH = biased_tangent(T, g_AngleBias);\n\
+			float tanH = biased_tangent(T, AngleBias);\n\
 			float sinH = tanH / sqrt(1 + tanH*tanH);\n\
 \n\
 			float ao = 0;\n\
 			for (float j=1; j<=numSteps; ++j) {\n\
 				uv += deltaUV;\n\
-				float3 S = fetch_eye_pos(NormalDepthTexture, g_Resolution, uv, g_InvFocalLen);\n\
+				float3 S = fetch_eye_pos(NormalDepthMap, Resolution, uv, InvFocalLen);\n\
 \n\
 				// Ignore any samples outside the radius of influence\n\
 				float d2  = length2(S - P);\n\
-				if (d2 < g_sqr_R) {\n\
+				if (d2 < SqrR) {\n\
 					float tanS = tangent(P, S);\n\
 \n\
 					if(tanS > tanH) {\n\
 						// Accumulate AO between the horizon and the sample\n\
 						float sinS = tanS / sqrt(1 + tanS*tanS);\n\
-						float r = sqrt(d2) * g_inv_R;\n\
-						ao += falloff(r, g_Attenuation) * (sinS - sinH);\n\
+						float r = sqrt(d2) * InvR;\n\
+						ao += falloff(r, Attenuation) * (sinS - sinH);\n\
 \n\
 						// Update the current horizon angle\n\
 						tanH = tanS;\n\
@@ -237,8 +259,8 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 			aoFinal += ao;\n\
 		}\n\
 	}\n\
-	OUT.color = 1 - aoFinal/g_NumDir*g_Contrast;\n\
+	OUT.Color0 = 1 - aoFinal/NumDir*Contrast;\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

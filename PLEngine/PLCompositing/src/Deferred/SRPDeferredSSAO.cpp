@@ -59,6 +59,7 @@ pl_implement_class(SRPDeferredSSAO)
 *    Default constructor
 */
 SRPDeferredSSAO::SRPDeferredSSAO() :
+	ShaderLanguage(this),
 	Contrast(this),
 	BlurRadius(this),
 	BlurSharpness(this),

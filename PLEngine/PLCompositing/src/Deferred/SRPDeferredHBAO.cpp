@@ -23,13 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/FixedFunctions.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Texture/TextureManager.h>
@@ -94,10 +95,9 @@ SRPDeferredHBAO::SRPDeferredHBAO() :
 	RandomUVScale(this),
 	Flags(this),
 	m_nNumberOfDirections(8),
-	m_pRandomNormalsTexture(NULL)
+	m_pRandomNormalsTexture(NULL),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -106,73 +106,13 @@ SRPDeferredHBAO::SRPDeferredHBAO() :
 */
 SRPDeferredHBAO::~SRPDeferredHBAO()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-
 	// Destroy the random normals texture
 	if (m_pRandomNormalsTexture)
 		delete m_pRandomNormalsTexture;
-}
 
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the fragment shader
-*/
-Shader *SRPDeferredHBAO::GetFragmentShader(Renderer &cRenderer, bool bUseNormal)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bUseNormal];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bUseNormal]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredHBAO.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bUseNormal) {
-			sDefines += "#define USE_NORMAL\n";
-			sName    += "[UseNormal]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredHBAO_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredHBAO_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredHBAO_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines); // We can't use for e.g. "arbfp1" because we're using loops heavily in here
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bUseNormal] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredHBAO::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -181,148 +121,236 @@ void SRPDeferredHBAO::DestroyShaders()
 //[-------------------------------------------------------]
 void SRPDeferredHBAO::DrawAO(FullscreenQuad &cFullscreenQuad, TextureBufferRectangle &cNormalDepthTextureBuffer)
 {
-	// Get the renderer instance
-	Renderer &cRenderer = cNormalDepthTextureBuffer.GetRenderer();
+	// Get the vertex buffer of the fullscreen quad
+	VertexBuffer *pVertexBuffer = cFullscreenQuad.GetVertexBuffer();
+	if (pVertexBuffer) {
+		// Get the renderer instance
+		Renderer &cRenderer = cNormalDepthTextureBuffer.GetRenderer();
 
-	// Get and set the fragment shader
-	Shader *pFragmentShader = GetFragmentShader(cRenderer, !(GetFlags() & NoNormals));
-	if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-		// Get and set the fragment shader program
-		ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-		cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+		// Get the shader language to use
+		String sShaderLanguage = ShaderLanguage;
+		if (!sShaderLanguage.GetLength())
+			sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-		{ // Set the texture buffer
-			static const String sNormalDepthTexture = "NormalDepthTexture";
-			const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sNormalDepthTexture, &cNormalDepthTextureBuffer);
-			if (nStage >= 0) {
-				cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-				cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-				cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+		// Create the program generator if there's currently no instance of it
+		if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+			// If there's an previous instance of the program generator, destroy it first
+			if (m_pProgramGenerator) {
+				delete m_pProgramGenerator;
+				m_pProgramGenerator = NULL;
 			}
+
+			// Choose the shader source codes depending on the requested shader language
+			String sDeferredHBAO_VS;
+			String sDeferredHBAO_FS;
+			if (sShaderLanguage == "GLSL") {
+				#include "SRPDeferredHBAO_GLSL.h"
+				sDeferredHBAO_VS = sDeferredHBAO_GLSL_VS;
+				sDeferredHBAO_FS = sDeferredHBAO_GLSL_FS;
+			} else if (sShaderLanguage == "Cg") {
+				#include "SRPDeferredHBAO_Cg.h"
+				sDeferredHBAO_VS = sDeferredHBAO_Cg_VS;
+				sDeferredHBAO_FS = sDeferredHBAO_Cg_FS;
+			}
+
+			// Create the program generator
+			if (sDeferredHBAO_VS.GetLength() && sDeferredHBAO_FS.GetLength())
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_VS, "glslv", sDeferredHBAO_FS, "glslf", true);
 		}
 
-		// Get the width and height of the texture buffer
-		const float fWidth  = (float)cNormalDepthTextureBuffer.GetSize().x;
-		const float fHeight = (float)cNormalDepthTextureBuffer.GetSize().y;
+		// If there's no program generator, we don't need to continue
+		if (m_pProgramGenerator) {
+			// Reset the program flags
+			m_cProgramFlags.Reset();
 
-		{ // Set fragment shader parameters
-			// g_NumSteps
-			static const String g_NumSteps = "g_NumSteps";
-			pFragmentShaderProgram->SetParameter1i(g_NumSteps, NumberOfSteps);
+			// Set program flags
+			if (!(GetFlags() & NoNormals))
+				PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMAL)
 
-			// g_NumDir
-			static const String g_NumDir = "g_NumDir";
-			pFragmentShaderProgram->SetParameter1i(g_NumDir, m_nNumberOfDirections);
+			// Get a program instance from the program generator using the given program flags
+			ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
 
-			{ // Radius
-				// Calculate the radius to use
-				const float fRadius = SceneScale * AORadius;
-
-				// g_R
-				static const String g_R = "g_R";
-				pFragmentShaderProgram->SetParameter1f(g_R, fRadius);
-
-				// g_inv_R
-				static const String g_inv_R = "g_inv_R";
-				pFragmentShaderProgram->SetParameter1f(g_inv_R, 1.0f/fRadius);
-
-				// g_sqr_R
-				static const String g_sqr_R = "g_sqr_R";
-				pFragmentShaderProgram->SetParameter1f(g_sqr_R, fRadius*fRadius);
-			}
-
-			{ // Angle bias and contrast
-				// Calculate the angle in radians
-				const float fAngle = float(AngleBias * Math::DegToRad);
-
-				// g_AngleBias
-				static const String g_AngleBias = "g_AngleBias";
-				pFragmentShaderProgram->SetParameter1f(g_AngleBias, fAngle);
-
-				// g_TanAngleBias
-				static const String g_TanAngleBias = "g_TanAngleBias";
-				pFragmentShaderProgram->SetParameter1f(g_TanAngleBias, Math::Tan(fAngle));
-
-				// g_Contrast
-				static const String g_Contrast = "g_Contrast";
-				const float fContrast = Contrast / (1.0f - Math::Sin(fAngle));
-				pFragmentShaderProgram->SetParameter1f(g_Contrast, fContrast);
-			}
-
-			// g_Attenuation
-			static const String g_Attenuation = "g_Attenuation";
-			pFragmentShaderProgram->SetParameter1f(g_Attenuation, Attenuation);
-
-			{ // Focal length
-				// Calculate the focal length
-				const float fFovY         = float((SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f) * Math::DegToRad);
-				const float fFocalLengthY = 1.0f / Math::Tan(fFovY * 0.5f);
-				const float fFocalLengthX = fFocalLengthY * ((fHeight * (SNCamera::GetCamera() ? SNCamera::GetCamera()->GetAspect() : 1.0f)) / fWidth);
-
-				// g_FocalLen
-				static const String g_FocalLen = "g_FocalLen";
-				pFragmentShaderProgram->SetParameter2f(g_FocalLen, fFocalLengthX, fFocalLengthY);
-
-				// g_InvFocalLen
-				static const String g_InvFocalLen = "g_InvFocalLen";
-				pFragmentShaderProgram->SetParameter2f(g_InvFocalLen, 1.0f/fFocalLengthX, 1.0f/fFocalLengthY);
-			}
-
-			// g_Resolution
-			static const String g_Resolution = "g_Resolution";
-			pFragmentShaderProgram->SetParameter2f(g_Resolution, fWidth, fHeight);
-
-			// g_InvResolution
-			static const String g_InvResolution = "g_InvResolution";
-			pFragmentShaderProgram->SetParameter2f(g_InvResolution, 1.0f/fWidth, 1.0f/fHeight);
-
-			// RandomUVScale
-			static const String sRandomUVScale = "RandomUVScale";
-			pFragmentShaderProgram->SetParameter2fv(sRandomUVScale, RandomUVScale.Get());
-		}
-
-		{ // Set the "RandomNormalsTexture" fragment shader parameter
-			// Create texture if required
-			if (!m_pRandomNormalsTexture) {
-				const uint32 nWidth  = 64;
-				const uint32 nHeight = 64;
-
-				// Create the image
-				Image cImage;
-				ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-				pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(nWidth, nHeight, 1));
-
-				// Create the texture data
-				float *pfData = (float*)pImageBuffer->GetData();
-				for (int i=0; i<64*64*4; i+=4) {
-					const float fAngle = float(2.0f*Math::Pi*Math::GetRandFloat()/(float)m_nNumberOfDirections);
-					pfData[i  ] = Math::Cos(fAngle);
-					pfData[i+1] = Math::Sin(fAngle);
-					pfData[i+2] = Math::GetRandFloat();
-					pfData[i+3] = 0.0f;
+			// Make our program to the current one
+			if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+				// Set pointers to uniforms & attributes of a generated program if they are not set yet
+				GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+				if (!pGeneratedProgramUserData) {
+					pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+					Program *pProgram = pGeneratedProgram->pProgram;
+					// Vertex shader attributes
+					static const String sVertexPosition = "VertexPosition";
+					pGeneratedProgramUserData->pVertexPosition		= pProgram->GetAttribute(sVertexPosition);
+					// Fragment shader uniforms
+					static const String sNumSteps = "NumSteps";
+					pGeneratedProgramUserData->pNumSteps			= pProgram->GetUniform(sNumSteps);
+					static const String sNumDir = "NumDir";
+					pGeneratedProgramUserData->pNumDir				= pProgram->GetUniform(sNumDir);
+					static const String sRadius = "Radius";
+					pGeneratedProgramUserData->pRadius				= pProgram->GetUniform(sRadius);
+					static const String sInvR = "InvR";
+					pGeneratedProgramUserData->pInvR				= pProgram->GetUniform(sInvR);
+					static const String sSqrR = "SqrR";
+					pGeneratedProgramUserData->pSqrR				= pProgram->GetUniform(sSqrR);
+					static const String sAngleBias = "AngleBias";
+					pGeneratedProgramUserData->pAngleBias			= pProgram->GetUniform(sAngleBias);
+					static const String sTanAngleBias = "TanAngleBias";
+					pGeneratedProgramUserData->pTanAngleBias		= pProgram->GetUniform(sTanAngleBias);
+					static const String sContrast = "Contrast";
+					pGeneratedProgramUserData->pContrast			= pProgram->GetUniform(sContrast);
+					static const String sAttenuation = "Attenuation";
+					pGeneratedProgramUserData->pAttenuation			= pProgram->GetUniform(sAttenuation);
+					static const String sFocalLen = "FocalLen";
+					pGeneratedProgramUserData->pFocalLen			= pProgram->GetUniform(sFocalLen);
+					static const String sInvFocalLen = "InvFocalLen";
+					pGeneratedProgramUserData->pInvFocalLen			= pProgram->GetUniform(sInvFocalLen);
+					static const String sResolution = "Resolution";
+					pGeneratedProgramUserData->pResolution			= pProgram->GetUniform(sResolution);
+					static const String sInvResolution = "InvResolution";
+					pGeneratedProgramUserData->pInvResolution		= pProgram->GetUniform(sInvResolution);
+					static const String sRandomUVScale = "RandomUVScale";
+					pGeneratedProgramUserData->pRandomUVScale		= pProgram->GetUniform(sRandomUVScale);
+					static const String sRandomNormalsMap = "RandomNormalsMap";
+					pGeneratedProgramUserData->pRandomNormalsMap	= pProgram->GetUniform(sRandomNormalsMap);
+					static const String sNormalDepthMap = "NormalDepthMap";
+					pGeneratedProgramUserData->pNormalDepthMap		= pProgram->GetUniform(sNormalDepthMap);
 				}
 
-				// Create the texture
-				m_pRandomNormalsTexture = cRenderer.CreateTextureBuffer2D(cImage, TextureBuffer::Unknown, 0);
-			}
+				// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+				if (pGeneratedProgramUserData->pVertexPosition)
+					pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
 
-			{ // Set texture
-				static const String sRandomNormalsTexture = "RandomNormalsTexture";
-				const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sRandomNormalsTexture, m_pRandomNormalsTexture);
-				if (nStage >= 0) {
-					cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-					cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-					cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-					cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-					cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+				// Set the normal depth texture
+				if (pGeneratedProgramUserData->pNormalDepthMap) {
+					const int nTextureUnit = pGeneratedProgramUserData->pNormalDepthMap->Set(&cNormalDepthTextureBuffer);
+					if (nTextureUnit >= 0) {
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+					}
 				}
+
+				// Get the width and height of the texture buffer
+				const float fWidth  = (float)cNormalDepthTextureBuffer.GetSize().x;
+				const float fHeight = (float)cNormalDepthTextureBuffer.GetSize().y;
+
+				// NumSteps
+				if (pGeneratedProgramUserData->pNumSteps)
+					pGeneratedProgramUserData->pNumSteps->Set((int)NumberOfSteps);
+
+				// NumDir
+				if (pGeneratedProgramUserData->pNumDir)
+					pGeneratedProgramUserData->pNumDir->Set((int)m_nNumberOfDirections);
+
+				{ // Radius
+					// Calculate the radius to use
+					const float fRadius = SceneScale * AORadius;
+
+					// Radius
+					if (pGeneratedProgramUserData->pRadius)
+						pGeneratedProgramUserData->pRadius->Set(fRadius);
+
+					// InvR
+					if (pGeneratedProgramUserData->pInvR)
+						pGeneratedProgramUserData->pInvR->Set(1.0f/fRadius);
+
+					// SqrR
+					if (pGeneratedProgramUserData->pSqrR)
+						pGeneratedProgramUserData->pSqrR->Set(fRadius*fRadius);
+				}
+
+				{ // Angle bias and contrast
+					// Calculate the angle in radians
+					const float fAngle = float(AngleBias * Math::DegToRad);
+
+					// AngleBias
+					if (pGeneratedProgramUserData->pAngleBias)
+						pGeneratedProgramUserData->pAngleBias->Set(fAngle);
+
+					// TanAngleBias
+					if (pGeneratedProgramUserData->pTanAngleBias)
+						pGeneratedProgramUserData->pTanAngleBias->Set(Math::Tan(fAngle));
+
+					// Contrast
+					const float fContrast = Contrast / (1.0f - Math::Sin(fAngle));
+					if (pGeneratedProgramUserData->pContrast)
+						pGeneratedProgramUserData->pContrast->Set(fContrast);
+				}
+
+				// Attenuation
+				if (pGeneratedProgramUserData->pAttenuation)
+					pGeneratedProgramUserData->pAttenuation->Set(Attenuation);
+
+				{ // Focal length
+					// Calculate the focal length
+					const float fFovY         = float((SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f) * Math::DegToRad);
+					const float fFocalLengthY = 1.0f / Math::Tan(fFovY * 0.5f);
+					const float fFocalLengthX = fFocalLengthY * ((fHeight * (SNCamera::GetCamera() ? SNCamera::GetCamera()->GetAspect() : 1.0f)) / fWidth);
+
+					// FocalLen
+					if (pGeneratedProgramUserData->pFocalLen)
+						pGeneratedProgramUserData->pFocalLen->Set(fFocalLengthX, fFocalLengthY);
+
+					// InvFocalLen
+					if (pGeneratedProgramUserData->pInvFocalLen)
+						pGeneratedProgramUserData->pInvFocalLen->Set(1.0f/fFocalLengthX, 1.0f/fFocalLengthY);
+				}
+
+				// Resolution
+				if (pGeneratedProgramUserData->pResolution)
+					pGeneratedProgramUserData->pResolution->Set(fWidth, fHeight);
+
+				// InvResolution
+				if (pGeneratedProgramUserData->pInvResolution)
+					pGeneratedProgramUserData->pInvResolution->Set(1.0f/fWidth, 1.0f/fHeight);
+
+				// RandomUVScale
+				if (pGeneratedProgramUserData->pRandomUVScale)
+					pGeneratedProgramUserData->pRandomUVScale->Set(RandomUVScale.Get());
+
+				{ // Set the "RandomNormalsMap" fragment shader parameter
+					// Create texture if required
+					if (!m_pRandomNormalsTexture) {
+						const uint32 nWidth  = 64;
+						const uint32 nHeight = 64;
+
+						// Create the image
+						Image cImage;
+						ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+						pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(nWidth, nHeight, 1));
+
+						// Create the texture data
+						float *pfData = (float*)pImageBuffer->GetData();
+						for (int i=0; i<64*64*4; i+=4) {
+							const float fAngle = float(2.0f*Math::Pi*Math::GetRandFloat()/(float)m_nNumberOfDirections);
+							pfData[i  ] = Math::Cos(fAngle);
+							pfData[i+1] = Math::Sin(fAngle);
+							pfData[i+2] = Math::GetRandFloat();
+							pfData[i+3] = 0.0f;
+						}
+
+						// Create the texture
+						m_pRandomNormalsTexture = cRenderer.CreateTextureBuffer2D(cImage, TextureBuffer::Unknown, 0);
+					}
+
+					// Set texture
+					if (pGeneratedProgramUserData->pRandomNormalsMap) {
+						const int nTextureUnit = pGeneratedProgramUserData->pRandomNormalsMap->Set(m_pRandomNormalsTexture);
+						if (nTextureUnit >= 0) {
+							cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Wrap);
+							cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Wrap);
+							cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+							cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+							cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+						}
+					}
+				}
+
+				// Draw the fullscreen quad
+				cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 			}
 		}
-
-		// Draw the fullscreen quad
-		cFullscreenQuad.Draw(Vector2i::One);
 	}
 }
 

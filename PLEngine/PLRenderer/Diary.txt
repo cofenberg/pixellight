@@ -1,3 +1,12 @@
+>> 05.09.2010
+[CO]
+PLRendererOpenGL:
+- ProgramCg::UnmakeCurrent(): Hier sollte cgGLDisableClientState für alle Attribute aufgerufen werden... macht man das nicht und nutzt
+  natives GLSL und Cg gleichzeitig, kann man Probleme bekommen was ich gerade hatte, die Vertex Daten waren dann im Cg Shader kaputt. :/
+  (und dann sucht man ertmal Ewig was denn im Shader falsch sein könnte, obwohl dort alles richtig ist...)
+
+
+
 >> 01.09.2010
 [CO]
 PLRendererOpenGL:

@@ -468,6 +468,10 @@ bool ProgramCg::MakeCurrent()
 		for (int i=0; i<nNumOfProgramDomains; i++)
 			cgGLEnableProfile(cgGetProgramDomainProfile(pCgCombinedProgram, i));
 
+		// Enable vertex attribute arrays
+		for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
+			cgGLEnableClientState(((ProgramAttributeCg*)m_lstAttributes[i])->m_pCgParameter);
+
 		// Done
 		return true;
 	}
@@ -480,6 +484,10 @@ bool ProgramCg::UnmakeCurrent()
 {
 	// There must be a Cg combined program
 	if (m_pCgCombinedProgram) {
+		// Disable vertex attribute arrays
+		for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
+			cgGLDisableClientState(((ProgramAttributeCg*)m_lstAttributes[i])->m_pCgParameter);
+
 		// Iterate through all Cg programs of the Cg combined program and disable all required profiles
 		const int nNumOfProgramDomains = cgGetNumProgramDomains(m_pCgCombinedProgram);
 		for (int i=0; i<nNumOfProgramDomains; i++)
