@@ -28,8 +28,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -77,9 +86,10 @@ class SRPDeferredEdgeAA : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredEdgeAA, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering anti-aliasing using resolution-independent edge detection")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(WeightScale,	float,					1.0f,	ReadWrite,	DirectValue,	"Weight scale",	"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(WeightScale,		float,					1.0f,	ReadWrite,	DirectValue,	"Weight scale",																															"")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,			pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",		"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -101,41 +111,43 @@ class SRPDeferredEdgeAA : public SRPDeferred {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bMoreSamples
-		*    Take more samples
-		*  @param[in] bShowEdges
-		*    Show edges (and do not perform anti-aliasing)
-		*  @param[in] bShowEdgesOnly
-		*    Show edges only (and do not perform anti-aliasing)
-		*
-		*  @return
-		*    The fragment shader, NULL on error
+		*    Fragment shader flags, flag names become to source code definitions
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bMoreSamples, bool bShowEdges, bool bShowEdgesOnly);
+		enum EFragmentShaderFlags {
+			FS_SHOW_EDGES	  = 1<<0,	/**< Show edges */
+			FS_SHOW_EDGESONLY = 1<<1,	/**< Show edges only */
+			FS_MORE_SAMPLES   = 1<<2	/**< Take more samples */
+		};
 
 		/**
 		*  @brief
-		*    Destroys all currently used shaders
+		*    Direct pointers to uniforms & attributes of a generated program
 		*/
-		void DestroyShaders();
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pMinGradient;
+			PLRenderer::ProgramUniform *pWeightScale;
+			PLRenderer::ProgramUniform *pEdgeColor;
+			PLRenderer::ProgramUniform *pFrontMap;
+			PLRenderer::ProgramUniform *pNormalDepthMap;
+		};
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool										m_bFragmentShader[2][2][2];	/**< Fragment shader build? [MoreSamples][ShowEdges][ShowEdgesOnly] */
-		PLRenderer::ShaderHandler					m_cFragmentShader[2][2][2];	/**< Fragment shader mode [MoreSamples][ShowEdges][ShowEdgesOnly] */
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;				/**< List of all used shaders */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

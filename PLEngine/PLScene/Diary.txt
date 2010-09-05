@@ -5,6 +5,7 @@ PLCompositing:
 - SRPDeferredDepthFog verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 - SRPDeferredGBufferDebug verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 - SRPDeferredGodRays verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+- SRPDeferredEdgeAA verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 
 
 

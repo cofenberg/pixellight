@@ -445,6 +445,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Deferred\SRPDeferredEdgeAA_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Deferred\SRPDeferredGBuffer.cpp"
 				>
 			</File>

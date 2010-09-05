@@ -17,37 +17,45 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - SHOW_EDGES:     Show edges
- *  - SHOW_EDGESONLY: Show edges only
- *  - MORE_SAMPLES:   Take more samples
 \*********************************************************/
 
 
-const static char *pszDeferredEdgeAA_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredEdgeAA_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+static const PLGeneral::String sDeferredEdgeAA_Cg_FS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
-\n\
-// Decodes a 2 component normal vector to a 3 component normal vector\n\
-float3 decodeNormalVector(float2 normal)\n\
-{\n\
-	float2 fenc = normal*4 - 2;\n\
-	float f = dot(fenc, fenc);\n\
-	float g = sqrt(1 - f/4);\n\
-	float3 n;\n\
-	n.xy = fenc*g;\n\
-	n.z = 1 - f/2;\n\
-	return n;\n\
-}\n\
 \n\
 // Neighbor offset table\n\
 const static float2 Offsets[9] = {\n\
@@ -62,15 +70,28 @@ const static float2 Offsets[9] = {\n\
 	float2(-1,  0)  // Left         8\n\
 };\n\
 \n\
-// Main function\n\
-FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n\
-	 , uniform float	   MinGradient			// Minumum gradient\n\
-	 , uniform float	   WeightScale			// Weight scale\n\
-	#ifdef SHOW_EDGES\n\
-	 , uniform float3	   EdgeColor			// Edge color\n\
+// Programs\n\
+// Decodes a 2 component normal vector to a 3 component normal vector\n\
+float3 decodeNormalVector(float2 normal)\n\
+{\n\
+	float2 fenc = normal*4 - 2;\n\
+	float f = dot(fenc, fenc);\n\
+	float g = sqrt(1 - f/4);\n\
+	float3 n;\n\
+	n.xy = fenc*g;\n\
+	n.z = 1 - f/2;\n\
+	return n;\n\
+}\n\
+\n\
+// Program entry point\n\
+FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
+	 , uniform float	   MinGradient		// Minumum gradient\n\
+	 , uniform float	   WeightScale		// Weight scale\n\
+	#ifdef FS_SHOW_EDGES\n\
+	 , uniform float3	   EdgeColor		// Edge color\n\
 	#endif\n\
-	 , uniform samplerRECT FrontTexture			// Front texture\n\
-	 , uniform samplerRECT NormalDepthTexture)	// Normal depth texture\n\
+	 , uniform samplerRECT FrontMap			// Front texture\n\
+	 , uniform samplerRECT NormalDepthMap)	// Normal depth texture\n\
 {\n\
 	FS_OUTPUT OUT;\n\
 \n\
@@ -79,7 +100,7 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	float3 normal[9];\n\
 	for (int i=0; i<9; i++) {\n\
 		// Retrieve sample at new location\n\
-		float3 sample = texRECT(NormalDepthTexture, IN.texUV + Offsets[i]).xyz;\n\
+		float3 sample = texRECT(NormalDepthMap, IN.TexCoord + Offsets[i]).xyz;\n\
 \n\
 		// Get depth and normal\n\
 		depth[i]  = sample.b;\n\
@@ -134,10 +155,10 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	float w = (normalResults.x + normalResults.y + normalResults.z + normalResults.w)*0.25f; // 0=no aa, 1=full aa\n\
 	if (w <= 0) {\n\
 		// Early escape: No anti-aliasing required\n\
-		#ifdef SHOW_EDGESONLY\n\
-			OUT.color = 0;\n\
+		#ifdef FS_SHOW_EDGESONLY\n\
+			OUT.Color0 = 0;\n\
 		#else\n\
-			OUT.color = texRECT(FrontTexture, IN.texUV);\n\
+			OUT.Color0 = texRECT(FrontMap, IN.TexCoord);\n\
 		#endif\n\
 		return OUT;\n\
 	}\n\
@@ -146,24 +167,24 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	w *= WeightScale;\n\
 \n\
 	// Perform anti-aliasing\n\
-	#ifdef SHOW_EDGES\n\
-		OUT.color = float4(EdgeColor, 1);\n\
+	#ifdef FS_SHOW_EDGES\n\
+		OUT.Color0 = float4(EdgeColor, 1);\n\
 	#else\n\
 		// Smoothed color\n\
-		#ifdef MORE_SAMPLES\n\
-			OUT.color = 0;\n\
+		#ifdef FS_MORE_SAMPLES\n\
+			OUT.Color0 = 0;\n\
 			for (int i=0; i<9; i++)\n\
-				OUT.color += texRECT(FrontTexture, IN.texUV + Offsets[i]*w);\n\
-			OUT.color /= 9;\n\
+				OUT.Color0 += texRECT(FrontMap, IN.TexCoord + Offsets[i]*w);\n\
+			OUT.Color0 /= 9;\n\
 		#else\n\
-			float4 s0 = texRECT(FrontTexture, IN.texUV + Offsets[2]*w);\n\
-			float4 s1 = texRECT(FrontTexture, IN.texUV + Offsets[4]*w);\n\
-			float4 s2 = texRECT(FrontTexture, IN.texUV + Offsets[6]*w);\n\
-			float4 s3 = texRECT(FrontTexture, IN.texUV + Offsets[8]*w);\n\
-			OUT.color = (s0 + s1 + s2 + s3)/4.0f;\n\
+			float4 s0 = texRECT(FrontMap, IN.TexCoord + Offsets[2]*w);\n\
+			float4 s1 = texRECT(FrontMap, IN.TexCoord + Offsets[4]*w);\n\
+			float4 s2 = texRECT(FrontMap, IN.TexCoord + Offsets[6]*w);\n\
+			float4 s3 = texRECT(FrontMap, IN.TexCoord + Offsets[8]*w);\n\
+			OUT.Color0 = (s0 + s1 + s2 + s3)/4.0f;\n\
 		#endif\n\
 	#endif\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

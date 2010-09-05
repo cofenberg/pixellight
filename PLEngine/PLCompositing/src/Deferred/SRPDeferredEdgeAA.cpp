@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
@@ -60,11 +60,11 @@ pl_implement_class(SRPDeferredEdgeAA)
 *    Default constructor
 */
 SRPDeferredEdgeAA::SRPDeferredEdgeAA() :
+	ShaderLanguage(this),
 	WeightScale(this),
-	Flags(this)
+	Flags(this),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -73,77 +73,9 @@ SRPDeferredEdgeAA::SRPDeferredEdgeAA() :
 */
 SRPDeferredEdgeAA::~SRPDeferredEdgeAA()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the fragment shader
-*/
-Shader *SRPDeferredEdgeAA::GetFragmentShader(Renderer &cRenderer, bool bMoreSamples, bool bShowEdges, bool bShowEdgesOnly)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bMoreSamples][bShowEdges][bShowEdgesOnly];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bMoreSamples][bShowEdges][bShowEdgesOnly]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredEdgeAA.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bMoreSamples) {
-			sDefines += "#define MORE_SAMPLES\n";
-			sName    += "[MoreSamples]";
-		}
-		if (bShowEdges) {
-			sDefines += "#define SHOW_EDGES\n";
-			sName    += "[ShowEdges]";
-		}
-		if (bShowEdgesOnly) {
-			sDefines += "#define SHOW_EDGESONLY\n";
-			sName    += "[ShowEdgesOnly]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredEdgeAA_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredEdgeAA_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredEdgeAA_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bMoreSamples][bShowEdges][bShowEdgesOnly] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredEdgeAA::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -158,70 +90,160 @@ void SRPDeferredEdgeAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// Get the fullscreen quad instance
 		FullscreenQuad *pFullscreenQuad = pSRPDeferredGBuffer->GetFullscreenQuad();
 		if (pFullscreenQuad) {
-			// Get the normal/depth texture buffer to use
-			TextureBufferRectangle *pNormalDepthTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
-			if (pNormalDepthTextureBuffer) {
-				// Get the "PLScene::SRPBegin" instance
-				SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
-				if (pSRPBegin) {
-					// We need up-to-date front render target content, so swap the render targets
-					pSRPBegin->SwapRenderTargets();
+			// Get the vertex buffer of the fullscreen quad
+			VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
+			if (pVertexBuffer) {
+				// Get the normal/depth texture buffer to use
+				TextureBufferRectangle *pNormalDepthTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
+				if (pNormalDepthTextureBuffer) {
+					// Get the "PLScene::SRPBegin" instance
+					SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
+					if (pSRPBegin) {
+						// We need up-to-date front render target content, so swap the render targets
+						pSRPBegin->SwapRenderTargets();
 
-					// Get the front render target of SRPBegin, this holds the current content
-					SurfaceTextureBuffer *pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
-					if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
-						// Reset all render states to default
-						cRenderer.GetRendererContext().GetEffectManager().Use();
+						// Get the front render target of SRPBegin, this holds the current content
+						SurfaceTextureBuffer *pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
+						if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
+							// Get the shader language to use
+							String sShaderLanguage = ShaderLanguage;
+							if (!sShaderLanguage.GetLength())
+								sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-						// Get and set the fragment shader
-						Shader *pFragmentShader = GetFragmentShader(cRenderer, (GetFlags() & MoreSamples) != 0, (GetFlags() & ShowEdges) || (GetFlags() & ShowEdgesOnly), (GetFlags() & ShowEdgesOnly) != 0);
-						if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-							// Get and set the fragment shader program
-							ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-							cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+							// Create the program generator if there's currently no instance of it
+							if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+								// If there's an previous instance of the program generator, destroy it first
+								if (m_pProgramGenerator) {
+									delete m_pProgramGenerator;
+									m_pProgramGenerator = NULL;
+								}
 
-							{ // Set the "MinGradient" fragment shader parameter
-								static const String sMinGradient = "MinGradient";
-								pFragmentShaderProgram->SetParameter1f(sMinGradient, (pNormalDepthTextureBuffer->GetFormat() == TextureBuffer::R32G32B32A32F) ? 0.00001f : 0.001f);
+								// Choose the shader source codes depending on the requested shader language
+								String sDeferredEdgeAA_VS;
+								String sDeferredEdgeAA_FS;
+								if (sShaderLanguage == "GLSL") {
+									#include "SRPDeferredEdgeAA_GLSL.h"
+									sDeferredEdgeAA_VS = sDeferredEdgeAA_GLSL_VS;
+									sDeferredEdgeAA_FS = sDeferredEdgeAA_GLSL_FS;
+								} else if (sShaderLanguage == "Cg") {
+									#include "SRPDeferredEdgeAA_Cg.h"
+									sDeferredEdgeAA_VS = sDeferredEdgeAA_Cg_VS;
+									sDeferredEdgeAA_FS = sDeferredEdgeAA_Cg_FS;
+								}
+
+								// Create the program generator
+								if (sDeferredEdgeAA_VS.GetLength() && sDeferredEdgeAA_FS.GetLength())
+									m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredEdgeAA_VS, "arbvp1", sDeferredEdgeAA_FS, "arbfp1", true);
 							}
 
-							{ // Set the "WeightScale" fragment shader parameter
-								static const String sWeightScale = "WeightScale";
-								pFragmentShaderProgram->SetParameter1f(sWeightScale, WeightScale);
-							}
+							// If there's no program generator, we don't need to continue
+							if (m_pProgramGenerator) {
+								// Reset all render states to default
+								cRenderer.GetRendererContext().GetEffectManager().Use();
 
-							// Set the "EdgeColor" fragment shader parameter
-							if ((GetFlags() & ShowEdges) || (GetFlags() & ShowEdgesOnly)) {
-								static const String sEdgeColor = "EdgeColor";
-								pFragmentShaderProgram->SetParameter3fv(sEdgeColor, (GetFlags() & ShowEdgesOnly) ? Color3::White : Color3::Red);
-							}
+								// Reset the program flags
+								m_cProgramFlags.Reset();
 
-							{ // Set the "FrontTexture" fragment shader parameter
-								static const String sFrontTexture = "FrontTexture";
-								const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sFrontTexture, pFrontSurfaceTextureBuffer->GetTextureBuffer());
-								if (nStage >= 0) {
-									cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-									cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-									cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-									cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-									cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+								// Show edges?
+								if ((GetFlags() & ShowEdges) || (GetFlags() & ShowEdgesOnly))
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_EDGES)
+
+								// Show edges only?
+								if ((GetFlags() & ShowEdgesOnly) != 0)
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_EDGESONLY)
+
+								// Take more samples?
+								if ((GetFlags() & MoreSamples) != 0)
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_MORE_SAMPLES)
+
+								// Get a program instance from the program generator using the given program flags
+								ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
+
+								// Make our program to the current one
+								if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+									// Set pointers to uniforms & attributes of a generated program if they are not set yet
+									GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+									if (!pGeneratedProgramUserData) {
+										pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+										Program *pProgram = pGeneratedProgram->pProgram;
+										// Vertex shader attributes
+										static const String sVertexPosition = "VertexPosition";
+										pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+										// Vertex shader uniforms
+										static const String sTextureSize = "TextureSize";
+										pGeneratedProgramUserData->pTextureSize		= pProgram->GetUniform(sTextureSize);
+										// Fragment shader uniforms
+										static const String sMinGradient = "MinGradient";
+										pGeneratedProgramUserData->pMinGradient		= pProgram->GetUniform(sMinGradient);
+										static const String sWeightScale = "WeightScale";
+										pGeneratedProgramUserData->pWeightScale		= pProgram->GetUniform(sWeightScale);
+										static const String sEdgeColor = "EdgeColor";
+										pGeneratedProgramUserData->pEdgeColor		= pProgram->GetUniform(sEdgeColor);
+										static const String sFrontMap = "FrontMap";
+										pGeneratedProgramUserData->pFrontMap		= pProgram->GetUniform(sFrontMap);
+										static const String sNormalDepthMap = "NormalDepthMap";
+										pGeneratedProgramUserData->pNormalDepthMap	= pProgram->GetUniform(sNormalDepthMap);
+									}
+
+									// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+									if (pGeneratedProgramUserData->pVertexPosition)
+										pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+									// Set texture size
+									if (pGeneratedProgramUserData->pTextureSize)
+										pGeneratedProgramUserData->pTextureSize->Set(pNormalDepthTextureBuffer->GetSize());
+
+									// Set min gradient
+									if (pGeneratedProgramUserData->pMinGradient)
+										pGeneratedProgramUserData->pMinGradient->Set((pNormalDepthTextureBuffer->GetFormat() == TextureBuffer::R32G32B32A32F) ? 0.00001f : 0.001f);
+
+									// Set weight scale
+									if (pGeneratedProgramUserData->pWeightScale)
+										pGeneratedProgramUserData->pWeightScale->Set(WeightScale);
+
+									// Set edge color
+									if (pGeneratedProgramUserData->pEdgeColor)
+										pGeneratedProgramUserData->pEdgeColor->Set((GetFlags() & ShowEdgesOnly) ? Color3::White : Color3::Red);
+
+									// Front map
+									if (pGeneratedProgramUserData->pFrontMap) {
+										const int nTextureUnit = pGeneratedProgramUserData->pFrontMap->Set(pFrontSurfaceTextureBuffer->GetTextureBuffer());
+										if (nTextureUnit >= 0) {
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+										}
+									}
+
+									// Normal depth map
+									if (pGeneratedProgramUserData->pNormalDepthMap) {
+										const int nTextureUnit = pGeneratedProgramUserData->pNormalDepthMap->Set(pNormalDepthTextureBuffer);
+										if (nTextureUnit >= 0) {
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+										}
+									}
+
+									// Setup renderer
+									const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+									cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+									cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+									cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+									cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+									cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
+									// Draw the fullscreen quad
+									cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+									// Restore fixed fill mode render state
+									cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 								}
 							}
-
-							{ // Set the "NormalDepthTexture" fragment shader parameter
-								static const String sNormalDepthTexture = "NormalDepthTexture";
-								const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sNormalDepthTexture, pNormalDepthTextureBuffer);
-								if (nStage >= 0) {
-									cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-									cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-									cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-									cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-									cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
-								}
-							}
-
-							// Draw the fullscreen quad
-							pFullscreenQuad->Draw(pNormalDepthTextureBuffer->GetSize());
 						}
 					}
 				}

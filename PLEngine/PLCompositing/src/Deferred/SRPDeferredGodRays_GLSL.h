@@ -64,25 +64,25 @@ uniform lowp  sampler2DRect	Map;				// Map\n\
 void main()\n\
 {\n\
 	// Calculate vector from pixel to light source in screen space\n\
-	vec2 texUV = VertexTexCoordVS;\n\
-	vec2 deltaTexUV = texUV - LightPosition;\n\
+	highp vec2 texUV = VertexTexCoordVS;\n\
+	highp vec2 deltaTexUV = texUV - LightPosition;\n\
 \n\
 	// Divide by number of samples and scale by control factor\n\
 	deltaTexUV *= 1.0f/NumberOfSamples*Density;\n\
 \n\
 	// Store initial sample\n\
-	vec3 color = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
+	lowp vec3 color = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
 \n\
 	// Set up illumination decay factor\n\
-	float illuminationDecay = 1;\n\
+	highp float illuminationDecay = 1;\n\
 \n\
 	// Evaluate summation\n\
-	for (int i=0; i<NumberOfSamples; i++) {\n\
+	for (highp int i=0; i<NumberOfSamples; i++) {\n\
 		// Step sample location along ray\n\
 		texUV -= deltaTexUV;\n\
 \n\
 		// Retrieve sample at new location\n\
-		vec3 sample = texture2DRect(Map, texUV).rgb;\n\
+		lowp vec3 sample = texture2DRect(Map, texUV).rgb;\n\
 \n\
 		// Apply sample attenuation scale/decay factors\n\
 		sample *= illuminationDecay*Weight;\n\
@@ -95,7 +95,7 @@ void main()\n\
 	}\n\
 \n\
 	// Output final color with a further scale control factor\n\
-	vec3 resultingColor = color*Color;\n\
+	lowp vec3 resultingColor = color*Color;\n\
 \n\
 	// Use discard?\n\
 #ifdef FS_DISCARD\n\
