@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color3.h>
-#include <PLRenderer/Shader/ShaderManager.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
 

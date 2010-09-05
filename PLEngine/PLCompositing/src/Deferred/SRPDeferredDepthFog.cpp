@@ -24,10 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <float.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Scene/SNCamera.h>
@@ -60,15 +60,15 @@ pl_implement_class(SRPDeferredDepthFog)
 *    Default constructor
 */
 SRPDeferredDepthFog::SRPDeferredDepthFog() :
+	ShaderLanguage(this),
 	FogColor(this),
 	FogMode(this),
 	FogStart(this),
 	FogEnd(this),
 	FogDensity(this),
-	Flags(this)
+	Flags(this),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -77,80 +77,9 @@ SRPDeferredDepthFog::SRPDeferredDepthFog() :
 */
 SRPDeferredDepthFog::~SRPDeferredDepthFog()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-}
-
-/**
-*  @brief
-*    Returns the fragment shader
-*/
-Shader *SRPDeferredDepthFog::GetFragmentShader(Renderer &cRenderer)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[FogMode];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[FogMode]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredDepthFog.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		switch (FogMode) {
-			case LinearMode:
-				sDefines += "#define LINEAR_MODE\n";
-				sName    += "[LinearMode]";
-				break;
-
-			case ExponentialMode:
-				sDefines += "#define EXPONENTIAL_MODE\n";
-				sName    += "[ExponentialMode]";
-				break;
-
-			case Exponential2Mode:
-				sDefines += "#define EXPONENTIAL2_MODE\n";
-				sName    += "[Exponential2Mode]";
-				break;
-
-			default:
-				return NULL; // Error!
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredDepthFog_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredDepthFog_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredDepthFog_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[FogMode] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredDepthFog::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -165,67 +94,165 @@ void SRPDeferredDepthFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// Get the fullscreen quad instance
 		FullscreenQuad *pFullscreenQuad = pSRPDeferredGBuffer->GetFullscreenQuad();
 		if (pFullscreenQuad) {
-			// Get the normal/depth texture buffer to use
-			TextureBufferRectangle *pNormalDepthTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
-			if (pNormalDepthTextureBuffer) {
-				// Reset all render states to default
-				cRenderer.GetRendererContext().GetEffectManager().Use();
+			// Get the vertex buffer of the fullscreen quad
+			VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
+			if (pVertexBuffer) {
+				// Get the normal/depth texture buffer to use
+				TextureBufferRectangle *pNormalDepthTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
+				if (pNormalDepthTextureBuffer) {
+					// Get the shader language to use
+					String sShaderLanguage = ShaderLanguage;
+					if (!sShaderLanguage.GetLength())
+						sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-				// Get and set the fragment shader
-				Shader *pFragmentShader = GetFragmentShader(cRenderer);
-				if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-					// Get and set the fragment shader program
-					ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-					cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+					// Create the program generator if there's currently no instance of it
+					if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+						// If there's an previous instance of the program generator, destroy it first
+						if (m_pProgramGenerator) {
+							delete m_pProgramGenerator;
+							m_pProgramGenerator = NULL;
+						}
 
-					{ // Set the "FarPlane" fragment shader parameter and ensure that the parameter is never ever 0
-						static const String sFarPlane = "FarPlane";
-						float fFarPlane = SNCamera::GetCamera() ? SNCamera::GetCamera()->ZFar : FLT_MIN;
-						if (fFarPlane < FLT_MIN)
-							fFarPlane = FLT_MIN;
-						pFragmentShaderProgram->SetParameter1f(sFarPlane, fFarPlane);
+						// Choose the shader source codes depending on the requested shader language
+						String sDeferredDepthFog_VS;
+						String sDeferredDepthFog_FS;
+						if (sShaderLanguage == "GLSL") {
+							#include "SRPDeferredDepthFog_GLSL.h"
+							sDeferredDepthFog_VS = sDeferredDepthFog_GLSL_VS;
+							sDeferredDepthFog_FS = sDeferredDepthFog_GLSL_FS;
+						} else if (sShaderLanguage == "Cg") {
+							#include "SRPDeferredDepthFog_Cg.h"
+							sDeferredDepthFog_VS = sDeferredDepthFog_Cg_VS;
+							sDeferredDepthFog_FS = sDeferredDepthFog_Cg_FS;
+						}
+
+						// Create the program generator
+						if (sDeferredDepthFog_VS.GetLength() && sDeferredDepthFog_FS.GetLength())
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredDepthFog_VS, "arbvp1", sDeferredDepthFog_FS, "arbfp1", true);
 					}
 
-					{ // Set the "FogColor" fragment shader parameter
-						static const String sFogColor = "FogColor";
-						pFragmentShaderProgram->SetParameter4fv(sFogColor, FogColor.Get());
-					}
+					// If there's no program generator, we don't need to continue
+					if (m_pProgramGenerator) {
+						// Reset all render states to default
+						cRenderer.GetRendererContext().GetEffectManager().Use();
 
-					// Fog mode dependent parameters
-					if (FogMode == LinearMode) {
-						// Set the "FogStart" and "FogEnd" fragment shader parameter
-						static const String sFogEnd = "FogEnd";
-						pFragmentShaderProgram->SetParameter1f(sFogEnd, FogEnd);
-						static const String sFogRange = "FogRange";
-						const float fFogRange = FogEnd - FogStart;
-						pFragmentShaderProgram->SetParameter1f(sFogRange, (fFogRange > FLT_MIN) ? fFogRange : FLT_MIN);
-					} else {
-						// Set the "FogDensity" fragment shader parameter
-						static const String sFogDensity = "FogDensity";
-						pFragmentShaderProgram->SetParameter1f(sFogDensity, FogDensity);
-					}
+						// Reset the program flags
+						m_cProgramFlags.Reset();
 
-					{ // Set the "NormalDepthTexture" fragment shader parameter
-						static const String sNormalDepthTexture = "NormalDepthTexture";
-						const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sNormalDepthTexture, pNormalDepthTextureBuffer);
-						if (nStage >= 0) {
-							cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-							cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-							cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-							cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-							cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+						// Set program flags
+						switch (FogMode) {
+							case LinearMode:
+								PL_ADD_FS_FLAG(m_cProgramFlags, FS_LINEAR_MODE)
+								break;
+
+							case ExponentialMode:
+								PL_ADD_FS_FLAG(m_cProgramFlags, FS_EXPONENTIAL_MODE)
+								break;
+
+							case Exponential2Mode:
+								PL_ADD_FS_FLAG(m_cProgramFlags, FS_EXPONENTIAL2_MODE)
+								break;
+						}
+
+						// Get a program instance from the program generator using the given program flags
+						ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
+
+						// Make our program to the current one
+						if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+							// Set pointers to uniforms & attributes of a generated program if they are not set yet
+							GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+							if (!pGeneratedProgramUserData) {
+								pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+								Program *pProgram = pGeneratedProgram->pProgram;
+								// Vertex shader attributes
+								static const String sVertexPosition = "VertexPosition";
+								pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+								// Vertex shader uniforms
+								static const String sTextureSize = "TextureSize";
+								pGeneratedProgramUserData->pTextureSize		= pProgram->GetUniform(sTextureSize);
+								// Fragment shader uniforms
+								static const String sFarPlane = "FarPlane";
+								pGeneratedProgramUserData->pFarPlane		= pProgram->GetUniform(sFarPlane);
+								static const String sFogColor = "FogColor";
+								pGeneratedProgramUserData->pFogColor		= pProgram->GetUniform(sFogColor);
+								static const String sFogEnd = "FogEnd";
+								pGeneratedProgramUserData->pFogEnd			= pProgram->GetUniform(sFogEnd);
+								static const String sFogRange = "FogRange";
+								pGeneratedProgramUserData->pFogRange		= pProgram->GetUniform(sFogRange);
+								static const String sFogDensity = "FogDensity";
+								pGeneratedProgramUserData->pFogDensity		= pProgram->GetUniform(sFogDensity);
+								static const String sNormalDepthMap = "NormalDepthMap";
+								pGeneratedProgramUserData->pNormalDepthMap	= pProgram->GetUniform(sNormalDepthMap);
+							}
+
+							// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+							if (pGeneratedProgramUserData->pVertexPosition)
+								pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+							// Set texture size
+							if (pGeneratedProgramUserData->pTextureSize)
+								pGeneratedProgramUserData->pTextureSize->Set(pNormalDepthTextureBuffer->GetSize());
+
+							// Set the far plane parameter and ensure that the parameter is never ever 0
+							if (pGeneratedProgramUserData->pFarPlane) {
+								float fFarPlane = SNCamera::GetCamera() ? SNCamera::GetCamera()->ZFar : FLT_MIN;
+								if (fFarPlane < FLT_MIN)
+									fFarPlane = FLT_MIN;
+								pGeneratedProgramUserData->pFarPlane->Set(fFarPlane);
+							}
+
+							// Fog color
+							if (pGeneratedProgramUserData->pFogColor)
+								pGeneratedProgramUserData->pFogColor->Set(FogColor.Get());
+
+							// Fog end
+							if (pGeneratedProgramUserData->pFogEnd)
+								pGeneratedProgramUserData->pFogEnd->Set(FogEnd);
+
+							// Fog range
+							if (pGeneratedProgramUserData->pFogRange) {
+								const float fFogRange = FogEnd - FogStart;
+								pGeneratedProgramUserData->pFogRange->Set((fFogRange > FLT_MIN) ? fFogRange : FLT_MIN);
+							}
+
+							// Fog density
+							if (pGeneratedProgramUserData->pFogDensity)
+								pGeneratedProgramUserData->pFogDensity->Set(FogDensity);
+
+							// Normal depth map
+							if (pGeneratedProgramUserData->pNormalDepthMap) {
+								const int nTextureUnit = pGeneratedProgramUserData->pNormalDepthMap->Set(pNormalDepthTextureBuffer);
+								if (nTextureUnit >= 0) {
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+									cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+								}
+							}
+
+							// Setup renderer
+							const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+							cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+							cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+							cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+							cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+							cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
+							// Set blend mode
+							if (!(GetFlags() & DisableBlending)) {
+								cRenderer.SetRenderState(RenderState::BlendEnable,	true);
+								cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
+								cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::InvSrcAlpha);
+							}
+
+							// Draw the fullscreen quad
+							cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+							// Restore fixed fill mode render state
+							cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 						}
 					}
-
-					// Set blend mode
-					if (!(GetFlags() & DisableBlending)) {
-						cRenderer.SetRenderState(RenderState::BlendEnable,	true);
-						cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
-						cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::InvSrcAlpha);
-					}
-
-					// Draw the fullscreen quad
-					pFullscreenQuad->Draw(pNormalDepthTextureBuffer->GetSize());
 				}
 			}
 		}
