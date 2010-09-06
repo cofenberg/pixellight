@@ -544,7 +544,7 @@ bool ImageData::Decompress()
 			}
 			break;
 
-		case CompressionATI2N:
+		case CompressionLATC2:
 			// Loop trough all block rows
 			for (int y=0; y<m_vSize.y; y+=4) {
 				// Loop trough all blocks within the current row
@@ -679,7 +679,7 @@ void ImageData::CalculateCompressedImageBufferSize()
 
 		case CompressionDXT3:
 		case CompressionDXT5:
-		case CompressionATI2N:
+		case CompressionLATC2:
 			// Avoid slow division by using bit-shift
 			m_nCompressedSize = ((m_vSize.x + 3) >> 2) * ((m_vSize.y + 3) >> 2) * 16;
 		//	m_nCompressedSize = ((m_vSize.x + 3) / 4) * ((m_vSize.y + 3) / 4) * 16;

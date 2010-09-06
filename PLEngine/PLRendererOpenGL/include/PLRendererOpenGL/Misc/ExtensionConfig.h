@@ -68,6 +68,7 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_EXT_fog_coord,					bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_secondary_color,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_texture_compression_s3tc,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_EXT_texture_compression_latc,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_texture_lod_bias,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_texture_filter_anisotropic,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_separate_specular_color,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")

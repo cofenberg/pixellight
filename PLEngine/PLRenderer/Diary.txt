@@ -4,10 +4,19 @@ PLRendererOpenGL:
 - "ATI2N" Support läuft (es folgen noch ein paar Arbeitsschritte). Gegenüber "DXT5 xGxR" hat man zwar keine Speicherersparnis, die Qualität ist allerdings besser.
   (siehe http://developer.nvidia.com/object/real-time-normal-map-dxt-compression.html und http://www.ozone3d.net/tutorials/bump_map_compression_p4.php)
   Von den Namen her ist das wieder herrlich, ATI führte das unter dem Marketingnamen 3DC ein, technisch bezeichnet man das als ATI2N, mittlerweile
-  gibts ne universellere OpenGL Extension die auch auf NVIDIA Karten läuft und das RGTC nennt, in DirectX 10 ist es unter BC5 bekannt... *g*
+  gibts ne universellere OpenGL Extension die auch auf NVIDIA Karten läuft und das LATC2 nennt, in DirectX 10 ist es unter BC5 bekannt... *g*
   Ich unterstütze ebenfalls "Alternate XY Swizzle ATI2N", dies ist vergleichbar zu "DXT5 xGxR", beides kann mit "The Compressonator" von ATI erzeugt werden...
   das hat den Vorteil das ich die Shader in den Compositing Schritten NICHT erweitern muss, da bei "ATI2N" der Rest wie bei "DXT5 xGxR" abläuft.
   (sprich, 3'te Komponente errechnen)
+- "GL_ATI_texture_compression_3dc" scheint am Aussterben zu sein, "GL_EXT_texture_compression_latc" heißt der "quasi Nachfolger" der ebenfalls auf NVIDIA Karten läuft.
+  "ATI2N" in "LATC2" umbenannt (das Format an sich ist das gleiche!) und Support für "GL_EXT_texture_compression_latc" hinzugefügt das Standardmäßig verwendet
+  wird, erst wenn diese Erweiterung nicht vorhanden ist, wird nach "GL_ATI_texture_compression_3dc" gesucht. (hätte ich RGTC2 gewählt, wäre das nicht Rückwärtskompatibel
+  zu 3DC und weitere Fallunterscheidungen müssten her, das wollte ich aber vermeiden)
+  Ist weder "GL_EXT_texture_compression_latc" noch "GL_ATI_texture_compression_3dc" vorhanden, wird die Texture zu L8A8 auf der CPU dekomprimiert und dann so zur
+  GPU gegeben, so das man trotzdem was sehen kann auch wenn dann natürlich der Speicherverbrauch höher ist.
+  -> Da ich keine NVIDIA Karte habe, kann ich das natürlich nicht gegentesten ob das auch sauber auf NVIDIA Karten läuft. Zukünftig werde ich "LATC2" im Dungeon
+     Demo nutzen da dieses Feature mittlerweile eigentlich von allen halbwechs aktuellen GPU's unterstützt werden sollte, im PL SDK bleibe ich zur Sicherheit auf
+     "DXT5 xGxR" da ich hier höchstmögliche Kompatibilität haben will.
 
 
 

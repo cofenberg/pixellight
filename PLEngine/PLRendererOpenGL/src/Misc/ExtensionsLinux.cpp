@@ -171,6 +171,11 @@ bool OpenGLExtensions::Init()
 	// GL_EXT_texture_compression_s3tc
 	m_bGL_EXT_texture_compression_s3tc = IsSupported("GL_EXT_texture_compression_s3tc");
 
+	// GL_EXT_texture_compression_latc
+	if (IsSupported("GL_EXT_texture_compression_latc")) {
+		m_bGL_EXT_texture_compression_latc = true;
+	} else m_bGL_EXT_texture_compression_latc = false;
+
 	// GL_EXT_texture_lod_bias
 	m_bGL_EXT_texture_lod_bias = IsSupported("GL_EXT_texture_lod_bias");
 

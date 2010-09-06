@@ -128,7 +128,7 @@ uint32 TextureBufferRectangle::GetNumOfBytes(uint32 nMipmap, EPixelFormat nForma
 
 				case DXT3:
 				case DXT5:
-				case ATI2N:
+				case LATC2:
 					return ((m_vSize.x+3)/4)*((m_vSize.y+3)/4)*16;
 			}
 		} else {

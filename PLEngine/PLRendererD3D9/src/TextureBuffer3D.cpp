@@ -195,7 +195,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 												nSourceFormat = (D3DFORMAT)'1ITA';
 												break;
 
-											case CompressionATI2N:
+											case CompressionLATC2:
 												nSourceFormat = (D3DFORMAT)'2ITA';
 												break;
 

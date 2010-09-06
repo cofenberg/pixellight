@@ -92,8 +92,8 @@ TextureBuffer::EPixelFormat TextureBuffer::GetFormatFromImage(const Image &cImag
 					case CompressionDXT5:
 						return DXT5;
 
-					case CompressionATI2N:
-						return ATI2N;
+					case CompressionLATC2:
+						return LATC2;
 				}
 			}
 		}
@@ -129,7 +129,7 @@ bool TextureBuffer::IsCompressedFormat(EPixelFormat nFormat)
 		case DXT1:			return true;
 		case DXT3:			return true;
 		case DXT5:			return true;
-		case ATI2N:			return true;
+		case LATC2:			return true;
 		case L16F:			return false;
 		case L32F:			return false;
 		case R16G16B16A16F:	return false;
@@ -151,7 +151,7 @@ TextureBuffer::EPixelFormat TextureBuffer::GetUncompressedFormat(EPixelFormat nF
 			case DXT1:			return R8G8B8;
 			case DXT3:			return R8G8B8A8;
 			case DXT5:			return R8G8B8A8;
-			case ATI2N:			return L8A8;
+			case LATC2:			return L8A8;
 		}
 	}
 
@@ -185,7 +185,7 @@ bool TextureBuffer::IsFloatingPointFormat(EPixelFormat nFormat)
 		case DXT1:			return false;
 		case DXT3:			return false;
 		case DXT5:			return false;
-		case ATI2N:			return false;
+		case LATC2:			return false;
 		case L16F:			return true;
 		case L32F:			return true;
 		case R16G16B16A16F:	return true;
@@ -220,7 +220,7 @@ uint32 TextureBuffer::GetComponentsPerPixel(EPixelFormat nFormat)
 		case DXT1:			return 3;
 		case DXT3:			return 4;
 		case DXT5:			return 4;
-		case ATI2N:			return 2;
+		case LATC2:			return 2;
 		case L16F:			return 1;
 		case L32F:			return 1;
 		case R16G16B16A16F:	return 4;
@@ -255,7 +255,7 @@ uint32 TextureBuffer::GetBytesPerPixelComponent(EPixelFormat nFormat)
 		case DXT1:			return 0; // No full byte per component...
 		case DXT3:			return 0; // No full byte per component...
 		case DXT5:			return 0; // No full byte per component...
-		case ATI2N:			return 0; // No full byte per component...
+		case LATC2:			return 0; // No full byte per component...
 		case L16F:			return 2;
 		case L32F:			return 4;
 		case R16G16B16A16F:	return 2;
@@ -290,7 +290,7 @@ uint32 TextureBuffer::GetBytesPerPixel(EPixelFormat nFormat)
 		case DXT1:			return 0; // No full byte per pixel...
 		case DXT3:			return 0; // No full byte per pixel...
 		case DXT5:			return 0; // No full byte per pixel...
-		case ATI2N:			return 0; // No full byte per pixel...
+		case LATC2:			return 0; // No full byte per pixel...
 		case L16F:			return 2;
 		case L32F:			return 4;
 		case R16G16B16A16F:	return 8;

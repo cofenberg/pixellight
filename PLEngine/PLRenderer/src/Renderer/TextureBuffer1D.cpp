@@ -130,7 +130,7 @@ uint32 TextureBuffer1D::GetNumOfBytes(uint32 nMipmap, EPixelFormat nFormat) cons
 
 				case DXT3:
 				case DXT5:
-				case ATI2N:
+				case LATC2:
 					return ((nSize+3)/4)*16;
 			}
 		} else {

@@ -62,6 +62,7 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_EXT_fog_coord(this),
 	GL_EXT_secondary_color(this),
 	GL_EXT_texture_compression_s3tc(this),
+	GL_EXT_texture_compression_latc(this),
 	GL_EXT_texture_lod_bias(this),
 	GL_EXT_texture_filter_anisotropic(this),
 	GL_EXT_separate_specular_color(this),

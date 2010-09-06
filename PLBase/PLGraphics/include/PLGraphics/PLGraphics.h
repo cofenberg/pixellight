@@ -145,7 +145,7 @@ enum ECompression {
 	CompressionDXT3,		/**< DXT3 compression (RGBA compression: 4:1, 16 bytes per block) */
 	CompressionDXT5,		/**< DXT5 compression (RGBA compression: 4:1, 16 bytes per block) */
 	CompressionATI1N,		/**< ATI1N compression (8 bytes per block) */
-	CompressionATI2N		/**< ATI2N compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC or RGTC (known as BC5 in DirectX 10), 16 bytes per block) */
+	CompressionLATC2		/**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as LATC2 or previously 3DC, known as BC5 in DirectX 10, 16 bytes per block) */
 };
 
 

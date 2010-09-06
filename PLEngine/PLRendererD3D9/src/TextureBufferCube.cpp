@@ -199,7 +199,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 															nSourceFormat = (D3DFORMAT)'1ITA';
 															break;
 
-														case CompressionATI2N:
+														case CompressionLATC2:
 															nSourceFormat = (D3DFORMAT)'2ITA';
 															break;
 

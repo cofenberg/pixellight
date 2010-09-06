@@ -105,7 +105,7 @@ class TextureBuffer : public Resource {
 			DXT1          = 16,	/**< DXT1 format (RGB compression: 8:1) */
 			DXT3          = 17,	/**< DXT3 format (RGBA compression: 4:1) */
 			DXT5          = 18,	/**< DXT5 format (RGBA compression: 4:1) */
-			ATI2N         = 19, /**< ATI2N compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC or RGTC (known as BC5 in DirectX 10), 16 bytes per block) */
+			LATC2         = 19, /**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as LATC2 or previously 3DC, known as BC5 in DirectX 10, 16 bytes per block) */
 			// Floating-point formats
 			L16F          = 20,	/**< 16-bit float format using 16 bits for luminance */
 			L32F          = 21,	/**< 32-bit float format using 32 bits for luminance */

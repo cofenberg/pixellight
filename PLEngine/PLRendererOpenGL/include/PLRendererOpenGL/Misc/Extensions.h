@@ -110,6 +110,7 @@ class OpenGLExtensions {
 		bool IsGL_EXT_fog_coord() const;
 		bool IsGL_EXT_secondary_color() const;
 		bool IsGL_EXT_texture_compression_s3tc() const;
+		bool IsGL_EXT_texture_compression_latc() const;
 		bool IsGL_EXT_texture_lod_bias() const;
 		bool IsGL_EXT_texture_filter_anisotropic() const;
 		bool IsGL_EXT_separate_specular_color() const;
@@ -261,6 +262,7 @@ class OpenGLExtensions {
 		bool m_bGL_EXT_fog_coord;
 		bool m_bGL_EXT_secondary_color;
 		bool m_bGL_EXT_texture_compression_s3tc;
+		bool m_bGL_EXT_texture_compression_latc;
 		bool m_bGL_EXT_texture_lod_bias;
 		bool m_bGL_EXT_texture_filter_anisotropic;
 		bool m_bGL_EXT_separate_specular_color;

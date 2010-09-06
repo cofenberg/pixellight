@@ -483,7 +483,7 @@ uint32 Renderer::GetOpenGLESDataFormat(PLRenderer::TextureBuffer::EPixelFormat n
 		case PLRenderer::TextureBuffer::DXT1:
 		case PLRenderer::TextureBuffer::DXT3:
 		case PLRenderer::TextureBuffer::DXT5:
-		case PLRenderer::TextureBuffer::ATI2N:
+		case PLRenderer::TextureBuffer::LATC2:
 			return GL_UNSIGNED_BYTE;
 
 		case PLRenderer::TextureBuffer::L16:
@@ -532,7 +532,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
 			// we have to choose a fallback format.
 			switch (nChosenInternalFormat) {
-				case PLRenderer::TextureBuffer::ATI2N:
+				case PLRenderer::TextureBuffer::LATC2:
 					nChosenInternalFormat = PLRenderer::TextureBuffer::L8A8;
 					break;
 
@@ -803,7 +803,7 @@ void Renderer::InitWrappers()
 	m_cPLE_TPFWrapper += GL_RGB;				// 16: PLRenderer::TextureBuffer::DXT1			- not supported by OpenGL ES 2.0
 	m_cPLE_TPFWrapper += GL_RGBA;				// 17: PLRenderer::TextureBuffer::DXT3			- not supported by OpenGL ES 2.0
 	m_cPLE_TPFWrapper += GL_RGBA;				// 18: PLRenderer::TextureBuffer::DXT5			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	// 19: PLRenderer::TextureBuffer::ATI2N			- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	// 19: PLRenderer::TextureBuffer::LATC2			- not supported by OpenGL ES 2.0
 
 	/*
 	// [TODO]

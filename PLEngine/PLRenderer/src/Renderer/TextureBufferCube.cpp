@@ -140,7 +140,7 @@ uint32 TextureBufferCube::GetNumOfBytes(uint32 nMipmap, EPixelFormat nFormat) co
 
 				case DXT3:
 				case DXT5:
-				case ATI2N:
+				case LATC2:
 					return ((nSize+3)/4)*((nSize+3)/4)*16*6;
 			}
 		} else {

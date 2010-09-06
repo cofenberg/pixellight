@@ -349,6 +349,7 @@ bool OpenGLExtensions::IsGL_EXT_draw_range_elements()			const { return m_bGL_EXT
 bool OpenGLExtensions::IsGL_EXT_fog_coord()						const { return m_bGL_EXT_fog_coord;					 }
 bool OpenGLExtensions::IsGL_EXT_secondary_color()				const { return m_bGL_EXT_secondary_color;			 }
 bool OpenGLExtensions::IsGL_EXT_texture_compression_s3tc()		const { return m_bGL_EXT_texture_compression_s3tc;	 }
+bool OpenGLExtensions::IsGL_EXT_texture_compression_latc()		const { return m_bGL_EXT_texture_compression_latc;	 }
 bool OpenGLExtensions::IsGL_EXT_texture_lod_bias()				const { return m_bGL_EXT_texture_lod_bias;			 }
 bool OpenGLExtensions::IsGL_EXT_texture_filter_anisotropic()	const { return m_bGL_EXT_texture_filter_anisotropic; }
 bool OpenGLExtensions::IsGL_EXT_separate_specular_color()		const { return m_bGL_EXT_separate_specular_color;	 }
@@ -533,6 +534,7 @@ void OpenGLExtensions::ResetExtensions()
 	m_bGL_EXT_fog_coord					 = false;
 	m_bGL_EXT_secondary_color			 = false;
 	m_bGL_EXT_texture_compression_s3tc   = false;
+	m_bGL_EXT_texture_compression_latc	 = false;
 	m_bGL_EXT_texture_lod_bias			 = false;
 	m_bGL_EXT_texture_filter_anisotropic = false;
 	m_bGL_EXT_separate_specular_color    = false;

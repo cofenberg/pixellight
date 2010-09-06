@@ -107,8 +107,8 @@ class Texture : public PLCore::Resource<Texture> {
 			DXT5			= 3,	/**< DXT5 format (RGBA compression: 4:1) */
 			DXT5_xGxR		= 4,	/**< Swizzled DXT5 (same as above!) format for normal map compression (red stored in alpha, blue unused) */
 			ATI1N			= 5,	/**< ATI1N compression (8 bytes per block) */
-			ATI2N			= 6,	/**< ATI2N compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC or RGTC (known as BC5 in DirectX 10), 16 bytes per block) */
-			ATI2N_XYSwizzle = 7,	/**< Alternate XY swizzle ATI2N (same as above!) format for normal map compression (texture can be used just like DXT5_xGxR) */
+			LATC2			= 6,	/**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as LATC2 or previously 3DC, known as BC5 in DirectX 10, 16 bytes per block) */
+			LATC2_XYSwizzle = 7,	/**< Alternate XY swizzle LATC2 (same as above!) format for normal map compression (texture can be used just like DXT5_xGxR) */
 			None			= 8		/**< No compression is used */
 		};
 
