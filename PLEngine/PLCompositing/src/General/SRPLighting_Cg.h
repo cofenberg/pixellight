@@ -382,10 +382,14 @@ static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
 	#ifdef FS_NORMAL\n\
 		#ifdef FS_NORMALMAP\n\
 			// Fetch normal texel data\n\
-			#ifdef FS_NORMALMAP_DXT5_XGXR\n\
+			#if defined(FS_NORMALMAP_DXT5_XGXR) || defined(FS_NORMALMAP_LATC2)\n\
 				// Fetch the xy-components of the normal and reconstruct the z-component\n\
 				float3 normal;\n\
-				normal.xy = tex2D(NormalMap, TexCoord0).ag*2 - 1;\n\
+				#ifdef FS_NORMALMAP_DXT5_XGXR\n\
+					normal.xy = tex2D(NormalMap, TexCoord0).ag*2 - 1;\n\
+				#else\n\
+					normal.xy = tex2D(NormalMap, TexCoord0).ra*2 - 1;\n\
+				#endif\n\
 				normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 			#else\n\
 				float3 normal = tex2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
@@ -394,10 +398,14 @@ static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
 \n\
 			// Fetch and apply detail normal texel data\n\
 			#ifdef FS_DETAILNORMALMAP\n\
-				#ifdef FS_DETAILNORMALMAP_DXT5_XGXR\n\
+				#if defined(FS_DETAILNORMALMAP_DXT5_XGXR) || defined(FS_DETAILNORMALMAP_LATC2)\n\
 					// Fetch the xy-components of the normal and reconstruct the z-component\n\
 					float3 detailNormal;\n\
-					detailNormal.xy = tex2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2 - 1;\n\
+					#ifdef FS_DETAILNORMALMAP_DXT5_XGXR\n\
+						detailNormal.xy = tex2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2 - 1;\n\
+					#else\n\
+						detailNormal.xy = tex2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ra*2 - 1;\n\
+					#endif\n\
 					detailNormal.z  = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 				#else\n\
 					float3 detailNormal = tex2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2 - 1;\n\

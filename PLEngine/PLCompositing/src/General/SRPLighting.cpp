@@ -610,8 +610,12 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								pNormalMapParameter = pMaterial->GetParameter(Material::NormalMap);
 								if (pNormalMapParameter) {
 									const Texture *pNormalMapTexture = pNormalMapParameter->GetValueTexture();
-									if (pNormalMapTexture && (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle))
-										PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+									if (pNormalMapTexture) {
+										if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+											PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+										else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+											PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_LATC2)
+									}
 								}
 							} else {
 								// The normal map has no longer an influence!
@@ -643,8 +647,12 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								pDetailNormalMapParameter = pMaterial->GetParameter(sDetailNormalMap);
 								if (pDetailNormalMapParameter) {
 									const Texture *pDetailNormalMapTexture = pDetailNormalMapParameter->GetValueTexture();
-									if (pDetailNormalMapTexture && (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle))
-										PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+									if (pDetailNormalMapTexture) {
+										if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+											PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+										else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+											PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_LATC2)
+									}
 								}
 							} else {
 								// The detail normal map has no longer an influence!

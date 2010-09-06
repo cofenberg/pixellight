@@ -279,17 +279,19 @@ class SRPDirectionalLighting : public PLScene::SRPDirectionalLighting {
 				FS_2DREFLECTIONMAP				= 1<<15,	/**< Use 2D reflection mapping (FS_REFLECTION should be defined, can't be set together with FS_CUBEREFLECTIONMAP!) */
 				FS_CUBEREFLECTIONMAP			= 1<<16,	/**< Use cube reflection mapping (FS_REFLECTION should be defined, can't be set together with FS_2DREFLECTIONMAP!) */
 			FS_NORMALMAP						= 1<<17,	/**< Take normal map into account */
-				FS_NORMALMAP_DXT5_XGXR			= 1<<18,	/**< Compressed normal map (FS_NORMALMAP should be defined!) */
-				FS_DETAILNORMALMAP				= 1<<19,	/**< Take detail normal map into account (FS_NORMALMAP should be defined!) */
-				FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<20,	/**< Compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined!) */
-			FS_LIGHTING							= 1<<21,	/**< Perform lighting */
-				FS_SPECULAR						= 1<<22,	/**< Use specular (FS_LIGHTING should be set, too) */
-					FS_SPECULARMAP				= 1<<23,	/**< Take specular map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
-					FS_SPECULARRAMPMAP			= 1<<24,	/**< Take specular ramp map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
-				FS_EDGERAMPMAP					= 1<<25,	/**< Use edge ramp map (FS_LIGHTING should be set, too) */
-			FS_GLOW								= 1<<26,	/**< Use glow (FS_DOF is not allowed to be set as well) */
-				FS_GLOWMAP						= 1<<27,	/**< Use glow map (FS_GLOW should be set, too) */
-			FS_DOF								= 1<<28		/**< Use depth of field (FS_GLOW is not allowed to be set as well) */
+				FS_NORMALMAP_DXT5_XGXR			= 1<<18,	/**< DXT5 XGXR normal map (FS_NORMALMAP should be defined and FS_NORMALMAP_LATC2 not!) */
+				FS_NORMALMAP_LATC2				= 1<<19,	/**< LATC2 normal map (FS_NORMALMAP should be defined and FS_NORMALMAP_DXT5_XGXR not!) */
+				FS_DETAILNORMALMAP				= 1<<20,	/**< Take detail normal map into account (FS_NORMALMAP should be defined!) */
+				FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<21,	/**< DXT5 XGXR compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined and FS_DETAILNORMALMAP_LATC2 not!) */
+				FS_DETAILNORMALMAP_LATC2		= 1<<22,	/**< LATC2 compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined and FS_DETAILNORMALMAP_DXT5_XGXR not!) */
+			FS_LIGHTING							= 1<<23,	/**< Perform lighting */
+				FS_SPECULAR						= 1<<24,	/**< Use specular (FS_LIGHTING should be set, too) */
+					FS_SPECULARMAP				= 1<<25,	/**< Take specular map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
+					FS_SPECULARRAMPMAP			= 1<<26,	/**< Take specular ramp map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
+				FS_EDGERAMPMAP					= 1<<27,	/**< Use edge ramp map (FS_LIGHTING should be set, too) */
+			FS_GLOW								= 1<<28,	/**< Use glow (FS_DOF is not allowed to be set as well) */
+				FS_GLOWMAP						= 1<<29,	/**< Use glow map (FS_GLOW should be set, too) */
+			FS_DOF								= 1<<30		/**< Use depth of field (FS_GLOW is not allowed to be set as well) */
 		};
 
 		/**

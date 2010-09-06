@@ -379,10 +379,14 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*    Normal map
 		*  @param[in] bNormalMap_DXT5_xGxR
 		*    DXT5 xGxR normal map
+		*  @param[in] bNormalMap_LATC2
+		*    LATC2 normal map
 		*  @param[in] bDetailNormalMap
 		*    Detail normal map
 		*  @param[in] bDetailNormalMap_DXT5_xGxR
 		*    DXT5 xGxR detail normal map
+		*  @param[in] bDetailNormalMap_LATC2
+		*    LATC2 detail normal map
 		*  @param[in] fAlphaReference
 		*    Alpha reference
 		*  @param[in] bFresnelReflection
@@ -397,7 +401,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*  @return
 		*    The shader with the requested features, NULL on error
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap, bool bSpecular, bool bSpecularMap, bool bParallax, bool bAmbientOcclusionMap, bool bEmissiveMap, bool b2DReflection, bool bCubeReflection, bool bReflectivityMap, bool bLightMap, bool bAOAlphaTest, bool bNormalMap, bool bNormalMap_DXT5_xGxR, bool bDetailNormalMap, bool bDetailNormalMap_DXT5_xGxR, float fAlphaReference, bool bFresnelReflection, bool bGlow, bool bGlowMap, bool bGammaCorrection);
+		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap, bool bSpecular, bool bSpecularMap, bool bParallax, bool bAmbientOcclusionMap, bool bEmissiveMap, bool b2DReflection, bool bCubeReflection, bool bReflectivityMap, bool bLightMap, bool bAOAlphaTest, bool bNormalMap, bool bNormalMap_DXT5_xGxR, bool bNormalMap_LATC2, bool bDetailNormalMap, bool bDetailNormalMap_DXT5_xGxR, bool bDetailNormalMap_LATC2, float fAlphaReference, bool bFresnelReflection, bool bGlow, bool bGlowMap, bool bGammaCorrection);
 
 		/**
 		*  @brief
@@ -455,10 +459,10 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		PLGeneral::uint32			 m_nMaterialChanges;	/**< Number of material changes */
 		const PLRenderer::Material	*m_pCurrentMaterial;	/**< Current used material, can be NULL */
 
-		bool					  m_bVertexShader[2][2][2][2][2][2][2][2][2];										/**< [DiffuseMap][Parallax][DisplacementMap][AmbientOcclusionMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
-		PLRenderer::ShaderHandler m_cVertexShader[2][2][2][2][2][2][2][2][2];										/**< [DiffuseMap][Parallax][DisplacementMap][AmbientOcclusionMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
-		bool					  m_bFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][DetailNormalMap][DetailNormalMap_DXT5_xGxR][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
-		PLRenderer::ShaderHandler m_cFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][DetailNormalMap][DetailNormalMap_DXT5_xGxR][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
+		bool					  m_bVertexShader[2][2][2][2][2][2][2][2][2];											/**< [DiffuseMap][Parallax][DisplacementMap][AmbientOcclusionMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
+		PLRenderer::ShaderHandler m_cVertexShader[2][2][2][2][2][2][2][2][2];											/**< [DiffuseMap][Parallax][DisplacementMap][AmbientOcclusionMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
+		bool					  m_bFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][NormalMap_LATC2][DetailNormalMap][DetailNormalMap_DXT5_xGxR][DetailNormalMap_LATC2][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
+		PLRenderer::ShaderHandler m_cFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][NormalMap_LATC2][DetailNormalMap][DetailNormalMap_DXT5_xGxR][DetailNormalMap_LATC2][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
 
 		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;	/**< List of all used shaders */
 

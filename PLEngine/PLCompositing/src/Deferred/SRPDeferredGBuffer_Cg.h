@@ -24,9 +24,11 @@
  *  - USE_SPECULAR:                  Use specular
  *    - USE_SPECULARMAP:             Take specular map into account (USE_SPECULAR must be set, too)
  *  - USE_NORMALMAP:                 Take normal map into account
- *    - NORMALMAP_DXT5_XGXR:         Compressed normal map (USE_NORMALMAP must be defined!)
+ *    - NORMALMAP_DXT5_XGXR:         DXT5 XGXR compressed normal map (USE_NORMALMAP must be defined and NORMALMAP_LATC2 not!)
+ *    - NORMALMAP_LATC2:             LATC2 compressed normal map (USE_NORMALMAP must be defined and NORMALMAP_DXT5_XGXR not!)
  *    - USE_DETAILNORMALMAP:         Take detail normal map into account (USE_NORMALMAP must be defined!)
- *      - DETAILNORMALMAP_DXT5_XGXR: Compressed detail normal map (USE_NORMALMAP & USE_DETAILNORMALMAP must be defined!)
+ *      - DETAILNORMALMAP_DXT5_XGXR: DXT5 XGXR compressed detail normal map (USE_NORMALMAP & USE_DETAILNORMALMAP must be defined and DETAILNORMALMAP_LATC2 not!)
+ *      - DETAILNORMALMAP_LATC2:     LATC2 compressed detail normal map (USE_NORMALMAP & USE_DETAILNORMALMAP must be defined and DETAILNORMALMAP_DXT5_XGXR not!)
  *  - USE_PARALLAXMAPPING:           Perform parallax mapping
  *  - USE_AMBIENTOCCLUSIONMAP:       Use ambient occlusion map
  *  - USE_LIGHTMAP:                  Use light map
@@ -310,10 +312,14 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 	// RT1: RG encoded normal vector\n\
 #ifdef USE_NORMALMAP\n\
 	// Fetch normal texel data\n\
-	#ifdef NORMALMAP_DXT5_XGXR\n\
+	#if defined(NORMALMAP_DXT5_XGXR) || defined(NORMALMAP_LATC2)\n\
 		// Fetch the xy-components of the normal and reconstruct the z-component\n\
 		float3 normal;\n\
-		normal.xy = tex2D(NormalMap, textureCoordinate).ag*2 - 1;\n\
+		#ifdef NORMALMAP_DXT5_XGXR\n\
+			normal.xy = tex2D(NormalMap, textureCoordinate).ag*2 - 1;\n\
+		#else\n\
+			normal.xy = tex2D(NormalMap, textureCoordinate).ra*2 - 1;\n\
+		#endif\n\
 		normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 	#else\n\
 		float3 normal = tex2D(NormalMap, textureCoordinate).xyz*2 - 1;\n\
@@ -322,10 +328,14 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 \n\
 	// Fetch and apply detail normal texel data\n\
 	#ifdef USE_DETAILNORMALMAP\n\
-		#ifdef DETAILNORMALMAP_DXT5_XGXR\n\
+		#if defined(DETAILNORMALMAP_DXT5_XGXR) || defined(DETAILNORMALMAP_LATC2)\n\
 			// Fetch the xy-components of the normal and reconstruct the z-component\n\
 			float3 detailNormal;\n\
-			detailNormal.xy = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ag*2 - 1;\n\
+			#ifdef DETAILNORMALMAP_DXT5_XGXR\n\
+				detailNormal.xy = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ag*2 - 1;\n\
+			#else\n\
+				detailNormal.xy = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ra*2 - 1;\n\
+			#endif\n\
 			detailNormal.z  = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 		#else\n\
 			float3 detailNormal = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2 - 1;\n\

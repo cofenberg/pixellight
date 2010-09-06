@@ -284,7 +284,7 @@ Shader *SRPDeferredGBuffer::GetVertexShader(Renderer &cRenderer, bool bDiffuseMa
 *  @brief
 *    Returns an ambient/emissive fragment shader
 */
-Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuseMap, bool bSpecular, bool bSpecularMap, bool bParallax, bool bAmbientOcclusionMap, bool bEmissiveMap, bool b2DReflection, bool bCubeReflection, bool bReflectivityMap, bool bLightMap, bool bAlphaTest, bool bNormalMap, bool bNormalMap_DXT5_xGxR, bool bDetailNormalMap, bool bDetailNormalMap_DXT5_xGxR, float fAlphaReference, bool bFresnelReflection, bool bGlow, bool bGlowMap, bool bGammaCorrection)
+Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuseMap, bool bSpecular, bool bSpecularMap, bool bParallax, bool bAmbientOcclusionMap, bool bEmissiveMap, bool b2DReflection, bool bCubeReflection, bool bReflectivityMap, bool bLightMap, bool bAlphaTest, bool bNormalMap, bool bNormalMap_DXT5_xGxR, bool bNormalMap_LATC2, bool bDetailNormalMap, bool bDetailNormalMap_DXT5_xGxR, bool bDetailNormalMap_LATC2, float fAlphaReference, bool bFresnelReflection, bool bGlow, bool bGlowMap, bool bGammaCorrection)
 {
 	// Check reflection settings
 	if (b2DReflection && bCubeReflection)
@@ -294,15 +294,15 @@ Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuse
 	// Normal mapping logic checks
 	if (bNormalMap) {
 		if (!bDetailNormalMap)
-			bDetailNormalMap_DXT5_xGxR = false;
+			bDetailNormalMap_DXT5_xGxR = bDetailNormalMap_LATC2 = false;
 	} else {
-		bNormalMap_DXT5_xGxR = bDetailNormalMap = bDetailNormalMap_DXT5_xGxR = false;
+		bNormalMap_DXT5_xGxR = bNormalMap_LATC2 = bDetailNormalMap = bDetailNormalMap_DXT5_xGxR = bDetailNormalMap_LATC2 = false;
 	}
 
 	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection];
+	ShaderHandler &cShaderHandler = m_cFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bNormalMap_LATC2][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bDetailNormalMap_LATC2][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection];
 	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection]) {
+	if (!pShader && !m_bFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bNormalMap_LATC2][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bDetailNormalMap_LATC2][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection]) {
 		const static String ShaderFilename = "Fragment/SRPDeferredGBuffer.cg";
 
 		// Get defines string and a readable shader name (we MUST choose a new name!)
@@ -329,6 +329,9 @@ Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuse
 			if (bNormalMap_DXT5_xGxR) {
 				sDefines += "#define NORMALMAP_DXT5_XGXR\n";
 				sName    += "[NormalMap_DXT5_xGxR]";
+			} else if (bNormalMap_LATC2) {
+				sDefines += "#define NORMALMAP_LATC2\n";
+				sName    += "[NormalMap_LATC2]";
 			}
 			if (bDetailNormalMap) {
 				sDefines += "#define USE_DETAILNORMALMAP\n";
@@ -336,6 +339,9 @@ Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuse
 				if (bDetailNormalMap_DXT5_xGxR) {
 					sDefines += "#define DETAILNORMALMAP_DXT5_XGXR\n";
 					sName    += "[DetailNormalMap_DXT5_xGxR]";
+				} else if (bDetailNormalMap_LATC2) {
+					sDefines += "#define DETAILNORMALMAP_LATC2\n";
+					sName    += "[DetailNormalMap_LATC2]";
 				}
 			}
 		}
@@ -396,7 +402,7 @@ Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuse
 		}
 		cShaderHandler.SetResource(pShader);
 		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection] = true;
+		m_bFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bNormalMap_LATC2][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bDetailNormalMap_LATC2][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection] = true;
 	}
 
 	// Return the shader
@@ -711,6 +717,7 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 								TextureBuffer *pNormalMap = (GetFlags() & NoNormalMap) ? NULL : pMaterial->GetParameterTextureBuffer(Material::NormalMap);
 								float fNormalMapBumpiness = 1.0f;
 								bool bNormalMap_DXT5_xGxR = false;
+								bool bNormalMap_LATC2     = false;
 								static const String sNormalMapBumpiness = "NormalMapBumpiness";
 								if (pNormalMap) {
 									// Get normal map bumpiness
@@ -722,8 +729,12 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 										pNormalMapParameter = pMaterial->GetParameter(Material::NormalMap);
 										if (pNormalMapParameter) {
 											const Texture *pNormalMapTexture = pNormalMapParameter->GetValueTexture();
-											if (pNormalMapTexture && (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle))
-												bNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+											if (pNormalMapTexture) {
+												if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+													bNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+												else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+													bNormalMap_LATC2 = true;
+											}
 										}
 									} else {
 										// The normal map has no longer an influence!
@@ -737,6 +748,7 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 								float fDetailNormalMapBumpiness = 1.0f;
 								Vector2 vDetailNormalMapUVScale(4.0f, 4.0f);
 								bool bDetailNormalMap_DXT5_xGxR = false;
+								bool bDetailNormalMap_LATC2     = false;
 								static const String sDetailNormalMapBumpiness = "DetailNormalMapBumpiness";
 								static const String sDetailNormalMapUVScale   = "DetailNormalMapUVScale";
 								if (pDetailNormalMap) {
@@ -754,8 +766,12 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 										pDetailNormalMapParameter = pMaterial->GetParameter(sDetailNormalMap);
 										if (pDetailNormalMapParameter) {
 											const Texture *pDetailNormalMapTexture = pDetailNormalMapParameter->GetValueTexture();
-											if (pDetailNormalMapTexture && (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle))
-												bDetailNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+											if (pDetailNormalMapTexture) {
+												if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+													bDetailNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+												else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+													bDetailNormalMap_LATC2 = true;
+											}
 										}
 									} else {
 										// The detail normal map has no longer an influence!
@@ -777,7 +793,7 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 								if (pMeshVertexShader) {
 									pVertexShaderProgram = pMeshVertexShader->GetShaderProgram();
 									if (pVertexShaderProgram) {
-										Shader *pMeshFragmentShader = GetFragmentShader(cRenderer, pDiffuseMap != NULL, bSpecular, pSpecularMap != NULL, fParallax != 0.0f, pAmbientOcclusionMap != NULL, pEmissiveMap != NULL, b2DReflectionMap && pReflectionMap, !b2DReflectionMap && pReflectionMap, pReflectivityMap != NULL, pLightMap != NULL, fAlphaReference != 0.0f, pNormalMap != NULL, bNormalMap_DXT5_xGxR, pDetailNormalMap != NULL, bDetailNormalMap_DXT5_xGxR, fAlphaReference, fIndexOfRefraction > 0.0f, fGlowFactor != 0.0f, pGlowMap != NULL, bGammaCorrection);
+										Shader *pMeshFragmentShader = GetFragmentShader(cRenderer, pDiffuseMap != NULL, bSpecular, pSpecularMap != NULL, fParallax != 0.0f, pAmbientOcclusionMap != NULL, pEmissiveMap != NULL, b2DReflectionMap && pReflectionMap, !b2DReflectionMap && pReflectionMap, pReflectivityMap != NULL, pLightMap != NULL, fAlphaReference != 0.0f, pNormalMap != NULL, bNormalMap_DXT5_xGxR, bNormalMap_LATC2, pDetailNormalMap != NULL, bDetailNormalMap_DXT5_xGxR, bDetailNormalMap_LATC2, fAlphaReference, fIndexOfRefraction > 0.0f, fGlowFactor != 0.0f, pGlowMap != NULL, bGammaCorrection);
 										if (pMeshFragmentShader) {
 											ShaderProgram *pFragmentShaderProgram = pMeshFragmentShader->GetShaderProgram();
 											if (pFragmentShaderProgram) {

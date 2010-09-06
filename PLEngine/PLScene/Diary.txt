@@ -2,6 +2,10 @@
 [CO]
 PLCompositing:
 - SRPDeferredHDAO verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+- SRPDeferredGBuffer & SNDirectionalLight & SNLight um LATC2 Support erweitert, dazu habe ich erstmal entsprechende Shader-Flags hinzugefügt, auch
+  wenn das mittlerweile stellenweise extrem viele Flags sind. Für Texture-Komponenten tauschen gibts mittlerweile auch "GL_EXT_texture_swizzle",
+  ich wollte allerdings jetzt nicht NOCH eine OpenGL Erweiterung hinzufügen für Komponenten vertauschen, am Ende gibts Systeme die das nicht
+  unterstüzen etc....
 
 
 

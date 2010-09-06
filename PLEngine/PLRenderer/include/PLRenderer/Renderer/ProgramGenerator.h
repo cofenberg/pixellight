@@ -47,7 +47,7 @@
 *  @param[in] FLAG
 *    Flag to add
 */
-#define PL_ADD_VS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddVertexShaderFlag(FLAG, #FLAG);
+#define PL_ADD_VS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddVertexShaderFlag(PLGeneral::uint32(FLAG), #FLAG);
 
 /**
 *  @brief
@@ -58,7 +58,7 @@
 *  @param[in] FLAG
 *    Flag to add
 */
-#define PL_ADD_FS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddFragmentShaderFlag(FLAG, #FLAG);
+#define PL_ADD_FS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddFragmentShaderFlag(PLGeneral::uint32(FLAG), #FLAG);
 
 
 //[-------------------------------------------------------]

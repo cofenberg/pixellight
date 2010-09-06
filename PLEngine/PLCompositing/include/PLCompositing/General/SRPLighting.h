@@ -271,22 +271,24 @@ class SRPLighting : public PLScene::SceneRendererPass {
 				FS_2DREFLECTIONMAP				= 1<<11,	/**< Use 2D reflection mapping (FS_REFLECTION should be defined, can't be set together with FS_CUBEREFLECTIONMAP!) */
 				FS_CUBEREFLECTIONMAP			= 1<<12,	/**< Use cube reflection mapping (FS_REFLECTION should be defined, can't be set together with FS_2DREFLECTIONMAP!) */
 			FS_NORMALMAP						= 1<<13,	/**< Take normal map into account */
-				FS_NORMALMAP_DXT5_XGXR			= 1<<14,	/**< Compressed normal map (FS_NORMALMAP should be defined!) */
-				FS_DETAILNORMALMAP				= 1<<15,	/**< Take detail normal map into account (FS_NORMALMAP should be defined!) */
-				FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<16,	/**< Compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined!) */
-			FS_SPECULAR							= 1<<17,	/**< Use specular */
-				FS_SPECULARMAP					= 1<<18,	/**< Take specular map into account (FS_SPECULAR should be set, too) */
-				FS_SPECULARRAMPMAP				= 1<<19,	/**< Take specular ramp map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
-			FS_EDGERAMPMAP						= 1<<20,	/**< Use edge ramp map */
-			FS_DIRECTIONAL						= 1<<21,	/**< Directional light */
-			FS_PROJECTIVE_POINT					= 1<<22,	/**< Projective point light */
-			FS_SPOT								= 1<<23,	/**< Spot light */
-				FS_SPOT_PROJECTIVE				= 1<<24,	/**< Projective spot light (FS_SPOT should be set, too) */
-				FS_SPOT_CONE					= 1<<25,	/**< Spot light with a cone (FS_SPOT should be set, too) */
-					FS_SPOT_SMOOTHCONE			= 1<<26,	/**< Spot light with a smooth cone (FS_SPOT & FS_SPOT_CONE should be set, too) */
-			FS_SHADOWMAPPING					= 1<<27,	/**< Perform shadow mapping */
-				FS_SOFTSHADOWMAPPING			= 1<<28,	/**< Perform soft shadow mapping (FS_SHADOWMAPPING should be set, too) */
-			FS_DISCARD							= 1<<29		/**< Use discard */
+				FS_NORMALMAP_DXT5_XGXR			= 1<<14,	/**< DXT5 XGXR compressed normal map (FS_NORMALMAP should be defined and FS_NORMALMAP_LATC2 not!) */
+				FS_NORMALMAP_LATC2				= 1<<15,	/**< LATC2 compressed normal map (FS_NORMALMAP should be defined and FS_NORMALMAP_DXT5_XGXR not!) */
+				FS_DETAILNORMALMAP				= 1<<16,	/**< Take detail normal map into account (FS_NORMALMAP should be defined!) */
+				FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<17,	/**< DXT5 XGXR compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined and FS_DETAILNORMALMAP_LATC2 not!) */
+				FS_DETAILNORMALMAP_LATC2		= 1<<18,	/**< LATC2 compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined and FS_DETAILNORMALMAP_DXT5_XGXR not!) */
+			FS_SPECULAR							= 1<<19,	/**< Use specular */
+				FS_SPECULARMAP					= 1<<20,	/**< Take specular map into account (FS_SPECULAR should be set, too) */
+				FS_SPECULARRAMPMAP				= 1<<21,	/**< Take specular ramp map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
+			FS_EDGERAMPMAP						= 1<<22,	/**< Use edge ramp map */
+			FS_DIRECTIONAL						= 1<<23,	/**< Directional light */
+			FS_PROJECTIVE_POINT					= 1<<24,	/**< Projective point light */
+			FS_SPOT								= 1<<25,	/**< Spot light */
+				FS_SPOT_PROJECTIVE				= 1<<26,	/**< Projective spot light (FS_SPOT should be set, too) */
+				FS_SPOT_CONE					= 1<<27,	/**< Spot light with a cone (FS_SPOT should be set, too) */
+					FS_SPOT_SMOOTHCONE			= 1<<28,	/**< Spot light with a smooth cone (FS_SPOT & FS_SPOT_CONE should be set, too) */
+			FS_SHADOWMAPPING					= 1<<29,	/**< Perform shadow mapping */
+				FS_SOFTSHADOWMAPPING			= 1<<30,	/**< Perform soft shadow mapping (FS_SHADOWMAPPING should be set, too) */
+			FS_DISCARD							= 1<<31		/**< Use discard */
 		};
 
 		/**
