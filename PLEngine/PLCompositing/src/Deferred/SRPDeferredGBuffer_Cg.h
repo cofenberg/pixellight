@@ -314,7 +314,7 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 		// Fetch the xy-components of the normal and reconstruct the z-component\n\
 		float3 normal;\n\
 		normal.xy = tex2D(NormalMap, textureCoordinate).ag*2 - 1;\n\
-		normal.z  = sqrt(1 - dot(normal.xy, normal.xy));\n\
+		normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 	#else\n\
 		float3 normal = tex2D(NormalMap, textureCoordinate).xyz*2 - 1;\n\
 	#endif\n\
@@ -326,7 +326,7 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 			// Fetch the xy-components of the normal and reconstruct the z-component\n\
 			float3 detailNormal;\n\
 			detailNormal.xy = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ag*2 - 1;\n\
-			detailNormal.z  = sqrt(1 - dot(detailNormal.xy, detailNormal.xy));\n\
+			detailNormal.z  = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 		#else\n\
 			float3 detailNormal = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2 - 1;\n\
 		#endif\n\

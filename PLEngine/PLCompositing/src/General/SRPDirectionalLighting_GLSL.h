@@ -389,7 +389,7 @@ void main()\n\
 				// Fetch the xy-components of the normal and reconstruct the z-component\n\
 				lowp vec3 normal;\n\
 				normal.xy = texture2D(NormalMap, TexCoord0).ag*2 - 1;\n\
-				normal.z  = sqrt(1 - dot(normal.xy, normal.xy));\n\
+				normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 			#else\n\
 				lowp vec3 normal = texture2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
 			#endif\n\
@@ -401,7 +401,7 @@ void main()\n\
 					// Fetch the xy-components of the normal and reconstruct the z-component\n\
 					lowp vec3 detailNormal;\n\
 					detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2 - 1;\n\
-					detailNormal.z  = sqrt(1 - dot(detailNormal.xy, detailNormal.xy));\n\
+					detailNormal.z  = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 				#else\n\
 					lowp detailNormal = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2 - 1;\n\
 				#endif\n\
