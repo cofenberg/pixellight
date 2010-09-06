@@ -17,24 +17,47 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - USE_NORMAL:  Use per fragment normal vector
 \*********************************************************/
 
 
-const static char *pszDeferredHDAO_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredHDAO_Cg_VS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+static const PLGeneral::String sDeferredHDAO_Cg_FS = "\
+// Definitions\n\
 #define M_PI 3.14159265f\n\
 \n\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
@@ -112,7 +135,7 @@ static const float2 g_f2HDAORingPattern[NUM_RING_4_GATHERS] =\n\
 	{ 7, -1 },\n\
 	{ 5, -3 },\n\
 	{ 3, -5 },\n\
-	{ 1, -7 },\n\
+	{ 1, -7 }\n\
 };\n\
 \n\
 // Ring weights\n\
@@ -144,7 +167,7 @@ static const float4 g_f4HDAORingWeight[NUM_RING_4_GATHERS] = \n\
 	{ 0.20000, 0.17500, 0.17365, 0.19799 },\n\
 	{ 0.25997, 0.22136, 0.20870, 0.24010 },\n\
 	{ 0.28000, 0.24749, 0.21864, 0.24010 },\n\
-	{ 0.23016, 0.22136, 0.19230, 0.19799 },\n\
+	{ 0.23016, 0.22136, 0.19230, 0.19799 }\n\
 };\n\
 \n\
 static const float g_fRingWeightsTotal[RING_4] =\n\
@@ -152,7 +175,7 @@ static const float g_fRingWeightsTotal[RING_4] =\n\
 	5.30864,\n\
 	11.39610,\n\
 	17.92677,\n\
-	24.93639,\n\
+	24.93639\n\
 };\n\
 \n\
 #define NUM_NORMAL_LOADS (4)\n\
@@ -161,7 +184,7 @@ static const int2 g_i2NormalLoadPattern[NUM_NORMAL_LOADS] =\n\
 	{ 1, 8 },\n\
 	{ 8, -1 },\n\
 	{ 5, 4 },\n\
-	{ 4, -4 },\n\
+	{ 4, -4 }\n\
 };\n\
 \n\
 \n\
@@ -187,7 +210,7 @@ float4 GatherNZSamples(samplerRECT Tex, float2 f2TexCoord)\n\
 \n\
 \n\
 // Used as an early rejection test - based on normals\n\
-float NormalRejectionTest(samplerRECT normalDepthTexture, int2 i2ScreenCoord, float2 resolution, float acceptAngle)\n\
+float NormalRejectionTest(samplerRECT normalDepthMap, int2 i2ScreenCoord, int2 resolution, float acceptAngle)\n\
 {\n\
 	float3 f3N1;\n\
 	float3 f3N2;\n\
@@ -199,13 +222,13 @@ float NormalRejectionTest(samplerRECT normalDepthTexture, int2 i2ScreenCoord, fl
 		int2 i2MirrorOffsetScreenCoord = i2ScreenCoord + i2MirrorPattern;\n\
 \n\
 		// Clamp our test to screen coordinates\n\
-		i2OffsetScreenCoord = (i2OffsetScreenCoord > (resolution - float2(1, 1))) ? (resolution - float2(1, 1)) : i2OffsetScreenCoord;\n\
-		i2MirrorOffsetScreenCoord = (i2MirrorOffsetScreenCoord > (resolution - float2(1, 1))) ? (resolution - float2(1, 1)) : i2MirrorOffsetScreenCoord;\n\
-		i2OffsetScreenCoord = (i2OffsetScreenCoord < 0) ? 0 : i2OffsetScreenCoord;\n\
-		i2MirrorOffsetScreenCoord = (i2MirrorOffsetScreenCoord < 0) ? 0 : i2MirrorOffsetScreenCoord;\n\
+		i2OffsetScreenCoord.x	    = clamp((float)i2OffsetScreenCoord.x,	    0.0f, resolution.x - 1.0f);\n\
+		i2OffsetScreenCoord.y	    = clamp((float)i2OffsetScreenCoord.y,	    0.0f, resolution.y - 1.0f);\n\
+		i2MirrorOffsetScreenCoord.x = clamp((float)i2MirrorOffsetScreenCoord.x, 0.0f, resolution.x - 1.0f);\n\
+		i2MirrorOffsetScreenCoord.y = clamp((float)i2MirrorOffsetScreenCoord.y, 0.0f, resolution.y - 1.0f);\n\
 \n\
-		f3N1.zxy = decodeNormalVector(texRECT(normalDepthTexture, i2OffsetScreenCoord).rg);\n\
-		f3N2.zxy = decodeNormalVector(texRECT(normalDepthTexture, i2MirrorOffsetScreenCoord).rg);\n\
+		f3N1.zxy = decodeNormalVector(texRECT(normalDepthMap, i2OffsetScreenCoord).rg);\n\
+		f3N2.zxy = decodeNormalVector(texRECT(normalDepthMap, i2MirrorOffsetScreenCoord).rg);\n\
 \n\
 		float fDot = dot(f3N1, f3N2);\n\
 \n\
@@ -220,17 +243,17 @@ float NormalRejectionTest(samplerRECT normalDepthTexture, int2 i2ScreenCoord, fl
 // component of the camera space normal\n\
 // Main function\n\
 FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n\
-	 , uniform float	   g_fHDAORejectRadius	// HDAO param\n\
+	 , uniform float	   AORejectRadius		// AO reject radius\n\
 	 , uniform float	   Contrast				// Contrast\n\
-	 , uniform float	   g_fHDAOAcceptRadius	// HDAO param\n\
-#ifdef USE_NORMAL\n\
-	 , uniform float	   g_fNormalScale		// Normal scale\n\
+	 , uniform float	   AOAcceptRadius		// AO accept radius\n\
+#ifdef FS_NORMAL\n\
+	 , uniform float	   NormalScale			// Normal scale\n\
 #endif\n\
-	 , uniform float	   g_fAcceptAngle		// Accept angle\n\
-	 , uniform int		   iNumRingGathers\n\
-	 , uniform int		   iNumRings\n\
-	 , uniform int2		   g_Resolution			// Resolution of the input texture data (for example 636 x 456)\n\
-	 , uniform samplerRECT NormalDepthTexture)	// RG=normal vector, B=linear view space length\n\
+	 , uniform float	   AcceptAngle			// Accept angle\n\
+	 , uniform int		   NumRingGathers\n\
+	 , uniform int		   NumRings\n\
+	 , uniform int2		   Resolution			// Resolution of the input texture data (for example 636 x 456)\n\
+	 , uniform samplerRECT NormalDepthMap)		// RG=normal vector, B=linear view space length\n\
 {\n\
 	FS_OUTPUT OUT;\n\
 \n\
@@ -241,56 +264,56 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	float4 f4SampledNormalZ[2];\n\
 	float4 f4Diff;\n\
 	float4 f4Compare[2];\n\
-	float2 f2KernelScale = float2(g_Resolution.x/1024.0f, g_Resolution.y/768.0f);\n\
+	float2 f2KernelScale = float2(Resolution.x/1024.0f, Resolution.y/768.0f);\n\
 \n\
 	// Test the normals to see if we should apply occlusion\n\
-	float fDot = NormalRejectionTest(NormalDepthTexture, IN.texUV, g_Resolution, g_fAcceptAngle);\n\
+	float fDot = NormalRejectionTest(NormalDepthMap, IN.TexCoord, Resolution, AcceptAngle);\n\
 	if (fDot > 0.5f) {\n\
 		// Sample the center pixel for camera Z\n\
-		float4 sample = texRECT(NormalDepthTexture, IN.texUV);\n\
+		float4 sample = texRECT(NormalDepthMap, IN.TexCoord);\n\
 		float fCenterZ = sample.b;\n\
-		#ifdef USE_NORMAL\n\
-			float fOffsetCenterZ = fCenterZ + decodeNormalVector(sample.rg).z*g_fNormalScale;\n\
+		#ifdef FS_NORMAL\n\
+			float fOffsetCenterZ = fCenterZ + decodeNormalVector(sample.rg).z*NormalScale;\n\
 		#endif\n\
 \n\
 		// Loop through each gather location, and compare with its mirrored location\n\
-		for (int iGather=0; iGather<iNumRingGathers; iGather++) {\n\
-			float2 f2TexCoord = IN.texUV + f2KernelScale*g_f2HDAORingPattern[iGather];\n\
+		for (int iGather=0; iGather<NumRingGathers; iGather++) {\n\
+			float2 f2TexCoord = IN.TexCoord + f2KernelScale*g_f2HDAORingPattern[iGather];\n\
 			float2 f2MirrorScreenCoord = ((f2KernelScale*g_f2HDAORingPattern[iGather]) + float2(1, 1))*float2(-1, -1);\n\
-			float2 f2MirrorTexCoord = IN.texUV + f2MirrorScreenCoord;\n\
+			float2 f2MirrorTexCoord = IN.TexCoord + f2MirrorScreenCoord;\n\
 \n\
 			// Sample\n\
-			f4SampledZ[0] = GatherZSamples(NormalDepthTexture, f2TexCoord);\n\
-			f4SampledZ[1] = GatherZSamples(NormalDepthTexture, f2MirrorTexCoord);\n\
+			f4SampledZ[0] = GatherZSamples(NormalDepthMap, f2TexCoord);\n\
+			f4SampledZ[1] = GatherZSamples(NormalDepthMap, f2MirrorTexCoord);\n\
 \n\
 			// Detect valleys\n\
 			f4Diff = fCenterZ.xxxx - f4SampledZ[0];\n\
-			f4Compare[0]  = (f4Diff < g_fHDAORejectRadius.xxxx) ? 1 : 0;\n\
-			f4Compare[0] *= (f4Diff > g_fHDAOAcceptRadius.xxxx) ? 1 : 0;\n\
+			f4Compare[0]  = (f4Diff < AORejectRadius.xxxx) ? 1 : 0;\n\
+			f4Compare[0] *= (f4Diff > AOAcceptRadius.xxxx) ? 1 : 0;\n\
 \n\
 			f4Diff = fCenterZ.xxxx - f4SampledZ[1];\n\
-			f4Compare[1]  = (f4Diff < g_fHDAORejectRadius.xxxx) ? 1 : 0;\n\
-			f4Compare[1] *= (f4Diff > g_fHDAOAcceptRadius.xxxx) ? 1 : 0;\n\
+			f4Compare[1]  = (f4Diff < AORejectRadius.xxxx) ? 1 : 0;\n\
+			f4Compare[1] *= (f4Diff > AOAcceptRadius.xxxx) ? 1 : 0;\n\
 \n\
 			f4Occlusion.xyzw += (g_f4HDAORingWeight[iGather].xyzw*(f4Compare[0].xyzw*f4Compare[1].zwxy)*fDot);\n\
 \n\
-			#ifdef USE_NORMAL\n\
+			#ifdef FS_NORMAL\n\
 				// Sample normals\n\
-				f4SampledNormalZ[0] = GatherNZSamples(NormalDepthTexture, f2TexCoord);\n\
-				f4SampledNormalZ[1] = GatherNZSamples(NormalDepthTexture, f2MirrorTexCoord);\n\
+				f4SampledNormalZ[0] = GatherNZSamples(NormalDepthMap, f2TexCoord);\n\
+				f4SampledNormalZ[1] = GatherNZSamples(NormalDepthMap, f2MirrorTexCoord);\n\
 \n\
 				// Scale normals\n\
-				f4OffsetSampledZ[0] = f4SampledZ[0] + f4SampledNormalZ[0]*g_fNormalScale;\n\
-				f4OffsetSampledZ[1] = f4SampledZ[1] + f4SampledNormalZ[1]*g_fNormalScale;\n\
+				f4OffsetSampledZ[0] = f4SampledZ[0] + f4SampledNormalZ[0]*NormalScale;\n\
+				f4OffsetSampledZ[1] = f4SampledZ[1] + f4SampledNormalZ[1]*NormalScale;\n\
 \n\
 				// Detect valleys\n\
 				f4Diff = fOffsetCenterZ.xxxx - f4OffsetSampledZ[0];\n\
-				f4Compare[0]  = (f4Diff < g_fHDAORejectRadius.xxxx) ? 1 : 0;\n\
-				f4Compare[0] *= (f4Diff > g_fHDAOAcceptRadius.xxxx) ? 1 : 0;\n\
+				f4Compare[0]  = (f4Diff < AORejectRadius.xxxx) ? 1 : 0;\n\
+				f4Compare[0] *= (f4Diff > AOAcceptRadius.xxxx) ? 1 : 0;\n\
 \n\
 				f4Diff = fOffsetCenterZ.xxxx - f4OffsetSampledZ[1];\n\
-				f4Compare[1]  = (f4Diff < g_fHDAORejectRadius.xxxx) ? 1 : 0;\n\
-				f4Compare[1] *= (f4Diff > g_fHDAOAcceptRadius.xxxx) ? 1 : 0;\n\
+				f4Compare[1]  = (f4Diff < AORejectRadius.xxxx) ? 1 : 0;\n\
+				f4Compare[1] *= (f4Diff > AOAcceptRadius.xxxx) ? 1 : 0;\n\
 \n\
 				f4Occlusion.xyzw += (g_f4HDAORingWeight[iGather].xyzw*(f4Compare[0].xyzw*f4Compare[1].zwxy)*fDot);\n\
 			#endif\n\
@@ -298,13 +321,13 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	}\n\
 \n\
 	// Finally calculate the HDAO occlusion value\n\
-	#ifdef USE_NORMAL\n\
-		float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(3*g_fRingWeightsTotal[iNumRings- 1]));\n\
+	#ifdef FS_NORMAL\n\
+		float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(3*g_fRingWeightsTotal[NumRings- 1]));\n\
 	#else\n\
-		float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(2*g_fRingWeightsTotal[iNumRings - 1]));\n\
+		float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(2*g_fRingWeightsTotal[NumRings - 1]));\n\
 	#endif\n\
-	OUT.color = 1 - saturate(fOcclusion*Contrast);\n\
+	OUT.Color0 = 1 - clamp(fOcclusion*Contrast, 0.0f, 1.0f);\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

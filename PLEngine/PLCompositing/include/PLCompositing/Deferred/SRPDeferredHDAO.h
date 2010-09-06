@@ -36,8 +36,6 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
-	class TextureBuffer2D;
-	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
 
@@ -113,38 +111,45 @@ class SRPDeferredHDAO : public SRPDeferredSSAO {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bUseNormal
-		*    Use per fragment normal data for more detailed AO?
-		*
-		*  @return
-		*    The fragment shader with the requested features, NULL on error
+		*    Fragment shader flags, flag names become to source code definitions
 		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bUseNormal);
+		enum EFragmentShaderFlags {
+			FS_NORMAL = 1<<0	/**< Use per fragment normal vector */
+		};
 
 		/**
 		*  @brief
-		*    Destroys all currently used shaders
+		*    Direct pointers to uniforms & attributes of a generated program
 		*/
-		void DestroyShaders();
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pAORejectRadius;
+			PLRenderer::ProgramUniform *pContrast;
+			PLRenderer::ProgramUniform *pAOAcceptRadius;
+			PLRenderer::ProgramUniform *pNormalScale;
+			PLRenderer::ProgramUniform *pAcceptAngle;
+			PLRenderer::ProgramUniform *pNumRingGathers;
+			PLRenderer::ProgramUniform *pNumRings;
+			PLRenderer::ProgramUniform *pResolution;
+			PLRenderer::ProgramUniform *pNormalDepthMap;
+		};
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::TextureBuffer2D					*m_pRandomNormalsTexture;	/**< Texture with random normal vectors, can be NULL */
-		bool										 m_bFragmentShader[2];		/**< Fragment shader build? [UseNormal] */
-		PLRenderer::ShaderHandler					 m_cFragmentShader[2];		/**< Fragment shader mode [UseNormal] */
-		PLGeneral::List<PLRenderer::ShaderHandler*>  m_lstShaders;				/**< List of all used shaders */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,6 @@
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Program.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>

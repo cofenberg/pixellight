@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
 #include "PLCompositing/Deferred/SRPDeferredGBuffer.h"
@@ -63,10 +63,9 @@ SRPDeferredHDAO::SRPDeferredHDAO() :
 	AcceptAngle(this),
 	NumberOfRingGathers(this),
 	NumberOfRings(this),
-	Flags(this)
+	Flags(this),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -75,69 +74,9 @@ SRPDeferredHDAO::SRPDeferredHDAO() :
 */
 SRPDeferredHDAO::~SRPDeferredHDAO()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the fragment shader
-*/
-Shader *SRPDeferredHDAO::GetFragmentShader(Renderer &cRenderer, bool bUseNormal)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bUseNormal];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bUseNormal]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredHDAO.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bUseNormal) {
-			sDefines += "#define USE_NORMAL\n";
-			sName    += "[UseNormal]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			#include "SRPDeferredHDAO_Cg.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredHDAO_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredHDAO_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines); // We can't use for e.g. "arbfp1" because we're using loops heavily in here
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bUseNormal] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredHDAO::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 
@@ -146,85 +85,157 @@ void SRPDeferredHDAO::DestroyShaders()
 //[-------------------------------------------------------]
 void SRPDeferredHDAO::DrawAO(FullscreenQuad &cFullscreenQuad, TextureBufferRectangle &cNormalDepthTextureBuffer)
 {
-	// Get the renderer instance
-	Renderer &cRenderer = cNormalDepthTextureBuffer.GetRenderer();
+	// Get the vertex buffer of the fullscreen quad
+	VertexBuffer *pVertexBuffer = cFullscreenQuad.GetVertexBuffer();
+	if (pVertexBuffer) {
+		// Get the renderer instance
+		Renderer &cRenderer = cNormalDepthTextureBuffer.GetRenderer();
 
-	// Get and set the fragment shader
-	Shader *pFragmentShader = GetFragmentShader(cRenderer, !(GetFlags() & NoNormals));
-	if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-		// Get and set the fragment shader program
-		ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-		cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+		// Get the shader language to use
+		String sShaderLanguage = ShaderLanguage;
+		if (!sShaderLanguage.GetLength())
+			sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-		{ // Set the texture buffer
-			static const String sNormalDepthTexture = "NormalDepthTexture";
-			const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sNormalDepthTexture, &cNormalDepthTextureBuffer);
-			if (nStage >= 0) {
-				cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-				cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-				cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+		// Create the program generator if there's currently no instance of it
+		if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+			// If there's an previous instance of the program generator, destroy it first
+			if (m_pProgramGenerator) {
+				delete m_pProgramGenerator;
+				m_pProgramGenerator = NULL;
 			}
+
+			// Choose the shader source codes depending on the requested shader language
+			String sDeferredHDAO_VS;
+			String sDeferredHDAO_FS;
+			if (sShaderLanguage == "GLSL") {
+				#include "SRPDeferredHDAO_GLSL.h"
+				sDeferredHDAO_VS = sDeferredHDAO_GLSL_VS;
+				sDeferredHDAO_FS = sDeferredHDAO_GLSL_FS;
+			} else if (sShaderLanguage == "Cg") {
+				#include "SRPDeferredHDAO_Cg.h"
+				sDeferredHDAO_VS = sDeferredHDAO_Cg_VS;
+				sDeferredHDAO_FS = sDeferredHDAO_Cg_FS;
+			}
+
+			// Create the program generator
+			if (sDeferredHDAO_VS.GetLength() && sDeferredHDAO_FS.GetLength())
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHDAO_VS, "glslv", sDeferredHDAO_FS, "glslf", true);
 		}
 
-		// Get the size of the texture buffer
-		const Vector2i vSize = cNormalDepthTextureBuffer.GetSize();
+		// If there's no program generator, we don't need to continue
+		if (m_pProgramGenerator) {
+			// Reset the program flags
+			m_cProgramFlags.Reset();
 
-		{ // Set fragment shader parameters
-			{ // g_fHDAORejectRadius
-				static const String g_fHDAORejectRadius = "g_fHDAORejectRadius";
-				pFragmentShaderProgram->SetParameter1f(g_fHDAORejectRadius, AORejectRadius);
+			// Set program flags
+			if (!(GetFlags() & NoNormals))
+				PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMAL)
+
+			// Get a program instance from the program generator using the given program flags
+			ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
+
+			// Make our program to the current one
+			if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+				// Set pointers to uniforms & attributes of a generated program if they are not set yet
+				GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+				if (!pGeneratedProgramUserData) {
+					pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+					Program *pProgram = pGeneratedProgram->pProgram;
+					// Vertex shader attributes
+					static const String sVertexPosition = "VertexPosition";
+					pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+					// Vertex shader uniforms
+					static const String sTextureSize = "TextureSize";
+					pGeneratedProgramUserData->pTextureSize		= pProgram->GetUniform(sTextureSize);
+					// Fragment shader uniforms
+					static const String sAORejectRadius = "AORejectRadius";
+					pGeneratedProgramUserData->pAORejectRadius	= pProgram->GetUniform(sAORejectRadius);
+					static const String sContrast = "Contrast";
+					pGeneratedProgramUserData->pContrast		= pProgram->GetUniform(sContrast);
+					static const String sAOAcceptRadius = "AOAcceptRadius";
+					pGeneratedProgramUserData->pAOAcceptRadius	= pProgram->GetUniform(sAOAcceptRadius);
+					static const String sNormalScale = "NormalScale";
+					pGeneratedProgramUserData->pNormalScale		= pProgram->GetUniform(sNormalScale);
+					static const String sAcceptAngle = "AcceptAngle";
+					pGeneratedProgramUserData->pAcceptAngle		= pProgram->GetUniform(sAcceptAngle);
+					static const String sNumRingGathers = "NumRingGathers";
+					pGeneratedProgramUserData->pNumRingGathers	= pProgram->GetUniform(sNumRingGathers);
+					static const String sNumRings = "NumRings";
+					pGeneratedProgramUserData->pNumRings		= pProgram->GetUniform(sNumRings);
+					static const String sResolution = "Resolution";
+					pGeneratedProgramUserData->pResolution		= pProgram->GetUniform(sResolution);
+					static const String sNormalDepthMap = "NormalDepthMap";
+					pGeneratedProgramUserData->pNormalDepthMap	= pProgram->GetUniform(sNormalDepthMap);
+				}
+
+				// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+				if (pGeneratedProgramUserData->pVertexPosition)
+					pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+				// Set texture size
+				if (pGeneratedProgramUserData->pTextureSize)
+					pGeneratedProgramUserData->pTextureSize->Set(cNormalDepthTextureBuffer.GetSize());
+
+				// Set the normal depth texture
+				if (pGeneratedProgramUserData->pNormalDepthMap) {
+					const int nTextureUnit = pGeneratedProgramUserData->pNormalDepthMap->Set(&cNormalDepthTextureBuffer);
+					if (nTextureUnit >= 0) {
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+						cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+					}
+				}
+
+				// AORejectRadius
+				if (pGeneratedProgramUserData->pAORejectRadius)
+					pGeneratedProgramUserData->pAORejectRadius->Set(AORejectRadius);
+
+				// Contrast
+				if (pGeneratedProgramUserData->pContrast)
+					pGeneratedProgramUserData->pContrast->Set(Contrast);
+
+				// AOAcceptRadius
+				if (pGeneratedProgramUserData->pAOAcceptRadius)
+					pGeneratedProgramUserData->pAOAcceptRadius->Set(AOAcceptRadius);
+
+				// NormalScale
+				if (pGeneratedProgramUserData->pNormalScale)
+					pGeneratedProgramUserData->pNormalScale->Set(NormalScale);
+
+				// AcceptAngle
+				if (pGeneratedProgramUserData->pAcceptAngle)
+					pGeneratedProgramUserData->pAcceptAngle->Set(AcceptAngle);
+
+				// NumRingGathers
+				if (pGeneratedProgramUserData->pNumRingGathers) {
+					uint32 nNumberOfRingGathers = NumberOfRingGathers;
+					if (nNumberOfRingGathers < 1)
+						nNumberOfRingGathers = 1;
+					if (nNumberOfRingGathers > 20)
+						nNumberOfRingGathers = 20;
+					pGeneratedProgramUserData->pNumRingGathers->Set((int)nNumberOfRingGathers);
+				}
+
+				// NumRings
+				if (pGeneratedProgramUserData->pNumRings) {
+					uint32 nNumberOfRings = NumberOfRings;
+					if (nNumberOfRings < 1)
+						nNumberOfRings = 1;
+					if (nNumberOfRings > 4)
+						nNumberOfRings = 4;
+					pGeneratedProgramUserData->pNumRings->Set((int)nNumberOfRings);
+				}
+
+				// Resolution
+				if (pGeneratedProgramUserData->pResolution)
+					pGeneratedProgramUserData->pResolution->Set(cNormalDepthTextureBuffer.GetSize());
+
+				// Draw the fullscreen quad
+				cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 			}
-
-			{ // Contrast
-				static const String sContrast = "Contrast";
-				pFragmentShaderProgram->SetParameter1f(sContrast, Contrast);
-			}
-
-			{ // g_fHDAOAcceptRadius
-				static const String g_fHDAOAcceptRadius = "g_fHDAOAcceptRadius";
-				pFragmentShaderProgram->SetParameter1f(g_fHDAOAcceptRadius, AOAcceptRadius);
-			}
-
-			// g_fNormalScale
-			if (!(GetFlags() & NoNormals)) {
-				static const String g_fNormalScale = "g_fNormalScale";
-				pFragmentShaderProgram->SetParameter1f(g_fNormalScale, NormalScale);
-			}
-
-			{ // g_fAcceptAngle
-				static const String g_fAcceptAngle = "g_fAcceptAngle";
-				pFragmentShaderProgram->SetParameter1f(g_fAcceptAngle, AcceptAngle);
-			}
-
-			{ // iNumRingGathers
-				uint32 nNumberOfRingGathers = NumberOfRingGathers;
-				if (nNumberOfRingGathers < 1)
-					nNumberOfRingGathers = 1;
-				if (nNumberOfRingGathers > 20)
-					nNumberOfRingGathers = 20;
-				static const String iNumRingGathers = "iNumRingGathers";
-				pFragmentShaderProgram->SetParameter1i(iNumRingGathers, nNumberOfRingGathers);
-			}
-
-			{ // iNumRings
-				uint32 nNumberOfRings = NumberOfRings;
-				if (nNumberOfRings < 1)
-					nNumberOfRings = 1;
-				if (nNumberOfRings > 4)
-					nNumberOfRings = 4;
-				static const String iNumRings = "iNumRings";
-				pFragmentShaderProgram->SetParameter1i(iNumRings, nNumberOfRings);
-			}
-
-			// g_Resolution
-			static const String g_Resolution = "g_Resolution";
-			pFragmentShaderProgram->SetParameter2iv(g_Resolution, vSize);
 		}
-
-		// Draw the fullscreen quad
-		cFullscreenQuad.Draw(vSize);
 	}
 }
 

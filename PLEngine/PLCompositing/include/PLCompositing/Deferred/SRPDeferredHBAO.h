@@ -37,7 +37,6 @@
 //[-------------------------------------------------------]
 namespace PLRenderer {
 	class TextureBuffer2D;
-	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
 
