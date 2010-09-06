@@ -17,6 +17,10 @@ PLRendererOpenGL:
   -> Da ich keine NVIDIA Karte habe, kann ich das natürlich nicht gegentesten ob das auch sauber auf NVIDIA Karten läuft. Zukünftig werde ich "LATC2" im Dungeon
      Demo nutzen da dieses Feature mittlerweile eigentlich von allen halbwechs aktuellen GPU's unterstützt werden sollte, im PL SDK bleibe ich zur Sicherheit auf
      "DXT5 xGxR" da ich hier höchstmögliche Kompatibilität haben will.
+- "ATI1N" (zu dem es nicht wirklich Informationen im Netz gibt) in "LATC1" umbenannt und PLRenderer um Support für dieses Texture Format erweitert. Damit ist es
+  endlich auch möglich reine Luminance Texturen (z.B. Height Map) vernümpftig zu komprimieren. Ist "GL_EXT_texture_compression_latc" nicht vorhanden, wird auf der
+  CPU dekomprimiert bevor die Daten an die GPU weitergereicht werden. Wie schon bei "LATC2" hat auch "LATC1" *nur* Qualitätsvorteile, aber keinen geringeren
+  Speicherbedarf gegenüber "DXT1".
 
 
 

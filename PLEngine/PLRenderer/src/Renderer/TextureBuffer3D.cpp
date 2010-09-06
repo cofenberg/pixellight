@@ -144,6 +144,7 @@ uint32 TextureBuffer3D::GetNumOfBytes(uint32 nMipmap, EPixelFormat nFormat) cons
 			// DXT formats divide the texture buffer into 4x4 blocks, each block has a fixed number of bytes
 			switch (nFormat) {
 				case DXT1:
+				case LATC1:
 					return ((vSize.x+3)/4)*((vSize.y+3)/4)*8*vSize.z;
 
 				case DXT3:

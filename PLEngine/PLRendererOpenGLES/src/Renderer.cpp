@@ -483,6 +483,7 @@ uint32 Renderer::GetOpenGLESDataFormat(PLRenderer::TextureBuffer::EPixelFormat n
 		case PLRenderer::TextureBuffer::DXT1:
 		case PLRenderer::TextureBuffer::DXT3:
 		case PLRenderer::TextureBuffer::DXT5:
+		case PLRenderer::TextureBuffer::LATC1:
 		case PLRenderer::TextureBuffer::LATC2:
 			return GL_UNSIGNED_BYTE;
 
@@ -532,6 +533,10 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
 			// we have to choose a fallback format.
 			switch (nChosenInternalFormat) {
+				case PLRenderer::TextureBuffer::LATC1:
+					nChosenInternalFormat = PLRenderer::TextureBuffer::L8;
+					break;
+
 				case PLRenderer::TextureBuffer::LATC2:
 					nChosenInternalFormat = PLRenderer::TextureBuffer::L8A8;
 					break;
@@ -803,31 +808,11 @@ void Renderer::InitWrappers()
 	m_cPLE_TPFWrapper += GL_RGB;				// 16: PLRenderer::TextureBuffer::DXT1			- not supported by OpenGL ES 2.0
 	m_cPLE_TPFWrapper += GL_RGBA;				// 17: PLRenderer::TextureBuffer::DXT3			- not supported by OpenGL ES 2.0
 	m_cPLE_TPFWrapper += GL_RGBA;				// 18: PLRenderer::TextureBuffer::DXT5			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	// 19: PLRenderer::TextureBuffer::LATC2			- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_LUMINANCE;			// 19: PLRenderer::TextureBuffer::LATC1			- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	// 20: PLRenderer::TextureBuffer::LATC2			- not supported by OpenGL ES 2.0
 
-	/*
 	// [TODO]
-	// ATI float pixel format
-	if (IsWGL_ATI_pixel_format_float()) {
-		m_cPLE_TPFWrapper += GL_LUMINANCE_FLOAT16_ATI;	// 20: PLRenderer::TextureBuffer::R16F
-		m_cPLE_TPFWrapper += GL_LUMINANCE_FLOAT32_ATI;	// 21: PLRenderer::TextureBuffer::R32F
-		m_cPLE_TPFWrapper += GL_RGBA_FLOAT16_ATI;		// 22: PLRenderer::TextureBuffer::R16G16B16A16F
-		m_cPLE_TPFWrapper += GL_RGBA_FLOAT32_ATI;		// 23: PLRenderer::TextureBuffer::R32G32B32A32F
-	} else {
-		// NVIDIA float pixel format
-		if (IsWGL_NV_float_buffer()) {
-			m_cPLE_TPFWrapper += GL_FLOAT_R16_NV;		// 20: PLRenderer::TextureBuffer::R16F
-			m_cPLE_TPFWrapper += GL_FLOAT_R32_NV;		// 21: PLRenderer::TextureBuffer::R32F
-			m_cPLE_TPFWrapper += GL_FLOAT_RGBA16_NV;	// 22: PLRenderer::TextureBuffer::R16G16B16A16F
-			m_cPLE_TPFWrapper += GL_FLOAT_RGBA32_NV;	// 23: PLRenderer::TextureBuffer::R32G32B32A32F
-		} else { // Fixed point fallback
-			m_cPLE_TPFWrapper += GL_INTENSITY8;	// 20: PLRenderer::TextureBuffer::R16F
-			m_cPLE_TPFWrapper += GL_INTENSITY8;	// 21: PLRenderer::TextureBuffer::R32F
-			m_cPLE_TPFWrapper += GL_RGBA8;		// 22: PLRenderer::TextureBuffer::R16G16B16A16F
-			m_cPLE_TPFWrapper += GL_RGBA8;		// 23: PLRenderer::TextureBuffer::R32G32B32A32F
-		}
-	}
-	*/
+	// Float pixel format
 }
 
 /**

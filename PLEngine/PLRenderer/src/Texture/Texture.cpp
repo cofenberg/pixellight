@@ -318,7 +318,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// Compression
 								sValue = pElement->GetAttribute("Compression");
 								if (sValue.GetLength()) {
-									static const String sFormat[] = {"Default", "DXT1", "DXT3", "DXT5", "DXT5_xGxR", "ATI1N", "LATC2", "LATC2_XYSwizzle", "None"};
+									static const String sFormat[] = {"Default", "DXT1", "DXT3", "DXT5", "DXT5_xGxR", "LATC1", "LATC2", "LATC2_XYSwizzle", "None"};
 									for (uint32 nFormat=0; nFormat<=None; nFormat++) {
 										if (sValue == sFormat[nFormat]) {
 											m_nCompressionHint = (ECompressionFormat)nFormat;
@@ -651,8 +651,8 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 							m_nCompressionHint = DXT5;
 							break;
 
-						case CompressionATI1N:
-							m_nCompressionHint = ATI1N;
+						case CompressionLATC1:
+							m_nCompressionHint = LATC1;
 							break;
 
 						case CompressionLATC2:
@@ -702,12 +702,10 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 							nInternalFormat  = TextureBuffer::DXT5;
 							break;
 
-						/* [TODO] Implement ATI1N
-						case ATI1N:
+						case LATC1:
 							nTextureFlags   |= TextureBuffer::Compression;
-							nInternalFormat  = TextureBuffer::ATI1N;
+							nInternalFormat  = TextureBuffer::LATC1;
 							break;
-						*/
 
 						case LATC2:
 						case LATC2_XYSwizzle:

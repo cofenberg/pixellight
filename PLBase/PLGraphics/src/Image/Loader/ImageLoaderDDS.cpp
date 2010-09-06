@@ -165,7 +165,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 
 					case 80:
 						nInternalColorFormat = nColorFormat = ColorGrayscale;
-						nCompression = CompressionATI1N;
+						nCompression = CompressionLATC1;
 						break;
 
 					case 83:
@@ -196,7 +196,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 
 					case MCHAR4('A', 'T', 'I', '1'):
 						nInternalColorFormat = nColorFormat = ColorGrayscale;
-						nCompression = CompressionATI1N;
+						nCompression = CompressionLATC1;
 						break;
 
 					case MCHAR4('A', 'T', 'I', '2'):

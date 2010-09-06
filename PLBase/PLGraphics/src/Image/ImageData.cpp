@@ -529,7 +529,7 @@ bool ImageData::Decompress()
 			}
 			break;
 
-		case CompressionATI1N:
+		case CompressionLATC1:
 			// Loop trough all block rows
 			for (int y=0; y<m_vSize.y; y+=4) {
 				// Loop trough all blocks within the current row
@@ -671,7 +671,7 @@ void ImageData::CalculateCompressedImageBufferSize()
 	switch (m_nCompression) {
 		// DXT formats divide the texture buffer into 4x4 blocks, each block has a fixed number of bytes
 		case CompressionDXT1:
-		case CompressionATI1N:
+		case CompressionLATC1:
 			// Avoid slow division by using bit-shift
 			m_nCompressedSize = ((m_vSize.x + 3) >> 2) * ((m_vSize.y + 3) >> 2) * 8;
 		//	m_nCompressedSize = ((m_vSize.x + 3) / 4) * ((m_vSize.y + 3) / 4) * 8;

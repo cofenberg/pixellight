@@ -105,16 +105,17 @@ class TextureBuffer : public Resource {
 			DXT1          = 16,	/**< DXT1 format (RGB compression: 8:1) */
 			DXT3          = 17,	/**< DXT3 format (RGBA compression: 4:1) */
 			DXT5          = 18,	/**< DXT5 format (RGBA compression: 4:1) */
-			LATC2         = 19, /**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as LATC2 or previously 3DC, known as BC5 in DirectX 10, 16 bytes per block) */
+			LATC1         = 19,	/**< 1 component texture compression (8 bytes per block) */
+			LATC2         = 20, /**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as LATC2 or previously 3DC, known as BC5 in DirectX 10, 16 bytes per block) */
 			// Floating-point formats
-			L16F          = 20,	/**< 16-bit float format using 16 bits for luminance */
-			L32F          = 21,	/**< 32-bit float format using 32 bits for luminance */
-			R16G16B16A16F = 22,	/**< 64-bit float format using 16 bits for the each channel (red, green, blue, alpha) */
-			R32G32B32A32F = 23,	/**< 128-bit float format using 32 bits for the each channel (red, green, blue, alpha) */
+			L16F          = 21,	/**< 16-bit float format using 16 bits for luminance */
+			L32F          = 22,	/**< 32-bit float format using 32 bits for luminance */
+			R16G16B16A16F = 23,	/**< 64-bit float format using 16 bits for the each channel (red, green, blue, alpha) */
+			R32G32B32A32F = 24,	/**< 128-bit float format using 32 bits for the each channel (red, green, blue, alpha) */
 			// End
-			Unknown        = 24	/**< Unknown texture buffer pixel format */
+			Unknown       = 25	/**< Unknown texture buffer pixel format */
 		};
-		static const PLGeneral::uint32 NumOfPixelFormats = 24;	/**< Numer of pixel formats */
+		static const PLGeneral::uint32 NumOfPixelFormats = 25;	/**< Numer of pixel formats */
 
 
 	//[-------------------------------------------------------]

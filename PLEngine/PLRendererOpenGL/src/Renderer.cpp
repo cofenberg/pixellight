@@ -380,6 +380,7 @@ uint32 Renderer::GetOpenGLDataFormat(PLRenderer::TextureBuffer::EPixelFormat nFo
 		case PLRenderer::TextureBuffer::DXT1:
 		case PLRenderer::TextureBuffer::DXT3:
 		case PLRenderer::TextureBuffer::DXT5:
+		case PLRenderer::TextureBuffer::LATC1:
 		case PLRenderer::TextureBuffer::LATC2:
 			return GL_UNSIGNED_BYTE;
 
@@ -417,6 +418,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 		// we have to use the uncompressed image instead.
 		if (!IsGL_ARB_texture_compression() ||
 			(nImageFormat <= PLRenderer::TextureBuffer::DXT5 && !IsGL_EXT_texture_compression_s3tc()) ||
+			(nImageFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
 			(nImageFormat == PLRenderer::TextureBuffer::LATC2 && !IsGL_EXT_texture_compression_latc() && !IsGL_ATI_texture_compression_3dc())) {
 			// Do not use texture buffer compression
 			nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
@@ -431,10 +433,15 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 		nChosenInternalFormat = nInternalFormat;
 		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat) &&
 			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5 && !IsGL_EXT_texture_compression_s3tc()) ||
+			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
 			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2 && !IsGL_EXT_texture_compression_latc() && !IsGL_ATI_texture_compression_3dc()))) {
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
 			// we have to choose a fallback format.
 			switch (nChosenInternalFormat) {
+				case PLRenderer::TextureBuffer::LATC1:
+					nChosenInternalFormat = PLRenderer::TextureBuffer::L8;
+					break;
+
 				case PLRenderer::TextureBuffer::LATC2:
 					nChosenInternalFormat = PLRenderer::TextureBuffer::L8A8;
 					break;
@@ -467,6 +474,11 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
 			if (pImageBuffer) {
 				switch (pImageBuffer->GetComponentsPerPixel()) {
+					case 1:
+						if (IsGL_EXT_texture_compression_latc())
+							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC1;
+						break;
+
 					case 2:
 						if (IsGL_EXT_texture_compression_latc() || IsGL_ATI_texture_compression_3dc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC2;
@@ -600,18 +612,22 @@ void Renderer::InitWrappers()
 	m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;				// 17: PLRenderer::TextureBuffer::DXT3
 	m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;				// 18: PLRenderer::TextureBuffer::DXT5
 	if (IsGL_EXT_texture_compression_latc())
-		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT;	// 19: PLRenderer::TextureBuffer::LATC2
-	else if (IsGL_ATI_texture_compression_3dc())
-		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_3DC_ATI;		// 19: PLRenderer::TextureBuffer::LATC2
+		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_LATC1_EXT;			// 19: PLRenderer::TextureBuffer::LATC1
 	else
-		m_cPLE_TPFWrapper += 0;											// 19: PLRenderer::TextureBuffer::LATC2
+		m_cPLE_TPFWrapper += 0;											// 19: PLRenderer::TextureBuffer::LATC1
+	if (IsGL_EXT_texture_compression_latc())
+		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT;	// 20: PLRenderer::TextureBuffer::LATC2
+	else if (IsGL_ATI_texture_compression_3dc())
+		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_3DC_ATI;		// 20: PLRenderer::TextureBuffer::LATC2
+	else
+		m_cPLE_TPFWrapper += 0;											// 20: PLRenderer::TextureBuffer::LATC2
 
 	// ARB float pixel format
 	if (IsGL_ARB_texture_float()) {
-		m_cPLE_TPFWrapper += GL_LUMINANCE16F_ARB;	// 20: PLRenderer::TextureBuffer::R16F
-		m_cPLE_TPFWrapper += GL_LUMINANCE32F_ARB;	// 21: PLRenderer::TextureBuffer::R32F
-		m_cPLE_TPFWrapper += GL_RGBA16F_ARB;		// 22: PLRenderer::TextureBuffer::R16G16B16A16F
-		m_cPLE_TPFWrapper += GL_RGBA32F_ARB;		// 23: PLRenderer::TextureBuffer::R32G32B32A32F
+		m_cPLE_TPFWrapper += GL_LUMINANCE16F_ARB;	// 21: PLRenderer::TextureBuffer::R16F
+		m_cPLE_TPFWrapper += GL_LUMINANCE32F_ARB;	// 22: PLRenderer::TextureBuffer::R32F
+		m_cPLE_TPFWrapper += GL_RGBA16F_ARB;		// 23: PLRenderer::TextureBuffer::R16G16B16A16F
+		m_cPLE_TPFWrapper += GL_RGBA32F_ARB;		// 24: PLRenderer::TextureBuffer::R32G32B32A32F
 	} else {
 		// ATI float pixel format
 		if (IsWGL_ATI_pixel_format_float()) {

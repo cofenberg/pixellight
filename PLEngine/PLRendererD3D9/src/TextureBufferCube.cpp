@@ -195,7 +195,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 															nSourceFormat = D3DFMT_DXT5;
 															break;
 
-														case CompressionATI1N:
+														case CompressionLATC1:
 															nSourceFormat = (D3DFORMAT)'1ITA';
 															break;
 

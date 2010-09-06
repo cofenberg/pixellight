@@ -136,6 +136,7 @@ uint32 TextureBufferCube::GetNumOfBytes(uint32 nMipmap, EPixelFormat nFormat) co
 			// DXT formats divide the texture buffer into 4x4 blocks, each block has a fixed number of bytes
 			switch (nFormat) {
 				case DXT1:
+				case LATC1:
 					return ((nSize+3)/4)*((nSize+3)/4)*8*6;
 
 				case DXT3:
