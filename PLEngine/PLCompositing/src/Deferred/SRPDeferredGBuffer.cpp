@@ -722,8 +722,8 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 										pNormalMapParameter = pMaterial->GetParameter(Material::NormalMap);
 										if (pNormalMapParameter) {
 											const Texture *pNormalMapTexture = pNormalMapParameter->GetValueTexture();
-											if (pNormalMapTexture && pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR)
-												bNormalMap_DXT5_xGxR = true;
+											if (pNormalMapTexture && (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::ATI2N_XYSwizzle))
+												bNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and ATI2N_XYSwizzle :D
 										}
 									} else {
 										// The normal map has no longer an influence!
@@ -754,8 +754,8 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 										pDetailNormalMapParameter = pMaterial->GetParameter(sDetailNormalMap);
 										if (pDetailNormalMapParameter) {
 											const Texture *pDetailNormalMapTexture = pDetailNormalMapParameter->GetValueTexture();
-											if (pDetailNormalMapTexture && pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR)
-												bDetailNormalMap_DXT5_xGxR = true;
+											if (pDetailNormalMapTexture && (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::ATI2N_XYSwizzle))
+												bDetailNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and ATI2N_XYSwizzle :D
 										}
 									} else {
 										// The detail normal map has no longer an influence!

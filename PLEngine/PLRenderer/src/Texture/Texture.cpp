@@ -318,7 +318,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// Compression
 								sValue = pElement->GetAttribute("Compression");
 								if (sValue.GetLength()) {
-									static const String sFormat[] = {"Default", "DXT1", "DXT3", "DXT5", "DXT5_xGxR", "None"};
+									static const String sFormat[] = {"Default", "DXT1", "DXT3", "DXT5", "DXT5_xGxR", "ATI1N", "ATI2N", "ATI2N_XYSwizzle", "None"};
 									for (uint32 nFormat=0; nFormat<=None; nFormat++) {
 										if (sValue == sFormat[nFormat]) {
 											m_nCompressionHint = (ECompressionFormat)nFormat;
@@ -651,6 +651,14 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 							m_nCompressionHint = DXT5;
 							break;
 
+						case CompressionATI1N:
+							m_nCompressionHint = ATI1N;
+							break;
+
+						case CompressionATI2N:
+							m_nCompressionHint = ATI2N;
+							break;
+
 						default:
 							m_nCompressionHint = None;
 							break;
@@ -694,14 +702,27 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 							nInternalFormat  = TextureBuffer::DXT5;
 							break;
 
+						/* [TODO] Implement ATI1N
+						case ATI1N:
+							nTextureFlags   |= TextureBuffer::Compression;
+							nInternalFormat  = TextureBuffer::ATI1N;
+							break;
+						*/
+
+						case ATI2N:
+						case ATI2N_XYSwizzle:
+							nTextureFlags   |= TextureBuffer::Compression;
+							nInternalFormat  = TextureBuffer::ATI2N;
+							break;
+
 						case None:
 						default:
 							// No texture compression is used
 							break;
 					}
 				} else {
-					// If 'DXT5 xGxR' is used, the data is also uncompressed... BUT the data is STILL swizzled!
-					if (m_nCompressionHint != Texture::DXT5_xGxR)
+					// If 'DXT5 xGxR' or 'ATI2N_XYSwizzle' is used, the data is also uncompressed... BUT the data is STILL swizzled!
+					if (m_nCompressionHint != Texture::DXT5_xGxR || m_nCompressionHint != Texture::ATI2N_XYSwizzle)
 						m_nCompressionHint = None; // Do never ever use texture compression!
 				}
 

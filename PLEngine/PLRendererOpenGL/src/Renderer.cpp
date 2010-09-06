@@ -420,7 +420,10 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 			(nImageFormat == PLRenderer::TextureBuffer::ATI2N && !IsGL_ATI_texture_compression_3dc())) {
 			// Do not use texture buffer compression
 			nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
-		} else bUsePreCompressedData = true; // Use the pre compressed data
+		} else {
+			// Use the pre compressed data
+			bUsePreCompressedData = true;
+		}
 	}
 
 	// Get internal pixel format

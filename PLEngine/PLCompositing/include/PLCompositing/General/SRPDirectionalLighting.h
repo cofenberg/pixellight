@@ -139,7 +139,7 @@ namespace PLCompositing {
 *  @endverbatim
 *
 *  @note
-*    - Normal map compression using swizzled DXT5 (xGxR) is supported
+*    - Normal map compression using swizzled DXT5 (xGxR) and alternate XY swizzle ATI2N is supported
 *    - Build in support for a glow post processing effect writing values into the alpha channel of the framebuffer
 *    - Build in support for a DOF post processing effect writing values into the alpha channel of the framebuffer
 */
