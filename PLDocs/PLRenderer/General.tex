@@ -93,7 +93,6 @@ Here some examples were it's useful to know how many fragments of an object are 
 
 
 
-
 \section{Rectangle textures}
 \hypertarget{Rectangle textures}{}
 The hardware texturing is limited to images with power-of-two dimensions and an optional 1-texel border. But there's also an special kind of textures called \emph{rectangle textures} without requiring power-of-two dimensions.
@@ -103,9 +102,9 @@ Non-power-of-two dimensioned textures are useful for storing video images that d
 However, non-power-of-two dimensioned (NPOTD) textures have limitations that do not apply to power-of-two dimensioned (POT) textures. NPOTD textures may not use mipmap filtering; POTD textures support both mipmapped and non-mipmapped filtering. NPOTD textures support only the CLAMP, CLAMP TO EDGE, and CLAMP TO BORDER wrap modes; POTD textures support CLAMP TO EDGE, REPEAT, CLAMP, MIRRORED REPEAT, and CLAMP TO BORDER. NPOTD textures do not support an optional 1-texel border;
 POTD textures do support an optional 1-texel border.
 
-Whether a texture is a rectangle texture or not is defined in the textures plt-file:
+Whether a texture is a rectangle texture or not is defined in the textures \emph{plt}-file:
 
-\begin{lstlisting}[caption=plt-file rectangle texture setup]
+\begin{lstlisting}[caption=\emph{plt}-file rectangle texture setup]
 <?xml version="1.0"?>
 <Texture Version="1">
     <General Rectangle="1" />
@@ -113,3 +112,51 @@ Whether a texture is a rectangle texture or not is defined in the textures plt-f
 \end{lstlisting}
 
 Were the default value is 0 meaning that by default all textures must have a power-of-two dimension! If no rectangle textures are supported by the renderer, this setting will have no effect and power-of-two are used.
+
+
+
+
+\section{Texture compression}
+Try to use texture compression whenever possible - this will shorten the loading times, enhance the performance and of course, will safe memory on the GPU. The \emph{dds} image file format is best suited for this task because it supports many texture compression formats a GPU's can directly work with. Other traditional image file formats like \emph{jpg} should not be used as texture - GPU's don't understand the used compression techniques, and therefore after loading such an image, the data needs to be decompressed on the CPU in order to be able to upload it to the GPU. This is a slow process resulting in images with compression artefacts, but without a usable compression - it's even worse if this uncompressed data is compressed for instance to \emph{DXT1} before uploading to the CPU. (slow and additional compression artefacts)
+
+During production, one can use uncompressed textures so no compression artefacts are introduces during production when manipulating a texture multiple times. When publishing something, we highly recommend that the textures are compressed in a proper way. The additional work is really worth the effort, belief us.
+
+
+\paragraph{Luminance Map Compression}
+When using luminance maps, meaning maps with only one channel, \emph{LATC1}\footnote{Called \emph{BC4} in \emph{DirectX 10}, formerly \emph{ATI1N} on ATI GPU's only} is a good choice for texture compression with high quality and the same memory footprint as \emph{DXT1}.
+
+
+\paragraph{Color Map Compression}
+When using color maps like photos, meaning maps with three channels, \emph{DXT1}\footnote{Called \emph{BC1} in \emph{DirectX 10}} is a good choice for texture compression.
+
+
+\paragraph{Color Map With Alpha Channel Compression}
+When using color maps which contain a alpha channel, meaning maps with four channels, \emph{DXT5}\footnote{Called \emph{BC3} in \emph{DirectX 10}} is a good choice for texture compression. For alpha channels with low coherency, \emph{DXT3}\footnote{Called \emph{BC2} in \emph{DirectX 10}} may reduce the memory footprint while still having a acceptable quality.
+
+
+\paragraph{Normal Map Compression}
+In general, do never ever compress normal maps with standard compression formats like \emph{DXT1}, \emph{DXT3} or \emph{DXT5}, this will lead to ugly visible normal artefacts because this formats are optimized for color based data, but in this case, we have vector data stored in the texture! \emph{DXT5 xGxR} can be used for best backward compatibility (not the best quality) and \emph{LATC2}\footnote{Called \emph{BC5} in \emph{DirectX 10}, formerly \emph{3DC}/\emph{ATI2N} on ATI GPU's only} is the recommended format for normal map compression with reasonable quality and the same memory footprint as \emph{DXT1}. PixelLight also supports \emph{Alternate XY Swizzle LATC2} which enables shader code reuse of \emph{DXT5 xGxR}.
+
+\emph{DXT5 xGxR} and \emph{Alternate XY Swizzle LATC2} are no standard extensions of the \emph{dds} image file format. Tools like \emph{The Compressonator} usually store their own additional information within the file to mark the special format, but other tools can't read in and understand this information. Instead of manipulating the \emph{dds} image file format, we decided to add an optional \emph{plt}-file per texture to add additional information about a texture.
+
+To mark a texture as \emph{DXT5 xGxR}, add a \emph{plt}-file with the same name as the texture and with the following content:
+\begin{lstlisting}[caption=\emph{plt}-file \emph{DXT5 xGxR} normal map compression]
+<?xml version="1.0"?>
+<Texture Version="1">
+    <General Compression="DXT5_xGxR" />
+</Texture>
+\end{lstlisting}
+
+To mark a texture as \emph{Alternate XY Swizzle LATC2}, add a \emph{plt}-file with the same name as the texture and with the following content:
+\begin{lstlisting}[caption=\emph{plt}-file \emph{Alternate XY Swizzle LATC2} normal map compression]
+<?xml version="1.0"?>
+<Texture Version="1">
+    <General Compression="LATC2_XYSwizzle" />
+</Texture>
+\end{lstlisting}
+
+
+\paragraph{More Information And Tools}
+For additional information about texture compression, especially about normal map compression, have a look at 
+\url{http://developer.nvidia.com/object/real-time-normal-map-dxt-compression.html} and \url{http://www.ozone3d.net/tutorials/bump_map_compression.php}.
+There are many tools dealing with textures, \emph{The Compressonator}\footnote{\url{http://developer.amd.com/gpu/compressonator/Pages/default.aspx}} from ATI is one of the better ones and can directly deal with for instance \emph{DXT5 xGxR} or \emph{Alternate XY Swizzle LATC2}.

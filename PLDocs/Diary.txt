@@ -1,3 +1,9 @@
+>> 06.09.2010
+[CO]
+- PLRenderer Doku um "Texture compression" erweitert
+
+
+
 >> 05.08.2010
 [CO]
 - PLGeneral Doku nochmal durchgeschaut
