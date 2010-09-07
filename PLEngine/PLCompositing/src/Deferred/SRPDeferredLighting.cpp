@@ -154,8 +154,8 @@ Shader *SRPDeferredLighting::GetVertexShader(Renderer &cRenderer)
 	if (!pShader && !m_bVertexShader) {
 		const static String ShaderFilename = "Vertex/SRPDeferredLighting.cg";
 		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredLighting_Cg_VS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredLighting_Cg_VS, nNumOfBytes, false, ".cg");
+			static uint32 nNumOfBytes = Wrapper::GetStringLength(sDeferredLighting_Cg_VS.GetASCII()) + 1; // +1 for the terminating NULL (\0) to be 'correct'
+			File cFile((uint8*)sDeferredLighting_Cg_VS.GetASCII(), nNumOfBytes, false, ".cg");
 			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, false, "arbvp1", "");
 		}
 		cShaderHandler.SetResource(pShader);
@@ -182,71 +182,71 @@ Shader *SRPDeferredLighting::GetFragmentShader(Renderer &cRenderer, bool bDirect
 		// Get defines string and a readable shader name (we MUST choose a new name!)
 		String sDefines, sName = ShaderFilename + '_';
 		if (bDirectional) {
-			sDefines += "#define DIRECTIONAL\n";
+			sDefines += "#define FS_DIRECTIONAL\n";
 			sName    += "[Directional]";
 		} else {
 			if (bProjectivePoint) {
-				sDefines += "#define PROJECTIVE_POINT\n";
+				sDefines += "#define FS_PROJECTIVE_POINT\n";
 				sName    += "[ProjectivePoint]";
 			} else {
 				if (bSpot) {
-					sDefines += "#define SPOT\n";
+					sDefines += "#define FS_SPOT\n";
 					sName    += "[Spot]";
 					if (bProjectiveSpot) {
-						sDefines += "#define PROJECTIVE_SPOT\n";
+						sDefines += "#define FS_PROJECTIVE_SPOT\n";
 						sName    += "[ProjectiveSpot]";
 					}
 					if (bSpotCone) {
-						sDefines += "#define SPOT_CONE\n";
+						sDefines += "#define FS_SPOT_CONE\n";
 						sName    += "[SpotCone]";
 						if (bSpotSmoothCone) {
-							sDefines += "#define SPOT_SMOOTHCONE\n";
+							sDefines += "#define FS_SPOT_SMOOTHCONE\n";
 							sName    += "[SpotSmoothCone]";
 						}
 					}
 				}
 			}
 			if (bShadowMapping) {
-				sDefines += "#define SHADOWMAPPING\n";
+				sDefines += "#define FS_SHADOWMAPPING\n";
 				sName    += "[ShadowMapping]";
 				if (!(GetFlags() & NoSoftShadow)) {
-					sDefines += "#define SOFTSHADOWMAPPING\n";
+					sDefines += "#define FS_SOFTSHADOWMAPPING\n";
 					sName    += "[SoftShadowMapping]";
 				}
 			}
 		}
 		if (GetFlags() & NoAlbedo) {
-			sDefines += "#define NO_ALBEDO\n";
+			sDefines += "#define FS_NO_ALBEDO\n";
 			sName    += "[NoAlbedo]";
 		}
 		if (GetFlags() & NoAmbientOcclusion) {
-			sDefines += "#define NO_AMBIENTOCCLUSION\n";
+			sDefines += "#define FS_NO_AMBIENTOCCLUSION\n";
 			sName    += "[NoAmbientOcclusion]";
 		}
 		if (GetFlags() & NoSpecular) {
-			sDefines += "#define NO_SPECULAR\n";
+			sDefines += "#define FS_NO_SPECULAR\n";
 			sName    += "[NoSpecular]";
 		}
 		if (GetFlags() & NoSpecularColor) {
-			sDefines += "#define NO_SPECULARCOLOR\n";
+			sDefines += "#define FS_NO_SPECULARCOLOR\n";
 			sName    += "[NoSpecularColor]";
 		}
 		if (GetFlags() & NoSpecularExponent) {
-			sDefines += "#define NO_SPECULAREXPONENT\n";
+			sDefines += "#define FS_NO_SPECULAREXPONENT\n";
 			sName    += "[NoSpecularExponent]";
 		}
 		if (bDiscard) {
-			sDefines += "#define DISCARD\n";
+			sDefines += "#define FS_DISCARD\n";
 			sName    += "[Discard]";
 		}
 		if (bGammaCorrection) {
-			sDefines += "#define GAMMACORRECTION\n";
+			sDefines += "#define FS_GAMMACORRECTION\n";
 			sName    += "[GammaCorrection]";
 		}
 
 		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredLighting_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredLighting_Cg_FS, nNumOfBytes, false, ".cg");
+			static uint32 nNumOfBytes = Wrapper::GetStringLength(sDeferredLighting_Cg_FS.GetASCII()) + 1; // +1 for the terminating NULL (\0) to be 'correct'
+			File cFile((uint8*)sDeferredLighting_Cg_FS.GetASCII(), nNumOfBytes, false, ".cg");
 			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "arbfp1", sDefines); // "glslf" would be nice, but then, the "discard" keyword seems to have no effect :/
 		}
 		cShaderHandler.SetResource(pShader);

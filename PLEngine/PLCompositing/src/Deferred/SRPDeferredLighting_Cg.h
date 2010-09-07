@@ -19,69 +19,66 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
  *
  *  Definitions:
- *  - DIRECTIONAL:         Directional light
- *  - PROJECTIVE_POINT:    Projective point light
- *  - SPOT:                Spot light
- *    - PROJECTIVE_SPOT:   Projective spot light (SPOT must be set, too)
- *    - SPOT_CONE:         Spot light with a cone (SPOT must be set, too)
- *      - SPOT_SMOOTHCONE: Spot light with a smooth cone (SPOT & SPOT_CONE must be set, too)
- *  - SHADOWMAPPING:       Perform shadow mapping
- *    - SOFTSHADOWMAPPING: Perform soft shadow mapping (SHADOWMAPPING must be set, too)
- *  - NO_ALBEDO:           Ignore albedo data
- *  - NO_AMBIENTOCCLUSION: Ignore ambient occlusion data
- *  - NO_SPECULAR:         No specular
- *  - NO_SPECULARCOLOR:    Ignore specular color data
- *  - NO_SPECULAREXPONENT: Ignore specular exponent data
- *  - DISCARD:             Use discard
- *  - GAMMACORRECTION:     Use gamma correction (sRGB to linear space)
+ *  - FS_DIRECTIONAL:         Directional light
+ *  - FS_PROJECTIVE_POINT:    Projective point light
+ *  - FS_SPOT:                Spot light
+ *    - FS_PROJECTIVE_SPOT:   Projective spot light (FS_SPOT must be set, too)
+ *    - FS_SPOT_CONE:         Spot light with a cone (FS_SPOT must be set, too)
+ *      - FS_SPOT_SMOOTHCONE: Spot light with a smooth cone (FS_SPOT & FS_SPOT_CONE must be set, too)
+ *  - FS_SHADOWMAPPING:       Perform shadow mapping
+ *    - FS_SOFTSHADOWMAPPING: Perform soft shadow mapping (FS_SHADOWMAPPING must be set, too)
+ *  - FS_NO_ALBEDO:           Ignore albedo data
+ *  - FS_NO_AMBIENTOCCLUSION: Ignore ambient occlusion data
+ *  - FS_NO_SPECULAR:         No specular
+ *  - FS_NO_SPECULARCOLOR:    Ignore specular color data
+ *  - FS_NO_SPECULAREXPONENT: Ignore specular exponent data
+ *  - FS_DISCARD:             Use discard
+ *  - FS_GAMMACORRECTION:     Use gamma correction (sRGB to linear space)
 \*********************************************************/
 
 
-const static char *pszDeferredLighting_Cg_VS = "\n\
-// Vertex input\n\
-struct VS_INPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-};\n\
-\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredLighting_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position  : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	 : TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-	float2 texUnitUV : TEXCOORD1;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	float4 Position			  : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord			  : TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float2 TexCoordNormalized : TEXCOORD1;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
 };\n\
 \n\
 // Main function\n\
-VS_OUTPUT main(VS_INPUT IN				// Vertex input\n\
-	 , uniform int2	    TextureSize)	// Texture size\n\
+VS_OUTPUT main(float4 VertexPosition  : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+			   float2 VertexTexCoord0 : TEXCOORD0,	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2   TextureSize)					// Texture size\n\
 {\n\
 	VS_OUTPUT OUT;\n\
 \n\
 	// Pass through the vertex position\n\
-	OUT.position = IN.position;\n\
+	OUT.Position = VertexPosition;\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	OUT.texUV = IN.texUV*TextureSize;\n\
+	OUT.TexCoord = VertexTexCoord0*TextureSize;\n\
 \n\
 	// Pass through the vertex texture coordinate\n\
-	OUT.texUnitUV = IN.texUV;\n\
+	OUT.TexCoordNormalized = VertexTexCoord0;\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";
 
 
-const static char *pszDeferredLighting_Cg_FS = "\n\
+// Cg fragment shader source code
+static const PLGeneral::String sDeferredLighting_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position	 : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	 : TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-	float2 texUnitUV : TEXCOORD1;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	float4 Position			  : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord			  : TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float2 TexCoordNormalized : TEXCOORD1;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
 // Performs the Blinn-Phong lighting calculation\n\
@@ -99,7 +96,7 @@ float3 BlinnPhong(float3 lightVector, float3 lightColor, float3 viewVector, floa
 	float3 diffuseLighting = saturate(dot(lightVector, normalVector))*diffuseColor*lightColor;\n\
 \n\
 	// Specular term\n\
-	#ifdef NO_SPECULAR\n\
+	#ifdef FS_NO_SPECULAR\n\
 		#define specularLighting 0\n\
 	#else\n\
 		// Calculate the half vector between the light vector and the view vector. This is cheaper then calculating the actual reflective vector.\n\
@@ -165,23 +162,23 @@ float3 uv_to_eye(float2 uv, float eye_z, float2 invFocalLen)\n\
 \n\
 // Main function\n\
 FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stage\n\
-#ifdef DIRECTIONAL\n\
+#ifdef FS_DIRECTIONAL\n\
 	, uniform float3 LightDirection								// View space normalized light direction\n\
 #else\n\
 	, uniform float3 LightPosition								// View space light position\n\
 	, uniform float	 LightRadius								// View space light radius\n\
-	#ifdef PROJECTIVE_POINT\n\
+	#ifdef FS_PROJECTIVE_POINT\n\
 		, uniform samplerCUBE ProjectivePointCubeMap			// Cube map texture for projective point light\n\
 		, uniform float3x3    ViewSpaceToCubeMapSpace			// View space to cube map space transform matrix\n\
 	#else\n\
-		#ifdef SPOT\n\
+		#ifdef FS_SPOT\n\
 			, uniform float3	   LightDirection				// View space normalized light direction\n\
-			#ifdef PROJECTIVE_SPOT\n\
+			#ifdef FS_PROJECTIVE_SPOT\n\
 				, uniform sampler2D ProjectiveSpotMap			// Texture for projective spot light\n\
 				, uniform float4x4  ViewSpaceToSpotMapSpace		// View space to spot map space transform matrix\n\
 			#endif\n\
-			#ifdef SPOT_CONE\n\
-				#ifdef SPOT_SMOOTHCONE\n\
+			#ifdef FS_SPOT_CONE\n\
+				#ifdef FS_SPOT_SMOOTHCONE\n\
 					, uniform float2 SpotConeCos				// Cosinus of the outer and inner cone angle in view space\n\
 				#else\n\
 					, uniform float  SpotConeCos				// Cosinus of the cone angle in view space\n\
@@ -189,8 +186,8 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 			#endif\n\
 		#endif\n\
 	#endif\n\
-	#ifdef SHADOWMAPPING\n\
-		#ifdef SPOT\n\
+	#ifdef FS_SHADOWMAPPING\n\
+		#ifdef FS_SPOT\n\
 			, uniform sampler2D ShadowMap						// 2D shadow map\n\
 			, uniform float4x4  ViewSpaceToShadowMapSpace		// View space to shadow map space transform matrix\n\
 		#else\n\
@@ -198,7 +195,7 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 			, uniform float3x3    ViewSpaceToShadowCubeMapSpace	// View space to shadow cube map space transform matrix\n\
 			, uniform float		  InvLightRadius				// 1/LightRadius\n\
 		#endif\n\
-		#ifdef SOFTSHADOWMAPPING\n\
+		#ifdef FS_SOFTSHADOWMAPPING\n\
 			, uniform float TexelSize							// Shadow map texel size\n\
 		#endif\n\
 	#endif\n\
@@ -212,24 +209,24 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 	FS_OUTPUT OUT;\n\
 \n\
 	// Reconstruct view-space position (current surface point)\n\
-	float4 sampleRT1 = texRECT(RenderTargetTexture1, IN.texUV);\n\
-	float3 position  = uv_to_eye(IN.texUnitUV, sampleRT1.b, InvFocalLen);\n\
+	float4 sampleRT1 = texRECT(RenderTargetTexture1, IN.TexCoord);\n\
+	float3 position  = uv_to_eye(IN.TexCoordNormalized, sampleRT1.b, InvFocalLen);\n\
 \n\
 	// Perform the lighting calculation in view space\n\
-#ifdef DIRECTIONAL\n\
+#ifdef FS_DIRECTIONAL\n\
 	float3 normal    = decodeNormalVector(sampleRT1.rg);\n\
-	float4 sampleRT0 = texRECT(RenderTargetTexture0, IN.texUV);\n\
-	float4 sampleRT2 = texRECT(RenderTargetTexture2, IN.texUV);\n\
-	#ifdef NO_ALBEDO\n\
+	float4 sampleRT0 = texRECT(RenderTargetTexture0, IN.TexCoord);\n\
+	float4 sampleRT2 = texRECT(RenderTargetTexture2, IN.TexCoord);\n\
+	#ifdef FS_NO_ALBEDO\n\
 		sampleRT0.rgb = 1;	// Set to default\n\
 	#endif\n\
-	#ifdef NO_SPECULARCOLOR\n\
+	#ifdef FS_NO_SPECULARCOLOR\n\
 		sampleRT2.rgb = 1;	// Set to default\n\
 	#endif\n\
-	#ifdef NO_SPECULAREXPONENT\n\
+	#ifdef FS_NO_SPECULAREXPONENT\n\
 		sampleRT2.a = 45;	// Set to default\n\
 	#endif\n\
-	OUT.color.rgb = BlinnPhong(LightDirection, LightColor, -normalize(position), normal, sampleRT0.rgb, sampleRT2.rgb, sampleRT2.a);\n\
+	OUT.Color0.rgb = BlinnPhong(LightDirection, LightColor, -normalize(position), normal, sampleRT0.rgb, sampleRT2.rgb, sampleRT2.a);\n\
 \n\
 	// Not shadowed by default\n\
 	#define shadow 1\n\
@@ -243,22 +240,22 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 	// If the position is outside of area of effect, discard position\n\
 	if (distance > LightRadius) {\n\
 		// Early escape: Not influcenced by the light\n\
-		#ifdef DISCARD\n\
+		#ifdef FS_DISCARD\n\
 			discard;\n\
 		#else\n\
-			OUT.color = 0;\n\
+			OUT.Color0 = 0;\n\
 			return OUT;\n\
 		#endif\n\
 	}\n\
 \n\
 	// Perform shadow mapping\n\
-	#ifdef SHADOWMAPPING\n\
-		#ifdef SPOT\n\
+	#ifdef FS_SHADOWMAPPING\n\
+		#ifdef FS_SPOT\n\
 			// Calculate the shadow vector\n\
 			float4 shadowVector = mul(ViewSpaceToShadowMapSpace, float4(position, 1));\n\
 \n\
 			// Shadow mapping\n\
-			#ifdef SOFTSHADOWMAPPING\n\
+			#ifdef FS_SOFTSHADOWMAPPING\n\
 				// Fake PCF (percentage-closer filtering)\n\
 				float shadow = (texPCF(ShadowMap, shadowVector, float2(-TexelSize,  TexelSize)).x +\n\
 								texPCF(ShadowMap, shadowVector, float2( TexelSize,  TexelSize)).x +\n\
@@ -271,7 +268,7 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 			// Shadow mapping\n\
 			float3 shadowVector = mul(ViewSpaceToShadowCubeMapSpace, -lightVector*InvLightRadius);\n\
 			float shadowVecLength = length(shadowVector);\n\
-			#ifdef SOFTSHADOWMAPPING\n\
+			#ifdef FS_SOFTSHADOWMAPPING\n\
 				// Shadowed?\n\
 				float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, float3(TexelSize, TexelSize, TexelSize))) ? 0.16666667 : 0;\n\
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, float3(-TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0;\n\
@@ -292,10 +289,10 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 		// Is the position completely shadowed?\n\
 		if (shadow <= 0) {\n\
 			// Early escape: Not influcenced by the light\n\
-			#ifdef DISCARD\n\
+			#ifdef FS_DISCARD\n\
 				discard;\n\
 			#else\n\
-				OUT.color = 0;\n\
+				OUT.Color0 = 0;\n\
 				return OUT;\n\
 			#endif\n\
 		}\n\
@@ -305,14 +302,14 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 	#endif\n\
 \n\
 	// Get the light color (lightColor)\n\
-	#ifdef PROJECTIVE_POINT\n\
+	#ifdef FS_PROJECTIVE_POINT\n\
 		// Calculate the cube map space vector ('-' -> The light is the source of the ray, not the surface!)\n\
 		float3 cubeMapVector = mul(ViewSpaceToCubeMapSpace, -lightVector);\n\
 \n\
 		// Get cube map texture for projective point light\n\
 		float3 lightColor = texCUBE(ProjectivePointCubeMap, cubeMapVector).rgb;\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
-		#ifdef GAMMACORRECTION\n\
+		#ifdef FS_GAMMACORRECTION\n\
 			lightColor = pow(lightColor, 2.2f);\n\
 		#endif\n\
 		// Apply light color\n\
@@ -322,19 +319,19 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 		float3 lightColor = LightColor;\n\
 \n\
 		// Add spot light\n\
-		#ifdef SPOT\n\
+		#ifdef FS_SPOT\n\
 			// Projective spot map\n\
-			#ifdef PROJECTIVE_SPOT\n\
+			#ifdef FS_PROJECTIVE_SPOT\n\
 				// Calculate the projective spot map texture coordinate\n\
 				float4 projectiveSpotMapUV = mul(ViewSpaceToSpotMapSpace, -float4(position, 1));\n\
 \n\
 				// No back projection, please!\n\
 				if (projectiveSpotMapUV.z < 0) {\n\
 					// Early escape: Not influcenced by the light\n\
-					#ifdef DISCARD\n\
+					#ifdef FS_DISCARD\n\
 						discard;\n\
 					#else\n\
-						OUT.color = 0;\n\
+						OUT.Color0 = 0;\n\
 						return OUT;\n\
 					#endif\n\
 				}\n\
@@ -342,7 +339,7 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 				// Get the projective spot map texel data\n\
 				float3 projectiveSpotMapTexel = tex2Dproj(ProjectiveSpotMap, projectiveSpotMapUV).rgb;\n\
 				// Perform sRGB to linear space conversion (gamma correction)\n\
-				#ifdef GAMMACORRECTION\n\
+				#ifdef FS_GAMMACORRECTION\n\
 					projectiveSpotMapTexel = pow(projectiveSpotMapTexel, 2.2f);\n\
 				#endif\n\
 				// Modulate the color of the light using the projective spot map texel data\n\
@@ -350,22 +347,22 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 			#endif\n\
 \n\
 			// Spot light with cone\n\
-			#ifdef SPOT_CONE\n\
+			#ifdef FS_SPOT_CONE\n\
 				// Calculate the angle between the current position and the spot light\n\
 				float currentSpotConeCos = dot(normalize(position - LightPosition), LightDirection);\n\
 \n\
 				// Spot light with smooth cone\n\
-				#ifdef SPOT_SMOOTHCONE\n\
+				#ifdef FS_SPOT_SMOOTHCONE\n\
 					// Get the current smooth spot cone attenuation\n\
 					float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
 \n\
 					// Is the position completly outside the spot cone?\n\
 					if (currentSpotConeCosAttenuation <= 0) {\n\
 						// Early escape: The position is outside the light cone and therefore not influcenced by the light\n\
-						#ifdef DISCARD\n\
+						#ifdef FS_DISCARD\n\
 							discard;\n\
 						#else\n\
-							OUT.color = 0;\n\
+							OUT.Color0 = 0;\n\
 							return OUT;\n\
 						#endif\n\
 					}\n\
@@ -376,10 +373,10 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 					// A position is inside or outside the spot cone, there is no 'in between'\n\
 					if (SpotConeCos > currentSpotConeCos) {\n\
 						// Early escape: The position is outside the light cone and therefore not influcenced by the light\n\
-						#ifdef DISCARD\n\
+						#ifdef FS_DISCARD\n\
 							discard;\n\
 						#else\n\
-							OUT.color = 0;\n\
+							OUT.Color0 = 0;\n\
 							return OUT;\n\
 						#endif\n\
 					}\n\
@@ -390,35 +387,35 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 \n\
 	// Perform the lighting calculation in view space\n\
 	float3 normal    = decodeNormalVector(sampleRT1.rg);\n\
-	float4 sampleRT0 = texRECT(RenderTargetTexture0, IN.texUV);\n\
-	float4 sampleRT2 = texRECT(RenderTargetTexture2, IN.texUV);\n\
-	#ifdef NO_ALBEDO\n\
+	float4 sampleRT0 = texRECT(RenderTargetTexture0, IN.TexCoord);\n\
+	float4 sampleRT2 = texRECT(RenderTargetTexture2, IN.TexCoord);\n\
+	#ifdef FS_NO_ALBEDO\n\
 		sampleRT0.rgb = 1;	// Set to default\n\
 	#endif\n\
-	#ifdef NO_SPECULARCOLOR\n\
+	#ifdef FS_NO_SPECULARCOLOR\n\
 		sampleRT2.rgb = 1;	// Set to default\n\
 	#endif\n\
-	#ifdef NO_SPECULAREXPONENT\n\
+	#ifdef FS_NO_SPECULAREXPONENT\n\
 		sampleRT2.a = 45;	// Set to default\n\
 	#endif\n\
-	OUT.color.rgb = BlinnPhong(normalize(lightVector), lightColor, -normalize(position), normal, sampleRT0.rgb, sampleRT2.rgb, sampleRT2.a);\n\
+	OUT.Color0.rgb = BlinnPhong(normalize(lightVector), lightColor, -normalize(position), normal, sampleRT0.rgb, sampleRT2.rgb, sampleRT2.a);\n\
 \n\
 	// Apply attenuation\n\
-	OUT.color.rgb *= saturate(1 - distance/LightRadius);\n\
+	OUT.Color0.rgb *= saturate(1 - distance/LightRadius);\n\
 #endif\n\
 \n\
 	// Apply ambient occlusion or the calculated realtime shadow\n\
-#ifdef NO_AMBIENTOCCLUSION\n\
+#ifdef FS_NO_AMBIENTOCCLUSION\n\
 	// Just modulate the calculated lighting color with the calculated shadowing\n\
-	OUT.color.rgb *= shadow;\n\
+	OUT.Color0.rgb *= shadow;\n\
 #else\n\
 	// Modulate the calculated lighting color with the calculated shadowing or the ambient occlusion value, do not multiply both shadow values\n\
-	OUT.color.rgb *= min(sampleRT0.a, shadow);\n\
+	OUT.Color0.rgb *= min(sampleRT0.a, shadow);\n\
 #endif\n\
 \n\
 	// Still here? Write any alpha value so all color components were written.\n\
-	OUT.color.a = 1;\n\
+	OUT.Color0.a = 1;\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";
