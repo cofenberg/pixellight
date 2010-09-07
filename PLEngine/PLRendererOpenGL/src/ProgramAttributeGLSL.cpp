@@ -75,6 +75,9 @@ bool ProgramAttributeGLSL::Set(PLRenderer::VertexBuffer *pVertexBuffer, uint32 n
 
 			// Enable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
 			glEnableVertexAttribArrayARB(m_nOpenGLAttributeLocation);
+		} else {
+			// Disable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
+			glDisableVertexAttribArrayARB(m_nOpenGLAttributeLocation);
 		}
 	} else {
 		// Disable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
@@ -100,6 +103,9 @@ bool ProgramAttributeGLSL::Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRender
 
 			// Enable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
 			glEnableVertexAttribArrayARB(m_nOpenGLAttributeLocation);
+		} else {
+			// Disable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
+			glDisableVertexAttribArrayARB(m_nOpenGLAttributeLocation);
 		}
 	} else {
 		// Disable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)

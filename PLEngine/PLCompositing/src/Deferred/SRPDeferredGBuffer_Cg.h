@@ -20,14 +20,6 @@
 *********************************************************/
 
 
-/*
- *  Definitions:
- *  - VS_TWOSIDED:					 Two sided material
- *  - VS_DISPLACEMENTMAP:			 Displacement map
- *  - VS_SECONDTEXTURECOORDINATE:    Second texture coordinate
- *  - VS_TANGENT_BINORMAL:			 Tangent and binormal vectors
- *  - VS_VIEWSPACEPOSITION:          Calculate viewspace position
- */
 // Cg vertex shader source code
 static const PLGeneral::String sDeferredGBuffer_Cg_VS = "\
 // Vertex output\n\
@@ -39,8 +31,10 @@ struct VS_OUTPUT {\n\
 	float2 TexCoord	   : TEXCOORD0;	// Vertex texture coordinate\n\
 #endif\n\
 	float4 NormalDepth : TEXCOORD1; // View space vertex normal and view space linear depth [0...far plane]\n\
+#ifdef VS_TANGENT_BINORMAL\n\
 	float3 Tangent     : TEXCOORD2;	// View space vertex tangent\n\
 	float3 Binormal    : TEXCOORD3;	// View space vertex tangent\n\
+#endif\n\
 	float3 EyeVec      : TEXCOORD4;	// Tangent space vector pointing from the pixel to the eye point\n\
 #ifdef VS_VIEWSPACEPOSITION\n\
 	float3 PositionVS  : TEXCOORD5;	// View space vertex position\n\
@@ -120,33 +114,9 @@ VS_OUTPUT main(float4 VertexPosition  : POSITION	// Object space vertex position
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";
 
-/*
- *  Definitions:
- *  - FS_DIFFUSEMAP:                    Take diffuse map into account
- *    - FS_ALPHATEST:                   Use alpha test to discard fragments (FS_DIFFUSEMAP must be defined!)
- *  - FS_SPECULAR:                      Use specular
- *    - FS_SPECULARMAP:                 Take specular map into account (FS_SPECULAR must be set, too)
- *  - FS_NORMALMAP:                     Take normal map into account
- *    - FS_NORMALMAP_DXT5_XGXR:         DXT5 XGXR compressed normal map (FS_NORMALMAP must be defined and FS_NORMALMAP_LATC2 not!)
- *    - FS_NORMALMAP_LATC2:             LATC2 compressed normal map (FS_NORMALMAP must be defined and FS_NORMALMAP_DXT5_XGXR not!)
- *    - FS_DETAILNORMALMAP:             Take detail normal map into account (FS_NORMALMAP must be defined!)
- *      - FS_DETAILNORMALMAP_DXT5_XGXR: DXT5 XGXR compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP must be defined and FS_DETAILNORMALMAP_LATC2 not!)
- *      - FS_DETAILNORMALMAP_LATC2:     LATC2 compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP must be defined and FS_DETAILNORMALMAP_DXT5_XGXR not!)
- *  - FS_PARALLAXMAPPING:               Perform parallax mapping
- *  - FS_AMBIENTOCCLUSIONMAP:           Use ambient occlusion map
- *  - FS_LIGHTMAP:                      Use light map
- *  - FS_EMISSIVEMAP:                   Use emissive map
- *  - FS_GLOW:                          Use glow
- *    - FS_GLOWMAP:                     Use glow map (FS_GLOW must be defined!)
- *  - FS_REFLECTION:                    Use reflection
- *    - FS_FRESNELREFLECTION:           Use fresnel reflection (FS_REFLECTION must be defined!)
- *    - FS_REFLECTIVITYMAP:             Use reflectivity map (FS_REFLECTION and FS_FRESNELREFLECTION or FS_2DREFLECTIONMAP or FS_CUBEREFLECTIONMAP must be defined!)
- *    - FS_2DREFLECTIONMAP:             Use 2D reflection mapping (FS_REFLECTION must be defined, can't be set together with FS_CUBEREFLECTIONMAP!)
- *    - FS_CUBEREFLECTIONMAP:           Use cube reflection mapping (FS_REFLECTION must be defined, can't be set together with FS_2DREFLECTIONMAP!)
- *  - FS_GAMMACORRECTION:               Use gamma correction (sRGB to linear space)
- */
+
 // Cg fragment shader source code
 static const PLGeneral::String sDeferredGBuffer_Cg_FS = "\
 // Vertex output\n\
@@ -188,7 +158,7 @@ float fresnel(float3 light, float3 normal, float2 constants)\n\
 	// Light and normal are assumed to be normalized\n\
 	// constants.x = R0 [0..1]\n\
 	// constants.y = Power, always >0\n\
-	float cosAngle = saturate(1 - dot(light, normal)); // We REALLY need to saturate in here or pow may hurt us when using negative numbers!\n\
+	float cosAngle = clamp(1 - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
 	return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
 }\n\
 \n\
@@ -277,7 +247,7 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 \n\
 	// For better quality: Refine the parallax by making another lookup at where we ended\n\
 	// up in the first parallax computation, then averaging the results.\n\
-	float height2 = (height + tex2D(HeightMap, textureCoordinate))*0.5f;\n\
+	float height2 = (height + tex2D(HeightMap, textureCoordinate).r)*0.5f;\n\
 	offset = height2*scale + bias;\n\
 	textureCoordinate = IN.TexCoord.xy + offset*eyeVec.xy;\n\
 #else\n\
@@ -325,7 +295,7 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 		#else\n\
 			normal.xy = tex2D(NormalMap, textureCoordinate).ra*2 - 1;\n\
 		#endif\n\
-		normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+		normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 	#else\n\
 		float3 normal = tex2D(NormalMap, textureCoordinate).xyz*2 - 1;\n\
 	#endif\n\
@@ -461,4 +431,4 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

@@ -24,8 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <float.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLGraphics/Image/Image.h>
@@ -34,8 +32,9 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/RenderStates.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
@@ -82,6 +81,7 @@ pl_implement_class(SRPDeferredGBuffer)
 *    Default constructor
 */
 SRPDeferredGBuffer::SRPDeferredGBuffer() :
+	ShaderLanguage(this),
 	TextureFiltering(this),
 	Flags(this),
 	m_pRenderTarget(NULL),
@@ -94,11 +94,10 @@ SRPDeferredGBuffer::SRPDeferredGBuffer() :
 	m_pFullscreenQuad(NULL),
 	m_pRenderStates(new RenderStates()),
 	m_nMaterialChanges(0),
-	m_pCurrentMaterial(NULL)
+	m_pCurrentMaterial(NULL),
+	m_pGeneratedProgramUserData(NULL),
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bVertexShader,   0, sizeof(m_bVertexShader));
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
 }
 
 /**
@@ -107,9 +106,6 @@ SRPDeferredGBuffer::SRPDeferredGBuffer() :
 */
 SRPDeferredGBuffer::~SRPDeferredGBuffer()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-
 	// Destroy render states 'translator'
 	delete m_pRenderStates;
 
@@ -126,6 +122,10 @@ SRPDeferredGBuffer::~SRPDeferredGBuffer()
 	// Destroy the fullscreen quad
 	if (m_pFullscreenQuad)
 		delete m_pFullscreenQuad;
+
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
 }
 
 /**
@@ -218,217 +218,6 @@ void SRPDeferredGBuffer::SetupTextureFiltering(Renderer &cRenderer, uint32 nStag
 
 /**
 *  @brief
-*    Returns an ambient/emissive vertex shader
-*/
-Shader *SRPDeferredGBuffer::GetVertexShader(Renderer &cRenderer, bool bDiffuseMap, bool bParallax, bool bDisplacementMap, bool bNormalMap, bool bEmissiveMap, bool bReflection, bool bLightMap, bool bTwoSided, float fAlphaReference)
-{
-	// Take diffuse map into account? (if ambient color is black, we don't need it :)
-	bool bAmbientColor = true;
-	bDiffuseMap = (bAmbientColor && bDiffuseMap) || bEmissiveMap || fAlphaReference != 0.0f;
-	if (!bAmbientColor)
-		bLightMap = false; // No ambient color, no light map required :)
-
-	// Tangent and binormal required?
-	bool bTangentBinormal = bNormalMap || bParallax;
-
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided]) {
-		const static String ShaderFilename = "Vertex/SRPDeferredGBuffer.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bTwoSided) {
-			sDefines += "#define VS_TWOSIDED\n";
-			sName    += "[TwoSided]";
-		}
-		if (bDisplacementMap) {
-			sDefines += "#define VS_DISPLACEMENTMAP\n";
-			sName    += "[DisplacementMap]";
-		}
-		if (bLightMap) {
-			sDefines += "#define VS_SECONDTEXTURECOORDINATE\n";
-			sName    += "[LightMap]";
-		}
-		if (bTangentBinormal) {
-			sDefines += "#define VS_TANGENT_BINORMAL\n";
-			sName    += "[TangentBinormal]";
-		}
-		if (bReflection) {
-			sDefines += "#define VS_VIEWSPACEPOSITION\n";
-			sName    += "[Reflection]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(sDeferredGBuffer_Cg_VS.GetASCII()) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)sDeferredGBuffer_Cg_VS.GetASCII(), nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, false, "arbvp1", sDefines); // [TODO] Use "glslv" profile for vertex texture fetch... but it looks like this is messing up with for example "TANGENT" input semantics (in the future, I will use pur GLSL instead of Cg for this anyway :)
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns an ambient/emissive fragment shader
-*/
-Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuseMap, bool bSpecular, bool bSpecularMap, bool bParallax, bool bAmbientOcclusionMap, bool bEmissiveMap, bool b2DReflection, bool bCubeReflection, bool bReflectivityMap, bool bLightMap, bool bAlphaTest, bool bNormalMap, bool bNormalMap_DXT5_xGxR, bool bNormalMap_LATC2, bool bDetailNormalMap, bool bDetailNormalMap_DXT5_xGxR, bool bDetailNormalMap_LATC2, float fAlphaReference, bool bFresnelReflection, bool bGlow, bool bGlowMap, bool bGammaCorrection)
-{
-	// Check reflection settings
-	if (b2DReflection && bCubeReflection)
-		b2DReflection = bCubeReflection = false; // Invalid state!
-	const bool bReflection = (bFresnelReflection || b2DReflection || bCubeReflection);
-
-	// Normal mapping logic checks
-	if (bNormalMap) {
-		if (!bDetailNormalMap)
-			bDetailNormalMap_DXT5_xGxR = bDetailNormalMap_LATC2 = false;
-	} else {
-		bNormalMap_DXT5_xGxR = bNormalMap_LATC2 = bDetailNormalMap = bDetailNormalMap_DXT5_xGxR = bDetailNormalMap_LATC2 = false;
-	}
-
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bNormalMap_LATC2][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bDetailNormalMap_LATC2][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bNormalMap_LATC2][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bDetailNormalMap_LATC2][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredGBuffer.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bDiffuseMap) {
-			sDefines += "#define FS_DIFFUSEMAP\n";
-			sName    += "[DiffuseMap]";
-			if (bAlphaTest) {
-				sDefines += "#define FS_ALPHATEST\n";
-				sName    += "[AlphaTest]";
-			}
-		}
-		if (bSpecular) {
-			sDefines += "#define FS_SPECULAR\n";
-			sName    += "[Specular]";
-			if (bSpecularMap) {
-				sDefines += "#define FS_SPECULARMAP\n";
-				sName    += "[SpecularMap]";
-			}
-		}
-		if (bNormalMap) {
-			sDefines += "#define FS_NORMALMAP\n";
-			sName    += "[NormalMap]";
-			if (bNormalMap_DXT5_xGxR) {
-				sDefines += "#define FS_NORMALMAP_DXT5_XGXR\n";
-				sName    += "[NormalMap_DXT5_xGxR]";
-			} else if (bNormalMap_LATC2) {
-				sDefines += "#define FS_NORMALMAP_LATC2\n";
-				sName    += "[NormalMap_LATC2]";
-			}
-			if (bDetailNormalMap) {
-				sDefines += "#define FS_DETAILNORMALMAP\n";
-				sName    += "[DetailNormalMap]";
-				if (bDetailNormalMap_DXT5_xGxR) {
-					sDefines += "#define FS_DETAILNORMALMAP_DXT5_XGXR\n";
-					sName    += "[DetailNormalMap_DXT5_xGxR]";
-				} else if (bDetailNormalMap_LATC2) {
-					sDefines += "#define FS_DETAILNORMALMAP_LATC2\n";
-					sName    += "[DetailNormalMap_LATC2]";
-				}
-			}
-		}
-		if (bParallax) {
-			sDefines += "#define FS_PARALLAXMAPPING\n";
-			sName    += "[ParallaxMapping]";
-		}
-		if (bAmbientOcclusionMap) {
-			sDefines += "#define FS_AMBIENTOCCLUSIONMAP\n";
-			sName    += "[AmbientOcclusionMap]";
-		}
-		if (bLightMap) {
-			sDefines += "#define FS_LIGHTMAP\n";
-			sName    += "[LightMap]";
-		}
-		if (bEmissiveMap) {
-			sDefines += "#define FS_EMISSIVEMAP\n";
-			sName    += "[EmissiveMap]";
-		}
-		if (bGlow) {
-			sDefines += "#define FS_GLOW\n";
-			sName    += "[Glow]";
-			if (bGlowMap) {
-				sDefines += "#define FS_GLOWMAP\n";
-				sName    += "[GlowMap]";
-			}
-		}
-		if (bReflection) {
-			sDefines += "#define FS_REFLECTION\n";
-			sName    += "[Reflection]";
-			if (bFresnelReflection) {
-				sDefines += "#define FS_FRESNELREFLECTION\n";
-				sName    += "[FresnelReflection]";
-			}
-			if (bReflectivityMap) {
-				sDefines += "#define FS_REFLECTIVITYMAP\n";
-				sName    += "[ReflectivityMap]";
-			}
-			if (b2DReflection) {
-				sDefines += "#define FS_2DREFLECTIONMAP\n";
-				sName    += "[ReflectionMap2D]";
-			} else if (bCubeReflection) {
-				sDefines += "#define FS_CUBEREFLECTIONMAP\n";
-				sName    += "[ReflectionMapCube]";
-			}
-		}
-		if (bGammaCorrection) {
-			sDefines += "#define FS_GAMMACORRECTION\n";
-			sName    += "[GammaCorrection]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(sDeferredGBuffer_Cg_FS.GetASCII()) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)sDeferredGBuffer_Cg_FS.GetASCII(), nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "arbfp1", sDefines); // "glslf" would be nice, but then, the "discard" keyword seems to have no effect :/
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bDiffuseMap][bSpecular][bSpecularMap][bParallax][bAmbientOcclusionMap][bEmissiveMap][b2DReflection][bCubeReflection][bReflectivityMap][bLightMap][bAlphaTest][bNormalMap][bNormalMap_DXT5_xGxR][bNormalMap_LATC2][bDetailNormalMap][bDetailNormalMap_DXT5_xGxR][bDetailNormalMap_LATC2][bFresnelReflection][bGlow][bGlowMap][bReflection][bGammaCorrection] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void SRPDeferredGBuffer::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bVertexShader,   0, sizeof(m_bVertexShader));
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
-}
-
-/**
-*  @brief
 *    Draws recursive
 */
 void SRPDeferredGBuffer::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
@@ -482,9 +271,9 @@ void SRPDeferredGBuffer::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 					if (pMesh) {
 						// Get the mesh LOD level to use
 						const MeshLODLevel *pLODLevel = pMesh->GetLODLevel(0);
-						if (pLODLevel && pLODLevel->GetIndexBuffer()) {
+						if (pLODLevel && pLODLevel->GetIndexBuffer() && pMeshHandler->GetVertexBuffer()) {
 							// Draw the mesh
-							DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel);
+							DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel, *pMeshHandler->GetVertexBuffer());
 
 							// Mark this scene node as drawn
 							pSceneNode->SetDrawn();
@@ -500,7 +289,7 @@ void SRPDeferredGBuffer::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 *  @brief
 *    Draws a mesh
 */
-void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel)
+void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel, VertexBuffer &cVertexBuffer)
 {
 	// Get scene container
 	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
@@ -511,10 +300,6 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 
 	// Bind buffers
 	cRenderer.SetIndexBuffer(pIndexBuffer);
-	// [TODO] Remove FixedFunctions usage by using the new shader interface
-	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-	if (pFixedFunctions)
-		pFixedFunctions->SetVertexBuffer(cMeshHandler.GetVertexBuffer());
 
 	// Draw mesh
 	for (uint32 nMat=0; nMat<cMeshHandler.GetNumOfMaterials(); nMat++) {
@@ -533,7 +318,6 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 					const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
 					if (!pParameter || pParameter->GetValue1f() >= 1.0f) {
 						// First material usage?
-						ShaderProgram *pVertexShaderProgram = cRenderer.GetVertexShaderProgram();
 						if (bFirstMaterialUsage) {
 							bFirstMaterialUsage = false;
 
@@ -781,270 +565,420 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 								// Get emissive map
 								TextureBuffer *pEmissiveMap = (GetFlags() & NoEmissiveMap) ? NULL : pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
 
+								// Reset the program flags
+								m_cProgramFlags.Reset();
+
+								// Set vertex program flags
+								if (bTwoSided)
+									PL_ADD_VS_FLAG(m_cProgramFlags, VS_TWOSIDED)
+								if ( pDisplacementMap != NULL)
+									PL_ADD_VS_FLAG(m_cProgramFlags, VS_DISPLACEMENTMAP)
+								if (pAmbientOcclusionMap != NULL || pLightMap != NULL)
+									PL_ADD_VS_FLAG(m_cProgramFlags, VS_SECONDTEXTURECOORDINATE)
+								if (pNormalMap != NULL || fParallax != 0.0f)
+									PL_ADD_VS_FLAG(m_cProgramFlags, VS_TANGENT_BINORMAL)
+								if (bReflection)
+									PL_ADD_VS_FLAG(m_cProgramFlags, VS_VIEWSPACEPOSITION)
+								
+								// Set fragment program flags
+								if (pDiffuseMap != NULL) {
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
+									if (fAlphaReference != 0.0f)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_ALPHATEST)
+								}
+								if (bSpecular) {
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULAR)
+									if (pSpecularMap != NULL)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARMAP)
+								}
+								if (pNormalMap != NULL) {
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP)
+									if (bNormalMap_DXT5_xGxR)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)
+									else if (bNormalMap_LATC2)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_LATC2)
+									if (pDetailNormalMap != NULL) {
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP)
+										if (bDetailNormalMap_DXT5_xGxR)
+											PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)
+										else if (bDetailNormalMap_LATC2)
+											PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_LATC2)
+									}
+								}
+								if (fParallax != 0.0f)
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_PARALLAXMAPPING)
+								if (pAmbientOcclusionMap != NULL)
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_AMBIENTOCCLUSIONMAP)
+								if (pLightMap != NULL)
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_LIGHTMAP)
+								if (pEmissiveMap != NULL)
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_EMISSIVEMAP)
+								if (fGlowFactor != 0.0f) {
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOW)
+									if (pGlowMap != NULL)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOWMAP)
+								}
+								if ((fIndexOfRefraction > 0.0f || (b2DReflectionMap && pReflectionMap) || (!b2DReflectionMap && pReflectionMap))) {
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTION)
+									if (fIndexOfRefraction > 0.0f)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_FRESNELREFLECTION)
+									if (pReflectivityMap != NULL)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTIVITYMAP)
+									if (b2DReflectionMap && pReflectionMap)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_2DREFLECTIONMAP)
+									else if (!b2DReflectionMap && pReflectionMap)
+										PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
+								}
 								// Use gamma correction?
-								const bool bGammaCorrection = !(GetFlags() & NoGammaCorrection);
+								if (!(GetFlags() & NoGammaCorrection))
+									PL_ADD_FS_FLAG(m_cProgramFlags, FS_GAMMACORRECTION)
 
-								// Get the shader with the given features
-								Shader *pMeshVertexShader = GetVertexShader(cRenderer, pDiffuseMap != NULL || pReflectivityMap != NULL || pNormalMap != NULL, fParallax != 0.0f, pDisplacementMap != NULL, pNormalMap != NULL, pEmissiveMap != NULL, bReflection, pAmbientOcclusionMap != NULL || pLightMap != NULL, bTwoSided, fAlphaReference != 0.0f);
-								if (pMeshVertexShader) {
-									pVertexShaderProgram = pMeshVertexShader->GetShaderProgram();
-									if (pVertexShaderProgram) {
-										Shader *pMeshFragmentShader = GetFragmentShader(cRenderer, pDiffuseMap != NULL, bSpecular, pSpecularMap != NULL, fParallax != 0.0f, pAmbientOcclusionMap != NULL, pEmissiveMap != NULL, b2DReflectionMap && pReflectionMap, !b2DReflectionMap && pReflectionMap, pReflectivityMap != NULL, pLightMap != NULL, fAlphaReference != 0.0f, pNormalMap != NULL, bNormalMap_DXT5_xGxR, bNormalMap_LATC2, pDetailNormalMap != NULL, bDetailNormalMap_DXT5_xGxR, bDetailNormalMap_LATC2, fAlphaReference, fIndexOfRefraction > 0.0f, fGlowFactor != 0.0f, pGlowMap != NULL, bGammaCorrection);
-										if (pMeshFragmentShader) {
-											ShaderProgram *pFragmentShaderProgram = pMeshFragmentShader->GetShaderProgram();
-											if (pFragmentShaderProgram) {
-											// Vertex shader program
-												cRenderer.SetVertexShaderProgram(pVertexShaderProgram);
+								// Get a program instance from the program generator using the given program flags
+								ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
 
-												// Set displacement map
-												if (pDisplacementMap) {
-													const int nStage = pVertexShaderProgram->SetParameterTextureBuffer(sDisplacementMap, pDisplacementMap);
-													if (nStage >= 0) {
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-														SetupTextureFiltering(cRenderer, nStage);
-													}
+								// Make our program to the current one
+								if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+									// Set pointers to uniforms & attributes of a generated program if they are not set yet
+									m_pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+									if (!m_pGeneratedProgramUserData) {
+										pGeneratedProgram->pUserData = m_pGeneratedProgramUserData = new GeneratedProgramUserData;
+										Program *pProgram = pGeneratedProgram->pProgram;
+										// Vertex shader attributes
+										static const String sVertexPosition = "VertexPosition";
+										m_pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+										static const String sVertexTexCoord0 = "VertexTexCoord0";
+										m_pGeneratedProgramUserData->pVertexTexCoord0	= pProgram->GetAttribute(sVertexTexCoord0);
+										static const String sVertexTexCoord1 = "VertexTexCoord1";
+										m_pGeneratedProgramUserData->pVertexTexCoord1	= pProgram->GetAttribute(sVertexTexCoord1);
+										static const String sVertexNormal = "VertexNormal";
+										m_pGeneratedProgramUserData->pVertexNormal	= pProgram->GetAttribute(sVertexNormal);
+										static const String sVertexTangent = "VertexTangent";
+										m_pGeneratedProgramUserData->pVertexTangent	= pProgram->GetAttribute(sVertexTangent);
+										static const String sVertexBinormal = "VertexBinormal";
+										m_pGeneratedProgramUserData->pVertexBinormal	= pProgram->GetAttribute(sVertexBinormal);
+										// Vertex shader uniforms
+										static const String sNormalScale = "NormalScale";
+										m_pGeneratedProgramUserData->pNormalScale				= pProgram->GetUniform(sNormalScale);
+										static const String sEyePos = "EyePos";
+										m_pGeneratedProgramUserData->pEyePos					= pProgram->GetUniform(sEyePos);
+										static const String sWorldVP = "WorldVP";
+										m_pGeneratedProgramUserData->pWorldVP					= pProgram->GetUniform(sWorldVP);
+										static const String sWorldV = "WorldV";
+										m_pGeneratedProgramUserData->pWorldV					= pProgram->GetUniform(sWorldV);
+										static const String sDisplacementMap = "DisplacementMap";
+										m_pGeneratedProgramUserData->pDisplacementMap			= pProgram->GetUniform(sDisplacementMap);
+										static const String sDisplacementScaleBias = "DisplacementScaleBias";
+										m_pGeneratedProgramUserData->pDisplacementScaleBias	= pProgram->GetUniform(sDisplacementScaleBias);
+										// Fragment shader uniforms
+										static const String sDiffuseColor = "DiffuseColor";
+										m_pGeneratedProgramUserData->pDiffuseColor				= pProgram->GetUniform(sDiffuseColor);
+										static const String sDiffuseMap = "DiffuseMap";
+										m_pGeneratedProgramUserData->pDiffuseMap				= pProgram->GetUniform(sDiffuseMap);
+										static const String sAlphaReference = "AlphaReference";
+										m_pGeneratedProgramUserData->pAlphaReference			= pProgram->GetUniform(sAlphaReference);
+										static const String sSpecularColor = "SpecularColor";
+										m_pGeneratedProgramUserData->pSpecularColor				= pProgram->GetUniform(sSpecularColor);
+										static const String sSpecularExponent = "SpecularExponent";
+										m_pGeneratedProgramUserData->pSpecularExponent			= pProgram->GetUniform(sSpecularExponent);
+										static const String sSpecularMap = "SpecularMap";
+										m_pGeneratedProgramUserData->pSpecularMap				= pProgram->GetUniform(sSpecularMap);
+										static const String sNormalMap = "NormalMap";
+										m_pGeneratedProgramUserData->pNormalMap					= pProgram->GetUniform(sNormalMap);
+										static const String sNormalMapBumpiness = "NormalMapBumpiness";
+										m_pGeneratedProgramUserData->pNormalMapBumpiness		= pProgram->GetUniform(sNormalMapBumpiness);
+										static const String sDetailNormalMap = "DetailNormalMap";
+										m_pGeneratedProgramUserData->pDetailNormalMap			= pProgram->GetUniform(sDetailNormalMap);
+										static const String sDetailNormalMapBumpiness = "DetailNormalMapBumpiness";
+										m_pGeneratedProgramUserData->pDetailNormalMapBumpiness	= pProgram->GetUniform(sDetailNormalMapBumpiness);
+										static const String sDetailNormalMapUVScale = "DetailNormalMapUVScale";
+										m_pGeneratedProgramUserData->pDetailNormalMapUVScale	= pProgram->GetUniform(sDetailNormalMapUVScale);
+										static const String sHeightMap = "HeightMap";
+										m_pGeneratedProgramUserData->pHeightMap					= pProgram->GetUniform(sHeightMap);
+										static const String sParallaxScaleBias = "ParallaxScaleBias";
+										m_pGeneratedProgramUserData->pParallaxScaleBias			= pProgram->GetUniform(sParallaxScaleBias);
+										static const String sAmbientOcclusionMap = "AmbientOcclusionMap";
+										m_pGeneratedProgramUserData->pAmbientOcclusionMap		= pProgram->GetUniform(sAmbientOcclusionMap);
+										static const String sAmbientOcclusionFactor = "AmbientOcclusionFactor";
+										m_pGeneratedProgramUserData->pAmbientOcclusionFactor	= pProgram->GetUniform(sAmbientOcclusionFactor);
+										static const String sLightMap = "LightMap";
+										m_pGeneratedProgramUserData->pLightMap					= pProgram->GetUniform(sLightMap);
+										static const String sLightMapColor = "LightMapColor";
+										m_pGeneratedProgramUserData->pLightMapColor				= pProgram->GetUniform(sLightMapColor);
+										static const String sEmissiveMap = "EmissiveMap";
+										m_pGeneratedProgramUserData->pEmissiveMap				= pProgram->GetUniform(sEmissiveMap);
+										static const String sEmissiveMapColor = "EmissiveMapColor";
+										m_pGeneratedProgramUserData->pEmissiveMapColor			= pProgram->GetUniform(sEmissiveMapColor);
+										static const String sGlowFactor = "GlowFactor";
+										m_pGeneratedProgramUserData->pGlowFactor				= pProgram->GetUniform(sGlowFactor);
+										static const String sGlowMap = "GlowMap";
+										m_pGeneratedProgramUserData->pGlowMap					= pProgram->GetUniform(sGlowMap);
+										static const String sReflectionColor = "ReflectionColor";
+										m_pGeneratedProgramUserData->pReflectionColor			= pProgram->GetUniform(sReflectionColor);
+										static const String sReflectivity = "Reflectivity";
+										m_pGeneratedProgramUserData->pReflectivity				= pProgram->GetUniform(sReflectivity);
+										static const String sReflectivityMap = "ReflectivityMap";
+										m_pGeneratedProgramUserData->pReflectivityMap			= pProgram->GetUniform(sReflectivityMap);
+										static const String sFresnelConstants = "FresnelConstants";
+										m_pGeneratedProgramUserData->pFresnelConstants			= pProgram->GetUniform(sFresnelConstants);
+										static const String sReflectionMap = "ReflectionMap";
+										m_pGeneratedProgramUserData->pReflectionMap				= pProgram->GetUniform(sReflectionMap);
+										static const String sViewSpaceToWorldSpace = "ViewSpaceToWorldSpace";
+										m_pGeneratedProgramUserData->pViewSpaceToWorldSpace		= pProgram->GetUniform(sViewSpaceToWorldSpace);
+									}
 
-													// Set displacement scale bias
-													static const String sDisplacementScaleBias = "DisplacementScaleBias";
-													const Vector2 vDisplacementScaleBias(fDisplacementScale, fDisplacementBias);
-													pVertexShaderProgram->SetParameter2fv(sDisplacementScaleBias, vDisplacementScaleBias);
+									// Set displacement map
+									if (m_pGeneratedProgramUserData->pDisplacementMap) {
+										const int nTextureUnit = m_pGeneratedProgramUserData->pDisplacementMap->Set(pDisplacementMap);
+										if (nTextureUnit >= 0) {
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
+										}
+
+										// Set displacement scale bias
+										if (m_pGeneratedProgramUserData->pDisplacementScaleBias)
+											m_pGeneratedProgramUserData->pDisplacementScaleBias->Set(fDisplacementScale, fDisplacementBias);
+									}
+
+									// Set the "DiffuseColor" fragment shader parameter
+									if (m_pGeneratedProgramUserData->pDiffuseColor) {
+										static const String sDiffuseColor = "DiffuseColor";
+										pParameter = pMaterial->GetParameter(sDiffuseColor);
+										if (pParameter) {
+											float fDiffuseColor[3] = { 1.0f, 1.0f, 1.0f };
+											pParameter->GetValue3f(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2]);
+											m_pGeneratedProgramUserData->pDiffuseColor->Set(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2]);
+										} else {
+											m_pGeneratedProgramUserData->pDiffuseColor->Set(1.0f, 1.0f, 1.0f);
+										}
+									}
+
+									// Diffuse
+									if (m_pGeneratedProgramUserData->pDiffuseMap) {
+										// Set the "DiffuseMap" fragment shader parameter
+										const int nTextureUnit = m_pGeneratedProgramUserData->pDiffuseMap->Set(pDiffuseMap);
+										if (nTextureUnit >= 0) {
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
+										}
+
+										// Set the "AlphaReference" fragment shader parameter
+										if (m_pGeneratedProgramUserData->pAlphaReference)
+											m_pGeneratedProgramUserData->pAlphaReference->Set(fAlphaReference);
+									}
+
+									// Specular
+									if (bSpecular) {
+										// Set specular exponent and specular color
+										if (m_pGeneratedProgramUserData->pSpecularColor)
+											m_pGeneratedProgramUserData->pSpecularColor->Set(cSpecularColor);
+										if (m_pGeneratedProgramUserData->pSpecularExponent)
+											m_pGeneratedProgramUserData->pSpecularExponent->Set(fSpecularExponent);
+
+										// Set the "SpecularMap" fragment shader parameter
+										if (m_pGeneratedProgramUserData->pSpecularMap) {
+											const int nTextureUnit = m_pGeneratedProgramUserData->pSpecularMap->Set(pSpecularMap);
+											if (nTextureUnit >= 0) {
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+												SetupTextureFiltering(cRenderer, nTextureUnit);
+											}
+										}
+									}
+
+									// Normal map
+									if (m_pGeneratedProgramUserData->pNormalMap) {
+										{ // Set normal map
+											const int nTextureUnit = m_pGeneratedProgramUserData->pNormalMap->Set(pNormalMap);
+											if (nTextureUnit >= 0) {
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+												SetupTextureFiltering(cRenderer, nTextureUnit);
+											}
+
+											// Set normal map bumpiness
+											if (m_pGeneratedProgramUserData->pNormalMapBumpiness)
+												m_pGeneratedProgramUserData->pNormalMapBumpiness->Set(fNormalMapBumpiness);
+										}
+
+										// Detail normal map
+										if (m_pGeneratedProgramUserData->pDetailNormalMap) {
+											{ // Set detail normal map
+												const int nTextureUnit = m_pGeneratedProgramUserData->pDetailNormalMap->Set(pDetailNormalMap);
+												if (nTextureUnit >= 0) {
+													cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+													cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+													SetupTextureFiltering(cRenderer, nTextureUnit);
 												}
+											}
 
-											// Fragment shader program
-												cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+											// Set detail normal map bumpiness and uv scale
+											if (m_pGeneratedProgramUserData->pDetailNormalMapBumpiness)
+												m_pGeneratedProgramUserData->pDetailNormalMapBumpiness->Set(fDetailNormalMapBumpiness);
+											if (m_pGeneratedProgramUserData->pDetailNormalMapUVScale)
+												m_pGeneratedProgramUserData->pDetailNormalMapUVScale->Set(vDetailNormalMapUVScale);
+										}
+									}
 
-												{ // Set the "DiffuseColor" fragment shader parameter
-													static const String sDiffuseColor = "DiffuseColor";
-													pParameter = pMaterial->GetParameter(sDiffuseColor);
-													if (pParameter) {
-														float fDiffuseColor[3] = { 1.0f, 1.0f, 1.0f };
-														pParameter->GetValue3f(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2]);
-														pFragmentShaderProgram->SetParameter3fv(sDiffuseColor, fDiffuseColor);
-													} else {
-														pFragmentShaderProgram->SetParameter3f(sDiffuseColor, 1.0f, 1.0f, 1.0f);
-													}
+									// Set height map
+									if (m_pGeneratedProgramUserData->pHeightMap) {
+										const int nTextureUnit = m_pGeneratedProgramUserData->pHeightMap->Set(pHeightMap);
+										if (nTextureUnit >= 0) {
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
+										}
+
+										// Set parallax scale bias
+										if (m_pGeneratedProgramUserData->pParallaxScaleBias)
+											m_pGeneratedProgramUserData->pParallaxScaleBias->Set(fParallax, -0.02f);
+									}
+
+									// Set ambient occlusion map
+									if (m_pGeneratedProgramUserData->pAmbientOcclusionMap) {
+										const int nTextureUnit = m_pGeneratedProgramUserData->pAmbientOcclusionMap->Set(pAmbientOcclusionMap);
+										if (nTextureUnit >= 0) {
+											// Setup sampler states
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
+
+											// Set ambient occlusion factor
+											if (m_pGeneratedProgramUserData->pAmbientOcclusionFactor) {
+												float fAmbientOcclusionFactor = 1.0f;
+												static const String sAmbientOcclusionFactor = "AmbientOcclusionFactor";
+												pParameter = pMaterial->GetParameter(sAmbientOcclusionFactor);
+												if (pParameter)
+													pParameter->GetValue1f(fAmbientOcclusionFactor);
+												m_pGeneratedProgramUserData->pAmbientOcclusionFactor->Set(fAmbientOcclusionFactor);
+											}
+										}
+									}
+
+									// Set light map
+									if (m_pGeneratedProgramUserData->pLightMap) {
+										const int nTextureUnit = m_pGeneratedProgramUserData->pLightMap->Set(pLightMap);
+										if (nTextureUnit >= 0) {
+											// Setup sampler states
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
+
+											// Set light map color
+											if (m_pGeneratedProgramUserData->pLightMapColor) {
+												float fLightMapColor[3] = { 1.0f, 1.0f, 1.0f };
+												static const String sLightMapColor = "LightMapColor";
+												pParameter = pMaterial->GetParameter(sLightMapColor);
+												if (pParameter)
+													pParameter->GetValue3f(fLightMapColor[0], fLightMapColor[1], fLightMapColor[2]);
+												m_pGeneratedProgramUserData->pLightMapColor->Set(fLightMapColor[0], fLightMapColor[1], fLightMapColor[2]);
+											}
+										}
+
+										// Color target 3 has real information
+										m_bColorTarget3Used = true;
+									}
+
+									// Set emissive map
+									if (m_pGeneratedProgramUserData->pEmissiveMap) {
+										const int nTextureUnit = m_pGeneratedProgramUserData->pEmissiveMap->Set(pEmissiveMap);
+										if (nTextureUnit >= 0) {
+											// Setup sampler states
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+											SetupTextureFiltering(cRenderer, nTextureUnit);
+
+											// Set emissive color
+											if (m_pGeneratedProgramUserData->pEmissiveMapColor) {
+												float fEmissiveMapColor[3] = { 1.0f, 1.0f, 1.0f };
+												static const String sEmissiveMapColor = "EmissiveMapColor";
+												pParameter = pMaterial->GetParameter(sEmissiveMapColor);
+												if (pParameter)
+													pParameter->GetValue3f(fEmissiveMapColor[0], fEmissiveMapColor[1], fEmissiveMapColor[2]);
+												m_pGeneratedProgramUserData->pEmissiveMapColor->Set(fEmissiveMapColor[0], fEmissiveMapColor[1], fEmissiveMapColor[2]);
+											}
+										}
+
+										// Color target 3 has real information
+										m_bColorTarget3Used = true;
+									}
+
+									// Set the "GlowFactor" fragment shader parameter
+									if (fGlowFactor != 0.0f) {
+										if (m_pGeneratedProgramUserData->pGlowFactor)
+											m_pGeneratedProgramUserData->pGlowFactor->Set(fGlowFactor);
+
+										// Set glow map
+										if (m_pGeneratedProgramUserData->pGlowMap) {
+											const int nTextureUnit = m_pGeneratedProgramUserData->pGlowMap->Set(pGlowMap);
+											if (nTextureUnit >= 0) {
+												// Setup sampler states
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+												SetupTextureFiltering(cRenderer, nTextureUnit);
+											}
+										}
+
+										// The alpha channel of target 3 has real information
+										m_bColorTarget3AlphaUsed = true;
+									}
+
+									// Set reflection parameters
+									if (bReflection) {
+										// Set the "ReflectionColor" fragment shader parameter
+										if (m_pGeneratedProgramUserData->pReflectionColor)
+											m_pGeneratedProgramUserData->pReflectionColor->Set(cReflectionColor);
+
+										// Set the "Reflectivity" fragment shader parameter
+										if (m_pGeneratedProgramUserData->pReflectivity)
+											m_pGeneratedProgramUserData->pReflectivity->Set(fReflectivity);
+
+										// Set the "ReflectivityMap" fragment shader parameter
+										if (m_pGeneratedProgramUserData->pReflectivityMap) {
+											const int nTextureUnit = m_pGeneratedProgramUserData->pReflectivityMap->Set(pReflectivityMap);
+											if (nTextureUnit >= 0) {
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+												cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+												SetupTextureFiltering(cRenderer, nTextureUnit);
+											}
+										}
+
+										// Use Fresnel reflection?
+										if (m_pGeneratedProgramUserData->pFresnelConstants) {
+											// Calculate the eta value
+											// [TODO] Make the "from material" also setable per material or global?
+											static const float AirIndexOfRefaction = 1.0f;
+											const float fEtaValue = AirIndexOfRefaction / fIndexOfRefraction; // "from material" -> "to material"
+
+											// Set the "FresnelConstants" fragment shader parameter
+											static const String sFresnelConstants = "FresnelConstants";
+											const float fR0 = Math::Saturate(Math::Pow(1.0f - fEtaValue, 2.0f) / Math::Pow(1.0f + fEtaValue, 2.0f));
+											m_pGeneratedProgramUserData->pFresnelConstants->Set(fR0, fFresnelReflectionPower);
+										}
+
+										// Set the "ReflectionMap" fragment shader parameter
+										if (m_pGeneratedProgramUserData->pReflectionMap) {
+											const int nTextureUnit = m_pGeneratedProgramUserData->pReflectionMap->Set(pReflectionMap);
+											if (nTextureUnit >= 0) {
+												// Setup sampler states
+												if (b2DReflectionMap) {
+													cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+													cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+												} else {
+													cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+													cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
 												}
+												SetupTextureFiltering(cRenderer, nTextureUnit);
+											}
 
-												// Diffuse
-												if (pDiffuseMap) {
-													// Set the "DiffuseMap" fragment shader parameter
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::DiffuseMap, pDiffuseMap);
-													if (nStage >= 0) {
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-														SetupTextureFiltering(cRenderer, nStage);
-													}
-
-													// Set the "AlphaReference" fragment shader parameter
-													if (fAlphaReference != 0.0f) {
-														static const String sAlphaReference = "AlphaReference";
-														pFragmentShaderProgram->SetParameter1f(sAlphaReference, fAlphaReference);
-													}
-												}
-
-												// Specular
-												if (bSpecular) {
-													// Set specular exponent and specular color
-													pFragmentShaderProgram->SetParameter3fv(sSpecularColor,    cSpecularColor);
-													pFragmentShaderProgram->SetParameter1f (sSpecularExponent, fSpecularExponent);
-
-													// Set the "SpecularMap" fragment shader parameter
-													if (pSpecularMap) {
-														const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::SpecularMap, pSpecularMap);
-														if (nStage >= 0) {
-															cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-															cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-															SetupTextureFiltering(cRenderer, nStage);
-														}
-													}
-												}
-
-												// Normal map
-												if (pNormalMap) {
-													{ // Set normal map
-														const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::NormalMap, pNormalMap);
-														if (nStage >= 0) {
-															cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-															cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-															SetupTextureFiltering(cRenderer, nStage);
-														}
-
-														// Set normal map bumpiness
-														pFragmentShaderProgram->SetParameter1f(sNormalMapBumpiness, fNormalMapBumpiness);
-													}
-
-													// Detail normal map
-													if (pDetailNormalMap) {
-														// Set detail normal map
-														const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sDetailNormalMap, pDetailNormalMap);
-														if (nStage >= 0) {
-															cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-															cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-															SetupTextureFiltering(cRenderer, nStage);
-														}
-
-														// Set detail normal map bumpiness and uv scale
-														pFragmentShaderProgram->SetParameter1f (sDetailNormalMapBumpiness, fDetailNormalMapBumpiness);
-														pFragmentShaderProgram->SetParameter2fv(sDetailNormalMapUVScale,   vDetailNormalMapUVScale);
-													}
-												}
-
-												// Set height map
-												if (pHeightMap) {
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::HeightMap, pHeightMap);
-													if (nStage >= 0) {
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-														SetupTextureFiltering(cRenderer, nStage);
-													}
-
-													// Set parallax scale bias
-													static const String sParallaxScaleBias = "ParallaxScaleBias";
-													const Vector2 vParallaxScaleBias(fParallax, -0.02f);
-													pFragmentShaderProgram->SetParameter2fv(sParallaxScaleBias, vParallaxScaleBias);
-												}
-
-												// Set ambient occlusion map
-												if (pAmbientOcclusionMap) {
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::AmbientOcclusionMap, pAmbientOcclusionMap);
-													if (nStage >= 0) {
-														// Setup sampler states
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-														SetupTextureFiltering(cRenderer, nStage);
-
-														// Set ambient occlusion factor
-														float fAmbientOcclusionFactor = 1.0f;
-														static const String sAmbientOcclusionFactor = "AmbientOcclusionFactor";
-														pParameter = pMaterial->GetParameter(sAmbientOcclusionFactor);
-														if (pParameter)
-															pParameter->GetValue1f(fAmbientOcclusionFactor);
-														pFragmentShaderProgram->SetParameter1f(sAmbientOcclusionFactor, fAmbientOcclusionFactor);
-													}
-												}
-
-												// Set light map
-												if (pLightMap) {
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::LightMap, pLightMap);
-													if (nStage >= 0) {
-														// Setup sampler states
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-														SetupTextureFiltering(cRenderer, nStage);
-
-														// Set light map color
-														float fLightMapColor[3] = { 1.0f, 1.0f, 1.0f };
-														static const String sLightMapColor = "LightMapColor";
-														pParameter = pMaterial->GetParameter(sLightMapColor);
-														if (pParameter)
-															pParameter->GetValue3f(fLightMapColor[0], fLightMapColor[1], fLightMapColor[2]);
-														pFragmentShaderProgram->SetParameter3fv(sLightMapColor, fLightMapColor);
-													}
-
-													// Color target 3 has real information
-													m_bColorTarget3Used = true;
-												}
-
-												// Set emissive map
-												if (pEmissiveMap) {
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::EmissiveMap, pEmissiveMap);
-													if (nStage >= 0) {
-														// Setup sampler states
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-														SetupTextureFiltering(cRenderer, nStage);
-
-														// Set emissive color
-														float fEmissiveMapColor[3] = { 1.0f, 1.0f, 1.0f };
-														static const String sEmissiveMapColor = "EmissiveMapColor";
-														pParameter = pMaterial->GetParameter(sEmissiveMapColor);
-														if (pParameter)
-															pParameter->GetValue3f(fEmissiveMapColor[0], fEmissiveMapColor[1], fEmissiveMapColor[2]);
-														pFragmentShaderProgram->SetParameter3fv(sEmissiveMapColor, fEmissiveMapColor);
-													}
-
-													// Color target 3 has real information
-													m_bColorTarget3Used = true;
-												}
-
-												// Set the "GlowFactor" fragment shader parameter
-												if (fGlowFactor != 0.0f) {
-													static const String sGlowFactor = "GlowFactor";
-													pFragmentShaderProgram->SetParameter1f(sGlowFactor, fGlowFactor);
-
-													// Set glow map
-													if (pGlowMap) {
-														static const String sGlowMap = "GlowMap";
-														const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sGlowMap, pGlowMap);
-														if (nStage >= 0) {
-															// Setup sampler states
-															cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-															cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-															SetupTextureFiltering(cRenderer, nStage);
-														}
-													}
-
-													// The alpha channel of target 3 has real information
-													m_bColorTarget3AlphaUsed = true;
-												}
-
-												// Set reflection parameters
-												if (bReflection) {
-													// Set the "ReflectionColor" fragment shader parameter
-													pFragmentShaderProgram->SetParameter3fv(sReflectionColor, cReflectionColor);
-
-													// Set the "Reflectivity" fragment shader parameter
-													pFragmentShaderProgram->SetParameter1f(sReflectivity, fReflectivity);
-
-													// Set the "ReflectivityMap" fragment shader parameter
-													if (pReflectivityMap) {
-														const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::ReflectivityMap, pReflectivityMap);
-														if (nStage >= 0) {
-															cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-															cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-															SetupTextureFiltering(cRenderer, nStage);
-														}
-													}
-
-													// Use Fresnel reflection?
-													if (fIndexOfRefraction > 0.0f) {
-														// Calculate the eta value
-														// [TODO] Make the "from material" also setable per material or global?
-														static const float AirIndexOfRefaction = 1.0f;
-														const float fEtaValue = AirIndexOfRefaction / fIndexOfRefraction; // "from material" -> "to material"
-
-														// Set the "FresnelConstants" fragment shader parameter
-														static const String sFresnelConstants = "FresnelConstants";
-														const float fR0 = Math::Saturate(Math::Pow(1.0f - fEtaValue, 2.0f) / Math::Pow(1.0f + fEtaValue, 2.0f));
-														pFragmentShaderProgram->SetParameter2f(sFresnelConstants, fR0, fFresnelReflectionPower);
-													}
-
-													// Set the "ReflectionMap" fragment shader parameter
-													if (pReflectionMap) {
-														const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::ReflectionMap, pReflectionMap);
-														if (nStage >= 0) {
-															// Setup sampler states
-															if (b2DReflectionMap) {
-																cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-																cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-															} else {
-																cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-																cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-															}
-															SetupTextureFiltering(cRenderer, nStage);
-														}
-
-														{ // Set the "ViewSpaceToWorldSpace" fragment shader parameter
-															// [TODO] Add *SNCamera::GetInvViewMatrix()?
-															Matrix3x3 mRot;
-															if (SNCamera::GetCamera()) mRot = SNCamera::GetCamera()->GetViewMatrix().GetInverted();
-															else					   mRot = Matrix3x3::Identity;
-															static const String sViewSpaceToWorldSpace = "ViewSpaceToWorldSpace";
-															pFragmentShaderProgram->SetParameterFloat3x3(sViewSpaceToWorldSpace, mRot);
-														}
-													}
-												}
+											// Set the "ViewSpaceToWorldSpace" fragment shader parameter
+											if (m_pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
+												// [TODO] Add *SNCamera::GetInvViewMatrix()?
+												Matrix3x3 mRot;
+												if (SNCamera::GetCamera()) mRot = SNCamera::GetCamera()->GetViewMatrix().GetInverted();
+												else					   mRot = Matrix3x3::Identity;
+												m_pGeneratedProgramUserData->pViewSpaceToWorldSpace->Set(mRot);
 											}
 										}
 									}
@@ -1052,61 +986,69 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 							}
 
 							// Vertex shader program
-							if (pVertexShaderProgram) {
-								// Two sided?
-								if (bTwoSided) {
-									static const String sNormalScale = "NormalScale";
-									pVertexShaderProgram->SetParameter1f(sNormalScale, 1.0f);
-								}
+							if (m_pGeneratedProgramUserData) {
+								// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+								if (m_pGeneratedProgramUserData->pVertexPosition)
+									m_pGeneratedProgramUserData->pVertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+								if (m_pGeneratedProgramUserData->pVertexTexCoord0)
+									m_pGeneratedProgramUserData->pVertexTexCoord0->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord);
+								if (m_pGeneratedProgramUserData->pVertexTexCoord1)
+									m_pGeneratedProgramUserData->pVertexTexCoord1->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord, 1);
+								if (m_pGeneratedProgramUserData->pVertexNormal)
+									m_pGeneratedProgramUserData->pVertexNormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Normal);
+								if (m_pGeneratedProgramUserData->pVertexTangent)
+									m_pGeneratedProgramUserData->pVertexTangent->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Tangent);
+								if (m_pGeneratedProgramUserData->pVertexBinormal)
+									m_pGeneratedProgramUserData->pVertexBinormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Binormal);
+
+								// Two sided lighting?
+								if (m_pGeneratedProgramUserData->pNormalScale)
+									m_pGeneratedProgramUserData->pNormalScale->Set(1.0f);
 
 								// Set world view projection matrix
-								static const String sWorldVP = "WorldVP";
-								pVertexShaderProgram->SetParameterMatrixfv(sWorldVP, cVisNode.GetWorldViewProjectionMatrix());
+								if (m_pGeneratedProgramUserData->pWorldVP)
+									m_pGeneratedProgramUserData->pWorldVP->Set(cVisNode.GetWorldViewProjectionMatrix());
 
 								// Set world view matrix
-								static const String sWorldV = "WorldV";
-								pVertexShaderProgram->SetParameterMatrixfv(sWorldV, cVisNode.GetWorldViewMatrix());
+								if (m_pGeneratedProgramUserData->pWorldV)
+									m_pGeneratedProgramUserData->pWorldV->Set(cVisNode.GetWorldViewMatrix());
 
 								// Set object space eye position
-								if (pHeightMap || pReflectionMap) {
-									static const String sEyePos = "EyePos";
-									pVertexShaderProgram->SetParameter3fv(sEyePos, cVisNode.GetInverseWorldMatrix()*(cVisContainer.GetWorldMatrix()*cCullQuery.GetCameraPosition()));
-								}
+								if (m_pGeneratedProgramUserData->pEyePos)
+									m_pGeneratedProgramUserData->pEyePos->Set(cVisNode.GetInverseWorldMatrix()*(cVisContainer.GetWorldMatrix()*cCullQuery.GetCameraPosition()));
 							}
 						}
 
-						// Draw geometry
+						// Draw the geometry
 						cRenderer.DrawIndexedPrimitives(
 							cGeometry.GetPrimitiveType(),
 							0,
-							cMeshHandler.GetVertexBuffer()->GetNumOfElements()-1,
+							cVertexBuffer.GetNumOfElements()-1,
 							cGeometry.GetStartIndex(),
 							cGeometry.GetIndexSize()
 						);
 
 						// If this is a two sided material, draw the primitives again - but with
 						// flipped culling mode and vertex normals
-						if (bTwoSided && pVertexShaderProgram) {
-							// Setup cull mode - because two sided materials usually not used
-							// often, we reset the state after we're done
+						if (m_pGeneratedProgramUserData && m_pGeneratedProgramUserData->pNormalScale) {
+							// Flip normals
+							m_pGeneratedProgramUserData->pNormalScale->Set(-1.0f);
+
+							// Flip the backface culling
+							const uint32 nCullModeBackup = cRenderer.GetRenderState(RenderState::CullMode);
 							cRenderer.SetRenderState(RenderState::CullMode, Cull::CW);
 
-							// Flip normals
-							static const String sNormalScale = "NormalScale";
-							pVertexShaderProgram->SetParameter1f(sNormalScale, -1.0f);
-
-							// Draw geometry
+							// Draw geometry - again
 							cRenderer.DrawIndexedPrimitives(
 								cGeometry.GetPrimitiveType(),
 								0,
-								cMeshHandler.GetVertexBuffer()->GetNumOfElements()-1,
+								cVertexBuffer.GetNumOfElements()-1,
 								cGeometry.GetStartIndex(),
 								cGeometry.GetIndexSize()
 							);
 
-							// Reset cull mode
-							pVertexShaderProgram->SetParameter1f(sNormalScale, 1.0f);
-							cRenderer.SetRenderState(RenderState::CullMode, Cull::CCW);
+							// Restore the previous cull mode
+							cRenderer.SetRenderState(RenderState::CullMode, nCullModeBackup);
 						}
 					}
 				}
@@ -1121,104 +1063,139 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 //[-------------------------------------------------------]
 void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	// Create the fullscreen quad instance if required
-	if (!m_pFullscreenQuad)
-		m_pFullscreenQuad = new FullscreenQuad(cRenderer);
+	// Get the shader language to use
+	String sShaderLanguage = ShaderLanguage;
+	if (!sShaderLanguage.GetLength())
+		sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-	// Get the size of the current render target
-	const Vector2i vRTSize = cRenderer.GetRenderTarget()->GetSize();
-	if (vRTSize.x != 0 && vRTSize.y != 0) {
-		// Get the internal texture format to use
-		const TextureBuffer::EPixelFormat nInternalFormat = (GetFlags() & Float32) ? TextureBuffer::R32G32B32A32F : TextureBuffer::R16G16B16A16F;
-
-		// Render target size change?
-		if (m_pRenderTarget && (m_pRenderTarget->GetSize() != vRTSize || m_pRenderTarget->GetFormat() != nInternalFormat)) {
-			// Destroy the render target of the GBuffer
-			if (m_pRenderTarget) {
-				delete m_pRenderTarget;
-				m_pRenderTarget = NULL;
-			}
-			if (m_pColorTarget1) {
-				delete m_pColorTarget1;
-				m_pColorTarget1 = NULL;
-			}
-			if (m_pColorTarget2) {
-				delete m_pColorTarget2;
-				m_pColorTarget2 = NULL;
-			}
-			if (m_pColorTarget3) {
-				delete m_pColorTarget3;
-				m_pColorTarget3 = NULL;
-			}
+	// Create the program generator if there's currently no instance of it
+	if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+		// If there's an previous instance of the program generator, destroy it first
+		if (m_pProgramGenerator) {
+			delete m_pProgramGenerator;
+			m_pProgramGenerator = NULL;
 		}
 
-		// Create the render target of the GBuffer right now?
-		if (!m_pRenderTarget) {
-			m_pRenderTarget = cRenderer.CreateSurfaceTextureBufferRectangle(vRTSize, nInternalFormat, SurfaceTextureBuffer::NoMultisampleAntialiasing, 4);
-			{ // Create color target 1, 2 and 3
-				Image cImage;
-				ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-				pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(vRTSize.x, vRTSize.y, 1));
-				// [TODO] Currently, I just assume a real rectangle instance... find a better way!
-				m_pColorTarget1 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
-				m_pColorTarget2 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
-				m_pColorTarget3 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
-			}
+		// Choose the shader source codes depending on the requested shader language
+		String sDeferredGBuffer_VS;
+		String sDeferredGBuffer_FS;
+		if (sShaderLanguage == "GLSL") {
+			#include "SRPDeferredGBuffer_GLSL.h"
+			sDeferredGBuffer_VS = sDeferredGBuffer_GLSL_VS;
+			sDeferredGBuffer_FS = sDeferredGBuffer_GLSL_FS;
+		} else if (sShaderLanguage == "Cg") {
+			#include "SRPDeferredGBuffer_Cg.h"
+			sDeferredGBuffer_VS = sDeferredGBuffer_Cg_VS;
+			sDeferredGBuffer_FS = sDeferredGBuffer_Cg_FS;
 		}
+
+		// Create the program generator
+		if (sDeferredGBuffer_VS.GetLength() && sDeferredGBuffer_FS.GetLength())
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBuffer_VS, "arbvp1", sDeferredGBuffer_FS, "arbfp1", true);
 	}
 
-	// Is there a render target?
-	if (m_pRenderTarget) {
-		// Backup the current render target, pass on the depth buffer of the surface texture buffer and set the new render target
-		m_pSurfaceBackup = cRenderer.GetRenderTarget();
-		if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
-			m_pRenderTarget->TakeDepthBufferFromSurfaceTextureBuffer((SurfaceTextureBuffer&)*m_pSurfaceBackup);
-		cRenderer.SetRenderTarget(m_pRenderTarget);
-		cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget1, 1);
-		cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget2, 2);
-		cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget3, 3);
+	// If there's no program generator, we don't need to continue
+	if (m_pProgramGenerator) {
+		// Create the fullscreen quad instance if required
+		if (!m_pFullscreenQuad)
+			m_pFullscreenQuad = new FullscreenQuad(cRenderer);
 
-		// Reset all render states to default
-		cRenderer.GetRendererContext().GetEffectManager().Use();
+		// Get the size of the current render target
+		const Vector2i vRTSize = cRenderer.GetRenderTarget()->GetSize();
+		if (vRTSize.x != 0 && vRTSize.y != 0) {
+			// Get the internal texture format to use
+			const TextureBuffer::EPixelFormat nInternalFormat = (GetFlags() & Float32) ? TextureBuffer::R32G32B32A32F : TextureBuffer::R16G16B16A16F;
 
-		// Clear the GBuffer content
-		if (GetFlags() & NoStencil) {
-			// Do only clear the color buffer
-			cRenderer.Clear(Clear::Color, Color4(0.0f, 0.0f, 0.0f, 0.0f));
-		} else {
-			// Clear color buffer and stencil buffer
-			cRenderer.Clear(Clear::Color | Clear::Stencil, Color4(0.0f, 0.0f, 0.0f, 0.0f), 1.0f, 1);
+			// Render target size change?
+			if (m_pRenderTarget && (m_pRenderTarget->GetSize() != vRTSize || m_pRenderTarget->GetFormat() != nInternalFormat)) {
+				// Destroy the render target of the GBuffer
+				if (m_pRenderTarget) {
+					delete m_pRenderTarget;
+					m_pRenderTarget = NULL;
+				}
+				if (m_pColorTarget1) {
+					delete m_pColorTarget1;
+					m_pColorTarget1 = NULL;
+				}
+				if (m_pColorTarget2) {
+					delete m_pColorTarget2;
+					m_pColorTarget2 = NULL;
+				}
+				if (m_pColorTarget3) {
+					delete m_pColorTarget3;
+					m_pColorTarget3 = NULL;
+				}
+			}
 
-			// Enable stencil test - if something is written, the pixel is tagged with 0
-			cRenderer.SetRenderState(RenderState::StencilEnable, true);
-			cRenderer.SetRenderState(RenderState::StencilRef,    0);
-			cRenderer.SetRenderState(RenderState::StencilPass,   StencilOp::Replace);
+			// Create the render target of the GBuffer right now?
+			if (!m_pRenderTarget) {
+				m_pRenderTarget = cRenderer.CreateSurfaceTextureBufferRectangle(vRTSize, nInternalFormat, SurfaceTextureBuffer::NoMultisampleAntialiasing, 4);
+				{ // Create color target 1, 2 and 3
+					Image cImage;
+					ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+					pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(vRTSize.x, vRTSize.y, 1));
+					// [TODO] Currently, I just assume a real rectangle instance... find a better way!
+					m_pColorTarget1 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
+					m_pColorTarget2 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
+					m_pColorTarget3 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
+				}
+			}
 		}
 
-		// Backup the color mask
-		bool bRed, bGreen, bBlue, bAlpha;
-		cRenderer.GetColorMask(bRed, bGreen, bBlue, bAlpha);
+		// Is there a render target?
+		if (m_pRenderTarget) {
+			// Backup the current render target, pass on the depth buffer of the surface texture buffer and set the new render target
+			m_pSurfaceBackup = cRenderer.GetRenderTarget();
+			if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
+				m_pRenderTarget->TakeDepthBufferFromSurfaceTextureBuffer((SurfaceTextureBuffer&)*m_pSurfaceBackup);
+			cRenderer.SetRenderTarget(m_pRenderTarget);
+			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget1, 1);
+			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget2, 2);
+			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget3, 3);
 
-		// Setup the color mask and enable scissor test
-		cRenderer.SetColorMask(true, true, true, true);
-		cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
+			// Reset all render states to default
+			cRenderer.GetRendererContext().GetEffectManager().Use();
 
-		// Reset current states
-		m_nMaterialChanges		 = 0;
-		m_pCurrentMaterial		 = NULL;
-		m_bColorTarget3Used		 = false;
-		m_bColorTarget3AlphaUsed = false;
+			// Clear the GBuffer content
+			if (GetFlags() & NoStencil) {
+				// Do only clear the color buffer
+				cRenderer.Clear(Clear::Color, Color4(0.0f, 0.0f, 0.0f, 0.0f));
+			} else {
+				// Clear color buffer and stencil buffer
+				cRenderer.Clear(Clear::Color | Clear::Stencil, Color4(0.0f, 0.0f, 0.0f, 0.0f), 1.0f, 1);
 
-		// Draw recursive from front to back
-		DrawRec(cRenderer, cCullQuery);
+				// Enable stencil test - if something is written, the pixel is tagged with 0
+				cRenderer.SetRenderState(RenderState::StencilEnable, true);
+				cRenderer.SetRenderState(RenderState::StencilRef,    0);
+				cRenderer.SetRenderState(RenderState::StencilPass,   StencilOp::Replace);
+			}
 
-		// Restore the color mask
-		cRenderer.SetColorMask(bRed, bGreen, bBlue, bAlpha);
+			// Backup the color mask
+			bool bRed, bGreen, bBlue, bAlpha;
+			cRenderer.GetColorMask(bRed, bGreen, bBlue, bAlpha);
 
-		// Give back the depth buffer of the surface texture buffer and restore the previously set render target
-		if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
-			((SurfaceTextureBuffer*)m_pSurfaceBackup)->TakeDepthBufferFromSurfaceTextureBuffer(*m_pRenderTarget);
-		cRenderer.SetRenderTarget(m_pSurfaceBackup);
+			// Setup the color mask and enable scissor test
+			cRenderer.SetColorMask(true, true, true, true);
+			cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
+
+			// Reset current states
+			m_nMaterialChanges			= 0;
+			m_pCurrentMaterial			= NULL;
+			m_pGeneratedProgramUserData	= NULL;
+			m_bColorTarget3Used			= false;
+			m_bColorTarget3AlphaUsed	= false;
+
+			// Draw recursive from front to back
+			DrawRec(cRenderer, cCullQuery);
+
+			// Restore the color mask
+			cRenderer.SetColorMask(bRed, bGreen, bBlue, bAlpha);
+
+			// Give back the depth buffer of the surface texture buffer and restore the previously set render target
+			if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
+				((SurfaceTextureBuffer*)m_pSurfaceBackup)->TakeDepthBufferFromSurfaceTextureBuffer(*m_pRenderTarget);
+			cRenderer.SetRenderTarget(m_pSurfaceBackup);
+		}
 	}
 }
 

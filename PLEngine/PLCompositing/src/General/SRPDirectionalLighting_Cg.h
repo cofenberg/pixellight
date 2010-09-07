@@ -419,7 +419,7 @@ FS_OUTPUT main(VS_OUTPUT In			// Vertex shader output as fragment shader input\n
 				#else\n\
 					normal.xy = tex2D(NormalMap, TexCoord0).ra*2 - 1;\n\
 				#endif\n\
-				normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+				normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 			#else\n\
 				float3 normal = tex2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
 			#endif\n\

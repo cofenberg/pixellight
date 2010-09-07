@@ -43,6 +43,7 @@ void main()\n\
 	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
 }";
 
+
 // GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
 static const PLGeneral::String sDeferredDepthFog_GLSL_FS = "\
 // GLSL preprocessor directives\n\

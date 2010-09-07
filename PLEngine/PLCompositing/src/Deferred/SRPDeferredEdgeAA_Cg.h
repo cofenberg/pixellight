@@ -45,6 +45,8 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 	return OUT;\n\
 }";
 
+
+// Cg fragment shader source code
 static const PLGeneral::String sDeferredEdgeAA_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\

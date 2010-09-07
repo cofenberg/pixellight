@@ -45,6 +45,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 	return OUT;\n\
 }";
 
+
 // Cg fragment shader source code
 static const PLGeneral::String sDeferredAmbient_Cg_FS = "\
 // Vertex output\n\

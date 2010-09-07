@@ -364,7 +364,7 @@ void main()\n\
 				#else\n\
 					normal.xy = texture2D(NormalMap, TexCoord0).ra*2 - 1;\n\
 				#endif\n\
-				normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+				normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 			#else\n\
 				lowp vec3 normal = texture2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
 			#endif\n\

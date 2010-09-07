@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
 
 
@@ -39,6 +39,9 @@ namespace PLRenderer {
 	class Surface;
 	class Material;
 	class RenderStates;
+	class VertexBuffer;
+	class ProgramUniform;
+	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
@@ -227,9 +230,10 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGBuffer, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering GBuffer (Geometry Buffer) fill")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",	"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",				"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -317,98 +321,6 @@ class SRPDeferredGBuffer : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Returns an ambient/emissive vertex shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bDiffuseMap
-		*    Diffuse map
-		*  @param[in] bParallax
-		*    Parallax mapping
-		*  @param[in] bDisplacementMap
-		*    Displacement mapping
-		*  @param[in] bNormalMap
-		*    Normal map
-		*  @param[in] bEmissiveMap
-		*    Emissive map
-		*  @param[in] bReflection
-		*    Reflecton
-		*  @param[in] bLightMap
-		*    Light map
-		*  @param[in] bTwoSided
-		*    Two sided
-		*  @param[in] fAlphaReference
-		*    Alpha reference
-		*
-		*  @return
-		*    The shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetVertexShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap, bool bParallax, bool bDisplacementMap, bool bNormalMap, bool bEmissiveMap, bool bReflection, bool bLightMap, bool bTwoSided, float fAlphaReference);
-
-		/**
-		*  @brief
-		*    Returns an ambient/emissive fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bDiffuseMap
-		*    Diffuse map
-		*  @param[in] bSpecular
-		*    Specular
-		*  @param[in] bSpecularMap
-		*    Specular map
-		*  @param[in] bParallax
-		*    Parallax mapping
-		*  @param[in] bAmbientOcclusionMap
-		*    Ambient occlusion map
-		*  @param[in] bEmissiveMap
-		*    Emissive map
-		*  @param[in] b2DReflection
-		*    2D reflecton (can't be set together with 'bCubeReflection'!)
-		*  @param[in] bCubeReflection
-		*    Cube reflecton (can't be set together with 'b2DReflection'!)
-		*  @param[in] bReflectivityMap
-		*    Reflectivity map
-		*  @param[in] bLightMap
-		*    Light map
-		*  @param[in] bAlphaTest
-		*    Alpha test
-		*  @param[in] bNormalMap
-		*    Normal map
-		*  @param[in] bNormalMap_DXT5_xGxR
-		*    DXT5 xGxR normal map
-		*  @param[in] bNormalMap_LATC2
-		*    LATC2 normal map
-		*  @param[in] bDetailNormalMap
-		*    Detail normal map
-		*  @param[in] bDetailNormalMap_DXT5_xGxR
-		*    DXT5 xGxR detail normal map
-		*  @param[in] bDetailNormalMap_LATC2
-		*    LATC2 detail normal map
-		*  @param[in] fAlphaReference
-		*    Alpha reference
-		*  @param[in] bFresnelReflection
-		*    Use fresnel reflection?
-		*  @param[in] bGlow
-		*    Use glow?
-		*  @param[in] bGlowMap
-		*    Use glow map?
-		*  @param[in] bGammaCorrection
-		*    Use gamma correction?
-		*
-		*  @return
-		*    The shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap, bool bSpecular, bool bSpecularMap, bool bParallax, bool bAmbientOcclusionMap, bool bEmissiveMap, bool b2DReflection, bool bCubeReflection, bool bReflectivityMap, bool bLightMap, bool bAOAlphaTest, bool bNormalMap, bool bNormalMap_DXT5_xGxR, bool bNormalMap_LATC2, bool bDetailNormalMap, bool bDetailNormalMap_DXT5_xGxR, bool bDetailNormalMap_LATC2, float fAlphaReference, bool bFresnelReflection, bool bGlow, bool bGlowMap, bool bGammaCorrection);
-
-		/**
-		*  @brief
-		*    Destroys all currently used shaders
-		*/
-		void DestroyShaders();
-
-		/**
-		*  @brief
 		*    Draws recursive
 		*
 		*  @param[in] cRenderer
@@ -436,8 +348,105 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*    Mesh to draw
 		*  @param[in] cMeshLODLevel
 		*    LOD level of the mesh to draw
+		*  @param[in] cVertexBuffer
+		*    Vertex buffer to use
 		*/
-		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel);
+		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);
+
+
+	//[-------------------------------------------------------]
+	//[ Private definitions                                   ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Vertex shader flags, flag names become to source code definitions
+		*/
+		enum EVertexShaderFlags {
+			VS_TWOSIDED					= 1<<0,	/**< Two sided material */
+			VS_DISPLACEMENTMAP			= 1<<1,	/**< Displacement map */
+			VS_SECONDTEXTURECOORDINATE	= 1<<2,	/**< Second texture coordinate */
+			VS_TANGENT_BINORMAL			= 1<<3,	/**< Tangent and binormal vectors */
+			VS_VIEWSPACEPOSITION		= 1<<4	/**< Calculate viewspace position */
+		};
+
+		/**
+		*  @brief
+		*    Fragment shader flags, flag names become to source code definitions
+		*/
+		enum EFragmentShaderFlags {
+			FS_DIFFUSEMAP							= 1<<0,		/**< Take diffuse map into account */
+				FS_ALPHATEST						= 1<<1,		/**< Use alpha test to discard fragments (FS_DIFFUSEMAP must be defined!) */
+			FS_SPECULAR								= 1<<2,		/**< Use specular */
+				FS_SPECULARMAP						= 1<<3,		/**< Take specular map into account (FS_SPECULAR must be set, too) */
+			FS_NORMALMAP							= 1<<4,		/**< Take normal map into account */
+				FS_NORMALMAP_DXT5_XGXR				= 1<<5,		/**< DXT5 XGXR compressed normal map (FS_NORMALMAP must be defined and FS_NORMALMAP_LATC2 not!) */
+				FS_NORMALMAP_LATC2					= 1<<6,		/**< LATC2 compressed normal map (FS_NORMALMAP must be defined and FS_NORMALMAP_DXT5_XGXR not!) */
+				FS_DETAILNORMALMAP					= 1<<7,		/**< Take detail normal map into account (FS_NORMALMAP must be defined!) */
+					FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<8,		/**< DXT5 XGXR compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP must be defined and FS_DETAILNORMALMAP_LATC2 not!) */
+					FS_DETAILNORMALMAP_LATC2		= 1<<9,		/**< LATC2 compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP must be defined and FS_DETAILNORMALMAP_DXT5_XGXR not!) */
+			FS_PARALLAXMAPPING						= 1<<10,	/**< Perform parallax mapping */
+			FS_AMBIENTOCCLUSIONMAP					= 1<<11,	/**< Use ambient occlusion map */
+			FS_LIGHTMAP								= 1<<12,	/**< Use light map */
+			FS_EMISSIVEMAP							= 1<<13,	/**< Use emissive map */
+			FS_GLOW									= 1<<14,	/**< Use glow */
+				FS_GLOWMAP							= 1<<15,	/**< Use glow map (FS_GLOW must be defined!) */
+			FS_REFLECTION							= 1<<16,	/**< Use reflection */
+				FS_FRESNELREFLECTION				= 1<<17,	/**< Use fresnel reflection (FS_REFLECTION must be defined!) */
+				FS_REFLECTIVITYMAP					= 1<<18,	/**< Use reflectivity map (FS_REFLECTION and FS_FRESNELREFLECTION or FS_2DREFLECTIONMAP or FS_CUBEREFLECTIONMAP must be defined!) */
+				FS_2DREFLECTIONMAP					= 1<<19,	/**< Use 2D reflection mapping (FS_REFLECTION must be defined, can't be set together with FS_CUBEREFLECTIONMAP!) */
+				FS_CUBEREFLECTIONMAP				= 1<<20,	/**< Use cube reflection mapping (FS_REFLECTION must be defined, can't be set together with FS_2DREFLECTIONMAP!) */
+			FS_GAMMACORRECTION						= 1<<21		/**< Use gamma correction (sRGB to linear space) */
+		};
+
+		/**
+		*  @brief
+		*    Direct pointers to uniforms & attributes of a generated program
+		*/
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			PLRenderer::ProgramAttribute *pVertexTexCoord0;
+			PLRenderer::ProgramAttribute *pVertexTexCoord1;
+			PLRenderer::ProgramAttribute *pVertexNormal;
+			PLRenderer::ProgramAttribute *pVertexTangent;
+			PLRenderer::ProgramAttribute *pVertexBinormal;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pNormalScale;
+			PLRenderer::ProgramUniform *pEyePos;
+			PLRenderer::ProgramUniform *pWorldVP;
+			PLRenderer::ProgramUniform *pWorldV;
+			PLRenderer::ProgramUniform *pDisplacementMap;
+			PLRenderer::ProgramUniform *pDisplacementScaleBias;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pDiffuseColor;
+			PLRenderer::ProgramUniform *pDiffuseMap;
+			PLRenderer::ProgramUniform *pAlphaReference;
+			PLRenderer::ProgramUniform *pSpecularColor;
+			PLRenderer::ProgramUniform *pSpecularExponent;
+			PLRenderer::ProgramUniform *pSpecularMap;
+			PLRenderer::ProgramUniform *pNormalMap;
+			PLRenderer::ProgramUniform *pNormalMapBumpiness;
+			PLRenderer::ProgramUniform *pDetailNormalMap;
+			PLRenderer::ProgramUniform *pDetailNormalMapBumpiness;
+			PLRenderer::ProgramUniform *pDetailNormalMapUVScale;
+			PLRenderer::ProgramUniform *pHeightMap;
+			PLRenderer::ProgramUniform *pParallaxScaleBias;
+			PLRenderer::ProgramUniform *pAmbientOcclusionMap;
+			PLRenderer::ProgramUniform *pAmbientOcclusionFactor;
+			PLRenderer::ProgramUniform *pLightMap;
+			PLRenderer::ProgramUniform *pLightMapColor;
+			PLRenderer::ProgramUniform *pEmissiveMap;
+			PLRenderer::ProgramUniform *pEmissiveMapColor;
+			PLRenderer::ProgramUniform *pGlowFactor;
+			PLRenderer::ProgramUniform *pGlowMap;
+			PLRenderer::ProgramUniform *pReflectionColor;
+			PLRenderer::ProgramUniform *pReflectivity;
+			PLRenderer::ProgramUniform *pReflectivityMap;
+			PLRenderer::ProgramUniform *pFresnelConstants;
+			PLRenderer::ProgramUniform *pReflectionMap;
+			PLRenderer::ProgramUniform *pViewSpaceToWorldSpace;
+		};
 
 
 	//[-------------------------------------------------------]
@@ -456,13 +465,10 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		PLRenderer::RenderStates	*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
 		PLGeneral::uint32			 m_nMaterialChanges;	/**< Number of material changes */
 		const PLRenderer::Material	*m_pCurrentMaterial;	/**< Current used material, can be NULL */
+		GeneratedProgramUserData    *m_pGeneratedProgramUserData;
 
-		bool					  m_bVertexShader[2][2][2][2][2][2][2][2];												/**< [DiffuseMap][Parallax][DisplacementMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
-		PLRenderer::ShaderHandler m_cVertexShader[2][2][2][2][2][2][2][2];												/**< [DiffuseMap][Parallax][DisplacementMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
-		bool					  m_bFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][NormalMap_LATC2][DetailNormalMap][DetailNormalMap_DXT5_xGxR][DetailNormalMap_LATC2][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
-		PLRenderer::ShaderHandler m_cFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][NormalMap_LATC2][DetailNormalMap][DetailNormalMap_DXT5_xGxR][DetailNormalMap_LATC2][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
-
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;	/**< List of all used shaders */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

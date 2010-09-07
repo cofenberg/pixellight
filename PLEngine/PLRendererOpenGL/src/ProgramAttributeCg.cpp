@@ -75,6 +75,9 @@ bool ProgramAttributeCg::Set(PLRenderer::VertexBuffer *pVertexBuffer, uint32 nIn
 
 			// Enable vertex attribute array
 			cgGLEnableClientState(m_pCgParameter);
+		} else {
+			// Disable vertex attribute array
+			cgGLDisableClientState(m_pCgParameter);
 		}
 	} else {
 		// Disable vertex attribute array
@@ -100,6 +103,9 @@ bool ProgramAttributeCg::Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRenderer
 
 			// Enable vertex attribute array
 			cgGLEnableClientState(m_pCgParameter);
+		} else {
+			// Disable vertex attribute array
+			cgGLDisableClientState(m_pCgParameter);
 		}
 	} else {
 		// Disable vertex attribute array

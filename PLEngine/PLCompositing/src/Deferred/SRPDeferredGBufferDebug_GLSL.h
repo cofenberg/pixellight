@@ -43,6 +43,7 @@ void main()\n\
 	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
 }";
 
+
 // GLSL fragment shader source code
 static const PLGeneral::String sDeferredGBufferDebug_GLSL_FS = "\
 // GLSL preprocessor directives\n\

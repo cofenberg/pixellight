@@ -45,6 +45,8 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 	return OUT;\n\
 }";
 
+
+// Cg fragment shader source code
 static const PLGeneral::String sDeferredHDAO_Cg_FS = "\
 // Definitions\n\
 #define M_PI 3.14159265f\n\

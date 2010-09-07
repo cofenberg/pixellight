@@ -2,6 +2,7 @@
 [CO]
 PLCompositing:
 - SRPDeferredLighting verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+- SRPDeferredGBuffer verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 
 
 

@@ -390,7 +390,7 @@ static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
 				#else\n\
 					normal.xy = tex2D(NormalMap, TexCoord0).ra*2 - 1;\n\
 				#endif\n\
-				normal.z  = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+				normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 			#else\n\
 				float3 normal = tex2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
 			#endif\n\
