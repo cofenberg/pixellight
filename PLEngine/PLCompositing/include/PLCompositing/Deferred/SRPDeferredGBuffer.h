@@ -327,8 +327,6 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*    Parallax mapping
 		*  @param[in] bDisplacementMap
 		*    Displacement mapping
-		*  @param[in] bAmbientOcclusionMap
-		*    Ambient occlusion map
 		*  @param[in] bNormalMap
 		*    Normal map
 		*  @param[in] bEmissiveMap
@@ -345,7 +343,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*  @return
 		*    The shader with the requested features, NULL on error
 		*/
-		PLRenderer::Shader *GetVertexShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap, bool bParallax, bool bDisplacementMap, bool bAmbientOcclusionMap, bool bNormalMap, bool bEmissiveMap, bool bReflection, bool bLightMap, bool bTwoSided, float fAlphaReference);
+		PLRenderer::Shader *GetVertexShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap, bool bParallax, bool bDisplacementMap, bool bNormalMap, bool bEmissiveMap, bool bReflection, bool bLightMap, bool bTwoSided, float fAlphaReference);
 
 		/**
 		*  @brief
@@ -459,8 +457,8 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		PLGeneral::uint32			 m_nMaterialChanges;	/**< Number of material changes */
 		const PLRenderer::Material	*m_pCurrentMaterial;	/**< Current used material, can be NULL */
 
-		bool					  m_bVertexShader[2][2][2][2][2][2][2][2][2];											/**< [DiffuseMap][Parallax][DisplacementMap][AmbientOcclusionMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
-		PLRenderer::ShaderHandler m_cVertexShader[2][2][2][2][2][2][2][2][2];											/**< [DiffuseMap][Parallax][DisplacementMap][AmbientOcclusionMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
+		bool					  m_bVertexShader[2][2][2][2][2][2][2][2];												/**< [DiffuseMap][Parallax][DisplacementMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
+		PLRenderer::ShaderHandler m_cVertexShader[2][2][2][2][2][2][2][2];												/**< [DiffuseMap][Parallax][DisplacementMap][TangentBinormal][EmissiveMap][Reflection][LightMap][TwoSided] */
 		bool					  m_bFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][NormalMap_LATC2][DetailNormalMap][DetailNormalMap_DXT5_xGxR][DetailNormalMap_LATC2][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
 		PLRenderer::ShaderHandler m_cFragmentShader[2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2][2];	/**< [DiffuseMap][Specular][SpecularMap][Parallax][AmbientOcclusionMap][EmissiveMap][2DReflectionMap][CubeReflectionMap][ReflectivityMap][LightMap][AOAlphaTest][NormalMap][NormalMap_DXT5_xGxR][NormalMap_LATC2][DetailNormalMap][DetailNormalMap_DXT5_xGxR][DetailNormalMap_LATC2][FresnelReflection][Glow][GlowMap][Reflection][GammaCorrection] */
 

@@ -220,7 +220,7 @@ void SRPDeferredGBuffer::SetupTextureFiltering(Renderer &cRenderer, uint32 nStag
 *  @brief
 *    Returns an ambient/emissive vertex shader
 */
-Shader *SRPDeferredGBuffer::GetVertexShader(Renderer &cRenderer, bool bDiffuseMap, bool bParallax, bool bDisplacementMap, bool bAmbientOcclusionMap, bool bNormalMap, bool bEmissiveMap, bool bReflection, bool bLightMap, bool bTwoSided, float fAlphaReference)
+Shader *SRPDeferredGBuffer::GetVertexShader(Renderer &cRenderer, bool bDiffuseMap, bool bParallax, bool bDisplacementMap, bool bNormalMap, bool bEmissiveMap, bool bReflection, bool bLightMap, bool bTwoSided, float fAlphaReference)
 {
 	// Take diffuse map into account? (if ambient color is black, we don't need it :)
 	bool bAmbientColor = true;
@@ -232,48 +232,44 @@ Shader *SRPDeferredGBuffer::GetVertexShader(Renderer &cRenderer, bool bDiffuseMa
 	bool bTangentBinormal = bNormalMap || bParallax;
 
 	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bAmbientOcclusionMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided];
+	ShaderHandler &cShaderHandler = m_cVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided];
 	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bAmbientOcclusionMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided]) {
+	if (!pShader && !m_bVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided]) {
 		const static String ShaderFilename = "Vertex/SRPDeferredGBuffer.cg";
 
 		// Get defines string and a readable shader name (we MUST choose a new name!)
 		String sDefines, sName = ShaderFilename + '_';
 		if (bTwoSided) {
-			sDefines += "#define TWOSIDED\n";
+			sDefines += "#define VS_TWOSIDED\n";
 			sName    += "[TwoSided]";
 		}
 		if (bDisplacementMap) {
-			sDefines += "#define USE_DISPLACEMENTMAP\n";
+			sDefines += "#define VS_DISPLACEMENTMAP\n";
 			sName    += "[DisplacementMap]";
 		}
-		if (bAmbientOcclusionMap) {
-			sDefines += "#define USE_AMBIENTOCCLUSIONMAP\n";
-			sName    += "[AmbientOcclusionMap]";
-		}
 		if (bLightMap) {
-			sDefines += "#define USE_LIGHTMAP\n";
+			sDefines += "#define VS_SECONDTEXTURECOORDINATE\n";
 			sName    += "[LightMap]";
 		}
 		if (bTangentBinormal) {
-			sDefines += "#define TANGENT_BINORMAL\n";
+			sDefines += "#define VS_TANGENT_BINORMAL\n";
 			sName    += "[TangentBinormal]";
 		}
 		if (bReflection) {
-			sDefines += "#define USE_REFLECTION\n";
+			sDefines += "#define VS_VIEWSPACEPOSITION\n";
 			sName    += "[Reflection]";
 		}
 		if (!sDefines.GetLength())
 			sName += "[NoDefines]";
 
 		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredGBuffer_Cg_VS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredGBuffer_Cg_VS, nNumOfBytes, false, ".cg");
+			static uint32 nNumOfBytes = Wrapper::GetStringLength(sDeferredGBuffer_Cg_VS.GetASCII()) + 1; // +1 for the terminating NULL (\0) to be 'correct'
+			File cFile((uint8*)sDeferredGBuffer_Cg_VS.GetASCII(), nNumOfBytes, false, ".cg");
 			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, false, "arbvp1", sDefines); // [TODO] Use "glslv" profile for vertex texture fetch... but it looks like this is messing up with for example "TANGENT" input semantics (in the future, I will use pur GLSL instead of Cg for this anyway :)
 		}
 		cShaderHandler.SetResource(pShader);
 		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bAmbientOcclusionMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided] = true;
+		m_bVertexShader[bDiffuseMap][bParallax][bDisplacementMap][bTangentBinormal][bEmissiveMap][bReflection][bLightMap][bTwoSided] = true;
 	}
 
 	// Return the shader
@@ -308,96 +304,96 @@ Shader *SRPDeferredGBuffer::GetFragmentShader(Renderer &cRenderer, bool bDiffuse
 		// Get defines string and a readable shader name (we MUST choose a new name!)
 		String sDefines, sName = ShaderFilename + '_';
 		if (bDiffuseMap) {
-			sDefines += "#define USE_DIFFUSEMAP\n";
+			sDefines += "#define FS_DIFFUSEMAP\n";
 			sName    += "[DiffuseMap]";
 			if (bAlphaTest) {
-				sDefines += "#define USE_ALPHATEST\n";
+				sDefines += "#define FS_ALPHATEST\n";
 				sName    += "[AlphaTest]";
 			}
 		}
 		if (bSpecular) {
-			sDefines += "#define USE_SPECULAR\n";
+			sDefines += "#define FS_SPECULAR\n";
 			sName    += "[Specular]";
 			if (bSpecularMap) {
-				sDefines += "#define USE_SPECULARMAP\n";
+				sDefines += "#define FS_SPECULARMAP\n";
 				sName    += "[SpecularMap]";
 			}
 		}
 		if (bNormalMap) {
-			sDefines += "#define USE_NORMALMAP\n";
+			sDefines += "#define FS_NORMALMAP\n";
 			sName    += "[NormalMap]";
 			if (bNormalMap_DXT5_xGxR) {
-				sDefines += "#define NORMALMAP_DXT5_XGXR\n";
+				sDefines += "#define FS_NORMALMAP_DXT5_XGXR\n";
 				sName    += "[NormalMap_DXT5_xGxR]";
 			} else if (bNormalMap_LATC2) {
-				sDefines += "#define NORMALMAP_LATC2\n";
+				sDefines += "#define FS_NORMALMAP_LATC2\n";
 				sName    += "[NormalMap_LATC2]";
 			}
 			if (bDetailNormalMap) {
-				sDefines += "#define USE_DETAILNORMALMAP\n";
+				sDefines += "#define FS_DETAILNORMALMAP\n";
 				sName    += "[DetailNormalMap]";
 				if (bDetailNormalMap_DXT5_xGxR) {
-					sDefines += "#define DETAILNORMALMAP_DXT5_XGXR\n";
+					sDefines += "#define FS_DETAILNORMALMAP_DXT5_XGXR\n";
 					sName    += "[DetailNormalMap_DXT5_xGxR]";
 				} else if (bDetailNormalMap_LATC2) {
-					sDefines += "#define DETAILNORMALMAP_LATC2\n";
+					sDefines += "#define FS_DETAILNORMALMAP_LATC2\n";
 					sName    += "[DetailNormalMap_LATC2]";
 				}
 			}
 		}
 		if (bParallax) {
-			sDefines += "#define USE_PARALLAXMAPPING\n";
+			sDefines += "#define FS_PARALLAXMAPPING\n";
 			sName    += "[ParallaxMapping]";
 		}
 		if (bAmbientOcclusionMap) {
-			sDefines += "#define USE_AMBIENTOCCLUSIONMAP\n";
+			sDefines += "#define FS_AMBIENTOCCLUSIONMAP\n";
 			sName    += "[AmbientOcclusionMap]";
 		}
 		if (bLightMap) {
-			sDefines += "#define USE_LIGHTMAP\n";
+			sDefines += "#define FS_LIGHTMAP\n";
 			sName    += "[LightMap]";
 		}
 		if (bEmissiveMap) {
-			sDefines += "#define USE_EMISSIVEMAP\n";
+			sDefines += "#define FS_EMISSIVEMAP\n";
 			sName    += "[EmissiveMap]";
 		}
 		if (bGlow) {
-			sDefines += "#define USE_GLOW\n";
+			sDefines += "#define FS_GLOW\n";
 			sName    += "[Glow]";
 			if (bGlowMap) {
-				sDefines += "#define USE_GLOWMAP\n";
+				sDefines += "#define FS_GLOWMAP\n";
 				sName    += "[GlowMap]";
 			}
 		}
 		if (bReflection) {
-			sDefines += "#define USE_REFLECTION\n";
+			sDefines += "#define FS_REFLECTION\n";
 			sName    += "[Reflection]";
 			if (bFresnelReflection) {
-				sDefines += "#define USE_FRESNELREFLECTION\n";
+				sDefines += "#define FS_FRESNELREFLECTION\n";
 				sName    += "[FresnelReflection]";
 			}
 			if (bReflectivityMap) {
-				sDefines += "#define USE_REFLECTIVITYMAP\n";
+				sDefines += "#define FS_REFLECTIVITYMAP\n";
 				sName    += "[ReflectivityMap]";
 			}
 			if (b2DReflection) {
-				sDefines += "#define USE_2DREFLECTIONMAP\n";
+				sDefines += "#define FS_2DREFLECTIONMAP\n";
 				sName    += "[ReflectionMap2D]";
 			} else if (bCubeReflection) {
-				sDefines += "#define USE_CUBEREFLECTIONMAP\n";
+				sDefines += "#define FS_CUBEREFLECTIONMAP\n";
 				sName    += "[ReflectionMapCube]";
 			}
 		}
 		if (bGammaCorrection) {
-			sDefines += "#define USE_GAMMACORRECTION\n";
+			sDefines += "#define FS_GAMMACORRECTION\n";
 			sName    += "[GammaCorrection]";
 		}
 		if (!sDefines.GetLength())
 			sName += "[NoDefines]";
 
 		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredGBuffer_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredGBuffer_Cg_FS, nNumOfBytes, false, ".cg");
+			static uint32 nNumOfBytes = Wrapper::GetStringLength(sDeferredGBuffer_Cg_FS.GetASCII()) + 1; // +1 for the terminating NULL (\0) to be 'correct'
+			File cFile((uint8*)sDeferredGBuffer_Cg_FS.GetASCII(), nNumOfBytes, false, ".cg");
 			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "arbfp1", sDefines); // "glslf" would be nice, but then, the "discard" keyword seems to have no effect :/
 		}
 		cShaderHandler.SetResource(pShader);
@@ -789,7 +785,7 @@ void SRPDeferredGBuffer::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery,
 								const bool bGammaCorrection = !(GetFlags() & NoGammaCorrection);
 
 								// Get the shader with the given features
-								Shader *pMeshVertexShader = GetVertexShader(cRenderer, pDiffuseMap != NULL || pReflectivityMap != NULL || pNormalMap != NULL, fParallax != 0.0f, pDisplacementMap != NULL, pAmbientOcclusionMap != NULL, pNormalMap != NULL, pEmissiveMap != NULL, bReflection, pLightMap != NULL, bTwoSided, fAlphaReference != 0.0f);
+								Shader *pMeshVertexShader = GetVertexShader(cRenderer, pDiffuseMap != NULL || pReflectivityMap != NULL || pNormalMap != NULL, fParallax != 0.0f, pDisplacementMap != NULL, pNormalMap != NULL, pEmissiveMap != NULL, bReflection, pAmbientOcclusionMap != NULL || pLightMap != NULL, bTwoSided, fAlphaReference != 0.0f);
 								if (pMeshVertexShader) {
 									pVertexShaderProgram = pMeshVertexShader->GetShaderProgram();
 									if (pVertexShaderProgram) {
