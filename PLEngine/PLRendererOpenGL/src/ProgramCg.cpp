@@ -465,12 +465,27 @@ bool ProgramCg::MakeCurrent()
 
 		// Iterate through all Cg programs of the Cg combined program and enable all required profiles
 		const int nNumOfProgramDomains = cgGetNumProgramDomains(pCgCombinedProgram);
-		for (int i=0; i<nNumOfProgramDomains; i++)
+		for (int i=0; i<nNumOfProgramDomains; i++) {
+			// Enable the profile
 			cgGLEnableProfile(cgGetProgramDomainProfile(pCgCombinedProgram, i));
 
-		// Enable vertex attribute arrays
-		for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
-			cgGLEnableClientState(((ProgramAttributeCg*)m_lstAttributes[i])->m_pCgParameter);
+			// Get the Cg program of the current domain
+			CGprogram pCgDomainProgram = cgGetProgramDomainProgram(pCgCombinedProgram, i);
+
+			// Enable vertex attribute arrays (vertex domain attributes ONLY!)
+			if (cgGetProgramDomain(pCgDomainProgram) == CG_VERTEX_DOMAIN) {
+				// Iterate through all Cg parameters of the Cg vertex program
+				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
+				while (pCgParameter) {
+					// Is this an attribute?
+					if (cgGetParameterVariability(pCgParameter) == CG_VARYING && cgGetParameterDirection(pCgParameter) == CG_IN)
+						cgGLEnableClientState(pCgParameter);
+
+					// Next Cg parameter, please
+					pCgParameter = cgGetNextParameter(pCgParameter);
+				}
+			}
+		}
 
 		// Done
 		return true;
@@ -484,14 +499,29 @@ bool ProgramCg::UnmakeCurrent()
 {
 	// There must be a Cg combined program
 	if (m_pCgCombinedProgram) {
-		// Disable vertex attribute arrays
-		for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
-			cgGLDisableClientState(((ProgramAttributeCg*)m_lstAttributes[i])->m_pCgParameter);
-
 		// Iterate through all Cg programs of the Cg combined program and disable all required profiles
 		const int nNumOfProgramDomains = cgGetNumProgramDomains(m_pCgCombinedProgram);
-		for (int i=0; i<nNumOfProgramDomains; i++)
+		for (int i=0; i<nNumOfProgramDomains; i++) {
+			// Get the Cg program of the current domain
+			CGprogram pCgDomainProgram = cgGetProgramDomainProgram(m_pCgCombinedProgram, i);
+
+			// Disable vertex attribute arrays (vertex domain attributes ONLY!)
+			if (cgGetProgramDomain(pCgDomainProgram) == CG_VERTEX_DOMAIN) {
+				// Iterate through all Cg parameters of the Cg vertex program
+				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
+				while (pCgParameter) {
+					// Is this an attribute?
+					if (cgGetParameterVariability(pCgParameter) == CG_VARYING && cgGetParameterDirection(pCgParameter) == CG_IN)
+						cgGLDisableClientState(pCgParameter);
+
+					// Next Cg parameter, please
+					pCgParameter = cgGetNextParameter(pCgParameter);
+				}
+			}
+
+			// Disable the profile
 			cgGLDisableProfile(cgGetProgramDomainProfile(m_pCgCombinedProgram, i));
+		}
 
 		// [HACK] When using GLSL as Cg profile we need to use 'glUseProgramObjectARB()' to deactivate shaders
 		glUseProgramObjectARB(0);

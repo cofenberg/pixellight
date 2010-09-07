@@ -2844,6 +2844,18 @@ bool Renderer::SetFragmentShaderProgram(PLRenderer::ShaderProgram *pFragmentShad
 
 bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 {
+	// [TODO] Remove this when the old shader interface is finally gone
+	if (m_pCurrentVertexShaderProgram) {
+		cgGLDisableProfile(((ShaderProgram*)m_pCurrentVertexShaderProgram)->GetCgProfile());
+		m_pCurrentVertexShaderProgram = NULL;
+		glUseProgramObjectARB(0);
+	}
+	if (m_pCurrentFragmentShaderProgram) {
+		cgGLDisableProfile(((ShaderProgram*)m_pCurrentFragmentShaderProgram)->GetCgProfile());
+		m_pCurrentFragmentShaderProgram = NULL;
+		glUseProgramObjectARB(0);
+	}
+
 	// Is the new program the same one as the current one?
 	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
 	if (pCurrentProgram != pProgram) {
@@ -2864,9 +2876,6 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 				return ((ProgramGLSL*)pProgram)->MakeCurrent();
 			else if (pProgram->GetShaderLanguage() == ShaderLanguageCg)
 				return ((ProgramCg*)pProgram)->MakeCurrent();
-		} else {
-			// Currently, no program is set
-			glUseProgramObjectARB(0);
 		}
 	}
 

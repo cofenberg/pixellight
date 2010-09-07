@@ -516,7 +516,8 @@ bool ProgramGLSL::UnmakeCurrent()
 	for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
 		glDisableVertexAttribArrayARB(((ProgramAttributeGLSL*)m_lstAttributes[i])->m_nOpenGLAttributeLocation);
 
-	// Renderer::SetProgram() will call glUseProgram(0) - if required
+	// Currently, no program is set
+	glUseProgramObjectARB(0);
 
 	// Done
 	return true;

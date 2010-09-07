@@ -1,3 +1,14 @@
+>> 07.09.2010
+[CO]
+PLRendererOpenGL:
+- ProgramCg: MakeCurrent()/UnmakeCurrent() dürfen cgGLEnableClientState/cgGLDisableClientState NUR bei Vertex Program Attributen aufrufen
+- Renderer::SetProgram(): Bis das alte Shader Interface raus ist, wird hier noch geprüft ob momentan ein Shader über das alte Shader Interface gesetzt wurde,
+  wenn ja, wird das hier zurückgesetzt.
+- "Renderer::SetProgram(" setzt kein "glUseProgramObjectARB(0)" mehr, das ist Job von "ProgramGLSL::UnmakeCurrent()"... das machte als ich das neue Shader Interface
+  implementierte noch Probleme, nun scheint es aber mittlerweile endlich sauber zu laufen :D
+
+
+
 >> 06.09.2010
 [CO]
 PLRendererOpenGL:
