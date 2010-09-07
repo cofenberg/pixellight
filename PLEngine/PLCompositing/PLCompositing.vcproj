@@ -549,6 +549,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Deferred\SRPDeferredLighting_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Deferred\SRPDeferredSSAO.cpp"
 				>
 			</File>

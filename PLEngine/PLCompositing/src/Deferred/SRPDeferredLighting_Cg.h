@@ -17,23 +17,6 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - FS_DIRECTIONAL:         Directional light
- *  - FS_PROJECTIVE_POINT:    Projective point light
- *  - FS_SPOT:                Spot light
- *    - FS_PROJECTIVE_SPOT:   Projective spot light (FS_SPOT must be set, too)
- *    - FS_SPOT_CONE:         Spot light with a cone (FS_SPOT must be set, too)
- *      - FS_SPOT_SMOOTHCONE: Spot light with a smooth cone (FS_SPOT & FS_SPOT_CONE must be set, too)
- *  - FS_SHADOWMAPPING:       Perform shadow mapping
- *    - FS_SOFTSHADOWMAPPING: Perform soft shadow mapping (FS_SHADOWMAPPING must be set, too)
- *  - FS_NO_ALBEDO:           Ignore albedo data
- *  - FS_NO_AMBIENTOCCLUSION: Ignore ambient occlusion data
- *  - FS_NO_SPECULAR:         No specular
- *  - FS_NO_SPECULARCOLOR:    Ignore specular color data
- *  - FS_NO_SPECULAREXPONENT: Ignore specular exponent data
- *  - FS_DISCARD:             Use discard
- *  - FS_GAMMACORRECTION:     Use gamma correction (sRGB to linear space)
 \*********************************************************/
 
 
@@ -93,7 +76,7 @@ float3 BlinnPhong(float3 lightVector, float3 lightColor, float3 viewVector, floa
 		viewVector = float3(0, 0, 1);\n\
 \n\
 	// Diffuse term\n\
-	float3 diffuseLighting = saturate(dot(lightVector, normalVector))*diffuseColor*lightColor;\n\
+	float3 diffuseLighting = clamp(dot(lightVector, normalVector), 0.0f, 1.0f)*diffuseColor*lightColor;\n\
 \n\
 	// Specular term\n\
 	#ifdef FS_NO_SPECULAR\n\
@@ -109,7 +92,7 @@ float3 BlinnPhong(float3 lightVector, float3 lightColor, float3 viewVector, floa
 		#undef FLT_MIN\n\
 \n\
 		// Specular term\n\
-		float3 specularLighting = pow(saturate(dot(halfVector, normalVector)), specularExponent)*specularColor*lightColor;\n\
+		float3 specularLighting = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent)*specularColor*lightColor;\n\
 	#endif\n\
 \n\
 	// Final color\n\
@@ -276,7 +259,7 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, float3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667 : 0;\n\
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, float3( TexelSize, -TexelSize,  TexelSize))) ? 0.16666667 : 0;\n\
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, float3(-TexelSize,  TexelSize,  TexelSize))) ? 0.16666667 : 0;\n\
-				shadow = saturate(shadow);\n\
+				shadow = clamp(shadow, 0.0f, 1.0f);\n\
 			#else\n\
 				// Unpack\n\
 				float depthValue = texPCF(ShadowMap, shadowVector);\n\
@@ -401,7 +384,7 @@ FS_OUTPUT main(VS_OUTPUT IN										// Interpolated output from the vertex stag
 	OUT.Color0.rgb = BlinnPhong(normalize(lightVector), lightColor, -normalize(position), normal, sampleRT0.rgb, sampleRT2.rgb, sampleRT2.a);\n\
 \n\
 	// Apply attenuation\n\
-	OUT.Color0.rgb *= saturate(1 - distance/LightRadius);\n\
+	OUT.Color0.rgb *= clamp(1 - distance/LightRadius, 0.0f, 1.0f);\n\
 #endif\n\
 \n\
 	// Apply ambient occlusion or the calculated realtime shadow\n\

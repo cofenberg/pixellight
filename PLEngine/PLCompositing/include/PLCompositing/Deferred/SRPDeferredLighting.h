@@ -28,14 +28,18 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
 #include <PLRenderer/Texture/TextureHandler.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLRenderer {
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 namespace PLScene {
 	class SNLight;
 	class VisNode;
@@ -126,17 +130,11 @@ class SRPDeferredLighting : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredLighting, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering lighting")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,					ReadWrite,	DirectValue,	"Texture filtering, used for projective lights",	"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",								ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,					ReadWrite,	DirectValue,	"Texture filtering, used for projective lights",																						"")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,				pl_flag_type(EFlags),				NoShadowLOD|NoAmbientOcclusion,	ReadWrite,	GetSet,			"Flags",											"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),				NoShadowLOD|NoAmbientOcclusion,	ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCOM_API virtual void SetFlags(PLGeneral::uint32 nValue);	// From SceneRendererPass
 
 
 	//[-------------------------------------------------------]
@@ -175,54 +173,6 @@ class SRPDeferredLighting : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Returns the vertex shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*
-		*  @return
-		*    The vertex shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetVertexShader(PLRenderer::Renderer &cRenderer);
-
-		/**
-		*  @brief
-		*    Returns the fragment shader for the requested visualisation mode
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bDirectional
-		*    Directional light
-		*  @param[in] bProjectivePoint
-		*    Projective point light
-		*  @param[in] bSpot
-		*    Spot light
-		*  @param[in] bProjectiveSpot
-		*    Projective spot light
-		*  @param[in] bSpotCone
-		*    Spot light with cone
-		*  @param[in] bSpotSmoothCone
-		*    Spot light with a smooth cone
-		*  @param[in] bShadowMapping
-		*    Shadow mapping
-		*  @param[in] bDiscard
-		*    Use discard
-		*  @param[in] bGammaCorrection
-		*    Use gamma correction
-		*
-		*  @return
-		*    The fragment shader for the requested visualisation mode, NULL on error
-		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bDirectional, bool bProjectivePoint, bool bSpot, bool bProjectiveSpot, bool bSpotCone, bool bSpotSmoothCone, bool bShadowMapping, bool bDiscard, bool bGammaCorrection);
-
-		/**
-		*  @brief
-		*    Destroys all currently used shaders
-		*/
-		void DestroyShaders();
-
-		/**
-		*  @brief
 		*    Draws recursive
 		*
 		*  @param[in] cRenderer
@@ -253,16 +203,71 @@ class SRPDeferredLighting : public SRPDeferred {
 
 
 	//[-------------------------------------------------------]
+	//[ Private definitions                                   ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Fragment shader flags, flag names become to source code definitions
+		*/
+		enum EFragmentShaderFlags {
+			FS_DIRECTIONAL				= 1<<0,		/**< Directional light */
+			FS_PROJECTIVE_POINT			= 1<<1,		/**< Projective point light */
+			FS_SPOT						= 1<<2,		/**< Spot light */
+				FS_PROJECTIVE_SPOT		= 1<<3,		/**< Projective spot light (FS_SPOT must be set, too) */
+				FS_SPOT_CONE			= 1<<4,		/**< Spot light with a cone (FS_SPOT must be set, too) */
+					FS_SPOT_SMOOTHCONE	= 1<<5,		/**< Spot light with a smooth cone (FS_SPOT & FS_SPOT_CONE must be set, too) */
+			FS_SHADOWMAPPING			= 1<<6,		/**< Perform shadow mapping */
+				FS_SOFTSHADOWMAPPING	= 1<<7,		/**< Perform soft shadow mapping (FS_SHADOWMAPPING must be set, too) */
+			FS_NO_ALBEDO				= 1<<8,		/**< Ignore albedo data */
+			FS_NO_AMBIENTOCCLUSION		= 1<<9,		/**< Ignore ambient occlusion data */
+			FS_NO_SPECULAR				= 1<<10,	/**< No specular */
+			FS_NO_SPECULARCOLOR			= 1<<11,	/**< Ignore specular color data */
+			FS_NO_SPECULAREXPONENT		= 1<<12,	/**< Ignore specular exponent data */
+			FS_DISCARD					= 1<<13,	/**< Use discard */
+			FS_GAMMACORRECTION			= 1<<14		/**< Use gamma correction (sRGB to linear space) */
+		};
+
+		/**
+		*  @brief
+		*    Direct pointers to uniforms & attributes of a generated program
+		*/
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			PLRenderer::ProgramAttribute *pVertexTexCoord0;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pLightDirection;
+			PLRenderer::ProgramUniform *pLightPosition;
+			PLRenderer::ProgramUniform *pLightRadius;
+			PLRenderer::ProgramUniform *pProjectivePointCubeMap;
+			PLRenderer::ProgramUniform *pViewSpaceToCubeMapSpace;
+			PLRenderer::ProgramUniform *pProjectiveSpotMap;
+			PLRenderer::ProgramUniform *pViewSpaceToSpotMapSpace;
+			PLRenderer::ProgramUniform *pSpotConeCos;
+			PLRenderer::ProgramUniform *pShadowMap;
+			PLRenderer::ProgramUniform *pViewSpaceToShadowMapSpace;
+			PLRenderer::ProgramUniform *pViewSpaceToShadowCubeMapSpace;
+			PLRenderer::ProgramUniform *pInvLightRadius;
+			PLRenderer::ProgramUniform *pTexelSize;
+			PLRenderer::ProgramUniform *pLightColor;
+			PLRenderer::ProgramUniform *pInvFocalLen;
+			PLRenderer::ProgramUniform *pRenderTargetTexture0;
+			PLRenderer::ProgramUniform *pRenderTargetTexture1;
+			PLRenderer::ProgramUniform *pRenderTargetTexture2;
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool										m_bVertexShader;								/**< Generic vertex shader already build? */
-		PLRenderer::ShaderHandler					m_cVertexShader;								/**< Generic vertex shader */
-		bool										m_bFragmentShader[2][2][2][2][2][2][2][2][2];	/**< Fragment shader build? [Directional][ProjectivePoint][Spot][ProjectiveSpot][SpotCone][SpotSmoothCone][ShadowMapping][Discard][GammaCorrection] */
-		PLRenderer::ShaderHandler					m_cFragmentShader[2][2][2][2][2][2][2][2][2];	/**< Fragment shader mode [Directional][ProjectivePoint][Spot][ProjectiveSpot][SpotCone][SpotSmoothCone][ShadowMapping][Discard][GammaCorrection] */
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;									/**< List of all used shaders */
-		PLRenderer::TextureHandler					m_cSpotMapHandler;								/**< Texture handler for the default spot map */
-		PLRenderer::TextureHandler					m_cCubeMapHandler;								/**< Texture handler for the default cube map */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
+		PLRenderer::TextureHandler			 m_cSpotMapHandler;		/**< Texture handler for the default spot map */
+		PLRenderer::TextureHandler			 m_cCubeMapHandler;		/**< Texture handler for the default cube map */
 
 
 	//[-------------------------------------------------------]
