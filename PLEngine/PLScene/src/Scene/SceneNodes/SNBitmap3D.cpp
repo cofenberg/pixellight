@@ -301,18 +301,18 @@ void SNBitmap3D::DrawShape(Renderer &cRenderer, const VisNode &cVisNode)
 
 			// Bind buffers
 			cRenderer.SetIndexBuffer(m_pIndexBuffer);
-			// [TODO] Remove FixedFunctions usage by using the new shader interface
-			FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-			if (pFixedFunctions) {
-				pFixedFunctions->SetVertexBuffer(m_pVertexBuffer);
-
-				// Set world matrix
-				pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, cVisNode.GetWorldMatrix());
-			}
 
 			// Draw primitives
 			for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
 				pMaterial->SetupPass(nPass);
+				// [TODO] Remove FixedFunctions usage by using the new shader interface
+				FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
+				if (pFixedFunctions) {
+					pFixedFunctions->SetVertexBuffer(m_pVertexBuffer);
+
+					// Set world matrix
+					pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, cVisNode.GetWorldMatrix());
+				}
 				cRenderer.DrawIndexedPrimitives(Primitive::TriangleList, 0, 3, 0, 6);
 			}
 		}
