@@ -1130,10 +1130,10 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 										if (bSpot) {
 											if (pGeneratedProgramUserData->pViewSpaceToShadowMapSpace) {
 												// This matrix brings us from clip space [-1...1] to texture space [0...1] (scale & bias)
-												const Matrix4x4 mClipSpaceToTextureSpace(0.5f, 0.0f, 0.0f, 0.5f,
-																						 0.0f, 0.5f, 0.0f, 0.5f,
-																						 0.0f, 0.0f, 0.5f, 0.5f,
-																						 0.0f, 0.0f, 0.0f, 1.0f);
+												static const Matrix4x4 mClipSpaceToTextureSpace(0.5f, 0.0f, 0.0f, 0.5f,
+																								0.0f, 0.5f, 0.0f, 0.5f,
+																								0.0f, 0.0f, 0.5f, 0.5f,
+																								0.0f, 0.0f, 0.0f, 1.0f);
 
 												// Clip space [-1...1] to texture space [0...1]
 												Matrix4x4 mTransform = mClipSpaceToTextureSpace;

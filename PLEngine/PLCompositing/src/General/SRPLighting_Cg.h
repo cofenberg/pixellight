@@ -420,6 +420,7 @@ static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
 		#else\n\
 			float3 normal = normalize(In.Normal);\n\
 		#endif\n\
+		// [TODO] There seem to be invalid normal vectors here (NAN)\n\
 		if (isnan(normal.x) || isnan(normal.y) || isnan(normal.z))\n\
 			normal = float3(0, 0, 1); // I had situations with invalid normal vectors...\n\
 	#else\n\

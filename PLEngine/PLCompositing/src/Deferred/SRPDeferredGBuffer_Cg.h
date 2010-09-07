@@ -350,6 +350,7 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 #else\n\
 	float3 normal = normalize(IN.normalDepth.rgb);\n\
 #endif\n\
+	// [TODO] There seem to be invalid normal vectors here (NAN)\n\
 	if (isnan(normal.x) || isnan(normal.y) || isnan(normal.z))\n\
 		normal = float3(0, 0, 1); // I had situations with invalid normal vectors...\n\
 	// RG encoded normal vector\n\
