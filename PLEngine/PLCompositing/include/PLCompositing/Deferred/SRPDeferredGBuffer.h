@@ -28,6 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Container/Pool.h>
+#include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
 
@@ -38,7 +40,7 @@
 namespace PLRenderer {
 	class Surface;
 	class Material;
-	class RenderStates;
+	class IndexBuffer;
 	class VertexBuffer;
 	class ProgramUniform;
 	class ProgramAttribute;
@@ -47,6 +49,7 @@ namespace PLRenderer {
 }
 namespace PLMesh {
 	class Mesh;
+	class Geometry;
 	class MeshHandler;
 	class MeshLODLevel;
 }
@@ -305,56 +308,6 @@ class SRPDeferredGBuffer : public SRPDeferred {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Sets correct texture filtering modes
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] nStage
-		*    Texture stage
-		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
-
-		/**
-		*  @brief
-		*    Draws recursive
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cCullQuery
-		*    Cull query to use
-		*/
-		void DrawRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
-
-		/**
-		*  @brief
-		*    Draws a mesh
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cCullQuery
-		*    Cull query to use
-		*  @param[in] cVisNode
-		*    Visibility node to use
-		*  @param[in] cSceneNode
-		*    Mesh owner scene node
-		*  @param[in] cMeshHandler
-		*    Mesh handler to use
-		*  @param[in] cMesh
-		*    Mesh to draw
-		*  @param[in] cMeshLODLevel
-		*    LOD level of the mesh to draw
-		*  @param[in] cVertexBuffer
-		*    Vertex buffer to use
-		*/
-		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);
-
-
-	//[-------------------------------------------------------]
 	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
@@ -448,27 +401,102 @@ class SRPDeferredGBuffer : public SRPDeferred {
 			PLRenderer::ProgramUniform *pViewSpaceToWorldSpace;
 		};
 
+		/**
+		*  @brief
+		*    Mesh batch
+		*/
+		struct MeshBatch {
+			const PLRenderer::Material		*pMaterial;			/**< Used material, always valid! */
+				  PLRenderer::VertexBuffer	*pVertexBuffer;		/**< Used vertex buffer, always valid! */
+				  PLRenderer::IndexBuffer	*pIndexBuffer;		/**< Used index buffer, always valid! */
+			const PLMesh::Geometry			*pGeometry;			/**< Used geometry, always valid! */
+			const PLScene::SQCull			*pCullQuery;		/**< Used cull query, always valid! */
+			const PLScene::VisNode			*pVisNode;			/**< Used visibility node, always valid! */
+				  PLMath::Rectangle			 sScissorRectangle;	/**< Scissor rectangle */
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Collect mesh batches recursive
+		*
+		*  @param[in] cCullQuery
+		*    Cull query to use
+		*/
+		void CollectMeshBatchesRec(const PLScene::SQCull &cCullQuery);
+
+		/**
+		*  @brief
+		*    Makes a material to the currently used one
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cMaterial
+		*    Material to use
+		*
+		*  @return
+		*    Generated program user data
+		*/
+		GeneratedProgramUserData *MakeMaterialCurrent(PLRenderer::Renderer &cRenderer, const PLRenderer::Material &cMaterial);
+
+		/**
+		*  @brief
+		*    Sets correct texture filtering modes
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] nStage
+		*    Texture stage
+		*/
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
+
+		/**
+		*  @brief
+		*    Draws a mesh batch
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cGeneratedProgramUserData
+		*    Generated program user data for the mesh batch material
+		*  @param[in] cMeshBatch
+		*    Mesh batch to use
+		*/
+		void DrawMeshBatch(PLRenderer::Renderer &cRenderer, GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const;
+
+		/**
+		*  @brief
+		*    Returns a free mesh batch
+		*
+		*  @return
+		*    Free mesh batch
+		*
+		*  @note
+		*    - Use FreeMeshBatch() if you no longer need this mesh batch
+		*/
+		MeshBatch &GetFreeMeshBatch();
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer   *m_pRenderTarget;			/**< Render target of the GBuffer, can be NULL */
-		PLRenderer::TextureBufferRectangle *m_pColorTarget1;			/**< Color target 1, can be NULL */
-		PLRenderer::TextureBufferRectangle *m_pColorTarget2;			/**< Color target 2, can be NULL */
-		PLRenderer::TextureBufferRectangle *m_pColorTarget3;			/**< Color target 3, can be NULL */
-		bool								m_bColorTarget3Used;		/**< Was the RGB color target 3 actually used when filling the current GBuffer content? */
-		bool								m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
-		PLRenderer::Surface				   *m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be NULL */
-		PLScene::FullscreenQuad			   *m_pFullscreenQuad;			/**< Fullscreen quad instance, can be NULL */
-
-		PLRenderer::RenderStates	*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
-		PLGeneral::uint32			 m_nMaterialChanges;	/**< Number of material changes */
-		const PLRenderer::Material	*m_pCurrentMaterial;	/**< Current used material, can be NULL */
-		GeneratedProgramUserData    *m_pGeneratedProgramUserData;
-
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
-		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
+		PLRenderer::SurfaceTextureBuffer			 *m_pRenderTarget;			/**< Render target of the GBuffer, can be NULL */
+		PLRenderer::TextureBufferRectangle			 *m_pColorTarget1;			/**< Color target 1, can be NULL */
+		PLRenderer::TextureBufferRectangle			 *m_pColorTarget2;			/**< Color target 2, can be NULL */
+		PLRenderer::TextureBufferRectangle			 *m_pColorTarget3;			/**< Color target 3, can be NULL */
+		bool										  m_bColorTarget3Used;		/**< Was the RGB color target 3 actually used when filling the current GBuffer content? */
+		bool										  m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
+		PLRenderer::Surface							 *m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be NULL */
+		PLScene::FullscreenQuad						 *m_pFullscreenQuad;		/**< Fullscreen quad instance, can be NULL */
+		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
+		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
+		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */
+		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags			  m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

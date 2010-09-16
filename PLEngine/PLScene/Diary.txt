@@ -1,3 +1,19 @@
+>> 17.09.2010
+[CO]
+PLCompositing:
+- SRPDeferredGBuffer: Ein kleines Experiment gemacht das sogar geglückt ist: Anstatt Meshes als gesamtes anzugehen, werden nun nur noch die
+  Mesh Geometrien betrachtet. In einem ersten Schritt werden von allen sichtbaren Scene Nodes Mesh Geometry relevante Daten in "Mesh Batches" gepackt,
+  die u.a. Material, Index Buffer, Vertex Buffer etc. haben - also total abstrakt und losgelöst von der komplexen Mesh Klasse. Beim Rendern werden
+  dann die "Mesh Batches" verwendet, dazu werden momentan alle gefundenen Materialien durchlaufen, und dann jeweils alle Mesh Batches gezeichnet
+  welche ein gemeinesames Material nutzen. Somit wird nun also pro Render Schritt jedes Material nur noch einmal gebunden, und dann auf einen schlag
+  alles gezeichnet das dieses Material nutzt. Da die Materialien recht viele State Changes auslösen können, bringt das mehr als nur darauf zu achten
+  Meshes von vorne nach hinten sortiert zu zeichnen um Füllrate zu sparen... wenn der Tiefenbuffer für z.B. Dynamic Occlusion Culling gefüllt wird,
+  bringt das sortieren nach Tiefe hier in SRPDeferredGBuffer ohnehin nichts mehr. Die aktuelle SRPDeferredGBuffer lässt sich natürlich noch weiter
+  Optimieren, diese relativ einfache Umbauarbeit hat in ein paar Projekten allerdings bereits einen netten Performance schub gebracht... und
+  die Implementation ist zumindestens ein klein wenig Überschaubarer geworden. :D
+
+
+
 >> 16.09.2010
 [CO]
 PLCompositing:
