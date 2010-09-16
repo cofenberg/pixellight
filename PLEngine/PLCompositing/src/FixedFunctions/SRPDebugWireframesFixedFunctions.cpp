@@ -147,7 +147,7 @@ void SRPDebugWireframesFixedFunctions::DrawRec(Renderer &cRenderer, const SQCull
 */
 void SRPDebugWireframesFixedFunctions::DrawMesh(Renderer &cRenderer, const VisNode &cVisNode, const MeshHandler &cMeshHandler) const
 {
-	// Check for distance limitation and do only draw the wireframe if the scene node position is within the frustum
+	// Check for draw distance limitation
 	if ((MaxDrawDistance <= 0.0f || cVisNode.GetSquaredDistanceToCamera() <= MaxDrawDistance*MaxDrawDistance) && cMeshHandler.GetVertexBuffer()) {
 		// Get the mesh
 		const Mesh *pMesh = cMeshHandler.GetResource();

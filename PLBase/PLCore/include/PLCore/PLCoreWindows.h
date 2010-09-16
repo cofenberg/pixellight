@@ -67,7 +67,7 @@
 //[-------------------------------------------------------]
 //[ Disable warnings                                      ]
 //[-------------------------------------------------------]
-__pragma(warning(disable: 4355)) // "'this' : used in base member initializer list"
+PL_WARNING_DISABLE(4355) // 'this' : used in base member initializer list"
 
 
 #endif // __PLCORE_WINDOWS_H__

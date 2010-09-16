@@ -1,3 +1,9 @@
+>> 16.09.2010
+[CO]
+- "PLGeneralWindows.h" um MinGW Support erweitert
+
+
+
 >> 22.08.2010
 [CO]
 - Huch, die "FileWindows::CopyTo"-Implementation war fehlerhaft, die Windows Funktion "CopyFile" erwartet als zweiten Parameter,

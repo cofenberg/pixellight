@@ -35,13 +35,21 @@
 *  @brief
 *    Backups the current warning state for all warnings
 */
-#define PL_WARNING_PUSH __pragma(warning(push))
+#ifdef __MINGW32__
+	#define PL_WARNING_PUSH
+#else
+	#define PL_WARNING_PUSH __pragma(warning(push))
+#endif
 
 /**
 *  @brief
 *    Restores the last warning state pushed onto the stack
 */
-#define PL_WARNING_POP __pragma(warning(pop))
+#ifdef __MINGW32__
+	#define PL_WARNING_POP
+#else
+	#define PL_WARNING_POP __pragma(warning(pop))
+#endif
 
 /**
 *  @brief
@@ -50,21 +58,37 @@
 *  @param[in] WarningID
 *    ID of the warning to disable
 */
-#define PL_WARNING_DISABLE(WarningID) __pragma(warning(disable: WarningID))
+#ifdef __MINGW32__
+	#define PL_WARNING_DISABLE(WarningID)
+#else
+	#define PL_WARNING_DISABLE(WarningID) __pragma(warning(disable: WarningID))
+#endif
 
 
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    The 'NULL'-definition is for instance used to null a pointer
-*
-*  @note
-*    - Do NOT use this for 'virtual Test() = NULL', use 'virtual Test() = 0' instead!
-*/
-#ifndef NULL
-	#define NULL 0
+#ifdef __MINGW32__
+	#include <_mingw.h>	// For "__int8", "__int16" and so so definitions
+	// Within "_mingw.h", "__int32" is defined as "long" while PixelLight assumes "int", so, we change the definition
+	#define __int32 int
+	#include <stddef.h>	// For "size_t" and "NULL"
+#else
+	/**
+	*  @brief
+	*    The 'NULL'-definition is for instance used to null a pointer
+	*
+	*  @note
+	*    - Do NOT use this for 'virtual Test() = NULL', use 'virtual Test() = 0' instead!
+	*/
+	#ifndef NULL
+		#define NULL 0
+	#endif
+
+	// Below VC8 'wchar_t' is no native type, we need to add it
+	#if _MSC_VER < 1400
+		#include <wctype.h>
+	#endif
 #endif
 
 /**
@@ -142,15 +166,6 @@ namespace PLGeneral {
 
 
 }
-
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-// Below VC8 'wchar_t' is no native type, we need to add it
-#if _MSC_VER < 1400
-	#include <wctype.h>
-#endif
 
 
 #endif // __PLGENERAL_WINDOWS_H__
