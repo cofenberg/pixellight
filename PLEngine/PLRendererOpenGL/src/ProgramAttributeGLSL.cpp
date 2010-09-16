@@ -67,8 +67,8 @@ bool ProgramAttributeGLSL::Set(PLRenderer::VertexBuffer *pVertexBuffer, uint32 n
 		// Get the vertex buffer attribute
 		const PLRenderer::VertexBuffer::Attribute *pVertexAttribute = pVertexBuffer->GetVertexAttribute(nIndex);
 		if (pVertexAttribute) {
-			// Make the given vertex buffer to the current one
-			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->MakeCurrent(0);
+			// Bind and update the vertex buffer if required
+			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->BindAndUpdate();
 
 			// Create the connection between "vertex program attribute" and "vertex buffer attribute"
 			glVertexAttribPointerARB(m_nOpenGLAttributeLocation, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, GL_FALSE, pVertexBuffer->GetVertexSize(), (const void*)pVertexAttribute->nOffset);
@@ -95,8 +95,8 @@ bool ProgramAttributeGLSL::Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRender
 		// Get the vertex buffer attribute
 		const PLRenderer::VertexBuffer::Attribute *pVertexAttribute = pVertexBuffer->GetVertexAttribute(nSemantic, nChannel);
 		if (pVertexAttribute) {
-			// Make the given vertex buffer to the current one
-			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->MakeCurrent(0);
+			// Bind and update the vertex buffer if required
+			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->BindAndUpdate();
 
 			// Create the connection between "vertex program attribute" and "vertex buffer attribute"
 			glVertexAttribPointerARB(m_nOpenGLAttributeLocation, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, GL_FALSE, pVertexBuffer->GetVertexSize(), (const void*)pVertexAttribute->nOffset);

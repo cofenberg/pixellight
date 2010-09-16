@@ -1,3 +1,13 @@
+>> 17.09.2010
+[CO]
+PLRendererOpenGL:
+- "FixedFunctions::SetVertexBuffer()": Vertex Attribute werden nun nicht mehr in "VertexBuffer::MakeCurrent()" an z.B. "glNormalPointer" für Fixed Functions
+  Rendering übergeben, sondern in "FixedFunctions::SetVertexBuffer()" so das die (grausamen) Fixed Functions Dinge beisammen sind
+- "VertexBuffer::MakeCurrent()" durch "BindAndUpdate()" ersetzt - die neue Implementation ist *sehr* schlank, im Grunde nur "glBindBufferARB" und falls nötig
+  ein "glBufferSubDataARB" um die VBO Daten auf der GPU zu aktualisieren
+
+
+
 >> 07.09.2010
 [CO]
 PLRendererOpenGL:

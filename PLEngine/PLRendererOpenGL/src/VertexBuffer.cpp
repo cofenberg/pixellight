@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
 
@@ -53,186 +52,47 @@ VertexBuffer::~VertexBuffer()
 
 /**
 *  @brief
-*    Makes this vertex buffer to the renderers current vertex buffer
+*    Returns the OpenGL vertex buffer
 */
-bool VertexBuffer::MakeCurrent()
+uint32 VertexBuffer::GetOpenGLVertexBuffer() const
 {
-	return MakeCurrent(0);
+	return m_nVertexBuffer;
 }
 
 /**
 *  @brief
-*    Makes this vertex buffer to the renderers current vertex buffer
+*    Returns the dynamic buffer (none VBO)
 */
-bool VertexBuffer::MakeCurrent(uint32 nOffset)
+const uint8 *VertexBuffer::GetDynamicBuffer() const
 {
-	// Is there a vertex buffer?
-	if (!m_nVertexBuffer && !m_pData) return false; // Error!
+	return m_pData;
+}
 
-	// Setup buffer offset
-	const uint32 nBytesOffset = GetVertexSize()*nOffset; // Get the vertex offset in bytes
-	const uint8 *pData		  = m_nVertexBuffer ? NULL : m_pData;
-
-	// Define an offset helper macro just used inside this function
-	#define BUFFER_OFFSET(i) ((char*)pData+(i+nBytesOffset))
-
+/**
+*  @brief
+*    Binds and updates the vertex buffer if required
+*/
+bool VertexBuffer::BindAndUpdate()
+{
 	// Bind the vertex buffer
-	if (m_nVertexBuffer) {
+	if (m_nVertexBuffer)
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB, m_nVertexBuffer);
-	}
 
 	// Do we need to update the VBO?
 	if (m_bUpdateVBO && m_pData) {
-		m_bUpdateVBO = false;
-
 		// Upload new data
 		if (m_nVertexBuffer)
 			glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, m_nSize, m_pData);
+
+		// The data is now up-to-date
+		m_bUpdateVBO = false;
+
+		// An update was performed
+		return true;
 	}
 
-	// Set vertex elements
-	for (uint32 i=0; i<m_lstVertexAttributes.GetNumOfElements(); i++) {
-		// Get vertex attribute
-		const Attribute &cAttribute = *m_lstVertexAttributes[i];
-
-		// Set declaration
-		switch (cAttribute.nSemantic) {
-			case Position: // Positions
-				glVertexPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-				glEnableClientState(GL_VERTEX_ARRAY);
-				break;
-
-			case BlendWeight: // Blend weights
-				if (((Renderer&)GetRenderer()).IsGL_ARB_vertex_program()) {
-					glVertexAttribPointerARB(
-						1,								// Weights are vertex attribute 1
-						cAttribute.nComponentsAPI,
-						cAttribute.nTypeAPI,
-						GL_FALSE,						// Normalisation disabled
-						m_nVertexSize,
-						BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableVertexAttribArrayARB(1);
-				}
-				break;
-
-			case Normal: // Normals
-				glNormalPointer(cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-				glEnableClientState(GL_NORMAL_ARRAY);
-				break;
-
-			case Color: // Colors
-				if (cAttribute.nChannel) {
-					if (((Renderer&)GetRenderer()).IsGL_EXT_secondary_color()) {
-						glSecondaryColorPointerEXT(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-						glEnableClientState(GL_SECONDARY_COLOR_ARRAY);
-					}
-				} else {
-					glColorPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableClientState(GL_COLOR_ARRAY);
-				}
-				break;
-
-			case FogCoord: // Fog coordinates
-				if (((Renderer&)GetRenderer()).IsGL_ARB_vertex_program()) {
-					glVertexAttribPointerARB(
-						5,								// Fog coordinates are vertex attribute 5
-						cAttribute.nComponentsAPI,
-						cAttribute.nTypeAPI,
-						GL_FALSE,						// Normalisation disabled
-						m_nVertexSize,
-						BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableVertexAttribArrayARB(5);
-
-				// Hm, no vertex program extension - try to use the fog coordinate extension instead (type MUST be Float1!)
-				} else if (((Renderer&)GetRenderer()).IsGL_EXT_fog_coord() && cAttribute.nTypeAPI == Float1) {
-					glFogCoordPointerEXT(cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableClientState(GL_FOG_COORDINATE_ARRAY_EXT);
-				}
-				break;
-
-			case PSize: // Point sprite sizes
-				if (((Renderer&)GetRenderer()).IsGL_ARB_vertex_program()) {
-					glVertexAttribPointerARB(
-						6,								// Point sprite size are vertex attribute 6
-						cAttribute.nComponentsAPI,
-						cAttribute.nTypeAPI,
-						GL_FALSE,						// Normalisation disabled
-						m_nVertexSize,
-						BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableVertexAttribArrayARB(6);
-				}
-				break;
-
-			case BlendIndices: // Blend indices
-				if (((Renderer&)GetRenderer()).IsGL_ARB_vertex_program()) {
-					glVertexAttribPointerARB(
-						7,								// Matrix indices are vertex attribute 7
-						cAttribute.nComponentsAPI,
-						cAttribute.nTypeAPI,
-						GL_FALSE,						// Normalisation disabled
-						m_nVertexSize,
-						BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableVertexAttribArrayARB(7);
-				}
-				break;
-
-			case TexCoord: // Texture coordinates
-			{
-				// Set texture coordinate layer
-				uint32 nChannel			  = cAttribute.nChannel;
-				uint32 nNumOfTextureUnits = GetRenderer().GetCapabilities().nMaxTextureUnits;
-				if (nChannel < nNumOfTextureUnits) {
-					if (!cAttribute.nChannel) {
-						for (uint32 j=0; j<nNumOfTextureUnits; j++) {
-							if (glClientActiveTextureARB)
-								glClientActiveTextureARB(GL_TEXTURE0_ARB+j);
-							glTexCoordPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-							glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-						}
-					} else {
-						uint32 j = cAttribute.nChannel;
-						if (glClientActiveTextureARB)
-							glClientActiveTextureARB(GL_TEXTURE0_ARB+j);
-						glTexCoordPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, m_nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
-						glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-					}
-				}
-				break;
-			}
-
-			case Tangent: // Tangents
-				if (((Renderer&)GetRenderer()).IsGL_ARB_vertex_program()) {
-					glVertexAttribPointerARB(
-						14,								// Tangent are vertex attribute 14
-						cAttribute.nComponentsAPI,
-						cAttribute.nTypeAPI,
-						GL_FALSE,						// Normalisation disabled
-						m_nVertexSize,
-						BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableVertexAttribArrayARB(14);
-				}
-				break;
-
-			case Binormal: // Binormals
-				if (((Renderer&)GetRenderer()).IsGL_ARB_vertex_program()) {
-					glVertexAttribPointerARB(
-						15,								// Binormal are vertex attribute 15
-						cAttribute.nComponentsAPI,
-						cAttribute.nTypeAPI,
-						GL_FALSE,						// Normalisation disabled
-						m_nVertexSize,
-						BUFFER_OFFSET(cAttribute.nOffset));
-					glEnableVertexAttribArrayARB(15);
-				}
-				break;
-		}
-	}
-
-	// Undefine your offset helper macro because its just used inside this function
-	#undef BUFFER_OFFSET
-
-	// Done
-	return true;
+	// No update was performed
+	return false;
 }
 
 
@@ -561,8 +421,8 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 	if (m_pData) m_pLockedData = m_pData;
 	else if (m_nVertexBuffer) {
-		// Make this vertex buffer to the current one
-		MakeCurrent(0);
+		// Bind and update the vertex buffer if required
+		BindAndUpdate();
 
 		// Map
 		m_pLockedData = glMapBufferARB(GL_ARRAY_BUFFER_ARB, nFlagAPI);
@@ -595,8 +455,8 @@ bool VertexBuffer::Unlock()
 			m_bUpdateVBO = true;
 	} else {
 		if (m_nVertexBuffer) {
-			// Make this vertex buffer to the current one
-			MakeCurrent(0);
+			// Bind and update the vertex buffer if required
+			BindAndUpdate();
 
 			// Unmap
 			glUnmapBufferARB(GL_ARRAY_BUFFER_ARB);

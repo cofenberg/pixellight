@@ -1350,15 +1350,158 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 
 	// Should an vertex buffer be set?
 	if (pVertexBuffer) {
-		// Yes, make it current
-		if (!((VertexBuffer*)pVertexBuffer)->MakeCurrent(nOffset)) {
-			// Now no vertex buffer is set...
-			m_nVertexBufferOffsets[nStreamNumber] = 0;
-			m_ppCurrentVertexBuffer[nStreamNumber] = NULL;
+		VertexBuffer *pVertexBufferOpenGL = (VertexBuffer*)pVertexBuffer;
 
-			// Error!
-			return false;
+		// Bind and update the vertex buffer if required
+		pVertexBufferOpenGL->BindAndUpdate();
+
+		// Setup buffer offset
+		const uint32 nVertexSize  = pVertexBufferOpenGL->GetVertexSize();
+		const uint32 nBytesOffset = nVertexSize*nOffset; // Get the vertex offset in bytes
+		const uint8 *pData		  = pVertexBufferOpenGL->GetOpenGLVertexBuffer() ? NULL : pVertexBufferOpenGL->GetDynamicBuffer();
+
+		// Define an offset helper macro just used inside this function
+		#define BUFFER_OFFSET(i) ((char*)pData+(i+nBytesOffset))
+
+		// Set vertex elements
+		for (uint32 i=0; i<pVertexBufferOpenGL->GetNumOfVertexAttributes(); i++) {
+			// Get vertex attribute
+			const VertexBuffer::Attribute &cAttribute = *pVertexBufferOpenGL->GetVertexAttribute(i);
+
+			// Set declaration
+			switch (cAttribute.nSemantic) {
+				case VertexBuffer::Position: // Positions
+					glVertexPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+					glEnableClientState(GL_VERTEX_ARRAY);
+					break;
+
+				case VertexBuffer::BlendWeight: // Blend weights
+					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+						glVertexAttribPointerARB(
+							1,								// Weights are vertex attribute 1
+							cAttribute.nComponentsAPI,
+							cAttribute.nTypeAPI,
+							GL_FALSE,						// Normalisation disabled
+							nVertexSize,
+							BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableVertexAttribArrayARB(1);
+					}
+					break;
+
+				case VertexBuffer::Normal: // Normals
+					glNormalPointer(cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+					glEnableClientState(GL_NORMAL_ARRAY);
+					break;
+
+				case VertexBuffer::Color: // Colors
+					if (cAttribute.nChannel) {
+						if (m_pRendererOpenGL->IsGL_EXT_secondary_color()) {
+							glSecondaryColorPointerEXT(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+							glEnableClientState(GL_SECONDARY_COLOR_ARRAY);
+						}
+					} else {
+						glColorPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableClientState(GL_COLOR_ARRAY);
+					}
+					break;
+
+				case VertexBuffer::FogCoord: // Fog coordinates
+					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+						glVertexAttribPointerARB(
+							5,								// Fog coordinates are vertex attribute 5
+							cAttribute.nComponentsAPI,
+							cAttribute.nTypeAPI,
+							GL_FALSE,						// Normalisation disabled
+							nVertexSize,
+							BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableVertexAttribArrayARB(5);
+
+					// Hm, no vertex program extension - try to use the fog coordinate extension instead (type MUST be Float1!)
+					} else if (m_pRendererOpenGL->IsGL_EXT_fog_coord() && cAttribute.nTypeAPI == VertexBuffer::Float1) {
+						glFogCoordPointerEXT(cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableClientState(GL_FOG_COORDINATE_ARRAY_EXT);
+					}
+					break;
+
+				case VertexBuffer::PSize: // Point sprite sizes
+					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+						glVertexAttribPointerARB(
+							6,								// Point sprite size are vertex attribute 6
+							cAttribute.nComponentsAPI,
+							cAttribute.nTypeAPI,
+							GL_FALSE,						// Normalisation disabled
+							nVertexSize,
+							BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableVertexAttribArrayARB(6);
+					}
+					break;
+
+				case VertexBuffer::BlendIndices: // Blend indices
+					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+						glVertexAttribPointerARB(
+							7,								// Matrix indices are vertex attribute 7
+							cAttribute.nComponentsAPI,
+							cAttribute.nTypeAPI,
+							GL_FALSE,						// Normalisation disabled
+							nVertexSize,
+							BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableVertexAttribArrayARB(7);
+					}
+					break;
+
+				case VertexBuffer::TexCoord: // Texture coordinates
+				{
+					// Set texture coordinate layer
+					const uint32 nChannel			= cAttribute.nChannel;
+					const uint32 nNumOfTextureUnits = m_pRendererOpenGL->GetCapabilities().nMaxTextureUnits;
+					if (nChannel < nNumOfTextureUnits) {
+						if (!cAttribute.nChannel) {
+							for (uint32 j=0; j<nNumOfTextureUnits; j++) {
+								if (glClientActiveTextureARB)
+									glClientActiveTextureARB(GL_TEXTURE0_ARB+j);
+								glTexCoordPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+								glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+							}
+						} else {
+							if (glClientActiveTextureARB)
+								glClientActiveTextureARB(GL_TEXTURE0_ARB+cAttribute.nChannel);
+							glTexCoordPointer(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
+							glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+						}
+					}
+					break;
+				}
+
+				case VertexBuffer::Tangent: // Tangents
+					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+						glVertexAttribPointerARB(
+							14,								// Tangent are vertex attribute 14
+							cAttribute.nComponentsAPI,
+							cAttribute.nTypeAPI,
+							GL_FALSE,						// Normalisation disabled
+							nVertexSize,
+							BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableVertexAttribArrayARB(14);
+					}
+					break;
+
+				case VertexBuffer::Binormal: // Binormals
+					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+						glVertexAttribPointerARB(
+							15,								// Binormal are vertex attribute 15
+							cAttribute.nComponentsAPI,
+							cAttribute.nTypeAPI,
+							GL_FALSE,						// Normalisation disabled
+							nVertexSize,
+							BUFFER_OFFSET(cAttribute.nOffset));
+						glEnableVertexAttribArrayARB(15);
+					}
+					break;
+			}
 		}
+
+		// Undefine your offset helper macro because its just used inside this function
+		#undef BUFFER_OFFSET
 	}
 
 	// Done

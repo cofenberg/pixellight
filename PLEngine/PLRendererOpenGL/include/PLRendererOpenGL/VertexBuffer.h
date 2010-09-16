@@ -65,30 +65,33 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 
 		/**
 		*  @brief
-		*    Makes this vertex buffer to the renderers current vertex buffer
+		*    Returns the OpenGL vertex buffer
 		*
 		*  @return
-		*    'true' if all went fine, else 'false'
-		*
-		*  @note
-		*    - This function is used by the renderer when SetVertexBuffer() was called
+		*    OpenGL vertex buffer
 		*/
-		bool MakeCurrent();
+		PLGeneral::uint32 GetOpenGLVertexBuffer() const;
 
 		/**
 		*  @brief
-		*    Makes this vertex buffer to the renderers current vertex buffer
-		*
-		*  @param[in] nOffset
-		*    Vertex offset
+		*    Returns the dynamic buffer (none VBO)
 		*
 		*  @return
-		*    'true' if all went fine, else 'false'
+		*    The dynamic buffer, can be NULL
+		*/
+		const PLGeneral::uint8 *GetDynamicBuffer() const;
+
+		/**
+		*  @brief
+		*    Binds and updates the vertex buffer if required
+		*
+		*  @return
+		*    'true' if an update was performed, else 'false' if everything was already up-to-date
 		*
 		*  @note
-		*    - This function is used by the renderer when SetVertexBuffer() was called
+		*    - Should be called before the vertex buffer is used for rendering to ensure that the data on the GPU side is up-to-date
 		*/
-		bool MakeCurrent(PLGeneral::uint32 nOffset = 0);
+		bool BindAndUpdate();
 
 
 	//[-------------------------------------------------------]

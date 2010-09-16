@@ -55,29 +55,29 @@ VertexBuffer::~VertexBuffer()
 
 /**
 *  @brief
-*    Makes this vertex buffer to the renderers current vertex buffer
+*    Binds and updates the vertex buffer if required
 */
-bool VertexBuffer::MakeCurrent()
+bool VertexBuffer::BindAndUpdate()
 {
-	// Is there a vertex buffer?
-	if (!m_nVertexBuffer && !m_pData)
-		return false; // Error!
-
 	// Bind the vertex buffer
 	if (m_nVertexBuffer)
 		glBindBuffer(GL_ARRAY_BUFFER, m_nVertexBuffer);
 
 	// Do we need to update the VBO?
 	if (m_bUpdateVBO && m_pData) {
-		m_bUpdateVBO = false;
-
 		// Upload new data
 		if (m_nVertexBuffer)
 			glBufferSubData(GL_ARRAY_BUFFER, 0, m_nSize, m_pData);
+
+		// The data is now up-to-date
+		m_bUpdateVBO = false;
+
+		// An update was performed
+		return true;
 	}
 
-	// Done
-	return true;
+	// No update was performed
+	return false;
 }
 
 
@@ -411,8 +411,8 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	if (m_pData)
 		m_pLockedData = m_pData;
 	else if (m_nVertexBuffer) {
-		// Make this vertex buffer to the current one
-		MakeCurrent();
+		// Bind and update the vertex buffer if required
+		BindAndUpdate();
 
 		// Get API dependent flag
 		uint32 nFlagAPI;
@@ -456,8 +456,8 @@ bool VertexBuffer::Unlock()
 			m_bUpdateVBO = true;
 	} else {
 		if (m_nVertexBuffer) {
-			// Make this vertex buffer to the current one
-			MakeCurrent();
+			// Bind and update the vertex buffer if required
+			BindAndUpdate();
 
 			// [TODO] GL_OES_mapbuffer
 			// Unmap

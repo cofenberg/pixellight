@@ -65,15 +65,15 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 
 		/**
 		*  @brief
-		*    Makes this vertex buffer to the renderers current vertex buffer
+		*    Binds and updates the vertex buffer if required
 		*
 		*  @return
-		*    'true' if all went fine, else 'false'
+		*    'true' if an update was performed, else 'false' if everything was already up-to-date
 		*
 		*  @note
-		*    - Makes the OpenGL ES vertex buffer to the current one and updates it's content if required
+		*    - Should be called before the vertex buffer is used for rendering to ensure that the data on the GPU side is up-to-date
 		*/
-		bool MakeCurrent();
+		bool BindAndUpdate();
 
 
 	//[-------------------------------------------------------]
