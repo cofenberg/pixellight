@@ -33,6 +33,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class VertexBuffer;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLMesh {
@@ -80,6 +88,28 @@ class MeshCreatorCube : public MeshCreator {
 		*    Destructor
 		*/
 		PLMESH_API virtual ~MeshCreatorCube();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Sets the four normal vectors of a cube side
+		*
+		*  @param[in] cVertexBuffer
+		*    Vertex buffer to use
+		*  @param[in] nSide
+		*    Cube side
+		*  @param[in] fX
+		*    X component of the normal vector
+		*  @param[in] fY
+		*    Y component of the normal vector
+		*  @param[in] fZ
+		*    Z component of the normal vector
+		*/
+		void SetNormals(PLRenderer::VertexBuffer &cVertexBuffer, PLGeneral::uint32 nSide, float fX, float fY, float fZ) const;
 
 
 	//[-------------------------------------------------------]

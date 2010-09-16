@@ -1,3 +1,9 @@
+>> 16.09.2010
+[CO]
+- MeshCreatorCube: Support für Normal Vektoren hinzugefügt
+
+
+
 >> 30.07.2010
 [CO]
 - MeshLoaderPLXml kann nun genauso viel wie MeshLoaderPL

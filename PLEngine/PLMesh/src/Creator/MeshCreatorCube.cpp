@@ -74,6 +74,25 @@ MeshCreatorCube::~MeshCreatorCube()
 
 
 //[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Sets the four normal vectors of a cube side
+*/
+void MeshCreatorCube::SetNormals(VertexBuffer &cVertexBuffer, uint32 nSide, float fX, float fY, float fZ) const
+{
+	// Set the normal vector of each corner vertex
+	for (uint32 i=0; i<4; i++) {
+		float *pfVertices = (float*)cVertexBuffer.GetData(i + nSide*4, VertexBuffer::Normal);
+		pfVertices[Vector3::X] = fX;
+		pfVertices[Vector3::Y] = fY;
+		pfVertices[Vector3::Z] = fZ;
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual MeshCreator functions                 ]
 //[-------------------------------------------------------]
 Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
@@ -89,10 +108,13 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 	MeshMorphTarget *pMorphTarget = cMesh.GetMorphTarget(0);
 	if (pMorphTarget && pMorphTarget->GetVertexBuffer()) {
 		VertexBuffer *pVertexBuffer = pMorphTarget->GetVertexBuffer();
-		if (TexCoords) {
+		if (TexCoords || Normals) {
 			// Allocate data
 			pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
-			pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+			if (TexCoords)
+				pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+			if (Normals)
+				pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal, 0, VertexBuffer::Float3);
 			pVertexBuffer->Allocate(24, bStatic ? Usage::Static : Usage::Dynamic);
 			if (pVertexBuffer->Lock(Lock::WriteOnly)) { // Setup vertices
 			// x-positive (0)
@@ -246,29 +268,8 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// Setup texture coordinates
-				for (int nSide=0; nSide<6; nSide++) {
-					// [TODO] Check me
-	/*				if (nSide == 1) {
-						// 0
-						pfVertices = (float*)pVertexBuffer->GetData(0+nSide*4, VertexBuffer::TexCoord);
-						pfVertices[Vector2::X] = 1.0f;
-						pfVertices[Vector2::Y] = 1.0f;
-
-						// 1
-						pfVertices = (float*)pVertexBuffer->GetData(1+nSide*4, VertexBuffer::TexCoord);
-						pfVertices[Vector2::X] = 0.0f;
-						pfVertices[Vector2::Y] = 1.0f;
-
-						// 2
-						pfVertices = (float*)pVertexBuffer->GetData(2+nSide*4, VertexBuffer::TexCoord);
-						pfVertices[Vector2::X] = 0.0f;
-						pfVertices[Vector2::Y] = 0.0f;
-
-						// 3
-						pfVertices = (float*)pVertexBuffer->GetData(3+nSide*4, VertexBuffer::TexCoord);
-						pfVertices[Vector2::X] = 1.0f;
-						pfVertices[Vector2::Y] = 0.0f;
-					} else {*/
+				if (TexCoords) {
+					for (int nSide=0; nSide<6; nSide++) {
 						// 0
 						pfVertices = (float*)pVertexBuffer->GetData(0+nSide*4, VertexBuffer::TexCoord);
 						pfVertices[Vector2::X] = 1.0f;
@@ -288,7 +289,28 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 						pfVertices = (float*)pVertexBuffer->GetData(3+nSide*4, VertexBuffer::TexCoord);
 						pfVertices[Vector2::X] = 1.0f;
 						pfVertices[Vector2::Y] = 1.0f;
-			//		}
+					}
+				}
+
+				// Setup normal vectors
+				if (Normals) {
+					// x-positive (0)
+					SetNormals(*pVertexBuffer, 0, 1.0f, 0.0f, 0.0f);
+
+					// x-negative (1)
+					SetNormals(*pVertexBuffer, 1, -1.0f, 0.0f, 0.0f);
+
+					// y-positive (2)
+					SetNormals(*pVertexBuffer, 2, 0.0f, 1.0f, 0.0f);
+
+					// y-negative (3)
+					SetNormals(*pVertexBuffer, 3, 0.0f, -1.0f, 0.0f);
+
+					// z-positive (4)
+					SetNormals(*pVertexBuffer, 4, 0.0f, 0.0f, 1.0f);
+
+					// z-negative (5)
+					SetNormals(*pVertexBuffer, 5, 0.0f, 0.0f, -1.0f);
 				}
 
 				// Unlock the vertex buffer
@@ -478,10 +500,6 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 			}
 		}
 	}
-
-	// [TODO] Checkme
-//	if (Normals)
-//		cMesh.CalculateNormals();
 
 	// Return the created mesh
 	return &cMesh;
