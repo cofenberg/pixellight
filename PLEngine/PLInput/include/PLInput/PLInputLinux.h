@@ -43,31 +43,23 @@
 		// To export explicit template instanciations
 		#define PLINPUT_TEMPLATE
 	#endif
-
-	// To export RTTI elements
-//	#define PLINPUT_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLINPUT_API
 
 	// To import explicit template instanciations
 	#define PLINPUT_TEMPLATE extern
-
-	// To import RTTI elements
-//	#define PLINPUT_RTTI_EXPORT 0
 #endif
 
 #ifdef HAVE_VISIBILITY_ATTR
-		// To import/export class templates
-		#define PLINPUT_TMPL __attribute__ ((visibility("default")))
+	// To import/export class templates
+	#define PLINPUT_TMPL __attribute__ ((visibility("default")))
 #else
-		// To import/export class templates
-		#define PLINPUT_TMPL
+	// To import/export class templates
+	#define PLINPUT_TMPL
 #endif
 
-
-// [DEBUG] Linux
-// To export RTTI elements
+// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLINPUT_RTTI_EXPORT 1
 
 

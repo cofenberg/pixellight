@@ -40,23 +40,15 @@
 
 	// To export explicit template instanciations
 	#define PL_TEMPLATE
-
-	// To export RTTI elements
-//	#define PL_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PL_API
 
 	// To import explicit template instanciations
 	#define PL_TEMPLATE extern
-
-	// To import RTTI elements
-//	#define PL_RTTI_EXPORT 0
 #endif
 
-
-// [DEBUG] Linux
-// To export RTTI elements
+// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PL_RTTI_EXPORT 1
 
 

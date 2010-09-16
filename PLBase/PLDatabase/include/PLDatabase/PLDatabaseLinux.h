@@ -37,20 +37,12 @@
 		// To export classes, methods and variables
 		#define PLDATABASE_API
 	#endif
-
-	// To export RTTI elements
-//	#define PLDATABASE_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLDATABASE_API
-
-	// To import RTTI elements
-//	#define PLDATABASE_RTTI_EXPORT 0
 #endif
 
-
-// [DEBUG] Linux
-// To export RTTI elements
+// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLDATABASE_RTTI_EXPORT 1
 
 

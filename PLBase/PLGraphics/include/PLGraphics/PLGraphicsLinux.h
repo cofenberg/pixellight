@@ -37,21 +37,12 @@
 		// To export classes, methods and variables
 		#define PLGRAPHICS_API
 	#endif
-
-	// To export RTTI elements
-//	#define PLGRAPHICS_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLGRAPHICS_API
-
-
-	// To import RTTI elements
-//	#define PLGRAPHICS_RTTI_EXPORT 0
 #endif
 
-
-// [DEBUG] Linux
-// To export RTTI elements
+// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLGRAPHICS_RTTI_EXPORT 1
 
 
