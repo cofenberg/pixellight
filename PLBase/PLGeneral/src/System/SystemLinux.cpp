@@ -23,25 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-// [TODO] Remove unused headers
 #include <pwd.h>
 #include <time.h>
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <locale.h>
-#include <term.h>
-#include <termios.h>
-#include <curses.h>
-#include <stropts.h>
-#include <sys/ioctl.h>
 #include <sys/time.h>
-#include <sys/param.h>
-#include <sys/select.h>
 #include "PLGeneral/String/RegEx.h"
 #include "PLGeneral/File/File.h"
-#include "PLGeneral/File/Url.h"
 #include "PLGeneral/System/SystemLinux.h"
 
 

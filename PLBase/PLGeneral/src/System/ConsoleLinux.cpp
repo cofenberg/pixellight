@@ -23,24 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-// [TODO] Remove unused headers
-#include <pwd.h>
-#include <time.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <locale.h>
 #include <term.h>
-#include <termios.h>
-#include <curses.h>
-#include <stropts.h>
 #include <sys/ioctl.h>
-#include <sys/time.h>
-#include <sys/param.h>
-#include <sys/select.h>
 #include "PLGeneral/File/File.h"
-#include "PLGeneral/File/Url.h"
 #include "PLGeneral/System/ConsoleLinux.h"
 
 
@@ -111,7 +97,7 @@ void ConsoleLinux::ClearScreen() const
 	setupterm(NULL, 1, NULL);
 	putp(clear_screen); 
 
-	// Use ANSI-sequences to achieve the job
+	// Another solution: Use ANSI-sequences to achieve the job
 //	printf("\033[H\033[J");
 //	fflush(stdout);
 }
@@ -137,7 +123,7 @@ void ConsoleLinux::SetCursorPosition(uint16 nX, uint16 nY) const
 	setupterm(NULL, 1, NULL);
 	putp(tparm(cursor_address, nY, nX));
 
-	// Use ANSI-sequences to achieve the job
+	// Another solution: Use ANSI-sequences to achieve the job
 //	printf("\033[%d;%dH", nX, nY);
 //	fflush(stdout);
 }
