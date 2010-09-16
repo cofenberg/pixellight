@@ -126,7 +126,7 @@ namespace PLCompositing {
 *  @endverbatim
 *
 *  @note
-*    - Normal map compression using swizzled DXT5 (xGxR) and alternate XY swizzle LATC2 is supported
+*    - Normal map compression using swizzled DXT5 (xGxR), LATC2 and alternate XY swizzle LATC2 is supported
 *    - If there's an SRPDirectionalLighting instance, "SRPDirectionalLighting::GetUsedLight()" will be called to ask for
 *      an already drawn directional light source (*the primary light source*)... if such a light exists, this scene renderer
 *      pass automatically skipts the light rendering so that this light source is not rendered twice!

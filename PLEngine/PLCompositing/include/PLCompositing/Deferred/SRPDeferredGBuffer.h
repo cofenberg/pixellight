@@ -149,7 +149,7 @@ namespace PLCompositing {
 *  @note
 *    - Geometry/attributes stage
 *    - Another known name "fat frame buffer"
-*    - Normal map compression using swizzled DXT5 (xGxR) and alternate XY swizzle LATC2 is supported
+*    - Normal map compression using swizzled DXT5 (xGxR), LATC2 and alternate XY swizzle LATC2 is supported
 *    - By default, this scene renderer pass writes into the stencil buffer whether or not a pixel has valid content.
 *      1 within the stencil buffer means: The GBuffer has no information about the pixel because no geometry is covering it.
 */
