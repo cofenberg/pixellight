@@ -20,16 +20,35 @@
 \*********************************************************/
 
 
-const static char *pszHDRLightAdaptation_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sHDRLightAdaptation_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float2 VertexPosition : POSITION)	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+// Cg fragment shader source code
+static const PLGeneral::String sHDRLightAdaptation_Cg_FS = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR0;\n\
 };\n\
 \n\
 // Main function\n\
@@ -45,8 +64,8 @@ FS_OUTPUT main(VS_OUTPUT		 IN					// Interpolated output from the vertex stage\n
 	float currentAverageLuminance = tex2D(CurrentTexture,  float2(0.5f, 0.5f)).r;\n\
 \n\
 	// Adapt the luminance using Pattanaik's technique\n\
-	OUT.color = lerp(previouAverageLuminance, currentAverageLuminance, Factor);\n\
+	OUT.Color0 = lerp(previouAverageLuminance, currentAverageLuminance, Factor);\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

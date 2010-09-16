@@ -2889,10 +2889,6 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 //[-------------------------------------------------------]
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
-	// Vertex buffer correct?
-	// [TODO] Remove this
-//	if (!m_ppCurrentVertexBuffer[0]) return false; // Error!
-
 	// Draw something?
 	if (!nNumVertices) return true; // Done
 
@@ -2905,7 +2901,7 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
 		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
 		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:									return false; // Error!
+		default:								   return false; // Error!
 	}
 
 	// Update statistics
@@ -2956,8 +2952,6 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 {
 	// Index and vertex buffer correct?
 	if (!m_pCurrentIndexBuffer) return false; // Error!
-	// [TODO] Remove this
-//	if (!m_pCurrentIndexBuffer || !m_ppCurrentVertexBuffer[0]) return false; // Error!
 
 	// Draw something?
 	if (!nNumVertices) return true; // Done

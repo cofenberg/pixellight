@@ -630,6 +630,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\HDR\HDRLightAdaptation_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\HDR\SRPEndHDR.cpp"
 				>
 			</File>

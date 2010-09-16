@@ -1,3 +1,10 @@
+>> 16.09.2010
+[CO]
+PLCompositing:
+- HDRLightAdaptation verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
+
+
+
 >> 07.09.2010
 [CO]
 PLCompositing:

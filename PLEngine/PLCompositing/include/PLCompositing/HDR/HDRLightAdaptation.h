@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -36,8 +35,13 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
+	class Program;
+	class VertexShader;
 	class TextureBuffer;
+	class ProgramUniform;
+	class FragmentShader;
 	class TextureBuffer2D;
+	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
@@ -88,6 +92,8 @@ class HDRLightAdaptation {
 		*  @brief
 		*    Calculates the light adaptation
 		*
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used, don't change the shader language on each call (performance!)
 		*  @param[in] cAverageLuminanceTextureBuffer2D
 		*    Current average luminance texture buffer
 		*  @param[in] fTauTimeDifference
@@ -96,7 +102,7 @@ class HDRLightAdaptation {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		PLCOM_API void CalculateLightAdaptation(PLRenderer::TextureBuffer &cAverageLuminanceTextureBuffer2D, float fTauTimeDifference);
+		PLCOM_API void CalculateLightAdaptation(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBuffer &cAverageLuminanceTextureBuffer2D, float fTauTimeDifference);
 
 		/**
 		*  @brief
@@ -112,27 +118,18 @@ class HDRLightAdaptation {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Returns the fragment shader
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetFragmentShader();
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer			 *m_pRenderer;							/**< Renderer to use, always valid! */
 		PLScene::FullscreenQuad			 *m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
-		bool							  m_bFragmentShader;					/**< Fragment shader build? */
-		PLRenderer::ShaderHandler		  m_cFragmentShader;					/**< Fragment shader mode */
+		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be NULL */
+		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute */
+		PLRenderer::ProgramUniform		 *m_pFactorProgramUniform;				/**< Factor program uniform */
+		PLRenderer::ProgramUniform		 *m_pPreviousTextureProgramUniform;		/**< Previous texture program uniform */
+		PLRenderer::ProgramUniform		 *m_pCurrentTextureProgramUniform;		/**< Current texture program uniform */
 		PLRenderer::SurfaceTextureBuffer *m_pLightAdaptationTextureBuffer2D[2];	/**< 1x1 2D texture buffer storing the previous and current light adaptation */
 		bool							  m_bPreviousIndex;						/**< Index of the previous 2D light adaptation texture buffer */
 

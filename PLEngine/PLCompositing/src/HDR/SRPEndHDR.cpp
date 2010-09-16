@@ -188,7 +188,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							// [TODO] Would be nice if the "previous" data would not be stored in the scene renderer pass instance...
 							if (!m_pHDRLightAdaptation)
 								m_pHDRLightAdaptation = new HDRLightAdaptation(cRenderer);
-							m_pHDRLightAdaptation->CalculateLightAdaptation(*m_pHDRAverageLuminance->GetTextureBuffer(), Timing::GetInstance()->GetTimeDifference()*Tau);
+							m_pHDRLightAdaptation->CalculateLightAdaptation(sShaderLanguage, *m_pHDRAverageLuminance->GetTextureBuffer(), Timing::GetInstance()->GetTimeDifference()*Tau);
 							pHDRAverageLuminanceTextureBuffer = m_pHDRLightAdaptation->GetTextureBuffer();
 						} else {
 							pHDRAverageLuminanceTextureBuffer = m_pHDRAverageLuminance->GetTextureBuffer();
