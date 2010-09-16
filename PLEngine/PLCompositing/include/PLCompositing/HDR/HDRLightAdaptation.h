@@ -118,6 +118,27 @@ class HDRLightAdaptation {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when a program became dirty
+		*
+		*  @param[in] pProgram
+		*    Program which became dirty
+		*/
+		void OnDirty(PLRenderer::Program *pProgram);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> EventHandlerDirty;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:

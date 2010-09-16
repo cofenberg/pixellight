@@ -207,7 +207,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 													 LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale);
 
 						// Show bloom texture (for debugging)
-						if ((GetFlags() & ShowBloomTexture)) {
+						if (GetFlags() & ShowBloomTexture) {
 							bToneMapping			   = false;
 							bAutomaticAverageLuminance = false;
 							bLightAdaptation		   = false;

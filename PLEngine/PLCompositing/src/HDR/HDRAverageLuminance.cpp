@@ -56,6 +56,7 @@ namespace PLCompositing {
 *    Constructor
 */
 HDRAverageLuminance::HDRAverageLuminance(Renderer &cRenderer) :
+	EventHandlerDirty(&HDRAverageLuminance::OnDirty, this),
 	m_pRenderer(&cRenderer),
 	m_pFullscreenQuad(NULL),
 	m_pVertexShader(NULL),
@@ -174,6 +175,18 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			delete m_pVertexShader;
 			m_pVertexShader = NULL;
 		}
+		m_pDownsampleLogPositionProgramAttribute		= NULL;
+		m_pDownsampleLogTextureSizeProgramUniform		= NULL;
+		m_pDownsampleLogTextureProgramUniform			= NULL;
+		m_pDownsampleLogLuminanceConvertProgramUniform	= NULL;
+		m_pDownsampleLogEpsilonProgramUniform			= NULL;
+		m_pDownsamplePositionProgramAttribute			= NULL;
+		m_pDownsampleTextureSizeProgramUniform			= NULL;
+		m_pDownsampleSizeProgramUniform					= NULL;
+		m_pDownsampleTextureProgramUniform				= NULL;
+		m_pDownsampleExpPositionProgramAttribute		= NULL;
+		m_pDownsampleExpTextureSizeProgramUniform		= NULL;
+		m_pDownsampleExpTextureProgramUniform			= NULL;
 
 		// Shader source code
 		String sVertexShaderSourceCode;
@@ -233,12 +246,11 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			m_pDownsampleLogProgram->SetVertexShader(m_pVertexShader);
 			m_pDownsampleLogProgram->SetFragmentShader(m_pDownsampleLogFragmentShader);
 
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pDownsampleLogProgram->EventDirty.Connect(&EventHandlerDirty);
+
 			// Get attributes and uniforms
-			m_pDownsampleLogPositionProgramAttribute	   = m_pDownsampleLogProgram->GetAttribute("VertexPosition");
-			m_pDownsampleLogTextureSizeProgramUniform	   = m_pDownsampleLogProgram->GetUniform("TextureSize");
-			m_pDownsampleLogTextureProgramUniform		   = m_pDownsampleLogProgram->GetUniform("Texture");
-			m_pDownsampleLogLuminanceConvertProgramUniform = m_pDownsampleLogProgram->GetUniform("LuminanceConvert");
-			m_pDownsampleLogEpsilonProgramUniform		   = m_pDownsampleLogProgram->GetUniform("Epsilon");
+			OnDirty(m_pDownsampleLogProgram);
 		}
 		m_pDownsampleProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
 		if (m_pDownsampleProgram) {
@@ -246,11 +258,11 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			m_pDownsampleProgram->SetVertexShader(m_pDownsampleVertexShader);
 			m_pDownsampleProgram->SetFragmentShader(m_pDownsampleFragmentShader);
 
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pDownsampleProgram->EventDirty.Connect(&EventHandlerDirty);
+
 			// Get attributes and uniforms
-			m_pDownsamplePositionProgramAttribute  = m_pDownsampleProgram->GetAttribute("VertexPosition");
-			m_pDownsampleTextureSizeProgramUniform = m_pDownsampleProgram->GetUniform("TextureSize");
-			m_pDownsampleSizeProgramUniform		   = m_pDownsampleProgram->GetUniform("Size");
-			m_pDownsampleTextureProgramUniform	   = m_pDownsampleProgram->GetUniform("Texture");
+			OnDirty(m_pDownsampleProgram);
 		}
 		m_pDownsampleExpProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
 		if (m_pDownsampleExpProgram) {
@@ -258,10 +270,11 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			m_pDownsampleExpProgram->SetVertexShader(m_pVertexShader);
 			m_pDownsampleExpProgram->SetFragmentShader(m_pDownsampleExpFragmentShader);
 
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pDownsampleExpProgram->EventDirty.Connect(&EventHandlerDirty);
+
 			// Get attributes and uniforms
-			m_pDownsampleExpPositionProgramAttribute  = m_pDownsampleExpProgram->GetAttribute("VertexPosition");
-			m_pDownsampleExpTextureSizeProgramUniform = m_pDownsampleExpProgram->GetUniform("TextureSize");
-			m_pDownsampleExpTextureProgramUniform     = m_pDownsampleExpProgram->GetUniform("Texture");
+			OnDirty(m_pDownsampleExpProgram);
 		}
 	}
 
@@ -461,6 +474,35 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 TextureBuffer *HDRAverageLuminance::GetTextureBuffer() const
 {
 	return m_pAverageLuminanceTextureBuffer2D ? m_pAverageLuminanceTextureBuffer2D->GetTextureBuffer() : NULL;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when a program became dirty
+*/
+void HDRAverageLuminance::OnDirty(Program *pProgram)
+{
+	// Get attributes and uniforms
+	if (pProgram == m_pDownsampleLogProgram) {
+		m_pDownsampleLogPositionProgramAttribute	   = m_pDownsampleLogProgram->GetAttribute("VertexPosition");
+		m_pDownsampleLogTextureSizeProgramUniform	   = m_pDownsampleLogProgram->GetUniform("TextureSize");
+		m_pDownsampleLogTextureProgramUniform		   = m_pDownsampleLogProgram->GetUniform("Texture");
+		m_pDownsampleLogLuminanceConvertProgramUniform = m_pDownsampleLogProgram->GetUniform("LuminanceConvert");
+		m_pDownsampleLogEpsilonProgramUniform		   = m_pDownsampleLogProgram->GetUniform("Epsilon");
+	} else if (pProgram == m_pDownsampleProgram) {
+		m_pDownsamplePositionProgramAttribute  = m_pDownsampleProgram->GetAttribute("VertexPosition");
+		m_pDownsampleTextureSizeProgramUniform = m_pDownsampleProgram->GetUniform("TextureSize");
+		m_pDownsampleSizeProgramUniform		   = m_pDownsampleProgram->GetUniform("Size");
+		m_pDownsampleTextureProgramUniform	   = m_pDownsampleProgram->GetUniform("Texture");
+	} else if (pProgram == m_pDownsampleExpProgram) {
+		m_pDownsampleExpPositionProgramAttribute  = m_pDownsampleExpProgram->GetAttribute("VertexPosition");
+		m_pDownsampleExpTextureSizeProgramUniform = m_pDownsampleExpProgram->GetUniform("TextureSize");
+		m_pDownsampleExpTextureProgramUniform     = m_pDownsampleExpProgram->GetUniform("Texture");
+	}
 }
 
 

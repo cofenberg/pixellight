@@ -56,6 +56,7 @@ namespace PLCompositing {
 *    Constructor
 */
 HDRLightAdaptation::HDRLightAdaptation(Renderer &cRenderer) :
+	EventHandlerDirty(&HDRLightAdaptation::OnDirty, this),
 	m_pRenderer(&cRenderer),
 	m_pFullscreenQuad(NULL),
 	m_pVertexShader(NULL),
@@ -124,6 +125,10 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 			delete m_pVertexShader;
 			m_pVertexShader = NULL;
 		}
+		m_pPositionProgramAttribute			= NULL;
+		m_pFactorProgramUniform				= NULL;
+		m_pPreviousTextureProgramUniform	= NULL;
+		m_pCurrentTextureProgramUniform		= NULL;
 
 		// Shader source code
 		String sVertexShaderSourceCode;
@@ -159,11 +164,11 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 			m_pProgram->SetVertexShader(m_pVertexShader);
 			m_pProgram->SetFragmentShader(m_pFragmentShader);
 
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pProgram->EventDirty.Connect(&EventHandlerDirty);
+
 			// Get attributes and uniforms
-			m_pPositionProgramAttribute		 = m_pProgram->GetAttribute("VertexPosition");
-			m_pFactorProgramUniform			 = m_pProgram->GetUniform("Factor");
-			m_pPreviousTextureProgramUniform = m_pProgram->GetUniform("PreviousTexture");
-			m_pCurrentTextureProgramUniform  = m_pProgram->GetUniform("CurrentTexture");
+			OnDirty(m_pProgram);
 		}
 	}
 
@@ -252,6 +257,25 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 TextureBuffer *HDRLightAdaptation::GetTextureBuffer() const
 {
 	return m_pLightAdaptationTextureBuffer2D[!m_bPreviousIndex] ? m_pLightAdaptationTextureBuffer2D[!m_bPreviousIndex]->GetTextureBuffer() : NULL;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when a program became dirty
+*/
+void HDRLightAdaptation::OnDirty(Program *pProgram)
+{
+	// Get attributes and uniforms
+	if (pProgram == m_pProgram) {
+		m_pPositionProgramAttribute		 = m_pProgram->GetAttribute("VertexPosition");
+		m_pFactorProgramUniform			 = m_pProgram->GetUniform("Factor");
+		m_pPreviousTextureProgramUniform = m_pProgram->GetUniform("PreviousTexture");
+		m_pCurrentTextureProgramUniform  = m_pProgram->GetUniform("CurrentTexture");
+	}
 }
 
 
