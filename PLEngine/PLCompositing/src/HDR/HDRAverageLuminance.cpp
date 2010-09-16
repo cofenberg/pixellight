@@ -23,17 +23,18 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLMath/Math.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
+#include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
 #include "PLCompositing/HDR/HDRAverageLuminance.h"
-#include "HDRAverageLuminance_Cg.h"	// The shader programs
 
 
 //[-------------------------------------------------------]
@@ -57,11 +58,28 @@ namespace PLCompositing {
 HDRAverageLuminance::HDRAverageLuminance(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
 	m_pFullscreenQuad(NULL),
-	m_bDownsampleLogFragmentShader(false),
+	m_pVertexShader(NULL),
+	m_pDownsampleLogFragmentShader(NULL),
+	m_pDownsampleLogProgram(NULL),
+	m_pDownsampleLogPositionProgramAttribute(NULL),
+	m_pDownsampleLogTextureSizeProgramUniform(NULL),
+	m_pDownsampleLogTextureProgramUniform(NULL),
+	m_pDownsampleLogLuminanceConvertProgramUniform(NULL),
+	m_pDownsampleLogEpsilonProgramUniform(NULL),
 	m_pDownsampleLogRenderTarget(NULL),
-	m_bDownsampleFragmentShader(false),
+	m_pDownsampleVertexShader(NULL),
+	m_pDownsampleFragmentShader(NULL),
+	m_pDownsampleProgram(NULL),
+	m_pDownsamplePositionProgramAttribute(NULL),
+	m_pDownsampleTextureSizeProgramUniform(NULL),
+	m_pDownsampleSizeProgramUniform(NULL),
+	m_pDownsampleTextureProgramUniform(NULL),
 	m_pDownsampleRenderTarget(NULL),
-	m_bDownsampleExpFragmentShader(false),
+	m_pDownsampleExpFragmentShader(NULL),
+	m_pDownsampleExpProgram(NULL),
+	m_pDownsampleExpPositionProgramAttribute(NULL),
+	m_pDownsampleExpTextureSizeProgramUniform(NULL),
+	m_pDownsampleExpTextureProgramUniform(NULL),
 	m_pAverageLuminanceTextureBuffer2D(NULL)
 {
 }
@@ -77,37 +95,193 @@ HDRAverageLuminance::~HDRAverageLuminance()
 		delete m_pFullscreenQuad;
 
 	// Destroy the downsample 2x2 log fragment shader and render target
-	if (m_cDownsampleLogFragmentShader.GetResource())
-		delete m_cDownsampleLogFragmentShader.GetResource();
+	if (m_pDownsampleLogProgram)
+		delete m_pDownsampleLogProgram;
+	if (m_pDownsampleLogFragmentShader)
+		delete m_pDownsampleLogFragmentShader;
 	if (m_pDownsampleLogRenderTarget)
 		delete m_pDownsampleLogRenderTarget;
 
 	// Destroy the downsample 4x4 fragment shader and render target
-	if (m_cDownsampleFragmentShader.GetResource())
-		delete m_cDownsampleFragmentShader.GetResource();
+	if (m_pDownsampleProgram)
+		delete m_pDownsampleProgram;
+	if (m_pDownsampleFragmentShader)
+		delete m_pDownsampleFragmentShader;
+	if (m_pDownsampleVertexShader)
+		delete m_pDownsampleVertexShader;
 	if (m_pDownsampleRenderTarget)
 		delete m_pDownsampleRenderTarget;
 
 	// Destroy the average luminance result step stuff
-	if (m_cDownsampleExpFragmentShader.GetResource())
-		delete m_cDownsampleExpFragmentShader.GetResource();
+	if (m_pDownsampleExpProgram)
+		delete m_pDownsampleExpProgram;
+	if (m_pDownsampleExpFragmentShader)
+		delete m_pDownsampleExpFragmentShader;
 	if (m_pAverageLuminanceTextureBuffer2D)
 		delete m_pAverageLuminanceTextureBuffer2D;
+
+	// Destroy the vertex shader
+	if (m_pVertexShader)
+		delete m_pVertexShader;
 }
 
 /**
 *  @brief
 *    Calculates the logarithmic average luminance
 */
-void HDRAverageLuminance::CalculateAverageLuminance(TextureBufferRectangle &cOriginalTexture, const Color3 &cLuminanceConvert)
+void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguage, TextureBufferRectangle &cOriginalTexture, const Color3 &cLuminanceConvert)
 {
 	// Get the internal texture format to use
 	const TextureBuffer::EPixelFormat nInternalFormat = (cOriginalTexture.GetFormat() == TextureBuffer::R16G16B16A16F) ? TextureBuffer::L16F : TextureBuffer::L32F;
 
-	{ // First step: Downsample 2x2, calculate pixel luminance and log - I don't use a "bilinear filter" because this would mess up the incomming texel data "before" the log calculation was performed!
-		// Get the fragment shader
-		Shader *pFragmentShader = GetDownsampleLogFragmentShader();
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
+	// Get the shader language to use
+	String sUsedShaderLanguage = sShaderLanguage;
+	if (!sUsedShaderLanguage.GetLength())
+		sUsedShaderLanguage = m_pRenderer->GetDefaultShaderLanguage();
+
+	// Create the shaders and programs right now?
+	if (!m_pVertexShader || m_pVertexShader->GetShaderLanguage() != sUsedShaderLanguage) {
+		// If there's an previous instance of the program, destroy it first
+		if (m_pDownsampleLogProgram) {
+			delete m_pDownsampleLogProgram;
+			m_pDownsampleLogProgram = NULL;
+		}
+		if (m_pDownsampleLogFragmentShader) {
+			delete m_pDownsampleLogFragmentShader;
+			m_pDownsampleLogFragmentShader = NULL;
+		}
+		if (m_pDownsampleProgram) {
+			delete m_pDownsampleProgram;
+			m_pDownsampleProgram = NULL;
+		}
+		if (m_pDownsampleFragmentShader) {
+			delete m_pDownsampleFragmentShader;
+			m_pDownsampleFragmentShader = NULL;
+		}
+		if (m_pDownsampleVertexShader) {
+			delete m_pDownsampleVertexShader;
+			m_pDownsampleVertexShader = NULL;
+		}
+		if (m_pDownsampleExpProgram) {
+			delete m_pDownsampleExpProgram;
+			m_pDownsampleExpProgram = NULL;
+		}
+		if (m_pDownsampleExpFragmentShader) {
+			delete m_pDownsampleExpFragmentShader;
+			m_pDownsampleExpFragmentShader = NULL;
+		}
+		if (m_pVertexShader) {
+			delete m_pVertexShader;
+			m_pVertexShader = NULL;
+		}
+
+		// Shader source code
+		String sVertexShaderSourceCode;
+		String sVertexShaderSourceCode_Downsample;
+		String sFragmentShaderSourceCode_DownsampleLog;
+		String sFragmentShaderSourceCode_Downsample;
+		String sFragmentShaderSourceCode_DownsampleExp;
+		if (sUsedShaderLanguage == "GLSL") {
+			#include "HDRAverageLuminance_GLSL.h"
+			sVertexShaderSourceCode					= sHDRAverageLuminance_GLSL_VS;
+			sVertexShaderSourceCode_Downsample		= sHDRAverageLuminance_GLSL_VS_Downsample;
+			sFragmentShaderSourceCode_DownsampleLog	= sHDRAverageLuminance_GLSL_FS_Common + sHDRAverageLuminance_GLSL_FS_DownsampleLog;
+			sFragmentShaderSourceCode_Downsample	= sHDRAverageLuminance_GLSL_FS_Common + sHDRAverageLuminance_GLSL_FS_Downsample;
+			sFragmentShaderSourceCode_DownsampleExp	= sHDRAverageLuminance_GLSL_FS_Common + sHDRAverageLuminance_GLSL_FS_DownsampleExp;
+		} else if (sUsedShaderLanguage == "Cg") {
+			#include "HDRAverageLuminance_Cg.h"
+			sVertexShaderSourceCode					= sHDRAverageLuminance_Cg_VS;
+			sVertexShaderSourceCode_Downsample		= sHDRAverageLuminance_Cg_VS_Downsample;
+			sFragmentShaderSourceCode_DownsampleLog	= sHDRAverageLuminance_Cg_FS_Common + sHDRAverageLuminance_Cg_FS_DownsampleLog;
+			sFragmentShaderSourceCode_Downsample	= sHDRAverageLuminance_Cg_FS_Common + sHDRAverageLuminance_Cg_FS_Downsample;
+			sFragmentShaderSourceCode_DownsampleExp	= sHDRAverageLuminance_Cg_FS_Common + sHDRAverageLuminance_Cg_FS_DownsampleExp;
+		}
+
+		// Create a vertex shader instance
+		m_pVertexShader = m_pRenderer->CreateVertexShader(sUsedShaderLanguage);
+		if (m_pVertexShader) {
+			// Set the vertex shader source code
+			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+		}
+		m_pDownsampleVertexShader = m_pRenderer->CreateVertexShader(sUsedShaderLanguage);
+		if (m_pDownsampleVertexShader) {
+			// Set the vertex shader source code
+			m_pDownsampleVertexShader->SetSourceCode(sVertexShaderSourceCode_Downsample);
+		}
+
+		// Create a fragment shader instance
+		m_pDownsampleLogFragmentShader = m_pRenderer->CreateFragmentShader(sUsedShaderLanguage);
+		if (m_pDownsampleLogFragmentShader) {
+			// Set the fragment shader source code
+			m_pDownsampleLogFragmentShader->SetSourceCode(sFragmentShaderSourceCode_DownsampleLog);
+		}
+		m_pDownsampleFragmentShader = m_pRenderer->CreateFragmentShader(sUsedShaderLanguage);
+		if (m_pDownsampleFragmentShader) {
+			// Set the fragment shader source code
+			m_pDownsampleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downsample);
+		}
+		m_pDownsampleExpFragmentShader = m_pRenderer->CreateFragmentShader(sUsedShaderLanguage);
+		if (m_pDownsampleExpFragmentShader) {
+			// Set the fragment shader source code
+			m_pDownsampleExpFragmentShader->SetSourceCode(sFragmentShaderSourceCode_DownsampleExp);
+		}
+
+		// Create a program instance
+		m_pDownsampleLogProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
+		if (m_pDownsampleLogProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pDownsampleLogProgram->SetVertexShader(m_pVertexShader);
+			m_pDownsampleLogProgram->SetFragmentShader(m_pDownsampleLogFragmentShader);
+
+			// Get attributes and uniforms
+			m_pDownsampleLogPositionProgramAttribute	   = m_pDownsampleLogProgram->GetAttribute("VertexPosition");
+			m_pDownsampleLogTextureSizeProgramUniform	   = m_pDownsampleLogProgram->GetUniform("TextureSize");
+			m_pDownsampleLogTextureProgramUniform		   = m_pDownsampleLogProgram->GetUniform("Texture");
+			m_pDownsampleLogLuminanceConvertProgramUniform = m_pDownsampleLogProgram->GetUniform("LuminanceConvert");
+			m_pDownsampleLogEpsilonProgramUniform		   = m_pDownsampleLogProgram->GetUniform("Epsilon");
+		}
+		m_pDownsampleProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
+		if (m_pDownsampleProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pDownsampleProgram->SetVertexShader(m_pDownsampleVertexShader);
+			m_pDownsampleProgram->SetFragmentShader(m_pDownsampleFragmentShader);
+
+			// Get attributes and uniforms
+			m_pDownsamplePositionProgramAttribute  = m_pDownsampleProgram->GetAttribute("VertexPosition");
+			m_pDownsampleTextureSizeProgramUniform = m_pDownsampleProgram->GetUniform("TextureSize");
+			m_pDownsampleSizeProgramUniform		   = m_pDownsampleProgram->GetUniform("Size");
+			m_pDownsampleTextureProgramUniform	   = m_pDownsampleProgram->GetUniform("Texture");
+		}
+		m_pDownsampleExpProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
+		if (m_pDownsampleExpProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pDownsampleExpProgram->SetVertexShader(m_pVertexShader);
+			m_pDownsampleExpProgram->SetFragmentShader(m_pDownsampleExpFragmentShader);
+
+			// Get attributes and uniforms
+			m_pDownsampleExpPositionProgramAttribute  = m_pDownsampleExpProgram->GetAttribute("VertexPosition");
+			m_pDownsampleExpTextureSizeProgramUniform = m_pDownsampleExpProgram->GetUniform("TextureSize");
+			m_pDownsampleExpTextureProgramUniform     = m_pDownsampleExpProgram->GetUniform("Texture");
+		}
+	}
+
+	// Create the fullscreen quad instance if required
+	if (!m_pFullscreenQuad)
+		m_pFullscreenQuad = new FullscreenQuad(*m_pRenderer);
+
+	// Get the vertex buffer of the fullscreen quad
+	VertexBuffer *pVertexBuffer = m_pFullscreenQuad->GetVertexBuffer();
+	if (pVertexBuffer) {
+		// Setup renderer
+		const uint32 nFixedFillModeBackup = m_pRenderer->GetRenderState(RenderState::FixedFillMode);
+		m_pRenderer->SetRenderState(RenderState::ScissorTestEnable,	false);
+		m_pRenderer->SetRenderState(RenderState::FixedFillMode,		Fill::Solid);
+		m_pRenderer->SetRenderState(RenderState::CullMode,			Cull::None);
+		m_pRenderer->SetRenderState(RenderState::ZEnable,			false);
+		m_pRenderer->SetRenderState(RenderState::ZWriteEnable,		false);
+
+		// First step: Downsample 2x2, calculate pixel luminance and log - I don't use a "bilinear filter" because this would mess up the incomming texel data "before" the log calculation was performed!
+		if (m_pRenderer->SetProgram(m_pDownsampleLogProgram)) {
 			// Get the size of the original HDR texture
 			const Vector2i vRTSize = cOriginalTexture.GetSize()/2;
 			if (vRTSize.x != 0 && vRTSize.y != 0) {
@@ -128,50 +302,49 @@ void HDRAverageLuminance::CalculateAverageLuminance(TextureBufferRectangle &cOri
 			// Make the downsample 2x2 log render target to the current render target
 			m_pRenderer->SetRenderTarget(m_pDownsampleLogRenderTarget);
 
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			m_pRenderer->SetFragmentShaderProgram(pFragmentShaderProgram);
+			// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+			if (m_pDownsampleLogPositionProgramAttribute)
+				m_pDownsampleLogPositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
 
-			{ // Set the "LuminanceConvert" fragment shader parameter
-				static const String sLuminanceConvert = "LuminanceConvert";
-				pFragmentShaderProgram->SetParameter3fv(sLuminanceConvert, cLuminanceConvert);
-			}
+			// Set the "TextureSize" fragment shader parameter
+			if (m_pDownsampleLogTextureSizeProgramUniform)
+				m_pDownsampleLogTextureSizeProgramUniform->Set(cOriginalTexture.GetSize());
 
-			{ // Set the "Epsilon" fragment shader parameter
-				static const String sEpsilon = "Epsilon";
-				pFragmentShaderProgram->SetParameter1f(sEpsilon, 0.0001f);
-			}
-
-			{ // Set the "Texture" fragment shader parameter
-				static const String sTexture = "Texture";
-				const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, &cOriginalTexture);
-				if (nStage >= 0) {
-					m_pRenderer->SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-					m_pRenderer->SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+			// Set the "Texture" fragment shader parameter
+			if (m_pDownsampleLogTextureProgramUniform) {
+				const int nTextureUnit = m_pDownsampleLogTextureProgramUniform->Set(&cOriginalTexture);
+				if (nTextureUnit >= 0) {
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 				}
 			}
-			
 
-			// Create the fullscreen quad instance if required
-			if (!m_pFullscreenQuad)
-				m_pFullscreenQuad = new FullscreenQuad(*m_pRenderer);
+			// Set the "LuminanceConvert" fragment shader parameter
+			if (m_pDownsampleLogLuminanceConvertProgramUniform)
+				m_pDownsampleLogLuminanceConvertProgramUniform->Set(cLuminanceConvert);
+
+			// Set the "Epsilon" fragment shader parameter
+			if (m_pDownsampleLogEpsilonProgramUniform)
+				m_pDownsampleLogEpsilonProgramUniform->Set(0.0001f);
 
 			// Draw the fullscreen quad
-			m_pFullscreenQuad->Draw(cOriginalTexture.GetSize());
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 		}
-	}
 
-	const uint32 TextureScaleFactor = 2;
-	Vector2i vFinalTextureSize;
-	TextureBufferRectangle *pFinalTextureBufferRectangle = NULL;
+		Vector2i vFinalTextureSize;
+		TextureBufferRectangle *pFinalTextureBufferRectangle = NULL;
 
-	{ // Second step: Reduce to <4>x<4>
-		// Get the fragment shader
-		Shader *pFragmentShader = GetDownsampleFragmentShader();
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
+		// Second step: Reduce to <4>x<4>
+		if (m_pRenderer->SetProgram(m_pDownsampleProgram)) {
+			const uint32 TextureScaleFactor = 2;
+
+			// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+			if (m_pDownsamplePositionProgramAttribute)
+				m_pDownsamplePositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
 			// Get the size of the original HDR texture
 			const Vector2i vRTSize = m_pDownsampleLogRenderTarget->GetSize()/TextureScaleFactor;
 			if (vRTSize.x != 0 && vRTSize.y != 0) {
@@ -189,10 +362,6 @@ void HDRAverageLuminance::CalculateAverageLuminance(TextureBufferRectangle &cOri
 					m_pDownsampleRenderTarget = m_pRenderer->CreateSurfaceTextureBufferRectangle(vRTSize, nInternalFormat, SurfaceTextureBuffer::NoMultisampleAntialiasing);
 			}
 
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			m_pRenderer->SetFragmentShaderProgram(pFragmentShaderProgram);
-
 			// Get the maximum size
 			Vector2i vCurrentSize = m_pDownsampleLogRenderTarget->GetSize();
 			uint32   nSize		  = Math::Max(vCurrentSize.x, vCurrentSize.y);
@@ -209,32 +378,37 @@ void HDRAverageLuminance::CalculateAverageLuminance(TextureBufferRectangle &cOri
 				// Set the current render target
 				m_pRenderer->SetRenderTarget(pRenderTargetTexture);
 
-				{ // Set the "Texture" fragment shader parameter
-					static const String sTexture = "Texture";
-					const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, pTextureBufferRectangle);
-					if (nStage >= 0) {
-						m_pRenderer->SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-						m_pRenderer->SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
-						m_pRenderer->SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
-						m_pRenderer->SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
-					}
-				}
-
 				// Backup texture width
 				vFinalTextureSize			 = vCurrentSize/TextureScaleFactor;
 				pFinalTextureBufferRectangle = (TextureBufferRectangle*)pRenderTargetTexture->GetTextureBuffer();
 
+				// Set the "TextureSize" fragment shader parameter
+				if (m_pDownsampleTextureSizeProgramUniform)
+					m_pDownsampleTextureSizeProgramUniform->Set(vCurrentSize);
+
+				// Set the "Size" fragment shader parameter
+				if (m_pDownsampleSizeProgramUniform)
+					m_pDownsampleSizeProgramUniform->Set(float(vFinalTextureSize.x)/pRenderTargetTexture->GetSize().x, float(vFinalTextureSize.y)/pRenderTargetTexture->GetSize().y);
+
+				// Set the "Texture" fragment shader parameter
+				if (m_pDownsampleTextureProgramUniform) {
+					const int nTextureUnit = m_pDownsampleTextureProgramUniform->Set(pTextureBufferRectangle);
+					if (nTextureUnit >= 0) {
+						m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+						m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+						m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
+						m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
+						m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+					}
+				}
+
 				// Draw the fullscreen quad
-				m_pFullscreenQuad->Draw(vCurrentSize, vFinalTextureSize);
+				m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 			}
 		}
-	}
 
-	{ // Third step: Reduce <4>x<4> to <1>x<1> and calculate the exponent
-		// Get the fragment shader
-		Shader *pFragmentShader = GetDownsampleExpFragmentShader();
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
+		// Third step: Reduce <4>x<4> to <1>x<1> and calculate the exponent
+		if (m_pRenderer->SetProgram(m_pDownsampleExpProgram)) {
 			// Render format change?
 			if (m_pAverageLuminanceTextureBuffer2D && m_pAverageLuminanceTextureBuffer2D->GetFormat() != nInternalFormat) {
 				// Destroy the result render target
@@ -251,25 +425,32 @@ void HDRAverageLuminance::CalculateAverageLuminance(TextureBufferRectangle &cOri
 			// Make the result render target to the current render target
 			m_pRenderer->SetRenderTarget(m_pAverageLuminanceTextureBuffer2D);
 
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			m_pRenderer->SetFragmentShaderProgram(pFragmentShaderProgram);
+			// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+			if (m_pDownsampleExpPositionProgramAttribute)
+				m_pDownsampleExpPositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
 
-			{ // Set the "Texture" fragment shader parameter
-				static const String sTexture = "Texture";
-				const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, pFinalTextureBufferRectangle);
-				if (nStage >= 0) {
-					m_pRenderer->SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-					m_pRenderer->SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
-					m_pRenderer->SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
-					m_pRenderer->SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+			// Set the "TextureSize" fragment shader parameter
+			if (m_pDownsampleExpTextureSizeProgramUniform)
+				m_pDownsampleExpTextureSizeProgramUniform->Set(vFinalTextureSize);
+
+			// Set the "Texture" fragment shader parameter
+			if (m_pDownsampleExpTextureProgramUniform) {
+				const int nTextureUnit = m_pDownsampleExpTextureProgramUniform->Set(pFinalTextureBufferRectangle);
+				if (nTextureUnit >= 0) {
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);	// [TODO] Use bilinear filter
+					m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 				}
 			}
 
 			// Draw the fullscreen quad
-			m_pFullscreenQuad->Draw(vFinalTextureSize);
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 		}
+
+		// Restore fixed fill mode render state
+		m_pRenderer->SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 	}
 }
 
@@ -280,79 +461,6 @@ void HDRAverageLuminance::CalculateAverageLuminance(TextureBufferRectangle &cOri
 TextureBuffer *HDRAverageLuminance::GetTextureBuffer() const
 {
 	return m_pAverageLuminanceTextureBuffer2D ? m_pAverageLuminanceTextureBuffer2D->GetTextureBuffer() : NULL;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the downsample 2x2 log fragment shader
-*/
-Shader *HDRAverageLuminance::GetDownsampleLogFragmentShader()
-{
-	// Get/construct the shader
-	Shader *pShader = m_cDownsampleLogFragmentShader.GetResource();
-	if (!pShader && !m_bDownsampleLogFragmentShader) {
-		const static String ShaderFilename = "Fragment/HDRAverageLuminance_DownsampleLog.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszHDRAverageLuminance_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszHDRAverageLuminance_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf", "", "DownsampleLog");
-		}
-		m_cDownsampleLogFragmentShader.SetResource(pShader);
-		m_bDownsampleLogFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the downsample 4x4 fragment shader
-*/
-Shader *HDRAverageLuminance::GetDownsampleFragmentShader()
-{
-	// Get/construct the shader
-	Shader *pShader = m_cDownsampleFragmentShader.GetResource();
-	if (!pShader && !m_bDownsampleFragmentShader) {
-		const static String ShaderFilename = "Fragment/HDRAverageLuminance_Downsample.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszHDRAverageLuminance_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszHDRAverageLuminance_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf", "", "Downsample");
-		}
-		m_cDownsampleFragmentShader.SetResource(pShader);
-		m_bDownsampleFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the downsample 4x4 exp fragment shader
-*/
-Shader *HDRAverageLuminance::GetDownsampleExpFragmentShader()
-{
-	// Get/construct the shader
-	Shader *pShader = m_cDownsampleExpFragmentShader.GetResource();
-	if (!pShader && !m_bDownsampleExpFragmentShader) {
-		const static String ShaderFilename = "Fragment/HDRAverageLuminance_DownsampleExp.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszHDRAverageLuminance_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszHDRAverageLuminance_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf", "", "DownsampleExp");
-		}
-		m_cDownsampleExpFragmentShader.SetResource(pShader);
-		m_bDownsampleExpFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
 }
 
 

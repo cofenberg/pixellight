@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -39,8 +38,13 @@ namespace PLGraphics {
 	class Color3;
 }
 namespace PLRenderer {
+	class Program;
+	class VertexShader;
 	class TextureBuffer;
+	class ProgramUniform;
+	class FragmentShader;
 	class TextureBuffer2D;
+	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
@@ -91,6 +95,8 @@ class HDRAverageLuminance {
 		*  @brief
 		*    Calculates the logarithmic average luminance
 		*
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used, don't change the shader language on each call (performance!)
 		*  @param[in] cOriginalTexture
 		*    Original HDR texture buffer to calculate the logarithmic average luminance from
 		*  @param[in] cLuminanceConvert
@@ -99,7 +105,7 @@ class HDRAverageLuminance {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		PLCOM_API void CalculateAverageLuminance(PLRenderer::TextureBufferRectangle &cOriginalTexture, const PLGraphics::Color3 &cLuminanceConvert);
+		PLCOM_API void CalculateAverageLuminance(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, const PLGraphics::Color3 &cLuminanceConvert);
 
 		/**
 		*  @brief
@@ -115,55 +121,37 @@ class HDRAverageLuminance {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Returns the downsample 2x2 log fragment shader
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetDownsampleLogFragmentShader();
-
-		/**
-		*  @brief
-		*    Returns the downsample 4x4 fragment shader
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetDownsampleFragmentShader();
-
-		/**
-		*  @brief
-		*    Returns the downsample 4x4 exp fragment shader
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetDownsampleExpFragmentShader();
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer			 *m_pRenderer;							/**< Renderer to use, always valid! */
-		PLScene::FullscreenQuad			 *m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
+		PLRenderer::Renderer			 *m_pRenderer;										/**< Renderer to use, always valid! */
+		PLScene::FullscreenQuad			 *m_pFullscreenQuad;								/**< Fullscreen quad instance, can be NULL */
+		PLRenderer::VertexShader		 *m_pVertexShader;									/**< Vertex shader, can be NULL */
 		// Downsample 2x2, calculate pixel luminance and log
-		bool							  m_bDownsampleLogFragmentShader;		/**< Downsample 2x2 log fragment shader build? */
-		PLRenderer::ShaderHandler		  m_cDownsampleLogFragmentShader;		/**< Downsample 2x2 log fragment shader mode */
-		PLRenderer::SurfaceTextureBuffer *m_pDownsampleLogRenderTarget;			/**< Downsample 2x2 log render target, can be NULL */
+		PLRenderer::FragmentShader		 *m_pDownsampleLogFragmentShader;					/**< Downsample 2x2 log fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pDownsampleLogProgram;							/**< Downsample 2x2 log GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pDownsampleLogPositionProgramAttribute;			/**< Downsample 2x2 log position program attribute */
+		PLRenderer::ProgramUniform		 *m_pDownsampleLogTextureSizeProgramUniform;		/**< Downsample 2x2 log texture size program uniform */
+		PLRenderer::ProgramUniform		 *m_pDownsampleLogTextureProgramUniform;			/**< Downsample 2x2 log texture program uniform */
+		PLRenderer::ProgramUniform		 *m_pDownsampleLogLuminanceConvertProgramUniform;	/**< Downsample 2x2 log luminance convert program uniform */
+		PLRenderer::ProgramUniform		 *m_pDownsampleLogEpsilonProgramUniform;			/**< Downsample 2x2 log epsilon program uniform */
+		PLRenderer::SurfaceTextureBuffer *m_pDownsampleLogRenderTarget;						/**< Downsample 2x2 log render target, can be NULL */
 		// Downsample 4x4
-		bool							  m_bDownsampleFragmentShader;			/**< Downsample 4x4 fragment shader build? */
-		PLRenderer::ShaderHandler		  m_cDownsampleFragmentShader;			/**< Downsample 4x4 fragment shader mode */
-		PLRenderer::SurfaceTextureBuffer *m_pDownsampleRenderTarget;			/**< Downsample 4x4 render target, can be NULL */
+		PLRenderer::VertexShader		 *m_pDownsampleVertexShader;						/**< Downsample vertex shader, can be NULL */
+		PLRenderer::FragmentShader		 *m_pDownsampleFragmentShader;						/**< Downsample 4x4 fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pDownsampleProgram;								/**< Downsample 4x4 GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pDownsamplePositionProgramAttribute;			/**< Downsample 4x4 position program attribute */
+		PLRenderer::ProgramUniform		 *m_pDownsampleTextureSizeProgramUniform;			/**< Downsample 4x4 texture size program uniform */
+		PLRenderer::ProgramUniform		 *m_pDownsampleSizeProgramUniform;					/**< Downsample 4x4 size program uniform */
+		PLRenderer::ProgramUniform		 *m_pDownsampleTextureProgramUniform;				/**< Downsample 4x4 texture program uniform */
+		PLRenderer::SurfaceTextureBuffer *m_pDownsampleRenderTarget;						/**< Downsample 4x4 render target, can be NULL */
 		// Reduce <4>x<4> to <1>x<1> and calculate the exponent
-		bool							  m_bDownsampleExpFragmentShader;		/**< Downsample 4x4 exp fragment shader build? */
-		PLRenderer::ShaderHandler		  m_cDownsampleExpFragmentShader;		/**< Downsample 4x4 exp fragment shader mode */
-		PLRenderer::SurfaceTextureBuffer *m_pAverageLuminanceTextureBuffer2D;	/**< 1x1 2D texture buffer storing the logarithmic average luminance */
+		PLRenderer::FragmentShader		 *m_pDownsampleExpFragmentShader;					/**< Downsample 4x4 exp fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pDownsampleExpProgram;							/**< Downsample 4x4 exp GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pDownsampleExpPositionProgramAttribute;			/**< Downsample 4x4 exp position program attribute */
+		PLRenderer::ProgramUniform		 *m_pDownsampleExpTextureSizeProgramUniform;		/**< Downsample 4x4 exp texture size program uniform */
+		PLRenderer::ProgramUniform		 *m_pDownsampleExpTextureProgramUniform;			/**< Downsample 4x4 exp texture program uniform */
+		PLRenderer::SurfaceTextureBuffer *m_pAverageLuminanceTextureBuffer2D;				/**< 1x1 2D texture buffer storing the logarithmic average luminance */
 
 
 };

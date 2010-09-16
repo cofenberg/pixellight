@@ -2,6 +2,7 @@
 [CO]
 PLCompositing:
 - HDRLightAdaptation verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
+- HDRAverageLuminance verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
 
 
 

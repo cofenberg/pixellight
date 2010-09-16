@@ -39,6 +39,7 @@ VS_OUTPUT main(float2 VertexPosition : POSITION)	// Clip space vertex position, 
 	return OUT;\n\
 }";
 
+
 // Cg fragment shader source code
 static const PLGeneral::String sHDRLightAdaptation_Cg_FS = "\
 // Vertex output\n\

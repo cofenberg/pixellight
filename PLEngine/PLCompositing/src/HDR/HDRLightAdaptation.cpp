@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLMath/Rectangle.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/RendererContext.h>
@@ -33,7 +31,6 @@
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
@@ -231,8 +228,19 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 				}
 			}
 
+			// Setup renderer
+			const uint32 nFixedFillModeBackup = m_pRenderer->GetRenderState(RenderState::FixedFillMode);
+			m_pRenderer->SetRenderState(RenderState::ScissorTestEnable,	false);
+			m_pRenderer->SetRenderState(RenderState::FixedFillMode,		Fill::Solid);
+			m_pRenderer->SetRenderState(RenderState::CullMode,			Cull::None);
+			m_pRenderer->SetRenderState(RenderState::ZEnable,			false);
+			m_pRenderer->SetRenderState(RenderState::ZWriteEnable,		false);
+
 			// Draw the fullscreen quad
 			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+			// Restore fixed fill mode render state
+			m_pRenderer->SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 		}
 	}
 }

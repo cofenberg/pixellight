@@ -181,7 +181,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					if (bAutomaticAverageLuminance) {
 						if (!m_pHDRAverageLuminance)
 							m_pHDRAverageLuminance = new HDRAverageLuminance(cRenderer);
-						m_pHDRAverageLuminance->CalculateAverageLuminance((TextureBufferRectangle&)*pSurfaceTextureBuffer->GetTextureBuffer(), LuminanceConvert.Get());
+						m_pHDRAverageLuminance->CalculateAverageLuminance(sShaderLanguage, (TextureBufferRectangle&)*pSurfaceTextureBuffer->GetTextureBuffer(), LuminanceConvert.Get());
 
 						// Light adaptation
 						if (bLightAdaptation && m_pHDRAverageLuminance->GetTextureBuffer()) {

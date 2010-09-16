@@ -606,6 +606,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\HDR\HDRAverageLuminance_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\HDR\HDRBloom.cpp"
 				>
 			</File>
