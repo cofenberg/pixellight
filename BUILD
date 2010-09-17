@@ -218,7 +218,7 @@ Here's a list of the most important "maketool"-options:
 --minimal:			Do only compile the most important projects
 
 To avoid setting the parameters "--externals", "--username" and "--password" over and over again:
-- Within the home directory, create a file called "pl_config.cfg" (Perl-Script, included and just executed) with the following content:
+- Create a file "pl_config.cfg" in your home directory (Perl-Script, included and just executed) with the following content:
 	$pl_external_url = "";
 	$pl_external_user = "";
 	$pl_external_pass = "";
