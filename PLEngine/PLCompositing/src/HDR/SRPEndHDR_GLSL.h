@@ -26,12 +26,19 @@ static const PLGeneral::String sEndHDR_GLSL_VS = "\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\
 // Attributes\n\
-attribute highp vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-										// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+attribute highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+											// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	varying highp vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component output\n\
+#else\n\
+	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+#endif\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform highp ivec2 TextureSize;						// Texture size in texel\n\
+#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+#endif\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -40,7 +47,12 @@ void main()\n\
 	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
+	VertexTexCoordVS.xy = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Get the average luminance by using vertex texture fetch so we have just 4 instead of xxxx average luminance texture accesses when doing this within the fragment shader\n\
+	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+		VertexTexCoordVS.z = texture2D(AverageLuminanceTexture, vec2(0.5f, 0.5f)).r;\n\
+	#endif\n\
 }";
 
 
@@ -50,16 +62,18 @@ static const PLGeneral::String sEndHDR_GLSL_FS = "\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\
 // Attributes\n\
-varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	varying highp vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component input from vertex shader\n\
+#else\n\
+	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+#endif\n\
 \n\
 // Uniforms\n\
 #ifdef FS_TONE_MAPPING\n\
 	uniform highp vec3			LuminanceConvert;			// Luminance convert\n\
 	uniform highp float			Key;						// Key, must be >=0\n\
 	uniform highp float			WhiteLevel;					// White level, must be >=0\n\
-	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
-		uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
-	#else\n\
+	#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
 		uniform highp float		AverageLuminance;			// User set average luminance\n\
 	#endif\n\
 #endif\n\
@@ -77,7 +91,7 @@ uniform highp sampler2DRect		HDRTexture;					// HDR texture\n\
 void main()\n\
 {\n\
 	// Fetch the required texel data\n\
-	highp vec4 sample = texture2DRect(HDRTexture, VertexTexCoordVS);\n\
+	highp vec4 sample = texture2DRect(HDRTexture, VertexTexCoordVS.xy);\n\
 \n\
 	// Perform tone mapping\n\
 #ifdef FS_TONE_MAPPING\n\
@@ -86,7 +100,7 @@ void main()\n\
 \n\
 	// Get the average luminance\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
-		highp float averageLuminance = texture2D(AverageLuminanceTexture, vec2(0.5f, 0.5f)).r;\n\
+		#define averageLuminance VertexTexCoordVS.z\n\
 	#else\n\
 		#define averageLuminance AverageLuminance\n\
 	#endif\n\
@@ -107,7 +121,7 @@ void main()\n\
 \n\
 	// Add bloom\n\
 #ifdef FS_BLOOM\n\
-	gl_FragColor = clamp(gl_FragColor + texture2DRect(BloomTexture, VertexTexCoordVS/BloomDownscale)*BloomFactor, 0.0f, 1.0f);\n\
+	gl_FragColor = clamp(gl_FragColor + texture2DRect(BloomTexture, VertexTexCoordVS.xy/BloomDownscale)*BloomFactor, 0.0f, 1.0f);\n\
 #endif\n\
 \n\
 	// Perform gamma correction (linear space -> sRGB space)\n\

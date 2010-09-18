@@ -273,7 +273,7 @@ Shader *HDRBloom::GetDownsampleFragmentShader(bool bToneMapping, bool bAutomatic
 		{ // Load the shader
 			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszHDRBloom_Downsample_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
 			File cFile((uint8*)pszHDRBloom_Downsample_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines, "Downsample");
+			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
 		}
 		cShaderHandler.SetResource(pShader);
 		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);

@@ -58,7 +58,7 @@ const static float2 Offsets[16] = {\n\
 };\n\
 \n\
 // Downsample main function\n\
-FS_OUTPUT Downsample(VS_OUTPUT   IN							// Interpolated output from the vertex stage\n\
+FS_OUTPUT main(VS_OUTPUT   IN								// Interpolated output from the vertex stage\n\
 #ifdef TONE_MAPPING\n\
 		   , uniform float3      LuminanceConvert			// Luminance convert\n\
 		   , uniform float       Key						// Key, must be >=0\n\

@@ -229,8 +229,10 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Set program flags
 					if (bToneMapping) {
 						PL_ADD_FS_FLAG(m_cProgramFlags, FS_TONE_MAPPING)
-						if (bAutomaticAverageLuminance)
+						if (bAutomaticAverageLuminance) {
+							PL_ADD_VS_FLAG(m_cProgramFlags, VS_AUTOMATIC_AVERAGE_LUMINANCE)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_AUTOMATIC_AVERAGE_LUMINANCE)
+						}
 					}
 					if (bBloom)
 						PL_ADD_FS_FLAG(m_cProgramFlags, FS_BLOOM)
@@ -253,6 +255,8 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							// Vertex shader uniforms
 							static const String sTextureSize = "TextureSize";
 							pGeneratedProgramUserData->pTextureSize				= pProgram->GetUniform(sTextureSize);
+							static const String sAverageLuminanceTexture = "AverageLuminanceTexture";
+							pGeneratedProgramUserData->pAverageLuminanceTexture	= pProgram->GetUniform(sAverageLuminanceTexture);
 							// Fragment shader uniforms
 							static const String sLuminanceConvert = "LuminanceConvert";
 							pGeneratedProgramUserData->pLuminanceConvert		= pProgram->GetUniform(sLuminanceConvert);
@@ -260,8 +264,6 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							pGeneratedProgramUserData->pKey						= pProgram->GetUniform(sKey);
 							static const String sWhiteLevel = "WhiteLevel";
 							pGeneratedProgramUserData->pWhiteLevel				= pProgram->GetUniform(sWhiteLevel);
-							static const String sAverageLuminanceTexture = "AverageLuminanceTexture";
-							pGeneratedProgramUserData->pAverageLuminanceTexture	= pProgram->GetUniform(sAverageLuminanceTexture);
 							static const String sAverageLuminance = "AverageLuminance";
 							pGeneratedProgramUserData->pAverageLuminance		= pProgram->GetUniform(sAverageLuminance);
 							static const String sBloomFactor = "BloomFactor";

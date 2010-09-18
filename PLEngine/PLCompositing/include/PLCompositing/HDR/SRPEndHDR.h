@@ -150,6 +150,14 @@ class SRPEndHDR : public PLScene::SRPEnd {
 	private:
 		/**
 		*  @brief
+		*    Vertex shader flags, flag names become to source code definitions
+		*/
+		enum EVertexShaderFlags {
+			VS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<0	/**< Perform light adaptation */
+		};
+
+		/**
+		*  @brief
 		*    Fragment shader flags, flag names become to source code definitions
 		*/
 		enum EFragmentShaderFlags {
@@ -168,11 +176,11 @@ class SRPEndHDR : public PLScene::SRPEnd {
 			PLRenderer::ProgramAttribute *pVertexPosition;
 			// Vertex shader uniforms
 			PLRenderer::ProgramUniform *pTextureSize;
+			PLRenderer::ProgramUniform *pAverageLuminanceTexture;
 			// Fragment shader uniforms
 			PLRenderer::ProgramUniform *pLuminanceConvert;
 			PLRenderer::ProgramUniform *pKey;
 			PLRenderer::ProgramUniform *pWhiteLevel;
-			PLRenderer::ProgramUniform *pAverageLuminanceTexture;
 			PLRenderer::ProgramUniform *pAverageLuminance;
 			PLRenderer::ProgramUniform *pBloomFactor;
 			PLRenderer::ProgramUniform *pBloomDownscale;

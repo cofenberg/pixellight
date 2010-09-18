@@ -203,7 +203,7 @@ void SRPDeferredGBuffer::CollectMeshBatchesRec(const SQCull &cCullQuery)
 	// Get scene container
 	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
 
-	// Render all visible scene nodes of this scene container
+	// Loop through all visible scene nodes of this scene container
 	Iterator<VisNode*> cIterator = cVisContainer.GetVisNodes().GetIterator();
 	while (cIterator.HasNext()) {
 		// Get visibility node and scene node
