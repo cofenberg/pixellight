@@ -102,9 +102,9 @@ class TextureBuffer : public Resource {
 			R8G8B8A8      = 13,	/**< 32-bit pixel format, 8 bits for red, green, blue and alpha */
 			R10G10B10A2   = 14,	/**< 32-bit pixel format, 10 bits for red, green, blue and 2 bits for alpha */
 			R16G16B16A16  = 15,	/**< 64-bit pixel format, 16 bits for red, green, blue and alpha */
-			DXT1          = 16,	/**< DXT1 format (RGB compression: 8:1) */
-			DXT3          = 17,	/**< DXT3 format (RGBA compression: 4:1) */
-			DXT5          = 18,	/**< DXT5 format (RGBA compression: 4:1) */
+			DXT1          = 16,	/**< DXT1 format (known as BC1 in DirectX 10, RGB compression: 8:1) */
+			DXT3          = 17,	/**< DXT3 format (known as BC2 in DirectX 10, RGBA compression: 4:1) */
+			DXT5          = 18,	/**< DXT5 format (known as BC3 in DirectX 10, RGBA compression: 4:1) */
 			LATC1         = 19,	/**< 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block) */
 			LATC2         = 20, /**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block) */
 			// Floating-point formats

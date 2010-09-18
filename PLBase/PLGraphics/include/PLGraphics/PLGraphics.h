@@ -141,9 +141,9 @@ enum EColorFormat {
 */
 enum ECompression {
 	CompressionNone = 0,	/**< No compression */
-	CompressionDXT1,		/**< DXT1 compression (RGB compression: 8:1, 8 bytes per block) */
-	CompressionDXT3,		/**< DXT3 compression (RGBA compression: 4:1, 16 bytes per block) */
-	CompressionDXT5,		/**< DXT5 compression (RGBA compression: 4:1, 16 bytes per block) */
+	CompressionDXT1,		/**< DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) */
+	CompressionDXT3,		/**< DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) */
+	CompressionDXT5,		/**< DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) */
 	CompressionLATC1,		/**< 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block) */
 	CompressionLATC2		/**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block) */
 };
