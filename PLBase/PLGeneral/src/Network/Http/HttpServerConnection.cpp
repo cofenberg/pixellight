@@ -23,9 +23,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLGeneral/System/System.h"
+#include "PLGeneral/File/File.h"
 #include "PLGeneral/Network/Http/HttpServer.h"
 #include "PLGeneral/Network/Http/HttpServerConnection.h"
-
+#include "PLGeneral/Network/Http/MimeTypeManager.h"
+//#include "PLGeneral/Network/Http/HttpServerConnection.h"
+//#include "PLGeneral/Network/Http/HttpServer.h"
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -51,6 +55,131 @@ HttpServerConnection::HttpServerConnection(HttpServer &cServer) : Connection((Ho
 */
 HttpServerConnection::~HttpServerConnection()
 {
+}
+
+/**
+*  @brief
+*    Send a file to the client
+*/
+void HttpServerConnection::SendFile(EHttpStatus nStatus, const String &sFilename)
+{
+	// Open file
+	File cFile(sFilename);
+	if (cFile.Open(File::FileRead)) {
+		// Send header
+		SendHeader(nStatus, MimeTypeManager::GetMimeType(sFilename), cFile.GetSize());
+
+		// Read in chunks of 256 bytes
+		char szBuffer[256];
+		while (!cFile.IsEof()) {
+			// Read from file
+			uint32 nSize = cFile.Read(szBuffer, 1, 255);
+
+			// Send
+			if (nSize > 0) Send((const char *)szBuffer, (uint32)nSize);
+		}
+
+		// Close file
+		cFile.Close();
+
+		// Close connection
+		Disconnect();
+	} else {
+		// Error: File not found
+		SendError(Http_404_NotFound);
+	}
+}
+
+/**
+*  @brief
+*    Send data to the client
+*/
+void HttpServerConnection::SendData(EHttpStatus nStatus, const String &sMimeType, const String &sContent)
+{
+	// Send header
+	SendHeader(nStatus, sMimeType, sContent.GetLength());
+
+	// Send page
+	Send(sContent);
+
+	// Close connection
+	Disconnect();
+}
+
+/**
+*  @brief
+*    Send a redirect
+*/
+void HttpServerConnection::SendRedirect(const String &sLocation)
+{
+	// HTTP protocol version and status
+	Send("HTTP/1.1 " + Http::GetStatusString(Http_301_MovedPermanently) + "\r\n");
+
+	// Date
+	Send("Date: " + System::GetInstance()->GetTime().ToString() + "\r\n");
+
+	// Redirect location
+	Send("Location: " + sLocation + "\r\n");
+
+	// Server identification
+	Send("Server: PixelLight HTTP Server\r\n");
+
+	// Connection type
+	Send("Connection: close\r\n");
+
+	// End header
+	Send("\r\n");
+
+	// Close
+	Disconnect();
+}
+
+/**
+*  @brief
+*    Send an error
+*/
+void HttpServerConnection::SendError(EHttpStatus nStatus)
+{
+	// Status code must be 400 or higher
+	if (nStatus > 400) {
+		// Call virtual error function
+		m_pServer->OnError(this, nStatus);
+	} else {
+		// Consider this as an internal server error
+		SendError(Http_500_InternalServerError);
+	}
+}
+
+/**
+*  @brief
+*    Send HTTP header
+*/
+void HttpServerConnection::SendHeader(EHttpStatus nStatus, const String &sMimeType, uint32 nLength)
+{
+	// HTTP protocol version and status
+	Send("HTTP/1.1 " + Http::GetStatusString(nStatus) + "\r\n");
+
+	// Date
+	Send("Date: " + System::GetInstance()->GetTime().ToString() + "\r\n");
+
+	// Content type
+	if (sMimeType != "") {
+		Send("Content-Type: " + sMimeType + "; charset=ISO-8859-1\r\n");
+	}
+
+	// Content length
+	if (nLength > 0) {
+		Send("Content-Length: " + String() + (int)nLength + "\r\n");
+	}
+
+	// Server identification
+	Send("Server: PixelLight HTTP Server\r\n");
+
+	// Connection type
+	Send("Connection: close\r\n");
+
+	// End header
+	Send("\r\n");
 }
 
 

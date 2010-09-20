@@ -1,3 +1,13 @@
+>> 20.09.2010
+[SB]
+- HttpServer: Methoden zum Senden von Daten nach HttpServerConnection verschoben, wo sie auch hingehören.
+  Eine Server-Klasse sollten eigentlich nur Connections verwalten, die eigentliche Kommunikation
+  zwischen zwei Hosts passiert aber immer in einer Connection, daher sollte die Funktionalität dieser
+  Kommunikation auch dort definiert werden. Dies macht auch die Verwendung und den Zugriff auf eine Connection
+  einfacher, ansonsten gibt es immer Probleme mit der Sichtbarkeit und der Vererbung von der Server-Klasse.
+
+
+
 >> 16.09.2010
 [CO]
 - "PLGeneralWindows.h" um MinGW Support erweitert

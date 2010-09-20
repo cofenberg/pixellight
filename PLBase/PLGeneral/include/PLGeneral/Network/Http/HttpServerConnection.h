@@ -71,6 +71,71 @@ class HttpServerConnection : public Connection {
 		*/
 		PLGENERAL_API virtual ~HttpServerConnection();
 
+		/**
+		*  @brief
+		*    Send a file to the client
+		*
+		*  @param[in] pConnection
+		*    Connection
+		*  @param[in] nStatus
+		*    HTTP status code
+		*  @param[in] sFilename
+		*    Filename
+		*/
+		PLGENERAL_API void SendFile(EHttpStatus nStatus, const String &sFilename);
+
+		/**
+		*  @brief
+		*    Send data to the client
+		*
+		*  @param[in] pConnection
+		*    Connection
+		*  @param[in] nStatus
+		*    HTTP status code
+		*  @param[in] sMimeType
+		*    MIME type
+		*  @param[in] sContent
+		*    Data to send
+		*/
+		PLGENERAL_API void SendData(EHttpStatus nStatus, const String &sMimeType, const String &sContent);
+
+		/**
+		*  @brief
+		*    Send a redirect
+		*
+		*  @param[in] pConnection
+		*    Connection
+		*  @param[in] sLocation
+		*    New location
+		*/
+		PLGENERAL_API void SendRedirect(const String &sLocation);
+
+		/**
+		*  @brief
+		*    Send an error
+		*
+		*  @param[in] pConnection
+		*    Connection
+		*  @param[in] nStatus
+		*    HTTP status code
+		*/
+		PLGENERAL_API void SendError(EHttpStatus nStatus);
+
+		/**
+		*  @brief
+		*    Send HTTP header
+		*
+		*  @param[in] pConnection
+		*    Connection
+		*  @param[in] nStatus
+		*    HTTP status code
+		*  @param[in] sMimeType
+		*    MIME type
+		*  @param[in] nLength
+		*    Content length (0 for not sending the content-length at all)
+		*/
+		PLGENERAL_API void SendHeader(EHttpStatus nStatus, const String &sMimeType, uint32 nLength);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual HttpServerConnection functions      ]
