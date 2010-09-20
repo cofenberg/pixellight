@@ -117,7 +117,7 @@ Were the default value is 0 meaning that by default all textures must have a pow
 
 
 \section{Texture compression}
-Try to use texture compression whenever possible - this will shorten the loading times, enhance the performance and of course, will safe memory on the GPU. The \emph{dds} image file format is best suited for this task because it supports many texture compression formats a GPU's can directly work with. Other traditional image file formats like \emph{jpg} should not be used as texture - GPU's don't understand the used compression techniques, and therefore after loading such an image, the data needs to be decompressed on the CPU in order to be able to upload it to the GPU. This is a slow process resulting in images with compression artefacts, but without a usable compression - it's even worse if this uncompressed data is compressed for instance to \emph{DXT1} before uploading to the CPU. (slow and additional compression artefacts)
+Try to use texture compression whenever possible - this will shorten the loading times, enhance the performance and of course, will safe memory on the GPU. The \emph{dds} image file format is best suited for this task because it supports many texture compression formats a GPU's can directly work with. Other traditional image file formats like \emph{jpg} should not be used as texture - GPU's don't understand the used compression techniques, and therefore after loading such an image, the data needs to be decompressed on the CPU in order to be able to upload it to the GPU. This is a slow process resulting in images with compression artefacts, but without a usable compression - it's even worse if this uncompressed data is compressed for instance to \emph{DXT1}\footnote{Called \emph{BC1} in \emph{DirectX 10}} before uploading to the CPU. (slow and additional compression artefacts)
 
 During production, one can use uncompressed textures so no compression artefacts are introduces during production when manipulating a texture multiple times. When publishing something, we highly recommend that the textures are compressed in a proper way. The additional work is really worth the effort, belief us.
 
@@ -127,7 +127,7 @@ When using luminance maps, meaning maps with only one channel, \emph{LATC1}\foot
 
 
 \paragraph{Color Map Compression}
-When using color maps like photos, meaning maps with three channels, \emph{DXT1}\footnote{Called \emph{BC1} in \emph{DirectX 10}} is a good choice for texture compression.
+When using color maps like photos, meaning maps with three channels, \emph{DXT1} is a good choice for texture compression.
 
 
 \paragraph{Color Map With Alpha Channel Compression}

@@ -1,3 +1,13 @@
+>> 18.09.2010
+[CO]
+- PLCompositing: SRPEndHDR: Wird automatische Helligkeitsermittlung verwendet, so wird beim Tone Mapping die Helligkeit nun im Vertex Shader
+  aus der Texture ausgelesen (Vertex Texture Fetch) und als z-Komponente der Texture Koordinate an den Fragment Shader weitergegeben. So hat
+  man nur noch 4 Zugriffe auf die Texture mit der Helligkeit anstatt xxxx zugriffe im Fragment Shader. Performancemäßig konnte ich zwar keinen
+  unterschied messen, eventuell weil der Texture Cache seinen Job sehr gut erledigt, aber man muss der GPU das Leben auch nicht unnötig schwerer
+  machen wenn es offensichtliche Optimierungsmöglichkeiten gibt. :D
+
+
+
 >> 17.09.2010
 [CO]
 PLCompositing:

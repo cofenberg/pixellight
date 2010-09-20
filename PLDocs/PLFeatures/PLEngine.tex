@@ -25,7 +25,7 @@
 \item{Primitives are drawn through vertex and index buffers for maximum performance}
 \item{Vertex streaming for combining the data of different vertex buffers}
 \item{1D, 2D (and rectangle), 3D and cube textures}
-\item{Mipmaps and texture compression support\footnote{DXT1, DXT3, DXT5, LATC1 and LATC2}. These can be created automatically on the fly or used from given dds data, for instance, for maximum control and best loading times.}
+\item{Mipmaps and texture compression support\footnote{DXT1 (BC1), DXT3 (BC2), DXT5 (BC3), LATC1 (3DC+/ATI1N/BC4) and LATC2 (3DC/ATI2N/BC5)}. These can be created automatically on the fly or used from given dds data, for instance, for maximum control and best loading times.}
 \item{Abstract GPU program interface with support for vertex, geometry and fragment shaders\footnote{The OpenGL renderer backend supports GLSL and Cg (\url{http://developer.nvidia.com/object/cg_toolkit.html}) as shader languages}}
 \item{Fonts and draw helpers so it's easy to draw lines, images and so on}
 \item{Interface for fixed functions to support legacy graphics cards without, or just limited shader support}
@@ -119,7 +119,7 @@ Scenes are rendered using a realtime compositing system. For example a first lay
 \item{Gamma correction}
 \item{Layers with debug information like wireframe, scene node icons, scene node names and so on}
 \item{Many material features like diffuse and opacity mapping, normal mapping, detail normal mapping, parallax mapping, two sided lighting, specular and gloss mapping, ambient occlusion mapping, light mapping, emissive mapping, glow mapping, fresnel reflection, spherical environment mapping, cubic environment mapping, reflectivity mapping}
-\item{Normal map compression using swizzled DXT5 (xGxR), LATC2\footnote{Formally \emph{3DC}/\emph{ATI1N}/\emph{ATI2N} on ATI GPU's only} and alternate XY swizzle LATC2 is supported}
+\item{Normal map compression using swizzled DXT5 (xGxR), LATC2\footnote{Formally \emph{3DC}/\emph{ATI2N} on ATI GPU's only} and alternate XY swizzle LATC2 is supported}
 \end{itemize}
 
 
