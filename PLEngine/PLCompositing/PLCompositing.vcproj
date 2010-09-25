@@ -576,6 +576,10 @@
 				RelativePath=".\src\Deferred\SRPDeferredSSAO_Cg.h"
 				>
 			</File>
+			<File
+				RelativePath=".\src\Deferred\SRPDeferredSSAO_GLSL.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Source Files"

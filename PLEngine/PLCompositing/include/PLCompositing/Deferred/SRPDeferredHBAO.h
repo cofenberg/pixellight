@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferredSSAO.h"
 
 
@@ -172,7 +173,7 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 	//[ Protected virtual SRPDeferredSSAO functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void DrawAO(PLScene::FullscreenQuad &cFullscreenQuad, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
+		virtual void DrawAO(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
 
 
 };

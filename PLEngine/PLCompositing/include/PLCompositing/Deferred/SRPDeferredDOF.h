@@ -199,11 +199,6 @@ class SRPDeferredDOF : public SRPDeferred {
 		*/
 		PLRenderer::TextureBuffer *GetBlurTextureBuffer() const;
 
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
 		/**
 		*  @brief
 		*    Called when a program became dirty

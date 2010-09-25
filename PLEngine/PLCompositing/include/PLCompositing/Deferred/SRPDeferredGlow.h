@@ -155,11 +155,6 @@ class SRPDeferredGlow : public SRPDeferred {
 		*/
 		PLRenderer::TextureBuffer *GetTextureBuffer() const;
 
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
 		/**
 		*  @brief
 		*    Called when a program became dirty

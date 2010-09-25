@@ -4,6 +4,8 @@ PLCompositing:
 - HDRBloom verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 - SRPDeferredGlow verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
 - SRPDeferredDOF verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
+- SRPDeferredSSAO verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
+-> Damit ist endlich alles in PLCompositing auf das neue Shader-Interface umgestellt und läuft auch direkt mit GLSL-Shadern :D
 
 
 

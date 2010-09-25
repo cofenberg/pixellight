@@ -28,8 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
-#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
 
 
@@ -37,13 +35,14 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
+	class Program;
+	class VertexBuffer;
+	class VertexShader;
+	class FragmentShader;
 	class ProgramUniform;
 	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
-}
-namespace PLScene {
-	class FullscreenQuad;
 }
 
 
@@ -125,12 +124,14 @@ class SRPDeferredSSAO : public SRPDeferred {
 		*  @brief
 		*    Draws the AO
 		*
-		*  @param[in] cFullscreenQuad
-		*    Fullscreen quad to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), don't change the shader language on each call (performance!)
+		*  @param[in] cVertexBuffer
+		*    Vertex buffer of the fullscreen quad
 		*  @param[in] cNormalDepthTextureBuffer
 		*    RG components of RT1 store the normal vector, B component of RT1 stores the linear view space depth
 		*/
-		virtual void DrawAO(PLScene::FullscreenQuad &cFullscreenQuad, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer) = 0;
+		virtual void DrawAO(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -139,40 +140,12 @@ class SRPDeferredSSAO : public SRPDeferred {
 	private:
 		/**
 		*  @brief
-		*    Returns the blur vertex shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*
-		*  @return
-		*    The blur vertex shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetBlurVertexShader(PLRenderer::Renderer &cRenderer);
-
-		/**
-		*  @brief
-		*    Returns the blur fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bXBlur
-		*    X blur, else it's y blur
-		*
-		*  @return
-		*    The blur fragment shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetBlurFragmentShader(PLRenderer::Renderer &cRenderer, bool bXBlur);
-
-		/**
-		*  @brief
-		*    Destroys all currently used shaders
-		*/
-		void DestroyShaders();
-
-		/**
-		*  @brief
 		*    Draws the blur
 		*
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), don't change the shader language on each call (performance!)
+		*  @param[in] cVertexBuffer
+		*    Vertex buffer of the fullscreen quad
 		*  @param[in] cInputTextureBuffer
 		*    Input texture buffer to apply to blur to
 		*  @param[in] cNormalDepthTextureBuffer
@@ -180,20 +153,43 @@ class SRPDeferredSSAO : public SRPDeferred {
 		*  @param[in] bXBlur
 		*    X blur, else it's y blur
 		*/
-		void DrawBlur(PLRenderer::TextureBufferRectangle &cInputTextureBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer, bool bXBlur);
+		void DrawBlur(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cInputTextureBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer, bool bXBlur);
+
+		/**
+		*  @brief
+		*    Called when a program became dirty
+		*
+		*  @param[in] pProgram
+		*    Program which became dirty
+		*/
+		void OnDirty(PLRenderer::Program *pProgram);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> EventHandlerDirty;
 
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer			*m_pRenderTargetAO;			/**< Render target catching the result of AO, can be NULL */
-		PLRenderer::SurfaceTextureBuffer			*m_pRenderTargetXBlur;		/**< Render target catching the result of x blur, can be NULL */
-		bool										 m_bBlurVertexShader;		/**< Generic blur vertex shader already build? */
-		PLRenderer::ShaderHandler					 m_cBlurVertexShader;		/**< Generic blur vertex shader */
-		bool										 m_bBlurFragmentShader[2];	/**< Fragment blur shader build? [XBlur] */
-		PLRenderer::ShaderHandler					 m_cBlurFragmentShader[2];	/**< Fragment blur shader mode [XBlur] */
-		PLGeneral::List<PLRenderer::ShaderHandler*>  m_lstShaders;				/**< List of all used shaders */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTargetAO;					/**< Render target catching the result of AO, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTargetXBlur;					/**< Render target catching the result of x blur, can be NULL */
+		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be NULL */
+		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pTextureSizeProgramUniform;			/**< Texture size program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pInputTextureSizeProgramUniform;	/**< Input texture size program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pBlurRadiusProgramUniform;			/**< Blur radius program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pBlurFalloffProgramUniform;			/**< Blur falloff program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pSharpnessProgramUniform;			/**< Sharpness program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pUVScaleProgramUniform;				/**< UV scale program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pInputTextureProgramUniform;		/**< Input texture program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pNormalDepthTextureProgramUniform;	/**< Normal depth texture program uniform, can be NULL */
 
 
 	//[-------------------------------------------------------]

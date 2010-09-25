@@ -593,6 +593,42 @@ TextureBuffer *SRPDeferredDOF::GetBlurTextureBuffer() const
 	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : NULL;
 }
 
+/**
+*  @brief
+*    Called when a program became dirty
+*/
+void SRPDeferredDOF::OnDirty(Program *pProgram)
+{
+	// Get attributes and uniforms
+	if (pProgram == m_pDepthBlurProgram) {
+		m_pDepthBlurPositionProgramAttribute		 = m_pDepthBlurProgram->GetAttribute("VertexPosition");
+		m_pDepthBlurTextureSizeProgramUniform		 = m_pDepthBlurProgram->GetUniform("TextureSize");
+		m_pDepthBlurDOFParamsProgramUniform			 = m_pDepthBlurProgram->GetUniform("DOFParams");
+		m_pDepthBlurRGBTextureProgramUniform		 = m_pDepthBlurProgram->GetUniform("RGBTexture");
+		m_pDepthBlurNormalDepthTextureProgramUniform = m_pDepthBlurProgram->GetUniform("NormalDepthTexture");
+	} else if (pProgram == m_pDownscaleProgram) {
+		m_pDownscalePositionProgramAttribute  = m_pDownscaleProgram->GetAttribute("VertexPosition");
+		m_pDownscaleTextureSizeProgramUniform = m_pDownscaleProgram->GetUniform("TextureSize");
+		m_pDownscaleTextureProgramUniform	  = m_pDownscaleProgram->GetUniform("Texture");
+	} else if (pProgram == m_pBlurProgram) {
+		m_pBlurPositionProgramAttribute  = m_pBlurProgram->GetAttribute("VertexPosition");
+		m_pBlurTextureSizeProgramUniform = m_pBlurProgram->GetUniform("TextureSize");
+		m_pBlurUVScaleProgramUniform	 = m_pBlurProgram->GetUniform("UVScale");
+		m_pBlurTextureProgramUniform	 = m_pBlurProgram->GetUniform("Texture");
+	} else if (pProgram == m_pResultProgram) {
+		m_pResultPositionProgramAttribute    = m_pResultProgram->GetAttribute("VertexPosition");
+		m_pResultTextureSizeProgramUniform   = m_pResultProgram->GetUniform("TextureSize");
+		m_pResultEffectWeightProgramUniform	 = m_pResultProgram->GetUniform("EffectWeight");
+		m_pResultBlurDownscaleProgramUniform = m_pResultProgram->GetUniform("BlurDownscale");
+		m_pResultBlurTextureProgramUniform	 = m_pResultProgram->GetUniform("BlurTexture");
+		m_pResultTextureProgramUniform		 = m_pResultProgram->GetUniform("Texture");
+	} else if (pProgram == m_pDebugProgram) {
+		m_pDebugPositionProgramAttribute  = m_pDebugProgram->GetAttribute("VertexPosition");
+		m_pDebugTextureSizeProgramUniform = m_pDebugProgram->GetUniform("TextureSize");
+		m_pDebugTextureProgramUniform	  = m_pDebugProgram->GetUniform("Texture");
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLScene::SceneRendererPass functions  ]
@@ -804,46 +840,6 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				}
 			}
 		}
-	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when a program became dirty
-*/
-void SRPDeferredDOF::OnDirty(Program *pProgram)
-{
-	// Get attributes and uniforms
-	if (pProgram == m_pDepthBlurProgram) {
-		m_pDepthBlurPositionProgramAttribute		 = m_pDepthBlurProgram->GetAttribute("VertexPosition");
-		m_pDepthBlurTextureSizeProgramUniform		 = m_pDepthBlurProgram->GetUniform("TextureSize");
-		m_pDepthBlurDOFParamsProgramUniform			 = m_pDepthBlurProgram->GetUniform("DOFParams");
-		m_pDepthBlurRGBTextureProgramUniform		 = m_pDepthBlurProgram->GetUniform("RGBTexture");
-		m_pDepthBlurNormalDepthTextureProgramUniform = m_pDepthBlurProgram->GetUniform("NormalDepthTexture");
-	} else if (pProgram == m_pDownscaleProgram) {
-		m_pDownscalePositionProgramAttribute  = m_pDownscaleProgram->GetAttribute("VertexPosition");
-		m_pDownscaleTextureSizeProgramUniform = m_pDownscaleProgram->GetUniform("TextureSize");
-		m_pDownscaleTextureProgramUniform	  = m_pDownscaleProgram->GetUniform("Texture");
-	} else if (pProgram == m_pBlurProgram) {
-		m_pBlurPositionProgramAttribute  = m_pBlurProgram->GetAttribute("VertexPosition");
-		m_pBlurTextureSizeProgramUniform = m_pBlurProgram->GetUniform("TextureSize");
-		m_pBlurUVScaleProgramUniform	 = m_pBlurProgram->GetUniform("UVScale");
-		m_pBlurTextureProgramUniform	 = m_pBlurProgram->GetUniform("Texture");
-	} else if (pProgram == m_pResultProgram) {
-		m_pResultPositionProgramAttribute    = m_pResultProgram->GetAttribute("VertexPosition");
-		m_pResultTextureSizeProgramUniform   = m_pResultProgram->GetUniform("TextureSize");
-		m_pResultEffectWeightProgramUniform	 = m_pResultProgram->GetUniform("EffectWeight");
-		m_pResultBlurDownscaleProgramUniform = m_pResultProgram->GetUniform("BlurDownscale");
-		m_pResultBlurTextureProgramUniform	 = m_pResultProgram->GetUniform("BlurTexture");
-		m_pResultTextureProgramUniform		 = m_pResultProgram->GetUniform("Texture");
-	} else if (pProgram == m_pDebugProgram) {
-		m_pDebugPositionProgramAttribute  = m_pDebugProgram->GetAttribute("VertexPosition");
-		m_pDebugTextureSizeProgramUniform = m_pDebugProgram->GetUniform("TextureSize");
-		m_pDebugTextureProgramUniform	  = m_pDebugProgram->GetUniform("Texture");
 	}
 }
 
