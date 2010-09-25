@@ -99,8 +99,8 @@ namespace PLCompositing {
 *      - LightMapColor:            If there's a 'LightMap', use this 3 floating point values to set the light map color, default: 1.0 1.0 1.0
 *    - EmissiveMap:                'Emissive lighting', not influenced by any lighting (2D, RGB, other usual name: 'self illumination map'), emissive materials will not automatically glow, for glow you need to set 'Glow', too
 *      - EmissiveMapColor:         If there's a 'EmissiveMap', use this 3 floating point values to set the emissive map color, default: 1.0 1.0 1.0
-*    - Glow:                       Glow factor, values 0.0...1.0=no glow...full glow, default: 0.0
-*      - GlowMap:                  If 'Glow' is not 0, per fragment 'glow' control (2D, grayscale)
+*      - Glow:                     Glow factor, values 0.0...1.0=no glow...full glow, default: 0.0 - glowing materials also need a EmissiveMap
+*        - GlowMap:                If 'Glow' is not 0, per fragment 'glow' control (2D, grayscale)
 *    - IndexOfRefraction:          Index of refraction (IOR), used for Fresnel reflection, <= 0.0 means no Fresnel reflection, default: 0.0 (List of refractive indices: http://en.wikipedia.org/wiki/List_of_refractive_indices, the index of refaction of the "from" material is set to air=1.0)
 *      - FresnelReflectionPower:   If 'IndexOfRefraction' is > 0.0, this is the Fresnel reflection power, default: 5.0
 *    - ReflectionColor:            If 'IndexOfRefraction' is > 0.0 or if there's a 'ReflectionMap', use this 3 floating point values to set the reflection color, default: 1.0 1.0 1.0
