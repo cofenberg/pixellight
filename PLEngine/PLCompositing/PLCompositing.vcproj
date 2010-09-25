@@ -433,6 +433,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Deferred\SRPDeferredDOF_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Deferred\SRPDeferredEdgeAA.cpp"
 				>
 			</File>

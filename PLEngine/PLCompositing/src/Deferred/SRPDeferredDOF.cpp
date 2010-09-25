@@ -24,10 +24,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <float.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
+#include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Scene/SNCamera.h>
@@ -36,7 +38,6 @@
 #include <PLScene/Compositing/General/SRPBegin.h>
 #include "PLCompositing/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Deferred/SRPDeferredDOF.h"
-#include "SRPDeferredDOF_Cg.h"	// The shader programs
 
 
 //[-------------------------------------------------------]
@@ -63,6 +64,8 @@ pl_implement_class(SRPDeferredDOF)
 *    Default constructor
 */
 SRPDeferredDOF::SRPDeferredDOF() :
+	EventHandlerDirty(&SRPDeferredDOF::OnDirty, this),
+	ShaderLanguage(this),
 	EffectWeight(this),
 	NearPlaneDepth(this),
 	FocalPlaneDepth(this),
@@ -71,14 +74,42 @@ SRPDeferredDOF::SRPDeferredDOF() :
 	BlurPasses(this),
 	BlurDownscale(this),
 	Flags(this),
-	m_bDepthBlurFragmentShader(false),
-	m_bDownsampleFragmentShader(false),
-	m_bBlurFragmentShader(false),
-	m_bResultFragmentShader(false),
-	m_bResultIndex(0)
+	m_bResultIndex(0),
+	m_pVertexShader(NULL),
+	m_pDepthBlurFragmentShader(NULL),
+	m_pDepthBlurProgram(NULL),
+	m_pDepthBlurPositionProgramAttribute(NULL),
+	m_pDepthBlurTextureSizeProgramUniform(NULL),
+	m_pDepthBlurDOFParamsProgramUniform(NULL),
+	m_pDepthBlurRGBTextureProgramUniform(NULL),
+	m_pDepthBlurNormalDepthTextureProgramUniform(NULL),
+	m_pDownscaleFragmentShader(NULL),
+	m_pDownscaleProgram(NULL),
+	m_pDownscalePositionProgramAttribute(NULL),
+	m_pDownscaleTextureSizeProgramUniform(NULL),
+	m_pDownscaleTextureProgramUniform(NULL),
+	m_pBlurFragmentShader(NULL),
+	m_pBlurProgram(NULL),
+	m_pBlurPositionProgramAttribute(NULL),
+	m_pBlurTextureSizeProgramUniform(NULL),
+	m_pBlurUVScaleProgramUniform(NULL),
+	m_pBlurTextureProgramUniform(NULL),
+	m_pResultFragmentShader(NULL),
+	m_pResultProgram(NULL),
+	m_pResultPositionProgramAttribute(NULL),
+	m_pResultTextureSizeProgramUniform(NULL),
+	m_pResultEffectWeightProgramUniform(NULL),
+	m_pResultBlurDownscaleProgramUniform(NULL),
+	m_pResultBlurTextureProgramUniform(NULL),
+	m_pResultTextureProgramUniform(NULL),
+	m_pDebugFragmentShader(NULL),
+	m_pDebugProgram(NULL),
+	m_pDebugPositionProgramAttribute(NULL),
+	m_pDebugTextureSizeProgramUniform(NULL),
+	m_pDebugTextureProgramUniform(NULL),
+	m_nDebugType(0)
 {
 	// Init data
-	MemoryManager::Set(m_bShowFragmentShader, 0, sizeof(m_bShowFragmentShader));
 	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
 }
 
@@ -94,27 +125,39 @@ SRPDeferredDOF::~SRPDeferredDOF()
 			delete m_pRenderTarget[i];
 	}
 
-	// Destroy the depth blur fragment shader
-	if (m_cDepthBlurFragmentShader.GetResource())
-		delete m_cDepthBlurFragmentShader.GetResource();
+	// Destroy the depth blur stuff
+	if (m_pDepthBlurProgram)
+		delete m_pDepthBlurProgram;
+	if (m_pDepthBlurFragmentShader)
+		delete m_pDepthBlurFragmentShader;
 
-	// Destroy the downsample fragment shader
-	if (m_cDownsampleFragmentShader.GetResource())
-		delete m_cDownsampleFragmentShader.GetResource();
+	// Destroy the downscale stuff
+	if (m_pDownscaleProgram)
+		delete m_pDownscaleProgram;
+	if (m_pDownscaleFragmentShader)
+		delete m_pDownscaleFragmentShader;
 
-	// Destroy the blur fragment shader
-	if (m_cBlurFragmentShader.GetResource())
-		delete m_cBlurFragmentShader.GetResource();
+	// Destroy the blur stuff
+	if (m_pBlurProgram)
+		delete m_pBlurProgram;
+	if (m_pBlurFragmentShader)
+		delete m_pBlurFragmentShader;
 
-	// Destroy the result fragment shader
-	if (m_cResultFragmentShader.GetResource())
-		delete m_cResultFragmentShader.GetResource();
+	// Destroy the result stuff
+	if (m_pResultProgram)
+		delete m_pResultProgram;
+	if (m_pResultFragmentShader)
+		delete m_pResultFragmentShader;
 
-	// Destroy the show fragment shader
-	for (int i=0; i<2; i++) {
-		if (m_cShowFragmentShader[i].GetResource())
-			delete m_cShowFragmentShader[i].GetResource();
-	}
+	// Destroy the debug stuff
+	if (m_pDebugProgram)
+		delete m_pDebugProgram;
+	if (m_pDebugFragmentShader)
+		delete m_pDebugFragmentShader;
+
+	// Destroy the vertex shader
+	if (m_pVertexShader)
+		delete m_pVertexShader;
 }
 
 
@@ -125,22 +168,87 @@ SRPDeferredDOF::~SRPDeferredDOF()
 *  @brief
 *    Calculates the depth blur
 */
-void SRPDeferredDOF::CalculateDepthBlur(FullscreenQuad &cFullscreenQuad, TextureBufferRectangle &cRGBTexture, TextureBufferRectangle &cNormalDepthTexture,
-										float fNearPlaneDepth, float fFocalPlaneDepth, float fFarPlaneDepth, float fBlurrinessCutoff)
+void SRPDeferredDOF::CalculateDepthBlur(const String &sShaderLanguage, VertexBuffer &cVertexBuffer, TextureBufferRectangle &cRGBTexture,
+										TextureBufferRectangle &cNormalDepthTexture, float fNearPlaneDepth, float fFocalPlaneDepth, float fFarPlaneDepth, float fBlurrinessCutoff)
 {
 	// Get the renderer instance
 	Renderer &cRenderer = cRGBTexture.GetRenderer();
 
-	// Get the fragment shader
-	Shader *pFragmentShader = GetDepthBlurFragmentShader(cRenderer);
-	if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-		// Set the fragment shader program
-		ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-		cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+	// Create the shaders and programs right now?
+	if (!m_pVertexShader || m_pVertexShader->GetShaderLanguage() != sShaderLanguage) {
+		// If there's an previous instance of the program, destroy it first
+		if (m_pDepthBlurProgram) {
+			delete m_pDepthBlurProgram;
+			m_pDepthBlurProgram = NULL;
+		}
+		if (m_pDepthBlurFragmentShader) {
+			delete m_pDepthBlurFragmentShader;
+			m_pDepthBlurFragmentShader = NULL;
+		}
+		if (m_pVertexShader) {
+			delete m_pVertexShader;
+			m_pVertexShader = NULL;
+		}
+		m_pDepthBlurPositionProgramAttribute			= NULL;
+		m_pDepthBlurTextureSizeProgramUniform			= NULL;
+		m_pDepthBlurDOFParamsProgramUniform				= NULL;
+		m_pDepthBlurRGBTextureProgramUniform			= NULL;
+		m_pDepthBlurNormalDepthTextureProgramUniform	= NULL;
 
-		{ // Set the "DOFParams" fragment shader parameter and ensure that all values are correct
-			static const String sDOFParams = "DOFParams";
+		// Shader source code
+		String sVertexShaderSourceCode;
+		String sFragmentShaderSourceCode;
+		if (sShaderLanguage == "GLSL") {
+			#include "SRPDeferredDOF_GLSL.h"
+			sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
+			sFragmentShaderSourceCode = sDeferredDOF_GLSL_FS_DepthBlur;
+		} else if (sShaderLanguage == "Cg") {
+			#include "SRPDeferredDOF_Cg.h"
+			sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
+			sFragmentShaderSourceCode = sDeferredDOF_Cg_FS_DepthBlur;
+		}
 
+		// Create a vertex shader instance
+		m_pVertexShader = cRenderer.CreateVertexShader(sShaderLanguage);
+		if (m_pVertexShader) {
+			// Set the vertex shader source code
+			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+		}
+
+		// Create a fragment shader instance
+		m_pDepthBlurFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
+		if (m_pDepthBlurFragmentShader) {
+			// Set the fragment shader source code
+			m_pDepthBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+		}
+
+		// Create a program instance
+		m_pDepthBlurProgram = cRenderer.CreateProgram(sShaderLanguage);
+		if (m_pDepthBlurProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pDepthBlurProgram->SetVertexShader(m_pVertexShader);
+			m_pDepthBlurProgram->SetFragmentShader(m_pDepthBlurFragmentShader);
+
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pDepthBlurProgram->EventDirty.Connect(&EventHandlerDirty);
+
+			// Get attributes and uniforms
+			OnDirty(m_pDepthBlurProgram);
+		}
+	}
+
+	// Make the depth blur GPU program to the currently used one
+	if (cRenderer.SetProgram(m_pDepthBlurProgram)) {
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		if (m_pDepthBlurPositionProgramAttribute)
+			m_pDepthBlurPositionProgramAttribute->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+		// Set the "TextureSize" fragment shader parameter
+		if (m_pDepthBlurTextureSizeProgramUniform)
+			m_pDepthBlurTextureSizeProgramUniform->Set(cRGBTexture.GetSize());
+
+		// Set the "DOFParams" fragment shader parameter and ensure that all values are correct
+		if (m_pDepthBlurDOFParamsProgramUniform) {
 			// fFocalPlaneDepth - fNearPlaneDepth is not allowed to be 0!
 			if (fNearPlaneDepth > fFocalPlaneDepth)
 				fNearPlaneDepth = fFocalPlaneDepth;
@@ -153,36 +261,36 @@ void SRPDeferredDOF::CalculateDepthBlur(FullscreenQuad &cFullscreenQuad, Texture
 			if (fFarPlaneDepth - fFocalPlaneDepth < FLT_MIN)
 				fFarPlaneDepth += FLT_MIN;
 
-			// Set parameter
-			pFragmentShaderProgram->SetParameter4f(sDOFParams, fNearPlaneDepth, fFocalPlaneDepth, fFarPlaneDepth, fBlurrinessCutoff);
+			// Set parameters
+			m_pDepthBlurDOFParamsProgramUniform->Set(fNearPlaneDepth, fFocalPlaneDepth, fFarPlaneDepth, fBlurrinessCutoff);
 		}
 
-		{ // Set the "RGBTexture" fragment shader parameter
-			static const String sRGBTexture = "RGBTexture";
-			const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sRGBTexture, &cRGBTexture);
-			if (nStage >= 0) {
-				cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-				cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-				cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+		// Set the "RGBTexture" fragment shader parameter
+		if (m_pDepthBlurRGBTextureProgramUniform) {
+			const int nTextureUnit = m_pDepthBlurRGBTextureProgramUniform->Set(&cRGBTexture);
+			if (nTextureUnit >= 0) {
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 			}
 		}
 
-		{ // Set the "NormalDepth" fragment shader parameter
-			static const String sNormalDepth = "NormalDepth";
-			const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sNormalDepth, &cNormalDepthTexture);
-			if (nStage >= 0) {
-				cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-				cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-				cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+		// Set the "NormalDepthTexture" fragment shader parameter
+		if (m_pDepthBlurNormalDepthTextureProgramUniform) {
+			const int nTextureUnit = m_pDepthBlurNormalDepthTextureProgramUniform->Set(&cNormalDepthTexture);
+			if (nTextureUnit >= 0) {
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 			}
 		}
 
 		// Draw the fullscreen quad
-		cFullscreenQuad.Draw(cRGBTexture.GetSize());
+		cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 	}
 }
 
@@ -190,7 +298,7 @@ void SRPDeferredDOF::CalculateDepthBlur(FullscreenQuad &cFullscreenQuad, Texture
 *  @brief
 *    Calculates the blur
 */
-void SRPDeferredDOF::CalculateBlur(FullscreenQuad &cFullscreenQuad, TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, uint32 nBlurPasses, float fDownscale)
+void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &cVertexBuffer, TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, uint32 nBlurPasses, float fDownscale)
 {
 	// Get the internal texture format to use
 	const TextureBuffer::EPixelFormat nInternalFormat = cOriginalTexture.GetFormat();
@@ -205,122 +313,274 @@ void SRPDeferredDOF::CalculateBlur(FullscreenQuad &cFullscreenQuad, TextureBuffe
 			for (int i=0; i<2; i++) {
 				// Render target size change?
 				if (m_pRenderTarget[i] && (m_pRenderTarget[i]->GetSize() != vRTSize || m_pRenderTarget[i]->GetFormat() != nInternalFormat)) {
-					// Destroy the downsample render target
+					// Destroy the downscale render target
 					if (m_pRenderTarget[i]) {
 						delete m_pRenderTarget[i];
 						m_pRenderTarget[i] = NULL;
 					}
 				}
 
-				// Create the downsample render target right now?
+				// Create the downscale render target right now?
 				if (!m_pRenderTarget[i])
 					m_pRenderTarget[i] = cRenderer.CreateSurfaceTextureBufferRectangle(vRTSize, nInternalFormat, SurfaceTextureBuffer::NoMultisampleAntialiasing);
 			}
 		}
 	}
 
-	{ // First step: Downscale
-		// Get the fragment shader
-		Shader *pFragmentShader = GetDownsampleFragmentShader(cRenderer);
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-			// Make the render target 0 to the current render target
-			cRenderer.SetRenderTarget(m_pRenderTarget[0]);
-			m_bResultIndex = 0;
+	// Create the shaders and programs right now?
+	if (!m_pDownscaleFragmentShader || m_pDownscaleFragmentShader->GetShaderLanguage() != sShaderLanguage) {
+		// If there's an previous instance of the program, destroy it first
+		if (m_pDownscaleProgram) {
+			delete m_pDownscaleProgram;
+			m_pDownscaleProgram = NULL;
+		}
+		if (m_pDownscaleFragmentShader) {
+			delete m_pDownscaleFragmentShader;
+			m_pDownscaleFragmentShader = NULL;
+		}
+		if (m_pBlurProgram) {
+			delete m_pBlurProgram;
+			m_pBlurProgram = NULL;
+		}
+		if (m_pBlurFragmentShader) {
+			delete m_pBlurFragmentShader;
+			m_pBlurFragmentShader = NULL;
+		}
+		m_pDownscalePositionProgramAttribute	= NULL;
+		m_pDownscaleTextureSizeProgramUniform	= NULL;
+		m_pDownscaleTextureProgramUniform		= NULL;
+		m_pBlurPositionProgramAttribute			= NULL;
+		m_pBlurTextureSizeProgramUniform		= NULL;
+		m_pBlurUVScaleProgramUniform			= NULL;
+		m_pBlurTextureProgramUniform			= NULL;
 
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+		// Shader source code
+		String sVertexShaderSourceCode;
+		String sFragmentShaderSourceCode_Downscale;
+		String sFragmentShaderSourceCode_Blur;
+		if (sShaderLanguage == "GLSL") {
+			#include "SRPDeferredDOF_GLSL.h"
+			sVertexShaderSourceCode				= sDeferredDOF_GLSL_VS;
+			sFragmentShaderSourceCode_Downscale	= sDeferredDOF_GLSL_FS_Downscale;
+			sFragmentShaderSourceCode_Blur		= sDeferredDOF_GLSL_FS_Blur;
+		} else if (sShaderLanguage == "Cg") {
+			#include "SRPDeferredDOF_Cg.h"
+			sVertexShaderSourceCode				= sDeferredDOF_Cg_VS;
+			sFragmentShaderSourceCode_Downscale = sDeferredDOF_Cg_FS_Downscale;
+			sFragmentShaderSourceCode_Blur		= sDeferredDOF_Cg_FS_Blur;
+		}
 
-			{ // Set the "Texture" fragment shader parameter
-				static const String sTexture = "Texture";
-				const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, &cOriginalTexture);
-				if (nStage >= 0) {
-					cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-					cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-					cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-					cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-					cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+		// Create a fragment shader instance
+		m_pDownscaleFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
+		if (m_pDownscaleFragmentShader) {
+			// Set the fragment shader source code
+			m_pDownscaleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downscale);
+		}
+		m_pBlurFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
+		if (m_pBlurFragmentShader) {
+			// Set the fragment shader source code
+			m_pBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Blur);
+		}
+
+		// Create a program instance
+		m_pDownscaleProgram = cRenderer.CreateProgram(sShaderLanguage);
+		if (m_pDownscaleProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pDownscaleProgram->SetVertexShader(m_pVertexShader);
+			m_pDownscaleProgram->SetFragmentShader(m_pDownscaleFragmentShader);
+
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pDownscaleProgram->EventDirty.Connect(&EventHandlerDirty);
+
+			// Get attributes and uniforms
+			OnDirty(m_pDownscaleProgram);
+		}
+		m_pBlurProgram = cRenderer.CreateProgram(sShaderLanguage);
+		if (m_pBlurProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pBlurProgram->SetVertexShader(m_pVertexShader);
+			m_pBlurProgram->SetFragmentShader(m_pBlurFragmentShader);
+
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pBlurProgram->EventDirty.Connect(&EventHandlerDirty);
+
+			// Get attributes and uniforms
+			OnDirty(m_pBlurProgram);
+		}
+	}
+
+	// First step: Downscale -> Make the downscale GPU program to the currently used one
+	if (cRenderer.SetProgram(m_pDownscaleProgram)) {
+		// Make the render target 0 to the current render target
+		cRenderer.SetRenderTarget(m_pRenderTarget[0]);
+		m_bResultIndex = 0;
+
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		if (m_pDownscalePositionProgramAttribute)
+			m_pDownscalePositionProgramAttribute->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+		// Set the "TextureSize" fragment shader parameter
+		if (m_pDownscaleTextureSizeProgramUniform)
+			m_pDownscaleTextureSizeProgramUniform->Set(cOriginalTexture.GetSize());
+
+		// Set the "Texture" fragment shader parameter
+		if (m_pDownscaleTextureProgramUniform) {
+			const int nTextureUnit = m_pDownscaleTextureProgramUniform->Set(&cOriginalTexture);
+			if (nTextureUnit >= 0) {
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+			}
+		}
+
+		// Draw the fullscreen quad
+		cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+	}
+
+	// Second step: Gaussian convolution filter to glow - Make the bloom GPU program to the currently used one
+	if (cRenderer.SetProgram(m_pBlurProgram)) {
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		if (m_pBlurPositionProgramAttribute)
+			m_pBlurPositionProgramAttribute->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+		// Set the "TextureSize" fragment shader parameter - both render targets have the same size
+		if (m_pBlurTextureSizeProgramUniform)
+			m_pBlurTextureSizeProgramUniform->Set(m_pRenderTarget[0]->GetSize());
+
+		// Horizontal and vertical blur
+		for (uint32 i=0; i<nBlurPasses; i++) {
+			// Make the render target 1 to the current render target
+			cRenderer.SetRenderTarget(m_pRenderTarget[!m_bResultIndex]);
+
+			// Set the "UVScale" fragment shader parameter
+			if (m_pBlurUVScaleProgramUniform) {
+				if (i%2 != 0)
+					m_pBlurUVScaleProgramUniform->Set(0.0f, 1.0f);
+				else
+					m_pBlurUVScaleProgramUniform->Set(1.0f, 0.0f);
+			}
+
+			// Set the "Texture" fragment shader parameter
+			if (m_pBlurTextureProgramUniform) {
+				const int nTextureUnit = m_pBlurTextureProgramUniform->Set(m_pRenderTarget[m_bResultIndex]->GetTextureBuffer());
+				if (nTextureUnit >= 0) {
+					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+					cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
+					cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 				}
 			}
 
 			// Draw the fullscreen quad
-			cFullscreenQuad.Draw(cOriginalTexture.GetSize());
-		}
-	}
+			cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 
-	{ // Gaussian convolution filter to blur
-		// Get the fragment shader
-		Shader *pFragmentShader = GetBlurFragmentShader(cRenderer);
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
-
-			// Horizontal and vertical blur
-			for (uint32 i=0; i<nBlurPasses; i++) {
-				// Make the render target 1 to the current render target
-				cRenderer.SetRenderTarget(m_pRenderTarget[!m_bResultIndex]);
-
-				{ // Set the "UVScale" fragment shader parameter
-					static const String sUVScale = "UVScale";
-					if (i%2 != 0)
-						pFragmentShaderProgram->SetParameter2f(sUVScale, 0.0f, 1.0f);
-					else
-						pFragmentShaderProgram->SetParameter2f(sUVScale, 1.0f, 0.0f);
-				}
-
-				{ // Set the "Texture" fragment shader parameter
-					static const String sTexture = "Texture";
-					const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, m_pRenderTarget[m_bResultIndex]->GetTextureBuffer());
-					if (nStage >= 0) {
-						cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-						cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-						cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-						cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-						cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
-					}
-				}
-
-				// Draw the fullscreen quad
-				cFullscreenQuad.Draw(m_pRenderTarget[0]->GetSize());
-
-				// The result is now within the other render target
-				m_bResultIndex = !m_bResultIndex;
-			}
+			// The result is now within the other render target
+			m_bResultIndex = !m_bResultIndex;
 		}
 	}
 }
 
 /**
 *  @brief
-*    Shows data
+*    Debugs data
 */
-void SRPDeferredDOF::Show(FullscreenQuad &cFullscreenQuad, TextureBufferRectangle &cTexture, uint32 nType)
+void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexBuffer, TextureBufferRectangle &cTexture, uint32 nType)
 {
 	// Get the renderer instance
 	Renderer &cRenderer = cTexture.GetRenderer();
 
-	// Get the fragment shader
-	Shader *pFragmentShader = GetShowFragmentShader(cRenderer, nType);
-	if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-		// Set the fragment shader program
-		ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-		cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+	// Create the shaders and programs right now?
+	if (!m_pDebugFragmentShader || m_pDebugFragmentShader->GetShaderLanguage() != sShaderLanguage || m_nDebugType != nType) {
+		// If there's an previous instance of the program, destroy it first
+		if (m_pDebugProgram) {
+			delete m_pDebugProgram;
+			m_pDebugProgram = NULL;
+		}
+		if (m_pDebugFragmentShader) {
+			delete m_pDebugFragmentShader;
+			m_pDebugFragmentShader = NULL;
+		}
+		m_pDebugPositionProgramAttribute	= NULL;
+		m_pDebugTextureSizeProgramUniform	= NULL;
+		m_pDebugTextureProgramUniform		= NULL;
 
-		{ // Set the "Texture" fragment shader parameter
-			static const String sTexture = "Texture";
-			const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, &cTexture);
-			if (nStage >= 0) {
-				cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-				cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-				cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+		// Get the definition
+		String sDefinition;
+		switch (nType) {
+			 case 0:
+				 sDefinition = "#define FS_DEPTH_BLUR\\n";
+				 break;
+
+			 case 1:
+				 sDefinition = "#define FS_BLUR\\n";
+				 break;
+		}
+
+		// Shader source code
+		String sVertexShaderSourceCode;
+		String sFragmentShaderSourceCode;
+		if (sShaderLanguage == "GLSL") {
+			#include "SRPDeferredDOF_GLSL.h"
+			sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
+			sFragmentShaderSourceCode = sDefinition + sDeferredDOF_GLSL_FS_Debug;
+		} else if (sShaderLanguage == "Cg") {
+			#include "SRPDeferredDOF_Cg.h"
+			sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
+			sFragmentShaderSourceCode = sDefinition + sDeferredDOF_Cg_FS_Debug;
+		}
+
+		// Create a fragment shader instance
+		m_pDebugFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
+		if (m_pDebugFragmentShader) {
+			// Set the fragment shader source code
+			m_pDebugFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+		}
+
+		// Create a program instance
+		m_pDebugProgram = cRenderer.CreateProgram(sShaderLanguage);
+		if (m_pDebugProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pDebugProgram->SetVertexShader(m_pVertexShader);
+			m_pDebugProgram->SetFragmentShader(m_pDebugFragmentShader);
+
+			// Add our nark which will inform us as soon as the program gets dirty
+			m_pDebugProgram->EventDirty.Connect(&EventHandlerDirty);
+
+			// Get attributes and uniforms
+			OnDirty(m_pDebugProgram);
+
+			// Backup the current debug type
+			m_nDebugType = nType;
+		}
+	}
+
+	// Make the depth blur GPU program to the currently used one
+	if (cRenderer.SetProgram(m_pDebugProgram)) {
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		if (m_pDebugPositionProgramAttribute)
+			m_pDebugPositionProgramAttribute->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+		// Set the "TextureSize" fragment shader parameter
+		if (m_pDebugTextureSizeProgramUniform)
+			m_pDebugTextureSizeProgramUniform->Set(cTexture.GetSize());
+
+		// Set the "Texture" fragment shader parameter
+		if (m_pDebugTextureProgramUniform) {
+			const int nTextureUnit = m_pDebugTextureProgramUniform->Set(&cTexture);
+			if (nTextureUnit >= 0) {
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 			}
 		}
 
 		// Draw the fullscreen quad
-		cFullscreenQuad.Draw(cTexture.GetSize());
+		cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 	}
 }
 
@@ -331,139 +591,6 @@ void SRPDeferredDOF::Show(FullscreenQuad &cFullscreenQuad, TextureBufferRectangl
 TextureBuffer *SRPDeferredDOF::GetBlurTextureBuffer() const
 {
 	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : NULL;
-}
-
-/**
-*  @brief
-*    Returns the depth blur fragment shader
-*/
-Shader *SRPDeferredDOF::GetDepthBlurFragmentShader(Renderer &cRenderer)
-{
-	// Get/construct the shader
-	Shader *pShader = m_cDepthBlurFragmentShader.GetResource();
-	if (!pShader && !m_bDepthBlurFragmentShader) {
-		const static String ShaderFilename = "Fragment/SRPDeferredDOF_DepthBlur.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredDOF_DepthBlur_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredDOF_DepthBlur_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf");
-		}
-		m_cDepthBlurFragmentShader.SetResource(pShader);
-		m_bDepthBlurFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the downsample fragment shader
-*/
-Shader *SRPDeferredDOF::GetDownsampleFragmentShader(Renderer &cRenderer)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cDownsampleFragmentShader;
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bDownsampleFragmentShader) {
-		const static String ShaderFilename = "Fragment/SRPDeferredBlur_Downsample.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredDOF_Downsample_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredDOF_Downsample_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf");
-		}
-		cShaderHandler.SetResource(pShader);
-		m_bDownsampleFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the blur fragment shader
-*/
-Shader *SRPDeferredDOF::GetBlurFragmentShader(Renderer &cRenderer)
-{
-	// Get/construct the shader
-	Shader *pShader = m_cBlurFragmentShader.GetResource();
-	if (!pShader && !m_bBlurFragmentShader) {
-		const static String ShaderFilename = "Fragment/SRPDeferredDOF_Blur.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredDOF_Blur_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredDOF_Blur_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf");
-		}
-		m_cBlurFragmentShader.SetResource(pShader);
-		m_bBlurFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the result fragment shader
-*/
-Shader *SRPDeferredDOF::GetResultFragmentShader(Renderer &cRenderer)
-{
-	// Get/construct the shader
-	Shader *pShader = m_cResultFragmentShader.GetResource();
-	if (!pShader && !m_bResultFragmentShader) {
-		const static String ShaderFilename = "Fragment/SRPDeferredDOF_Result.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredDOF_Result_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredDOF_Result_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf");
-		}
-		m_cResultFragmentShader.SetResource(pShader);
-		m_bResultFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the show fragment shader
-*/
-Shader *SRPDeferredDOF::GetShowFragmentShader(Renderer &cRenderer, uint32 nType)
-{
-	// Get/construct the shader
-	Shader *pShader = m_cShowFragmentShader[nType].GetResource();
-	if (!pShader && !m_bShowFragmentShader[nType]) {
-		const static String ShaderFilename = "Fragment/SRPDeferredDOF_Show.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		switch (nType) {
-			case 0:
-				sDefines += "#define DEPTH_BLUR\n";
-				sName    += "[DepthBlur]";
-				break;
-
-			case 1:
-				sDefines += "#define BLUR\n";
-				sName    += "[Blur]";
-				break;
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszDeferredDOF_Show_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszDeferredDOF_Show_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		m_cShowFragmentShader[nType].SetResource(pShader);
-		m_bShowFragmentShader[nType] = true;
-	}
-
-	// Return the shader
-	return pShader;
 }
 
 
@@ -510,98 +637,213 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// Get the fullscreen quad instance
 				FullscreenQuad *pFullscreenQuad = pSRPDeferredGBuffer->GetFullscreenQuad();
 				if (pFullscreenQuad) {
-					// Get the "PLScene::SRPBegin" instance
-					SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
-					if (pSRPBegin) {
-						// We need up-to-date front render target content, so swap the render targets
-						pSRPBegin->SwapRenderTargets();
+					// Get the vertex buffer of the fullscreen quad
+					VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
+					if (pVertexBuffer) {
+						// Get the "PLScene::SRPBegin" instance
+						SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
+						if (pSRPBegin) {
+							// We need up-to-date front render target content, so swap the render targets
+							pSRPBegin->SwapRenderTargets();
 
-						// Get the front render target of SRPBegin, this holds the current content
-						SurfaceTextureBuffer *pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
-						if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
-							// Reset all render states to default
-							cRenderer.GetRendererContext().GetEffectManager().Use();
-							cRenderer.SetColorMask();
+							// Get the front render target of SRPBegin, this holds the current content
+							SurfaceTextureBuffer *pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
+							if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
+								// Get the shader language to use
+								String sShaderLanguage = ShaderLanguage;
+								if (!sShaderLanguage.GetLength())
+									sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
-							// Calculate the depth blur
-							CalculateDepthBlur(*pFullscreenQuad, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), *pNormalDepthTextureBuffer, fNearPlaneDepth, fFocalPlaneDepth, fFarPlaneDepth, fBlurrinessCutoff);
-							if (GetFlags() & ShowDepthBlur) {
-								// Show depth blur data
-								pSRPBegin->SwapRenderTargets();
-								pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
-								if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer())
-									Show(*pFullscreenQuad, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), 0);
-							} else {
-								// Calculate the blur texture buffer
-								if (BlurDownscale < 1.0f)
-									BlurDownscale = 1.0f;
-								CalculateBlur(*pFullscreenQuad, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), 0.0f, BlurPasses, BlurDownscale);
+								// Reset all render states to default
+								cRenderer.GetRendererContext().GetEffectManager().Use();
 
-								// We need up-to-date front render target content, so swap the render targets
-								pSRPBegin->SwapRenderTargets();
+								// Setup renderer
+								const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+								cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+								cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+								cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+								cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+								cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
 
-								// Get blur texture buffer
-								TextureBufferRectangle *pTextureBuffer = (TextureBufferRectangle*)GetBlurTextureBuffer();
-								if (pTextureBuffer) {
-									// Show blur data?
-									if (GetFlags() & ShowBlur) {
-										Show(*pFullscreenQuad, *pTextureBuffer, 1);
-									} else {
-										pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
-										if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
-											// Get and set the fragment shader
-											Shader *pFragmentShader = GetResultFragmentShader(cRenderer);
-											if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-												// Get and set the fragment shader program
-												ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-												cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
+								// Calculate the depth blur
+								cRenderer.SetColorMask(false, false, false, true);
+								CalculateDepthBlur(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), *pNormalDepthTextureBuffer, fNearPlaneDepth, fFocalPlaneDepth, fFarPlaneDepth, fBlurrinessCutoff);
+								cRenderer.SetColorMask();
+								if (GetFlags() & DebugDepthBlur) {
+									// Debug depth blur data
+									pSRPBegin->SwapRenderTargets();
+									pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
+									if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer())
+										Debug(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), 0);
+								} else {
+									// Calculate the blur texture buffer
+									if (BlurDownscale < 1.0f)
+										BlurDownscale = 1.0f;
+									CalculateBlur(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), 0.0f, BlurPasses, BlurDownscale);
 
-												{ // Set the "EffectWeight" fragment shader parameter
-													static const String sEffectWeight = "EffectWeight";
-													pFragmentShaderProgram->SetParameter1f(sEffectWeight, fEffectWeight);
-												}
+									// We need up-to-date front render target content, so swap the render targets
+									pSRPBegin->SwapRenderTargets();
 
-												{ // Set the "BlurDownscale" fragment shader parameter
-													static const String sBlurDownscale = "BlurDownscale";
-													pFragmentShaderProgram->SetParameter1f(sBlurDownscale, BlurDownscale);
-												}
+									// Get blur texture buffer
+									TextureBufferRectangle *pTextureBuffer = (TextureBufferRectangle*)GetBlurTextureBuffer();
+									if (pTextureBuffer) {
+										// Debug blur data?
+										if (GetFlags() & DebugBlur) {
+											Debug(sShaderLanguage, *pVertexBuffer, *pTextureBuffer, 1);
+										} else {
+											pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
+											if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
+												// Create the shaders and programs right now?
+												if (!m_pResultFragmentShader || m_pResultFragmentShader->GetShaderLanguage() != sShaderLanguage) {
+													// If there's an previous instance of the program, destroy it first
+													if (m_pResultProgram) {
+														delete m_pResultProgram;
+														m_pResultProgram = NULL;
+													}
+													if (m_pResultFragmentShader) {
+														delete m_pResultFragmentShader;
+														m_pResultFragmentShader = NULL;
+													}
+													m_pResultPositionProgramAttribute		= NULL;
+													m_pResultTextureSizeProgramUniform		= NULL;
+													m_pResultEffectWeightProgramUniform		= NULL;
+													m_pResultBlurDownscaleProgramUniform	= NULL;
+													m_pResultBlurTextureProgramUniform		= NULL;
+													m_pResultTextureProgramUniform			= NULL;
 
-												{ // Set the "BlurTexture" fragment shader parameter
-													static const String sBlurTexture = "BlurTexture";
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sBlurTexture, pTextureBuffer);
-													if (nStage >= 0) {
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-														cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-														cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-														cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+													// Shader source code
+													String sVertexShaderSourceCode;
+													String sFragmentShaderSourceCode;
+													if (sShaderLanguage == "GLSL") {
+														#include "SRPDeferredDOF_GLSL.h"
+														sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
+														sFragmentShaderSourceCode = sDeferredDOF_GLSL_FS_Result;
+													} else if (sShaderLanguage == "Cg") {
+														#include "SRPDeferredDOF_Cg.h"
+														sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
+														sFragmentShaderSourceCode = sDeferredDOF_Cg_FS_Result;
+													}
+
+													// Create a fragment shader instance
+													m_pResultFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
+													if (m_pResultFragmentShader) {
+														// Set the fragment shader source code
+														m_pResultFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+													}
+
+													// Create a program instance
+													m_pResultProgram = cRenderer.CreateProgram(sShaderLanguage);
+													if (m_pResultProgram) {
+														// Assign the created vertex and fragment shaders to the program
+														m_pResultProgram->SetVertexShader(m_pVertexShader);
+														m_pResultProgram->SetFragmentShader(m_pResultFragmentShader);
+
+														// Add our nark which will inform us as soon as the program gets dirty
+														m_pResultProgram->EventDirty.Connect(&EventHandlerDirty);
+
+														// Get attributes and uniforms
+														OnDirty(m_pResultProgram);
 													}
 												}
 
-												{ // Set the "Texture" fragment shader parameter
-													static const String sTexture = "Texture";
-													const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, pFrontSurfaceTextureBuffer->GetTextureBuffer());
-													if (nStage >= 0) {
-														cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-														cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-														cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-														cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-														cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
-													}
-												}
+												// Make the result GPU program to the currently used one
+												if (cRenderer.SetProgram(m_pResultProgram)) {
+													// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+													if (m_pResultPositionProgramAttribute)
+														m_pResultPositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
 
-												// Draw the fullscreen quad
-												pFullscreenQuad->Draw(((TextureBufferRectangle*)pFrontSurfaceTextureBuffer->GetTextureBuffer())->GetSize());
+													// Set the "TextureSize" fragment shader parameter
+													if (m_pResultTextureSizeProgramUniform)
+														m_pResultTextureSizeProgramUniform->Set(((TextureBufferRectangle*)pFrontSurfaceTextureBuffer->GetTextureBuffer())->GetSize());
+
+													// Set the "EffectWeight" fragment shader parameter
+													if (m_pResultEffectWeightProgramUniform)
+														m_pResultEffectWeightProgramUniform->Set(fEffectWeight);
+
+													// Set the "BlurDownscale" fragment shader parameter
+													if (m_pResultBlurDownscaleProgramUniform)
+														m_pResultBlurDownscaleProgramUniform->Set(BlurDownscale);
+
+													// Set the "BlurTexture" fragment shader parameter
+													if (m_pResultBlurTextureProgramUniform) {
+														const int nTextureUnit = m_pResultBlurTextureProgramUniform->Set(pTextureBuffer);
+														if (nTextureUnit >= 0) {
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+														}
+													}
+
+													// Set the "Texture" fragment shader parameter
+													if (m_pResultTextureProgramUniform) {
+														const int nTextureUnit = m_pResultTextureProgramUniform->Set(pFrontSurfaceTextureBuffer->GetTextureBuffer());
+														if (nTextureUnit >= 0) {
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+															cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+														}
+													}
+
+													// Draw the fullscreen quad
+													cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+												}
 											}
 										}
 									}
 								}
+
+								// Restore fixed fill mode render state
+								cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when a program became dirty
+*/
+void SRPDeferredDOF::OnDirty(Program *pProgram)
+{
+	// Get attributes and uniforms
+	if (pProgram == m_pDepthBlurProgram) {
+		m_pDepthBlurPositionProgramAttribute		 = m_pDepthBlurProgram->GetAttribute("VertexPosition");
+		m_pDepthBlurTextureSizeProgramUniform		 = m_pDepthBlurProgram->GetUniform("TextureSize");
+		m_pDepthBlurDOFParamsProgramUniform			 = m_pDepthBlurProgram->GetUniform("DOFParams");
+		m_pDepthBlurRGBTextureProgramUniform		 = m_pDepthBlurProgram->GetUniform("RGBTexture");
+		m_pDepthBlurNormalDepthTextureProgramUniform = m_pDepthBlurProgram->GetUniform("NormalDepthTexture");
+	} else if (pProgram == m_pDownscaleProgram) {
+		m_pDownscalePositionProgramAttribute  = m_pDownscaleProgram->GetAttribute("VertexPosition");
+		m_pDownscaleTextureSizeProgramUniform = m_pDownscaleProgram->GetUniform("TextureSize");
+		m_pDownscaleTextureProgramUniform	  = m_pDownscaleProgram->GetUniform("Texture");
+	} else if (pProgram == m_pBlurProgram) {
+		m_pBlurPositionProgramAttribute  = m_pBlurProgram->GetAttribute("VertexPosition");
+		m_pBlurTextureSizeProgramUniform = m_pBlurProgram->GetUniform("TextureSize");
+		m_pBlurUVScaleProgramUniform	 = m_pBlurProgram->GetUniform("UVScale");
+		m_pBlurTextureProgramUniform	 = m_pBlurProgram->GetUniform("Texture");
+	} else if (pProgram == m_pResultProgram) {
+		m_pResultPositionProgramAttribute    = m_pResultProgram->GetAttribute("VertexPosition");
+		m_pResultTextureSizeProgramUniform   = m_pResultProgram->GetUniform("TextureSize");
+		m_pResultEffectWeightProgramUniform	 = m_pResultProgram->GetUniform("EffectWeight");
+		m_pResultBlurDownscaleProgramUniform = m_pResultProgram->GetUniform("BlurDownscale");
+		m_pResultBlurTextureProgramUniform	 = m_pResultProgram->GetUniform("BlurTexture");
+		m_pResultTextureProgramUniform		 = m_pResultProgram->GetUniform("Texture");
+	} else if (pProgram == m_pDebugProgram) {
+		m_pDebugPositionProgramAttribute  = m_pDebugProgram->GetAttribute("VertexPosition");
+		m_pDebugTextureSizeProgramUniform = m_pDebugProgram->GetUniform("TextureSize");
+		m_pDebugTextureProgramUniform	  = m_pDebugProgram->GetUniform("Texture");
 	}
 }
 

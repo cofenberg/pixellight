@@ -45,9 +45,6 @@ namespace PLRenderer {
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
-namespace PLScene {
-	class FullscreenQuad;
-}
 
 
 //[-------------------------------------------------------]
