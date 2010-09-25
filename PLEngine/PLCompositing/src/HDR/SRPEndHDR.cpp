@@ -169,6 +169,14 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					cRenderer.GetRendererContext().GetEffectManager().Use();
 					cRenderer.SetColorMask();
 
+					// Setup renderer
+					const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+					cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+					cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+					cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
+					cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+					cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
 					// Get the requested features
 					bool bToneMapping				= !(GetFlags() & NoToneMapping);
 					bool bAutomaticAverageLuminance = !(GetFlags() & NoAutomaticAverageLuminance);
@@ -361,20 +369,12 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							}
 						}
 
-						// Setup renderer
-						const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
-						cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
-						cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
-						cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
-						cRenderer.SetRenderState(RenderState::ZEnable,			 false);
-						cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
-
 						// Draw the fullscreen quad
 						cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
-
-						// Restore fixed fill mode render state
-						cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 					}
+
+					// Restore fixed fill mode render state
+					cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 				}
 			}
 		}

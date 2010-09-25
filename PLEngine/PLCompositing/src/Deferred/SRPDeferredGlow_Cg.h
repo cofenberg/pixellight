@@ -17,24 +17,47 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
- *
- *  Definitions:
- *  - DISCARD: Use discard
 \*********************************************************/
 
 
-const static char *pszDeferredGlow_Downsample_Cg_FS = "\n\
+// Cg vertex shader source code
+static const PLGeneral::String sDeferredGlow_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+};\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+	   uniform int2	  TextureSize)					// Texture size in texel\n\
+{\n\
+	VS_OUTPUT OUT;\n\
+\n\
+	// Pass through the vertex position\n\
+	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
+\n\
+	// Pass through the scaled vertex texture coordinate\n\
+	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
+\n\
+	// Done\n\
+	return OUT;\n\
+}";
+
+
+// Downscale Cg fragment shader source code
+static const PLGeneral::String sDeferredGlow_Cg_FS_Downscale = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR;\n\
 };\n\
-\n\
 \n\
 // Neighbor offset table\n\
 const static float2 Offsets[16] = {\n\
@@ -53,7 +76,7 @@ const static float2 Offsets[16] = {\n\
 	float2(-1.5f, -1.5f), // 12\n\
 	float2(-1.5f, -0.5f), // 13\n\
 	float2(-1.5f,  0.5f), // 14\n\
-	float2(-1.5f,  1.5f), // 15\n\
+	float2(-1.5f,  1.5f)  // 15\n\
 };\n\
 \n\
 // Main main function\n\
@@ -62,27 +85,28 @@ FS_OUTPUT main(VS_OUTPUT  IN		// Interpolated output from the vertex stage\n\
 {\n\
 	FS_OUTPUT OUT;\n\
 \n\
-	// Downsample\n\
+	// Downscale\n\
 	float4 color = 0;\n\
 	for (int i=0; i<16; i++)\n\
-		color += texRECT(Texture, IN.texUV + Offsets[i]);\n\
-	OUT.color = color*(1.0f/16.0f);\n\
+		color += texRECT(Texture, IN.TexCoord + Offsets[i]);\n\
+	OUT.Color0 = color*(1.0f/16.0f);\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";
 
 
-const static char *pszDeferredGlow_Cg_FS = "\n\
+// Blur Cg fragment shader source code
+static const PLGeneral::String sDeferredGlow_Cg_FS_Blur = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR;\n\
 };\n\
 \n\
 // Neighbor offset table\n\
@@ -120,29 +144,30 @@ const static float Weights[13] = {\n\
 // Main function\n\
 FS_OUTPUT main(VS_OUTPUT   IN		// Interpolated output from the vertex stage\n\
 	 , uniform float2	   UVScale	// UV scale\n\
-	 , uniform samplerRECT Texture)	// HDR texture\n\
+	 , uniform samplerRECT Texture)	// texture\n\
 {\n\
 	FS_OUTPUT OUT;\n\
 \n\
-	OUT.color = 0;\n\
+	OUT.Color0 = 0;\n\
 	for (int i=0; i<13; i++)\n\
-		OUT.color += texRECT(Texture, IN.texUV + Offsets[i]*UVScale)*Weights[i];\n\
+		OUT.Color0 += texRECT(Texture, IN.TexCoord + Offsets[i]*UVScale)*Weights[i];\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";
 
 
-const static char *pszDeferredGlow_Result_Cg_FS = "\n\
+// Result Cg fragment shader source code
+static const PLGeneral::String sDeferredGlow_Cg_FS_Result = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 texUV	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 };\n\
 \n\
 // Fragment output\n\
 struct FS_OUTPUT {\n\
-	float4 color : COLOR;\n\
+	float4 Color0 : COLOR;\n\
 };\n\
 \n\
 // Main function\n\
@@ -153,18 +178,18 @@ FS_OUTPUT main(VS_OUTPUT   IN			// Interpolated output from the vertex stage\n\
 	FS_OUTPUT OUT;\n\
 \n\
 	// Fetch the required texel data\n\
-	float4 sample = texRECT(Texture, IN.texUV);\n\
+	float4 sample = texRECT(Texture, IN.TexCoord);\n\
 \n\
 	// Calculate the resulting glow\n\
 	float glowFactor = sample.a*GlowFactor;\n\
-	OUT.color = float4(sample.rgb*glowFactor, glowFactor != 0);\n\
+	OUT.Color0 = float4(sample.rgb*glowFactor, glowFactor != 0);\n\
 \n\
 	// Use discard?\n\
-#ifdef DISCARD\n\
-	if (OUT.color.a == 0 || (OUT.color.r == 0 && OUT.color.g == 0 && OUT.color.b == 0))\n\
+#ifdef FS_DISCARD\n\
+	if (OUT.Color0.a == 0 || (OUT.Color0.r == 0 && OUT.Color0.g == 0 && OUT.Color0.b == 0))\n\
 		discard;\n\
 #endif\n\
 \n\
 	// Done\n\
 	return OUT;\n\
-}\0";
+}";

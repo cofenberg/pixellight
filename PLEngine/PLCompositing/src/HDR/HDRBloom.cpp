@@ -278,19 +278,8 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 						}
 					}
 
-					// Setup renderer
-					const uint32 nFixedFillModeBackup = m_pRenderer->GetRenderState(RenderState::FixedFillMode);
-					m_pRenderer->SetRenderState(RenderState::ScissorTestEnable, false);
-					m_pRenderer->SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
-					m_pRenderer->SetRenderState(RenderState::CullMode,			 Cull::None);
-					m_pRenderer->SetRenderState(RenderState::ZEnable,			 false);
-					m_pRenderer->SetRenderState(RenderState::ZWriteEnable,		 false);
-
 					// Draw the fullscreen quad
 					m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
-
-					// Restore fixed fill mode render state
-					m_pRenderer->SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 				}
 			}
 		}
@@ -387,8 +376,8 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 						if (nTextureUnit >= 0) {
 							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
-							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
 							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 						}
 					}

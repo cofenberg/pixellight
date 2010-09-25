@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
 #include "PLCompositing/Deferred/SRPDeferred.h"
 
 
@@ -36,7 +35,13 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
+	class Program;
+	class VertexBuffer;
+	class VertexShader;
 	class TextureBuffer;
+	class ProgramUniform;
+	class FragmentShader;
+	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
@@ -89,11 +94,12 @@ class SRPDeferredGlow : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGlow, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering glow effect")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(GlowFactor,		float,					1.0f,	ReadWrite,	DirectValue,	"Glow factor",												"")
-		pl_attribute(GlowBlurPasses,	PLGeneral::uint32,		4,		ReadWrite,	DirectValue,	"Number of glow blur passes, should be a multiple of 2",	"")
-		pl_attribute(GlowDownscale,		float,					8.0f,	ReadWrite,	DirectValue,	"Glow downscale factor, should be a multiple of 2",			"Min='1.0'")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(GlowFactor,		float,					1.0f,	ReadWrite,	DirectValue,	"Glow factor",																															"")
+		pl_attribute(GlowBlurPasses,	PLGeneral::uint32,		4,		ReadWrite,	DirectValue,	"Number of glow blur passes, should be a multiple of 2",																				"")
+		pl_attribute(GlowDownscale,		float,					8.0f,	ReadWrite,	DirectValue,	"Glow downscale factor, should be a multiple of 2",																						"Min='1.0'")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",													"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -122,8 +128,10 @@ class SRPDeferredGlow : public SRPDeferred {
 		*  @brief
 		*    Calculates the glow
 		*
-		*  @param[in] cFullscreenQuad
-		*    Fullscreen quad instance instance to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), don't change the shader language on each call (performance!)
+		*  @param[in] cVertexBuffer
+		*    Vertex buffer of the fullscreen quad
 		*  @param[in] cOriginalTexture
 		*    Original HDR texture buffer to calculate the glow from
 		*  @param[in] fBrightThreshold
@@ -136,7 +144,7 @@ class SRPDeferredGlow : public SRPDeferred {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		void CalculateGlow(PLScene::FullscreenQuad &cFullscreenQuad, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, PLGeneral::uint32 nBlurPasses, float fDownscale);
+		void CalculateGlow(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, PLGeneral::uint32 nBlurPasses, float fDownscale);
 
 		/**
 		*  @brief
@@ -150,63 +158,56 @@ class SRPDeferredGlow : public SRPDeferred {
 		*/
 		PLRenderer::TextureBuffer *GetTextureBuffer() const;
 
-		/**
-		*  @brief
-		*    Returns the downsample fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetDownsampleFragmentShader(PLRenderer::Renderer &cRenderer);
 
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
 		/**
 		*  @brief
-		*    Returns the glow fragment shader
+		*    Called when a program became dirty
 		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*
-		*  @return
-		*    The fragment shader, NULL on error
+		*  @param[in] pProgram
+		*    Program which became dirty
 		*/
-		PLRenderer::Shader *GetGlowFragmentShader(PLRenderer::Renderer &cRenderer);
+		void OnDirty(PLRenderer::Program *pProgram);
 
-		/**
-		*  @brief
-		*    Returns the result fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bDiscard
-		*    Use discard
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetResultFragmentShader(PLRenderer::Renderer &cRenderer, bool bDiscard);
 
-		/**
-		*  @brief
-		*    Destroys all currently used shaders
-		*/
-		void DestroyShaders();
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> EventHandlerDirty;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Render targets, can be NULL */
-		bool							  m_bDownsampleFragmentShader;	/**< Downsample fragment shader build? */
-		PLRenderer::ShaderHandler		  m_cDownsampleFragmentShader;	/**< Downsample fragment shader mode */
-		bool							  m_bGlowFragmentShader;		/**< Glow fragment shader build? */
-		PLRenderer::ShaderHandler		  m_cGlowFragmentShader;		/**< Glow fragment shader mode */
-		bool							  m_bResultIndex;				/**< Index of the result texture buffer */
-		bool							  m_bResultFragmentShader[2];	/**< Result fragment shader build? [Discard] */
-		PLRenderer::ShaderHandler		  m_cResultFragmentShader[2];	/**< Result fragment shader mode [Discard] */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];						/**< Render targets, can be NULL */
+		bool							  m_bResultIndex;							/**< Index of the result texture buffer */
+		PLRenderer::VertexShader		 *m_pVertexShader;							/**< Vertex shader, can be NULL */
+		// Downscale
+		PLRenderer::FragmentShader		 *m_pDownscaleFragmentShader;				/**< Downscale fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pDownscaleProgram;						/**< Downscale GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pDownscalePositionProgramAttribute;		/**< Downscale position program attribute, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pDownscaleTextureSizeProgramUniform;	/**< Downscale texture size program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pDownscaleTextureProgramUniform;		/**< Downscale texture program uniform, can be NULL */
+		// Blur
+		PLRenderer::FragmentShader		 *m_pBlurFragmentShader;					/**< Blur fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pBlurProgram;							/**< Blur GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pBlurPositionProgramAttribute;			/**< Blur position program attribute, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pBlurTextureSizeProgramUniform;			/**< Blur texture size program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pBlurUVScaleProgramUniform;				/**< Blur uv scale program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pBlurTextureProgramUniform;				/**< Blur texture program uniform, can be NULL */
+		// Result
+		PLRenderer::FragmentShader		 *m_pResultFragmentShader;					/**< Result fragment shader, can be NULL */
+		PLRenderer::Program				 *m_pResultProgram;							/**< Result GPU program, can be NULL */
+		PLRenderer::ProgramAttribute	 *m_pResultPositionProgramAttribute;		/**< Result position program attribute, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pResultTextureSizeProgramUniform;		/**< Result texture size program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pResultGlowFactorProgramUniform;		/**< Result glow factor program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pResultTextureProgramUniform;			/**< Result texture program uniform, can be NULL */
+		bool							  m_bResultDiscard;							/**< Discard used within the result GPU program? */
 
 
 	//[-------------------------------------------------------]

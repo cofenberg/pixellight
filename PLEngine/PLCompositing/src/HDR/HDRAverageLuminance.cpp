@@ -285,14 +285,6 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 	// Get the vertex buffer of the fullscreen quad
 	VertexBuffer *pVertexBuffer = m_pFullscreenQuad->GetVertexBuffer();
 	if (pVertexBuffer) {
-		// Setup renderer
-		const uint32 nFixedFillModeBackup = m_pRenderer->GetRenderState(RenderState::FixedFillMode);
-		m_pRenderer->SetRenderState(RenderState::ScissorTestEnable,	false);
-		m_pRenderer->SetRenderState(RenderState::FixedFillMode,		Fill::Solid);
-		m_pRenderer->SetRenderState(RenderState::CullMode,			Cull::None);
-		m_pRenderer->SetRenderState(RenderState::ZEnable,			false);
-		m_pRenderer->SetRenderState(RenderState::ZWriteEnable,		false);
-
 		// First step: Downsample 2x2, calculate pixel luminance and log - I don't use a "bilinear filter" because this would mess up the incomming texel data "before" the log calculation was performed!
 		if (m_pRenderer->SetProgram(m_pDownsampleLogProgram)) {
 			// Get the size of the original HDR texture
@@ -461,9 +453,6 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			// Draw the fullscreen quad
 			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 		}
-
-		// Restore fixed fill mode render state
-		m_pRenderer->SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 	}
 }
 

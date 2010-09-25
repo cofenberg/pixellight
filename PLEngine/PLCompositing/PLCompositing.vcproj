@@ -493,6 +493,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Deferred\SRPDeferredGlow_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Deferred\SRPDeferredGodRays.cpp"
 				>
 			</File>

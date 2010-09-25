@@ -2,6 +2,7 @@
 [CO]
 PLCompositing:
 - HDRBloom verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+- SRPDeferredGlow verwendet nun das neue Shader-Interface und unterstützt nun ebenfalls GLSL
 
 
 
