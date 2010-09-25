@@ -147,11 +147,11 @@ class HDRLightAdaptation {
 		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be NULL */
 		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be NULL */
 		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute */
-		PLRenderer::ProgramUniform		 *m_pFactorProgramUniform;				/**< Factor program uniform */
-		PLRenderer::ProgramUniform		 *m_pPreviousTextureProgramUniform;		/**< Previous texture program uniform */
-		PLRenderer::ProgramUniform		 *m_pCurrentTextureProgramUniform;		/**< Current texture program uniform */
-		PLRenderer::SurfaceTextureBuffer *m_pLightAdaptationTextureBuffer2D[2];	/**< 1x1 2D texture buffer storing the previous and current light adaptation */
+		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pFactorProgramUniform;				/**< Factor program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pPreviousTextureProgramUniform;		/**< Previous texture program uniform, can be NULL */
+		PLRenderer::ProgramUniform		 *m_pCurrentTextureProgramUniform;		/**< Current texture program uniform, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pLightAdaptationTextureBuffer2D[2];	/**< 1x1 2D texture buffer storing the previous and current light adaptation, can be NULL */
 		bool							  m_bPreviousIndex;						/**< Index of the previous 2D light adaptation texture buffer */
 
 

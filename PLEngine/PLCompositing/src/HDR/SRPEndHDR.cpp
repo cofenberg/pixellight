@@ -203,8 +203,8 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							BloomDownscale = 1.0f;
 						if (!m_pHDRBloom)
 							m_pHDRBloom = new HDRBloom(cRenderer);
-						m_pHDRBloom->CalculateBloom((TextureBufferRectangle&)*pSurfaceTextureBuffer->GetTextureBuffer(), BloomBrightThreshold, bToneMapping, bAutomaticAverageLuminance,
-													 LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale);
+						m_pHDRBloom->CalculateBloom(sShaderLanguage, (TextureBufferRectangle&)*pSurfaceTextureBuffer->GetTextureBuffer(), BloomBrightThreshold, bToneMapping, bAutomaticAverageLuminance,
+													LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale);
 
 						// Show bloom texture (for debugging)
 						if (GetFlags() & ShowBloomTexture) {

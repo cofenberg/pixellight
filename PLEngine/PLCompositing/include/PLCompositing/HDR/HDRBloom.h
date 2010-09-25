@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Shader/ShaderManager.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -39,8 +39,13 @@ namespace PLGraphics {
 	class Color3;
 }
 namespace PLRenderer {
+	class Program;
+	class VertexShader;
 	class TextureBuffer;
+	class FragmentShader;
+	class ProgramUniform;
 	class TextureBuffer2D;
+	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
@@ -88,6 +93,8 @@ class HDRBloom {
 		*  @brief
 		*    Calculates the bloom
 		*
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used, don't change the shader language on each call (performance!)
 		*  @param[in] cOriginalTexture
 		*    Original HDR texture buffer to calculate the bloom from
 		*  @param[in] fBrightThreshold
@@ -114,8 +121,8 @@ class HDRBloom {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		PLCOM_API void CalculateBloom(PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const PLGraphics::Color3 &cLuminanceConvert,
-									   float fKey, float fWhiteLevel, float fAverageLuminance, PLRenderer::TextureBuffer *pHDRAverageLuminanceTextureBuffer, PLGeneral::uint32 nBloomBlurPasses, float fDownscale);
+		PLCOM_API void CalculateBloom(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const PLGraphics::Color3 &cLuminanceConvert,
+									  float fKey, float fWhiteLevel, float fAverageLuminance, PLRenderer::TextureBuffer *pHDRAverageLuminanceTextureBuffer, PLGeneral::uint32 nBloomBlurPasses, float fDownscale);
 
 		/**
 		*  @brief
@@ -131,52 +138,86 @@ class HDRBloom {
 
 
 	//[-------------------------------------------------------]
+	//[ Private definitions                                   ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Vertex shader flags, flag names become to source code definitions
+		*/
+		enum EVertexShaderFlags {
+			VS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<0	/**< Perform light adaptation */
+		};
+
+		/**
+		*  @brief
+		*    Fragment shader flags, flag names become to source code definitions
+		*/
+		enum EFragmentShaderFlags {
+			FS_TONE_MAPPING					   = 1<<0,	/**< Perform tone mapping */
+				FS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<1,	/**< Perform light adaptation (FS_TONE_MAPPING must be set, too) */
+			FS_BLOOM						   = 1<<2,	/**< Add bloom */
+			FS_GAMMA_CORRECTION				   = 1<<3	/**< Perform gamma correction */
+		};
+
+		/**
+		*  @brief
+		*    Direct pointers to uniforms & attributes of a generated program
+		*/
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			PLRenderer::ProgramUniform *pAverageLuminanceTexture;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pLuminanceConvert;
+			PLRenderer::ProgramUniform *pKey;
+			PLRenderer::ProgramUniform *pWhiteLevel;
+			PLRenderer::ProgramUniform *pAverageLuminance;
+			PLRenderer::ProgramUniform *pBrightThreshold;
+			PLRenderer::ProgramUniform *pHDRTexture;
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Returns the downsample fragment shader
+		*    Called when a program became dirty
 		*
-		*  @param[in] bToneMapping
-		*    Perform tone mapping
-		*  @param[in] bAutomaticAverageLuminance
-		*    Automatic average luminance
-		*
-		*  @return
-		*    The fragment shader, NULL on error
+		*  @param[in] pProgram
+		*    Program which became dirty
 		*/
-		PLRenderer::Shader *GetDownsampleFragmentShader(bool bToneMapping, bool bAutomaticAverageLuminance);
+		void OnDirty(PLRenderer::Program *pProgram);
 
-		/**
-		*  @brief
-		*    Returns the bloom fragment shader
-		*
-		*  @return
-		*    The fragment shader, NULL on error
-		*/
-		PLRenderer::Shader *GetBloomFragmentShader();
 
-		/**
-		*  @brief
-		*    Destroys all currently used shaders
-		*/
-		void DestroyShaders();
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> EventHandlerDirty;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer						*m_pRenderer;						/**< Renderer to use, always valid! */
-		PLScene::FullscreenQuad						*m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
-		bool										 m_bDownsampleFragmentShader[2][2];	/**< Downsample fragment shader build? [ToneMapping][bAutomaticAverageLuminance] */
-		PLRenderer::ShaderHandler					 m_cDownsampleFragmentShader[2][2];	/**< Downsample fragment shader mode [ToneMapping][bAutomaticAverageLuminance] */
-		PLGeneral::List<PLRenderer::ShaderHandler*>  m_lstShaders;						/**< List of all used shaders */
-		PLRenderer::SurfaceTextureBuffer			*m_pRenderTarget[2];				/**< Render targets, can be NULL */
-		bool										 m_bBloomFragmentShader;			/**< Bloom fragment shader build? */
-		PLRenderer::ShaderHandler					 m_cBloomFragmentShader;			/**< Bloom fragment shader mode */
-		bool										 m_bResultIndex;					/**< Index of the result texture buffer */
+		PLRenderer::Renderer				*m_pRenderer;						/**< Renderer to use, always valid! */
+		PLScene::FullscreenQuad				*m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
+		PLRenderer::SurfaceTextureBuffer	*m_pRenderTarget[2];				/**< Render targets, can be NULL */
+		bool								 m_bResultIndex;					/**< Index of the result texture buffer */
+		PLRenderer::ProgramGenerator		*m_pDownscaleProgramGenerator;		/**< Downscale program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags	 m_cDownscaleProgramFlags;			/**< Downscale program flags as class member to reduce dynamic memory allocations */
+		PLRenderer::VertexShader			*m_pBloomVertexShader;				/**< Bloom vertex shader, can be NULL */
+		PLRenderer::FragmentShader			*m_pBloomFragmentShader;			/**< Bloom fragment shader, can be NULL */
+		PLRenderer::Program					*m_pBloomProgram;					/**< Bloom GPU program, can be NULL */
+		PLRenderer::ProgramAttribute		*m_pBloomPositionProgramAttribute;	/**< Bloom position program attribute, can be NULL */
+		PLRenderer::ProgramUniform			*m_pBloomTextureSizeProgramUniform;	/**< Bloom texture size program uniform, can be NULL */
+		PLRenderer::ProgramUniform			*m_pBloomUVScaleProgramUniform;		/**< Bloom uv scale program uniform, can be NULL */
+		PLRenderer::ProgramUniform			*m_pBloomHDRTextureProgramUniform;	/**< Bloom HDR texture program uniform, can be NULL */
 
 
 };

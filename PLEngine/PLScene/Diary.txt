@@ -1,3 +1,10 @@
+>> 25.09.2010
+[CO]
+PLCompositing:
+- HDRBloom verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
+
+
+
 >> 18.09.2010
 [CO]
 - PLCompositing: SRPEndHDR: Wird automatische Helligkeitsermittlung verwendet, so wird beim Tone Mapping die Helligkeit nun im Vertex Shader

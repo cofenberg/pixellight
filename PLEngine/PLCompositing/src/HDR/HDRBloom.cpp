@@ -23,16 +23,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/Wrapper.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/FragmentShader.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
 #include "PLCompositing/HDR/HDRBloom.h"
-#include "HDRBloom_Cg.h"	// The shader programs
 
 
 //[-------------------------------------------------------]
@@ -54,14 +55,21 @@ namespace PLCompositing {
 *    Constructor
 */
 HDRBloom::HDRBloom(Renderer &cRenderer) :
+	EventHandlerDirty(&HDRBloom::OnDirty, this),
 	m_pRenderer(&cRenderer),
 	m_pFullscreenQuad(NULL),
-	m_bBloomFragmentShader(false),
-	m_bResultIndex(0)
+	m_bResultIndex(0),
+	m_pDownscaleProgramGenerator(NULL),
+	m_pBloomVertexShader(NULL),
+	m_pBloomFragmentShader(NULL),
+	m_pBloomProgram(NULL),
+	m_pBloomPositionProgramAttribute(NULL),
+	m_pBloomTextureSizeProgramUniform(NULL),
+	m_pBloomUVScaleProgramUniform(NULL),
+	m_pBloomHDRTextureProgramUniform(NULL)
 {
 	// Init data
 	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
-	MemoryManager::Set(m_bDownsampleFragmentShader, 0, sizeof(m_bDownsampleFragmentShader));
 }
 
 /**
@@ -70,9 +78,6 @@ HDRBloom::HDRBloom(Renderer &cRenderer) :
 */
 HDRBloom::~HDRBloom()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-
 	// Destroy the fullscreen quad
 	if (m_pFullscreenQuad)
 		delete m_pFullscreenQuad;
@@ -83,16 +88,24 @@ HDRBloom::~HDRBloom()
 			delete m_pRenderTarget[i];
 	}
 
-	// Destroy the bloom fragment shader
-	if (m_cBloomFragmentShader.GetResource())
-		delete m_cBloomFragmentShader.GetResource();
+	// Destroy the downscale program generator
+	if (m_pDownscaleProgramGenerator)
+		delete m_pDownscaleProgramGenerator;
+
+	// Destroy the bloom vertex and fragment shader
+	if (m_pBloomProgram)
+		delete m_pBloomProgram;
+	if (m_pBloomVertexShader)
+		delete m_pBloomVertexShader;
+	if (m_pBloomFragmentShader)
+		delete m_pBloomFragmentShader;
 }
 
 /**
 *  @brief
 *    Calculates the bloom
 */
-void HDRBloom::CalculateBloom(TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const Color3 &cLuminanceConvert,
+void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const Color3 &cLuminanceConvert,
 							  float fKey, float fWhiteLevel, float fAverageLuminance, TextureBuffer *pHDRAverageLuminanceTextureBuffer, uint32 nBloomBlurPasses, float fDownscale)
 {
 	// Get the internal texture format to use
@@ -105,130 +118,287 @@ void HDRBloom::CalculateBloom(TextureBufferRectangle &cOriginalTexture, float fB
 			for (int i=0; i<2; i++) {
 				// Render target size change?
 				if (m_pRenderTarget[i] && (m_pRenderTarget[i]->GetSize() != vRTSize || m_pRenderTarget[i]->GetFormat() != nInternalFormat)) {
-					// Destroy the downsample render target
+					// Destroy the downscale render target
 					if (m_pRenderTarget[i]) {
 						delete m_pRenderTarget[i];
 						m_pRenderTarget[i] = NULL;
 					}
 				}
 
-				// Create the downsample render target right now?
+				// Create the downscale render target right now?
 				if (!m_pRenderTarget[i])
 					m_pRenderTarget[i] = m_pRenderer->CreateSurfaceTextureBufferRectangle(vRTSize, nInternalFormat, SurfaceTextureBuffer::NoMultisampleAntialiasing);
 			}
 		}
 	}
 
-	{ // First step: Downscale, apply bright pass filter and tone mapping
-		// Get the fragment shader
-		Shader *pFragmentShader = GetDownsampleFragmentShader(bToneMapping, bAutomaticAverageLuminance);
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-			// Make the render target 0 to the current render target
-			m_pRenderer->SetRenderTarget(m_pRenderTarget[0]);
-			m_bResultIndex = 0;
+	// Create the fullscreen quad instance if required
+	if (!m_pFullscreenQuad)
+		m_pFullscreenQuad = new FullscreenQuad(*m_pRenderer);
 
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			m_pRenderer->SetFragmentShaderProgram(pFragmentShaderProgram);
+	// Get the vertex buffer of the fullscreen quad
+	VertexBuffer *pVertexBuffer = m_pFullscreenQuad->GetVertexBuffer();
+	if (pVertexBuffer) {
+		// Get the shader language to use
+		String sUsedShaderLanguage = sShaderLanguage;
+		if (!sUsedShaderLanguage.GetLength())
+			sUsedShaderLanguage = m_pRenderer->GetDefaultShaderLanguage();
 
-			// Set tone mapping fragment shader parameters
-			if (bToneMapping) {
-				{ // Set the "LuminanceConvert" fragment shader parameter
-					static const String sLuminanceConvert = "LuminanceConvert";
-					pFragmentShaderProgram->SetParameter3fv(sLuminanceConvert, cLuminanceConvert);
+		{ // First step: Downscale, apply bright pass filter and tone mapping
+			// Create the downscale program generator if there's currently no instance of it
+			if (!m_pDownscaleProgramGenerator || m_pDownscaleProgramGenerator->GetShaderLanguage() != sUsedShaderLanguage) {
+				// If there's an previous instance of the downscale program generator, destroy it first
+				if (m_pDownscaleProgramGenerator) {
+					delete m_pDownscaleProgramGenerator;
+					m_pDownscaleProgramGenerator = NULL;
 				}
 
-				{ // Set the "Key" fragment shader parameter
-					static const String sKey = "Key";
-					pFragmentShaderProgram->SetParameter1f(sKey, (fKey > 0.0f) ? fKey : 0.0f);
+				// Choose the shader source codes depending on the requested shader language
+				String sHDRBloom_VS;
+				String sHDRBloom_FS;
+				if (sUsedShaderLanguage == "GLSL") {
+					#include "HDRBloom_GLSL.h"
+					sHDRBloom_VS = sHDRBloom_GLSL_VS;
+					sHDRBloom_FS = sHDRBloom_GLSL_FS_Downscale;
+				} else if (sUsedShaderLanguage == "Cg") {
+					#include "HDRBloom_Cg.h"
+					sHDRBloom_VS = sHDRBloom_Cg_VS;
+					sHDRBloom_FS = sHDRBloom_Cg_FS_Downscale;
 				}
 
-				{ // Set the "WhiteLevel" fragment shader parameter
-					static const String sWhiteLevel = "WhiteLevel";
-					pFragmentShaderProgram->SetParameter1f(sWhiteLevel, (fWhiteLevel > 0.0f) ? fWhiteLevel : 0.0f);
-				}
+				// Create the downscale program generator
+				if (sHDRBloom_VS.GetLength() && sHDRBloom_FS.GetLength())
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_VS, "glslv", sHDRBloom_FS, "glslf", true);
+			}
 
-				// Set the "AverageLuminance" fragment shader parameter
-				if (bAutomaticAverageLuminance) {
-					static const String sAverageLuminanceTexture = "AverageLuminanceTexture";
-					const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sAverageLuminanceTexture, pHDRAverageLuminanceTextureBuffer);
-					if (nStage >= 0) {
-						m_pRenderer->SetSamplerState(nStage, Sampler::AddressU,  TextureAddressing::Wrap);
-						m_pRenderer->SetSamplerState(nStage, Sampler::AddressV,  TextureAddressing::Wrap);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::None);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+			// If there's no downscale program generator, we don't need to continue
+			if (m_pDownscaleProgramGenerator) {
+				// Make the render target 0 to the current render target
+				m_pRenderer->SetRenderTarget(m_pRenderTarget[0]);
+				m_bResultIndex = 0;
+
+				// Reset the downscale program flags
+				m_cDownscaleProgramFlags.Reset();
+
+				// Set downscale program flags
+				if (bToneMapping) {
+					PL_ADD_FS_FLAG(m_cDownscaleProgramFlags, FS_TONE_MAPPING)
+					if (bAutomaticAverageLuminance) {
+						PL_ADD_VS_FLAG(m_cDownscaleProgramFlags, VS_AUTOMATIC_AVERAGE_LUMINANCE)
+						PL_ADD_FS_FLAG(m_cDownscaleProgramFlags, FS_AUTOMATIC_AVERAGE_LUMINANCE)
 					}
-				} else {
-					static const String sAverageLuminance = "AverageLuminance";
-					pFragmentShaderProgram->SetParameter1f(sAverageLuminance, fAverageLuminance);
+				}
+
+				// Get a downscale program instance from the downscale program generator using the given program flags
+				ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pDownscaleProgramGenerator->GetProgram(m_cDownscaleProgramFlags);
+
+				// Make our downscale program to the current one
+				if (pGeneratedProgram && m_pRenderer->SetProgram(pGeneratedProgram->pProgram)) {
+					// Set pointers to uniforms & attributes of a generated program if they are not set yet
+					GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+					if (!pGeneratedProgramUserData) {
+						pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+						Program *pProgram = pGeneratedProgram->pProgram;
+						// Vertex shader attributes
+						static const String sVertexPosition = "VertexPosition";
+						pGeneratedProgramUserData->pVertexPosition			= pProgram->GetAttribute(sVertexPosition);
+						// Vertex shader uniforms
+						static const String sTextureSize = "TextureSize";
+						pGeneratedProgramUserData->pTextureSize				= pProgram->GetUniform(sTextureSize);
+						static const String sAverageLuminanceTexture = "AverageLuminanceTexture";
+						pGeneratedProgramUserData->pAverageLuminanceTexture	= pProgram->GetUniform(sAverageLuminanceTexture);
+						// Fragment shader uniforms
+						static const String sLuminanceConvert = "LuminanceConvert";
+						pGeneratedProgramUserData->pLuminanceConvert		= pProgram->GetUniform(sLuminanceConvert);
+						static const String sKey = "Key";
+						pGeneratedProgramUserData->pKey						= pProgram->GetUniform(sKey);
+						static const String sWhiteLevel = "WhiteLevel";
+						pGeneratedProgramUserData->pWhiteLevel				= pProgram->GetUniform(sWhiteLevel);
+						static const String sAverageLuminance = "AverageLuminance";
+						pGeneratedProgramUserData->pAverageLuminance		= pProgram->GetUniform(sAverageLuminance);
+						static const String sBrightThreshold = "BrightThreshold";
+						pGeneratedProgramUserData->pBrightThreshold			= pProgram->GetUniform(sBrightThreshold);
+						static const String sHDRTexture = "HDRTexture";
+						pGeneratedProgramUserData->pHDRTexture				= pProgram->GetUniform(sHDRTexture);
+					}
+
+					// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+					if (pGeneratedProgramUserData->pVertexPosition)
+						pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+					// Set texture size
+					if (pGeneratedProgramUserData->pTextureSize)
+						pGeneratedProgramUserData->pTextureSize->Set(cOriginalTexture.GetSize());
+
+					// Set tone mapping fragment shader parameters
+					if (bToneMapping) { 
+						// Set the "LuminanceConvert" fragment shader parameter
+						if (pGeneratedProgramUserData->pLuminanceConvert)
+							pGeneratedProgramUserData->pLuminanceConvert->Set(cLuminanceConvert);
+
+						// Set the "Key" fragment shader parameter
+						if (pGeneratedProgramUserData->pKey)
+							pGeneratedProgramUserData->pKey->Set((fKey > 0.0f) ? fKey : 0.0f);
+
+						// Set the "WhiteLevel" fragment shader parameter
+						if (pGeneratedProgramUserData->pWhiteLevel)
+							pGeneratedProgramUserData->pWhiteLevel->Set((fWhiteLevel > 0.0f) ? fWhiteLevel : 0.0f);
+
+						// Set the "AverageLuminance" fragment shader parameter
+						if (bAutomaticAverageLuminance) {
+							if (pGeneratedProgramUserData->pAverageLuminanceTexture) {
+								const int nTextureUnit = pGeneratedProgramUserData->pAverageLuminanceTexture->Set(pHDRAverageLuminanceTextureBuffer);
+								if (nTextureUnit >= 0) {
+									m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
+									m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+									m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+									m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+									m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+								}
+							}
+						} else {
+							if (pGeneratedProgramUserData->pAverageLuminance)
+								pGeneratedProgramUserData->pAverageLuminance->Set(fAverageLuminance);
+						}
+					}
+
+					// Set the "BrightThreshold" fragment shader parameter
+					if (pGeneratedProgramUserData->pBrightThreshold)
+						pGeneratedProgramUserData->pBrightThreshold->Set(fBrightThreshold);
+
+					// Set the "HDRTexture" fragment shader parameter
+					if (pGeneratedProgramUserData->pHDRTexture) {
+						const int nTextureUnit = pGeneratedProgramUserData->pHDRTexture->Set(&cOriginalTexture);
+						if (nTextureUnit >= 0) {
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+						}
+					}
+
+					// Setup renderer
+					const uint32 nFixedFillModeBackup = m_pRenderer->GetRenderState(RenderState::FixedFillMode);
+					m_pRenderer->SetRenderState(RenderState::ScissorTestEnable, false);
+					m_pRenderer->SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
+					m_pRenderer->SetRenderState(RenderState::CullMode,			 Cull::None);
+					m_pRenderer->SetRenderState(RenderState::ZEnable,			 false);
+					m_pRenderer->SetRenderState(RenderState::ZWriteEnable,		 false);
+
+					// Draw the fullscreen quad
+					m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+					// Restore fixed fill mode render state
+					m_pRenderer->SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 				}
 			}
-
-			{ // Set the "BrightThreshold" fragment shader parameter
-				static const String sBrightThreshold = "BrightThreshold";
-				pFragmentShaderProgram->SetParameter1f(sBrightThreshold, fBrightThreshold);
-			}
-
-			{ // Set the "Texture" fragment shader parameter
-				static const String sTexture = "Texture";
-				const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, &cOriginalTexture);
-				if (nStage >= 0) {
-					m_pRenderer->SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-					m_pRenderer->SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-					m_pRenderer->SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
-				}
-			}
-
-			// Create the fullscreen quad instance if required
-			if (!m_pFullscreenQuad)
-				m_pFullscreenQuad = new FullscreenQuad(*m_pRenderer);
-
-			// Draw the fullscreen quad
-			m_pFullscreenQuad->Draw(cOriginalTexture.GetSize());
 		}
-	}
 
-	{ // Gaussian convolution filter to bloom
-		// Get the fragment shader
-		Shader *pFragmentShader = GetBloomFragmentShader();
-		if (pFragmentShader && pFragmentShader->GetShaderProgram()) {
-			// Set the fragment shader program
-			ShaderProgram *pFragmentShaderProgram = pFragmentShader->GetShaderProgram();
-			m_pRenderer->SetFragmentShaderProgram(pFragmentShaderProgram);
+		{ // Gaussian convolution filter to bloom
+			// Create the shaders and programs right now?
+			if (!m_pBloomVertexShader || m_pBloomVertexShader->GetShaderLanguage() != sUsedShaderLanguage) {
+				// If there's an previous instance of the program, destroy it first
+				if (m_pBloomProgram) {
+					delete m_pBloomProgram;
+					m_pBloomProgram = NULL;
+				}
+				if (m_pBloomVertexShader) {
+					delete m_pBloomVertexShader;
+					m_pBloomVertexShader = NULL;
+				}
+				if (m_pBloomFragmentShader) {
+					delete m_pBloomFragmentShader;
+					m_pBloomFragmentShader = NULL;
+				}
+				m_pBloomPositionProgramAttribute	= NULL;
+				m_pBloomTextureSizeProgramUniform	= NULL;
+				m_pBloomUVScaleProgramUniform		= NULL;
+				m_pBloomHDRTextureProgramUniform	= NULL;
 
-			// Horizontal and vertical blur
-			for (uint32 i=0; i<nBloomBlurPasses; i++) {
-				// Make the render target 1 to the current render target
-				m_pRenderer->SetRenderTarget(m_pRenderTarget[!m_bResultIndex]);
-
-				{ // Set the "UVScale" fragment shader parameter
-					static const String sUVScale = "UVScale";
-					if (i%2 != 0)
-						pFragmentShaderProgram->SetParameter2f(sUVScale, 0.0f, 1.0f);
-					else
-						pFragmentShaderProgram->SetParameter2f(sUVScale, 1.0f, 0.0f);
+				// Shader source code
+				String sVertexShaderSourceCode;
+				String sFragmentShaderSourceCode;
+				if (sUsedShaderLanguage == "GLSL") {
+					#include "HDRBloom_GLSL.h"
+					sVertexShaderSourceCode	  = sHDRBloom_GLSL_VS;
+					sFragmentShaderSourceCode = sHDRBloom_GLSL_FS;
+				} else if (sUsedShaderLanguage == "Cg") {
+					#include "HDRBloom_Cg.h"
+					sVertexShaderSourceCode	  = sHDRBloom_Cg_VS;
+					sFragmentShaderSourceCode = sHDRBloom_Cg_FS;
 				}
 
-				{ // Set the "Texture" fragment shader parameter
-					static const String sTexture = "Texture";
-					const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(sTexture, m_pRenderTarget[m_bResultIndex]->GetTextureBuffer());
-					if (nStage >= 0) {
-						m_pRenderer->SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Clamp);
-						m_pRenderer->SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Clamp);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-						m_pRenderer->SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
+				// Create a vertex shader instance
+				m_pBloomVertexShader = m_pRenderer->CreateVertexShader(sUsedShaderLanguage);
+				if (m_pBloomVertexShader) {
+					// Set the vertex shader source code
+					m_pBloomVertexShader->SetSourceCode(sVertexShaderSourceCode);
+				}
+
+				// Create a fragment shader instance
+				m_pBloomFragmentShader = m_pRenderer->CreateFragmentShader(sUsedShaderLanguage);
+				if (m_pBloomFragmentShader) {
+					// Set the fragment shader source code
+					m_pBloomFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+				}
+
+				// Create a program instance
+				m_pBloomProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
+				if (m_pBloomProgram) {
+					// Assign the created vertex and fragment shaders to the program
+					m_pBloomProgram->SetVertexShader(m_pBloomVertexShader);
+					m_pBloomProgram->SetFragmentShader(m_pBloomFragmentShader);
+
+					// Add our nark which will inform us as soon as the program gets dirty
+					m_pBloomProgram->EventDirty.Connect(&EventHandlerDirty);
+
+					// Get attributes and uniforms
+					OnDirty(m_pBloomProgram);
+				}
+			}
+
+			// Make the bloom GPU program to the currently used one
+			if (m_pRenderer->SetProgram(m_pBloomProgram)) {
+				// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+				if (m_pBloomPositionProgramAttribute)
+					m_pBloomPositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+
+				// Set the "TextureSize" fragment shader parameter - both render targets have the same size
+				if (m_pBloomTextureSizeProgramUniform)
+					m_pBloomTextureSizeProgramUniform->Set(m_pRenderTarget[0]->GetSize());
+
+				// Horizontal and vertical blur
+				for (uint32 i=0; i<nBloomBlurPasses; i++) {
+					// Make the render target 1 to the current render target
+					m_pRenderer->SetRenderTarget(m_pRenderTarget[!m_bResultIndex]);
+
+					// Set the "UVScale" fragment shader parameter
+					if (m_pBloomUVScaleProgramUniform) {
+						if (i%2 != 0)
+							m_pBloomUVScaleProgramUniform->Set(0.0f, 1.0f);
+						else
+							m_pBloomUVScaleProgramUniform->Set(1.0f, 0.0f);
 					}
+
+					// Set the "HDRTexture" fragment shader parameter
+					if (m_pBloomHDRTextureProgramUniform) {
+						const int nTextureUnit = m_pBloomHDRTextureProgramUniform->Set(m_pRenderTarget[m_bResultIndex]->GetTextureBuffer());
+						if (nTextureUnit >= 0) {
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
+							m_pRenderer->SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
+						}
+					}
+
+					// Draw the fullscreen quad
+					m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+					// The result is now within the other render target
+					m_bResultIndex = !m_bResultIndex;
 				}
-
-				// Draw the fullscreen quad
-				m_pFullscreenQuad->Draw(m_pRenderTarget[0]->GetSize());
-
-				// The result is now within the other render target
-				m_bResultIndex = !m_bResultIndex;
 			}
 		}
 	}
@@ -249,83 +419,17 @@ TextureBuffer *HDRBloom::GetTextureBuffer() const
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the downsample fragment shader
+*    Called when a program became dirty
 */
-Shader *HDRBloom::GetDownsampleFragmentShader(bool bToneMapping, bool bAutomaticAverageLuminance)
+void HDRBloom::OnDirty(Program *pProgram)
 {
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cDownsampleFragmentShader[bToneMapping][bAutomaticAverageLuminance];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bDownsampleFragmentShader[bToneMapping][bAutomaticAverageLuminance]) {
-		const static String ShaderFilename = "Fragment/HDRBloom_Downsample.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bToneMapping) {
-			sDefines += "#define TONE_MAPPING\n";
-			sName    += "[ToneMapping]";
-			if (bAutomaticAverageLuminance) {
-				sDefines += "#define AUTOMATIC_AVERAGE_LUMINANCE\n";
-				sName    += "[AutomaticAverageLuminance]";
-			}
-		}
-
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszHDRBloom_Downsample_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszHDRBloom_Downsample_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(sName, cFile, true, "glslf", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bDownsampleFragmentShader[bToneMapping][bAutomaticAverageLuminance] = true;
+	// Get attributes and uniforms
+	if (pProgram == m_pBloomProgram) {
+		m_pBloomPositionProgramAttribute  = m_pBloomProgram->GetAttribute("VertexPosition");
+		m_pBloomTextureSizeProgramUniform = m_pBloomProgram->GetUniform("TextureSize");
+		m_pBloomUVScaleProgramUniform	  = m_pBloomProgram->GetUniform("UVScale");
+		m_pBloomHDRTextureProgramUniform  = m_pBloomProgram->GetUniform("HDRTexture");
 	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns the bloom fragment shader
-*/
-Shader *HDRBloom::GetBloomFragmentShader()
-{
-	// Get/construct the shader
-	Shader *pShader = m_cBloomFragmentShader.GetResource();
-	if (!pShader && !m_bBloomFragmentShader) {
-		const static String ShaderFilename = "Fragment/HDRBloom_Bloom.cg";
-		{ // Load the shader
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszHDRBloom_Cg_FS) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszHDRBloom_Cg_FS, nNumOfBytes, false, ".cg");
-			pShader = m_pRenderer->GetRendererContext().GetShaderManager().Load(ShaderFilename, cFile, true, "glslf");
-		}
-		m_cBloomFragmentShader.SetResource(pShader);
-		m_bBloomFragmentShader = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void HDRBloom::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bDownsampleFragmentShader, 0, sizeof(m_bDownsampleFragmentShader));
 }
 
 

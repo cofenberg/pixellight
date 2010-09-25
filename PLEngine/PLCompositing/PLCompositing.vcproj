@@ -622,6 +622,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\HDR\HDRBloom_GLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\HDR\HDRLightAdaptation.cpp"
 				>
 			</File>
