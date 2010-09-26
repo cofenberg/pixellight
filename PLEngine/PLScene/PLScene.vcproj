@@ -1498,10 +1498,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\PLScene\Compositing\FullscreenQuad_VertexShader.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Compositing\SceneRenderer.cpp"
 				>
 			</File>

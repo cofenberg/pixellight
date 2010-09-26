@@ -28,8 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLMath/Vector2i.h>
-#include <PLRenderer/Shader/ShaderManager.h>
 #include "PLScene/PLScene.h"
 
 
@@ -53,22 +51,25 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Fullscreen quad
+*    Fullscreen quad helper class
 *
 *  @remarks
 *    The default content of the vertex buffer is a fullscreen quad consisting of 4 vertices:
 *    Vertex 0 - lower/left corner
-*      - Position:             (-1.0f, -1.0f, 0.0f, 1.0f)
+*      - Position:             (-1.0f, -1.0f)
 *      - Texture coordinate 0: ( 0.0f,  0.0f)
 *    Vertex 1 - lower/right corner
-*      - Position:             ( 1.0f, -1.0f, 0.0f, 1.0f)
+*      - Position:             ( 1.0f, -1.0f)
 *      - Texture coordinate 0: ( 1.0f,  0.0f)
 *    Vertex 2 - upper/left corner
-*      - Position:             (-1.0f,  1.0f, 0.0f, 1.0f)
+*      - Position:             (-1.0f,  1.0f)
 *      - Texture coordinate 0: ( 0.0f,  1.0f)
 *    Vertex 3 - upper/right corner
-*      - Position:             ( 1.0f,  1.0f, 0.0f, 1.0f)
+*      - Position:             ( 1.0f,  1.0f)
 *      - Texture coordinate 0: ( 1.0f,  1.0f)
+*    To be as efficient as possible, only the xy-coordinate of the screen space position is stored.
+*    The zw-component of the vertex position stores the texture coordinate. As a result, the vertex buffer
+*    has only one "PLRenderer::VertexBuffer::Float4" vertex attribute with the semantic "PLRenderer::"VertexBuffer::Position".
 */
 class FullscreenQuad {
 
@@ -101,44 +102,13 @@ class FullscreenQuad {
 		*/
 		PLS_API PLRenderer::VertexBuffer *GetVertexBuffer();
 
-		/**
-		*  @brief
-		*    Returns the vertex shader of this fullscreen quad
-		*
-		*  @param[in] bSizeContol
-		*    Size control enabled?
-		*
-		*  @return
-		*    The vertex shader of this fullscreen quad, NULL on error
-		*/
-		PLS_API PLRenderer::Shader *GetVertexShader(bool bSizeContol);
-
-		/**
-		*  @brief
-		*    Draws the fullscreen quad
-		*
-		*  @param[in] vTextureSize
-		*    Texture size in texel
-		*  @param[in] vSize
-		*    Quad size in pixel, if any component is <= 0 a fullscreen quad is drawn (default)
-		*
-		*  @note
-		*    - Sets the vertex buffer of the fullscreen quad
-		*    - Sets the vertex shader of the fullscreen quad
-		*    - Sets required render states
-		*    - Draws the fullscreen quad
-		*/
-		PLS_API void Draw(const PLMath::Vector2i &vTextureSize, const PLMath::Vector2i &vSize = PLMath::Vector2i::Zero);
-
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer	  *m_pRenderer;			/**< Renderer to use, always valid! */
-		PLRenderer::VertexBuffer  *m_pVertexBuffer;		/**< Vertex buffer, can be NULL */
-		bool					   m_bVertexShader[2];	/**< Vertex shader already build? [SizeContol] */
-		PLRenderer::ShaderHandler  m_cVertexShader[2];	/**< Vertex shader [SizeContol] */
+		PLRenderer::Renderer	  *m_pRenderer;		/**< Renderer to use, always valid! */
+		PLRenderer::VertexBuffer  *m_pVertexBuffer;	/**< Vertex buffer, can be NULL */
 
 
 };
