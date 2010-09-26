@@ -151,8 +151,6 @@ void SceneRenderer::DrawScene(Renderer &cRenderer, const SQCull &cCullQuery)
 	cRenderer.SetViewport();
 	cRenderer.SetScissorRect();
 	cRenderer.SetColorMask();
-	cRenderer.SetVertexShaderProgram();
-	cRenderer.SetFragmentShaderProgram();
 	// Fixed functions
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {

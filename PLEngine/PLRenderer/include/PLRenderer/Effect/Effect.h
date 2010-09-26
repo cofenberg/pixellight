@@ -128,24 +128,6 @@ class Effect : public PLCore::Resource<Effect> {
 
 		/**
 		*  @brief
-		*    Unbinds the effect to the renderer
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		PLRENDERER_API bool Unbind();
-
-		/**
-		*  @brief
-		*    Binds the effect shaders to the renderer
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		PLRENDERER_API bool BindShaders();
-
-		/**
-		*  @brief
 		*    Returns whether the effect is loaded or not
 		*
 		*  @return

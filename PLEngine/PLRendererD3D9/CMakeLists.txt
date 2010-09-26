@@ -8,7 +8,6 @@ define_project(PLRendererD3D9)
 ##################################################
 add_sources(
 	src/PLRendererD3D9.cpp
-	src/../../PLRenderer/src/_Backend/ShaderProgramCgBackend.cpp
 	src/Renderer.cpp
 	src/FixedFunctions.cpp
 	src/VertexBuffer.cpp
@@ -20,7 +19,6 @@ add_sources(
 	src/TextureBufferCube.cpp
 	src/SurfaceWindow.cpp
 	src/SurfaceTextureBuffer.cpp
-	src/ShaderProgram.cpp
 	src/OcclusionQuery.cpp
 	src/FontManager.cpp
 )

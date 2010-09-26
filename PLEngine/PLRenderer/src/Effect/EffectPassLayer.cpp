@@ -24,12 +24,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLRenderer/RendererContext.h"
-#include "PLRenderer/Renderer/ShaderProgram.h"
+#include "PLRenderer/Renderer/Program.h"
+#include "PLRenderer/Renderer/ProgramUniform.h"
 #include "PLRenderer/Texture/TextureManager.h"
 #include "PLRenderer/Texture/TextureHandler.h"
 #include "PLRenderer/Material/Parameter.h"
 #include "PLRenderer/Material/ParameterManager.h"
-#include "PLRenderer/Shader/ShaderHandler.h"
 #include "PLRenderer/Effect/Effect.h"
 #include "PLRenderer/Effect/EffectPass.h"
 #include "PLRenderer/Effect/EffectManager.h"
@@ -197,13 +197,14 @@ bool EffectPassLayer::BindTexture(const Parameter *pParameter, uint32 nStage) co
 			}
 			TextureBuffer *pTextureBuffer = pTexture->GetTextureBuffer();
 			if (pTextureBuffer) {
-				// Bind
-				const ShaderHandler *pShaderHandler = m_pFXPass->GetFragmentShader();
-				if (pShaderHandler) {
-					const Shader *pShader = pShaderHandler->GetResource();
-					if (pShader && pShader->GetShaderProgram() && pShader->GetShaderProgram()->SetParameterTextureBuffer(pParameter->GetName(), pTextureBuffer) > -1) {
-						// Done
-						return bResult;
+				{ // Set the GPU program uniform
+					Program *pProgram = m_pFXPass->GetProgram();
+					if (pProgram) {
+						ProgramUniform *pProgramUniform = pProgram->GetUniform(pParameter->GetName());
+						if (pProgramUniform && pProgramUniform->Set(pTextureBuffer) > -1) {
+							// Done
+							return bResult;
+						}
 					}
 				}
 				if (bResult)

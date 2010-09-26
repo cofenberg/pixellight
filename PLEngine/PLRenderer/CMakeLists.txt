@@ -43,7 +43,6 @@ add_sources(
 	src/Renderer/SurfaceWindowHandler.cpp
 	src/Renderer/SurfaceTextureBuffer.cpp
 	src/Renderer/SurfacePainter.cpp
-	src/Renderer/ShaderProgram.cpp
 	src/Renderer/OcclusionQuery.cpp
 	src/Renderer/AbstractShader.cpp
 	src/Renderer/VertexShader.cpp
@@ -81,11 +80,6 @@ add_sources(
 	src/Texture/TextureAni.cpp
 	src/Texture/AniInfo.cpp
 	src/Texture/TextureManager.cpp
-	src/Shader/ShaderLoaderCg.cpp
-	src/Shader/ShaderLoader.cpp
-	src/Shader/ShaderManager.cpp
-	src/Shader/ShaderHandler.cpp
-	src/Shader/Shader.cpp
 	src/Effect/EffectLoaderPL.cpp
 	src/Effect/EffectLoader.cpp
 	src/Effect/EffectPassLayer.cpp

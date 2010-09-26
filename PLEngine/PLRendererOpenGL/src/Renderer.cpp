@@ -41,7 +41,6 @@
 #include "PLRendererOpenGL/TextureBufferCube.h"
 #include "PLRendererOpenGL/IndexBuffer.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
-#include "PLRendererOpenGL/ShaderProgram.h"
 #include "PLRendererOpenGL/OcclusionQuery.h"
 #include "PLRendererOpenGL/VertexShaderGLSL.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
@@ -946,16 +945,6 @@ void Renderer::RestoreDeviceStates()
 		SetIndexBuffer(pBuffer);
 	}
 
-	{ // Reset vertex shader program
-		PLRenderer::ShaderProgram *pShaderProgram = m_pCurrentVertexShaderProgram;
-		m_pCurrentVertexShaderProgram = NULL;
-		SetVertexShaderProgram(pShaderProgram);
-	}
-	{ // Reset fragment shaderProgram
-		PLRenderer::ShaderProgram *pShaderProgram = m_pCurrentFragmentShaderProgram;
-		m_pCurrentFragmentShaderProgram = NULL;
-		SetFragmentShaderProgram(pShaderProgram);
-	}
 	{ // Reset program
 		PLRenderer::Program *pProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
 		m_cProgramHandler.SetResource(NULL);
@@ -1053,16 +1042,6 @@ void Renderer::RestoreDeviceObjects()
 		// Restore device states
 		RestoreDeviceStates();
 	}
-}
-
-bool Renderer::IsShaderProgramProfileSupported(const String &sProfile) const
-{
-	// [TODO] Depreciated method, remove this
-	if (GetMode() == ModeFixedFunctions) return false;
-	if (!sProfile.GetLength()) return true; // Error!
-	CGprofile Profile = cgGetProfile(sProfile);
-	if (Profile == CG_PROFILE_UNKNOWN) return false; // Done
-	else							   return cgGLIsProfileSupported(Profile) != 0;
 }
 
 void Renderer::Update()
@@ -1203,46 +1182,6 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
 	// Create the OpenGL vertex buffer
 	return new VertexBuffer(*this);
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateVertexShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-															   const String &sEntry, const char **ppszAttributes)
-{
-	// [TODO] Depreciated method, remove this
-	if (GetMode() == ModeFixedFunctions)
-		return NULL;
-
-	// Is the profile supported?
-	if (IsShaderProgramProfileSupported(sProfile)) {
-		// Create the OpenGL vertex shader program
-		ShaderProgram *pShaderProgram = new ShaderProgram(*this, PLRenderer::Resource::TypeVertexShaderProgram, pProgram, sProfile,
-														  sDefines, sEntry, ppszAttributes);
-		if (pShaderProgram->GetCgProgram()) return pShaderProgram; // Done
-		else								delete pShaderProgram; // Cleanup
-	}
-
-	// Error!
-	return NULL;
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateFragmentShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-																 const String &sEntry, const char **ppszAttributes)
-{
-	// [TODO] Depreciated method, remove this
-	if (GetMode() == ModeFixedFunctions)
-		return NULL;
-
-	// Is the profile supported?
-	if (IsShaderProgramProfileSupported(sProfile)) {
-		// Create the OpenGL fragment shader program
-		ShaderProgram *pShaderProgram = new ShaderProgram(*this, PLRenderer::Resource::TypeFragmentShaderProgram, pProgram, sProfile,
-														  sDefines, sEntry, ppszAttributes);
-		if (pShaderProgram->GetCgProgram()) return pShaderProgram; // Done
-		else								delete pShaderProgram; // Cleanup
-	}
-
-	// Error!
-	return NULL;
 }
 
 PLRenderer::VertexShader *Renderer::CreateVertexShader(const String &sShaderLanguage)
@@ -2315,8 +2254,6 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 				((SurfaceTextureBuffer*)pPrevSurface)->IsPBufferUsed())) {
 				// Restore device states
 				RestoreDeviceStates();
-				SetVertexShaderProgram();
-				SetFragmentShaderProgram();
 			}
 		} else {
 			if (m_pContext)
@@ -2762,100 +2699,8 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 	return true;
 }
 
-bool Renderer::SetVertexShaderProgram(PLRenderer::ShaderProgram *pVertexShaderProgram)
-{
-	// Set no program
-	if (GetProgram())
-		SetProgram();
-
-	// Is this vertex shader program already set?
-	if (m_pCurrentVertexShaderProgram == pVertexShaderProgram) return false; // Error!
-
-	// Disable old shader program profile
-	if (m_pCurrentVertexShaderProgram)
-		cgGLDisableProfile(((ShaderProgram*)m_pCurrentVertexShaderProgram)->GetCgProfile());
-
-	// Is this really a vertex shader program?
-	if (pVertexShaderProgram && pVertexShaderProgram->GetType() != PLRenderer::Resource::TypeVertexShaderProgram)
-		return false; // Error!
-
-	// Make this vertex shader program to the renderers current one
-	PLRenderer::ShaderProgram *pPreviousShaderProgram = m_pCurrentVertexShaderProgram;
-	m_pCurrentVertexShaderProgram = pVertexShaderProgram;
-
-	// Should an vertex shader program be set?
-	if (pVertexShaderProgram) {
-		// Yes, make it current
-		if (!MakeShaderProgramCurrent(*pVertexShaderProgram)) {
-			m_pCurrentVertexShaderProgram = pPreviousShaderProgram;
-
-			// Error!
-			return false;
-		}
-	} else {
-		// [HACK] When using GLSL as Cg profile we need to use 'glUseProgramObjectARB()' to deactivate shaders
-		if (pPreviousShaderProgram && ((ShaderProgram*)pPreviousShaderProgram)->GetCgProfile() == cgGetProfile("glslv"))
-			glUseProgramObjectARB(0);
-	}
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetFragmentShaderProgram(PLRenderer::ShaderProgram *pFragmentShaderProgram)
-{
-	// Set no program
-	if (GetProgram())
-		SetProgram();
-
-	// Is this fragment shader program already set?
-	if (m_pCurrentFragmentShaderProgram == pFragmentShaderProgram) return false;
-
-	// Is this really a fragment shader program?
-	if (pFragmentShaderProgram && pFragmentShaderProgram->GetType() != PLRenderer::Resource::TypeFragmentShaderProgram)
-		return false; // Error!
-
-	// Disable old shader program profile
-	if (m_pCurrentFragmentShaderProgram)
-		cgGLDisableProfile(((ShaderProgram*)m_pCurrentFragmentShaderProgram)->GetCgProfile());
-
-	// Make this fragment shader program to the renderers current one
-	PLRenderer::ShaderProgram *pPreviousShaderProgram = m_pCurrentFragmentShaderProgram;
-	m_pCurrentFragmentShaderProgram = pFragmentShaderProgram;
-
-	// Should a fragment shader program be set?
-	if (pFragmentShaderProgram) {
-		// Yes, make it current
-		if (!MakeShaderProgramCurrent(*pFragmentShaderProgram)) {
-			m_pCurrentFragmentShaderProgram = pPreviousShaderProgram;
-
-			// Error!
-			return false;
-		}
-	} else {
-		// [HACK] When using GLSL as Cg profile we need to use 'glUseProgramObjectARB()' to deactivate shaders
-		if (pPreviousShaderProgram && ((ShaderProgram*)pPreviousShaderProgram)->GetCgProfile() == cgGetProfile("glslf"))
-			glUseProgramObjectARB(0);
-	}
-
-	// Done
-	return true;
-}
-
 bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 {
-	// [TODO] Remove this when the old shader interface is finally gone
-	if (m_pCurrentVertexShaderProgram) {
-		cgGLDisableProfile(((ShaderProgram*)m_pCurrentVertexShaderProgram)->GetCgProfile());
-		m_pCurrentVertexShaderProgram = NULL;
-		glUseProgramObjectARB(0);
-	}
-	if (m_pCurrentFragmentShaderProgram) {
-		cgGLDisableProfile(((ShaderProgram*)m_pCurrentFragmentShaderProgram)->GetCgProfile());
-		m_pCurrentFragmentShaderProgram = NULL;
-		glUseProgramObjectARB(0);
-	}
-
 	// Is the new program the same one as the current one?
 	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
 	if (pCurrentProgram != pProgram) {

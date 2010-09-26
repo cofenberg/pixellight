@@ -56,7 +56,6 @@ namespace PLRenderer {
 	class TextureBufferCube;
 	class IndexBuffer;
 	class VertexBuffer;
-	class ShaderProgram;
 	class OcclusionQuery;
 	class FixedFunctions;
 	class DrawHelpers;
@@ -291,8 +290,8 @@ class Renderer : public PLCore::Object {
 		*    - Avoid calling this function frequently because this can be a performance hit
 		*    - Internally this functions are called:
 		*      SetColor(), ResetRenderStates(), ResetTransformStates(), ResetSamplerStates(), SetTextureBuffer(),
-		*      SetIndexBuffer(), SetViewport(), SetScissorRect(), SetColorMask(), SetVertexShaderProgram(),
-		*      SetFragmentShaderProgram(), SetProgram(), FixedFunctions::Reset(), DrawHelpers::End2DMode(), DrawHelpers::Set2DZValue()
+		*      SetIndexBuffer(), SetViewport(), SetScissorRect(), SetColorMask(), SetProgram(),
+		*      FixedFunctions::Reset(), DrawHelpers::End2DMode(), DrawHelpers::Set2DZValue()
 		*/
 		virtual void Reset() = 0;
 
@@ -1318,147 +1317,6 @@ class Renderer : public PLCore::Object {
 		*/
 		virtual bool DrawIndexedPrimitives(Primitive::Enum nType, PLGeneral::uint32 nMinIndex, PLGeneral::uint32 nMaxIndex,
 										   PLGeneral::uint32 nStartIndex, PLGeneral::uint32 nNumVertices) = 0;
-
-
-		//[-------------------------------------------------------]
-		//[ Depreciated shader interface                          ]
-		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    Returns whether a given shader program profile is supported by the hardware or not
-		*
-		*  @param[in] sProfile
-		*    Name of the shader program profile (e.g. "arbvp1")
-		*
-		*  @return
-		*    'true' if the shader program profile is supported, else 'false'
-		*
-		*  @note
-		*    - For a full list of possible profiles have a look at e.g. the Cg reference
-		*    - If 'sProfile' is empty 'true' is returned
-		*/
-		virtual bool IsShaderProgramProfileSupported(const PLGeneral::String &sProfile) const = 0;
-
-		/**
-		*  @brief
-		*    Creates a vertex shader program
-		*
-		*  @param[in] pProgram
-		*    Vertex shader program this shader is using
-		*  @param[in] sProfile
-		*    Profile requirement (e.g. "arbvp1")
-		*    If empty, the best available profile is used.
-		*  @param[in] sDefines
-		*    Additional defines for the shader program
-		*  @param[in] sEntry
-		*    The entry point to the program in the shader program source. If empty, 'main' is used by default.
-		*  @param[in] ppszAttributes
-		*    Some additional attributes for the shader program compiler
-		*
-		*  @return
-		*    The created vertex shader program, NULL on error
-		*    (maybe invalid program/profile?)
-		*
-		*  @note
-		*    - The program MUST be a Cg vertex program which then is compiled internally.
-		*      The program is a sequence of bytes which construct the Cg program.
-		*    - Use 'sDefines' to add some defines to a shader program to customize it. The renderer
-		*      internally also adds some defines to the shader program, for instance the OpenGL renderer
-		*      will add the define 'OPENGL', the Direct3D renderer 'D3D'.
-		*      'sDefines' should look like this:
-		*      String sDefines("#define OPENGL\n#define ANOTHERDEF\n");
-		*    - 'ppszAttributes' should look like this:
-		*         const char *pszAttributes[] = { "First attribute", "Second attribute", NULL };
-		*      The last element must be NULL!
-		*    - Shader program paramters which are invalid or not referenced (maybe optimized out)
-		*      are ignored
-		*/
-		virtual ShaderProgram *CreateVertexShaderProgram(const void *pProgram, const PLGeneral::String &sProfile = "",
-														 const PLGeneral::String &sDefines = "", const PLGeneral::String &sEntry = "main",
-														 const char **ppszAttributes = NULL) = 0;
-
-		/**
-		*  @brief
-		*    Creates a fragment shader program
-		*
-		*  @param[in] pProgram
-		*    Fragment shader program this shader is using
-		*  @param[in] sProfile
-		*    Profile requirement (e.g. "arbvp1")
-		*    If empty, the best available profile is used.
-		*  @param[in] sDefines
-		*    Additional defines for the shader program
-		*  @param[in] sEntry
-		*    The entry point to the program in the shader program source. If empty, 'main' is used by default.
-		*  @param[in] ppszAttributes
-		*    Some additional attributes for the shader program compiler
-		*
-		*  @return
-		*    The created fragment shader program, NULL on error
-		*    (maybe invalid program/profile?)
-		*
-		*  @see
-		*    - CreateVertexShaderProgram()
-		*/
-		virtual ShaderProgram *CreateFragmentShaderProgram(const void *pProgram, const PLGeneral::String &sProfile = "",
-														   const PLGeneral::String &sDefines = "", const PLGeneral::String &sEntry = "main",
-														   const char **ppszAttributes = NULL) = 0;
-
-		/**
-		*  @brief
-		*    Gets the current vertex shader program
-		*
-		*  @return
-		*    The current vertex shader program, NULL if there's no one
-		*
-		*  @note
-		*    - When working with shader programs some or most fixed functions features will not work
-		*/
-		virtual ShaderProgram *GetVertexShaderProgram() const = 0;
-
-		/**
-		*  @brief
-		*    Sets the current vertex shader program
-		*
-		*  @param[in] pVertexShaderProgram
-		*    The vertex shader program which should be set, NULL if no vertex shader program should be set
-		*
-		*  @return
-		*    'true' if all went fine, else 'false' (maybe this is already the current
-		*    vertex shader program or this isn't a vertex shader orogram!)
-		*
-		*  @see
-		*    - GetVertexShaderProgram()
-		*/
-		virtual bool SetVertexShaderProgram(ShaderProgram *pVertexShaderProgram = NULL) = 0;
-
-		/**
-		*  @brief
-		*    Gets the current fragment shader program
-		*
-		*  @return
-		*    The current fragment shader program, NULL if there's no one
-		*
-		*  @see
-		*    - GetVertexShaderProgram()
-		*/
-		virtual ShaderProgram *GetFragmentShaderProgram() const = 0;
-
-		/**
-		*  @brief
-		*    Sets the current fragment shader program
-		*
-		*  @param[in] pFragmentShaderProgram
-		*    The fragment shader program which should be set, NULL if no fragment shader program should be set
-		*
-		*  @return
-		*    'true' if all went fine, else 'false' (maybe this is already the current
-		*    fragment shader program or this isn't a fragment shader program!)
-		*
-		*  @see
-		*    - GetVertexShaderProgram()
-		*/
-		virtual bool SetFragmentShaderProgram(ShaderProgram *pFragmentShaderProgram = NULL) = 0;
 
 
 	//[-------------------------------------------------------]

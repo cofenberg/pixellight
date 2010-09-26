@@ -24,11 +24,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
 #include <PLRenderer/Renderer/SamplerStates.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/SurfaceTextureBuffer.h>
 #include <PLRenderer/Material/Material.h>
 #include <PLRenderer/Material/Parameter.h>
@@ -316,11 +318,6 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 				m_pVertexBuffer->Unlock();
 			}
 
-			// [TODO] Remove FixedFunctions usage by using the new shader interface
-			FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-			if (pFixedFunctions)
-				pFixedFunctions->SetVertexBuffer(m_pVertexBuffer);
-
 			// If one or more kernel exists, convert kernel from pixel space to texel space
 			uint32 nType = PLRenderer::Resource::TypeTextureBufferRectangle;
 			if (m_pColorSurface->GetTextureBuffer())
@@ -419,9 +416,34 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 				// Setup pass
 				pMaterial->SetupPass(nPass);
 
-				// Set texture matrix
-				if (cRenderer.GetVertexShaderProgram())
-					cRenderer.GetVertexShaderProgram()->SetParameterMatrixfv("TextureMatrix", mScale);
+				// Set program attributes and uniforms
+				Program *pProgram = cRenderer.GetProgram();
+				if (pProgram) {
+					// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+					// Position
+					ProgramAttribute *pProgramAttribute = pProgram->GetAttribute("IN.pos");
+					if (!pProgramAttribute)
+						pProgramAttribute = pProgram->GetAttribute("Position");
+					if (pProgramAttribute)
+						pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::Position);
+					// Texture coordinate 0
+					pProgramAttribute = pProgram->GetAttribute("IN.texCoord0");
+					if (!pProgramAttribute)
+						pProgramAttribute = pProgram->GetAttribute("TexCoord0");
+					if (pProgramAttribute)
+						pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::TexCoord, 0);
+					// Texture coordinate 1
+					pProgramAttribute = pProgram->GetAttribute("IN.texCoord1");
+					if (!pProgramAttribute)
+						pProgramAttribute = pProgram->GetAttribute("TexCoord1");
+					if (pProgramAttribute)
+						pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::TexCoord, 1);
+
+					// TextureMatrix
+					ProgramUniform *pProgramUniform = pProgram->GetUniform("TextureMatrix");
+					if (pProgramUniform)
+						pProgramUniform->Set(mScale);
+				}
 
 				// Do NOT use mipmapping!
 				for (uint32 i=0; i<cRenderer.GetCapabilities().nMaxTextureUnits; i++)

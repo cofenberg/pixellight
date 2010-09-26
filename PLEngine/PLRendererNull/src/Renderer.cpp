@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
 #include <PLGraphics/Image/Image.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
 #include "PLRendererNull/SurfaceWindow.h"
@@ -249,12 +248,6 @@ String Renderer::GetDefaultShaderLanguage() const
 	return sString;
 }
 
-bool Renderer::IsShaderProgramProfileSupported(const String &sProfile) const
-{
-	// There are no shader programs :)
-	return false;
-}
-
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
 {
 	return m_pFixedFunctions;
@@ -400,20 +393,6 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
 	// Create the null vertex buffer
 	return new VertexBuffer(*this);
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateVertexShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-															   const String &sEntry, const char **ppszAttributes)
-{
-	// Not implemented :)
-	return NULL;
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateFragmentShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-																 const String &sEntry, const char **ppszAttributes)
-{
-	// Not implemented :)
-	return NULL;
 }
 
 PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()
@@ -633,62 +612,6 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		// Yes, make it current
 		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
 			m_pCurrentIndexBuffer = pT;
-
-			// Error!
-			return false;
-		}
-	}
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetVertexShaderProgram(PLRenderer::ShaderProgram *pVertexShaderProgram)
-{
-	// Is this vertex shader program already set?
-	if (m_pCurrentVertexShaderProgram == pVertexShaderProgram) return false; // Error!
-
-	// Is this really a vertex shader program?
-	if (pVertexShaderProgram && pVertexShaderProgram->GetType() != PLRenderer::Resource::TypeVertexShaderProgram)
-		return false; // Error!
-
-	// Make this vertex shader program to the renderers current one
-	PLRenderer::ShaderProgram *pT = m_pCurrentVertexShaderProgram;
-	m_pCurrentVertexShaderProgram = pVertexShaderProgram;
-
-	// Should an vertex shader program be set?
-	if (pVertexShaderProgram) {
-		// Yes, make it current
-		if (!MakeShaderProgramCurrent(*pVertexShaderProgram)) {
-			m_pCurrentVertexShaderProgram = pT;
-
-			// Error!
-			return false;
-		}
-	}
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetFragmentShaderProgram(PLRenderer::ShaderProgram *pFragmentShaderProgram)
-{
-	// Is this fragment shader program already set?
-	if (m_pCurrentFragmentShaderProgram == pFragmentShaderProgram) return false; // Error!
-
-	// Is this really a fragment shader program?
-	if (pFragmentShaderProgram && pFragmentShaderProgram->GetType() != PLRenderer::Resource::TypeFragmentShaderProgram)
-		return false; // Error!
-
-	// Make this fragment shader program to the renderers current one
-	PLRenderer::ShaderProgram *pT = m_pCurrentFragmentShaderProgram;
-	m_pCurrentFragmentShaderProgram = pFragmentShaderProgram;
-
-	// Should an fragment shader program be set?
-	if (pFragmentShaderProgram) {
-		// Yes, make it current
-		if (!MakeShaderProgramCurrent(*pFragmentShaderProgram)) {
-			m_pCurrentFragmentShaderProgram = pT;
 
 			// Error!
 			return false;

@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
-#include <_PLRendererBackend/ShaderProgramCgBackend.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 #include "PLRendererOpenGL/Misc/Extensions.h"
 
@@ -264,7 +263,6 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		virtual PLRenderer::FontManager &GetFontManager() const;
 		virtual void BackupDeviceObjects();
 		virtual void RestoreDeviceObjects();
-		virtual bool IsShaderProgramProfileSupported(const PLGeneral::String &sProfile) const;
 		virtual void Update();
 
 		//[-------------------------------------------------------]
@@ -281,8 +279,6 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		virtual PLRenderer::TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
 		virtual PLRenderer::IndexBuffer *CreateIndexBuffer();
 		virtual PLRenderer::VertexBuffer *CreateVertexBuffer();
-		virtual PLRenderer::ShaderProgram *CreateVertexShaderProgram(const void *pProgram, const PLGeneral::String &sProfile = "", const PLGeneral::String &sDefines = "", const PLGeneral::String &sEntry = "main", const char **ppszAttributes = NULL);
-		virtual PLRenderer::ShaderProgram *CreateFragmentShaderProgram(const void *pProgram, const PLGeneral::String &sProfile = "", const PLGeneral::String &sDefines = "", const PLGeneral::String &sEntry = "main", const char **ppszAttributes = NULL);
 		virtual PLRenderer::VertexShader *CreateVertexShader(const PLGeneral::String &sShaderLanguage = "");
 		virtual PLRenderer::GeometryShader *CreateGeometryShader(const PLGeneral::String &sShaderLanguage = "");
 		virtual PLRenderer::FragmentShader *CreateFragmentShader(const PLGeneral::String &sShaderLanguage = "");
@@ -321,8 +317,6 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
 
 		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = NULL);
-		virtual bool SetVertexShaderProgram(PLRenderer::ShaderProgram *pVertexShaderProgram = NULL);
-		virtual bool SetFragmentShaderProgram(PLRenderer::ShaderProgram *pFragmentShaderProgram = NULL);
 		virtual bool SetProgram(PLRenderer::Program *pProgram = NULL);
 
 		//[-------------------------------------------------------]

@@ -27,7 +27,6 @@
 #include <PLGeneral/Tools/Tools.h>
 #include <PLGeneral/String/ParseTools.h>
 #include <PLGeneral/Log/Log.h>
-#include "PLRenderer/Shader/ShaderManager.h"
 #include "PLRenderer/Texture/TextureHandler.h"
 #include "PLRenderer/Material/ParameterManager.h"
 #include "PLRenderer/Effect/EffectPass.h"
@@ -255,6 +254,8 @@ bool EffectLoaderPL::Save(const Effect &cEffect, File &cFile)
 						}
 					}
 
+					// [TODO] New shader interface
+					/*
 					// Vertex shader
 					const ShaderHandler *pShader = pFXPass->GetVertexShader();
 					if (pShader) {
@@ -280,6 +281,7 @@ bool EffectLoaderPL::Save(const Effect &cEffect, File &cFile)
 						// Link fragment shader element
 						pFXPassElement->LinkEndChild(*pFragmentShaderElement);
 					}
+					*/
 
 					pTechniqueElement->LinkEndChild(*pFXPassElement);
 				}
@@ -481,6 +483,9 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 							//[ VertexShader                                          ]
 							//[-------------------------------------------------------]
 							} else if (sValue == "VertexShader") {
+								// Get shader language
+								const String sLanguage = pFXPassElement->GetAttribute("Language");
+
 								// Get optional profile
 								sValue = pFXPassElement->GetAttribute("Profile");
 								String sProfile;
@@ -490,7 +495,7 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 								// Get filename and load the shader
 								sValue = pFXPassElement->GetAttribute("Filename");
 								if (sValue.GetLength()) {
-									if (!pFXPass->LoadVertexShader(sValue, sProfile))
+									if (!pFXPass->LoadVertexShader(sValue, sLanguage, sProfile))
 										bTechniqueValid = false; // Error - shader loading/initialization failed!
 								}
 
@@ -498,6 +503,9 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 							//[ FragmentShader                                        ]
 							//[-------------------------------------------------------]
 							} else if (sValue == "FragmentShader") {
+								// Get shader language
+								const String sLanguage = pFXPassElement->GetAttribute("Language");
+
 								// Get optional profile
 								sValue = pFXPassElement->GetAttribute("Profile");
 								String sProfile;
@@ -507,7 +515,7 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 								// Get filename and load the shader
 								sValue = pFXPassElement->GetAttribute("Filename");
 								if (sValue.GetLength()) {
-									if (!pFXPass->LoadFragmentShader(sValue, sProfile))
+									if (!pFXPass->LoadFragmentShader(sValue, sLanguage, sProfile))
 										bTechniqueValid = false; // Error - shader loading/initialization failed!
 								}
 							}

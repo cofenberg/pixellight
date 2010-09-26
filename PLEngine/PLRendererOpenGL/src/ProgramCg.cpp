@@ -215,19 +215,40 @@ void ProgramCg::BuildAttributeInformation()
 				// Get the Cg program of the current domain
 				CGprogram pCgDomainProgram = cgGetProgramDomainProgram(pCgCombinedProgram, i);
 
-				// Iterate through all Cg parameters of the Cg vertex program
-				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
-				while (pCgParameter) {
-					// Is this an attribute?
-					if (cgGetParameterVariability(pCgParameter) == CG_VARYING) {
-						// Register the new program attribute
-						ProgramAttributeCg *pProgramAttribute = new ProgramAttributeCg(pCgParameter);
-						m_lstAttributes.Add(pProgramAttribute);
-						m_mapAttributes.Add(cgGetParameterName(pCgParameter), pProgramAttribute);
-					}
+				// Vertex domain attributes ONLY!
+				if (cgGetProgramDomain(pCgDomainProgram) == CG_VERTEX_DOMAIN) {
+					// Iterate through all Cg parameters of the Cg vertex program
+					CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
+					while (pCgParameter) {
+						// Is this an attribute? (ONLY scalar or vector input data can come from the vertex buffer!)
+						if (cgGetParameterVariability(pCgParameter) == CG_VARYING && cgGetParameterDirection(pCgParameter) == CG_IN) {
+							// Is this uniform actually a structure?
+							if (cgGetParameterClass(pCgParameter) == CG_PARAMETERCLASS_STRUCT) {
+								// Add the structure elements as individual attributes as well so we can for example access an
+								// structure element by using "MyStructure.MyPosition" as attribute name to access the "MyPosition" attribute element
 
-					// Next Cg parameter, please
-					pCgParameter = cgGetNextParameter(pCgParameter);
+								// Iterate through all Cg parameters of the Cg structure
+								CGparameter pStructureCgParameter = cgGetFirstStructParameter(pCgParameter);
+								while (pStructureCgParameter) {
+									// Register the new program attribute
+									ProgramAttributeCg *pProgramAttribute = new ProgramAttributeCg(pStructureCgParameter);
+									m_lstAttributes.Add(pProgramAttribute);
+									m_mapAttributes.Add(cgGetParameterName(pStructureCgParameter), pProgramAttribute);
+
+									// Next Cg structure parameter, please
+									pStructureCgParameter = cgGetNextParameter(pStructureCgParameter);
+								}
+							} else {
+								// Register the new program attribute
+								ProgramAttributeCg *pProgramAttribute = new ProgramAttributeCg(pCgParameter);
+								m_lstAttributes.Add(pProgramAttribute);
+								m_mapAttributes.Add(cgGetParameterName(pCgParameter), pProgramAttribute);
+							}
+						}
+
+						// Next Cg parameter, please
+						pCgParameter = cgGetNextParameter(pCgParameter);
+					}
 				}
 			}
 
@@ -283,10 +304,35 @@ void ProgramCg::BuildUniformInformation()
 				while (pCgParameter) {
 					// Is this an uniform?
 					if (cgGetParameterVariability(pCgParameter) == CG_UNIFORM) {
-						// Register the new program uniform
-						ProgramUniformCg *pProgramUniform = new ProgramUniformCg(pCgParameter);
-						m_lstUniforms.Add(pProgramUniform);
-						m_mapUniforms.Add(cgGetParameterName(pCgParameter), pProgramUniform);
+						// Get the name of the uniform
+						const String sUniformName = cgGetParameterName(pCgParameter);
+
+						// Is this uniform actually an array?
+						if (cgGetParameterClass(pCgParameter) == CG_PARAMETERCLASS_ARRAY) {
+							// Get the array dimension
+							const int nArrayDimension = cgGetArraySize(pCgParameter, 0);	// We currently only support one dimension...
+
+							// Add the array elements as individual uniforms as well so we can for example access an
+							// array element by using "MyArray[1]" as uniform name to access the second array element
+							for (int i=0; i<nArrayDimension; i++) {
+								// Get the uniform name
+								const String sElementUniformName = sUniformName + String::Format("[%d]", i);
+
+								// Get the Cg parameter representing this array element
+								CGparameter pElementCgParameter = cgGetNamedParameter(pCgDomainProgram, sElementUniformName);
+								if (pElementCgParameter) {
+									// Register the new program uniform
+									ProgramUniformCg *pProgramUniform = new ProgramUniformCg(pElementCgParameter);
+									m_lstUniforms.Add(pProgramUniform);
+									m_mapUniforms.Add(sElementUniformName, pProgramUniform);
+								}
+							}
+						} else {
+							// Register the new program uniform
+							ProgramUniformCg *pProgramUniform = new ProgramUniformCg(pCgParameter);
+							m_lstUniforms.Add(pProgramUniform);
+							m_mapUniforms.Add(sUniformName, pProgramUniform);
+						}
 					}
 
 					// Next Cg parameter, please
@@ -468,23 +514,13 @@ bool ProgramCg::MakeCurrent()
 		for (int i=0; i<nNumOfProgramDomains; i++) {
 			// Enable the profile
 			cgGLEnableProfile(cgGetProgramDomainProfile(pCgCombinedProgram, i));
+		}
 
-			// Get the Cg program of the current domain
-			CGprogram pCgDomainProgram = cgGetProgramDomainProgram(pCgCombinedProgram, i);
-
-			// Enable vertex attribute arrays (vertex domain attributes ONLY!)
-			if (cgGetProgramDomain(pCgDomainProgram) == CG_VERTEX_DOMAIN) {
-				// Iterate through all Cg parameters of the Cg vertex program
-				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
-				while (pCgParameter) {
-					// Is this an attribute?
-					if (cgGetParameterVariability(pCgParameter) == CG_VARYING && cgGetParameterDirection(pCgParameter) == CG_IN)
-						cgGLEnableClientState(pCgParameter);
-
-					// Next Cg parameter, please
-					pCgParameter = cgGetNextParameter(pCgParameter);
-				}
-			}
+		// Iterate through all attributes - use GetAttributes() to ensure the attributes list is valid
+		const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
+		for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
+			// Enable vertex attribute array
+			cgGLEnableClientState(((ProgramAttributeCg*)lstAttributes[i])->m_pCgParameter);
 		}
 
 		// Done
@@ -499,26 +535,16 @@ bool ProgramCg::UnmakeCurrent()
 {
 	// There must be a Cg combined program
 	if (m_pCgCombinedProgram) {
+		// Iterate through all attributes - use GetAttributes() to ensure the attributes list is valid
+		const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
+		for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
+			// Disable vertex attribute array
+			cgGLDisableClientState(((ProgramAttributeCg*)lstAttributes[i])->m_pCgParameter);
+		}
+
 		// Iterate through all Cg programs of the Cg combined program and disable all required profiles
 		const int nNumOfProgramDomains = cgGetNumProgramDomains(m_pCgCombinedProgram);
 		for (int i=0; i<nNumOfProgramDomains; i++) {
-			// Get the Cg program of the current domain
-			CGprogram pCgDomainProgram = cgGetProgramDomainProgram(m_pCgCombinedProgram, i);
-
-			// Disable vertex attribute arrays (vertex domain attributes ONLY!)
-			if (cgGetProgramDomain(pCgDomainProgram) == CG_VERTEX_DOMAIN) {
-				// Iterate through all Cg parameters of the Cg vertex program
-				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
-				while (pCgParameter) {
-					// Is this an attribute?
-					if (cgGetParameterVariability(pCgParameter) == CG_VARYING && cgGetParameterDirection(pCgParameter) == CG_IN)
-						cgGLDisableClientState(pCgParameter);
-
-					// Next Cg parameter, please
-					pCgParameter = cgGetNextParameter(pCgParameter);
-				}
-			}
-
 			// Disable the profile
 			cgGLDisableProfile(cgGetProgramDomainProfile(m_pCgCombinedProgram, i));
 		}

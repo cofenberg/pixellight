@@ -1,3 +1,18 @@
+>> 27.09.2010
+[CO]
+PLRendererOpenGL:
+- ProgramCg::BuildUniformInformation(): Einzelnde Array Elemente können nun z.B. über "MyArray[1]" angesprochen werden
+- ProgramCg::BuildAttributeInformation(): Elemente einer Struktur können nun über z.B. "MyStructure.MyPosition" angesprochen werden
+
+
+
+>> 26.09.2010
+[CO]
+- Effekt-Klassen auf das neue Shader-Interface umgestellt
+- Das alte Shader-Interface endlich entfernt :D
+
+
+
 >> 17.09.2010
 [CO]
 PLRendererOpenGL:

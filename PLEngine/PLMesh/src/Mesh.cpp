@@ -257,8 +257,6 @@ void Mesh::Draw(const Matrix4x4 &mWorldViewProjection, bool bBlend, uint32 nFlag
 						}
 					}
 				}
-				m_pRenderer->SetFragmentShaderProgram();
-				m_pRenderer->SetVertexShaderProgram();
 			} else { // Bind no materials
 				// Draw geometries
 				for (uint32 nGeo=0; nGeo<lstGeometries.GetNumOfElements(); nGeo++) {

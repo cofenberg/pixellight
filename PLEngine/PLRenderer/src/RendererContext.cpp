@@ -27,7 +27,6 @@
 #include <PLGeneral/Tools/Profiling.h>
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Texture/TextureManager.h"
-#include "PLRenderer/Shader/ShaderManager.h"
 #include "PLRenderer/Effect/EffectManager.h"
 #include "PLRenderer/Material/MaterialManager.h"
 #include "PLRenderer/RendererContext.h"
@@ -77,8 +76,6 @@ RendererContext::~RendererContext()
 		delete m_pMaterialManager;
 	if (m_pEffectManager)
 		delete m_pEffectManager;
-	if (m_pShaderManager)
-		delete m_pShaderManager;
 	if (m_pTextureManager)
 		delete m_pTextureManager;
 	if (m_pRenderer)
@@ -103,17 +100,6 @@ TextureManager &RendererContext::GetTextureManager()
 	if (!m_pTextureManager)
 		m_pTextureManager = new TextureManager(*this);
 	return *m_pTextureManager;
-}
-
-/**
-*  @brief
-*    Returns the shader manager of this renderer context
-*/
-ShaderManager &RendererContext::GetShaderManager()
-{
-	if (!m_pShaderManager)
-		m_pShaderManager = new ShaderManager(*this);
-	return *m_pShaderManager;
 }
 
 /**
@@ -163,8 +149,6 @@ void RendererContext::Update()
 	if (pProfiling->IsActive()) {
 		if (m_pTextureManager)
 			pProfiling->Set("Renderer context", "Number of textures",  String::Format("%d", m_pTextureManager->GetNumOfElements()));
-		if (m_pShaderManager)
-			pProfiling->Set("Renderer context", "Number of shaders",   String::Format("%d", m_pShaderManager->GetNumOfElements()));
 		if (m_pEffectManager)
 			pProfiling->Set("Renderer context", "Number of effects",   String::Format("%d", m_pEffectManager->GetNumOfElements()));
 		if (m_pMaterialManager)
@@ -184,7 +168,6 @@ void RendererContext::Update()
 RendererContext::RendererContext(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
 	m_pTextureManager(NULL),
-	m_pShaderManager(NULL),
 	m_pEffectManager(NULL),
 	m_pMaterialManager(NULL)
 {

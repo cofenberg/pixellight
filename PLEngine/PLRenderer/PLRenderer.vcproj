@@ -726,50 +726,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Shader"
-			>
-			<File
-				RelativePath=".\src\Shader\Shader.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Shader\Shader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Shader\ShaderHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Shader\ShaderHandler.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Shader\ShaderLoader.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Shader\ShaderLoader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Shader\ShaderLoaderCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Shader\ShaderLoaderCg.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Shader\ShaderManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Shader\ShaderManager.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Animation"
 			>
 			<File
@@ -1030,14 +986,6 @@
 			</File>
 			<File
 				RelativePath=".\include\PLRenderer\Renderer\SamplerStates.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Renderer\ShaderProgram.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Renderer\ShaderProgram.h"
 				>
 			</File>
 			<File

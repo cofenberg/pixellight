@@ -42,8 +42,9 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Shader;
-class ShaderHandler;
+class Program;
+class VertexShader;
+class FragmentShader;
 class EffectPassLayer;
 class EffectTechnique;
 class ParameterManager;
@@ -107,16 +108,7 @@ class EffectPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Bind(ParameterManager *pParameterManager = NULL) const;
-
-		/**
-		*  @brief
-		*    Unbinds the pass to the renderer
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		PLRENDERER_API bool Unbind();
+		PLRENDERER_API bool Bind(ParameterManager *pParameterManager = NULL);
 
 		/**
 		*  @brief
@@ -266,37 +258,15 @@ class EffectPass {
 		*
 		*  @param[in] sFilename
 		*    Shader filename
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg")
 		*  @param[in] sProfile
 		*    Profile that should be used (e.g. "arbvp1")
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool LoadVertexShader(const PLGeneral::String &sFilename, const PLGeneral::String &sProfile = "");
-
-		/**
-		*  @brief
-		*    Unloads the vertex shader
-		*/
-		PLRENDERER_API void UnloadVertexShader();
-
-		/**
-		*  @brief
-		*    Gets the vertex shader
-		*
-		*  @return
-		*    The vertex shader, NULL if there's no one
-		*/
-		PLRENDERER_API ShaderHandler *GetVertexShader() const;
-
-		/**
-		*  @brief
-		*    Sets the vertex shader
-		*
-		*  @param[in] pShader
-		*    The vertex shader, NULL if there's no one
-		*/
-		PLRENDERER_API void SetVertexShader(Shader *pShader = NULL);
+		PLRENDERER_API bool LoadVertexShader(const PLGeneral::String &sFilename, const PLGeneral::String &sShaderLanguage, const PLGeneral::String &sProfile = "");
 
 		/**
 		*  @brief
@@ -304,51 +274,24 @@ class EffectPass {
 		*
 		*  @param[in] sFilename
 		*    Shader filename
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg")
 		*  @param[in] sProfile
 		*    Profile that should be used (e.g. "arbfp1")
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool LoadFragmentShader(const PLGeneral::String &sFilename, const PLGeneral::String &sProfile = "");
+		PLRENDERER_API bool LoadFragmentShader(const PLGeneral::String &sFilename, const PLGeneral::String &sShaderLanguage, const PLGeneral::String &sProfile = "");
 
 		/**
 		*  @brief
-		*    Unloads the fragment shader
-		*/
-		PLRENDERER_API void UnloadFragmentShader();
-
-		/**
-		*  @brief
-		*    Gets the fragment shader
+		*    Returns the used GPU program
 		*
 		*  @return
-		*    The fragment shader, NULL if there's no one
+		*    The used GPU program, NULL if there's no such GPU program
 		*/
-		PLRENDERER_API ShaderHandler *GetFragmentShader() const;
-
-		/**
-		*  @brief
-		*    Sets the fragment shader
-		*
-		*  @param[in] pShader
-		*    The fragment shader, NULL if there's no one
-		*/
-		PLRENDERER_API void SetFragmentShader(Shader *pShader = NULL);
-
-		/**
-		*  @brief
-		*    Binds a shader
-		*
-		*  @param[in] cShaderHandler
-		*    Shader to bind
-		*  @param[in] pParameterManager
-		*    Parameters to set, can be NULL
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool BindShader(const ShaderHandler &cShaderHandler, ParameterManager *pParameterManager = NULL) const;
+		PLRENDERER_API Program *GetProgram();
 
 
 	//[-------------------------------------------------------]
@@ -370,6 +313,18 @@ class EffectPass {
 		*/
 		~EffectPass();
 
+		/**
+		*  @brief
+		*    Loads in a string by using a file
+		*
+		*  @param[in] sFilename
+		*    Name of the file to read the string from
+		*
+		*  @return
+		*    The read string, empty string on error
+		*/
+		PLGeneral::String LoadStringFromFile(const PLGeneral::String &sFilename) const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
@@ -385,8 +340,9 @@ class EffectPass {
 		// Layers
 		PLGeneral::Array<EffectPassLayer*> m_lstLayers;	/**< Texture layers */
 		// Shaders
-		ShaderHandler *m_pVertexShader;		/**< Used vertex shader, can be NULL */
-		ShaderHandler *m_pFragmentShader;	/**< Used fragment shader, can be NULL */
+		VertexShader   *m_pVertexShader;	/**< Used vertex shader, can be NULL */
+		FragmentShader *m_pFragmentShader;	/**< Used fragment shader, can be NULL */
+		Program		   *m_pProgram;			/**< GPU program, can be NULL */
 
 
 };

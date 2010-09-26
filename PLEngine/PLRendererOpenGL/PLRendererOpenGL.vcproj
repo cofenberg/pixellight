@@ -602,14 +602,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ShaderProgram.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\ShaderProgram.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ShaderToolsCg.cpp"
 				>
 			</File>
@@ -823,18 +815,6 @@
 			</File>
 			<File
 				RelativePath="include\PLRendererOpenGL\Misc\pbuffer.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="PLRendererBackend"
-			>
-			<File
-				RelativePath="..\PLRenderer\src\_Backend\ShaderProgramCgBackend.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\PLRenderer\include\_PLRendererBackend\ShaderProgramCgBackend.h"
 				>
 			</File>
 		</Filter>

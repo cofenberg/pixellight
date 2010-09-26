@@ -35,7 +35,6 @@
 #include <PLRenderer/Effect/EffectPass.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLRenderer/Effect/EffectTechnique.h>
-#include <PLRenderer/Shader/ShaderManager.h>
 #include "PLDefaultFileFormats/Cg/EffectLoaderFX.h"
 
 
@@ -278,6 +277,7 @@ void Program_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokenize
 			}
 
 			// Get the renderer context and renderer
+			/* [TODO] New shader interface
 			RendererContext &cRendererContext = sInstance.pFX->GetEffectManager().GetRendererContext();
 			Renderer        &cRenderer        = cRendererContext.GetRenderer();
 
@@ -299,7 +299,7 @@ void Program_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokenize
 					}
 					pShader->SetShaderProgram(pShaderProgram);
 				}
-			}
+			}*/
 
 		// asm
 		} else if (sToken == "asm") {

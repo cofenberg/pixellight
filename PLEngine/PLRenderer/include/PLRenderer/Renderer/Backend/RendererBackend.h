@@ -123,18 +123,6 @@ class RendererBackend : public Renderer {
 
 		/**
 		*  @brief
-		*    Makes a shader program to the renderers current shader program
-		*
-		*  @param[in] cShaderProgram
-		*    Shader program to use
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		PLRENDERER_API bool MakeShaderProgramCurrent(ShaderProgram &cShaderProgram);
-
-		/**
-		*  @brief
 		*    Returns the API pixel format
 		*
 		*  @param[in] nPixelFormat
@@ -293,8 +281,6 @@ class RendererBackend : public Renderer {
 		PLGeneral::uint8	m_nCurrentSurfaceFace;				/**< The current renderer target surface face */
 		TextureBuffer	  **m_ppCurrentTextureBuffer;			/**< The current texture buffer */
 		IndexBuffer		   *m_pCurrentIndexBuffer;				/**< Current index buffer */
-		ShaderProgram	   *m_pCurrentVertexShaderProgram;		/**< Current vertex shader program */
-		ShaderProgram	   *m_pCurrentFragmentShaderProgram;	/**< Current fragment shader program */
 		ResourceHandler     m_cProgramHandler;					/**< Currently used program */
 
 
@@ -370,8 +356,6 @@ class RendererBackend : public Renderer {
 		PLRENDERER_API virtual TextureBuffer *GetColorRenderTarget(PLGeneral::uint8 nColorIndex = 0) const;
 		PLRENDERER_API virtual TextureBuffer *GetTextureBuffer(PLGeneral::uint32 nStage) const;
 		PLRENDERER_API virtual IndexBuffer *GetIndexBuffer() const;
-		PLRENDERER_API virtual ShaderProgram *GetVertexShaderProgram() const;
-		PLRENDERER_API virtual ShaderProgram *GetFragmentShaderProgram() const;
 		PLRENDERER_API virtual Program *GetProgram() const;
 		PLRENDERER_API virtual bool SetProgram(Program *pProgram = NULL);
 

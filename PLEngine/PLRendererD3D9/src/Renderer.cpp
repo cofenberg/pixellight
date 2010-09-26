@@ -40,7 +40,6 @@
 #include "PLRendererD3D9/TextureBufferCube.h"
 #include "PLRendererD3D9/IndexBuffer.h"
 #include "PLRendererD3D9/VertexBuffer.h"
-#include "PLRendererD3D9/ShaderProgram.h"
 #include "PLRendererD3D9/OcclusionQuery.h"
 #include "PLRendererD3D9/FixedFunctions.h"
 #include "PLRendererD3D9/FontManager.h"
@@ -180,9 +179,6 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	//		HRESULT nError = m_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, m_hWnd,
 
 			if (SUCCEEDED(nError)) {
-				// Set Cg device
-				cgD3D9SetDevice(m_pDevice);
-
 				// Init wrappers
 				InitWrappers();
 
@@ -274,9 +270,6 @@ Renderer::~Renderer()
 		// Destroy all renderer resources of this renderer
 		while (m_lstResources.GetNumOfElements())
 			delete m_lstResources[0];
-
-		// Set Cg device
-		cgD3D9SetDevice(NULL);
 
 		// Release the renderer device
 		if (m_pDevice) {
@@ -743,22 +736,6 @@ String Renderer::GetDefaultShaderLanguage() const
 	return (GetMode() != ModeFixedFunctions) ? sString : "";
 }
 
-bool Renderer::IsShaderProgramProfileSupported(const String &sProfile) const
-{
-	// [TODO] Depreciated method, remove this
-	if (GetMode() == ModeFixedFunctions) return false;
-//	if (!sProfile.GetLength())
-//		return true; // Error!
-
-	// [TODO]
-	return true;
-/*	CGprofile Profile = cgGetProfile(sProfile);
-	if (Profile == CG_PROFILE_UNKNOWN)
-		return false;
-	else
-		return (cgGLIsProfileSupported(Profile) != 0);*/
-}
-
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
 {
 	return m_pFixedFunctions;
@@ -909,50 +886,6 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
 	// Create the Direct3D 9 vertex buffer
 	return new VertexBuffer(*this);
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateVertexShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-															   const String &sEntry, const char **ppszAttributes)
-{
-	// [TODO] Depreciated method, remove this
-	if (GetMode() == ModeFixedFunctions)
-		return NULL;
-
-	// Is the profile supported?
-	if (IsShaderProgramProfileSupported(sProfile)) {
-		// Create the Direct3D 9 vertex shader program
-		ShaderProgram *pShaderProgram = new ShaderProgram(*this, PLRenderer::Resource::TypeVertexShaderProgram, pProgram, sProfile,
-														  sDefines, sEntry, ppszAttributes);
-		if (pShaderProgram->GetCgProgram())
-			return pShaderProgram;
-		else
-			delete pShaderProgram; // Cleanup
-	}
-
-	// Error!
-	return NULL;
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateFragmentShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-																 const String &sEntry, const char **ppszAttributes)
-{
-	// [TODO] Depreciated method, remove this
-	if (GetMode() == ModeFixedFunctions)
-		return NULL;
-
-	// Is the profile supported?
-	if (IsShaderProgramProfileSupported(sProfile)) {
-		// Create the Direct3D 9 fragment shader program
-		ShaderProgram *pShaderProgram = new ShaderProgram(*this, PLRenderer::Resource::TypeFragmentShaderProgram, pProgram, sProfile,
-														  sDefines, sEntry, ppszAttributes);
-		if (pShaderProgram->GetCgProgram())
-			return pShaderProgram;
-		else
-			delete pShaderProgram; // Cleanup
-	}
-
-	// Error!
-	return NULL;
 }
 
 PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()
@@ -1855,72 +1788,6 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 	} else {
 		// No, deactivate index buffer
 		m_pDevice->SetIndices(NULL);
-	}
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetVertexShaderProgram(PLRenderer::ShaderProgram *pVertexShaderProgram)
-{
-	// Is this vertex shader program already set?
-	if (m_pCurrentVertexShaderProgram == pVertexShaderProgram)
-		return false; // Error!
-
-	// Disable old shader program
-	if (m_pCurrentVertexShaderProgram)
-		m_pDevice->SetVertexShader(NULL);
-
-	// Is this really a vertex shader program?
-	if (pVertexShaderProgram && pVertexShaderProgram->GetType() != PLRenderer::Resource::TypeVertexShaderProgram)
-		return false; // Error!
-
-	// Make this vertex shader program to the renderers current one
-	PLRenderer::ShaderProgram *pT = m_pCurrentVertexShaderProgram;
-	m_pCurrentVertexShaderProgram = pVertexShaderProgram;
-
-	// Should an vertex shader program be set?
-	if (pVertexShaderProgram) {
-		// Yes, make it current
-		if (!MakeShaderProgramCurrent(*pVertexShaderProgram)) {
-			m_pCurrentVertexShaderProgram = pT;
-
-			// Error!
-			return false;
-		}
-	}
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetFragmentShaderProgram(PLRenderer::ShaderProgram *pFragmentShaderProgram)
-{
-	// Is this fragment shader program already set?
-	if (m_pCurrentFragmentShaderProgram == pFragmentShaderProgram)
-		return false; // Error!
-
-	// Disable old shader program
-	if (m_pCurrentFragmentShaderProgram)
-		m_pDevice->SetPixelShader(NULL);
-
-	// Is this really a fragment shader program?
-	if (pFragmentShaderProgram && pFragmentShaderProgram->GetType() != PLRenderer::Resource::TypeFragmentShaderProgram)
-		return false; // Error!
-
-	// Make this fragment shader program to the renderers current one
-	PLRenderer::ShaderProgram *pT = m_pCurrentFragmentShaderProgram;
-	m_pCurrentFragmentShaderProgram = pFragmentShaderProgram;
-
-	// Should an fragment shader program be set?
-	if (pFragmentShaderProgram) {
-		// Yes, make it current
-		if (!MakeShaderProgramCurrent(*pFragmentShaderProgram)) {
-			m_pCurrentFragmentShaderProgram = pT;
-
-			// Error!
-			return false;
-		}
 	}
 
 	// Done

@@ -7,7 +7,6 @@ define_project(PLRendererOpenGL)
 ## Source files
 ##################################################
 add_sources(
-	src/../../PLRenderer/src/_Backend/ShaderProgramCgBackend.cpp
 	src/PLRendererOpenGL.cpp
 	src/Renderer.cpp
 	src/FixedFunctions.cpp
@@ -21,7 +20,6 @@ add_sources(
 	src/TextureBufferCube.cpp
 	src/SurfaceWindow.cpp
 	src/SurfaceTextureBuffer.cpp
-	src/ShaderProgram.cpp
 	src/OcclusionQuery.cpp
 	src/VertexShaderGLSL.cpp
 	src/GeometryShaderGLSL.cpp

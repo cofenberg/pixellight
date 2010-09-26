@@ -40,7 +40,6 @@ namespace PLGeneral {
 }
 namespace PLRenderer {
 	class TextureManager;
-	class ShaderManager;
 	class EffectManager;
 	class MaterialManager;
 }
@@ -133,15 +132,6 @@ class RendererContext {
 
 		/**
 		*  @brief
-		*    Returns the shader manager of this renderer context
-		*
-		*  @return
-		*    Reference to the shader manager of this renderer context
-		*/
-		PLRENDERER_API ShaderManager &GetShaderManager();
-
-		/**
-		*  @brief
 		*    Returns the effect manager of this renderer context
 		*
 		*  @return
@@ -204,7 +194,6 @@ class RendererContext {
 	private:
 		Renderer		*m_pRenderer;			/**< Used renderer, always valid! */
 		TextureManager  *m_pTextureManager;		/**< The texture manager of this renderer context, NULL if not yet initialised */
-		ShaderManager   *m_pShaderManager;		/**< The shader manager of this renderer context, NULL if not yet initialised */
 		EffectManager   *m_pEffectManager;		/**< The effect manager of this renderer context, NULL if not yet initialised */
 		MaterialManager *m_pMaterialManager;	/**< The material manager of this renderer context, NULL if not yet initialised */
 

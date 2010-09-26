@@ -77,14 +77,12 @@ class Resource {
 			TypeTextureBufferRectangle =  4,	/**< Rectangle texture buffer */
 			TypeTextureBuffer3D        =  5,	/**< 3D texture buffer */
 			TypeTextureBufferCube      =  6,	/**< Cube texture buffer */
-			TypeVertexShaderProgram    =  7,	/**< Vertex shader program */
-			TypeFragmentShaderProgram  =  8,	/**< Fragment shader program */
-			TypeOcclusionQuery         =  9,	/**< Occlusion query */
-			TypeVertexShader           = 10,	/**< Vertex shader */
-			TypeGeometryShader         = 11,	/**< Geometry shader */
-			TypeFragmentShader         = 12,	/**< Fragment shader */
-			TypeProgram                = 13,	/**< Program */
-			TypeFont                   = 14		/**< Font */
+			TypeOcclusionQuery         =  7,	/**< Occlusion query */
+			TypeVertexShader           =  8,	/**< Vertex shader */
+			TypeGeometryShader         =  9,	/**< Geometry shader */
+			TypeFragmentShader         = 10,	/**< Fragment shader */
+			TypeProgram                = 11,	/**< Program */
+			TypeFont                   = 12		/**< Font */
 		};
 
 

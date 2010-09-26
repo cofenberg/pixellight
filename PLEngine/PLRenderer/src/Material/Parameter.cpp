@@ -24,7 +24,11 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/Tokenizer.h>
+#include <PLMath/Matrix3x3.h>
+#include <PLMath/Matrix3x4.h>
 #include "PLRenderer/RendererContext.h"
+#include "PLRenderer/Renderer/Program.h"
+#include "PLRenderer/Renderer/ProgramUniform.h"
 #include "PLRenderer/Texture/Texture.h"
 #include "PLRenderer/Texture/TextureHandler.h"
 #include "PLRenderer/Material/ParameterManager.h"
@@ -34,6 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLMath;
 namespace PLRenderer {
 
 
@@ -134,6 +139,105 @@ bool Parameter::SetManagerParameterValue(Parameters &cManager, const PLGeneral::
 
 	// Done
 	return true;
+}
+
+/**
+*  @brief
+*    Sets the value of this parameter to a parameter within the given manager GPU program
+*/
+bool Parameter::SetManagerParameterValue(Program &cProgram, const PLGeneral::String &sName) const
+{
+	// Get the GPU program uniform
+	ProgramUniform *pProgramUniform = cProgram.GetUniform(sName);
+	if (pProgramUniform) {
+		// Set parameter
+		switch (m_nType) {
+			case Parameters::String:
+				// GPU programs don't have string parameters
+				break;
+
+			case Parameters::Integer:
+				pProgramUniform->Set(*((const int*)m_pValue));
+				break;
+
+			case Parameters::Integer2:
+				pProgramUniform->Set2((const int*)m_pValue);
+				break;
+
+			case Parameters::Integer3:
+				pProgramUniform->Set3((const int*)m_pValue);
+				break;
+
+			case Parameters::Integer4:
+				pProgramUniform->Set4((const int*)m_pValue);
+				break;
+
+			case Parameters::Float:
+				pProgramUniform->Set(*((const float*)m_pValue));
+				break;
+
+			case Parameters::Float2:
+				pProgramUniform->Set2((const float*)m_pValue);
+				break;
+
+			case Parameters::Float3:
+				pProgramUniform->Set3((const float*)m_pValue);
+				break;
+
+			case Parameters::Float4:
+				pProgramUniform->Set4((const float*)m_pValue);
+				break;
+
+			case Parameters::Double:
+				pProgramUniform->Set(*((const double*)m_pValue));
+				break;
+
+			case Parameters::Double2:
+				pProgramUniform->Set2((const double*)m_pValue);
+				break;
+
+			case Parameters::Double3:
+				pProgramUniform->Set3((const double*)m_pValue);
+				break;
+
+			case Parameters::Double4:
+				pProgramUniform->Set4((const double*)m_pValue);
+				break;
+
+			case Parameters::Float3x3:
+				// [TODO] New shader interface: Add Set3x3 method?
+				//pProgramUniform->Set((const float*)m_pValue);
+				pProgramUniform->Set(Matrix3x3((const float*)m_pValue));
+				break;
+
+			case Parameters::Float3x4:
+				// [TODO] New shader interface: Add Set3x4 method?
+				//pProgramUniform->Set((const float*)m_pValue);
+				break;
+
+			case Parameters::Float4x4:
+				// [TODO] New shader interface: Add Set4x4 method?
+				pProgramUniform->Set(Matrix4x4((const float*)m_pValue));
+				break;
+
+			case Parameters::Double4x4:
+				// [TODO] New shader interface: Add Set4x4 method?
+				//pProgramUniform->Set((const double*)m_pValue);
+				break;
+
+			case Parameters::TextureBuffer:
+				return false; // Error, not supported
+
+			default:
+				return false; // Error, not supported
+		}
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
 }
 
 /**

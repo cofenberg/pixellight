@@ -41,6 +41,7 @@ namespace PLRenderer {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Texture;
+class Program;
 class TextureHandler;
 class ParameterManager;
 
@@ -90,6 +91,20 @@ class Parameter {
 		*    'true' if all went fine, else 'false' (maybe incompatible parameter types?)
 		*/
 		PLRENDERER_API bool SetManagerParameterValue(Parameters &cManager, const PLGeneral::String &sName) const;
+
+		/**
+		*  @brief
+		*    Sets the value of this parameter to a parameter within the given GPU program
+		*
+		*  @param[in] cProgram
+		*    GPU program to use
+		*  @param[in] sName
+		*    Name of the parameter within the given manager
+		* 
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe incompatible parameter types?)
+		*/
+		PLRENDERER_API bool SetManagerParameterValue(Program &cProgram, const PLGeneral::String &sName) const;
 
 		/**
 		*  @brief

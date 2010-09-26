@@ -98,46 +98,6 @@ void Effect::SetBlend(bool bBlend)
 
 /**
 *  @brief
-*    Unbinds the effect to the renderer
-*/
-bool Effect::Unbind()
-{
-	// Unbind first pass for general settings
-	EffectTechnique *pTechnique = m_lstTechnique[m_nSelectedTechnique];
-	return (pTechnique && pTechnique->GetPass() && pTechnique->GetPass()->Unbind());
-}
-
-/**
-*  @brief
-*    Binds the effect shaders to the renderer
-*/
-bool Effect::BindShaders()
-{
-	// Get the current effect technique
-	EffectTechnique *pTechnique = m_lstTechnique[m_nSelectedTechnique];
-	if (pTechnique) {
-		// Get the current effect pass
-		const EffectPass *pFXPass = pTechnique->GetPass();
-		if (pFXPass) {
-			// Bind vertex shader
-			if (pFXPass->GetVertexShader())
-				pFXPass->BindShader(*pFXPass->GetVertexShader(), m_pParameterManager);
-
-			// Bind fragmentx shader
-			if (pFXPass->GetFragmentShader())
-				pFXPass->BindShader(*pFXPass->GetFragmentShader(), m_pParameterManager);
-
-			// Done
-			return true;
-		}
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
 *    Returns whether the effect is loaded or not
 */
 bool Effect::IsLoaded() const

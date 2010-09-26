@@ -35,7 +35,6 @@
 #include "PLRenderer/Renderer/IndexBuffer.h"
 #include "PLRenderer/Renderer/VertexBuffer.h"
 #include "PLRenderer/Renderer/TextureBuffer.h"
-#include "PLRenderer/Renderer/ShaderProgram.h"
 #include "PLRenderer/Renderer/FixedFunctions.h"
 #include "PLRenderer/Renderer/Backend/DrawHelpersBackendShaders.h"
 #include "PLRenderer/Renderer/Backend/DrawHelpersBackendFixedFunctions.h"
@@ -104,15 +103,6 @@ bool RendererBackend::UnmakeSurfaceCurrent(Surface &cSurface)
 bool RendererBackend::MakeTextureBufferCurrent(TextureBuffer &cTextureBuffer, uint32 nStage)
 {
 	return cTextureBuffer.MakeCurrent(nStage);
-}
-
-/**
-*  @brief
-*    Makes a shader program to the renderers current shader program
-*/
-bool RendererBackend::MakeShaderProgramCurrent(ShaderProgram &cShaderProgram)
-{
-	return cShaderProgram.MakeCurrent();
 }
 
 /**
@@ -237,13 +227,11 @@ RendererBackend::RendererBackend(EMode nMode) :
 	}
 
 	// Current stuff
-	m_fViewPortMinZ					= 0.0f;
-	m_fViewPortMaxZ					= 0.0f;
-	m_nCurrentSurfaceFace			= 0;
-	m_ppCurrentTextureBuffer		= NULL;
-	m_pCurrentIndexBuffer			= NULL;
-	m_pCurrentVertexShaderProgram	= NULL;
-	m_pCurrentFragmentShaderProgram	= NULL;
+	m_fViewPortMinZ				= 0.0f;
+	m_fViewPortMaxZ				= 0.0f;
+	m_nCurrentSurfaceFace		= 0;
+	m_ppCurrentTextureBuffer	= NULL;
+	m_pCurrentIndexBuffer		= NULL;
 
 	// The rest ist done by the API backends!
 }
@@ -551,8 +539,6 @@ void RendererBackend::Reset()
 	SetViewport();
 	SetScissorRect();
 	SetColorMask();
-	SetVertexShaderProgram();
-	SetFragmentShaderProgram();
 	SetProgram();
 
 	// Fixed functions
@@ -803,16 +789,6 @@ TextureBuffer *RendererBackend::GetTextureBuffer(uint32 nStage) const
 IndexBuffer *RendererBackend::GetIndexBuffer() const
 {
 	return m_pCurrentIndexBuffer;
-}
-
-ShaderProgram *RendererBackend::GetVertexShaderProgram() const
-{
-	return m_pCurrentVertexShaderProgram;
-}
-
-ShaderProgram *RendererBackend::GetFragmentShaderProgram() const
-{
-	return m_pCurrentFragmentShaderProgram;
 }
 
 Program *RendererBackend::GetProgram() const

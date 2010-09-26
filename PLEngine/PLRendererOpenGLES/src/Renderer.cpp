@@ -30,7 +30,6 @@
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLGraphics/Image/ImageEffects.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
 #include "PLRendererOpenGLES/SurfaceWindow.h"
@@ -958,12 +957,6 @@ String Renderer::GetDefaultShaderLanguage() const
 	return ShaderLanguageGLSL;
 }
 
-bool Renderer::IsShaderProgramProfileSupported(const String &sProfile) const
-{
-	// There are no shader programs :)
-	return false;
-}
-
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
 {
 	// We're in luck - it's not supported by OpenGL ES 2.0
@@ -1118,20 +1111,6 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
 	// Create the null vertex buffer
 	return new VertexBuffer(*this);
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateVertexShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-															   const String &sEntry, const char **ppszAttributes)
-{
-	// Not implemented :)
-	return NULL;
-}
-
-PLRenderer::ShaderProgram *Renderer::CreateFragmentShaderProgram(const void *pProgram, const String &sProfile, const String &sDefines,
-																 const String &sEntry, const char **ppszAttributes)
-{
-	// Not implemented :)
-	return NULL;
 }
 
 PLRenderer::VertexShader *Renderer::CreateVertexShader(const String &sShaderLanguage)
@@ -2098,22 +2077,6 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		// No, deactivate index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetVertexShaderProgram(PLRenderer::ShaderProgram *pVertexShaderProgram)
-{
-	// [TODO] Remove this method
-
-	// Done
-	return true;
-}
-
-bool Renderer::SetFragmentShaderProgram(PLRenderer::ShaderProgram *pFragmentShaderProgram)
-{
-	// [TODO] Remove this method
 
 	// Done
 	return true;

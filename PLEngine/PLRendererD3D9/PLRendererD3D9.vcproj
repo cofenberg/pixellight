@@ -432,14 +432,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ShaderProgram.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererD3D9\ShaderProgram.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\SurfaceTextureBuffer.cpp"
 				>
 			</File>
@@ -501,18 +493,6 @@
 			</File>
 			<File
 				RelativePath="include\PLRendererD3D9\VertexBuffer.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="PLRendererBackend"
-			>
-			<File
-				RelativePath="..\PLRenderer\src\_Backend\ShaderProgramCgBackend.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\PLRenderer\include\_PLRendererBackend\ShaderProgramCgBackend.h"
 				>
 			</File>
 		</Filter>

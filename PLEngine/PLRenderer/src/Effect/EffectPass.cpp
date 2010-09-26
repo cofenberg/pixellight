@@ -23,9 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/File/File.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include "PLRenderer/RendererContext.h"
-#include "PLRenderer/Renderer/ShaderProgram.h"
-#include "PLRenderer/Shader/ShaderManager.h"
+#include "PLRenderer/Renderer/Program.h"
+#include "PLRenderer/Renderer/VertexShader.h"
+#include "PLRenderer/Renderer/FragmentShader.h"
 #include "PLRenderer/Material/Parameter.h"
 #include "PLRenderer/Material/ParameterManager.h"
 #include "PLRenderer/Texture/TextureManager.h"
@@ -39,6 +42,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRenderer {
@@ -78,7 +82,7 @@ void EffectPass::SetName(const String &sName)
 *  @brief
 *    Binds the pass
 */
-bool EffectPass::Bind(ParameterManager *pParameterManager) const
+bool EffectPass::Bind(ParameterManager *pParameterManager)
 {
 	// Get renderer
 	Renderer &cRenderer = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer();
@@ -101,10 +105,44 @@ bool EffectPass::Bind(ParameterManager *pParameterManager) const
 	}
 
 	{ // Bind shaders
-		if (!m_pVertexShader || !BindShader(*m_pVertexShader, pParameterManager))
-			cRenderer.SetVertexShaderProgram();
-		if (!m_pFragmentShader || !BindShader(*m_pFragmentShader, pParameterManager))
-			cRenderer.SetFragmentShaderProgram();
+		// Get the used GPU program
+		Program *pProgram = GetProgram();
+
+		// If there's a GPU program, make it to the currently used one
+		cRenderer.SetProgram(pProgram);
+		if (pProgram) {
+			// Set shader parameters
+			if (pParameterManager) {
+				// First, use the given parameter manager
+				for (uint32 i=0; i<pParameterManager->GetNumOfParameters(); i++) {
+					// Get parameter
+					const Parameter *pParameter = pParameterManager->GetParameter(i);
+					if (pParameter && pParameter->GetType() != Parameters::TextureBuffer) 
+						pParameter->SetManagerParameterValue(*pProgram, pParameter->GetName());
+				}
+
+				// Use the effect parameters if not already set by the given parameter manager
+				const uint32 nNumOfParameters = GetTechnique().GetEffect().GetParameterManager().GetNumOfParameters();
+				for (uint32 i=0; i<nNumOfParameters; i++) {
+					// Get parameter, ignore texture buffer parameters
+					const Parameter *pParameter = GetTechnique().GetEffect().GetParameterManager().GetParameter(i);
+					if (pParameter && pParameter->GetType() != Parameters::TextureBuffer) {
+						// Already set by the given parameter manager?
+						const String sName = pParameter->GetName();
+						if (!pParameterManager->IsParameter(sName))
+							pParameter->SetManagerParameterValue(*pProgram, sName);
+					}
+				}
+			} else {
+				const uint32 nNumOfParameters = GetTechnique().GetEffect().GetParameterManager().GetNumOfParameters();
+				for (uint32 i=0; i<nNumOfParameters; i++) {
+					// Get parameter
+					const Parameter *pParameter = GetTechnique().GetEffect().GetParameterManager().GetParameter(i);
+					if (pParameter && pParameter->GetType() != Parameters::TextureBuffer)
+						pParameter->SetManagerParameterValue(*pProgram, pParameter->GetName());
+				}
+			}
+		}
 	}
 
 	{ // Setup textures
@@ -143,22 +181,6 @@ bool EffectPass::Bind(ParameterManager *pParameterManager) const
 
 /**
 *  @brief
-*    Unbinds the pass to the renderer
-*/
-bool EffectPass::Unbind()
-{
-	// Unbind shaders
-	if (m_pVertexShader)
-		m_pVertexShader->Unbind();
-	if (m_pFragmentShader)
-		m_pFragmentShader->Unbind();
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
 *    Copy operator
 */
 EffectPass &EffectPass::operator =(const EffectPass &cSource)
@@ -186,6 +208,8 @@ EffectPass &EffectPass::operator =(const EffectPass &cSource)
 		m_lstLayers.Add(pFXPassLayer);
 	}
 
+	/*
+	// [TODO] New shader interface
 	// Vertex shader
 	if (cSource.GetVertexShader()) {
 		if (!m_pVertexShader)
@@ -209,7 +233,7 @@ EffectPass &EffectPass::operator =(const EffectPass &cSource)
 			m_pFragmentShader = NULL;
 		}
 	}
-
+*/
 	// Done
 	return *this;
 }
@@ -380,7 +404,7 @@ void EffectPass::RemoveAllLayers()
 *  @brief
 *    Loads a vertex shader
 */
-bool EffectPass::LoadVertexShader(const String &sFilename, const String &sProfile)
+bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShaderLanguage, const String &sProfile)
 {
 	// Check parameters
 	if (sFilename.GetLength()) {
@@ -390,14 +414,25 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sProfil
 			m_pVertexShader = NULL;
 		}
 
-		// Load shader
-		Shader *pShader = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetShaderManager().Load(sFilename, sFilename, sProfile);
-		if (pShader) {
-			m_pVertexShader = new ShaderHandler();
-			m_pVertexShader->SetResource(pShader);
+		// Load in the shader source code
+		const String sShaderSourceCode = LoadStringFromFile(sFilename);
+		if (sShaderSourceCode.GetLength()) {
+			// Create the shader instances
+			m_pVertexShader = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().CreateVertexShader(sShaderLanguage);
 
-			// Done
-			return true;
+			// Set the shader source code
+			if (m_pVertexShader) {
+				m_pVertexShader->SetSourceCode(sShaderSourceCode, sProfile);
+
+				// Destroy the current GPU program
+				if (m_pProgram) {
+					delete m_pProgram;
+					m_pProgram = NULL;
+				}
+
+				// Done
+				return true;
+			}
 		}
 	}
 
@@ -407,41 +442,9 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sProfil
 
 /**
 *  @brief
-*    Unloads the vertex shader
-*/
-void EffectPass::UnloadVertexShader()
-{
-	if (m_pVertexShader) {
-		delete m_pVertexShader;
-		m_pVertexShader = NULL;
-	}
-}
-
-/**
-*  @brief
-*    Gets the vertex shader
-*/
-ShaderHandler *EffectPass::GetVertexShader() const
-{
-	return m_pVertexShader;
-}
-
-/**
-*  @brief
-*    Sets the vertex shader
-*/
-void EffectPass::SetVertexShader(Shader *pShader)
-{
-	if (!m_pVertexShader)
-		m_pVertexShader = new ShaderHandler();
-	m_pVertexShader->SetResource(pShader);
-}
-
-/**
-*  @brief
 *    Loads a fragment shader
 */
-bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sProfile)
+bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShaderLanguage, const String &sProfile)
 {
 	// Check parameters
 	if (sFilename.GetLength()) {
@@ -451,117 +454,51 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sProf
 			m_pFragmentShader = NULL;
 		}
 
-		// Load shader
-		Shader *pShader = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetShaderManager().Load(sFilename + "+", sFilename + "+", sProfile);
-		if (pShader) {
-			m_pFragmentShader = new ShaderHandler();
-			m_pFragmentShader->SetResource(pShader);
+		// Load in the shader source code
+		const String sShaderSourceCode = LoadStringFromFile(sFilename);
+		if (sShaderSourceCode.GetLength()) {
+			// Create the shader instances
+			m_pFragmentShader = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().CreateFragmentShader(sShaderLanguage);
 
-			// Done
-			return true;
-		}
-	}
+			// Set the shader source code
+			if (m_pFragmentShader) {
+				m_pFragmentShader->SetSourceCode(sShaderSourceCode, sProfile);
 
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Unloads the fragment shader
-*/
-void EffectPass::UnloadFragmentShader()
-{
-	if (m_pFragmentShader) {
-		delete m_pFragmentShader;
-		m_pFragmentShader = NULL;
-	}
-}
-
-/**
-*  @brief
-*    Gets the fragment shader
-*/
-ShaderHandler *EffectPass::GetFragmentShader() const
-{
-	return m_pFragmentShader;
-}
-
-/**
-*  @brief
-*    Sets the fragment shader
-*/
-void EffectPass::SetFragmentShader(Shader *pShader)
-{
-	if (!m_pFragmentShader)
-		m_pFragmentShader = new ShaderHandler();
-	m_pFragmentShader->SetResource(pShader);
-}
-
-/**
-*  @brief
-*    Binds a shader
-*/
-bool EffectPass::BindShader(const ShaderHandler &cShaderHandler, ParameterManager *pParameterManager) const
-{
-	// Check parameter
-	if (cShaderHandler.GetResource()) {
-		// Get shader program
-		ShaderProgram *pShaderProgram = cShaderHandler.GetResource()->GetShaderProgram();
-		if (pShaderProgram) {
-			// Bind shader
-			cShaderHandler.Bind();
-
-			// Set shader parameters
-			if (pParameterManager) {
-				// First, use the given parameter manager
-				for (uint32 i=0; i<pParameterManager->GetNumOfParameters(); i++) {
-					// Get parameter
-					const Parameter *pParameter = pParameterManager->GetParameter(i);
-					if (pParameter && pParameter->GetType() != Parameters::TextureBuffer) {
-						// Is this a valid shader parameter?
-						const String sName = pParameter->GetName();
-						if (pShaderProgram->IsParameter(sName))
-							pParameter->SetManagerParameterValue(*pShaderProgram, sName);
-					}
+				// Destroy the current GPU program
+				if (m_pProgram) {
+					delete m_pProgram;
+					m_pProgram = NULL;
 				}
 
-				// Use the effect parameters if not already set by the given parameter manager
-				const uint32 nNumOfParameters = GetTechnique().GetEffect().GetParameterManager().GetNumOfParameters();
-				for (uint32 i=0; i<nNumOfParameters; i++) {
-					// Get parameter, ignore texture buffer parameters
-					const Parameter *pParameter = GetTechnique().GetEffect().GetParameterManager().GetParameter(i);
-					if (pParameter && pParameter->GetType() != Parameters::TextureBuffer) {
-						// Already set by the given parameter manager?
-						const String sName = pParameter->GetName();
-						if (!pParameterManager->IsParameter(sName)) {
-							// Is this a valid shader parameter?
-							if (pShaderProgram->IsParameter(sName))
-								pParameter->SetManagerParameterValue(*pShaderProgram, sName);
-						}
-					}
-				}
-			} else {
-				const uint32 nNumOfParameters = GetTechnique().GetEffect().GetParameterManager().GetNumOfParameters();
-				for (uint32 i=0; i<nNumOfParameters; i++) {
-					// Get parameter
-					const Parameter *pParameter = GetTechnique().GetEffect().GetParameterManager().GetParameter(i);
-					if (pParameter && pParameter->GetType() != Parameters::TextureBuffer) {
-						// Is this a valid shader parameter?
-						const String sName = pParameter->GetName();
-						if (pShaderProgram->IsParameter(sName))
-							pParameter->SetManagerParameterValue(*pShaderProgram, sName);
-					}
-				}
+				// Done
+				return true;
 			}
-
-			// Done
-			return true;
 		}
 	}
 
 	// Error!
 	return false;
+}
+
+/**
+*  @brief
+*    Returns the used GPU program
+*/
+Program *EffectPass::GetProgram()
+{
+	// Create the GPU program right now?
+	if (!m_pProgram && m_pVertexShader && m_pFragmentShader) {
+		// Create a program instance
+		m_pProgram = m_pVertexShader->GetRenderer().CreateProgram(m_pVertexShader->GetShaderLanguage());
+		if (m_pProgram) {
+			// Assign the vertex and fragment shaders to the program
+			m_pProgram->SetVertexShader(m_pVertexShader);
+			m_pProgram->SetFragmentShader(m_pFragmentShader);
+		}
+	}
+
+	// Done
+	return m_pProgram;
 }
 
 
@@ -577,7 +514,8 @@ EffectPass::EffectPass(EffectTechnique &cTechnique) :
 	m_sName("Pass"),
 	m_cColor(Color4::White),
 	m_pVertexShader(NULL),
-	m_pFragmentShader(NULL)
+	m_pFragmentShader(NULL),
+	m_pProgram(NULL)
 {
 	ResetMaterialStates();
 }
@@ -592,10 +530,68 @@ EffectPass::~EffectPass()
 	RemoveAllLayers();
 
 	// Delete shaders
+	if (m_pProgram)
+		delete m_pProgram;
 	if (m_pVertexShader)
 		delete m_pVertexShader;
 	if (m_pFragmentShader)
 		delete m_pFragmentShader;
+}
+
+/**
+*  @brief
+*    Loads in a string by using a file
+*/
+String EffectPass::LoadStringFromFile(const String &sFilename) const
+{
+	// Because absolute filenames can be accessed fastest by the file system, we first give
+	// the file system an absolute filename which is hopefully the correct one... if
+	// not, we must search the file which is quite slow...
+	File cFile;
+	const Url cUrl(sFilename);
+	if (cUrl.IsAbsolute()) {
+		// The given filename is already absolute! :)
+		cFile.Assign(cUrl);
+	} else {
+		// Get the loadable manager instance
+		LoadableManager *pLoadableManager = LoadableManager::GetInstance();
+
+		// Are there any base directories?
+		const uint32 nNumOfBaseDirs = pLoadableManager->GetNumOfBaseDirs();
+		if (nNumOfBaseDirs) {
+			// Reset file
+			cFile.Assign("");
+
+			// Loop through all base directories
+			bool bFileFound = false;
+			for (uint32 nBaseDir=0; nBaseDir<nNumOfBaseDirs && !bFileFound; nBaseDir++) {
+				// Try to open the file directly
+				const String sAbsFilename = pLoadableManager->GetBaseDir(nBaseDir) + sFilename;
+				cFile.Assign(sAbsFilename);
+
+				// File found?
+				bFileFound = cFile.IsFile();
+			}
+		} else {
+			// Try to open the file directly
+			cFile.Assign(cUrl);
+		}
+	}
+
+	// Check if the file has been found
+	if (cFile.Open(File::FileRead)) {
+		// Load in the file, we also take care of the terminating NULL (\0)
+		const uint32 nFileSize = cFile.GetSize();
+		char *pData = new char[nFileSize + 1];
+		cFile.Read(pData, nFileSize, 1);
+		pData[nFileSize] = '\0';
+
+		// The string class takes over the control of the memory
+		return String(pData, false, nFileSize);
+	}
+
+	// Error!
+	return "";
 }
 
 
