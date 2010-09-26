@@ -28,9 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLGeneral/Container/Pool.h>
 #include <PLGeneral/Base/ElementManager.h>
-#include <PLRenderer/Shader/ShaderHandler.h>
+#include <PLMath/Rectangle.h>
+#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLScene/Compositing/ShadowMap.h"
 
 
@@ -40,11 +41,22 @@
 namespace PLRenderer {
 	class Renderer;
 	class Material;
+	class IndexBuffer;
+	class VertexBuffer;
+	class ProgramUniform;
+	class ProgramAttribute;
 	class SurfaceTextureBuffer;
+}
+namespace PLMesh {
+	class Mesh;
+	class Geometry;
+	class MeshHandler;
+	class MeshLODLevel;
 }
 namespace PLScene {
 	class SQCull;
 	class SNLight;
+	class VisNode;
 	class SceneQueryHandler;
 }
 
@@ -75,8 +87,10 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 		*
 		*  @param[in] cRenderer
 		*    Renderer to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used, don't change the shader language on each call (performance!)
 		*/
-		PLS_API ShadowMapManager(PLRenderer::Renderer &cRenderer);
+		PLS_API ShadowMapManager(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "");
 
 		/**
 		*  @brief
@@ -120,90 +134,110 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Sets correct texture filtering modes
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] nStage
-		*    Texture stage
-		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
-
-		/**
-		*  @brief
-		*    Returns a vertex shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bDiffuseMap
-		*    Diffuse map
-		*
-		*  @return
-		*    The shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetVertexShader(PLRenderer::Renderer &cRenderer, bool bDiffuseMap);
-
-		/**
-		*  @brief
-		*    Returns a fragment shader
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] bAlphaTest
-		*    Alpha test
-		*
-		*  @return
-		*    The shader with the requested features, NULL on error
-		*/
-		PLRenderer::Shader *GetFragmentShader(PLRenderer::Renderer &cRenderer, bool bAlphaTest);
-
-		/**
-		*  @brief
-		*    Destroys all currently used shaders
-		*/
-		void DestroyShaders();
-
-		/**
-		*  @brief
-		*    Render distance recursive
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cCullQuery
-		*    Cull query to use
-		*  @param[in] cLight
-		*    Used light node
-		*/
-		void RenderDistanceRec(PLRenderer::Renderer &cRenderer, const SQCull &cCullQuery, SNLight &cLight);
-
-
-	//[-------------------------------------------------------]
-	//[ Private static data                                   ]
-	//[-------------------------------------------------------]
-	private:
-		static const PLGeneral::String m_sWorldVP;	/**< 'WorldVP' string */
-
-
-	//[-------------------------------------------------------]
 	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**
 		*  @brief
-		*    Texture filtering modes
+		*    Vertex shader flags, flag names become to source code definitions
 		*/
-		enum ETextureFiltering {
-			Bilinear      = 1,	/**< Bilinear */
-			Anisotropic2  = 2,	/**< Anisotropic x2 */
-			Anisotropic4  = 4,	/**< Anisotropic x4 */
-			Anisotropic8  = 8,	/**< Anisotropic x8 */
-			Anisotropic16 = 16	/**< Anisotropic x16 */
+		enum EVertexShaderFlags {
+			VS_TEXCOORD0 = 1<<0	/**< Use texture coordinate 0 */
 		};
+
+		/**
+		*  @brief
+		*    Fragment shader flags, flag names become to source code definitions
+		*/
+		enum EFragmentShaderFlags {
+			FS_ALPHATEST = 1<<0		/**< Use alpha test to discard fragments */
+		};
+
+		/**
+		*  @brief
+		*    Direct pointers to uniforms & attributes of a generated program
+		*/
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			PLRenderer::ProgramAttribute *pVertexTexCoord0;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pWorldVP;
+			PLRenderer::ProgramUniform *pWorldV;
+			PLRenderer::ProgramUniform *pInvRadius;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pDiffuseMap;
+			PLRenderer::ProgramUniform *pAlphaReference;
+		};
+
+		/**
+		*  @brief
+		*    Mesh batch
+		*/
+		struct MeshBatch {
+			const PLRenderer::Material		*pMaterial;			/**< Used material, always valid! */
+				  PLRenderer::VertexBuffer	*pVertexBuffer;		/**< Used vertex buffer, always valid! */
+				  PLRenderer::IndexBuffer	*pIndexBuffer;		/**< Used index buffer, always valid! */
+			const PLMesh::Geometry			*pGeometry;			/**< Used geometry, always valid! */
+			const PLScene::SQCull			*pCullQuery;		/**< Used cull query, always valid! */
+			const PLScene::VisNode			*pVisNode;			/**< Used visibility node, always valid! */
+				  PLMath::Rectangle			 sScissorRectangle;	/**< Scissor rectangle */
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Collect mesh batches recursive
+		*
+		*  @param[in] cCullQuery
+		*    Cull query to use
+		*/
+		void CollectMeshBatchesRec(const PLScene::SQCull &cCullQuery);
+
+		/**
+		*  @brief
+		*    Makes a material to the currently used one
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cMaterial
+		*    Material to use
+		*  @param[in] fInvRadius
+		*    Set world space inverse light radius
+		*
+		*  @return
+		*    Generated program user data
+		*/
+		GeneratedProgramUserData *MakeMaterialCurrent(PLRenderer::Renderer &cRenderer, const PLRenderer::Material &cMaterial, float fInvRadius);
+
+		/**
+		*  @brief
+		*    Draws a mesh batch
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cGeneratedProgramUserData
+		*    Generated program user data for the mesh batch material
+		*  @param[in] cMeshBatch
+		*    Mesh batch to use
+		*/
+		void DrawMeshBatch(PLRenderer::Renderer &cRenderer, GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const;
+
+		/**
+		*  @brief
+		*    Returns a free mesh batch
+		*
+		*  @return
+		*    Free mesh batch
+		*
+		*  @note
+		*    - Use FreeMeshBatch() if you no longer need this mesh batch
+		*/
+		MeshBatch &GetFreeMeshBatch();
 
 
 	//[-------------------------------------------------------]
@@ -211,6 +245,7 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer	*m_pRenderer;		/**< Used renderer (always valid!) */
+		PLGeneral::String		 m_sShaderLanguage;	/**< Shader language to use */
 		SceneQueryHandler		*m_pLightCullQuery;	/**< Light cull query (always valid!) */
 
 		// Cube shadow map
@@ -223,16 +258,12 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 		PLRenderer::SurfaceTextureBuffer *m_pSpotShadowRenderTarget[SpotShadowRenderTargets];	/**< 512, 256, 128, 64, 32, can be NULL */
 		PLRenderer::SurfaceTextureBuffer **m_pCurrentSpotShadowRenderTarget;
 
-		PLGeneral::uint32		   m_nTextureFiltering;
-		PLGeneral::uint32		   m_nMaterialChanges;	/**< Number of material changes */
-		PLRenderer::Material	  *m_pCurrentMaterial;	/**< Current used material, can be NULL */
-
-		bool					  m_bVertexShader[2];	/**< [DiffuseMap] */
-		PLRenderer::ShaderHandler m_cVertexShader[2];	/**< [DiffuseMap] */
-		bool					  m_bFragmentShader[2];	/**< [AlphaTest] */
-		PLRenderer::ShaderHandler m_cFragmentShader[2];	/**< [AlphaTest] */
-
-		PLGeneral::List<PLRenderer::ShaderHandler*> m_lstShaders;	/**< List of all used shaders */
+		// Material & shader
+		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
+		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
+		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */
+		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator::Flags			  m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

@@ -20,25 +20,18 @@
 \*********************************************************/
 
 
-// [TODO] Heavy under construction
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
 #include <PLGeneral/Tools/Tools.h>
-#include <PLGeneral/Tools/Wrapper.h>
-#include <PLMath/Matrix3x3.h>
-#include <PLMath/Intersect.h>
 #include <PLMath/EulerAngles.h>
 #include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
-#include <PLRenderer/Renderer/ShaderProgram.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Material/Parameter.h>
-#include <PLRenderer/Shader/ShaderManager.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLMesh/Mesh.h>
 #include <PLMesh/MeshHandler.h>
@@ -67,30 +60,23 @@ namespace PLScene {
 
 
 //[-------------------------------------------------------]
-//[ Private static data                                   ]
-//[-------------------------------------------------------]
-const String ShadowMapManager::m_sWorldVP = "WorldVP";
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-ShadowMapManager::ShadowMapManager(Renderer &cRenderer) :
+ShadowMapManager::ShadowMapManager(Renderer &cRenderer, const PLGeneral::String &sShaderLanguage) :
 	m_pRenderer(&cRenderer),
+	m_sShaderLanguage(sShaderLanguage),
 	m_pLightCullQuery(new SceneQueryHandler()),
 	m_pCurrentCubeShadowRenderTarget(NULL),
 	m_pCurrentSpotShadowRenderTarget(NULL),
-	m_nTextureFiltering(Anisotropic2),
-	m_nMaterialChanges(0),
-	m_pCurrentMaterial(NULL)
+	m_pProgramGenerator(NULL)
 {
-	// Init shader handler data
-	MemoryManager::Set(m_bVertexShader,   0, sizeof(m_bVertexShader));
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
+	// Get the shader language to use
+	if (!m_sShaderLanguage.GetLength())
+		m_sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
 	// Init shadow maps
 	for (int i=0; i<CubeShadowRenderTargets; i++)
@@ -105,9 +91,6 @@ ShadowMapManager::ShadowMapManager(Renderer &cRenderer) :
 */
 ShadowMapManager::~ShadowMapManager()
 {
-	// Destroy all used shaders
-	DestroyShaders();
-
 	// Cube shadow maps
 	for (int i=0; i<CubeShadowRenderTargets; i++) {
 		if (m_pCubeShadowRenderTarget[i]) {
@@ -132,6 +115,24 @@ ShadowMapManager::~ShadowMapManager()
 		pSceneQuery->GetSceneContainer().DestroyQuery(*pSceneQuery);
 
 	delete m_pLightCullQuery;
+
+	// Destroy the program generator
+	if (m_pProgramGenerator)
+		delete m_pProgramGenerator;
+
+	// Destroy all mesh batches
+	{ // Currently free ones
+		Iterator<MeshBatch*> cIterator = m_lstFreeMeshBatches.GetIterator();
+		while (cIterator.HasNext())
+			delete cIterator.Next();
+		m_lstFreeMeshBatches.Clear();
+	}
+	{ // Currently used ones
+		Iterator<MeshBatch*> cIterator = m_lstMeshBatches.GetIterator();
+		while (cIterator.HasNext())
+			delete cIterator.Next();
+		m_lstMeshBatches.Clear();
+	}
 }
 
 /**
@@ -217,29 +218,53 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 						pLightCullQuery->SetFlags(0);
 					}
 				}
-				// [TODO] No fixed functions in here
-				FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-				if (pFixedFunctions) {
-					if (pLightCullQuery) {
+				if (pLightCullQuery) {
+					// Create the program generator if there's currently no instance of it
+					if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != m_sShaderLanguage) {
+						// If there's an previous instance of the program generator, destroy it first
+						if (m_pProgramGenerator) {
+							delete m_pProgramGenerator;
+							m_pProgramGenerator = NULL;
+						}
+
+						// Choose the shader source codes depending on the requested shader language
+						String sShadowMapManager_VS;
+						String sShadowMapManager_FS;
+						if (m_sShaderLanguage == "GLSL") {
+							#include "ShadowMapManager_GLSL.h"
+							sShadowMapManager_VS = sShadowMapManager_GLSL_VS;
+							sShadowMapManager_FS = sShadowMapManager_GLSL_FS;
+						} else if (m_sShaderLanguage == "Cg") {
+							#include "ShadowMapManager_Cg.h"
+							sShadowMapManager_VS = sShadowMapManager_Cg_VS;
+							sShadowMapManager_FS = sShadowMapManager_Cg_FS;
+						}
+
+						// Create the program generator
+						if (sShadowMapManager_VS.GetLength() && sShadowMapManager_FS.GetLength())
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, m_sShaderLanguage, sShadowMapManager_VS, "arbvp1", sShadowMapManager_FS, "arbfp1", true);
+					}
+
+					// If there's no program generator, we don't need to continue
+					if (m_pProgramGenerator) {
 						// Backup the color mask
 						bool bRed, bGreen, bBlue, bAlpha;
 						cRenderer.GetColorMask(bRed, bGreen, bBlue, bAlpha);
 
 						// Get current render target
 						Surface *pSurfaceBackup = cRenderer.GetRenderTarget();
-						const Matrix4x4 mProjBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
-						const Matrix4x4 mViewBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
 						cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 
 						// Set polygon offset to avoid nasty shadow artefacts
 						cRenderer.SetRenderState(RenderState::SlopeScaleDepthBias,	Tools::FloatToUInt32(2.0f));
 						cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(10.0f));
 
+						// Get world space inverse light radius
+						const float fInvRadius = 1.0f/(cLight.IsPointLight() ? ((SNPointLight&)cLight).GetRange() : 0.0f);
+
 						// Spot or point light?
 						if (cLight.IsSpotLight()) {
 							SNSpotLight &cSpotLight = (SNSpotLight&)cLight;
-							pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, cSpotLight.GetProjectionMatrix());
-							pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       cSpotLight.GetViewMatrix());
 
 							// Setup render query
 							pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
@@ -256,18 +281,49 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 								// Clear the frame buffer
 								cRenderer.Clear(Clear::ZBuffer);
 
-								// Reset current material
-								m_nMaterialChanges = 0;
-								m_pCurrentMaterial = NULL;
-
 								// Disable color writes
 								cRenderer.SetColorMask(false, false, false, false);
 
-								// Render distance recursive
-								RenderDistanceRec(cRenderer, *pLightCullQuery, cLight);
+								// Collect recursive
+								CollectMeshBatchesRec(*pLightCullQuery);
+
+								{ // Loop through all currently used materials
+									Iterator<const Material*> cMaterialIterator = m_lstMaterials.GetIterator();
+									while (cMaterialIterator.HasNext()) {
+										// Get the current material
+										const Material *pMaterial = cMaterialIterator.Next();
+
+										// Make the material to the currently used one
+										GeneratedProgramUserData *pGeneratedProgramUserData = MakeMaterialCurrent(cRenderer, *pMaterial, fInvRadius);
+										if (pGeneratedProgramUserData) {
+											// Draw all mesh batches using this material
+											Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
+											while (cMeshBatchIterator.HasNext()) {
+												// Get the current mesh batch
+												MeshBatch *pMeshBatch = cMeshBatchIterator.Next();
+
+												// Same material?
+												if (pMeshBatch->pMaterial == pMaterial) {
+													// Draw the mesh batch
+													DrawMeshBatch(cRenderer, *pGeneratedProgramUserData, *pMeshBatch);
+												}
+											}
+										}
+									}
+									{ // Free the mesh batches
+										Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
+										while (cMeshBatchIterator.HasNext())
+											m_lstFreeMeshBatches.Add(cMeshBatchIterator.Next());
+										m_lstMeshBatches.Clear();
+									}
+									m_lstMaterials.Clear();
+								}
 							}
 						} else {
 							SNPointLight &cPointLight = (SNPointLight&)cLight;
+
+							// Enable color writes - this shadow map technique requires it!
+							cRenderer.SetColorMask();
 
 							// For each of the 6 cube faces...
 							Vector3 vRot;
@@ -310,12 +366,10 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 								// Calculate and set projection matrix
 								Matrix4x4 mProj;
 								mProj.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.01f, cPointLight.GetRange());
-								pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProj);
 
 								// Calculate and set view matrix
 								Matrix3x4 mView;
 								mView.View(qRot, cLight.GetTransform().GetPosition());
-								pFixedFunctions->SetTransformState(FixedFunctions::Transform::View, mView);
 
 								// Calculate the view frustum
 								Frustum cFrustum;
@@ -336,23 +390,46 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 									// Clear the frame buffer
 									cRenderer.Clear(Clear::Color|Clear::ZBuffer, PLGraphics::Color4::White);
 
-									// Reset current material
-									m_nMaterialChanges = 0;
-									m_pCurrentMaterial = NULL;
+									// Collect recursive
+									CollectMeshBatchesRec(*pLightCullQuery);
 
-									// Enable color writes - this shadow map technique requires it!
-									cRenderer.SetColorMask();
+									{ // Loop through all currently used materials
+										Iterator<const Material*> cMaterialIterator = m_lstMaterials.GetIterator();
+										while (cMaterialIterator.HasNext()) {
+											// Get the current material
+											const Material *pMaterial = cMaterialIterator.Next();
 
-									// Render distance recursive
-									RenderDistanceRec(cRenderer, *pLightCullQuery, cLight);
+											// Make the material to the currently used one
+											GeneratedProgramUserData *pGeneratedProgramUserData = MakeMaterialCurrent(cRenderer, *pMaterial, fInvRadius);
+											if (pGeneratedProgramUserData) {
+												// Draw all mesh batches using this material
+												Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
+												while (cMeshBatchIterator.HasNext()) {
+													// Get the current mesh batch
+													MeshBatch *pMeshBatch = cMeshBatchIterator.Next();
+
+													// Same material?
+													if (pMeshBatch->pMaterial == pMaterial) {
+														// Draw the mesh batch
+														DrawMeshBatch(cRenderer, *pGeneratedProgramUserData, *pMeshBatch);
+													}
+												}
+											}
+										}
+										{ // Free the mesh batches
+											Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
+											while (cMeshBatchIterator.HasNext())
+												m_lstFreeMeshBatches.Add(cMeshBatchIterator.Next());
+											m_lstMeshBatches.Clear();
+										}
+										m_lstMaterials.Clear();
+									}
 								}
 							}
 						}
 
 						// Reset renderer target
 						cRenderer.SetRenderTarget(pSurfaceBackup);
-						pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjBackup);
-						pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
 
 						// Restore the color mask
 						cRenderer.SetColorMask(bRed, bGreen, bBlue, bAlpha);
@@ -387,136 +464,14 @@ SurfaceTextureBuffer *ShadowMapManager::GetSpotShadowRenderTarget() const
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Sets correct texture filtering modes
+*    Collect mesh batches recursive
 */
-void ShadowMapManager::SetupTextureFiltering(Renderer &cRenderer, uint32 nStage) const
-{
-	if (m_nTextureFiltering > 1) {
-		cRenderer.SetSamplerState(nStage, Sampler::MagFilter,     TextureFiltering::Anisotropic);
-		cRenderer.SetSamplerState(nStage, Sampler::MinFilter,     TextureFiltering::Anisotropic);
-		cRenderer.SetSamplerState(nStage, Sampler::MipFilter,     TextureFiltering::Anisotropic);
-		cRenderer.SetSamplerState(nStage, Sampler::MaxAnisotropy, m_nTextureFiltering);
-	} else {
-		cRenderer.SetSamplerState(nStage, Sampler::MagFilter, TextureFiltering::Linear);
-		cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::Linear);
-		cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::Linear);
-	}
-}
-
-/**
-*  @brief
-*    Returns a vertex shader
-*/
-Shader *ShadowMapManager::GetVertexShader(Renderer &cRenderer, bool bDiffuseMap)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cVertexShader[bDiffuseMap];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bVertexShader[bDiffuseMap]) {
-		const static String ShaderFilename = "Vertex/Distance.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bDiffuseMap) {
-			sDefines += "#define USE_DIFFUSEMAP\n";
-			sName    += "[DiffuseMap]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		// Load the shader
-		{
-			#include "ShadowMapManager_VertexShader.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszShadowMapManager_VertexShader) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszShadowMapManager_VertexShader, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, false, "arbvp1", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bVertexShader[bDiffuseMap] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Returns a fragment shader
-*/
-Shader *ShadowMapManager::GetFragmentShader(Renderer &cRenderer, bool bAlphaTest)
-{
-	// Get/construct the shader
-	ShaderHandler &cShaderHandler = m_cFragmentShader[bAlphaTest];
-	Shader *pShader = cShaderHandler.GetResource();
-	if (!pShader && !m_bFragmentShader[bAlphaTest]) {
-		const static String ShaderFilename = "Fragment/Distance.cg";
-
-		// Get defines string and a readable shader name (we MUST choose a new name!)
-		String sDefines, sName = ShaderFilename + '_';
-		if (bAlphaTest) {
-			sDefines += "#define ALPHATEST\n";
-			sName    += "[AlphaTest]";
-		}
-		if (!sDefines.GetLength())
-			sName += "[NoDefines]";
-
-		// Load the shader
-		{
-			#include "ShadowMapManager_FragmentShader.h"
-			static uint32 nNumOfBytes = Wrapper::GetStringLength(pszShadowMapManager_FragmentShader) + 1; // +1 for the terminating NULL (\0) to be 'correct'
-			File cFile((uint8*)pszShadowMapManager_FragmentShader, nNumOfBytes, false, ".cg");
-			pShader = cRenderer.GetRendererContext().GetShaderManager().Load(sName, cFile, true, "arbfp1", sDefines);
-		}
-		cShaderHandler.SetResource(pShader);
-		m_lstShaders.Add(new ShaderHandler())->SetResource(pShader);
-		m_bFragmentShader[bAlphaTest] = true;
-	}
-
-	// Return the shader
-	return pShader;
-}
-
-/**
-*  @brief
-*    Destroys all currently used shaders
-*/
-void ShadowMapManager::DestroyShaders()
-{
-	{
-		Iterator<ShaderHandler*> cIterator = m_lstShaders.GetIterator();
-		while (cIterator.HasNext()) {
-			ShaderHandler *pShaderHandler = cIterator.Next();
-			if (pShaderHandler->GetResource())
-				delete pShaderHandler->GetResource();
-			delete pShaderHandler;
-		}
-	}
-	m_lstShaders.Clear();
-
-	// Init shader handler data
-	MemoryManager::Set(m_bVertexShader,   0, sizeof(m_bVertexShader));
-	MemoryManager::Set(m_bFragmentShader, 0, sizeof(m_bFragmentShader));
-}
-
-/**
-*  @brief
-*    Renders distance recursive
-*/
-void ShadowMapManager::RenderDistanceRec(Renderer &cRenderer, const SQCull &cCullQuery, SNLight &cLight)
+void ShadowMapManager::CollectMeshBatchesRec(const SQCull &cCullQuery)
 {
 	// Get scene container
-//	SceneContainer     &cSceneContainer = cCullQuery.GetSceneContainer();
-	const VisContainer &cVisContainer   = cCullQuery.GetVisContainer();
+	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
 
-	// Set the new scissor rectangle
-	cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
-
-	// Draw the container scene node (maybe there are for instance some debug information to draw)
-	// [TODO]
-//	cSceneContainer.DrawSolid(cRenderer);
-
-	// Render all visible scene nodes of this scene container
+	// Loop through all visible scene nodes of this scene container
 	Iterator<VisNode*> cIterator = cVisContainer.GetVisNodes().GetIterator();
 	while (cIterator.HasNext()) {
 		// Get visibility node and scene node
@@ -530,189 +485,221 @@ void ShadowMapManager::RenderDistanceRec(Renderer &cRenderer, const SQCull &cCul
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
 				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
-				if (pVisCell && pVisCell->GetCullQuery()) {
-					// Draw the target cell
-					RenderDistanceRec(cRenderer, *pVisCell->GetCullQuery(), cLight);
-
-					// Set the previous scissor rectangle
-					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
-				}
-
-				// Draw the portal itself (maybe there are for instance some debug information to draw)
-				// [TODO]
-	//			pSceneNode->DrawSolid(cRenderer);
+				if (pVisCell && pVisCell->GetCullQuery())
+					CollectMeshBatchesRec(*pVisCell->GetCullQuery());
 
 			// Is this scene node a container? We do not need to check for cells because we will
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
-				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					RenderDistanceRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery(), cLight);
-
-					// Set the previous scissor rectangle
-					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
-				}
-
-			// Is this a light, if so, ignore it
-			} else if (pSceneNode->IsLight()) {
+				// Collect this container without special processing
+				if (((const VisContainer*)pVisNode)->GetCullQuery())
+					CollectMeshBatchesRec(*((const VisContainer*)pVisNode)->GetCullQuery());
 
 			// This must just be a quite boring scene node :)
 			} else {
-				// First of all, check sphere/axis aligned bounding box intersection of the used light and the scene node
-				// [TODO] Make this portal safe
-				//	Intersect::SphereSphere(cLight.GetContainerBoundingSphere(), pSceneNode->GetContainerBoundingSphere()) &&
-				//	Intersect::SphereAABox(cLight.GetContainerBoundingSphere(), pSceneNode->GetContainerAABoundingBox())) {
-				if (true) {
-					// If this is a spot light, we can do another intersection test
-					// [TODO] Make this portal safe
-					if (true) {
-//					if (!cLight.IsSpotLight() ||
-//						Intersect::PlaneSetAABox(((SNSpotLight&)cLight).GetFrustum(), pSceneNode->GetContainerAABoundingBox().vMin, pSceneNode->GetContainerAABoundingBox().vMax)) {
-						// Here we draw the stuff by hand in order to minimize state changes and other overhead
-						MeshHandler *pMeshHandler = pSceneNode->GetMeshHandler();
-						if (pMeshHandler && pMeshHandler->GetVertexBuffer()) {
-							Material *pMaterial = pMeshHandler->GetMaterial(0);
-							if (pMaterial) {
-								Mesh *pMesh = pMeshHandler->GetResource();
-								if (pMesh) {
-									// Get buffers
-									MeshLODLevel *pLODLevel = pMesh->GetLODLevel(0);
-									if (pLODLevel) {
-										// Get index buffer
-										IndexBuffer *pIndexBuffer = pLODLevel->GetIndexBuffer();
-										if (pIndexBuffer) {
-											const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
+				// Here we draw the stuff by hand in order to minimize state changes and other overhead
+				const MeshHandler *pMeshHandler = pSceneNode->GetMeshHandler();
+				if (pMeshHandler && pMeshHandler->GetVertexBuffer() && pMeshHandler->GetNumOfMaterials()) {
+					// Get the used mesh
+					const Mesh *pMesh = pMeshHandler->GetResource();
+					if (pMesh) {
+						// Get the mesh LOD level to use
+						const MeshLODLevel *pLODLevel = pMesh->GetLODLevel(0);
+						if (pLODLevel && pLODLevel->GetIndexBuffer() && pMeshHandler->GetVertexBuffer()) {
+							// Loop through all mesh geometries
+							const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
+							for (uint32 nGeo=0; nGeo<lstGeometries.GetNumOfElements(); nGeo++) {
+								// Is this geometry active and is it using the current used mesh material?
+								const Geometry &cGeometry = lstGeometries[nGeo];
+								if (cGeometry.IsActive()) {
+									// Get the material the mesh geometry is using
+									const Material *pMaterial = pMeshHandler->GetMaterial(cGeometry.GetMaterial());
+									if (pMaterial) {
+										// Transparent material? Only solid materials can cast a shadow.
+										static const String sOpacity = "Opacity";
+										const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
+										if (!pParameter || pParameter->GetValue1f() >= 1.0f) {
+											// Get a free mesh batch
+											MeshBatch &cMeshBatch = GetFreeMeshBatch();
+											m_lstMeshBatches.Add(&cMeshBatch);
 
-											// Mark this scene node as drawn
-											pSceneNode->SetDrawn();
+											// Fill the mesh batch
+											cMeshBatch.pMaterial			= pMaterial;
+											cMeshBatch.pVertexBuffer		= pMeshHandler->GetVertexBuffer();
+											cMeshBatch.pIndexBuffer			= pLODLevel->GetIndexBuffer();
+											cMeshBatch.pCullQuery			= &cCullQuery;
+											cMeshBatch.pGeometry			= &cGeometry;
+											cMeshBatch.pVisNode				= pVisNode;
+											cMeshBatch.sScissorRectangle	= cVisContainer.GetProjection().cRectangle;
 
-											// Bind buffers
-											cRenderer.SetIndexBuffer(pIndexBuffer);
-
-											// [TODO] Remove FixedFunctions usage by using the new shader interface
-											FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-											if (pFixedFunctions)
-												pFixedFunctions->SetVertexBuffer(pMeshHandler->GetVertexBuffer());
-
-											// Draw mesh
-											for (uint32 nMat=0; nMat<pMeshHandler->GetNumOfMaterials(); nMat++) {
-												// Get mesh material
-												pMaterial = pMeshHandler->GetMaterial(nMat);
-												if (pMaterial) {
-													// Draw geometries
-													bool bFirstMaterialUsage = true;
-													for (uint32 nGeo=0; nGeo<lstGeometries.GetNumOfElements(); nGeo++) {
-														// Is this geometry active and is it using the current used mesh material?
-														const Geometry &cGeometry = lstGeometries[nGeo];
-														if (cGeometry.IsActive() && nMat == cGeometry.GetMaterial()) {
-															// Transparent material?
-															static const String sOpacity = "Opacity";
-															const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
-															if (!pParameter || pParameter->GetValue1f() >= 1.0f) {
-																// First material usage?
-																if (bFirstMaterialUsage) {
-																	ShaderProgram *pVertexShaderProgram = NULL;
-																	bFirstMaterialUsage = false;
-
-																	// Material change?
-																	if (m_pCurrentMaterial != pMaterial) {
-																		m_nMaterialChanges++;
-																		m_pCurrentMaterial = pMaterial;
-
-																		// Two sided?
-																		static const String sTwoSided = "TwoSided";
-																		pParameter = pMaterial->GetParameter(sTwoSided);
-																		const bool bTwoSided = (pParameter && pParameter->GetValue1f() == 1.0f);
-
-																		// Setup cull mode
-																		cRenderer.SetRenderState(RenderState::CullMode, bTwoSided ? Cull::None : Cull::CCW);
-
-																		// Get diffuse map and alpha reference
-																		float fAlphaReference = 0.0f;
-																		TextureBuffer *pDiffuseMap = pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
-																		// Enable/disable alpha test
-																		if (pDiffuseMap && pDiffuseMap->GetComponentsPerPixel() == 4) {
-																			// Get alpha reference
-																			static const String sAlphaReference = "AlphaReference";
-																			pParameter = pMaterial->GetParameter(sAlphaReference);
-																			fAlphaReference = pParameter ? pParameter->GetValue1f() : 0.5f;
-																		}
-
-																		// Get the shader with the given features
-																		Shader *pMeshVertexShader = GetVertexShader(cRenderer, fAlphaReference != 0.0f);
-																		if (pMeshVertexShader) {
-																			pVertexShaderProgram = pMeshVertexShader->GetShaderProgram();
-																			if (pVertexShaderProgram) {
-																				Shader *pMeshFragmentShader = GetFragmentShader(cRenderer, fAlphaReference != 0.0f);
-																				if (pMeshFragmentShader) {
-																					ShaderProgram *pFragmentShaderProgram = pMeshFragmentShader->GetShaderProgram();
-																					if (pFragmentShaderProgram) {
-																					// Vertex shader program
-																						cRenderer.SetVertexShaderProgram(pVertexShaderProgram);
-
-																					// Fragment shader program
-																						cRenderer.SetFragmentShaderProgram(pFragmentShaderProgram);
-
-																						// Set diffuse map
-																						if (fAlphaReference != 0.0f) {
-																							const int nStage = pFragmentShaderProgram->SetParameterTextureBuffer(Material::DiffuseMap, pDiffuseMap);
-																							if (nStage >= 0) {
-																								cRenderer.SetSamplerState(nStage, Sampler::AddressU, TextureAddressing::Wrap);
-																								cRenderer.SetSamplerState(nStage, Sampler::AddressV, TextureAddressing::Wrap);
-																								SetupTextureFiltering(cRenderer, nStage);
-																							}
-
-																							// Set the "AlphaReference" fragment shader parameter
-																							static const String sAlphaReference = "AlphaReference";
-																							pFragmentShaderProgram->SetParameter1f(sAlphaReference, fAlphaReference);
-																						}
-																					}
-																				}
-																			}
-																		}
-																	} else {
-																		pVertexShaderProgram = cRenderer.GetVertexShaderProgram();
-																	}
-
-																	// Vertex shader program
-																	if (pVertexShaderProgram) {
-																		// Set world view projection matrix
-																		static const String sWorldVP = "WorldVP";
-																		pVertexShaderProgram->SetParameterMatrixfv(sWorldVP, pVisNode->GetWorldViewProjectionMatrix());
-
-																		// Set 4x4 world view matrix
-																		static const String sWorldV = "WorldV";
-																		pVertexShaderProgram->SetParameterMatrixfv(sWorldV, pVisNode->GetWorldViewMatrix());
-
-																		// Set world space inverse light radius
-																		const float fRange = cLight.IsPointLight() ? ((SNPointLight&)cLight).GetRange() : 0.0f;
-																		static const String sInvRadius = "InvRadius";
-																		pVertexShaderProgram->SetParameter1f(sInvRadius, 1.0f/fRange);
-																	}
-																}
-
-																// Draw geometry
-																cRenderer.DrawIndexedPrimitives(
-																	cGeometry.GetPrimitiveType(),
-																	0,
-																	pMeshHandler->GetVertexBuffer()->GetNumOfElements()-1,
-																	cGeometry.GetStartIndex(),
-																	cGeometry.GetIndexSize()
-																);
-															}
-														}
-													}
-												}
-											}
+											// Add material
+											if (!m_lstMaterials.IsElement(pMaterial))
+												m_lstMaterials.Add(pMaterial);
 										}
 									}
 								}
 							}
+
+							// Mark this scene node as drawn
+							pSceneNode->SetDrawn();
 						}
 					}
 				}
 			}
 		}
+	}
+}
+
+/**
+*  @brief
+*    Makes a material to the currently used one
+*/
+ShadowMapManager::GeneratedProgramUserData *ShadowMapManager::MakeMaterialCurrent(Renderer &cRenderer, const Material &cMaterial, float fInvRadius)
+{
+	const Parameter *pParameter = NULL;
+
+	{ // Two sided? Setup cull mode...
+		static const String sTwoSided = "TwoSided";
+		pParameter = cMaterial.GetParameter(sTwoSided);
+		cRenderer.SetRenderState(RenderState::CullMode, (pParameter && pParameter->GetValue1f() == 1.0f) ? Cull::None : Cull::CCW);
+	}
+
+	// Get diffuse map and alpha reference
+	float fAlphaReference = 0.0f;
+	TextureBuffer *pDiffuseMap = cMaterial.GetParameterTextureBuffer(Material::DiffuseMap);
+
+	// Enable/disable alpha test (fragments are thrown away inside the fragment shader using the 'discard' keyword)
+	if (pDiffuseMap && pDiffuseMap->GetComponentsPerPixel() == 4) {
+		// Get alpha reference
+		static const String sAlphaReference = "AlphaReference";
+		pParameter = cMaterial.GetParameter(sAlphaReference);
+		fAlphaReference = pParameter ? pParameter->GetValue1f() : 0.5f;
+	}
+
+	// Reset the program flags
+	m_cProgramFlags.Reset();
+
+	// Set fragment program flags - we only need the diffuse map for alpha test
+	if (fAlphaReference) {
+		PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
+		PL_ADD_FS_FLAG(m_cProgramFlags, FS_ALPHATEST)
+	}
+
+	// Get a program instance from the program generator using the given program flags
+	ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
+
+	// Make our program to the current one
+	GeneratedProgramUserData *pGeneratedProgramUserData = NULL;
+	if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
+		// Set pointers to uniforms & attributes of a generated program if they are not set yet
+		pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+		if (!pGeneratedProgramUserData) {
+			pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
+			Program *pProgram = pGeneratedProgram->pProgram;
+			// Vertex shader attributes
+			static const String sVertexPosition = "VertexPosition";
+			pGeneratedProgramUserData->pVertexPosition	= pProgram->GetAttribute(sVertexPosition);
+			static const String sVertexTexCoord0 = "VertexTexCoord0";
+			pGeneratedProgramUserData->pVertexTexCoord0	= pProgram->GetAttribute(sVertexTexCoord0);
+			// Vertex shader uniforms
+			static const String sWorldVP = "WorldVP";
+			pGeneratedProgramUserData->pWorldVP			= pProgram->GetUniform(sWorldVP);
+			static const String sWorldV = "WorldV";
+			pGeneratedProgramUserData->pWorldV			= pProgram->GetUniform(sWorldV);
+			static const String sInvRadius = "InvRadius";
+			pGeneratedProgramUserData->pInvRadius		= pProgram->GetUniform(sInvRadius);
+			// Fragment shader uniforms
+			static const String sDiffuseMap = "DiffuseMap";
+			pGeneratedProgramUserData->pDiffuseMap		= pProgram->GetUniform(sDiffuseMap);
+			static const String sAlphaReference = "AlphaReference";
+			pGeneratedProgramUserData->pAlphaReference	= pProgram->GetUniform(sAlphaReference);
+		}
+
+		// Set world space inverse light radius
+		if (pGeneratedProgramUserData->pInvRadius)
+			pGeneratedProgramUserData->pInvRadius->Set(fInvRadius);
+
+		// Diffuse
+		if (pGeneratedProgramUserData->pDiffuseMap) {
+			// Set the "DiffuseMap" fragment shader parameter
+			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(pDiffuseMap);
+			if (nTextureUnit >= 0) {
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
+				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::Linear);
+			}
+
+			// Set the "AlphaReference" fragment shader parameter
+			if (pGeneratedProgramUserData->pAlphaReference)
+				pGeneratedProgramUserData->pAlphaReference->Set(fAlphaReference);
+		}
+	}
+
+	// Done
+	return pGeneratedProgramUserData;
+}
+
+/**
+*  @brief
+*    Draws a mesh batch
+*/
+void ShadowMapManager::DrawMeshBatch(Renderer &cRenderer, GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const
+{
+	// Get the mesh batch vertex buffer
+	VertexBuffer *pVertexBuffer = cMeshBatch.pVertexBuffer;
+
+	{ // Set per mesh batch program parameters
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		if (cGeneratedProgramUserData.pVertexPosition)
+			cGeneratedProgramUserData.pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+		if (cGeneratedProgramUserData.pVertexTexCoord0)
+			cGeneratedProgramUserData.pVertexTexCoord0->Set(pVertexBuffer, PLRenderer::VertexBuffer::TexCoord);
+
+		// Get the mesh batch visibility node
+		const VisNode *pVisNode = cMeshBatch.pVisNode;
+
+		// Set world view projection matrix
+		if (cGeneratedProgramUserData.pWorldVP)
+			cGeneratedProgramUserData.pWorldVP->Set(pVisNode->GetWorldViewProjectionMatrix());
+
+		// Set world view matrix
+		if (cGeneratedProgramUserData.pWorldV)
+			cGeneratedProgramUserData.pWorldV->Set(pVisNode->GetWorldViewMatrix());
+	}
+
+	// Bind index buffer
+	cRenderer.SetIndexBuffer(cMeshBatch.pIndexBuffer);
+
+	// Set the new scissor rectangle
+	cRenderer.SetScissorRect(&cMeshBatch.sScissorRectangle);
+
+	// Get the mesh patch geometry
+	const Geometry *pGeometry = cMeshBatch.pGeometry;
+
+	// Draw the geometry
+	cRenderer.DrawIndexedPrimitives(
+		pGeometry->GetPrimitiveType(),
+		0,
+		pVertexBuffer->GetNumOfElements()-1,
+		pGeometry->GetStartIndex(),
+		pGeometry->GetIndexSize()
+	);
+}
+
+/**
+*  @brief
+*    Returns a free mesh batch
+*/
+ShadowMapManager::MeshBatch &ShadowMapManager::GetFreeMeshBatch()
+{
+	if (m_lstFreeMeshBatches.IsEmpty())
+		return *(new MeshBatch);
+	else {
+		MeshBatch *pMeshBatch = m_lstFreeMeshBatches.Get(0);
+		m_lstFreeMeshBatches.RemoveAtIndex(0);
+		return *pMeshBatch;
 	}
 }
 

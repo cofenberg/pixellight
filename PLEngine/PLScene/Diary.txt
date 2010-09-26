@@ -3,6 +3,7 @@
 - Shader & Zeichnen Dinge aus "FullscreenQuad" entfernt da diese Hilfs-Klasse möglichst universell sein soll... im Grunde besteht diese Klasse
   nun nur noch aus einem Vertex-Buffer, ist aber ok da der Vertex Buffer hier einfach das relevante ist und es bereits hilft wenn man den Buffer
   nicht ständig selbst anlegen und füllen muss :D
+- ShadowMapManager verwendet nun das neue Shader-Interface, den Program Generator und unterstützt nun ebenfalls GLSL
 
 
 
