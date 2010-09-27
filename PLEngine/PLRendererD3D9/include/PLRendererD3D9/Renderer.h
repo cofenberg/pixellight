@@ -184,6 +184,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const;
 		virtual PLGeneral::String GetVendor() const;
 		virtual PLGeneral::String GetDefaultShaderLanguage() const;
+		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
 		virtual PLRenderer::FixedFunctions *GetFixedFunctions() const;
 		virtual PLRenderer::FontManager &GetFontManager() const;
 		virtual void BackupDeviceObjects();

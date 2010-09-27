@@ -29,6 +29,7 @@
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
@@ -305,45 +306,49 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				m_pBloomUVScaleProgramUniform		= NULL;
 				m_pBloomHDRTextureProgramUniform	= NULL;
 
-				// Shader source code
-				String sVertexShaderSourceCode;
-				String sFragmentShaderSourceCode;
-				if (sUsedShaderLanguage == "GLSL") {
-					#include "HDRBloom_GLSL.h"
-					sVertexShaderSourceCode	  = sHDRBloom_GLSL_VS;
-					sFragmentShaderSourceCode = sHDRBloom_GLSL_FS;
-				} else if (sUsedShaderLanguage == "Cg") {
-					#include "HDRBloom_Cg.h"
-					sVertexShaderSourceCode	  = sHDRBloom_Cg_VS;
-					sFragmentShaderSourceCode = sHDRBloom_Cg_FS;
-				}
+				// Get the shader language instance
+				ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(sUsedShaderLanguage);
+				if (pShaderLanguage) {
+					// Shader source code
+					String sVertexShaderSourceCode;
+					String sFragmentShaderSourceCode;
+					if (sUsedShaderLanguage == "GLSL") {
+						#include "HDRBloom_GLSL.h"
+						sVertexShaderSourceCode	  = sHDRBloom_GLSL_VS;
+						sFragmentShaderSourceCode = sHDRBloom_GLSL_FS;
+					} else if (sUsedShaderLanguage == "Cg") {
+						#include "HDRBloom_Cg.h"
+						sVertexShaderSourceCode	  = sHDRBloom_Cg_VS;
+						sFragmentShaderSourceCode = sHDRBloom_Cg_FS;
+					}
 
-				// Create a vertex shader instance
-				m_pBloomVertexShader = m_pRenderer->CreateVertexShader(sUsedShaderLanguage);
-				if (m_pBloomVertexShader) {
-					// Set the vertex shader source code
-					m_pBloomVertexShader->SetSourceCode(sVertexShaderSourceCode);
-				}
+					// Create a vertex shader instance
+					m_pBloomVertexShader = pShaderLanguage->CreateVertexShader();
+					if (m_pBloomVertexShader) {
+						// Set the vertex shader source code
+						m_pBloomVertexShader->SetSourceCode(sVertexShaderSourceCode);
+					}
 
-				// Create a fragment shader instance
-				m_pBloomFragmentShader = m_pRenderer->CreateFragmentShader(sUsedShaderLanguage);
-				if (m_pBloomFragmentShader) {
-					// Set the fragment shader source code
-					m_pBloomFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-				}
+					// Create a fragment shader instance
+					m_pBloomFragmentShader = pShaderLanguage->CreateFragmentShader();
+					if (m_pBloomFragmentShader) {
+						// Set the fragment shader source code
+						m_pBloomFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+					}
 
-				// Create a program instance
-				m_pBloomProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
-				if (m_pBloomProgram) {
-					// Assign the created vertex and fragment shaders to the program
-					m_pBloomProgram->SetVertexShader(m_pBloomVertexShader);
-					m_pBloomProgram->SetFragmentShader(m_pBloomFragmentShader);
+					// Create a program instance
+					m_pBloomProgram = pShaderLanguage->CreateProgram();
+					if (m_pBloomProgram) {
+						// Assign the created vertex and fragment shaders to the program
+						m_pBloomProgram->SetVertexShader(m_pBloomVertexShader);
+						m_pBloomProgram->SetFragmentShader(m_pBloomFragmentShader);
 
-					// Add our nark which will inform us as soon as the program gets dirty
-					m_pBloomProgram->EventDirty.Connect(&EventHandlerDirty);
+						// Add our nark which will inform us as soon as the program gets dirty
+						m_pBloomProgram->EventDirty.Connect(&EventHandlerDirty);
 
-					// Get attributes and uniforms
-					OnDirty(m_pBloomProgram);
+						// Get attributes and uniforms
+						OnDirty(m_pBloomProgram);
+					}
 				}
 			}
 

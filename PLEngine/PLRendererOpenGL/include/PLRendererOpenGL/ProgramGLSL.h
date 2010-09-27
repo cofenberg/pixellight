@@ -54,6 +54,7 @@ class ProgramGLSL : public Program {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Renderer;
+	friend class ShaderLanguageGLSL;
 
 
 	//[-------------------------------------------------------]

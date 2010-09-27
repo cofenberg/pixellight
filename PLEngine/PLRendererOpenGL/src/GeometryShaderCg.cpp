@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Wrapper.h>
+#include "PLRendererOpenGL/ShaderLanguageCg.h"
 #include "PLRendererOpenGL/ShaderToolsCg.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/GeometryShaderCg.h"
@@ -93,7 +94,7 @@ GeometryShaderCg::GeometryShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer
 //[-------------------------------------------------------]
 String GeometryShaderCg::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageCg;
+	return ShaderLanguageCg::Cg;
 }
 
 String GeometryShaderCg::GetSourceCode() const

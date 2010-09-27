@@ -619,30 +619,6 @@ bool RendererBackend::RemoveResource(Resource &cResource)
 	return m_lstResources.Remove(&cResource);
 }
 
-VertexShader *RendererBackend::CreateVertexShader(const String &sShaderLanguage)
-{
-	// Not implemented
-	return NULL;
-}
-
-GeometryShader *RendererBackend::CreateGeometryShader(const String &sShaderLanguage)
-{
-	// Not implemented
-	return NULL;
-}
-
-FragmentShader *RendererBackend::CreateFragmentShader(const String &sShaderLanguage)
-{
-	// Not implemented
-	return NULL;
-}
-
-Program *RendererBackend::CreateProgram(const String &sShaderLanguage)
-{
-	// Not implemented
-	return NULL;
-}
-
 
 //[-------------------------------------------------------]
 //[ States                                                ]

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLRendererOpenGL/VertexShaderGLSL.h"
+#include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
 #include "PLRendererOpenGL/Renderer.h"
@@ -337,7 +338,7 @@ void ProgramGLSL::DestroyUniformInformation()
 //[-------------------------------------------------------]
 String ProgramGLSL::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageGLSL;
+	return ShaderLanguageGLSL::GLSL;
 }
 
 PLRenderer::VertexShader *ProgramGLSL::GetVertexShader() const
@@ -351,7 +352,7 @@ bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 	PLRenderer::VertexShader *pCurrentVertexShader = (PLRenderer::VertexShader*)m_cVertexShaderHandler.GetResource();
 	if (pCurrentVertexShader != pVertexShader) {
 		// The shader language of the program and the vertex shader must match
-		if (pVertexShader && pVertexShader->GetShaderLanguage() != Renderer::ShaderLanguageGLSL)
+		if (pVertexShader && pVertexShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
 			return false; // Error, shader language mismatch!
 
 		// Detach the current vertex shader from the program
@@ -383,7 +384,7 @@ bool ProgramGLSL::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 	PLRenderer::GeometryShader *pCurrentGeometryShader = (PLRenderer::GeometryShader*)m_cGeometryShaderHandler.GetResource();
 	if (pCurrentGeometryShader != pGeometryShader) {
 		// The shader language of the program and the geometry shader must match
-		if (pGeometryShader && pGeometryShader->GetShaderLanguage() != Renderer::ShaderLanguageGLSL)
+		if (pGeometryShader && pGeometryShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
 			return false; // Error, shader language mismatch!
 
 		// Detach the current geometry shader from the program
@@ -423,7 +424,7 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	PLRenderer::FragmentShader *pCurrentFragmentShader = (PLRenderer::FragmentShader*)m_cFragmentShaderHandler.GetResource();
 	if (pCurrentFragmentShader != pFragmentShader) {
 		// The shader language of the program and the fragment shader must match
-		if (pFragmentShader && pFragmentShader->GetShaderLanguage() != Renderer::ShaderLanguageGLSL)
+		if (pFragmentShader && pFragmentShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
 			return false; // Error, shader language mismatch!
 
 		// Detach the current fragment shader from the program

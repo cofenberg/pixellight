@@ -51,7 +51,7 @@ class FragmentShaderGLSL : public PLRenderer::FragmentShader {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
+	friend class ShaderLanguageGLSL;
 
 
 	//[-------------------------------------------------------]

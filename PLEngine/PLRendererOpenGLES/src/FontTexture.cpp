@@ -164,9 +164,8 @@ void FontTexture::Draw(const String &sText, const Color4 &cColor, const Matrix4x
 			// Set object space to clip space matrix
 			pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(mObjectSpaceToClipSpace);
 
-			// Set glyph texture atlas
-			if (pProgram->GetShaderLanguage() == Renderer::ShaderLanguageGLSL)
-				((ProgramUniformGLSL*)pGeneratedProgramUserData->pGlyphMap)->Set((GLenum)GL_TEXTURE_2D, m_nOpenGLESGlyphTextureAtlas);
+			// Set glyph texture atlas - must be GLSL because that's the only supported shader language in here :D
+			((ProgramUniformGLSL*)pGeneratedProgramUserData->pGlyphMap)->Set((GLenum)GL_TEXTURE_2D, m_nOpenGLESGlyphTextureAtlas);
 
 			// Enable/disable mipmapping
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (nFlags & Mipmapping) ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR);

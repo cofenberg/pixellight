@@ -51,7 +51,7 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
+	friend class ShaderLanguageGLSL;
 
 
 	//[-------------------------------------------------------]

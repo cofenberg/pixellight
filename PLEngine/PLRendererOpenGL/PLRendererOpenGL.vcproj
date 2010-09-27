@@ -618,6 +618,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ShaderLanguage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRendererOpenGL\ShaderLanguage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShaderLanguageCg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRendererOpenGL\ShaderLanguageCg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShaderLanguageGLSL.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRendererOpenGL\ShaderLanguageGLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ShaderToolsCg.cpp"
 				>
 			</File>

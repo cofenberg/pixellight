@@ -30,6 +30,7 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/GeometryShader.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -67,48 +68,49 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 	m_pProgram(NULL)
 {
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
-	const String sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
+	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
+	if (pShaderLanguage) {
+		// Create the shader instances
+		m_pVertexShader   = pShaderLanguage->CreateVertexShader();
+		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
+		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 
-	// Create the shader instances
-	m_pVertexShader   = cRenderer.CreateVertexShader(sShaderLanguage);
-	m_pGeometryShader = cRenderer.CreateGeometryShader(sShaderLanguage);
-	m_pFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
+		// Shader source code
+		String sVertexShaderSourceCode;
+		String sGeometryShaderSourceCode;
+		String sFragmentShaderSourceCode;
+		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
+			#include "SPTriangleShaders_GLSL.h"
+			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
+			sGeometryShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sGeometryShaderSourceCodeGLSL);
+			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : sFragmentShaderSourceCodeGLSL);
+		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
+			#include "SPTriangleShaders_Cg.h"
+			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
+			sGeometryShaderSourceCode = sGeometryShaderSourceCodeCg;
+			sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
+		}
 
-	// Shader source code
-	String sVertexShaderSourceCode;
-	String sGeometryShaderSourceCode;
-	String sFragmentShaderSourceCode;
-	if (sShaderLanguage == "GLSL") {
-		#include "SPTriangleShaders_GLSL.h"
-		sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-		sGeometryShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sGeometryShaderSourceCodeGLSL);
-		sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : sFragmentShaderSourceCodeGLSL);
-	} else if (sShaderLanguage == "Cg") {
-		#include "SPTriangleShaders_Cg.h"
-		sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
-		sGeometryShaderSourceCode = sGeometryShaderSourceCodeCg;
-		sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
-	}
+		// Set the vertex shader source code
+		if (m_pVertexShader)
+			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
 
-	// Set the vertex shader source code
-	if (m_pVertexShader)
-		m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+		// Set the geometry shader source code
+		if (m_pGeometryShader)
+			m_pGeometryShader->SetSourceCode(sGeometryShaderSourceCode);
 
-	// Set the geometry shader source code
-	if (m_pGeometryShader)
-		m_pGeometryShader->SetSourceCode(sGeometryShaderSourceCode);
+		// Set the fragment shader source code
+		if (m_pFragmentShader)
+			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
 
-	// Set the fragment shader source code
-	if (m_pFragmentShader)
-		m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-
-	// Create a program instance
-	m_pProgram = cRenderer.CreateProgram(sShaderLanguage);
-	if (m_pProgram) {
-		// Assign the created vertex, geometry and fragment shaders to the program
-		m_pProgram->SetVertexShader(m_pVertexShader);
-		m_pProgram->SetGeometryShader(m_pGeometryShader);
-		m_pProgram->SetFragmentShader(m_pFragmentShader);
+		// Create a program instance
+		m_pProgram = pShaderLanguage->CreateProgram();
+		if (m_pProgram) {
+			// Assign the created vertex, geometry and fragment shaders to the program
+			m_pProgram->SetVertexShader(m_pVertexShader);
+			m_pProgram->SetGeometryShader(m_pGeometryShader);
+			m_pProgram->SetFragmentShader(m_pFragmentShader);
+		}
 	}
 }
 

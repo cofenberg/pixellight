@@ -25,8 +25,9 @@
 //[-------------------------------------------------------]
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include "PLRendererOpenGLES/VertexShaderGLSL.h"
+#include "PLRendererOpenGLES/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGLES/FragmentShaderGLSL.h"
+#include "PLRendererOpenGLES/VertexShaderGLSL.h"
 #include "PLRendererOpenGLES/Renderer.h"
 #include "PLRendererOpenGLES/ShaderToolsGLSL.h"
 #include "PLRendererOpenGLES/ProgramAttributeGLSL.h"
@@ -307,7 +308,7 @@ void ProgramGLSL::DestroyUniformInformation()
 //[-------------------------------------------------------]
 String ProgramGLSL::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageGLSL;
+	return ShaderLanguageGLSL::GLSL;
 }
 
 PLRenderer::VertexShader *ProgramGLSL::GetVertexShader() const
@@ -321,7 +322,7 @@ bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 	PLRenderer::VertexShader *pCurrentVertexShader = (PLRenderer::VertexShader*)m_cVertexShaderHandler.GetResource();
 	if (pCurrentVertexShader != pVertexShader) {
 		// The shader language of the program and the vertex shader must match
-		if (pVertexShader && pVertexShader->GetShaderLanguage() != Renderer::ShaderLanguageGLSL)
+		if (pVertexShader && pVertexShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
 			return false; // Error, shader language mismatch!
 
 		// Detach the current vertex shader from the program
@@ -366,7 +367,7 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	PLRenderer::FragmentShader *pCurrentFragmentShader = (PLRenderer::FragmentShader*)m_cFragmentShaderHandler.GetResource();
 	if (pCurrentFragmentShader != pFragmentShader) {
 		// The shader language of the program and the fragment shader must match
-		if (pFragmentShader && pFragmentShader->GetShaderLanguage() != Renderer::ShaderLanguageGLSL)
+		if (pFragmentShader && pFragmentShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
 			return false; // Error, shader language mismatch!
 
 		// Detach the current fragment shader from the program
@@ -460,7 +461,8 @@ bool ProgramGLSL::UnmakeCurrent()
 	for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
 		glDisableVertexAttribArray(((ProgramAttributeGLSL*)m_lstAttributes[i])->m_nOpenGLESAttributeLocation);
 
-	// Renderer::SetProgram() will call glUseProgram(0) - if required
+	// Currently, no program is set
+	glUseProgram(0);
 
 	// Done
 	return true;

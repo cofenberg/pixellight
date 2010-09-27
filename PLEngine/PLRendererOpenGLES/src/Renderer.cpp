@@ -39,10 +39,9 @@
 #include "PLRendererOpenGLES/TextureBufferCube.h"
 #include "PLRendererOpenGLES/IndexBuffer.h"
 #include "PLRendererOpenGLES/VertexBuffer.h"
-#include "PLRendererOpenGLES/VertexShaderGLSL.h"
-#include "PLRendererOpenGLES/FragmentShaderGLSL.h"
 #include "PLRendererOpenGLES/ProgramGLSL.h"
 #include "PLRendererOpenGLES/FontManager.h"
+#include "PLRendererOpenGLES/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGLES/Renderer.h"
 
 
@@ -53,12 +52,6 @@ using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRendererOpenGLES {
-
-	
-//[-------------------------------------------------------]
-//[ Public static data                                    ]
-//[-------------------------------------------------------]
-const String Renderer::ShaderLanguageGLSL = "GLSL";
 
 
 //[-------------------------------------------------------]
@@ -76,6 +69,7 @@ pl_implement_class(Renderer)
 */
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// Only shaders mode is supported by OpenGL ES 2.0
 	m_pFontManager(new FontManager(*this)),
+	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this)),
 	m_hDisplay(NULL),
 	m_hConfig(NULL),
 	m_hContext(NULL),
@@ -283,6 +277,10 @@ Renderer::~Renderer()
 	// Destroy the OpenGL ES renderer font manager while there's still an active OpenGL ES context (... font textures...)
 	delete m_pFontManager;
 	m_pFontManager = NULL;
+
+	// Destroy the GLSL shader language instance
+	delete m_pShaderLanguageGLSL;
+	m_pShaderLanguageGLSL = NULL;
 
 	// Destroy the draw helpers instance
 	delete m_pDrawHelpers;
@@ -954,7 +952,13 @@ String Renderer::GetVendor() const
 
 String Renderer::GetDefaultShaderLanguage() const
 {
-	return ShaderLanguageGLSL;
+	return ShaderLanguageGLSL::GLSL;
+}
+
+PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
+{
+	// Only the build in GLSL shader language is supported
+	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL) ? m_pShaderLanguageGLSL : NULL;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
@@ -1111,27 +1115,6 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
 	// Create the null vertex buffer
 	return new VertexBuffer(*this);
-}
-
-PLRenderer::VertexShader *Renderer::CreateVertexShader(const String &sShaderLanguage)
-{
-	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) ? new VertexShaderGLSL(*this) : NULL;
-}
-
-PLRenderer::GeometryShader *Renderer::CreateGeometryShader(const String &sShaderLanguage)
-{
-	// OpenGL ES 2.0 has no support for geometry shaders
-	return NULL;
-}
-
-PLRenderer::FragmentShader *Renderer::CreateFragmentShader(const String &sShaderLanguage)
-{
-	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) ? new FragmentShaderGLSL(*this) : NULL;
-}
-
-PLRenderer::Program *Renderer::CreateProgram(const String &sShaderLanguage)
-{
-	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) ? new ProgramGLSL(*this) : NULL;
 }
 
 PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()
@@ -2087,20 +2070,16 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 	// Is the new program the same one as the current one?
 	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
 	if (pCurrentProgram != pProgram) {
-		// Was there a previous program?
+		// Was there a previous program? (must be GLSL because that's the only supported shader language in here :D)
 		if (pCurrentProgram)
 			((ProgramGLSL*)pCurrentProgram)->UnmakeCurrent();
 
 		// Update the program resource handler
 		m_cProgramHandler.SetResource(pProgram);
 
-		// Make the new program to the current one
-		if (pProgram) {
+		// Make the new program to the current one (must be GLSL because that's the only supported shader language in here :D)
+		if (pProgram)
 			return ((ProgramGLSL*)pProgram)->MakeCurrent();
-		} else {
-			// Currently, no program is set
-			glUseProgram(0);
-		}
 	}
 
 	// Done

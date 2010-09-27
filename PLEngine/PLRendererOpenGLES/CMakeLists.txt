@@ -16,6 +16,7 @@ add_sources(
 	src/TextureBuffer3D.cpp
 	src/TextureBufferCube.cpp
 	src/VertexBuffer.cpp
+	src/ShaderLanguageGLSL.cpp
 	src/VertexShaderGLSL.cpp
 	src/FragmentShaderGLSL.cpp
 	src/ProgramGLSL.cpp

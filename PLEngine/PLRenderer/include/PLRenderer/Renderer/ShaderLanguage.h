@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: VertexShaderGLSL.h                             *
+ *  File: ShaderLanguage.h                               *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,31 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_VERTEXSHADERGLSL_H__
-#define __PLRENDEREROPENGL_VERTEXSHADERGLSL_H__
+#ifndef __PLRENDERER_SHADERLANGUAGE_H__
+#define __PLRENDERER_SHADERLANGUAGE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/VertexShader.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include <PLGeneral/String/String.h>
+#include "PLRenderer/PLRenderer.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRenderer {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Program;
+class VertexShader;
+class GeometryShader;
+class FragmentShader;
 
 
 //[-------------------------------------------------------]
@@ -43,35 +52,76 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL GLSL renderer vertex shader resource
+*    Abstract shader language
 */
-class VertexShaderGLSL : public PLRenderer::VertexShader {
+class ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class ShaderLanguageGLSL;
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual ShaderLanguage functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Destructor
+		*    Returns the name of the shader language
+		*
+		*  @return
+		*    The name of the shader language (for example "GLSL" or "Cg")
 		*/
-		virtual ~VertexShaderGLSL();
+		virtual PLGeneral::String GetShaderLanguage() const = 0;
 
 		/**
 		*  @brief
-		*    Returns the OpenGL vertex shader
+		*    Creates a vertex shader
 		*
 		*  @return
-		*    The OpenGL vertex shader, do not destroy it!
+		*    The created vertex shader, NULL on error
 		*/
-		GLuint GetOpenGLVertexShader() const;
+		virtual VertexShader *CreateVertexShader() = 0;
+
+		/**
+		*  @brief
+		*    Creates a geometry shader
+		*
+		*  @return
+		*    The created geometry shader, NULL on error
+		*/
+		virtual GeometryShader *CreateGeometryShader() = 0;
+
+		/**
+		*  @brief
+		*    Creates a fragment shader
+		*
+		*  @return
+		*    The created fragment shader, NULL on error
+		*/
+		virtual FragmentShader *CreateFragmentShader() = 0;
+
+		/**
+		*  @brief
+		*    Creates a program
+		*
+		*  @return
+		*    The created program, NULL on error
+		*/
+		virtual Program *CreateProgram() = 0;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLRENDERER_API ShaderLanguage();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLRENDERER_API virtual ~ShaderLanguage();
 
 
 	//[-------------------------------------------------------]
@@ -80,38 +130,24 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 	private:
 		/**
 		*  @brief
-		*    Constructor
+		*    Copy constructor
 		*
-		*  @param[in] cRenderer
-		*    Owner renderer
+		*  @param[in] cSource
+		*    Source to copy from
 		*/
-		VertexShaderGLSL(PLRenderer::Renderer &cRenderer);
+		ShaderLanguage(const ShaderLanguage &cSource);
 
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		GLuint m_nOpenGLVertexShader;	/**< OpenGL vertex shader, always valid! */
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::AbstractShader functions   ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
-		virtual PLGeneral::String GetSourceCode() const;
-		virtual PLGeneral::String GetProfile() const;
-		virtual PLGeneral::String GetEntry() const;
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::Resource functions        ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		ShaderLanguage &operator =(const ShaderLanguage &cSource);
 
 
 };
@@ -120,7 +156,7 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRenderer
 
 
-#endif // __PLRENDEREROPENGL_VERTEXSHADERGLSL_H__
+#endif // __PLRENDERER_SHADERLANGUAGE_H__

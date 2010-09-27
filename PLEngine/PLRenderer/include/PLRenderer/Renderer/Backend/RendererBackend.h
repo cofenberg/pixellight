@@ -324,10 +324,6 @@ class RendererBackend : public Renderer {
 		PLRENDERER_API virtual Resource *GetResource(PLGeneral::uint32 nIndex = 0) const;
 		PLRENDERER_API virtual bool AddResource(Resource &cResource);
 		PLRENDERER_API virtual bool RemoveResource(Resource &cResource);
-		PLRENDERER_API virtual VertexShader *CreateVertexShader(const PLGeneral::String &sShaderLanguage = "");
-		PLRENDERER_API virtual GeometryShader *CreateGeometryShader(const PLGeneral::String &sShaderLanguage = "");
-		PLRENDERER_API virtual FragmentShader *CreateFragmentShader(const PLGeneral::String &sShaderLanguage = "");
-		PLRENDERER_API virtual Program *CreateProgram(const PLGeneral::String &sShaderLanguage = "");
 
 		//[-------------------------------------------------------]
 		//[ States                                                ]

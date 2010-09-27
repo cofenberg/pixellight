@@ -989,6 +989,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Renderer\ShaderLanguage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRenderer\Renderer\ShaderLanguage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Renderer\Surface.cpp"
 				>
 			</File>

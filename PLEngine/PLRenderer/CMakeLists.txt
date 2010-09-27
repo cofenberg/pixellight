@@ -44,6 +44,7 @@ add_sources(
 	src/Renderer/SurfaceTextureBuffer.cpp
 	src/Renderer/SurfacePainter.cpp
 	src/Renderer/OcclusionQuery.cpp
+	src/Renderer/ShaderLanguage.cpp
 	src/Renderer/AbstractShader.cpp
 	src/Renderer/VertexShader.cpp
 	src/Renderer/GeometryShader.cpp

@@ -732,8 +732,16 @@ String Renderer::GetVendor() const
 
 String Renderer::GetDefaultShaderLanguage() const
 {
-	static const String sString = "Cg";
-	return (GetMode() != ModeFixedFunctions) ? sString : "";
+	// [TODO] Implement me
+	return "";
+//	static const String sString = "Cg";
+//	return (GetMode() != ModeFixedFunctions) ? sString : "";
+}
+
+PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
+{
+	// [TODO] Implement me
+	return NULL;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const

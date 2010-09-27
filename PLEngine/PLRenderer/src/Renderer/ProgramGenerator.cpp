@@ -27,6 +27,7 @@
 #include "PLRenderer/Renderer/Program.h"
 #include "PLRenderer/Renderer/VertexShader.h"
 #include "PLRenderer/Renderer/FragmentShader.h"
+#include "PLRenderer/Renderer/ShaderLanguage.h"
 #include "PLRenderer/Renderer/ProgramGenerator.h"
 
 
@@ -141,29 +142,33 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 		// Is there already a vertex shader with the requested flags?
 		VertexShader *pVertexShader = m_mapVertexShaders.Get(nVertexShaderID);
 		if (!pVertexShader) {
-			// Create a new vertex shader instance
-			pVertexShader = m_pRenderer->CreateVertexShader(m_sShaderLanguage);
-			if (pVertexShader) {
-				// Add flag definitions to the shader source code
-				String sSourceCode;
-				const Array<const char *> &lstVertexShaderDefinitions = cFlags.GetVertexShaderDefinitions();
-				const uint32 nNumOfVertexShaderDefinitions = lstVertexShaderDefinitions.GetNumOfElements();
-				for (uint32 i=0; i<nNumOfVertexShaderDefinitions; i++) {
-					// Get the flag definition
-					const char *pszDefinition = lstVertexShaderDefinitions[i];
-					if (pszDefinition)
-						sSourceCode += String::Format("#define %s\n", pszDefinition);
+			// Get the shader language to use
+			ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(m_sShaderLanguage);
+			if (pShaderLanguage) {
+				// Create a new vertex shader instance
+				pVertexShader = pShaderLanguage->CreateVertexShader();
+				if (pVertexShader) {
+					// Add flag definitions to the shader source code
+					String sSourceCode;
+					const Array<const char *> &lstVertexShaderDefinitions = cFlags.GetVertexShaderDefinitions();
+					const uint32 nNumOfVertexShaderDefinitions = lstVertexShaderDefinitions.GetNumOfElements();
+					for (uint32 i=0; i<nNumOfVertexShaderDefinitions; i++) {
+						// Get the flag definition
+						const char *pszDefinition = lstVertexShaderDefinitions[i];
+						if (pszDefinition)
+							sSourceCode += String::Format("#define %s\n", pszDefinition);
+					}
+
+					// Add the shader source code
+					sSourceCode += m_sVertexShader;
+
+					// Set the combined shader source code
+					pVertexShader->SetSourceCode(sSourceCode, m_sVertexShaderProfile);
+
+					// Add the created shader to the cache of the program generator
+					m_lstVertexShaders.Add(pVertexShader);
+					m_mapVertexShaders.Add(nVertexShaderID, pVertexShader);
 				}
-
-				// Add the shader source code
-				sSourceCode += m_sVertexShader;
-
-				// Set the combined shader source code
-				pVertexShader->SetSourceCode(sSourceCode, m_sVertexShaderProfile);
-
-				// Add the created shader to the cache of the program generator
-				m_lstVertexShaders.Add(pVertexShader);
-				m_mapVertexShaders.Add(nVertexShaderID, pVertexShader);
 			}
 		}
 
@@ -172,54 +177,62 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 			// Is there already a fragment shader with the requested flags?
 			FragmentShader *pFragmentShader = m_mapFragmentShaders.Get(nFragmentShaderID);
 			if (!pFragmentShader) {
-				// Create a new fragment shader instance
-				pFragmentShader = m_pRenderer->CreateFragmentShader(m_sShaderLanguage);
-				if (pFragmentShader) {
-					// Add flag definitions to the shader source code
-					String sSourceCode;
-					const Array<const char *> &lstFragmentShaderDefinitions = cFlags.GetFragmentShaderDefinitions();
-					const uint32 nNumOfFragmentShaderDefinitions = lstFragmentShaderDefinitions.GetNumOfElements();
-					for (uint32 i=0; i<nNumOfFragmentShaderDefinitions; i++) {
-						// Get the flag definition
-						const char *pszDefinition = lstFragmentShaderDefinitions[i];
-						if (pszDefinition)
-							sSourceCode += String::Format("#define %s\n", pszDefinition);
+				// Get the shader language to use
+				ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(m_sShaderLanguage);
+				if (pShaderLanguage) {
+					// Create a new fragment shader instance
+					pFragmentShader = pShaderLanguage->CreateFragmentShader();
+					if (pFragmentShader) {
+						// Add flag definitions to the shader source code
+						String sSourceCode;
+						const Array<const char *> &lstFragmentShaderDefinitions = cFlags.GetFragmentShaderDefinitions();
+						const uint32 nNumOfFragmentShaderDefinitions = lstFragmentShaderDefinitions.GetNumOfElements();
+						for (uint32 i=0; i<nNumOfFragmentShaderDefinitions; i++) {
+							// Get the flag definition
+							const char *pszDefinition = lstFragmentShaderDefinitions[i];
+							if (pszDefinition)
+								sSourceCode += String::Format("#define %s\n", pszDefinition);
+						}
+
+						// Add the shader source code
+						sSourceCode += m_sFragmentShader;
+
+						// Set the combined shader source code
+						pFragmentShader->SetSourceCode(sSourceCode, m_sFragmentShaderProfile);
+
+						// Add the created shader to the cache of the program generator
+						m_lstFragmentShaders.Add(pFragmentShader);
+						m_mapFragmentShaders.Add(nFragmentShaderID, pFragmentShader);
 					}
-
-					// Add the shader source code
-					sSourceCode += m_sFragmentShader;
-
-					// Set the combined shader source code
-					pFragmentShader->SetSourceCode(sSourceCode, m_sFragmentShaderProfile);
-
-					// Add the created shader to the cache of the program generator
-					m_lstFragmentShaders.Add(pFragmentShader);
-					m_mapFragmentShaders.Add(nFragmentShaderID, pFragmentShader);
 				}
 			}
 
 			// If we have no fragment shader, we don't need to continue constructing a program...
 			if (pFragmentShader) {
-				// Create a program instance
-				Program *pProgram = m_pRenderer->CreateProgram(m_sShaderLanguage);
-				if (pProgram) {
-					// Assign the created vertex and fragment shaders to the program
-					pProgram->SetVertexShader(pVertexShader);
-					pProgram->SetFragmentShader(pFragmentShader);
+				// Get the shader language to use
+				ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(m_sShaderLanguage);
+				if (pShaderLanguage) {
+					// Create a program instance
+					Program *pProgram = pShaderLanguage->CreateProgram();
+					if (pProgram) {
+						// Assign the created vertex and fragment shaders to the program
+						pProgram->SetVertexShader(pVertexShader);
+						pProgram->SetFragmentShader(pFragmentShader);
 
-					// Create a generated program contained
-					pGeneratedProgram = new GeneratedProgram;
-					pGeneratedProgram->pProgram			    = pProgram;
-					pGeneratedProgram->nVertexShaderFlags   = cFlags.GetVertexShaderFlags();
-					pGeneratedProgram->nFragmentShaderFlags = cFlags.GetFragmentShaderFlags();
-					pGeneratedProgram->pUserData			= NULL;
+						// Create a generated program contained
+						pGeneratedProgram = new GeneratedProgram;
+						pGeneratedProgram->pProgram			    = pProgram;
+						pGeneratedProgram->nVertexShaderFlags   = cFlags.GetVertexShaderFlags();
+						pGeneratedProgram->nFragmentShaderFlags = cFlags.GetFragmentShaderFlags();
+						pGeneratedProgram->pUserData			= NULL;
 
-					// Add our nark which will inform us as soon as the program gets dirty
-					pProgram->EventDirty.Connect(&EventHandlerDirty);
+						// Add our nark which will inform us as soon as the program gets dirty
+						pProgram->EventDirty.Connect(&EventHandlerDirty);
 
-					// Add the created program to the cache of the program generator
-					m_lstPrograms.Add(pGeneratedProgram);
-					m_mapPrograms.Add(nProgramID, pGeneratedProgram);
+						// Add the created program to the cache of the program generator
+						m_lstPrograms.Add(pGeneratedProgram);
+						m_mapPrograms.Add(nProgramID, pGeneratedProgram);
+					}
 				}
 			}
 		}

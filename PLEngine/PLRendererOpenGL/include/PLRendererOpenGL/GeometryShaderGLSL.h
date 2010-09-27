@@ -51,7 +51,7 @@ class GeometryShaderGLSL : public PLRenderer::GeometryShader {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
+	friend class ShaderLanguageGLSL;
 
 
 	//[-------------------------------------------------------]

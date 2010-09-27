@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
@@ -76,7 +77,7 @@ FragmentShaderGLSL::FragmentShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRend
 //[-------------------------------------------------------]
 String FragmentShaderGLSL::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageGLSL;
+	return ShaderLanguageGLSL::GLSL;
 }
 
 String FragmentShaderGLSL::GetSourceCode() const

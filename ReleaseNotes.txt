@@ -1,6 +1,7 @@
 Changes in PixelLight 0.9.2-R3 (not yet released)
 - Feature: Added support for "LATC1" and "LATC2" (formally "3DC"/"ATI1N"/"ATI2N" on ATI GPU's only) texture compression
 - Change: Updated from "Cg Toolkit 2.2, February 2010 Release" to "Cg Toookit 3.0 - July 2010"
+- Change: Introduced new "PLRenderer::ShaderLanguage" interface, removed "Create<Type>Shader()" and "CreateProgram()" within "PLRenderer::Renderer"
 - Removed: Old shader interface within PLRenderer
 - Bugfix: Within some GLSL shaders, the not specified "clamp(float, int, int)" was used, which didn't work on every system
 - Bugfix: Fixed PLDemoRendererRTT graphics bug

@@ -28,6 +28,7 @@
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
@@ -195,45 +196,49 @@ void SRPDeferredDOF::CalculateDepthBlur(const String &sShaderLanguage, VertexBuf
 		m_pDepthBlurRGBTextureProgramUniform			= NULL;
 		m_pDepthBlurNormalDepthTextureProgramUniform	= NULL;
 
-		// Shader source code
-		String sVertexShaderSourceCode;
-		String sFragmentShaderSourceCode;
-		if (sShaderLanguage == "GLSL") {
-			#include "SRPDeferredDOF_GLSL.h"
-			sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
-			sFragmentShaderSourceCode = sDeferredDOF_GLSL_FS_DepthBlur;
-		} else if (sShaderLanguage == "Cg") {
-			#include "SRPDeferredDOF_Cg.h"
-			sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
-			sFragmentShaderSourceCode = sDeferredDOF_Cg_FS_DepthBlur;
-		}
+		// Get the shader language instance
+		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
+		if (pShaderLanguage) {
+			// Shader source code
+			String sVertexShaderSourceCode;
+			String sFragmentShaderSourceCode;
+			if (sShaderLanguage == "GLSL") {
+				#include "SRPDeferredDOF_GLSL.h"
+				sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
+				sFragmentShaderSourceCode = sDeferredDOF_GLSL_FS_DepthBlur;
+			} else if (sShaderLanguage == "Cg") {
+				#include "SRPDeferredDOF_Cg.h"
+				sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
+				sFragmentShaderSourceCode = sDeferredDOF_Cg_FS_DepthBlur;
+			}
 
-		// Create a vertex shader instance
-		m_pVertexShader = cRenderer.CreateVertexShader(sShaderLanguage);
-		if (m_pVertexShader) {
-			// Set the vertex shader source code
-			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-		}
+			// Create a vertex shader instance
+			m_pVertexShader = pShaderLanguage->CreateVertexShader();
+			if (m_pVertexShader) {
+				// Set the vertex shader source code
+				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+			}
 
-		// Create a fragment shader instance
-		m_pDepthBlurFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
-		if (m_pDepthBlurFragmentShader) {
-			// Set the fragment shader source code
-			m_pDepthBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-		}
+			// Create a fragment shader instance
+			m_pDepthBlurFragmentShader = pShaderLanguage->CreateFragmentShader();
+			if (m_pDepthBlurFragmentShader) {
+				// Set the fragment shader source code
+				m_pDepthBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+			}
 
-		// Create a program instance
-		m_pDepthBlurProgram = cRenderer.CreateProgram(sShaderLanguage);
-		if (m_pDepthBlurProgram) {
-			// Assign the created vertex and fragment shaders to the program
-			m_pDepthBlurProgram->SetVertexShader(m_pVertexShader);
-			m_pDepthBlurProgram->SetFragmentShader(m_pDepthBlurFragmentShader);
+			// Create a program instance
+			m_pDepthBlurProgram = pShaderLanguage->CreateProgram();
+			if (m_pDepthBlurProgram) {
+				// Assign the created vertex and fragment shaders to the program
+				m_pDepthBlurProgram->SetVertexShader(m_pVertexShader);
+				m_pDepthBlurProgram->SetFragmentShader(m_pDepthBlurFragmentShader);
 
-			// Add our nark which will inform us as soon as the program gets dirty
-			m_pDepthBlurProgram->EventDirty.Connect(&EventHandlerDirty);
+				// Add our nark which will inform us as soon as the program gets dirty
+				m_pDepthBlurProgram->EventDirty.Connect(&EventHandlerDirty);
 
-			// Get attributes and uniforms
-			OnDirty(m_pDepthBlurProgram);
+				// Get attributes and uniforms
+				OnDirty(m_pDepthBlurProgram);
+			}
 		}
 	}
 
@@ -354,58 +359,62 @@ void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &
 		m_pBlurUVScaleProgramUniform			= NULL;
 		m_pBlurTextureProgramUniform			= NULL;
 
-		// Shader source code
-		String sVertexShaderSourceCode;
-		String sFragmentShaderSourceCode_Downscale;
-		String sFragmentShaderSourceCode_Blur;
-		if (sShaderLanguage == "GLSL") {
-			#include "SRPDeferredDOF_GLSL.h"
-			sVertexShaderSourceCode				= sDeferredDOF_GLSL_VS;
-			sFragmentShaderSourceCode_Downscale	= sDeferredDOF_GLSL_FS_Downscale;
-			sFragmentShaderSourceCode_Blur		= sDeferredDOF_GLSL_FS_Blur;
-		} else if (sShaderLanguage == "Cg") {
-			#include "SRPDeferredDOF_Cg.h"
-			sVertexShaderSourceCode				= sDeferredDOF_Cg_VS;
-			sFragmentShaderSourceCode_Downscale = sDeferredDOF_Cg_FS_Downscale;
-			sFragmentShaderSourceCode_Blur		= sDeferredDOF_Cg_FS_Blur;
-		}
+		// Get the shader language instance
+		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
+		if (pShaderLanguage) {
+			// Shader source code
+			String sVertexShaderSourceCode;
+			String sFragmentShaderSourceCode_Downscale;
+			String sFragmentShaderSourceCode_Blur;
+			if (sShaderLanguage == "GLSL") {
+				#include "SRPDeferredDOF_GLSL.h"
+				sVertexShaderSourceCode				= sDeferredDOF_GLSL_VS;
+				sFragmentShaderSourceCode_Downscale	= sDeferredDOF_GLSL_FS_Downscale;
+				sFragmentShaderSourceCode_Blur		= sDeferredDOF_GLSL_FS_Blur;
+			} else if (sShaderLanguage == "Cg") {
+				#include "SRPDeferredDOF_Cg.h"
+				sVertexShaderSourceCode				= sDeferredDOF_Cg_VS;
+				sFragmentShaderSourceCode_Downscale = sDeferredDOF_Cg_FS_Downscale;
+				sFragmentShaderSourceCode_Blur		= sDeferredDOF_Cg_FS_Blur;
+			}
 
-		// Create a fragment shader instance
-		m_pDownscaleFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
-		if (m_pDownscaleFragmentShader) {
-			// Set the fragment shader source code
-			m_pDownscaleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downscale);
-		}
-		m_pBlurFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
-		if (m_pBlurFragmentShader) {
-			// Set the fragment shader source code
-			m_pBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Blur);
-		}
+			// Create a fragment shader instance
+			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader();
+			if (m_pDownscaleFragmentShader) {
+				// Set the fragment shader source code
+				m_pDownscaleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downscale);
+			}
+			m_pBlurFragmentShader = pShaderLanguage->CreateFragmentShader();
+			if (m_pBlurFragmentShader) {
+				// Set the fragment shader source code
+				m_pBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Blur);
+			}
 
-		// Create a program instance
-		m_pDownscaleProgram = cRenderer.CreateProgram(sShaderLanguage);
-		if (m_pDownscaleProgram) {
-			// Assign the created vertex and fragment shaders to the program
-			m_pDownscaleProgram->SetVertexShader(m_pVertexShader);
-			m_pDownscaleProgram->SetFragmentShader(m_pDownscaleFragmentShader);
+			// Create a program instance
+			m_pDownscaleProgram = pShaderLanguage->CreateProgram();
+			if (m_pDownscaleProgram) {
+				// Assign the created vertex and fragment shaders to the program
+				m_pDownscaleProgram->SetVertexShader(m_pVertexShader);
+				m_pDownscaleProgram->SetFragmentShader(m_pDownscaleFragmentShader);
 
-			// Add our nark which will inform us as soon as the program gets dirty
-			m_pDownscaleProgram->EventDirty.Connect(&EventHandlerDirty);
+				// Add our nark which will inform us as soon as the program gets dirty
+				m_pDownscaleProgram->EventDirty.Connect(&EventHandlerDirty);
 
-			// Get attributes and uniforms
-			OnDirty(m_pDownscaleProgram);
-		}
-		m_pBlurProgram = cRenderer.CreateProgram(sShaderLanguage);
-		if (m_pBlurProgram) {
-			// Assign the created vertex and fragment shaders to the program
-			m_pBlurProgram->SetVertexShader(m_pVertexShader);
-			m_pBlurProgram->SetFragmentShader(m_pBlurFragmentShader);
+				// Get attributes and uniforms
+				OnDirty(m_pDownscaleProgram);
+			}
+			m_pBlurProgram = pShaderLanguage->CreateProgram();
+			if (m_pBlurProgram) {
+				// Assign the created vertex and fragment shaders to the program
+				m_pBlurProgram->SetVertexShader(m_pVertexShader);
+				m_pBlurProgram->SetFragmentShader(m_pBlurFragmentShader);
 
-			// Add our nark which will inform us as soon as the program gets dirty
-			m_pBlurProgram->EventDirty.Connect(&EventHandlerDirty);
+				// Add our nark which will inform us as soon as the program gets dirty
+				m_pBlurProgram->EventDirty.Connect(&EventHandlerDirty);
 
-			// Get attributes and uniforms
-			OnDirty(m_pBlurProgram);
+				// Get attributes and uniforms
+				OnDirty(m_pBlurProgram);
+			}
 		}
 	}
 
@@ -507,53 +516,57 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 		m_pDebugTextureSizeProgramUniform	= NULL;
 		m_pDebugTextureProgramUniform		= NULL;
 
-		// Get the definition
-		String sDefinition;
-		switch (nType) {
-			 case 0:
-				 sDefinition = "#define FS_DEPTH_BLUR\\n";
-				 break;
+		// Get the shader language instance
+		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
+		if (pShaderLanguage) {
+			// Get the definition
+			String sDefinition;
+			switch (nType) {
+				 case 0:
+					 sDefinition = "#define FS_DEPTH_BLUR\\n";
+					 break;
 
-			 case 1:
-				 sDefinition = "#define FS_BLUR\\n";
-				 break;
-		}
+				 case 1:
+					 sDefinition = "#define FS_BLUR\\n";
+					 break;
+			}
 
-		// Shader source code
-		String sVertexShaderSourceCode;
-		String sFragmentShaderSourceCode;
-		if (sShaderLanguage == "GLSL") {
-			#include "SRPDeferredDOF_GLSL.h"
-			sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
-			sFragmentShaderSourceCode = sDefinition + sDeferredDOF_GLSL_FS_Debug;
-		} else if (sShaderLanguage == "Cg") {
-			#include "SRPDeferredDOF_Cg.h"
-			sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
-			sFragmentShaderSourceCode = sDefinition + sDeferredDOF_Cg_FS_Debug;
-		}
+			// Shader source code
+			String sVertexShaderSourceCode;
+			String sFragmentShaderSourceCode;
+			if (sShaderLanguage == "GLSL") {
+				#include "SRPDeferredDOF_GLSL.h"
+				sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
+				sFragmentShaderSourceCode = sDefinition + sDeferredDOF_GLSL_FS_Debug;
+			} else if (sShaderLanguage == "Cg") {
+				#include "SRPDeferredDOF_Cg.h"
+				sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
+				sFragmentShaderSourceCode = sDefinition + sDeferredDOF_Cg_FS_Debug;
+			}
 
-		// Create a fragment shader instance
-		m_pDebugFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
-		if (m_pDebugFragmentShader) {
-			// Set the fragment shader source code
-			m_pDebugFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-		}
+			// Create a fragment shader instance
+			m_pDebugFragmentShader = pShaderLanguage->CreateFragmentShader();
+			if (m_pDebugFragmentShader) {
+				// Set the fragment shader source code
+				m_pDebugFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+			}
 
-		// Create a program instance
-		m_pDebugProgram = cRenderer.CreateProgram(sShaderLanguage);
-		if (m_pDebugProgram) {
-			// Assign the created vertex and fragment shaders to the program
-			m_pDebugProgram->SetVertexShader(m_pVertexShader);
-			m_pDebugProgram->SetFragmentShader(m_pDebugFragmentShader);
+			// Create a program instance
+			m_pDebugProgram = pShaderLanguage->CreateProgram();
+			if (m_pDebugProgram) {
+				// Assign the created vertex and fragment shaders to the program
+				m_pDebugProgram->SetVertexShader(m_pVertexShader);
+				m_pDebugProgram->SetFragmentShader(m_pDebugFragmentShader);
 
-			// Add our nark which will inform us as soon as the program gets dirty
-			m_pDebugProgram->EventDirty.Connect(&EventHandlerDirty);
+				// Add our nark which will inform us as soon as the program gets dirty
+				m_pDebugProgram->EventDirty.Connect(&EventHandlerDirty);
 
-			// Get attributes and uniforms
-			OnDirty(m_pDebugProgram);
+				// Get attributes and uniforms
+				OnDirty(m_pDebugProgram);
 
-			// Backup the current debug type
-			m_nDebugType = nType;
+				// Backup the current debug type
+				m_nDebugType = nType;
+			}
 		}
 	}
 
@@ -747,38 +760,42 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 													m_pResultBlurTextureProgramUniform		= NULL;
 													m_pResultTextureProgramUniform			= NULL;
 
-													// Shader source code
-													String sVertexShaderSourceCode;
-													String sFragmentShaderSourceCode;
-													if (sShaderLanguage == "GLSL") {
-														#include "SRPDeferredDOF_GLSL.h"
-														sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
-														sFragmentShaderSourceCode = sDeferredDOF_GLSL_FS_Result;
-													} else if (sShaderLanguage == "Cg") {
-														#include "SRPDeferredDOF_Cg.h"
-														sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
-														sFragmentShaderSourceCode = sDeferredDOF_Cg_FS_Result;
-													}
+													// Get the shader language instance
+													PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
+													if (pShaderLanguage) {
+														// Shader source code
+														String sVertexShaderSourceCode;
+														String sFragmentShaderSourceCode;
+														if (sShaderLanguage == "GLSL") {
+															#include "SRPDeferredDOF_GLSL.h"
+															sVertexShaderSourceCode	  = sDeferredDOF_GLSL_VS;
+															sFragmentShaderSourceCode = sDeferredDOF_GLSL_FS_Result;
+														} else if (sShaderLanguage == "Cg") {
+															#include "SRPDeferredDOF_Cg.h"
+															sVertexShaderSourceCode	  = sDeferredDOF_Cg_VS;
+															sFragmentShaderSourceCode = sDeferredDOF_Cg_FS_Result;
+														}
 
-													// Create a fragment shader instance
-													m_pResultFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
-													if (m_pResultFragmentShader) {
-														// Set the fragment shader source code
-														m_pResultFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-													}
+														// Create a fragment shader instance
+														m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader();
+														if (m_pResultFragmentShader) {
+															// Set the fragment shader source code
+															m_pResultFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+														}
 
-													// Create a program instance
-													m_pResultProgram = cRenderer.CreateProgram(sShaderLanguage);
-													if (m_pResultProgram) {
-														// Assign the created vertex and fragment shaders to the program
-														m_pResultProgram->SetVertexShader(m_pVertexShader);
-														m_pResultProgram->SetFragmentShader(m_pResultFragmentShader);
+														// Create a program instance
+														m_pResultProgram = pShaderLanguage->CreateProgram();
+														if (m_pResultProgram) {
+															// Assign the created vertex and fragment shaders to the program
+															m_pResultProgram->SetVertexShader(m_pVertexShader);
+															m_pResultProgram->SetFragmentShader(m_pResultFragmentShader);
 
-														// Add our nark which will inform us as soon as the program gets dirty
-														m_pResultProgram->EventDirty.Connect(&EventHandlerDirty);
+															// Add our nark which will inform us as soon as the program gets dirty
+															m_pResultProgram->EventDirty.Connect(&EventHandlerDirty);
 
-														// Get attributes and uniforms
-														OnDirty(m_pResultProgram);
+															// Get attributes and uniforms
+															OnDirty(m_pResultProgram);
+														}
 													}
 												}
 

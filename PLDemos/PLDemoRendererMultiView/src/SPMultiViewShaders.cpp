@@ -29,6 +29,7 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
@@ -67,41 +68,42 @@ SPMultiViewShaders::SPMultiViewShaders(Renderer &cRenderer) : SPMultiView(cRende
 	m_pProgram(NULL)
 {
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
-	const String sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
+	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
+	if (pShaderLanguage) {
+		// Shader source code
+		String sVertexShaderSourceCode;
+		String sFragmentShaderSourceCode;
+		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
+			#include "SPMultiViewShaders_GLSL.h"
+			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
+			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
+		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
+			#include "SPMultiViewShaders_Cg.h"
+			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
+			sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
+		}
 
-	// Shader source code
-	String sVertexShaderSourceCode;
-	String sFragmentShaderSourceCode;
-	if (sShaderLanguage == "GLSL") {
-		#include "SPMultiViewShaders_GLSL.h"
-		sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-		sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
-	} else if (sShaderLanguage == "Cg") {
-		#include "SPMultiViewShaders_Cg.h"
-		sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
-		sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
-	}
+		// Create a vertex shader instance
+		m_pVertexShader = pShaderLanguage->CreateVertexShader();
+		if (m_pVertexShader) {
+			// Set the vertex shader source code
+			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+		}
 
-	// Create a vertex shader instance
-	m_pVertexShader = cRenderer.CreateVertexShader(sShaderLanguage);
-	if (m_pVertexShader) {
-		// Set the vertex shader source code
-		m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-	}
+		// Create a fragment shader instance
+		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
+		if (m_pFragmentShader) {
+			// Set the fragment shader source code
+			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+		}
 
-	// Create a fragment shader instance
-	m_pFragmentShader = cRenderer.CreateFragmentShader(sShaderLanguage);
-	if (m_pFragmentShader) {
-		// Set the fragment shader source code
-		m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-	}
-
-	// Create a program instance
-	m_pProgram = cRenderer.CreateProgram(sShaderLanguage);
-	if (m_pProgram) {
-		// Assign the created vertex and fragment shaders to the program
-		m_pProgram->SetVertexShader(m_pVertexShader);
-		m_pProgram->SetFragmentShader(m_pFragmentShader);
+		// Create a program instance
+		m_pProgram = pShaderLanguage->CreateProgram();
+		if (m_pProgram) {
+			// Assign the created vertex and fragment shaders to the program
+			m_pProgram->SetVertexShader(m_pVertexShader);
+			m_pProgram->SetFragmentShader(m_pFragmentShader);
+		}
 	}
 }
 

@@ -248,6 +248,12 @@ String Renderer::GetDefaultShaderLanguage() const
 	return sString;
 }
 
+PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
+{
+	// No support for shader languages
+	return NULL;
+}
+
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
 {
 	return m_pFixedFunctions;

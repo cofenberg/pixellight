@@ -1,5 +1,11 @@
 >> 27.09.2010
 [CO]
+- "ShaderLanguage"-Schnittstelle eingeführt. Da zukünftig in z.B. PLRendererOpenGL Shader Sprachen über Plugins hinzugefügt werden können sollen
+  (z.B. Cg wird rein optional über Plugin), macht eine eigene Schnittstelle denke ich wirklich Sinn. In der "Renderer" Klasse wurden die Methoden
+  CreateVertexShader(), CreateGeometryShader(), CreateFragmentShader(), CreateProgram() entfernt - diese Methoden liegen nun in "ShaderLanguage".
+  (mittlerweile gibts noch einige weitere neue Shader Typen die wir noch nicht unterstützen... da würde es auf die Dauer in "Renderer" auch ziemlich
+  voll werden :/)
+  Über z.B. "Renderer::GetShaderLanguage(<Name>)" lässt sich eine Instanz einer Shadersprache anfragen.
 PLRendererOpenGL:
 - ProgramCg::BuildUniformInformation(): Einzelnde Array Elemente können nun z.B. über "MyArray[1]" angesprochen werden
 - ProgramCg::BuildAttributeInformation(): Elemente einer Struktur können nun über z.B. "MyStructure.MyPosition" angesprochen werden

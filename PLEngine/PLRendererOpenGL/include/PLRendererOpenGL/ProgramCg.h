@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <Cg/cg.h>
 #include <PLGeneral/Container/HashMap.h>
 #include <PLRenderer/Renderer/ResourceHandler.h>
 #include "PLRendererOpenGL/Program.h"
@@ -54,6 +55,7 @@ class ProgramCg : public Program {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Renderer;
+	friend class ShaderLanguageCg;
 
 
 	//[-------------------------------------------------------]

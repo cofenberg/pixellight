@@ -21,6 +21,9 @@ add_sources(
 	src/SurfaceWindow.cpp
 	src/SurfaceTextureBuffer.cpp
 	src/OcclusionQuery.cpp
+	src/ShaderLanguage.cpp
+	src/ShaderLanguageGLSL.cpp
+	src/ShaderLanguageCg.cpp
 	src/Program.cpp
 	src/ProgramUniform.cpp
 	src/VertexShaderGLSL.cpp

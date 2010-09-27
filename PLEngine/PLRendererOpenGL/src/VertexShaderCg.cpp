@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Wrapper.h>
+#include "PLRendererOpenGL/ShaderLanguageCg.h"
 #include "PLRendererOpenGL/ShaderToolsCg.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/VertexShaderCg.h"
@@ -93,7 +94,7 @@ VertexShaderCg::VertexShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::Ve
 //[-------------------------------------------------------]
 String VertexShaderCg::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageCg;
+	return ShaderLanguageCg::Cg;
 }
 
 String VertexShaderCg::GetSourceCode() const

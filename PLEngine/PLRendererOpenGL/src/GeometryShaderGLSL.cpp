@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
@@ -76,7 +77,7 @@ GeometryShaderGLSL::GeometryShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRend
 //[-------------------------------------------------------]
 String GeometryShaderGLSL::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageGLSL;
+	return ShaderLanguageGLSL::GLSL;
 }
 
 String GeometryShaderGLSL::GetSourceCode() const

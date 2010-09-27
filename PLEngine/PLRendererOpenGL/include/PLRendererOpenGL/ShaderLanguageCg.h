@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FragmentShaderCg.h                             *
+ *  File: ShaderLanguageCg.h                             *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_FRAGMENTSHADERCG_H__
-#define __PLRENDEREROPENGL_FRAGMENTSHADERCG_H__
+#ifndef __PLRENDEREROPENGL_SHADERLANGUAGECG_H__
+#define __PLRENDEREROPENGL_SHADERLANGUAGECG_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <Cg/cgGL.h>
-#include <PLRenderer/Renderer/FragmentShader.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include "PLRendererOpenGL/ShaderLanguage.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class Renderer;
+}
 
 
 //[-------------------------------------------------------]
@@ -44,44 +50,33 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg renderer fragment shader resource
+*    OpenGL Cg shader language
 */
-class FragmentShaderCg : public PLRenderer::FragmentShader {
+class ShaderLanguageCg : public PLRenderer::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class ShaderLanguageCg;
+	friend class Renderer;
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~FragmentShaderCg();
+		static const PLGeneral::String Cg;	/**< 'Cg' string */
 
-		/**
-		*  @brief
-		*    Returns the Cg profile
-		*
-		*  @return
-		*    The Cg profile, can be CG_PROFILE_UNKNOWN
-		*/
-		CGprofile GetCgProfile() const;
 
-		/**
-		*  @brief
-		*    Returns the Cg fragment program
-		*
-		*  @return
-		*    The Cg fragment program, can be NULL, do not destroy it!
-		*/
-		CGprogram GetCgFragmentProgram() const;
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLGeneral::String GetShaderLanguage() const;
+		virtual PLRenderer::VertexShader *CreateVertexShader();
+		virtual PLRenderer::GeometryShader *CreateGeometryShader();
+		virtual PLRenderer::FragmentShader *CreateFragmentShader();
+		virtual PLRenderer::Program *CreateProgram();
 
 
 	//[-------------------------------------------------------]
@@ -93,37 +88,22 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 		*    Constructor
 		*
 		*  @param[in] cRenderer
-		*    Owner renderer
+		*    The used renderer
 		*/
-		FragmentShaderCg(PLRenderer::Renderer &cRenderer);
+		ShaderLanguageCg(PLRenderer::Renderer &cRenderer);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~ShaderLanguageCg();
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
-		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgFragmentProgram;	/**< Cg fragment program, can be NULL */
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::AbstractShader functions   ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
-		virtual PLGeneral::String GetSourceCode() const;
-		virtual PLGeneral::String GetProfile() const;
-		virtual PLGeneral::String GetEntry() const;
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::Resource functions        ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		PLRenderer::Renderer *m_pRenderer;	/**< The used renderer, always valid! */
 
 
 };
@@ -135,4 +115,4 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 } // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGL_FRAGMENTSHADERCG_H__
+#endif // __PLRENDEREROPENGL_SHADERLANGUAGECG_H__

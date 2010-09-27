@@ -29,6 +29,7 @@
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
@@ -130,45 +131,49 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 		m_pPreviousTextureProgramUniform	= NULL;
 		m_pCurrentTextureProgramUniform		= NULL;
 
-		// Shader source code
-		String sVertexShaderSourceCode;
-		String sFragmentShaderSourceCode;
-		if (sUsedShaderLanguage == "GLSL") {
-			#include "HDRLightAdaptation_GLSL.h"
-			sVertexShaderSourceCode   = sHDRLightAdaptation_GLSL_VS;
-			sFragmentShaderSourceCode = sHDRLightAdaptation_GLSL_FS;
-		} else if (sUsedShaderLanguage == "Cg") {
-			#include "HDRLightAdaptation_Cg.h"
-			sVertexShaderSourceCode   = sHDRLightAdaptation_Cg_VS;
-			sFragmentShaderSourceCode = sHDRLightAdaptation_Cg_FS;
-		}
+		// Get the shader language instance
+		ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(sUsedShaderLanguage);
+		if (pShaderLanguage) {
+			// Shader source code
+			String sVertexShaderSourceCode;
+			String sFragmentShaderSourceCode;
+			if (sUsedShaderLanguage == "GLSL") {
+				#include "HDRLightAdaptation_GLSL.h"
+				sVertexShaderSourceCode   = sHDRLightAdaptation_GLSL_VS;
+				sFragmentShaderSourceCode = sHDRLightAdaptation_GLSL_FS;
+			} else if (sUsedShaderLanguage == "Cg") {
+				#include "HDRLightAdaptation_Cg.h"
+				sVertexShaderSourceCode   = sHDRLightAdaptation_Cg_VS;
+				sFragmentShaderSourceCode = sHDRLightAdaptation_Cg_FS;
+			}
 
-		// Create a vertex shader instance
-		m_pVertexShader = m_pRenderer->CreateVertexShader(sUsedShaderLanguage);
-		if (m_pVertexShader) {
-			// Set the vertex shader source code
-			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-		}
+			// Create a vertex shader instance
+			m_pVertexShader = pShaderLanguage->CreateVertexShader();
+			if (m_pVertexShader) {
+				// Set the vertex shader source code
+				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+			}
 
-		// Create a fragment shader instance
-		m_pFragmentShader = m_pRenderer->CreateFragmentShader(sUsedShaderLanguage);
-		if (m_pFragmentShader) {
-			// Set the fragment shader source code
-			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-		}
+			// Create a fragment shader instance
+			m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
+			if (m_pFragmentShader) {
+				// Set the fragment shader source code
+				m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+			}
 
-		// Create a program instance
-		m_pProgram = m_pRenderer->CreateProgram(sUsedShaderLanguage);
-		if (m_pProgram) {
-			// Assign the created vertex and fragment shaders to the program
-			m_pProgram->SetVertexShader(m_pVertexShader);
-			m_pProgram->SetFragmentShader(m_pFragmentShader);
+			// Create a program instance
+			m_pProgram = pShaderLanguage->CreateProgram();
+			if (m_pProgram) {
+				// Assign the created vertex and fragment shaders to the program
+				m_pProgram->SetVertexShader(m_pVertexShader);
+				m_pProgram->SetFragmentShader(m_pFragmentShader);
 
-			// Add our nark which will inform us as soon as the program gets dirty
-			m_pProgram->EventDirty.Connect(&EventHandlerDirty);
+				// Add our nark which will inform us as soon as the program gets dirty
+				m_pProgram->EventDirty.Connect(&EventHandlerDirty);
 
-			// Get attributes and uniforms
-			OnDirty(m_pProgram);
+				// Get attributes and uniforms
+				OnDirty(m_pProgram);
+			}
 		}
 	}
 

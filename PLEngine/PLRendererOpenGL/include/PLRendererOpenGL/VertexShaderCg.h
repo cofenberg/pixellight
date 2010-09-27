@@ -52,7 +52,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
+	friend class ShaderLanguageCg;
 
 
 	//[-------------------------------------------------------]

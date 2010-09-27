@@ -50,6 +50,8 @@
 #include "PLRendererOpenGL/GeometryShaderCg.h"
 #include "PLRendererOpenGL/FragmentShaderCg.h"
 #include "PLRendererOpenGL/ProgramCg.h"
+#include "PLRendererOpenGL/ShaderLanguageCg.h"
+#include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #ifdef WIN32
 	#include "PLRendererOpenGL/ContextWindows.h"
 #endif
@@ -67,13 +69,6 @@ using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRendererOpenGL {
-
-
-//[-------------------------------------------------------]
-//[ Public static data                                    ]
-//[-------------------------------------------------------]
-const String Renderer::ShaderLanguageGLSL = "GLSL";
-const String Renderer::ShaderLanguageCg   = "Cg";
 
 
 //[-------------------------------------------------------]
@@ -99,18 +94,25 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_nTextureBufferTypes(NULL),
 	m_ppPrevTextureBuffer(NULL)
 {
+
+
+	// [TODO] Make this to plugins
+	m_pShaderLanguageCg = new ShaderLanguageCg(*this);
+	m_pShaderLanguageGLSL = new ShaderLanguageGLSL(*this);
+
+
 	// Output log information
 	PL_LOG(Info, "Initialize OpenGL renderer")
 
 	// Shaders allowed?
 	if (GetMode() != ModeFixedFunctions) {
 		// If the given desired default shader language is valid, use it - else use GLSL as default shader language
-		if (sDefaultShaderLanguage == ShaderLanguageGLSL)
-			m_sDefaultShaderLanguage = ShaderLanguageGLSL;
-		else if (sDefaultShaderLanguage == ShaderLanguageCg)
-			m_sDefaultShaderLanguage = ShaderLanguageCg;
+		if (sDefaultShaderLanguage == ShaderLanguageGLSL::GLSL)
+			m_sDefaultShaderLanguage = ShaderLanguageGLSL::GLSL;
+		else if (sDefaultShaderLanguage == ShaderLanguageCg::Cg)
+			m_sDefaultShaderLanguage = ShaderLanguageCg::Cg;
 		else
-			m_sDefaultShaderLanguage = ShaderLanguageGLSL;
+			m_sDefaultShaderLanguage = ShaderLanguageGLSL::GLSL;
 	}
 
 	// Set Z buffer bits and stencil buffer bits capabilities
@@ -281,6 +283,12 @@ Renderer::~Renderer()
 			delete [] m_nTextureBufferTypes;
 			m_nTextureBufferTypes = NULL;
 		}
+
+
+		// [TODO] Make this to plugins
+		delete m_pShaderLanguageCg;
+		delete m_pShaderLanguageGLSL;
+
 
 		// Destroy the OpenGL render context
 		delete m_pContext;
@@ -1008,6 +1016,25 @@ String Renderer::GetDefaultShaderLanguage() const
 	return m_sDefaultShaderLanguage;
 }
 
+PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
+{
+	// Check the renderer mode
+	if (GetMode() != ModeFixedFunctions) {
+		// [TODO] Make this to plugins
+		const String &sUsedShaderLanguage = sShaderLanguage.GetLength() ? sShaderLanguage : m_sDefaultShaderLanguage;
+		if (sUsedShaderLanguage == ShaderLanguageGLSL::GLSL)
+			return m_pShaderLanguageGLSL;
+		else if (sUsedShaderLanguage == ShaderLanguageCg::Cg)
+			return m_pShaderLanguageCg;
+		else 
+			return NULL;
+	}
+
+	// Error!
+	return NULL;
+
+}
+
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
 {
 	return m_pFixedFunctions;
@@ -1182,86 +1209,6 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
 	// Create the OpenGL vertex buffer
 	return new VertexBuffer(*this);
-}
-
-PLRenderer::VertexShader *Renderer::CreateVertexShader(const String &sShaderLanguage)
-{
-	// Check the renderer mode
-	if (GetMode() != ModeFixedFunctions) {
-		// Use GLSL as shader language?
-		if (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) {
-			// Is the OpenGL extension GL_ARB_shader_objects available?
-			if (IsGL_ARB_shader_objects())
-				return new VertexShaderGLSL(*this);
-		} else {
-			// Use Cg as shader language?
-			if (sShaderLanguage == ShaderLanguageCg)
-				return new VertexShaderCg(*this);
-		}
-	}
-
-	// Error!
-	return NULL;
-}
-
-PLRenderer::GeometryShader *Renderer::CreateGeometryShader(const String &sShaderLanguage)
-{
-	// Check the renderer mode
-	if (GetMode() != ModeFixedFunctions) {
-		// Use GLSL as shader language?
-		if (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) {
-			// Are the OpenGL extensions GL_ARB_shader_objects and GL_EXT_geometry_shader4 available?
-			if (IsGL_ARB_shader_objects() && IsGL_EXT_geometry_shader4())
-				return new GeometryShaderGLSL(*this);
-		} else {
-			// Use Cg as shader language?
-			if (sShaderLanguage == ShaderLanguageCg)
-				return new GeometryShaderCg(*this);
-		}
-	}
-
-	// Error!
-	return NULL;
-}
-
-PLRenderer::FragmentShader *Renderer::CreateFragmentShader(const String &sShaderLanguage)
-{
-	// Check the renderer mode
-	if (GetMode() != ModeFixedFunctions) {
-		// Use GLSL as shader language?
-		if (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) {
-			// Is the OpenGL extension GL_ARB_shader_objects available?
-			if (IsGL_ARB_shader_objects())
-				return new FragmentShaderGLSL(*this);
-		} else {
-			// Use Cg as shader language?
-			if (sShaderLanguage == ShaderLanguageCg)
-				return new FragmentShaderCg(*this);
-		}
-	}
-
-	// Error!
-	return NULL;
-}
-
-PLRenderer::Program *Renderer::CreateProgram(const String &sShaderLanguage)
-{
-	// Check the renderer mode
-	if (GetMode() != ModeFixedFunctions) {
-		// Use GLSL as shader language?
-		if (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL) {
-			// Is the OpenGL extension GL_ARB_shader_objects available?
-			if (IsGL_ARB_shader_objects())
-				return new ProgramGLSL(*this);
-		} else {
-			// Use Cg as shader language?
-			if (sShaderLanguage == ShaderLanguageCg)
-				return new ProgramCg(*this);
-		}
-	}
-
-	// Error!
-	return NULL;
 }
 
 PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()

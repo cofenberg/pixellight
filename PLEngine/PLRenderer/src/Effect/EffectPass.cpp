@@ -28,6 +28,7 @@
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Program.h"
 #include "PLRenderer/Renderer/VertexShader.h"
+#include "PLRenderer/Renderer/ShaderLanguage.h"
 #include "PLRenderer/Renderer/FragmentShader.h"
 #include "PLRenderer/Material/Parameter.h"
 #include "PLRenderer/Material/ParameterManager.h"
@@ -414,24 +415,28 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 			m_pVertexShader = NULL;
 		}
 
-		// Load in the shader source code
-		const String sShaderSourceCode = LoadStringFromFile(sFilename);
-		if (sShaderSourceCode.GetLength()) {
-			// Create the shader instances
-			m_pVertexShader = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().CreateVertexShader(sShaderLanguage);
+		// Get the shader language to use
+		ShaderLanguage *pShaderLanguage = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().GetShaderLanguage(sShaderLanguage);
+		if (pShaderLanguage) {
+			// Load in the shader source code
+			const String sShaderSourceCode = LoadStringFromFile(sFilename);
+			if (sShaderSourceCode.GetLength()) {
+				// Create the shader instances
+				m_pVertexShader = pShaderLanguage->CreateVertexShader();
 
-			// Set the shader source code
-			if (m_pVertexShader) {
-				m_pVertexShader->SetSourceCode(sShaderSourceCode, sProfile);
+				// Set the shader source code
+				if (m_pVertexShader) {
+					m_pVertexShader->SetSourceCode(sShaderSourceCode, sProfile);
 
-				// Destroy the current GPU program
-				if (m_pProgram) {
-					delete m_pProgram;
-					m_pProgram = NULL;
+					// Destroy the current GPU program
+					if (m_pProgram) {
+						delete m_pProgram;
+						m_pProgram = NULL;
+					}
+
+					// Done
+					return true;
 				}
-
-				// Done
-				return true;
 			}
 		}
 	}
@@ -454,24 +459,28 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 			m_pFragmentShader = NULL;
 		}
 
-		// Load in the shader source code
-		const String sShaderSourceCode = LoadStringFromFile(sFilename);
-		if (sShaderSourceCode.GetLength()) {
-			// Create the shader instances
-			m_pFragmentShader = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().CreateFragmentShader(sShaderLanguage);
+		// Get the shader language to use
+		ShaderLanguage *pShaderLanguage = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().GetShaderLanguage(sShaderLanguage);
+		if (pShaderLanguage) {
+			// Load in the shader source code
+			const String sShaderSourceCode = LoadStringFromFile(sFilename);
+			if (sShaderSourceCode.GetLength()) {
+				// Create the shader instances
+				m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 
-			// Set the shader source code
-			if (m_pFragmentShader) {
-				m_pFragmentShader->SetSourceCode(sShaderSourceCode, sProfile);
+				// Set the shader source code
+				if (m_pFragmentShader) {
+					m_pFragmentShader->SetSourceCode(sShaderSourceCode, sProfile);
 
-				// Destroy the current GPU program
-				if (m_pProgram) {
-					delete m_pProgram;
-					m_pProgram = NULL;
+					// Destroy the current GPU program
+					if (m_pProgram) {
+						delete m_pProgram;
+						m_pProgram = NULL;
+					}
+
+					// Done
+					return true;
 				}
-
-				// Done
-				return true;
 			}
 		}
 	}
@@ -488,12 +497,16 @@ Program *EffectPass::GetProgram()
 {
 	// Create the GPU program right now?
 	if (!m_pProgram && m_pVertexShader && m_pFragmentShader) {
-		// Create a program instance
-		m_pProgram = m_pVertexShader->GetRenderer().CreateProgram(m_pVertexShader->GetShaderLanguage());
-		if (m_pProgram) {
-			// Assign the vertex and fragment shaders to the program
-			m_pProgram->SetVertexShader(m_pVertexShader);
-			m_pProgram->SetFragmentShader(m_pFragmentShader);
+		// Get the shader language to use
+		ShaderLanguage *pShaderLanguage = m_pVertexShader->GetRenderer().GetShaderLanguage(m_pVertexShader->GetShaderLanguage());
+		if (pShaderLanguage) {
+			// Create a program instance
+			m_pProgram = pShaderLanguage->CreateProgram();
+			if (m_pProgram) {
+				// Assign the vertex and fragment shaders to the program
+				m_pProgram->SetVertexShader(m_pVertexShader);
+				m_pProgram->SetFragmentShader(m_pFragmentShader);
+			}
 		}
 	}
 

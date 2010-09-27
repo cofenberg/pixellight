@@ -51,6 +51,7 @@ namespace PLRendererOpenGLES {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class FontManager;
+class ShaderLanguageGLSL;
 
 
 //[-------------------------------------------------------]
@@ -74,13 +75,6 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class SurfaceWindow;
-
-
-	//[-------------------------------------------------------]
-	//[ Public static data                                    ]
-	//[-------------------------------------------------------]
-	public:
-		static const PLGeneral::String ShaderLanguageGLSL;	/**< 'GLSL' string */
 
 
 	//[-------------------------------------------------------]
@@ -261,7 +255,8 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FontManager		   *m_pFontManager;	/**< OpenGL ES renderer font manager, always valid! */
+		FontManager		   *m_pFontManager;			/**< OpenGL ES renderer font manager, always valid! */
+		ShaderLanguageGLSL *m_pShaderLanguageGLSL;	/**< Build in GLSL shader language, always valid! */
 		PLGeneral::uint32	m_nViewPortX;
 		PLGeneral::uint32	m_nViewPortY;
 		PLGeneral::uint32	m_nViewPortWidth;
@@ -294,6 +289,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const;
 		virtual PLGeneral::String GetVendor() const;
 		virtual PLGeneral::String GetDefaultShaderLanguage() const;
+		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
 		virtual PLRenderer::FixedFunctions *GetFixedFunctions() const;
 		virtual PLRenderer::FontManager &GetFontManager() const;
 
@@ -311,10 +307,6 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual PLRenderer::TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
 		virtual PLRenderer::IndexBuffer *CreateIndexBuffer();
 		virtual PLRenderer::VertexBuffer *CreateVertexBuffer();
-		virtual PLRenderer::VertexShader *CreateVertexShader(const PLGeneral::String &sShaderLanguage = "");
-		virtual PLRenderer::GeometryShader *CreateGeometryShader(const PLGeneral::String &sShaderLanguage = "");
-		virtual PLRenderer::FragmentShader *CreateFragmentShader(const PLGeneral::String &sShaderLanguage = "");
-		virtual PLRenderer::Program *CreateProgram(const PLGeneral::String &sShaderLanguage = "");
 		virtual PLRenderer::OcclusionQuery *CreateOcclusionQuery();
 
 		//[-------------------------------------------------------]

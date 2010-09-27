@@ -285,6 +285,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ShaderLanguageGLSL.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRendererOpenGLES\ShaderLanguageGLSL.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ShaderToolsGLSL.cpp"
 				>
 			</File>

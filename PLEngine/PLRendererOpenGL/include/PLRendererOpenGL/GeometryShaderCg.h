@@ -52,7 +52,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
+	friend class ShaderLanguageCg;
 
 
 	//[-------------------------------------------------------]

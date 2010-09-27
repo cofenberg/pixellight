@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/VertexShaderGLSL.h"
@@ -76,7 +77,7 @@ VertexShaderGLSL::VertexShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRenderer
 //[-------------------------------------------------------]
 String VertexShaderGLSL::GetShaderLanguage() const
 {
-	return Renderer::ShaderLanguageGLSL;
+	return ShaderLanguageGLSL::GLSL;
 }
 
 String VertexShaderGLSL::GetSourceCode() const

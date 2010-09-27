@@ -59,11 +59,9 @@ namespace PLRenderer {
 	class OcclusionQuery;
 	class FixedFunctions;
 	class DrawHelpers;
-	class VertexShader;
-	class GeometryShader;
-	class FragmentShader;
 	class Program;
 	class FontManager;
+	class ShaderLanguage;
 }
 
 
@@ -172,6 +170,19 @@ class Renderer : public PLCore::Object {
 		*    The name of the default shader language of the renderer (for example "GLSL" or "Cg"), the string can be empty, too
 		*/
 		virtual PLGeneral::String GetDefaultShaderLanguage() const = 0;
+
+		/**
+		*  @brief
+		*    Returns a shader language instance
+		*
+		*  @param[in] sShaderLanguage
+		*    The name of the shader language the geometry shader is using (for example "GLSL" or "Cg"), if empty string,
+		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
+		*
+		*  @return
+		*    The shader language instance (do NOT delete it!), NULL on error
+		*/
+		virtual ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "") = 0;
 
 		/**
 		*  @brief
@@ -686,58 +697,6 @@ class Renderer : public PLCore::Object {
 		*    For fixed functions rendering, pass the vertex buffer it to FixedFunctions::SetVertexBuffer().
 		*/
 		virtual VertexBuffer *CreateVertexBuffer() = 0;
-
-		/**
-		*  @brief
-		*    Creates a vertex shader
-		*
-		*  @param[in] sShaderLanguage
-		*    The name of the shader language the vertex shader is using (for example "GLSL" or "Cg"), if empty string,
-		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
-		*
-		*  @return
-		*    The created vertex shader, NULL on error
-		*/
-		virtual VertexShader *CreateVertexShader(const PLGeneral::String &sShaderLanguage = "") = 0;
-
-		/**
-		*  @brief
-		*    Creates a geometry shader
-		*
-		*  @param[in] sShaderLanguage
-		*    The name of the shader language the geometry shader is using (for example "GLSL" or "Cg"), if empty string,
-		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
-		*
-		*  @return
-		*    The created geometry shader, NULL on error
-		*/
-		virtual GeometryShader *CreateGeometryShader(const PLGeneral::String &sShaderLanguage = "") = 0;
-
-		/**
-		*  @brief
-		*    Creates a fragment shader
-		*
-		*  @param[in] sShaderLanguage
-		*    The name of the shader language the fragment shader is using (for example "GLSL" or "Cg"), if empty string,
-		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
-		*
-		*  @return
-		*    The created fragment shader, NULL on error
-		*/
-		virtual FragmentShader *CreateFragmentShader(const PLGeneral::String &sShaderLanguage = "") = 0;
-
-		/**
-		*  @brief
-		*    Creates a program
-		*
-		*  @param[in] sShaderLanguage
-		*    The name of the shader language the program is using (for example "GLSL" or "Cg"), if empty string,
-		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
-		*
-		*  @return
-		*    The created program, NULL on error
-		*/
-		virtual Program *CreateProgram(const PLGeneral::String &sShaderLanguage = "") = 0;
 
 		/**
 		*  @brief
