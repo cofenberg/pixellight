@@ -132,7 +132,7 @@ bool ProgramGLSL::IsLinked() const
 *  @brief
 *    Constructor
 */
-ProgramGLSL::ProgramGLSL(PLRenderer::Renderer &cRenderer) : PLRenderer::Program(cRenderer),
+ProgramGLSL::ProgramGLSL(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 	m_nOpenGLProgram(glCreateProgramObjectARB()),
 	m_bLinked(false),
 	m_bLinkedFailed(false),

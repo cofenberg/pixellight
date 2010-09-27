@@ -2674,7 +2674,8 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 {
 	// Is this index buffer already set?
-	if (m_pCurrentIndexBuffer == pIndexBuffer) return false; // Error!
+	if (m_pCurrentIndexBuffer == pIndexBuffer)
+		return false; // Error!
 
 	// Make this index buffer to the renderers current one
 	m_pCurrentIndexBuffer = pIndexBuffer;
@@ -2685,14 +2686,16 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
 			// Now, no index buffer is set...
 			m_pCurrentIndexBuffer = NULL;
-			if (IsGL_ARB_vertex_buffer_object()) glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+			if (IsGL_ARB_vertex_buffer_object())
+				glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
 
 			// Error!
 			return false;
 		}
 	} else {
 		// No, deactivate index buffer
-		if (IsGL_ARB_vertex_buffer_object()) glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+		if (IsGL_ARB_vertex_buffer_object())
+			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
 	}
 
 	// Done
@@ -2705,23 +2708,15 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
 	if (pCurrentProgram != pProgram) {
 		// Was there a previous program?
-		if (pCurrentProgram) {
-			if (pCurrentProgram->GetShaderLanguage() == ShaderLanguageGLSL)
-				((ProgramGLSL*)pCurrentProgram)->UnmakeCurrent();
-			else if (pCurrentProgram->GetShaderLanguage() == ShaderLanguageCg)
-				((ProgramCg*)pCurrentProgram)->UnmakeCurrent();
-		}
+		if (pCurrentProgram)
+			((Program*)pCurrentProgram)->UnmakeCurrent();
 
 		// Update the program resource handler
 		m_cProgramHandler.SetResource(pProgram);
 
 		// Make the new program to the current one
-		if (pProgram) {
-			if (pProgram->GetShaderLanguage() == ShaderLanguageGLSL)
-				return ((ProgramGLSL*)pProgram)->MakeCurrent();
-			else if (pProgram->GetShaderLanguage() == ShaderLanguageCg)
-				return ((ProgramCg*)pProgram)->MakeCurrent();
-		}
+		if (pProgram)
+			return ((Program*)pProgram)->MakeCurrent();
 	}
 
 	// Done
@@ -2735,7 +2730,8 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
 	// Draw something?
-	if (!nNumVertices) return true; // Done
+	if (!nNumVertices)
+		return true; // Done
 
 	// Get number of primitives
 	uint32 nPrimitiveCount;
@@ -2796,14 +2792,15 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 									 uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
 {
 	// Index and vertex buffer correct?
-	if (!m_pCurrentIndexBuffer) return false; // Error!
+	if (!m_pCurrentIndexBuffer)
+		return false; // Error!
 
 	// Draw something?
-	if (!nNumVertices) return true; // Done
+	if (!nNumVertices)
+		return true; // Done
 
 	// Check parameters
-	if (nStartIndex+nNumVertices > m_pCurrentIndexBuffer->GetNumOfElements() ||
-		nMinIndex > nMaxIndex)
+	if (nStartIndex+nNumVertices > m_pCurrentIndexBuffer->GetNumOfElements() || nMinIndex > nMaxIndex)
 		return false; // Definitely NOT good...
 
 	// Define an offset helper macro just used inside this function

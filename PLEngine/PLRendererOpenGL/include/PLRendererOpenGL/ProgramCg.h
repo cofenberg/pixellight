@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/HashMap.h>
 #include <PLRenderer/Renderer/ResourceHandler.h>
-#include <PLRenderer/Renderer/Program.h>
+#include "PLRendererOpenGL/Program.h"
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
@@ -47,7 +47,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    OpenGL Cg renderer program resource
 */
-class ProgramCg : public PLRenderer::Program {
+class ProgramCg : public Program {
 
 
 	//[-------------------------------------------------------]

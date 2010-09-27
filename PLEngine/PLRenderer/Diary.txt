@@ -3,6 +3,8 @@
 PLRendererOpenGL:
 - ProgramCg::BuildUniformInformation(): Einzelnde Array Elemente können nun z.B. über "MyArray[1]" angesprochen werden
 - ProgramCg::BuildAttributeInformation(): Elemente einer Struktur können nun über z.B. "MyStructure.MyPosition" angesprochen werden
+- ProgramCg & ProgramGLSL sind nun von der Basisklass Program, und ProgramUniformCg & ProgramUniformGLSL sind nun von der Basisklass ProgramUniform
+  abgeleitet, damit fallen an zwei stellen Shadersprachen-Fallunterscheidungen weg
 
 
 

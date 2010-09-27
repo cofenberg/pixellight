@@ -546,6 +546,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Program.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRendererOpenGL\Program.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ProgramAttributeCg.cpp"
 				>
 			</File>
@@ -575,6 +583,14 @@
 			</File>
 			<File
 				RelativePath=".\include\PLRendererOpenGL\ProgramGLSL.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ProgramUniform.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRendererOpenGL\ProgramUniform.h"
 				>
 			</File>
 			<File

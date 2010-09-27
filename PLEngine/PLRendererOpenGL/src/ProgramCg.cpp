@@ -162,7 +162,7 @@ bool ProgramCg::IsLinked() const
 *  @brief
 *    Constructor
 */
-ProgramCg::ProgramCg(PLRenderer::Renderer &cRenderer) : PLRenderer::Program(cRenderer),
+ProgramCg::ProgramCg(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 	m_pCgCombinedProgram(NULL),
 	m_bLinked(false),
 	m_bLinkedFailed(false),

@@ -48,12 +48,8 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Public virtual ProgramUniform functions               ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    If this uniform is a texture, this method sets the OpenGL texture assigned to the uniform
-*/
 int ProgramUniformGLSL::Set(GLenum nOpenGLTextureTarget, GLuint nOpenGLTexture)
 {
 	// Valid texture unit?

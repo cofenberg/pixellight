@@ -76,10 +76,7 @@ void FontTextureShaders::Draw(const String &sText, const Color4 &cColor, const M
 			pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(mObjectSpaceToClipSpace);
 
 			// Set glyph texture atlas
-			if (pProgram->GetShaderLanguage() == Renderer::ShaderLanguageGLSL)
-				((ProgramUniformGLSL*)pGeneratedProgramUserData->pGlyphMap)->Set((GLenum)GL_TEXTURE_2D, m_nOpenGLGlyphTextureAtlas);
-			else if (pProgram->GetShaderLanguage() == Renderer::ShaderLanguageCg)
-				((ProgramUniformCg*)pGeneratedProgramUserData->pGlyphMap)->Set(m_nOpenGLGlyphTextureAtlas);
+			((ProgramUniform*)pGeneratedProgramUserData->pGlyphMap)->Set(GL_TEXTURE_2D, m_nOpenGLGlyphTextureAtlas);
 
 			// Enable/disable mipmapping
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (nFlags & Mipmapping) ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR);

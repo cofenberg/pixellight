@@ -29,8 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include <PLRenderer/Renderer/ProgramUniform.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include "PLRendererOpenGL/ProgramUniform.h"
 
 
 //[-------------------------------------------------------]
@@ -46,7 +45,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    OpenGL Cg renderer program uniform
 */
-class ProgramUniformCg : public PLRenderer::ProgramUniform {
+class ProgramUniformCg : public ProgramUniform {
 
 
 	//[-------------------------------------------------------]
@@ -56,20 +55,10 @@ class ProgramUniformCg : public PLRenderer::ProgramUniform {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual ProgramUniform functions               ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    If this uniform is a texture, this method sets the OpenGL texture assigned to the uniform
-		*
-		*  @param[in] nOpenGLTexture
-		*    OpenGL texture to set
-		*
-		*  @return
-		*    The texture unit assigned to this uniform (same as GetTextureUnit()), negative on error
-		*/
-		int Set(GLuint nOpenGLTexture);
+		virtual int Set(GLenum nOpenGLTextureTarget, GLuint nOpenGLTexture);
 
 
 	//[-------------------------------------------------------]
