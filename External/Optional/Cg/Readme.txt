@@ -1,6 +1,6 @@
 Cg Toookit 3.0 - July 2010
+- Used by the renderer backend "PLRendererOpenGLCg" (external Windows dependencies: "cg.dll" and "cgGL.dll")
 - Used by the renderer backend "PLRendererD3D9" (external Windows dependencies: "cg.dll" and "cgD3D9.dll")
-- Used by the renderer backend "PLRendererOpenGL" (external Windows dependencies: "cg.dll" and "cgGL.dll")
 - We're sorry, but due to legal issues we can't provide you with a downloadable package
 - Download from: http://developer.nvidia.com/object/cg_toolkit.html
 - When using the CMake "CMAKETOOLS_USE_SYSTEM_LIBS" option, just install the Cg SDK

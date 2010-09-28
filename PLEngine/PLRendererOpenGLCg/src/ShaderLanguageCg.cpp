@@ -23,18 +23,18 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/ProgramCg.h"
-#include "PLRendererOpenGL/VertexShaderCg.h"
-#include "PLRendererOpenGL/GeometryShaderCg.h"
-#include "PLRendererOpenGL/FragmentShaderCg.h"
-#include "PLRendererOpenGL/ShaderLanguageCg.h"
+#include "PLRendererOpenGLCg/ProgramCg.h"
+#include "PLRendererOpenGLCg/VertexShaderCg.h"
+#include "PLRendererOpenGLCg/GeometryShaderCg.h"
+#include "PLRendererOpenGLCg/FragmentShaderCg.h"
+#include "PLRendererOpenGLCg/ShaderLanguageCg.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -73,7 +73,7 @@ PLRenderer::Program *ShaderLanguageCg::CreateProgram()
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -96,4 +96,4 @@ ShaderLanguageCg::~ShaderLanguageCg()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg

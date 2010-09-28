@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Program.h>
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -61,7 +62,7 @@ class Program : public PLRenderer::Program {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~Program();
+		PLRENDEREROPENGL_API virtual ~Program();
 
 
 	//[-------------------------------------------------------]
@@ -75,7 +76,7 @@ class Program : public PLRenderer::Program {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*/
-		Program(PLRenderer::Renderer &cRenderer);
+		PLRENDEREROPENGL_API Program(PLRenderer::Renderer &cRenderer);
 
 
 };

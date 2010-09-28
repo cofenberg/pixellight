@@ -1,3 +1,14 @@
+>> 28.09.2010
+[CO]
+- Dank der Umbauten in der letzten Zeit, konnte ich nun endlich Cg-Support von PLRendererOpenGL in ein seperates Plugin Namens PLRendererOpenGLCg
+  verschieben. (ein Plugin für ein Plugin *g*) Cg hat seine Vorteile, hat aber leider genauso auch einige Nachteile - z.B. eher mangelhafter Support
+  für ATI Grafikkarten, ist nicht OpenSource + die Header & Libs darf man nicht weiterverbreiten so das jeder der PL übersetzen will zuerst Cg installieren
+  muss... und ganz nebenbei sind die Cg dlls mittlerweile 6,5 MB groß und scheinen mit jedem neuen Release auch weiter zu wachsen. Dies sind also mehr
+  als genug Gründe die dafür sprechen Cg nun komplett Optional zu machen, mit GLSL ist man einfach etwas leichtgewichtiger unterwegs da die Shader-Compiler hier
+  direkt in den Grafikkarten-Treibern integriert sind.
+
+
+
 >> 27.09.2010
 [CO]
 - "ShaderLanguage"-Schnittstelle eingeführt. Da zukünftig in z.B. PLRendererOpenGL Shader Sprachen über Plugins hinzugefügt werden können sollen

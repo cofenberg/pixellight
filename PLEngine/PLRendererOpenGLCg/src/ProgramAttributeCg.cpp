@@ -23,17 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
-#include "PLRendererOpenGL/VertexBuffer.h"
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
-#include "PLRendererOpenGL/ProgramAttributeCg.h"
+#include <PLRendererOpenGL/VertexBuffer.h>
+#include "PLRendererOpenGLCg/ProgramAttributeCg.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -120,4 +118,4 @@ bool ProgramAttributeCg::Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRenderer
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg

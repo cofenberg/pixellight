@@ -24,15 +24,14 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
-#include "PLRendererOpenGL/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/ShaderToolsCg.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]

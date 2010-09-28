@@ -27,9 +27,8 @@
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/FontManager.h"
+#include "PLRendererOpenGL/ProgramUniform.h"
 #include "PLRendererOpenGL/FontGlyphTexture.h"
-#include "PLRendererOpenGL/ProgramUniformCg.h"
-#include "PLRendererOpenGL/ProgramUniformGLSL.h"
 #include "PLRendererOpenGL/FontTextureShaders.h"
 
 

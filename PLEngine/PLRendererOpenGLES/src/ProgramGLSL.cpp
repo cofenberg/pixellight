@@ -122,17 +122,20 @@ ProgramGLSL::ProgramGLSL(PLRenderer::Renderer &cRenderer) : PLRenderer::Program(
 */
 void ProgramGLSL::RelinkRequired()
 {
-	// The linked state is now dirty
-	m_bLinked = m_bLinkedFailed = false;
+	// Is the program currently linked?
+	if (m_bLinked) {
+		// The linked state is now dirty
+		m_bLinked = m_bLinkedFailed = false;
 
-	// Destroy the attribute information
-	DestroyAttributeInformation();
+		// Destroy the attribute information
+		DestroyAttributeInformation();
 
-	// Destroy the uniform information
-	DestroyUniformInformation();
+		// Destroy the uniform information
+		DestroyUniformInformation();
 
-	// The program is now dirty
-	EventDirty.Emit(this);
+		// The program is now dirty
+		EventDirty.Emit(this);
+	}
 }
 
 /**

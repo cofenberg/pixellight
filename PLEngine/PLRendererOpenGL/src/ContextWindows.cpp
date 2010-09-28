@@ -298,8 +298,8 @@ bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &ls
 		bool bNewMode = true;
 		for (uint32 i=0; i<lstDisplayModeList.GetNumOfElements(); i++) {
 			const PLRenderer::DisplayMode *pDisplayMode = lstDisplayModeList[i];
-			if (pDisplayMode->vSize.x == DevMode.dmPelsWidth && pDisplayMode->vSize.y == DevMode.dmPelsHeight &&
-				pDisplayMode->nColorBits == DevMode.dmBitsPerPel && pDisplayMode->nFrequency == DevMode.dmDisplayFrequency) {
+			if ((DWORD)pDisplayMode->vSize.x == DevMode.dmPelsWidth && (DWORD)pDisplayMode->vSize.y == DevMode.dmPelsHeight &&
+				(DWORD)pDisplayMode->nColorBits == DevMode.dmBitsPerPel && (DWORD)pDisplayMode->nFrequency == DevMode.dmDisplayFrequency) {
 				// We already have such a display mode within our list!
 				bNewMode = false;
 

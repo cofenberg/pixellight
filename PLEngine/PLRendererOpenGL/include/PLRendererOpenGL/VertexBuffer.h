@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/VertexBuffer.h>
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -61,7 +62,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~VertexBuffer();
+		PLRENDEREROPENGL_API virtual ~VertexBuffer();
 
 		/**
 		*  @brief
@@ -70,7 +71,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*  @return
 		*    OpenGL vertex buffer
 		*/
-		PLGeneral::uint32 GetOpenGLVertexBuffer() const;
+		PLRENDEREROPENGL_API PLGeneral::uint32 GetOpenGLVertexBuffer() const;
 
 		/**
 		*  @brief
@@ -79,7 +80,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*  @return
 		*    The dynamic buffer, can be NULL
 		*/
-		const PLGeneral::uint8 *GetDynamicBuffer() const;
+		PLRENDEREROPENGL_API const PLGeneral::uint8 *GetDynamicBuffer() const;
 
 		/**
 		*  @brief
@@ -91,7 +92,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*  @note
 		*    - Should be called before the vertex buffer is used for rendering to ensure that the data on the GPU side is up-to-date
 		*/
-		bool BindAndUpdate();
+		PLRENDEREROPENGL_API bool BindAndUpdate();
 
 
 	//[-------------------------------------------------------]

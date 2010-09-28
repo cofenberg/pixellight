@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_PROGRAMCG_H__
-#define __PLRENDEREROPENGL_PROGRAMCG_H__
+#ifndef __PLRENDEREROPENGLCG_PROGRAMCG_H__
+#define __PLRENDEREROPENGLCG_PROGRAMCG_H__
 #pragma once
 
 
@@ -31,14 +31,13 @@
 #include <Cg/cg.h>
 #include <PLGeneral/Container/HashMap.h>
 #include <PLRenderer/Renderer/ResourceHandler.h>
-#include "PLRendererOpenGL/Program.h"
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include <PLRendererOpenGL/Program.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -48,7 +47,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    OpenGL Cg renderer program resource
 */
-class ProgramCg : public Program {
+class ProgramCg : public PLRendererOpenGL::Program {
 
 
 	//[-------------------------------------------------------]
@@ -195,7 +194,7 @@ class ProgramCg : public Program {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_PROGRAMCG_H__
+#endif // __PLRENDEREROPENGLCG_PROGRAMCG_H__

@@ -75,13 +75,13 @@ class ProgramUniform : public PLRenderer::ProgramUniform {
 		*  @brief
 		*    Constructor
 		*/
-		ProgramUniform();
+		PLRENDEREROPENGL_API ProgramUniform();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ProgramUniform();
+		PLRENDEREROPENGL_API virtual ~ProgramUniform();
 
 
 };

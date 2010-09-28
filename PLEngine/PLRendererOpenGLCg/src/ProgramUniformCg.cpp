@@ -29,14 +29,13 @@
 #include <PLMath/Quaternion.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLGraphics/Color/Color4.h>
-#include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/TextureBuffer1D.h"
-#include "PLRendererOpenGL/TextureBuffer2D.h"
-#include "PLRendererOpenGL/TextureBufferRectangle.h"
-#include "PLRendererOpenGL/TextureBuffer3D.h"
-#include "PLRendererOpenGL/TextureBufferCube.h"
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
-#include "PLRendererOpenGL/ProgramUniformCg.h"
+#include <PLRendererOpenGL/Renderer.h>
+#include <PLRendererOpenGL/TextureBuffer1D.h>
+#include <PLRendererOpenGL/TextureBuffer2D.h>
+#include <PLRendererOpenGL/TextureBufferRectangle.h>
+#include <PLRendererOpenGL/TextureBuffer3D.h>
+#include <PLRendererOpenGL/TextureBufferCube.h>
+#include "PLRendererOpenGLCg/ProgramUniformCg.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +43,7 @@
 //[-------------------------------------------------------]
 using namespace PLMath;
 using namespace PLGraphics;
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -467,23 +466,23 @@ int ProgramUniformCg::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 			// Check resource type
 			switch (pTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
-					nOpenGLTexture = ((TextureBuffer1D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = ((PLRendererOpenGL::TextureBuffer1D*)pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
-					nOpenGLTexture = ((TextureBuffer2D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = ((PLRendererOpenGL::TextureBuffer2D*)pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
-					nOpenGLTexture = ((TextureBufferRectangle*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = ((PLRendererOpenGL::TextureBufferRectangle*)pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
-					nOpenGLTexture = ((TextureBuffer3D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = ((PLRendererOpenGL::TextureBuffer3D*)pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
-					nOpenGLTexture = ((TextureBufferCube*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = ((PLRendererOpenGL::TextureBufferCube*)pTextureBuffer)->GetOpenGLTexture();
 					break;
 			}
 		}
@@ -494,7 +493,7 @@ int ProgramUniformCg::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 
 		// Inform the renderer
 		if (pTextureBuffer)
-			((Renderer&)pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(nTextureUnit, pTextureBuffer);
+			((PLRendererOpenGL::Renderer&)pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(nTextureUnit, pTextureBuffer);
 
 		// Done
 		return nTextureUnit;
@@ -508,4 +507,4 @@ int ProgramUniformCg::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg

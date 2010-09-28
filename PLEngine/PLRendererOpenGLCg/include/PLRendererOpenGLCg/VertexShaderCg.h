@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: GeometryShaderCg.h                             *
+ *  File: VertexShaderCg.h                               *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_GEOMETRYSHADERCG_H__
-#define __PLRENDEREROPENGL_GEOMETRYSHADERCG_H__
+#ifndef __PLRENDEREROPENGLCG_VERTEXSHADERCG_H__
+#define __PLRENDEREROPENGLCG_VERTEXSHADERCG_H__
 #pragma once
 
 
@@ -29,14 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include <PLRenderer/Renderer/GeometryShader.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include <PLRenderer/Renderer/VertexShader.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -44,9 +43,9 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg renderer geometry shader resource
+*    OpenGL Cg renderer vertex shader resource
 */
-class GeometryShaderCg : public PLRenderer::GeometryShader {
+class VertexShaderCg : public PLRenderer::VertexShader {
 
 
 	//[-------------------------------------------------------]
@@ -63,7 +62,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~GeometryShaderCg();
+		virtual ~VertexShaderCg();
 
 		/**
 		*  @brief
@@ -76,12 +75,12 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 
 		/**
 		*  @brief
-		*    Returns the Cg geometry program
+		*    Returns the Cg vertex program
 		*
 		*  @return
-		*    The Cg geometry program, can be NULL, do not destroy it!
+		*    The Cg vertex program, can be NULL, do not destroy it!
 		*/
-		CGprogram GetCgGeometryProgram() const;
+		CGprogram GetCgVertexProgram() const;
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +94,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*/
-		GeometryShaderCg(PLRenderer::Renderer &cRenderer);
+		VertexShaderCg(PLRenderer::Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -104,7 +103,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 	private:
 		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
 		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgGeometryProgram;	/**< Cg geometry program, can be NULL */
+		CGprogram		  m_pCgVertexProgram;	/**< Cg vertex program, can be NULL */
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +131,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_GEOMETRYSHADERCG_H__
+#endif // __PLRENDEREROPENGLCG_VERTEXSHADERCG_H__

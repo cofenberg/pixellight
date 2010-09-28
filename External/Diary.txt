@@ -1,3 +1,11 @@
+>> 28.09.2010
+[CO]
+- Cg von "Recommended" nach "Optional" verschoben da Cg nun in PLRendererOpenGL nur noch über ein loses Plugin reinkommt und,
+  bis auf Post Processing (hier kommt noch ein Refactoring!), alles auch mit GLSL läuft. Damit ist ein minimaler PixelLight
+  Build nun etwas einfacher da eine propritäre nicht OpenSource Abhängigkeit weniger. :D
+
+
+
 >> 03.09.2010
 [CO]
 - Wie schon bei OpenGL ES, werden nun auch bei Cg die dlls (hier "cg.dll", "cgGL.dll" und "cgD3D9.dll") bei CMake Check/Install

@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_PROGRAMUNIFORMCG_H__
-#define __PLRENDEREROPENGL_PROGRAMUNIFORMCG_H__
+#ifndef __PLRENDEREROPENGLCG_PROGRAMUNIFORMCG_H__
+#define __PLRENDEREROPENGLCG_PROGRAMUNIFORMCG_H__
 #pragma once
 
 
@@ -29,13 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include "PLRendererOpenGL/ProgramUniform.h"
+#include <PLRendererOpenGL/ProgramUniform.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -45,7 +45,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    OpenGL Cg renderer program uniform
 */
-class ProgramUniformCg : public ProgramUniform {
+class ProgramUniformCg : public PLRendererOpenGL::ProgramUniform {
 
 
 	//[-------------------------------------------------------]
@@ -170,7 +170,7 @@ class ProgramUniformCg : public ProgramUniform {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_PROGRAMUNIFORMCG_H__
+#endif // __PLRENDEREROPENGLCG_PROGRAMUNIFORMCG_H__

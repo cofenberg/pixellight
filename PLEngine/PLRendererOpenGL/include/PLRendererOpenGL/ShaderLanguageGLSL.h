@@ -50,9 +50,9 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Build in OpenGL GLSL shader language
+*    Build in OpenGL GLSL shader language class
 */
-class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
+class ShaderLanguageGLSL : public ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
@@ -69,6 +69,17 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLRENDEREROPENGL_RTTI_EXPORT, ShaderLanguageGLSL, "PLRendererOpenGL", PLRendererOpenGL::ShaderLanguage, "Build in OpenGL GLSL shader language class")
+		pl_properties
+			pl_property("ShaderLanguage", "GLSL")
+		pl_properties_end
+		pl_constructor_1(DefaultConstructor, PLRenderer::Renderer&, "Constructor with used renderer as parameter", "")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
 	//[-------------------------------------------------------]
 	public:
@@ -80,9 +91,9 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	private:
+	public:
 		/**
 		*  @brief
 		*    Constructor

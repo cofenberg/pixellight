@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FragmentShaderCg.h                             *
+ *  File: GeometryShaderCg.h                             *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_FRAGMENTSHADERCG_H__
-#define __PLRENDEREROPENGL_FRAGMENTSHADERCG_H__
+#ifndef __PLRENDEREROPENGLCG_GEOMETRYSHADERCG_H__
+#define __PLRENDEREROPENGLCG_GEOMETRYSHADERCG_H__
 #pragma once
 
 
@@ -29,14 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include <PLRenderer/Renderer/FragmentShader.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include <PLRenderer/Renderer/GeometryShader.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -44,9 +43,9 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg renderer fragment shader resource
+*    OpenGL Cg renderer geometry shader resource
 */
-class FragmentShaderCg : public PLRenderer::FragmentShader {
+class GeometryShaderCg : public PLRenderer::GeometryShader {
 
 
 	//[-------------------------------------------------------]
@@ -63,7 +62,7 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~FragmentShaderCg();
+		virtual ~GeometryShaderCg();
 
 		/**
 		*  @brief
@@ -76,12 +75,12 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 
 		/**
 		*  @brief
-		*    Returns the Cg fragment program
+		*    Returns the Cg geometry program
 		*
 		*  @return
-		*    The Cg fragment program, can be NULL, do not destroy it!
+		*    The Cg geometry program, can be NULL, do not destroy it!
 		*/
-		CGprogram GetCgFragmentProgram() const;
+		CGprogram GetCgGeometryProgram() const;
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +94,7 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*/
-		FragmentShaderCg(PLRenderer::Renderer &cRenderer);
+		GeometryShaderCg(PLRenderer::Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -104,7 +103,7 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 	private:
 		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
 		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgFragmentProgram;	/**< Cg fragment program, can be NULL */
+		CGprogram		  m_pCgGeometryProgram;	/**< Cg geometry program, can be NULL */
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +131,7 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_FRAGMENTSHADERCG_H__
+#endif // __PLRENDEREROPENGLCG_GEOMETRYSHADERCG_H__

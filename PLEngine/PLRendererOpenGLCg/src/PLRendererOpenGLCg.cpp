@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguage.cpp                             *
+ *  File: PLRendererOpenGLCg.cpp                         *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,42 +23,18 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/ShaderLanguage.h"
+#include <PLCore/ModuleMain.h>
 
 
 //[-------------------------------------------------------]
-//[ Namespace                                             ]
+//[ Plugin implementation                                 ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
-
-
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(ShaderLanguage)
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-ShaderLanguage::ShaderLanguage()
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ShaderLanguage::~ShaderLanguage()
-{
-}
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-} // PLRendererOpenGL
+pl_module_plugin("PLRendererOpenGLCg")
+	pl_module_vendor("Copyright (C) 2002-2010 by The PixelLight Team")
+	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_description("Cg shader language support for the OpenGL PixelLight renderer")
+	pl_module_dependencies_win32_release("cg.dll cgGL.dll")
+	pl_module_dependencies_win32_debug("cg.dll cgGL.dll")
+	pl_module_dependencies_win64_release("cg64.dll cgGL64.dll")
+	pl_module_dependencies_win64_debug("cg64.dll cgGL64.dll")
+pl_module_end

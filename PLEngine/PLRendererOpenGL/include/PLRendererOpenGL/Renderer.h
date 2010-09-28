@@ -45,10 +45,7 @@ namespace PLRendererOpenGL {
 class Context;
 class FontManager;
 class FixedFunctions;
-
-// [TODO] Make this to plugins
-class ShaderLanguageCg;
-class ShaderLanguageGLSL;
+class ShaderLanguage;
 
 
 //[-------------------------------------------------------]
@@ -71,7 +68,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Renderer, "PLRendererOpenGL", PLRenderer::RendererBackend, "OpenGL 1.1 + extensions renderer backend")
+	pl_class(PLRENDEREROPENGL_RTTI_EXPORT, Renderer, "PLRendererOpenGL", PLRenderer::RendererBackend, "OpenGL 1.1 + extensions renderer backend")
 		pl_constructor_5(DefaultConstructor, pl_enum_type(EMode), PLGeneral::uint32, PLGeneral::uint32, PLGeneral::uint32, PLGeneral::String, "Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter", "")
 	pl_class_end
 
@@ -96,7 +93,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*    The name of the default shader language of the renderer (for example "GLSL" or "Cg"), if the string
 		*    is empty, the default is chosen by the renderer implementation, this information is just a hint
 		*/
-		Renderer(EMode nMode, PLGeneral::uint32 nZBufferBits, PLGeneral::uint32 nStencilBits, PLGeneral::uint32 nMultisampleAntialiasingSamples, PLGeneral::String sDefaultShaderLanguage);
+		PLRENDEREROPENGL_API Renderer(EMode nMode, PLGeneral::uint32 nZBufferBits, PLGeneral::uint32 nStencilBits, PLGeneral::uint32 nMultisampleAntialiasingSamples, PLGeneral::String sDefaultShaderLanguage);
 
 		/**
 		*  @brief
@@ -234,22 +231,22 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Context				*m_pContext;						/**< OpenGL render context, can be NULL (= renderer not initialized) */
-		FixedFunctions		*m_pFixedFunctions;					/**< Fixed functions interface implementation, can be NULL */
-		FontManager			*m_pFontManager;					/**< OpenGL renderer font manager, always valid! */
-		bool				 m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
-		bool				 m_bCurrentSwapInterval;			/**< Is swap interval currently enabled? */
-		PLGeneral::uint32	 m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
-		PLGeneral::String	 m_sDefaultShaderLanguage;			/**< Name of the default shader language to use */
+		Context														*m_pContext;						/**< OpenGL render context, can be NULL (= renderer not initialized) */
+		FixedFunctions												*m_pFixedFunctions;					/**< Fixed functions interface implementation, can be NULL */
+		FontManager													*m_pFontManager;					/**< OpenGL renderer font manager, always valid! */
+		bool														 m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
+		bool														 m_bCurrentSwapInterval;			/**< Is swap interval currently enabled? */
+		PLGeneral::uint32											 m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
+		PLGeneral::String											 m_sDefaultShaderLanguage;			/**< Name of the default shader language to use */
+		PLGeneral::List<const PLCore::Class*>						 m_lstShaderLanguages;				/**< List of available shader language classes */
+		PLGeneral::HashMap<PLGeneral::String, const PLCore::Class*>  m_mapShaderLanguages;				/**< Map of available shader language classes "<Name> => <Class>" */
+		PLGeneral::Array<ShaderLanguage*>							 m_lstShaderLanguageInstances;		/**< List of available shader language instances */
+		PLGeneral::HashMap<PLGeneral::String, ShaderLanguage*>		 m_mapShaderLanguageInstances;		/**< Map of available shader language instances "<Name> => <Instance>" */
 
 		/** OpenGL texture type at the certain texture stages */
 		PLGeneral::uint32 *m_nTextureBufferTypes;
 
 		PLRenderer::TextureBuffer **m_ppPrevTextureBuffer;	/**< The previous non NULL texture buffer */
-
-		// [TODO] Make this to plugins
-		ShaderLanguageCg	*m_pShaderLanguageCg;
-		ShaderLanguageGLSL	*m_pShaderLanguageGLSL;
 
 
 	//[-------------------------------------------------------]
@@ -311,7 +308,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
 
 		// [TODO] Clean this up!
-		bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
+		PLRENDEREROPENGL_API bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
 
 		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = NULL);
 		virtual bool SetProgram(PLRenderer::Program *pProgram = NULL);

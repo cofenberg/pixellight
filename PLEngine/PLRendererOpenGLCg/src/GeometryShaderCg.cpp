@@ -24,17 +24,17 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Wrapper.h>
-#include "PLRendererOpenGL/ShaderLanguageCg.h"
-#include "PLRendererOpenGL/ShaderToolsCg.h"
-#include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/GeometryShaderCg.h"
+#include <PLGeneral/Core/MemoryManager.h>
+#include "PLRendererOpenGLCg/ShaderLanguageCg.h"
+#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/GeometryShaderCg.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -182,4 +182,4 @@ void GeometryShaderCg::RestoreDeviceData(uint8 **ppBackup)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg

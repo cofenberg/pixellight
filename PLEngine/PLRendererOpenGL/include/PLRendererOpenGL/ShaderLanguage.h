@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/ShaderLanguage.h>
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -42,9 +43,22 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract OpenGL shader language
+*    Abstract OpenGL shader language class
 */
 class ShaderLanguage : public PLRenderer::ShaderLanguage {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class Renderer;
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLRENDEREROPENGL_RTTI_EXPORT, ShaderLanguage, "PLRendererOpenGL", PLRenderer::ShaderLanguage, "Abstract OpenGL shader language class")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -55,13 +69,13 @@ class ShaderLanguage : public PLRenderer::ShaderLanguage {
 		*  @brief
 		*    Constructor
 		*/
-		ShaderLanguage();
+		PLRENDEREROPENGL_API ShaderLanguage();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ShaderLanguage();
+		PLRENDEREROPENGL_API virtual ~ShaderLanguage();
 
 
 };

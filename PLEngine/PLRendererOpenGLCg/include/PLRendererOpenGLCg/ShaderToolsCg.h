@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ProgramAttributeCg.h                           *
+ *  File: ShaderToolsCg.h                                *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_PROGRAMATTRIBUTECG_H__
-#define __PLRENDEREROPENGL_PROGRAMATTRIBUTECG_H__
+#ifndef __PLRENDEREROPENGLCG_SHADERTOOLSCG_H__
+#define __PLRENDEREROPENGLCG_SHADERTOOLSCG_H__
 #pragma once
 
 
@@ -29,13 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include <PLRenderer/Renderer/ProgramAttribute.h>
+#include <PLGeneral/String/String.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -43,50 +43,81 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg renderer program attriute
+*    Static class with some useful OpenGL Cg shader tool methods
 */
-class ProgramAttributeCg : public PLRenderer::ProgramAttribute {
+class ShaderToolsCg {
 
 
 	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class ProgramCg;
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pCgParameter
-		*    Cg program parameter, must be valid!
-		*/
-		ProgramAttributeCg(CGparameter pCgParameter);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~ProgramAttributeCg();
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		CGparameter m_pCgParameter;	/**< Cg program parameter, always valid! */
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::ProgramAttribute functions ]
+	//[ Public static methods                                 ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Set(PLRenderer::VertexBuffer *pVertexBuffer, PLGeneral::uint32 nIndex);
-		virtual bool Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRenderer::VertexBuffer::ESemantic nSemantic, PLGeneral::uint32 nChannel = 0);
+		/**
+		*  @brief
+		*    Adds a Cg context reference
+		*
+		*  @note
+		*    - Should be done when creating for example a vertex shader
+		*    - If this is the first reference, the internal Cg context is created automatically
+		*/
+		static void AddCgContextReference();
+
+		/**
+		*  @brief
+		*    Releases a Cg context reference
+		*
+		*  @note
+		*    - Should be done when destroying for example a vertex shader
+		*    - If this is the last reference, the internal Cg context is destroyed automatically
+		*/
+		static void ReleaseCgContextReference();
+
+		/**
+		*  @brief
+		*    Returns the Cg context
+		*
+		*  @return
+		*    The Cg context, can be NULL
+		*/
+		static CGcontext GetCgContext();
+
+		/**
+		*  @brief
+		*    Creates a Cg program
+		*
+		*  @param[in] pCgProfile
+		*    Cg profile the created Cg program should use
+		*  @param[in] sSourceCode
+		*    Shader source code, usually blank ASCII code
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    The creates Cg program, NULL on error
+		*
+		*  @note
+		*    - There must be at least one reference to the Cg context
+		*/
+		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLGeneral::String &sSourceCode, const PLGeneral::String &sEntry);
+
+
+	//[-------------------------------------------------------]
+	//[ Private static Cg callback functions                  ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Internal Cg error callback function
+		*/
+		static void CgErrorCallback();
+
+
+	//[-------------------------------------------------------]
+	//[ Private static data                                   ]
+	//[-------------------------------------------------------]
+	private:
+		static CGcontext		 m_pCgContext;			/**< Cg shader program context, can be NULL */
+		static PLGeneral::uint32 m_nCgContexCounter;	/**< Cg context counter */
 
 
 };
@@ -95,7 +126,7 @@ class ProgramAttributeCg : public PLRenderer::ProgramAttribute {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_PROGRAMATTRIBUTECG_H__
+#endif // __PLRENDEREROPENGLCG_SHADERTOOLSCG_H__

@@ -26,6 +26,7 @@ add_subdirectory(PostgreSQL)
 add_subdirectory(MySQL)
 add_subdirectory(ODE)
 add_subdirectory(OpenGLES)
+add_subdirectory(Cg)
 
 ##################################################
 ## Dependencies

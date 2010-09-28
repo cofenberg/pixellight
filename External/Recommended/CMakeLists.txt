@@ -13,7 +13,6 @@ add_custom_target(External-Recommended)
 ##################################################
 add_subdirectory(OpenGL)
 add_subdirectory(freetype)
-add_subdirectory(Cg)
 add_subdirectory(OpenAL)
 add_subdirectory(libogg)
 add_subdirectory(libvorbis)

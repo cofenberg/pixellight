@@ -24,22 +24,21 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
-#include "PLRendererOpenGL/VertexShaderCg.h"
-#include "PLRendererOpenGL/ShaderLanguageCg.h"
-#include "PLRendererOpenGL/GeometryShaderCg.h"
-#include "PLRendererOpenGL/FragmentShaderCg.h"
-#include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/ShaderToolsCg.h"
-#include "PLRendererOpenGL/ProgramAttributeCg.h"
-#include "PLRendererOpenGL/ProgramUniformCg.h"
-#include "PLRendererOpenGL/ProgramCg.h"
+#include "PLRendererOpenGLCg/VertexShaderCg.h"
+#include "PLRendererOpenGLCg/ShaderLanguageCg.h"
+#include "PLRendererOpenGLCg/GeometryShaderCg.h"
+#include "PLRendererOpenGLCg/FragmentShaderCg.h"
+#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/ProgramAttributeCg.h"
+#include "PLRendererOpenGLCg/ProgramUniformCg.h"
+#include "PLRendererOpenGLCg/ProgramCg.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -178,23 +177,26 @@ ProgramCg::ProgramCg(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 */
 void ProgramCg::RelinkRequired()
 {
-	// The linked state is now dirty
-	m_bLinked = m_bLinkedFailed = false;
+	// Is the program currently linked?
+	if (m_bLinked) {
+		// The linked state is now dirty
+		m_bLinked = m_bLinkedFailed = false;
 
-	// Destroy the attribute information
-	DestroyAttributeInformation();
+		// Destroy the attribute information
+		DestroyAttributeInformation();
 
-	// Destroy the uniform information
-	DestroyUniformInformation();
+		// Destroy the uniform information
+		DestroyUniformInformation();
 
-	// Destroy the tCg combined program
-	if (m_pCgCombinedProgram) {
-		cgDestroyProgram(m_pCgCombinedProgram);
-		m_pCgCombinedProgram = NULL;
+		// Destroy the tCg combined program
+		if (m_pCgCombinedProgram) {
+			cgDestroyProgram(m_pCgCombinedProgram);
+			m_pCgCombinedProgram = NULL;
+		}
+
+		// The program is now dirty
+		EventDirty.Emit(this);
 	}
-
-	// The program is now dirty
-	EventDirty.Emit(this);
 }
 
 /**
@@ -390,7 +392,7 @@ bool ProgramCg::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 	if (pCurrentVertexShader != pVertexShader) {
 		// The shader language of the program and the vertex shader must match and the vertex shader must be valid!
 		if (pVertexShader && (pVertexShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
-			!((PLRendererOpenGL::VertexShaderCg*)pVertexShader)->GetCgVertexProgram()))
+			!((VertexShaderCg*)pVertexShader)->GetCgVertexProgram()))
 			return false; // Error!
 
 		// Update the vertex shader resource handler
@@ -416,7 +418,7 @@ bool ProgramCg::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 	if (pCurrentGeometryShader != pGeometryShader) {
 		// The shader language of the program and the geometry shader must match and the geometry shader must be valid!
 		if (pGeometryShader && (pGeometryShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
-			!((PLRendererOpenGL::GeometryShaderCg*)pGeometryShader)->GetCgGeometryProgram()))
+			!((GeometryShaderCg*)pGeometryShader)->GetCgGeometryProgram()))
 			return false; // Error, shader language mismatch!
 
 		// Update the geometry shader resource handler
@@ -444,7 +446,7 @@ bool ProgramCg::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	if (pCurrentFragmentShader != pFragmentShader) {
 		// The shader language of the program and the fragment shader must match and the fragment shader must be valid!
 		if (pFragmentShader && (pFragmentShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
-			!((PLRendererOpenGL::FragmentShaderCg*)pFragmentShader)->GetCgFragmentProgram()))
+			!((FragmentShaderCg*)pFragmentShader)->GetCgFragmentProgram()))
 			return false; // Error, shader language mismatch!
 
 		// Update the fragment shader resource handler
@@ -549,9 +551,6 @@ bool ProgramCg::UnmakeCurrent()
 			// Disable the profile
 			cgGLDisableProfile(cgGetProgramDomainProfile(m_pCgCombinedProgram, i));
 		}
-
-		// [HACK] When using GLSL as Cg profile we need to use 'glUseProgramObjectARB()' to deactivate shaders
-		glUseProgramObjectARB(0);
 	}
 
 	// Done
@@ -578,4 +577,4 @@ void ProgramCg::RestoreDeviceData(uint8 **ppBackup)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/Base/Object.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -52,9 +52,16 @@ class FragmentShader;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract shader language
+*    Abstract shader language class
 */
-class ShaderLanguage {
+class ShaderLanguage : public PLCore::Object {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLRENDERER_RTTI_EXPORT, ShaderLanguage, "PLRenderer", PLCore::Object, "Abstract shader language class")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]

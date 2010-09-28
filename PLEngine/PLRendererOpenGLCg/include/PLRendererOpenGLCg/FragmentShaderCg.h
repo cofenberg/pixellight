@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: VertexShaderCg.h                               *
+ *  File: FragmentShaderCg.h                             *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_VERTEXSHADERCG_H__
-#define __PLRENDEREROPENGL_VERTEXSHADERCG_H__
+#ifndef __PLRENDEREROPENGLCG_FRAGMENTSHADERCG_H__
+#define __PLRENDEREROPENGLCG_FRAGMENTSHADERCG_H__
 #pragma once
 
 
@@ -29,14 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include <PLRenderer/Renderer/VertexShader.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include <PLRenderer/Renderer/FragmentShader.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -44,9 +43,9 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg renderer vertex shader resource
+*    OpenGL Cg renderer fragment shader resource
 */
-class VertexShaderCg : public PLRenderer::VertexShader {
+class FragmentShaderCg : public PLRenderer::FragmentShader {
 
 
 	//[-------------------------------------------------------]
@@ -63,7 +62,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~VertexShaderCg();
+		virtual ~FragmentShaderCg();
 
 		/**
 		*  @brief
@@ -76,12 +75,12 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 
 		/**
 		*  @brief
-		*    Returns the Cg vertex program
+		*    Returns the Cg fragment program
 		*
 		*  @return
-		*    The Cg vertex program, can be NULL, do not destroy it!
+		*    The Cg fragment program, can be NULL, do not destroy it!
 		*/
-		CGprogram GetCgVertexProgram() const;
+		CGprogram GetCgFragmentProgram() const;
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +94,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*/
-		VertexShaderCg(PLRenderer::Renderer &cRenderer);
+		FragmentShaderCg(PLRenderer::Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -104,7 +103,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 	private:
 		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
 		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgVertexProgram;	/**< Cg vertex program, can be NULL */
+		CGprogram		  m_pCgFragmentProgram;	/**< Cg fragment program, can be NULL */
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +131,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_VERTEXSHADERCG_H__
+#endif // __PLRENDEREROPENGLCG_FRAGMENTSHADERCG_H__

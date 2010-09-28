@@ -33,8 +33,4 @@ pl_module_plugin("PLRendererOpenGL")
 	pl_module_vendor("Copyright (C) 2002-2010 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("OpenGL 1.1 + extensions (http://www.opengl.org/) renderer implementation using FreeType for font support")
-	pl_module_dependencies_win32_release("cg.dll cgGL.dll")
-	pl_module_dependencies_win32_debug("cg.dll cgGL.dll")
-	pl_module_dependencies_win64_release("cg64.dll cgGL64.dll")
-	pl_module_dependencies_win64_debug("cg64.dll cgGL64.dll")
 pl_module_end

@@ -43,8 +43,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/OpenGL/include/;../../External/_Windows_x86_32/Cg/include/;../../External/_Windows_x86_32/FreeType/include/"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/OpenGL/include/;../../External/_Windows_x86_32/FreeType/include/"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGL_EXPORTS"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -66,10 +66,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PLGeneralD.lib PLCoreD.lib PLMathD.lib PLGraphicsD.lib PLRendererD.lib cg.lib cgGL.lib opengl32.lib glu32.lib libfreetype.lib"
+				AdditionalDependencies="PLGeneralD.lib PLCoreD.lib PLMathD.lib PLGraphicsD.lib PLRendererD.lib opengl32.lib glu32.lib libfreetype.lib"
 				OutputFile="$(OutDir)/PLRendererOpenGLD.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_32/Cg/lib/;../../External/_Windows_x86_32/FreeType/lib/"
+				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_32/FreeType/lib/"
 				IgnoreDefaultLibraryNames="libcmt.lib;MSVCRT"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/PLRendererOpenGLD.pdb"
@@ -99,7 +99,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\debug\PLRendererOpenGLD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;"
+				CommandLine="..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\debug\PLRendererOpenGLD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;copy build\debug\PLRendererOpenGLD.lib ..\..\Bin\Lib\"
 			/>
 		</Configuration>
 		<Configuration
@@ -128,8 +128,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/OpenGL/include/;../../External/_Windows_x86_64/Cg/include/;../../External/_Windows_x86_64/FreeType/include/"
-				PreprocessorDefinitions="WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/OpenGL/include/;../../External/_Windows_x86_64/FreeType/include/"
+				PreprocessorDefinitions="WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGL_EXPORTS"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -151,10 +151,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PLGeneralD64.lib PLCoreD64.lib PLMathD64.lib PLGraphicsD64.lib PLRendererD64.lib cg64.lib cgGL64.lib opengl32.lib glu32.lib libfreetype64.lib"
+				AdditionalDependencies="PLGeneralD64.lib PLCoreD64.lib PLMathD64.lib PLGraphicsD64.lib PLRendererD64.lib opengl32.lib glu32.lib libfreetype64.lib"
 				OutputFile="$(OutDir)/PLRendererOpenGLD64.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_64/Cg/lib/;../../External/_Windows_x86_64/FreeType/lib/"
+				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_64/FreeType/lib/"
 				IgnoreDefaultLibraryNames="libcmt.lib;MSVCRT"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/PLRendererOpenGLD64.pdb"
@@ -184,7 +184,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\debug64\PLRendererOpenGLD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;"
+				CommandLine="..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\debug64\PLRendererOpenGLD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;copy build\debug64\PLRendererOpenGLD64.lib ..\..\Bin\Lib\"
 			/>
 		</Configuration>
 		<Configuration
@@ -218,8 +218,8 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/OpenGL/include/;../../External/_Windows_x86_32/Cg/include/;../../External/_Windows_x86_32/FreeType/include/"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/OpenGL/include/;../../External/_Windows_x86_32/FreeType/include/"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGL_EXPORTS"
 				StringPooling="true"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -245,10 +245,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PLGeneral.lib PLCore.lib PLMath.lib PLGraphics.lib PLRenderer.lib cg.lib cgGL.lib opengl32.lib glu32.lib libfreetype.lib"
+				AdditionalDependencies="PLGeneral.lib PLCore.lib PLMath.lib PLGraphics.lib PLRenderer.lib opengl32.lib glu32.lib libfreetype.lib"
 				OutputFile="$(OutDir)/PLRendererOpenGL.dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_32/Cg/lib/;../../External/_Windows_x86_32/FreeType/lib/"
+				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_32/FreeType/lib/"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="LIBCMT"
 				GenerateDebugInformation="false"
@@ -281,7 +281,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\release\PLRendererOpenGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;"
+				CommandLine="..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\release\PLRendererOpenGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;copy build\release\PLRendererOpenGL.lib ..\..\Bin\Lib\"
 			/>
 		</Configuration>
 		<Configuration
@@ -315,8 +315,8 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/OpenGL/include/;../../External/_Windows_x86_64/Cg/include/;../../External/_Windows_x86_64/FreeType/include/"
-				PreprocessorDefinitions="WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/OpenGL/include/;../../External/_Windows_x86_64/FreeType/include/"
+				PreprocessorDefinitions="WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGL_EXPORTS"
 				StringPooling="true"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -339,10 +339,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PLGeneral64.lib PLCore64.lib PLMath64.lib PLGraphics64.lib PLRenderer64.lib cg64.lib cgGL64.lib opengl32.lib glu32.lib libfreetype64.lib"
+				AdditionalDependencies="PLGeneral64.lib PLCore64.lib PLMath64.lib PLGraphics64.lib PLRenderer64.lib opengl32.lib glu32.lib libfreetype64.lib"
 				OutputFile="$(OutDir)/PLRendererOpenGL64.dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_64/Cg/lib/;../../External/_Windows_x86_64/FreeType/lib/"
+				AdditionalLibraryDirectories="../../Bin/Lib/;../../External/_Windows_x86_64/FreeType/lib/"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="LIBCMT"
 				GenerateDebugInformation="false"
@@ -374,7 +374,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\release64\PLRendererOpenGL64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;"
+				CommandLine="..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin&#x0D;&#x0A;copy build\release64\PLRendererOpenGL64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\&#x0D;&#x0A;copy build\release64\PLRendererOpenGL64.lib ..\..\Bin\Lib\"
 			/>
 		</Configuration>
 	</Configurations>
@@ -482,27 +482,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\FragmentShaderCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\FragmentShaderCg.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\FragmentShaderGLSL.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\include\PLRendererOpenGL\FragmentShaderGLSL.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\GeometryShaderCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\GeometryShaderCg.h"
 				>
 			</File>
 			<File
@@ -554,27 +538,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ProgramAttributeCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\ProgramAttributeCg.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ProgramAttributeGLSL.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\include\PLRendererOpenGL\ProgramAttributeGLSL.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ProgramCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\ProgramCg.h"
 				>
 			</File>
 			<File
@@ -591,14 +559,6 @@
 			</File>
 			<File
 				RelativePath=".\include\PLRendererOpenGL\ProgramUniform.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ProgramUniformCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\ProgramUniformCg.h"
 				>
 			</File>
 			<File
@@ -626,27 +586,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\ShaderLanguageCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\ShaderLanguageCg.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ShaderLanguageGLSL.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\include\PLRendererOpenGL\ShaderLanguageGLSL.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ShaderToolsCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\ShaderToolsCg.h"
 				>
 			</File>
 			<File
@@ -759,14 +703,6 @@
 			</File>
 			<File
 				RelativePath=".\include\PLRendererOpenGL\VertexBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\VertexShaderCg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRendererOpenGL\VertexShaderCg.h"
 				>
 			</File>
 			<File

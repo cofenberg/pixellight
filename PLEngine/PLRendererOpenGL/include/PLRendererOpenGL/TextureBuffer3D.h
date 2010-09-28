@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Types.h>
 #include <PLRenderer/Renderer/TextureBuffer3D.h>
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -62,7 +63,7 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~TextureBuffer3D();
+		PLRENDEREROPENGL_API virtual ~TextureBuffer3D();
 
 		/**
 		*  @brief
@@ -71,7 +72,7 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 		*  @return
 		*    OpenGL resource ID of the texture buffer
 		*/
-		PLGeneral::uint32 GetOpenGLTexture() const;
+		PLRENDEREROPENGL_API PLGeneral::uint32 GetOpenGLTexture() const;
 
 
 	//[-------------------------------------------------------]

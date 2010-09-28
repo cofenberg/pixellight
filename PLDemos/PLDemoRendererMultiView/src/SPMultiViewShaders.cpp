@@ -87,14 +87,14 @@ SPMultiViewShaders::SPMultiViewShaders(Renderer &cRenderer) : SPMultiView(cRende
 		m_pVertexShader = pShaderLanguage->CreateVertexShader();
 		if (m_pVertexShader) {
 			// Set the vertex shader source code
-			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode, "arbvp1");
 		}
 
 		// Create a fragment shader instance
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 		if (m_pFragmentShader) {
 			// Set the fragment shader source code
-			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode, "arbfp1");
 		}
 
 		// Create a program instance

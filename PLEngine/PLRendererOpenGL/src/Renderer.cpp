@@ -31,6 +31,7 @@
 #include <PLGraphics/Image/ImageEffects.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
+#include "PLRendererOpenGL/Program.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/SurfaceWindow.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
@@ -39,19 +40,10 @@
 #include "PLRendererOpenGL/TextureBufferRectangle.h"
 #include "PLRendererOpenGL/TextureBuffer3D.h"
 #include "PLRendererOpenGL/TextureBufferCube.h"
+#include "PLRendererOpenGL/ShaderLanguage.h"
 #include "PLRendererOpenGL/IndexBuffer.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
 #include "PLRendererOpenGL/OcclusionQuery.h"
-#include "PLRendererOpenGL/VertexShaderGLSL.h"
-#include "PLRendererOpenGL/GeometryShaderGLSL.h"
-#include "PLRendererOpenGL/FragmentShaderGLSL.h"
-#include "PLRendererOpenGL/ProgramGLSL.h"
-#include "PLRendererOpenGL/VertexShaderCg.h"
-#include "PLRendererOpenGL/GeometryShaderCg.h"
-#include "PLRendererOpenGL/FragmentShaderCg.h"
-#include "PLRendererOpenGL/ProgramCg.h"
-#include "PLRendererOpenGL/ShaderLanguageCg.h"
-#include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #ifdef WIN32
 	#include "PLRendererOpenGL/ContextWindows.h"
 #endif
@@ -66,6 +58,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRendererOpenGL {
@@ -94,25 +87,39 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_nTextureBufferTypes(NULL),
 	m_ppPrevTextureBuffer(NULL)
 {
-
-
-	// [TODO] Make this to plugins
-	m_pShaderLanguageCg = new ShaderLanguageCg(*this);
-	m_pShaderLanguageGLSL = new ShaderLanguageGLSL(*this);
-
-
 	// Output log information
 	PL_LOG(Info, "Initialize OpenGL renderer")
 
 	// Shaders allowed?
 	if (GetMode() != ModeFixedFunctions) {
+		// Register the available OpenGL shader languages
+		ClassManager::GetInstance()->GetClasses(m_lstShaderLanguages, "PLRendererOpenGL::ShaderLanguage", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
+		if (m_lstShaderLanguages.GetNumOfElements()) {
+			// Show a log message
+			PL_LOG(Info, "Available OpenGL shader languages:")
+
+			// Loop through all found classes
+			ConstIterator<const Class*> cIterator = m_lstShaderLanguages.GetConstIterator();
+			while (cIterator.HasNext()) {
+				// Get the class instance
+				const Class *pClass = cIterator.Next();
+
+				// Get the name of the shader language
+				const String sShaderLanguage = pClass->GetProperties().Get("ShaderLanguage");
+
+				// Show a log message
+				PL_LOG(Info, "- " + sShaderLanguage + " (Class: " + pClass->GetClassName() + ')')
+
+				// Add to shader language map
+				m_mapShaderLanguages.Add(sShaderLanguage, pClass);
+			}
+		} else {
+			// There should be at least the shader language GLSL... but to be on the save side, we handle this case here, too
+			PL_LOG(Info, "There are no OpenGL shader languages available")
+		}
+
 		// If the given desired default shader language is valid, use it - else use GLSL as default shader language
-		if (sDefaultShaderLanguage == ShaderLanguageGLSL::GLSL)
-			m_sDefaultShaderLanguage = ShaderLanguageGLSL::GLSL;
-		else if (sDefaultShaderLanguage == ShaderLanguageCg::Cg)
-			m_sDefaultShaderLanguage = ShaderLanguageCg::Cg;
-		else
-			m_sDefaultShaderLanguage = ShaderLanguageGLSL::GLSL;
+		m_sDefaultShaderLanguage = m_mapShaderLanguages.Get(sDefaultShaderLanguage) ? sDefaultShaderLanguage : "GLSL";
 	}
 
 	// Set Z buffer bits and stencil buffer bits capabilities
@@ -284,11 +291,11 @@ Renderer::~Renderer()
 			m_nTextureBufferTypes = NULL;
 		}
 
-
-		// [TODO] Make this to plugins
-		delete m_pShaderLanguageCg;
-		delete m_pShaderLanguageGLSL;
-
+		// Destroy the shader language instances
+		for (uint32 i=0; i<m_lstShaderLanguageInstances.GetNumOfElements(); i++)
+			delete m_lstShaderLanguageInstances[i];
+		m_lstShaderLanguageInstances.Clear();
+		m_mapShaderLanguageInstances.Clear();
 
 		// Destroy the OpenGL render context
 		delete m_pContext;
@@ -1020,19 +1027,31 @@ PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLan
 {
 	// Check the renderer mode
 	if (GetMode() != ModeFixedFunctions) {
-		// [TODO] Make this to plugins
+		// Get the shader language to use
 		const String &sUsedShaderLanguage = sShaderLanguage.GetLength() ? sShaderLanguage : m_sDefaultShaderLanguage;
-		if (sUsedShaderLanguage == ShaderLanguageGLSL::GLSL)
-			return m_pShaderLanguageGLSL;
-		else if (sUsedShaderLanguage == ShaderLanguageCg::Cg)
-			return m_pShaderLanguageCg;
-		else 
-			return NULL;
+
+		// Is there already an instance of this shader language?
+		ShaderLanguage *pShaderLanguage = m_mapShaderLanguageInstances.Get(sUsedShaderLanguage);
+		if (!pShaderLanguage) {
+			// Get the RTTI class of the shader language
+			const Class *pClass = m_mapShaderLanguages.Get(sUsedShaderLanguage);
+			if (pClass) {
+				// Create an instance
+				pShaderLanguage = (ShaderLanguage*)pClass->Create(Params<Object*, Renderer&>(*this));
+				if (pShaderLanguage) {
+					// Register the instance
+					m_lstShaderLanguageInstances.Add(pShaderLanguage);
+					m_mapShaderLanguageInstances.Add(sUsedShaderLanguage, pShaderLanguage);
+				}
+			}
+		}
+
+		// Done
+		return pShaderLanguage;
 	}
 
 	// Error!
 	return NULL;
-
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
@@ -2655,8 +2674,12 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
 	if (pCurrentProgram != pProgram) {
 		// Was there a previous program?
-		if (pCurrentProgram)
+		if (pCurrentProgram) {
 			((Program*)pCurrentProgram)->UnmakeCurrent();
+
+			// [HACK] When using GLSL as Cg profile we need to use 'glUseProgramObjectARB()' to deactivate shaders
+			glUseProgramObjectARB(0);
+		}
 
 		// Update the program resource handler
 		m_cProgramHandler.SetResource(pProgram);

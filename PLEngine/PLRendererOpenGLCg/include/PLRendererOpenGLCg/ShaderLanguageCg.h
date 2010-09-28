@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_SHADERLANGUAGECG_H__
-#define __PLRENDEREROPENGL_SHADERLANGUAGECG_H__
+#ifndef __PLRENDEREROPENGLCG_SHADERLANGUAGECG_H__
+#define __PLRENDEREROPENGLCG_SHADERLANGUAGECG_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/ShaderLanguage.h"
+#include <PLRendererOpenGL/ShaderLanguage.h>
 
 
 //[-------------------------------------------------------]
@@ -42,7 +42,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGL {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -50,9 +50,9 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg shader language
+*    OpenGL Cg shader language class
 */
-class ShaderLanguageCg : public PLRenderer::ShaderLanguage {
+class ShaderLanguageCg : public PLRendererOpenGL::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
@@ -69,6 +69,17 @@ class ShaderLanguageCg : public PLRenderer::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(pl_rtti_export, ShaderLanguageCg, "PLRendererOpenGLCg", PLRendererOpenGL::ShaderLanguage, "OpenGL Cg shader language class")
+		pl_properties
+			pl_property("ShaderLanguage", "Cg")
+		pl_properties_end
+		pl_constructor_1(DefaultConstructor, PLRenderer::Renderer&, "Constructor with used renderer as parameter", "")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
 	//[-------------------------------------------------------]
 	public:
@@ -80,9 +91,9 @@ class ShaderLanguageCg : public PLRenderer::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	private:
+	public:
 		/**
 		*  @brief
 		*    Constructor
@@ -112,7 +123,7 @@ class ShaderLanguageCg : public PLRenderer::ShaderLanguage {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGL
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGL_SHADERLANGUAGECG_H__
+#endif // __PLRENDEREROPENGLCG_SHADERLANGUAGECG_H__

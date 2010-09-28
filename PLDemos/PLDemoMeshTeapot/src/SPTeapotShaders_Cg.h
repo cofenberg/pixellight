@@ -30,7 +30,7 @@ struct VS_OUTPUT {\n\
 \n\
 // Programs\n\
 VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input\n\
-			   float3   VertexNormal   : COLOR,			// Object space vertex normal input\n\
+			   float3   VertexNormal   : NORMAL,		// Object space vertex normal input\n\
 	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix\n\
 	   uniform float4x4 ObjectSpaceToWorldSpaceMatrix)	// Object space to world space matrix\n\
 {\n\

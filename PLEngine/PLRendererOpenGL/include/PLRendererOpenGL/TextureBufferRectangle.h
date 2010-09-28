@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Types.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -62,7 +63,7 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~TextureBufferRectangle();
+		PLRENDEREROPENGL_API virtual ~TextureBufferRectangle();
 
 		/**
 		*  @brief
@@ -71,7 +72,7 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 		*  @return
 		*    OpenGL resource ID of the texture buffer
 		*/
-		PLGeneral::uint32 GetOpenGLTexture() const;
+		PLRENDEREROPENGL_API PLGeneral::uint32 GetOpenGLTexture() const;
 
 
 	//[-------------------------------------------------------]

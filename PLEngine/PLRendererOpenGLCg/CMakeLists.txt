@@ -1,66 +1,22 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLRendererOpenGL)
+define_project(PLRendererOpenGLCg)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/PLRendererOpenGL.cpp
-	src/Renderer.cpp
-	src/FixedFunctions.cpp
-	src/Context.cpp
-	src/VertexBuffer.cpp
-	src/IndexBuffer.cpp
-	src/TextureBuffer1D.cpp
-	src/TextureBuffer2D.cpp
-	src/TextureBufferRectangle.cpp
-	src/TextureBuffer3D.cpp
-	src/TextureBufferCube.cpp
-	src/SurfaceWindow.cpp
-	src/SurfaceTextureBuffer.cpp
-	src/OcclusionQuery.cpp
-	src/ShaderLanguage.cpp
-	src/ShaderLanguageGLSL.cpp
-	src/Program.cpp
-	src/ProgramUniform.cpp
-	src/VertexShaderGLSL.cpp
-	src/GeometryShaderGLSL.cpp
-	src/FragmentShaderGLSL.cpp
-	src/ProgramGLSL.cpp
-	src/ProgramAttributeGLSL.cpp
-	src/ProgramUniformGLSL.cpp
-	src/ShaderToolsGLSL.cpp
-	src/FontManager.cpp
-	src/FontTexture.cpp
-	src/FontTextureShaders.cpp
-	src/FontTextureFixedFunctions.cpp
-	src/FontGlyphTexture.cpp
-	src/Misc/Extensions.cpp
-	src/Misc/FrameBufferObject.cpp
-	src/Misc/ExtensionConfig.cpp
-	src/Misc/pbuffer.cpp
+	src/PLRendererOpenGLCg.cpp
+	src/ShaderLanguageCg.cpp
+	src/VertexShaderCg.cpp
+	src/GeometryShaderCg.cpp
+	src/FragmentShaderCg.cpp
+	src/ProgramCg.cpp
+	src/ProgramAttributeCg.cpp
+	src/ProgramUniformCg.cpp
+	src/ShaderToolsCg.cpp
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_sources(
-		src/Misc/ExtensionsWindows.cpp
-		src/SurfaceWindowWindows.cpp
-		src/ContextWindows.cpp
-	)
-elseif(LINUX)
-	##################################################
-	## Linux
-	##################################################
-	add_sources(
-		src/Misc/ExtensionsLinux.cpp
-		src/SurfaceWindowLinux.cpp
-		src/ContextLinux.cpp
-	)
-endif()
 
 ##################################################
 ## Include directories
@@ -72,8 +28,8 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
-	${OPENGL_INCLUDE_DIRS}
-	${FREETYPE_INCLUDE_DIRS}
+	${CMAKE_SOURCE_DIR}/PLEngine/PLRendererOpenGL/include
+	${CG_INCLUDE_DIRS}
 )
 
 ##################################################
@@ -92,35 +48,13 @@ add_libs(
 	PLGraphics
 	PLMath
 	PLRenderer
-	${FREETYPE_LIBRARIES}
+	PLRendererOpenGL
+	${CG_OPENGL_LIBRARIES}
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_libs(
-		${WIN32_USER32_LIB}
-		${WIN32_GDI32_LIB}
-		${WIN32_OPENGL32_LIB}
-		${WIN32_GLU32_LIB}
-	)
-elseif(LINUX)
-	##################################################
-	## Linux
-	##################################################
-	add_libs(
-		GL
-		GLU
-		Xxf86vm
-	)
-endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
-add_compile_defs(
-	PLRENDEREROPENGL_EXPORTS
-)
 if(WIN32)
 	##################################################
 	## Win32
@@ -134,7 +68,6 @@ elseif(LINUX)
 	##################################################
 	add_compile_defs(
 		${LINUX_COMPILE_DEFS}
-		GLX_GLXEXT_PROTOTYPES
 	)
 endif()
 
@@ -178,7 +111,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGL External-freetype PLGeneral PLCore PLMath PLGraphics PLRenderer)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Cg PLGeneral PLCore PLMath PLGraphics PLRenderer PLRendererOpenGL)
 add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -204,6 +137,21 @@ if(WIN32)
 	)
 endif()
 
+# External dependencies, but only when not using system-libs
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+	if(WIN32)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLRenderer/cg.dll "${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLRenderer/cgGL.dll "${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/"
+		)
+	elseif(LINUX)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Cg/lib/libCg.so   "${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Cg/lib/libCgGL.so "${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/"
+		)
+	endif()
+endif()
+
 ##################################################
 ## Install
 ##################################################
@@ -224,3 +172,19 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/${CMAKETOOLS_CURRENT_PLUGIN}
 	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer			COMPONENT Runtime
 )
+
+# External dependencies, but only when not using system-libs
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+	if(WIN32)
+		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/cg.dll
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/cgGL.dll
+			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer	COMPONENT Runtime
+		)
+	elseif(LINUX)
+		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/libCg.so
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLRenderer/libCgGL.so
+			DESTINATION ${PL_INSTALL_SHARED}						COMPONENT Runtime
+		)
+	endif()
+endif()
+
