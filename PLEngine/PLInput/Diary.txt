@@ -1,3 +1,10 @@
+>> 30.09.2010
+[CO]
+- VirtualStandardController: "Jump"-Control hinzugefügt, ich denke das ist ebenfalls etwas recht allgemeines
+- VirtualStandardController: "TransX"/"TransY" Achsen zuweisung der Space Mouse war vertauscht
+
+
+
 >> 15.08.2010
 [SB]
 - InputManager: Es gab hier einen Mutex-Deadlock, der durch das Hintereinanderschalten von Controls ausgelöst wurde.

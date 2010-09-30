@@ -667,6 +667,14 @@
 			Name="SceneNodeModifiers"
 			>
 			<File
+				RelativePath=".\src\SceneNodeModifiers\PhysicsCharacterController.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLPhysics\SceneNodeModifiers\PhysicsCharacterController.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\SceneNodeModifiers\SNMPhysics.cpp"
 				>
 			</File>

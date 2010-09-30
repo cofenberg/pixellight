@@ -37,6 +37,9 @@
 namespace PLInput {
 	class Controller;
 }
+namespace PLScene {
+	class CameraZoomController;
+}
 
 
 //[-------------------------------------------------------]
@@ -124,7 +127,7 @@ class SNMCameraZoomController : public SNMCameraZoom {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLInput::Controller *m_pController;	/**< Camera zoom input controller instance, always valid! */
+		CameraZoomController *m_pController;	/**< Camera zoom input controller instance, always valid! */
 
 
 };

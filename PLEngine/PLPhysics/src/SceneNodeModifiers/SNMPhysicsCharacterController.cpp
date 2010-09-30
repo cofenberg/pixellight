@@ -25,14 +25,13 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Devices/Keyboard.h>
-#include <PLInput/Input/Devices/SpaceMouse.h>
 #include <PLRenderer/Animation/Animation.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshAnimationManager.h>
 #include "PLScene/Scene/SceneContext.h"
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodes/SNMesh.h>
+#include "PLPhysics/SceneNodeModifiers/PhysicsCharacterController.h"
 #include "PLPhysics/SceneNodeModifiers/SNMPhysicsCharacterController.h"
 
 
@@ -79,7 +78,6 @@ void SNMPhysicsCharacterController::SetFlags(uint32 nValue)
 */
 SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNode) : SNMPhysicsCharacter(cSceneNode),
 	YRotVelocity(this),
-	SpaceMouseTranslationFactor(this),
 	IdleAnimation(this),
 	IdleAnimationSpeed(this),
 	WalkAnimation(this),
@@ -88,8 +86,34 @@ SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNo
 	RotationNode(this),
 	Flags(this),
 	EventHandlerUpdate(&SNMPhysicsCharacterController::NotifyUpdate, this),
-	m_bJumping(false)
+	m_bJumping(false),
+	m_pController(new PhysicsCharacterController())
 {
+	// Connect to virtual input controller
+	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
+	//        virtual controller is used by the application. Therefore, it should be the application that
+	//        connects our controls to it's virtual controller, which will need some additional callback
+	//        to connect to scene nodes that provide input controllers.
+	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
+	if (pController) {
+		m_pController->Connect("TransX",		pController->GetControl("TransX"));
+		m_pController->Connect("TransY",		pController->GetControl("TransY"));
+		m_pController->Connect("TransZ",		pController->GetControl("TransZ"));
+		m_pController->Connect("RotX",			pController->GetControl("RotX"));
+		m_pController->Connect("RotY",			pController->GetControl("RotY"));
+		m_pController->Connect("RotZ",			pController->GetControl("RotZ"));
+		m_pController->Connect("Forward",		pController->GetControl("Forward"));
+		m_pController->Connect("Backward",		pController->GetControl("Backward"));
+		m_pController->Connect("Left",			pController->GetControl("Left"));
+		m_pController->Connect("Right",			pController->GetControl("Right"));
+		m_pController->Connect("StrafeLeft",	pController->GetControl("StrafeLeft"));
+		m_pController->Connect("StrafeRight",	pController->GetControl("StrafeRight"));
+		m_pController->Connect("Up",			pController->GetControl("Up"));
+		m_pController->Connect("Down",			pController->GetControl("Down"));
+		m_pController->Connect("Run",			pController->GetControl("Run"));
+		m_pController->Connect("Crouch",		pController->GetControl("Crouch"));
+		m_pController->Connect("Jump",			pController->GetControl("Jump"));
+	}
 }
 
 /**
@@ -98,6 +122,8 @@ SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNo
 */
 SNMPhysicsCharacterController::~SNMPhysicsCharacterController()
 {
+	// Destroy the input controller
+	delete m_pController;
 }
 
 
@@ -139,43 +165,30 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 	Vector3 vMovement;
 
 	// Check if input is active
-	// [TODO] Don't use devices directly, use a virtual controller instead
-	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
-	if ((pController && pController->GetActive()) || !pController) {
-		// Get keyboard input device
-		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-		if (pKeyboard) {
-			// Forward/backward
-			if (pKeyboard->KeyW.IsPressed() || pKeyboard->KeyUp   .IsPressed())
-				vMovement += vDirVector;
-			if (pKeyboard->KeyS.IsPressed() || pKeyboard->KeyDown .IsPressed()) {
-				vMovement -= vDirVector;
-				bRevert = true;
-			}
-
-			// Left/right
-			if (pKeyboard->KeyA.IsPressed() || pKeyboard->KeyLeft .IsPressed())
-				vMovement += vDirLeftVector;
-			if (pKeyboard->KeyD.IsPressed() || pKeyboard->KeyRight.IsPressed())
-				vMovement -= vDirLeftVector;
-
-			// Upward/downward
-			if (GetFlags() & YMovement) {
-				if (pKeyboard->KeyPageUp.IsPressed())
-					vMovement += vDirUpVector;
-				if (pKeyboard->KeyPageDown.IsPressed())
-					vMovement -= vDirUpVector;
-			}
+	if (m_pController->GetActive()) {
+		// Forward/backward
+		if (m_pController->Forward.IsPressed())
+			vMovement += vDirVector;
+		if (m_pController->Backward.IsPressed()) {
+			vMovement -= vDirVector;
+			bRevert = true;
 		}
+		vMovement += vDirVector*(m_pController->TransY.GetValue());
 
-		// Get SpaceMouse device
-		SpaceMouse *pSpaceMouse = (SpaceMouse*)InputManager::GetInstance()->GetDevice("SpaceMouse0");
-		if (pSpaceMouse) {
-			// Set new offset
-			vMovement -= vDirLeftVector*(pSpaceMouse->TransX.GetValue()*SpaceMouseTranslationFactor);
-			if (GetFlags() & YMovement)
-				vMovement -= vDirUpVector*(pSpaceMouse->TransZ.GetValue()*SpaceMouseTranslationFactor);
-			vMovement -= vDirVector*(pSpaceMouse->TransY.GetValue()*SpaceMouseTranslationFactor);
+		// Strafe left/right
+		if (m_pController->StrafeLeft.IsPressed())
+			vMovement += vDirLeftVector;
+		if (m_pController->StrafeRight.IsPressed())
+			vMovement -= vDirLeftVector;
+		vMovement += vDirLeftVector*(m_pController->TransX.GetValue());
+
+		// Upward/downward
+		if (GetFlags() & YMovement) {
+			if (m_pController->Up.IsPressed())
+				vMovement += vDirUpVector;
+			if (m_pController->Down.IsPressed())
+				vMovement -= vDirUpVector;
+			vMovement += vDirUpVector*(m_pController->TransZ.GetValue());
 		}
 	}
 
@@ -186,41 +199,38 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 	bool bIdle = vMovement.IsNull();
 
 	// Check if input is active
-	// [TODO] Don't use devices directly, use a virtual controller instead
-	if ((pController && pController->GetActive()) || !pController) {
-		// Get keyboard input device
-		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-		if (pKeyboard) {
-			// Rotation
-			if (YRotVelocity && (pKeyboard->KeyQ.IsPressed() || pKeyboard->KeyE.IsPressed())) {
-				Vector3 vRot = cSceneNode.GetRotation();
-				if (pKeyboard->KeyQ.IsPressed()) {
-					vRot.y += fTimeDiff*YRotVelocity;
-					bRevert = true;
-				}
-				if (pKeyboard->KeyE.IsPressed())
-					vRot.y -= fTimeDiff*YRotVelocity;
-				cSceneNode.SetRotation(vRot);
+	if (m_pController->GetActive()) {
+		// Rotation
+		if (YRotVelocity) {
+			Vector3 vRot = cSceneNode.GetRotation();
+			if (m_pController->Left.IsPressed()) {
+				vRot.y += fTimeDiff*YRotVelocity;
+				bRevert = true;
+			}
+			if (m_pController->Right.IsPressed())
+				vRot.y -= fTimeDiff*YRotVelocity;
+			vRot.y += m_pController->RotZ.GetValue()*fTimeDiff*YRotVelocity;
+			if (vRot != cSceneNode.GetRotation())
 				bIdle = false;
-			}
-
-			// Jump
-			if (!(GetFlags() & NoJump) && JumpForce && pKeyboard->KeySpace.IsPressed()) {
-				if (!m_bJumping) {
-					Jump();
-					bIdle = false;
-					m_bJumping = true;
-				}
-			} else {
-				m_bJumping = false;
-			}
-
-			// Toggle running mode
-			SetRunning(!(GetFlags() & NoRun) && pKeyboard->KeyShift.IsPressed());
-
-			// Toggle creeping mode
-			SetCreeping(!(GetFlags() & NoCreep) && pKeyboard->KeyControl.IsPressed());
+			cSceneNode.SetRotation(vRot);
 		}
+
+		// Jump
+		if (!(GetFlags() & NoJump) && JumpForce && m_pController->Jump.IsPressed()) {
+			if (!m_bJumping) {
+				Jump();
+				bIdle = false;
+				m_bJumping = true;
+			}
+		} else {
+			m_bJumping = false;
+		}
+
+		// Toggle running mode
+		SetRunning(!(GetFlags() & NoRun) && m_pController->Run.IsPressed());
+
+		// Toggle creeping mode
+		SetCreeping(!(GetFlags() & NoCreep) && m_pController->Crouch.IsPressed());
 	}
 
 	// Setup character animation

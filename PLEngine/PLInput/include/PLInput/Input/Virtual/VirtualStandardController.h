@@ -61,138 +61,139 @@ class VirtualStandardController : public VirtualController {
 	//[-------------------------------------------------------]
 	public:
 		// Mouse
-		PLInput::Axis		MouseX;				/**< X axis */
-		PLInput::Axis		MouseY;				/**< Y axis */
-		PLInput::Axis		MouseWheel;			/**< Mouse wheel */
-		PLInput::Button		MouseLeft;			/**< Left mouse button  */
-		PLInput::Button		MouseRight;			/**< Right mouse button  */
-		PLInput::Button		MouseMiddle;		/**< Middle mouse button  */
-		PLInput::Button		MouseButton4;		/**< Mouse button #4 */
-		PLInput::Button		MouseButton5;		/**< Mouse button #5 */
-		PLInput::Button		MouseButton6;		/**< Mouse button #6 */
-		PLInput::Button		MouseButton7;		/**< Mouse button #7 */
-		PLInput::Button		MouseButton8;		/**< Mouse button #8 */
-		PLInput::Button		MouseButton9;		/**< Mouse button #9 */
-		PLInput::Button		MouseButton10;		/**< Mouse button #10 */
-		PLInput::Button		MouseButton11;		/**< Mouse button #11 */
-		PLInput::Button		MouseButton12;		/**< Mouse button #12 */
+		Axis		MouseX;				/**< X axis */
+		Axis		MouseY;				/**< Y axis */
+		Axis		MouseWheel;			/**< Mouse wheel */
+		Button		MouseLeft;			/**< Left mouse button  */
+		Button		MouseRight;			/**< Right mouse button  */
+		Button		MouseMiddle;		/**< Middle mouse button  */
+		Button		MouseButton4;		/**< Mouse button #4 */
+		Button		MouseButton5;		/**< Mouse button #5 */
+		Button		MouseButton6;		/**< Mouse button #6 */
+		Button		MouseButton7;		/**< Mouse button #7 */
+		Button		MouseButton8;		/**< Mouse button #8 */
+		Button		MouseButton9;		/**< Mouse button #9 */
+		Button		MouseButton10;		/**< Mouse button #10 */
+		Button		MouseButton11;		/**< Mouse button #11 */
+		Button		MouseButton12;		/**< Mouse button #12 */
 
 		// Keyboard
-		PLInput::Button		KeyBack;			/**< Backspace */
-		PLInput::Button		KeyTab;				/**< Tab */
-		PLInput::Button		KeyClear;			/**< Clear (not available everywhere) */
-		PLInput::Button		KeyReturn;			/**< Enter */
-		PLInput::Button		KeyShift;			/**< Shift */
-		PLInput::Button		KeyControl;			/**< Ctrl */
-		PLInput::Button		KeyAlt;				/**< Alt */
-		PLInput::Button		KeyPause;			/**< Pause */
-		PLInput::Button		KeyCapsLock;		/**< Caps lock */
-		PLInput::Button		KeyEscape;			/**< Escape */
-		PLInput::Button		KeySpace;			/**< Space */
-		PLInput::Button		KeyPageUp;			/**< Page up */
-		PLInput::Button		KeyPageDown;		/**< Page down */
-		PLInput::Button		KeyEnd;				/**< End */
-		PLInput::Button		KeyHome;			/**< Home */
-		PLInput::Button		KeyLeft;			/**< Left arrow */
-		PLInput::Button		KeyUp;				/**< Up arrow */
-		PLInput::Button		KeyRight;			/**< Right arrow */
-		PLInput::Button		KeyDown;			/**< Down arrow */
-		PLInput::Button		KeySelect;			/**< Select (not available everywhere) */
-		PLInput::Button		KeyExecute;			/**< Execute (not available everywhere) */
-		PLInput::Button		KeyPrintScreen;		/**< Print screen */
-		PLInput::Button		KeyInsert;			/**< Insert */
-		PLInput::Button		KeyDelete;			/**< Delete */
-		PLInput::Button		KeyHelp;			/**< Help (not available everywhere) */
-		PLInput::Button		Key0;				/**< 0 */
-		PLInput::Button		Key1;				/**< 1 */
-		PLInput::Button		Key2;				/**< 2 */
-		PLInput::Button		Key3;				/**< 3 */
-		PLInput::Button		Key4;				/**< 4 */
-		PLInput::Button		Key5;				/**< 5 */
-		PLInput::Button		Key6;				/**< 6 */
-		PLInput::Button		Key7;				/**< 7 */
-		PLInput::Button		Key8;				/**< 8 */
-		PLInput::Button		Key9;				/**< 9 */
-		PLInput::Button		KeyA;				/**< A */
-		PLInput::Button		KeyB;				/**< B */
-		PLInput::Button		KeyC;				/**< C */
-		PLInput::Button		KeyD;				/**< D */
-		PLInput::Button		KeyE;				/**< E */
-		PLInput::Button		KeyF;				/**< F */
-		PLInput::Button		KeyG;				/**< G */
-		PLInput::Button		KeyH;				/**< H */
-		PLInput::Button		KeyI;				/**< I */
-		PLInput::Button		KeyJ;				/**< J */
-		PLInput::Button		KeyK;				/**< K */
-		PLInput::Button		KeyL;				/**< L */
-		PLInput::Button		KeyM;				/**< M */
-		PLInput::Button		KeyN;				/**< N */
-		PLInput::Button		KeyO;				/**< O */
-		PLInput::Button		KeyP;				/**< P */
-		PLInput::Button		KeyQ;				/**< Q */
-		PLInput::Button		KeyR;				/**< R */
-		PLInput::Button		KeyS;				/**< S */
-		PLInput::Button		KeyT;				/**< T */
-		PLInput::Button		KeyU;				/**< U */
-		PLInput::Button		KeyV;				/**< V */
-		PLInput::Button		KeyW;				/**< W */
-		PLInput::Button		KeyX;				/**< X */
-		PLInput::Button		KeyY;				/**< Y */
-		PLInput::Button		KeyZ;				/**< Z */
-		PLInput::Button		KeyNumpad0;			/**< Numeric keypad 0 */
-		PLInput::Button		KeyNumpad1;			/**< Numeric keypad 1 */
-		PLInput::Button		KeyNumpad2;			/**< Numeric keypad 2 */
-		PLInput::Button		KeyNumpad3;			/**< Numeric keypad 3 */
-		PLInput::Button		KeyNumpad4;			/**< Numeric keypad 4 */
-		PLInput::Button		KeyNumpad5;			/**< Numeric keypad 5 */
-		PLInput::Button		KeyNumpad6;			/**< Numeric keypad 6 */
-		PLInput::Button		KeyNumpad7;			/**< Numeric keypad 7 */
-		PLInput::Button		KeyNumpad8;			/**< Numeric keypad 8 */
-		PLInput::Button		KeyNumpad9;			/**< Numeric keypad 9 */
-		PLInput::Button		KeyNumpadMultiply;	/**< Numeric keypad "Multiply" */
-		PLInput::Button		KeyNumpadAdd;		/**< Numeric keypad "Add" */
-		PLInput::Button		KeyNumpadSeparator;	/**< Numeric keypad "Separator" */
-		PLInput::Button		KeyNumpadSubtract;	/**< Numeric keypad "Subtract" */
-		PLInput::Button		KeyNumpadDecimal;	/**< Numeric keypad "Decimal" */
-		PLInput::Button		KeyNumpadDivide;	/**< Numeric keypad "Divide" */
-		PLInput::Button		KeyF1;				/**< F1 */
-		PLInput::Button		KeyF2;				/**< F2 */
-		PLInput::Button		KeyF3;				/**< F3 */
-		PLInput::Button		KeyF4;				/**< F4 */
-		PLInput::Button		KeyF5;				/**< F5 */
-		PLInput::Button		KeyF6;				/**< F6 */
-		PLInput::Button		KeyF7;				/**< F7 */
-		PLInput::Button		KeyF8;				/**< F8 */
-		PLInput::Button		KeyF9;				/**< F9 */
-		PLInput::Button		KeyF10;				/**< F10 */
-		PLInput::Button		KeyF11;				/**< F11 */
-		PLInput::Button		KeyF12;				/**< F12 */
-		PLInput::Button		KeyNumLock;			/**< Num lock */
-		PLInput::Button		KeyScrollLock;		/**< Scroll lock */
-		PLInput::Button		KeyCircumflex;		/**< Circumflex (^) */
+		Button		KeyBack;			/**< Backspace */
+		Button		KeyTab;				/**< Tab */
+		Button		KeyClear;			/**< Clear (not available everywhere) */
+		Button		KeyReturn;			/**< Enter */
+		Button		KeyShift;			/**< Shift */
+		Button		KeyControl;			/**< Ctrl */
+		Button		KeyAlt;				/**< Alt */
+		Button		KeyPause;			/**< Pause */
+		Button		KeyCapsLock;		/**< Caps lock */
+		Button		KeyEscape;			/**< Escape */
+		Button		KeySpace;			/**< Space */
+		Button		KeyPageUp;			/**< Page up */
+		Button		KeyPageDown;		/**< Page down */
+		Button		KeyEnd;				/**< End */
+		Button		KeyHome;			/**< Home */
+		Button		KeyLeft;			/**< Left arrow */
+		Button		KeyUp;				/**< Up arrow */
+		Button		KeyRight;			/**< Right arrow */
+		Button		KeyDown;			/**< Down arrow */
+		Button		KeySelect;			/**< Select (not available everywhere) */
+		Button		KeyExecute;			/**< Execute (not available everywhere) */
+		Button		KeyPrintScreen;		/**< Print screen */
+		Button		KeyInsert;			/**< Insert */
+		Button		KeyDelete;			/**< Delete */
+		Button		KeyHelp;			/**< Help (not available everywhere) */
+		Button		Key0;				/**< 0 */
+		Button		Key1;				/**< 1 */
+		Button		Key2;				/**< 2 */
+		Button		Key3;				/**< 3 */
+		Button		Key4;				/**< 4 */
+		Button		Key5;				/**< 5 */
+		Button		Key6;				/**< 6 */
+		Button		Key7;				/**< 7 */
+		Button		Key8;				/**< 8 */
+		Button		Key9;				/**< 9 */
+		Button		KeyA;				/**< A */
+		Button		KeyB;				/**< B */
+		Button		KeyC;				/**< C */
+		Button		KeyD;				/**< D */
+		Button		KeyE;				/**< E */
+		Button		KeyF;				/**< F */
+		Button		KeyG;				/**< G */
+		Button		KeyH;				/**< H */
+		Button		KeyI;				/**< I */
+		Button		KeyJ;				/**< J */
+		Button		KeyK;				/**< K */
+		Button		KeyL;				/**< L */
+		Button		KeyM;				/**< M */
+		Button		KeyN;				/**< N */
+		Button		KeyO;				/**< O */
+		Button		KeyP;				/**< P */
+		Button		KeyQ;				/**< Q */
+		Button		KeyR;				/**< R */
+		Button		KeyS;				/**< S */
+		Button		KeyT;				/**< T */
+		Button		KeyU;				/**< U */
+		Button		KeyV;				/**< V */
+		Button		KeyW;				/**< W */
+		Button		KeyX;				/**< X */
+		Button		KeyY;				/**< Y */
+		Button		KeyZ;				/**< Z */
+		Button		KeyNumpad0;			/**< Numeric keypad 0 */
+		Button		KeyNumpad1;			/**< Numeric keypad 1 */
+		Button		KeyNumpad2;			/**< Numeric keypad 2 */
+		Button		KeyNumpad3;			/**< Numeric keypad 3 */
+		Button		KeyNumpad4;			/**< Numeric keypad 4 */
+		Button		KeyNumpad5;			/**< Numeric keypad 5 */
+		Button		KeyNumpad6;			/**< Numeric keypad 6 */
+		Button		KeyNumpad7;			/**< Numeric keypad 7 */
+		Button		KeyNumpad8;			/**< Numeric keypad 8 */
+		Button		KeyNumpad9;			/**< Numeric keypad 9 */
+		Button		KeyNumpadMultiply;	/**< Numeric keypad "Multiply" */
+		Button		KeyNumpadAdd;		/**< Numeric keypad "Add" */
+		Button		KeyNumpadSeparator;	/**< Numeric keypad "Separator" */
+		Button		KeyNumpadSubtract;	/**< Numeric keypad "Subtract" */
+		Button		KeyNumpadDecimal;	/**< Numeric keypad "Decimal" */
+		Button		KeyNumpadDivide;	/**< Numeric keypad "Divide" */
+		Button		KeyF1;				/**< F1 */
+		Button		KeyF2;				/**< F2 */
+		Button		KeyF3;				/**< F3 */
+		Button		KeyF4;				/**< F4 */
+		Button		KeyF5;				/**< F5 */
+		Button		KeyF6;				/**< F6 */
+		Button		KeyF7;				/**< F7 */
+		Button		KeyF8;				/**< F8 */
+		Button		KeyF9;				/**< F9 */
+		Button		KeyF10;				/**< F10 */
+		Button		KeyF11;				/**< F11 */
+		Button		KeyF12;				/**< F12 */
+		Button		KeyNumLock;			/**< Num lock */
+		Button		KeyScrollLock;		/**< Scroll lock */
+		Button		KeyCircumflex;		/**< Circumflex (^) */
 
 		// Main character controls
-		PLInput::Axis		TransX;				/**< X translation axis */
-		PLInput::Axis		TransY;				/**< Y translation axis */
-		PLInput::Axis		TransZ;				/**< Z translation axis */
-		PLInput::Axis		RotX;				/**< X rotation axis */
-		PLInput::Axis		RotY;				/**< Y rotation axis */
-		PLInput::Axis		RotZ;				/**< Z rotation axis */
-		PLInput::Button		Forward;			/**< Move forwards */
-		PLInput::Button		Backward;			/**< Move backwards */
-		PLInput::Button		Left;				/**< Move (rotate) left */
-		PLInput::Button		Right;				/**< Move (rotate) right */
-		PLInput::Button		StrafeLeft;			/**< Strafe left */
-		PLInput::Button		StrafeRight;		/**< Strafe right */
-		PLInput::Button		Up;					/**< Move up */
-		PLInput::Button		Down;				/**< Move down */
-		PLInput::Button		Run;				/**< Keep pressed to run */
-		PLInput::Button		Crouch;				/**< Keep pressed to crouch */
-		PLInput::Button		Button1;			/**< Button for action #1 */
-		PLInput::Button		Button2;			/**< Button for action #2 */
-		PLInput::Button		Button3;			/**< Button for action #3 */
-		PLInput::Button		Button4;			/**< Button for action #4 */
-		PLInput::Button		Button5;			/**< Button for action #5 */
+		Axis		TransX;				/**< X translation axis */
+		Axis		TransY;				/**< Y translation axis */
+		Axis		TransZ;				/**< Z translation axis */
+		Axis		RotX;				/**< X rotation axis */
+		Axis		RotY;				/**< Y rotation axis */
+		Axis		RotZ;				/**< Z rotation axis */
+		Button		Forward;			/**< Move forwards */
+		Button		Backward;			/**< Move backwards */
+		Button		Left;				/**< Move (rotate) left */
+		Button		Right;				/**< Move (rotate) right */
+		Button		StrafeLeft;			/**< Strafe left */
+		Button		StrafeRight;		/**< Strafe right */
+		Button		Up;					/**< Move up */
+		Button		Down;				/**< Move down */
+		Button		Run;				/**< Keep pressed to run */
+		Button		Crouch;				/**< Keep pressed to crouch */
+		Button		Jump;				/**< Jump */
+		Button		Button1;			/**< Button for action #1 */
+		Button		Button2;			/**< Button for action #2 */
+		Button		Button3;			/**< Button for action #3 */
+		Button		Button4;			/**< Button for action #4 */
+		Button		Button5;			/**< Button for action #5 */
 
 
 	//[-------------------------------------------------------]

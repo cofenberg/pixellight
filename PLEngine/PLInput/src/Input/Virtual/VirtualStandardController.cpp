@@ -180,6 +180,7 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	Down				(this, "Down",			"Move down",							0x00),
 	Run					(this, "Run",			"Keep pressed to run",					0x00),
 	Crouch				(this, "Crouch",		"Keep pressed to crouch",				0x00),
+	Jump				(this, "Jump",			"Jump",									0x00),
 	Button1				(this, "Button1",		"Button for action #1",					0x00),
 	Button2				(this, "Button2",		"Button for action #2",					0x00),
 	Button3				(this, "Button3",		"Button for action #3",					0x00),
@@ -254,9 +255,10 @@ void VirtualStandardController::ConnectToDevices()
 			Connect("Up",			&pKeyboard->KeyPageUp);
 			Connect("Down",			&pKeyboard->KeyPageDown);
 
-			// Run/crouch
+			// Run/crouch/jump
 			Connect("Run",			&pKeyboard->KeyShift);
 			Connect("Crouch",		&pKeyboard->KeyControl);
+			Connect("Jump",			&pKeyboard->KeySpace);
 
 			// Buttons
 			Connect("Button1",		&pKeyboard->KeySpace);
@@ -292,8 +294,8 @@ void VirtualStandardController::ConnectToDevices()
 			Connect("RotX",			&pSpaceMouse->RotY,   -1.0f/90.0f);
 			Connect("RotY",			&pSpaceMouse->RotX,   -1.0f/90.0f);
 			Connect("RotZ",			&pSpaceMouse->RotZ,   -1.0f/90.0f);
-			Connect("TransX",		&pSpaceMouse->TransY, -1.0f/90.0f);
-			Connect("TransY",		&pSpaceMouse->TransX, -1.0f/90.0f);
+			Connect("TransX",		&pSpaceMouse->TransX, -1.0f/90.0f);
+			Connect("TransY",		&pSpaceMouse->TransY, -1.0f/90.0f);
 			Connect("TransZ",		&pSpaceMouse->TransZ, -1.0f/90.0f);
 
 			// Buttons

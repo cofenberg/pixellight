@@ -35,6 +35,7 @@ add_sources(
 	src/SceneNodeModifiers/SNMPhysicsBodyTerrain.cpp
 	src/SceneNodeModifiers/SNMPhysicsCharacter.cpp
 	src/SceneNodeModifiers/SNMPhysicsCharacterController.cpp
+	src/SceneNodeModifiers/PhysicsCharacterController.cpp
 	src/SceneNodeModifiers/SNMPhysicsCorrectDistance.cpp
 	src/SceneNodeModifiers/SNMPhysicsForce.cpp
 	src/SceneNodeModifiers/SNMPhysicsJoint.cpp

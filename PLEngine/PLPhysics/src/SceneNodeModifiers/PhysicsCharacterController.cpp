@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: CameraZoomController.cpp                       *
+ *  File: PhysicsCharacterController.cpp                 *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,20 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/CameraZoomController.h"
+#include "PLPhysics/SceneNodeModifiers/PhysicsCharacterController.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLInput;
-namespace PLScene {
+namespace PLPhysics {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(CameraZoomController)
+pl_implement_class(PhysicsCharacterController)
 
 
 //[-------------------------------------------------------]
@@ -46,8 +46,24 @@ pl_implement_class(CameraZoomController)
 *  @brief
 *    Constructor
 */
-CameraZoomController::CameraZoomController() : Controller(ControllerVirtual, "CameraZoomController", "Camera zoom input controller"),
-	Zoom(this, "Zoom", "Zoom")
+PhysicsCharacterController::PhysicsCharacterController() : Controller(ControllerVirtual, "PhysicsCharacterController", "Physics character input controller"),
+	TransX				(this, "TransX",		"X translation axis"),
+	TransY				(this, "TransY",		"Y translation axis"),
+	TransZ				(this, "TransZ",		"Z translation axis"),
+	RotX				(this, "RotX",			"X rotation axis"),
+	RotY				(this, "RotY",			"Y rotation axis"),
+	RotZ				(this, "RotZ",			"Z rotation axis"),
+	Forward				(this, "Forward",		"Move forwards",			0x00),
+	Backward			(this, "Backward",		"Move backwards",			0x00),
+	Left				(this, "Left",			"Move (rotate) left",		0x00),
+	Right				(this, "Right",			"Move (rotate) right",		0x00),
+	StrafeLeft			(this, "StrafeLeft",	"Strafe left",				0x00),
+	StrafeRight			(this, "StrafeRight",	"Strafe right",				0x00),
+	Up					(this, "Up",			"Move up",					0x00),
+	Down				(this, "Down",			"Move down",				0x00),
+	Run					(this, "Run",			"Keep pressed to run",		0x00),
+	Crouch				(this, "Crouch",		"Keep pressed to crouch",	0x00),
+	Jump				(this, "Jump",			"Jump",						0x00)
 {
 }
 
@@ -55,7 +71,7 @@ CameraZoomController::CameraZoomController() : Controller(ControllerVirtual, "Ca
 *  @brief
 *    Destructor
 */
-CameraZoomController::~CameraZoomController()
+PhysicsCharacterController::~PhysicsCharacterController()
 {
 }
 
@@ -63,4 +79,4 @@ CameraZoomController::~CameraZoomController()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLPhysics

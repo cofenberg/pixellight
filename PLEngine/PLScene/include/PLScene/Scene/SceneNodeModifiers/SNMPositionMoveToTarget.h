@@ -44,6 +44,9 @@ namespace PLScene {
 /**
 *  @brief
 *    Scene node modifier class moving the owner scene node towards a target scene node
+*
+*  @note
+*    - Please note that within this simple scene node modifier, there's no path finding involved, the scene node is just moved towards the target position
 */
 class SNMPositionMoveToTarget : public SNMPosition {
 
