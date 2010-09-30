@@ -2,6 +2,8 @@
 [CO]
 - VirtualStandardController: "Jump"-Control hinzugefügt, ich denke das ist ebenfalls etwas recht allgemeines
 - VirtualStandardController: "TransX"/"TransY" Achsen zuweisung der Space Mouse war vertauscht
+- VirtualStandardController: So genau wie möglich Dokumentiert welche 3D-Achse welche Bedeutung hat... denn da kann man schonmal schnell
+  durcheinander kommen :D
 
 
 

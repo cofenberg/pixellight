@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <Scene Version="1">
     <Node Class="PLScene::SNCamera" Name="Camera1_Free" Position="0.0 0.0 10.0" Rotation="0.0 180.0 0.0">
-        <Modifier Class="PLScene::SNMMouseLookController" />
+        <Modifier Class="PLScene::SNMRotationController" />
         <Modifier Class="PLScene::SNMMoveController" Speed="2.0" />
     </Node>
     <Node Class="PLScene::SNCamera" Name="Camera2_FixRoll" Position="0.0 2.0 10.0" Rotation="0.0 180.0 0.0">
-        <Modifier Class="PLScene::SNMMouseLookController" />
+        <Modifier Class="PLScene::SNMRotationController" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
         <Modifier Class="PLScene::SNMMoveController" Speed="2.0" />
     </Node>

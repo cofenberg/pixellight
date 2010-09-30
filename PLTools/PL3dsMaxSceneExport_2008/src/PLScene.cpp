@@ -816,7 +816,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				} else {
 					// Add scene node modifier so we can automatically look around
 					XmlElement *pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class", "PLScene::SNMMouseLookController");
+					pModifierElement->SetAttribute("Class", "PLScene::SNMRotationController");
 					pNodeElement->LinkEndChild(*pModifierElement);
 
 					// Add scene node modifier automatically fixing rotation

@@ -1085,6 +1085,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\RotationController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\RotationController.h"
+					>
+				</File>
+				<File
 					RelativePath="src\Scene\SceneNodeModifiers\SNMAnchor.cpp"
 					>
 				</File>
@@ -1338,6 +1346,14 @@
 				</File>
 				<File
 					RelativePath="include\PLScene\Scene\SceneNodeModifiers\SNMRotation.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMRotationController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMRotationController.h"
 					>
 				</File>
 				<File

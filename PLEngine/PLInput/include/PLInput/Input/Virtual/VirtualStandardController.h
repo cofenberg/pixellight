@@ -45,7 +45,18 @@ namespace PLInput {
 /**
 *  @brief
 *    Standard virtual input controller
-*/
+*
+*  @remarks
+*    3D coordinate system:
+*    @code
+*      y = > Translation: Move up/down (+/-) => Rotation: Yaw (also called 'heading') change is turning to the left or right
+*      |
+*      |
+*      *---x => Translation: Strafe left/right (+/-) => Rotation: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
+*     /
+*    z => Translation: Move forwards/backwards (+/-) => Rotation: Roll (also called 'attitude') change is moving one wingtip up and the other down
+*    @endcode
+**/
 class VirtualStandardController : public VirtualController {
 
 
@@ -172,12 +183,12 @@ class VirtualStandardController : public VirtualController {
 		Button		KeyCircumflex;		/**< Circumflex (^) */
 
 		// Main character controls
-		Axis		TransX;				/**< X translation axis */
-		Axis		TransY;				/**< Y translation axis */
-		Axis		TransZ;				/**< Z translation axis */
-		Axis		RotX;				/**< X rotation axis */
-		Axis		RotY;				/**< Y rotation axis */
-		Axis		RotZ;				/**< Z rotation axis */
+		Axis		TransX;				/**< X translation axis: Strafe left/right (+/-) */
+		Axis		TransY;				/**< Y translation axis: Move up/down (+/-) */
+		Axis		TransZ;				/**< Z translation axis: Move forwards/backwards (+/-) */
+		Axis		RotX;				/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
+		Axis		RotY;				/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		Axis		RotZ;				/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
 		Button		Forward;			/**< Move forwards */
 		Button		Backward;			/**< Move backwards */
 		Button		Left;				/**< Move (rotate) left */

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PhysicsCharacterController.h                   *
+ *  File: RotationController.h                           *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_CONTROLLER_H__
-#define __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_CONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLPhysics/PLPhysics.h"
+#include "PLScene/PLScene.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
@@ -45,15 +45,15 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Physics character input controller
+*    Rotation input controller
 */
-class PhysicsCharacterController : public PLInput::Controller {
+class RotationController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, PhysicsCharacterController, "PLPhysics", PLInput::Controller, "Physics character input controller")
+	pl_class(PLS_RTTI_EXPORT, RotationController, "PLScene", PLInput::Controller, "Rotation input controller")
 	pl_class_end
 
 
@@ -61,21 +61,10 @@ class PhysicsCharacterController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis		TransX;			/**< X translation axis: Strafe left/right (+/-) */
-		PLInput::Axis		TransY;			/**< Y translation axis: Move up/down (+/-) */
-		PLInput::Axis		TransZ;			/**< Z translation axis: Move forwards/backwards (+/-) */
-		PLInput::Axis		RotY;			/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
-		PLInput::Button		Forward;		/**< Move forwards */
-		PLInput::Button		Backward;		/**< Move backwards */
-		PLInput::Button		Left;			/**< Move (rotate) left */
-		PLInput::Button		Right;			/**< Move (rotate) right */
-		PLInput::Button		StrafeLeft;		/**< Strafe left */
-		PLInput::Button		StrafeRight;	/**< Strafe right */
-		PLInput::Button		Up;				/**< Move up */
-		PLInput::Button		Down;			/**< Move down */
-		PLInput::Button		Run;			/**< Keep pressed to run */
-		PLInput::Button		Crouch;			/**< Keep pressed to crouch */
-		PLInput::Button		Jump;			/**< Jump */
+		PLInput::Axis	RotX;	/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
+		PLInput::Axis	RotY;	/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		PLInput::Axis	RotZ;	/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
+		PLInput::Button	Rotate;	/**< Keep pressed to rotate (optional) */
 
 
 	//[-------------------------------------------------------]
@@ -86,13 +75,13 @@ class PhysicsCharacterController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLPHYSICS_API PhysicsCharacterController();
+		PLS_API RotationController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~PhysicsCharacterController();
+		PLS_API virtual ~RotationController();
 
 
 };
@@ -101,7 +90,7 @@ class PhysicsCharacterController : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLScene
 
 
-#endif // __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_CONTROLLER_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__

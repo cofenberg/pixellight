@@ -99,9 +99,7 @@ SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNo
 		m_pController->Connect("TransX",		pController->GetControl("TransX"));
 		m_pController->Connect("TransY",		pController->GetControl("TransY"));
 		m_pController->Connect("TransZ",		pController->GetControl("TransZ"));
-		m_pController->Connect("RotX",			pController->GetControl("RotX"));
 		m_pController->Connect("RotY",			pController->GetControl("RotY"));
-		m_pController->Connect("RotZ",			pController->GetControl("RotZ"));
 		m_pController->Connect("Forward",		pController->GetControl("Forward"));
 		m_pController->Connect("Backward",		pController->GetControl("Backward"));
 		m_pController->Connect("Left",			pController->GetControl("Left"));
@@ -205,7 +203,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 			}
 			if (m_pController->Right.IsPressed())
 				fYRotationChange -= fTimeDiff*YRotVelocity;
-			fYRotationChange += m_pController->RotZ.GetValue()*fTimeDiff*YRotVelocity;
+			fYRotationChange += m_pController->RotY.GetValue()*fTimeDiff*YRotVelocity;
 			if (fYRotationChange) {
 				Vector3 vRot = cSceneNode.GetRotation();
 				vRot.y += fYRotationChange;

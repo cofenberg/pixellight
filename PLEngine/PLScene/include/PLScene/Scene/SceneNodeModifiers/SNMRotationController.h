@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMPhysicsCharacterController.h                *
+ *  File: SNMRotationController.h                        *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_H__
-#define __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_MOUSELOOKCONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_MOUSELOOKCONTROLLER_H__
 #pragma once
 
 
@@ -29,24 +29,24 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsCharacter.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLInput {
-	class Controller;
+	class Control;
 }
-namespace PLPhysics {
-	class PhysicsCharacterController;
+namespace PLScene {
+	class RotationController;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
@@ -54,17 +54,12 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Basic PL physics character controller scene node modifier class
-*
-*  @remarks
-*    When using the unchanged virtual standard controller:
-*    Use a/w/d/s or cursor keys to walk, q/e to rotate and 'space' to jump. 'PageUp/PageDown'
-*    to move upwards/downwards. Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
+*    Scene node rotation input controller modifier class
 *
 *  @note
 *    - Normally only used for rapid prototyping
 */
-class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
+class SNMRotationController : public SNMRotation {
 
 
 	//[-------------------------------------------------------]
@@ -73,35 +68,24 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	public:
 		/**
 		*  @brief
-		*    Scene node modifier flags (PLScene::SceneNodeModifier flags extension)
+		*    Scene node modifier flags (SceneNodeModifier flags extension)
 		*/
 		enum EFlags {
-			NoJump  = 1<<3,	/**< Do not allow jumping */
-			NoRun   = 1<<4,	/**< Do not allow running */
-			NoCreep = 1<<5	/**< Do not allow creeping */
+			UseRotationKey = 1<<2	/**< If this flag is set, it's required to keep the rotation key pressed in order to rotate */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(SNMPhysicsCharacter::EFlags)
-			pl_enum_value(NoJump,	"Do not allow jumping")
-			pl_enum_value(NoRun,	"Do not allow running")
-			pl_enum_value(NoCreep,	"Do not allow creeping")
+			pl_enum_base(SNMRotation::EFlags)
+			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate")
 		pl_enum_end
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsCharacterController, "PLPhysics", PLPhysics::SNMPhysicsCharacter, "Basic PL physics character controller scene node modifier class")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(YRotVelocity,			float,					0.0f,	ReadWrite,	DirectValue,	"Y rotation velocity, if 0, there's no rotation control",											"")
-		pl_attribute(IdleAnimation,			PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Idle animation",																					"")
-		pl_attribute(IdleAnimationSpeed,	float,					24.0f,	ReadWrite,	DirectValue,	"Idle animation playback speed",																	"Min='0.0001'")
-		pl_attribute(WalkAnimation,			PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Walk animation",																					"")
-		pl_attribute(WalkAnimationSpeed,	float,					24.0f,	ReadWrite,	DirectValue,	"Walk animation playback speed",																	"Min='0.0001'")
-		pl_attribute(RunAnimationSpeed,		float,					35.0f,	ReadWrite,	DirectValue,	"Run animation playback speed (walk animation, just faster)",										"Min='0.0001'")
-		pl_attribute(RotationNode,			PLGeneral::String,		"",		ReadWrite,	DirectValue,	"If empty, take the rotation of the owner node for movement, else the rotation of the given node",	"")
-		// Overwritten PLScene::SceneNodeModifier variables
-		pl_attribute(Flags,					pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																							"")
+	pl_class(PLS_RTTI_EXPORT, SNMRotationController, "PLScene", PLScene::SNMRotation, "Scene node rotation input controller modifier class")
+		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Overwritten SceneNodeModifier variables
+		pl_attribute(Flags,	pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,	"Flags",	"")
 	pl_class_end
 
 
@@ -109,7 +93,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -123,13 +107,13 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLPHYSICS_API SNMPhysicsCharacterController(PLScene::SceneNode &cSceneNode);
+		PLS_API SNMRotationController(SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~SNMPhysicsCharacterController();
+		PLS_API virtual ~SNMRotationController();
 
 		/**
 		*  @brief
@@ -138,7 +122,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 		*  @return
 		*    Input controller
 		*/
-		PLPHYSICS_API PLInput::Controller &GetController();
+		PLS_API PLInput::Controller &GetController();
 
 
 	//[-------------------------------------------------------]
@@ -163,8 +147,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool						m_bJumping;		/**< Are we currently jumping? */
-		PhysicsCharacterController *m_pController;	/**< Physics character input controller instance, always valid! */
+		RotationController *m_pController;	/**< Rotation input controller instance, always valid! */
 
 
 };
@@ -173,7 +156,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLScene
 
 
-#endif // __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_MOUSELOOKCONTROLLER_H__

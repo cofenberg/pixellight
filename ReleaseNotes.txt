@@ -5,6 +5,7 @@ Changes in PixelLight 0.9.2-R3 (not yet released)
 - Change: Introduced new "PLRenderer::ShaderLanguage" interface, removed "Create<Type>Shader()" and "CreateProgram()" within "PLRenderer::Renderer"
 - Change: Camera zoom input control modifier "PLScene::SNMCameraZoom" was replaced by "PLScene::SNMCameraZoomController"
 - Change: "PLPhysics::SNMPhysicsCharacterController" is now using a virtual input controller instead of accessing input devices directly
+- Change: New "PLScene::SNMRotationController" scene node modifier as replacement for "PLScene::SNMMouseLookController"
 - Removed: Old shader interface within PLRenderer
 - Bugfix: Within some GLSL shaders, the not specified "clamp(float, int, int)" was used, which didn't work on every system
 - Bugfix: Fixed PLDemoRendererRTT graphics bug

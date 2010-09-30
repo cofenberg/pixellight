@@ -164,12 +164,12 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	KeyScrollLock		(this, "ScrollLock",	"ScrollLock",							0x00),
 	KeyCircumflex		(this, "Circumflex",	"Circumflex",							0x00),
 	// Main character controls
-	TransX				(this, "TransX",		"X translation axis"),
-	TransY				(this, "TransY",		"Y translation axis"),
-	TransZ				(this, "TransZ",		"Z translation axis"),
-	RotX				(this, "RotX",			"X rotation axis"),
-	RotY				(this, "RotY",			"Y rotation axis"),
-	RotZ				(this, "RotZ",			"Z rotation axis"),
+	TransX				(this, "TransX",		"X translation axis: Strafe left/right (+/-)"),
+	TransY				(this, "TransY",		"Y translation axis: Move up/down (+/-)"),
+	TransZ				(this, "TransZ",		"Z translation axis: Move forwards/backwards (+/-)"),
+	RotX				(this, "RotX",			"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
+	RotY				(this, "RotY",			"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
+	RotZ				(this, "RotZ",			"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
 	Forward				(this, "Forward",		"Move forwards",						0x00),
 	Backward			(this, "Backward",		"Move backwards",						0x00),
 	Left				(this, "Left",			"Move (rotate) left",					0x00),
@@ -221,8 +221,10 @@ void VirtualStandardController::ConnectToDevices()
 			Mouse *pMouse = (Mouse*)pDevice;
 
 			// Movement
-			Connect("RotX",			&pMouse->X);
-			Connect("RotY",			&pMouse->Y);
+			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
+			Connect("RotX",			&pMouse->Y);
+			// RotY: Yaw (also called 'heading') change is turning to the left or right
+			Connect("RotY",			&pMouse->X, -1.0f);
 
 			// Buttons
 			Connect("Button1",		&pMouse->Left);
@@ -274,8 +276,10 @@ void VirtualStandardController::ConnectToDevices()
 			Joystick *pJoystick = (Joystick*)pDevice;
 
 			// Movement
-			Connect("RotX",			&pJoystick->X, 4.0f);
-			Connect("RotY",			&pJoystick->Y, 4.0f);
+			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
+			Connect("RotX",			&pJoystick->Y, 4.0f);
+			// RotY: Yaw (also called 'heading') change is turning to the left or right
+			Connect("RotY",			&pJoystick->X, 4.0f);
 
 			// Buttons
 			Connect("Button1",		&pJoystick->Button0);
@@ -291,11 +295,17 @@ void VirtualStandardController::ConnectToDevices()
 			SpaceMouse *pSpaceMouse = (SpaceMouse*)pDevice;
 
 			// Movement
-			Connect("RotX",			&pSpaceMouse->RotY,   -1.0f/90.0f);
-			Connect("RotY",			&pSpaceMouse->RotX,   -1.0f/90.0f);
-			Connect("RotZ",			&pSpaceMouse->RotZ,   -1.0f/90.0f);
+			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
+			Connect("RotX",			&pSpaceMouse->RotX,   -1.0f/90.0f);
+			// RotY: Yaw (also called 'heading') change is turning to the left or right
+			Connect("RotY",			&pSpaceMouse->RotZ,   -1.0f/90.0f);
+			// RotZ: Roll (also called 'attitude') change is moving one wingtip up and the other down
+			Connect("RotZ",			&pSpaceMouse->RotY,   -1.0f/90.0f);
+			// X translation axis: Strafe left/right (+/-)
 			Connect("TransX",		&pSpaceMouse->TransX, -1.0f/90.0f);
+			// Y translation axis: Move up/down (+/-)
 			Connect("TransY",		&pSpaceMouse->TransY, -1.0f/90.0f);
+			// Z translation axis: Move forwards/backwards (+/-)
 			Connect("TransZ",		&pSpaceMouse->TransZ, -1.0f/90.0f);
 
 			// Buttons

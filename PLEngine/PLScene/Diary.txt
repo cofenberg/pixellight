@@ -1,8 +1,10 @@
 >> 30.09.2010
 [CO]
 - "SNMCameraZoom": "Zoom" Attribute in "ZoomDegree" umbenannt
-- "SNMCameraZoom": Input nutzung entfernt, dafür "SNMCameraZoomController" hinzugefügt das von "SNMCameraZoom" abgeleitet ist und sich "ausschließlich"
+- "SNMCameraZoom": Input Nutzung entfernt, dafür "SNMCameraZoomController" hinzugefügt das von "SNMCameraZoom" abgeleitet ist und sich "ausschließlich"
   um Input kümmert
+- "SNMRotationController" Scene Node Modifier als Ersatz für das alte "SNMMouseLookController" hinzugefügt, durch den Virtuellen Controller ist das ja
+  nun nicht mehr nur auf Maus fixiert (war es ohnehin nicht mehr da auch Space Mouse unterstützt wurde)
 
 
 

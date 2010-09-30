@@ -424,7 +424,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 		SetCamera((SNCamera*)pCamera);
 
 		// Add a controller modifier so we can look around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMMouseLookController");
+		pCamera->AddModifier("PLScene::SNMRotationController");
 
 		// Fix roll to avoid a camera twist
 		pCamera->AddModifier("PLScene::SNMRotationFixRoll");
