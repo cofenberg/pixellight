@@ -54,6 +54,9 @@ namespace PLScene {
 /**
 *  @brief
 *    Scene node modifier class implementing camera zoom input control
+*
+*  @note
+*    - Normally only used for rapid prototyping
 */
 class SNMCameraZoomController : public SNMCameraZoom {
 

@@ -1,6 +1,8 @@
 >> 30.09.2010
 [CO]
-- "SNMPhysicsCharacterController": Nutzt nun einen Virtuellen Input Controller
+- SNMPhysicsCharacterController: Nutzt nun einen Virtuellen Input Controller
+- SNMPhysicsCharacterController: "SpaceMouseTranslationFactor"-Attribut entfernt, dies kann nun viel universeller über den Virtuellen Controller eingestellt werden
+- SNMPhysicsCharacterController: "FlipXAxis"/"FlipZAxis"-Flags entfernt, dies kann nun viel universeller über den Virtuellen Controller eingestellt werden
 
 
 

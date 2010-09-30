@@ -61,8 +61,7 @@ namespace PLPhysics {
 *    to move upwards/downwards. Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
 *
 *  @note
-*    - Normally only used for debugging
-*    - 'SpaceMouse'-support
+*    - Normally only used for rapid prototyping
 */
 class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 
@@ -76,19 +75,15 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 		*    Scene node modifier flags (PLScene::SceneNodeModifier flags extension)
 		*/
 		enum EFlags {
-			FlipXAxis = 1<<3,	/**< Flip x axis */
-			FlipZAxis = 1<<4,	/**< Flip z axis */
-			NoJump    = 1<<5,	/**< Do not allow jumping */
-			NoRun     = 1<<6,	/**< Do not allow running */
-			NoCreep   = 1<<7	/**< Do not allow creeping */
+			NoJump  = 1<<3,	/**< Do not allow jumping */
+			NoRun   = 1<<4,	/**< Do not allow running */
+			NoCreep = 1<<5	/**< Do not allow creeping */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SNMPhysicsCharacter::EFlags)
-			pl_enum_value(FlipXAxis, "Flip x axis")
-			pl_enum_value(FlipZAxis, "Flip z axis")
-			pl_enum_value(NoJump,	 "Do not allow jumping")
-			pl_enum_value(NoRun,	 "Do not allow running")
-			pl_enum_value(NoCreep,	 "Do not allow creeping")
+			pl_enum_value(NoJump,	"Do not allow jumping")
+			pl_enum_value(NoRun,	"Do not allow running")
+			pl_enum_value(NoCreep,	"Do not allow creeping")
 		pl_enum_end
 
 

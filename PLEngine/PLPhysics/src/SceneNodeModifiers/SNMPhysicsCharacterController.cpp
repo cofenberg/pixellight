@@ -150,13 +150,9 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 			pRotationNode = pSceneNode;
 	}
 	const Quaternion &qRot = pRotationNode->GetTransform().GetRotation();
-	Vector3 vDirLeftVector = qRot.GetXAxis();
-	Vector3 vDirUpVector   = qRot.GetYAxis();
-	Vector3 vDirVector     = qRot.GetZAxis();
-	if (GetFlags() & FlipZAxis)
-		vDirVector.Invert();
-	if (GetFlags() & FlipXAxis)
-		vDirLeftVector.Invert();
+	const Vector3 vDirLeftVector = qRot.GetXAxis();
+	const Vector3 vDirUpVector   = qRot.GetYAxis();
+	const Vector3 vDirVector     = qRot.GetZAxis();
 
 	// Revert animation?
 	bool bRevert = false;
@@ -202,17 +198,20 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 	if (m_pController->GetActive()) {
 		// Rotation
 		if (YRotVelocity) {
-			Vector3 vRot = cSceneNode.GetRotation();
+			float fYRotationChange = 0.0f;
 			if (m_pController->Left.IsPressed()) {
-				vRot.y += fTimeDiff*YRotVelocity;
+				fYRotationChange += fTimeDiff*YRotVelocity;
 				bRevert = true;
 			}
 			if (m_pController->Right.IsPressed())
-				vRot.y -= fTimeDiff*YRotVelocity;
-			vRot.y += m_pController->RotZ.GetValue()*fTimeDiff*YRotVelocity;
-			if (vRot != cSceneNode.GetRotation())
+				fYRotationChange -= fTimeDiff*YRotVelocity;
+			fYRotationChange += m_pController->RotZ.GetValue()*fTimeDiff*YRotVelocity;
+			if (fYRotationChange) {
+				Vector3 vRot = cSceneNode.GetRotation();
+				vRot.y += fYRotationChange;
+				cSceneNode.SetRotation(vRot);
 				bIdle = false;
-			cSceneNode.SetRotation(vRot);
+			}
 		}
 
 		// Jump
