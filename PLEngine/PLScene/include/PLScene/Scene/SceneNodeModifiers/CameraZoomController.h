@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: GunController.h                                *
+ *  File: CameraZoomController.h                         *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLDEMO2DGAME_GUNCONTROLLER_H__
-#define __PLDEMO2DGAME_GUNCONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
 #pragma once
 
 
@@ -30,7 +30,13 @@
 //[-------------------------------------------------------]
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
-#include <PLInput/Input/Controls/Axis.h>
+#include "PLScene/PLScene.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
@@ -38,15 +44,15 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Gun input controller
+*    Camera zoom input controller
 */
-class GunController : public PLInput::Controller {
+class CameraZoomController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, GunController, "", PLInput::Controller, "Demo2DGame gun input controller")
+	pl_class(PLS_RTTI_EXPORT, CameraZoomController, "PLScene", PLInput::Controller, "Camera zoom input controller")
 	pl_class_end
 
 
@@ -54,10 +60,7 @@ class GunController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	X;			/**< X rotation axis */
-		PLInput::Button	Left;		/**< Move (rotate) left */
-		PLInput::Button	Right;		/**< Move (rotate) right */
-		PLInput::Button	Fire;		/**< Fire gun */
+		PLInput::Button	Zoom;	/**< Zoom */
 
 
 	//[-------------------------------------------------------]
@@ -68,16 +71,22 @@ class GunController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		GunController();
+		PLS_API CameraZoomController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~GunController();
+		PLS_API virtual ~CameraZoomController();
 
 
 };
 
 
-#endif // __PLDEMO2DGAME_GUNCONTROLLER_H__
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLScene
+
+
+#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__

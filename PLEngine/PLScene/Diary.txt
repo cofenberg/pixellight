@@ -1,3 +1,11 @@
+>> 30.09.2010
+[CO]
+- "SNMCameraZoom": "Zoom" Attribute in "ZoomDegree" umbenannt
+- "SNMCameraZoom": Input nutzung entfernt, dafür "SNMCameraZoomController" hinzugefügt das von "SNMCameraZoom" abgeleitet ist und sich "ausschließlich"
+  um Input kümmert
+
+
+
 >> 26.09.2010
 [CO]
 - Shader & Zeichnen Dinge aus "FullscreenQuad" entfernt da diese Hilfs-Klasse möglichst universell sein soll... im Grunde besteht diese Klasse

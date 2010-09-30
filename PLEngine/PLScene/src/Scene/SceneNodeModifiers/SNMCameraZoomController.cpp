@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMCameraZoom.cpp                              *
+ *  File: SNMCameraZoomController.cpp                    *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,37 +23,37 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include "PLScene/Scene/SNCamera.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMCameraZoom.h"
+#include <PLInput/Input/InputManager.h>
+#include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneContext.h"
+#include "PLScene/Scene/SceneNodeModifiers/CameraZoomController.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMCameraZoomController.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLInput;
 namespace PLScene {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMCameraZoom)
+pl_implement_class(SNMCameraZoomController)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
-void SNMCameraZoom::SetFlags(uint32 nValue)
+void SNMCameraZoomController::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SceneNodeModifier::SetFlags(nValue);
+	SNMCameraZoom::SetFlags(nValue);
 
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
+	// Activate/deactivate the input controller
+	m_pController->SetActive(IsActive());
 }
 
 
@@ -64,22 +64,40 @@ void SNMCameraZoom::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMCameraZoom::SNMCameraZoom(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
-	ZoomDegree(this),
-	ZoomFactor(this),
-	ZoomSpeed(this),
-	EventHandlerUpdate(&SNMCameraZoom::NotifyUpdate, this),
-	m_fOriginalFOV(cSceneNode.IsCamera() ? ((SNCamera&)cSceneNode).GetFOV() : 0.0f),
-	m_fCurrentZoomFactor(0.0f)
+SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCameraZoom(cSceneNode),
+	EventHandlerControl(&SNMCameraZoomController::NotifyControl, this),
+	m_pController(new CameraZoomController())
 {
+	// Connect input control event handler
+	m_pController->OnControl.Connect(&EventHandlerControl);
+
+	// Connect to virtual input controller
+	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
+	//        virtual controller is used by the application. Therefore, it should be the application that
+	//        connects our controls to it's virtual controller, which will need some additional callback
+	//        to connect to scene nodes that provide input controllers.
+	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
+	if (pController)
+		m_pController->Connect("Zoom", pController->GetControl("Button2"));
 }
 
 /**
 *  @brief
 *    Destructor
 */
-SNMCameraZoom::~SNMCameraZoom()
+SNMCameraZoomController::~SNMCameraZoomController()
 {
+	// Destroy the input controller
+	delete m_pController;
+}
+
+/**
+*  @brief
+*    Get input controller
+*/
+Controller &SNMCameraZoomController::GetController()
+{
+	return *m_pController;
 }
 
 
@@ -88,38 +106,12 @@ SNMCameraZoom::~SNMCameraZoom()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when the scene node needs to be updated
+*    Called when a control event has occured
 */
-void SNMCameraZoom::NotifyUpdate()
+void SNMCameraZoomController::NotifyControl(Control *pControl)
 {
-	// Get the scene node
-	SceneNode &cSceneNode = GetSceneNode();
-	if (cSceneNode.IsCamera()) {
-		// Smooth camera zoom?
-		if (ZoomSpeed) {
-			// Get the current time difference
-			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference()*ZoomSpeed;
-
-			// Update the current zoom factor
-			if (m_fCurrentZoomFactor < ZoomFactor) {
-				// Increase the current zoom factor
-				m_fCurrentZoomFactor += fTimeDiff;
-				if (m_fCurrentZoomFactor > ZoomFactor)
-					m_fCurrentZoomFactor = ZoomFactor;
-			} else {
-				// Decrease the current zoom factor
-				m_fCurrentZoomFactor -= fTimeDiff;
-				if (m_fCurrentZoomFactor < ZoomFactor)
-					m_fCurrentZoomFactor = ZoomFactor;
-			}
-		} else {
-			// Set to target zoom factor at once
-			m_fCurrentZoomFactor = ZoomFactor;
-		}
-
-		// Set the current FOV of the owner camera
-		((SNCamera&)cSceneNode).SetFOV(m_fOriginalFOV - m_fCurrentZoomFactor*ZoomDegree);
-	}
+	if (pControl == &((CameraZoomController*)m_pController)->Zoom)
+		ZoomFactor = ((Button*)pControl)->IsPressed() ? 1.0f : 0.0f;
 }
 
 

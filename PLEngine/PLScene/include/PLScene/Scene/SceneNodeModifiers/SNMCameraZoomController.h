@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMCameraZoom.h                                *
+ *  File: SNMCameraZoomController.h                      *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOM_H__
-#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOM_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifier.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMCameraZoom.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLInput {
+	class Controller;
+}
 
 
 //[-------------------------------------------------------]
@@ -43,22 +50,16 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node modifier class implementing camera zoom
+*    Scene node modifier class implementing camera zoom input control
 */
-class SNMCameraZoom : public SceneNodeModifier {
+class SNMCameraZoomController : public SNMCameraZoom {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMCameraZoom, "PLScene", PLScene::SceneNodeModifier, "Scene node modifier class implementing camera zoom")
-		pl_properties
-			pl_property("SceneNodeClass", "PLScene::SNCamera")
-		pl_properties_end
+	pl_class(PLS_RTTI_EXPORT, SNMCameraZoomController, "PLScene", PLScene::SNMCameraZoom, "Scene node modifier class implementing camera zoom input control")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
-		pl_attribute(ZoomDegree,	float,	30.0f,	ReadWrite,	DirectValue,	"Zoom in degree, added to original camera FOV",												"")
-		pl_attribute(ZoomFactor,	float,	0.0f,	ReadWrite,	DirectValue,	"Target zoom factor [0..1]",																"")
-		pl_attribute(ZoomSpeed,		float,	4.0f,	ReadWrite,	DirectValue,	"Current zoom factor update speed, if 0, current factor is set to target factor at once",	"")
 	pl_class_end
 
 
@@ -80,13 +81,22 @@ class SNMCameraZoom : public SceneNodeModifier {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMCameraZoom(SceneNode &cSceneNode);
+		PLS_API SNMCameraZoomController(SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMCameraZoom();
+		PLS_API virtual ~SNMCameraZoomController();
+
+		/**
+		*  @brief
+		*    Get input controller
+		*
+		*  @return
+		*    Input controller
+		*/
+		PLS_API PLInput::Controller &GetController();
 
 
 	//[-------------------------------------------------------]
@@ -95,24 +105,26 @@ class SNMCameraZoom : public SceneNodeModifier {
 	private:
 		/**
 		*  @brief
-		*    Called when the scene node needs to be updated
+		*    Called when a control event has occured
+		*
+		*  @param[in] pControl
+		*    The control causing the event
 		*/
-		void NotifyUpdate();
+		void NotifyControl(PLInput::Control *pControl);
 
 
 	//[-------------------------------------------------------]
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
+		PLCore::EventHandler<PLInput::Control*> EventHandlerControl;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		float m_fOriginalFOV;		/**< Original camera scene node FOV in degree when this modifier was added */
-		float m_fCurrentZoomFactor;	/**< Current zoom factor [0..1] */
+		PLInput::Controller *m_pController;	/**< Camera zoom input controller instance, always valid! */
 
 
 };
@@ -124,4 +136,4 @@ class SNMCameraZoom : public SceneNodeModifier {
 } // PLScene
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOM_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_H__

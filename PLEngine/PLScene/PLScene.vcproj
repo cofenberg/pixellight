@@ -1077,6 +1077,14 @@
 				Name="SceneNodeModifiers"
 				>
 				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\CameraZoomController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\CameraZoomController.h"
+					>
+				</File>
+				<File
 					RelativePath="src\Scene\SceneNodeModifiers\SNMAnchor.cpp"
 					>
 				</File>
@@ -1114,6 +1122,14 @@
 				</File>
 				<File
 					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMCameraZoom.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMCameraZoomController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMCameraZoomController.h"
 					>
 				</File>
 				<File

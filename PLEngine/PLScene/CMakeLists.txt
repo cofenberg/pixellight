@@ -100,6 +100,8 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMMouseOrbitingController.cpp
 	src/Scene/SceneNodeModifiers/SNMUnknown.cpp
 	src/Scene/SceneNodeModifiers/SNMCameraZoom.cpp
+	src/Scene/SceneNodeModifiers/SNMCameraZoomController.cpp
+	src/Scene/SceneNodeModifiers/CameraZoomController.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshMorphBlink.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshMorphCameraNear.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionRandomAnimation.cpp
