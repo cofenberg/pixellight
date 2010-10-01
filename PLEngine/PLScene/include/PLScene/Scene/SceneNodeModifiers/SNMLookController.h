@@ -35,9 +35,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLInput {
-	class Control;
-}
 namespace PLScene {
 	class LookController;
 }
@@ -115,14 +112,12 @@ class SNMLookController : public SNMTransform {
 		*/
 		PLS_API virtual ~SNMLookController();
 
-		/**
-		*  @brief
-		*    Get input controller
-		*
-		*  @return
-		*    Input controller
-		*/
-		PLS_API PLInput::Controller &GetController();
+
+	//[-------------------------------------------------------]
+	//[ Public virtual SceneNodeModifier functions            ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

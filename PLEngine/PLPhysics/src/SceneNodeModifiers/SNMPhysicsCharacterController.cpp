@@ -126,6 +126,15 @@ SNMPhysicsCharacterController::~SNMPhysicsCharacterController()
 
 
 //[-------------------------------------------------------]
+//[ Public virtual PLScene::SceneNodeModifier functions   ]
+//[-------------------------------------------------------]
+Controller *SNMPhysicsCharacterController::GetInputController() const
+{
+	return m_pController;
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**

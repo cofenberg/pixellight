@@ -102,13 +102,13 @@ SNMLookController::~SNMLookController()
 	delete m_pController;
 }
 
-/**
-*  @brief
-*    Get input controller
-*/
-Controller &SNMLookController::GetController()
+
+//[-------------------------------------------------------]
+//[ Public virtual SceneNodeModifier functions            ]
+//[-------------------------------------------------------]
+Controller *SNMLookController::GetInputController() const
 {
-	return *m_pController;
+	return m_pController;
 }
 
 

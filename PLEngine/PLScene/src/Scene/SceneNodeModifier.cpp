@@ -31,6 +31,7 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLCore;
+using namespace PLInput;
 namespace PLScene {
 
 
@@ -103,6 +104,20 @@ void SceneNodeModifier::SetActive(bool bActive)
 		// Set new flags
 		Flags = nNewFlags;
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual SceneNodeModifier functions            ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Get input controller
+*/
+Controller *SceneNodeModifier::GetInputController() const
+{
+	// The default implementation is empty
+	return NULL;
 }
 
 

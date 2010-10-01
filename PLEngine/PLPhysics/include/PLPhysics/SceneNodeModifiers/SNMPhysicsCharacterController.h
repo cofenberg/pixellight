@@ -35,9 +35,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLInput {
-	class Controller;
-}
 namespace PLPhysics {
 	class PhysicsCharacterController;
 }
@@ -131,14 +128,12 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 		*/
 		PLPHYSICS_API virtual ~SNMPhysicsCharacterController();
 
-		/**
-		*  @brief
-		*    Get input controller
-		*
-		*  @return
-		*    Input controller
-		*/
-		PLPHYSICS_API PLInput::Controller &GetController();
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLScene::SceneNodeModifier functions   ]
+	//[-------------------------------------------------------]
+	public:
+		PLPHYSICS_API PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

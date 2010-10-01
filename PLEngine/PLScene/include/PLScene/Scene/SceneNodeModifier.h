@@ -33,15 +33,20 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLInput {
+	class Controller;
+}
+namespace PLScene {
+	class SceneNode;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScene {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class SceneNode;
 
 
 //[-------------------------------------------------------]
@@ -150,6 +155,23 @@ class SceneNodeModifier : public PLCore::Object {
 		*    - Sets/unsets the 'Inactive'-flag
 		*/
 		PLS_API void SetActive(bool bActive = true);
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual SceneNodeModifier functions            ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Get input controller
+		*
+		*  @return
+		*    Input controller (can be NULL)
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLS_API PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

@@ -34,9 +34,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLInput {
-	class Controller;
-}
 namespace PLScene {
 	class CameraZoomController;
 }
@@ -95,14 +92,12 @@ class SNMCameraZoomController : public SNMCameraZoom {
 		*/
 		PLS_API virtual ~SNMCameraZoomController();
 
-		/**
-		*  @brief
-		*    Get input controller
-		*
-		*  @return
-		*    Input controller
-		*/
-		PLS_API PLInput::Controller &GetController();
+
+	//[-------------------------------------------------------]
+	//[ Public virtual SceneNodeModifier functions            ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

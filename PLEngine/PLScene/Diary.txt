@@ -3,6 +3,7 @@
 - Nach einer Diskussion mit Stefan "SNMRotationController" in "SNMLookController" umbenannt
 - "SNMMouseLookController" entfernt (zukünftig "SNMLookController" verwenden)
 - Wie mit Stefan besprochen SNMPosition & SNMRotation & SNMScale zu SNMTransform Basisklasse kombiniert
+- Wie mit Stefan besprochen SceneNodeModifier um virtuelle Methode "GetInputController()" erweitert
 
 
 
