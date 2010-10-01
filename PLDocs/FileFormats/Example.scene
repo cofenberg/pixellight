@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <Scene Version="1" Name="Scene">
     <Node Class="PLScene::SNCamera" Name="Camera">
-        <Modifier Class="PLScene::SNMMouseLookController" />
+        <Modifier Class="PLScene::SNMRotationController" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
         <Modifier Class="PLScene::SNMMoveController" Flags="FlipXAxis|FlipZAxis" />
     </Node>

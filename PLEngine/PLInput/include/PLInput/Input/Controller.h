@@ -212,7 +212,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    Control, or NULL if no control with that name could be found
 		*/
-		PLINPUT_API Control* GetControl(const PLGeneral::String &sName) const;
+		PLINPUT_API Control *GetControl(const PLGeneral::String &sName) const;
 
 		/**
 		*  @brief

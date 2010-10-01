@@ -1,3 +1,9 @@
+>> 01.09.2010
+[CO]
+- "SNMMouseLookController" entfernt (zukünftig "SNMRotationController" verwenden)
+
+
+
 >> 30.09.2010
 [CO]
 - "SNMCameraZoom": "Zoom" Attribute in "ZoomDegree" umbenannt
