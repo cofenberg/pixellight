@@ -538,7 +538,7 @@ bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContain
 						} else if (cTokenizer.GetToken() == sInfoPlayerStart) {
 							pSceneNode = cContainer.Create("PLScene::SNCamera", "Camera");
 							if (pSceneNode) {
-								pSceneNode->AddModifier("PLScene::SNMRotationController");
+								pSceneNode->AddModifier("PLScene::SNMLookController");
 								pSceneNode->AddModifier("PLScene::SNMRotationFixRoll");
 								pSceneNode->AddModifier("PLScene::SNMMoveController", "Speed=\"0.2\"");
 							}

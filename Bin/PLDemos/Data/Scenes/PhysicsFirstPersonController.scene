@@ -41,7 +41,7 @@
             <Modifier Class="PLPhysics::SNMPhysicsBodyEllipsoid" Mass="1" PositionOffset="0.0 -0.5 0.0" UseRotation="0" Radius="0.2 0.5 0.2" InitFrozen="0" />
             <Modifier Class="PLPhysics::SNMPhysicsJointUpVector" />
             <Modifier Class="PLPhysics::SNMPhysicsCharacterController" />
-            <Modifier Class="PLScene::SNMRotationController" />
+            <Modifier Class="PLScene::SNMLookController" />
             <Modifier Class="PLScene::SNMRotationFixRoll" />
         </Node>
     </Container>

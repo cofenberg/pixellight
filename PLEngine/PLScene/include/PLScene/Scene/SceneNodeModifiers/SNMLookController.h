@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMRotationController.h                        *
+ *  File: SNMLookController.h                            *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_MOUSELOOKCONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_MOUSELOOKCONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_H__
 #pragma once
 
 
@@ -39,7 +39,7 @@ namespace PLInput {
 	class Control;
 }
 namespace PLScene {
-	class RotationController;
+	class LookController;
 }
 
 
@@ -59,7 +59,7 @@ namespace PLScene {
 *  @note
 *    - Normally only used for rapid prototyping
 */
-class SNMRotationController : public SNMRotation {
+class SNMLookController : public SNMRotation {
 
 
 	//[-------------------------------------------------------]
@@ -82,7 +82,7 @@ class SNMRotationController : public SNMRotation {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMRotationController, "PLScene", PLScene::SNMRotation, "Scene node rotation input controller modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMLookController, "PLScene", PLScene::SNMRotation, "Scene node rotation input controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		// Overwritten SceneNodeModifier variables
 		pl_attribute(Flags,	pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,	"Flags",	"")
@@ -107,13 +107,13 @@ class SNMRotationController : public SNMRotation {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMRotationController(SceneNode &cSceneNode);
+		PLS_API SNMLookController(SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMRotationController();
+		PLS_API virtual ~SNMLookController();
 
 		/**
 		*  @brief
@@ -147,7 +147,7 @@ class SNMRotationController : public SNMRotation {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		RotationController *m_pController;	/**< Rotation input controller instance, always valid! */
+		LookController *m_pController;	/**< Look input controller instance, always valid! */
 
 
 };
@@ -159,4 +159,4 @@ class SNMRotationController : public SNMRotation {
 } // PLScene
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_MOUSELOOKCONTROLLER_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_H__

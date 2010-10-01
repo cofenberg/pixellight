@@ -2,7 +2,7 @@
 <Scene Version="1">
     <Node Class="PLScene::SNKeyValue" Key="ClearColor" Value="0.1 0.1 0.1 1.0" />
     <Node Class="PLScene::SNCamera" Name="FreeCamera" Position="10.0 2.0 0.0" Rotation="0.0 -90.0 0.0">
-        <Modifier Class="PLScene::SNMRotationController" />
+        <Modifier Class="PLScene::SNMLookController" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
         <Modifier Class="PLScene::SNMMoveController" Speed="8.0" />
     </Node>

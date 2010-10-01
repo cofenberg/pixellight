@@ -1085,11 +1085,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Scene\SceneNodeModifiers\RotationController.cpp"
+					RelativePath=".\src\Scene\SceneNodeModifiers\LookController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\RotationController.h"
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\LookController.h"
 					>
 				</File>
 				<File
@@ -1341,11 +1341,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Scene\SceneNodeModifiers\SNMRotationController.cpp"
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMLookController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMRotationController.h"
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMLookController.h"
 					>
 				</File>
 				<File

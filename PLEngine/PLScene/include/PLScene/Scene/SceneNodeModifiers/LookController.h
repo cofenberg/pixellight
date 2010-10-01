@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RotationController.h                           *
+ *  File: LookController.h                               *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_CONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_CONTROLLER_H__
 #pragma once
 
 
@@ -45,15 +45,15 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Rotation input controller
+*    Look input controller
 */
-class RotationController : public PLInput::Controller {
+class LookController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, RotationController, "PLScene", PLInput::Controller, "Rotation input controller")
+	pl_class(PLS_RTTI_EXPORT, LookController, "PLScene", PLInput::Controller, "Look input controller")
 	pl_class_end
 
 
@@ -75,13 +75,13 @@ class RotationController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLS_API RotationController();
+		PLS_API LookController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~RotationController();
+		PLS_API virtual ~LookController();
 
 
 };
@@ -93,4 +93,4 @@ class RotationController : public PLInput::Controller {
 } // PLScene
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_CONTROLLER_H__

@@ -1,6 +1,7 @@
 >> 01.09.2010
 [CO]
-- "SNMMouseLookController" entfernt (zukünftig "SNMRotationController" verwenden)
+- Nach einer Diskussion mit Stefan "SNMRotationController" in "SNMLookController" umbenannt
+- "SNMMouseLookController" entfernt (zukünftig "SNMLookController" verwenden)
 
 
 

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMRotationController.cpp                      *
+ *  File: SNMLookController.cpp                          *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -28,8 +28,8 @@
 #include <PLInput/Input/InputManager.h>
 #include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodeModifiers/RotationController.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotationController.h"
+#include "PLScene/Scene/SceneNodeModifiers/LookController.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMLookController.h"
 
 
 //[-------------------------------------------------------]
@@ -44,13 +44,13 @@ namespace PLScene {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMRotationController)
+pl_implement_class(SNMLookController)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
-void SNMRotationController::SetFlags(uint32 nValue)
+void SNMLookController::SetFlags(uint32 nValue)
 {
 	// Call base implementation
 	SNMRotation::SetFlags(nValue);
@@ -70,10 +70,10 @@ void SNMRotationController::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMRotationController::SNMRotationController(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
-	EventHandlerUpdate(&SNMRotationController::NotifyUpdate, this),
+SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+	EventHandlerUpdate(&SNMLookController::NotifyUpdate, this),
 	Flags(this),
-	m_pController(new RotationController())
+	m_pController(new LookController())
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|UseRotationKey);
@@ -96,7 +96,7 @@ SNMRotationController::SNMRotationController(SceneNode &cSceneNode) : SNMRotatio
 *  @brief
 *    Destructor
 */
-SNMRotationController::~SNMRotationController()
+SNMLookController::~SNMLookController()
 {
 	// Destroy the input controller
 	delete m_pController;
@@ -106,7 +106,7 @@ SNMRotationController::~SNMRotationController()
 *  @brief
 *    Get input controller
 */
-Controller &SNMRotationController::GetController()
+Controller &SNMLookController::GetController()
 {
 	return *m_pController;
 }
@@ -119,7 +119,7 @@ Controller &SNMRotationController::GetController()
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNMRotationController::NotifyUpdate()
+void SNMLookController::NotifyUpdate()
 {
 	// Check if input is active and whether or not the rotation key required and pressed
 	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed())) {

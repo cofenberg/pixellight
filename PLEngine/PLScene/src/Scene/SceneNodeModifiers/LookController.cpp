@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RotationController.cpp                         *
+ *  File: LookController.cpp                             *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/RotationController.h"
+#include "PLScene/Scene/SceneNodeModifiers/LookController.h"
 
 
 //[-------------------------------------------------------]
@@ -36,7 +36,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(RotationController)
+pl_implement_class(LookController)
 
 
 //[-------------------------------------------------------]
@@ -46,7 +46,7 @@ pl_implement_class(RotationController)
 *  @brief
 *    Constructor
 */
-RotationController::RotationController() : Controller(ControllerVirtual, "RotationController", "Rotation input controller"),
+LookController::LookController() : Controller(ControllerVirtual, "LookController", "Look input controller"),
 	RotX  (this, "RotX",	"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
 	RotY  (this, "RotY",	"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
 	RotZ  (this, "RotZ",	"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
@@ -58,7 +58,7 @@ RotationController::RotationController() : Controller(ControllerVirtual, "Rotati
 *  @brief
 *    Destructor
 */
-RotationController::~RotationController()
+LookController::~LookController()
 {
 }
 

@@ -65,8 +65,8 @@ add_sources(
 	src/Scene/SceneNodes/SNLine.cpp
 	src/Scene/SceneNodes/SNPoint.cpp
 	src/Scene/SceneNodes/SNMesh.cpp
-	src/Scene/SceneNodeModifiers/SNMRotationController.cpp
-	src/Scene/SceneNodeModifiers/RotationController.cpp
+	src/Scene/SceneNodeModifiers/SNMLookController.cpp
+	src/Scene/SceneNodeModifiers/LookController.cpp
 	src/Scene/SceneNodeModifiers/SNMMoveController.cpp
 	src/Scene/SceneNodeModifiers/SNMMouseMoveController.cpp
 	src/Scene/SceneNodeModifiers/SNMAnchor.cpp
