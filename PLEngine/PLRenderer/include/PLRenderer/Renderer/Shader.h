@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AbstractShader.h                               *
+ *  File: Shader.h                                       *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDERER_ABSTRACTSHADER_H__
-#define __PLRENDERER_ABSTRACTSHADER_H__
+#ifndef __PLRENDERER_SHADER_H__
+#define __PLRENDERER_SHADER_H__
 #pragma once
 
 
@@ -45,7 +45,7 @@ namespace PLRenderer {
 *  @brief
 *    Abstract renderer shader resource
 */
-class AbstractShader : public Resource {
+class Shader : public Resource {
 
 
 	//[-------------------------------------------------------]
@@ -56,11 +56,11 @@ class AbstractShader : public Resource {
 		*  @brief
 		*    Destructor
 		*/
-		PLRENDERER_API virtual ~AbstractShader();
+		PLRENDERER_API virtual ~Shader();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual AbstractShader functions               ]
+	//[ Public virtual Shader functions                       ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -141,7 +141,7 @@ class AbstractShader : public Resource {
 		*  @param[in] nType
 		*    Resource type
 		*/
-		PLRENDERER_API AbstractShader(Renderer &cRenderer, EType nType);
+		PLRENDERER_API Shader(Renderer &cRenderer, EType nType);
 
 
 	//[-------------------------------------------------------]
@@ -155,7 +155,7 @@ class AbstractShader : public Resource {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		AbstractShader(const AbstractShader &cSource);
+		Shader(const Shader &cSource);
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class AbstractShader : public Resource {
 		*  @return
 		*    Reference to this instance
 		*/
-		AbstractShader &operator =(const AbstractShader &cSource);
+		Shader &operator =(const Shader &cSource);
 
 
 };
@@ -179,4 +179,4 @@ class AbstractShader : public Resource {
 } // PLRenderer
 
 
-#endif // __PLRENDERER_ABSTRACTSHADER_H__
+#endif // __PLRENDERER_SHADER_H__

@@ -90,7 +90,7 @@ GeometryShaderCg::GeometryShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLRenderer::AbstractShader functions   ]
+//[ Public virtual PLRenderer::Shader functions           ]
 //[-------------------------------------------------------]
 String GeometryShaderCg::GetShaderLanguage() const
 {

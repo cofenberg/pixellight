@@ -53,7 +53,7 @@ VertexShader::~VertexShader()
 *  @brief
 *    Constructor
 */
-VertexShader::VertexShader(Renderer &cRenderer) : AbstractShader(cRenderer, TypeVertexShader)
+VertexShader::VertexShader(Renderer &cRenderer) : Shader(cRenderer, TypeVertexShader)
 {
 }
 
@@ -65,7 +65,7 @@ VertexShader::VertexShader(Renderer &cRenderer) : AbstractShader(cRenderer, Type
 *  @brief
 *    Copy constructor
 */
-VertexShader::VertexShader(const VertexShader &cSource) : AbstractShader(cSource.GetRenderer(), TypeVertexShader)
+VertexShader::VertexShader(const VertexShader &cSource) : Shader(cSource.GetRenderer(), TypeVertexShader)
 {
 	// No implementation because the copy constructor is never used
 }

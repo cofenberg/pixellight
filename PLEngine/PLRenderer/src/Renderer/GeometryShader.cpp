@@ -53,7 +53,7 @@ GeometryShader::~GeometryShader()
 *  @brief
 *    Constructor
 */
-GeometryShader::GeometryShader(Renderer &cRenderer) : AbstractShader(cRenderer, TypeGeometryShader)
+GeometryShader::GeometryShader(Renderer &cRenderer) : Shader(cRenderer, TypeGeometryShader)
 {
 }
 
@@ -65,7 +65,7 @@ GeometryShader::GeometryShader(Renderer &cRenderer) : AbstractShader(cRenderer, 
 *  @brief
 *    Copy constructor
 */
-GeometryShader::GeometryShader(const GeometryShader &cSource) : AbstractShader(cSource.GetRenderer(), TypeGeometryShader)
+GeometryShader::GeometryShader(const GeometryShader &cSource) : Shader(cSource.GetRenderer(), TypeGeometryShader)
 {
 	// No implementation because the copy constructor is never used
 }

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRenderer/Renderer/AbstractShader.h"
+#include "PLRenderer/Renderer/Shader.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace PLRenderer {
 *  @brief
 *    Abstract renderer geometry shader resource
 */
-class GeometryShader : public AbstractShader {
+class GeometryShader : public Shader {
 
 
 	//[-------------------------------------------------------]

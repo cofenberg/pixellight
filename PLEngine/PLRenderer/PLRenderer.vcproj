@@ -789,14 +789,6 @@
 			Name="Renderer"
 			>
 			<File
-				RelativePath=".\src\Renderer\AbstractShader.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLRenderer\Renderer\AbstractShader.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Renderer\Buffer.cpp"
 				>
 			</File>
@@ -986,6 +978,14 @@
 			</File>
 			<File
 				RelativePath=".\include\PLRenderer\Renderer\SamplerStates.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Renderer\Shader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLRenderer\Renderer\Shader.h"
 				>
 			</File>
 			<File

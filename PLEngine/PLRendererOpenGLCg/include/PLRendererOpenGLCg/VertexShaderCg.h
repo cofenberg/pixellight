@@ -107,7 +107,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::AbstractShader functions   ]
+	//[ Public virtual PLRenderer::Shader functions           ]
 	//[-------------------------------------------------------]
 	public:
 		virtual PLGeneral::String GetShaderLanguage() const;

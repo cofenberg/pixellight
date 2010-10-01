@@ -107,7 +107,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::AbstractShader functions   ]
+	//[ Public virtual PLRenderer::Shader functions           ]
 	//[-------------------------------------------------------]
 	public:
 		virtual PLGeneral::String GetShaderLanguage() const;

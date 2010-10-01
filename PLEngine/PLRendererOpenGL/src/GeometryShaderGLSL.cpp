@@ -73,7 +73,7 @@ GeometryShaderGLSL::GeometryShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRend
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLRenderer::AbstractShader functions   ]
+//[ Public virtual PLRenderer::Shader functions           ]
 //[-------------------------------------------------------]
 String GeometryShaderGLSL::GetShaderLanguage() const
 {

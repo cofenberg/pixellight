@@ -90,7 +90,7 @@ FragmentShaderCg::FragmentShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLRenderer::AbstractShader functions   ]
+//[ Public virtual PLRenderer::Shader functions           ]
 //[-------------------------------------------------------]
 String FragmentShaderCg::GetShaderLanguage() const
 {

@@ -1,3 +1,10 @@
+>> 01.10.2010
+[CO]
+- "AbstractShader" in "Shader" umbenannt da der Name "Shader" durch das entfernen des alten Shader-Interfaces nun wieder frei ist und es so konsistenter
+  zu den anderen PLRenderer Klassennamen ist
+
+
+
 >> 28.09.2010
 [CO]
 - Dank der Umbauten in der letzten Zeit, konnte ich nun endlich Cg-Support von PLRendererOpenGL in ein seperates Plugin Namens PLRendererOpenGLCg

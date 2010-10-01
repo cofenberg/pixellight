@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AbstractShader.cpp                             *
+ *  File: Shader.cpp                                     *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLRenderer/Renderer/Renderer.h"
-#include "PLRenderer/Renderer/AbstractShader.h"
+#include "PLRenderer/Renderer/Shader.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +41,7 @@ namespace PLRenderer {
 *  @brief
 *    Destructor
 */
-AbstractShader::~AbstractShader()
+Shader::~Shader()
 {
 }
 
@@ -53,7 +53,7 @@ AbstractShader::~AbstractShader()
 *  @brief
 *    Constructor
 */
-AbstractShader::AbstractShader(Renderer &cRenderer, EType nType) : Resource(cRenderer, nType)
+Shader::Shader(Renderer &cRenderer, EType nType) : Resource(cRenderer, nType)
 {
 }
 
@@ -65,7 +65,7 @@ AbstractShader::AbstractShader(Renderer &cRenderer, EType nType) : Resource(cRen
 *  @brief
 *    Copy constructor
 */
-AbstractShader::AbstractShader(const AbstractShader &cSource) : Resource(cSource.GetRenderer(), cSource.GetType())
+Shader::Shader(const Shader &cSource) : Resource(cSource.GetRenderer(), cSource.GetType())
 {
 	// No implementation because the copy constructor is never used
 }
@@ -74,7 +74,7 @@ AbstractShader::AbstractShader(const AbstractShader &cSource) : Resource(cSource
 *  @brief
 *    Copy operator
 */
-AbstractShader &AbstractShader::operator =(const AbstractShader &cSource)
+Shader &Shader::operator =(const Shader &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;

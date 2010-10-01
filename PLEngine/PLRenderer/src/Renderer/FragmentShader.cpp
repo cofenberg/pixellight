@@ -53,7 +53,7 @@ FragmentShader::~FragmentShader()
 *  @brief
 *    Constructor
 */
-FragmentShader::FragmentShader(Renderer &cRenderer) : AbstractShader(cRenderer, TypeFragmentShader)
+FragmentShader::FragmentShader(Renderer &cRenderer) : Shader(cRenderer, TypeFragmentShader)
 {
 }
 
@@ -65,7 +65,7 @@ FragmentShader::FragmentShader(Renderer &cRenderer) : AbstractShader(cRenderer, 
 *  @brief
 *    Copy constructor
 */
-FragmentShader::FragmentShader(const FragmentShader &cSource) : AbstractShader(cSource.GetRenderer(), TypeFragmentShader)
+FragmentShader::FragmentShader(const FragmentShader &cSource) : Shader(cSource.GetRenderer(), TypeFragmentShader)
 {
 	// No implementation because the copy constructor is never used
 }

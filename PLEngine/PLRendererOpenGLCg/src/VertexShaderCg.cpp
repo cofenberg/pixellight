@@ -90,7 +90,7 @@ VertexShaderCg::VertexShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::Ve
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLRenderer::AbstractShader functions   ]
+//[ Public virtual PLRenderer::Shader functions           ]
 //[-------------------------------------------------------]
 String VertexShaderCg::GetShaderLanguage() const
 {

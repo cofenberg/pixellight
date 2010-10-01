@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRenderer/Renderer/AbstractShader.h"
+#include "PLRenderer/Renderer/Shader.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace PLRenderer {
 *  @brief
 *    Abstract renderer vertex shader resource
 */
-class VertexShader : public AbstractShader {
+class VertexShader : public Shader {
 
 
 	//[-------------------------------------------------------]
