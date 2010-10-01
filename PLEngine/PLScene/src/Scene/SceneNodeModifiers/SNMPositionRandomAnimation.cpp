@@ -48,7 +48,7 @@ pl_implement_class(SNMPositionRandomAnimation)
 void SNMPositionRandomAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMPosition::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -65,7 +65,7 @@ void SNMPositionRandomAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMPositionRandomAnimation::SNMPositionRandomAnimation(SceneNode &cSceneNode) : SNMPosition(cSceneNode),
+SNMPositionRandomAnimation::SNMPositionRandomAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
 	Radius(this),
 	FixPosition(this),

@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMPosition.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -53,7 +53,7 @@ namespace PLScene {
 *    - Normally only used for debugging
 *    - 'SpaceMouse'-support
 */
-class SNMMoveController : public SNMPosition {
+class SNMMoveController : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
@@ -70,7 +70,7 @@ class SNMMoveController : public SNMPosition {
 			FlipZAxis = 1<<4	/**< Flip z axis */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(SNMPosition::EFlags)
+			pl_enum_base(SNMTransform::EFlags)
 			pl_enum_value(FlipXAxis,	"Flip x axis")
 			pl_enum_value(FlipYAxis,	"Flip y axis")
 			pl_enum_value(FlipZAxis,	"Flip z axis")
@@ -80,7 +80,7 @@ class SNMMoveController : public SNMPosition {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMPosition, "Simple scene node move controller modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMTransform, "Simple scene node move controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,							float,					1.0f,		ReadWrite,	DirectValue,	"Speed",								"Min='0.0001'")
 		pl_attribute(SpaceMouseTranslationFactor,	float,					0.0025f,	ReadWrite,	DirectValue,	"Space mouse translation scale factor",	"Min='0.0001'")

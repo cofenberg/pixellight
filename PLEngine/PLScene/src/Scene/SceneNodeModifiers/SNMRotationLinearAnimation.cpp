@@ -49,7 +49,7 @@ pl_implement_class(SNMRotationLinearAnimation)
 void SNMRotationLinearAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMRotation::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -66,7 +66,7 @@ void SNMRotationLinearAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMRotationLinearAnimation::SNMRotationLinearAnimation(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+SNMRotationLinearAnimation::SNMRotationLinearAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Velocity(this),
 	EventHandlerUpdate(&SNMRotationLinearAnimation::NotifyUpdate, this)
 {

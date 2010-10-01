@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMPosition.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace PLScene {
 *  @remarks
 *    Animates the position of the scene nodes over time.
 */
-class SNMPositionRandomAnimation : public SNMPosition {
+class SNMPositionRandomAnimation : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMPositionRandomAnimation, "PLScene", PLScene::SNMPosition, "Random position animation scene node modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMPositionRandomAnimation, "PLScene", PLScene::SNMTransform, "Random position animation scene node modifier class")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,			float,				1.0f,								ReadWrite,	DirectValue,	"Animation speed",													"")
 		pl_attribute(Radius,		float,				10.0f,								ReadWrite,	DirectValue,	"Animation radius",													"")

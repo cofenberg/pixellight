@@ -56,7 +56,7 @@ pl_implement_class(SNMRotationTarget)
 void SNMRotationTarget::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMRotation::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Update the rotation also on position change: If this is not done in here, too, the camera may 'shiver'
 	// if it's rotation is changed 'before' it's position is updated
@@ -82,7 +82,7 @@ void SNMRotationTarget::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMRotationTarget::SNMRotationTarget(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+SNMRotationTarget::SNMRotationTarget(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Target(this),
 	Offset(this),
 	UpVector(this),

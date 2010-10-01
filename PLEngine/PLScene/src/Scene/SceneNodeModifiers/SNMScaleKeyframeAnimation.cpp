@@ -96,7 +96,7 @@ void SNMScaleKeyframeAnimation::SetKeys(const String &sValue)
 void SNMScaleKeyframeAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMScale::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -113,7 +113,7 @@ void SNMScaleKeyframeAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMScaleKeyframeAnimation::SNMScaleKeyframeAnimation(SceneNode &cSceneNode) : SNMScale(cSceneNode),
+SNMScaleKeyframeAnimation::SNMScaleKeyframeAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
 	FramesPerSecond(this),
 	Keys(this),

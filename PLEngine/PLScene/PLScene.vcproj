@@ -1181,6 +1181,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMLookController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMLookController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\src\Scene\SceneNodeModifiers\SNMMesh.cpp"
 					>
 				</File>
@@ -1261,14 +1269,6 @@
 					>
 				</File>
 				<File
-					RelativePath="src\Scene\SceneNodeModifiers\SNMPosition.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\PLScene\Scene\SceneNodeModifiers\SNMPosition.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Scene\SceneNodeModifiers\SNMPositionKeyframeAnimation.cpp"
 					>
 				</File>
@@ -1333,22 +1333,6 @@
 					>
 				</File>
 				<File
-					RelativePath="src\Scene\SceneNodeModifiers\SNMRotation.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\PLScene\Scene\SceneNodeModifiers\SNMRotation.h"
-					>
-				</File>
-				<File
-					RelativePath=".\src\Scene\SceneNodeModifiers\SNMLookController.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMLookController.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Scene\SceneNodeModifiers\SNMRotationFixRoll.cpp"
 					>
 				</File>
@@ -1389,14 +1373,6 @@
 					>
 				</File>
 				<File
-					RelativePath="src\Scene\SceneNodeModifiers\SNMScale.cpp"
-					>
-				</File>
-				<File
-					RelativePath="include\PLScene\Scene\SceneNodeModifiers\SNMScale.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Scene\SceneNodeModifiers\SNMScaleKeyframeAnimation.cpp"
 					>
 				</File>
@@ -1410,6 +1386,14 @@
 				</File>
 				<File
 					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMScaleRandomAnimation.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMTransform.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMTransform.h"
 					>
 				</File>
 				<File

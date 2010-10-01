@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMPosition.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLScene {
 *  @note
 *    - Please note that within this simple scene node modifier, there's no path finding involved, the scene node is just moved towards the target position
 */
-class SNMPositionMoveToTarget : public SNMPosition {
+class SNMPositionMoveToTarget : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMPositionMoveToTarget, "PLScene", PLScene::SNMPosition, "Scene node modifier class moving the owner scene node towards a target scene node")
+	pl_class(PLS_RTTI_EXPORT, SNMPositionMoveToTarget, "PLScene", PLScene::SNMTransform, "Scene node modifier class moving the owner scene node towards a target scene node")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Target,	PLGeneral::String,	"",		ReadWrite,	DirectValue,	"Target scene node to move to",	"")
 		pl_attribute(Speed,		float,				2.0f,	ReadWrite,	DirectValue,	"Movement speed",				"Min='0.0001'")

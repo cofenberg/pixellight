@@ -48,7 +48,7 @@ pl_implement_class(SNMPositionLinearAnimation)
 void SNMPositionLinearAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMPosition::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -65,7 +65,7 @@ void SNMPositionLinearAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMPositionLinearAnimation::SNMPositionLinearAnimation(SceneNode &cSceneNode) : SNMPosition(cSceneNode),
+SNMPositionLinearAnimation::SNMPositionLinearAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	AutoVector(this),
 	Vector(this),
 	Speed(this),

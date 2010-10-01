@@ -70,14 +70,12 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMMoveController.cpp
 	src/Scene/SceneNodeModifiers/SNMMouseMoveController.cpp
 	src/Scene/SceneNodeModifiers/SNMAnchor.cpp
-	src/Scene/SceneNodeModifiers/SNMPosition.cpp
+	src/Scene/SceneNodeModifiers/SNMTransform.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionPath.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionMoveToTarget.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionLinearAnimation.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionKeyframeAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMScale.cpp
 	src/Scene/SceneNodeModifiers/SNMScaleKeyframeAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMRotation.cpp
 	src/Scene/SceneNodeModifiers/SNMRotationTarget.cpp
 	src/Scene/SceneNodeModifiers/SNMRotationFixRoll.cpp
 	src/Scene/SceneNodeModifiers/SNMRotationMoveDirection.cpp

@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMScale.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace PLScene {
 *  @remarks
 *    Animates the scale of the scene nodes over time.
 */
-class SNMScaleRandomAnimation : public PLScene::SNMScale {
+class SNMScaleRandomAnimation : public PLScene::SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMScaleRandomAnimation, "PLScene", PLScene::SNMScale, "Random scale animation scene node modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMScaleRandomAnimation, "PLScene", PLScene::SNMTransform, "Random scale animation scene node modifier class")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,		float,				1.0f,								ReadWrite,	DirectValue,	"Animation speed",											"")
 		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"Animation radius",											"")

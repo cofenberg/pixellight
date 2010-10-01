@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMPosition.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -62,7 +62,7 @@ namespace PLScene {
 *  @note
 *    - The "CoordinateSystem" attribute can be quite useful if the scene contains portals
 */
-class SNMPositionKeyframeAnimation : public SNMPosition {
+class SNMPositionKeyframeAnimation : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
@@ -78,7 +78,7 @@ class SNMPositionKeyframeAnimation : public SNMPosition {
 			PlaybackPingPong = 1<<3		/**< Ping pong animation */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(SNMPosition::EFlags)
+			pl_enum_base(SNMTransform::EFlags)
 			pl_enum_value(PlaybackNoLoop,	"No loop animation")
 			pl_enum_value(PlaybackPingPong,	"Ping pong animation")
 		pl_enum_end
@@ -87,7 +87,7 @@ class SNMPositionKeyframeAnimation : public SNMPosition {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMPositionKeyframeAnimation, "PLScene", PLScene::SNMPosition, "Keyframe position animation scene node modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMPositionKeyframeAnimation, "PLScene", PLScene::SNMTransform, "Keyframe position animation scene node modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,				float,					1.0f,	ReadWrite,	DirectValue,	"Animation playback speed",																										"")
 		pl_attribute(FramesPerSecond,	PLGeneral::uint32,		24,		ReadWrite,	DirectValue,	"Frames per second",																											"")

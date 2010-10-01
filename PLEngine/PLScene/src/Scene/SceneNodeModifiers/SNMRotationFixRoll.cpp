@@ -49,7 +49,7 @@ pl_implement_class(SNMRotationFixRoll)
 void SNMRotationFixRoll::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMRotation::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -66,7 +66,7 @@ void SNMRotationFixRoll::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMRotationFixRoll::SNMRotationFixRoll(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+SNMRotationFixRoll::SNMRotationFixRoll(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	UpVector(this),
 	Speed(this),
 	EventHandlerUpdate(&SNMRotationFixRoll::NotifyUpdate, this)

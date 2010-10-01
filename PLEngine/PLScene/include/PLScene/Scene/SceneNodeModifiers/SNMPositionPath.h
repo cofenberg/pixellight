@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMPosition.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -68,7 +68,7 @@ namespace PLScene {
 *      speed on the path may vary, this depends on whether or not all path segments have the same length.
 *    Beside the major strategy, it's possible to set the interpolation type.
 */
-class SNMPositionPath : public SNMPosition {
+class SNMPositionPath : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
@@ -96,7 +96,7 @@ class SNMPositionPath : public SNMPosition {
 			NodeIndexProgress = 1<<2	/**< 'Progress' defined by 'node index' instead or 'percentage along path' */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(SNMPosition::EFlags)
+			pl_enum_base(SNMTransform::EFlags)
 			pl_enum_value(NodeIndexProgress, "'Progress' defined by 'node index' instead or 'percentage along path'")
 		pl_enum_end
 
@@ -104,7 +104,7 @@ class SNMPositionPath : public SNMPosition {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMPositionPath, "PLScene", PLScene::SNMPosition, "Scene node modifier class moving the position of a scene node along a given path")
+	pl_class(PLS_RTTI_EXPORT, SNMPositionPath, "PLScene", PLScene::SNMTransform, "Scene node modifier class moving the position of a scene node along a given path")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Filename,		PLGeneral::String,				"",		ReadWrite,	GetSet,			"Filename of the path the node should move on",									"Type='GraphPath'")
 		pl_attribute(Progress,		float,							0.0f,	ReadWrite,	DirectValue,	"Path progress (0-1, automatically wrapped into that range -> or node index)",	"")

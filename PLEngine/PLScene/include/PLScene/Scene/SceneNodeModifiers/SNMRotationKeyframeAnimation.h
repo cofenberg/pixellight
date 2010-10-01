@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -59,7 +59,7 @@ namespace PLScene {
 *  @remarks
 *    Animates the rotation of the scene nodes over time using keyframes.
 */
-class SNMRotationKeyframeAnimation : public SNMRotation {
+class SNMRotationKeyframeAnimation : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
@@ -75,7 +75,7 @@ class SNMRotationKeyframeAnimation : public SNMRotation {
 			PlaybackPingPong = 1<<3		/**< Ping pong animation */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(SNMRotation::EFlags)
+			pl_enum_base(SNMTransform::EFlags)
 			pl_enum_value(PlaybackNoLoop,	"No loop animation")
 			pl_enum_value(PlaybackPingPong,	"Ping pong animation")
 		pl_enum_end
@@ -84,7 +84,7 @@ class SNMRotationKeyframeAnimation : public SNMRotation {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMRotationKeyframeAnimation, "PLScene", PLScene::SNMRotation, "Keyframe rotation animation scene node modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMRotationKeyframeAnimation, "PLScene", PLScene::SNMTransform, "Keyframe rotation animation scene node modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,				float,					1.0f,	ReadWrite,	DirectValue,	"Animation playback speed",												"")
 		pl_attribute(FramesPerSecond,	PLGeneral::uint32,		24,		ReadWrite,	DirectValue,	"Frames per second",													"")

@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMPosition.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -48,7 +48,7 @@ namespace PLScene {
 *  @note
 *    - Normally only used for debugging
 */
-class SNMMouseMoveController : public SNMPosition {
+class SNMMouseMoveController : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
@@ -85,7 +85,7 @@ class SNMMouseMoveController : public SNMPosition {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMMouseMoveController, "PLScene", PLScene::SNMPosition, "Simple scene node mouse move controller modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMMouseMoveController, "PLScene", PLScene::SNMTransform, "Simple scene node mouse move controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,			float,					1.0f,								ReadWrite,	DirectValue,	"Speed",										"Min='0.0001'")
 		pl_attribute(XSpeed,		float,					0.3f,								ReadWrite,	DirectValue,	"Mouse move x axis speed",						"")

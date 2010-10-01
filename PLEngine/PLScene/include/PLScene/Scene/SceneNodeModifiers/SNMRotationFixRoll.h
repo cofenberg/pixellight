@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -51,13 +51,13 @@ namespace PLScene {
 *    This scene node will 'fix' this roll for you. If the up-vector is (0, 1, 0), this will 'flat'
 *    the rotation to a rotation on the xz-plane.
 */
-class SNMRotationFixRoll : public SNMRotation {
+class SNMRotationFixRoll : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMRotationFixRoll, "PLScene", PLScene::SNMRotation, "Scene node modifier class 'correcting' the rotation of a scene node")
+	pl_class(PLS_RTTI_EXPORT, SNMRotationFixRoll, "PLScene", PLScene::SNMTransform, "Scene node modifier class 'correcting' the rotation of a scene node")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",															"")
 		pl_attribute(Speed,		float,				5.0f,								ReadWrite,	DirectValue,	"Fix roll speed, if <=0 rotation is fixed at once and not 'smoothly'",	"Min='0.0'")

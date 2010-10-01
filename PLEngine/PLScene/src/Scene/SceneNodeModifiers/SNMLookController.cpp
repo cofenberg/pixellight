@@ -53,7 +53,7 @@ pl_implement_class(SNMLookController)
 void SNMLookController::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMRotation::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -70,7 +70,7 @@ void SNMLookController::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	EventHandlerUpdate(&SNMLookController::NotifyUpdate, this),
 	Flags(this),
 	m_pController(new LookController())

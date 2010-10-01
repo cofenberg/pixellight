@@ -49,7 +49,7 @@ pl_implement_class(SNMPositionMoveToTarget)
 void SNMPositionMoveToTarget::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMPosition::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -66,7 +66,7 @@ void SNMPositionMoveToTarget::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMPositionMoveToTarget::SNMPositionMoveToTarget(SceneNode &cSceneNode) : SNMPosition(cSceneNode),
+SNMPositionMoveToTarget::SNMPositionMoveToTarget(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Target(this),
 	Speed(this),
 	EventHandlerUpdate(&SNMPositionMoveToTarget::NotifyUpdate, this)

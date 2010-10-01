@@ -58,7 +58,7 @@ class SceneNode;
 *    possible to assign a light flickering modifier to a a scene node which is a noise.
 *
 *  @note
-*    - Derived classes should use a 'SNM'-prefix (example: SNMPosition)
+*    - Derived classes should use a 'SNM'-prefix (example: SNMTransform)
 */
 class SceneNodeModifier : public PLCore::Object {
 

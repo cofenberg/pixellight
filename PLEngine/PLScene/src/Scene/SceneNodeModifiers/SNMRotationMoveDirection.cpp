@@ -49,7 +49,7 @@ pl_implement_class(SNMRotationMoveDirection)
 void SNMRotationMoveDirection::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMRotation::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -66,7 +66,7 @@ void SNMRotationMoveDirection::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMRotationMoveDirection::SNMRotationMoveDirection(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+SNMRotationMoveDirection::SNMRotationMoveDirection(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Offset(this),
 	UpVector(this),
 	EventHandlerUpdate(&SNMRotationMoveDirection::NotifyUpdate, this),

@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -62,13 +62,13 @@ namespace PLScene {
 *    offer 'target offsets' because they can be easy and universal constructed by using for instance a 'SNMAnchor'
 *    scene node modifier in combination with a 'SNHelper' scene node.
 */
-class SNMRotationTarget : public SNMRotation {
+class SNMRotationTarget : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMRotationTarget, "PLScene", PLScene::SNMRotation, "Scene node modifier class rotating a scene node towards a target scene node")
+	pl_class(PLS_RTTI_EXPORT, SNMRotationTarget, "PLScene", PLScene::SNMTransform, "Scene node modifier class rotating a scene node towards a target scene node")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Target,	PLGeneral::String,		"",									ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",	"")
 		pl_attribute(Offset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation offset to add in degree, [0, 360]",				"")

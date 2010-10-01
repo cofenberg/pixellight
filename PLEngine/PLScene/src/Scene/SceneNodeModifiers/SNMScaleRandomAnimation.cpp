@@ -48,7 +48,7 @@ pl_implement_class(SNMScaleRandomAnimation)
 void SNMScaleRandomAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMScale::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -65,7 +65,7 @@ void SNMScaleRandomAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMScaleRandomAnimation::SNMScaleRandomAnimation(SceneNode &cSceneNode) : SNMScale(cSceneNode),
+SNMScaleRandomAnimation::SNMScaleRandomAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
 	Radius(this),
 	FixScale(this),

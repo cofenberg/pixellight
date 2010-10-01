@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMScale.h                                     *
+ *  File: SNMTransform.h                                 *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_SCALE_H__
-#define __PLSCENE_SCENENODEMODIFIER_SCALE_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_TRANSFORM_H__
+#define __PLSCENE_SCENENODEMODIFIER_TRANSFORM_H__
 #pragma once
 
 
@@ -42,15 +42,15 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract scene node modifier base class for modifiers that promise to ONLY manipulate the scale of the owner scene node
+*    Abstract scene node modifier base class for modifiers that promise to ONLY manipulate the transform of the owner scene node
 */
-class SNMScale : public SceneNodeModifier {
+class SNMTransform : public SceneNodeModifier {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMScale, "PLScene", PLScene::SceneNodeModifier, "Abstract scene node modifier base class for modifiers that promise to ONLY manipulate the scale of the owner scene node")
+	pl_class(PLS_RTTI_EXPORT, SNMTransform, "PLScene", PLScene::SceneNodeModifier, "Abstract scene node modifier base class for modifiers that promise to ONLY manipulate the transform of the owner scene node")
 	pl_class_end
 
 
@@ -65,13 +65,13 @@ class SNMScale : public SceneNodeModifier {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMScale(SceneNode &cSceneNode);
+		PLS_API SNMTransform(SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMScale();
+		PLS_API virtual ~SNMTransform();
 
 
 };
@@ -83,4 +83,4 @@ class SNMScale : public SceneNodeModifier {
 } // PLScene
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_SCALE_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_TRANSFORM_H__

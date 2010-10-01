@@ -96,7 +96,7 @@ void SNMRotationKeyframeAnimation::SetKeys(const String &sValue)
 void SNMRotationKeyframeAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMRotation::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -113,7 +113,7 @@ void SNMRotationKeyframeAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMRotationKeyframeAnimation::SNMRotationKeyframeAnimation(SceneNode &cSceneNode) : SNMRotation(cSceneNode),
+SNMRotationKeyframeAnimation::SNMRotationKeyframeAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
 	FramesPerSecond(this),
 	Keys(this),

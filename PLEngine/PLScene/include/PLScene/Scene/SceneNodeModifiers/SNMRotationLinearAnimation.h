@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace PLScene {
 *  @remarks
 *    Animates the rotation of the scene nodes over time.
 */
-class SNMRotationLinearAnimation : public SNMRotation {
+class SNMRotationLinearAnimation : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMRotationLinearAnimation, "PLScene", PLScene::SNMRotation, "Linear rotation animation scene node modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMRotationLinearAnimation, "PLScene", PLScene::SNMTransform, "Linear rotation animation scene node modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Velocity,	PLMath::Vector3,	PLMath::Vector3(0.0f, 10.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation velocity (degree, [0, 360])",	"")
 	pl_class_end

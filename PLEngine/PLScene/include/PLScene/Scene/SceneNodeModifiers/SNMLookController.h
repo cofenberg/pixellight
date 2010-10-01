@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -59,7 +59,7 @@ namespace PLScene {
 *  @note
 *    - Normally only used for rapid prototyping
 */
-class SNMLookController : public SNMRotation {
+class SNMLookController : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
@@ -74,7 +74,7 @@ class SNMLookController : public SNMRotation {
 			UseRotationKey = 1<<2	/**< If this flag is set, it's required to keep the rotation key pressed in order to rotate */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(SNMRotation::EFlags)
+			pl_enum_base(SNMTransform::EFlags)
 			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate")
 		pl_enum_end
 
@@ -82,7 +82,7 @@ class SNMLookController : public SNMRotation {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMLookController, "PLScene", PLScene::SNMRotation, "Scene node rotation input controller modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMLookController, "PLScene", PLScene::SNMTransform, "Scene node rotation input controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		// Overwritten SceneNodeModifier variables
 		pl_attribute(Flags,	pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,	"Flags",	"")

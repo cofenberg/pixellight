@@ -53,7 +53,7 @@ pl_implement_class(SNMMoveController)
 void SNMMoveController::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMPosition::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -70,7 +70,7 @@ void SNMMoveController::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMPosition(cSceneNode),
+SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
 	SpaceMouseTranslationFactor(this),
 	Flags(this),

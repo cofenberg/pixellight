@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotation.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
@@ -50,13 +50,13 @@ namespace PLScene {
 *    Rotates the scene node into the movement direction by using the current and
 *    previous scene node position.
 */
-class SNMRotationMoveDirection : public SNMRotation {
+class SNMRotationMoveDirection : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMRotationMoveDirection, "PLScene", PLScene::SNMRotation, "Scene node modifier class rotating a scene node into the direction it's moving")
+	pl_class(PLS_RTTI_EXPORT, SNMRotationMoveDirection, "PLScene", PLScene::SNMTransform, "Scene node modifier class rotating a scene node into the direction it's moving")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation offset to add in degree, [0, 360]",	"")
 		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",									"")

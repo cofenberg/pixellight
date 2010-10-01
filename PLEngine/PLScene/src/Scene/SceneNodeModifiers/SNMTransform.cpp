@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMPosition.h                                  *
+ *  File: SNMTransform.cpp                               *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,67 +20,46 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_POSITION_H__
-#define __PLSCENE_SCENENODEMODIFIER_POSITION_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifier.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 namespace PLScene {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(SNMTransform)
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract scene node modifier base class for modifiers that promise to ONLY manipulate the position of the owner scene node
+*    Constructor
 */
-class SNMPosition : public SceneNodeModifier {
+SNMTransform::SNMTransform(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode)
+{
+}
 
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMPosition, "PLScene", PLScene::SceneNodeModifier, "Abstract scene node modifier base class for modifiers that promise to ONLY manipulate the position of the owner scene node")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cSceneNode
-		*    Owner scene node
-		*/
-		PLS_API SNMPosition(SceneNode &cSceneNode);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLS_API virtual ~SNMPosition();
-
-
-};
+/**
+*  @brief
+*    Destructor
+*/
+SNMTransform::~SNMTransform()
+{
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScene
-
-
-#endif // __PLSCENE_SCENENODEMODIFIER_POSITION_H__

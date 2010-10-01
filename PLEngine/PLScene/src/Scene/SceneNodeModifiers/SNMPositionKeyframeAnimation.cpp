@@ -96,7 +96,7 @@ void SNMPositionKeyframeAnimation::SetKeys(const String &sValue)
 void SNMPositionKeyframeAnimation::SetFlags(uint32 nValue)
 {
 	// Call base implementation
-	SNMPosition::SetFlags(nValue);
+	SNMTransform::SetFlags(nValue);
 
 	// Connect/disconnect event handler
 	if (IsActive())
@@ -113,7 +113,7 @@ void SNMPositionKeyframeAnimation::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMPositionKeyframeAnimation::SNMPositionKeyframeAnimation(SceneNode &cSceneNode) : SNMPosition(cSceneNode),
+SNMPositionKeyframeAnimation::SNMPositionKeyframeAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
 	FramesPerSecond(this),
 	Keys(this),
