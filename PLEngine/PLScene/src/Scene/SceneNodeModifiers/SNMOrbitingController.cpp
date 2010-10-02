@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMMouseOrbitingController.cpp                 *
+ *  File: SNMOrbitingController.cpp                      *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -31,7 +31,7 @@
 #include <PLInput/Input/Devices/SpaceMouse.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNode.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMMouseOrbitingController.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMOrbitingController.h"
 
 
 //[-------------------------------------------------------]
@@ -46,13 +46,13 @@ namespace PLScene {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMMouseOrbitingController)
+pl_implement_class(SNMOrbitingController)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
-void SNMMouseOrbitingController::SetFlags(uint32 nValue)
+void SNMOrbitingController::SetFlags(uint32 nValue)
 {
 	// Call base implementation
 	SNMOrbiting::SetFlags(nValue);
@@ -72,7 +72,7 @@ void SNMMouseOrbitingController::SetFlags(uint32 nValue)
 *  @brief
 *    Constructor
 */
-SNMMouseOrbitingController::SNMMouseOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
+SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
 	XSpeed(this),
 	YSpeed(this),
 	RotationSpeed(this),
@@ -80,7 +80,7 @@ SNMMouseOrbitingController::SNMMouseOrbitingController(SceneNode &cSceneNode) : 
 	ZoomSpeed(this),
 	WheelSpeed(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMMouseOrbitingController::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|RotateLeftMouseButton|ZoomRightMouseButton|ZoomMouseWheel|PanMiddleMouseButton);
@@ -90,7 +90,7 @@ SNMMouseOrbitingController::SNMMouseOrbitingController(SceneNode &cSceneNode) : 
 *  @brief
 *    Destructor
 */
-SNMMouseOrbitingController::~SNMMouseOrbitingController()
+SNMOrbitingController::~SNMOrbitingController()
 {
 }
 
@@ -102,7 +102,7 @@ SNMMouseOrbitingController::~SNMMouseOrbitingController()
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNMMouseOrbitingController::NotifyUpdate()
+void SNMOrbitingController::NotifyUpdate()
 {
 	// Check if input is active
 	// [TODO] Don't use devices directly, use a virtual controller instead

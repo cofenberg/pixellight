@@ -35,7 +35,7 @@
             <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="2.0" />
         </Node>
         <Node Class="PLScene::SNCamera" Name="OrbiterCamera" Position="3.0 2.0 -8.0">
-            <Modifier Class="PLScene::SNMMouseOrbitingController" Flags="RotateLeftMouseButton" Target="Marble" />
+            <Modifier Class="PLScene::SNMOrbitingController" Flags="RotateLeftMouseButton" Target="Marble" />
             <Modifier Class="PLScene::SNMRotationFixRoll" />
         </Node>
         <Node Class="PLScene::SNMesh" Position="-1.5 0 -6" Scale="2.5 0.1 0.1" AABBMin="-1 -1 -1" AABBMax="1 1 1" Name="Stick" Mesh="Default">

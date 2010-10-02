@@ -788,7 +788,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 
 					// Add scene node modifier so we can automatically orbiting
 					XmlElement *pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class",  "PLScene::SNMMouseOrbitingController");
+					pModifierElement->SetAttribute("Class",  "PLScene::SNMOrbitingController");
 					pModifierElement->SetAttribute("Target", sTargetName.c_str());
 					pNodeElement->LinkEndChild(*pModifierElement);
 

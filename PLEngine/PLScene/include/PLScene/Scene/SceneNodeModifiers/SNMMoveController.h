@@ -51,7 +51,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node move controller modifier class
+*    Scene node move input controller modifier class
 *
 *  @remarks
 *    When using the unchanged virtual standard controller:
@@ -67,7 +67,7 @@ class SNMMoveController : public SNMTransform {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMTransform, "Scene node move controller modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMTransform, "Scene node move input controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		pl_attribute(Speed,	float,	1.0f,	ReadWrite,	DirectValue,	"Movement speed",	"Min='0.0001'")
 	pl_class_end

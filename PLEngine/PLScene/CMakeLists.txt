@@ -96,7 +96,7 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMKeyValue.cpp
 	src/Scene/SceneNodeModifiers/SNMDeactivationOnTimeout.cpp
 	src/Scene/SceneNodeModifiers/SNMOrbiting.cpp
-	src/Scene/SceneNodeModifiers/SNMMouseOrbitingController.cpp
+	src/Scene/SceneNodeModifiers/SNMOrbitingController.cpp
 	src/Scene/SceneNodeModifiers/SNMUnknown.cpp
 	src/Scene/SceneNodeModifiers/SNMCameraZoom.cpp
 	src/Scene/SceneNodeModifiers/SNMCameraZoomController.cpp

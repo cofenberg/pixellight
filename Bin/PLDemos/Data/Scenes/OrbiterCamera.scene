@@ -2,7 +2,7 @@
 <Scene Version="1" Name="Scene">
     <Node Class="PLScene::SNHelper" Name="SoldierTargetHelper" />
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera_Mouse">
-        <Modifier Class="PLScene::SNMMouseOrbitingController" Target="SoldierTargetHelper" Distance="3" />
+        <Modifier Class="PLScene::SNMOrbitingController" Target="SoldierTargetHelper" Distance="3" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
     </Node>
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera_Keys">
