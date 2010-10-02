@@ -140,23 +140,23 @@ void SNMMoveController::NotifyUpdate()
 
 		// Forward/backward
 		if (m_pController->Forward.IsPressed())
-			vMovement -= vDirVector;
-		if (m_pController->Backward.IsPressed())
 			vMovement += vDirVector;
+		if (m_pController->Backward.IsPressed())
+			vMovement -= vDirVector;
 		vMovement += vDirVector*m_pController->TransZ.GetValue();
 
 		// Left/right
 		if (m_pController->StrafeLeft.IsPressed())
-			vMovement -= vDirLeftVector;
-		if (m_pController->StrafeRight.IsPressed())
 			vMovement += vDirLeftVector;
+		if (m_pController->StrafeRight.IsPressed())
+			vMovement -= vDirLeftVector;
 		vMovement += vDirLeftVector*m_pController->TransX.GetValue();
 
 		// Upward/downward
 		if (m_pController->Up.IsPressed())
-			vMovement -= vDirUpVector;
-		if (m_pController->Down.IsPressed())
 			vMovement += vDirUpVector;
+		if (m_pController->Down.IsPressed())
+			vMovement -= vDirUpVector;
 		vMovement += vDirUpVector*m_pController->TransY.GetValue();
 
 		// Set movement speed
@@ -175,7 +175,7 @@ void SNMMoveController::NotifyUpdate()
 
 		// 'Move' to the new position
 		if (!vMovement.IsNull())
-			cSceneNode.MoveTo(cSceneNode.GetTransform().GetPosition() - vMovement);
+			cSceneNode.MoveTo(cSceneNode.GetTransform().GetPosition() + vMovement);
 	}
 }
 

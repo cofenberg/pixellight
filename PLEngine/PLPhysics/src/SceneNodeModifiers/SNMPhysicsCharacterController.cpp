@@ -176,14 +176,14 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 			vMovement -= vDirVector;
 			bRevert = true;
 		}
-		vMovement += vDirVector*(m_pController->TransY.GetValue());
+		vMovement += vDirVector*m_pController->TransZ.GetValue();
 
 		// Strafe left/right
 		if (m_pController->StrafeLeft.IsPressed())
 			vMovement += vDirLeftVector;
 		if (m_pController->StrafeRight.IsPressed())
 			vMovement -= vDirLeftVector;
-		vMovement += vDirLeftVector*(m_pController->TransX.GetValue());
+		vMovement += vDirLeftVector*m_pController->TransX.GetValue();
 
 		// Upward/downward
 		if (GetFlags() & YMovement) {
@@ -191,7 +191,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 				vMovement += vDirUpVector;
 			if (m_pController->Down.IsPressed())
 				vMovement -= vDirUpVector;
-			vMovement += vDirUpVector*(m_pController->TransZ.GetValue());
+			vMovement += vDirUpVector*m_pController->TransY.GetValue();
 		}
 	}
 

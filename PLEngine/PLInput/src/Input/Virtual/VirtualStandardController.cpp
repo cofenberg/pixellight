@@ -304,9 +304,9 @@ void VirtualStandardController::ConnectToDevices()
 			// X translation axis: Strafe left/right (+/-)
 			Connect("TransX",		&pSpaceMouse->TransX, -1.0f/90.0f);
 			// Y translation axis: Move up/down (+/-)
-			Connect("TransY",		&pSpaceMouse->TransY, -1.0f/90.0f);
+			Connect("TransY",		&pSpaceMouse->TransZ, -1.0f/90.0f);
 			// Z translation axis: Move forwards/backwards (+/-)
-			Connect("TransZ",		&pSpaceMouse->TransZ, -1.0f/90.0f);
+			Connect("TransZ",		&pSpaceMouse->TransY, -1.0f/90.0f);
 
 			// Buttons
 			Connect("Button1",		&pSpaceMouse->Button0);
