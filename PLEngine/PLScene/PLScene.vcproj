@@ -1093,6 +1093,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\MoveController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\MoveController.h"
+					>
+				</File>
+				<File
 					RelativePath="src\Scene\SceneNodeModifiers\SNMAnchor.cpp"
 					>
 				</File>

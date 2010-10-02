@@ -25,10 +25,9 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Devices/Keyboard.h>
-#include <PLInput/Input/Devices/SpaceMouse.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneNodeModifiers/MoveController.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMoveController.h"
 
 
@@ -72,10 +71,28 @@ void SNMMoveController::SetFlags(uint32 nValue)
 */
 SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Speed(this),
-	SpaceMouseTranslationFactor(this),
-	Flags(this),
-	EventHandlerUpdate(&SNMMoveController::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMMoveController::NotifyUpdate, this),
+	m_pController(new MoveController())
 {
+	// Connect to virtual input controller
+	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
+	//        virtual controller is used by the application. Therefore, it should be the application that
+	//        connects our controls to it's virtual controller, which will need some additional callback
+	//        to connect to scene nodes that provide input controllers.
+	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
+	if (pController) {
+		m_pController->Connect("TransX",		pController->GetControl("TransX"));
+		m_pController->Connect("TransY",		pController->GetControl("TransY"));
+		m_pController->Connect("TransZ",		pController->GetControl("TransZ"));
+		m_pController->Connect("Forward",		pController->GetControl("Forward"));
+		m_pController->Connect("Backward",		pController->GetControl("Backward"));
+		m_pController->Connect("StrafeLeft",	pController->GetControl("StrafeLeft"));
+		m_pController->Connect("StrafeRight",	pController->GetControl("StrafeRight"));
+		m_pController->Connect("Up",			pController->GetControl("Up"));
+		m_pController->Connect("Down",			pController->GetControl("Down"));
+		m_pController->Connect("Run",			pController->GetControl("Run"));
+		m_pController->Connect("Crouch",		pController->GetControl("Crouch"));
+	}
 }
 
 /**
@@ -84,6 +101,17 @@ SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cScen
 */
 SNMMoveController::~SNMMoveController()
 {
+	// Destroy the input controller
+	delete m_pController;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLScene::SceneNodeModifier functions   ]
+//[-------------------------------------------------------]
+Controller *SNMMoveController::GetInputController() const
+{
+	return m_pController;
 }
 
 
@@ -101,79 +129,53 @@ void SNMMoveController::NotifyUpdate()
 
 	// Get direction vectors
 	const Quaternion &qRot = cSceneNode.GetTransform().GetRotation();
-	Vector3 vDirLeftVector = qRot.GetXAxis();
-	Vector3 vDirUpVector   = qRot.GetYAxis();
-	Vector3 vDirVector     = qRot.GetZAxis();
-	if (GetFlags() & FlipXAxis)
-		vDirLeftVector.Invert();
-	if (GetFlags() & FlipYAxis)
-		vDirUpVector.Invert();
-	if (GetFlags() & FlipZAxis)
-		vDirVector.Invert();
+	const Vector3 vDirLeftVector = qRot.GetXAxis();
+	const Vector3 vDirUpVector   = qRot.GetYAxis();
+	const Vector3 vDirVector     = qRot.GetZAxis();
 
 	// Check if input is active
-	// [TODO] Don't use devices directly, use a virtual controller instead
-	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
-	if ((pController && pController->GetActive()) || !pController) {
+	if (m_pController->GetActive()) {
 		// Movement vector
 		Vector3 vMovement;
 
-		// Get keyboard input device
-		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-		if (pKeyboard) {
-			// Forward/backward
-			if (pKeyboard->KeyW.IsPressed() || pKeyboard->KeyUp.IsPressed())
-				vMovement -= vDirVector;
-			if (pKeyboard->KeyS.IsPressed() || pKeyboard->KeyDown.IsPressed())
-				vMovement += vDirVector;
+		// Forward/backward
+		if (m_pController->Forward.IsPressed())
+			vMovement -= vDirVector;
+		if (m_pController->Backward.IsPressed())
+			vMovement += vDirVector;
+		vMovement += vDirVector*m_pController->TransZ.GetValue();
 
-			// Left/right
-			if (pKeyboard->KeyA.IsPressed() || pKeyboard->KeyLeft.IsPressed())
-				vMovement -= vDirLeftVector;
-			if (pKeyboard->KeyD.IsPressed() || pKeyboard->KeyRight.IsPressed())
-				vMovement += vDirLeftVector;
+		// Left/right
+		if (m_pController->StrafeLeft.IsPressed())
+			vMovement -= vDirLeftVector;
+		if (m_pController->StrafeRight.IsPressed())
+			vMovement += vDirLeftVector;
+		vMovement += vDirLeftVector*m_pController->TransX.GetValue();
 
-			// Upward/downward
-			if (pKeyboard->KeyPageUp.IsPressed())
-				vMovement -= vDirUpVector;
-			if (pKeyboard->KeyPageDown.IsPressed())
-				vMovement += vDirUpVector;
-		}
-
-		// Get SpaceMouse device
-		SpaceMouse *pSpaceMouse = (SpaceMouse*)InputManager::GetInstance()->GetDevice("SpaceMouse0");
-		if (pSpaceMouse) {
-			// Get translation
-			const float fX = pSpaceMouse->TransX.GetValue() * SpaceMouseTranslationFactor;
-			const float fY = pSpaceMouse->TransY.GetValue() * SpaceMouseTranslationFactor;
-			const float fZ = pSpaceMouse->TransZ.GetValue() * SpaceMouseTranslationFactor;
-
-			// Set new offset
-			vMovement += vDirLeftVector * fX;
-			vMovement += vDirUpVector   * fZ;
-			vMovement += vDirVector     * fY;
-		}
+		// Upward/downward
+		if (m_pController->Up.IsPressed())
+			vMovement -= vDirUpVector;
+		if (m_pController->Down.IsPressed())
+			vMovement += vDirUpVector;
+		vMovement += vDirUpVector*m_pController->TransY.GetValue();
 
 		// Set movement speed
 		float fCurrentSpeed = Speed;
 
-		// Check keyboard input device
-		if (pKeyboard) {
-			// Speed up
-			if (pKeyboard->KeyShift.IsPressed())
-				fCurrentSpeed *= 4;
+		// Speed up
+		if (m_pController->Run.IsPressed())
+			fCurrentSpeed *= 4;
 
-			// Slow down
-			else if (pKeyboard->KeyControl.IsPressed())
-				fCurrentSpeed /= 4;
-		}
+		// Slow down
+		else if (m_pController->Crouch.IsPressed())
+			fCurrentSpeed /= 4;
 
 		// Calculate movement
 		vMovement *= fCurrentSpeed*Timing::GetInstance()->GetTimeDifference();
 
 		// 'Move' to the new position
 		if (!vMovement.IsNull())
-			cSceneNode.MoveTo(cSceneNode.GetTransform().GetPosition()-vMovement);
+			cSceneNode.MoveTo(cSceneNode.GetTransform().GetPosition() - vMovement);
 	}
 }
 

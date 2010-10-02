@@ -1,6 +1,8 @@
 >> 02.10.2010
 [CO]
-- Nicht verwendetes "SNMMouseMoveController" entfernt... das wird ohnehin demnächst überflüssig durch die Nutzung von Virtuellen Controllern
+- Nicht verwendetes "SNMMouseMoveController" entfernt... das wird ohnehin demnächst überflüssig durch die Nutzung von virtuellen Input Controllern
+- "SNMMoveController" verwendet nun virtuelle Input Controller, "FlipXAxis", "FlipYAxis" & "FlipZAxis" Flags entfernt da sich das nun universeller
+  über die Input Controller konfigurieren lässt (auch wenn dies im Augenblick z.B. in PLViewer noch nicht komplett über scene/config Dateien geht)
 
 
 

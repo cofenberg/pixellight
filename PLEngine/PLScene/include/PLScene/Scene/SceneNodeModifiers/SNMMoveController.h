@@ -33,6 +33,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLScene {
+	class MoveController;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScene {
@@ -43,49 +51,25 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Simple scene node move controller modifier class
+*    Scene node move controller modifier class
 *
 *  @remarks
+*    When using the unchanged virtual standard controller:
 *    Use a/w/d/s or cursor keys to walk. 'PageUp/PageDown' to move upwards/downwards.
 *    Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
 *
 *  @note
-*    - Normally only used for debugging
-*    - 'SpaceMouse'-support
+*    - Normally only used for rapid prototyping
 */
 class SNMMoveController : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
-	//[ Public definition                                     ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Scene node modifier flags (SceneNodeModifier flags extension)
-		*/
-		enum EFlags {
-			FlipXAxis = 1<<2,	/**< Flip x axis */
-			FlipYAxis = 1<<3,	/**< Flip y axis */
-			FlipZAxis = 1<<4	/**< Flip z axis */
-		};
-		pl_enum(EFlags)
-			pl_enum_base(SNMTransform::EFlags)
-			pl_enum_value(FlipXAxis,	"Flip x axis")
-			pl_enum_value(FlipYAxis,	"Flip y axis")
-			pl_enum_value(FlipZAxis,	"Flip z axis")
-		pl_enum_end
-
-
-	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMTransform, "Simple scene node move controller modifier class")
+	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMTransform, "Scene node move controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
-		pl_attribute(Speed,							float,					1.0f,		ReadWrite,	DirectValue,	"Speed",								"Min='0.0001'")
-		pl_attribute(SpaceMouseTranslationFactor,	float,					0.0025f,	ReadWrite,	DirectValue,	"Space mouse translation scale factor",	"Min='0.0001'")
-		// Overwritten SceneNodeModifier variables
-		pl_attribute(Flags,							pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,			"Flags",								"")
+		pl_attribute(Speed,	float,	1.0f,	ReadWrite,	DirectValue,	"Movement speed",	"Min='0.0001'")
 	pl_class_end
 
 
@@ -117,6 +101,13 @@ class SNMMoveController : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual PLScene::SceneNodeModifier functions   ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API PLInput::Controller *GetInputController() const;
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -132,6 +123,13 @@ class SNMMoveController : public SNMTransform {
 	//[-------------------------------------------------------]
 	private:
 		PLCore::EventHandler<> EventHandlerUpdate;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		MoveController *m_pController;	/**< Move input controller instance, always valid! */
 
 
 };

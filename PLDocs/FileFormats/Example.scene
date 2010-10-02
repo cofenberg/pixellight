@@ -3,7 +3,7 @@
     <Node Class="PLScene::SNCamera" Name="Camera">
         <Modifier Class="PLScene::SNMLookController" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
-        <Modifier Class="PLScene::SNMMoveController" Flags="FlipXAxis|FlipZAxis" />
+        <Modifier Class="PLScene::SNMMoveController" Speed="2" />
     </Node>
     <Node Class="PLScene::SNMesh" Position="0 -2.1 -5" Scale="4 0.1 4" Rotation="0 180 0" Name="Floor" Mesh="Default" />
     <Node Class="PLScene::SNMesh" Position="0 -1.5 -5" Scale="0.5 0.5 0.5" Name="StatueSocket" Mesh="Default" />
