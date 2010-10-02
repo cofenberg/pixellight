@@ -1,4 +1,10 @@
->> 01.09.2010
+>> 02.10.2010
+[CO]
+- Nicht verwendetes "SNMMouseMoveController" entfernt... das wird ohnehin demnächst überflüssig durch die Nutzung von Virtuellen Controllern
+
+
+
+>> 01.10.2010
 [CO]
 - Nach einer Diskussion mit Stefan "SNMRotationController" in "SNMLookController" umbenannt
 - "SNMMouseLookController" entfernt (zukünftig "SNMLookController" verwenden)

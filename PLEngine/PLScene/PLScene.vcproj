@@ -1237,14 +1237,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Scene\SceneNodeModifiers\SNMMouseMoveController.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMMouseMoveController.h"
-					>
-				</File>
-				<File
 					RelativePath=".\src\Scene\SceneNodeModifiers\SNMMouseOrbitingController.cpp"
 					>
 				</File>

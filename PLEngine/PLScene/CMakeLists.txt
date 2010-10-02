@@ -68,7 +68,6 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMLookController.cpp
 	src/Scene/SceneNodeModifiers/LookController.cpp
 	src/Scene/SceneNodeModifiers/SNMMoveController.cpp
-	src/Scene/SceneNodeModifiers/SNMMouseMoveController.cpp
 	src/Scene/SceneNodeModifiers/SNMAnchor.cpp
 	src/Scene/SceneNodeModifiers/SNMTransform.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionPath.cpp
