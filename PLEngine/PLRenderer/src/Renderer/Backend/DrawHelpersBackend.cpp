@@ -169,12 +169,12 @@ void DrawHelpersBackend::DrawText(Font &cFont, const String &sText, const Color4
 		mTransform.SetTranslationMatrix(fX, fY - fClipSpaceFontHeight, 0.0f);
 
 		// Calculate the bias
-		Vector2 vBias;
+		Vector2 vFontBias = vBias;
 		if (nFlags & Font::CenterText)
-			vBias.x -= cFont.GetTextWidth(sText)/2;
+			vFontBias.x -= cFont.GetTextWidth(sText)/2;
 
 		// Draw the text
-		cFont.Draw(sText, cColor, mTransform, Vector2(fClipSpaceFontWidth/nFontHeightInPixels, fClipSpaceFontHeight/nFontHeightInPixels), vBias);
+		cFont.Draw(sText, cColor, mTransform, Vector2(fClipSpaceFontWidth/nFontHeightInPixels, fClipSpaceFontHeight/nFontHeightInPixels)*vScale, vFontBias);
 	}
 }
 

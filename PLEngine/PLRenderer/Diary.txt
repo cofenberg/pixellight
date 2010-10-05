@@ -1,3 +1,9 @@
+>> 05.10.2010
+[CO]
+- "DrawHelpersBackend::DrawText": Scale & Bias Parameter wurden nicht verwendet
+
+
+
 >> 01.10.2010
 [CO]
 - "AbstractShader" in "Shader" umbenannt da der Name "Shader" durch das entfernen des alten Shader-Interfaces nun wieder frei ist und es so konsistenter
