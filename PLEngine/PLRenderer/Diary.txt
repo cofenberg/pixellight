@@ -1,3 +1,11 @@
+>> 08.10.2010
+[CO]
+- "PLRendererOpenGL::ProgramGLSL" & "PLRendererOpenGLCg::ProgramCg": "RelinkRequired()" wird nur noch in "RestoreDeviceData()" und nicht mehr auch in
+  "BackupDeviceData()" aufgerufen, es ist einfach am Geschicktesten wenn das "Dirty"-Event dann kommt, wenn es möglich ist wieder ein neues internes
+  Program zu erzeugen (von dem man sich dann z.B. direkte Zeiger auf Attribute/Uniforms speichern kann)
+
+
+
 >> 05.10.2010
 [CO]
 - "DrawHelpersBackend::DrawText": Scale & Bias Parameter wurden nicht verwendet

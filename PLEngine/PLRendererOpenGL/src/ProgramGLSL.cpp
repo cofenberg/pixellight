@@ -533,10 +533,8 @@ bool ProgramGLSL::UnmakeCurrent()
 //[-------------------------------------------------------]
 void ProgramGLSL::BackupDeviceData(uint8 **ppBackup)
 {
+	// Is there currently a OpenGL program?
 	if (m_nOpenGLProgram) {
-		// Call the relink method, this automatically destroys the used resources
-		RelinkRequired();
-
 		// Destroy the OpenGL program
 		glDeleteObjectARB(m_nOpenGLProgram);
 		m_nOpenGLProgram = NULL;
@@ -549,7 +547,7 @@ void ProgramGLSL::RestoreDeviceData(uint8 **ppBackup)
 		m_nOpenGLProgram = glCreateProgramObjectARB();
 		m_bVertexShaderAttached = m_bGeometryShaderAttached = m_bFragmentShaderAttached = false;
 
-		// Call the relink method, this automatically destroys the used resources
+		// Call the relink method, this automatically destroys the used resources and the user will be informed through an dirty-event
 		RelinkRequired();
 	}
 }

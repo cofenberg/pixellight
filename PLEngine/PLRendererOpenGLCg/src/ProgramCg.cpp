@@ -188,7 +188,7 @@ void ProgramCg::RelinkRequired()
 		// Destroy the uniform information
 		DestroyUniformInformation();
 
-		// Destroy the tCg combined program
+		// Destroy the Cg combined program
 		if (m_pCgCombinedProgram) {
 			cgDestroyProgram(m_pCgCombinedProgram);
 			m_pCgCombinedProgram = NULL;
@@ -563,13 +563,16 @@ bool ProgramCg::UnmakeCurrent()
 //[-------------------------------------------------------]
 void ProgramCg::BackupDeviceData(uint8 **ppBackup)
 {
-	// Call the relink method, this automatically destroys the used resources
-	RelinkRequired();
+	// Destroy the Cg combined program
+	if (m_pCgCombinedProgram) {
+		cgDestroyProgram(m_pCgCombinedProgram);
+		m_pCgCombinedProgram = NULL;
+	}
 }
 
 void ProgramCg::RestoreDeviceData(uint8 **ppBackup)
 {
-	// Call the relink method, this automatically destroys the used resources
+	// Call the relink method, this automatically destroys the used resources and the user will be informed through an dirty-event
 	RelinkRequired();
 }
 
