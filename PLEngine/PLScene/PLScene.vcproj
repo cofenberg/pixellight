@@ -1101,6 +1101,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\OrbitingController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\OrbitingController.h"
+					>
+				</File>
+				<File
 					RelativePath="src\Scene\SceneNodeModifiers\SNMAnchor.cpp"
 					>
 				</File>
@@ -1245,14 +1253,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\Scene\SceneNodeModifiers\SNMOrbitingController.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMOrbitingController.h"
-					>
-				</File>
-				<File
 					RelativePath="src\Scene\SceneNodeModifiers\SNMMoveController.cpp"
 					>
 				</File>
@@ -1266,6 +1266,14 @@
 				</File>
 				<File
 					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMOrbiting.h"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMOrbitingController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMOrbitingController.h"
 					>
 				</File>
 				<File

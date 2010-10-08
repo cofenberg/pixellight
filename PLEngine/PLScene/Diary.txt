@@ -6,6 +6,7 @@
   Zwar besitzen in der Regel nur *extrem* wenige SceneNodes Eingabebehandlung, allerdings ist es dann denke ich nett direkt über SceneNode an den
   Input-Controller gelangen zu können - Speicher, oder Performancenachteile hat man durch diese weitere virtuelle, standardmäßig nicht Implementierte
   Methode ja nicht.
+- SNMOrbitingController: Nutzt nun einen Virtuellen Input Controller, die Implementation ist dadurch *minimal* einfacher geworden *g*
 
 
 

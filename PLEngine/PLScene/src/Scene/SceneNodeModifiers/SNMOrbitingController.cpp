@@ -25,12 +25,9 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
-#include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Devices/Mouse.h>
-#include <PLInput/Input/Devices/Keyboard.h>
-#include <PLInput/Input/Devices/SpaceMouse.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneNodeModifiers/OrbitingController.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMOrbitingController.h"
 
 
@@ -73,17 +70,33 @@ void SNMOrbitingController::SetFlags(uint32 nValue)
 *    Constructor
 */
 SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
-	XSpeed(this),
-	YSpeed(this),
-	RotationSpeed(this),
-	PanSpeed(this),
-	ZoomSpeed(this),
-	WheelSpeed(this),
-	Flags(this),
-	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this),
+	m_pController(new OrbitingController())
 {
-	// Overwrite the default setting of the flags
-	SetFlags(GetFlags()|RotateLeftMouseButton|ZoomRightMouseButton|ZoomMouseWheel|PanMiddleMouseButton);
+	// Connect to virtual input controller
+	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
+	//        virtual controller is used by the application. Therefore, it should be the application that
+	//        connects our controls to it's virtual controller, which will need some additional callback
+	//        to connect to scene nodes that provide input controllers.
+	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
+	if (pController) {
+		m_pController->Connect("RotX",		pController->GetControl("RotX"));
+		m_pController->Connect("RotY",		pController->GetControl("RotY"));
+		m_pController->Connect("RotZ",		pController->GetControl("RotZ"));
+		m_pController->Connect("TransX",	pController->GetControl("TransX"));
+		m_pController->Connect("TransX",	pController->GetControl("MouseX"), -1.0f);
+		m_pController->Connect("TransY",	pController->GetControl("TransY"));
+		m_pController->Connect("TransY",	pController->GetControl("MouseY"), -1.0f);
+		m_pController->Connect("TransZ",	pController->GetControl("TransZ"));
+		m_pController->Connect("ZoomAxis",	pController->GetControl("MouseWheel"));
+		m_pController->Connect("ZoomAxis",	pController->GetControl("TransZ"));
+		m_pController->Connect("ZoomAxis",	pController->GetControl("MouseY"), -1.0f);
+		m_pController->Connect("Rotate",	pController->GetControl("Button1"));
+		m_pController->Connect("Pan",		pController->GetControl("Button3"));
+		m_pController->Connect("Zoom",		pController->GetControl("Button2"));
+		m_pController->Connect("SpeedUp",	pController->GetControl("Run"));
+		m_pController->Connect("SlowDown",	pController->GetControl("Crouch"));
+	}
 }
 
 /**
@@ -92,6 +105,17 @@ SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbitin
 */
 SNMOrbitingController::~SNMOrbitingController()
 {
+	// Destroy the input controller
+	delete m_pController;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual SceneNodeModifier functions            ]
+//[-------------------------------------------------------]
+Controller *SNMOrbitingController::GetInputController() const
+{
+	return m_pController;
 }
 
 
@@ -105,220 +129,52 @@ SNMOrbitingController::~SNMOrbitingController()
 void SNMOrbitingController::NotifyUpdate()
 {
 	// Check if input is active
-	// [TODO] Don't use devices directly, use a virtual controller instead
-	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
-	if ((pController && pController->GetActive()) || !pController) {
-		// Get mouse input device
-		Mouse *pMouse = InputManager::GetInstance()->GetMouse();
-		if (pMouse) {
-			// The mouse wheel can be used to control the distance to the target
-			if (GetFlags() & ZoomMouseWheel) {
-				float fWheelDelta = pMouse->Wheel.GetValue() * WheelSpeed;
-				if (fWheelDelta) {
-					// Get keyboard input device
-					Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-					if (pKeyboard) {
-						// Speed up
-						if (pKeyboard->KeyShift.IsPressed())
-							fWheelDelta *= 4;
+	if (m_pController->GetActive()) {
+		// Get the current speed
+		float fCurrentSpeed = Timing::GetInstance()->GetTimeDifference();
+		if (m_pController->SpeedUp.IsPressed())
+			fCurrentSpeed *= 4.0f;
+		else if (m_pController->SlowDown.IsPressed())
+			fCurrentSpeed /= 4.0f;
 
-						// Slow down
-						else if (pKeyboard->KeyControl.IsPressed())
-							fWheelDelta /= 4;
-					}
+		// Rotation
+		if (m_pController->Rotate.IsPressed()) {
+			const float fX = m_pController->RotX.GetValue()*fCurrentSpeed;
+			const float fY = m_pController->RotY.GetValue()*fCurrentSpeed;
+			const float fZ = m_pController->RotZ.GetValue()*fCurrentSpeed;
+			if (fX || fY || fZ) {
+				// Get a quaternion representation of the rotation delta
+				Quaternion qRotInc;
+				EulerAngles::ToQuaternion(-float(fX*Math::DegToRad),
+										  -float(fY*Math::DegToRad),
+										  -float(fZ*Math::DegToRad),
+										  qRotInc);
 
-					// Set new distance
-					SetDistance(GetDistance() - fWheelDelta);
-				}
-			}
-
-			// Check mouse buttons
-			bool bLeftButton   = pMouse->Left.IsPressed();
-			bool bRightButton  = pMouse->Right.IsPressed();
-			bool bMiddleButton = pMouse->Middle.IsPressed();
-			if (bLeftButton && bRightButton) {
-				// Emulate third mouse button
-				bLeftButton		= false;
-				bRightButton	= false;
-				bMiddleButton	= true;
-			}
-
-			// Is any rotation mouse button pressed we are interested in?
-			const bool bRotate = (RotationSpeed && (
-								   ((GetFlags() & RotateLeftMouseButton)   && bLeftButton) ||
-								   ((GetFlags() & RotateRightMouseButton)  && bRightButton) ||
-								   ((GetFlags() & RotateMiddleMouseButton) && bMiddleButton) ||
-								   ((GetFlags() & RotateNoMouseButton)) ) );
-
-			// Is any pan mouse button pressed we are interested in?
-			const bool bPan = (PanSpeed && (
-								   ((GetFlags() & PanLeftMouseButton)   && bLeftButton) ||
-								   ((GetFlags() & PanRightMouseButton)  && bRightButton) ||
-								   ((GetFlags() & PanMiddleMouseButton) && bMiddleButton) ||
-								   ((GetFlags() & PanNoMouseButton)) ) );
-
-			// Is any zoom mouse button pressed we are interested in?
-			const bool bZoom = (ZoomSpeed && (
-								   ((GetFlags() & ZoomLeftMouseButton)   && bLeftButton) ||
-								   ((GetFlags() & ZoomRightMouseButton)  && bRightButton) ||
-								   ((GetFlags() & ZoomMiddleMouseButton) && bMiddleButton) ||
-								   ((GetFlags() & ZoomNoMouseButton)) ) );
-
-			// Rotate and/or pan and/or zoom?
-			if (bRotate || bPan || bZoom) {
-				// Get mouse movement
-				float fDeltaX = pMouse->X.GetValue()*XSpeed;
-				float fDeltaY = pMouse->Y.GetValue()*YSpeed;
-				if (fDeltaX || fDeltaY) {
-					// Flip axis
-					if (GetFlags() & FlipXAxis)
-						fDeltaX = -fDeltaX;
-					if (GetFlags() & FlipYAxis)
-						fDeltaY = -fDeltaY;
-
-					// Swap x/y axis
-					if (GetFlags() & SwapXYAxis) {
-						const float fTemp = fDeltaX;
-						fDeltaX = fDeltaY;
-						fDeltaY = fTemp;
-					}
-
-					// Get keyboard input device
-					Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-					if (pKeyboard) {
-						// Speed up
-						if (pKeyboard->KeyShift.IsPressed()) {
-							fDeltaX *= 4;
-							fDeltaY *= 4;
-
-						// Slow down
-						} else if (pKeyboard->KeyControl.IsPressed()) {
-							fDeltaX /= 4;
-							fDeltaY /= 4;
-						}
-					}
-
-					// Rotate?
-					if (bRotate) {
-						// Get a quaternion representation of the rotation delta
-						Quaternion qRotInc;
-						EulerAngles::ToQuaternion(-float(fDeltaY*Math::DegToRad*RotationSpeed),
-												   float(fDeltaX*Math::DegToRad*RotationSpeed),
-												   0.0f, qRotInc);
-
-						// Update rotation
-						GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
-					}
-
-					// Pan?
-					if (bPan) {
-						Vector3 vPan = Pan.Get();
-						if (fDeltaX)
-							vPan.x -= fDeltaX*PanSpeed;
-						if (fDeltaY)
-							vPan.y -= fDeltaY*PanSpeed;
-						Pan.Set(vPan);
-					}
-
-					// Zoom?
-					if (bZoom) {
-						// Set new distance
-						SetDistance(GetDistance() - fDeltaY);
-					}
-				}
+				// Update rotation
+				GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
 			}
 		}
 
-		// Get SpaceMouse device
-		SpaceMouse *pSpaceMouse = (SpaceMouse*)InputManager::GetInstance()->GetDevice("SpaceMouse0");
-		if (pSpaceMouse) {
-			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
-
-			// Get rotation
-				  float fX = pSpaceMouse->RotX.GetValue() * RotationSpeed * fTimeDiff;
-				  float fY = pSpaceMouse->RotY.GetValue() * RotationSpeed * fTimeDiff;
-			const float fZ = pSpaceMouse->RotZ.GetValue() * RotationSpeed * fTimeDiff;
-
-			// Flip axis
-			if (GetFlags() & FlipXAxis)
-				fX = -fX;
-			if (GetFlags() & FlipYAxis)
-				fY = -fY;
-
-			// Swap x/y axis
-			if (GetFlags() & SwapXYAxis) {
-				const float fTemp = fX;
-				fX = fY;
-				fY = fTemp;
-			}
-
-			// Get keyboard input device
-			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-			if (pKeyboard) {
-				// Speed up
-				if (pKeyboard->KeyShift.IsPressed()) {
-					fX *= 4;
-					fY *= 4;
-
-				// Slow down
-				} else if (pKeyboard->KeyControl.IsPressed()) {
-					fX /= 4;
-					fY /= 4;
-				}
-			}
-
-			// Get a quaternion representation of the rotation delta
-			Quaternion qRotInc;
-			EulerAngles::ToQuaternion( float(fX*Math::DegToRad),
-									   float(fZ*Math::DegToRad),
-									   float(fY*Math::DegToRad),
-									   qRotInc);
-
-			// Update rotation
-			GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
-
-			// Get translation
-			float fTranslationX = pSpaceMouse->TransX.GetValue() * PanSpeed * fTimeDiff;
-			float fTranslationY = pSpaceMouse->TransY.GetValue() * PanSpeed * fTimeDiff;
-			float fTranslationZ = pSpaceMouse->TransZ.GetValue() * PanSpeed * fTimeDiff;
-
-			// Do pan or zoom
-			if (pSpaceMouse->Button1.IsPressed() || pSpaceMouse->Button2.IsPressed()) {
-				// Flip axis
-				if (GetFlags() & FlipXAxis)
-					fTranslationX = -fTranslationX;
-				if (GetFlags() & FlipYAxis)
-					fTranslationY = -fTranslationY;
-
-				// Swap x/y axis
-				if (GetFlags() & SwapXYAxis) {
-					const float fTemp = fTranslationX;
-					fTranslationX = fTranslationY;
-					fTranslationY = fTemp;
-				}
-
-				// Check keyboard input device
-				if (pKeyboard) {
-					// Speed up
-					if (pKeyboard->KeyShift.IsPressed()) {
-						fTranslationX *= 4;
-						fTranslationY *= 4;
-
-					// Slow down
-					} else if (pKeyboard->KeyControl.IsPressed()) {
-						fTranslationX /= 4;
-						fTranslationY /= 4;
-					}
-				}
-
-				// Set new offset
+		// Pan
+		if (m_pController->Pan.IsPressed()) {
+			const float fX = m_pController->TransX.GetValue()*fCurrentSpeed;
+			const float fY = m_pController->TransY.GetValue()*fCurrentSpeed;
+			const float fZ = m_pController->TransZ.GetValue()*fCurrentSpeed;
+			if (fX || fY || fZ) {
 				Vector3 vPan = Pan.Get();
-				vPan.x += fTranslationX;
-				vPan.y += fTranslationY;
+				vPan.x += fX;
+				vPan.y += fY;
+				vPan.z += fZ;
 				Pan.Set(vPan);
-			} else {
+			}
+		}
+
+		// Zoom
+		if (m_pController->Zoom.IsPressed()) {
+			const float fZoomAxis = m_pController->ZoomAxis.GetValue()*fCurrentSpeed;
+			if (fZoomAxis) {
 				// Set new distance
-				SetDistance(GetDistance() + fTranslationZ);
+				SetDistance(GetDistance() - fZoomAxis);
 			}
 		}
 	}

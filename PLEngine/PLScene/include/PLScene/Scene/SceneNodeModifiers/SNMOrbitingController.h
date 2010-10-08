@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_MOUSEORBITINGCONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_MOUSEORBITINGCONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_H__
 #pragma once
 
 
@@ -39,6 +39,12 @@ namespace PLScene {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class OrbitingController;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -46,60 +52,10 @@ namespace PLScene {
 *    Scene node modifier class rotating a scene node towards a target scene node using an input controller
 *
 *  @remarks
-*    Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
-*
-*  @note
-*    - Normally only used for debugging
-*    - 'SpaceMouse'-support
+*    When using the unchanged virtual standard controller:
+*    Hold the left mouse button to rotate, the right mouse button to zoom and the middle mouse button to pan.
 */
 class SNMOrbitingController : public SNMOrbiting {
-
-
-	//[-------------------------------------------------------]
-	//[ Public definition                                     ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Scene node modifier flags (SceneNodeModifier flags extension)
-		*/
-		enum EFlags {
-			FlipXAxis				 = 1<<2,	/**< Flip x mouse axis */
-			FlipYAxis				 = 1<<3,	/**< Flip y mouse axis */
-			SwapXYAxis				 = 1<<4,	/**< Swap x/y mouse axis */
-			RotateNoMouseButton		 = 1<<5,	/**< No mouse button must be hold down to rotate */
-			RotateLeftMouseButton	 = 1<<6,	/**< The left mouse button must be hold down to rotate */
-			RotateRightMouseButton	 = 1<<7,	/**< The right mouse button must be hold down to rotate */
-			RotateMiddleMouseButton	 = 1<<8,	/**< The left mouse button must be hold down to rotate */
-			ZoomNoMouseButton		 = 1<<9,	/**< No mouse button must be hold down to zoom */
-			ZoomLeftMouseButton		 = 1<<10,	/**< The left mouse button must be hold down to zoom */
-			ZoomRightMouseButton	 = 1<<11,	/**< The right mouse button must be hold down to zoom */
-			ZoomMiddleMouseButton	 = 1<<12,	/**< The left mouse button must be hold down to zoom */
-			ZoomMouseWheel			 = 1<<13,	/**< The mouse wheel can be used to zoom */
-			PanNoMouseButton		 = 1<<14,	/**< No mouse button must be hold down to pan */
-			PanLeftMouseButton		 = 1<<15,	/**< The left mouse button must be hold down to pan */
-			PanRightMouseButton		 = 1<<16,	/**< The right mouse button must be hold down to pan */
-			PanMiddleMouseButton	 = 1<<17	/**< The left mouse button must be hold down to pan */
-		};
-		pl_enum(EFlags)
-			pl_enum_base(SNMOrbiting::EFlags)
-			pl_enum_value(FlipXAxis,				"Flip x mouse axis")
-			pl_enum_value(FlipYAxis,				"Flip y mouse axis")
-			pl_enum_value(SwapXYAxis,				"Swap x/y mouse axis")
-			pl_enum_value(RotateNoMouseButton,		"No mouse button must be hold down to rotate")
-			pl_enum_value(RotateLeftMouseButton,	"The left mouse button must be hold down to rotate")
-			pl_enum_value(RotateRightMouseButton,	"The right mouse button must be hold down to rotate")
-			pl_enum_value(RotateMiddleMouseButton,	"The left mouse button must be hold down to rotate")
-			pl_enum_value(ZoomNoMouseButton,		"No mouse button must be hold down to zoom")
-			pl_enum_value(ZoomLeftMouseButton,		"The left mouse button must be hold down to zoom")
-			pl_enum_value(ZoomRightMouseButton,		"The right mouse button must be hold down to zoom")
-			pl_enum_value(ZoomMiddleMouseButton,	"The left mouse button must be hold down to zoom")
-			pl_enum_value(ZoomMouseWheel,			"The mouse wheel can be used to zoom")
-			pl_enum_value(PanNoMouseButton,			"No mouse button must be hold down to pan")
-			pl_enum_value(PanLeftMouseButton,		"The left mouse button must be hold down to pan")
-			pl_enum_value(PanRightMouseButton,		"The right mouse button must be hold down to pan")
-			pl_enum_value(PanMiddleMouseButton,		"The left mouse button must be hold down to pan")
-		pl_enum_end
 
 
 	//[-------------------------------------------------------]
@@ -107,14 +63,6 @@ class SNMOrbitingController : public SNMOrbiting {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMOrbitingController, "PLScene", PLScene::SNMOrbiting, "Scene node modifier class rotating a scene node towards a target scene node using an input controller")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
-		pl_attribute(XSpeed,		float,					0.3f,																			ReadWrite,	DirectValue,	"Mouse look x axis speed",					"")
-		pl_attribute(YSpeed,		float,					0.3f,																			ReadWrite,	DirectValue,	"Mouse look y axis speed",					"")
-		pl_attribute(RotationSpeed,	float,					1.0f,																			ReadWrite,	DirectValue,	"Rotation speed",							"")
-		pl_attribute(PanSpeed,		float,					1.0f,																			ReadWrite,	DirectValue,	"Pan speed",								"")
-		pl_attribute(ZoomSpeed,		float,					1.0f,																			ReadWrite,	DirectValue,	"Zoom speed",								"")
-		pl_attribute(WheelSpeed,	float,					0.1f,																			ReadWrite,	DirectValue,	"Mouse wheel speed for distance control",	"")
-		// Overwritten SceneNodeModifier variables
-		pl_attribute(Flags,			pl_flag_type(EFlags),	RotateLeftMouseButton|ZoomRightMouseButton|ZoomMouseWheel|PanMiddleMouseButton,	ReadWrite,	GetSet,			"Flags",									"")
 	pl_class_end
 
 
@@ -146,6 +94,13 @@ class SNMOrbitingController : public SNMOrbiting {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual PLScene::SceneNodeModifier functions   ]
+	//[-------------------------------------------------------]
+	public:
+		PLS_API virtual PLInput::Controller *GetInputController() const;
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -163,6 +118,13 @@ class SNMOrbitingController : public SNMOrbiting {
 		PLCore::EventHandler<> EventHandlerUpdate;
 
 
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		OrbitingController *m_pController;	/**< Orbiting input controller instance, always valid! */
+
+
 };
 
 
@@ -172,4 +134,4 @@ class SNMOrbitingController : public SNMOrbiting {
 } // PLScene
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_MOUSEORBITINGCONTROLLER_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_H__

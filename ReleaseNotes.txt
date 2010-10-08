@@ -2,12 +2,14 @@ Changes in PixelLight 0.9.2-R3 (not yet released)
 - Feature: Added support for "LATC1" and "LATC2" (formally "3DC"/"ATI1N"/"ATI2N" on ATI GPU's only) texture compression
 - Feature: Cg shader language support is now optional (PLRendererOpenGLCg plugin) instead of directly build in within PLRendererOpenGL
 - Feature: Deferred scene renderer and HDR compositing steps are now supporting GLSL as well instead of just Cg
+- Feature: Added MinGW support to the header file "PLGeneralWindows.h" from "PLGeneral"
 - Change: Updated from "Cg Toolkit 2.2, February 2010 Release" to "Cg Toookit 3.0 - July 2010"
 - Change: Introduced new "PLRenderer::ShaderLanguage" interface, removed "Create<Type>Shader()" and "CreateProgram()" within "PLRenderer::Renderer"
 - Change: Camera zoom input control modifier "PLScene::SNMCameraZoom" was replaced by "PLScene::SNMCameraZoomController"
 - Change: "PLPhysics::SNMPhysicsCharacterController" is now using a virtual input controller instead of accessing input devices directly
 - Change: "PLPhysics::SNPhysicsMouseInteraction" is now using a virtual input controller instead of accessing input devices directly
 - Change: "PLScene::SNMMoveController" is now using a virtual input controller instead of accessing input devices directly
+- Change: "PLScene::SNMOrbitingController" is now using a virtual input controller instead of accessing input devices directly
 - Change: New "PLScene::SNMLookController" scene node modifier as replacement for "PLScene::SNMMouseLookController"
 - Change: Renamed "PLScene::SNMMouseOrbitingController" scene node modifier into "PLScene::SNMOrbitingController"
 - Removed: Old shader interface within PLRenderer

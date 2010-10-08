@@ -67,6 +67,7 @@ class OrbitingController : public PLInput::Controller {
 		PLInput::Axis	TransX;		/**< X translation axis: Strafe left/right (+/-) */
 		PLInput::Axis	TransY;		/**< Y translation axis: Move up/down (+/-) */
 		PLInput::Axis	TransZ;		/**< Z translation axis: Move forwards/backwards (+/-) */
+		PLInput::Axis	ZoomAxis;	/**< Zoom axis to zoom in or out (+/-) */
 		PLInput::Button	Rotate;		/**< Keep pressed to rotate */
 		PLInput::Button	Pan;		/**< Keep pressed to pan */
 		PLInput::Button	Zoom;		/**< Keep pressed to zoom */

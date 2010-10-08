@@ -53,6 +53,7 @@ OrbitingController::OrbitingController() : Controller(ControllerVirtual, "Orbiti
 	TransX	(this, "TransX",	"X translation axis: Strafe left/right (+/-)"),
 	TransY	(this, "TransY",	"Y translation axis: Move up/down (+/-)"),
 	TransZ	(this, "TransZ",	"Z translation axis: Move forwards/backwards (+/-)"),
+	ZoomAxis(this, "ZoomAxis",	"Zoom axis to zoom in or out (+/-)"),
 	Rotate	(this, "Rotate",	"Keep pressed to rotate"),
 	Pan		(this, "Pan",		"Keep pressed to pan"),
 	Zoom	(this, "Zoom",		"Keep pressed to zoom"),
