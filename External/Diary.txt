@@ -1,3 +1,9 @@
+>> 08.10.2010
+[CO]
+- External "WindowsDDK" entfernt, siehe PLInput Tagebucheintrag von heute
+
+
+
 >> 28.09.2010
 [CO]
 - Cg von "Recommended" nach "Optional" verschoben da Cg nun in PLRendererOpenGL nur noch über ein loses Plugin reinkommt und,

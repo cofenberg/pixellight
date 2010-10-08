@@ -76,14 +76,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_include_directories(
-		${WINDOWSDDK_INCLUDE_DIRS}
-	)
-elseif(LINUX)
+if(LINUX)
 	##################################################
 	## Linux
 	##################################################
@@ -116,7 +109,6 @@ if(WIN32)
 		${WIN32_USER32_LIB}
 		${WIN32_WINMM_LIB}
 		${WIN32_SETUPAPI_LIB}
-		${WINDOWSDDK_LIBRARIES}
 	)
 elseif(LINUX)
 	##################################################
@@ -189,9 +181,6 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath)
-if(WIN32)
-	add_dependencies(Engine                    	External-WindowsDDK)
-endif()
 add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

@@ -23,8 +23,24 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Log/Log.h>
+#include <PLGeneral/System/DynLib.h>
 #include "PLInput/Backend/HID/HIDWindows.h"
 #include "PLInput/Backend/HID/HIDDeviceWindows.h"
+
+
+//[-------------------------------------------------------]
+//[ Global HID function pointers (HIDWindows.cpp)         ]
+//[-------------------------------------------------------]
+PFNHIDDGETPREPARSEDDATA		HidD_GetPreparsedData	= NULL;
+PFNHIDDFREEPREPARSEDDATA	HidD_FreePreparsedData	= NULL;
+PFNHIDPGETDATA				HidP_GetData			= NULL;
+PFNHIDPSETDATA				HidP_SetData			= NULL;
+PFNHIDPGETHIDGUID			HidD_GetHidGuid			= NULL;
+PFNHIDPGETATTRIBUTES		HidD_GetAttributes		= NULL;
+PFNHIDPGETCAPS				HidP_GetCaps			= NULL;
+PFNHIDPGETBUTTONCAPS		HidP_GetButtonCaps		= NULL;
+PFNHIDPGETVALUECAPS			HidP_GetValueCaps		= NULL;
 
 
 //[-------------------------------------------------------]
@@ -41,10 +57,36 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-HIDWindows::HIDWindows()
+HIDWindows::HIDWindows() :
+	m_pDynLibHID(new DynLib())
 {
+	// Try to load "hid.dll"
+	if (m_pDynLibHID->Load("hid.dll")) {
+		// Get global HID function pointers
+		HidD_GetPreparsedData	= (PFNHIDDGETPREPARSEDDATA)		m_pDynLibHID->GetSymbol("HidD_GetPreparsedData");
+		HidD_FreePreparsedData	= (PFNHIDDFREEPREPARSEDDATA)	m_pDynLibHID->GetSymbol("HidD_FreePreparsedData");
+		HidP_GetData			= (PFNHIDPGETDATA)				m_pDynLibHID->GetSymbol("HidP_GetData");
+		HidP_SetData			= (PFNHIDPSETDATA)				m_pDynLibHID->GetSymbol("HidP_SetData");
+		HidD_GetHidGuid			= (PFNHIDPGETHIDGUID)			m_pDynLibHID->GetSymbol("HidD_GetHidGuid");
+		HidD_GetAttributes		= (PFNHIDPGETATTRIBUTES)		m_pDynLibHID->GetSymbol("HidD_GetAttributes");
+		HidP_GetCaps			= (PFNHIDPGETCAPS)				m_pDynLibHID->GetSymbol("HidP_GetCaps");
+		HidP_GetButtonCaps		= (PFNHIDPGETBUTTONCAPS)		m_pDynLibHID->GetSymbol("HidP_GetButtonCaps");
+		HidP_GetValueCaps		= (PFNHIDPGETVALUECAPS)			m_pDynLibHID->GetSymbol("HidP_GetValueCaps");
+
+		// Ensure that we have valid function pointers
+		if (!HidD_GetPreparsedData || !HidD_FreePreparsedData || !HidP_GetData || !HidP_SetData || !HidD_GetHidGuid ||
+			!HidD_GetAttributes || !HidP_GetCaps || !HidP_GetButtonCaps || !HidP_GetValueCaps) {
+			// Error!
+			PL_LOG(Error, "Not all required symbols within \"hid.dll\" were found, as a result, no HID devices can be used")
+		}
+	} else {
+		// Error!
+		PL_LOG(Error, "Failed to load in \"hid.dll\", as a result, no HID devices can be used")
+	}
+
 	// Get device interface GUID
-	HidD_GetHidGuid(&m_sGUID);
+	if (HidD_GetHidGuid)
+		HidD_GetHidGuid(&m_sGUID);
 }
 
 /**
@@ -57,6 +99,9 @@ HIDWindows::~HIDWindows()
 	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)
 		delete m_lstDevices[i];
 	m_lstDevices.Clear();
+
+	// Destroy the dynamic HID library object
+	delete m_pDynLibHID;
 }
 
 
@@ -70,6 +115,12 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 		delete m_lstDevices[i];
 	m_lstDevices.Clear();
 
+	// We're going to use HID functions, ensure that we have valid function pointers (there's no need for additional tests within HIDDeviceWindows!)
+	if (!HidD_GetPreparsedData || !HidD_FreePreparsedData || !HidP_GetData || !HidP_SetData || !HidD_GetHidGuid ||
+		!HidD_GetAttributes || !HidP_GetCaps || !HidP_GetButtonCaps || !HidP_GetValueCaps) {
+		return;
+	}
+
 	// Create handle
 	HDEVINFO hDevInfo = SetupDiGetClassDevs(&m_sGUID, NULL, NULL, DIGCF_DEVICEINTERFACE);
 	if (!hDevInfo) return;
@@ -78,8 +129,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 	SP_DEVICE_INTERFACE_DATA sDevice;
 	sDevice.cbSize = sizeof(sDevice);
 	uint32 nDevice = 0;
-	while (SetupDiEnumDeviceInterfaces(hDevInfo, NULL, &m_sGUID, nDevice, &sDevice))
-	{
+	while (SetupDiEnumDeviceInterfaces(hDevInfo, NULL, &m_sGUID, nDevice, &sDevice)) {
 		// Allocate buffer for device interface details
 		DWORD nDetailsSize = 0;
 		SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, NULL, 0, &nDetailsSize, NULL);
@@ -130,7 +180,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 							// Enumerate buttons
 							if (sCaps.NumberInputButtonCaps > 0) {
 								USHORT nSize = sCaps.NumberInputButtonCaps;
-								PHIDP_BUTTON_CAPS pButtons = new HIDP_BUTTON_CAPS[nSize];
+								HIDP_BUTTON_CAPS *pButtons = new HIDP_BUTTON_CAPS[nSize];
 								if (HidP_GetButtonCaps(HidP_Input, pButtons, &nSize, pDevice->m_pPreparsedData) == HIDP_STATUS_SUCCESS) {
 									for (int i=0; i<nSize; i++) {
 										// Save button control
@@ -164,7 +214,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 							// Enumerate input values
 							if (sCaps.NumberInputValueCaps > 0) {
 								USHORT nSize = sCaps.NumberInputValueCaps;
-								PHIDP_VALUE_CAPS pValues = new HIDP_VALUE_CAPS[nSize];
+								HIDP_VALUE_CAPS *pValues = new HIDP_VALUE_CAPS[nSize];
 								if (HidP_GetValueCaps(HidP_Input, pValues, &nSize, pDevice->m_pPreparsedData) == HIDP_STATUS_SUCCESS) {
 									for (int i=0; i<nSize; i++) {
 										// Save input value control
@@ -201,7 +251,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 							// Enumerate output values
 							if (sCaps.NumberOutputValueCaps > 0) {
 								USHORT nSize = sCaps.NumberOutputValueCaps;
-								PHIDP_VALUE_CAPS pValues = new HIDP_VALUE_CAPS[nSize];
+								HIDP_VALUE_CAPS *pValues = new HIDP_VALUE_CAPS[nSize];
 								if (HidP_GetValueCaps(HidP_Output, pValues, &nSize, pDevice->m_pPreparsedData) == HIDP_STATUS_SUCCESS) {
 									for (int i=0; i<nSize; i++) {
 										// Save output value control
@@ -229,10 +279,11 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 				// Close device handle
 				CloseHandle(hDevice);
 
-				// Device found	
+				// Device found
 				m_lstDevices.Add(pDevice);
 				  lstDevices.Add(pDevice);
 			} else {
+				// [TODO] Write error message into the log?
 				// Get error message
 				/*
 				DWORD nError = GetLastError();

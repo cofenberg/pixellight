@@ -16,7 +16,6 @@ add_subdirectory(pcre)
 add_subdirectory(png)
 add_subdirectory(TinyXML)
 add_subdirectory(zlib)
-add_subdirectory(WindowsDDK)
 
 ##################################################
 ## Dependencies

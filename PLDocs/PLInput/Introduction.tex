@@ -12,10 +12,4 @@ The core of PLInput depends on the \textbf{PLGeneral}, \textbf{PLCore} and \text
 
 
 \paragraph{Microsoft Windows}
-When compiling for \emph{Microsoft Windows}, you'll need the the external headers \emph{hidpi.h}, \emph{hidsdi.h} and \emph{hidusage.h} and the following libraries:
-\begin{itemize}
-\item \emph{winmm.lib} linking to \emph{winmm.dll}
-\item \emph{hid.lib} linking to \emph{hid.dll}
-\item \emph{setupapi.lib} linking to \emph{setupapi.dll}
-\end{itemize}
-Usually, the \emph{dll} files should be already available on the systems of end users. When using \emph{Microsoft Visual Studio}, some of the required libraries and headers may already be there. In general, this libraries can be found within the \emph{Windows Driver Kit (WDK)}\footnote{ISO (\SI{620}{\mebi\byte}) which can be freely downloaded from \url{http://www.microsoft.com/whdc/Devtools/wdk/default.mspx}}. To avoid legal issues, we don't include this files you'll need to compile the PLInput library. The official compiled PixelLight SDK is using the files from an older WDK version, previously known as \emph{Windows Driver Development Kit (DDK)}. We noticed that in newer WDK versions like \emph{7.1.0} some changes were made and the mentioned files are no longer enough.
+When compiling for \emph{Microsoft Windows}, there are no additional external dependencies - the few required \emph{hid.dll} system shared library functions are loaded dynamically.

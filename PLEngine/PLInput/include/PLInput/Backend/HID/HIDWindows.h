@@ -33,15 +33,20 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class DynLib;
+}
+namespace PLInput {
+	class HIDDeviceWindows;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLInput {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class HIDDeviceWindows;
 
 
 //[-------------------------------------------------------]
@@ -88,6 +93,7 @@ class HIDWindows : public HIDImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		PLGeneral::DynLib				   *m_pDynLibHID;	/**< Dynamic HID library, always valid! */
 		PLGeneral::List<HIDDeviceWindows*>	m_lstDevices;	/**< List of devices */
 		GUID								m_sGUID;		/**< HID device interface GUID */
 
