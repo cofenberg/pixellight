@@ -33,17 +33,15 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLScene {
-	class LookController;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScene {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class LookController;
 
 
 //[-------------------------------------------------------]
@@ -52,9 +50,6 @@ namespace PLScene {
 /**
 *  @brief
 *    Scene node rotation input controller modifier class
-*
-*  @note
-*    - Normally only used for rapid prototyping
 */
 class SNMLookController : public SNMTransform {
 

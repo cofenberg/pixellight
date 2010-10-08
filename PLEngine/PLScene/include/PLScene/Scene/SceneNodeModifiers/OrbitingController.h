@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PhysicsMouseInteraction.h                      *
+ *  File: OrbitingController.h                           *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODES_MOUSEINTERACTION_CONTROLLER_H__
-#define __PLPHYSICS_SCENENODES_MOUSEINTERACTION_CONTROLLER_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_CONTROLLER_H__
+#define __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_CONTROLLER_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLPhysics/PLPhysics.h"
+#include "PLScene/PLScene.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
@@ -45,27 +45,33 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mouse physics interaction input controller
+*    Orbiting input controller
 */
-class PhysicsMouseInteraction : public PLInput::Controller {
+class OrbitingController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, PhysicsMouseInteraction, "PLPhysics", PLInput::Controller, "Mouse physics interaction input controller")
+	pl_class(PLS_RTTI_EXPORT, OrbitingController, "PLScene", PLInput::Controller, "Orbiting input controller")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
-	public:	
-		PLInput::Button		Pickup;			/**< Keep pressed to pickup */
-		PLInput::Button		Throw;			/**< Throw the picked object */
-		PLInput::Button		IncreaseForce;	/**< Keep pressed to increase the force applied to the picked object */
-		PLInput::Button		DecreaseForce;	/**< Keep pressed to decrease the force applied to the picked object */
-		PLInput::Axis		PushPull;		/**< Used to push/pull the picked object */
+	public:
+		PLInput::Axis	RotX;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
+		PLInput::Axis	RotY;		/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		PLInput::Axis	RotZ;		/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
+		PLInput::Axis	TransX;		/**< X translation axis: Strafe left/right (+/-) */
+		PLInput::Axis	TransY;		/**< Y translation axis: Move up/down (+/-) */
+		PLInput::Axis	TransZ;		/**< Z translation axis: Move forwards/backwards (+/-) */
+		PLInput::Button	Rotate;		/**< Keep pressed to rotate */
+		PLInput::Button	Pan;		/**< Keep pressed to pan */
+		PLInput::Button	Zoom;		/**< Keep pressed to zoom */
+		PLInput::Button	SpeedUp;	/**< Keep pressed to speed up */
+		PLInput::Button	SlowDown;	/**< Keep pressed to slow down */
 
 
 	//[-------------------------------------------------------]
@@ -76,13 +82,13 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLPHYSICS_API PhysicsMouseInteraction();
+		PLS_API OrbitingController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~PhysicsMouseInteraction();
+		PLS_API virtual ~OrbitingController();
 
 
 };
@@ -91,7 +97,7 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLScene
 
 
-#endif // __PLPHYSICS_SCENENODES_MOUSEINTERACTION_CONTROLLER_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_CONTROLLER_H__

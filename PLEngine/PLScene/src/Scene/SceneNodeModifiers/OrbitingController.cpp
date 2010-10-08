@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PhysicsMouseInteraction.cpp                    *
+ *  File: OrbitingController.cpp                         *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,20 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPhysics/SceneNodes/PhysicsMouseInteraction.h"
+#include "PLScene/Scene/SceneNodeModifiers/OrbitingController.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLInput;
-namespace PLPhysics {
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(PhysicsMouseInteraction)
+pl_implement_class(OrbitingController)
 
 
 //[-------------------------------------------------------]
@@ -46,12 +46,18 @@ pl_implement_class(PhysicsMouseInteraction)
 *  @brief
 *    Constructor
 */
-PhysicsMouseInteraction::PhysicsMouseInteraction() : Controller(ControllerVirtual, "PhysicsMouseInteraction", "Mouse physics interaction input controller"),
-	Pickup			(this, "Pickup",		"Keep pressed to pickup",											0x00),
-	Throw			(this, "Throw",			"Throw the picked object",											0x00),
-	IncreaseForce	(this, "IncreaseForce",	"Keep pressed to increase the force applied to the picked object",	0x00),
-	DecreaseForce	(this, "DecreaseForce",	"Keep pressed to decrease the force applied to the picked object",	0x00),
-	PushPull		(this, "PushPull",		"Used to push/pull the picked object")
+OrbitingController::OrbitingController() : Controller(ControllerVirtual, "OrbitingController", "Orbiting input controller"),
+	RotX	(this, "RotX",		"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
+	RotY	(this, "RotY",		"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
+	RotZ	(this, "RotZ",		"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
+	TransX	(this, "TransX",	"X translation axis: Strafe left/right (+/-)"),
+	TransY	(this, "TransY",	"Y translation axis: Move up/down (+/-)"),
+	TransZ	(this, "TransZ",	"Z translation axis: Move forwards/backwards (+/-)"),
+	Rotate	(this, "Rotate",	"Keep pressed to rotate"),
+	Pan		(this, "Pan",		"Keep pressed to pan"),
+	Zoom	(this, "Zoom",		"Keep pressed to zoom"),
+	SpeedUp	(this, "SpeedUp",	"Keep pressed to speed up"),
+	SlowDown(this, "SlowDown",	"Keep pressed to slow down")
 {
 }
 
@@ -59,7 +65,7 @@ PhysicsMouseInteraction::PhysicsMouseInteraction() : Controller(ControllerVirtua
 *  @brief
 *    Destructor
 */
-PhysicsMouseInteraction::~PhysicsMouseInteraction()
+OrbitingController::~OrbitingController()
 {
 }
 
@@ -67,4 +73,4 @@ PhysicsMouseInteraction::~PhysicsMouseInteraction()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLScene

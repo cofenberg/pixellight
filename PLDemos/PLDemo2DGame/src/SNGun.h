@@ -86,14 +86,14 @@ class SNGun : public PLSound::SNSound {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SceneNodeModifier functions   ]
+	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
 		virtual PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNode functions                 ]
+	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual void InitFunction();

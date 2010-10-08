@@ -41,6 +41,7 @@ namespace PLPhysics {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Body;
+class PhysicsMouseInteraction;
 
 
 //[-------------------------------------------------------]
@@ -50,12 +51,15 @@ class Body;
 *  @brief
 *    Mouse physics interaction scene node
 *
-*  @note
-*    - The main purpose of this scene node is easy physics debugging
+*  @remarks
+*    When using the unchanged virtual standard controller:
 *    - Hold the third mouse button over an physics object to pick it, use the mouse wheel
 *      to pull/push the object towards/away
 *    - While picking, hold shift/strg-key to increase/decrease the picking force, hit the
-*      alt key to 'kick away' the picked object
+*      t-key to 'throw away' the picked object
+*
+*  @note
+*    - The main purpose of this scene node is easy physics debugging
 *    - If there's a scene node for instance named 'PhysicsForceLine' (default value of the variable 'ForceLineName')
 *      within the same scene container, it's variables 'StartPosition' and 'EndPosition' will be manipulated so you can see
 *      the applied 'picking force'
@@ -69,7 +73,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNPhysicsMouseInteraction, "PLPhysics", PLScene::SceneNode, "Mouse physics interaction scene node")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(MaxPickingRange,	float,					0.0f,				ReadWrite,	DirectValue,	"Maximum picking range, if 0.0, there's no range limit (physics container space)",	"Min='0.0'")
-		pl_attribute(ThrowForce,		float,					0.2f,				ReadWrite,	DirectValue,	"Throw force",																		"Min='0.0'")
+		pl_attribute(ThrowForce,		float,					2.0f,				ReadWrite,	DirectValue,	"Throw force",																		"Min='0.0'")
 		pl_attribute(ForceLineName,		PLGeneral::String,		"PhysicsForceLine",	ReadWrite,	GetSet,			"Name of the force visualization line node",										"")
 		// Overwritten PLScene::SceneNode variables
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCulling,			ReadWrite,	GetSet,			"Flags",																			"")
@@ -102,6 +106,20 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual PLScene::SceneNode functions           ]
+	//[-------------------------------------------------------]
+	public:
+		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLScene::SceneNode functions        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLPHYSICS_API virtual void InitFunction();
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
@@ -111,6 +129,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		float						m_fPickedDistance;		/**< Picking distance */
 		PLMath::Vector3				m_vAttachmentPoint;		/**< Picking attachment point */
 		PLScene::SceneNodeHandler	m_cForceLineHandler;	/**< Scene handler for the physics force line */
+		PhysicsMouseInteraction	   *m_pController;			/**< Physics mouse interaction input controller instance, always valid! */
 
 
 	//[-------------------------------------------------------]

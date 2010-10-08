@@ -33,17 +33,15 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLScene {
-	class MoveController;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScene {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class MoveController;
 
 
 //[-------------------------------------------------------]
@@ -57,9 +55,6 @@ namespace PLScene {
 *    When using the unchanged virtual standard controller:
 *    Use a/w/d/s or cursor keys to walk. 'PageUp/PageDown' to move upwards/downwards.
 *    Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
-*
-*  @note
-*    - Normally only used for rapid prototyping
 */
 class SNMMoveController : public SNMTransform {
 

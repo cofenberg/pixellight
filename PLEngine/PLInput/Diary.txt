@@ -1,3 +1,10 @@
+>> 08.09.2010
+[CO]
+- VirtualStandardController: Interaction-Controls "Pickup", "Throw", "IncreaseForce", "DecreaseForce" und "PushPull" hinzugefügt
+  (verwendet in "PLPhysics::SNPhysicsMouseInteraction")
+
+
+
 >> 30.09.2010
 [CO]
 - VirtualStandardController: "Jump"-Control hinzugefügt, ich denke das ist ebenfalls etwas recht allgemeines

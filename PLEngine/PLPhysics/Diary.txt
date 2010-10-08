@@ -1,3 +1,9 @@
+>> 08.10.2010
+[CO]
+- SNPhysicsMouseInteraction: Nutzt nun einen Virtuellen Input Controller
+
+
+
 >> 30.09.2010
 [CO]
 - SNMPhysicsCharacterController: Nutzt nun einen Virtuellen Input Controller

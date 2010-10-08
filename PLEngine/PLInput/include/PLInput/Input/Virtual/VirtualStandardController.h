@@ -206,6 +206,13 @@ class VirtualStandardController : public VirtualController {
 		Button		Button4;			/**< Button for action #4 */
 		Button		Button5;			/**< Button for action #5 */
 
+		// Interaction
+		Button		Pickup;				/**< Keep pressed to pickup */
+		Button		Throw;				/**< Throw the picked object */
+		Button		IncreaseForce;		/**< Keep pressed to increase the force applied to the picked object */
+		Button		DecreaseForce;		/**< Keep pressed to decrease the force applied to the picked object */
+		Axis		PushPull;			/**< Used to push/pull the picked object */
+
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]

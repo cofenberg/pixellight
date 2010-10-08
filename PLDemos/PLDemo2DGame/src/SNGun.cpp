@@ -94,7 +94,7 @@ char SNGun::GetFrame() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SceneNodeModifier functions   ]
+//[ Public virtual PLScene::SceneNode functions           ]
 //[-------------------------------------------------------]
 Controller *SNGun::GetInputController() const
 {
@@ -103,7 +103,7 @@ Controller *SNGun::GetInputController() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual SceneNode functions                 ]
+//[ Protected virtual PLScene::SceneNode functions        ]
 //[-------------------------------------------------------]
 void SNGun::InitFunction()
 {
@@ -187,7 +187,7 @@ void SNGun::UpdateFunction()
 	m_fFrame += fDelta * 3.0f * fTimeDiff;
 	if (m_fFrame > 12.0f) m_fFrame = 12.0f;
 	if (m_fFrame <  0.0f) m_fFrame =  0.0f;
-	m_nFrame = (int)m_fFrame;
+	m_nFrame = (char)m_fFrame;
 
 	// Create a projectile?
 	if (m_pController->Fire.IsHit()) {

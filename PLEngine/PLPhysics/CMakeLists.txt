@@ -20,6 +20,7 @@ add_sources(
 	src/SceneNodes/RagdollBody.cpp
 	src/SceneNodes/SNRagdoll.cpp
 	src/SceneNodes/RagdollJoint.cpp
+	src/SceneNodes/PhysicsMouseInteraction.cpp
 	src/SceneNodes/SNPhysicsMouseInteraction.cpp
 	src/SceneNodeModifiers/SNMPhysics.cpp
 	src/SceneNodeModifiers/SNMPhysicsBody.cpp

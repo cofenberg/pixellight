@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
-#include <PLInput/Input/InputManager.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifiers/MoveController.h"
@@ -170,7 +169,7 @@ void SNMMoveController::NotifyUpdate()
 		else if (m_pController->Crouch.IsPressed())
 			fCurrentSpeed /= 4;
 
-		// Calculate movement
+		// Calculate movement and don't forget to apply the current time difference
 		vMovement *= fCurrentSpeed*Timing::GetInstance()->GetTimeDifference();
 
 		// 'Move' to the new position

@@ -55,9 +55,6 @@ class PhysicsCharacterController;
 *    When using the unchanged virtual standard controller:
 *    Use a/w/d/s or cursor keys to walk, q/e to rotate and 'space' to jump. 'PageUp/PageDown'
 *    to move upwards/downwards. Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
-*
-*  @note
-*    - Normally only used for rapid prototyping
 */
 class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 

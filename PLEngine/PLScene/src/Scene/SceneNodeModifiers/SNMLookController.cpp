@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
-#include <PLInput/Input/InputManager.h>
 #include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/LookController.h"
@@ -123,16 +122,19 @@ void SNMLookController::NotifyUpdate()
 {
 	// Check if input is active and whether or not the rotation key required and pressed
 	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed())) {
-		// Get movement
+		// Get rotation
 		const float fX = m_pController->RotX.GetValue();
 		const float fY = m_pController->RotY.GetValue();
 		const float fZ = m_pController->RotZ.GetValue();
 		if (fX || fY || fZ) {
+			// Get the current time difference
+			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
+
 			// Get a quaternion representation of the rotation delta
 			Quaternion qRotInc;
-			EulerAngles::ToQuaternion(float(fX*Math::DegToRad),
-									  float(fY*Math::DegToRad),
-									  float(fZ*Math::DegToRad),
+			EulerAngles::ToQuaternion(float(fX*Math::DegToRad*fTimeDiff),
+									  float(fY*Math::DegToRad*fTimeDiff),
+									  float(fZ*Math::DegToRad*fTimeDiff),
 									  qRotInc);
 
 			// Update rotation

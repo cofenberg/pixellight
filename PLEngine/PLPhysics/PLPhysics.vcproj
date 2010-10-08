@@ -607,6 +607,14 @@
 			Name="SceneNodes"
 			>
 			<File
+				RelativePath=".\src\SceneNodes\PhysicsMouseInteraction.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLPhysics\SceneNodes\PhysicsMouseInteraction.h"
+				>
+			</File>
+			<File
 				RelativePath="src\SceneNodes\RagdollBody.cpp"
 				>
 			</File>

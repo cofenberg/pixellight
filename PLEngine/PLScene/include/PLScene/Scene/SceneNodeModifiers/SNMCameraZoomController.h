@@ -32,17 +32,15 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLScene {
-	class CameraZoomController;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScene {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class CameraZoomController;
 
 
 //[-------------------------------------------------------]
@@ -52,8 +50,9 @@ namespace PLScene {
 *  @brief
 *    Scene node modifier class implementing camera zoom input control
 *
-*  @note
-*    - Normally only used for rapid prototyping
+*  @remarks
+*    When using the unchanged virtual standard controller:
+*    Hold the right mouse button to zoom.
 */
 class SNMCameraZoomController : public SNMCameraZoom {
 

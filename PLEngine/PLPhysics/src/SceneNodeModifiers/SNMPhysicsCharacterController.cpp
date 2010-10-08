@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
-#include <PLInput/Input/InputManager.h>
 #include <PLRenderer/Animation/Animation.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshAnimationManager.h>

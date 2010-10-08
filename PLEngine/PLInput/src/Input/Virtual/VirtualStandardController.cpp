@@ -71,98 +71,98 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	MouseButton11		(this, "MouseButton11",	"Mouse button #11"),
 	MouseButton12		(this, "MouseButton12",	"Mouse button #12"),
 	// Keyboard
-	KeyBack				(this, "Backspace",		"Backspace",							0x08),
-	KeyTab				(this, "Tab",			"Tabulator",							0x09),
-	KeyClear			(this, "Clear",			"Clear (not available everywhere)",		0x00),
-	KeyReturn			(this, "Enter",			"Enter",								0x0D),
-	KeyShift			(this, "Shift",			"Shift",								0x00),
-	KeyControl			(this, "Ctrl",			"Ctrl",									0x00),
-	KeyAlt				(this, "Alt",			"Alt",									0x00),
-	KeyPause			(this, "Pause",			"Pause",								0x00),
-	KeyCapsLock			(this, "CapsLock",		"Caps lock",							0x00),
-	KeyEscape			(this, "Escape",		"Escape",								0x1B),
-	KeySpace			(this, "Space",			"Space",								0x20),
-	KeyPageUp			(this, "PageUp",		"Page up",								0x00),
-	KeyPageDown			(this, "PageDown",		"Page down",							0x00),
-	KeyEnd				(this, "End",			"End",									0x00),
-	KeyHome				(this, "Home",			"Home",									0x00),
-	KeyLeft				(this, "Left",			"Left arrow",							0x00),
-	KeyUp				(this, "Up",			"Up arrow",								0x00),
-	KeyRight			(this, "Right",			"Right arrow",							0x00),
-	KeyDown				(this, "Down",			"Down arrow",							0x00),
-	KeySelect			(this, "Select",		"Select (not available everywhere)",	0x00),
-	KeyExecute			(this, "Execute",		"Execute (not available everywhere)",	0x00),
-	KeyPrintScreen		(this, "Print",			"Print screen",							0x00),
-	KeyInsert			(this, "Insert",		"Insert",								0x00),
-	KeyDelete			(this, "Delete",		"Delete",								0x7F),
-	KeyHelp				(this, "Help",			"Help (not available everywhere)",		0x00),
-	Key0				(this, "0",				"0",									 '0'),
-	Key1				(this, "1",				"1",									 '1'),
-	Key2				(this, "2",				"2",									 '2'),
-	Key3				(this, "3",				"3",									 '3'),
-	Key4				(this, "4",				"4",									 '4'),
-	Key5				(this, "5",				"5",									 '5'),
-	Key6				(this, "6",				"6",									 '6'),
-	Key7				(this, "7",				"7",									 '7'),
-	Key8				(this, "8",				"8",									 '8'),
-	Key9				(this, "9",				"9",									 '9'),
-	KeyA				(this, "A",				"A",									 'a'),
-	KeyB				(this, "B",				"B",									 'b'),
-	KeyC				(this, "C",				"C",									 'c'),
-	KeyD				(this, "D",				"D",									 'd'),
-	KeyE				(this, "E",				"E",									 'e'),
-	KeyF				(this, "F",				"F",									 'f'),
-	KeyG				(this, "G",				"G",									 'g'),
-	KeyH				(this, "H",				"H",									 'h'),
-	KeyI				(this, "I",				"I",									 'i'),
-	KeyJ				(this, "J",				"J",									 'j'),
-	KeyK				(this, "K",				"K",									 'k'),
-	KeyL				(this, "L",				"L",									 'l'),
-	KeyM				(this, "M",				"M",									 'm'),
-	KeyN				(this, "N",				"N",									 'n'),
-	KeyO				(this, "O",				"O",									 'o'),
-	KeyP				(this, "P",				"P",									 'p'),
-	KeyQ				(this, "Q",				"Q",									 'q'),
-	KeyR				(this, "R",				"R",									 'r'),
-	KeyS				(this, "S",				"S",									 's'),
-	KeyT				(this, "T",				"T",									 't'),
-	KeyU				(this, "U",				"U",									 'u'),
-	KeyV				(this, "V",				"V",									 'v'),
-	KeyW				(this, "W",				"W",									 'w'),
-	KeyX				(this, "X",				"X",									 'x'),
-	KeyY				(this, "Y",				"Y",									 'y'),
-	KeyZ				(this, "Z",				"Z",									 'z'),
-	KeyNumpad0			(this, "Num0",			"Numpad 0",								 '0'),
-	KeyNumpad1			(this, "Num1",			"Numpad 1",								 '1'),
-	KeyNumpad2			(this, "Num2",			"Numpad 2",								 '2'),
-	KeyNumpad3			(this, "Num3",			"Numpad 3",								 '3'),
-	KeyNumpad4			(this, "Num4",			"Numpad 4",								 '4'),
-	KeyNumpad5			(this, "Num5",			"Numpad 5",								 '5'),
-	KeyNumpad6			(this, "Num6",			"Numpad 6",								 '6'),
-	KeyNumpad7			(this, "Num7",			"Numpad 7",								 '7'),
-	KeyNumpad8			(this, "Num8",			"Numpad 8",								 '8'),
-	KeyNumpad9			(this, "Num9",			"Numpad 9",								 '9'),
-	KeyNumpadMultiply	(this, "NumMultiply",	"Numpad Multiply",						 '*'),
-	KeyNumpadAdd		(this, "NumAdd",		"Numpad Add",							 '+'),
-	KeyNumpadSeparator	(this, "NumSeparator",	"Numpad Separator",						 ','),
-	KeyNumpadSubtract	(this, "NumSubtract",	"Numpad Subtract",						 '-'),
-	KeyNumpadDecimal	(this, "NumDecimal",	"Numpad Decimal",						 '.'),
-	KeyNumpadDivide		(this, "NumDivide",		"Numpad Divide",						 '/'),
-	KeyF1				(this, "F1",			"F1",									0x00),
-	KeyF2				(this, "F2",			"F2",									0x00),
-	KeyF3				(this, "F3",			"F3",									0x00),
-	KeyF4				(this, "F4",			"F4",									0x00),
-	KeyF5				(this, "F5",			"F5",									0x00),
-	KeyF6				(this, "F6",			"F6",									0x00),
-	KeyF7				(this, "F7",			"F7",									0x00),
-	KeyF8				(this, "F8",			"F8",									0x00),
-	KeyF9				(this, "F9",			"F9",									0x00),
-	KeyF10				(this, "F10",			"F10",									0x00),
-	KeyF11				(this, "F11",			"F11",									0x00),
-	KeyF12				(this, "F12",			"F12",									0x00),
-	KeyNumLock			(this, "NumLock",		"NumLock",								0x00),
-	KeyScrollLock		(this, "ScrollLock",	"ScrollLock",							0x00),
-	KeyCircumflex		(this, "Circumflex",	"Circumflex",							0x00),
+	KeyBack				(this, "Backspace",		"Backspace",														0x08),
+	KeyTab				(this, "Tab",			"Tabulator",														0x09),
+	KeyClear			(this, "Clear",			"Clear (not available everywhere)",									0x00),
+	KeyReturn			(this, "Enter",			"Enter",															0x0D),
+	KeyShift			(this, "Shift",			"Shift",															0x00),
+	KeyControl			(this, "Ctrl",			"Ctrl",																0x00),
+	KeyAlt				(this, "Alt",			"Alt",																0x00),
+	KeyPause			(this, "Pause",			"Pause",															0x00),
+	KeyCapsLock			(this, "CapsLock",		"Caps lock",														0x00),
+	KeyEscape			(this, "Escape",		"Escape",															0x1B),
+	KeySpace			(this, "Space",			"Space",															0x20),
+	KeyPageUp			(this, "PageUp",		"Page up",															0x00),
+	KeyPageDown			(this, "PageDown",		"Page down",														0x00),
+	KeyEnd				(this, "End",			"End",																0x00),
+	KeyHome				(this, "Home",			"Home",																0x00),
+	KeyLeft				(this, "Left",			"Left arrow",														0x00),
+	KeyUp				(this, "Up",			"Up arrow",															0x00),
+	KeyRight			(this, "Right",			"Right arrow",														0x00),
+	KeyDown				(this, "Down",			"Down arrow",														0x00),
+	KeySelect			(this, "Select",		"Select (not available everywhere)",								0x00),
+	KeyExecute			(this, "Execute",		"Execute (not available everywhere)",								0x00),
+	KeyPrintScreen		(this, "Print",			"Print screen",														0x00),
+	KeyInsert			(this, "Insert",		"Insert",															0x00),
+	KeyDelete			(this, "Delete",		"Delete",															0x7F),
+	KeyHelp				(this, "Help",			"Help (not available everywhere)",									0x00),
+	Key0				(this, "0",				"0",																'0'),
+	Key1				(this, "1",				"1",																'1'),
+	Key2				(this, "2",				"2",																'2'),
+	Key3				(this, "3",				"3",																'3'),
+	Key4				(this, "4",				"4",																'4'),
+	Key5				(this, "5",				"5",																'5'),
+	Key6				(this, "6",				"6",																'6'),
+	Key7				(this, "7",				"7",																'7'),
+	Key8				(this, "8",				"8",																'8'),
+	Key9				(this, "9",				"9",																'9'),
+	KeyA				(this, "A",				"A",																'a'),
+	KeyB				(this, "B",				"B",																'b'),
+	KeyC				(this, "C",				"C",																'c'),
+	KeyD				(this, "D",				"D",																'd'),
+	KeyE				(this, "E",				"E",																'e'),
+	KeyF				(this, "F",				"F",																'f'),
+	KeyG				(this, "G",				"G",																'g'),
+	KeyH				(this, "H",				"H",																'h'),
+	KeyI				(this, "I",				"I",																'i'),
+	KeyJ				(this, "J",				"J",																'j'),
+	KeyK				(this, "K",				"K",																'k'),
+	KeyL				(this, "L",				"L",																'l'),
+	KeyM				(this, "M",				"M",																'm'),
+	KeyN				(this, "N",				"N",																'n'),
+	KeyO				(this, "O",				"O",																'o'),
+	KeyP				(this, "P",				"P",																'p'),
+	KeyQ				(this, "Q",				"Q",																'q'),
+	KeyR				(this, "R",				"R",																'r'),
+	KeyS				(this, "S",				"S",																's'),
+	KeyT				(this, "T",				"T",																't'),
+	KeyU				(this, "U",				"U",																'u'),
+	KeyV				(this, "V",				"V",																'v'),
+	KeyW				(this, "W",				"W",																'w'),
+	KeyX				(this, "X",				"X",																'x'),
+	KeyY				(this, "Y",				"Y",																'y'),
+	KeyZ				(this, "Z",				"Z",																'z'),
+	KeyNumpad0			(this, "Num0",			"Numpad 0",															'0'),
+	KeyNumpad1			(this, "Num1",			"Numpad 1",															'1'),
+	KeyNumpad2			(this, "Num2",			"Numpad 2",															'2'),
+	KeyNumpad3			(this, "Num3",			"Numpad 3",															'3'),
+	KeyNumpad4			(this, "Num4",			"Numpad 4",															'4'),
+	KeyNumpad5			(this, "Num5",			"Numpad 5",															'5'),
+	KeyNumpad6			(this, "Num6",			"Numpad 6",															'6'),
+	KeyNumpad7			(this, "Num7",			"Numpad 7",															'7'),
+	KeyNumpad8			(this, "Num8",			"Numpad 8",															'8'),
+	KeyNumpad9			(this, "Num9",			"Numpad 9",															'9'),
+	KeyNumpadMultiply	(this, "NumMultiply",	"Numpad Multiply",													'*'),
+	KeyNumpadAdd		(this, "NumAdd",		"Numpad Add",														'+'),
+	KeyNumpadSeparator	(this, "NumSeparator",	"Numpad Separator",													','),
+	KeyNumpadSubtract	(this, "NumSubtract",	"Numpad Subtract",													'-'),
+	KeyNumpadDecimal	(this, "NumDecimal",	"Numpad Decimal",													'.'),
+	KeyNumpadDivide		(this, "NumDivide",		"Numpad Divide",													'/'),
+	KeyF1				(this, "F1",			"F1",																0x00),
+	KeyF2				(this, "F2",			"F2",																0x00),
+	KeyF3				(this, "F3",			"F3",																0x00),
+	KeyF4				(this, "F4",			"F4",																0x00),
+	KeyF5				(this, "F5",			"F5",																0x00),
+	KeyF6				(this, "F6",			"F6",																0x00),
+	KeyF7				(this, "F7",			"F7",																0x00),
+	KeyF8				(this, "F8",			"F8",																0x00),
+	KeyF9				(this, "F9",			"F9",																0x00),
+	KeyF10				(this, "F10",			"F10",																0x00),
+	KeyF11				(this, "F11",			"F11",																0x00),
+	KeyF12				(this, "F12",			"F12",																0x00),
+	KeyNumLock			(this, "NumLock",		"NumLock",															0x00),
+	KeyScrollLock		(this, "ScrollLock",	"ScrollLock",														0x00),
+	KeyCircumflex		(this, "Circumflex",	"Circumflex",														0x00),
 	// Main character controls
 	TransX				(this, "TransX",		"X translation axis: Strafe left/right (+/-)"),
 	TransY				(this, "TransY",		"Y translation axis: Move up/down (+/-)"),
@@ -170,22 +170,28 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	RotX				(this, "RotX",			"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
 	RotY				(this, "RotY",			"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
 	RotZ				(this, "RotZ",			"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
-	Forward				(this, "Forward",		"Move forwards",						0x00),
-	Backward			(this, "Backward",		"Move backwards",						0x00),
-	Left				(this, "Left",			"Move (rotate) left",					0x00),
-	Right				(this, "Right",			"Move (rotate) right",					0x00),
-	StrafeLeft			(this, "StrafeLeft",	"Strafe left",							0x00),
-	StrafeRight			(this, "StrafeRight",	"Strafe right",							0x00),
-	Up					(this, "Up",			"Move up",								0x00),
-	Down				(this, "Down",			"Move down",							0x00),
-	Run					(this, "Run",			"Keep pressed to run",					0x00),
-	Crouch				(this, "Crouch",		"Keep pressed to crouch",				0x00),
-	Jump				(this, "Jump",			"Jump",									0x00),
-	Button1				(this, "Button1",		"Button for action #1",					0x00),
-	Button2				(this, "Button2",		"Button for action #2",					0x00),
-	Button3				(this, "Button3",		"Button for action #3",					0x00),
-	Button4				(this, "Button4",		"Button for action #4",					0x00),
-	Button5				(this, "Button5",		"Button for action #5",					0x00)
+	Forward				(this, "Forward",		"Move forwards",													0x00),
+	Backward			(this, "Backward",		"Move backwards",													0x00),
+	Left				(this, "Left",			"Move (rotate) left",												0x00),
+	Right				(this, "Right",			"Move (rotate) right",												0x00),
+	StrafeLeft			(this, "StrafeLeft",	"Strafe left",														0x00),
+	StrafeRight			(this, "StrafeRight",	"Strafe right",														0x00),
+	Up					(this, "Up",			"Move up",															0x00),
+	Down				(this, "Down",			"Move down",														0x00),
+	Run					(this, "Run",			"Keep pressed to run",												0x00),
+	Crouch				(this, "Crouch",		"Keep pressed to crouch",											0x00),
+	Jump				(this, "Jump",			"Jump",																0x00),
+	Button1				(this, "Button1",		"Button for action #1",												0x00),
+	Button2				(this, "Button2",		"Button for action #2",												0x00),
+	Button3				(this, "Button3",		"Button for action #3",												0x00),
+	Button4				(this, "Button4",		"Button for action #4",												0x00),
+	Button5				(this, "Button5",		"Button for action #5",												0x00),
+	// Interaction
+	Pickup				(this, "Pickup",		"Keep pressed to pickup",											0x00),
+	Throw				(this, "Throw",			"Throw the picked object",											0x00),
+	IncreaseForce		(this, "IncreaseForce",	"Keep pressed to increase the force applied to the picked object",	0x00),
+	DecreaseForce		(this, "DecreaseForce",	"Keep pressed to decrease the force applied to the picked object",	0x00),
+	PushPull			(this, "PushPull",		"Used to push/pull the picked object")
 {
 }
 
@@ -222,16 +228,20 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			Connect("RotX",			&pMouse->Y);
+			Connect("RotX",				&pMouse->Y, 15.0f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
-			Connect("RotY",			&pMouse->X, -1.0f);
+			Connect("RotY",				&pMouse->X, -15.0f);
 
 			// Buttons
-			Connect("Button1",		&pMouse->Left);
-			Connect("Button2",		&pMouse->Right);
-			Connect("Button3",		&pMouse->Middle);
-			Connect("Button4",		&pMouse->Button4);
-			Connect("Button5",		&pMouse->Button5);
+			Connect("Button1",			&pMouse->Left);
+			Connect("Button2",			&pMouse->Right);
+			Connect("Button3",			&pMouse->Middle);
+			Connect("Button4",			&pMouse->Button4);
+			Connect("Button5",			&pMouse->Button5);
+
+			// Interaction
+			Connect("Pickup",			&pMouse->Middle);
+			Connect("PushPull",			&pMouse->Wheel);
 		}
 
 		// Keyboard
@@ -240,34 +250,39 @@ void VirtualStandardController::ConnectToDevices()
 			Keyboard *pKeyboard = (Keyboard*)pDevice;
 
 			// WASD
-			Connect("Forward",		&pKeyboard->KeyW);
-			Connect("Backward",		&pKeyboard->KeyS);
-			Connect("StrafeLeft",   &pKeyboard->KeyA);
-			Connect("StrafeRight",  &pKeyboard->KeyD);
-			Connect("Left",			&pKeyboard->KeyQ);
-			Connect("Right",		&pKeyboard->KeyE);
+			Connect("Forward",			&pKeyboard->KeyW);
+			Connect("Backward",			&pKeyboard->KeyS);
+			Connect("StrafeLeft",		&pKeyboard->KeyA);
+			Connect("StrafeRight",		&pKeyboard->KeyD);
+			Connect("Left",				&pKeyboard->KeyQ);
+			Connect("Right",			&pKeyboard->KeyE);
 
 			// Cursor keys
-			Connect("Forward",		&pKeyboard->KeyUp);
-			Connect("Backward",		&pKeyboard->KeyDown);
-			Connect("Left",			&pKeyboard->KeyLeft);
-			Connect("Right",		&pKeyboard->KeyRight);
+			Connect("Forward",			&pKeyboard->KeyUp);
+			Connect("Backward",			&pKeyboard->KeyDown);
+			Connect("Left",				&pKeyboard->KeyLeft);
+			Connect("Right",			&pKeyboard->KeyRight);
 
 			// Look up/down
-			Connect("Up",			&pKeyboard->KeyPageUp);
-			Connect("Down",			&pKeyboard->KeyPageDown);
+			Connect("Up",				&pKeyboard->KeyPageUp);
+			Connect("Down",				&pKeyboard->KeyPageDown);
 
 			// Run/crouch/jump
-			Connect("Run",			&pKeyboard->KeyShift);
-			Connect("Crouch",		&pKeyboard->KeyControl);
-			Connect("Jump",			&pKeyboard->KeySpace);
+			Connect("Run",				&pKeyboard->KeyShift);
+			Connect("Crouch",			&pKeyboard->KeyControl);
+			Connect("Jump",				&pKeyboard->KeySpace);
 
 			// Buttons
-			Connect("Button1",		&pKeyboard->KeySpace);
-			Connect("Button2",		&pKeyboard->KeyReturn);
-			Connect("Button3",		&pKeyboard->KeyBack);
-			Connect("Button4",		&pKeyboard->KeyAlt);
-			Connect("Button5",		&pKeyboard->KeyCircumflex);
+			Connect("Button1",			&pKeyboard->KeySpace);
+			Connect("Button2",			&pKeyboard->KeyReturn);
+			Connect("Button3",			&pKeyboard->KeyBack);
+			Connect("Button4",			&pKeyboard->KeyAlt);
+			Connect("Button5",			&pKeyboard->KeyCircumflex);
+
+			// Interaction
+			Connect("Throw",			&pKeyboard->KeyT);
+			Connect("IncreaseForce",	&pKeyboard->KeyShift);
+			Connect("DecreaseForce",	&pKeyboard->KeyControl);
 		}
 
 		// Joystick
@@ -277,16 +292,16 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			Connect("RotX",			&pJoystick->Y, 4.0f);
+			Connect("RotX",				&pJoystick->Y, 4.0f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
-			Connect("RotY",			&pJoystick->X, 4.0f);
+			Connect("RotY",				&pJoystick->X, 4.0f);
 
 			// Buttons
-			Connect("Button1",		&pJoystick->Button0);
-			Connect("Button2",		&pJoystick->Button1);
-			Connect("Button3",		&pJoystick->Button2);
-			Connect("Button4",		&pJoystick->Button3);
-			Connect("Button5",		&pJoystick->Button4);
+			Connect("Button1",			&pJoystick->Button0);
+			Connect("Button2",			&pJoystick->Button1);
+			Connect("Button3",			&pJoystick->Button2);
+			Connect("Button4",			&pJoystick->Button3);
+			Connect("Button5",			&pJoystick->Button4);
 		}
 
 		// SpaceMouse
@@ -296,24 +311,24 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			Connect("RotX",			&pSpaceMouse->RotX,   -1.0f/90.0f);
+			Connect("RotX",				&pSpaceMouse->RotX,   -0.8f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
-			Connect("RotY",			&pSpaceMouse->RotZ,   -1.0f/90.0f);
+			Connect("RotY",				&pSpaceMouse->RotZ,   -0.8f);
 			// RotZ: Roll (also called 'attitude') change is moving one wingtip up and the other down
-			Connect("RotZ",			&pSpaceMouse->RotY,   -1.0f/90.0f);
+			Connect("RotZ",				&pSpaceMouse->RotY,   -0.8f);
 			// X translation axis: Strafe left/right (+/-)
-			Connect("TransX",		&pSpaceMouse->TransX, -1.0f/90.0f);
+			Connect("TransX",			&pSpaceMouse->TransX, -1.0f/90.0f);
 			// Y translation axis: Move up/down (+/-)
-			Connect("TransY",		&pSpaceMouse->TransZ, -1.0f/90.0f);
+			Connect("TransY",			&pSpaceMouse->TransZ, -1.0f/90.0f);
 			// Z translation axis: Move forwards/backwards (+/-)
-			Connect("TransZ",		&pSpaceMouse->TransY, -1.0f/90.0f);
+			Connect("TransZ",			&pSpaceMouse->TransY, -1.0f/90.0f);
 
 			// Buttons
-			Connect("Button1",		&pSpaceMouse->Button0);
-			Connect("Button2",		&pSpaceMouse->Button1);
-			Connect("Button3",		&pSpaceMouse->Button2);
-			Connect("Button4",		&pSpaceMouse->Button3);
-			Connect("Button5",		&pSpaceMouse->Button4);
+			Connect("Button1",			&pSpaceMouse->Button0);
+			Connect("Button2",			&pSpaceMouse->Button1);
+			Connect("Button3",			&pSpaceMouse->Button2);
+			Connect("Button4",			&pSpaceMouse->Button3);
+			Connect("Button5",			&pSpaceMouse->Button4);
 		}
 
 		// WiiMote
@@ -325,17 +340,17 @@ void VirtualStandardController::ConnectToDevices()
 			// [TODO] We need some more logic here to calculate movement from WiiMote data
 
 			// Cursor keys
-			Connect("Forward",		&pWiiMote->ButtonUp);
-			Connect("Backward",		&pWiiMote->ButtonDown);
-			Connect("Left",			&pWiiMote->ButtonLeft);
-			Connect("Right",		&pWiiMote->ButtonRight);
+			Connect("Forward",			&pWiiMote->ButtonUp);
+			Connect("Backward",			&pWiiMote->ButtonDown);
+			Connect("Left",				&pWiiMote->ButtonLeft);
+			Connect("Right",			&pWiiMote->ButtonRight);
 
 			// Buttons
-			Connect("Button1",		&pWiiMote->ButtonA);
-			Connect("Button2",		&pWiiMote->ButtonB);
-			Connect("Button3",		&pWiiMote->Button1);
-			Connect("Button4",		&pWiiMote->Button2);
-			Connect("Button5",		&pWiiMote->ButtonHome);
+			Connect("Button1",			&pWiiMote->ButtonA);
+			Connect("Button2",			&pWiiMote->ButtonB);
+			Connect("Button3",			&pWiiMote->Button1);
+			Connect("Button4",			&pWiiMote->Button2);
+			Connect("Button5",			&pWiiMote->ButtonHome);
 		}
 	}
 }
