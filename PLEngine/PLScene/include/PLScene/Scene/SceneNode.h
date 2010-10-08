@@ -41,6 +41,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLInput {
+	class Controller;
+}
 namespace PLRenderer {
 	class Renderer;
 }
@@ -752,6 +755,18 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    - DrawPre()
 		*/
 		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler();
+
+		/**
+		*  @brief
+		*    Get input controller
+		*
+		*  @return
+		*    Input controller (can be NULL)
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLS_API virtual PLInput::Controller *GetInputController() const;
 
 		/**
 		*  @brief

@@ -868,6 +868,16 @@ MeshHandler *SceneNode::GetMeshHandler()
 
 /**
 *  @brief
+*    Get input controller
+*/
+PLInput::Controller *SceneNode::GetInputController() const
+{
+	// The default implementation is empty
+	return NULL;
+}
+
+/**
+*  @brief
 *    This function is called before any solid parts of the scene are drawn
 */
 void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)

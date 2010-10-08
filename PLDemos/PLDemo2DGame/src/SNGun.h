@@ -29,15 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLSound/SceneNodes/SNSound.h>
-#include "GunController.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLInput {
-	class Control;
-}
+class GunController;
 
 
 //[-------------------------------------------------------]
@@ -80,21 +77,19 @@ class SNGun : public PLSound::SNSound {
 
 		/**
 		*  @brief
-		*    Get input controller
-		*
-		*  @return
-		*    Input controller
-		*/
-		GunController &GetController();
-
-		/**
-		*  @brief
 		*    Returns the current frame
 		*
 		*  @return
 		*    The current frame
 		*/
 		char GetFrame() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLScene::SceneNodeModifier functions   ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]
@@ -131,9 +126,9 @@ class SNGun : public PLSound::SNSound {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GunController	m_cController;
-		char			m_nFrame;
-		float			m_fFrame;
+		GunController *m_pController;	/**< Gun input controller instance, always valid! */
+		char		   m_nFrame;
+		float		   m_fFrame;
 
 
 	//[-------------------------------------------------------]

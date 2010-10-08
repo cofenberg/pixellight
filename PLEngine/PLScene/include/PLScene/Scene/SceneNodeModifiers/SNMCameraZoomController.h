@@ -97,7 +97,7 @@ class SNMCameraZoomController : public SNMCameraZoom {
 	//[ Public virtual SceneNodeModifier functions            ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLInput::Controller *GetInputController() const;
+		PLS_API virtual PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

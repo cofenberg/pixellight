@@ -1,3 +1,14 @@
+>> 08.10.2010
+[CO]
+- SceneNode besitzt nun genauso wie SceneNodeModifier eine virtuelle Methode namens GetInputController, es wäre sicherlich nicht Benutzerfreundlich
+  zu erzwingen das Eingabebehandlung *ausschließlich* über Modifier zu erfolgen hat. (in PLDemo2DGame z.B. ist es Praktisch das direkt in der SceneNode
+  zu erledigen)
+  Zwar besitzen in der Regel nur *extrem* wenige SceneNodes Eingabebehandlung, allerdings ist es dann denke ich nett direkt über SceneNode an den
+  Input-Controller gelangen zu können - Speicher, oder Performancenachteile hat man durch diese weitere virtuelle, standardmäßig nicht Implementierte
+  Methode ja nicht.
+
+
+
 >> 02.10.2010
 [CO]
 - Nicht verwendetes "SNMMouseMoveController" entfernt... das wird ohnehin demnächst überflüssig durch die Nutzung von virtuellen Input Controllern

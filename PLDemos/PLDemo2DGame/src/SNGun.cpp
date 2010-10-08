@@ -28,6 +28,7 @@
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQAABoundingBox.h>
 #include <PLSound/Source.h>
+#include "GunController.h"
 #include "SNGun.h"
 
 
@@ -58,6 +59,7 @@ SNGun::SNGun() :
 	Sound(this),
 	Flags(this),
 	EventHandlerOnSceneNode(&SNGun::OnSceneNode, this),
+	m_pController(new GunController()),
 	m_nFrame(0),
 	m_fFrame(0.0f)
 {
@@ -77,16 +79,8 @@ SNGun::SNGun() :
 */
 SNGun::~SNGun()
 {
-}
-
-/**
-*  @brief
-*    Get input controller
-*/
-GunController &SNGun::GetController()
-{
-	// Return controller
-	return m_cController;
+	// Destroy the input controller
+	delete m_pController;
 }
 
 /**
@@ -96,6 +90,15 @@ GunController &SNGun::GetController()
 char SNGun::GetFrame() const
 {
 	return m_nFrame;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLScene::SceneNodeModifier functions   ]
+//[-------------------------------------------------------]
+Controller *SNGun::GetInputController() const
+{
+	return m_pController;
 }
 
 
@@ -114,18 +117,18 @@ void SNGun::InitFunction()
 	//        to connect to scene nodes that provide input controllers.
 	Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
 	if (pController) {
-		m_cController.Connect("X",		pController->GetControl("RotX"));
-		m_cController.Connect("Left",	pController->GetControl("Left"));
-		m_cController.Connect("Right",	pController->GetControl("Right"));
-		m_cController.Connect("Left",	pController->GetControl("Forward"));
-		m_cController.Connect("Right",	pController->GetControl("Backward"));
-		m_cController.Connect("Left",	pController->GetControl("StrafeLeft"));
-		m_cController.Connect("Right",	pController->GetControl("StrafeRight"));
-		m_cController.Connect("Fire",	pController->GetControl("Button1"));
-		m_cController.Connect("Fire",	pController->GetControl("Button2"));
-		m_cController.Connect("Fire",	pController->GetControl("Button3"));
-		m_cController.Connect("Fire",	pController->GetControl("Button4"));
-		m_cController.Connect("Fire",	pController->GetControl("Button5"));
+		m_pController->Connect("X",		pController->GetControl("RotX"));
+		m_pController->Connect("Left",	pController->GetControl("Left"));
+		m_pController->Connect("Right",	pController->GetControl("Right"));
+		m_pController->Connect("Left",	pController->GetControl("Forward"));
+		m_pController->Connect("Right",	pController->GetControl("Backward"));
+		m_pController->Connect("Left",	pController->GetControl("StrafeLeft"));
+		m_pController->Connect("Right",	pController->GetControl("StrafeRight"));
+		m_pController->Connect("Fire",	pController->GetControl("Button1"));
+		m_pController->Connect("Fire",	pController->GetControl("Button2"));
+		m_pController->Connect("Fire",	pController->GetControl("Button3"));
+		m_pController->Connect("Fire",	pController->GetControl("Button4"));
+		m_pController->Connect("Fire",	pController->GetControl("Button5"));
 	}
 }
 
@@ -168,15 +171,15 @@ void SNGun::UpdateFunction()
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
 	// Get X value
-	float fDelta = m_cController.X.GetValue();
+	float fDelta = m_pController->X.GetValue();
 
 	// Left button pressed?
-	if (m_cController.Left.IsPressed()) {
+	if (m_pController->Left.IsPressed()) {
 		fDelta = -6.0f;
 	}
 
 	// Right button pressed?
-	if (m_cController.Right.IsPressed()) {
+	if (m_pController->Right.IsPressed()) {
 		fDelta = 6.0f;
 	}
 
@@ -187,7 +190,7 @@ void SNGun::UpdateFunction()
 	m_nFrame = (int)m_fFrame;
 
 	// Create a projectile?
-	if (m_cController.Fire.IsHit()) {
+	if (m_pController->Fire.IsHit()) {
 		// Get projectile start position in bitmap space
 		Vector2 vPos;
 		switch (m_nFrame) {

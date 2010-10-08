@@ -311,7 +311,7 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 			#else\n\
 				detailNormal.xy = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ra*2 - 1;\n\
 			#endif\n\
-			detailNormal.z  = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
+			detailNormal.z = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 		#else\n\
 			float3 detailNormal = tex2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2 - 1;\n\
 		#endif\n\

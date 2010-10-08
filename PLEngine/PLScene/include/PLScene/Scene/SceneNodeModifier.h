@@ -171,7 +171,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*  @note
 		*    - The default implementation is empty
 		*/
-		PLS_API PLInput::Controller *GetInputController() const;
+		PLS_API virtual PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

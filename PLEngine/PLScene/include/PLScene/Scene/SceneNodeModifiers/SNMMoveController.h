@@ -104,7 +104,7 @@ class SNMMoveController : public SNMTransform {
 	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLInput::Controller *GetInputController() const;
+		PLS_API virtual PLInput::Controller *GetInputController() const;
 
 
 	//[-------------------------------------------------------]

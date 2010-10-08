@@ -406,7 +406,7 @@ static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
 					#else\n\
 						detailNormal.xy = tex2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ra*2 - 1;\n\
 					#endif\n\
-					detailNormal.z  = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
+					detailNormal.z = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 				#else\n\
 					float3 detailNormal = tex2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2 - 1;\n\
 				#endif\n\
