@@ -1,3 +1,12 @@
+>> 11.10.2010
+[CO]
+- String: < und > Operatoren für ASCII waren fehlerhaft Implementiert. StringBuffer::IsLessThan() und StringBuffer::IsGreaterThan()
+  wurden, warum auch immer, mit einer String länge von 0 aufgerufen... interessant das dies bisher noch nicht aufgefallen war, und das
+  obwohl die String-Tests die umfangreichsten aller Tests sind. :/ (ok, die ASCII, UTF8 und Unicode kombinationsmöglichkeiten machen
+  es nicht einfacher das möglichst Wasserdicht zu testen)
+
+
+
 >> 20.09.2010
 [SB]
 - HttpServer: Methoden zum Senden von Daten nach HttpServerConnection verschoben, wo sie auch hingehören.

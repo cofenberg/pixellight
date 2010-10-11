@@ -686,7 +686,7 @@ bool String::operator <(const String &sString) const
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				switch (sString.GetFormat()) {
-					case ASCII:   return ((StringBufferASCII*)m_pStringBuffer)->IsLessThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+					case ASCII:   return ((StringBufferASCII*)m_pStringBuffer)->IsLessThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 					case Unicode: return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsGreaterThan(GetUnicode(), m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
@@ -694,7 +694,7 @@ bool String::operator <(const String &sString) const
 			case Unicode:
 				switch (sString.GetFormat()) {
 					case ASCII:   return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
-					case Unicode: return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+					case Unicode: return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
@@ -777,7 +777,7 @@ bool String::operator >(const String &sString) const
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				switch (sString.GetFormat()) {
-					case ASCII:   return ((StringBufferASCII*)m_pStringBuffer)->IsGreaterThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+					case ASCII:   return ((StringBufferASCII*)m_pStringBuffer)->IsGreaterThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 					case Unicode: return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsLessThan(GetUnicode(), m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
@@ -785,7 +785,7 @@ bool String::operator >(const String &sString) const
 			case Unicode:
 				switch (sString.GetFormat()) {
 					case ASCII:   return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
-					case Unicode: return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+					case Unicode: return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
