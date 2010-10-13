@@ -294,7 +294,7 @@ class DrawHelpers {
 		*      for better performance. This way you also have more control over 'how' the points
 		*      are rendered. (vertex color and so on)
 		*    - You should use the draw functions for points and lines only for debug
-		*      proposes because often they are not fast and in general not supported
+		*      purposes because often they are not fast and in general not supported
 		*      by each API! (OpenGL supports this function well :)
 		*
 		*  @see

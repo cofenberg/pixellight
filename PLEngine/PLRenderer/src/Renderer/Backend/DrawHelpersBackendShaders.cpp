@@ -156,7 +156,7 @@ void DrawHelpersBackendShaders::DrawImage(TextureBuffer &cTextureBuffer, Sampler
 			}
 		}
 
-		// Get texture scale - rectangle textures use none-normalized texture coordinates
+		// Get texture scale - rectangle textures use non-normalized texture coordinates
 		float fTextureCoordinateScaleX = 1.0f;
 		float fTextureCoordinateScaleY = 1.0f;
 		if (cTextureBuffer.GetType() == Resource::TypeTextureBufferRectangle) {
