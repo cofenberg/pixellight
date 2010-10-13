@@ -98,9 +98,9 @@ class Method : public DESC::FuncType {
 		*  @return
 		*    Func descriptor
 		*/
-		virtual const FuncDesc &GetDesc() {
+		virtual const FuncDesc *GetDesc() const {
 			// Return descriptor
-			return Desc;
+			return &Desc;
 		}
 
 

@@ -123,9 +123,9 @@ class Attribute : public Var<T, ACCESS, STORAGE> {
 		*  @return
 		*    Var descriptor
 		*/
-		virtual const VarDesc &GetDesc() {
+		virtual const VarDesc *GetDesc() const {
 			// Return descriptor
-			return Desc;
+			return &Desc;
 		}
 
 

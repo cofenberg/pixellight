@@ -98,9 +98,9 @@ class Slot : public DESC::EventHandlerType {
 		*  @return
 		*    Event handler descriptor
 		*/
-		virtual const EventHandlerDesc &GetDesc() {
+		virtual const EventHandlerDesc *GetDesc() const {
 			// Return descriptor
-			return Desc;
+			return &Desc;
 		}
 
 
