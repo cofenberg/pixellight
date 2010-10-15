@@ -147,11 +147,7 @@ endif()
 # External dependencies, but only when not using system-libs
 # [TODO] Uncomment this as soon as there's support for system-libs
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
-	if(WIN32)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLDatabase/libpq.dll "${PL_BIN_DIR}/PLRuntime/Plugins/PLDatabase/"
-		)
-	elseif(LINUX)
+	if(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite.so   "${PL_BIN_DIR}/PLRuntime/Plugins/PLDatabase/"
 		)
@@ -182,11 +178,7 @@ install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLDatabase/${CMAKETOOLS_CURRENT_PL
 # External dependencies, but only when not using system-libs
 # [TODO] Uncomment this as soon as there's support for system-libs
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
-	if(WIN32)
-		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLDatabase/libpq.dll
-			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLDatabase	COMPONENT Runtime
-		)
-	elseif(LINUX)
+	if(LINUX)
 		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLDatabase/libsqlite.so
 			DESTINATION ${PL_INSTALL_SHARED}						COMPONENT Runtime
 		)
