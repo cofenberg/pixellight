@@ -1,3 +1,11 @@
+>> 15.10.2010
+[CO]
+- Wie mit Stefan vor einigen Tagen bespochen, "SceneApplication" um "OnInputControllerFound()" Methode erweitert. Diese Methode wird
+  standardmäßig über das neue "PLScene::SceneContext::EventInputControllerFound"-Ereigniss aufgerufen. In dieser Methode findet die
+  ganz konkrete Zuweisung von Controls zu Virtual Controls statt.
+
+
+
 >> 20.08.2010
 [CO]
 - GUI Nachrichten werden nicht mehr direkt in "RenderApplication::Main()" verarbeitet sondern nun in "RenderApplication::Update(" -

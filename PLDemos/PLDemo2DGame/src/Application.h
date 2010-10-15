@@ -88,6 +88,13 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLEngine::SceneApplication functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLGeneral::String sInputSemantic);
+
+
+	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:

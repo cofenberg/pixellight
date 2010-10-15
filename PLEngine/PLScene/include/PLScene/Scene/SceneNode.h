@@ -765,6 +765,8 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*
 		*  @note
 		*    - The default implementation is empty
+		*    - Derived scene nodes may add a string attribute called "InputSemantic" to tell the world about
+		*      the purpose of the input controller (for example controlling a free camera)
 		*/
 		PLS_API virtual PLInput::Controller *GetInputController() const;
 

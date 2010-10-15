@@ -80,6 +80,7 @@ void SNPhysicsMouseInteraction::SetForceLineName(const String &sValue)
 *    Default constructor
 */
 SNPhysicsMouseInteraction::SNPhysicsMouseInteraction() :
+	InputSemantic(this),
 	MaxPickingRange(this),
 	ThrowForce(this),
 	ForceLineName(this),
@@ -122,19 +123,8 @@ void SNPhysicsMouseInteraction::InitFunction()
 	// Call base implementation
 	SceneNode::InitFunction();
 
-	// Connect to virtual input controller
-	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
-	//        virtual controller is used by the application. Therefore, it should be the application that
-	//        connects our controls to it's virtual controller, which will need some additional callback
-	//        to connect to scene nodes that provide input controllers.
-	Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
-	if (pController) {
-		m_pController->Connect("Pickup",		pController->GetControl("Pickup"));
-		m_pController->Connect("Throw",			pController->GetControl("Throw"));
-		m_pController->Connect("IncreaseForce",	pController->GetControl("IncreaseForce"));
-		m_pController->Connect("DecreaseForce",	pController->GetControl("DecreaseForce"));
-		m_pController->Connect("PushPull",		pController->GetControl("PushPull"));
-	}
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 

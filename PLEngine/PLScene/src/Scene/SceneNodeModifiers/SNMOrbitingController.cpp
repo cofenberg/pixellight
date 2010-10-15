@@ -25,8 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
-#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/OrbitingController.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMOrbitingController.h"
 
@@ -71,32 +71,11 @@ void SNMOrbitingController::SetFlags(uint32 nValue)
 */
 SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
 	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this),
+	InputSemantic(this),
 	m_pController(new OrbitingController())
 {
-	// Connect to virtual input controller
-	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
-	//        virtual controller is used by the application. Therefore, it should be the application that
-	//        connects our controls to it's virtual controller, which will need some additional callback
-	//        to connect to scene nodes that provide input controllers.
-	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
-	if (pController) {
-		m_pController->Connect("RotX",		pController->GetControl("RotX"));
-		m_pController->Connect("RotY",		pController->GetControl("RotY"));
-		m_pController->Connect("RotZ",		pController->GetControl("RotZ"));
-		m_pController->Connect("TransX",	pController->GetControl("TransX"));
-		m_pController->Connect("TransX",	pController->GetControl("MouseX"), -1.0f);
-		m_pController->Connect("TransY",	pController->GetControl("TransY"));
-		m_pController->Connect("TransY",	pController->GetControl("MouseY"), -1.0f);
-		m_pController->Connect("TransZ",	pController->GetControl("TransZ"));
-		m_pController->Connect("ZoomAxis",	pController->GetControl("MouseWheel"));
-		m_pController->Connect("ZoomAxis",	pController->GetControl("TransZ"));
-		m_pController->Connect("ZoomAxis",	pController->GetControl("MouseY"), -1.0f);
-		m_pController->Connect("Rotate",	pController->GetControl("Button1"));
-		m_pController->Connect("Pan",		pController->GetControl("Button3"));
-		m_pController->Connect("Zoom",		pController->GetControl("Button2"));
-		m_pController->Connect("SpeedUp",	pController->GetControl("Run"));
-		m_pController->Connect("SlowDown",	pController->GetControl("Crouch"));
-	}
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**

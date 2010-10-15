@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodes/Console/ConsoleCommand.h>
@@ -36,6 +37,7 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLCore;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -49,6 +51,7 @@ namespace PLEngine {
 *    Constructor
 */
 SceneApplication::SceneApplication(const String &sSceneFilename) : RenderApplication("PLScene::SPScene"),
+	EventHandlerInputControllerFound(&SceneApplication::OnInputControllerFound, this),
 	m_pSceneContext(NULL),
 	m_pRootScene(NULL),
 	m_bEditModeEnabled(false)
@@ -240,6 +243,9 @@ bool SceneApplication::Init()
 			// Set default input controller
 			m_pSceneContext->SetDefaultInputController(GetInputController());
 
+			// Connect the input controller found event handler to the corresponding scene context event
+			m_pSceneContext->EventInputControllerFound.Connect(&EventHandlerInputControllerFound);
+
 			// Create root scene
 			OnCreateRootScene();
 			if (!m_bRunning) return false;
@@ -337,6 +343,90 @@ void SceneApplication::OnCreateRootScene()
 
 		// Set the root scene
 		SetRootScene(pRootContainer);
+	}
+}
+
+/**
+*  @brief
+*    Function that is called when an input controller has been found
+*/
+void SceneApplication::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
+{
+	// Is there an application input controller?
+	if (m_pInputController) {
+		// Try to connect all controls automatically with the virtual standard controller
+		pInputController->ConnectAll(m_pInputController, "", "");
+
+		// PixelLightPhysicsCharacter (SNMPhysicsCharacterController)
+		if (sInputSemantic == "PixelLightPhysicsCharacter") {
+			// "TransX" is connected automatically with the virtual standard controller
+			// "TransY" is connected automatically with the virtual standard controller
+			// "TransZ" is connected automatically with the virtual standard controller
+			// "RotY" is connected automatically with the virtual standard controller
+			// "Forward" is connected automatically with the virtual standard controller
+			// "Backward" is connected automatically with the virtual standard controller
+			// "Left" is connected automatically with the virtual standard controller
+			// "Right" is connected automatically with the virtual standard controller
+			// "StrafeLeft" is connected automatically with the virtual standard controller
+			// "StrafeRight" is connected automatically with the virtual standard controller
+			// "Up" is connected automatically with the virtual standard controller
+			// "Down" is connected automatically with the virtual standard controller
+			// "Run" is connected automatically with the virtual standard controller
+			// "Crouch" is connected automatically with the virtual standard controller
+			// "Jump" is connected automatically with the virtual standard controller
+
+		// PixelLightCameraZoom (SNMCameraZoomController)
+		} if (sInputSemantic == "PixelLightCameraZoom") {
+			pInputController->Connect("Zoom", m_pInputController->GetControl("Button2"));
+
+		// PixelLightOrbiting (SNMOrbitingController)
+		} if (sInputSemantic == "PixelLightOrbiting") {
+			// "RotX" is connected automatically with the virtual standard controller
+			// "RotY" is connected automatically with the virtual standard controller
+			// "RotZ" is connected automatically with the virtual standard controller
+			// "TransX" is connected automatically with the virtual standard controller
+			// "TransY" is connected automatically with the virtual standard controller
+			// "TransZ" is connected automatically with the virtual standard controller
+			pInputController->Connect("TransX",		m_pInputController->GetControl("MouseX"), -1.0f);
+			pInputController->Connect("TransY",		m_pInputController->GetControl("MouseY"), -1.0f);
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseWheel"));
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("TransZ"));
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseY"), -1.0f);
+			pInputController->Connect("Rotate",		m_pInputController->GetControl("Button1"));
+			pInputController->Connect("Pan",		m_pInputController->GetControl("Button3"));
+			pInputController->Connect("Zoom",		m_pInputController->GetControl("Button2"));
+			pInputController->Connect("SpeedUp",	m_pInputController->GetControl("Run"));
+			pInputController->Connect("SlowDown",	m_pInputController->GetControl("Crouch"));
+
+		// PixelLightMove (SNMMoveController)
+		} if (sInputSemantic == "PixelLightMove") {
+			// "TransX" is connected automatically with the virtual standard controller
+			// "TransY" is connected automatically with the virtual standard controller
+			// "TransZ" is connected automatically with the virtual standard controller
+			// "Forward" is connected automatically with the virtual standard controller
+			// "Backward" is connected automatically with the virtual standard controller
+			// "StrafeLeft" is connected automatically with the virtual standard controller
+			// "StrafeRight" is connected automatically with the virtual standard controller
+			// "Up" is connected automatically with the virtual standard controller
+			// "Down" is connected automatically with the virtual standard controller
+			// "Run" is connected automatically with the virtual standard controller
+			// "Crouch" is connected automatically with the virtual standard controller
+
+		// PixelLightLook (SNMLookController)
+		} if (sInputSemantic == "PixelLightLook") {
+			// "RotX" is connected automatically with the virtual standard controller
+			// "RotY" is connected automatically with the virtual standard controller
+			// "RotZ" is connected automatically with the virtual standard controller
+			pInputController->Connect("Rotate", m_pInputController->GetControl("Button1"));
+
+		// PixelLightPhysicsMouse (SNPhysicsMouseInteraction)
+		} if (sInputSemantic == "PixelLightPhysicsMouse") {
+			// "Pickup" is connected automatically with the virtual standard controller
+			// "Throw" is connected automatically with the virtual standard controller
+			// "IncreaseForce" is connected automatically with the virtual standard controller
+			// "DecreaseForce" is connected automatically with the virtual standard controller
+			// "PushPull" is connected automatically with the virtual standard controller
+		}
 	}
 }
 

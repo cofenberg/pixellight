@@ -1,3 +1,16 @@
+>> 15.10.2010
+[CO]
+- Wie mit Stefan vor einigen Tagen bespochen (das Master-Studium ist leider ziemlich Zeitintensiv so das ich bisher noch nicht dazu kam das abzuarbeiten :/),
+  besitzen nun alle Scene Nodes und Scene Node Modifiers welche "GetInputController()" implementieren ein Attribute Namens "InputSemantic". Als Default Wert
+  von "InputSemantic" habe ich mich für Klassenname mit Prefix "PixelLight" statt "SNM"/"SN" und ohne "Controller" am Ende entschieden.
+- Wie mit Stefan vor einigen Tagen bespochen, "SceneContext" um "EventInputControllerFound" Ereigniss erweitert welches von den Input Controllern
+  abgefeuert wird so das man an zentraler Stelle eine Möglichkeit hat rauszufinden, welche Input Controller es gibt, und dann diese mit z.B. realen
+  Eingabegeräten verbinden kann. Der erste Parameter ist der gefundene Input Controller, der zweite Parameter "Input Semantic" wodurch man rausfinden
+  kann für was der Input Controller gut sein soll. (z.B. einen Spieler herumbewegen, ein Fahrzeug steuern etc.) Woher der Input Controller kommt,
+  z.B. ob von einer Scene Node oder einem Scene Node Modifier, sollte hier nicht weiter interessieren.
+
+
+
 >> 08.10.2010
 [CO]
 - SceneNode besitzt nun genauso wie SceneNodeModifier eine virtuelle Methode namens GetInputController, es wäre sicherlich nicht Benutzerfreundlich
