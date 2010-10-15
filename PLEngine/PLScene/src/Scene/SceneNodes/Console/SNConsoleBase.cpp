@@ -530,10 +530,10 @@ void SNConsoleBase::ProcessKeyMessage()
 				// Get the button
 				Button *pButton = pKeyboard->GetButtons()[i];
 
-				// Was this button it? If so, is it currently still pressed?
-				if (pButton->IsHit() && pButton->IsPressed()) {
-					// Get the name of the button
-					String sButtonName = pButton->GetName();
+				// Was this button hit?
+				if (pButton->IsHit()) {
+					// Get the character of the button
+					String sButtonName = pButton->GetCharacter();
 
 					// We only accept button names with one alpha-numeric ('abc', '12' or 'abc12' are alpha-numeric while 'abc-12' is not) character 
 					if (sButtonName.GetLength() == 1 && sButtonName.IsAlphaNumeric()) {
