@@ -535,8 +535,8 @@ void SNConsoleBase::ProcessKeyMessage()
 					// Get the character of the button
 					String sButtonName = pButton->GetCharacter();
 
-					// We only accept button names with one alpha-numeric ('abc', '12' or 'abc12' are alpha-numeric while 'abc-12' is not) character 
-					if (sButtonName.GetLength() == 1 && sButtonName.IsAlphaNumeric()) {
+					// The character must have at least a length of 1
+					if (sButtonName.GetLength() == 1) {
 						// Ensure the button name is lower or upper case depending on whether or not the shift key is currently pressed
 						if (pKeyboard->KeyShift.IsPressed())
 							sButtonName.ToUpper();
