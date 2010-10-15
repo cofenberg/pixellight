@@ -65,19 +65,14 @@ void SNMCameraZoomController::SetFlags(uint32 nValue)
 */
 SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCameraZoom(cSceneNode),
 	EventHandlerControl(&SNMCameraZoomController::NotifyControl, this),
+	InputSemantic(this),
 	m_pController(new CameraZoomController())
 {
 	// Connect input control event handler
 	m_pController->OnControl.Connect(&EventHandlerControl);
 
-	// Connect to virtual input controller
-	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
-	//        virtual controller is used by the application. Therefore, it should be the application that
-	//        connects our controls to it's virtual controller, which will need some additional callback
-	//        to connect to scene nodes that provide input controllers.
-	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
-	if (pController)
-		m_pController->Connect("Zoom", pController->GetControl("Button2"));
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**

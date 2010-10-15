@@ -35,6 +35,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLInput {
+	class Controller;
+}
 namespace PLScene {
 	class SceneContext;
 	class ConsoleCommand;
@@ -259,6 +262,30 @@ class SceneApplication : public RenderApplication {
 		*    Function that is called to create the application's root scene
 		*/
 		PL_API virtual void OnCreateRootScene();
+
+		/**
+		*  @brief
+		*    Function that is called when an input controller has been found
+		*
+		*  @param[in] pInputController
+		*    Found input controller, always valid
+		*  @param[in] sInputSemantic
+		*    Purpose of this input controller
+		*
+		*  @remarks
+		*    Use this virtual method for instance to connect the input controller to real input devices.
+		*
+		*  @note
+		*    - Connected to the "PLScene::SceneContext::EventInputControllerFound"-event
+		*/
+		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLGeneral::String sInputSemantic);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected event handlers                              ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCore::EventHandler<PLInput::Controller*, PLGeneral::String> EventHandlerInputControllerFound;
 
 
 	//[-------------------------------------------------------]

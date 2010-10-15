@@ -76,8 +76,9 @@ class SNMLookController : public SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMLookController, "PLScene", PLScene::SNMTransform, "Scene node rotation input controller modifier class")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		pl_attribute(InputSemantic,	PLGeneral::String,		"PixelLightLook",	ReadWrite,	DirectValue,	"Purpose of this input controller",	"")
 		// Overwritten SceneNodeModifier variables
-		pl_attribute(Flags,	pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,	"Flags",	"")
+		pl_attribute(Flags,			pl_flag_type(EFlags),	UseRotationKey,		ReadWrite,	GetSet,			"Flags",							"")
 	pl_class_end
 
 

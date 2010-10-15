@@ -27,7 +27,7 @@
 #include <PLRenderer/Animation/Animation.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshAnimationManager.h>
-#include "PLScene/Scene/SceneContext.h"
+#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodes/SNMesh.h>
 #include "PLPhysics/SceneNodeModifiers/PhysicsCharacterController.h"
@@ -76,6 +76,7 @@ void SNMPhysicsCharacterController::SetFlags(uint32 nValue)
 *    Constructor
 */
 SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNode) : SNMPhysicsCharacter(cSceneNode),
+	InputSemantic(this),
 	YRotVelocity(this),
 	IdleAnimation(this),
 	IdleAnimationSpeed(this),
@@ -88,29 +89,8 @@ SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNo
 	m_bJumping(false),
 	m_pController(new PhysicsCharacterController())
 {
-	// Connect to virtual input controller
-	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
-	//        virtual controller is used by the application. Therefore, it should be the application that
-	//        connects our controls to it's virtual controller, which will need some additional callback
-	//        to connect to scene nodes that provide input controllers.
-	Controller *pController = (Controller*)GetSceneNode().GetSceneContext()->GetDefaultInputController();
-	if (pController) {
-		m_pController->Connect("TransX",		pController->GetControl("TransX"));
-		m_pController->Connect("TransY",		pController->GetControl("TransY"));
-		m_pController->Connect("TransZ",		pController->GetControl("TransZ"));
-		m_pController->Connect("RotY",			pController->GetControl("RotY"));
-		m_pController->Connect("Forward",		pController->GetControl("Forward"));
-		m_pController->Connect("Backward",		pController->GetControl("Backward"));
-		m_pController->Connect("Left",			pController->GetControl("Left"));
-		m_pController->Connect("Right",			pController->GetControl("Right"));
-		m_pController->Connect("StrafeLeft",	pController->GetControl("StrafeLeft"));
-		m_pController->Connect("StrafeRight",	pController->GetControl("StrafeRight"));
-		m_pController->Connect("Up",			pController->GetControl("Up"));
-		m_pController->Connect("Down",			pController->GetControl("Down"));
-		m_pController->Connect("Run",			pController->GetControl("Run"));
-		m_pController->Connect("Crouch",		pController->GetControl("Crouch"));
-		m_pController->Connect("Jump",			pController->GetControl("Jump"));
-	}
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**

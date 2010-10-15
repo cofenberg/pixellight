@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodes/Console/ConsoleCommand.h>
@@ -36,6 +37,7 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLCore;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -49,6 +51,7 @@ namespace PLEngine {
 *    Constructor
 */
 SceneApplication::SceneApplication(const String &sSceneFilename) : RenderApplication("PLScene::SPScene"),
+	EventHandlerInputControllerFound(&SceneApplication::OnInputControllerFound, this),
 	m_pSceneContext(NULL),
 	m_pRootScene(NULL),
 	m_bEditModeEnabled(false)
@@ -240,6 +243,9 @@ bool SceneApplication::Init()
 			// Set default input controller
 			m_pSceneContext->SetDefaultInputController(GetInputController());
 
+			// Connect the input controller found event handler to the corresponding scene context event
+			m_pSceneContext->EventInputControllerFound.Connect(&EventHandlerInputControllerFound);
+
 			// Create root scene
 			OnCreateRootScene();
 			if (!m_bRunning) return false;
@@ -337,6 +343,87 @@ void SceneApplication::OnCreateRootScene()
 
 		// Set the root scene
 		SetRootScene(pRootContainer);
+	}
+}
+
+/**
+*  @brief
+*    Function that is called when an input controller has been found
+*/
+void SceneApplication::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
+{
+	// Is there an application input controller?
+	if (m_pInputController) {
+		// PixelLightPhysicsCharacter (SNMPhysicsCharacterController)
+		if (sInputSemantic == "PixelLightPhysicsCharacter") {
+			pInputController->Connect("TransX",			m_pInputController->GetControl("TransX"));
+			pInputController->Connect("TransY",			m_pInputController->GetControl("TransY"));
+			pInputController->Connect("TransZ",			m_pInputController->GetControl("TransZ"));
+			pInputController->Connect("RotY",			m_pInputController->GetControl("RotY"));
+			pInputController->Connect("Forward",		m_pInputController->GetControl("Forward"));
+			pInputController->Connect("Backward",		m_pInputController->GetControl("Backward"));
+			pInputController->Connect("Left",			m_pInputController->GetControl("Left"));
+			pInputController->Connect("Right",			m_pInputController->GetControl("Right"));
+			pInputController->Connect("StrafeLeft",		m_pInputController->GetControl("StrafeLeft"));
+			pInputController->Connect("StrafeRight",	m_pInputController->GetControl("StrafeRight"));
+			pInputController->Connect("Up",				m_pInputController->GetControl("Up"));
+			pInputController->Connect("Down",			m_pInputController->GetControl("Down"));
+			pInputController->Connect("Run",			m_pInputController->GetControl("Run"));
+			pInputController->Connect("Crouch",			m_pInputController->GetControl("Crouch"));
+			pInputController->Connect("Jump",			m_pInputController->GetControl("Jump"));
+
+		// PixelLightCameraZoom (SNMCameraZoomController)
+		} if (sInputSemantic == "PixelLightCameraZoom") {
+			pInputController->Connect("Zoom", m_pInputController->GetControl("Button2"));
+
+		// PixelLightOrbiting (SNMOrbitingController)
+		} if (sInputSemantic == "PixelLightOrbiting") {
+			pInputController->Connect("RotX",		m_pInputController->GetControl("RotX"));
+			pInputController->Connect("RotY",		m_pInputController->GetControl("RotY"));
+			pInputController->Connect("RotZ",		m_pInputController->GetControl("RotZ"));
+			pInputController->Connect("TransX",		m_pInputController->GetControl("TransX"));
+			pInputController->Connect("TransX",		m_pInputController->GetControl("MouseX"), -1.0f);
+			pInputController->Connect("TransY",		m_pInputController->GetControl("TransY"));
+			pInputController->Connect("TransY",		m_pInputController->GetControl("MouseY"), -1.0f);
+			pInputController->Connect("TransZ",		m_pInputController->GetControl("TransZ"));
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseWheel"));
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("TransZ"));
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseY"), -1.0f);
+			pInputController->Connect("Rotate",		m_pInputController->GetControl("Button1"));
+			pInputController->Connect("Pan",		m_pInputController->GetControl("Button3"));
+			pInputController->Connect("Zoom",		m_pInputController->GetControl("Button2"));
+			pInputController->Connect("SpeedUp",	m_pInputController->GetControl("Run"));
+			pInputController->Connect("SlowDown",	m_pInputController->GetControl("Crouch"));
+
+		// PixelLightMove (SNMMoveController)
+		} if (sInputSemantic == "PixelLightMove") {
+			pInputController->Connect("TransX",			m_pInputController->GetControl("TransX"));
+			pInputController->Connect("TransY",			m_pInputController->GetControl("TransY"));
+			pInputController->Connect("TransZ",			m_pInputController->GetControl("TransZ"));
+			pInputController->Connect("Forward",		m_pInputController->GetControl("Forward"));
+			pInputController->Connect("Backward",		m_pInputController->GetControl("Backward"));
+			pInputController->Connect("StrafeLeft",		m_pInputController->GetControl("StrafeLeft"));
+			pInputController->Connect("StrafeRight",	m_pInputController->GetControl("StrafeRight"));
+			pInputController->Connect("Up",				m_pInputController->GetControl("Up"));
+			pInputController->Connect("Down",			m_pInputController->GetControl("Down"));
+			pInputController->Connect("Run",			m_pInputController->GetControl("Run"));
+			pInputController->Connect("Crouch",			m_pInputController->GetControl("Crouch"));
+
+		// PixelLightLook (SNMLookController)
+		} if (sInputSemantic == "PixelLightLook") {
+			pInputController->Connect("RotX",   m_pInputController->GetControl("RotX"));
+			pInputController->Connect("RotY",   m_pInputController->GetControl("RotY"));
+			pInputController->Connect("RotZ",   m_pInputController->GetControl("RotZ"));
+			pInputController->Connect("Rotate", m_pInputController->GetControl("Button1"));
+
+		// PixelLightPhysicsMouse (SNPhysicsMouseInteraction)
+		} if (sInputSemantic == "PixelLightPhysicsMouse") {
+			pInputController->Connect("Pickup",			m_pInputController->GetControl("Pickup"));
+			pInputController->Connect("Throw",			m_pInputController->GetControl("Throw"));
+			pInputController->Connect("IncreaseForce",	m_pInputController->GetControl("IncreaseForce"));
+			pInputController->Connect("DecreaseForce",	m_pInputController->GetControl("DecreaseForce"));
+			pInputController->Connect("PushPull",		m_pInputController->GetControl("PushPull"));
+		}
 	}
 }
 

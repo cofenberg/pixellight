@@ -170,6 +170,8 @@ class SceneNodeModifier : public PLCore::Object {
 		*
 		*  @note
 		*    - The default implementation is empty
+		*    - Derived scene node modifiers may add a string attribute called "InputSemantic" to tell the world about
+		*      the purpose of the input controller (for example controlling a free camera)
 		*/
 		PLS_API virtual PLInput::Controller *GetInputController() const;
 

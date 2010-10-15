@@ -26,6 +26,7 @@
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
@@ -39,6 +40,7 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 
@@ -156,6 +158,32 @@ void Application::OnCreateMainWindow()
 		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
 			pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLEngine::SceneApplication functions  ]
+//[-------------------------------------------------------]
+void Application::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
+{
+	// Call base implementation
+	BasicSceneApplication::OnInputControllerFound(pInputController, sInputSemantic);
+
+	// Is there an application input controller? If so, connect gun (SNGun)...
+	if (m_pInputController && sInputSemantic == "Gun") {
+		pInputController->Connect("X",		m_pInputController->GetControl("RotX"));
+		pInputController->Connect("Left",	m_pInputController->GetControl("Left"));
+		pInputController->Connect("Right",	m_pInputController->GetControl("Right"));
+		pInputController->Connect("Left",	m_pInputController->GetControl("Forward"));
+		pInputController->Connect("Right",	m_pInputController->GetControl("Backward"));
+		pInputController->Connect("Left",	m_pInputController->GetControl("StrafeLeft"));
+		pInputController->Connect("Right",	m_pInputController->GetControl("StrafeRight"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button1"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button2"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button3"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button4"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button5"));
 	}
 }
 

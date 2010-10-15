@@ -85,15 +85,16 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsCharacterController, "PLPhysics", PLPhysics::SNMPhysicsCharacter, "Basic PL physics character controller scene node modifier class")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(YRotVelocity,			float,					0.0f,	ReadWrite,	DirectValue,	"Y rotation velocity, if 0, there's no rotation control",											"")
-		pl_attribute(IdleAnimation,			PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Idle animation",																					"")
-		pl_attribute(IdleAnimationSpeed,	float,					24.0f,	ReadWrite,	DirectValue,	"Idle animation playback speed",																	"Min='0.0001'")
-		pl_attribute(WalkAnimation,			PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Walk animation",																					"")
-		pl_attribute(WalkAnimationSpeed,	float,					24.0f,	ReadWrite,	DirectValue,	"Walk animation playback speed",																	"Min='0.0001'")
-		pl_attribute(RunAnimationSpeed,		float,					35.0f,	ReadWrite,	DirectValue,	"Run animation playback speed (walk animation, just faster)",										"Min='0.0001'")
-		pl_attribute(RotationNode,			PLGeneral::String,		"",		ReadWrite,	DirectValue,	"If empty, take the rotation of the owner node for movement, else the rotation of the given node",	"")
+		pl_attribute(InputSemantic,			PLGeneral::String,		"PixelLightPhysicsCharacter",	ReadWrite,	DirectValue,	"Purpose of this input controller",																	"")
+		pl_attribute(YRotVelocity,			float,					0.0f,							ReadWrite,	DirectValue,	"Y rotation velocity, if 0, there's no rotation control",											"")
+		pl_attribute(IdleAnimation,			PLGeneral::String,		"",								ReadWrite,	DirectValue,	"Idle animation",																					"")
+		pl_attribute(IdleAnimationSpeed,	float,					24.0f,							ReadWrite,	DirectValue,	"Idle animation playback speed",																	"Min='0.0001'")
+		pl_attribute(WalkAnimation,			PLGeneral::String,		"",								ReadWrite,	DirectValue,	"Walk animation",																					"")
+		pl_attribute(WalkAnimationSpeed,	float,					24.0f,							ReadWrite,	DirectValue,	"Walk animation playback speed",																	"Min='0.0001'")
+		pl_attribute(RunAnimationSpeed,		float,					35.0f,							ReadWrite,	DirectValue,	"Run animation playback speed (walk animation, just faster)",										"Min='0.0001'")
+		pl_attribute(RotationNode,			PLGeneral::String,		"",								ReadWrite,	DirectValue,	"If empty, take the rotation of the owner node for movement, else the rotation of the given node",	"")
 		// Overwritten PLScene::SceneNodeModifier variables
-		pl_attribute(Flags,					pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																							"")
+		pl_attribute(Flags,					pl_flag_type(EFlags),	0,								ReadWrite,	GetSet,			"Flags",																							"")
 	pl_class_end
 
 

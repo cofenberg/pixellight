@@ -56,6 +56,7 @@ pl_implement_class(SNGun)
 *    Default constructor
 */
 SNGun::SNGun() :
+	InputSemantic(this),
 	Sound(this),
 	Flags(this),
 	EventHandlerOnSceneNode(&SNGun::OnSceneNode, this),
@@ -110,26 +111,8 @@ void SNGun::InitFunction()
 	// Call base implementation
 	SNSound::InitFunction();
 
-	// Connect to virtual input controller
-	// [TODO] This is not quite the right place to do it, because we can not really know in here, what
-	//        virtual controller is used by the application. Therefore, it should be the application that
-	//        connects our controls to it's virtual controller, which will need some additional callback
-	//        to connect to scene nodes that provide input controllers.
-	Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
-	if (pController) {
-		m_pController->Connect("X",		pController->GetControl("RotX"));
-		m_pController->Connect("Left",	pController->GetControl("Left"));
-		m_pController->Connect("Right",	pController->GetControl("Right"));
-		m_pController->Connect("Left",	pController->GetControl("Forward"));
-		m_pController->Connect("Right",	pController->GetControl("Backward"));
-		m_pController->Connect("Left",	pController->GetControl("StrafeLeft"));
-		m_pController->Connect("Right",	pController->GetControl("StrafeRight"));
-		m_pController->Connect("Fire",	pController->GetControl("Button1"));
-		m_pController->Connect("Fire",	pController->GetControl("Button2"));
-		m_pController->Connect("Fire",	pController->GetControl("Button3"));
-		m_pController->Connect("Fire",	pController->GetControl("Button4"));
-		m_pController->Connect("Fire",	pController->GetControl("Button5"));
-	}
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 

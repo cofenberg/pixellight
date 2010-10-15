@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/Array.h>
+#include <PLCore/Base/Event/Event.h>
 #include "PLScene/PLScene.h"
 
 
@@ -42,6 +43,7 @@ namespace PLMesh {
 	class MeshManager;
 }
 namespace PLInput {
+	class Controller;
 	class VirtualController;
 }
 namespace PLScene {
@@ -74,6 +76,13 @@ class SceneContext {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class SceneNode;
+
+
+	//[-------------------------------------------------------]
+	//[ Public events                                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<PLInput::Controller*, PLGeneral::String> EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
 
 
 	//[-------------------------------------------------------]
@@ -263,7 +272,7 @@ class SceneContext {
 		VisManager					 *m_pVisManager;				/**< Visibility manager, can be NULL */
 		bool						  m_bProcessActive;				/**< Is there currently an active process? */
 		PLGeneral::uint32			  m_nProcessCounter;			/**< Internal process counter */
-		PLInput::VirtualController	 *m_pDefaultInputController;	/**< Default input controller */
+		PLInput::VirtualController	 *m_pDefaultInputController;	/**< Default input controller, can be NULL */
 
 
 };
