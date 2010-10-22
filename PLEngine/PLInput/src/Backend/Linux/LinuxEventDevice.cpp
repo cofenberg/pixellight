@@ -168,7 +168,7 @@ void LinuxEventDevice::Update()
 				float fValue = ((float)(pEvents[i].value - sAbsInfo.minimum) / (float)(sAbsInfo.maximum - sAbsInfo.minimum)) * 2.0f - 1.0f;
 				if (fValue >  1.0f) fValue =  1.0f;
 				if (fValue < -1.0f) fValue = -1.0f;
-				pAxis->SetValue(fValue);
+				pAxis->SetValue(fValue, true);
 			}
 		}
 	}
