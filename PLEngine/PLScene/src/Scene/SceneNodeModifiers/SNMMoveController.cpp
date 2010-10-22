@@ -118,32 +118,8 @@ void SNMMoveController::NotifyUpdate()
 
 	// Check if input is active
 	if (m_pController->GetActive()) {
-		// Movement vector
-		Vector3 vMovement;
-
-		// Forward/backward
-		if (m_pController->Forward.IsPressed())
-			vMovement += vDirVector;
-		if (m_pController->Backward.IsPressed())
-			vMovement -= vDirVector;
-		vMovement += vDirVector*m_pController->TransZ.GetValue();
-
-		// Left/right
-		if (m_pController->StrafeLeft.IsPressed())
-			vMovement += vDirLeftVector;
-		if (m_pController->StrafeRight.IsPressed())
-			vMovement -= vDirLeftVector;
-		vMovement += vDirLeftVector*m_pController->TransX.GetValue();
-
-		// Upward/downward
-		if (m_pController->Up.IsPressed())
-			vMovement += vDirUpVector;
-		if (m_pController->Down.IsPressed())
-			vMovement -= vDirUpVector;
-		vMovement += vDirUpVector*m_pController->TransY.GetValue();
-
-		// Set movement speed
-		float fCurrentSpeed = Speed;
+		// Set movement speed and don't forget to apply the current time difference
+		float fCurrentSpeed = Speed*Timing::GetInstance()->GetTimeDifference();
 
 		// Speed up
 		if (m_pController->Run.IsPressed())
@@ -153,8 +129,29 @@ void SNMMoveController::NotifyUpdate()
 		else if (m_pController->Crouch.IsPressed())
 			fCurrentSpeed /= 4;
 
-		// Calculate movement and don't forget to apply the current time difference
-		vMovement *= fCurrentSpeed*Timing::GetInstance()->GetTimeDifference();
+		// Movement vector
+		Vector3 vMovement;
+
+		// Forward/backward
+		if (m_pController->Forward.IsPressed())
+			vMovement += vDirVector*fCurrentSpeed;
+		if (m_pController->Backward.IsPressed())
+			vMovement -= vDirVector*fCurrentSpeed;
+		vMovement += vDirVector*(m_pController->TransZ.IsValueAbsolute() ? m_pController->TransZ.GetValue()*fCurrentSpeed : m_pController->TransZ.GetValue());
+
+		// Left/right
+		if (m_pController->StrafeLeft.IsPressed())
+			vMovement += vDirLeftVector*fCurrentSpeed;
+		if (m_pController->StrafeRight.IsPressed())
+			vMovement -= vDirLeftVector*fCurrentSpeed;
+		vMovement += vDirLeftVector*(m_pController->TransX.IsValueAbsolute() ? m_pController->TransX.GetValue()*fCurrentSpeed : m_pController->TransX.GetValue());
+
+		// Upward/downward
+		if (m_pController->Up.IsPressed())
+			vMovement += vDirUpVector*fCurrentSpeed;
+		if (m_pController->Down.IsPressed())
+			vMovement -= vDirUpVector*fCurrentSpeed;
+		vMovement += vDirUpVector*(m_pController->TransY.IsValueAbsolute() ? m_pController->TransY.GetValue()*fCurrentSpeed : m_pController->TransY.GetValue());
 
 		// 'Move' to the new position
 		if (!vMovement.IsNull())

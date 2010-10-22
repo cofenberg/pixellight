@@ -150,24 +150,26 @@ void SNGun::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 //[-------------------------------------------------------]
 void SNGun::UpdateFunction()
 {
-	// Get time difference
+	// Get the current time difference between the last frame and the current frame
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
 	// Get X value
 	float fDelta = m_pController->X.GetValue();
 
+	// Do we need to take the current time difference into account?
+	if (m_pController->X.IsValueAbsolute())
+		fDelta *= fTimeDiff;
+
 	// Left button pressed?
-	if (m_pController->Left.IsPressed()) {
-		fDelta = -6.0f;
-	}
+	if (m_pController->Left.IsPressed())
+		fDelta = -6.0f*fTimeDiff;
 
 	// Right button pressed?
-	if (m_pController->Right.IsPressed()) {
-		fDelta = 6.0f;
-	}
+	if (m_pController->Right.IsPressed())
+		fDelta = 6.0f*fTimeDiff;
 
 	// Move gun
-	m_fFrame += fDelta * 3.0f * fTimeDiff;
+	m_fFrame += fDelta * 3.0f;
 	if (m_fFrame > 12.0f) m_fFrame = 12.0f;
 	if (m_fFrame <  0.0f) m_fFrame =  0.0f;
 	m_nFrame = (char)m_fFrame;

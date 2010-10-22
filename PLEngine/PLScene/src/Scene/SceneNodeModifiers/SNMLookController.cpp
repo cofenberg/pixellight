@@ -114,18 +114,26 @@ void SNMLookController::NotifyUpdate()
 	// Check if input is active and whether or not the rotation key required and pressed
 	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed())) {
 		// Get rotation
-		const float fX = m_pController->RotX.GetValue();
-		const float fY = m_pController->RotY.GetValue();
-		const float fZ = m_pController->RotZ.GetValue();
+		float fX = m_pController->RotX.GetValue();
+		float fY = m_pController->RotY.GetValue();
+		float fZ = m_pController->RotZ.GetValue();
 		if (fX || fY || fZ) {
 			// Get the current time difference
 			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
+			// Do we need to take the current time difference into account?
+			if (m_pController->RotX.IsValueAbsolute())
+				fX *= fTimeDiff;
+			if (m_pController->RotY.IsValueAbsolute())
+				fY *= fTimeDiff;
+			if (m_pController->RotZ.IsValueAbsolute())
+				fZ *= fTimeDiff;
+
 			// Get a quaternion representation of the rotation delta
 			Quaternion qRotInc;
-			EulerAngles::ToQuaternion(float(fX*Math::DegToRad*fTimeDiff),
-									  float(fY*Math::DegToRad*fTimeDiff),
-									  float(fZ*Math::DegToRad*fTimeDiff),
+			EulerAngles::ToQuaternion(float(fX*Math::DegToRad),
+									  float(fY*Math::DegToRad),
+									  float(fZ*Math::DegToRad),
 									  qRotInc);
 
 			// Update rotation

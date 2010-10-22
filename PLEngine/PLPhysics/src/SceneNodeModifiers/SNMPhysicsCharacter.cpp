@@ -245,27 +245,31 @@ void SNMPhysicsCharacter::NotifyUpdate()
 	// Get the body
 	Body *pBody = GetPhysicsBody();
 	if (pBody) {
-		// Normalize movement vector if the length is >1
+		// Get the direction we're moving into and the movement speed (normalize movement vector if the length is >1)
+		float fMovementSpeed = m_vMovement.GetLength();
+		Vector3 vMovementDirection;
 		if (GetFlags() & YMovement) {
-			// Movement on all axis
-			const float fLength = m_vMovement.GetLength();
-			if (fLength > 1.0f)
-				m_vMovement /= fLength;
+			// Movement on all axis - normalize the movement direction vector
+			vMovementDirection = m_vMovement;
+			if (fMovementSpeed)
+				vMovementDirection /= fMovementSpeed;
 		} else {
 			// Movement is just performed on the x/z plane
-			float fLength =  Math::Sqrt(m_vMovement.x*m_vMovement.x + m_vMovement.z*m_vMovement.z);
-			if (fLength > 1.0f)
-				m_vMovement.SetXYZ(m_vMovement.x/fLength, m_vMovement.y, m_vMovement.z/fLength);
+			vMovementDirection.SetXYZ(m_vMovement.x, 0.0f, m_vMovement.z);
+			vMovementDirection.Normalize();
 		}
+		if (fMovementSpeed > 1.0f)
+			fMovementSpeed = 1.0f;
+		if (Speed < 0.0f)
+			Speed = 0.0f;
+		fMovementSpeed *= Speed;
 
 		// Get the current velocity
 		Vector3 vVelocity;
 		pBody->GetLinearVelocity(vVelocity);
 
 		// Get velocity we want to apply on our character
-		if (Speed < 0.0f)
-			Speed = 0.0f;
-		Vector3 vGoalVelocity(m_vMovement.x*Speed, (GetFlags() & YMovement) ? m_vMovement.y*Speed : 0.0f, m_vMovement.z*Speed);
+		Vector3 vGoalVelocity(vMovementDirection.x*fMovementSpeed, (GetFlags() & YMovement) ? vMovementDirection.y*fMovementSpeed : 0.0f, vMovementDirection.z*fMovementSpeed);
 
 		// Scale it by 3 up if the character wants to run
 		if (m_bRun)

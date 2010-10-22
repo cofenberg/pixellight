@@ -389,7 +389,7 @@ void SceneApplication::OnInputControllerFound(Controller *pInputController, Stri
 			// "TransZ" is connected automatically with the virtual standard controller
 			pInputController->Connect("TransX",		m_pInputController->GetControl("MouseX"), -1.0f);
 			pInputController->Connect("TransY",		m_pInputController->GetControl("MouseY"), -1.0f);
-			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseWheel"));
+			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseWheel"), 0.5f);
 			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("TransZ"));
 			pInputController->Connect("ZoomAxis",	m_pInputController->GetControl("MouseY"), -1.0f);
 			pInputController->Connect("Rotate",		m_pInputController->GetControl("Button1"));

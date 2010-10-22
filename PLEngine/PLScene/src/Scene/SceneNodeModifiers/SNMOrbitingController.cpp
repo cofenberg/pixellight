@@ -118,10 +118,18 @@ void SNMOrbitingController::NotifyUpdate()
 
 		// Rotation
 		if (m_pController->Rotate.IsPressed()) {
-			const float fX = m_pController->RotX.GetValue()*fCurrentSpeed;
-			const float fY = m_pController->RotY.GetValue()*fCurrentSpeed;
-			const float fZ = m_pController->RotZ.GetValue()*fCurrentSpeed;
+			float fX = m_pController->RotX.GetValue();
+			float fY = m_pController->RotY.GetValue();
+			float fZ = m_pController->RotZ.GetValue();
 			if (fX || fY || fZ) {
+				// Do we need to take the current time difference into account?
+				if (m_pController->RotX.IsValueAbsolute())
+					fX *= fCurrentSpeed;
+				if (m_pController->RotY.IsValueAbsolute())
+					fY *= fCurrentSpeed;
+				if (m_pController->RotZ.IsValueAbsolute())
+					fZ *= fCurrentSpeed;
+
 				// Get a quaternion representation of the rotation delta
 				Quaternion qRotInc;
 				EulerAngles::ToQuaternion(-float(fX*Math::DegToRad),
@@ -136,10 +144,19 @@ void SNMOrbitingController::NotifyUpdate()
 
 		// Pan
 		if (m_pController->Pan.IsPressed()) {
-			const float fX = m_pController->TransX.GetValue()*fCurrentSpeed;
-			const float fY = m_pController->TransY.GetValue()*fCurrentSpeed;
-			const float fZ = m_pController->TransZ.GetValue()*fCurrentSpeed;
+			float fX = m_pController->TransX.GetValue();
+			float fY = m_pController->TransY.GetValue();
+			float fZ = m_pController->TransZ.GetValue();
 			if (fX || fY || fZ) {
+				// Do we need to take the current time difference into account?
+				if (m_pController->TransX.IsValueAbsolute())
+					fX *= fCurrentSpeed;
+				if (m_pController->TransX.IsValueAbsolute())
+					fY *= fCurrentSpeed;
+				if (m_pController->TransX.IsValueAbsolute())
+					fZ *= fCurrentSpeed;
+
+				// Set pan
 				Vector3 vPan = Pan.Get();
 				vPan.x += fX;
 				vPan.y += fY;
@@ -150,8 +167,12 @@ void SNMOrbitingController::NotifyUpdate()
 
 		// Zoom
 		if (m_pController->Zoom.IsPressed()) {
-			const float fZoomAxis = m_pController->ZoomAxis.GetValue()*fCurrentSpeed;
+			float fZoomAxis = m_pController->ZoomAxis.GetValue();
 			if (fZoomAxis) {
+				// Do we need to take the current time difference into account?
+				if (m_pController->ZoomAxis.IsValueAbsolute())
+					fZoomAxis *= fCurrentSpeed;
+
 				// Set new distance
 				SetDistance(GetDistance() - fZoomAxis);
 			}

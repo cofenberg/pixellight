@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Tools/Timing.h>
 #include <PLGui/Widgets/Widget.h>
 #include <PLGui/Application/GuiApplication.h>
 #include <PLRenderer/RendererContext.h>
@@ -319,7 +320,8 @@ void SNPhysicsMouseInteraction::UpdateFunction()
 							// The mouse wheel can be used to push/pull the target
 							const float fWheelDelta = m_pController->PushPull.GetValue();
 							if (fWheelDelta) {
-								m_fPickedDistance += fWheelDelta*0.0005f;
+								// Do we need to take the current time difference into account?
+								m_fPickedDistance += m_pController->PushPull.IsValueAbsolute() ? fWheelDelta*Timing::GetInstance()->GetTimeDifference() : fWheelDelta;
 
 								// Check distance
 								const float fLength = (vNormal*m_fPickedDistance).GetLength();

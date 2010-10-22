@@ -155,14 +155,16 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 			vMovement -= vDirVector;
 			bRevert = true;
 		}
-		vMovement += vDirVector*m_pController->TransZ.GetValue();
+		// For relative input values, we need to cancel out the time difference applied within the base method "SetMovement()"
+		vMovement += vDirVector*(m_pController->TransZ.IsValueAbsolute() ? m_pController->TransZ.GetValue() : (1.0f/fTimeDiff)*m_pController->TransZ.GetValue());
 
 		// Strafe left/right
 		if (m_pController->StrafeLeft.IsPressed())
 			vMovement += vDirLeftVector;
 		if (m_pController->StrafeRight.IsPressed())
 			vMovement -= vDirLeftVector;
-		vMovement += vDirLeftVector*m_pController->TransX.GetValue();
+		// For relative input values, we need to cancel out the time difference applied within the base method "SetMovement()"
+		vMovement += vDirLeftVector*(m_pController->TransX.IsValueAbsolute() ? m_pController->TransX.GetValue() : (1.0f/fTimeDiff)*m_pController->TransX.GetValue());
 
 		// Upward/downward
 		if (GetFlags() & YMovement) {
@@ -170,7 +172,9 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 				vMovement += vDirUpVector;
 			if (m_pController->Down.IsPressed())
 				vMovement -= vDirUpVector;
-			vMovement += vDirUpVector*m_pController->TransY.GetValue();
+
+			// For relative input values, we need to cancel out the time difference applied within the base method "SetMovement()"
+			vMovement += vDirUpVector*(m_pController->TransY.IsValueAbsolute() ? m_pController->TransY.GetValue() : (1.0f/fTimeDiff)*m_pController->TransY.GetValue());
 		}
 	}
 

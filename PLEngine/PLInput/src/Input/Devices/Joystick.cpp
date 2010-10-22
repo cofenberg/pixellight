@@ -231,37 +231,37 @@ void Joystick::ParseInputReport()
 			switch (lstInputValues[i].m_nUsage) {
 				case UsageX:
 					if (X.GetValue() != fValue)
-						X.SetValue(fValue);
+						X.SetValue(fValue, true);
 					break;
 
 				case UsageY:
 					if (Y.GetValue() != fValue)
-						Y.SetValue(fValue);
+						Y.SetValue(fValue, true);
 					break;
 
 				case UsageZ:
 					if (Z.GetValue() != fValue)
-						Z.SetValue(fValue);
+						Z.SetValue(fValue, true);
 					break;
 
 				case UsageRX:
 					if (RX.GetValue() != fValue)
-						RX.SetValue(fValue);
+						RX.SetValue(fValue, true);
 					break;
 
 				case UsageRY:
 					if (RY.GetValue() != fValue)
-						RY.SetValue(fValue);
+						RY.SetValue(fValue, true);
 					break;
 
 				case UsageRZ:
 					if (RZ.GetValue() != fValue)
-						RZ.SetValue(fValue);
+						RZ.SetValue(fValue, true);
 					break;
 
 				case UsageHat:
 					if (Hat.GetValue() != fValue)
-						Hat.SetValue(fValue);
+						Hat.SetValue(fValue, true);
 					break;
 			}
 		}

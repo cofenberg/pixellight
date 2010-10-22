@@ -117,11 +117,14 @@ void Connection::PassValue()
 				break;
 
 			case ControlAxis:
+			{
+				Axis *pInputAxis = (Axis*)m_pInput;
 				if (m_fScale != 1.0f)
-					((Axis*)m_pOutput)->SetValue(((Axis*)m_pInput)->GetValue() * m_fScale);
+					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue() * m_fScale, pInputAxis->IsValueAbsolute());
 				else
-					((Axis*)m_pOutput)->SetValue(((Axis*)m_pInput)->GetValue());
+					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue(), pInputAxis->IsValueAbsolute());
 				break;
+			}
 		}
 	}
 }

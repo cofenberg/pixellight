@@ -119,7 +119,7 @@ void LegacyJoystickDevice::Update()
 				// Set new value
 				Axis *pAxis = pJoystick->GetAxes()[i];
 				if (pAxis && pAxis->GetValue() != fPos)
-					pAxis->SetValue(fPos);
+					pAxis->SetValue(fPos, true);
 			}
 
 			// Update buttons
