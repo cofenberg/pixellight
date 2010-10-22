@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include <PLCore/Base/Object.h>
 #include "PLInput/PLInput.h"
 #include "PLInput/PLInputDefinitions.h"

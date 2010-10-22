@@ -36,7 +36,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
 namespace PLInput {
 
 
@@ -228,9 +227,9 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			Connect("RotX",				&pMouse->Y, 15.0f);
+			Connect("RotX",				&pMouse->Y, 0.5f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
-			Connect("RotY",				&pMouse->X, -15.0f);
+			Connect("RotY",				&pMouse->X, -0.5f);
 
 			// Buttons
 			Connect("Button1",			&pMouse->Left);
@@ -241,7 +240,7 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Interaction
 			Connect("Pickup",			&pMouse->Middle);
-			Connect("PushPull",			&pMouse->Wheel);
+			Connect("PushPull",			&pMouse->Wheel, 0.001f);
 		}
 
 		// Keyboard
