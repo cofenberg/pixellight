@@ -107,7 +107,7 @@ class Provider : public PLCore::Object {
 		*    Get list of devices
 		*
 		*  @return
-		*    Device list
+		*    Device list, do not destroy the returned instances!
 		*/
 		PLINPUT_API const PLGeneral::List<Device*> &GetDevices() const;
 
@@ -146,14 +146,15 @@ class Provider : public PLCore::Object {
 		*  @param[in] sName
 		*    Name of the input device (e.g. "Mouse0")
 		*  @param[in] pDevice
-		*    Pointer to the device (derived from Device)
+		*    Pointer to the device (derived from Device), shouldn't be NULL (but NULL is catched internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*
 		*  @remarks
 		*    The function will fail, if the device is already present. Otherwise,
-		*    the new device will be registered in the input system.
+		*    the new device will be registered in the input system. On success, the input provider
+		*    takes control over the device instance and will destroy it if it's no longer required.
 		*/
 		PLINPUT_API bool AddDevice(const PLGeneral::String &sName, Device *pDevice);
 

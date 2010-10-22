@@ -23,12 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Thread.h>
 #include <PLGeneral/System/Mutex.h>
 #include <PLGeneral/Log/Log.h>
 #include "PLInput/Input/InputManager.h"
-#include "PLInput/Input/Devices/Device.h"
 #include "PLInput/Input/Devices/Mouse.h"
 #include "PLInput/Backend/Provider.h"
 

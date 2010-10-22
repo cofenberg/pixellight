@@ -76,6 +76,9 @@ class UpdateDevice : public DeviceImpl {
 		*
 		*  @remarks
 		*    This function should be used to get the current device states and update the device-object accordingly.
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual void Update();
 

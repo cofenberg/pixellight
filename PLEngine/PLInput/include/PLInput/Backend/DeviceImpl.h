@@ -95,7 +95,7 @@ class DeviceImpl {
 		*    Get device
 		*
 		*  @return
-		*    Device that owns this device implementation
+		*    Device that owns this device implementation, can be NULL
 		*/
 		PLINPUT_API Device *GetDevice() const;
 
@@ -109,7 +109,7 @@ class DeviceImpl {
 		*    Set device
 		*
 		*  @param[in] pDevice
-		*    Device that owns this device implementation
+		*    Device that owns this device implementation, can be NULL
 		*/
 		PLINPUT_API void SetDevice(Device *pDevice);
 
@@ -119,7 +119,7 @@ class DeviceImpl {
 	//[-------------------------------------------------------]
 	protected:
 		EDeviceBackend	 m_nBackendType;	/**< Device backend type */
-		Device			*m_pDevice;			/**< Device that owns to this device implementation */
+		Device			*m_pDevice;			/**< Device that owns to this device implementation, can be NULL */
 		bool			 m_bDelete;			/**< If 'true', the device implementation will be destroyed automatically with the Device, else it must be destroyed manually */
 
 

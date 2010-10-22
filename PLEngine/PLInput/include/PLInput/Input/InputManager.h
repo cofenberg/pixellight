@@ -130,7 +130,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get list of input providers
 		*
 		*  @return
-		*    Provider list
+		*    Provider list, do not destroy the returned instances!
 		*/
 		PLINPUT_API const PLGeneral::List<Provider*> &GetProviders() const;
 
@@ -139,7 +139,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get list of detected input providers
 		*
 		*  @return
-		*    Provider list
+		*    Provider list, do not destroy the returned instances!
 		*/
 		PLINPUT_API PLGeneral::List<Provider*> &GetProviders();
 
@@ -151,7 +151,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Name of provider
 		*
 		*  @return
-		*    Provider, or NULL if it doesn't exist
+		*    Provider, or NULL if it doesn't exist, do not destroy the returned instance!
 		*/
 		PLINPUT_API Provider *GetProvider(const PLGeneral::String &sProvider);
 
@@ -160,7 +160,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get list of devices
 		*
 		*  @return
-		*    Device list
+		*    Device list, do not destroy the returned instances!
 		*/
 		PLINPUT_API PLGeneral::List<Device*> &GetDevices();
 
@@ -172,7 +172,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Name of device
 		*
 		*  @return
-		*    Device, or NULL if it doesn't exist
+		*    Device, or NULL if it doesn't exist, do not destroy the returned instance!
 		*/
 		PLINPUT_API Device *GetDevice(const PLGeneral::String &sDevice) const;
 
@@ -181,7 +181,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get default keyboard device
 		*
 		*  @return
-		*    Default keyboard, can be NULL
+		*    Default keyboard, can be NULL, do not destroy the returned instance!
 		*/
 		PLINPUT_API Keyboard *GetKeyboard() const;
 
@@ -190,7 +190,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get default mouse device
 		*
 		*  @return
-		*    Default mouse, can be NULL
+		*    Default mouse, can be NULL, do not destroy the returned instance!
 		*/
 		PLINPUT_API Mouse *GetMouse() const;
 
@@ -247,7 +247,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Add a new input device
 		*
 		*  @param[in] pDevice
-		*    Input device
+		*    Input device, shouldn't be NULL (but NULL is catched internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -259,7 +259,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Remove device
 		*
 		*  @param[in] pDevice
-		*    Input device
+		*    Input device, shouldn't be NULL (but NULL is catched internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -271,7 +271,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Update control
 		*
 		*  @param[in] pControl
-		*    Input control
+		*    Input control, shouldn't be NULL (but NULL is catched internally)
 		*
 		*  @remarks
 		*    This marks the control as being updated recently, which will fire a message
@@ -289,7 +289,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		PLGeneral::HashMap<PLGeneral::String, Provider*> m_mapProviders;		/**< Hash map of providers */
 		PLGeneral::List<Device*>						 m_lstDevices;			/**< List of devices */
 		PLGeneral::HashMap<PLGeneral::String, Device*>	 m_mapDevices;			/**< Hash map of devices */
-		PLGeneral::Mutex								*m_pMutex;				/**< Mutex for reading/writing input messages */
+		PLGeneral::Mutex								*m_pMutex;				/**< Mutex for reading/writing input messages, always valid! */
 		PLGeneral::List<Control*>						 m_lstUpdatedControls;	/**< List of controls that have been updated (message list) */
 
 

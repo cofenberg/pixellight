@@ -233,7 +233,7 @@ class Controller : public PLCore::Object {
 		*    Get connections
 		*
 		*  @return
-		*    List of connections (both incoming and outgoing)
+		*    List of connections (both incoming and outgoing), do not destroy the returned connection instances!
 		*
 		*  @remarks
 		*    To determine whether a connection is incoming or outgoing, you can check e.g.
@@ -248,7 +248,7 @@ class Controller : public PLCore::Object {
 		*  @param[in] sControl
 		*    Name of control of this controller (output control)
 		*  @param[in] pControl
-		*    Pointer to control (input control)
+		*    Pointer to control (input control), shouldn't be NULL (but NULL is catched internally)
 		*  @param[in] fScale
 		*    Scale factor
 		*/
@@ -259,7 +259,7 @@ class Controller : public PLCore::Object {
 		*    Connect to another controller
 		*
 		*  @param[in] pController
-		*    Pointer to controller containing the input controls
+		*    Pointer to controller containing the input controls, must be valid!
 		*  @param[in] sPrefixOut
 		*    Prefix for controls of this controller
 		*  @param[in] sPrefixIn
@@ -278,7 +278,7 @@ class Controller : public PLCore::Object {
 		*    Disconnect connection
 		*
 		*  @param[in] pConnection
-		*    Connection (must be valid!)
+		*    Connection (must be valid!), on successful disconnect, the given "pConnection" instance becomes invalid
 		*/
 		PLINPUT_API void Disconnect(Connection *pConnection);
 
@@ -294,6 +294,9 @@ class Controller : public PLCore::Object {
 		*  @remarks
 		*    This function can be used e.g. to reset any data of a device once per frame. Usually this is
 		*    not needed, but some devices (e.g. RawInput mice etc.) need to reset their data once per frame.
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual void Update();
 
@@ -302,12 +305,15 @@ class Controller : public PLCore::Object {
 		*    Update output controls (LEDs, effects etc.)
 		*
 		*  @param[in] pControl
-		*    Output control that has been changed
+		*    Output control that has been changed, must be valid!
 		*
 		*  @remarks
 		*    This function is called whenever an output control such as LED or Effect has been changed.
 		*    A device should use this function to update the specific control state on the device (or update
 		*    all output controls at the same time)
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual void UpdateOutputControl(Control *pControl);
 

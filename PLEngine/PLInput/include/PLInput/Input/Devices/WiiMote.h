@@ -183,7 +183,7 @@ class WiiMote : public Device {
 		*  @param[in] sName
 		*    Device name
 		*  @param[in] pImpl
-		*    System specific device implementation
+		*    System specific device implementation, must be valid!
 		*/
 		PLINPUT_API WiiMote(const PLGeneral::String &sName, DeviceImpl *pImpl);
 
@@ -515,7 +515,7 @@ class WiiMote : public Device {
 		PLCore::EventHandler<> EventHandlerOnDeviceRead;
 
 		// HID connection
-		ConnectionDevice	*m_pConnectionDevice;		/**< Connection device */
+		ConnectionDevice	*m_pConnectionDevice;		/**< Connection device, always valid! */
 		PLGeneral::uint8	*m_pInputBuffer;			/**< Input buffer */
 		PLGeneral::uint8	*m_pOutputBuffer;			/**< Output buffer */
 

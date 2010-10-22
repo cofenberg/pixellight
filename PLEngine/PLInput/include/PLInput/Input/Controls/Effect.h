@@ -59,7 +59,7 @@ class Effect : public Control {
 		*    Effect
 		*
 		*  @param[in] pController
-		*    Owning controller
+		*    Owning controller, can, but shouldn't be NULL
 		*  @param[in] sName
 		*    Control name
 		*  @param[in] sDescription

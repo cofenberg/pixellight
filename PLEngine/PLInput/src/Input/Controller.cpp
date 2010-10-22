@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include "PLInput/Input/Controller.h"
 #include "PLInput/Input/Controls/Button.h"
-#include "PLInput/Input/Controls/Axis.h"
 #include "PLInput/Input/Connection/Connection.h"
 
 
@@ -193,7 +192,7 @@ const PLGeneral::List<Axis*> &Controller::GetAxes() const
 *  @brief
 *    Get control with a specific name
 */
-Control* Controller::GetControl(const String &sName) const
+Control *Controller::GetControl(const String &sName) const
 {
 	// Return control
 	return m_mapControls.Get(sName);
@@ -303,6 +302,7 @@ void Controller::Disconnect(Connection *pConnection)
 */
 void Controller::Update()
 {
+	// Do nothing by default
 }
 
 /**
@@ -311,6 +311,7 @@ void Controller::Update()
 */
 void Controller::UpdateOutputControl(Control *pControl)
 {
+	// Do nothing by default
 }
 
 

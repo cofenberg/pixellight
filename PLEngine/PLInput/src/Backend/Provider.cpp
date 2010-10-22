@@ -149,7 +149,7 @@ bool Provider::AddDevice(const String &sName, Device *pDevice)
 	if (!pDeviceFound) {
 		// Add device to manager
 		if (InputManager::GetInstance()->AddDevice(pDevice)) {
-			// Add device to own list
+			// Add device to own list - if we're in here, we now that the pDevice pointer is valid
 			m_lstDevices.Add(pDevice);
 			pDevice->m_bConfirmed = true;
 			return true;

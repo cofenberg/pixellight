@@ -85,7 +85,7 @@ class RawInputDevice : public UpdateDevice {
 		*  @brief
 		*    Destructor
 		*/
-		PLINPUT_API ~RawInputDevice();
+		PLINPUT_API virtual ~RawInputDevice();
 
 		/**
 		*  @brief

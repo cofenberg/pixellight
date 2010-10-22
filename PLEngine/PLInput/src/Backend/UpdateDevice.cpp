@@ -63,6 +63,7 @@ UpdateDevice::~UpdateDevice()
 */
 void UpdateDevice::Update()
 {
+	// To be implemented in derived classes
 }
 
 

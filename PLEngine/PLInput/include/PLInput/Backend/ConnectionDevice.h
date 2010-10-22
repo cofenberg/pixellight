@@ -52,6 +52,9 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Device connection class
+*
+*  @remarks
 *    A connection device is a device backend that uses e.g. a HID or bluetooth connection to communicate
 *    directly with the input device (no use of HID features, only read/write commands) and expose an
 *    interface that can be used by the device class to use that connection.
@@ -113,7 +116,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Get input report size
 		*
 		*  @return
-		*    Size of an input report (unique to each HID device)
+		*    Size of an input report in bytes (unique to each HID device)
 		*/
 		PLINPUT_API PLGeneral::uint32 GetInputReportSize() const;
 
@@ -122,7 +125,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Set input report size
 		*
 		*  @param[in] nSize
-		*    Size of an input report (unique to each HID device)
+		*    Size of an input report in bytes (unique to each HID device)
 		*/
 		PLINPUT_API void SetInputReportSize(PLGeneral::uint32 nSize);
 
@@ -131,7 +134,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Get output report size
 		*
 		*  @return
-		*    Size of an output report
+		*    Size of an output report in bytes
 		*/
 		PLINPUT_API PLGeneral::uint32 GetOutputReportSize() const;
 
@@ -140,7 +143,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Set output report size
 		*
 		*  @param[in] nSize
-		*    Size of an output report (unique to each HID device)
+		*    Size of an output report in bytes (unique to each HID device)
 		*/
 		PLINPUT_API void SetOutputReportSize(PLGeneral::uint32 nSize);
 
@@ -149,7 +152,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Get input buffer
 		*
 		*  @return
-		*    Input buffer (can be NULL if the device is not open)
+		*    Input buffer (can be NULL if the device is not open), do not destroy the returned buffer!
 		*/
 		PLINPUT_API PLGeneral::uint8 *GetInputBuffer() const;
 
@@ -158,7 +161,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Get output buffer
 		*
 		*  @return
-		*    Output buffer (can be NULL if the device is not open)
+		*    Output buffer (can be NULL if the device is not open), do not destroy the returned buffer!
 		*/
 		PLINPUT_API PLGeneral::uint8 *GetOutputBuffer() const;
 
@@ -181,6 +184,9 @@ class ConnectionDevice : public DeviceImpl {
 		*
 		*  @remarks
 		*    If you are using a HIDDevice, the output and input ports will be ignored.
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual bool Open(PLGeneral::uint16 nOutputPort = 0, PLGeneral::uint16 nInputPort = 0);
 
@@ -190,6 +196,9 @@ class ConnectionDevice : public DeviceImpl {
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual bool Close();
 
@@ -199,6 +208,9 @@ class ConnectionDevice : public DeviceImpl {
 		*
 		*  @return
 		*    'true' if device is open, else 'false'
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual bool IsOpen() const = 0;
 
@@ -206,13 +218,16 @@ class ConnectionDevice : public DeviceImpl {
 		*  @brief
 		*    Read from device
 		*
-		*  @param[in] pBuffer
-		*    Buffer that will receive the data
-		*  @param[in] nSize
-		*    Buffer size
+		*  @param[out] pBuffer
+		*    Buffer that will receive the data, must be valid and at least "nSize"-bytes long!
+		*  @param[in]  nSize
+		*    Buffer size in bytes
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual bool Read(PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
 
@@ -221,12 +236,15 @@ class ConnectionDevice : public DeviceImpl {
 		*    Write to device
 		*
 		*  @param[in] pBuffer
-		*    Buffer containing the data
+		*    Buffer containing the data, must be valid and at least "nSize"-bytes long!
 		*  @param[in] nSize
-		*    Buffer size
+		*    Buffer size in bytes
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLINPUT_API virtual bool Write(const PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
 
@@ -277,6 +295,9 @@ class ConnectionDevice : public DeviceImpl {
 		/**
 		*  @brief
 		*    Device update thread function
+		*
+		*  @param[in] pData
+		*    Pointer to this ConnectionDevice instance, always valid!
 		*/
 		static int ReadThread(void *pData);
 
@@ -289,14 +310,14 @@ class ConnectionDevice : public DeviceImpl {
 		EDeviceType			 m_nDeviceType;			/**< Device type */
 
 		// Input and output buffers
-		PLGeneral::uint8	*m_pInputBuffer;		/**< Input report buffer */
-		PLGeneral::uint8	*m_pOutputBuffer;		/**< Output report buffer */
-		PLGeneral::uint16	 m_nInputReportSize;	/**< Size of input report */
-		PLGeneral::uint16	 m_nOutputReportSize;	/**< Size of output report */
+		PLGeneral::uint8	*m_pInputBuffer;		/**< Input report buffer, can be NULL */
+		PLGeneral::uint8	*m_pOutputBuffer;		/**< Output report buffer, can be NULL */
+		PLGeneral::uint16	 m_nInputReportSize;	/**< Size of input report in bytes */
+		PLGeneral::uint16	 m_nOutputReportSize;	/**< Size of output report in bytes */
 
 		// Read thread
-		PLGeneral::Thread	*m_pThread;				/**< Update thread */
-		PLGeneral::Mutex	*m_pMutex;				/**< Update mutex */
+		PLGeneral::Thread	*m_pThread;				/**< Update thread, can be NULL */
+		PLGeneral::Mutex	*m_pMutex;				/**< Update mutex, can be NULL */
 		bool				 m_bThreadExit;			/**< Flag to exit the thread */
 
 

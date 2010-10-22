@@ -82,7 +82,7 @@ class Device : public Controller {
 		*  @param[in] sDescription
 		*    Controller description
 		*  @param[in] pImpl
-		*    System specific device implementation
+		*    System specific device implementation, can, but shouldn't be NULL
 		*/
 		PLINPUT_API Device(const PLGeneral::String &sName, const PLGeneral::String &sDescription, DeviceImpl *pImpl);
 
@@ -97,23 +97,16 @@ class Device : public Controller {
 		*    Get device implementation
 		*
 		*  @return
-		*    System specific device implementation
+		*    System specific device implementation, can be NULL
 		*/
 		PLINPUT_API DeviceImpl *GetImpl() const;
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Controller functions                   ]
-	//[-------------------------------------------------------]
-	public:
-		PLINPUT_API virtual void Update();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		DeviceImpl *m_pImpl;		/**< System specific device implementation */
+		DeviceImpl *m_pImpl;		/**< System specific device implementation, can be NULL */
 		bool		m_bDeleteImpl;	/**< Destroy device implementation automatically? */
 
 

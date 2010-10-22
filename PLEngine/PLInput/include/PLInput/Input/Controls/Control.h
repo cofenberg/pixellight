@@ -66,7 +66,7 @@ class Control {
 		*    Constructor
 		*
 		*  @param[in] pController
-		*    Owning controller
+		*    Owning controller, can, but shouldn't be NULL
 		*  @param[in] nType
 		*    Control type
 		*  @param[in] sName
@@ -87,7 +87,7 @@ class Control {
 		*    Get controller
 		*
 		*  @return
-		*    Pointer to controller that owns the control
+		*    Pointer to controller that owns the control, can be NULL
 		*/
 		PLINPUT_API Controller *GetController() const;
 
@@ -144,7 +144,7 @@ class Control {
 	//[-------------------------------------------------------]
 	protected:
 		// Control data
-		Controller			*m_pController;		/**< Owning controller */
+		Controller			*m_pController;		/**< Owning controller, can be NULL */
 		EControlType		 m_nType;			/**< Control type */
 		PLGeneral::String	 m_sName;			/**< Control name */
 		PLGeneral::String	 m_sDescription;	/**< Control description */

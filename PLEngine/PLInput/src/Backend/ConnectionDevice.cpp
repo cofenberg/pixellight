@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Thread.h>
 #include <PLGeneral/System/Mutex.h>
 #include "PLInput/Backend/ConnectionDevice.h"

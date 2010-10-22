@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
 #include "PLInput/Input/Devices/Device.h"
 #include "PLInput/Backend/DeviceImpl.h"
 

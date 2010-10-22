@@ -194,7 +194,7 @@ WiiMote::WiiMote(const String &sName, DeviceImpl *pImpl) : Device(sName, "WiiMot
 	}
 
 	// Connect to HIDDevice events
-	m_pConnectionDevice->EventOnConnect.Connect	(&EventHandlerOnDeviceConnect);
+	m_pConnectionDevice->EventOnConnect.Connect		(&EventHandlerOnDeviceConnect);
 	m_pConnectionDevice->EventOnDisconnect.Connect	(&EventHandlerOnDeviceDisconnect);
 	m_pConnectionDevice->EventOnRead.Connect		(&EventHandlerOnDeviceRead);
 
@@ -355,7 +355,7 @@ void WiiMote::UpdateOutputControl(Control *pControl)
 	}
 
 	// Update rumble
-	if (pControl == &Rumble1) {
+	else if (pControl == &Rumble1) {
 		// Switch rumble on or off?
 		if (Rumble1.GetValue() > 0) {
 			// Enable rumble

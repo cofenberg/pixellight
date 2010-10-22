@@ -92,7 +92,7 @@ class Mouse : public Device {
 		*  @param[in] sName
 		*    Device name
 		*  @param[in] pImpl
-		*    System specific device implementation
+		*    System specific device implementation, can, but shouldn't be NULL
 		*/
 		PLINPUT_API Mouse(const PLGeneral::String &sName, DeviceImpl *pImpl);
 

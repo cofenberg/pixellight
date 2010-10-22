@@ -132,7 +132,7 @@ class Joystick : public Device {
 		*  @param[in] sName
 		*    Device name
 		*  @param[in] pImpl
-		*    System specific device implementation
+		*    System specific device implementation, can, but shouldn't be NULL
 		*/
 		PLINPUT_API Joystick(const PLGeneral::String &sName, DeviceImpl *pImpl);
 
@@ -194,7 +194,7 @@ class Joystick : public Device {
 		PLCore::EventHandler<> EventHandlerOnDeviceRead;
 
 		// HID connection
-		HIDDevice *m_pHIDDevice;	/**< HID device */
+		HIDDevice *m_pHIDDevice;	/**< HID device, can be NULL */
 
 		// Configuration
 		int	m_nThreshold;			/**< Movement threshold */

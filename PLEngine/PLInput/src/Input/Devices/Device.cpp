@@ -31,7 +31,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
 namespace PLInput {
 
 
@@ -78,14 +77,6 @@ DeviceImpl *Device::GetImpl() const
 {
 	// Return device implementation
 	return m_pImpl;
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual Controller functions                   ]
-//[-------------------------------------------------------]
-void Device::Update()
-{
 }
 
 

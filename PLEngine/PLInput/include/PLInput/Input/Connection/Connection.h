@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
 #include "PLInput/PLInput.h"
 
 
@@ -63,9 +62,9 @@ class Connection {
 		*    Constructor
 		*
 		*  @param[in] pInput
-		*    Input control
+		*    Input control, can be NULL
 		*  @param[in] pOutput
-		*    Output control
+		*    Output control, can be NULL
 		*  @param[in] fScale
 		*    Scale factor
 		*/
@@ -82,7 +81,7 @@ class Connection {
 		*    Get input control
 		*
 		*  @return
-		*    Pointer to control that is on the input side of the connection
+		*    Pointer to control that is on the input side of the connection, can be NULL
 		*/
 		PLINPUT_API Control *GetInputControl() const;
 
@@ -91,7 +90,7 @@ class Connection {
 		*    Get output control
 		*
 		*  @return
-		*    Pointer to control that is on the output side of the connection
+		*    Pointer to control that is on the output side of the connection, can be NULL
 		*/
 		PLINPUT_API Control *GetOutputControl() const;
 
@@ -129,8 +128,8 @@ class Connection {
 	//[-------------------------------------------------------]
 	protected:
 		// Control data
-		Control	*m_pInput;		/**< Input control */
-		Control	*m_pOutput;		/**< Output control */
+		Control	*m_pInput;		/**< Input control, can be NULL */
+		Control	*m_pOutput;		/**< Output control, can be NULL */
 		bool	 m_bValid;		/**< 'true' if connection is valid, else 'false' */
 		float	 m_fScale;		/**< Scale factor */
 
