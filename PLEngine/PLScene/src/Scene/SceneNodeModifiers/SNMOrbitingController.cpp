@@ -123,11 +123,11 @@ void SNMOrbitingController::NotifyUpdate()
 			float fZ = m_pController->RotZ.GetValue();
 			if (fX || fY || fZ) {
 				// Do we need to take the current time difference into account?
-				if (m_pController->RotX.IsValueAbsolute())
+				if (!m_pController->RotX.IsValueRelative())
 					fX *= fCurrentSpeed;
-				if (m_pController->RotY.IsValueAbsolute())
+				if (!m_pController->RotY.IsValueRelative())
 					fY *= fCurrentSpeed;
-				if (m_pController->RotZ.IsValueAbsolute())
+				if (!m_pController->RotZ.IsValueRelative())
 					fZ *= fCurrentSpeed;
 
 				// Get a quaternion representation of the rotation delta
@@ -149,11 +149,11 @@ void SNMOrbitingController::NotifyUpdate()
 			float fZ = m_pController->TransZ.GetValue();
 			if (fX || fY || fZ) {
 				// Do we need to take the current time difference into account?
-				if (m_pController->TransX.IsValueAbsolute())
+				if (!m_pController->TransX.IsValueRelative())
 					fX *= fCurrentSpeed;
-				if (m_pController->TransX.IsValueAbsolute())
+				if (!m_pController->TransX.IsValueRelative())
 					fY *= fCurrentSpeed;
-				if (m_pController->TransX.IsValueAbsolute())
+				if (!m_pController->TransX.IsValueRelative())
 					fZ *= fCurrentSpeed;
 
 				// Set pan
@@ -170,7 +170,7 @@ void SNMOrbitingController::NotifyUpdate()
 			float fZoomAxis = m_pController->ZoomAxis.GetValue();
 			if (fZoomAxis) {
 				// Do we need to take the current time difference into account?
-				if (m_pController->ZoomAxis.IsValueAbsolute())
+				if (!m_pController->ZoomAxis.IsValueRelative())
 					fZoomAxis *= fCurrentSpeed;
 
 				// Set new distance

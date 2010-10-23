@@ -83,9 +83,9 @@ void LinuxMouseDevice::Update()
 		m_nMouseX = nRootX;
 		m_nMouseY = nRootY;
 		if (pMouse->X.GetValue() != nDeltaX)
-			pMouse->X.SetValue(nDeltaX, false);
+			pMouse->X.SetValue(nDeltaX, true);
 		if (pMouse->Y.GetValue() != nDeltaY)
-			pMouse->Y.SetValue(nDeltaY, false);
+			pMouse->Y.SetValue(nDeltaY, true);
 
 		// Update buttons
 		bool bPressed = ((nMask & Button1Mask) != 0);

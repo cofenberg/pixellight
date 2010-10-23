@@ -115,9 +115,9 @@ void SpaceMouse::OnDeviceRead()
 				float fTransX = (float)(int16)((pInputBuffer[1] & 0x000000ff) | ((int)pInputBuffer[2]<<8 & 0xffffff00));
 				float fTransY = (float)(int16)((pInputBuffer[3] & 0x000000ff) | ((int)pInputBuffer[4]<<8 & 0xffffff00));
 				float fTransZ = (float)(int16)((pInputBuffer[5] & 0x000000ff) | ((int)pInputBuffer[6]<<8 & 0xffffff00));
-				if (TransX.GetValue() != fTransX) TransX.SetValue(fTransX, true);
-				if (TransY.GetValue() != fTransY) TransY.SetValue(fTransY, true);
-				if (TransZ.GetValue() != fTransZ) TransZ.SetValue(fTransZ, true);
+				if (TransX.GetValue() != fTransX) TransX.SetValue(fTransX, false);
+				if (TransY.GetValue() != fTransY) TransY.SetValue(fTransY, false);
+				if (TransZ.GetValue() != fTransZ) TransZ.SetValue(fTransZ, false);
 				break;
 			}
 
@@ -127,9 +127,9 @@ void SpaceMouse::OnDeviceRead()
 				float fRotX = (float)(int16)((pInputBuffer[1] & 0x000000ff) | ((int)pInputBuffer[2]<<8 & 0xffffff00));
 				float fRotY = (float)(int16)((pInputBuffer[3] & 0x000000ff) | ((int)pInputBuffer[4]<<8 & 0xffffff00));
 				float fRotZ = (float)(int16)((pInputBuffer[5] & 0x000000ff) | ((int)pInputBuffer[6]<<8 & 0xffffff00));
-				if (RotX.GetValue() != fRotX) RotX.SetValue(fRotX, true);
-				if (RotY.GetValue() != fRotY) RotY.SetValue(fRotY, true);
-				if (RotZ.GetValue() != fRotZ) RotZ.SetValue(fRotZ, true);
+				if (RotX.GetValue() != fRotX) RotX.SetValue(fRotX, false);
+				if (RotY.GetValue() != fRotY) RotY.SetValue(fRotY, false);
+				if (RotZ.GetValue() != fRotZ) RotZ.SetValue(fRotZ, false);
 				break;
 			}
 

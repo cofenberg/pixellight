@@ -157,7 +157,7 @@ void SNGun::UpdateFunction()
 	float fDelta = m_pController->X.GetValue();
 
 	// Do we need to take the current time difference into account?
-	if (m_pController->X.IsValueAbsolute())
+	if (!m_pController->X.IsValueRelative())
 		fDelta *= fTimeDiff;
 
 	// Left button pressed?

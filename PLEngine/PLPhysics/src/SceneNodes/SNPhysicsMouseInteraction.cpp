@@ -321,7 +321,7 @@ void SNPhysicsMouseInteraction::UpdateFunction()
 							const float fWheelDelta = m_pController->PushPull.GetValue();
 							if (fWheelDelta) {
 								// Do we need to take the current time difference into account?
-								m_fPickedDistance += m_pController->PushPull.IsValueAbsolute() ? fWheelDelta*Timing::GetInstance()->GetTimeDifference() : fWheelDelta;
+								m_fPickedDistance += m_pController->PushPull.IsValueRelative() ? fWheelDelta : fWheelDelta*Timing::GetInstance()->GetTimeDifference();
 
 								// Check distance
 								const float fLength = (vNormal*m_fPickedDistance).GetLength();

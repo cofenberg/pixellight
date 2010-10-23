@@ -137,21 +137,21 @@ void SNMMoveController::NotifyUpdate()
 			vMovement += vDirVector*fCurrentSpeed;
 		if (m_pController->Backward.IsPressed())
 			vMovement -= vDirVector*fCurrentSpeed;
-		vMovement += vDirVector*(m_pController->TransZ.IsValueAbsolute() ? m_pController->TransZ.GetValue()*fCurrentSpeed : m_pController->TransZ.GetValue());
+		vMovement += vDirVector*(m_pController->TransZ.IsValueRelative() ? m_pController->TransZ.GetValue() : m_pController->TransZ.GetValue()*fCurrentSpeed);
 
 		// Left/right
 		if (m_pController->StrafeLeft.IsPressed())
 			vMovement += vDirLeftVector*fCurrentSpeed;
 		if (m_pController->StrafeRight.IsPressed())
 			vMovement -= vDirLeftVector*fCurrentSpeed;
-		vMovement += vDirLeftVector*(m_pController->TransX.IsValueAbsolute() ? m_pController->TransX.GetValue()*fCurrentSpeed : m_pController->TransX.GetValue());
+		vMovement += vDirLeftVector*(m_pController->TransX.IsValueRelative() ? m_pController->TransX.GetValue() : m_pController->TransX.GetValue()*fCurrentSpeed);
 
 		// Upward/downward
 		if (m_pController->Up.IsPressed())
 			vMovement += vDirUpVector*fCurrentSpeed;
 		if (m_pController->Down.IsPressed())
 			vMovement -= vDirUpVector*fCurrentSpeed;
-		vMovement += vDirUpVector*(m_pController->TransY.IsValueAbsolute() ? m_pController->TransY.GetValue()*fCurrentSpeed : m_pController->TransY.GetValue());
+		vMovement += vDirUpVector*(m_pController->TransY.IsValueRelative() ? m_pController->TransY.GetValue() : m_pController->TransY.GetValue()*fCurrentSpeed);
 
 		// 'Move' to the new position
 		if (!vMovement.IsNull())

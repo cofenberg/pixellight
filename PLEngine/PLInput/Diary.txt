@@ -1,3 +1,9 @@
+>> 23.10.2010
+[CO]
+- Auf Stefans Wunsch hin "Axis::IsValueAbsolute()" in "Axis::IsValueRelease()" umbenannt
+
+
+
 >> 22.10.2010
 [CO]
 - Über "Axis::IsValueAbsolute()" lässt sich ermitteln, ob der aktuelle Wert ("GetValue()") absolut oder relativ ist. Ich habe mich dabei

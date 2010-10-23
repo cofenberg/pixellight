@@ -42,7 +42,7 @@ namespace PLInput {
 */
 Axis::Axis(Controller *pController, const String &sName, const String &sDescription) : Control(pController, ControlAxis, sName, sDescription),
 	m_fValue(0.0f),
-	m_bValueAbsolute(false)
+	m_bValueRelative(false)
 {
 }
 
@@ -52,7 +52,7 @@ Axis::Axis(Controller *pController, const String &sName, const String &sDescript
 */
 Axis::Axis(const Axis &cOther) : Control(cOther.GetController(), ControlAxis, cOther.GetName(), cOther.GetDescription()),
 	m_fValue(cOther.m_fValue),
-	m_bValueAbsolute(cOther.m_bValueAbsolute)
+	m_bValueRelative(cOther.m_bValueRelative)
 {
 }
 
@@ -71,7 +71,7 @@ Axis::~Axis()
 bool Axis::operator ==(const Axis &cOther) const
 {
 	// Compare values
-	return (m_fValue == cOther.m_fValue && m_bValueAbsolute == cOther.m_bValueAbsolute);
+	return (m_fValue == cOther.m_fValue && m_bValueRelative == cOther.m_bValueRelative);
 }
 
 /**
@@ -82,7 +82,7 @@ Axis &Axis::operator =(const Axis &cOther)
 {
 	// Copy value
 	m_fValue		 = cOther.m_fValue;
-	m_bValueAbsolute = cOther.m_bValueAbsolute;
+	m_bValueRelative = cOther.m_bValueRelative;
 
 	// Control has changed
 	InformUpdate();
@@ -105,11 +105,11 @@ float Axis::GetValue() const
 *  @brief
 *    Set axis value
 */
-void Axis::SetValue(float fValue, bool bValueAbsolute)
+void Axis::SetValue(float fValue, bool bValueRelative)
 {
 	// Set value
 	m_fValue		 = fValue;
-	m_bValueAbsolute = bValueAbsolute;
+	m_bValueRelative = bValueRelative;
 
 	// Control has changed
 	InformUpdate();
@@ -117,11 +117,11 @@ void Axis::SetValue(float fValue, bool bValueAbsolute)
 
 /**
 *  @brief
-*    Return whether the current value is absolute or relative
+*    Return whether the current value is relative or absolute
 */
-bool Axis::IsValueAbsolute() const
+bool Axis::IsValueRelative() const
 {
-	return m_bValueAbsolute;
+	return m_bValueRelative;
 }
 
 

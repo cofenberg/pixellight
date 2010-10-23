@@ -273,11 +273,11 @@ void RawInputDevice::Update()
 
 		// Reset mouse movement
 		if (pMouse->X.GetValue() != 0.0f)
-			pMouse->X.SetValue(0.0f, false);
+			pMouse->X.SetValue(0.0f, true);
 		if (pMouse->Y.GetValue() != 0.0f)
-			pMouse->Y.SetValue(0, false);
+			pMouse->Y.SetValue(0, true);
 		if (pMouse->Wheel.GetValue() != 0.0f)
-			pMouse->Wheel.SetValue(0, false);
+			pMouse->Wheel.SetValue(0, true);
 	}
 }
 
@@ -334,9 +334,9 @@ void RawInputDevice::ProcessMouseData(unsigned short nFlags, unsigned long nButt
 
 		// Set axis values
 		if (pMouse->X.GetValue() != fX)
-			pMouse->X.SetValue(fX, false);
+			pMouse->X.SetValue(fX, true);
 		if (pMouse->Y.GetValue() != fY)
-			pMouse->Y.SetValue(fY, false);
+			pMouse->Y.SetValue(fY, true);
 
 		// Update buttons
 		if (nButtonFlags) {
@@ -374,7 +374,7 @@ void RawInputDevice::ProcessMouseData(unsigned short nFlags, unsigned long nButt
 				// Well ... nButtonData is unsigned, but the wheel delta can be negative. So let's cast USHORT to SHORT.
 				float fValue = (float) *((short*)&nButtonData);
 				if (pMouse->Wheel.GetValue() != fValue)
-					pMouse->Wheel.SetValue(fValue, false);
+					pMouse->Wheel.SetValue(fValue, true);
 			}
 		}
 	}

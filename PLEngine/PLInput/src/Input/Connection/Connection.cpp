@@ -120,9 +120,9 @@ void Connection::PassValue()
 			{
 				Axis *pInputAxis = (Axis*)m_pInput;
 				if (m_fScale != 1.0f)
-					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue() * m_fScale, pInputAxis->IsValueAbsolute());
+					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue() * m_fScale, pInputAxis->IsValueRelative());
 				else
-					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue(), pInputAxis->IsValueAbsolute());
+					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue(), pInputAxis->IsValueRelative());
 				break;
 			}
 		}

@@ -114,7 +114,7 @@ class Axis : public Control {
 		*    Please note that a value can be absolute (for instance the x-axis of a joystick) or
 		*    relative (for instance the x-axis of a mouse). While an absolute axis is usually timing
 		*    independent, a relative axis just tells you about a state change since the last update.
-		*    Therfore, we strongly recommend to always use "IsValueAbsolute()" to check for the value
+		*    Therfore, we strongly recommend to always use "IsValueRelative()" to check for the value
 		*    type in order to, for instance, multiply a absolute value with the current time difference
 		*    since the last frame/update to get correctly timed movement.
 		*/
@@ -126,19 +126,19 @@ class Axis : public Control {
 		*
 		*  @param[in] fValue
 		*    Current value
-		*  @param[in] bValueAbsolute
-		*    'true' if the current value is absolute, else 'false' if it's a relative value
+		*  @param[in] bValueRelative
+		*    'true' if the current value is relative, else 'false' if it's a absolute value
 		*/
-		PLINPUT_API void SetValue(float fValue, bool bValueAbsolute);
+		PLINPUT_API void SetValue(float fValue, bool bValueRelative);
 
 		/**
 		*  @brief
-		*    Return whether the current value is absolute or relative
+		*    Return whether the current value is relative or absolute
 		*
 		*  @return
-		*    'true' if the current value is absolute, else 'false' if it's a relative value
+		*    'true' if the current value is relative, else 'false' if it's a absolute value
 		*/
-		PLINPUT_API bool IsValueAbsolute() const;
+		PLINPUT_API bool IsValueRelative() const;
 
 
 	//[-------------------------------------------------------]
@@ -146,7 +146,7 @@ class Axis : public Control {
 	//[-------------------------------------------------------]
 	private:
 		float m_fValue;			/**< Value of the axis */
-		bool  m_bValueAbsolute;	/**< Is the current value an absolute one? */
+		bool  m_bValueRelative;	/**< Is the current value a relative one? */
 
 
 };

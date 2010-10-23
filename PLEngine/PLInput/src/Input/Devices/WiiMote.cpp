@@ -717,38 +717,38 @@ void WiiMote::OnReadAccel()
 
 		// AccX
 		if (ValueChanged(AccX.GetValue(), m_sAcc.fAccX))
-			AccX.SetValue(m_sAcc.fAccX, true);
+			AccX.SetValue(m_sAcc.fAccX, false);
 
 		// AccY
 		if (ValueChanged(AccY.GetValue(), m_sAcc.fAccY))
-			AccY.SetValue(m_sAcc.fAccY, true);
+			AccY.SetValue(m_sAcc.fAccY, false);
 
 		// AccZ
 		if (ValueChanged(AccZ.GetValue(), m_sAcc.fAccZ))
-			AccZ.SetValue(m_sAcc.fAccZ, true);
+			AccZ.SetValue(m_sAcc.fAccZ, false);
 
 	// Compute orientation
 	m_sAcc.CalculateOrientation();
 
 		// OrientX
 		if (ValueChanged(OrientX.GetValue(), m_sAcc.fOrientX))
-			OrientX.SetValue(m_sAcc.fOrientX, true);
+			OrientX.SetValue(m_sAcc.fOrientX, false);
 
 		// OrientY
 		if (ValueChanged(OrientY.GetValue(), m_sAcc.fOrientY))
-			OrientY.SetValue(m_sAcc.fOrientY, true);
+			OrientY.SetValue(m_sAcc.fOrientY, false);
 
 		// OrientZ
 		if (ValueChanged(OrientZ.GetValue(), m_sAcc.fOrientZ))
-			OrientZ.SetValue(m_sAcc.fOrientZ, true);
+			OrientZ.SetValue(m_sAcc.fOrientZ, false);
 
 		// Roll
 		if (ValueChanged(Roll.GetValue(), m_sAcc.fRoll))
-			Roll.SetValue(m_sAcc.fRoll, true);
+			Roll.SetValue(m_sAcc.fRoll, false);
 
 		// Pitch
 		if (ValueChanged(Pitch.GetValue(), m_sAcc.fPitch))
-			Pitch.SetValue(m_sAcc.fPitch, true);
+			Pitch.SetValue(m_sAcc.fPitch, false);
 }
 
 /**
@@ -813,11 +813,11 @@ void WiiMote::OnReadIR()
 
 		// PointerX
 		if (ValueChanged(PointerX.GetValue(), m_vIRPos.x))
-			PointerX.SetValue(m_vIRPos.x, true);
+			PointerX.SetValue(m_vIRPos.x, false);
 
 		// PointerY
 		if (ValueChanged(PointerY.GetValue(), m_vIRPos.y))
-			PointerY.SetValue(m_vIRPos.y, true);
+			PointerY.SetValue(m_vIRPos.y, false);
 }
 
 /**
@@ -877,38 +877,38 @@ void WiiMote::OnReadNunchuk(uint32 nOffset)
 
 		// AccX
 		if (ValueChanged(NunchukAccX.GetValue(), m_sNunchukAcc.fAccX))
-			NunchukAccX.SetValue(m_sNunchukAcc.fAccX, true);
+			NunchukAccX.SetValue(m_sNunchukAcc.fAccX, false);
 
 		// AccY
 		if (ValueChanged(NunchukAccY.GetValue(), m_sNunchukAcc.fAccY))
-			NunchukAccY.SetValue(m_sNunchukAcc.fAccY, true);
+			NunchukAccY.SetValue(m_sNunchukAcc.fAccY, false);
 
 		// AccZ
 		if (ValueChanged(NunchukAccZ.GetValue(), m_sNunchukAcc.fAccZ))
-			NunchukAccZ.SetValue(m_sNunchukAcc.fAccZ, true);
+			NunchukAccZ.SetValue(m_sNunchukAcc.fAccZ, false);
 
 	// Compute orientation
 	m_sNunchukAcc.CalculateOrientation();
 
 		// OrientX
 		if (ValueChanged(NunchukOrientX.GetValue(), m_sNunchukAcc.fOrientX))
-			NunchukOrientX.SetValue(m_sNunchukAcc.fOrientX, true);
+			NunchukOrientX.SetValue(m_sNunchukAcc.fOrientX, false);
 
 		// OrientY
 		if (ValueChanged(NunchukOrientY.GetValue(), m_sNunchukAcc.fOrientY))
-			NunchukOrientY.SetValue(m_sNunchukAcc.fOrientY, true);
+			NunchukOrientY.SetValue(m_sNunchukAcc.fOrientY, false);
 
 		// OrientZ
 		if (ValueChanged(NunchukOrientZ.GetValue(), m_sNunchukAcc.fOrientZ))
-			NunchukOrientZ.SetValue(m_sNunchukAcc.fOrientZ, true);
+			NunchukOrientZ.SetValue(m_sNunchukAcc.fOrientZ, false);
 
 		// Roll
 		if (ValueChanged(NunchukRoll.GetValue(), m_sNunchukAcc.fRoll))
-			NunchukRoll.SetValue(m_sNunchukAcc.fRoll, true);
+			NunchukRoll.SetValue(m_sNunchukAcc.fRoll, false);
 
 		// Pitch
 		if (ValueChanged(NunchukPitch.GetValue(), m_sNunchukAcc.fPitch))
-			NunchukPitch.SetValue(m_sNunchukAcc.fPitch, true);
+			NunchukPitch.SetValue(m_sNunchukAcc.fPitch, false);
 
 	// Get raw joystick position
 	uint8 nJoyRawX = m_pInputBuffer[nOffset+0];
@@ -927,11 +927,11 @@ void WiiMote::OnReadNunchuk(uint32 nOffset)
 
 		// NunchukX
 		if (ValueChanged(NunchukX.GetValue(), m_sNunchukJoy.fX))
-			NunchukX.SetValue(m_sNunchukJoy.fX, true);
+			NunchukX.SetValue(m_sNunchukJoy.fX, false);
 
 		// NunchukY
 		if (ValueChanged(NunchukY.GetValue(), m_sNunchukJoy.fY))
-			NunchukY.SetValue(m_sNunchukJoy.fY, true);
+			NunchukY.SetValue(m_sNunchukJoy.fY, false);
 }
 
 /**

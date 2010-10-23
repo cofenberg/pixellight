@@ -122,11 +122,11 @@ void SNMLookController::NotifyUpdate()
 			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
 			// Do we need to take the current time difference into account?
-			if (m_pController->RotX.IsValueAbsolute())
+			if (!m_pController->RotX.IsValueRelative())
 				fX *= fTimeDiff;
-			if (m_pController->RotY.IsValueAbsolute())
+			if (!m_pController->RotY.IsValueRelative())
 				fY *= fTimeDiff;
-			if (m_pController->RotZ.IsValueAbsolute())
+			if (!m_pController->RotZ.IsValueRelative())
 				fZ *= fTimeDiff;
 
 			// Get a quaternion representation of the rotation delta
