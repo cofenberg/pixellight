@@ -77,9 +77,6 @@ SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cScen
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|UseRotationKey);
-
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**
@@ -103,6 +100,19 @@ Controller *SNMLookController::GetInputController() const
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMLookController::InformedOnInit()
+{
+	// Call base implementation
+	SNMTransform::InformedOnInit();
+
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -111,8 +121,15 @@ Controller *SNMLookController::GetInputController() const
 */
 void SNMLookController::NotifyUpdate()
 {
+	// [HACK][TODO] Currently it's not possible to define/script a control logic within the control connection to, for instance
+	// "pass through" a rotation value from a space mouse, but "passing" movements from the mouse only if, for example, the left
+	// mouse button is currently pressed (so we don't look around the every time when moving the mouse to, for instance, move
+	// the mouse cursor to an ingame GUI widget). Because it's REALLY comfortable to use the space mouse, I added this hack so
+	// the space mouse (provides us with absolute values!) can be used as expected during the last steps of the input system refactoring.
+	const bool bSpaceMouseRotationHack = ((GetFlags() & UseRotationKey) && (!m_pController->RotX.IsValueRelative() || !m_pController->RotY.IsValueRelative()));
+
 	// Check if input is active and whether or not the rotation key required and pressed
-	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed())) {
+	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed() || bSpaceMouseRotationHack)) {
 		// Get rotation
 		float fX = m_pController->RotX.GetValue();
 		float fY = m_pController->RotY.GetValue();

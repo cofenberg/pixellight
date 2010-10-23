@@ -62,7 +62,7 @@ class SNMCameraZoomController : public SNMCameraZoom {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMCameraZoomController, "PLScene", PLScene::SNMCameraZoom, "Scene node modifier class implementing camera zoom input control")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
-		pl_attribute(InputSemantic,	PLGeneral::String,	"PixelLightCameraZoom",	ReadWrite,	DirectValue,	"Purpose of this input controller",	"")
+		pl_attribute(InputSemantic,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 	pl_class_end
 
 
@@ -98,6 +98,13 @@ class SNMCameraZoomController : public SNMCameraZoom {
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual PLInput::Controller *GetInputController() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void InformedOnInit();
 
 
 	//[-------------------------------------------------------]

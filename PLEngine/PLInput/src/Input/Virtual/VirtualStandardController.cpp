@@ -166,9 +166,14 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	TransX				(this, "TransX",		"X translation axis: Strafe left/right (+/-)"),
 	TransY				(this, "TransY",		"Y translation axis: Move up/down (+/-)"),
 	TransZ				(this, "TransZ",		"Z translation axis: Move forwards/backwards (+/-)"),
+	Pan					(this, "Pan",			"Keep pressed to pan",												0x00),
+	PanX				(this, "PanX",			"X pan translation axis: Strafe left/right (+/-)"),
+	PanY				(this, "PanY",			"Y pan translation axis: Move up/down (+/-)"),
+	PanZ				(this, "PanZ",			"Z pan translation axis: Move forwards/backwards (+/-)"),
 	RotX				(this, "RotX",			"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
 	RotY				(this, "RotY",			"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
 	RotZ				(this, "RotZ",			"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
+	Rotate				(this, "Rotate",		"Keep pressed to rotate",											0x00),
 	Forward				(this, "Forward",		"Move forwards",													0x00),
 	Backward			(this, "Backward",		"Move backwards",													0x00),
 	Left				(this, "Left",			"Move (rotate) left",												0x00),
@@ -180,6 +185,8 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	Run					(this, "Run",			"Keep pressed to run",												0x00),
 	Crouch				(this, "Crouch",		"Keep pressed to crouch",											0x00),
 	Jump				(this, "Jump",			"Jump",																0x00),
+	Zoom				(this, "Zoom",			"Keep pressed to zoom",												0x00),
+	ZoomAxis			(this, "ZoomAxis",		"Zoom axis to zoom in or out (+/-)"),
 	Button1				(this, "Button1",		"Button for action #1",												0x00),
 	Button2				(this, "Button2",		"Button for action #2",												0x00),
 	Button3				(this, "Button3",		"Button for action #3",												0x00),
@@ -226,10 +233,23 @@ void VirtualStandardController::ConnectToDevices()
 			Mouse *pMouse = (Mouse*)pDevice;
 
 			// Movement
+			// Keep pressed to pan
+			Connect("Pan",				&pMouse->Middle);
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
 			Connect("RotX",				&pMouse->Y, 0.5f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
 			Connect("RotY",				&pMouse->X, -0.5f);
+			// Keep pressed to rotate
+			Connect("Rotate",			&pMouse->Left);
+			// Pan x
+			Connect("PanX",				&pMouse->X, -0.05f);
+			// Pan y
+			Connect("PanY",				&pMouse->Y, -0.05f);
+
+			// Zoom
+			Connect("Zoom",				&pMouse->Right);
+			Connect("ZoomAxis",			&pMouse->Wheel, 0.01f);
+			Connect("ZoomAxis",			&pMouse->Y, -0.1f);
 
 			// Buttons
 			Connect("Button1",			&pMouse->Left);
@@ -321,6 +341,15 @@ void VirtualStandardController::ConnectToDevices()
 			Connect("TransY",			&pSpaceMouse->TransZ, -1.0f/90.0f);
 			// Z translation axis: Move forwards/backwards (+/-)
 			Connect("TransZ",			&pSpaceMouse->TransY, -1.0f/90.0f);
+			// X pan translation axis: Strafe left/right (+/-)
+			Connect("PanX",				&pSpaceMouse->TransX, -1.0f/90.0f);
+			// Y pan translation axis: Move up/down (+/-)
+			Connect("PanY",				&pSpaceMouse->TransZ, -1.0f/90.0f);
+			// Z pan translation axis: Move forwards/backwards (+/-)
+			Connect("PanZ",				&pSpaceMouse->TransY, -1.0f/90.0f);
+
+			// Zoom
+			Connect("ZoomAxis",			&pSpaceMouse->TransY, -1.0f/90.0f);
 
 			// Buttons
 			Connect("Button1",			&pSpaceMouse->Button0);

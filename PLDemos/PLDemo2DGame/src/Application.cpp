@@ -173,8 +173,8 @@ void Application::OnInputControllerFound(Controller *pInputController, String sI
 	// Is there an application input controller? If so, connect gun (SNGun)...
 	if (m_pInputController && sInputSemantic == "Gun") {
 		pInputController->Connect("X",		m_pInputController->GetControl("RotX"));
-		pInputController->Connect("Left",	m_pInputController->GetControl("Left"));
-		pInputController->Connect("Right",	m_pInputController->GetControl("Right"));
+		// "Left" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
+		// "Right" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
 		pInputController->Connect("Left",	m_pInputController->GetControl("Forward"));
 		pInputController->Connect("Right",	m_pInputController->GetControl("Backward"));
 		pInputController->Connect("Left",	m_pInputController->GetControl("StrafeLeft"));

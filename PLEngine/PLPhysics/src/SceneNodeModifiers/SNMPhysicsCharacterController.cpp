@@ -89,8 +89,6 @@ SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNo
 	m_bJumping(false),
 	m_pController(new PhysicsCharacterController())
 {
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**
@@ -110,6 +108,19 @@ SNMPhysicsCharacterController::~SNMPhysicsCharacterController()
 Controller *SNMPhysicsCharacterController::GetInputController() const
 {
 	return m_pController;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
+//[-------------------------------------------------------]
+void SNMPhysicsCharacterController::InformedOnInit()
+{
+	// Call base implementation
+	SNMPhysicsCharacter::InformedOnInit();
+
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 

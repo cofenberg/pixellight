@@ -70,9 +70,6 @@ SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCam
 {
 	// Connect input control event handler
 	m_pController->OnControl.Connect(&EventHandlerControl);
-
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**
@@ -92,6 +89,19 @@ SNMCameraZoomController::~SNMCameraZoomController()
 Controller *SNMCameraZoomController::GetInputController() const
 {
 	return m_pController;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMCameraZoomController::InformedOnInit()
+{
+	// Call base implementation
+	SNMCameraZoom::InformedOnInit();
+
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 

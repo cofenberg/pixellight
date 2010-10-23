@@ -186,9 +186,14 @@ class VirtualStandardController : public VirtualController {
 		Axis		TransX;				/**< X translation axis: Strafe left/right (+/-) */
 		Axis		TransY;				/**< Y translation axis: Move up/down (+/-) */
 		Axis		TransZ;				/**< Z translation axis: Move forwards/backwards (+/-) */
+		Button		Pan;				/**< Keep pressed to pan */
+		Axis		PanX;				/**< X pan translation axis: Strafe left/right (+/-) */
+		Axis		PanY;				/**< Y pan translation axis: Move up/down (+/-) */
+		Axis		PanZ;				/**< Z pan translation axis: Move forwards/backwards (+/-) */
 		Axis		RotX;				/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
 		Axis		RotY;				/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
 		Axis		RotZ;				/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
+		Button		Rotate;				/**< Keep pressed to rotate */
 		Button		Forward;			/**< Move forwards */
 		Button		Backward;			/**< Move backwards */
 		Button		Left;				/**< Move (rotate) left */
@@ -200,6 +205,8 @@ class VirtualStandardController : public VirtualController {
 		Button		Run;				/**< Keep pressed to run */
 		Button		Crouch;				/**< Keep pressed to crouch */
 		Button		Jump;				/**< Jump */
+		Button		Zoom;				/**< Keep pressed to zoom */
+		Axis		ZoomAxis;			/**< Zoom axis to zoom in or out (+/-) */
 		Button		Button1;			/**< Button for action #1 */
 		Button		Button2;			/**< Button for action #2 */
 		Button		Button3;			/**< Button for action #3 */

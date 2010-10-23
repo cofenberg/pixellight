@@ -63,7 +63,7 @@ class SNMOrbitingController : public SNMOrbiting {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMOrbitingController, "PLScene", PLScene::SNMOrbiting, "Scene node modifier class rotating a scene node towards a target scene node using an input controller")
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
-		pl_attribute(InputSemantic,	PLGeneral::String,	"PixelLightOrbiting",	ReadWrite,	DirectValue,	"Purpose of this input controller",	"")
+		pl_attribute(InputSemantic,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 	pl_class_end
 
 
@@ -99,6 +99,13 @@ class SNMOrbitingController : public SNMOrbiting {
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual PLInput::Controller *GetInputController() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void InformedOnInit();
 
 
 	//[-------------------------------------------------------]

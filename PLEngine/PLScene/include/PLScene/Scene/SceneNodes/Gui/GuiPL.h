@@ -81,7 +81,7 @@ class GuiPL : public PLGui::GuiImpl {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, GuiPL, "PLScene", PLGui::GuiImpl, "PixelLight ingame GUI implementation")
 		pl_constructor_1(DefaultConstructor, PLGui::Gui*, "Default constructor", "")
-		pl_attribute(InputSemantic,	PLGeneral::String,	"PixelLightGui",	ReadWrite,	DirectValue,	"Purpose of this input controller",	"")
+		pl_attribute(InputSemantic,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 	pl_class_end
 
 

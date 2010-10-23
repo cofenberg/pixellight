@@ -60,7 +60,7 @@ class CameraZoomController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Button	Zoom;	/**< Zoom */
+		PLInput::Button	Zoom;	/**< Keep pressed to zoom */
 
 
 	//[-------------------------------------------------------]

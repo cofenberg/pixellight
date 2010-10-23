@@ -1,6 +1,7 @@
 >> 23.10.2010
 [CO]
 - Auf Stefans Wunsch hin "Axis::IsValueAbsolute()" in "Axis::IsValueRelease()" umbenannt
+- "VirtualStandardController" um "Pan", "PanX", "PanY", "PanZ", "Rotate", "Zoom" und "ZoomAxis" erweitert
 
 
 

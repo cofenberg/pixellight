@@ -74,8 +74,6 @@ SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cScen
 	Speed(this),
 	m_pController(new MoveController())
 {
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**
@@ -95,6 +93,19 @@ SNMMoveController::~SNMMoveController()
 Controller *SNMMoveController::GetInputController() const
 {
 	return m_pController;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMMoveController::InformedOnInit()
+{
+	// Call base implementation
+	SNMTransform::InformedOnInit();
+
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 

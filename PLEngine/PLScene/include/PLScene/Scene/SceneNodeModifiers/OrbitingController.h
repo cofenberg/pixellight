@@ -64,15 +64,15 @@ class OrbitingController : public PLInput::Controller {
 		PLInput::Axis	RotX;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
 		PLInput::Axis	RotY;		/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
 		PLInput::Axis	RotZ;		/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
-		PLInput::Axis	TransX;		/**< X translation axis: Strafe left/right (+/-) */
-		PLInput::Axis	TransY;		/**< Y translation axis: Move up/down (+/-) */
-		PLInput::Axis	TransZ;		/**< Z translation axis: Move forwards/backwards (+/-) */
-		PLInput::Axis	ZoomAxis;	/**< Zoom axis to zoom in or out (+/-) */
+		PLInput::Axis	PanX;		/**< X pan translation axis: Strafe left/right (+/-) */
+		PLInput::Axis	PanY;		/**< Y pan translation axis: Move up/down (+/-) */
+		PLInput::Axis	PanZ;		/**< Z pan translation axis: Move forwards/backwards (+/-) */
 		PLInput::Button	Rotate;		/**< Keep pressed to rotate */
 		PLInput::Button	Pan;		/**< Keep pressed to pan */
 		PLInput::Button	Zoom;		/**< Keep pressed to zoom */
-		PLInput::Button	SpeedUp;	/**< Keep pressed to speed up */
-		PLInput::Button	SlowDown;	/**< Keep pressed to slow down */
+		PLInput::Axis	ZoomAxis;	/**< Zoom axis to zoom in or out (+/-) */
+		PLInput::Button	Run;		/**< Keep pressed to run */
+		PLInput::Button	Crouch;		/**< Keep pressed to crouch */
 
 
 	//[-------------------------------------------------------]

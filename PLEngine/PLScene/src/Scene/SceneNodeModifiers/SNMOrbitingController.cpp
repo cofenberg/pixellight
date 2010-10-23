@@ -74,8 +74,6 @@ SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbitin
 	InputSemantic(this),
 	m_pController(new OrbitingController())
 {
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
 /**
@@ -99,6 +97,19 @@ Controller *SNMOrbitingController::GetInputController() const
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMOrbitingController::InformedOnInit()
+{
+	// Call base implementation
+	SNMOrbiting::InformedOnInit();
+
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -110,11 +121,12 @@ void SNMOrbitingController::NotifyUpdate()
 	// Check if input is active
 	if (m_pController->GetActive()) {
 		// Get the current speed
-		float fCurrentSpeed = Timing::GetInstance()->GetTimeDifference();
-		if (m_pController->SpeedUp.IsPressed())
-			fCurrentSpeed *= 4.0f;
-		else if (m_pController->SlowDown.IsPressed())
-			fCurrentSpeed /= 4.0f;
+		float fSpeed = 1.0f;
+		if (m_pController->Run.IsPressed())
+			fSpeed *= 4.0f;
+		else if (m_pController->Crouch.IsPressed())
+			fSpeed /= 4.0f;
+		const float fTimedSpeed = fSpeed*Timing::GetInstance()->GetTimeDifference();
 
 		// Rotation
 		if (m_pController->Rotate.IsPressed()) {
@@ -123,12 +135,9 @@ void SNMOrbitingController::NotifyUpdate()
 			float fZ = m_pController->RotZ.GetValue();
 			if (fX || fY || fZ) {
 				// Do we need to take the current time difference into account?
-				if (!m_pController->RotX.IsValueRelative())
-					fX *= fCurrentSpeed;
-				if (!m_pController->RotY.IsValueRelative())
-					fY *= fCurrentSpeed;
-				if (!m_pController->RotZ.IsValueRelative())
-					fZ *= fCurrentSpeed;
+				fX *= m_pController->RotX.IsValueRelative() ? fSpeed : fTimedSpeed;
+				fY *= m_pController->RotY.IsValueRelative() ? fSpeed : fTimedSpeed;
+				fZ *= m_pController->RotZ.IsValueRelative() ? fSpeed : fTimedSpeed;
 
 				// Get a quaternion representation of the rotation delta
 				Quaternion qRotInc;
@@ -144,17 +153,14 @@ void SNMOrbitingController::NotifyUpdate()
 
 		// Pan
 		if (m_pController->Pan.IsPressed()) {
-			float fX = m_pController->TransX.GetValue();
-			float fY = m_pController->TransY.GetValue();
-			float fZ = m_pController->TransZ.GetValue();
+			float fX = m_pController->PanX.GetValue();
+			float fY = m_pController->PanY.GetValue();
+			float fZ = m_pController->PanZ.GetValue();
 			if (fX || fY || fZ) {
 				// Do we need to take the current time difference into account?
-				if (!m_pController->TransX.IsValueRelative())
-					fX *= fCurrentSpeed;
-				if (!m_pController->TransX.IsValueRelative())
-					fY *= fCurrentSpeed;
-				if (!m_pController->TransX.IsValueRelative())
-					fZ *= fCurrentSpeed;
+				fX *= m_pController->PanX.IsValueRelative() ? fSpeed : fTimedSpeed;
+				fY *= m_pController->PanY.IsValueRelative() ? fSpeed : fTimedSpeed;
+				fZ *= m_pController->PanZ.IsValueRelative() ? fSpeed : fTimedSpeed;
 
 				// Set pan
 				Vector3 vPan = Pan.Get();
@@ -170,8 +176,7 @@ void SNMOrbitingController::NotifyUpdate()
 			float fZoomAxis = m_pController->ZoomAxis.GetValue();
 			if (fZoomAxis) {
 				// Do we need to take the current time difference into account?
-				if (!m_pController->ZoomAxis.IsValueRelative())
-					fZoomAxis *= fCurrentSpeed;
+				fZoomAxis *= m_pController->ZoomAxis.IsValueRelative() ? fSpeed : fTimedSpeed;
 
 				// Set new distance
 				SetDistance(GetDistance() - fZoomAxis);
