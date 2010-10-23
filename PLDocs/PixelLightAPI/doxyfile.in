@@ -583,6 +583,7 @@ INPUT                  = PixelLight.h \
                          ../../PLNetwork/PLIRC/include \
                          ../../PLNetwork/PLJabber/include \
                          ../../PLGui/PLGui/include \
+                         ../../PLGui/PLXmlText/include \
                          ../../PLEngine/PLInput/include \
                          ../../PLEngine/PLRenderer/include \
                          ../../PLEngine/PLMesh/include \
@@ -694,17 +695,23 @@ EXCLUDE                = ../../PLBase/PLGeneral/include/PLGeneral/FileSystem/Win
                          ../../PLNetwork/PLJabber/include/PLJabber/PLJabberLinux.h \
                          ../../PLGui/PLGui/include/PLGui/PLGui.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiWindows.h \
+                         ../../PLGui/PLGui/include/PLGui/PLGuiWindowsIncludes.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiLinux.h \
-                         ../../PLGui/PLGui/include/PLGui/Base/WindowImpl.h \
-                         ../../PLGui/PLGui/include/PLGui/Win32/ \
-                         ../../PLGui/PLGui/include/PLGui/Linux/ \
+                         ../../PLGui/PLGui/include/PLGui/PLGuiLinuxIncludes.h \
+                         ../../PLGui/PLGui/include/PLGui/Backend/ \
+                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlText.h \
+                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlTextLinux.h \
+                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlTextWindows.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInput.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInputWindows.h \
+                         ../../PLEngine/PLInput/include/PLInput/PLInputWindowsIncludes.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInputLinux.h \
-                         ../../PLEngine/PLRenderer/include/_PLRendererBackend/ \
+                         ../../PLEngine/PLInput/include/PLInput/PLInputLinuxIncludes.h \
+                         ../../PLEngine/PLInput/include/PLInput/Backend/ \
                          ../../PLEngine/PLRenderer/include/PLRenderer/PLRenderer.h \
                          ../../PLEngine/PLRenderer/include/PLRenderer/PLRendererWindows.h \
                          ../../PLEngine/PLRenderer/include/PLRenderer/PLRendererLinux.h \
+                         ../../PLEngine/PLRenderer/include/PLRenderer/Renderer/Backend/ \
                          ../../PLEngine/PLMesh/include/PLMesh/PLMesh.h \
                          ../../PLEngine/PLMesh/include/PLMesh/PLMeshWindows.h \
                          ../../PLEngine/PLMesh/include/PLMesh/PLMeshLinux.h \
