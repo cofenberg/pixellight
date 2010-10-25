@@ -341,6 +341,15 @@ class Time {
 
 		/**
 		*  @brief
+		*    Set time from string representation
+		*
+		*  @param[in] sString
+		*    String representation (for example: Sun Sep 16 01:03:52 1973)
+		*/
+		PLGENERAL_API void FromString(const String &sString);
+
+		/**
+		*  @brief
 		*    Converts a date from Unix/POSIX format
 		*
 		*  @param[in] nUnixDate

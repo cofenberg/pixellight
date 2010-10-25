@@ -1,3 +1,12 @@
+>> 24.10.2010
+[SB]
+- Time: Wenn man Zeiten als String abspeichert, möchte man diese manchmal auch gerne wieder einlesen. Da das Format
+  hier ja sehr strikt ist, dürfte dies auch ohne weiteres möglich sein, daher habe ich FromString() so implementiert,
+  dass es die von ToString() ausgegebenen Time-Strings parsen kann und somit Zeiten auch als Strings übergeben
+  werden können.
+
+
+
 >> 11.10.2010
 [CO]
 - String: < und > Operatoren für ASCII waren fehlerhaft Implementiert. StringBuffer::IsLessThan() und StringBuffer::IsGreaterThan()

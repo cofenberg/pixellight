@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLGeneral/String/RegEx.h"
 #include "PLGeneral/Tools/Time.h"
 
 
@@ -203,7 +204,7 @@ uint8 Time::GetDayOfMonth() const
 void Time::SetDayOfMonth(uint8 nDayOfMonth)
 {
 	if (nDayOfMonth >= 1 && nDayOfMonth <= 31)
-		m_nDayOfMonth = nDayOfMonth - 1;
+		m_nDayOfMonth = nDayOfMonth;
 }
 
 /**
@@ -309,6 +310,43 @@ String Time::ToString() const
 	return String::Format("%.3s %.3s%3d %.2d:%.2d:%.2d %d",
 						  ShortDayName[m_nDayOfWeek].GetASCII(), ShortMonthName[m_nMonth-1].GetASCII(),
 						  m_nDayOfMonth, m_nHour, m_nMinute, m_nSecond, m_nYear);
+}
+
+/**
+*  @brief
+*    Set time from string representation
+*/
+void Time::FromString(const String &sString)
+{
+	// Parse string
+	RegEx cRegEx("(?<dow>\\w+)\\s(?<month>\\w+)\\s(?<day>\\w+)\\s(?<hour>\\w+):(?<min>\\w+):(?<sec>\\w+)\\s(?<year>\\w+)");
+	if (cRegEx.Match(sString)) {
+		// Read time
+		m_nYear		   = (uint16)cRegEx.GetNameResult("year") .GetInt();
+		m_nMonth	   = (EMonth)cRegEx.GetNameResult("month").GetInt();
+		m_nDayOfMonth  = (uint8) cRegEx.GetNameResult("day")  .GetInt();
+		m_nHour		   = (uint8) cRegEx.GetNameResult("hour") .GetInt();
+		m_nMinute	   = (uint8) cRegEx.GetNameResult("min")  .GetInt();
+		m_nSecond	   = (uint8) cRegEx.GetNameResult("sec")  .GetInt();
+		m_nMillisecond = 0;
+
+		// Get day of week
+		String sDayOfWeek = cRegEx.GetNameResult("dow");
+		int nDay = -1;
+		for (int i=0; i<7; i++) {
+			// Day of week found?
+			if (ShortDayName[i] == sDayOfWeek) {
+				nDay = i;
+				break;
+			}
+		}
+
+		// Set day of week, if the string was not found, try to calculate it from the date
+		if (nDay >= 0)
+			m_nDayOfWeek = (EDay)nDay;
+		else
+			m_nDayOfWeek = Time::CalculateDayOfWeek(m_nDayOfMonth, m_nMonth, m_nYear);
+	}
 }
 
 /**
