@@ -23,8 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
 #include "PLGeneral/File/File.h"
+#include "PLGeneral/Xml/XmlParsingData.h"
+#include "PLGeneral/Xml/XmlDeclaration.h"
 #include "PLGeneral/Xml/XmlDocument.h"
 
 
@@ -35,14 +36,41 @@ namespace PLGeneral {
 
 
 //[-------------------------------------------------------]
+//[ Private static data                                   ]
+//[-------------------------------------------------------]
+const String XmlDocument::sErrorString[ErrorStringCount] =
+{
+	"No error",
+	"Error",
+	"Failed to open file",
+	"Error parsing Element.",
+	"Failed to read Element name",
+	"Error reading Element value.",
+	"Error reading Attributes.",
+	"Error: empty tag.",
+	"Error reading end tag.",
+	"Error parsing Unknown.",
+	"Error parsing Comment.",
+	"Error parsing Declaration.",
+	"Error document empty.",
+	"Error null (0) or unexpected EOF found in input stream.",
+	"Error parsing CDATA.",
+	"Error when XmlDocument added to document, because XmlDocument can only be at the root."
+};
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-XmlDocument::XmlDocument() :
-	XmlNode(new TiXmlDocument())
+XmlDocument::XmlDocument() : XmlNode(Document),
+	m_bError(false),
+	m_nErrorID(-1),
+	m_nTabSize(4),
+	m_bUseMicrosoftBOM(false)
 {
 }
 
@@ -50,18 +78,23 @@ XmlDocument::XmlDocument() :
 *  @brief
 *    Constructor
 */
-XmlDocument::XmlDocument(const String &sName) :
-	XmlNode(new TiXmlDocument(sName))
+XmlDocument::XmlDocument(const String &sName) : XmlNode(Document),
+	m_bError(false),
+	m_nErrorID(-1),
+	m_nTabSize(4),
+	m_bUseMicrosoftBOM(false)
 {
+	// Use the name as value
+	m_sValue = sName;
 }
 
 /**
 *  @brief
 *    Copy constructor
 */
-XmlDocument::XmlDocument(const XmlDocument &cSource) :
-	XmlNode(new TiXmlDocument(*(TiXmlDocument*)cSource.m_pData))
+XmlDocument::XmlDocument(const XmlDocument &cSource) : XmlNode(Document)
 {
+	*this = cSource;
 }
 
 /**
@@ -78,7 +111,22 @@ XmlDocument::~XmlDocument()
 */
 XmlDocument &XmlDocument::operator =(const XmlDocument &cSource)
 {
-	*((TiXmlDocument*)m_pData) = (const TiXmlDocument&)*((TiXmlDocument*)cSource.m_pData);
+	// Delete all the children of this node
+	Clear();
+
+	// Copy data
+	m_sValue			= cSource.m_sValue;
+	m_bError			= cSource.m_bError;
+	m_nErrorID			= cSource.m_nErrorID;
+	m_sErrorDescription	= cSource.m_sErrorDescription;
+	m_cErrorCursor		= cSource.m_cErrorCursor;
+	m_nTabSize			= cSource.m_nTabSize;
+	m_bUseMicrosoftBOM	= cSource.m_bUseMicrosoftBOM;
+	for (const XmlNode *pNode=cSource.GetFirstChild(); pNode; pNode=pNode->GetNextSibling()) {
+		XmlNode *pClone = pNode->Clone();
+		if (pClone)
+			LinkEndChild(*pClone);
+	}
 	return *this;
 }
 
@@ -88,7 +136,7 @@ XmlDocument &XmlDocument::operator =(const XmlDocument &cSource)
 */
 bool XmlDocument::Load(EEncoding nEncoding)
 {
-	return Load(GetValue(), nEncoding);
+	return Load(m_sValue, nEncoding);
 }
 
 /**
@@ -102,12 +150,12 @@ bool XmlDocument::Load(const String &sFilename, EEncoding nEncoding)
 		// Set document value
 		SetValue(sFilename);
 
-		// Open file in binary mode so that TinyXML can normalize the end of lines (EOL)
+		// Open file in binary mode so that the parser can normalize the end of lines (EOL)
 		File cFile(sFilename);
 		if (cFile.Exists() && cFile.Open(File::FileRead)) {
 			return Load(cFile);
 		} else {
-			((TiXmlDocument*)m_pData)->SetError(TiXmlBase::TIXML_ERROR_OPENING_FILE, 0, 0, TIXML_ENCODING_UNKNOWN);
+			SetError(ErrorOpeningFile, 0, 0, EncodingUnknown);
 		}
 	}
 
@@ -125,11 +173,37 @@ bool XmlDocument::Load(File &cFile, EEncoding nEncoding)
 	SetValue(cFile.GetUrl().GetNativePath());
 
 	// Get data
-	uint32 nFileSize = cFile.GetSize();
+	const uint32 nFileSize = cFile.GetSize();
 	if (nFileSize) {
 		char *pszData = new char[nFileSize+1];
 		cFile.Read(pszData, 1, nFileSize);
 		pszData[nFileSize] = '\0';
+
+		// Process the buffer in place to normalize new lines. (See comment above.)
+		// Copies from the 'pszData' to 'pszWriteData' pointer, where pszData can advance faster if
+		// a newline-carriage return is hit.
+		//
+		// Wikipedia:
+		// Systems based on ASCII or a compatible character set use either LF  (Line feed, '\n', 0x0A, 10 in decimal) or
+		// CR (Carriage return, '\r', 0x0D, 13 in decimal) individually, or CR followed by LF (CR+LF, 0x0D 0x0A)...
+		//        * LF:    Multics, Unix and Unix-like systems (GNU/Linux, AIX, Xenix, Mac OS X, FreeBSD, etc.), BeOS, Amiga, RISC OS, and others
+		//        * CR+LF: DEC RT-11 and most other early non-Unix, non-IBM OSes, CP/M, MP/M, DOS, OS/2, Microsoft Windows, Symbian OS
+		//        * CR:    Commodore 8-bit machines, Apple II family, Mac OS up to version 9 and OS-9
+		const char *pszReadData = pszData;	// The read head
+		char *pszWriteData = pszData;		// The write head
+		const char CR = 0x0d;
+		const char LF = 0x0a;
+		while (*pszReadData) {
+			if (*pszReadData == CR) {
+				*pszWriteData++ = LF;
+				pszReadData++;
+				if (*pszReadData == LF)	// Check for CR+LF (and skip LF)
+					pszReadData++;
+			} else {
+				*pszWriteData++ = *pszReadData++;
+			}
+		}
+		*pszWriteData = '\0';
 
 		// Parse data
 		Parse(pszData, NULL, nEncoding);
@@ -151,7 +225,7 @@ bool XmlDocument::Load(File &cFile, EEncoding nEncoding)
 */
 bool XmlDocument::Save()
 {
-	return Save(GetValue());
+	return Save(m_sValue);
 }
 
 /**
@@ -173,18 +247,9 @@ bool XmlDocument::Save(const String &sFilename)
 		return true;
 	} else {
 		// Error!
-		((TiXmlDocument*)m_pData)->SetError(TiXmlBase::TIXML_ERROR_OPENING_FILE, 0, 0, TIXML_ENCODING_UNKNOWN);
+		SetError(ErrorOpeningFile, 0, 0, EncodingUnknown);
 		return false;
 	}
-}
-
-/**
-*  @brief
-*    Parse the given null terminated block of XML data
-*/
-const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
-{
-	return ((TiXmlDocument*)m_pData)->Parse(pszData, (TiXmlParsingData*)pData, (TiXmlEncoding)nEncoding);
 }
 
 /**
@@ -193,12 +258,12 @@ const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEnco
 */
 XmlElement *XmlDocument::GetRootElement()
 {
-	return (XmlElement*)GetPLNode(((TiXmlDocument*)m_pData)->RootElement());
+	return GetFirstChildElement();
 }
 
 const XmlElement *XmlDocument::GetRootElement() const
 {
-	return (const XmlElement*)((XmlDocument*)this)->GetPLNode(((TiXmlDocument*)m_pData)->RootElement());
+	return GetFirstChildElement();
 }
 
 /**
@@ -207,7 +272,7 @@ const XmlElement *XmlDocument::GetRootElement() const
 */
 bool XmlDocument::Error() const
 {
-	return ((TiXmlDocument*)m_pData)->Error();
+	return m_bError;
 }
 
 /**
@@ -217,14 +282,14 @@ bool XmlDocument::Error() const
 String XmlDocument::GetErrorDesc(bool bLocation) const
 {
 	if (bLocation) {
-		String sString = ((TiXmlDocument*)m_pData)->ErrorDesc();
+		String sString = m_sErrorDescription;
 		if (GetErrorRow() > 0)
 			sString += String::Format(" Row: %d", GetErrorRow());
 		if (GetErrorColumn() > 0)
 			sString += String::Format(" Column: %d", GetErrorColumn());
 		return sString;
 	} else {
-		return ((TiXmlDocument*)m_pData)->ErrorDesc();
+		return m_sErrorDescription;
 	}
 }
 
@@ -235,7 +300,7 @@ String XmlDocument::GetErrorDesc(bool bLocation) const
 */
 int XmlDocument::GetErrorID() const
 {
-	return ((TiXmlDocument*)m_pData)->ErrorId();
+	return m_nErrorID;
 }
 
 /**
@@ -244,7 +309,7 @@ int XmlDocument::GetErrorID() const
 */
 int XmlDocument::GetErrorRow() const
 {
-	return ((TiXmlDocument*)m_pData)->ErrorRow();
+	return m_cErrorCursor.nRow + 1;
 }
 
 /**
@@ -253,7 +318,7 @@ int XmlDocument::GetErrorRow() const
 */
 int XmlDocument::GetErrorColumn() const
 {
-	return ((TiXmlDocument*)m_pData)->ErrorCol();
+	return  m_cErrorCursor.nColumn + 1;
 }
 
 /**
@@ -262,7 +327,7 @@ int XmlDocument::GetErrorColumn() const
 */
 uint32 XmlDocument::GetTabSize() const
 {
-	return ((TiXmlDocument*)m_pData)->TabSize();
+	return m_nTabSize;
 }
 
 /**
@@ -271,7 +336,7 @@ uint32 XmlDocument::GetTabSize() const
 */
 void XmlDocument::SetTabSize(uint32 nTabSize)
 {
-	((TiXmlDocument*)m_pData)->SetTabSize(nTabSize);
+	m_nTabSize = nTabSize;
 }
 
 /**
@@ -280,7 +345,10 @@ void XmlDocument::SetTabSize(uint32 nTabSize)
 */
 void XmlDocument::ClearError()
 {
-	((TiXmlDocument*)m_pData)->ClearError();
+	m_bError			= false;
+	m_nErrorID			= 0;
+	m_sErrorDescription = "";
+	m_cErrorCursor.nRow = m_cErrorCursor.nColumn = 0;
 }
 
 
@@ -298,13 +366,104 @@ bool XmlDocument::Save(File &cFile, uint32 nDepth)
 	return true;
 }
 
-String XmlDocument::ToString(uint32 nDepth)
+String XmlDocument::ToString(uint32 nDepth) const
 {
 	String sXml;
-	for (XmlNode *pNode=GetFirstChild(); pNode; pNode=pNode->GetNextSibling()) {
+	for (const XmlNode *pNode=GetFirstChild(); pNode; pNode=pNode->GetNextSibling())
 		sXml += pNode->ToString(nDepth);
-	}
 	return sXml;
+}
+
+const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
+{
+	ClearError();
+
+	// Parse away, at the document level. Since a document contains nothing but other tags, most of what happens here is skipping white space
+	if (!pszData || !*pszData) {
+		// Set error code
+		SetError(ErrorDocumentEmpty, 0, 0, EncodingUnknown);
+
+		// Error!
+		return NULL;
+	}
+
+	// Note that, for a document, this needs to come before the while space skip, so that parsing starts from the pointer we are given
+	m_cCursor.Clear();
+	if (pData) {
+		m_cCursor.nRow    = pData->m_cCursor.nRow;
+		m_cCursor.nColumn = pData->m_cCursor.nColumn;
+	} else {
+		m_cCursor.nRow    = 0;
+		m_cCursor.nColumn = 0;
+	}
+	XmlParsingData cXmlParsingData(pszData, m_nTabSize, m_cCursor.nRow, m_cCursor.nColumn);
+	m_cCursor = cXmlParsingData.Cursor();
+
+	if (nEncoding == EncodingUnknown) {
+		// Check for the Microsoft UTF-8 lead bytes
+		const unsigned char *pU = (const unsigned char*)pszData;
+		if (	*(pU+0) && *(pU+0) == UTF_LEAD_0
+			 && *(pU+1) && *(pU+1) == UTF_LEAD_1
+			 && *(pU+2) && *(pU+2) == UTF_LEAD_2 ) {
+			nEncoding = EncodingUTF8;
+			m_bUseMicrosoftBOM = true;
+		}
+	}
+
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+	if (!pszData) {
+		// Set error code
+		SetError(ErrorDocumentEmpty, 0, 0, EncodingUnknown);
+
+		// Error!
+		return NULL;
+	}
+
+	while (pszData && *pszData) {
+		XmlNode *pNode = Identify(pszData, nEncoding);
+		if (pNode) {
+			pszData = pNode->Parse(pszData, &cXmlParsingData, nEncoding);
+			LinkEndChild(*pNode);
+		} else {
+			// Get us out of here right now!
+			break;
+		}
+
+		// Did we get nEncoding info?
+		if (nEncoding == EncodingUnknown && pNode->ToDeclaration()) {
+			const String sEncoding = pNode->ToDeclaration()->GetEncoding();
+			if (!sEncoding.GetLength())
+				nEncoding = EncodingUTF8;
+			else if (StringEqual(sEncoding, "UTF-8", true, EncodingUnknown))
+				nEncoding = EncodingUTF8;
+			else if (StringEqual(sEncoding, "UTF8", true, EncodingUnknown))
+				nEncoding = EncodingUTF8;	// Incorrect, but be nice
+			else
+				nEncoding = EncodingLegacy;
+		}
+
+		pszData = SkipWhiteSpace(pszData, nEncoding);
+	}
+
+	// Was this empty?
+	if (!m_pFirstChild) {
+		SetError(ErrorDocumentEmpty, 0, 0, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+
+	// All is well
+	return pszData;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual XmlNode functions                      ]
+//[-------------------------------------------------------]
+XmlNode *XmlDocument::Clone() const
+{
+	return new XmlDocument(*this);
 }
 
 
@@ -313,11 +472,21 @@ String XmlDocument::ToString(uint32 nDepth)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Sets an error
 */
-XmlDocument::XmlDocument(void *pNode, int nDummy) :
-	XmlNode(pNode)
+void XmlDocument::SetError(int nError, const char *pszErrorLocation, XmlParsingData *pData, EEncoding nEncoding)
 {
+	// The first error in a chain is more accurate - don't set again!
+	if (!m_bError) {
+		m_bError			= true;
+		m_nErrorID			= nError;
+		m_sErrorDescription = sErrorString[m_nErrorID];
+		m_cErrorCursor.Clear();
+		if (pszErrorLocation && pData) {
+			pData->Stamp(pszErrorLocation, nEncoding);
+			m_cErrorCursor = pData->Cursor();
+		}
+	}
 }
 
 

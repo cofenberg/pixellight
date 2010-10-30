@@ -1,3 +1,24 @@
+>> 30.10.2010
+[CO]
+- Wie mit Stefan besprochen: TinyXML Abhängigkeit entfernt. Das hatten wir nun bereits seit etlichen Jahren angedacht... TinyXML ist zwar
+  wirklich super, aber unsere eigenen Ansprüche verändern sich über die Zeit so das immer mehr Änderungen in TinyXML nötig wurden um es in
+  PL noch richtig nutzen zu können. Die XML Wrapper Schicht an sich war auch noch nie sooo toll da diese Overhead hinzufügte. Nachdem Stefan
+  nun probleme beim Einladen großer XML Dateien hatte, entschlossen wir uns dazu, die TinyXML Abhängigkeit nun zu entfernen um mehr Kontrolle
+  über die XML Implementation zu haben und z.B. einfacher Problemen nachgehen zu können. Der Kern des XML Parsers basiert auf TinyXML damit ich
+  nicht ganz bei 0 anfangen musste und auf einen über viele Jahre hinweg ausgereiften XML Parser aufbauen kann, ich denke das die Implementation
+  auf Dauer allerdings immer weiter von TinyXML abdriften wird.
+  Das war nun zwar ca. 2 Tage Arbeiten an Grundlagen-Klassen, aber ich denke es hat sich gelohnt da unsere grundliegenste Komponente nun von
+  einer externen lib weniger Abhängt was das Cross-Compiling etwas einfacher macht. Die erzeugte PLGeneral dll ist bei mir um 10 KB kleiner geworden
+  da weniger Redundanter Code vorhanden ist (mehrere String Klassen etc. da jede lib das nochmal selbst implementiert).
+  -> Weis noch nicht ob Unicode XML Dateien schon korrekt funktionieren, da müsste man etwas testen und gegebenenfalls ausbessern
+  -> Das XML Laden (XmlDocument::Load) ist im Augenblick etwas langsamer als vorher da unsere String Klasse bei z.B. "sMyString +=" immer einen internen
+     neuen String erzeugt... hier sollte man wohl demnächst kleinere Optimierungen machen so das der interne String immer etwas mehr Speicher belegt
+     als eigentlich nötig ist, was dann aber ein performanteres anhängen von weiteren Zeichen oder kurzen Strings ermöglicht.
+  -> Am XML Interface hat sich zwar nicht wirklich was großartig verändert, unter der Haupt gabs allerdings einiges an Änderungen... darum wäre es gut
+     wenn jemand das nochmal kritisch durchgeht (auch z.B. die Copy-Operatoren) und testet.
+
+
+
 >> 24.10.2010
 [SB]
 - Time: Wenn man Zeiten als String abspeichert, möchte man diese manchmal auch gerne wieder einlesen. Da das Format

@@ -23,8 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
+#include <string.h>
 #include "PLGeneral/File/File.h"
+#include "PLGeneral/Xml/XmlParsingData.h"
+#include "PLGeneral/Xml/XmlDocument.h"
 #include "PLGeneral/Xml/XmlText.h"
 
 
@@ -41,18 +43,31 @@ namespace PLGeneral {
 *  @brief
 *    Constructor
 */
-XmlText::XmlText(const String &sValue) :
-	XmlNode(new TiXmlText(sValue))
+XmlText::XmlText() : XmlNode(Text),
+	m_bCDATA(false)
 {
+}
+
+/**
+*  @brief
+*    Default constructor
+*/
+XmlText::XmlText(const String &sValue) : XmlNode(Text),
+	m_bCDATA(false)
+{
+	// Copy the value
+	SetValue(sValue);
 }
 
 /**
 *  @brief
 *    Copy constructor
 */
-XmlText::XmlText(const XmlText &cSource) :
-	XmlNode(new TiXmlText(*(TiXmlText*)cSource.m_pData))
+XmlText::XmlText(const XmlText &cSource) : XmlNode(Text),
+	m_bCDATA(cSource.m_bCDATA)
 {
+	// Copy the value
+	SetValue(cSource.GetValue());
 }
 
 /**
@@ -69,8 +84,28 @@ XmlText::~XmlText()
 */
 XmlText &XmlText::operator =(const XmlText &cSource)
 {
-	*((TiXmlText*)m_pData) = (const TiXmlText&)*((TiXmlText*)cSource.m_pData);
+	// Copy data
+	m_bCDATA = cSource.m_bCDATA;
+	SetValue(cSource.GetValue());
 	return *this;
+}
+
+/**
+*  @brief
+*    Queries whether this represents text using a CDATA section
+*/
+bool XmlText::IsCDATA() const
+{
+	return m_bCDATA;
+}
+
+/**
+*  @brief
+*    Turns on or off a CDATA representation of text
+*/
+void XmlText::SetCDATA(bool bCDATA)
+{
+	m_bCDATA = bCDATA;
 }
 
 
@@ -79,33 +114,79 @@ XmlText &XmlText::operator =(const XmlText &cSource)
 //[-------------------------------------------------------]
 bool XmlText::Save(File &cFile, uint32 nDepth)
 {
-	TIXML_STRING sBuffer;
-
-	TiXmlBase::EncodeString(((TiXmlText*)m_pData)->ValueTStr(), &sBuffer);
-	cFile.Print(sBuffer.c_str());
+	String sBuffer;
+	EncodeString(m_sValue, sBuffer);
+	cFile.Print(sBuffer);
 
 	// Done
 	return true;
 }
 
-String XmlText::ToString(uint32 nDepth)
+String XmlText::ToString(uint32 nDepth) const
 {
-	TIXML_STRING sBuffer;
-	TiXmlBase::EncodeString(((TiXmlText*)m_pData)->ValueTStr(), &sBuffer);
-	return String(sBuffer.c_str());
+	String sBuffer;
+	EncodeString(m_sValue, sBuffer);
+	return String(sBuffer);
+}
+
+const char *XmlText::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
+{
+	// Constants
+	static const char   *pszStartTag     = "<![CDATA[";
+	static const uint32  nStartTagLength = strlen(pszStartTag);
+	static const char   *pszEndTag       = "]]>";
+	static const char   *pszEnd          = "<";
+
+	m_sValue = "";
+
+	if (pData) {
+		pData->Stamp(pszData, nEncoding);
+		m_cCursor = pData->Cursor();
+	}
+
+	if (m_bCDATA || StringEqual(pszData, pszStartTag, false, nEncoding)) {
+		m_bCDATA = true;
+
+		if (!StringEqual(pszData, pszStartTag, false, nEncoding)){
+			// Set error code
+			XmlDocument *pDocument = GetDocument();
+			if (pDocument)
+				pDocument->SetError(ErrorParsingCData, pszData, pData, nEncoding);
+
+			// Error!
+			return NULL;
+		}
+		pszData += nStartTagLength;
+
+		// Keep all the white space, ignore the encoding, etc.
+		while (pszData && *pszData && !StringEqual(pszData, pszEndTag, false, nEncoding)) {
+			m_sValue += *pszData;
+			++pszData;
+		}
+
+		String sDummy;
+		pszData = ReadText(pszData, sDummy, false, pszEndTag, false, nEncoding);
+
+		// Done
+		return pszData;
+	} else {
+		bool bIgnoreWhite = true;
+		pszData = ReadText(pszData, m_sValue, bIgnoreWhite, pszEnd, false, nEncoding);
+		if (pszData && *pszData)
+			return pszData - 1;	// don't truncate the '<'
+
+		// Error!
+		return NULL;
+	}
 }
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public virtual XmlNode functions                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-XmlText::XmlText(void *pNode, int nDummy) :
-	XmlNode(pNode)
+XmlNode *XmlText::Clone() const
 {
+	return new XmlText(*this);
 }
 
 

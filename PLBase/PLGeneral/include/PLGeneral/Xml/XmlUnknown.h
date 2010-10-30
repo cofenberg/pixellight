@@ -64,7 +64,7 @@ class XmlUnknown : public XmlNode {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
 		PLGENERAL_API XmlUnknown();
 
@@ -101,23 +101,15 @@ class XmlUnknown : public XmlNode {
 	//[-------------------------------------------------------]
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLGENERAL_API virtual String ToString(uint32 nDepth = 0);
+		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public virtual XmlNode functions                      ]
 	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pNode
-		*    Internal node pointer (always valid!)
-		*  @param[in] nDummy
-		*    Dummy parameter
-		*/
-		XmlUnknown(void *pNode, int nDummy);
+	public:
+		PLGENERAL_API virtual XmlNode *Clone() const;
 
 
 };

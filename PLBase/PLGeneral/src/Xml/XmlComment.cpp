@@ -23,8 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
+#include <string.h>
 #include "PLGeneral/File/File.h"
+#include "PLGeneral/Xml/XmlParsingData.h"
 #include "PLGeneral/Xml/XmlDocument.h"
 #include "PLGeneral/Xml/XmlComment.h"
 
@@ -40,20 +41,30 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Default constructor
+*/
+XmlComment::XmlComment() : XmlNode(Comment)
+{
+}
+
+/**
+*  @brief
 *    Constructor
 */
-XmlComment::XmlComment() :
-	XmlNode(new TiXmlComment())
+XmlComment::XmlComment(const String &sValue) : XmlNode(Comment)
 {
+	// Copy the value
+	SetValue(sValue);
 }
 
 /**
 *  @brief
 *    Copy constructor
 */
-XmlComment::XmlComment(const XmlComment &cSource) :
-	XmlNode(new TiXmlComment(*(TiXmlComment*)cSource.m_pData))
+XmlComment::XmlComment(const XmlComment &cSource) : XmlNode(Comment)
 {
+	// Copy the value
+	SetValue(cSource.GetValue());
 }
 
 /**
@@ -70,7 +81,8 @@ XmlComment::~XmlComment()
 */
 XmlComment &XmlComment::operator =(const XmlComment &cSource)
 {
-	*((TiXmlComment*)m_pData) = (const TiXmlComment&)*((TiXmlComment*)cSource.m_pData);
+	// Copy the value
+	SetValue(cSource.GetValue());
 	return *this;
 }
 
@@ -82,24 +94,24 @@ bool XmlComment::Save(File &cFile, uint32 nDepth)
 {
 	// Get the number of empty spaces
 	const XmlDocument *pDocument = GetDocument();
-	uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
+	const uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
 
 	// Print empty spaces
 	for (uint32 i=0; i<nNumOfSpaces; i++)
 		cFile.PutC(' ');
 
 	// Write value
-	cFile.Print("<!--" + GetValue() + "-->");
+	cFile.Print("<!--" + m_sValue + "-->");
 
 	// Done
 	return true;
 }
 
-String XmlComment::ToString(uint32 nDepth)
+String XmlComment::ToString(uint32 nDepth) const
 {
 	// Get the number of empty spaces
 	const XmlDocument *pDocument = GetDocument();
-	uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
+	const uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
 
 	// Print empty spaces
 	String sXml;
@@ -107,23 +119,59 @@ String XmlComment::ToString(uint32 nDepth)
 		sXml += ' ';
 
 	// Write value
-	sXml += "<!--" + GetValue() + "-->";
+	sXml += "<!--" + m_sValue + "-->";
 
 	// Return the resulting string
 	return sXml;
 }
 
+const char *XmlComment::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
+{
+	// Constants
+	static const char   *pszStartTag     = "<!--";
+	static const uint32  nStartTagLength = strlen(pszStartTag);
+	static const char   *pszEndTag       = "-->";
+	static const uint32  nEndTagLength   = strlen(pszEndTag);
+
+	m_sValue = "";
+
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+
+	if (pData) {
+		pData->Stamp(pszData, nEncoding);
+		m_cCursor = pData->Cursor();
+	}
+
+	if (!StringEqual(pszData, pszStartTag, false, nEncoding)) {
+		// Set error code
+		XmlDocument *pDocument = GetDocument();
+		if (pDocument)
+			pDocument->SetError(ErrorParsingComment, pszData, pData, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+	pszData += nStartTagLength;
+
+	// Keep all the white space
+	while (pszData && *pszData && !StringEqual(pszData, pszEndTag, false, nEncoding)) {
+		m_sValue += *pszData;
+		++pszData;
+	}
+	if (pszData && *pszData)
+		pszData += nEndTagLength;
+
+	// Done
+	return pszData;
+}
+
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public virtual XmlNode functions                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-XmlComment::XmlComment(void *pNode, int nDummy) :
-	XmlNode(pNode)
+XmlNode *XmlComment::Clone() const
 {
+	return new XmlComment(*this);
 }
 
 

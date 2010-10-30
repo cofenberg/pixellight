@@ -95,6 +95,7 @@ add_sources(
 	src/Xml/XmlUnknown.cpp
 	src/Xml/XmlDocument.cpp
 	src/Xml/XmlDeclaration.cpp
+	src/Xml/XmlParsingData.cpp
 	src/Log/Log.cpp
 	src/Log/LogFormater.cpp
 	src/Log/LogFormaterXml.cpp
@@ -140,7 +141,6 @@ add_include_directories(
 	include
 	${ZLIB_INCLUDE_DIR}
 	${PCRE_INCLUDE_DIR}
-	${TINYXML_INCLUDE_DIR}
 )
 
 ##################################################
@@ -149,7 +149,6 @@ add_include_directories(
 add_libs(
 	${ZLIB_LIBRARIES}
 	${PCRE_LIBRARIES}
-	${TINYXML_LIBRARIES}
 )
 if(WIN32)
 	##################################################
@@ -241,7 +240,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-zlib External-TinyXML External-libpcre)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-zlib External-libpcre)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -295,7 +294,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET}Stat STATIC)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	External-zlib External-TinyXML External-libpcre)
+add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	External-zlib External-libpcre)
 add_dependencies(Base                       		${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

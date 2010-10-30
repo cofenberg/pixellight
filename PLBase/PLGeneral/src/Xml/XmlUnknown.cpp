@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
 #include "PLGeneral/File/File.h"
+#include "PLGeneral/Xml/XmlParsingData.h"
 #include "PLGeneral/Xml/XmlDocument.h"
 #include "PLGeneral/Xml/XmlUnknown.h"
 
@@ -40,10 +40,9 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-XmlUnknown::XmlUnknown() :
-	XmlNode(new TiXmlUnknown())
+XmlUnknown::XmlUnknown() : XmlNode(Unknown)
 {
 }
 
@@ -51,9 +50,10 @@ XmlUnknown::XmlUnknown() :
 *  @brief
 *    Copy constructor
 */
-XmlUnknown::XmlUnknown(const XmlUnknown &cSource) :
-	XmlNode(new TiXmlUnknown(*(TiXmlUnknown*)cSource.m_pData))
+XmlUnknown::XmlUnknown(const XmlUnknown &cSource) : XmlNode(Unknown)
 {
+	// Copy the value
+	SetValue(cSource.GetValue());
 }
 
 /**
@@ -70,7 +70,8 @@ XmlUnknown::~XmlUnknown()
 */
 XmlUnknown &XmlUnknown::operator =(const XmlUnknown &cSource)
 {
-	*((TiXmlUnknown*)m_pData) = (const TiXmlUnknown&)*((TiXmlUnknown*)cSource.m_pData);
+	// Copy the value
+	SetValue(cSource.GetValue());
 	return *this;
 }
 
@@ -82,24 +83,24 @@ bool XmlUnknown::Save(File &cFile, uint32 nDepth)
 {
 	// Get the number of empty spaces
 	const XmlDocument *pDocument = GetDocument();
-	uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
+	const uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
 
 	// Print empty spaces
 	for (uint32 i=0; i<nNumOfSpaces; i++)
 		cFile.PutC(' ');
 
 	// Write value
-	cFile.Print('<' + GetValue() + '>');
+	cFile.Print('<' + m_sValue + '>');
 
 	// Done
 	return true;
 }
 
-String XmlUnknown::ToString(uint32 nDepth)
+String XmlUnknown::ToString(uint32 nDepth) const
 {
 	// Get the number of empty spaces
 	const XmlDocument *pDocument = GetDocument();
-	uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
+	const uint32 nNumOfSpaces = (pDocument ? pDocument->GetTabSize() : 4) * nDepth;
 
 	// Print empty spaces
 	String sXml;
@@ -107,23 +108,57 @@ String XmlUnknown::ToString(uint32 nDepth)
 		sXml += ' ';
 
 	// Write value
-	sXml += '<' + GetValue() + '>';
+	sXml += '<' + m_sValue + '>';
 
 	// Return the resulting string
 	return sXml;
 }
 
+const char *XmlUnknown::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
+{
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+
+	if (pData) {
+		pData->Stamp(pszData, nEncoding);
+		m_cCursor = pData->Cursor();
+	}
+	if (!pszData || !*pszData || *pszData != '<') {
+		// Set error code
+		XmlDocument *pDocument = GetDocument();
+		if (pDocument)
+			pDocument->SetError(ErrorParsingUnknown, pszData, pData, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+	++pszData;
+	m_sValue = "";
+
+	while (pszData && *pszData && *pszData != '>') {
+		m_sValue += *pszData;
+		++pszData;
+	}
+
+	if (!pszData) {
+		// Set error code
+		XmlDocument *pDocument = GetDocument();
+		if (pDocument)
+			pDocument->SetError(ErrorParsingUnknown, 0, 0, nEncoding);
+	}
+	if (pszData && *pszData == '>')
+		return pszData + 1;
+
+	// Done
+	return pszData;
+}
+
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public virtual XmlNode functions                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-XmlUnknown::XmlUnknown(void *pNode, int nDummy) :
-	XmlNode(pNode)
+XmlNode *XmlUnknown::Clone() const
 {
+	return new XmlUnknown(*this);
 }
 
 

@@ -23,8 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
+#include <stdio.h>
 #include "PLGeneral/File/File.h"
+#include "PLGeneral/Xml/XmlParsingData.h"
+#include "PLGeneral/Xml/XmlDocument.h"
 #include "PLGeneral/Xml/XmlAttribute.h"
 
 
@@ -39,6 +41,17 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Default constructor
+*/
+XmlAttribute::XmlAttribute() :
+	m_pDocument(NULL),
+	m_pPreviousAttribute(NULL),
+	m_pNextAttribute(NULL)
+{
+}
+
+/**
+*  @brief
 *    Destructor
 */
 XmlAttribute::~XmlAttribute()
@@ -51,7 +64,7 @@ XmlAttribute::~XmlAttribute()
 */
 String XmlAttribute::GetName() const
 {
-	return ((TiXmlAttribute*)m_pData)->Name();
+	return m_sName;
 }
 
 /**
@@ -60,7 +73,7 @@ String XmlAttribute::GetName() const
 */
 void XmlAttribute::SetName(const String &sName)
 {
-	((TiXmlAttribute*)m_pData)->SetName(sName);
+	m_sName = sName;
 }
 
 /**
@@ -69,7 +82,7 @@ void XmlAttribute::SetName(const String &sName)
 */
 String XmlAttribute::GetValue() const
 {
-	return ((TiXmlAttribute*)m_pData)->Value();
+	return m_sValue;
 }
 
 /**
@@ -78,7 +91,7 @@ String XmlAttribute::GetValue() const
 */
 int XmlAttribute::GetIntValue() const
 {
-	return ((TiXmlAttribute*)m_pData)->IntValue();
+	return m_sValue.GetInt();
 }
 
 /**
@@ -87,7 +100,7 @@ int XmlAttribute::GetIntValue() const
 */
 double XmlAttribute::GetDoubleValue() const
 {
-	return ((TiXmlAttribute*)m_pData)->DoubleValue();
+	return m_sValue.GetDouble();
 }
 
 /**
@@ -97,7 +110,7 @@ double XmlAttribute::GetDoubleValue() const
 XmlBase::EQueryResult XmlAttribute::QueryIntValue(int &nValue) const
 {
 	int nBackup = nValue;
-	EQueryResult nResult = (EQueryResult)((TiXmlAttribute*)m_pData)->QueryIntValue(&nValue);
+	EQueryResult nResult = (sscanf_s(m_sValue.GetASCII(), "%d", &nValue) == 1) ? Success : WrongType;
 	if (nResult != Success)
 		nValue = nBackup;
 	return nResult;
@@ -110,7 +123,7 @@ XmlBase::EQueryResult XmlAttribute::QueryIntValue(int &nValue) const
 XmlBase::EQueryResult XmlAttribute::QueryDoubleValue(double &dValue) const
 {
 	double dBackup = dValue;
-	EQueryResult nResult = (EQueryResult)((TiXmlAttribute*)m_pData)->QueryDoubleValue(&dValue);
+	EQueryResult nResult = (sscanf_s(m_sValue.GetASCII(), "%lf", &dValue) == 1) ? Success : WrongType;
 	if (nResult != Success)
 		dValue = dBackup;
 	return nResult;
@@ -122,7 +135,7 @@ XmlBase::EQueryResult XmlAttribute::QueryDoubleValue(double &dValue) const
 */
 void XmlAttribute::SetValue(const String &sValue)
 {
-	((TiXmlAttribute*)m_pData)->SetValue(sValue);
+	m_sValue = sValue;
 }
 
 /**
@@ -131,7 +144,7 @@ void XmlAttribute::SetValue(const String &sValue)
 */
 void XmlAttribute::SetIntValue(int nValue)
 {
-	((TiXmlAttribute*)m_pData)->SetIntValue(nValue);
+	m_sValue = nValue;
 }
 
 /**
@@ -140,7 +153,7 @@ void XmlAttribute::SetIntValue(int nValue)
 */
 void XmlAttribute::SetDoubleValue(double dValue)
 {
-	((TiXmlAttribute*)m_pData)->SetDoubleValue(dValue);
+	m_sValue = dValue;
 }
 
 /**
@@ -149,12 +162,14 @@ void XmlAttribute::SetDoubleValue(double dValue)
 */
 XmlAttribute *XmlAttribute::GetNext()
 {
-	return GetPLAttribute(((TiXmlAttribute*)m_pData)->Next());
+	// We are using knowledge of the sentinel. The sentinel have a value or name.
+	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? NULL : m_pNextAttribute;
 }
 
 const XmlAttribute *XmlAttribute::GetNext() const
 {
-	return (const XmlAttribute*)GetPLAttribute(((TiXmlAttribute*)m_pData)->Next());
+	// We are using knowledge of the sentinel. The sentinel have a value or name.
+	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? NULL : m_pNextAttribute;
 }
 
 /**
@@ -163,27 +178,29 @@ const XmlAttribute *XmlAttribute::GetNext() const
 */
 XmlAttribute *XmlAttribute::GetPrevious()
 {
-	return GetPLAttribute(((TiXmlAttribute*)m_pData)->Previous());
+	// We are using knowledge of the sentinel. The sentinel have a value or name.
+	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? NULL : m_pPreviousAttribute;
 }
 
 const XmlAttribute *XmlAttribute::GetPrevious() const
 {
-	return (const XmlAttribute*)GetPLAttribute(((TiXmlAttribute*)m_pData)->Previous());
+	// We are using knowledge of the sentinel. The sentinel have a value or name.
+	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? NULL : m_pPreviousAttribute;
 }
 
 bool XmlAttribute::operator ==(const XmlAttribute &cOther) const
 {
-	return (*((TiXmlAttribute*)m_pData) == (const TiXmlAttribute&)*((TiXmlAttribute*)cOther.m_pData));
+	return (cOther.m_sName == m_sName);
 }
 
 bool XmlAttribute::operator <(const XmlAttribute &cOther) const
 {
-	return (*((TiXmlAttribute*)m_pData) < (const TiXmlAttribute&)*((TiXmlAttribute*)cOther.m_pData));
+	return (m_sName < cOther.m_sName);
 }
 
 bool XmlAttribute::operator >(const XmlAttribute &cOther) const
 {
-	return (*((TiXmlAttribute*)m_pData) > (const TiXmlAttribute&)*((TiXmlAttribute*)cOther.m_pData));
+	return (m_sName > cOther.m_sName);
 }
 
 
@@ -192,31 +209,113 @@ bool XmlAttribute::operator >(const XmlAttribute &cOther) const
 //[-------------------------------------------------------]
 bool XmlAttribute::Save(File &cFile, uint32 nDepth)
 {
-	TIXML_STRING sName, sValue;
+	String sName, sValue;
 
-	TiXmlBase::EncodeString(((TiXmlAttribute*)m_pData)->NameTStr(),  &sName);
-	TiXmlBase::EncodeString(((TiXmlAttribute*)m_pData)->ValueTStr(), &sValue);
+	EncodeString(m_sName,  sName);
+	EncodeString(m_sValue, sValue);
 
-	if (sValue.find('\"') == TIXML_STRING::npos)
-		cFile.Print(String::Format("%s=\"%s\"", sName.c_str(), sValue.c_str()));
+	if (sValue.IsSubstring('\"'))
+		cFile.Print(sName + "='" + sValue + '\'');
 	else
-		cFile.Print(String::Format("%s='%s'", sName.c_str(), sValue.c_str()));
+		cFile.Print(sName + "=\"" + sValue + '\"');
 
 	// Done
 	return true;
 }
 
-String XmlAttribute::ToString(uint32 nDepth)
+String XmlAttribute::ToString(uint32 nDepth) const
 {
-	TIXML_STRING sName, sValue;
+	String sName, sValue;
 
-	TiXmlBase::EncodeString(((TiXmlAttribute*)m_pData)->NameTStr(),  &sName);
-	TiXmlBase::EncodeString(((TiXmlAttribute*)m_pData)->ValueTStr(), &sValue);
+	EncodeString(m_sName,  sName);
+	EncodeString(m_sValue, sValue);
 
-	if (sValue.find('\"') == TIXML_STRING::npos)
-		return String::Format("%s=\"%s\"", sName.c_str(), sValue.c_str());
+	if (sValue.IsSubstring('\"'))
+		return sName + "='" + sValue + '\'';
 	else
-		return String::Format("%s='%s'", sName.c_str(), sValue.c_str());
+		return sName + "=\"" + sValue + '\"';
+}
+
+const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
+{
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+	if (!pszData || !*pszData)
+		return NULL; // Error!
+
+	if (pData) {
+		pData->Stamp(pszData, nEncoding);
+		m_cCursor = pData->Cursor();
+	}
+
+	// Read the name, the '=' and the value
+	const char *pszError = pszData;
+	pszData = ReadName(pszData, m_sName, nEncoding);
+	if (!pszData || !*pszData) {
+		// Set error code
+		if (m_pDocument)
+			m_pDocument->SetError(ErrorReadingAttributes, pszError, pData, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+	if (!pszData || !*pszData || *pszData != '=') {
+		// Set error code
+		if (m_pDocument)
+			m_pDocument->SetError(ErrorReadingAttributes, pszData, pData, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+
+	++pszData;	// skip '='
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+	if (!pszData || !*pszData) {
+		// Set error code
+		if (m_pDocument)
+			m_pDocument->SetError(ErrorReadingAttributes, pszData, pData, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+	
+	// Constants
+	const char szSingleQuote = '\'';
+	const char szDoubleQuote = '\"';
+
+	if (*pszData == szSingleQuote) {
+		++pszData;
+		const char *pszEnd = "\'";		// Single quote in string
+		pszData = ReadText(pszData, m_sValue, false, pszEnd, false, nEncoding);
+	} else if (*pszData == szDoubleQuote) {
+		++pszData;
+		const char *pszEnd = "\"";		// Double quote in string
+		pszData = ReadText(pszData, m_sValue, false, pszEnd, false, nEncoding);
+	} else {
+		// All attribute values should be in single or double quotes.
+		// But this is such a common error that the parser will try
+		// its best, even without them.
+		m_sValue = "";
+		while (    pszData && *pszData										// Existence
+				&& !IsWhiteSpace( *pszData )								// Whitespace
+				&& *pszData != '/' && *pszData != '>' ) {					// Tag end
+			if (*pszData == szSingleQuote || *pszData == szDoubleQuote) {
+				// We did not have an opening quote but seem to have a closing one. Give up and throw an error.
+
+				// Set error code
+				if (m_pDocument)
+					m_pDocument->SetError(ErrorReadingAttributes, pszData, pData, nEncoding);
+
+				// Error!
+				return NULL;
+			}
+			m_sValue += *pszData;
+			++pszData;
+		}
+	}
+
+	// Done
+	return pszData;
 }
 
 
@@ -225,19 +324,12 @@ String XmlAttribute::ToString(uint32 nDepth)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-XmlAttribute::XmlAttribute(void *pNode) :
-	XmlBase(pNode)
-{
-}
-
-/**
-*  @brief
 *    Copy constructor
 */
 XmlAttribute::XmlAttribute(const XmlAttribute &cSource) :
-	XmlBase(NULL)
+	m_pDocument(NULL),
+	m_pPreviousAttribute(NULL),
+	m_pNextAttribute(NULL)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -250,29 +342,6 @@ XmlAttribute &XmlAttribute::operator =(const XmlAttribute &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private static functions                              ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns/creates the PL XML attribute
-*/
-XmlAttribute *XmlAttribute::GetPLAttribute(void *pNode)
-{
-	// Check parameter
-	if (!pNode)
-		return NULL;
-
-	// Check wether this TinyXML attribute has already a PL XML attribute, if there's no
-	// PL XML attribute, create one
-	TiXmlAttribute *pTinyXMLAttribute = (TiXmlAttribute*)pNode;
-	if (pTinyXMLAttribute->GetUserData())
-		return (XmlAttribute*)pTinyXMLAttribute->GetUserData();
-	else
-		return new XmlAttribute(pTinyXMLAttribute);
 }
 
 

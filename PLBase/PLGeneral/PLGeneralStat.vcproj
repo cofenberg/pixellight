@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/TinyXML/include/tinyxml/;../../External/_Windows_x86_32/libpcre/include/pcre/"
+				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/libpcre/include/pcre/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;PLGENERAL_STATIC;PCRE_STATIC"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -66,9 +66,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Userenv.lib wsock32.lib zlib.lib tinyxml.lib pcre.lib"
+				AdditionalDependencies="Userenv.lib wsock32.lib zlib.lib pcre.lib"
 				OutputFile="$(OutDir)\$(ProjectName)D.lib"
-				AdditionalLibraryDirectories="../../External/_Windows_x86_32/zlib/lib/;../../External/_Windows_x86_32/TinyXML/lib/;../../External/_Windows_x86_32/libpcre/lib/"
+				AdditionalLibraryDirectories="../../External/_Windows_x86_32/zlib/lib/;../../External/_Windows_x86_32/libpcre/lib/"
 				IgnoreDefaultLibraryNames=""
 			/>
 			<Tool
@@ -114,7 +114,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/TinyXML/include/tinyxml/;../../External/_Windows_x86_64/libpcre/include/pcre/"
+				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/libpcre/include/pcre/"
 				PreprocessorDefinitions="WIN32;WIN64;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;PLGENERAL_STATIC;PCRE_STATIC"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -136,9 +136,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Userenv.lib wsock32.lib zlibstat64.lib tinyxml64.lib pcre64.lib"
+				AdditionalDependencies="Userenv.lib wsock32.lib zlibstat64.lib pcre64.lib"
 				OutputFile="$(OutDir)\$(ProjectName)D64.lib"
-				AdditionalLibraryDirectories="../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/TinyXML/lib/;../../External/_Windows_x86_64/PCRE/lib/"
+				AdditionalLibraryDirectories="../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/PCRE/lib/"
 				IgnoreDefaultLibraryNames=""
 			/>
 			<Tool
@@ -188,7 +188,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/TinyXML/include/tinyxml/;../../External/_Windows_x86_32/libpcre/include/pcre/"
+				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/libpcre/include/pcre/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;PLGENERAL_STATIC;PCRE_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -214,8 +214,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Userenv.lib wsock32.lib zlib.lib tinyxml.lib pcre.lib"
-				AdditionalLibraryDirectories="../../External/_Windows_x86_32/zlib/lib/;../../External/_Windows_x86_32/TinyXML/lib/;../../External/_Windows_x86_32/libpcre/lib/"
+				AdditionalDependencies="Userenv.lib wsock32.lib zlib.lib pcre.lib"
+				AdditionalLibraryDirectories="../../External/_Windows_x86_32/zlib/lib/;../../External/_Windows_x86_32/libpcre/lib/"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -265,7 +265,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/TinyXML/include/tinyxml/;../../External/_Windows_x86_64/libpcre/include/pcre/"
+				AdditionalIncludeDirectories="include/;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/libpcre/include/pcre/"
 				PreprocessorDefinitions="WIN32;WIN64;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;PLGENERAL_STATIC;PCRE_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -288,9 +288,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Userenv.lib wsock32.lib zlibstat64.lib tinyxml64.lib pcre64.lib"
+				AdditionalDependencies="Userenv.lib wsock32.lib zlibstat64.lib pcre64.lib"
 				OutputFile="$(OutDir)\$(ProjectName)64.lib"
-				AdditionalLibraryDirectories="../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/TinyXML/lib/;../../External/_Windows_x86_64/PCRE/lib/"
+				AdditionalLibraryDirectories="../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/PCRE/lib/"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -1676,6 +1676,10 @@
 			</File>
 			<File
 				RelativePath=".\include\PLGeneral\Xml\XmlNode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Xml\XmlParsingData.cpp"
 				>
 			</File>
 			<File

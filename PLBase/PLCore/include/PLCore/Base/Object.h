@@ -40,9 +40,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
-	class XmlElement;
-}
 namespace PLCore {
 	class Class;
 	class DynVar;

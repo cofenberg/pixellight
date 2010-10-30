@@ -74,7 +74,7 @@ class XmlDeclaration : public XmlNode {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
 		PLGENERAL_API XmlDeclaration();
 
@@ -151,23 +151,24 @@ class XmlDeclaration : public XmlNode {
 	//[-------------------------------------------------------]
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLGENERAL_API virtual String ToString(uint32 nDepth = 0);
+		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public virtual XmlNode functions                      ]
+	//[-------------------------------------------------------]
+	public:
+		PLGENERAL_API virtual XmlNode *Clone() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pNode
-		*    Internal node pointer (always valid!)
-		*  @param[in] nDummy
-		*    Dummy parameter
-		*/
-		XmlDeclaration(void *pNode, int nDummy);
+		String m_sVersion;		/**< Version */
+		String m_sEncoding;		/**< Encoding */
+		String m_sStandalone;	/**< Standalone */
 
 
 };

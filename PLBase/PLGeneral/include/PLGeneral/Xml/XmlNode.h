@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGeneral/String/String.h"
 #include "PLGeneral/Xml/XmlBase.h"
 
 
@@ -54,7 +53,7 @@ class XmlDeclaration;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    XML node
+*    Abstract XML node
 */
 class XmlNode : public XmlBase {
 
@@ -249,7 +248,7 @@ class XmlNode : public XmlBase {
 		*    Node to add
 		*
 		*  @return
-		*    Pointer to the given 'cAddThis', NULL on error
+		*    Pointer to the given 'cAddThis', NULL on error (on error, 'cAddThis' will be deleted)
 		*
 		*  @remarks
 		*    The node to be added is passed by reference, and will be henceforth owned
@@ -271,7 +270,7 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Returns a pointer to the new object or NULL if an error occured
 		*/
-		PLGENERAL_API XmlNode *InsertBeforeChild(const XmlNode &cBeforeThis, const XmlNode &cAddThis);
+		PLGENERAL_API XmlNode *InsertBeforeChild(XmlNode &cBeforeThis, const XmlNode &cAddThis);
 
 		/**
 		*  @brief
@@ -285,14 +284,14 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Returns a pointer to the new object or NULL if an error occured
 		*/
-		PLGENERAL_API XmlNode *InsertAfterChild(const XmlNode &cAfterThis, const XmlNode &cAddThis);
+		PLGENERAL_API XmlNode *InsertAfterChild(XmlNode &cAfterThis, const XmlNode &cAddThis);
 
 		/**
 		*  @brief
 		*    Replace a child of this node
 		*
 		*  @param[in] cReplaceThis
-		*    Node which should be replaced
+		*    Node which should be replaced (on success, destroyed automatically)
 		*  @param[in] cWithThis
 		*    New node replacing the old
 		*
@@ -306,7 +305,7 @@ class XmlNode : public XmlBase {
 		*    Delete a child of this node
 		*
 		*  @param[in] cRemoveThis
-		*    Node to remove
+		*    Node to remove (on success, destroyed automatically)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -456,6 +455,11 @@ class XmlNode : public XmlBase {
 		PLGENERAL_API XmlDeclaration *ToDeclaration();
 		PLGENERAL_API const XmlDeclaration *ToDeclaration() const;
 
+
+	//[-------------------------------------------------------]
+	//[ Public virtual XmlNode functions                      ]
+	//[-------------------------------------------------------]
+	public:
 		/**
 		*  @brief
 		*    Create an exact duplicate of this node and return it
@@ -466,7 +470,7 @@ class XmlNode : public XmlBase {
 		*  @note
 		*    - The memory must be deleted by the caller
 		*/
-		PLGENERAL_API XmlNode *Clone() const;
+		virtual XmlNode *Clone() const = 0;
 
 
 	//[-------------------------------------------------------]
@@ -477,22 +481,37 @@ class XmlNode : public XmlBase {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] pData
-		*    Pointer to the concrete data (always valid!)
+		*  @param[in] nType
+		*    Type of the node
 		*/
-		XmlNode(void *pData);
+		XmlNode(ENodeType nType);
 
 		/**
 		*  @brief
-		*    Returns/creates the PL XML node
+		*    Figure out what is at *pszData, and parse it
 		*
-		*  @param[in] pNode
-		*    Internal node pointer (always valid!)
+		*  @param[in] pszData
+		*    Start position
+		*  @param[in] nEncoding
+		*    Encoding
 		*
 		*  @return
-		*    The PL XML node, NULL on error
+		*    Returns NULL if it is not an XML node, else it returns a created node instance (you're responsible for it's destruction)
 		*/
-		static XmlNode *GetPLNode(void *pNode);
+		XmlNode *Identify(const char *pszData, EEncoding nEncoding);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		XmlNode   *m_pParent;			/**< Parent node, can be NULL */
+		ENodeType  m_nType;				/**< Type of the node */
+		XmlNode   *m_pFirstChild;		/**< First child, can be NULL */
+		XmlNode   *m_pLastChild;		/**< Last child, can be NULL */
+		String	   m_sValue;			/**< Value */
+		XmlNode   *m_pPreviousSibling;	/**< Previous sibling, can be NULL */
+		XmlNode   *m_pNextSibling;		/**< Previous sibling, can be NULL */
 
 
 	//[-------------------------------------------------------]

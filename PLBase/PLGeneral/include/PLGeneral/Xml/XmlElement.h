@@ -29,18 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLGeneral/Xml/XmlNode.h"
+#include "PLGeneral/Xml/XmlAttribute.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLGeneral {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class XmlAttribute;
 
 
 //[-------------------------------------------------------]
@@ -287,29 +282,130 @@ class XmlElement : public XmlNode {
 		PLGENERAL_API XmlAttribute *GetLastAttribute();
 		PLGENERAL_API const XmlAttribute *GetLastAttribute() const;
 
+		/**
+		*  @brief
+		*    Convenience function for easy access to the text inside an element
+		*
+		*  @remarks
+		*    Although easy and concise, GetText() is limited compared to getting the
+		*    XmlText child and accessing it directly.
+		*
+		*    If the first child of 'this' is a XmlText, the GetText()
+		*    returns the character string of the text node, else null is returned.
+		*
+		*    This is a convenient method for getting the text of simple contained text:
+		*    @verbatim
+		*    <foo>This is text</foo>
+		*    const char *pszText = fooElement->GetText();
+		*    @endverbatim
+		*
+		*    'pszText' will be a pointer to "This is text".
+		*
+		*    Note that this function can be misleading. If the element foo was created from
+		*    this XML:
+		*    @verbatim
+		*    <foo><b>This is text</b></foo>
+		*    @endverbatim
+		*
+		*    then the value of str would be null. The first child node isn't a text node, it is
+		*    another element. From this XML:
+		*    @verbatim
+		*    <foo>This is <b>text</b></foo>
+		*    @endverbatim
+		*    GetText() will return "This is ".
+		*
+		*    WARNING: GetText() accesses a child node - don't become confused with the
+		*             similarly named XmlNode::ToText() which is safe type casts on the referenced node.
+		*
+		*  @return
+		*    Text inside an element, or empty string
+		*/
+		PLGENERAL_API String GetText() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual XmlBase functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLGENERAL_API virtual String ToString(uint32 nDepth = 0);
+		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Public virtual XmlNode functions                      ]
 	//[-------------------------------------------------------]
-	protected:
+	public:
+		PLGENERAL_API virtual XmlNode *Clone() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private classes                                       ]
+	//[-------------------------------------------------------]
+	private:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pNode
-		*    Internal node pointer (always valid!)
-		*  @param[in] nDummy
-		*    Dummy parameter
+		*    A internal class used to manage a group of attributes
 		*/
-		XmlElement(void *pNode, int nDummy);
+		class XmlAttributeSet {
+		public:
+			XmlAttributeSet();
+			~XmlAttributeSet();
+
+			void Add(XmlAttribute &cAttribute);
+			void Remove(XmlAttribute &cAttribute);
+
+			const XmlAttribute *GetFirst()	const	{ return ( cSentinel.m_pNextAttribute     == &cSentinel ) ? 0 : cSentinel.m_pNextAttribute; }
+			XmlAttribute *GetFirst()				{ return ( cSentinel.m_pNextAttribute     == &cSentinel ) ? 0 : cSentinel.m_pNextAttribute; }
+			const XmlAttribute *GetLast() const		{ return ( cSentinel.m_pPreviousAttribute == &cSentinel ) ? 0 : cSentinel.m_pPreviousAttribute; }
+			XmlAttribute *GetLast()					{ return ( cSentinel.m_pPreviousAttribute == &cSentinel ) ? 0 : cSentinel.m_pPreviousAttribute; }
+
+			XmlAttribute *Find(const String &sName) const;
+			XmlAttribute *FindOrCreate(const String &sName);
+
+		private:
+			XmlAttributeSet(const XmlAttributeSet &cSource) { /** Not implemented */ };
+			void operator =(const XmlAttributeSet &cSource) { /** Not implemented */ };
+
+			XmlAttribute cSentinel;
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Like clear, but initializes 'this' object as well
+		*/
+		void ClearThis();
+
+		/**
+		*  @brief
+		*    Reads the "value" of the element -- another element, or text
+		*
+		*  @param[in] pszData
+		*    Parsing data, if NULL, an error will be returned
+		*  @param[in] pData
+		*    Parsing data, can be NULL
+		*  @param[in] nEncoding
+		*    Encoding
+		*
+		*  @return
+		*    Read value
+		*
+		*  @note
+		*    - This should terminate with the current end tag
+		*/
+		const char *ReadValue(const char *pszData, XmlParsingData *pData, EEncoding nEncoding);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		XmlAttributeSet m_cAttributeSet;	/**< Attribute set */
 
 
 };

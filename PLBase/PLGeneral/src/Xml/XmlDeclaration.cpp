@@ -23,8 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
 #include "PLGeneral/File/File.h"
+#include "PLGeneral/Xml/XmlParsingData.h"
+#include "PLGeneral/Xml/XmlDocument.h"
+#include "PLGeneral/Xml/XmlAttribute.h"
 #include "PLGeneral/Xml/XmlDeclaration.h"
 
 
@@ -39,10 +41,9 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-XmlDeclaration::XmlDeclaration() :
-	XmlNode(new TiXmlDeclaration())
+XmlDeclaration::XmlDeclaration() : XmlNode(Declaration)
 {
 }
 
@@ -50,8 +51,10 @@ XmlDeclaration::XmlDeclaration() :
 *  @brief
 *    Constructor
 */
-XmlDeclaration::XmlDeclaration(const String &sVersion, const String &sEncoding, const String &sStandalone) :
-	XmlNode(new TiXmlDeclaration(sVersion, sEncoding, sStandalone))
+XmlDeclaration::XmlDeclaration(const String &sVersion, const String &sEncoding, const String &sStandalone) : XmlNode(Declaration),
+	m_sVersion(sVersion),
+	m_sEncoding(sEncoding),
+	m_sStandalone(sStandalone)
 {
 }
 
@@ -59,8 +62,10 @@ XmlDeclaration::XmlDeclaration(const String &sVersion, const String &sEncoding, 
 *  @brief
 *    Copy constructor
 */
-XmlDeclaration::XmlDeclaration(const XmlDeclaration &cSource) :
-	XmlNode(new TiXmlDeclaration(*(TiXmlDeclaration*)cSource.m_pData))
+XmlDeclaration::XmlDeclaration(const XmlDeclaration &cSource) : XmlNode(Declaration),
+	m_sVersion(cSource.m_sVersion),
+	m_sEncoding(cSource.m_sEncoding),
+	m_sStandalone(cSource.m_sStandalone)
 {
 }
 
@@ -78,7 +83,10 @@ XmlDeclaration::~XmlDeclaration()
 */
 XmlDeclaration &XmlDeclaration::operator =(const XmlDeclaration &cSource)
 {
-	*((TiXmlDeclaration*)m_pData) = (const TiXmlDeclaration&)*((TiXmlDeclaration*)cSource.m_pData);
+	// Copy the data
+	m_sVersion    = cSource.m_sVersion;
+	m_sEncoding   = cSource.m_sEncoding;
+	m_sStandalone = cSource.m_sStandalone;
 	return *this;
 }
 
@@ -88,7 +96,7 @@ XmlDeclaration &XmlDeclaration::operator =(const XmlDeclaration &cSource)
 */
 String XmlDeclaration::GetVersion() const
 {
-	return ((TiXmlDeclaration*)m_pData)->Version();
+	return m_sVersion;
 }
 
 /**
@@ -97,7 +105,7 @@ String XmlDeclaration::GetVersion() const
 */
 String XmlDeclaration::GetEncoding() const
 {
-	return ((TiXmlDeclaration*)m_pData)->Encoding();
+	return m_sEncoding;
 }
 
 /**
@@ -106,7 +114,7 @@ String XmlDeclaration::GetEncoding() const
 */
 String XmlDeclaration::GetStandalone() const
 {
-	return ((TiXmlDeclaration*)m_pData)->Standalone();
+	return m_sStandalone;
 }
 
 
@@ -117,45 +125,104 @@ bool XmlDeclaration::Save(File &cFile, uint32 nDepth)
 {
 	cFile.Print("<?xml ");
 
-	if (GetVersion().GetLength())
-		cFile.Print("version=\"" + GetVersion() + "\" ");
-	if (GetEncoding().GetLength())
-		cFile.Print("encoding=\"" + GetEncoding() + "\" ");
-	if (GetStandalone().GetLength())
-		cFile.Print("standalone=\"" + GetStandalone() + "\" ");
+	if (m_sVersion.GetLength())
+		cFile.Print("version=\"" + m_sVersion + "\" ");
+	if (m_sEncoding.GetLength())
+		cFile.Print("encoding=\"" + m_sEncoding + "\" ");
+	if (m_sStandalone.GetLength())
+		cFile.Print("standalone=\"" + m_sStandalone + "\" ");
 	cFile.Print("?>");
 
 	// Done
 	return true;
 }
 
-String XmlDeclaration::ToString(uint32 nDepth)
+String XmlDeclaration::ToString(uint32 nDepth) const
 {
 	String sXml = "<?xml ";
 
-	if (GetVersion().GetLength())
-		sXml += "version=\"" + GetVersion() + "\" ";
-	if (GetEncoding().GetLength())
-		sXml += "encoding=\"" + GetEncoding() + "\" ";
-	if (GetStandalone().GetLength())
-		sXml += "standalone=\"" + GetStandalone() + "\" ";
+	if (m_sVersion.GetLength())
+		sXml += "version=\"" + m_sVersion + "\" ";
+	if (m_sEncoding.GetLength())
+		sXml += "encoding=\"" + m_sEncoding + "\" ";
+	if (m_sStandalone.GetLength())
+		sXml += "standalone=\"" + m_sStandalone + "\" ";
 	sXml += "?>";
 
 	// Done
 	return sXml;
 }
 
+const char *XmlDeclaration::Parse(const char *pszData, XmlParsingData *pData, EEncoding nEncoding)
+{
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+
+	// Find the beginning, find the end, and look for the stuff in-between
+	if (!pszData || !*pszData || !StringEqual(pszData, "<?xml", true, nEncoding)) {
+		// Set error code
+		XmlDocument *pDocument = GetDocument();
+		if (pDocument)
+			pDocument->SetError(ErrorParsingDeclaration, 0, 0, nEncoding);
+
+		// Error!
+		return NULL;
+	}
+	if (pData) {
+		pData->Stamp(pszData, nEncoding);
+		m_cCursor = pData->Cursor();
+	}
+	pszData += 5;
+
+	m_sVersion    = "";
+	m_sEncoding   = "";
+	m_sStandalone = "";
+
+	while (pszData && *pszData) {
+		if (*pszData == '>') {
+			++pszData;
+
+			// Done
+			return pszData;
+		}
+
+		pszData = SkipWhiteSpace(pszData, nEncoding);
+
+		// "version"
+		if (StringEqual(pszData, "version", true, nEncoding)) {
+			XmlAttribute attrib;
+			pszData = attrib.Parse(pszData, pData, nEncoding);
+			m_sVersion = attrib.GetValue();
+
+		// "nEncoding"
+		} else if (StringEqual(pszData, "nEncoding", true, nEncoding)) {
+			XmlAttribute attrib;
+			pszData = attrib.Parse(pszData, pData, nEncoding);
+			m_sEncoding = attrib.GetValue();
+
+		// "standalone"
+		} else if (StringEqual(pszData, "standalone", true, nEncoding)) {
+			XmlAttribute attrib;
+			pszData = attrib.Parse(pszData, pData, nEncoding);
+			m_sStandalone = attrib.GetValue();
+
+		} else {
+			// Read over whatever it is
+			while(pszData && *pszData && *pszData != '>' && !IsWhiteSpace(*pszData))
+				++pszData;
+		}
+	}
+
+	// Error!
+	return NULL;
+}
+
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public virtual XmlNode functions                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-XmlDeclaration::XmlDeclaration(void *pNode, int nDummy) :
-	XmlNode(pNode)
+XmlNode *XmlDeclaration::Clone() const
 {
+	return new XmlDeclaration(*this);
 }
 
 

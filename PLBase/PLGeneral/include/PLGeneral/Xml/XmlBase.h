@@ -41,6 +41,7 @@ namespace PLGeneral {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class File;
+class XmlParsingData;
 
 
 //[-------------------------------------------------------]
@@ -75,6 +76,12 @@ class XmlBase {
 
 
 	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class XmlParsingData;
+
+
+	//[-------------------------------------------------------]
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
@@ -86,7 +93,6 @@ class XmlBase {
 			NoError,						/**< No error */
 			Error,							/**< Error */
 			ErrorOpeningFile,				/**< Error opening file */
-			ErrorOutOfMemory,				/**< Error out of memory */
 			ErrorParsingElement,			/**< Error parsing element */
 			ErrorFailedToReadElementName,	/**< Error failed to read element name */
 			ErrorReadingElementValue,		/**< Error reading element value */
@@ -98,6 +104,8 @@ class XmlBase {
 			ErrorParsingDeclaration,		/**< Error parsing declaration */
 			ErrorDocumentEmpty,				/**< Error document empty */
 			ErrorEmbeddedNull,				/**< Error embedded null */
+			ErrorParsingCData,				/**< Error parsing CDATA */
+			ErrorDocumentTopOnly,			/**< Error document top only */
 			ErrorStringCount				/**< Error string count */
 		};
 
@@ -109,6 +117,16 @@ class XmlBase {
 			Success,		/**< All went fine */
 			NoAttribute,	/**< Attribut does not exist */
 			WrongType		/**< Invalid attribute type */
+		};
+
+		/**
+		*  @brief
+		*    Used by the parsing routines
+		*/
+		enum EEncoding {
+			EncodingUnknown,	/**< Unknown encoding (default) */
+			EncodingUTF8,		/**< UTF8 encoding */
+			EncodingLegacy		/**< Legacy encoding */
 		};
 
 
@@ -216,30 +234,6 @@ class XmlBase {
 		*/
 		PLGENERAL_API void SetUserData(void *pUser);
 
-		/**
-		*  @brief
-		*    Returns the internal data
-		*
-		*  @return
-		*    Internal data (always valid!)
-		*
-		*  @note
-		*    - For internal usage only!
-		*/
-		void *GetData() const;
-
-		/**
-		*  @brief
-		*    Sets the internal data
-		*
-		*  @param[in] pData
-		*    New internal data (must be always valid!)
-		*
-		*  @note
-		*    - For internal usage only!
-		*/
-		void SetData(void *pData);
-
 
 	//[-------------------------------------------------------]
 	//[ Public virtual functions                              ]
@@ -269,7 +263,131 @@ class XmlBase {
 		*  @return
 		*    String containing the XML
 		*/
-		virtual PLGeneral::String ToString(uint32 nDepth = 0) = 0;
+		virtual String ToString(uint32 nDepth = 0) const = 0;
+
+		/**
+		*  @brief
+		*    Parse the given null terminated block of XML data
+		*
+		*  @param[in] pszData
+		*    Parsing data, if NULL, an error will be returned
+		*  @param[in] pData
+		*    Parsing data, can be NULL
+		*  @param[in] nEncoding
+		*    Encoding
+		*
+		*  @return
+		*    The pointer to the parameter 'pszData' if all went fine, else NULL
+		*
+		*  @remarks
+		*    Passing in an encoding to this method (either 'EncodingLegacy' or
+		*    'EncodingUTF8' will force the parser to use that encoding, regardless
+		*    of what the parser might otherwise try to detect.
+		*/
+		virtual const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown) = 0;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected definitions                                 ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Internal structure for tracking location of items in the XML file
+		*/
+		struct Cursor {
+			Cursor()		{ nRow = nColumn = -1; }
+			void Clear()	{ nRow = nColumn = -1; }
+
+			int nRow;		// 0 based
+			int nColumn;	// 0 based
+		};
+
+		// Bunch of unicode info at:
+		//		http://www.unicode.org/faq/utf_bom.html
+		// Including the basic of this table, which determines the #bytes in the
+		// sequence from the lead byte. 1 placed for invalid sequences --
+		// although the result will be junk, pass it through as much as possible.
+		// Beware of the non-characters in UTF-8:	
+		//				ef bb bf (Microsoft "lead bytes")
+		//				ef bf be
+		//				ef bf bf 
+		const static unsigned char UTF_LEAD_0 = 0xefU;
+		const static unsigned char UTF_LEAD_1 = 0xbbU;
+		const static unsigned char UTF_LEAD_2 = 0xbfU;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected static functions                            ]
+	//[-------------------------------------------------------]
+	protected:
+		static const char *SkipWhiteSpace(const char *pszData, EEncoding nEncoding);
+		static bool IsWhiteSpace(char c);
+		static bool IsWhiteSpace(int c);
+
+		/**
+		*  @brief
+		*    Reads an XML name into the string provided
+		*
+		*  @param[in]  pszData
+		*    Data
+		*  @param[out] sName
+		*    Read name
+		*  @param[in] nEncoding
+		*    Encoding
+		*
+		*  @return
+		*    Returns a pointer just past the last character of the name, or 0 if the function has an error
+		*/
+		static const char *ReadName(const char *pszData, String &sName, EEncoding nEncoding);
+
+		/**
+		*  @brief
+		*    Reads text
+		*
+		*  @param[in]  pszData
+		*    Where to start
+		*  @param[out] sText
+		*    The string read
+		*  @param[in]  bTrimWhiteSpace
+		*    Whether to keep the white space
+		*  @param[in]  pszEndTag
+		*    What ends this text
+		*  @param[in]  bCaseInsensitive
+		*    Whether to ignore case in the end tag
+		*  @param[in]  nEncoding
+		*    The current encoding
+		*
+		*  @return
+		*    Returns a pointer past the given end tag
+		*
+		*  @note
+		*    - Wickedly complex options, but it keeps the (sensitive) code in one place.
+		*/
+		static const char *ReadText(const char *pszData, String &sText, bool bTrimWhiteSpace, const char *pszEndTag, bool bCaseInsensitive, EEncoding nEncoding);
+
+		// If an entity has been found, transform it into a character.
+		static const char *GetEntity(const char *pszData, char *pszValue, int &nLength, EEncoding nEncoding);
+
+		// Get a character, while interpreting entities.
+		// The length can be from 0 to 4 bytes.
+		static const char *GetChar(const char *pszData, char *pszValue, int &nLength, EEncoding nEncoding);
+
+		// Return true if the next characters in the stream are any of the endTag sequences.
+		// Ignore case only works for english, and should only be relied on when comparing
+		// to English words: StringEqual(pszData, "version", true) is fine.
+		static bool StringEqual(const char *pszData, const char *pszTag, bool bIgnoreCase, EEncoding nEncoding);
+
+		// None of these methods are reliable for any language except English.
+		// Good for approximation, not great for accuracy.
+		static int IsAlpha(unsigned char nByte);
+		static int IsAlphaNum(unsigned char nByte);
+		static int ToLower(int nValue, EEncoding nEncoding);
+		static void ConvertUTF32ToUTF8(unsigned long nInput, char *pszOutput, int &nLength);
+
+		// Expands entities in a string. Note this should not contian the tag's '<', '>', etc, 
+		// or they will be transformed into entities!
+		static void EncodeString(const String &sInString, String &sOutString);
 
 
 	//[-------------------------------------------------------]
@@ -278,25 +396,32 @@ class XmlBase {
 	protected:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pData
-		*    Pointer to the concrete data (always valid!)
+		*    Default constructor
 		*/
-		XmlBase(void *pData);
+		XmlBase();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		void *m_pData;	/**< Pointer to the concrete data (always valid, set within the derived classes) */
+		void   *m_pUserData;	/**< User data, can be NULL */
+		Cursor  m_cCursor;		/**< Cursor */
 
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		XmlBase(const XmlBase &cSource);
+
 		/**
 		*  @brief
 		*    Copy operator
@@ -311,10 +436,19 @@ class XmlBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		void *m_pUserData;	/**< User data, can be NULL */
+		static const int utf8ByteTable[256];	/**< Table that returns, for a given lead byte, the total number of bytes in the UTF-8 sequence */
+		struct Entity {
+			String sString;
+			char   nCharacter;
+		};
+		enum {
+			NumOfEntities = 5
+		};
+		static Entity sEntity[NumOfEntities];
+		static bool   bCondenseWhiteSpace;
 
 
 };

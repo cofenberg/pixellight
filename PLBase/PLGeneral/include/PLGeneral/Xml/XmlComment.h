@@ -59,9 +59,18 @@ class XmlComment : public XmlNode {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
 		PLGENERAL_API XmlComment();
+
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sValue
+		*    Value of this text node
+		*/
+		PLGENERAL_API XmlComment(const String &sValue);
 
 		/**
 		*  @brief
@@ -96,23 +105,15 @@ class XmlComment : public XmlNode {
 	//[-------------------------------------------------------]
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLGENERAL_API virtual String ToString(uint32 nDepth = 0);
+		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public virtual XmlNode functions                      ]
 	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pNode
-		*    Internal node pointer (always valid!)
-		*  @param[in] nDummy
-		*    Dummy parameter
-		*/
-		XmlComment(void *pNode, int nDummy);
+	public:
+		PLGENERAL_API virtual XmlNode *Clone() const;
 
 
 };

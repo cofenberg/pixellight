@@ -55,8 +55,7 @@ class XmlParsingData;
 *    XML pieces. It can be saved, loaded, and printed to the screen.
 *    The 'value' of a document node is the XML filename.
 *
-*    Internally the XML parser TinyXML (http://www.sourceforge.net/projects/tinyxml) is used -
-*    this here are only wrapper interfaces.
+*    The XML DOM parser is basing on TinyXML (http://www.sourceforge.net/projects/tinyxml).
 */
 class XmlDocument : public XmlNode {
 
@@ -64,22 +63,13 @@ class XmlDocument : public XmlNode {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
+	friend class XmlText;
 	friend class XmlNode;
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Used by the parsing routines
-		*/
-		enum EEncoding {
-			EncodingUnknown,	/**< Unknown encoding */
-			EncodingUTF8,		/**< UTF8 encoding */
-			EncodingLegacy		/**< Legacy encoding */
-		};
+	friend class XmlUnknown;
+	friend class XmlElement;
+	friend class XmlComment;
+	friend class XmlAttribute;
+	friend class XmlDeclaration;
 
 
 	//[-------------------------------------------------------]
@@ -88,7 +78,7 @@ class XmlDocument : public XmlNode {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
 		PLGENERAL_API XmlDocument();
 
@@ -197,28 +187,6 @@ class XmlDocument : public XmlNode {
 		*    - The document value is set to 'sFilename'
 		*/
 		PLGENERAL_API bool Save(const String &sFilename);
-
-		/**
-		*  @brief
-		*    Parse the given null terminated block of XML data
-		*
-		*  @param[in] pszData
-		*    Parsing data, if NULL, an error will be returned
-		*  @param[in] pData
-		*    Parsing data, can be NULL
-		*  @param[in] nEncoding
-		*    Encoding
-		*
-		*  @return
-		*    The pointer to the parameter 'pszData' if all went fine, else NULL
-		*
-		*  @remarks
-		*    Passing in an encoding to this method (either 'EncodingLegacy' or
-		*    'EncodingUTF8' will force the parser to use that encoding, regardless
-		*    of what the parser might otherwise try to detect.
-		*/
-		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL,
-										EEncoding nEncoding = EncodingUnknown);
 
 		/**
 		*  @brief
@@ -351,7 +319,22 @@ class XmlDocument : public XmlNode {
 	//[-------------------------------------------------------]
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLGENERAL_API virtual String ToString(uint32 nDepth = 0);
+		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual XmlNode functions                      ]
+	//[-------------------------------------------------------]
+	public:
+		PLGENERAL_API virtual XmlNode *Clone() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private static data                                   ]
+	//[-------------------------------------------------------]
+	private:
+		static const String sErrorString[ErrorStringCount];	/**< Human readable error messages */
 
 
 	//[-------------------------------------------------------]
@@ -360,14 +343,30 @@ class XmlDocument : public XmlNode {
 	private:
 		/**
 		*  @brief
-		*    Constructor
+		*    Sets an error
 		*
-		*  @param[in] pNode
-		*    Internal node pointer (always valid!)
-		*  @param[in] nDummy
-		*    Dummy parameter
+		*  @param[in] nError
+		*    Error code
+		*  @param[in] pszErrorLocation
+		*    Error location
+		*  @param[in] pData
+		*    Data
+		*  @param[in] nEncoding
+		*    Encoding
 		*/
-		XmlDocument(void *pNode, int nDummy);
+		void SetError(int nError, const char *pszErrorLocation, XmlParsingData *pData, EEncoding nEncoding);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		bool   m_bError;			/**< Error detected? */
+		int    m_nErrorID;			/**< Error ID */
+		String m_sErrorDescription;	/**< Human readable error description */
+		Cursor m_cErrorCursor;		/**< Error cursor */
+		int    m_nTabSize;			/**< Tab size */
+		bool   m_bUseMicrosoftBOM;	/**< The UTF-8 BOM were found when read. Note this, and try to write. */
 
 
 };

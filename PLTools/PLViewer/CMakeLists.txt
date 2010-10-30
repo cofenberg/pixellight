@@ -154,7 +154,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET}Standalone WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Standalone	External-zlib External-TinyXML External-libpcre)
+add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Standalone	External-zlib External-libpcre)
 add_dependencies(Base										${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

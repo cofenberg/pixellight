@@ -23,8 +23,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <tinyxml.h>
-#include "PLGeneral/Xml/Xml.h"
+#include "PLGeneral/Xml/XmlDeclaration.h"
+#include "PLGeneral/Xml/XmlDocument.h"
+#include "PLGeneral/Xml/XmlUnknown.h"
+#include "PLGeneral/Xml/XmlComment.h"
+#include "PLGeneral/Xml/XmlElement.h"
+#include "PLGeneral/Xml/XmlText.h"
+#include "PLGeneral/Xml/XmlNode.h"
 
 
 //[-------------------------------------------------------]
@@ -42,6 +47,8 @@ namespace PLGeneral {
 */
 XmlNode::~XmlNode()
 {
+	// Delete all the children of this node
+	Clear();
 }
 
 /**
@@ -50,7 +57,7 @@ XmlNode::~XmlNode()
 */
 String XmlNode::GetValue() const
 {
-	return ((TiXmlNode*)m_pData)->Value();
+	return m_sValue;
 }
 
 /**
@@ -59,7 +66,7 @@ String XmlNode::GetValue() const
 */
 void XmlNode::SetValue(const String &sValue)
 {
-	((TiXmlNode*)m_pData)->SetValue(sValue);
+	m_sValue = sValue;
 }
 
 /**
@@ -68,7 +75,14 @@ void XmlNode::SetValue(const String &sValue)
 */
 void XmlNode::Clear()
 {
-	((TiXmlNode*)m_pData)->Clear();
+	XmlNode *pNode = m_pFirstChild;
+	while (pNode) {
+		XmlNode *pTempNode = pNode;
+		pNode = pNode->m_pNextSibling;
+		delete pTempNode;
+	}
+	m_pFirstChild = NULL;
+	m_pLastChild  = NULL;
 }
 
 /**
@@ -77,12 +91,12 @@ void XmlNode::Clear()
 */
 XmlNode *XmlNode::GetParent()
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->Parent());
+	return m_pParent;
 }
 
 const XmlNode *XmlNode::GetParent() const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->Parent());
+	return m_pParent;
 }
 
 /**
@@ -91,12 +105,12 @@ const XmlNode *XmlNode::GetParent() const
 */
 XmlNode *XmlNode::GetFirstChild()
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->FirstChild());
+	return m_pFirstChild;
 }
 
 const XmlNode *XmlNode::GetFirstChild() const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->FirstChild());
+	return m_pFirstChild;
 }
 
 /**
@@ -105,12 +119,20 @@ const XmlNode *XmlNode::GetFirstChild() const
 */
 XmlNode *XmlNode::GetFirstChild(const String &sValue)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->FirstChild(sValue));
+	for (XmlNode *pNode=m_pFirstChild; pNode; pNode=pNode->m_pNextSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+	return NULL;
 }
 
 const XmlNode *XmlNode::GetFirstChild(const String &sValue) const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->FirstChild(sValue));
+	for (const XmlNode *pNode=m_pFirstChild; pNode; pNode=pNode->m_pNextSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+	return NULL;
 }
 
 /**
@@ -119,12 +141,12 @@ const XmlNode *XmlNode::GetFirstChild(const String &sValue) const
 */
 XmlNode *XmlNode::GetLastChild()
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->LastChild());
+	return m_pLastChild;
 }
 
 const XmlNode *XmlNode::GetLastChild() const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->LastChild());
+	return m_pLastChild;
 }
 
 /**
@@ -133,12 +155,20 @@ const XmlNode *XmlNode::GetLastChild() const
 */
 XmlNode *XmlNode::GetLastChild(const String &sValue)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->LastChild(sValue));
+	for (XmlNode *pNode=m_pLastChild; pNode; pNode=pNode->m_pPreviousSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+	return NULL;
 }
 
 const XmlNode *XmlNode::GetLastChild(const String &sValue) const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->LastChild(sValue));
+	for (const XmlNode *pNode=m_pLastChild; pNode; pNode=pNode->m_pPreviousSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+	return NULL;
 }
 
 /**
@@ -147,12 +177,12 @@ const XmlNode *XmlNode::GetLastChild(const String &sValue) const
 */
 XmlNode *XmlNode::IterateChildren(XmlNode *pPrevious)
 {
-	return pPrevious ? GetPLNode(((TiXmlNode*)m_pData)->IterateChildren((TiXmlNode*)pPrevious->m_pData)) : GetPLNode(((TiXmlNode*)m_pData)->IterateChildren(NULL));
+	return const_cast< XmlNode* >( (const_cast< const XmlNode* >(this))->IterateChildren( pPrevious ) );
 }
 
 const XmlNode *XmlNode::IterateChildren(const XmlNode *pPrevious) const
 {
-	return pPrevious ? (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->IterateChildren((TiXmlNode*)pPrevious->m_pData)) : (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->IterateChildren(NULL));
+	return pPrevious ? pPrevious->GetNextSibling() : GetFirstChild();
 }
 
 /**
@@ -161,12 +191,12 @@ const XmlNode *XmlNode::IterateChildren(const XmlNode *pPrevious) const
 */
 XmlNode *XmlNode::IterateChildren(const String &sValue, XmlNode *pPrevious)
 {
-	return pPrevious ? GetPLNode(((TiXmlNode*)m_pData)->IterateChildren(sValue, (TiXmlNode*)pPrevious->m_pData)) : GetPLNode(((TiXmlNode*)m_pData)->IterateChildren(sValue, NULL));
+	return pPrevious ? pPrevious->GetNextSibling(sValue) : GetFirstChild(sValue);
 }
 
 const XmlNode *XmlNode::IterateChildren(const String &sValue, const XmlNode *pPrevious) const
 {
-	return pPrevious ? (const XmlNode*)GetPLNode((void*)((TiXmlNode*)m_pData)->IterateChildren(sValue, (const TiXmlNode*)pPrevious->m_pData)) : (const XmlNode*)GetPLNode((void*)((TiXmlNode*)m_pData)->IterateChildren(sValue, NULL));
+	return pPrevious ? pPrevious->GetNextSibling(sValue) : GetFirstChild(sValue);
 }
 
 /**
@@ -175,7 +205,21 @@ const XmlNode *XmlNode::IterateChildren(const String &sValue, const XmlNode *pPr
 */
 XmlNode *XmlNode::InsertEndChild(const XmlNode &cAddThis)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->InsertEndChild((const TiXmlNode&)*((TiXmlNode*)cAddThis.m_pData)));
+	// Insertion of documents is NOT allowed!
+	if (cAddThis.GetType() != Document) {
+		// Clone the given node
+		XmlNode *pNode = cAddThis.Clone();
+		if (pNode)
+			return LinkEndChild(*pNode);
+	} else {
+		// Set error code
+		XmlDocument *pDocument = GetDocument();
+		if (pDocument)
+			pDocument->SetError(ErrorDocumentTopOnly, 0, 0, EncodingUnknown);
+	}
+
+	// Error!
+	return NULL;
 }
 
 /**
@@ -184,25 +228,105 @@ XmlNode *XmlNode::InsertEndChild(const XmlNode &cAddThis)
 */
 XmlNode *XmlNode::LinkEndChild(XmlNode &cAddThis)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->LinkEndChild((TiXmlNode*)cAddThis.m_pData));
+	// Linking of documents is NOT allowed!
+	if (cAddThis.GetType() != Document) {
+		cAddThis.m_pParent			= this;
+		cAddThis.m_pPreviousSibling	= m_pLastChild;
+		cAddThis.m_pNextSibling		= NULL;
+		if (m_pLastChild)
+			m_pLastChild->m_pNextSibling = &cAddThis;
+		else
+			m_pFirstChild = &cAddThis;	// It was an empty list
+		m_pLastChild = &cAddThis;
+
+		// Done
+		return &cAddThis;
+	} else {
+		// Delete the given node
+		delete &cAddThis;
+
+		// Set error code
+		XmlDocument *pDocument = GetDocument();
+		if (pDocument)
+			pDocument->SetError(ErrorDocumentTopOnly, 0, 0, EncodingUnknown );
+
+		// Error!
+		return NULL;
+	}
 }
 
 /**
 *  @brief
 *    Add a new node related to this (adds a child before the specified child)
 */
-XmlNode *XmlNode::InsertBeforeChild(const XmlNode &cBeforeThis, const XmlNode &cAddThis)
+XmlNode *XmlNode::InsertBeforeChild(XmlNode &cBeforeThis, const XmlNode &cAddThis)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->InsertBeforeChild((TiXmlNode*)cBeforeThis.m_pData, (const TiXmlNode&)*((TiXmlNode*)cAddThis.m_pData)));
+	// Both nodes must have one and the same parent!
+	if (cBeforeThis.m_pParent == this) {
+		// Insertion of documents is NOT allowed!
+		if (cAddThis.GetType() != Document) {
+			// Clone the given node
+			XmlNode *pNode = cAddThis.Clone();
+			if (pNode) {
+				pNode->m_pParent		  = this;
+				pNode->m_pNextSibling	  = &cBeforeThis;
+				pNode->m_pPreviousSibling = cBeforeThis.m_pPreviousSibling;
+				if (cBeforeThis.m_pPreviousSibling)
+					cBeforeThis.m_pPreviousSibling->m_pNextSibling = pNode;
+				else
+					m_pFirstChild = pNode;
+				cBeforeThis.m_pPreviousSibling = pNode;
+
+				// Done
+				return pNode;
+			}
+		} else {
+			// Set error code
+			XmlDocument *pDocument = GetDocument();
+			if (pDocument)
+				pDocument->SetError(ErrorDocumentTopOnly, 0, 0, EncodingUnknown);
+		}
+	}
+
+	// Error!
+	return NULL;
 }
 
 /**
 *  @brief
 *    Add a new node related to this (adds a child after the specified child)
 */
-XmlNode *XmlNode::InsertAfterChild(const XmlNode &cAfterThis, const XmlNode &cAddThis)
+XmlNode *XmlNode::InsertAfterChild(XmlNode &cAfterThis, const XmlNode &cAddThis)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->InsertAfterChild((TiXmlNode*)cAfterThis.m_pData, (const TiXmlNode&)*((TiXmlNode*)cAddThis.m_pData)));
+	// Both nodes must have one and the same parent!
+	if (cAfterThis.m_pParent == this) {
+		// Insertion of documents is NOT allowed!
+		if (cAddThis.GetType() != Document) {
+			// Clone the given node
+			XmlNode *pNode = cAddThis.Clone();
+			if (pNode) {
+				pNode->m_pParent		  = this;
+				pNode->m_pPreviousSibling = &cAfterThis;
+				pNode->m_pNextSibling	  = cAfterThis.m_pNextSibling;
+				if (cAfterThis.m_pNextSibling)
+					cAfterThis.m_pNextSibling->m_pPreviousSibling = pNode;
+				else
+					m_pLastChild = pNode;
+				cAfterThis.m_pNextSibling = pNode;
+
+				// Done
+				return pNode;
+			}
+		} else {
+			// Set error code
+			XmlDocument *pDocument = GetDocument();
+			if (pDocument)
+				pDocument->SetError(ErrorDocumentTopOnly, 0, 0, EncodingUnknown);
+		}
+	}
+
+	// Error!
+	return NULL;
 }
 
 /**
@@ -211,7 +335,41 @@ XmlNode *XmlNode::InsertAfterChild(const XmlNode &cAfterThis, const XmlNode &cAd
 */
 XmlNode *XmlNode::ReplaceChild(XmlNode &cReplaceThis, const XmlNode &cWithThis)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->ReplaceChild((TiXmlNode*)cReplaceThis.m_pData, (const TiXmlNode&)*((TiXmlNode*)cWithThis.m_pData)));
+	// Both nodes must have one and the same parent!
+	if (cReplaceThis.m_pParent == this) {
+		// Insertion of documents is NOT allowed!
+		if (cWithThis.GetType() != Document) {
+			// Clone the given node
+			XmlNode *pNode = cWithThis.Clone();
+			if (pNode) {
+				pNode->m_pNextSibling	  = cReplaceThis.m_pNextSibling;
+				pNode->m_pPreviousSibling = cReplaceThis.m_pPreviousSibling;
+				if (cReplaceThis.m_pNextSibling)
+					cReplaceThis.m_pNextSibling->m_pPreviousSibling = pNode;
+				else
+					m_pLastChild = pNode;
+				if (cReplaceThis.m_pPreviousSibling)
+					cReplaceThis.m_pPreviousSibling->m_pNextSibling = pNode;
+				else
+					m_pFirstChild = pNode;
+				pNode->m_pParent = this;
+
+				// Destroy the replaced node
+				delete &cReplaceThis;
+
+				// Done
+				return pNode;
+			}
+		} else {
+			// Set error code
+			XmlDocument *pDocument = GetDocument();
+			if (pDocument)
+				pDocument->SetError(ErrorDocumentTopOnly, 0, 0, EncodingUnknown);
+		}
+	}
+
+	// Error!
+	return NULL;
 }
 
 /**
@@ -220,7 +378,26 @@ XmlNode *XmlNode::ReplaceChild(XmlNode &cReplaceThis, const XmlNode &cWithThis)
 */
 bool XmlNode::RemoveChild(XmlNode &cRemoveThis)
 {
-	return ((TiXmlNode*)m_pData)->RemoveChild((TiXmlNode*)cRemoveThis.m_pData);
+	// Both nodes must have one and the same parent!
+	if (cRemoveThis.m_pParent == this) {
+		if (cRemoveThis.m_pNextSibling)
+			cRemoveThis.m_pNextSibling->m_pPreviousSibling = cRemoveThis.m_pPreviousSibling;
+		else
+			m_pLastChild = cRemoveThis.m_pPreviousSibling;
+		if (cRemoveThis.m_pPreviousSibling)
+			cRemoveThis.m_pPreviousSibling->m_pNextSibling = cRemoveThis.m_pNextSibling;
+		else
+			m_pFirstChild = cRemoveThis.m_pNextSibling;
+
+		// Destroy the removed node
+		delete &cRemoveThis;
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
 }
 
 /**
@@ -229,12 +406,12 @@ bool XmlNode::RemoveChild(XmlNode &cRemoveThis)
 */
 XmlNode *XmlNode::GetPreviousSibling()
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->PreviousSibling());
+	return m_pPreviousSibling;
 }
 
 const XmlNode *XmlNode::GetPreviousSibling() const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->PreviousSibling());
+	return m_pPreviousSibling;
 }
 
 /**
@@ -243,12 +420,24 @@ const XmlNode *XmlNode::GetPreviousSibling() const
 */
 XmlNode *XmlNode::GetPreviousSibling(const String &sValue)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->PreviousSibling(sValue));
+	for (XmlNode *pNode=m_pPreviousSibling; pNode; pNode=pNode->m_pPreviousSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+
+	}
+	// There's no previous sibling
+	return NULL;
 }
 
 const XmlNode *XmlNode::GetPreviousSibling(const String &sValue) const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->PreviousSibling(sValue));
+	for (const XmlNode *pNode=m_pPreviousSibling; pNode; pNode=pNode->m_pPreviousSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+
+	// There's no previous sibling
+	return NULL;
 }
 
 /**
@@ -257,12 +446,12 @@ const XmlNode *XmlNode::GetPreviousSibling(const String &sValue) const
 */
 XmlNode *XmlNode::GetNextSibling()
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->NextSibling());
+	return m_pNextSibling;
 }
 
 const XmlNode *XmlNode::GetNextSibling() const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->NextSibling());
+	return m_pNextSibling;
 }
 
 /**
@@ -271,12 +460,24 @@ const XmlNode *XmlNode::GetNextSibling() const
 */
 XmlNode *XmlNode::GetNextSibling(const String &sValue)
 {
-	return GetPLNode(((TiXmlNode*)m_pData)->NextSibling(sValue));
+	for (XmlNode *pNode=m_pNextSibling; pNode; pNode=pNode->m_pNextSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+
+	// There's no next sibling
+	return NULL;
 }
 
 const XmlNode *XmlNode::GetNextSibling(const String &sValue) const
 {
-	return (const XmlNode*)GetPLNode(((TiXmlNode*)m_pData)->NextSibling(sValue));
+	for (const XmlNode *pNode=m_pNextSibling; pNode; pNode=pNode->m_pNextSibling) {
+		if (pNode->m_sValue == sValue)
+			return pNode;
+	}
+
+	// There's no next sibling
+	return NULL;
 }
 
 /**
@@ -285,12 +486,18 @@ const XmlNode *XmlNode::GetNextSibling(const String &sValue) const
 */
 XmlElement *XmlNode::GetNextSiblingElement()
 {
-	return (XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->NextSiblingElement());
+	return const_cast< XmlElement* >( (const_cast< const XmlNode* >(this))->GetNextSiblingElement() );
 }
 
 const XmlElement *XmlNode::GetNextSiblingElement() const
 {
-	return (const XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->NextSiblingElement());
+	for (const XmlNode *pNode=GetNextSibling(); pNode; pNode=pNode->GetNextSibling()) {
+		if (pNode->ToElement())
+			return pNode->ToElement();
+	}
+
+	// There's no next sibling element
+	return NULL;
 }
 
 /**
@@ -299,12 +506,24 @@ const XmlElement *XmlNode::GetNextSiblingElement() const
 */
 XmlElement *XmlNode::GetNextSiblingElement(const String &sValue)
 {
-	return (XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->NextSiblingElement(sValue));
+	for (XmlNode *pNode=GetNextSibling(sValue); pNode; pNode=pNode->GetNextSibling(sValue)) {
+		if (pNode->ToElement())
+			return pNode->ToElement();
+	}
+
+	// There's no next sibling element
+	return NULL;
 }
 
 const XmlElement *XmlNode::GetNextSiblingElement(const String &sValue) const
 {
-	return (const XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->NextSiblingElement(sValue));
+	for (const XmlNode *pNode=GetNextSibling(sValue); pNode; pNode=pNode->GetNextSibling(sValue)) {
+		if (pNode->ToElement())
+			return pNode->ToElement();
+	}
+
+	// There's no next sibling element
+	return NULL;
 }
 
 /**
@@ -313,12 +532,18 @@ const XmlElement *XmlNode::GetNextSiblingElement(const String &sValue) const
 */
 XmlElement *XmlNode::GetFirstChildElement()
 {
-	return (XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->FirstChildElement());
+	return const_cast< XmlElement* >( (const_cast< const XmlNode* >(this))->GetFirstChildElement() );
 }
 
 const XmlElement *XmlNode::GetFirstChildElement() const
 {
-	return (const XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->FirstChildElement());
+	for (const XmlNode *pNode=GetFirstChild(); pNode; pNode=pNode->GetNextSibling()) {
+		if (pNode->ToElement())
+			return pNode->ToElement();
+	}
+
+	// There's no first child element
+	return NULL;
 }
 
 /**
@@ -327,12 +552,18 @@ const XmlElement *XmlNode::GetFirstChildElement() const
 */
 XmlElement *XmlNode::GetFirstChildElement(const String &sValue)
 {
-	return (XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->FirstChildElement(sValue));
+	return const_cast< XmlElement* >( (const_cast< const XmlNode* >(this))->GetFirstChildElement( sValue ) );
 }
 
 const XmlElement *XmlNode::GetFirstChildElement(const String &sValue) const
 {
-	return (const XmlElement*)GetPLNode(((TiXmlNode*)m_pData)->FirstChildElement(sValue));
+	for (const XmlNode *pNode=GetFirstChild(sValue); pNode; pNode=pNode->GetNextSibling(sValue)) {
+		if (pNode->ToElement())
+			return pNode->ToElement();
+	}
+
+	// There's no first child element
+	return NULL;
 }
 
 /**
@@ -341,7 +572,7 @@ const XmlElement *XmlNode::GetFirstChildElement(const String &sValue) const
 */
 XmlNode::ENodeType XmlNode::GetType() const
 {
-	return (ENodeType)((TiXmlNode*)m_pData)->Type();
+	return m_nType;
 }
 
 /**
@@ -350,12 +581,16 @@ XmlNode::ENodeType XmlNode::GetType() const
 */
 XmlDocument *XmlNode::GetDocument()
 {
-	return (XmlDocument*)GetPLNode(((TiXmlNode*)m_pData)->GetDocument());
+	return const_cast< XmlDocument* >( (const_cast< const XmlNode* >(this))->GetDocument() );
 }
 
 const XmlDocument *XmlNode::GetDocument() const
 {
-	return (const XmlDocument*)GetPLNode(((TiXmlNode*)m_pData)->GetDocument());
+	for (const XmlNode *pNode=this; pNode; pNode=pNode->m_pParent) {
+		if (pNode->ToDocument())
+			return pNode->ToDocument();
+	}
+	return NULL;
 }
 
 /**
@@ -364,7 +599,7 @@ const XmlDocument *XmlNode::GetDocument() const
 */
 bool XmlNode::NoChildren() const
 {
-	return ((TiXmlNode*)m_pData)->NoChildren();
+	return !m_pFirstChild;
 }
 
 /**
@@ -373,71 +608,62 @@ bool XmlNode::NoChildren() const
 */
 XmlDocument *XmlNode::ToDocument()
 {
-	return (GetType() == Document) ? (XmlDocument*)this : NULL;
+	return (m_nType == Document) ? (XmlDocument*)this : NULL;
 }
 
 const XmlDocument *XmlNode::ToDocument() const
 {
-	return (GetType() == Document) ? (const XmlDocument*)this : NULL;
+	return (m_nType == Document) ? (const XmlDocument*)this : NULL;
 }
 
 XmlElement *XmlNode::ToElement()
 {
-	return (GetType() == Element) ? (XmlElement*)this : NULL;
+	return (m_nType == Element) ? (XmlElement*)this : NULL;
 }
 
 const XmlElement *XmlNode::ToElement() const
 {
-	return (GetType() == Element) ? (const XmlElement*)this : NULL;
+	return (m_nType == Element) ? (const XmlElement*)this : NULL;
 }
 
 XmlComment *XmlNode::ToComment()
 {
-	return (GetType() == Comment) ? (XmlComment*)this : NULL;
+	return (m_nType == Comment) ? (XmlComment*)this : NULL;
 }
 
 const XmlComment *XmlNode::ToComment() const
 {
-	return (GetType() == Comment) ? (const XmlComment*)this : NULL;
+	return (m_nType == Comment) ? (const XmlComment*)this : NULL;
 }
 
 XmlUnknown *XmlNode::ToUnknown()
 {
-	return (GetType() == Unknown) ? (XmlUnknown*)this : NULL;
+	return (m_nType == Unknown) ? (XmlUnknown*)this : NULL;
 }
 
 const XmlUnknown *XmlNode::ToUnknown() const
 {
-	return (GetType() == Unknown) ? (const XmlUnknown*)this : NULL;
+	return (m_nType == Unknown) ? (const XmlUnknown*)this : NULL;
 }
 
 XmlText *XmlNode::ToText()
 {
-	return (GetType() == Text) ? (XmlText*)this : NULL;
+	return (m_nType == Text) ? (XmlText*)this : NULL;
 }
 
 const XmlText *XmlNode::ToText() const
 {
-	return (GetType() == Text) ? (const XmlText*)this : NULL;
+	return (m_nType == Text) ? (const XmlText*)this : NULL;
 }
 
 XmlDeclaration *XmlNode::ToDeclaration()
 {
-	return (GetType() == Declaration) ? (XmlDeclaration*)this : NULL;
+	return (m_nType == Declaration) ? (XmlDeclaration*)this : NULL;
 }
 
 const XmlDeclaration *XmlNode::ToDeclaration() const
 {
-	return (GetType() == Declaration) ? (const XmlDeclaration*)this : NULL;
-}
-
-/**
-*  @brief
-*    Create an exact duplicate of this node and return it
-*/
-XmlNode *XmlNode::Clone() const
-{
-	return GetPLNode(((TiXmlNode*)m_pData)->Clone());
+	return (m_nType == Declaration) ? (const XmlDeclaration*)this : NULL;
 }
 
 
@@ -448,40 +674,62 @@ XmlNode *XmlNode::Clone() const
 *  @brief
 *    Constructor
 */
-XmlNode::XmlNode(void *pData) :
-	XmlBase(pData)
+XmlNode::XmlNode(ENodeType nType) :
+	m_pParent(NULL),
+	m_nType(nType),
+	m_pFirstChild(NULL),
+	m_pLastChild(NULL),
+	m_pPreviousSibling(NULL),
+	m_pNextSibling(NULL)
 {
 }
 
 /**
 *  @brief
-*    Returns/creates the PL XML node
+*    Figure out what is at *pszStart, and parse it
 */
-XmlNode *XmlNode::GetPLNode(void *pNode)
+XmlNode *XmlNode::Identify(const char *pszData, EEncoding nEncoding)
 {
-	// Check parameter
-	if (!pNode)
-		return NULL;
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+	if (!pszData || !*pszData || *pszData != '<')
+		return NULL; // Error!
 
-	// Check wether this TinyXML node has already a PL XML node, if there's no
-	// PL XML node, create one
-	TiXmlNode *pTinyXMLNode = (TiXmlNode*)pNode;
-	if (pTinyXMLNode->GetUserData())
-		return (XmlNode*)pTinyXMLNode->GetUserData();
-	else {
-		XmlNode *pNewNode = NULL;
-		switch (pTinyXMLNode->Type()) {
-			case TiXmlNode::TINYXML_DECLARATION:	  pNewNode = new XmlDeclaration(pTinyXMLNode, 0); break;
-			case TiXmlNode::TINYXML_TEXT:			  pNewNode = new XmlText       (pTinyXMLNode, 0); break;
-			case TiXmlNode::TINYXML_COMMENT:		  pNewNode = new XmlComment    (pTinyXMLNode, 0); break;
-			case TiXmlNode::TINYXML_ELEMENT:		  pNewNode = new XmlElement    (pTinyXMLNode, 0); break;
-			case TiXmlNode::TINYXML_DOCUMENT:		  pNewNode = new XmlDocument   (pTinyXMLNode, 0); break;
-			case TiXmlNode::TINYXML_UNKNOWN: default: pNewNode = new XmlUnknown    (pTinyXMLNode, 0); break;
-		}
+	pszData = SkipWhiteSpace(pszData, nEncoding);
+	if (!pszData || !*pszData)
+		return NULL; // Error!
 
-		// Return the created PL node
-		return pNewNode;
-	}
+	// What is this thing?
+	// - Elements start with a letter or underscore, but XML is reserved
+	// - Comments: <!--
+	// - Decleration: <?xml
+	// - Everthing else is unknown to the XML parser
+	static const char *pszXmlHeader		= "<?xml";
+	static const char *pszCommentHeader	= "<!--";
+	static const char *pszDtdHeader		= "<!";
+	static const char *pszCDataHeader	= "<![CDATA[";
+
+	XmlNode *pReturnNode = NULL;
+	if (StringEqual(pszData, pszXmlHeader, true, nEncoding))
+		pReturnNode = new XmlDeclaration();
+	else if (StringEqual(pszData, pszCommentHeader, false, nEncoding))
+		pReturnNode = new XmlComment();
+	else if (StringEqual(pszData, pszCDataHeader, false, nEncoding)) {
+		XmlText *pTextNode = new XmlText();
+		pTextNode->SetCDATA(true);
+		pReturnNode = pTextNode;
+	} else if (StringEqual(pszData, pszDtdHeader, false, nEncoding))
+		pReturnNode = new XmlUnknown();
+	else if (IsAlpha(*(pszData+1)) || *(pszData+1) == '_')
+		pReturnNode = new XmlElement("");
+	else
+		pReturnNode = new XmlUnknown();
+
+	// Set the parent, so it can report errors
+	if (pReturnNode)
+		pReturnNode->m_pParent = this;
+
+	// Done
+	return pReturnNode;
 }
 
 
@@ -493,7 +741,12 @@ XmlNode *XmlNode::GetPLNode(void *pNode)
 *    Copy constructor
 */
 XmlNode::XmlNode(const XmlNode &cSource) :
-	XmlBase(NULL)
+	m_pParent(NULL),
+	m_nType(Unknown),
+	m_pFirstChild(NULL),
+	m_pLastChild(NULL),
+	m_pPreviousSibling(NULL),
+	m_pNextSibling(NULL)
 {
 	// No implementation because the copy constructor is never used
 }

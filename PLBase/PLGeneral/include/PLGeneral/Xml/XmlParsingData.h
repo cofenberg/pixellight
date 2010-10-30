@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlText.h                                      *
+ *  File: XmlParsingData.h                               *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLGENERAL_XML_TEXT_H__
-#define __PLGENERAL_XML_TEXT_H__
+#ifndef __PLGENERAL_XML_PARSINGDATA_H__
+#define __PLGENERAL_XML_PARSINGDATA_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGeneral/Xml/XmlNode.h"
+#include "PLGeneral/Xml/XmlBase.h"
 
 
 //[-------------------------------------------------------]
@@ -42,104 +42,46 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    XML text node - contained in an XML element
+*    XML parsing data
 */
-class XmlText : public XmlNode {
+class XmlParsingData {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class XmlNode;
-	friend class XmlElement;
+	friend class XmlDocument;
 
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Default constructor
-		*/
-		XmlText();
-
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] sValue
-		*    Value of this text node
-		*/
-		PLGENERAL_API XmlText(const String &sValue);
-
-		/**
-		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*/
-		PLGENERAL_API XmlText(const XmlText &cSource);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLGENERAL_API virtual ~XmlText();
-
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		PLGENERAL_API XmlText &operator =(const XmlText &cSource);
-
-		/**
-		*  @brief
-		*    Queries whether this represents text using a CDATA section
-		*
-		*  @return
-		*    'true' if this is input and output as a CDATA style text element, else 'false'
-		*/
-		PLGENERAL_API bool IsCDATA() const;
-
-		/**
-		*  @brief
-		*    Turns on or off a CDATA representation of text
-		*
-		*  @param[in] bCDATA
-		*    'true' if this should be input and output as a CDATA style text element, else 'false'
-		*/
-		PLGENERAL_API void SetCDATA(bool bCDATA);
+		void Stamp(const char *pszNow, XmlBase::EEncoding encoding);
+		const XmlBase::Cursor &Cursor() const { return m_cCursor; }
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual XmlBase functions                      ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	public:
-		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
-		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual XmlNode functions                      ]
-	//[-------------------------------------------------------]
-	public:
-		PLGENERAL_API virtual XmlNode *Clone() const;
+	private:
+		// Only used by the document!
+		XmlParsingData(const char *pszStart, int nTabSize, int nRow, int nColumn) :
+			m_pszStamp(pszStart),
+			m_nTabSize(nTabSize)
+		{
+			m_cCursor.nRow = nRow;
+			m_cCursor.nColumn = nColumn;
+		}
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool m_bCDATA;	/**< 'true' if this should be input and output as a CDATA style text element */
+		XmlBase::Cursor	 m_cCursor;
+		const char		*m_pszStamp;
+		int				 m_nTabSize;
 
 
 };
@@ -151,4 +93,4 @@ class XmlText : public XmlNode {
 } // PLGeneral
 
 
-#endif // __PLGENERAL_XML_TEXT_H__
+#endif // __PLGENERAL_XML_PARSINGDATA_H__

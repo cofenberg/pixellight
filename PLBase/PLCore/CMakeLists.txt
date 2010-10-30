@@ -197,7 +197,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET}Stat STATIC)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	PLGeneralStat External-zlib External-TinyXML External-libpcre)
+add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	PLGeneralStat External-zlib External-libpcre)
 add_dependencies(Base                       		${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
