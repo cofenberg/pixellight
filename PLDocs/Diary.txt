@@ -1,3 +1,9 @@
+>> 03.11.2010
+[CO]
+- PLInput: Dokumentation etwas umstrukturiert und mit dem ausdetalieren begonnen
+
+
+
 >> 06.09.2010
 [CO]
 - PLRenderer Doku um "Texture compression" erweitert
