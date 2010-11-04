@@ -1,3 +1,14 @@
+>> 04.11.2010
+[SB]
+- XmlAttribute: Die Funktion sscanf_s ist eine Microsoft-Erweiterung und daher
+  unter anderen Systemen nicht vorhanden. Habe das daher erstmal in sscanf()
+  umgewandelt, vielleicht könnte man hier natürlich auch eine von unseren
+  bereits vorhandenen Varianten verwenden, um Strings in Zahlen zu konvertieren?
+  Die String-Klasse hat soetwas ja schon, alleine schon daher würde ich daher
+  empfehlen, in Zukunft möglichst auf low-level String-Funktionen zu verzichten.
+
+
+
 >> 30.10.2010
 [CO]
 - Wie mit Stefan besprochen: TinyXML Abhängigkeit entfernt. Das hatten wir nun bereits seit etlichen Jahren angedacht... TinyXML ist zwar

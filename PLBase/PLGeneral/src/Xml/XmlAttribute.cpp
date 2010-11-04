@@ -110,7 +110,7 @@ double XmlAttribute::GetDoubleValue() const
 XmlBase::EQueryResult XmlAttribute::QueryIntValue(int &nValue) const
 {
 	int nBackup = nValue;
-	EQueryResult nResult = (sscanf_s(m_sValue.GetASCII(), "%d", &nValue) == 1) ? Success : WrongType;
+	EQueryResult nResult = (sscanf(m_sValue.GetASCII(), "%d", &nValue) == 1) ? Success : WrongType;
 	if (nResult != Success)
 		nValue = nBackup;
 	return nResult;
@@ -123,7 +123,7 @@ XmlBase::EQueryResult XmlAttribute::QueryIntValue(int &nValue) const
 XmlBase::EQueryResult XmlAttribute::QueryDoubleValue(double &dValue) const
 {
 	double dBackup = dValue;
-	EQueryResult nResult = (sscanf_s(m_sValue.GetASCII(), "%lf", &dValue) == 1) ? Success : WrongType;
+	EQueryResult nResult = (sscanf(m_sValue.GetASCII(), "%lf", &dValue) == 1) ? Success : WrongType;
 	if (nResult != Success)
 		dValue = dBackup;
 	return nResult;
@@ -278,7 +278,7 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 		// Error!
 		return NULL;
 	}
-	
+
 	// Constants
 	const char szSingleQuote = '\'';
 	const char szDoubleQuote = '\"';
