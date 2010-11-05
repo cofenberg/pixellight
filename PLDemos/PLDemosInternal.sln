@@ -24,6 +24,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPostProcess", "PLDemo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoIngameGUI", "PLDemoIngameGUI\PLDemoIngameGUIInternal.vcproj", "{F1F83B21-F553-45A2-8C83-1FBD33D91359}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererTexturing", "PLDemoRendererTexturing\PLDemoRendererTexturingInternal.vcproj", "{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -128,6 +130,14 @@ Global
 		{F1F83B21-F553-45A2-8C83-1FBD33D91359}.Release|Win32.Build.0 = Release|Win32
 		{F1F83B21-F553-45A2-8C83-1FBD33D91359}.Release|x64.ActiveCfg = Release|x64
 		{F1F83B21-F553-45A2-8C83-1FBD33D91359}.Release|x64.Build.0 = Release|x64
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Debug|Win32.Build.0 = Debug|Win32
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Debug|x64.ActiveCfg = Debug|x64
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Debug|x64.Build.0 = Debug|x64
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Release|Win32.ActiveCfg = Release|Win32
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Release|Win32.Build.0 = Release|Win32
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Release|x64.ActiveCfg = Release|x64
+		{D8CB32A2-17FE-4A86-A3DB-473EA42F0BF8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

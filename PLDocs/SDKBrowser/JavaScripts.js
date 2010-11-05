@@ -131,6 +131,7 @@ shortcut("Dir_Demos", "Demos\\");
 shortcut("Dir_Demos_Bin", "Demos\\Bin\\");
 shortcut("Dir_Demo_Scenes", "Demos\\Bin\\Data\\Scenes\\");
 shortcut("Dir_PLDemoRendererTriangle", "Demos\\PLDemoRendererTriangle\\");
+shortcut("Dir_PLDemoRendererTexturing", "Demos\\PLDemoRendererTexturing\\");
 shortcut("Dir_PLDemoMeshTeapot", "Demos\\PLDemoMeshTeapot\\");
 shortcut("Dir_PLDemoRendererRTT", "Demos\\PLDemoRendererRTT\\");
 shortcut("Dir_PLDemoRendererMultiView", "Demos\\PLDemoRendererMultiView\\");
@@ -149,6 +150,7 @@ shortcut("Dir_Samples", "Samples\\");
 // Executable shortcuts
 // Demos
 shortcut("Exe_PLDemoRendererTriangle", "Demos\\Bin\\PLDemoRendererTriangle.exe");
+shortcut("Exe_PLDemoRendererTexturing", "Demos\\Bin\\PLDemoRendererTexturing.exe");
 shortcut("Exe_PLDemoMeshTeapot", "Demos\\Bin\\PLDemoMeshTeapot.exe");
 shortcut("Exe_PLDemoRendererRTT", "Demos\\Bin\\PLDemoRendererRTT.exe");
 shortcut("Exe_PLDemoRendererMultiView", "Demos\\Bin\\PLDemoRendererMultiView.exe");

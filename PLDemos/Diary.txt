@@ -1,3 +1,10 @@
+>> 05.11.2010
+[CO]
+- Auf Basis von "PLDemoRendererTriangle" erstelltes kleines Demo "PLDemoRendererTexturing" hinzugefügt das Texturierung auf
+  der untersten Ebene zeigt
+
+
+
 >> 01.09.2010
 [CO]
 - PLDemoRendererRTT: So wie es aussieht gibts noch probleme mit Multisample und Multi Render Targets, dass ist allerdings

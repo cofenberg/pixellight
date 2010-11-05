@@ -1,3 +1,7 @@
+Changes in PixelLight 0.9.3-R2 (not yet released)
+- Feature: Added basic PLDemoRendererTexturing demo
+
+
 Changes in PixelLight 0.9.3-R1 (released on October 23, 2010)
 - Feature: Added support for "LATC1" and "LATC2" (formally "3DC"/"ATI1N"/"ATI2N" on ATI GPU's only) texture compression
 - Feature: Cg shader language support is now optional (PLRendererOpenGLCg plugin) instead of directly build in within PLRendererOpenGL

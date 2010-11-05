@@ -23,9 +23,10 @@ copy_files("${CMAKE_SOURCE_DIR}/Bin/PLDemos/Data/*" "${PL_BIN_DIR}/PLDemos/Data"
 ## Projects
 ##################################################
 add_subdirectory(PLDemoRendererTriangle)
-add_subdirectory(PLDemoMeshTeapot)
+add_subdirectory(PLDemoRendererTexturing)
 add_subdirectory(PLDemoRendererRTT)
 add_subdirectory(PLDemoRendererMultiView)
+add_subdirectory(PLDemoMeshTeapot)
 add_subdirectory(PLDemoSimpleScene)
 add_subdirectory(PLDemoPhysicsBasic)
 add_subdirectory(PLDemoPhysicsRagdoll)
