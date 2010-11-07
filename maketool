@@ -26,6 +26,7 @@ my $buildExternalURL;	# URL to externals repository ("" for default)
 my $buildExternalUser;	# Username for access to restricted externals
 my $buildExternalPass;	# Password for access to restricted externals
 my $buildMinimal;		# Build minimal projects ("1"/"0")?
+my $buildCodeBlocks;	# Create Code::Blocks project?
 
 # Get system
 if ( ($^O eq "MSWin32") || ($^O eq "cygwin") ) {
@@ -65,7 +66,10 @@ sub Setup {
 
 	# Call CMake
 	chdir($buildDir);
-	my $cmake = "cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=\"$buildType\" -DCMAKETOOLS_CONFIG_NIGHTLY=\"$buildNightly\"";
+	my $cmake;
+	if ($buildCodeBlocks   ==  1) { $cmake = "cmake -G \"CodeBlocks - Unix Makefiles\""; }
+	else						  { $cmake = "cmake -G \"Unix Makefiles\""; }
+	$cmake .=  " -DCMAKE_BUILD_TYPE=\"$buildType\" -DCMAKETOOLS_CONFIG_NIGHTLY=\"$buildNightly\"";
 	if ($buildToolchain    ne "") { $cmake .= " -DCMAKE_TOOLCHAIN_FILE=\"$baseDir/cmake/Toolchains/Toolchain-" . $buildToolchain . ".cmake\""; }
 	if ($buildArch         ne "") { $cmake .= " -DCMAKETOOLS_TARGET_ARCH=\"$buildArch\""; }
 	if ($buildBitsize      ne "") { $cmake .= " -DCMAKETOOLS_TARGET_BITSIZE=\"$buildBitsize\""; }
@@ -185,6 +189,7 @@ $buildMinimal = 0;
 $buildExternalURL  = "";
 $buildExternalUser = "";
 $buildExternalPass = "";
+$buildCodeBlocks = 0;
 
 # Read password from user file
 $filename = $ENV{HOME} . "/pl_config.cfg";
@@ -241,6 +246,8 @@ for ($i=0; $i<$numArgs; $i++) {
 	} elsif ($ARGV[$i] eq "--password" || $ARGV[$i] eq "--pass" || $ARGV[$i] eq "-p") {
 		$buildExternalPass = $ARGV[$i+1];
 		$i++;
+	} elsif ($ARGV[$i] eq "--codeblocks" || $ARGV[$i] eq "--cb") {
+		$buildCodeBlocks = 1;
 	} elsif ($i == 0) {
 		$command = $ARGV[0];
 	} else {

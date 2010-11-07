@@ -13,7 +13,7 @@ ENDIF (PCRE_INCLUDE_DIR)
 FIND_PATH(PCRE_INCLUDE_DIR pcre.h)
 
 if(UNIX)
-  SET(PCRE_NAMES libpcre.a libpcreposix.a)
+  SET(PCRE_NAMES pcre pcreposix)
 else()
   SET(PCRE_NAMES pcre libpcre)
 endif()

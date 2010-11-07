@@ -13,7 +13,7 @@ ENDIF (ZLIB_INCLUDE_DIR)
 FIND_PATH(ZLIB_INCLUDE_DIR zlib.h)
 
 if(UNIX)
-  SET(ZLIB_NAMES libz.a zlib.a)
+  SET(ZLIB_NAMES z libz zlib)
 else()
   SET(ZLIB_NAMES z zlib zdll)
 endif()

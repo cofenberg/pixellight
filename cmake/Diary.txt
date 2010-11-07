@@ -1,3 +1,14 @@
+>> 07.11.2010
+[SB]
+- maketool: Unterstützung für Code::Blocks-Generator von CMake eingebaut. Damit kann ich
+  nun endlich auch unter Linux mit einer IDE arbeiten, ohne dann ständig per Hand die Dateien
+  hinzufügen zu müssen. Die erzeugten Projektdateien sind zwar nicht ideal, aber immerhin :-)
+- Bei Verwendung von --syslibs werden nun für zlib und pcre auch wieder dynamische
+  Bibliotheken gefunden. Dies ist notwendig, da sich unter 64Bit Linux statische Bibliotheken
+  (welche ohne -fPIC gebaut wurden) nicht in dynamische Bibliotheken einbinden lassen, und darum die dynamische Variante verwendet werden muss.
+
+
+
 >> 02.08.2010
 [CO]
 - "external_check_unpack" teil aus "external_check_done" entfernt und zu eigenem Makro gemacht
