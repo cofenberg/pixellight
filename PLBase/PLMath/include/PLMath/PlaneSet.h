@@ -135,14 +135,12 @@ class PlaneSet {
 
 		/**
 		*  @brief
-		*    Creates view planes using a projection and view matrix
+		*    Creates view planes using a view projection matrix
 		*
-		*  @param[in] mProj
-		*    Projection matrix
-		*  @param[in] mView
-		*    View matrix
+		*  @param[in] mViewProjection
+		*    View projection matrix
 		*  @param[in] bInfProj
-		*    Is the projection matrix infinite? In this case, there's no far plane.
+		*    Is the projection matrix part infinite? In this case, there's no far plane.
 		*
 		*  @note
 		*    - If there are not enought planes this function will create it. There are
@@ -150,10 +148,7 @@ class PlaneSet {
 		*      5 planes. (no far plane)
 		*    - See EViewPlaneOrder for plane order
 		*/
-		PLMATH_API void CreateViewPlanes(const Matrix4x4 &mProj, const Matrix4x4 &mView,
-										 bool bInfProj = false);
-		PLMATH_API void CreateViewPlanes(const Matrix4x4 &mProj, const Matrix3x4 &mView,
-										 bool bInfProj = false);
+		PLMATH_API void CreateViewPlanes(const Matrix4x4 &mViewProjection, bool bInfProj = false);
 
 		/**
 		*  @brief
@@ -191,7 +186,7 @@ class PlaneSet {
 		*    Width of the clip volume, in pixels
 		*  @param[in] nHeight
 		*    Height of the clip volume, in pixels
-		*  @param[in] mProj
+		*  @param[in] mProjection
 		*    Projection matrix
 		*  @param[in] mView
 		*    View matrix
@@ -208,11 +203,11 @@ class PlaneSet {
 		*/
 		PLMATH_API void CreateSelectionPlanes(const Vector2 &vStartPos, const Vector2 &vEndPos,
 											  int nX, int nY, int nWidth, int nHeight,
-											  const Matrix4x4 &mProj, const Matrix4x4 &mView,
+											  const Matrix4x4 &mProjection, const Matrix4x4 &mView,
 											  bool bInfProj = false);
 		PLMATH_API void CreateSelectionPlanes(const Vector2 &vStartPos, const Vector2 &vEndPos,
 											  int nX, int nY, int nWidth, int nHeight,
-											  const Matrix4x4 &mProj, const Matrix3x4 &mView,
+											  const Matrix4x4 &mProjection, const Matrix3x4 &mView,
 											  bool bInfProj = false);
 
 		/**

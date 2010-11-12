@@ -178,9 +178,6 @@ add_sources(
 	src/Compositing/SceneRendererHandler.cpp
 	src/Compositing/SceneRendererManager.cpp
 	src/Compositing/SceneRendererPass.cpp
-	src/Compositing/ShadowMap.cpp
-	src/Compositing/ShadowMapHandler.cpp
-	src/Compositing/ShadowMapManager.cpp
 	src/Compositing/FullscreenQuad.cpp
 	src/Compositing/PostProcessing/PostProcess.cpp
 	src/Compositing/PostProcessing/PostProcessor.cpp

@@ -44,13 +44,12 @@
 #include <PLScene/Scene/SNProjectiveSpotLight.h>
 #include <PLScene/Scene/SNProjectivePointLight.h>
 #include <PLScene/Scene/SNCellPortal.h>
-#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
 #include <PLScene/Visibility/VisContainer.h>
-#include <PLScene/Compositing/ShadowMapManager.h>
+#include "PLCompositing/ShadowMapping/SRPShadowMapping.h"
 #include "PLCompositing/General/SRPDirectionalLighting.h"
 #include "PLCompositing/General/SRPLighting.h"
 
@@ -213,15 +212,18 @@ void SRPLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 */
 void SRPLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQuery, SNLight &cLight, const VisNode &cLightVisNode)
 {
-	// Get the shadow map manager
-	ShadowMapManager *pShadowMapManager = NULL;
-	SceneContext *pSceneContext = GetSceneContext();
-	if (pSceneContext)
-		pShadowMapManager = &pSceneContext->GetShadowMapManager();
+	// Get the shadow mapping scene renderer pass
+	SRPShadowMapping *pSRPShadowMapping = NULL;
+	static const String sClassName = "PLCompositing::SRPShadowMapping";
+	pSRPShadowMapping = (SRPShadowMapping*)GetFirstInstanceOfSceneRendererPassClass(sClassName);
+
+	// Is the shadow mapping scene renderer pass active?
+	if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
+		pSRPShadowMapping = NULL;	// Just do like there's no shadow mapping scene renderer pass at all
 
 	// Updates shadow maps
-	if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pShadowMapManager) {
-		pShadowMapManager->UpdateShadowMap(cLight, cCullQuery, cLightVisNode.GetSquaredDistanceToCamera());
+	if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pSRPShadowMapping) {
+		pSRPShadowMapping->UpdateShadowMap(cRenderer, cLight, cCullQuery, cLightVisNode.GetSquaredDistanceToCamera());
 
 		// Sets the initial render states
 		SetInitialRenderStates(cRenderer);
@@ -229,14 +231,14 @@ void SRPLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQuery, SNL
 
 	// Is lighting allowed for this scene container?
 	if (!(cCullQuery.GetSceneContainer().GetFlags() & SceneNode::NoLighting))
-		RenderLightRec(cRenderer, cCullQuery, cLight, cLightVisNode, pShadowMapManager);
+		RenderLightRec(cRenderer, cCullQuery, cLight, cLightVisNode, pSRPShadowMapping);
 }
 
 /**
 *  @brief
 *    Renders a light recursive
 */
-void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, SNLight &cLight, const VisNode &cLightVisNode, ShadowMapManager *pShadowMapManager)
+void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, SNLight &cLight, const VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping)
 {
 	// Set cull mode
 	cRenderer.SetRenderState(RenderState::CullMode, Cull::CCW);
@@ -285,7 +287,7 @@ void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, 
 					cLight.GetTransform().SetScale(vScale);
 
 					// Draw the target cell
-					RenderLightRec(cRenderer, *pVisCell->GetCullQuery(), cLight, cLightVisNode, pShadowMapManager);
+					RenderLightRec(cRenderer, *pVisCell->GetCullQuery(), cLight, cLightVisNode, pSRPShadowMapping);
 
 					// [TODO] Use new PLMath::Transform3 features!
 					// Restore the old position, rotation and scale
@@ -302,7 +304,7 @@ void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, 
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
 				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					RenderLightRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery(), cLight, cLightVisNode, pShadowMapManager);
+					RenderLightRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery(), cLight, cLightVisNode, pSRPShadowMapping);
 
 					// Set the previous scissor rectangle
 					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
@@ -333,7 +335,7 @@ void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, 
 									VertexBuffer *pVertexBuffer = pMeshHandler->GetVertexBuffer();
 									if (pVertexBuffer && pVertexBuffer->GetVertexAttribute(VertexBuffer::Position)) {
 										// Draw the mesh
-										DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel, *pVertexBuffer, cLight, cLightVisNode, pShadowMapManager);
+										DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel, *pVertexBuffer, cLight, cLightVisNode, pSRPShadowMapping);
 
 										// Mark this scene node as drawn
 										pSceneNode->SetDrawn();
@@ -353,7 +355,7 @@ void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, 
 *    Draws a mesh
 */
 void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel,
-						   VertexBuffer &cVertexBuffer, SNLight &cLight, const VisNode &cLightVisNode, ShadowMapManager *pShadowMapManager)
+						   VertexBuffer &cVertexBuffer, SNLight &cLight, const VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping)
 {
 	// Figure out the type of the given light
 	const bool bPoint			= cLight.IsPointLight();
@@ -384,7 +386,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 	const Color3 cLightColor = cLight.Color.Get()*LightingIntensity;
 
 	// Shadow mapping?
-	const bool bShadow = (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pShadowMapManager && (pShadowMapManager->GetCubeShadowRenderTarget() || pShadowMapManager->GetSpotShadowRenderTarget()));
+	const bool bShadow = (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pSRPShadowMapping && (pSRPShadowMapping->GetCubeShadowRenderTarget() || pSRPShadowMapping->GetSpotShadowRenderTarget()));
 
 	// Get scene container
 	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
@@ -451,11 +453,11 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 						if (bShadow) {
 							// Get the shadow map
 							if (bSpot) {
-								if (pShadowMapManager->GetSpotShadowRenderTarget())
-									pShadowMap = pShadowMapManager->GetSpotShadowRenderTarget()->GetTextureBuffer();
+								if (pSRPShadowMapping->GetSpotShadowRenderTarget())
+									pShadowMap = pSRPShadowMapping->GetSpotShadowRenderTarget()->GetTextureBuffer();
 							} else {
-								if (pShadowMapManager->GetCubeShadowRenderTarget())
-									pShadowMap = pShadowMapManager->GetCubeShadowRenderTarget()->GetTextureBuffer();
+								if (pSRPShadowMapping->GetCubeShadowRenderTarget())
+									pShadowMap = pSRPShadowMapping->GetCubeShadowRenderTarget()->GetTextureBuffer();
 							}
 							if (pShadowMap) {
 								PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHADOWMAPPING)
@@ -1138,11 +1140,8 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 												// Clip space [-1...1] to texture space [0...1]
 												Matrix4x4 mTransform = mClipSpaceToTextureSpace;
 
-												// View space to clip space [-1...1]
-												mTransform *= ((SNSpotLight&)cLight).GetProjectionMatrix();
-
-												// Scene node space to view space
-												mTransform *= ((SNSpotLight&)cLight).GetViewMatrix();
+												// Scene node space to view space and then view space to clip space [-1...1] combined within one matrix
+												mTransform *= pSRPShadowMapping->GetLightViewProjectionMatrix();
 
 												// Set the fragment shader parameter
 												pGeneratedProgramUserData->pViewSpaceToShadowMapSpace->Set(mTransform*cLight.GetTransform().GetMatrix()*cLightVisNode.GetWorldViewMatrix().GetInverted());
@@ -1166,7 +1165,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 												fSize = (float)((TextureBuffer2D*)pShadowMap)->GetSize().x;
 											else if (pShadowMap->GetType() == TextureBuffer::TypeTextureBufferCube)
 												fSize = (float)((TextureBufferCube*)pShadowMap)->GetSize();
-											pGeneratedProgramUserData->pTexelSize->Set(0.5f/fSize);
+											pGeneratedProgramUserData->pTexelSize->Set(fSize ? 0.5f/fSize : 1.0f);
 										}
 									}
 								}

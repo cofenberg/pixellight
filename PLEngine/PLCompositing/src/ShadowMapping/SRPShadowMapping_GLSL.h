@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMapManager_GLSL.h                        *
+ *  File: SRPShadowMapping_GLSL.h                        *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,7 +21,7 @@
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sShadowMapManager_GLSL_VS = "\
+static const PLGeneral::String sSRPShadowMapping_GLSL_VS = "\
 // GLSL preprocessor directives\n\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\
@@ -55,7 +55,7 @@ void main()\n\
 
 
 // GLSL fragment shader source code
-static const PLGeneral::String sShadowMapManager_GLSL_FS = "\
+static const PLGeneral::String sSRPShadowMapping_GLSL_FS = "\
 // GLSL preprocessor directives\n\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\

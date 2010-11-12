@@ -51,7 +51,9 @@ namespace PLScene {
 	class VisNode;
 	class SNLight;
 	class SceneNode;
-	class ShadowMapManager;
+}
+namespace PLCompositing {
+	class SRPShadowMapping;
 }
 
 
@@ -420,10 +422,10 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*    Used light node
 		*  @param[in] cLightVisNode
 		*    The light visibility node
-		*  @param[in] pShadowMapManager
-		*    Shadow map manager to use, can be NULL
+		*  @param[in] pSRPShadowMapping
+		*    Shadow mapping scene renderer pass to use, can be NULL
 		*/
-		void RenderLightRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, PLScene::ShadowMapManager *pShadowMapManager);
+		void RenderLightRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping);
 
 		/**
 		*  @brief
@@ -449,11 +451,11 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*    Used light node
 		*  @param[in] cLightVisNode
 		*    The light visibility node
-		*  @param[in] pShadowMapManager
-		*    Shadow map manager to use, can be NULL
+		*  @param[in] pSRPShadowMapping
+		*    Shadow mapping scene renderer pass to use, can be NULL
 		*/
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler,
-					  const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, PLScene::ShadowMapManager *pShadowMapManager);
+					  const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping);
 
 
 	//[-------------------------------------------------------]

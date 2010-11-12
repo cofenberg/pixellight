@@ -1,0 +1,34 @@
+>> 12.11.2010
+[CO]
+- Eigenes Tagebuch für das PLCompositing Projekt angelegt da dieses Projekt mittlerweile einen Umfang erreicht hat wo dies gerechtfertigt ist. Das
+  PLCompositing Projekt ist noch relativ jung und bisher wurde das PLScene Tagebuch auch für PLComposing verwendet da die entsprechenden Klassen
+  ursprünglich in PLScene lagen (wobei PLScene wiederum früher direkt in PLEngine lag *g*).
+- Endlich mit dem längst überfälligen Refactoring des Shadow Mappings begonnen. Verschob als ersten Schritt die aktuelle Shadow Mapping implementation
+  von PLScene nach PLCompositing da diese hochspezielle Render-Technik nix im allgemeinen, soweit möglich Render unabhängigen, PLScene Projekt zu
+  suchen hat (das PLScene Projekt ist nebenbei ohnehin enorm umfangreich, da muss hier nicht auch noch Shadow Mapping mit reingestopft sein :).
+- Bisher lag eine "ShadowMapManager"-Instanz direkt in "PLScene::SceneContext" damit die einzelnden Scene Renderer Pass Implementation irgendwie
+  darauf zugreifen konnten. Das stammte noch aus den Urzeiten der ersten Shadow-Mapping Experimente und war noch nie wirklich prall. Damit das
+  ganze "von Außen" besser Konfigurierbar wird, ist "ShadowMapManager" nun eine Scene Renderer Pass Implementation - auch wenn das hier minimal
+  aus der Reihe tanzt. Zwar wird hier natürlich ebenfalls die Szene "in die Shadow Map" gezeichnet, dies passiert allerdings nicht in einer im
+  Scene Renderer über verschiedene Schritte festgelegten Reihenfolge, sondern "on demand" wenn ein Licht gezeichnet wird das Shadow Mapping nutzt.
+  Scene Renderer Pass Implementation welche Shadow Mapping nutzen, suchen also nach einer "ShadowMapManager" Instanz innerhalb des Scene Renderers -
+  das ist in etwa damit vergleichbar das Deferred Scene Renderer Pass Implementation nach "SRPDeferredGBuffer" suchen um an die Instanz des GBuffers
+  zu kommen (wobei der GBuffer hier allerdings in der im Scene Renderer festgelegten Reihenfolge zum füllen aufgerufen wird). Ich weis nicht ob das
+  bereits *optimal* ist, habe aber im Augenblick nicht die Weitsicht wie das gesamte PLCompositing System irgendwann später "final" aussehen könnte.
+  Es ist auf jedenfall so nun deutlich besser als eine Shadow Mapping Instanz direkt in "PLScene::SceneContext", und man kann endlich über die Scene
+  Renderer Schnittstelle auch generelle Shadow Mapping Einstellungen ändern oder komplett andere Shadow Mapping Implentationen nutzen und es ist nun
+  endlich alles zusammen was zusammen gehört anstatt über mehrere Projekte verteilt zu sein! "ShadowMapManager" in "SRPShadowMapping" umbenannt.
+- SRPShadowMapping ist kein "ElementManager" mehr da "ShadowMap" als eigenständige Klasse bisher nie nötig war
+- Der in SRPShadowMapping verwendete Shadow Mapping Algorithmus liegt nun in einer seperaten "ShadowMapping"-Klasse von der es verschiedenste
+  Implementationen geben kann. Heutzutage existieren zig verschiedene Shadow Mapping Algorithmen, die für unterschiedliche Einsatzgebiete unterschiedlich
+  gute Qualität liefern. Generell scheinen sich die Algorithmen in zwei Kategorien einteilen zu lassen, die einen Algorithmen nutzen nur eine einzige
+  Shadow Map während andere (z.B. Cascaded Shadow Mapping (CSM)) mehrere gestaffelte Shadow Maps nutzen um eine bessere Qualität zu erreichen - da die
+  letztere Variante etwas aufwändiger ist, berücksichtige ich erstmal nur für erste Kategorie von Algorithmen um nicht den Überblick zu verlieren.
+  Bei den Shadow Mapping Algorithmen mit nur einer Shadow Map, scheint nach außen hin gesehen nur die Light View/Projection Matrize etwas anderst berechnet
+  zu werden um die Fehler besser zu verteilen... beim nutzen der Shadow Map während der Beleuchtung scheints dann keinen unterschied mehr zugeben... ein Grund
+  mehr *erstmal* nur diese Kategorie zu berücksichtigen.
+- Bisher verwendeten wir als Shadow Mapping Algorithmus "Uniform Shadow Mapping", die traditionelle Variante welche allerdings auch die schlechtesten Ergebnisse
+  liefert. Dieser "Algorithmus" liegt nun in der "ShadowMappingUSM"-Implementation von "ShadowMapping".
+- "ShadowMappingUSM::CalculateLightMatrices()": Für Spot-Lights wird nun eine eigene Shadow Light View Matrize mit festen Up-Vektor berechnet anstatt die
+  vorhandene View Matrize des Spot Lights zu nutzen... dadurch "rotieren" nun die Shadow Mapping Artefakte nicht mehr mit wenn ein Licht um z.B. dauerhaft um
+  die z-Achse gedreht wird. Dies macht die Schatten etwas "ruhiger". :D

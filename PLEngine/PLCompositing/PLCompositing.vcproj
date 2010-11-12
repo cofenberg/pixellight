@@ -798,6 +798,58 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="ShadowMapping"
+			>
+			<File
+				RelativePath=".\src\ShadowMapping\ShadowMapping.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLCompositing\ShadowMapping\ShadowMapping.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShadowMapping\ShadowMappingLiSPSM.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLCompositing\ShadowMapping\ShadowMappingLiSPSM.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShadowMapping\ShadowMappingPSM.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLCompositing\ShadowMapping\ShadowMappingPSM.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShadowMapping\ShadowMappingUSM.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLCompositing\ShadowMapping\ShadowMappingUSM.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShadowMapping\SRPShadowMapping.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLCompositing\ShadowMapping\SRPShadowMapping.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShadowMapping\SRPShadowMapping_Cg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ShadowMapping\SRPShadowMapping_GLSL.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\CMakeLists.txt"
 			>

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMapHandler.h                             *
+ *  File: ShadowMappingPSM.h                             *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SHADOWMAPHANDLER_H__
-#define __PLSCENE_SHADOWMAPHANDLER_H__
+#ifndef __PLCOMPOSITING_SHADOWMAPPING_PSM_H__
+#define __PLCOMPOSITING_SHADOWMAPPING_PSM_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementHandler.h>
-#include "PLScene/PLScene.h"
+#include "PLCompositing/ShadowMapping/ShadowMapping.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLCompositing {
 
 
 //[-------------------------------------------------------]
@@ -43,9 +42,20 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Shadow map handler class
+*    Perspective Shadow Mapping (PSM) class
+*
+*  @remarks
+*    Perspective Shadow Mapping (PSM) implementation as described by [Stamminger and Drettakis 2002] in the 2002 SIGGRAPH conference.
 */
-class ShadowMapHandler : public PLGeneral::ElementHandler<ShadowMap> {
+class ShadowMappingPSM : public ShadowMapping {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCOM_RTTI_EXPORT, ShadowMappingPSM, "PLCompositing", PLCompositing::ShadowMapping, "Perspective Shadow Mapping (PSM) class")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -54,15 +64,22 @@ class ShadowMapHandler : public PLGeneral::ElementHandler<ShadowMap> {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
-		PLS_API ShadowMapHandler();
+		PLCOM_API ShadowMappingPSM();
 
 		/**
 		*  @brief
-		*    Destructor
+		*    Destructur
 		*/
-		PLS_API virtual ~ShadowMapHandler();
+		PLCOM_API virtual ~ShadowMappingPSM();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual ShadowMapping functions                ]
+	//[-------------------------------------------------------]
+	public:
+		virtual void CalculateLightMatrices(PLScene::SNLight &cLight, PLMath::Matrix4x4 &mLightView, PLMath::Matrix4x4 &mLightProjection);
 
 
 };
@@ -71,7 +88,7 @@ class ShadowMapHandler : public PLGeneral::ElementHandler<ShadowMap> {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing
 
 
-#endif // __PLSCENE_SHADOWMAPHANDLER_H__
+#endif // __PLCOMPOSITING_SHADOWMAPPING_PSM_H__

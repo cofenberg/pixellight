@@ -1,4 +1,12 @@
-﻿>> 24.06.2010
+﻿>> 12.11.2010
+[CO]
+- "PlaneSet::CreateViewPlanes()" existiert nun nur noch in einer Variante die Matrix4x4 akzepiert die View*Projection vereint...
+  das jedesmal innerhalb dieser Methode selbst zu multiplizieren ist einfach nur ungeschickt da man hin und wieder z.B. kein "Projection"
+  braucht, oder eine kombinierte Matrize bereits zur Hand hat die man direkt so nutzen kann
+
+
+
+>> 24.06.2010
 [CO]
 - Vector3: To2DCoordinate() muss man nun direkt die fertige Matrize übergeben - die man oft bereits genauso in der Form hat :D
 

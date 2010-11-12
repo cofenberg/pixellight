@@ -404,8 +404,12 @@ Frustum &SNCamera::GetFrustum(const Rectangle &cViewport)
 	// Calculate frustum if required
 	if (m_bAutoUpdate && ((m_nInternalCameraFlags & RecalculateFrustum) ||
 		m_nViewportWidth != nViewportWidth || m_nViewportHeight != nViewportHeight)) {
+		// Concatenate (multiply) the view matrix and the projection matrix
+		Matrix4x4 mViewProjection = GetProjectionMatrix(cViewport);
+		mViewProjection *= GetViewMatrix();
+
 		// Calculate frustum
-		m_cFrustum.CreateViewPlanes(GetProjectionMatrix(cViewport), GetViewMatrix(), (GetFlags() & NoZFar) != 0);
+		m_cFrustum.CreateViewPlanes(mViewProjection, (GetFlags() & NoZFar) != 0);
 
 		// Recalculation done
 		m_nInternalCameraFlags &= ~RecalculateFrustum;

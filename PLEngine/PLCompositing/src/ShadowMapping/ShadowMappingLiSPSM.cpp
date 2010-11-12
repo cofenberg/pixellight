@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMap.cpp                                  *
+ *  File: ShadowMappingLiSPSM.cpp                        *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,14 +23,21 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Compositing/ShadowMap.h"
+#include "PLCompositing/ShadowMapping/ShadowMappingLiSPSM.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-namespace PLScene {
+using namespace PLMath;
+using namespace PLScene;
+namespace PLCompositing {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(ShadowMappingLiSPSM)
 
 
 //[-------------------------------------------------------]
@@ -38,22 +45,31 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-ShadowMap::ShadowMap(const String &sName, ElementManager<ShadowMap> *pManager) : Element<ShadowMap>(sName, pManager)
+ShadowMappingLiSPSM::ShadowMappingLiSPSM()
 {
 }
 
 /**
 *  @brief
-*    Destructor
+*    Destructur
 */
-ShadowMap::~ShadowMap()
+ShadowMappingLiSPSM::~ShadowMappingLiSPSM()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual ShadowMapping functions                ]
+//[-------------------------------------------------------]
+void ShadowMappingLiSPSM::CalculateLightMatrices(SNLight &cLight, Matrix4x4 &mLightView, Matrix4x4 &mLightProjection)
+{
+	// [TODO] Implement me
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing

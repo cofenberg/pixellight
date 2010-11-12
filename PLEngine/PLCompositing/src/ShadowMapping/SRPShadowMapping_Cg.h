@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMapManager_Cg.h                          *
+ *  File: SRPShadowMapping_Cg.h                          *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sShadowMapManager_Cg_VS = "\
+static const PLGeneral::String sSRPShadowMapping_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -59,7 +59,7 @@ VS_OUTPUT main(float4 VertexPosition  : POSITION	// Object space vertex position
 
 
 // Cg fragment shader source code
-static const PLGeneral::String sShadowMapManager_Cg_FS = "\
+static const PLGeneral::String sSRPShadowMapping_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\

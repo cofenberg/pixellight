@@ -1561,38 +1561,6 @@
 				RelativePath=".\include\PLScene\Compositing\SceneRendererPass.h"
 				>
 			</File>
-			<File
-				RelativePath=".\src\Compositing\ShadowMap.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLScene\Compositing\ShadowMap.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Compositing\ShadowMapHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLScene\Compositing\ShadowMapHandler.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Compositing\ShadowMapManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLScene\Compositing\ShadowMapManager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Compositing\ShadowMapManager_Cg.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Compositing\ShadowMapManager_GLSL.h"
-				>
-			</File>
 			<Filter
 				Name="General"
 				>

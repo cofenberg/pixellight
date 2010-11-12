@@ -242,8 +242,12 @@ const Frustum &SNSpotLight::GetFrustum()
 {
 	// Calculate frustum if required
 	if (m_nInternalLightFlags & RecalculateFrustum) {
+		// Concatenate (multiply) the view matrix and the projection matrix
+		Matrix4x4 mViewProjection = GetProjectionMatrix();
+		mViewProjection *= GetViewMatrix();
+
 		// Calculate frustum
-		m_cFrustum.CreateViewPlanes(GetProjectionMatrix(), GetViewMatrix(), true);
+		m_cFrustum.CreateViewPlanes(mViewProjection, true);
 
 		// Recalculation done
 		m_nInternalLightFlags &= ~RecalculateFrustum;

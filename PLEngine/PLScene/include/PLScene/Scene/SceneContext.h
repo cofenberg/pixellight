@@ -51,7 +51,6 @@ namespace PLScene {
 	class VisManager;
 	class SceneContainer;
 	class SceneNodeHandler;
-	class ShadowMapManager;
 	class SceneRendererManager;
 }
 
@@ -157,15 +156,6 @@ class SceneContext {
 
 		/**
 		*  @brief
-		*    Returns the shadow map manager
-		*
-		*  @return
-		*    The shadow map manager
-		*/
-		PLS_API ShadowMapManager &GetShadowMapManager();
-
-		/**
-		*  @brief
 		*    Returns the visibility manager
 		*
 		*  @return
@@ -268,7 +258,6 @@ class SceneContext {
 		SceneNodeHandler			 *m_pRoot;						/**< The root of the scene graph (always valid!) */
 		PLGeneral::Array<SceneNode*>  m_lstDeleteNodes;				/**< List of scene nodes to delete */
 		SceneRendererManager		 *m_pSceneRendererManager;		/**< Scene renderer manager, can be NULL */
-		ShadowMapManager			 *m_pShadowMapManager;			/**< Shadow map manager, can be NULL */
 		VisManager					 *m_pVisManager;				/**< Visibility manager, can be NULL */
 		bool						  m_bProcessActive;				/**< Is there currently an active process? */
 		PLGeneral::uint32			  m_nProcessCounter;			/**< Internal process counter */

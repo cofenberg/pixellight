@@ -161,10 +161,6 @@ EngineGraphicConfig::EngineGraphicConfig() :
 	RendererMode(this),
 	DefaultFontTexture(this),
 	DefaultFontTextureSize(this),
-	Detail(this),
-	Visibility(this),
-	Shadows(this),
-	HighRenderQuality(this),
 	// [DEBUG] Remove this later!
 	SlopeScaleDepthBias(this),
 	DepthBias(this)

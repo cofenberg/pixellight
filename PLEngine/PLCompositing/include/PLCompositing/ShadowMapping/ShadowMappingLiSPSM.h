@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMap.h                                    *
+ *  File: ShadowMappingLiSPSM.h                          *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,24 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SHADOWMAP_H__
-#define __PLSCENE_SHADOWMAP_H__
+#ifndef __PLCOMPOSITING_SHADOWMAPPING_LISPSM_H__
+#define __PLCOMPOSITING_SHADOWMAPPING_LISPSM_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementHandler.h>
-#include <PLGeneral/Base/ElementManager.h>
-#include "PLScene/PLScene.h"
+#include "PLCompositing/ShadowMapping/ShadowMapping.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLCompositing {
 
 
 //[-------------------------------------------------------]
@@ -45,10 +42,21 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Shadow map class
+*    Light Space Perspective Shadow Mapping (LiSPSM) class
+*
+*  @remarks
+*    Light Space Perspective Shadow Mapping (LiSPSM) implementation as descripted within "Light Space Perspective Shadow Maps"
+*    by Michael Wimmer, Daniel Scherzer and Werner Purgathofer (http://www.cg.tuwien.ac.at/research/vr/lispsm/shadows_egsr2004_revised.pdf).
 */
-class ShadowMap : public PLGeneral::Element<ShadowMap> {
+class ShadowMappingLiSPSM : public ShadowMapping {
 
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCOM_RTTI_EXPORT, ShadowMappingLiSPSM, "PLCompositing", PLCompositing::ShadowMapping, "Light Space Perspective Shadow Mapping (LiSPSM) class")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -57,20 +65,22 @@ class ShadowMap : public PLGeneral::Element<ShadowMap> {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] sName
-		*    Element name to set
-		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Default constructor
 		*/
-		PLS_API ShadowMap(const PLGeneral::String &sName = "", PLGeneral::ElementManager<ShadowMap> *pManager = NULL);
+		PLCOM_API ShadowMappingLiSPSM();
 
 		/**
 		*  @brief
-		*    Destructor
+		*    Destructur
 		*/
-		PLS_API virtual ~ShadowMap();
+		PLCOM_API virtual ~ShadowMappingLiSPSM();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual ShadowMapping functions                ]
+	//[-------------------------------------------------------]
+	public:
+		virtual void CalculateLightMatrices(PLScene::SNLight &cLight, PLMath::Matrix4x4 &mLightView, PLMath::Matrix4x4 &mLightProjection);
 
 
 };
@@ -79,7 +89,7 @@ class ShadowMap : public PLGeneral::Element<ShadowMap> {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing
 
 
-#endif // __PLSCENE_SHADOWMAP_H__
+#endif // __PLCOMPOSITING_SHADOWMAPPING_LISPSM_H__

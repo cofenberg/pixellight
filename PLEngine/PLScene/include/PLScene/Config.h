@@ -182,10 +182,6 @@ class EngineGraphicConfig : public EngineConfigGroup {
 		pl_attribute(RendererMode,				pl_enum_type(PLRenderer::Renderer::EMode),	PLRenderer::Renderer::ModeBoth,				ReadWrite,	DirectValue,	"The mode the renderer should run in (fixed functions, shaders or both)",	"")
 		pl_attribute(DefaultFontTexture,		PLGeneral::String,							"Data/Fonts/LinLibertine_Re-2.7.9.9.otf",	ReadWrite,	DirectValue,	"The default texture font",													"")
 		pl_attribute(DefaultFontTextureSize,	PLGeneral::uint32,							15,											ReadWrite,	DirectValue,	"The default texture font size",											"Max='100'")
-		pl_attribute(Detail,					float,										1.0f,										ReadWrite,	DirectValue,	"Graphic detail",															"Min='0.1' Max='1.0'")
-		pl_attribute(Visibility,				float,										1.0f,										ReadWrite,	DirectValue,	"Visibility",																"Min='0.2' Max='2.0'")
-		pl_attribute(Shadows,					bool,										true,										ReadWrite,	DirectValue,	"Render shadows?",															"")
-		pl_attribute(HighRenderQuality,			bool,										true,										ReadWrite,	DirectValue,	"Should we use a high render quality?",										"")
 
 		// [DEBUG] Remove this later!
 		pl_attribute(SlopeScaleDepthBias,		float,										-0.1f,										ReadWrite,	DirectValue,	"[DEBUG] Slope scale depth bias",											"")

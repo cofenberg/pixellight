@@ -29,7 +29,6 @@
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeHandler.h"
 #include "PLScene/Visibility/VisManager.h"
-#include "PLScene/Compositing/ShadowMapManager.h"
 #include "PLScene/Compositing/SceneRendererManager.h"
 #include "PLScene/Scene/SceneContext.h"
 
@@ -56,7 +55,6 @@ SceneContext::SceneContext(RendererContext &cRendererContext) :
 	m_pMeshManager(NULL),
 	m_pRoot(new SceneNodeHandler()),
 	m_pSceneRendererManager(NULL),
-	m_pShadowMapManager(NULL),
 	m_pVisManager(NULL),
 	m_bProcessActive(false),
 	m_nProcessCounter(0),
@@ -84,10 +82,6 @@ SceneContext::~SceneContext()
 	// Destroy the scene renderer manager
 	if (m_pSceneRendererManager)
 		delete m_pSceneRendererManager;
-
-	// Destroy the shadow map manager
-	if (m_pShadowMapManager)
-		delete m_pShadowMapManager;
 
 	// Destroy the visibility manager
 	if (m_pVisManager)
@@ -176,17 +170,6 @@ SceneRendererManager &SceneContext::GetSceneRendererManager()
 	if (!m_pSceneRendererManager)
 		m_pSceneRendererManager = new SceneRendererManager(*this);
 	return *m_pSceneRendererManager;
-}
-
-/**
-*  @brief
-*    Returns the shadow map manager
-*/
-ShadowMapManager &SceneContext::GetShadowMapManager()
-{
-	if (!m_pShadowMapManager)
-		m_pShadowMapManager = new ShadowMapManager(m_pRendererContext->GetRenderer());
-	return *m_pShadowMapManager;
 }
 
 /**

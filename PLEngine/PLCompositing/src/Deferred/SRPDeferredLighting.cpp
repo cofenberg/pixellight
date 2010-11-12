@@ -35,14 +35,13 @@
 #include <PLRenderer/Material/Parameter.h>
 #include <PLRenderer/Material/ParameterManager.h>
 #include <PLScene/Scene/SNCamera.h>
-#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SNDirectionalLight.h>
 #include <PLScene/Scene/SNProjectiveSpotLight.h>
 #include <PLScene/Scene/SNProjectivePointLight.h>
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
 #include <PLScene/Visibility/VisContainer.h>
-#include <PLScene/Compositing/ShadowMapManager.h>
+#include "PLCompositing/ShadowMapping/SRPShadowMapping.h"
 #include "PLCompositing/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Deferred/SRPDeferredLighting.h"
 
@@ -218,36 +217,39 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 		// Set the scissor rectangle
 		cRenderer.SetScissorRect(&cScissorRectangle);
 
-		// Get the shadow map manager and update the shadow map
+		// Get the shadow mapping scene renderer pass and update the shadow map
 		bool bShadowMapping = false;
-		ShadowMapManager *pShadowMapManager = NULL;
+		SRPShadowMapping *pSRPShadowMapping = NULL;
 		if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow)) {
-			// Get the scene context
-			SceneContext *pSceneContext = GetSceneContext();
-			if (pSceneContext) {
-				// Get the shadow map manager
-				pShadowMapManager = &pSceneContext->GetShadowMapManager();
-				if (pShadowMapManager) {
-					// Update the shadow map for this light
-					pShadowMapManager->UpdateShadowMap(cLight, cCullQuery, (GetFlags() & NoShadowLOD) ? 0.0f : cLightVisNode.GetSquaredDistanceToCamera());
+			// Get the shadow mapping scene renderer pass
+			static const String sClassName = "PLCompositing::SRPShadowMapping";
+			pSRPShadowMapping = (SRPShadowMapping*)GetFirstInstanceOfSceneRendererPassClass(sClassName);
 
-					// Perform shadow mapping?
-					if (pShadowMapManager->GetCubeShadowRenderTarget() || pShadowMapManager->GetSpotShadowRenderTarget())
-						bShadowMapping = true;
+			// Is the shadow mapping scene renderer pass active?
+			if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
+				pSRPShadowMapping = NULL;	// Just do like there's no shadow mapping scene renderer pass at all
 
-					// [TODO] Remove this, to much state changes!
-					// Sets the initial render states
-					cRenderer.GetRendererContext().GetEffectManager().Use();
-					cRenderer.SetRenderState(RenderState::CullMode,     Cull::None);
-					cRenderer.SetRenderState(RenderState::ZEnable,      false);
-					cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
-					cRenderer.SetRenderState(RenderState::BlendEnable,	true);
-					cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
-					cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::One);
+			// Is there a shadow mapping scene renderer pass?
+			if (pSRPShadowMapping) {
+				// Update the shadow map for this light
+				pSRPShadowMapping->UpdateShadowMap(cRenderer, cLight, cCullQuery, (GetFlags() & NoShadowLOD) ? 0.0f : cLightVisNode.GetSquaredDistanceToCamera());
 
-					// Set the color mask, we don't write out alpha
-					cRenderer.SetColorMask(true, true, true, false);
-				}
+				// Perform shadow mapping?
+				if (pSRPShadowMapping->GetCubeShadowRenderTarget() || pSRPShadowMapping->GetSpotShadowRenderTarget())
+					bShadowMapping = true;
+
+				// [TODO] Remove this, to much state changes!
+				// Sets the initial render states
+				cRenderer.GetRendererContext().GetEffectManager().Use();
+				cRenderer.SetRenderState(RenderState::CullMode,     Cull::None);
+				cRenderer.SetRenderState(RenderState::ZEnable,      false);
+				cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
+				cRenderer.SetRenderState(RenderState::BlendEnable,	true);
+				cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
+				cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::One);
+
+				// Set the color mask, we don't write out alpha
+				cRenderer.SetColorMask(true, true, true, false);
 			}
 		}
 
@@ -527,11 +529,11 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 					// Get the shadow map
 					TextureBuffer *pShadowMap = NULL;
 					if (bSpot) {
-						if (pShadowMapManager->GetSpotShadowRenderTarget())
-							pShadowMap = pShadowMapManager->GetSpotShadowRenderTarget()->GetTextureBuffer();
+						if (pSRPShadowMapping->GetSpotShadowRenderTarget())
+							pShadowMap = pSRPShadowMapping->GetSpotShadowRenderTarget()->GetTextureBuffer();
 					} else {
-						if (pShadowMapManager->GetCubeShadowRenderTarget())
-							pShadowMap = pShadowMapManager->GetCubeShadowRenderTarget()->GetTextureBuffer();
+						if (pSRPShadowMapping->GetCubeShadowRenderTarget())
+							pShadowMap = pSRPShadowMapping->GetCubeShadowRenderTarget()->GetTextureBuffer();
 					}
 
 					// Set shadow map
@@ -561,11 +563,8 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 									// Clip space [-1...1] to texture space [0...1]
 									Matrix4x4 mTransform = mClipSpaceToTextureSpace;
 
-									// View space to clip space [-1...1]
-									mTransform *= ((SNSpotLight&)cLight).GetProjectionMatrix();
-
-									// Scene node space to view space
-									mTransform *= ((SNSpotLight&)cLight).GetViewMatrix();
+									// Scene node space to view space and then view space to clip space [-1...1] combined within one matrix
+									mTransform *= pSRPShadowMapping->GetLightViewProjectionMatrix();
 
 									// Set the fragment shader parameter
 									pGeneratedProgramUserData->pViewSpaceToShadowMapSpace->Set(mTransform*cLight.GetTransform().GetMatrix()*cLightVisNode.GetWorldViewMatrix().GetInverted());
@@ -589,7 +588,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 									fSize = (float)((TextureBuffer2D*)pShadowMap)->GetSize().x;
 								else if (pShadowMap->GetType() == TextureBuffer::TypeTextureBufferCube)
 									fSize = (float)((TextureBufferCube*)pShadowMap)->GetSize();
-								pGeneratedProgramUserData->pTexelSize->Set(0.5f/fSize);
+								pGeneratedProgramUserData->pTexelSize->Set(fSize ? 0.5f/fSize : 1.0f);
 							}
 						}
 					}

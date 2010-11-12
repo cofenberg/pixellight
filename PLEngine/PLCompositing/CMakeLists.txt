@@ -36,6 +36,11 @@ add_sources(
 	src/FixedFunctions/SRPDirectionalLightingFixedFunctions.cpp
 	src/FixedFunctions/SRPEmissiveFixedFunctions.cpp
 	src/FixedFunctions/SRPLightEffectsFixedFunctions.cpp
+	src/ShadowMapping/SRPShadowMapping.cpp
+	src/ShadowMapping/ShadowMapping.cpp
+	src/ShadowMapping/ShadowMappingUSM.cpp
+	src/ShadowMapping/ShadowMappingPSM.cpp
+	src/ShadowMapping/ShadowMappingLiSPSM.cpp
 )
 
 ##################################################

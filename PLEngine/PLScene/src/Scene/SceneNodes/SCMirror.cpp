@@ -178,8 +178,12 @@ void SCMirror::UpdateVirtualCamera()
 				Matrix4x4 &mVirtualProjection = pVirtualCamera->GetProjectionMatrix(Rectangle());
 				mVirtualProjection.PerspectiveOffCenter(fXMin, fXMax, fYMin, fYMax, fDistance*NearScale, Far);
 
+				// Concatenate (multiply) the view matrix and the projection matrix
+				Matrix4x4 mViewProjection = mVirtualProjection;
+				mViewProjection *= mVirtualView;
+
 				// Update the frustum of the virtual camera
-				pVirtualCamera->GetFrustum(GetSceneContext()->GetRendererContext().GetRenderer().GetViewport()).CreateViewPlanes(mVirtualProjection, mVirtualView, true);
+				pVirtualCamera->GetFrustum(GetSceneContext()->GetRendererContext().GetRenderer().GetViewport()).CreateViewPlanes(mViewProjection, true);
 			}
 		}
 	}

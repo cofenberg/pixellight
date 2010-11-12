@@ -121,7 +121,7 @@ void PlaneSet::CreateBox(const Vector3 &vMin, const Vector3 &vMax)
 *  @brief
 *    Creates view planes using a projection and view matrix
 */
-void PlaneSet::CreateViewPlanes(const Matrix4x4 &mProj, const Matrix3x4 &mView, bool bInfProj)
+void PlaneSet::CreateViewPlanes(const Matrix4x4 &mViewProjection, bool bInfProj)
 {
 	// Check whether there are enough planes
 	uint32 nPlanes = bInfProj ? 5 : 6;
@@ -131,94 +131,8 @@ void PlaneSet::CreateViewPlanes(const Matrix4x4 &mProj, const Matrix3x4 &mView, 
 	while (m_lstPlane.GetNumOfElements() > nPlanes)
 		RemovePlane(m_lstPlane.GetNumOfElements()-1);
 
-	// Concatenate (multiply) the two matricies
-	Matrix4x4 mClip = mProj;
-	mClip *= mView;
-
 	// Setup new frustum
-	const float *pfClip = mClip;
-	for (uint32 i=0; i<m_lstPlane.GetNumOfElements(); i++) {
-		Plane &cPlane = m_lstPlane[i];
-		switch (i) {
-			case VPNear: // Extract the NEAR clipping plane
-				cPlane.fN[0] = pfClip[ 3] + pfClip[ 2];
-				cPlane.fN[1] = pfClip[ 7] + pfClip[ 6];
-				cPlane.fN[2] = pfClip[11] + pfClip[10];
-				cPlane.fD    = pfClip[15] + pfClip[14];
-				break;
-
-			case VPRight: // Extract the RIGHT clipping plane
-				cPlane.fN[0] = pfClip[ 3] - pfClip[ 0];
-				cPlane.fN[1] = pfClip[ 7] - pfClip[ 4];
-				cPlane.fN[2] = pfClip[11] - pfClip[ 8];
-				cPlane.fD    = pfClip[15] - pfClip[12];
-				break;
-			
-			case VPLeft: // Extract the LEFT clipping plane
-				cPlane.fN[0] = pfClip[ 3] + pfClip[ 0];
-				cPlane.fN[1] = pfClip[ 7] + pfClip[ 4];
-				cPlane.fN[2] = pfClip[11] + pfClip[ 8];
-				cPlane.fD    = pfClip[15] + pfClip[12];
-				break;
-
-			case VPBottom: // Extract the BOTTOM clipping plane
-				cPlane.fN[0] = pfClip[ 3] + pfClip[ 1];
-				cPlane.fN[1] = pfClip[ 7] + pfClip[ 5];
-				cPlane.fN[2] = pfClip[11] + pfClip[ 9];
-				cPlane.fD    = pfClip[15] + pfClip[13];
-				break;
-
-			case VPTop: // Extract the TOP clipping plane
-				cPlane.fN[0] = pfClip[ 3] - pfClip[ 1];
-				cPlane.fN[1] = pfClip[ 7] - pfClip[ 5];
-				cPlane.fN[2] = pfClip[11] - pfClip[ 9];
-				cPlane.fD    = pfClip[15] - pfClip[13];
-				break;
-
-			case VPFar: // Extract the FAR clipping plane
-				cPlane.fN[0] = pfClip[ 3] - pfClip[ 2];
-				cPlane.fN[1] = pfClip[ 7] - pfClip[ 6];
-				cPlane.fN[2] = pfClip[11] - pfClip[10];
-				cPlane.fD    = pfClip[15] - pfClip[14];
-				break;
-		}
-
-		// Avoid division through zero...
-		// Normalize it
-		float fU = cPlane.fN[0]*cPlane.fN[0] + cPlane.fN[1]*cPlane.fN[1] + cPlane.fN[2]*cPlane.fN[2];
-		if (fU) {
-			fU = Math::Sqrt(fU);
-			if (fU) {
-				// Scale
-				cPlane.fN[0] /= fU;
-				cPlane.fN[1] /= fU;
-				cPlane.fN[2] /= fU;
-				cPlane.fD    /= fU;
-			}
-		}
-	}
-}
-
-/**
-*  @brief
-*    Creates view planes using a projection and view matrix
-*/
-void PlaneSet::CreateViewPlanes(const Matrix4x4 &mProj, const Matrix4x4 &mView, bool bInfProj)
-{
-	// Check whether there are enough planes
-	uint32 nPlanes = bInfProj ? 5 : 6;
-	if (m_lstPlane.GetNumOfElements() < nPlanes) m_lstPlane.Resize(nPlanes);
-
-	// Check whether there are not to much planes
-	while (m_lstPlane.GetNumOfElements() > nPlanes)
-		RemovePlane(m_lstPlane.GetNumOfElements()-1);
-
-	// Concatenate (multiply) the two matricies
-	Matrix4x4 mClip = mProj;
-	mClip *= mView;
-
-	// Setup new frustum
-	const float *pfClip = mClip;
+	const float *pfClip = mViewProjection;
 	for (uint32 i=0; i<m_lstPlane.GetNumOfElements(); i++) {
 		Plane &cPlane = m_lstPlane[i];
 		switch (i) {
@@ -319,16 +233,19 @@ bool PlaneSet::CreateViewPlanes(const Array<Vector3> &lstVertices, const Vector3
 */
 void PlaneSet::CreateSelectionPlanes(const Vector2 &vStartPos, const Vector2 &vEndPos,
 									 int nX, int nY, int nWidth, int nHeight,
-									 const Matrix4x4 &mProj, const Matrix3x4 &mView,
+									 const Matrix4x4 &mProjection, const Matrix3x4 &mView,
 									 bool bInfProj)
 {
 	// Calculate restricted projection matrix
 	Matrix4x4 mRestrictedProjection;
 	mRestrictedProjection.RestrictedProjection(vStartPos, vEndPos, nX, nY, nWidth, nHeight);
-	mRestrictedProjection *= mProj;
+	mRestrictedProjection *= mProjection;
+
+	// Concatenate (multiply) the view matrix and the projection matrix
+	mRestrictedProjection *= mView;
 
 	// Create selection planes
-	CreateViewPlanes(mRestrictedProjection, mView, bInfProj);
+	CreateViewPlanes(mRestrictedProjection, bInfProj);
 }
 
 /**
@@ -337,16 +254,19 @@ void PlaneSet::CreateSelectionPlanes(const Vector2 &vStartPos, const Vector2 &vE
 */
 void PlaneSet::CreateSelectionPlanes(const Vector2 &vStartPos, const Vector2 &vEndPos,
 									 int nX, int nY, int nWidth, int nHeight,
-									 const Matrix4x4 &mProj, const Matrix4x4 &mView,
+									 const Matrix4x4 &mProjection, const Matrix4x4 &mView,
 									 bool bInfProj)
 {
 	// Calculate restricted projection matrix
 	Matrix4x4 mRestrictedProjection;
 	mRestrictedProjection.RestrictedProjection(vStartPos, vEndPos, nX, nY, nWidth, nHeight);
-	mRestrictedProjection *= mProj;
+	mRestrictedProjection *= mProjection;
+
+	// Concatenate (multiply) the view matrix and the projection matrix
+	mRestrictedProjection *= mView;
 
 	// Create selection planes
-	CreateViewPlanes(mRestrictedProjection, mView, bInfProj);
+	CreateViewPlanes(mRestrictedProjection, bInfProj);
 }
 
 /**

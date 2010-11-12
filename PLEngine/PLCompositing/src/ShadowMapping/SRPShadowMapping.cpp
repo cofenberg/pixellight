@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMapManager.cpp                           *
+ *  File: SRPShadowMapping.cpp                           *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -31,21 +31,22 @@
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
+#include <PLRenderer/Material/Material.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLMesh/Mesh.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
-#include "PLScene/Scene/SNLight.h"
-#include "PLScene/Scene/SceneContainer.h"
-#include "PLScene/Scene/SNProjectiveSpotLight.h"
-#include "PLScene/Scene/SNPointLight.h"
-#include "PLScene/Scene/SceneQueryHandler.h"
-#include "PLScene/Visibility/SQCull.h"
-#include "PLScene/Visibility/VisPortal.h"
-#include "PLScene/Visibility/VisContainer.h"
-#include "PLScene/Compositing/ShadowMap.h"
-#include "PLScene/Compositing/ShadowMapManager.h"
+#include <PLScene/Scene/SNLight.h>
+#include <PLScene/Scene/SceneContainer.h>
+#include <PLScene/Scene/SNSpotLight.h>
+#include <PLScene/Scene/SNPointLight.h>
+#include <PLScene/Scene/SceneQueryHandler.h>
+#include <PLScene/Visibility/SQCull.h>
+#include <PLScene/Visibility/VisPortal.h>
+#include <PLScene/Visibility/VisContainer.h>
+#include "PLCompositing/ShadowMapping/ShadowMappingUSM.h"
+#include "PLCompositing/ShadowMapping/SRPShadowMapping.h"
 
 
 //[-------------------------------------------------------]
@@ -56,7 +57,14 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLMesh;
-namespace PLScene {
+using namespace PLScene;
+namespace PLCompositing {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(SRPShadowMapping)
 
 
 //[-------------------------------------------------------]
@@ -66,18 +74,14 @@ namespace PLScene {
 *  @brief
 *    Constructor
 */
-ShadowMapManager::ShadowMapManager(Renderer &cRenderer, const PLGeneral::String &sShaderLanguage) :
-	m_pRenderer(&cRenderer),
-	m_sShaderLanguage(sShaderLanguage),
+SRPShadowMapping::SRPShadowMapping() :
+	ShaderLanguage(this),
+	m_pShadowMapping(new ShadowMappingUSM()),
 	m_pLightCullQuery(new SceneQueryHandler()),
 	m_pCurrentCubeShadowRenderTarget(NULL),
 	m_pCurrentSpotShadowRenderTarget(NULL),
 	m_pProgramGenerator(NULL)
 {
-	// Get the shader language to use
-	if (!m_sShaderLanguage.GetLength())
-		m_sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
-
 	// Init shadow maps
 	for (int i=0; i<CubeShadowRenderTargets; i++)
 		m_pCubeShadowRenderTarget[i] = NULL;
@@ -89,7 +93,7 @@ ShadowMapManager::ShadowMapManager(Renderer &cRenderer, const PLGeneral::String 
 *  @brief
 *    Destructor
 */
-ShadowMapManager::~ShadowMapManager()
+SRPShadowMapping::~SRPShadowMapping()
 {
 	// Cube shadow maps
 	for (int i=0; i<CubeShadowRenderTargets; i++) {
@@ -113,8 +117,11 @@ ShadowMapManager::~ShadowMapManager()
 	SceneQuery *pSceneQuery = m_pLightCullQuery->GetElement();
 	if (pSceneQuery)
 		pSceneQuery->GetSceneContainer().DestroyQuery(*pSceneQuery);
-
 	delete m_pLightCullQuery;
+
+	// Destroy the used shadow mapping algorithm
+	if (m_pShadowMapping)
+		delete m_pShadowMapping;
 
 	// Destroy the program generator
 	if (m_pProgramGenerator)
@@ -139,11 +146,9 @@ ShadowMapManager::~ShadowMapManager()
 *  @brief
 *    Updates the shadow map
 */
-void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery, float fSquaredDistanceToCamera)
+void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, const SQCull &cCullQuery, float fSquaredDistanceToCamera)
 {
 	if ((cLight.GetFlags() & SNLight::CastShadow) && cLight.IsPointLight()) {
-		Renderer &cRenderer = *m_pRenderer;
-
 		// Squared distance to camera must be >= 0
 		fSquaredDistanceToCamera = Math::Abs(fSquaredDistanceToCamera);
 
@@ -219,8 +224,13 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 					}
 				}
 				if (pLightCullQuery) {
+					// Get the shader language to use
+					String sShaderLanguage = ShaderLanguage;
+					if (!sShaderLanguage.GetLength())
+						sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
+
 					// Create the program generator if there's currently no instance of it
-					if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != m_sShaderLanguage) {
+					if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
 						// If there's an previous instance of the program generator, destroy it first
 						if (m_pProgramGenerator) {
 							delete m_pProgramGenerator;
@@ -228,21 +238,21 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 						}
 
 						// Choose the shader source codes depending on the requested shader language
-						String sShadowMapManager_VS;
-						String sShadowMapManager_FS;
-						if (m_sShaderLanguage == "GLSL") {
-							#include "ShadowMapManager_GLSL.h"
-							sShadowMapManager_VS = sShadowMapManager_GLSL_VS;
-							sShadowMapManager_FS = sShadowMapManager_GLSL_FS;
-						} else if (m_sShaderLanguage == "Cg") {
-							#include "ShadowMapManager_Cg.h"
-							sShadowMapManager_VS = sShadowMapManager_Cg_VS;
-							sShadowMapManager_FS = sShadowMapManager_Cg_FS;
+						String sSRPShadowMapping_VS;
+						String sSRPShadowMapping_FS;
+						if (sShaderLanguage == "GLSL") {
+							#include "SRPShadowMapping_GLSL.h"
+							sSRPShadowMapping_VS = sSRPShadowMapping_GLSL_VS;
+							sSRPShadowMapping_FS = sSRPShadowMapping_GLSL_FS;
+						} else if (sShaderLanguage == "Cg") {
+							#include "SRPShadowMapping_Cg.h"
+							sSRPShadowMapping_VS = sSRPShadowMapping_Cg_VS;
+							sSRPShadowMapping_FS = sSRPShadowMapping_Cg_FS;
 						}
 
 						// Create the program generator
-						if (sShadowMapManager_VS.GetLength() && sShadowMapManager_FS.GetLength())
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, m_sShaderLanguage, sShadowMapManager_VS, "arbvp1", sShadowMapManager_FS, "arbfp1", true);
+						if (sSRPShadowMapping_VS.GetLength() && sSRPShadowMapping_FS.GetLength())
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_VS, "arbvp1", sSRPShadowMapping_FS, "arbfp1", true);
 					}
 
 					// If there's no program generator, we don't need to continue
@@ -264,59 +274,71 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 
 						// Spot or point light?
 						if (cLight.IsSpotLight()) {
-							SNSpotLight &cSpotLight = (SNSpotLight&)cLight;
+							// Get the shadow mapping algorithm to use
+							if (m_pShadowMapping) {
+								// Calculate the view matrix and projection matrix for the given light
+								m_pShadowMapping->CalculateLightMatrices(cLight, m_mLightView, m_mLightProjection);
 
-							// Setup render query
-							pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
-							pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
-							pLightCullQuery->SetViewFrustum(cSpotLight.GetFrustum());
-							pLightCullQuery->SetViewMatrix(cSpotLight.GetViewMatrix());
-							pLightCullQuery->SetViewProjectionMatrix(cSpotLight.GetProjectionMatrix()*cSpotLight.GetViewMatrix());
+								// Concatenate (multiply) the view matrix and the projection matrix
+								m_mLightViewProjection = m_mLightProjection;
+								m_mLightViewProjection *= m_mLightView;
 
-							// Set the new render target
-							if (cRenderer.SetRenderTarget(*m_pCurrentSpotShadowRenderTarget)) {
-								// Perform the visibility determination
-								pLightCullQuery->PerformQuery();
+								// Calculate the light frustum
+								Frustum cLightFrustum;
+								cLightFrustum.CreateViewPlanes(m_mLightViewProjection, true);
 
-								// Clear the frame buffer
-								cRenderer.Clear(Clear::ZBuffer);
+								// Setup render query
+								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
+								pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
+								pLightCullQuery->SetViewFrustum(cLightFrustum);
+								pLightCullQuery->SetViewMatrix(m_mLightView);
+								pLightCullQuery->SetViewProjectionMatrix(m_mLightViewProjection);
 
-								// Disable color writes
-								cRenderer.SetColorMask(false, false, false, false);
+								// Set the new render target
+								if (cRenderer.SetRenderTarget(*m_pCurrentSpotShadowRenderTarget)) {
+									// Perform the visibility determination
+									pLightCullQuery->PerformQuery();
 
-								// Collect recursive
-								CollectMeshBatchesRec(*pLightCullQuery);
+									// Clear the frame buffer
+									cRenderer.Clear(Clear::ZBuffer);
 
-								{ // Loop through all currently used materials
-									Iterator<const Material*> cMaterialIterator = m_lstMaterials.GetIterator();
-									while (cMaterialIterator.HasNext()) {
-										// Get the current material
-										const Material *pMaterial = cMaterialIterator.Next();
+									// Disable color writes
+									cRenderer.SetColorMask(false, false, false, false);
 
-										// Make the material to the currently used one
-										GeneratedProgramUserData *pGeneratedProgramUserData = MakeMaterialCurrent(cRenderer, *pMaterial, fInvRadius);
-										if (pGeneratedProgramUserData) {
-											// Draw all mesh batches using this material
-											Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
-											while (cMeshBatchIterator.HasNext()) {
-												// Get the current mesh batch
-												MeshBatch *pMeshBatch = cMeshBatchIterator.Next();
+									// Collect recursive
+									CollectMeshBatchesRec(*pLightCullQuery);
 
-												// Same material?
-												if (pMeshBatch->pMaterial == pMaterial) {
-													// Draw the mesh batch
-													DrawMeshBatch(cRenderer, *pGeneratedProgramUserData, *pMeshBatch);
+									{ // Loop through all currently used materials
+										Iterator<const Material*> cMaterialIterator = m_lstMaterials.GetIterator();
+										while (cMaterialIterator.HasNext()) {
+											// Get the current material
+											const Material *pMaterial = cMaterialIterator.Next();
+
+											// Make the material to the currently used one
+											GeneratedProgramUserData *pGeneratedProgramUserData = MakeMaterialCurrent(cRenderer, *pMaterial, fInvRadius);
+											if (pGeneratedProgramUserData) {
+												// Draw all mesh batches using this material
+												Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
+												while (cMeshBatchIterator.HasNext()) {
+													// Get the current mesh batch
+													MeshBatch *pMeshBatch = cMeshBatchIterator.Next();
+
+													// Same material?
+													if (pMeshBatch->pMaterial == pMaterial) {
+														// Draw the mesh batch
+														DrawMeshBatch(cRenderer, *pGeneratedProgramUserData, *pMeshBatch);
+													}
 												}
 											}
 										}
+										{ // Free the mesh batches
+											Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
+											while (cMeshBatchIterator.HasNext())
+												m_lstFreeMeshBatches.Add(cMeshBatchIterator.Next());
+											m_lstMeshBatches.Clear();
+										}
+										m_lstMaterials.Clear();
 									}
-									{ // Free the mesh batches
-										Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();
-										while (cMeshBatchIterator.HasNext())
-											m_lstFreeMeshBatches.Add(cMeshBatchIterator.Next());
-										m_lstMeshBatches.Clear();
-									}
-									m_lstMaterials.Clear();
 								}
 							}
 						} else {
@@ -364,23 +386,25 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 								EulerAngles::ToQuaternion(float(vRot.x*Math::DegToRad), float(vRot.y*Math::DegToRad), float(vRot.z*Math::DegToRad), qRot);
 
 								// Calculate and set projection matrix
-								Matrix4x4 mProj;
-								mProj.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.01f, cPointLight.GetRange());
+								m_mLightProjection.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.01f, cPointLight.GetRange());
 
 								// Calculate and set view matrix
-								Matrix3x4 mView;
-								mView.View(qRot, cLight.GetTransform().GetPosition());
+								m_mLightView.View(qRot, cLight.GetTransform().GetPosition());
 
-								// Calculate the view frustum
-								Frustum cFrustum;
-								cFrustum.CreateViewPlanes(mProj, mView);
+								// Concatenate (multiply) the view matrix and the projection matrix
+								m_mLightViewProjection = m_mLightProjection;
+								m_mLightViewProjection *= m_mLightView;
+
+								// Calculate the light frustum
+								Frustum cLightFrustum;
+								cLightFrustum.CreateViewPlanes(m_mLightViewProjection);
 
 								// Setup render query
 								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
 								pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
-								pLightCullQuery->SetViewFrustum(cFrustum);
-								pLightCullQuery->SetViewMatrix(mView);
-								pLightCullQuery->SetViewProjectionMatrix(mProj*mView);
+								pLightCullQuery->SetViewFrustum(cLightFrustum);
+								pLightCullQuery->SetViewMatrix(m_mLightView);
+								pLightCullQuery->SetViewProjectionMatrix(m_mLightViewProjection);
 
 								// Set the new render target
 								if (cRenderer.SetRenderTarget(*m_pCurrentCubeShadowRenderTarget, nFace)) {
@@ -444,7 +468,7 @@ void ShadowMapManager::UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery
 *  @brief
 *    Returns the render target for the cube shadow map
 */
-SurfaceTextureBuffer *ShadowMapManager::GetCubeShadowRenderTarget() const
+SurfaceTextureBuffer *SRPShadowMapping::GetCubeShadowRenderTarget() const
 {
 	return m_pCurrentCubeShadowRenderTarget ? *m_pCurrentCubeShadowRenderTarget : NULL;
 }
@@ -453,9 +477,36 @@ SurfaceTextureBuffer *ShadowMapManager::GetCubeShadowRenderTarget() const
 *  @brief
 *    Returns the render target for the spot shadow map
 */
-SurfaceTextureBuffer *ShadowMapManager::GetSpotShadowRenderTarget() const
+SurfaceTextureBuffer *SRPShadowMapping::GetSpotShadowRenderTarget() const
 {
 	return m_pCurrentSpotShadowRenderTarget ? *m_pCurrentSpotShadowRenderTarget : NULL;
+}
+
+/**
+*  @brief
+*    Returns the used combined light view projection matrix
+*/
+const Matrix4x4 &SRPShadowMapping::GetLightViewProjectionMatrix() const
+{
+	return m_mLightViewProjection;
+}
+
+/**
+*  @brief
+*    Returns the used light projection matrix
+*/
+const Matrix4x4 &SRPShadowMapping::GetLightProjectionMatrix() const
+{
+	return m_mLightProjection;
+}
+
+/**
+*  @brief
+*    Returns the used light view matrix
+*/
+const Matrix4x4 &SRPShadowMapping::GetLightViewMatrix() const
+{
+	return m_mLightView;
 }
 
 
@@ -466,7 +517,7 @@ SurfaceTextureBuffer *ShadowMapManager::GetSpotShadowRenderTarget() const
 *  @brief
 *    Collect mesh batches recursive
 */
-void ShadowMapManager::CollectMeshBatchesRec(const SQCull &cCullQuery)
+void SRPShadowMapping::CollectMeshBatchesRec(const SQCull &cCullQuery)
 {
 	// Get scene container
 	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
@@ -554,7 +605,7 @@ void ShadowMapManager::CollectMeshBatchesRec(const SQCull &cCullQuery)
 *  @brief
 *    Makes a material to the currently used one
 */
-ShadowMapManager::GeneratedProgramUserData *ShadowMapManager::MakeMaterialCurrent(Renderer &cRenderer, const Material &cMaterial, float fInvRadius)
+SRPShadowMapping::GeneratedProgramUserData *SRPShadowMapping::MakeMaterialCurrent(Renderer &cRenderer, const Material &cMaterial, float fInvRadius)
 {
 	const Parameter *pParameter = NULL;
 
@@ -645,7 +696,7 @@ ShadowMapManager::GeneratedProgramUserData *ShadowMapManager::MakeMaterialCurren
 *  @brief
 *    Draws a mesh batch
 */
-void ShadowMapManager::DrawMeshBatch(Renderer &cRenderer, GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const
+void SRPShadowMapping::DrawMeshBatch(Renderer &cRenderer, GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const
 {
 	// Get the mesh batch vertex buffer
 	VertexBuffer *pVertexBuffer = cMeshBatch.pVertexBuffer;
@@ -692,7 +743,7 @@ void ShadowMapManager::DrawMeshBatch(Renderer &cRenderer, GeneratedProgramUserDa
 *  @brief
 *    Returns a free mesh batch
 */
-ShadowMapManager::MeshBatch &ShadowMapManager::GetFreeMeshBatch()
+SRPShadowMapping::MeshBatch &SRPShadowMapping::GetFreeMeshBatch()
 {
 	if (m_lstFreeMeshBatches.IsEmpty())
 		return *(new MeshBatch);
@@ -705,15 +756,15 @@ ShadowMapManager::MeshBatch &ShadowMapManager::GetFreeMeshBatch()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLScene::SceneRendererPass functions  ]
 //[-------------------------------------------------------]
-ShadowMap *ShadowMapManager::CreateElement(const String &sName)
+void SRPShadowMapping::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	return new ShadowMap(sName, this);
+	// Not used
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing

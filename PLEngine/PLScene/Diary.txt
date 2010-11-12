@@ -1,3 +1,14 @@
+>> 12.11.2010
+[CO]
+- Endlich mit dem längst überfälligen Refactoring des Shadow Mappings begonnen. Verschob als ersten Schritt die aktuelle Shadow Mapping implementation
+  von PLScene nach PLCompositing da diese hochspezielle Render-Technik nix im allgemeinen, soweit möglich Render unabhängigen, PLScene Projekt zu
+  suchen hat (das PLScene Projekt ist nebenbei ohnehin enorm umfangreich, da muss hier nicht auch noch Shadow Mapping mit reingestopft sein :).
+- "EngineGraphicConfig": "Shadows", "HighRenderQuality", "Detail" und "Visibility" entfernt da schon seit geraumer Zeit nicht mehr verwendet und als
+  Globale *fixed build in* Option auch schon länger nicht mehr Sinnvoll. Dies wird man auf "Application"-Ebene entscheiden müssen welche Optionen
+  man für den Endbenutzer nach außen hin geben will.
+
+
+
 >> 15.10.2010
 [CO]
 - Wie mit Stefan vor einigen Tagen bespochen (das Master-Studium ist leider ziemlich Zeitintensiv so das ich bisher noch nicht dazu kam das abzuarbeiten :/),

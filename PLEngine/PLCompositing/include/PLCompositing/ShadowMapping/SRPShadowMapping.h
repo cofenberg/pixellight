@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShadowMapManager.h                             *
+ *  File: SRPShadowMapping.h                             *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SHADOWMAPMANAGER_H__
-#define __PLSCENE_SHADOWMAPMANAGER_H__
+#ifndef __PLCOMPOSITING_SRPSHADOWMAPPING_H__
+#define __PLCOMPOSITING_SRPSHADOWMAPPING_H__
 #pragma once
 
 
@@ -32,12 +32,16 @@
 #include <PLGeneral/Base/ElementManager.h>
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
-#include "PLScene/Compositing/ShadowMap.h"
+#include <PLScene/Compositing/SceneRendererPass.h>
+#include "PLCompositing/PLCompositing.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLMath {
+	class Matrix4x4;
+}
 namespace PLRenderer {
 	class Renderer;
 	class Material;
@@ -59,12 +63,15 @@ namespace PLScene {
 	class VisNode;
 	class SceneQueryHandler;
 }
+namespace PLCompositing {
+	class ShadowMapping;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLCompositing {
 
 
 //[-------------------------------------------------------]
@@ -72,9 +79,18 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    This is a manager for shadow map elements
+*    Shadow mapping scene renderer pass implementation
 */
-class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
+class SRPShadowMapping : public PLScene::SceneRendererPass {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCOM_RTTI_EXPORT, SRPShadowMapping, "PLCompositing", PLScene::SceneRendererPass, "Shadow map manager scene renderer pass implementation")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -84,24 +100,21 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] sShaderLanguage
-		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used, don't change the shader language on each call (performance!)
 		*/
-		PLS_API ShadowMapManager(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "");
+		PLCOM_API SRPShadowMapping();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~ShadowMapManager();
+		PLCOM_API virtual ~SRPShadowMapping();
 
 		/**
 		*  @brief
 		*    Updates the shadow map
 		*
+		*  @param[in] cRenderer
+		*    Renderer to use
 		*  @param[in] cLight
 		*    Light scene node to render the shadow map for
 		*  @param[in] cCullQuery
@@ -112,7 +125,7 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 		*  @note
 		*    - Changes the current render states!
 		*/
-		PLS_API void UpdateShadowMap(SNLight &cLight, const SQCull &cCullQuery, float fSquaredDistanceToCamera);
+		PLCOM_API void UpdateShadowMap(PLRenderer::Renderer &cRenderer, PLScene::SNLight &cLight, const PLScene::SQCull &cCullQuery, float fSquaredDistanceToCamera);
 
 		/**
 		*  @brief
@@ -120,8 +133,11 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 		*
 		*  @return
 		*    The render target for the cube shadow map, NULL on error
+		*
+		*  @note
+		*    - Data of the previous "UpdateShadowMap()"-call
 		*/
-		PLS_API PLRenderer::SurfaceTextureBuffer *GetCubeShadowRenderTarget() const;
+		PLCOM_API PLRenderer::SurfaceTextureBuffer *GetCubeShadowRenderTarget() const;
 
 		/**
 		*  @brief
@@ -129,8 +145,51 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 		*
 		*  @return
 		*    The render target for the spot shadow map, NULL on error
+		*
+		*  @note
+		*    - Data of the previous "UpdateShadowMap()"-call
 		*/
-		PLS_API PLRenderer::SurfaceTextureBuffer *GetSpotShadowRenderTarget() const;
+		PLCOM_API PLRenderer::SurfaceTextureBuffer *GetSpotShadowRenderTarget() const;
+
+		/**
+		*  @brief
+		*    Returns the used combined light view projection matrix
+		*
+		*  @return
+		*    The used combined light view projection matrix
+		*
+		*  @note
+		*    - Data of the previous "UpdateShadowMap()"-call
+		*    - GetLightViewProjectionMatrix() = GetLightProjectionMatrix() * GetLightViewMatrix()
+		*    - Matrix purpose: Scene node space to view space and then view space to clip space [-1...1] combined within one matrix
+		*/
+		PLCOM_API const PLMath::Matrix4x4 &GetLightViewProjectionMatrix() const;
+
+		/**
+		*  @brief
+		*    Returns the used light projection matrix
+		*
+		*  @return
+		*    The used light projection matrix
+		*
+		*  @note
+		*    - Data of the previous "UpdateShadowMap()"-call
+		*    - Matrix purpose: View space to clip space [-1...1]
+		*/
+		PLCOM_API const PLMath::Matrix4x4 &GetLightProjectionMatrix() const;
+
+		/**
+		*  @brief
+		*    Returns the used light view matrix
+		*
+		*  @return
+		*    The used light view matrix
+		*
+		*  @note
+		*    - Data of the previous "UpdateShadowMap()"-call
+		*    - Matrix purpose: Scene node space to view space
+		*/
+		PLCOM_API const PLMath::Matrix4x4 &GetLightViewMatrix() const;
 
 
 	//[-------------------------------------------------------]
@@ -244,9 +303,11 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer	*m_pRenderer;		/**< Used renderer (always valid!) */
-		PLGeneral::String		 m_sShaderLanguage;	/**< Shader language to use */
-		SceneQueryHandler		*m_pLightCullQuery;	/**< Light cull query (always valid!) */
+		ShadowMapping				*m_pShadowMapping;			/**< The shadow mapping algorithm to use, can be NULL */
+		PLMath::Matrix4x4			 m_mLightProjection;		/**< View space to clip space [-1...1] */
+		PLMath::Matrix4x4			 m_mLightView;				/**< Scene node space to view space */
+		PLMath::Matrix4x4			 m_mLightViewProjection;	/**< Scene node space to view space and then view space to clip space [-1...1] combined within one matrix (m_mLightViewProjection = m_mLightProjection * m_mLightView) */
+		PLScene::SceneQueryHandler	*m_pLightCullQuery;			/**< Light cull query (always valid!) */
 
 		// Cube shadow map
 		static const PLGeneral::uint32 CubeShadowRenderTargets = 5;
@@ -267,10 +328,10 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLScene::SceneRendererPass functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual ShadowMap *CreateElement(const PLGeneral::String &sName);
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
 
 
 };
@@ -279,7 +340,7 @@ class ShadowMapManager : public PLGeneral::ElementManager<ShadowMap> {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing
 
 
-#endif // __PLSCENE_SHADOWMAPMANAGER_H__
+#endif // __PLCOMPOSITING_SRPSHADOWMAPPING_H__
