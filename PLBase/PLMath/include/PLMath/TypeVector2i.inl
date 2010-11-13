@@ -131,7 +131,19 @@ class Type<PLMath::Vector2i> {
 			return PLMath::Vector2i(nValue, nValue);
 		}
 
-		// Convert PLMath::Vector2i to int8
+		// Convert PLMath::Vector2i to int64
+		static PLGeneral::int64 ConvertToInt64(const PLMath::Vector2i &vVector)
+		{
+			return (PLGeneral::int64)ConvertToInt(vVector);
+		}
+
+		// Convert int64 to PLMath::Vector2i
+		static PLMath::Vector2i ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return PLMath::Vector2i((int)nValue, (int)nValue);
+		}
+
+		// Convert PLMath::Vector2i to uint8
 		static PLGeneral::uint8 ConvertToUInt8(const PLMath::Vector2i &vVector)
 		{
 			return (PLGeneral::uint8)ConvertToInt(vVector);
@@ -165,6 +177,30 @@ class Type<PLMath::Vector2i> {
 		static PLMath::Vector2i ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
 			return PLMath::Vector2i(nValue, nValue);
+		}
+
+		// Convert PLMath::Vector2i to uint64
+		static PLGeneral::uint64 ConvertToUInt64(const PLMath::Vector2i &vVector)
+		{
+			return (PLGeneral::uint64)ConvertToInt(vVector);
+		}
+
+		// Convert uint64 to PLMath::Vector2i
+		static PLMath::Vector2i ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return PLMath::Vector2i((int)nValue, (int)nValue);
+		}
+
+		// Convert PLMath::Vector2i to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLMath::Vector2i &vVector)
+		{
+			return (PLGeneral::uint_ptr)ConvertToInt(vVector);
+		}
+
+		// Convert uint_ptr to PLMath::Vector2i
+		static PLMath::Vector2i ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		{
+			return PLMath::Vector2i((int)nValue, (int)nValue);
 		}
 
 		// Convert PLMath::Vector2i to float

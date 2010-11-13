@@ -235,6 +235,25 @@ void DynVar::SetInt32(int32 nValue)
 *  @brief
 *    Get value
 */
+int64 DynVar::GetInt64() const
+{
+	// No data available
+	return 0;
+}
+
+/**
+*  @brief
+*    Set value
+*/
+void DynVar::SetInt64(int64 nValue)
+{
+	// No data
+}
+
+/**
+*  @brief
+*    Get value
+*/
 uint8 DynVar::GetUInt8() const
 {
 	// No data available
@@ -284,6 +303,44 @@ uint32 DynVar::GetUInt32() const
 *    Set value
 */
 void DynVar::SetUInt32(uint32 nValue)
+{
+	// No data
+}
+
+/**
+*  @brief
+*    Get value
+*/
+uint64 DynVar::GetUInt64() const
+{
+	// No data available
+	return 0;
+}
+
+/**
+*  @brief
+*    Set value
+*/
+void DynVar::SetUInt64(uint64 nValue)
+{
+	// No data
+}
+
+/**
+*  @brief
+*    Get value
+*/
+uint_ptr DynVar::GetUIntPtr() const
+{
+	// No data available
+	return 0;
+}
+
+/**
+*  @brief
+*    Set value
+*/
+void DynVar::SetUIntPtr(uint_ptr nValue)
 {
 	// No data
 }

@@ -131,7 +131,19 @@ class Type<PLGraphics::Color3> {
 			return PLGraphics::Color3((float)nValue, (float)nValue, (float)nValue);
 		}
 
-		// Convert PLGraphics::Color3 to int8
+		// Convert PLGraphics::Color3 to int64
+		static PLGeneral::int64 ConvertToInt64(const PLGraphics::Color3 &cColor)
+		{
+			return (PLGeneral::int64)ConvertToInt(cColor);
+		}
+
+		// Convert int64 to PLGraphics::Color3
+		static PLGraphics::Color3 ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return PLGraphics::Color3((float)nValue, (float)nValue, (float)nValue);
+		}
+
+		// Convert PLGraphics::Color3 to uint8
 		static PLGeneral::uint8 ConvertToUInt8(const PLGraphics::Color3 &cColor)
 		{
 			return (PLGeneral::uint8)ConvertToInt(cColor);
@@ -163,6 +175,30 @@ class Type<PLGraphics::Color3> {
 
 		// Convert uint32 to PLGraphics::Color3
 		static PLGraphics::Color3 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return PLGraphics::Color3((float)nValue, (float)nValue, (float)nValue);
+		}
+
+		// Convert PLGraphics::Color3 to uint64
+		static PLGeneral::uint64 ConvertToUInt64(const PLGraphics::Color3 &cColor)
+		{
+			return (PLGeneral::uint64)ConvertToInt(cColor);
+		}
+
+		// Convert uint64 to PLGraphics::Color3
+		static PLGraphics::Color3 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return PLGraphics::Color3((float)nValue, (float)nValue, (float)nValue);
+		}
+
+		// Convert PLGraphics::Color3 to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLGraphics::Color3 &cColor)
+		{
+			return (PLGeneral::uint_ptr)ConvertToInt(cColor);
+		}
+
+		// Convert uint_ptr to PLGraphics::Color3
+		static PLGraphics::Color3 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return PLGraphics::Color3((float)nValue, (float)nValue, (float)nValue);
 		}

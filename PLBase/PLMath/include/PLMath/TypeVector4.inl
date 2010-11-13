@@ -131,7 +131,19 @@ class Type<PLMath::Vector4> {
 			return PLMath::Vector4((float)nValue, (float)nValue, (float)nValue, (float)nValue);
 		}
 
-		// Convert PLMath::Vector4 to int8
+		// Convert PLMath::Vector4 to int64
+		static PLGeneral::int64 ConvertToInt64(const PLMath::Vector4 &vVector)
+		{
+			return (PLGeneral::int64)ConvertToInt(vVector);
+		}
+
+		// Convert int64 to PLMath::Vector4
+		static PLMath::Vector4 ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return PLMath::Vector4((float)nValue, (float)nValue, (float)nValue, (float)nValue);
+		}
+
+		// Convert PLMath::Vector4 to uint8
 		static PLGeneral::uint8 ConvertToUInt8(const PLMath::Vector4 &vVector)
 		{
 			return (PLGeneral::uint8)ConvertToInt(vVector);
@@ -163,6 +175,30 @@ class Type<PLMath::Vector4> {
 
 		// Convert uint32 to PLMath::Vector4
 		static PLMath::Vector4 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return PLMath::Vector4((float)nValue, (float)nValue, (float)nValue, (float)nValue);
+		}
+
+		// Convert PLMath::Vector4 to uint64
+		static PLGeneral::uint64 ConvertToUInt64(const PLMath::Vector4 &vVector)
+		{
+			return (PLGeneral::uint64)ConvertToInt(vVector);
+		}
+
+		// Convert uint64 to PLMath::Vector4
+		static PLMath::Vector4 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return PLMath::Vector4((float)nValue, (float)nValue, (float)nValue, (float)nValue);
+		}
+
+		// Convert PLMath::Vector4 to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLMath::Vector4 &vVector)
+		{
+			return (PLGeneral::uint_ptr)ConvertToInt(vVector);
+		}
+
+		// Convert uint_ptr to PLMath::Vector4
+		static PLMath::Vector4 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return PLMath::Vector4((float)nValue, (float)nValue, (float)nValue, (float)nValue);
 		}

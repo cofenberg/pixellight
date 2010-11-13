@@ -147,6 +147,8 @@ namespace PLGeneral {
 	typedef int64_t 			int64;
 	typedef uint64_t			uint64;
 
+	typedef size_t				uint_ptr;
+
 	typedef int					handle;
 
 

@@ -117,6 +117,18 @@ class Type<double> {
 			return (double)(nValue);
 		}
 
+		// Convert double to int64
+		static PLGeneral::int64 ConvertToInt64(double dValue)
+		{
+			return (PLGeneral::int64)(dValue);
+		}
+
+		// Convert int64 to double
+		static double ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (double)(nValue);
+		}
+
 		// Convert double to uint8
 		static PLGeneral::uint8 ConvertToUInt8(double dValue)
 		{
@@ -149,6 +161,30 @@ class Type<double> {
 
 		// Convert uint32 to double
 		static double ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (double)(nValue);
+		}
+
+		// Convert double to uint64
+		static PLGeneral::uint64 ConvertToUInt64(double dValue)
+		{
+			return (PLGeneral::uint64)(dValue);
+		}
+
+		// Convert uint64 to double
+		static double ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (double)(nValue);
+		}
+
+		// Convert double to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(double dValue)
+		{
+			return (PLGeneral::uint_ptr)(dValue);
+		}
+
+		// Convert uint_ptr to double
+		static double ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (double)(nValue);
 		}

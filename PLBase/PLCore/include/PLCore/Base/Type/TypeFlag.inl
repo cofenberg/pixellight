@@ -122,6 +122,18 @@ class Type< FlagType<ENUM> > {
 			return Type<_BaseType>::ConvertFromInt32(nValue);
 		}
 
+		// Convert type to int64
+		static PLGeneral::int64 ConvertToInt64(_BaseType Value)
+		{
+			return Type<_BaseType>::ConvertToInt64(Value);
+		}
+
+		// Convert int64 to type
+		static _BaseType ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return Type<_BaseType>::ConvertFromInt64(nValue);
+		}
+
 		// Convert type to uint8
 		static PLGeneral::uint8 ConvertToUInt8(_BaseType Value)
 		{
@@ -156,6 +168,30 @@ class Type< FlagType<ENUM> > {
 		static _BaseType ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
 			return Type<_BaseType>::ConvertFromUInt32(nValue);
+		}
+
+		// Convert type to uint64
+		static PLGeneral::uint64 ConvertToUInt64(_BaseType Value)
+		{
+			return Type<_BaseType>::ConvertToUInt64(Value);
+		}
+
+		// Convert uint64 to type
+		static _BaseType ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return Type<_BaseType>::ConvertFromUInt64(nValue);
+		}
+
+		// Convert type to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(_BaseType Value)
+		{
+			return Type<_BaseType>::ConvertToUIntPtr(Value);
+		}
+
+		// Convert uint_ptr to type
+		static _BaseType ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		{
+			return Type<_BaseType>::ConvertFromUIntPtr(nValue);
 		}
 
 		// Convert type to float

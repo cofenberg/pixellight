@@ -276,6 +276,16 @@ class Var : public DynVar {
 			m_Value.Set(Type<T>::ConvertFromInt32(nValue));
 		}
 
+		virtual PLGeneral::int64 GetInt64() const
+		{
+			return Type<T>::ConvertToInt64(m_Value.Get());
+		}
+
+		virtual void SetInt64(PLGeneral::int64 nValue)
+		{
+			m_Value.Set(Type<T>::ConvertFromInt64(nValue));
+		}
+
 		virtual PLGeneral::uint8 GetUInt8() const
 		{
 			return Type<T>::ConvertToUInt8(m_Value.Get());
@@ -304,6 +314,26 @@ class Var : public DynVar {
 		virtual void SetUInt32(PLGeneral::uint32 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt32(nValue));
+		}
+
+		virtual PLGeneral::uint64 GetUInt64() const
+		{
+			return Type<T>::ConvertToUInt64(m_Value.Get());
+		}
+
+		virtual void SetUInt64(PLGeneral::uint64 nValue)
+		{
+			m_Value.Set(Type<T>::ConvertFromUInt64(nValue));
+		}
+
+		virtual PLGeneral::uint_ptr GetUIntPtr() const
+		{
+			return Type<T>::ConvertToUIntPtr(m_Value.Get());
+		}
+
+		virtual void SetUIntPtr(PLGeneral::uint_ptr nValue)
+		{
+			m_Value.Set(Type<T>::ConvertFromUIntPtr(nValue));
 		}
 
 		virtual float GetFloat() const

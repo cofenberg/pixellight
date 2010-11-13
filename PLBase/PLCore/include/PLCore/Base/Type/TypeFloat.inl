@@ -117,6 +117,18 @@ class Type<float> {
 			return (float)(nValue);
 		}
 
+		// Convert float to int64
+		static PLGeneral::int64 ConvertToInt64(float fValue)
+		{
+			return (PLGeneral::int64)(fValue);
+		}
+
+		// Convert int64 to float
+		static float ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (float)(nValue);
+		}
+
 		// Convert float to uint8
 		static PLGeneral::uint8 ConvertToUInt8(float fValue)
 		{
@@ -149,6 +161,30 @@ class Type<float> {
 
 		// Convert uint32 to float
 		static float ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (float)(nValue);
+		}
+
+		// Convert float to uint64
+		static PLGeneral::uint64 ConvertToUInt64(float fValue)
+		{
+			return (PLGeneral::uint64)(fValue);
+		}
+
+		// Convert uint64 to float
+		static float ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (float)(nValue);
+		}
+
+		// Convert float to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(float fValue)
+		{
+			return (PLGeneral::uint_ptr)(fValue);
+		}
+
+		// Convert uint_ptr to float
+		static float ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (float)(nValue);
 		}

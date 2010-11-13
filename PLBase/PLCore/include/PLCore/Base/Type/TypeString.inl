@@ -117,6 +117,18 @@ class Type<PLGeneral::String> {
 			return (PLGeneral::String() + (int)nValue);
 		}
 
+		// Convert string to int64
+		static PLGeneral::int64 ConvertToInt64(const PLGeneral::String &sString)
+		{
+			return (PLGeneral::int64)sString.GetInt();
+		}
+
+		// Convert int64 to string
+		static PLGeneral::String ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (PLGeneral::String() + (int)nValue);
+		}
+
 		// Convert string to uint8
 		static PLGeneral::uint8 ConvertToUInt8(const PLGeneral::String &sString)
 		{
@@ -149,6 +161,30 @@ class Type<PLGeneral::String> {
 
 		// Convert uint32 to string
 		static PLGeneral::String ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (PLGeneral::String() + (int)nValue);
+		}
+
+		// Convert string to uint64
+		static PLGeneral::uint64 ConvertToUInt64(const PLGeneral::String &sString)
+		{
+			return (PLGeneral::uint64)sString.GetInt();
+		}
+
+		// Convert uint64 to string
+		static PLGeneral::String ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (PLGeneral::String() + (int)nValue);
+		}
+
+		// Convert string to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLGeneral::String &sString)
+		{
+			return (PLGeneral::uint_ptr)sString.GetInt();
+		}
+
+		// Convert uint_ptr to string
+		static PLGeneral::String ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (PLGeneral::String() + (int)nValue);
 		}

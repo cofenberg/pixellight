@@ -103,6 +103,14 @@ class DefaultValue<PLGeneral::int32> {
 };
 
 template <>
+class DefaultValue<PLGeneral::int64> {
+	public:
+		static PLGeneral::int64 Default() {
+			return 0;
+		}
+};
+
+template <>
 class DefaultValue<PLGeneral::uint8> {
 	public:
 		static PLGeneral::uint8 Default() {
@@ -122,6 +130,14 @@ template <>
 class DefaultValue<PLGeneral::uint32> {
 	public:
 		static PLGeneral::uint32 Default() {
+			return 0;
+		}
+};
+
+template <>
+class DefaultValue<PLGeneral::uint64> {
+	public:
+		static PLGeneral::uint64 Default() {
 			return 0;
 		}
 };

@@ -117,6 +117,18 @@ class Type<PLGeneral::uint32> {
 			return (PLGeneral::uint32)(nValue);
 		}
 
+		// Convert uint32 to int64
+		static PLGeneral::int64 ConvertToInt64(PLGeneral::uint32 nValue)
+		{
+			return (PLGeneral::int64)(nValue);
+		}
+
+		// Convert int64 to uint32
+		static PLGeneral::uint32 ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (PLGeneral::uint32)(nValue);
+		}
+
 		// Convert uint32 to uint8
 		static PLGeneral::uint8 ConvertToUInt8(PLGeneral::uint32 nValue)
 		{
@@ -149,6 +161,30 @@ class Type<PLGeneral::uint32> {
 
 		// Convert uint32 to uint32
 		static PLGeneral::uint32 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (PLGeneral::uint32)(nValue);
+		}
+
+		// Convert uint32 to uint64
+		static PLGeneral::uint64 ConvertToUInt64(PLGeneral::uint32 nValue)
+		{
+			return (PLGeneral::uint64)(nValue);
+		}
+
+		// Convert uint64 to uint32
+		static PLGeneral::uint32 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (PLGeneral::uint32)(nValue);
+		}
+
+		// Convert uint32 to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(PLGeneral::uint32 nValue)
+		{
+			return (PLGeneral::uint_ptr)(nValue);
+		}
+
+		// Convert uint_ptr to uint32
+		static PLGeneral::uint32 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (PLGeneral::uint32)(nValue);
 		}

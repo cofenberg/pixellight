@@ -118,6 +118,18 @@ class Type<T*> {
 			return (T*)(nValue);
 		}
 
+		// Convert pointer to int64
+		static PLGeneral::int64 ConvertToInt64(T *pValue)
+		{
+			return (PLGeneral::int64)(pValue);
+		}
+
+		// Convert int64 to pointer
+		static T *ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (T*)(nValue);
+		}
+
 		// Convert pointer to uint8
 		static PLGeneral::uint8 ConvertToUInt8(T *pValue)
 		{
@@ -154,6 +166,30 @@ class Type<T*> {
 			return (T*)(nValue);
 		}
 
+		// Convert pointer to uint64
+		static PLGeneral::uint64 ConvertToUInt64(T *pValue)
+		{
+			return (PLGeneral::uint64)(pValue);
+		}
+
+		// Convert uint64 to pointer
+		static T *ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (T*)(nValue);
+		}
+
+		// Convert pointer to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(T *pValue)
+		{
+			return (PLGeneral::uint_ptr)(pValue);
+		}
+
+		// Convert uint_ptr to pointer
+		static T *ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		{
+			return (T*)(nValue);
+		}
+
 		// Convert pointer to float
 		static float ConvertToFloat(T *pValue)
 		{
@@ -185,21 +221,13 @@ class Type<T*> {
 		// Convert pointer to string
 		static PLGeneral::String ConvertToString(T *pValue)
 		{
-			#ifdef X64_ARCHITECTURE
-				return PLGeneral::String() + (PLGeneral::uint64)pValue;
-			#else
-				return PLGeneral::String() + (PLGeneral::uint32)pValue;
-			#endif
+			return PLGeneral::String() + (PLGeneral::uint_ptr)pValue;
 		}
 
 		// Convert string to pointer
 		static T *ConvertFromString(const PLGeneral::String &sString)
 		{
-			#ifdef X64_ARCHITECTURE
-				return (T*)sString.GetUInt64();
-			#else
-				return (T*)sString.GetUInt32();
-			#endif
+			return (T*)sString.GetUIntPtr();
 		}
 
 
