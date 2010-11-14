@@ -124,11 +124,11 @@ void SRPBackgroundBitmap::LoadMaterial()
 		PLRenderer::Material *pMaterial = pRenderer->GetRendererContext().GetMaterialManager().LoadResource(m_sMaterial);
 		m_cMaterial.SetResource(pMaterial);
 
-		// Check whether this is a material or an effect, if not, we need to set a nice default billboard effect
+		// Check whether this is a material or an effect, if not, we need to set a default effect
 		if (pMaterial) {
 			const String sExtension = Url(pMaterial->GetName()).GetExtension();
 			if (sExtension != "mat" && sExtension != "plfx") {
-				PLRenderer::Material *pDefaultMaterial = GetRenderer()->GetRendererContext().GetMaterialManager().LoadResource(Material.GetDefault());
+				PLRenderer::Material *pDefaultMaterial = GetRenderer()->GetRendererContext().GetMaterialManager().LoadResource("Data/Effects/DefaultBitmap.plfx");
 				if (pDefaultMaterial)
 					pMaterial->SetEffect(pDefaultMaterial->GetEffect());
 			}
