@@ -93,7 +93,7 @@ class ThemeDesktop : public Theme {
 		PLGUI_API virtual void DrawRule(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation);
 
 		PLGUI_API virtual void DrawPanel(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EBorderStyle nBorderStyle);
-		PLGUI_API virtual void DrawWindow(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, bool bBorder, PLGeneral::uint32 nWidgetState, const PLGeneral::String &sTitle);
+		PLGUI_API virtual void DrawWindow(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, bool bBorder, PLGeneral::uint32 nWidgetState, const PLGeneral::String &sTitle, const PLGui::Image &cIcon);
 		PLGUI_API virtual void DrawSystemButton(Graphics &cGraphics, const PLMath::Vector2i &vPos, ESystemCommand nSystemCommand, PLGeneral::uint32 nWidgetState);
 		PLGUI_API virtual void DrawButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, const Image &cImage, PLGeneral::uint32 nWidgetState);
 		PLGUI_API virtual void DrawToggleButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, const Image &cImage, PLGeneral::uint32 nWidgetState, ECheckState nChecked);

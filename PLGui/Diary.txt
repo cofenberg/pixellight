@@ -1,3 +1,9 @@
+>> 14.11.2010
+[CO]
+- "Theme::DrawWindow()" um Icon-Parameter erweitert der von "Window::OnDraw()" übergeben wird
+
+
+
 >> 20.08.2010
 [CO]
 - WidgetWindows aktualisiert Maus-Trap sobald Fenster Position oder Größe verändert wurde - bitte nochmal drüberschaun

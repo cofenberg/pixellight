@@ -1,3 +1,15 @@
+>> 14.11.2010
+[CO]
+- SRPBackgroundBitmap: "Material"-Attribute ist nun leer anstatt einen Standard-Wert zu haben. In den Scene Renderer Dateien ist
+  "SRPBackgroundBitmap" nun standardmäßig aktiviert, da allerdings kein Material gesetzt ist passiert dann auch nicht viel weiter... will man ein
+  Hintergrundbild haben, so muss man nun nur noch "Material" setzen ohne dann "SRPBackgroundBitmap" auch noch aktivieren zu müssen. :)
+- "WidgetPL::Destroy()": Die Ingame-GUI Implementation hält einen Zeiger auf das aktuelle Mouse Over Widget (m_pMouseOver), dieser Zeiger wurde
+  allerdings nicht auf NULL gesetzt wenn dieses Widget zerstört wurde...
+- "GuiPL::FindWidgetAtPos()": Die Maus sollte nicht mit deaktivierten Widgets interagieren können... die Abfrage war bereits auskommentiert und
+  mit einem [TODO] versehen drinnen - scheint mittlerweile so wie gewünscht problemlos zu gehen :D
+
+
+
 >> 12.11.2010
 [CO]
 - Endlich mit dem längst überfälligen Refactoring des Shadow Mappings begonnen. Verschob als ersten Schritt die aktuelle Shadow Mapping implementation

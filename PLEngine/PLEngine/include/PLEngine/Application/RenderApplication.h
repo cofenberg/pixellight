@@ -191,7 +191,7 @@ class RenderApplication : public PLGui::GuiApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual ConsoleApplication functions        ]
+	//[ Protected virtual PLCore::ConsoleApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -239,7 +239,7 @@ class RenderApplication : public PLGui::GuiApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual GuiApplication functions            ]
+	//[ Protected virtual PLGui::GuiApplication functions     ]
 	//[-------------------------------------------------------]
 	protected:
 		PL_API virtual void OnCreateMainWindow();

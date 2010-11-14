@@ -268,7 +268,7 @@ void ThemeDesktop::DrawPanel(Graphics &cGraphics, const Vector2i &vPos1, const V
 	DrawBorder(cGraphics, vPos1, vPos2, nBorderStyle);
 }
 
-void ThemeDesktop::DrawWindow(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, bool bBorder, PLGeneral::uint32 nWidgetState, const String &sTitle)
+void ThemeDesktop::DrawWindow(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, bool bBorder, PLGeneral::uint32 nWidgetState, const String &sTitle, const PLGui::Image &cIcon)
 {
 	// Show border?
 	int nBorder = 0;
@@ -291,7 +291,7 @@ void ThemeDesktop::DrawWindow(Graphics &cGraphics, const Vector2i &vPos1, const 
 	cGraphics.DrawBox(cColor, vPos1 + Vector2i(nBorder, nBorder), Vector2i(vPos2.x-nBorder, vPos1.y+nBorder+19));
 
 	// Draw icon
-	cGraphics.DrawImage(m_cDefaultIcon, vPos1 + Vector2i(nBorder+1, nBorder+2), Vector2i(16, 16));
+	cGraphics.DrawImage(cIcon.IsEmpty() ? m_cDefaultIcon : cIcon, vPos1 + Vector2i(nBorder+1, nBorder+2), Vector2i(16, 16));
 
 	// Draw title
 	cGraphics.DrawText(m_cDefaultFont, Color4::White, Color4::Transparent, vPos1 + Vector2i(nBorder+21, nBorder+3), sTitle);

@@ -72,7 +72,7 @@ class SRPBackgroundBitmap : public SRPBackground {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SRPBackgroundBitmap, "PLScene", PLScene::SRPBackground, "Abstract bitmap background scene renderer pass")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(Material,		PLGeneral::String,		"Data/Effects/DefaultBitmap.plfx",			ReadWrite,	GetSet,			"Material to use",											"Type='Material Effect Image TextureAni'")
+		pl_attribute(Material,		PLGeneral::String,		"",											ReadWrite,	GetSet,			"Material to use",											"Type='Material Effect Image TextureAni'")
 		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Bitmap color",												"")
 		pl_attribute(Position,		PLMath::Vector2,		PLMath::Vector2(0.0f, 0.0f),				ReadWrite,	DirectValue,	"Bitmap position (0..1), (0, 0)=left top",					"")
 		pl_attribute(Size,			PLMath::Vector2,		PLMath::Vector2(1.0f, 1.0f),				ReadWrite,	DirectValue,	"Bitmap size (0..1)",										"")

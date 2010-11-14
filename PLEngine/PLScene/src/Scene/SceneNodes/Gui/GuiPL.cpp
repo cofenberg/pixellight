@@ -684,10 +684,8 @@ Widget *GuiPL::FindWidgetAtPos(const Vector2i &vMousePos) const
 		// Get the current top-level widget
 		Widget *pTopLevelWidget = cIterator.Next();
 
-		// [TODO] IsEnabled() not yet working?
 		// Is the widget visible and enabled?
-		if (pTopLevelWidget->IsVisible()) {
-//		if (pTopLevelWidget->IsVisible() && pTopLevelWidget->IsEnabled()) {
+		if (pTopLevelWidget->IsVisible() && pTopLevelWidget->IsEnabled()) {
 			// Get the absolute position and size of the widget
 			const Vector2i vAbsPos = pTopLevelWidget->GetAbsPos();
 			const Vector2i vSize   = pTopLevelWidget->GetSize();

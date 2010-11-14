@@ -239,7 +239,7 @@ Surface *RenderApplication::GetSurface(const Widget *pWidget) const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual ConsoleApplication functions        ]
+//[ Protected virtual PLCore::ConsoleApplication functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -333,7 +333,7 @@ void RenderApplication::DeInit()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual GuiApplication functions            ]
+//[ Protected virtual PLGui::GuiApplication functions     ]
 //[-------------------------------------------------------]
 void RenderApplication::OnCreateMainWindow()
 {
