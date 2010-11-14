@@ -5,6 +5,8 @@
   Hintergrundbild haben, so muss man nun nur noch "Material" setzen ohne dann "SRPBackgroundBitmap" auch noch aktivieren zu müssen. :)
 - "WidgetPL::Destroy()": Die Ingame-GUI Implementation hält einen Zeiger auf das aktuelle Mouse Over Widget (m_pMouseOver), dieser Zeiger wurde
   allerdings nicht auf NULL gesetzt wenn dieses Widget zerstört wurde...
+- "GuiPL::FindWidgetAtPos()": Die Maus sollte nicht mit deaktivierten Widgets interagieren können... die Abfrage war bereits auskommentiert und
+  mit einem [TODO] versehen drinnen - scheint mittlerweile so wie gewünscht problemlos zu gehen :D
 
 
 
