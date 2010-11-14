@@ -46,7 +46,7 @@ the needed external packages first (see below).
 
 In order to build the PixelLight engine with MSVC, all the external packages used by the engine need to be in the
 right place for the build. Have a look at the 'External' directory, there you can find a readme file for every library,
-that describes what files are needed. 
+that describes what files are needed.
 
 You can find the libraries pre-packed in the files-section on our homepage: http://dev.pixellight.org/files/externals/.
 Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according
@@ -74,7 +74,7 @@ Then start 'Build'.
 1.2.1. Prerequisites
 --------------------
 
-Here's a list of required programs that you need to fully build the SDK on Windows. 
+Here's a list of required programs that you need to fully build the SDK on Windows.
 - cmake-2.8.2-win32-x86.exe (http://www.cmake.org)
 	- Cross platform build tool used to build the SDK
 
@@ -142,7 +142,7 @@ including build tools and used development libraries.
 
 The following package list applies to the linux distribution "Ubuntu 10.04 - Lucid Lynx".
 If you use another distribution, please have a look at their package repository to find out which
-packages you need (in most cases, the package names will not be that different).  
+packages you need (in most cases, the package names will not be that different).
 
 The following packages are required in order to be able to compile everything (Ubuntu):
 - build-essential (GNU C++ compiler and other important build tools)
@@ -166,7 +166,7 @@ To install all required packages at once, just use:
   apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev
 
 When using the maketool flag '--syslibs', you also need the following packages:
-- libpcre3-de (required by PLGeneral)
+- libpcre3-dev (required by PLGeneral)
 - libjpeg62-dev (required by PLGraphics)
 - libpng12-dev (required by PLGraphics)
 - libfreetype6-dev (required by PLRendererOpenGL and PLRendererOpenGLES)
@@ -229,7 +229,7 @@ To avoid setting the parameters "--externals", "--username" and "--password" ove
 
 Just as with the Windows build, it is necessary to obtain all the external packages used by the engine and install
 them in the right place for the build. Have a look at the 'External' directory, there you find a readme file for every
-library that describes what files are needed. 
+library that describes what files are needed.
 
 You can find the libraries pre-packed in our files-section on our homepage: http://dev.pixellight.org/files/externals/.
 Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according

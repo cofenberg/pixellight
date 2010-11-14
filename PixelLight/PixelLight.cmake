@@ -79,7 +79,8 @@ else()
 	set (PL_PLUGIN_DATABASE_POSTGRESQL 		"0" CACHE BOOL "Build plugin 'PLDatabasePostgreSQL'?")
 	set (PL_PLUGIN_DATABASE_SQLITE 			"0" CACHE BOOL "Build plugin 'PLDatabaseSQLite'?")
 	set (PL_PLUGIN_PHYSICS_NULL 			"1" CACHE BOOL "Build plugin 'PLPhysicsNull'?")
-	set (PL_PLUGIN_PHYSICS_NEWTON	 		"1" CACHE BOOL "Build plugin 'PLPhysicsNewton'?")
+	# [TODO] Enable one physics plugin (newton, make it work on 64bit)
+	set (PL_PLUGIN_PHYSICS_NEWTON	 		"0" CACHE BOOL "Build plugin 'PLPhysicsNewton'?")
 	set (PL_PLUGIN_PHYSICS_ODE 				"0" CACHE BOOL "Build plugin 'PLPhysicsODE'?")
 	set (PL_PLUGIN_PHYSICS_PHYSX 			"0" CACHE BOOL "Build plugin 'PLPhysicsPhysX'?")
 	set (PL_PLUGIN_RENDERER_NULL	 		"1" CACHE BOOL "Build plugin 'PLRendererNull'?")
@@ -94,7 +95,8 @@ else()
 	endif()
 	set (PL_PLUGIN_RENDERER_D3D9 			"0" CACHE BOOL "Build plugin 'PLRendererD3D9'?")
 	set (PL_PLUGIN_SOUND_NULL 				"1" CACHE BOOL "Build plugin 'PLSoundNull'?")
-	set (PL_PLUGIN_SOUND_OPENAL				"1" CACHE BOOL "Build plugin 'PLSoundOpenAL'?")
+	# [TODO] Enable one sound plugin (openal, make it work on 64bit)
+	set (PL_PLUGIN_SOUND_OPENAL				"0" CACHE BOOL "Build plugin 'PLSoundOpenAL'?")
 	set (PL_PLUGIN_SOUND_FMOD 				"0" CACHE BOOL "Build plugin 'PLSoundFMOD'?")
 	set (PL_PLUGIN_SOUND_FMODEX 			"0" CACHE BOOL "Build plugin 'PLSoundFMODEx'?")
 	set (PL_PLUGIN_ENGINE_DEFAULTFF			"0" CACHE BOOL "Build plugin 'PLDefaultFileFormats'?")
@@ -110,7 +112,7 @@ endif()
 
 # Project suffix
 #   The suffix is appended to every library (e.g. [lib]MyLibrary-<suffix>.dll/lib/so/a)
-#   and can be used to install several versions of PixelLight at the same time 
+#   and can be used to install several versions of PixelLight at the same time
 set(CMAKETOOLS_CONFIG_SUFFIX "" CACHE STRING "Library suffix")
 
 # Version
@@ -176,7 +178,7 @@ endif()
 
 
 ##################################################
-## Macros 
+## Macros
 ##################################################
 
 ##################################################
@@ -186,7 +188,7 @@ endif()
 ##################################################
 macro(pl_plproject dir outputpath writeplugin)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${PL_PLPROJECT_COMMAND} ${dir} --output-path ${outputpath} --write-plugin ${writeplugin} 
+		COMMAND ${PL_PLPROJECT_COMMAND} ${dir} --output-path ${outputpath} --write-plugin ${writeplugin}
 	)
 endmacro(pl_plproject dir outputpath writeplugin)
 
@@ -208,7 +210,7 @@ endmacro(pl_create_plugin_description src dest)
 
 
 ##################################################
-## Initialization 
+## Initialization
 ##################################################
 
 # Set path to PLProject
@@ -224,5 +226,8 @@ endif()
 
 # Configure use of inline assembly
 if(NOT CMAKETOOLS_TARGET_ARCH STREQUAL "x86")
+	SET(CMAKETOOLS_CONFIG_NO_INLINE_ASM "1")
+endif()
+if(NOT CMAKETOOLS_TARGET_BITSIZE STREQUAL "32")
 	SET(CMAKETOOLS_CONFIG_NO_INLINE_ASM "1")
 endif()

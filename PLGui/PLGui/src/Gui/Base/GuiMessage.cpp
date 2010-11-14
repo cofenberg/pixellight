@@ -481,13 +481,13 @@ String GuiMessage::ToString() const
 		// Internal message
 		case MessageOnInternalMessage:
 			sMessage += "OnInternalMessage";
-			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (int)m_pDataPtr + ")";
+			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ")";
 			break;
 
 		// User message
 		case MessageOnUserMessage:
 			sMessage += "OnUserMessage";
-			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (int)m_pDataPtr + ")";
+			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ")";
 			break;
 
 		// Theme has been changed
@@ -503,19 +503,19 @@ String GuiMessage::ToString() const
 		// Child widget has been changed
 		case MessageOnUpdateChildWidget:
 			sMessage += "OnUpdateChildWidget";
-			sMessage += String() + " (Child=" + (int)m_pChildWidget + ")";
+			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ")";
 			break;
 
 		// Child widget has been added
 		case MessageOnAddChildWidget:
 			sMessage += "OnAddChildWidget";
-			sMessage += String() + " (Child=" + (int)m_pChildWidget + ")";
+			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ")";
 			break;
 
 		// Child widget has been removed
 		case MessageOnRemoveChildWidget:
 			sMessage += "OnRemoveChildWidget";
-			sMessage += String() + " (Child=" + (int)m_pChildWidget + ")";
+			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ")";
 			break;
 
 		// Widget shall be closed (ALT+F4 or X-Button pressed)

@@ -79,7 +79,7 @@ class Type<Object*> {
 		// Convert pointer to int
 		static int ConvertToInt(Object *pValue)
 		{
-			return (int)(pValue);
+			return (int)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int to pointer
@@ -115,7 +115,7 @@ class Type<Object*> {
 		// Convert pointer to int32
 		static PLGeneral::int32 ConvertToInt32(Object *pValue)
 		{
-			return (PLGeneral::int32)(pValue);
+			return (PLGeneral::int32)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int32 to pointer
@@ -127,7 +127,7 @@ class Type<Object*> {
 		// Convert pointer to int64
 		static PLGeneral::int64 ConvertToInt64(Object *pValue)
 		{
-			return (PLGeneral::int64)(pValue);
+			return (PLGeneral::int64)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int64 to pointer
@@ -163,7 +163,7 @@ class Type<Object*> {
 		// Convert pointer to uint32
 		static PLGeneral::uint32 ConvertToUInt32(Object *pValue)
 		{
-			return (PLGeneral::uint32)(pValue);
+			return (PLGeneral::uint32)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert uint32 to pointer
@@ -175,7 +175,7 @@ class Type<Object*> {
 		// Convert pointer to uint64
 		static PLGeneral::uint64 ConvertToUInt64(Object *pValue)
 		{
-			return (PLGeneral::uint64)(pValue);
+			return (PLGeneral::uint64)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert uint64 to pointer

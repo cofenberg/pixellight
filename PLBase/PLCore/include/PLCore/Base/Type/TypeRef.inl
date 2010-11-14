@@ -73,7 +73,7 @@ class Type<T&> {
 		// Convert pointer to int
 		static int ConvertToInt(T &cValue)
 		{
-			return (int)(&cValue);
+			return (int)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert int to pointer
@@ -85,7 +85,7 @@ class Type<T&> {
 		// Convert pointer to int8
 		static PLGeneral::int8 ConvertToInt8(T &cValue)
 		{
-			return (PLGeneral::int8)(&cValue);
+			return (PLGeneral::int8)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert int8 to pointer
@@ -97,7 +97,7 @@ class Type<T&> {
 		// Convert pointer to int16
 		static PLGeneral::int16 ConvertToInt16(T &cValue)
 		{
-			return (PLGeneral::int16)(&cValue);
+			return (PLGeneral::int16)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert int16 to pointer
@@ -109,7 +109,7 @@ class Type<T&> {
 		// Convert pointer to int32
 		static PLGeneral::int32 ConvertToInt32(T &cValue)
 		{
-			return (PLGeneral::int32)(&cValue);
+			return (PLGeneral::int32)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert int32 to pointer
@@ -121,7 +121,7 @@ class Type<T&> {
 		// Convert pointer to int64
 		static PLGeneral::int64 ConvertToInt64(T &cValue)
 		{
-			return (PLGeneral::int64)(&cValue);
+			return (PLGeneral::int64)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert int64 to pointer
@@ -133,7 +133,7 @@ class Type<T&> {
 		// Convert pointer to uint8
 		static PLGeneral::uint8 ConvertToUInt8(T &cValue)
 		{
-			return (PLGeneral::uint8)(&cValue);
+			return (PLGeneral::uint8)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert uint8 to pointer
@@ -145,7 +145,7 @@ class Type<T&> {
 		// Convert pointer to uint16
 		static PLGeneral::uint16 ConvertToUInt16(T &cValue)
 		{
-			return (PLGeneral::uint16)(&cValue);
+			return (PLGeneral::uint16)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert uint16 to pointer
@@ -157,7 +157,7 @@ class Type<T&> {
 		// Convert pointer to uint32
 		static PLGeneral::uint32 ConvertToUInt32(T &cValue)
 		{
-			return (PLGeneral::uint32)(&cValue);
+			return (PLGeneral::uint32)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert uint32 to pointer
@@ -169,7 +169,7 @@ class Type<T&> {
 		// Convert pointer to uint64
 		static PLGeneral::uint64 ConvertToUInt64(T &cValue)
 		{
-			return (PLGeneral::uint64)(&cValue);
+			return (PLGeneral::uint64)(PLGeneral::uint_ptr)(&cValue);
 		}
 
 		// Convert uint64 to pointer
