@@ -149,22 +149,35 @@ void WidgetPL::Destroy()
 {
 	// Check if the widget has already been destroyed
 	if (!m_bDestroyed) {
-		// Send OnDestroy message
-		m_pWidget->GetGui()->SendMessage(GuiMessage::OnDestroy(m_pWidget));
+		// Get the GUI instance
+		Gui *pGui = m_pWidget->GetGui();
+		if (pGui) {
+			// Get the GUI implementation instance
+			GuiPL *pGuiPL = (GuiPL*)pGui->GetImpl();
 
-		// Mark widget destroyed
-		m_bDestroyed = true;
+			// If the mouse was over this widget, set the current mouse over widget to NULL
+			if (pGuiPL && pGuiPL->m_pMouseOver == m_pWidget)
+				pGuiPL->m_pMouseOver = NULL;
 
-		// Delete child widgets
-		List<Widget*> lstChildren = m_pWidget->GetChildren();
-		for (uint32 i=0; i<lstChildren.GetNumOfElements(); i++)
-			lstChildren[i]->Destroy();
+			// Send OnDestroy message
+			pGui->SendMessage(GuiMessage::OnDestroy(m_pWidget));
 
-		// Remove from parent widget or GUI top-level list
-		if (m_pWidget->GetParent())
-			((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstChildren.Remove(m_pWidget);
-		else
-			((GuiPL*)m_pWidget->GetGui()->GetImpl())->m_lstTopLevelWidgets.Remove(m_pWidget);
+			// Mark widget destroyed
+			m_bDestroyed = true;
+
+			// Delete child widgets
+			List<Widget*> lstChildren = m_pWidget->GetChildren();
+			for (uint32 i=0; i<lstChildren.GetNumOfElements(); i++)
+				lstChildren[i]->Destroy();
+
+			// Remove from parent widget or GUI top-level list
+			if (m_pWidget->GetParent())
+				((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstChildren.Remove(m_pWidget);
+			else {
+				if (pGuiPL)
+					pGuiPL->m_lstTopLevelWidgets.Remove(m_pWidget);
+			}
+		}
 	}
 }
 
