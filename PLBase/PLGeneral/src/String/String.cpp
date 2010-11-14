@@ -74,27 +74,27 @@ String String::Format(const char *pszFormat, ...)
 #endif
 	// Check format string
 	if (pszFormat && strlen(pszFormat)) {
-		// Start parameter list
+		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
-
-		// Get the required buffer length, does not include the terminating null character
 		int nLength = _vscprintf(pszFormat, vaList);
+		va_end(vaList);
+
+        // Check length
 		if (nLength > 0) {
 			// Allocate memory
 			uint32  nBufferSize = nLength + 1;
 			char   *pszBuffer   = new char[nBufferSize];
 			if (pszBuffer) {
 				// Print the formatted string
+                va_start(vaList, pszFormat);
 				vsprintf(pszBuffer, pszFormat, vaList);
+                va_end(vaList);
 
 				// The string class takes over the control
 				sString.SetStringBuffer(pszBuffer, nLength);
 			}
 		}
-
-		// End parameter list
-		va_end(vaList);
 	}
 
 #ifdef LINUX
@@ -114,24 +114,24 @@ String String::Format(const wchar_t *pszFormat, ...)
 #endif
 	// Check format string
 	if (pszFormat && wcslen(pszFormat)) {
-		// Start parameter list
+		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
-
-		// Get the required buffer length, does not include the terminating null character
 		int nLength = _vscwprintf(pszFormat, vaList);
+		va_end(vaList);
+
+        // Check length
 		if (nLength > 0) {
 			// Allocate memory
 			wchar_t *pszBuffer = new wchar_t[nLength + 1];
 			if (pszBuffer) {
 				// Print the formatted string
+                va_start(vaList, pszFormat);
 				vswprintf(pszBuffer, nLength + 1, pszFormat, vaList);
 				sString.SetStringBuffer(pszBuffer, nLength);
+                va_end(vaList);
 			}
 		}
-
-		// End parameter list
-		va_end(vaList);
 	}
 
 #ifdef LINUX

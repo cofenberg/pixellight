@@ -1,3 +1,15 @@
+>> 14.11.2010
+[SB]
+- String::Format(): Hier gab es einen Bug, da nicht darauf geachtet wurde, dass laut Dokumentation die Funktion
+  _vscprintf (und alle anderen Funktionen dieser Art) das Handle für die Argumentenliste "zerstört". Daher muss
+  nach dem Aufruf von _vscprintf die Argumentenliste beendet und dann wieder neu geöffnet werden. Unter 32 Bit Linux
+  sowie unter Windows gab es hier niemals irgendwelche Probleme, aber unter 64 Bit Linux stürzte das ganze hier auf
+  mysteriöse Art und Weise ab. Wäre schon nett, wenn solche Dinge dann vielleicht nicht nur irgendwo in der Doku versteckt
+  wären, sondern auch verlässlich abstürzen würden, damit sowas nicht völlig unentdeckt bleiben kann ;-)
+  Zu diesem Fehler: http://bytes.com/topic/c/answers/572931-segmentation-fault-vsnprintf-lib64-tls-libc-so-6-a
+
+
+
 >> 04.11.2010
 [SB]
 - XmlAttribute: Die Funktion sscanf_s ist eine Microsoft-Erweiterung und daher
