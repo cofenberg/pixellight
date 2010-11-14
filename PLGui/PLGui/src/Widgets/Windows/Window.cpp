@@ -281,7 +281,7 @@ void Window::OnDraw(Graphics &cGraphics)
 {
 	// Draw window border
 	if (GetWindowState() != StateFullscreen) {
-		m_pTheme->DrawWindow(cGraphics, Vector2i::Zero, GetSize() - Vector2i(1, 1), m_bShowBorder, GetWidgetState(), GetTitle());
+		m_pTheme->DrawWindow(cGraphics, Vector2i::Zero, GetSize() - Vector2i(1, 1), m_bShowBorder, GetWidgetState(), GetTitle(), GetIcon());
 	}
 }
 
