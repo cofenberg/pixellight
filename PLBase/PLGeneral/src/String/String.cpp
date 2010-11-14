@@ -2210,6 +2210,15 @@ uint64 String::GetUInt64() const
 	return 0;
 }
 
+uint_ptr String::GetUIntPtr() const
+{
+	#ifdef X64_ARCHITECTURE
+		return GetUInt64();
+	#else
+		return GetUInt32();
+	#endif
+}
+
 long String::GetLong() const
 {
 	if (m_pStringBuffer) {

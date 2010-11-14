@@ -117,6 +117,18 @@ class Type< EnumTypePlain<ENUM> > {
 			return (ENUM)Type<int>::ConvertFromInt32(nValue);
 		}
 
+		// Convert type to int64
+		static PLGeneral::int64 ConvertToInt64(ENUM Value)
+		{
+			return Type<int>::ConvertToInt64((int)Value);
+		}
+
+		// Convert int64 to type
+		static ENUM ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (ENUM)Type<int>::ConvertFromInt64(nValue);
+		}
+
 		// Convert type to uint8
 		static PLGeneral::uint8 ConvertToUInt8(ENUM Value)
 		{
@@ -151,6 +163,30 @@ class Type< EnumTypePlain<ENUM> > {
 		static ENUM ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
 			return (ENUM)Type<int>::ConvertFromUInt32(nValue);
+		}
+
+		// Convert type to uint64
+		static PLGeneral::uint64 ConvertToUInt64(ENUM Value)
+		{
+			return Type<int>::ConvertToUInt64((int)Value);
+		}
+
+		// Convert uint64 to type
+		static ENUM ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (ENUM)Type<int>::ConvertFromUInt64(nValue);
+		}
+
+		// Convert type to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(ENUM Value)
+		{
+			return Type<int>::ConvertToUIntPtr((int)Value);
+		}
+
+		// Convert uint_ptr to type
+		static ENUM ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		{
+			return (ENUM)Type<int>::ConvertFromUIntPtr(nValue);
 		}
 
 		// Convert type to float

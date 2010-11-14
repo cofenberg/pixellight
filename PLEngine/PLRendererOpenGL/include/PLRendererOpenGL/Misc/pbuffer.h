@@ -10,7 +10,7 @@
 #  pragma warning (disable : 4786)
 #elif defined(LINUX)
 #  include <GL/glx.h>
-#  include "../../../../External/Recommended/OpenGL/glxext.h"
+#  include "../../../External/Recommended/OpenGL/glxext.h"
 #elif defined(MACOS)
 #  include <AGL/agl.h>
 #endif
@@ -43,7 +43,7 @@ namespace PLRendererOpenGL {
 // double       - must support double buffered rendering
 // samples=n    - must support n-sample antialiasing (n can be 2 or 4)
 // float=n      - must support n-bit per channel floating point
-// 
+//
 // texture2D
 // textureRECT
 // textureCUBE  - must support binding pbuffer as texture to specified target
@@ -51,7 +51,7 @@ namespace PLRendererOpenGL {
 //                '=depth' like so: texture2D=depth or textureRECT=depth
 //              - the internal format of the texture will be rgba by default or
 //                float if pbuffer is floating point
-//      
+//
 class PBuffer
 {
     public:
@@ -105,7 +105,7 @@ class PBuffer
 
         HGLRC       m_hOldGLRC;
         HDC         m_hOldDC;
-        
+
         std::vector<int> m_pfAttribList;
         std::vector<int> m_pbAttribList;
 
@@ -118,7 +118,7 @@ class PBuffer
         Display    *m_pOldDisplay;
         GLXPbuffer  m_glxOldDrawable;
         GLXContext  m_glxOldContext;
-        
+
         std::vector<int> m_pfAttribList;
         std::vector<int> m_pbAttribList;
 #elif defined(MACOS)
@@ -131,7 +131,7 @@ class PBuffer
         int m_iHeight;
         int m_iNComponents;
         int m_iBitsPerComponent;
-    
+
         const char *m_strMode;
         bool m_bSharedContext;
         bool m_bShareObjects;
@@ -139,7 +139,7 @@ class PBuffer
     private:
         std::string getStringValue(std::string token);
         int getIntegerValue(std::string token);
-#if defined(LINUX) || defined(WIN32)        
+#if defined(LINUX) || defined(WIN32)
         void parseModeString(const char *modeString, std::vector<int> *pfAttribList, std::vector<int> *pbAttribList);
 
         bool m_bIsBound;

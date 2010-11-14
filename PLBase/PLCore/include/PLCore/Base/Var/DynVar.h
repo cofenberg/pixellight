@@ -245,6 +245,24 @@ class DynVar {
 		*    Get value
 		*
 		*  @return
+		*    Value as int64
+		*/
+		PLCORE_API virtual PLGeneral::int64 GetInt64() const;
+
+		/**
+		*  @brief
+		*    Set value
+		*
+		*  @param[in] nValue
+		*    Value as int64
+		*/
+		PLCORE_API virtual void SetInt64(PLGeneral::int64 nValue);
+
+		/**
+		*  @brief
+		*    Get value
+		*
+		*  @return
 		*    Value as uint8
 		*/
 		PLCORE_API virtual PLGeneral::uint8 GetUInt8() const;
@@ -293,6 +311,42 @@ class DynVar {
 		*    Value as uint32
 		*/
 		PLCORE_API virtual void SetUInt32(PLGeneral::uint32 nValue);
+
+		/**
+		*  @brief
+		*    Get value
+		*
+		*  @return
+		*    Value as uint64
+		*/
+		PLCORE_API virtual PLGeneral::uint64 GetUInt64() const;
+
+		/**
+		*  @brief
+		*    Set value
+		*
+		*  @param[in] nValue
+		*    Value as uint64
+		*/
+		PLCORE_API virtual void SetUInt64(PLGeneral::uint64 nValue);
+
+		/**
+		*  @brief
+		*    Get value
+		*
+		*  @return
+		*    Value as uint_ptr
+		*/
+		PLCORE_API virtual PLGeneral::uint_ptr GetUIntPtr() const;
+
+		/**
+		*  @brief
+		*    Set value
+		*
+		*  @param[in] nValue
+		*    Value as uint_ptr
+		*/
+		PLCORE_API virtual void SetUIntPtr(PLGeneral::uint_ptr nValue);
 
 		/**
 		*  @brief

@@ -129,7 +129,19 @@ class Type<TrollType> {
 			return ConvertFromInt((int)nValue);
 		}
 
-		// Convert troll to int8
+		// Convert troll to int64
+		static PLGeneral::int64 ConvertToInt64(const TrollType &cTroll)
+		{
+			return (PLGeneral::int64)ConvertToInt(cTroll);
+		}
+
+		// Convert int64 to troll
+		static TrollType ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return ConvertFromInt((int)nValue);
+		}
+
+		// Convert troll to uint8
 		static PLGeneral::uint8 ConvertToUInt8(const TrollType &cTroll)
 		{
 			return (PLGeneral::uint8)ConvertToInt(cTroll);
@@ -161,6 +173,30 @@ class Type<TrollType> {
 
 		// Convert uint32 to troll
 		static TrollType ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return ConvertFromInt((int)nValue);
+		}
+
+		// Convert troll to uint64
+		static PLGeneral::uint64 ConvertToUInt64(const TrollType &cTroll)
+		{
+			return (PLGeneral::uint64)ConvertToInt(cTroll);
+		}
+
+		// Convert uint64 to troll
+		static TrollType ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return ConvertFromInt((int)nValue);
+		}
+
+		// Convert troll to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(const TrollType &cTroll)
+		{
+			return (PLGeneral::uint_ptr)ConvertToInt(cTroll);
+		}
+
+		// Convert uint_ptr to troll
+		static TrollType ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return ConvertFromInt((int)nValue);
 		}

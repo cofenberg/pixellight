@@ -699,6 +699,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\PLCore\Base\Type\TypeInt64.inl"
+					>
+				</File>
+				<File
 					RelativePath=".\include\PLCore\Base\Type\TypeInt8.inl"
 					>
 				</File>
@@ -732,6 +736,10 @@
 				</File>
 				<File
 					RelativePath=".\include\PLCore\Base\Type\TypeUInt32.inl"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLCore\Base\Type\TypeUInt64.inl"
 					>
 				</File>
 				<File

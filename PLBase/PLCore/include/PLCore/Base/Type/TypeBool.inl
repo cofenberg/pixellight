@@ -117,6 +117,18 @@ class Type<bool> {
 			return (bool)(nValue != 0);
 		}
 
+		// Convert bool to int64
+		static PLGeneral::int64 ConvertToInt64(bool bValue)
+		{
+			return (PLGeneral::int64)(bValue);
+		}
+
+		// Convert int64 to bool
+		static bool ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (bool)(nValue != 0);
+		}
+
 		// Convert bool to uint8
 		static PLGeneral::uint8 ConvertToUInt8(bool bValue)
 		{
@@ -149,6 +161,30 @@ class Type<bool> {
 
 		// Convert uint32 to bool
 		static bool ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (bool)(nValue != 0);
+		}
+
+		// Convert bool to uint64
+		static PLGeneral::uint64 ConvertToUInt64(bool bValue)
+		{
+			return (PLGeneral::uint64)(bValue);
+		}
+
+		// Convert uint64 to bool
+		static bool ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (bool)(nValue != 0);
+		}
+
+		// Convert bool to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(bool bValue)
+		{
+			return (PLGeneral::uint_ptr)(bValue);
+		}
+
+		// Convert uint_ptr to bool
+		static bool ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (bool)(nValue != 0);
 		}

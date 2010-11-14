@@ -131,6 +131,18 @@ class Type<PLGui::SizeHint> {
 			return PLGui::SizeHint(PLGui::SizeHint::Pixel, nValue);
 		}
 
+		// Convert PLGui::SizeHint to int64
+		static PLGeneral::int64 ConvertToInt64(const PLGui::SizeHint &cSize)
+		{
+			return (PLGeneral::int64)cSize.GetSize();
+		}
+
+		// Convert int64 to PLGui::SizeHint
+		static PLGui::SizeHint ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return PLGui::SizeHint(PLGui::SizeHint::Pixel, (PLGeneral::uint32)nValue);
+		}
+
 		// Convert PLGui::SizeHint to int8
 		static PLGeneral::uint8 ConvertToUInt8(const PLGui::SizeHint &cSize)
 		{
@@ -165,6 +177,30 @@ class Type<PLGui::SizeHint> {
 		static PLGui::SizeHint ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
 			return PLGui::SizeHint(PLGui::SizeHint::Pixel, nValue);
+		}
+
+		// Convert PLGui::SizeHint to uint64
+		static PLGeneral::uint64 ConvertToUInt64(const PLGui::SizeHint &cSize)
+		{
+			return (PLGeneral::uint64)cSize.GetSize();
+		}
+
+		// Convert uint64 to PLGui::SizeHint
+		static PLGui::SizeHint ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return PLGui::SizeHint(PLGui::SizeHint::Pixel, (PLGeneral::uint32)nValue);
+		}
+
+		// Convert PLGui::SizeHint to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLGui::SizeHint &cSize)
+		{
+			return (PLGeneral::uint_ptr)cSize.GetSize();
+		}
+
+		// Convert uint_ptr to PLGui::SizeHint
+		static PLGui::SizeHint ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		{
+			return PLGui::SizeHint(PLGui::SizeHint::Pixel, (PLGeneral::uint32)nValue);
 		}
 
 		// Convert PLGui::SizeHint to float

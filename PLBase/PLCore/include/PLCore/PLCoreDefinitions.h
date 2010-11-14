@@ -54,9 +54,11 @@ enum ETypeID {
 	TypeInt8,
 	TypeInt16,
 	TypeInt32,
+	TypeInt64,
 	TypeUInt8,
 	TypeUInt16,
 	TypeUInt32,
+	TypeUInt64,
 	TypeString,
 	TypeObjectPtr
 };

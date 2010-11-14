@@ -79,7 +79,7 @@ class Type<Object*> {
 		// Convert pointer to int
 		static int ConvertToInt(Object *pValue)
 		{
-			return (int)(pValue);
+			return (int)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int to pointer
@@ -91,7 +91,7 @@ class Type<Object*> {
 		// Convert pointer to int8
 		static PLGeneral::int8 ConvertToInt8(Object *pValue)
 		{
-			return (PLGeneral::int8)(PLGeneral::uint32)(pValue);
+			return (PLGeneral::int8)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int8 to pointer
@@ -103,7 +103,7 @@ class Type<Object*> {
 		// Convert pointer to int16
 		static PLGeneral::int16 ConvertToInt16(Object *pValue)
 		{
-			return (PLGeneral::int16)(PLGeneral::uint32)(pValue);
+			return (PLGeneral::int16)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int16 to pointer
@@ -115,7 +115,7 @@ class Type<Object*> {
 		// Convert pointer to int32
 		static PLGeneral::int32 ConvertToInt32(Object *pValue)
 		{
-			return (PLGeneral::int32)(pValue);
+			return (PLGeneral::int32)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert int32 to pointer
@@ -124,10 +124,22 @@ class Type<Object*> {
 			return (Object*)(nValue);
 		}
 
+		// Convert pointer to int64
+		static PLGeneral::int64 ConvertToInt64(Object *pValue)
+		{
+			return (PLGeneral::int64)(PLGeneral::uint_ptr)(pValue);
+		}
+
+		// Convert int64 to pointer
+		static Object *ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
 		// Convert pointer to uint8
 		static PLGeneral::uint8 ConvertToUInt8(Object *pValue)
 		{
-			return (PLGeneral::uint8)(PLGeneral::uint32)(pValue);
+			return (PLGeneral::uint8)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert uint8 to pointer
@@ -139,7 +151,7 @@ class Type<Object*> {
 		// Convert pointer to uint16
 		static PLGeneral::uint16 ConvertToUInt16(Object *pValue)
 		{
-			return (PLGeneral::uint16)(PLGeneral::uint32)(pValue);
+			return (PLGeneral::uint16)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert uint16 to pointer
@@ -151,11 +163,35 @@ class Type<Object*> {
 		// Convert pointer to uint32
 		static PLGeneral::uint32 ConvertToUInt32(Object *pValue)
 		{
-			return (PLGeneral::uint32)(pValue);
+			return (PLGeneral::uint32)(PLGeneral::uint_ptr)(pValue);
 		}
 
 		// Convert uint32 to pointer
 		static Object *ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to uint64
+		static PLGeneral::uint64 ConvertToUInt64(Object *pValue)
+		{
+			return (PLGeneral::uint64)(PLGeneral::uint_ptr)(pValue);
+		}
+
+		// Convert uint64 to pointer
+		static Object *ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (Object*)(nValue);
+		}
+
+		// Convert pointer to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(Object *pValue)
+		{
+			return (PLGeneral::uint_ptr)(pValue);
+		}
+
+		// Convert uint_ptr to pointer
+		static Object *ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (Object*)(nValue);
 		}
@@ -191,21 +227,13 @@ class Type<Object*> {
 		// Convert pointer to string
 		static PLGeneral::String ConvertToString(Object *pValue)
 		{
-			#ifdef X64_ARCHITECTURE
-				return PLGeneral::String() + (PLGeneral::uint64)pValue;
-			#else
-				return PLGeneral::String() + (PLGeneral::uint32)pValue;
-			#endif
+			return PLGeneral::String() + (PLGeneral::uint_ptr)pValue;
 		}
 
 		// Convert string to pointer
 		static Object *ConvertFromString(const PLGeneral::String &sString)
 		{
-			#ifdef X64_ARCHITECTURE
-				return (Object*)sString.GetUInt64();
-			#else
-				return (Object*)sString.GetUInt32();
-			#endif
+			return (Object*)sString.GetUIntPtr();
 		}
 
 

@@ -117,6 +117,18 @@ class Type<PLGeneral::int16> {
 			return (PLGeneral::int16)(nValue);
 		}
 
+		// Convert int16 to int64
+		static PLGeneral::int64 ConvertToInt64(PLGeneral::int16 nValue)
+		{
+			return (PLGeneral::int64)(nValue);
+		}
+
+		// Convert int64 to int16
+		static PLGeneral::int16 ConvertFromInt64(PLGeneral::int64 nValue)
+		{
+			return (PLGeneral::int16)(nValue);
+		}
+
 		// Convert int16 to uint8
 		static PLGeneral::uint8 ConvertToUInt8(PLGeneral::int16 nValue)
 		{
@@ -149,6 +161,30 @@ class Type<PLGeneral::int16> {
 
 		// Convert uint32 to int16
 		static PLGeneral::int16 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		{
+			return (PLGeneral::int16)(nValue);
+		}
+
+		// Convert int16 to uint64
+		static PLGeneral::uint64 ConvertToUInt64(PLGeneral::int16 nValue)
+		{
+			return (PLGeneral::uint64)(nValue);
+		}
+
+		// Convert uint64 to int16
+		static PLGeneral::int16 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		{
+			return (PLGeneral::int16)(nValue);
+		}
+
+		// Convert int16 to uint_ptr
+		static PLGeneral::uint_ptr ConvertToUIntPtr(PLGeneral::int16 nValue)
+		{
+			return (PLGeneral::uint_ptr)(nValue);
+		}
+
+		// Convert uint_ptr to int16
+		static PLGeneral::int16 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
 			return (PLGeneral::int16)(nValue);
 		}

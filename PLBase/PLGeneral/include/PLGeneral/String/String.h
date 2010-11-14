@@ -557,7 +557,7 @@ class String {
 		*
 		*  @param[in] pszString
 		*    String to compare with, can be NULL
-		*  @param[in] nPos 
+		*  @param[in] nPos
 		*    Start position within this string
 		*  @param[in] nCount
 		*    Number of characters to compare, if negative compare all characters, if 0 the result is "true"
@@ -601,7 +601,7 @@ class String {
 		*    'true' if the string is numeric, else 'false' (maybe the string is empty?)
 		*
 		*  @note
-		*    - Examples: '5' or '0' are numeric, 
+		*    - Examples: '5' or '0' are numeric,
 		*      while  '5.1', '.', 'AD', '3D', '5,5', '5.2.8' are not
 		*/
 		PLGENERAL_API bool IsNumeric() const;
@@ -899,25 +899,26 @@ class String {
 		PLGENERAL_API bool IsValidFloat() const;
 
 		// Convert from string
-		PLGENERAL_API bool    GetBool()     const;
-		PLGENERAL_API char    GetChar()     const;
-		PLGENERAL_API wchar_t GetWideChar() const;
-		PLGENERAL_API int     GetInt()      const;
-		PLGENERAL_API uint32  GetUInt32()   const;
-		PLGENERAL_API uint64  GetUInt64()   const;
-		PLGENERAL_API long    GetLong()     const;
-		PLGENERAL_API float   GetFloat()    const;
-		PLGENERAL_API double  GetDouble()   const;
+		PLGENERAL_API bool     GetBool()     const;
+		PLGENERAL_API char     GetChar()     const;
+		PLGENERAL_API wchar_t  GetWideChar() const;
+		PLGENERAL_API int      GetInt()      const;
+		PLGENERAL_API uint32   GetUInt32()   const;
+		PLGENERAL_API uint64   GetUInt64()   const;
+		PLGENERAL_API uint_ptr GetUIntPtr()  const;
+		PLGENERAL_API long     GetLong()     const;
+		PLGENERAL_API float    GetFloat()    const;
+		PLGENERAL_API double   GetDouble()   const;
 
 		// Convert to string
-		PLGENERAL_API String &operator =(bool    bValue);
-		PLGENERAL_API String &operator =(char    nValue);
-		PLGENERAL_API String &operator =(wchar_t nValue);
-		PLGENERAL_API String &operator =(int     nValue);
-		PLGENERAL_API String &operator =(uint32  nValue);
-		PLGENERAL_API String &operator =(uint64  nValue);
-		PLGENERAL_API String &operator =(float   fValue);
-		PLGENERAL_API String &operator =(double  dValue);
+		PLGENERAL_API String &operator =(bool     bValue);
+		PLGENERAL_API String &operator =(char     nValue);
+		PLGENERAL_API String &operator =(wchar_t  nValue);
+		PLGENERAL_API String &operator =(int      nValue);
+		PLGENERAL_API String &operator =(uint32   nValue);
+		PLGENERAL_API String &operator =(uint64   nValue);
+		PLGENERAL_API String &operator =(float    fValue);
+		PLGENERAL_API String &operator =(double   dValue);
 
 		// Concatenation
 		PLGENERAL_API String operator +(bool    bValue) const;
@@ -928,22 +929,22 @@ class String {
 		PLGENERAL_API String operator +(uint64  nValue) const;
 		PLGENERAL_API String operator +(float   fValue) const;
 		PLGENERAL_API String operator +(double  dValue) const;
-		PLGENERAL_API friend String operator +(bool    bValue, const String &sString);
-		PLGENERAL_API friend String operator +(char    nValue, const String &sString);
-		PLGENERAL_API friend String operator +(wchar_t nValue, const String &sString);
-		PLGENERAL_API friend String operator +(int     nValue, const String &sString);
-		PLGENERAL_API friend String operator +(uint32  nValue, const String &sString);
-		PLGENERAL_API friend String operator +(uint64  nValue, const String &sString);
-		PLGENERAL_API friend String operator +(float   fValue, const String &sString);
-		PLGENERAL_API friend String operator +(double  dValue, const String &sString);
-		PLGENERAL_API String &operator +=(bool    bValue);
-		PLGENERAL_API String &operator +=(char    nValue);
-		PLGENERAL_API String &operator +=(wchar_t nValue);
-		PLGENERAL_API String &operator +=(int     nValue);
-		PLGENERAL_API String &operator +=(uint32  nValue);
-		PLGENERAL_API String &operator +=(uint64  nValue);
-		PLGENERAL_API String &operator +=(float   fValue);
-		PLGENERAL_API String &operator +=(double  dValue);
+		PLGENERAL_API friend String operator +(bool     bValue, const String &sString);
+		PLGENERAL_API friend String operator +(char     nValue, const String &sString);
+		PLGENERAL_API friend String operator +(wchar_t  nValue, const String &sString);
+		PLGENERAL_API friend String operator +(int      nValue, const String &sString);
+		PLGENERAL_API friend String operator +(uint32   nValue, const String &sString);
+		PLGENERAL_API friend String operator +(uint64   nValue, const String &sString);
+		PLGENERAL_API friend String operator +(float    fValue, const String &sString);
+		PLGENERAL_API friend String operator +(double   dValue, const String &sString);
+		PLGENERAL_API String &operator +=(bool     bValue);
+		PLGENERAL_API String &operator +=(char     nValue);
+		PLGENERAL_API String &operator +=(wchar_t  nValue);
+		PLGENERAL_API String &operator +=(int      nValue);
+		PLGENERAL_API String &operator +=(uint32   nValue);
+		PLGENERAL_API String &operator +=(uint64   nValue);
+		PLGENERAL_API String &operator +=(float    fValue);
+		PLGENERAL_API String &operator +=(double   dValue);
 
 
 	//[-------------------------------------------------------]
