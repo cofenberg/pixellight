@@ -84,7 +84,7 @@ void ThemeTestWidget::OnDraw(Graphics &cGraphics)
 	// Draw a window
 	Vector2i vPos = Vector2i(32, 32);
 	Vector2i vSize = GetSize() - Vector2i(64, 64);
-	m_pTheme->DrawWindow(cGraphics, vPos, vPos + vSize - Vector2i(1, 1), true, WidgetActive, GetTitle());
+	m_pTheme->DrawWindow(cGraphics, vPos, vPos + vSize - Vector2i(1, 1), true, WidgetActive, GetTitle(), GetIcon());
 
 	// Draw a panel inside
 	vPos = Vector2i(64, 64);
