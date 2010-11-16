@@ -513,6 +513,14 @@
 			Name="Tools"
 			>
 			<File
+				RelativePath=".\src\Tools\SceneRendererTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLEngine\Tools\SceneRendererTool.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Tools\Screenshot.cpp"
 				>
 			</File>

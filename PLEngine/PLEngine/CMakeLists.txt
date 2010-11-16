@@ -27,6 +27,7 @@ add_sources(
 	src/Picking/PickingResult.cpp
 	src/Picking/MousePicking.cpp
 	src/Tools/Screenshot.cpp
+	src/Tools/SceneRendererTool.cpp
 	src/PLEngine.cpp
 )
 

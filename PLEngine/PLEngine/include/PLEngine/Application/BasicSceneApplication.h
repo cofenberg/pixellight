@@ -31,6 +31,7 @@
 #include <PLRenderer/Renderer/TextureBuffer.h>
 #include <PLScene/Scene/SceneNodeHandler.h>
 #include "PLEngine/Tools/Screenshot.h"
+#include "PLEngine/Tools/SceneRendererTool.h"
 #include "PLEngine/Application/SceneApplication.h"
 
 
@@ -145,10 +146,36 @@ class BasicSceneApplication : public SceneApplication {
 
 		/**
 		*  @brief
+		*    Get scene renderer tool
+		*
+		*  @return
+		*    Scene renderer tool instance
+		*
+		*  @remarks
+		*    Use "GetSceneRendererTool()" for a simplified interface to the scene renderer. By writing for example
+		*    "GetSceneRendererTool().SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
+		*    one can usually (on standard scene renderer configurations) set directly a background bitmap.
+		*/
+		PL_API SceneRendererTool &GetSceneRendererTool();
+
+		/**
+		*  @brief
+		*    Get scene renderer tool
+		*
+		*  @return
+		*    Scene renderer tool instance
+		*
+		*  @see
+		*    - Non-constant GetSceneRendererTool()
+		*/
+		PL_API const SceneRendererTool &GetSceneRendererTool() const;
+
+		/**
+		*  @brief
 		*    Get screenshot tool
 		*
 		*  @return
-		*    Screenshot tool
+		*    Screenshot tool instance
 		*/
 		PL_API Screenshot &GetScreenshotTool();
 
@@ -259,6 +286,7 @@ class BasicSceneApplication : public SceneApplication {
 		PLScene::SceneNode							  *m_pFirstFoundCamera;			/**< First found camera, can be NULL */
 		PLGeneral::Array<const PLScene::SNKeyValue*>   m_lstPostKeys;				/**< Keys to process AFTER all other */
 		bool										   m_bHasLoadScreen;			/**< Is there a load screen? */
+		SceneRendererTool							   m_cSceneRendererTool;		/**< Scene renderer tool */
 		Screenshot									   m_cScreenshot;				/**< Screenshot tool */
 
 

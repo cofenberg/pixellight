@@ -65,9 +65,9 @@ class Screenshot {
 		*    Constructor
 		*
 		*  @param[in] pRendererContext
-		*    Renderer context from which to create screenshots
+		*    Renderer context from which to create screenshots, can be NULL
 		*  @param[in] pPainter
-		*    Surface painter (only needed for extended screenshot functionality)
+		*    Surface painter, can be NULL (only needed for extended screenshot functionality)
 		*/
 		PL_API Screenshot(PLRenderer::RendererContext *pRendererContext = NULL, PLRenderer::SurfacePainter *pPainter = NULL);
 
@@ -75,14 +75,14 @@ class Screenshot {
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~Screenshot();
+		PL_API ~Screenshot();
 
 		/**
 		*  @brief
 		*    Get renderer context
 		*
 		*  @return
-		*    Renderer context from which to create screenshots
+		*    Renderer context from which to create screenshots, can be NULL
 		*/
 		PL_API PLRenderer::RendererContext *GetRendererContext() const;
 
@@ -91,7 +91,7 @@ class Screenshot {
 		*    Set renderer context
 		*
 		*  @param[in] pRendererContext
-		*    Renderer context from which to create screenshots
+		*    Renderer context from which to create screenshots, can be NULL
 		*/
 		PL_API void SetRendererContext(PLRenderer::RendererContext *pRendererContext);
 
@@ -100,7 +100,7 @@ class Screenshot {
 		*    Get surface painter
 		*
 		*  @return
-		*    Surface painter used to create screenshots
+		*    Surface painter used to create screenshots, can be NULL
 		*/
 		PL_API PLRenderer::SurfacePainter *GetPainter() const;
 
@@ -109,7 +109,7 @@ class Screenshot {
 		*    Set surface painter
 		*
 		*  @param[in] pSurfacePainter
-		*    Surface painter used to create screenshots
+		*    Surface painter used to create screenshots, can be NULL
 		*/
 		PL_API void SetPainter(PLRenderer::SurfacePainter *pSurfacePainter);
 
@@ -196,11 +196,11 @@ class Screenshot {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
-	protected:
-		PLRenderer::RendererContext *m_pRendererContext;		/**< Used renderer context */
-		PLRenderer::SurfacePainter	*m_pSurfacePainter;			/**< Used surface painter */
+	private:
+		PLRenderer::RendererContext *m_pRendererContext;		/**< Used renderer context, can be NULL */
+		PLRenderer::SurfacePainter	*m_pSurfacePainter;			/**< Used surface painter, can be NULL */
 		PLGeneral::String			 m_sScreenshotDirectory;	/**< Screenshot directory */
 
 

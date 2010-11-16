@@ -268,6 +268,26 @@ SNCamera *BasicSceneApplication::GetCamera() const
 
 /**
 *  @brief
+*    Get scene renderer tool
+*/
+SceneRendererTool &BasicSceneApplication::GetSceneRendererTool()
+{
+	// Return scene renderer tool
+	return m_cSceneRendererTool;
+}
+
+/**
+*  @brief
+*    Get scene renderer tool
+*/
+const SceneRendererTool &BasicSceneApplication::GetSceneRendererTool() const
+{
+	// Return scene renderer tool
+	return m_cSceneRendererTool;
+}
+
+/**
+*  @brief
 *    Get screenshot tool
 */
 Screenshot &BasicSceneApplication::GetScreenshotTool()
@@ -315,6 +335,9 @@ bool BasicSceneApplication::Init()
 {
 	// Call base implementation
 	if (SceneApplication::Init()) {
+		// Initialize scene renderer tool
+		m_cSceneRendererTool.SetPainter(GetPainter());
+
 		// Initialize screenshot tool
 		m_cScreenshot.SetRendererContext(GetRendererContext());
 		m_cScreenshot.SetPainter(GetPainter());

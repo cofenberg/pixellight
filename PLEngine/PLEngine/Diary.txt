@@ -1,3 +1,16 @@
+>> 16.11.2010
+[CO]
+- "SceneRendererTool"-Klasse hinzugefügt und "BasicSceneApplication::GetSceneRendererTool()"-Methode hinzugefügt über die sich eine
+  Instanz dieser Helferlein-Klasse erfragen lässt. "SceneRendererTool" dient dazu den Zugriff auf Scene Renderer Einstellungen etwas
+  zu vereinfachen - da in PL alles recht flexibel und universell gehalten ist, kann schonmal der Zugriff etwas komplizierter werden.
+  Im "Normallfall" kann man nun über "GetSceneRendererTool().SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
+  direkt ein Hintergrundbild setzen - das ist natürlich nicht für alle erdenkbaren Anwendungstypen und Scene Renderer zusammenstellungen,
+  aber die Application-Klassen sind ohnehin dazu da "bestimmte Anwendungsfälle zu Modellieren und hier eine besonderst einfache Nutzung zu
+  ermöglichen". Als Namen habe ich bewusst "SceneRendererTool" und nicht "SceneRenderer" gewählt damit es keine Namenskonflikte mit
+  "PLScene::SceneRenderer" geben kann und/oder verwirrungen.
+
+
+
 >> 23.10.2010
 [CO]
 - "SceneApplication::OnInputControllerFound()": Weiterer Refactoring-Schritt betreffend Umstellung auf Virtuelle Input Controller...
