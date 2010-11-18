@@ -131,11 +131,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 					nBytes		= 1;
 
 					// Convert 1, 2 and 4 Bit grayscale images to 8 Bit
-					// Note: Other than stated in the docs, this seems to automatically convert the image
-					//       into RGB rather than 8bit grayscale. I found no way to prevent this from
-					//       happening, so we just have to live with this
-					png_set_gray_1_2_4_to_8(pPng);
-					nColorType = PNG_COLOR_TYPE_RGB;
+					png_set_expand_gray_1_2_4_to_8(pPng);
 					break;
 
 				case 8:

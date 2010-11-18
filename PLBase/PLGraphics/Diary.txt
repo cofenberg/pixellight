@@ -1,3 +1,13 @@
+>> 18.11.2010
+[CO]
+- "ImageLoaderPNG::Load()": Anstatt "png_set_gray_1_2_4_to_8()" wird nun die neue Funktion "png_set_expand_gray_1_2_4_to_8()" verwendet
+  ("png_set_gray_1_2_4_to_8()" war deprecated und scheint bei einigen libpng Versionen bereits entfernt zu sein). Da Paint.NET/Gimp
+  png scheinbar nicht in < 8 bits speichern kann, nahm ich mir Bilder aus http://www.schaik.com/pngsuite/ zum Testen ob sich die neue
+  Funktion wie benötigt verhält. Sieht so aus als ob alles funktioniert, es kommt sogar wie Dokumentiert ein Graustufenbild heraus so
+  das ich "nColorType = PNG_COLOR_TYPE_RGB;" im Code entfernte.
+
+
+
 >> 17.04.2010
 [CO]
 - Image: = Operator: Auch Dateiname und URL von Loadable werden nun kopiert
