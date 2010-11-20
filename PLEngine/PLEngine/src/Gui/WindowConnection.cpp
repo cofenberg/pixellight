@@ -246,6 +246,11 @@ void WindowConnection::SetFullscreen(bool bFullscreen)
 			// De-init window
 			DeInit();
 
+			// [HACK] If the widget is currently maximized, change back to normal - if we don't do this and changing from
+			// maximized to fullscreen, the window title is visible within the fullscreen mode...
+			if (bFullscreen && m_pWidget->GetWindowState() == StateMaximized)
+				m_pWidget->SetWindowState(StateNormal);
+
 			// Init widget
 			InitWidget(bFullscreen);
 

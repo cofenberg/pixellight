@@ -1,3 +1,11 @@
+>> 20.11.2010
+[CO]
+- "WindowConnection::SetFullscreen()": Wenn ein Fenster maximiert ist, und man nun in den Vollbild-Modus wechselt sah man die Titel-Leiste
+  des Fensters, daher schalte ich nun in diesem Fall das Fenster zuerst zurück in den Normal-Modus (nach Vollbild-Modus ist
+  das ohnehin anschließend im Normal-Modus)
+
+
+
 >> 16.11.2010
 [CO]
 - "SceneRendererTool"-Klasse hinzugefügt und "BasicSceneApplication::GetSceneRendererTool()"-Methode hinzugefügt über die sich eine
