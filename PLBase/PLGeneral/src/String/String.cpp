@@ -80,16 +80,16 @@ String String::Format(const char *pszFormat, ...)
 		int nLength = _vscprintf(pszFormat, vaList);
 		va_end(vaList);
 
-        // Check length
+		// Check length
 		if (nLength > 0) {
 			// Allocate memory
 			uint32  nBufferSize = nLength + 1;
 			char   *pszBuffer   = new char[nBufferSize];
 			if (pszBuffer) {
 				// Print the formatted string
-                va_start(vaList, pszFormat);
+				va_start(vaList, pszFormat);
 				vsprintf(pszBuffer, pszFormat, vaList);
-                va_end(vaList);
+				va_end(vaList);
 
 				// The string class takes over the control
 				sString.SetStringBuffer(pszBuffer, nLength);
@@ -120,16 +120,16 @@ String String::Format(const wchar_t *pszFormat, ...)
 		int nLength = _vscwprintf(pszFormat, vaList);
 		va_end(vaList);
 
-        // Check length
+		// Check length
 		if (nLength > 0) {
 			// Allocate memory
 			wchar_t *pszBuffer = new wchar_t[nLength + 1];
 			if (pszBuffer) {
 				// Print the formatted string
-                va_start(vaList, pszFormat);
+				va_start(vaList, pszFormat);
 				vswprintf(pszBuffer, nLength + 1, pszFormat, vaList);
 				sString.SetStringBuffer(pszBuffer, nLength);
-                va_end(vaList);
+				va_end(vaList);
 			}
 		}
 	}

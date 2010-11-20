@@ -332,9 +332,6 @@ void SNBitmap3D::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 			// Call base implementation
 			SNBitmap::DrawSolid(cRenderer, pVisNode);
 
-			// Mark this scene node as drawn
-			SetDrawn();
-
 			// Draw the bitmap shape
 			DrawShape(cRenderer, *pVisNode);
 		}
@@ -349,9 +346,6 @@ void SNBitmap3D::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		if (pMaterial && pMaterial->GetBlend()) {
 			// Call base implementation
 			SNBitmap::DrawTransparent(cRenderer, pVisNode);
-
-			// Mark this scene node as drawn
-			SetDrawn();
 
 			// Draw the bitmap shape
 			DrawShape(cRenderer, *pVisNode);
