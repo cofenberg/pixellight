@@ -29,6 +29,9 @@ if(WIN32)
 	if(PL_EXPORTER_3DSMAX_2010)
 		add_subdirectory(PL3dsMaxSceneExport_2010)
 	endif()
+	if(PL_EXPORTER_3DSMAX_2011)
+		add_subdirectory(PL3dsMaxSceneExport_2011)
+	endif()
 endif()
 
 ##################################################

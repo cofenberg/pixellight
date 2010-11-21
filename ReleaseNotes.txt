@@ -1,5 +1,6 @@
 Changes in PixelLight 0.9.3-R2 (not yet released)
 - Feature: Added basic PLDemoRendererTexturing demo
+- Feature: Autodesk 3ds Max 2011 scene exporter added
 
 
 Changes in PixelLight 0.9.3-R1 (released on October 23, 2010)

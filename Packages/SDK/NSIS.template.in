@@ -350,6 +350,10 @@ Function PixelLightFinish
     ReadRegStr $3DSMaxDir HKLM "SOFTWARE\Autodesk\3dsMax\12.0\MAX-1:409" "InstallDir"
     StrCmp $3DSMaxDir "" noExporter
     CopyFiles $INSTDIR\Tools\3dsMax\*.dle $3DSMaxDir\plugins\PL3dsMaxSceneExport_2010.dle
+    ; Autodesk 3ds Max 2011
+    ReadRegStr $3DSMaxDir HKLM "SOFTWARE\Autodesk\3dsMax\13.0\MAX-1:409" "InstallDir"
+    StrCmp $3DSMaxDir "" noExporter
+    CopyFiles $INSTDIR\Tools\3dsMax\*.dle $3DSMaxDir\plugins\PL3dsMaxSceneExport_2011.dle
     ; Done
     goto endExporter
   noExporter:
