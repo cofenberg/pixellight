@@ -56,7 +56,7 @@ class SNMPostProcessPull : public PLCompositing::SNMPostProcess {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessPull, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(WarpPoint,		PLMath::Vector2,	PLMath::Vector2(300.0f, 300.0f),	ReadWrite, DirectValue,	"Warp point",							"")
+		pl_attribute(WarpPoint,		PLMath::Vector2,	PLMath::Vector2(300.0f, 300.0f),	ReadWrite, DirectValue,	"Warp point, (0, 0) = (left, lower)",	"")
 		pl_attribute(WarpScale,		float,				 -5.0f,								ReadWrite, DirectValue,	"Warp scale",							"")
 		pl_attribute(WarpDimension,	float,				500.0f,								ReadWrite, DirectValue,	"Warp dimension",						"")
 		// Overloaded SNMPostProcess variables

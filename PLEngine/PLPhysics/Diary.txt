@@ -1,3 +1,9 @@
+>> 26.11.2010
+[CO]
+- "SNPhysicsMouseInteraction::IsPicking()" hinzugefügt
+
+
+
 >> 08.10.2010
 [CO]
 - SNPhysicsMouseInteraction: Nutzt nun einen Virtuellen Input Controller

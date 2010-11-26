@@ -106,6 +106,17 @@ SNPhysicsMouseInteraction::~SNPhysicsMouseInteraction()
 	delete m_pController;
 }
 
+/**
+*  @brief
+*    Returns whether or not picking is currently performed
+*/
+bool SNPhysicsMouseInteraction::IsPicking(Vector2i *pvMousePos) const
+{
+	if (m_bPicking && pvMousePos)
+		*pvMousePos = m_vPickingMousePos;
+	return m_bPicking;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual PLScene::SceneNode functions           ]
@@ -171,13 +182,12 @@ void SNPhysicsMouseInteraction::UpdateFunction()
 					// Get the main window of the application
 					if (PLCore::ConsoleApplication::GetApplication() && ((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
 						// Get current mouse cursor position inside the widget
-						Vector2i vMousePos;
-						if (((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(vMousePos)) {
+						if (((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 							// Get current mouse position in world coordinates relative to the picked point on the body
-							Vector3 v2DPos((float)vMousePos.x, (float)vMousePos.y, 0.0001f);
+							Vector3 v2DPos((float)m_vPickingMousePos.x, (float)m_vPickingMousePos.y, 0.0001f);
 							Vector3 vV0 = v2DPos.To3DCoordinate(pCamera->GetProjectionMatrix(cRenderer.GetViewport()),
 																pCamera->GetViewMatrix(),
 																Matrix4x4::Identity,
@@ -249,13 +259,12 @@ void SNPhysicsMouseInteraction::UpdateFunction()
 					// Get the main window of the application
 					if (PLCore::ConsoleApplication::GetApplication() && ((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
 						// Get current mouse cursor position inside the widget
-						Vector2i vMousePos;
-						if (((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(vMousePos)) {
+						if (((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 							// Get current mouse position in world coordinates relative to the picked point on the body
-							Vector3 v2DPos((float)vMousePos.x, (float)vMousePos.y, 0.0001f);
+							Vector3 v2DPos((float)m_vPickingMousePos.x, (float)m_vPickingMousePos.y, 0.0001f);
 							Vector3 vV0 = v2DPos.To3DCoordinate(pCamera->GetProjectionMatrix(cRenderer.GetViewport()),
 																pCamera->GetViewMatrix(),
 																Matrix4x4::Identity,
