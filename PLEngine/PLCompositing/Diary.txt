@@ -1,3 +1,22 @@
+>> 26.11.2010
+[CO]
+- Bisher lagen bereits alle Fixed-Functions basierenden Compositing Dinge in einem "FixedFunctions"-Unterordner. Bei Shader basierenden Dingen
+  war ich mir damals als ich mit PLCompositing began noch unsicher ob man das auch in einen "Shaders"-Unterordner packen sollte, da heute eigentlich
+  alles Shader basierend ist. Mittlerweile habe ich allerdings zwei gute Gründe dafür auch einen "Shaders"-Unterordner zu haben:
+  1. Neben "Fixed Functions Rendering" und "Shaders Rendering" gibts da draußen in der Welt auch immer noch "Software Rendering", das mal aus Spaß
+     an der Freud umgesetzt wird, oder weil eine bestimmte Hardware keinerlei GPU bzw. Render-Support hat (heute wohl eher selten, selbst bei
+     Mobilen Geräten :)
+     In die sparte "Software Rendering" fällt meist auch soetwas wie "Raytracting/Raycasting", was mittlerweile stellenweise bereits aber auch
+     mit Hardware Support möglich ist. Desweiteren besteht heute auch die Möglichkeit z.B. über OpenCL Bildgeneration/Bildbearbeitung zu betreiben -
+     ich kann es mir gut vorstellen das wir irgendann auch mal einen "OpenCL"-Unterordner haben... :D
+  2. Sinn des PLCompositing Projektes besteht darin, bei Zeiten alles was mit konkreten Rendern zu tun hat in diesem Projekt zu halten anstatt das
+     auch noch in PLScene mit reingestopft zu haben. PLScene ist soweit unabhängig davon, wie dann z.B. eine Szene am Ende konkret auf den Bildschirm
+     gebracht wird - falls überhaupt. Mittlerweile bin ich wirklich froh mich damals für ein neues PLCompositing Projekt entschieden zu haben -
+     denn hier liegt bereits einiges an Funktionalität drinnen, und es ist abzusehen das hier zusammen mit der Hardware Entwicklung öfters Änderungen
+     und Erweiterungen stattfinden werden als z.B. im PLScene Projekt.
+
+
+
 >> 12.11.2010
 [CO]
 - Eigenes Tagebuch für das PLCompositing Projekt angelegt da dieses Projekt mittlerweile einen Umfang erreicht hat wo dies gerechtfertigt ist. Das

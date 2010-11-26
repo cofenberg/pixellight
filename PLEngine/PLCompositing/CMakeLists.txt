@@ -8,27 +8,6 @@ define_project(PLCompositing)
 ##################################################
 add_sources(
 	src/PLCompositing.cpp
-	src/General/SRPDiffuseOnly.cpp
-	src/General/SRPDirectionalLighting.cpp
-	src/General/SRPLighting.cpp
-	src/General/SRPVolumetricFog.cpp
-	src/Deferred/SRPDeferred.cpp
-	src/Deferred/SRPDeferredGBuffer.cpp
-	src/Deferred/SRPDeferredSSAO.cpp
-	src/Deferred/SRPDeferredHBAO.cpp
-	src/Deferred/SRPDeferredHDAO.cpp
-	src/Deferred/SRPDeferredAmbient.cpp
-	src/Deferred/SRPDeferredGlow.cpp
-	src/Deferred/SRPDeferredDOF.cpp
-	src/Deferred/SRPDeferredLighting.cpp
-	src/Deferred/SRPDeferredEdgeAA.cpp
-	src/Deferred/SRPDeferredDepthFog.cpp
-	src/Deferred/SRPDeferredGodRays.cpp
-	src/Deferred/SRPDeferredGBufferDebug.cpp
-	src/HDR/SRPEndHDR.cpp
-	src/HDR/HDRBloom.cpp
-	src/HDR/HDRLightAdaptation.cpp
-	src/HDR/HDRAverageLuminance.cpp
 	src/FixedFunctions/SRPDebugContainerScissorRectanglesFixedFunctions.cpp
 	src/FixedFunctions/SRPDebugHierarchiesFixedFunctions.cpp
 	src/FixedFunctions/SRPDebugWireframesFixedFunctions.cpp
@@ -36,11 +15,32 @@ add_sources(
 	src/FixedFunctions/SRPDirectionalLightingFixedFunctions.cpp
 	src/FixedFunctions/SRPEmissiveFixedFunctions.cpp
 	src/FixedFunctions/SRPLightEffectsFixedFunctions.cpp
-	src/ShadowMapping/SRPShadowMapping.cpp
-	src/ShadowMapping/ShadowMapping.cpp
-	src/ShadowMapping/ShadowMappingUSM.cpp
-	src/ShadowMapping/ShadowMappingPSM.cpp
-	src/ShadowMapping/ShadowMappingLiSPSM.cpp
+	src/Shaders/General/SRPDiffuseOnlyShaders.cpp
+	src/Shaders/General/SRPDirectionalLightingShaders.cpp
+	src/Shaders/General/SRPLighting.cpp
+	src/Shaders/General/SRPVolumetricFog.cpp
+	src/Shaders/Deferred/SRPDeferred.cpp
+	src/Shaders/Deferred/SRPDeferredGBuffer.cpp
+	src/Shaders/Deferred/SRPDeferredSSAO.cpp
+	src/Shaders/Deferred/SRPDeferredHBAO.cpp
+	src/Shaders/Deferred/SRPDeferredHDAO.cpp
+	src/Shaders/Deferred/SRPDeferredAmbient.cpp
+	src/Shaders/Deferred/SRPDeferredGlow.cpp
+	src/Shaders/Deferred/SRPDeferredDOF.cpp
+	src/Shaders/Deferred/SRPDeferredLighting.cpp
+	src/Shaders/Deferred/SRPDeferredEdgeAA.cpp
+	src/Shaders/Deferred/SRPDeferredDepthFog.cpp
+	src/Shaders/Deferred/SRPDeferredGodRays.cpp
+	src/Shaders/Deferred/SRPDeferredGBufferDebug.cpp
+	src/Shaders/HDR/SRPEndHDR.cpp
+	src/Shaders/HDR/HDRBloom.cpp
+	src/Shaders/HDR/HDRLightAdaptation.cpp
+	src/Shaders/HDR/HDRAverageLuminance.cpp
+	src/Shaders/ShadowMapping/SRPShadowMapping.cpp
+	src/Shaders/ShadowMapping/ShadowMapping.cpp
+	src/Shaders/ShadowMapping/ShadowMappingUSM.cpp
+	src/Shaders/ShadowMapping/ShadowMappingPSM.cpp
+	src/Shaders/ShadowMapping/ShadowMappingLiSPSM.cpp
 )
 
 ##################################################
