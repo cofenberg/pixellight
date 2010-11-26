@@ -30,7 +30,6 @@
 #include <PLGui/Widgets/Widget.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include <PLScene/Compositing/SceneRenderer.h>
 #include "Application.h"
 
 
@@ -224,21 +223,10 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 				// Update the time scale text node
 				UpdateTimeScaleTextNode();
 
-				// Update the motion blur factor of the used scene renderer
-				SurfacePainter *pPainter = GetPainter();
-				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-					SPScene *pSPScene = (SPScene*)pPainter;
-					SceneRenderer *pSceneRenderer = pSPScene->GetDefaultSceneRenderer();
-					if (pSceneRenderer) {
-						// Loop through all scene renderer passes
-						for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++)
-							pSceneRenderer->Get(nPass)->SetAttribute("MotionBlurFactor", String::Format("%g", 1-pTimer->GetTimeScaleFactor()));
-					}
-
-					// Update the pitch variable of the sound container using the time scale factor
-					if (pSPScene->GetSceneContainer())
-						pSPScene->GetSceneContainer()->SetAttribute("Pitch", String::Format("%g", pTimer->GetTimeScaleFactor()));
-				}
+				// Update the pitch variable of the sound container using the time scale factor
+				SceneContainer *pSceneContainer = GetScene();
+				if (pSceneContainer)
+					pSceneContainer->SetAttribute("Pitch", String::Format("%g", pTimer->GetTimeScaleFactor()));
 			}
 			break;
 		}
