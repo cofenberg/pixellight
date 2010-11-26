@@ -29,7 +29,7 @@
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredAmbient.h"
 
@@ -213,19 +213,9 @@ void SRPDeferredAmbient::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								}
 							}
 
-							// Setup renderer
-							const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
-							cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
-							cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
-							cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
-							cRenderer.SetRenderState(RenderState::ZEnable,			 false);
-							cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
-
 							// Draw the fullscreen quad
-							cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
-
-							// Restore fixed fill mode render state
-							cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
+							cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
+							pFullscreenQuad->Draw(true);
 						}
 					}
 				}

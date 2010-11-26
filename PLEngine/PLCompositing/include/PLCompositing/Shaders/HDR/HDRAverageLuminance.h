@@ -48,7 +48,7 @@ namespace PLRenderer {
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
-namespace PLScene {
+namespace PLCompositing {
 	class FullscreenQuad;
 }
 
@@ -146,7 +146,7 @@ class HDRAverageLuminance {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer			 *m_pRenderer;										/**< Renderer to use, always valid! */
-		PLScene::FullscreenQuad			 *m_pFullscreenQuad;								/**< Fullscreen quad instance, can be NULL */
+		FullscreenQuad					 *m_pFullscreenQuad;								/**< Fullscreen quad instance, can be NULL */
 		PLRenderer::VertexShader		 *m_pVertexShader;									/**< Vertex shader, can be NULL */
 		// Downsample 2x2, calculate pixel luminance and log
 		PLRenderer::FragmentShader		 *m_pDownsampleLogFragmentShader;					/**< Downsample 2x2 log fragment shader, can be NULL */

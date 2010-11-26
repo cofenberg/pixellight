@@ -32,7 +32,7 @@
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredSSAO.h"
 

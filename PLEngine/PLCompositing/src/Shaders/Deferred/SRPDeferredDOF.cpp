@@ -35,7 +35,7 @@
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredDOF.h"
@@ -842,7 +842,7 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 													}
 
 													// Draw the fullscreen quad
-													cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+													pFullscreenQuad->Draw();
 												}
 											}
 										}

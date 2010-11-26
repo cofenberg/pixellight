@@ -57,6 +57,8 @@ namespace PLScene {
 	class SQCull;
 	class VisNode;
 	class SceneNode;
+}
+namespace PLCompositing {
 	class FullscreenQuad;
 }
 
@@ -304,7 +306,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*  @return
 		*    Fullscreen quad instance, NULL on error
 		*/
-		PLCOM_API PLScene::FullscreenQuad *GetFullscreenQuad() const;
+		PLCOM_API FullscreenQuad *GetFullscreenQuad() const;
 
 
 	//[-------------------------------------------------------]
@@ -491,7 +493,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		bool										  m_bColorTarget3Used;		/**< Was the RGB color target 3 actually used when filling the current GBuffer content? */
 		bool										  m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
 		PLRenderer::Surface							 *m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be NULL */
-		PLScene::FullscreenQuad						 *m_pFullscreenQuad;		/**< Fullscreen quad instance, can be NULL */
+		FullscreenQuad								 *m_pFullscreenQuad;		/**< Fullscreen quad instance, can be NULL */
 		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
 		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
 		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */

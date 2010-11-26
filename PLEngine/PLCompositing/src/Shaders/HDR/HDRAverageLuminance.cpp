@@ -34,7 +34,7 @@
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/HDR/HDRAverageLuminance.h"
 
 
@@ -45,7 +45,6 @@ using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
-using namespace PLScene;
 namespace PLCompositing {
 
 
@@ -341,7 +340,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				m_pDownsampleLogEpsilonProgramUniform->Set(0.0001f);
 
 			// Draw the fullscreen quad
-			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+			m_pFullscreenQuad->Draw();
 		}
 
 		Vector2i vFinalTextureSize;
@@ -413,7 +412,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				}
 
 				// Draw the fullscreen quad
-				m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+				m_pFullscreenQuad->Draw();
 			}
 		}
 
@@ -456,7 +455,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			}
 
 			// Draw the fullscreen quad
-			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+			m_pFullscreenQuad->Draw();
 		}
 	}
 }

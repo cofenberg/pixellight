@@ -26,15 +26,16 @@
 #include <PLMath/Vector4.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
-#include "PLScene/Compositing/FullscreenQuad.h"
+#include "PLCompositing/FullscreenQuad.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLRenderer;
-namespace PLScene {
+namespace PLCompositing {
 
 
 //[-------------------------------------------------------]
@@ -125,8 +126,32 @@ VertexBuffer *FullscreenQuad::GetVertexBuffer()
 	return m_pVertexBuffer;
 }
 
+/**
+*  @brief
+*    Draws the fullscreen quad
+*/
+void FullscreenQuad::Draw(bool bSetupRenderer)
+{
+	// Setup renderer?
+	uint32 nFixedFillModeBackup = 0;
+	if (bSetupRenderer) {
+		nFixedFillModeBackup = m_pRenderer->GetRenderState(RenderState::FixedFillMode);
+		m_pRenderer->SetRenderState(RenderState::FixedFillMode, Fill::Solid);
+		m_pRenderer->SetRenderState(RenderState::CullMode,		Cull::None);
+		m_pRenderer->SetRenderState(RenderState::ZEnable,		false);
+		m_pRenderer->SetRenderState(RenderState::ZWriteEnable,	false);
+	}
+
+	// Draw the fullscreen quad
+	m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+	// Restore fixed fill mode render state?
+	if (bSetupRenderer)
+		m_pRenderer->SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing

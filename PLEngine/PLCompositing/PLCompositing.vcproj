@@ -382,6 +382,14 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm"
 			>
 			<File
+				RelativePath=".\src\FullscreenQuad.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLCompositing\FullscreenQuad.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\PLCompositing.cpp"
 				>
 			</File>

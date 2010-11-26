@@ -34,7 +34,7 @@
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/HDR/HDRLightAdaptation.h"
 
 
@@ -45,7 +45,6 @@ using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
-using namespace PLScene;
 namespace PLCompositing {
 
 
@@ -239,7 +238,7 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 			}
 
 			// Draw the fullscreen quad
-			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+			m_pFullscreenQuad->Draw();
 		}
 	}
 }

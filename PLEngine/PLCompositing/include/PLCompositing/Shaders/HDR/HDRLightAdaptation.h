@@ -45,7 +45,7 @@ namespace PLRenderer {
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
-namespace PLScene {
+namespace PLCompositing {
 	class FullscreenQuad;
 }
 
@@ -143,7 +143,7 @@ class HDRLightAdaptation {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer			 *m_pRenderer;							/**< Renderer to use, always valid! */
-		PLScene::FullscreenQuad			 *m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
+		FullscreenQuad					 *m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
 		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be NULL */
 		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be NULL */
 		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be NULL */

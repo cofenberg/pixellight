@@ -1482,14 +1482,6 @@
 			Name="Compositing"
 			>
 			<File
-				RelativePath=".\src\Compositing\FullscreenQuad.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\PLScene\Compositing\FullscreenQuad.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Compositing\SceneRenderer.cpp"
 				>
 			</File>

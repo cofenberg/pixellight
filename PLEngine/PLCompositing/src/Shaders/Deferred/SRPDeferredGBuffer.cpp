@@ -49,7 +49,7 @@
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
 #include <PLScene/Visibility/VisContainer.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 
 

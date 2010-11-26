@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_COMPOSITING_FULLSCREENQUAD_H__
-#define __PLSCENE_COMPOSITING_FULLSCREENQUAD_H__
+#ifndef __PLCOMPOSITING_FULLSCREENQUAD_H__
+#define __PLCOMPOSITING_FULLSCREENQUAD_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/PLScene.h"
+#include "PLCompositing/PLCompositing.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLCompositing {
 
 
 //[-------------------------------------------------------]
@@ -85,13 +85,13 @@ class FullscreenQuad {
 		*  @param[in] cRenderer
 		*    Renderer to use
 		*/
-		PLS_API FullscreenQuad(PLRenderer::Renderer &cRenderer);
+		PLCOM_API FullscreenQuad(PLRenderer::Renderer &cRenderer);
 
 		/**
 		*  @brief
 		*    Destructur
 		*/
-		PLS_API ~FullscreenQuad();
+		PLCOM_API ~FullscreenQuad();
 
 		/**
 		*  @brief
@@ -100,7 +100,26 @@ class FullscreenQuad {
 		*  @return
 		*    The vertex buffer of this fullscreen quad, NULL on error
 		*/
-		PLS_API PLRenderer::VertexBuffer *GetVertexBuffer();
+		PLCOM_API PLRenderer::VertexBuffer *GetVertexBuffer();
+
+		/**
+		*  @brief
+		*    Draws the fullscreen quad
+		*
+		*  @param[in] bSetupRenderer
+		*    Setup renderer?
+		*
+		*  @remarks
+		*    The 'bSetupRenderer'-parameter is just for convenience in order to set often used settings automatically.
+		*    If 'bSetupRenderer' is false, this method just calls "m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);".
+		*    If 'bSetupRenderer' is true, besides drawing the primitive, this method also makes the following renderer calls:
+		*      m_pRenderer->SetRenderState(RenderState::FixedFillMode, Fill::Solid);
+		*      m_pRenderer->SetRenderState(RenderState::CullMode,      Cull::None);
+		*      m_pRenderer->SetRenderState(RenderState::ZEnable,       false);
+		*      m_pRenderer->SetRenderState(RenderState::ZWriteEnable,  false);
+		*      -> "RenderState::FixedFillMode" is reset to the previous state after drawing the primitive.
+		*/
+		PLCOM_API void Draw(bool bSetupRenderer = false);
 
 
 	//[-------------------------------------------------------]
@@ -117,7 +136,7 @@ class FullscreenQuad {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLCompositing
 
 
-#endif // __PLSCENE_COMPOSITING_FULLSCREENQUAD_H__
+#endif // __PLCOMPOSITING_FULLSCREENQUAD_H__

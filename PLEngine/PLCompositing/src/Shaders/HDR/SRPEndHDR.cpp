@@ -31,7 +31,7 @@
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/Shaders/HDR/HDRAverageLuminance.h"
 #include "PLCompositing/Shaders/HDR/HDRLightAdaptation.h"
@@ -370,7 +370,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						}
 
 						// Draw the fullscreen quad
-						cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+						m_pFullscreenQuad->Draw();
 					}
 
 					// Restore fixed fill mode render state

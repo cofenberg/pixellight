@@ -33,7 +33,7 @@
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/HDR/HDRBloom.h"
 
 
@@ -44,7 +44,6 @@ using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
-using namespace PLScene;
 namespace PLCompositing {
 
 
@@ -280,7 +279,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					}
 
 					// Draw the fullscreen quad
-					m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+					m_pFullscreenQuad->Draw();
 				}
 			}
 		}
@@ -388,7 +387,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					}
 
 					// Draw the fullscreen quad
-					m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+					m_pFullscreenQuad->Draw();
 
 					// The result is now within the other render target
 					m_bResultIndex = !m_bResultIndex;

@@ -153,7 +153,6 @@ add_sources(
 	src/Compositing/SceneRendererHandler.cpp
 	src/Compositing/SceneRendererManager.cpp
 	src/Compositing/SceneRendererPass.cpp
-	src/Compositing/FullscreenQuad.cpp
 	src/PLScene.cpp
 	src/Config.cpp
 )

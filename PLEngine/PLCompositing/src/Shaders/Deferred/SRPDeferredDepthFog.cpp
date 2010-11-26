@@ -31,7 +31,7 @@
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Scene/SNCamera.h>
-#include <PLScene/Compositing/FullscreenQuad.h>
+#include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredDepthFog.h"
 
@@ -231,26 +231,15 @@ void SRPDeferredDepthFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								}
 							}
 
-							// Setup renderer
-							const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+							// Draw the fullscreen quad
 							cRenderer.SetRenderState(RenderState::ScissorTestEnable, false);
-							cRenderer.SetRenderState(RenderState::FixedFillMode,	 Fill::Solid);
-							cRenderer.SetRenderState(RenderState::CullMode,			 Cull::None);
-							cRenderer.SetRenderState(RenderState::ZEnable,			 false);
-							cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
-
-							// Set blend mode
 							if (!(GetFlags() & DisableBlending)) {
+								// Set blend mode
 								cRenderer.SetRenderState(RenderState::BlendEnable,	true);
 								cRenderer.SetRenderState(RenderState::SrcBlendFunc,	BlendFunc::One);
 								cRenderer.SetRenderState(RenderState::DstBlendFunc,	BlendFunc::InvSrcAlpha);
 							}
-
-							// Draw the fullscreen quad
-							cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
-
-							// Restore fixed fill mode render state
-							cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
+							pFullscreenQuad->Draw(true);
 						}
 					}
 				}

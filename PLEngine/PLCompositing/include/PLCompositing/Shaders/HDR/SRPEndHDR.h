@@ -41,11 +41,9 @@ namespace PLRenderer {
 	class ProgramUniform;
 	class ProgramAttribute;
 }
-namespace PLScene {
-	class FullscreenQuad;
-}
 namespace PLCompositing {
 	class HDRBloom;
+	class FullscreenQuad;
 	class HDRLightAdaptation;
 	class HDRAverageLuminance;
 }
@@ -194,7 +192,7 @@ class SRPEndHDR : public SRPEnd {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLScene::FullscreenQuad				*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be NULL */
+		FullscreenQuad						*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be NULL */
 		HDRAverageLuminance					*m_pHDRAverageLuminance;	/**< HDR logarithmic average luminance calculation component, can be NULL */
 		HDRLightAdaptation					*m_pHDRLightAdaptation;		/**< HDR light adaptation calculation component, can be NULL */
 		HDRBloom							*m_pHDRBloom;				/**< HDR bloom calculation component, can be NULL */

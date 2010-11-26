@@ -16,6 +16,9 @@
      und Erweiterungen stattfinden werden als z.B. im PLScene Projekt.
 - Alles was bisher in "Compositing/General/" & "Compositing/Debug/" & "Compositing/PostProcessing" lag in das Grundverzeichnis von PLCompositing verschoben
 - "SNMPostProcess" & "SNMPostProcessDepthOfField" & "SNMPostProcessGlow" von PLScene nach PLCompositing verschoben
+- "FullscreenQuad" von PLScene nach PLCompositing verschoben. Diese kleine Helferlein-Klasse hätte man auch genauso gut nach PLRenderer verschieben können,
+  allerdings will ich in PLRenderer, wenn es sich vermeiden lässt, nicht noch mehr Zeug packen, vorallem wenn etwas bisher eigentlich nur in einem einzigen
+  Projekt verwendet wird.
 
 
 

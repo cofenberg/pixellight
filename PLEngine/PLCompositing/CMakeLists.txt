@@ -8,6 +8,7 @@ define_project(PLCompositing)
 ##################################################
 add_sources(
 	src/PLCompositing.cpp
+	src/FullscreenQuad.cpp
 	src/SRPBegin.cpp
 	src/SRPEnd.cpp
 	src/SRPBackground.cpp

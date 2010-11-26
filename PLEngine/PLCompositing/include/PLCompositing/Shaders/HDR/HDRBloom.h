@@ -49,7 +49,7 @@ namespace PLRenderer {
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
-namespace PLScene {
+namespace PLCompositing {
 	class FullscreenQuad;
 }
 
@@ -206,7 +206,7 @@ class HDRBloom {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer				*m_pRenderer;						/**< Renderer to use, always valid! */
-		PLScene::FullscreenQuad				*m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
+		FullscreenQuad						*m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
 		PLRenderer::SurfaceTextureBuffer	*m_pRenderTarget[2];				/**< Render targets, can be NULL */
 		bool								 m_bResultIndex;					/**< Index of the result texture buffer */
 		PLRenderer::ProgramGenerator		*m_pDownscaleProgramGenerator;		/**< Downscale program generator, can be NULL */
