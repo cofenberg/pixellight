@@ -1,6 +1,10 @@
 Changes in PixelLight 0.9.3-R2 (not yet released)
+- Feature: Linux 64 bit support for a minimal build added (64 bit support for optional projects not yet added)
 - Feature: Added basic PLDemoRendererTexturing demo
+- Feature: Added "PLEngine::SceneRendererTool" helper class for simplified scene renderer access
 - Feature: Autodesk 3ds Max 2011 scene exporter added
+- Change: Integrated "PLCompositing::SRPPostProcessing" into the compositing system, now it's possible to use post processing within the deferred scene renderer
+- Change: Moved nearly all compositing relevant classes from PLScene to PLCompositing
 
 
 Changes in PixelLight 0.9.3-R1 (released on October 23, 2010)
