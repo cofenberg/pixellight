@@ -76,8 +76,8 @@ SPTeapotShaders::SPTeapotShaders(Renderer &cRenderer) : SPTeapot(cRenderer),
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 			#include "SPTeapotShaders_GLSL.h"
-			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
+			sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
+			sFragmentShaderSourceCode = sFragmentShaderSourceCodeGLSL;
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTeapotShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

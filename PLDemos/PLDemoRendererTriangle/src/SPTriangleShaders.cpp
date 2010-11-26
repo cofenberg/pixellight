@@ -81,9 +81,9 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 			#include "SPTriangleShaders_GLSL.h"
-			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-			sGeometryShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sGeometryShaderSourceCodeGLSL);
-			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : sFragmentShaderSourceCodeGLSL);
+			sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
+			sGeometryShaderSourceCode = sGeometryShaderSourceCodeGLSL;
+			sFragmentShaderSourceCode = m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : sFragmentShaderSourceCodeGLSL;
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTriangleShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

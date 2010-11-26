@@ -157,7 +157,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 					// Create the program generator
 					if (sEndHDR_VS.GetLength() && sEndHDR_FS.GetLength())
-						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_VS, "glslv", sEndHDR_FS, "glslf", true);
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_VS, "glslv", sEndHDR_FS, "glslf");
 				}
 
 				// If there's no program generator, we don't need to continue

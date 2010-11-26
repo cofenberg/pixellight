@@ -145,7 +145,7 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 
 		// Create the program generator
 		if (sDeferredHBAO_VS.GetLength() && sDeferredHBAO_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_VS, "glslv", sDeferredHBAO_FS, "glslf", true);
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_VS, "glslv", sDeferredHBAO_FS, "glslf");
 	}
 
 	// If there's no program generator, we don't need to continue

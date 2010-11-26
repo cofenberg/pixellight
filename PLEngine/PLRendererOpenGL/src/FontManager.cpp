@@ -115,7 +115,7 @@ PLRenderer::Program *FontManager::GetProgram(GeneratedProgramUserData **ppGenera
 
 		// Create the program generator
 		if (sVertexShaderSourceCode.GetLength() && sFragmentShaderSourceCode.GetLength())
-			m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCode, "arbvp1", sFragmentShaderSourceCode, "arbfp1", true);
+			m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCode, "arbvp1", sFragmentShaderSourceCode, "arbfp1");
 	}
 
 	// If there's no program generator, we don't need to continue

@@ -421,306 +421,302 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
-		// Are there any light effects to draw?
-		if (m_lstLightEffects.GetNumOfElements()) {
-			// Ensure the correct projection and view matrix is set
-			if (SNCamera::GetCamera()) {
-				pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
-				pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
+		// Prepare step?
+		if (GetFlags() & PrepareStep) {
+			// Draw anything?
+			if (!(GetFlags() & NoCorona) || !(GetFlags() & NoFlares) || !(GetFlags() & NoBlend)) {
+				// Ensure the correct projection and view matrix is set
+				if (SNCamera::GetCamera()) {
+					pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
+					pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
+				}
+
+				// Backup the color mask
+				bool bRed, bGreen, bBlue, bAlpha;
+				cRenderer.GetColorMask(bRed, bGreen, bBlue, bAlpha);
+
+				// Free all light effects
+				FreeLightEffects();
+
+				// Prepare recursive from back to front
+				PrepareRec(cRenderer, cCullQuery);
+
+				// Restore the color mask
+				cRenderer.SetColorMask(bRed, bGreen, bBlue, bAlpha);
 			}
-
-			// Set the initial world matrix
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, Matrix4x4::Identity);
-			cRenderer.SetScissorRect();
-			cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
-
-			// Options
-			const bool bCoronaActive = !(GetFlags() & NoCorona);
-			const bool bFlaresActive = !(GetFlags() & NoFlares);
-			const bool bBlendActive  = !(GetFlags() & NoBlend);
-
-		// Optimized for all 'standard' lights
-			bool bEffectLights = false; // Are there any 'effect lights'?
-			bool bFlareBlend   = false; // Are there any lights with flares/blend?
-			Material *pMaterial = NULL;
-			const float fWidth  = cRenderer.GetViewport().GetWidth();
-			const float fHeight = cRenderer.GetViewport().GetHeight();
-			const uint32 nTotalFragments = uint32(fWidth*fHeight);
-			// Free light effect, get factor and draw coronas
-			Iterator<LightEffect*> cIterator = m_lstLightEffects.GetIterator();
-			while (cIterator.HasNext()) {
-				// Get
-				LightEffect *pLightEffect = cIterator.Next();
-				m_lstFreeLightEffects.Add(pLightEffect);
-
-				// Check occlusion
-				pLightEffect->fFactor = 1.0f;
-				if (pLightEffect->pOcclusionQueryAll && pLightEffect->pOcclusionQuery) {
-					uint32 nNumberOfVisibleFragmentsAll;
-					while (!pLightEffect->pOcclusionQueryAll->PullOcclusionQuery(&nNumberOfVisibleFragmentsAll)) {
-						// We have to wait for the result...
-					}
-					if (nNumberOfVisibleFragmentsAll) {
-						uint32 nNumberOfVisibleFragments;
-						while (!pLightEffect->pOcclusionQuery->PullOcclusionQuery(&nNumberOfVisibleFragments)) {
-							// We have to wait for the result...
-						}
-						pLightEffect->fFactor = float(nNumberOfVisibleFragments)/float(nNumberOfVisibleFragmentsAll);
-						pLightEffect->fFlareBlendFactor = pLightEffect->fFactor*Math::Min(float(nNumberOfVisibleFragmentsAll)/float(nTotalFragments)*1000.0f, 1.0f);
-						pLightEffect->fFactor = Math::Pow(pLightEffect->fFactor, 2.0f);
-					} else {
-						pLightEffect->fFactor = pLightEffect->fFlareBlendFactor = 0.0f;
-					}
-				}
-				SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
-				if (pLightEffect->fFactor) {
-					// Calculate some special flare/blend data
-					if ((bFlaresActive && (pLight->GetFlags() & SNLight::Flares)) ||
-						(bBlendActive  && (pLight->GetFlags() & SNLight::Blend))) {
-						// Get 2D position
-						Vector3 &v2DPos = pLightEffect->v2DPos;
-						v2DPos = Vector3::Zero.To2DCoordinate(pLightEffect->pVisNode->GetWorldViewProjectionMatrix(), cRenderer.GetViewport());
-						v2DPos.x = v2DPos.x/fWidth*2.0f - 1.0f;
-						v2DPos.y = v2DPos.y/fHeight*2.0f - 1.0f;
-
-						// Adjust the factor so it is brighter at the centre of the screen
-						pLightEffect->fFlareBlendFactor *= 1.0f - Math::Min(Math::Sqrt(v2DPos.x*v2DPos.x + v2DPos.y*v2DPos.y), 1.0f);
-						if (pLightEffect->fFlareBlendFactor < 0.1f)
-							pLightEffect->fFlareBlendFactor = 0.0f;
-						else
-							bFlareBlend = true;
+		} else {
+			// Get the "PLCompositing::SRPLightEffectsFixedFunctions" instance used for the prepare step
+			SRPLightEffectsFixedFunctions *pSRPLightEffectsFixedFunctions = (SRPLightEffectsFixedFunctions*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPLightEffectsFixedFunctions");
+			if (pSRPLightEffectsFixedFunctions) {
+				// Are there any light effects to draw?
+				if (pSRPLightEffectsFixedFunctions->m_lstLightEffects.GetNumOfElements()) {
+					// Ensure the correct projection and view matrix is set
+					if (SNCamera::GetCamera()) {
+						pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
+						pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
 					}
 
-					// Draw
-					if (pLight->IsEffectLight())
-						bEffectLights = true;
-					else {
-						if (bCoronaActive && (pLight->GetFlags() & SNLight::Corona)) {
-							const Color3 cColor = pLight->Color.Get();
-							if (pMaterial != GetCoronaMaterialHandler().GetResource()) {
-								pMaterial = GetCoronaMaterialHandler().GetResource();
-								pMaterial->SetupPass(0);
+					// Set the initial world matrix
+					pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, Matrix4x4::Identity);
+					cRenderer.SetScissorRect();
+					cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
+
+					// Options
+					const bool bCoronaActive = !(GetFlags() & NoCorona);
+					const bool bFlaresActive = !(GetFlags() & NoFlares);
+					const bool bBlendActive  = !(GetFlags() & NoBlend);
+
+				// Optimized for all 'standard' lights
+					bool bEffectLights = false; // Are there any 'effect lights'?
+					bool bFlareBlend   = false; // Are there any lights with flares/blend?
+					Material *pMaterial = NULL;
+					const float fWidth  = cRenderer.GetViewport().GetWidth();
+					const float fHeight = cRenderer.GetViewport().GetHeight();
+					const uint32 nTotalFragments = uint32(fWidth*fHeight);
+					// Free light effect, get factor and draw coronas
+					Iterator<LightEffect*> cIterator = pSRPLightEffectsFixedFunctions->m_lstLightEffects.GetIterator();
+					while (cIterator.HasNext()) {
+						// Get
+						LightEffect *pLightEffect = cIterator.Next();
+						pSRPLightEffectsFixedFunctions->m_lstFreeLightEffects.Add(pLightEffect);
+
+						// Check occlusion
+						pLightEffect->fFactor = 1.0f;
+						if (pLightEffect->pOcclusionQueryAll && pLightEffect->pOcclusionQuery) {
+							uint32 nNumberOfVisibleFragmentsAll;
+							while (!pLightEffect->pOcclusionQueryAll->PullOcclusionQuery(&nNumberOfVisibleFragmentsAll)) {
+								// We have to wait for the result...
 							}
-							DrawBillboard(pLightEffect->pVisNode->GetWorldMatrix().GetTranslation(), pLight->CoronaSize,
-										  Color4(cColor.r, cColor.g, cColor.b, pLightEffect->fFactor));
-						}
-					}
-				} else {
-					pLightEffect->fFlareBlendFactor = 0.0f;
-				}
-			}
-
-			// Give us MOOOORRE light effects :)
-			if (bFlareBlend) {
-				SamplerStates cSamplerStates;
-
-				// Draw flares
-				pMaterial = NULL;
-				while (cIterator.HasPrevious()) {
-					// Get
-					LightEffect *pLightEffect = cIterator.Previous();
-					SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
-					if (!pLight->IsEffectLight()) {
-						const float fFactor = pLightEffect->fFlareBlendFactor;
-						if (fFactor && bFlaresActive && (pLight->GetFlags() & SNLight::Flares)) {
-							// Draw
-							const Color3 &cColor = pLight->Color.Get();
-							if (pMaterial != GetFlareMaterialHandler().GetResource()) {
-								pMaterial = GetFlareMaterialHandler().GetResource();
-								pMaterial->SetupPass(0);
-							}
-							const float fFlareSize = pLight->FlareSize*fFactor;
-							const Vector3 &v2DPos = pLightEffect->v2DPos;
-
-							// Begin 2D mode
-							DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-							cDrawHelpers.Begin2DMode(-1.0f, -1.0f, 1.0f, 1.0f);
-
-								// Draw the flares
-								DrawFlare(cRenderer,  0.7f, 0.2f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer,  0.6f, 0.3f*fFlareSize,      cColor.r, 0.6f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer,  0.4f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer,  0.3f, 0.6f*fFlareSize, 0.8f*cColor.r, 0.8f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer,  0.2f, 0.5f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.1f, 0.4f*fFlareSize, 0.6f*cColor.r,      cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.4f, 0.2f*fFlareSize, 0.6f*cColor.r, 0.8f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.6f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.7f, 0.5f*fFlareSize, 0.6f*cColor.r, 0.6f*cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.8f, 0.6f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -0.9f, 0.5f*fFlareSize, 0.8f*cColor.r, 0.6f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
-								DrawFlare(cRenderer, -1.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-
-							// End 2D mode
-							cDrawHelpers.End2DMode();
-						}
-					}
-				}
-
-				// Draw blend
-				pMaterial = NULL;
-				while (cIterator.HasNext()) {
-					// Get
-					const LightEffect *pLightEffect = cIterator.Next();
-					const SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
-					if (!pLight->IsEffectLight() && pLightEffect->fFlareBlendFactor && bBlendActive && (pLight->GetFlags() & SNLight::Blend)) {
-						float fFactor = pLightEffect->fFlareBlendFactor*pLight->ScreenBrighten;
-						if (fFactor) {
-							// Draw
-							const Color3 cColor = pLight->Color.Get();
-							if (pMaterial != GetBlendMaterialHandler().GetResource()) {
-								pMaterial = GetBlendMaterialHandler().GetResource();
-								pMaterial->SetupPass(0);
-							}
-
-							// Begin 2D mode
-							DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-							cDrawHelpers.Begin2DMode();
-
-								// Draw image
-								TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
-								if (pTextureBuffer) {
-									cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
-									cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2::Zero, Vector2::One, Color4(cColor.r*fFactor, cColor.g*fFactor, cColor.b*fFactor, fFactor));
+							if (nNumberOfVisibleFragmentsAll) {
+								uint32 nNumberOfVisibleFragments;
+								while (!pLightEffect->pOcclusionQuery->PullOcclusionQuery(&nNumberOfVisibleFragments)) {
+									// We have to wait for the result...
 								}
+								pLightEffect->fFactor = float(nNumberOfVisibleFragments)/float(nNumberOfVisibleFragmentsAll);
+								pLightEffect->fFlareBlendFactor = pLightEffect->fFactor*Math::Min(float(nNumberOfVisibleFragmentsAll)/float(nTotalFragments)*1000.0f, 1.0f);
+								pLightEffect->fFactor = Math::Pow(pLightEffect->fFactor, 2.0f);
+							} else {
+								pLightEffect->fFactor = pLightEffect->fFlareBlendFactor = 0.0f;
+							}
+						}
+						SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+						if (pLightEffect->fFactor) {
+							// Calculate some special flare/blend data
+							if ((bFlaresActive && (pLight->GetFlags() & SNLight::Flares)) ||
+								(bBlendActive  && (pLight->GetFlags() & SNLight::Blend))) {
+								// Get 2D position
+								Vector3 &v2DPos = pLightEffect->v2DPos;
+								v2DPos = Vector3::Zero.To2DCoordinate(pLightEffect->pVisNode->GetWorldViewProjectionMatrix(), cRenderer.GetViewport());
+								v2DPos.x = v2DPos.x/fWidth*2.0f - 1.0f;
+								v2DPos.y = v2DPos.y/fHeight*2.0f - 1.0f;
 
-							// End 2D mode
-							cDrawHelpers.End2DMode();
+								// Adjust the factor so it is brighter at the centre of the screen
+								pLightEffect->fFlareBlendFactor *= 1.0f - Math::Min(Math::Sqrt(v2DPos.x*v2DPos.x + v2DPos.y*v2DPos.y), 1.0f);
+								if (pLightEffect->fFlareBlendFactor < 0.1f)
+									pLightEffect->fFlareBlendFactor = 0.0f;
+								else
+									bFlareBlend = true;
+							}
+
+							// Draw
+							if (pLight->IsEffectLight())
+								bEffectLights = true;
+							else {
+								if (bCoronaActive && (pLight->GetFlags() & SNLight::Corona)) {
+									const Color3 cColor = pLight->Color.Get();
+									if (pMaterial != GetCoronaMaterialHandler().GetResource()) {
+										pMaterial = GetCoronaMaterialHandler().GetResource();
+										pMaterial->SetupPass(0);
+									}
+									DrawBillboard(pLightEffect->pVisNode->GetWorldMatrix().GetTranslation(), pLight->CoronaSize,
+												  Color4(cColor.r, cColor.g, cColor.b, pLightEffect->fFactor));
+								}
+							}
+						} else {
+							pLightEffect->fFlareBlendFactor = 0.0f;
 						}
 					}
-				}
-			}
 
-		// Draw special 'effect lights'
-			if (bEffectLights) {
-				while (cIterator.HasPrevious()) {
-					// Get
-					const LightEffect *pLightEffect = cIterator.Previous();
-					const SNLight *pLightT = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
-					if (pLightT->IsEffectLight()) {
-						SNEffectLight *pLight = (SNEffectLight*)pLightT;
-						if (pLightEffect->fFactor) {
-							const Color3 cColor = pLight->Color.Get();
+					// Give us MOOOORRE light effects :)
+					if (bFlareBlend) {
+						SamplerStates cSamplerStates;
 
-							// Corona
-							if (bCoronaActive && (pLight->GetFlags() & SNLight::Corona)) {
-								pMaterial = pLight->GetCoronaMaterialHandler().GetResource();
-								if (pMaterial) {
-									for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
-										pMaterial->SetupPass(nPass);
-										if (nPass)
-											cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
-										else {
-											DrawBillboard(pLightEffect->pVisNode->GetWorldMatrix().GetTranslation(), pLight->CoronaSize,
-														  Color4(cColor.r, cColor.g, cColor.b, pLightEffect->fFactor));
+						// Draw flares
+						pMaterial = NULL;
+						while (cIterator.HasPrevious()) {
+							// Get
+							LightEffect *pLightEffect = cIterator.Previous();
+							SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+							if (!pLight->IsEffectLight()) {
+								const float fFactor = pLightEffect->fFlareBlendFactor;
+								if (fFactor && bFlaresActive && (pLight->GetFlags() & SNLight::Flares)) {
+									// Draw
+									const Color3 &cColor = pLight->Color.Get();
+									if (pMaterial != GetFlareMaterialHandler().GetResource()) {
+										pMaterial = GetFlareMaterialHandler().GetResource();
+										pMaterial->SetupPass(0);
+									}
+									const float fFlareSize = pLight->FlareSize*fFactor;
+									const Vector3 &v2DPos = pLightEffect->v2DPos;
+
+									// Begin 2D mode
+									DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+									cDrawHelpers.Begin2DMode(-1.0f, -1.0f, 1.0f, 1.0f);
+
+										// Draw the flares
+										DrawFlare(cRenderer,  0.7f, 0.2f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer,  0.6f, 0.3f*fFlareSize,      cColor.r, 0.6f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer,  0.4f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer,  0.3f, 0.6f*fFlareSize, 0.8f*cColor.r, 0.8f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer,  0.2f, 0.5f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.1f, 0.4f*fFlareSize, 0.6f*cColor.r,      cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.4f, 0.2f*fFlareSize, 0.6f*cColor.r, 0.8f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.6f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.7f, 0.5f*fFlareSize, 0.6f*cColor.r, 0.6f*cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.8f, 0.6f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -0.9f, 0.5f*fFlareSize, 0.8f*cColor.r, 0.6f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
+										DrawFlare(cRenderer, -1.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+
+									// End 2D mode
+									cDrawHelpers.End2DMode();
+								}
+							}
+						}
+
+						// Draw blend
+						pMaterial = NULL;
+						while (cIterator.HasNext()) {
+							// Get
+							const LightEffect *pLightEffect = cIterator.Next();
+							const SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+							if (!pLight->IsEffectLight() && pLightEffect->fFlareBlendFactor && bBlendActive && (pLight->GetFlags() & SNLight::Blend)) {
+								float fFactor = pLightEffect->fFlareBlendFactor*pLight->ScreenBrighten;
+								if (fFactor) {
+									// Draw
+									const Color3 cColor = pLight->Color.Get();
+									if (pMaterial != GetBlendMaterialHandler().GetResource()) {
+										pMaterial = GetBlendMaterialHandler().GetResource();
+										pMaterial->SetupPass(0);
+									}
+
+									// Begin 2D mode
+									DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+									cDrawHelpers.Begin2DMode();
+
+										// Draw image
+										TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
+										if (pTextureBuffer) {
+											cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
+											cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2::Zero, Vector2::One, Color4(cColor.r*fFactor, cColor.g*fFactor, cColor.b*fFactor, fFactor));
+										}
+
+									// End 2D mode
+									cDrawHelpers.End2DMode();
+								}
+							}
+						}
+					}
+
+				// Draw special 'effect lights'
+					if (bEffectLights) {
+						while (cIterator.HasPrevious()) {
+							// Get
+							const LightEffect *pLightEffect = cIterator.Previous();
+							const SNLight *pLightT = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+							if (pLightT->IsEffectLight()) {
+								SNEffectLight *pLight = (SNEffectLight*)pLightT;
+								if (pLightEffect->fFactor) {
+									const Color3 cColor = pLight->Color.Get();
+
+									// Corona
+									if (bCoronaActive && (pLight->GetFlags() & SNLight::Corona)) {
+										pMaterial = pLight->GetCoronaMaterialHandler().GetResource();
+										if (pMaterial) {
+											for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
+												pMaterial->SetupPass(nPass);
+												if (nPass)
+													cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+												else {
+													DrawBillboard(pLightEffect->pVisNode->GetWorldMatrix().GetTranslation(), pLight->CoronaSize,
+																  Color4(cColor.r, cColor.g, cColor.b, pLightEffect->fFactor));
+												}
+											}
+										}
+									}
+
+									// Flares
+									if (bFlaresActive && (pLight->GetFlags() & SNLight::Flares) && pLightEffect->fFlareBlendFactor) {
+										pMaterial = pLight->GetFlareMaterialHandler().GetResource();
+										if (pMaterial) {
+											const float fFactor = pLightEffect->fFlareBlendFactor;
+											const float fFlareSize = pLight->FlareSize*fFactor;
+											if (fFlareSize) {
+												const Vector3 &v2DPos = pLightEffect->v2DPos;
+
+												// Begin 2D mode
+												DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+												cDrawHelpers.Begin2DMode(-1.0f, -1.0f, 1.0f, 1.0f);
+
+													// Draw the flares
+													for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
+														pMaterial->SetupPass(nPass);
+														DrawFlare(cRenderer,  0.7f, 0.2f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer,  0.6f, 0.3f*fFlareSize,      cColor.r, 0.6f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer,  0.4f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer,  0.3f, 0.6f*fFlareSize, 0.8f*cColor.r, 0.8f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer,  0.2f, 0.5f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.1f, 0.4f*fFlareSize, 0.6f*cColor.r,      cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.4f, 0.2f*fFlareSize, 0.6f*cColor.r, 0.8f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.6f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.7f, 0.5f*fFlareSize, 0.6f*cColor.r, 0.6f*cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.8f, 0.6f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -0.9f, 0.5f*fFlareSize, 0.8f*cColor.r, 0.6f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
+														DrawFlare(cRenderer, -1.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
+													}
+
+												// End 2D mode
+												cDrawHelpers.End2DMode();
+											}
+										}
+									}
+
+									// Blend
+									if (bBlendActive && (pLight->GetFlags() & SNLight::Blend) && pLightEffect->fFlareBlendFactor) {
+										pMaterial = pLight->GetBlendMaterialHandler().GetResource();
+										if (pMaterial) {
+											const float fFactor = pLightEffect->fFlareBlendFactor*pLight->ScreenBrighten;
+											if (fFactor) {
+												// Begin 2D mode
+												DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+												cDrawHelpers.Begin2DMode();
+
+													// Draw image
+													SamplerStates cSamplerStates;
+													for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
+														pMaterial->SetupPass(nPass);
+														TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
+														if (pTextureBuffer) {
+															cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
+															cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2::Zero, Vector2::One, Color4(cColor.r*fFactor, cColor.g*fFactor, cColor.b*fFactor, fFactor));
+														}
+													}
+
+												// End 2D mode
+												cDrawHelpers.End2DMode();
+											}
 										}
 									}
 								}
 							}
-
-							// Flares
-							if (bFlaresActive && (pLight->GetFlags() & SNLight::Flares) && pLightEffect->fFlareBlendFactor) {
-								pMaterial = pLight->GetFlareMaterialHandler().GetResource();
-								if (pMaterial) {
-									const float fFactor = pLightEffect->fFlareBlendFactor;
-									const float fFlareSize = pLight->FlareSize*fFactor;
-									if (fFlareSize) {
-										const Vector3 &v2DPos = pLightEffect->v2DPos;
-
-										// Begin 2D mode
-										DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-										cDrawHelpers.Begin2DMode(-1.0f, -1.0f, 1.0f, 1.0f);
-
-											// Draw the flares
-											for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
-												pMaterial->SetupPass(nPass);
-												DrawFlare(cRenderer,  0.7f, 0.2f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer,  0.6f, 0.3f*fFlareSize,      cColor.r, 0.6f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer,  0.4f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer,  0.3f, 0.6f*fFlareSize, 0.8f*cColor.r, 0.8f*cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer,  0.2f, 0.5f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.1f, 0.4f*fFlareSize, 0.6f*cColor.r,      cColor.g, 0.6f*cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.4f, 0.2f*fFlareSize, 0.6f*cColor.r, 0.8f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.6f, 0.4f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.7f, 0.5f*fFlareSize, 0.6f*cColor.r, 0.6f*cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.8f, 0.6f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -0.9f, 0.5f*fFlareSize, 0.8f*cColor.r, 0.6f*cColor.g, 0.8f*cColor.b, 0.5f*fFactor, v2DPos);
-												DrawFlare(cRenderer, -1.2f, 0.3f*fFlareSize,      cColor.r,      cColor.g,      cColor.b, 0.5f*fFactor, v2DPos);
-											}
-
-										// End 2D mode
-										cDrawHelpers.End2DMode();
-									}
-								}
-							}
-
-							// Blend
-							if (bBlendActive && (pLight->GetFlags() & SNLight::Blend) && pLightEffect->fFlareBlendFactor) {
-								pMaterial = pLight->GetBlendMaterialHandler().GetResource();
-								if (pMaterial) {
-									const float fFactor = pLightEffect->fFlareBlendFactor*pLight->ScreenBrighten;
-									if (fFactor) {
-										// Begin 2D mode
-										DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-										cDrawHelpers.Begin2DMode();
-
-											// Draw image
-											SamplerStates cSamplerStates;
-											for (uint32 nPass=0; nPass<pMaterial->GetNumOfPasses(); nPass++) {
-												pMaterial->SetupPass(nPass);
-												TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
-												if (pTextureBuffer) {
-													cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
-													cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2::Zero, Vector2::One, Color4(cColor.r*fFactor, cColor.g*fFactor, cColor.b*fFactor, fFactor));
-												}
-											}
-
-										// End 2D mode
-										cDrawHelpers.End2DMode();
-									}
-								}
-							}
 						}
 					}
+
+					// Done
+					pSRPLightEffectsFixedFunctions->m_lstLightEffects.Clear();
 				}
 			}
-
-			// Done
-			m_lstLightEffects.Clear();
-		}
-	}
-}
-
-
-//[-------------------------------------------------------]
-//[ public virtual SRPLightEffects functions              ]
-//[-------------------------------------------------------]
-void SRPLightEffectsFixedFunctions::Prepare(Renderer &cRenderer, const SQCull &cCullQuery)
-{
-	// Fixed functions support required
-	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-	if (pFixedFunctions) {
-		// Draw anything?
-		if (!(GetFlags() & NoCorona) || !(GetFlags() & NoFlares) || !(GetFlags() & NoBlend)) {
-			// Ensure the correct projection and view matrix is set
-			if (SNCamera::GetCamera()) {
-				pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
-				pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
-			}
-
-			// Backup the color mask
-			bool bRed, bGreen, bBlue, bAlpha;
-			cRenderer.GetColorMask(bRed, bGreen, bBlue, bAlpha);
-
-			// Free all light effects
-			FreeLightEffects();
-
-			// Prepare recursive from back to front
-			PrepareRec(cRenderer, cCullQuery);
-
-			// Restore the color mask
-			cRenderer.SetColorMask(bRed, bGreen, bBlue, bAlpha);
 		}
 	}
 }

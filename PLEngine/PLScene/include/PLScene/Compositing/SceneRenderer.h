@@ -105,7 +105,7 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::
 		*    - If the desired name is already in use, the name is chosen automatically
 		*/
 		PLS_API SceneRendererPass *Create(const PLGeneral::String &sClass, const PLGeneral::String &sName = "",
-										 const PLGeneral::String &sParameters = "");
+										  const PLGeneral::String &sParameters = "");
 
 
 	//[-------------------------------------------------------]

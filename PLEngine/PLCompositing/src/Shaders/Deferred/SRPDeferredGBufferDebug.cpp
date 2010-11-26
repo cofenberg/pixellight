@@ -119,7 +119,7 @@ void SRPDeferredGBufferDebug::Draw(Renderer &cRenderer, const SQCull &cCullQuery
 
 					// Create the program generator
 					if (sDeferredGBufferDebug_VS.GetLength() && sDeferredGBufferDebug_FS.GetLength())
-						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBufferDebug_VS, "arbvp1", sDeferredGBufferDebug_FS, "arbfp1", true);
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBufferDebug_VS, "arbvp1", sDeferredGBufferDebug_FS, "arbfp1");
 				}
 
 				// If there's no program generator, we don't need to continue

@@ -133,7 +133,7 @@ void SRPDeferredEdgeAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 								// Create the program generator
 								if (sDeferredEdgeAA_VS.GetLength() && sDeferredEdgeAA_FS.GetLength())
-									m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredEdgeAA_VS, "arbvp1", sDeferredEdgeAA_FS, "arbfp1", true);
+									m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredEdgeAA_VS, "arbvp1", sDeferredEdgeAA_FS, "arbfp1");
 							}
 
 							// If there's no program generator, we don't need to continue

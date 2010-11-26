@@ -180,32 +180,6 @@ class ProgramGenerator {
 
 
 	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Removes precision qualifiers from the given GLSL shader source code
-		*
-		*  @param[in] sSourceCode
-		*    Shader source code, usually blank ASCII code
-		*
-		*  @return
-		*    The modified GLSL shader source code
-		*
-		*  @remarks
-		*    From the "The OpenGL® Shading Language" specification "Language Version: 3.30, Document Revision: 6, 11-Mar-2010"
-		*        "Precision qualifiers are added for code portability with OpenGL ES, not for functionality. They have the
-		*         same syntax as in OpenGL ES, as described below, but they have no semantic meaning, which includes no
-		*         effect on the precision used to store or operate on variables."
-		*    Although the precision qualifiers "should" have no effect when not using OpenGL ES, we noticed that some NVIDIA GPU
-		*    drivers produced compiler errors when using precision qualifiers. Due this buggy behaviour, we decided to remove the
-		*    precision qualifiers before passing on the shader source code to the GPU.
-		*/
-		static PLRENDERER_API PLGeneral::String ApplyGLSLHacks(const PLGeneral::String &sSourceCode);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -227,13 +201,10 @@ class ProgramGenerator {
 		*  @param[in] sFragmentShaderProfile
 		*    Fragment shader profile to use, if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
-		*  @param[in] bGLSLHacks
-		*    If the shader language is GLSL, and the used renderer not OpenGL ES 2.0, remove the precision qualifiers? (see ApplyGLSLHacks() documentation)
 		*/
 		PLRENDERER_API ProgramGenerator(Renderer &cRenderer, const PLGeneral::String &sShaderLanguage,
 										const PLGeneral::String &sVertexShader, const PLGeneral::String &sVertexShaderProfile,
-										const PLGeneral::String &sFragmentShader, const PLGeneral::String &sFragmentShaderProfile,
-										bool bGLSLHacks = false);
+										const PLGeneral::String &sFragmentShader, const PLGeneral::String &sFragmentShaderProfile);
 
 		/**
 		*  @brief

@@ -66,15 +66,17 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 		*    Scene renderer pass flags (SceneRendererPass flags extension)
 		*/
 		enum EFlags {
-			NoCorona = 1<<1,	/**< Disable corona rendering */
-			NoFlares = 1<<2,	/**< Disable flares rendering */
-			NoBlend  = 1<<3		/**< Disable blend rendering */
+			NoCorona    = 1<<1,	/**< Disable corona rendering */
+			NoFlares    = 1<<2,	/**< Disable flares rendering */
+			NoBlend     = 1<<3,	/**< Disable blend rendering */
+			PrepareStep = 1<<4	/**< Is this a prepare step? */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneRendererPass::EFlags)
-			pl_enum_value(NoCorona,	"Disable corona rendering")
-			pl_enum_value(NoFlares,	"Disable flares rendering")
-			pl_enum_value(NoBlend,	"Disable blend rendering")
+			pl_enum_value(NoCorona,		"Disable corona rendering")
+			pl_enum_value(NoFlares,		"Disable flares rendering")
+			pl_enum_value(NoBlend,		"Disable blend rendering")
+			pl_enum_value(PrepareStep,	"Is this a prepare step?")
 		pl_enum_end
 
 
@@ -132,22 +134,6 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 		*    Handler of the blend material
 		*/
 		PLCOM_API const PLRenderer::MaterialHandler &GetBlendMaterialHandler();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual SRPLightEffects functions              ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Prepares light effects
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cCullQuery
-		*    Cull query to use
-		*/
-		PLCOM_API virtual void Prepare(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) = 0;
 
 
 	//[-------------------------------------------------------]

@@ -24,14 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
-#include <PLRenderer/Renderer/Renderer.h>
-
-// [TODO] Remove this!
-//#include "PLScene/Compositing/General/SRPLightEffects.h"
-
-// [TODO] Remove this!
-//#include "PLScene/Compositing/General/SRPPostProcessing.h"
-
 #include "PLScene/Compositing/SceneRendererManager.h"
 #include "PLScene/Compositing/SceneRenderer.h"
 
@@ -41,7 +33,6 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLCore;
-using namespace PLMath;
 using namespace PLRenderer;
 namespace PLScene {
 
@@ -126,27 +117,10 @@ SceneRenderer::~SceneRenderer()
 */
 void SceneRenderer::DrawScene(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	/*
-	// [TODO] Remove this!
-	// [TODO] Solve this within another, universal way!
-	// Get 'light effects' scene render pass
-	SceneRendererPass *pSRPSolidFunctions = NULL;
-	SRPLightEffects   *pSRPLightEffects   = (SRPLightEffects*)Get("LightEffects");
-	if (pSRPLightEffects && pSRPLightEffects->IsInstanceOf("PLCompositing::SRPLightEffects") && pSRPLightEffects->IsActive())
-		pSRPSolidFunctions = Get("FunctionsSolid");
-	else
-		pSRPLightEffects = NULL;
-*/
-
 	// Draw all scene renderer passes
 	for (uint32 i=0; i<GetNumOfElements(); i++) {
 		// Get the current pass
 		SceneRendererPass *pPass = Get(i);
-
-		// [TODO] Remove this!
-		// Can we now prepare the light effects scene render pass?
-//		if (pPass == pSRPSolidFunctions && pSRPLightEffects)
-//			pSRPLightEffects->Prepare(cRenderer, cCullQuery);
 
 		// Do ONLY take it into account if it's valid and active
 		if (pPass && pPass->IsActive())

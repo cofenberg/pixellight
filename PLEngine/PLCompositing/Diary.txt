@@ -22,6 +22,11 @@
 - "SRPBegin" setzt nun zuallererst die Render-States auf bekannte Werte, das war früher direkt in "PLScene::SceneRenderer::DrawScene()" drinnen
 - Das aktuelle Post Processing System "SRPPostProcessing" ans Compositing-System angestöpselt, somit kann man auch beim Deferred Renderer Post Processing
   nutzen
+- SRPLightEffects/SRPLightEffectsFixedFunctions: "PrepareStep"-Flag hinzugefügt, ähnlich wie beim Deferred Rendering arbeiten hier mehrere Szene
+  Renderer Schritt Instanzen "gemeinsam", müssen also voneinander wissen. In diesem Fall muss die erste SRPLightEffects-Instanz über Occlusion Query
+  die Sichtbarkeit feststellen, während die zweite SRPLightEffects-Instanz die ermittelten Informationen der ersten SRPLightEffects-Instanz zum
+  zeichnen verwendet. Die aktuelle Lösung ist sicherlich noch nicht perfekt, aber sicherlich deutlich besser als die alte die darin bestand,
+  einfach was in "PLScene::SceneRenderer::DrawScene()" fest einzubauen.
 
 
 

@@ -1,3 +1,12 @@
+>> 26.11.2010
+[CO]
+- Die am "07.07.2010" (siehe entsprechenden Tagebucheintrag für mehr Informationen) erstellte Methode "PLRenderer::ProgramGenerator::ApplyGLSLHacks()"
+  entfernt da es scheinbar mittlerweile auch ohne geht - hoffentlich wirklich ohne Probleme auf NVIDIA-Karten... denn solche Hacks (nur weil ein GPU-Treiber
+  sich nicht an den Standard hält!) sind einfach nur dämlich und böse Seiteneffekte sind da natürlich nicht auszuschließen. Wäre nett wenn jemand mit einer
+  NVIDIA-Karte und aktuellen Treibern das nochmals gegentesten könnte.
+
+
+
 >> 08.10.2010
 [CO]
 - "PLRendererOpenGL::ProgramGLSL" & "PLRendererOpenGLCg::ProgramCg": "RelinkRequired()" wird nur noch in "RestoreDeviceData()" und nicht mehr auch in

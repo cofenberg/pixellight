@@ -197,13 +197,6 @@ class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
 
 
-	//[-------------------------------------------------------]
-	//[ public virtual SRPLightEffects functions              ]
-	//[-------------------------------------------------------]
-	public:
-		PLCOM_API void Prepare(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
-
-
 };
 
 

@@ -995,7 +995,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 
 		// Create the program generator
 		if (sDiffuseOnly_VS.GetLength() && sDiffuseOnly_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_VS, "arbvp1", sDiffuseOnly_FS, "arbfp1", true);
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_VS, "arbvp1", sDiffuseOnly_FS, "arbfp1");
 	}
 
 	// If there's no program generator, we don't need to continue
