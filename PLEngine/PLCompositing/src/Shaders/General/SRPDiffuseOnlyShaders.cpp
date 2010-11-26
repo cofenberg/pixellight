@@ -87,7 +87,7 @@ SRPDiffuseOnlyShaders::~SRPDiffuseOnlyShaders()
 
 
 //[-------------------------------------------------------]
-//[ Private PLScene::SRPDiffuseOnly functions             ]
+//[ Private SRPDiffuseOnly functions                      ]
 //[-------------------------------------------------------]
 void SRPDiffuseOnlyShaders::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel, VertexBuffer &cVertexBuffer)
 {

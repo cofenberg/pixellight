@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Material/Parameter.h>
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessClipper.h"
 
 
@@ -68,7 +68,7 @@ SNMPostProcessClipper::~SNMPostProcessClipper()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SNMPostProcess functions      ]
+//[ Public virtual PLCompositing::SNMPostProcess functions ]
 //[-------------------------------------------------------]
 void SNMPostProcessClipper::SetParameters()
 {

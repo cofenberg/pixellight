@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Material/Parameter.h>
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessThermal.h"
 
 
@@ -67,7 +67,7 @@ SNMPostProcessThermal::~SNMPostProcessThermal()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SNMPostProcess functions      ]
+//[ Public virtual PLCompositing::SNMPostProcess functions ]
 //[-------------------------------------------------------]
 void SNMPostProcessThermal::SetParameters()
 {

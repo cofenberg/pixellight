@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -47,13 +47,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Reduces the color palette.
 */
-class SNMPostProcessPosterize : public PLScene::SNMPostProcess {
+class SNMPostProcessPosterize : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessPosterize, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessPosterize, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(Gamma,		float,				1.0f,								ReadWrite, DirectValue,	"Gamma",								"")
 		pl_attribute(Colors,	float,				8.0f,								ReadWrite, DirectValue,	"Number of colors",						"")
@@ -83,7 +83,7 @@ class SNMPostProcessPosterize : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -47,13 +47,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Old film image style.
 */
-class SNMPostProcessOldFilm : public PLScene::SNMPostProcess {
+class SNMPostProcessOldFilm : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessOldFilm, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessOldFilm, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_slot_0		(OnSceneNodeUpdate,							"Slot for SceneNode::EventUpdate", "")
 		// Overloaded SNMPostProcess variables
@@ -108,7 +108,7 @@ class SNMPostProcessOldFilm : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

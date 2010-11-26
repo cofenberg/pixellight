@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
-#include <PLScene/Compositing/General/SRPEnd.h>
+#include "PLCompositing/SRPEnd.h"
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -74,7 +74,7 @@ namespace PLCompositing {
 *    - HDR bloom effect
 *    - Performs gamma correction (linear space -> sRGB space)
 */
-class SRPEndHDR : public PLScene::SRPEnd {
+class SRPEndHDR : public SRPEnd {
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +95,7 @@ class SRPEndHDR : public PLScene::SRPEnd {
 			ShowBloomTexture            = 1<<7	/**< Show the bloom texture (for debugging) */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(PLScene::SRPEnd::EFlags)
+			pl_enum_base(SRPEnd::EFlags)
 			pl_enum_value(NoToneMapping,				"Do not perform tone mapping")
 			pl_enum_value(NoAutomaticAverageLuminance,	"Do not calculate the average luminance automatically (used for tone mapping)")
 			pl_enum_value(NoLightAdaptation,			"Do not perform light adaptation (used for tone mapping with automatically calculated average luminance)")
@@ -109,7 +109,7 @@ class SRPEndHDR : public PLScene::SRPEnd {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPEndHDR, "PLCompositing", PLScene::SRPEnd, "HDR render pipeline finishing scene renderer pass")
+	pl_class(PLCOM_RTTI_EXPORT, SRPEndHDR, "PLCompositing", PLCompositing::SRPEnd, "HDR render pipeline finishing scene renderer pass")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(ShaderLanguage,		PLGeneral::String,		"",												ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",		"")
 		pl_attribute(LuminanceConvert,		PLGraphics::Color3,		PLGraphics::Color3(0.2125f, 0.7154f, 0.0721f),	ReadWrite,	DirectValue,	"Luminance convert (tone mapping)",																											"")

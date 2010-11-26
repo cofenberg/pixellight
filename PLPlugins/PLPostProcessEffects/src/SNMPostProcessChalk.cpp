@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Material/Parameter.h>
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessChalk.h"
 
 
@@ -69,7 +69,7 @@ SNMPostProcessChalk::~SNMPostProcessChalk()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SNMPostProcess functions      ]
+//[ Public virtual PLCompositing::SNMPostProcess functions ]
 //[-------------------------------------------------------]
 void SNMPostProcessChalk::SetParameters()
 {

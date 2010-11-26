@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
 #include <PLGraphics/Color/Color3.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Bloom effect with tone mapping.
 */
-class SNMPostProcessBloomToneMap : public PLScene::SNMPostProcess {
+class SNMPostProcessBloomToneMap : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessBloomToneMap, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessBloomToneMap, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(BloomScale,	float,				0.8f,									ReadWrite, DirectValue,	"Bloom scale",							"")
 		pl_attribute(Strength,		PLMath::Vector2,	PLMath::Vector2(4.0f, 4.0f),			ReadWrite, DirectValue,	"Blur strength",						"")
@@ -88,7 +88,7 @@ class SNMPostProcessBloomToneMap : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

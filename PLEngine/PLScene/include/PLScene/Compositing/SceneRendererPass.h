@@ -71,7 +71,7 @@ namespace PLScene {
 *    In short, you can imagine 'scene renderer passes' as 'subsystems' of a scene renderer.
 *
 *  @note
-*    - Derived classes should use a 'SRP' prefix (example: SRPFixedFunction)
+*    - Derived classes should use a 'SRP' prefix (example: SRPBegin)
 */
 class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<SceneRendererPass> {
 

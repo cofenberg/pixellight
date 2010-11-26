@@ -84,7 +84,7 @@ SRPDirectionalLightingFixedFunctions::~SRPDirectionalLightingFixedFunctions()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLScene::SRPDirectionalLighting functions ]
+//[ Private virtual SRPDirectionalLighting functions      ]
 //[-------------------------------------------------------]
 void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel, VertexBuffer &cVertexBuffer)
 {

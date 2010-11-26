@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color4.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Simple color filter.
 */
-class SNMPostProcessColorFilter : public PLScene::SNMPostProcess {
+class SNMPostProcessColorFilter : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessColorFilter, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessColorFilter, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(Filter,	PLGraphics::Color4,	PLGraphics::Color4(1.0f, 0.4f, 0.4f, 1.0f), ReadWrite, DirectValue,	"Color filter",							"")
 		// Overloaded SNMPostProcess variables
@@ -83,7 +83,7 @@ class SNMPostProcessColorFilter : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

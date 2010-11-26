@@ -55,6 +55,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
+	${CMAKE_SOURCE_DIR}/PLEngine/PLCompositing/include
 )
 
 ##################################################
@@ -73,7 +74,7 @@ add_libs(
 	PLMath
 	PLGraphics
 	PLRenderer
-	PLScene
+	PLCompositing
 )
 
 ##################################################

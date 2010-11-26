@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
 #include <PLMath/Vector3.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -52,13 +52,13 @@ namespace PLPostProcessEffects {
 *  @note
 *    - For 'glowing' edges use the post process 'Data/PostProcesses/EdgeGlow.pp' together with this modifier
 */
-class SNMPostProcessEdgeDetect : public PLScene::SNMPostProcess {
+class SNMPostProcessEdgeDetect : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessEdgeDetect, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessEdgeDetect, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(LuminanceConvert,	PLMath::Vector3,	PLMath::Vector3(0.2125f, 0.7154f, 0.0721f),	ReadWrite, DirectValue,	"Color scale (for pixel kernel 0 and 1)",		"")
 		pl_attribute(PixelKernel0,		PLMath::Vector2,	PLMath::Vector2( 0.0f,  1.0f),				ReadWrite, DirectValue,	"Pixel kernel 0",								"")
@@ -91,7 +91,7 @@ class SNMPostProcessEdgeDetect : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

@@ -32,7 +32,7 @@
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
-#include <PLScene/Compositing/General/SRPBegin.h>
+#include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/Shaders/HDR/HDRAverageLuminance.h"
 #include "PLCompositing/Shaders/HDR/HDRLightAdaptation.h"
 #include "PLCompositing/Shaders/HDR/HDRBloom.h"
@@ -116,8 +116,8 @@ SRPEndHDR::~SRPEndHDR()
 //[-------------------------------------------------------]
 void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	// Get the "PLScene::SRPBegin" instance
-	SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
+	// Get the "PLCompositing::SRPBegin" instance
+	SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
 	if (pSRPBegin) {
 		// Get the back render target of SRPBegin, this holds the current content
 		SurfaceTextureBuffer *pSurfaceTextureBuffer = pSRPBegin->GetBackRenderTarget();

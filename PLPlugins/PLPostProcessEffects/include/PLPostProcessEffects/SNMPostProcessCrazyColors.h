@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector3.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Crazy colors.
 */
-class SNMPostProcessCrazyColors : public PLScene::SNMPostProcess {
+class SNMPostProcessCrazyColors : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessCrazyColors, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessCrazyColors, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_slot_0		(OnSceneNodeUpdate,							 "Slot for SceneNode::EventUpdate", "")
 		pl_attribute(ColorScaleX,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.0f,  2.0f), ReadWrite, DirectValue,	"Color scale x",						"")
@@ -115,7 +115,7 @@ class SNMPostProcessCrazyColors : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

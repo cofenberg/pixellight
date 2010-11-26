@@ -27,8 +27,13 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
-#include "PLScene/Compositing/General/SRPLightEffects.h"
-#include "PLScene/Compositing/General/SRPPostProcessing.h"
+
+// [TODO] Remove this!
+//#include "PLScene/Compositing/General/SRPLightEffects.h"
+
+// [TODO] Remove this!
+//#include "PLScene/Compositing/General/SRPPostProcessing.h"
+
 #include "PLScene/Compositing/SceneRendererManager.h"
 #include "PLScene/Compositing/SceneRenderer.h"
 
@@ -132,8 +137,10 @@ void SceneRenderer::DrawPass(Renderer &cRenderer, const SQCull &cCullQuery, Scen
 */
 bool SceneRenderer::SetRenderTarget(Renderer &cRenderer)
 {
-	SRPPostProcessing *pSRPPostProcessing = (SRPPostProcessing*)Get("PostProcessing");
-	return (pSRPPostProcessing && pSRPPostProcessing->IsActive() && pSRPPostProcessing->IsInstanceOf("PLScene::SRPPostProcessing")) ? pSRPPostProcessing->SetRenderTarget(cRenderer) : true;
+	// [TODO] Remove this!
+//	SRPPostProcessing *pSRPPostProcessing = (SRPPostProcessing*)Get("PostProcessing");
+//	return (pSRPPostProcessing && pSRPPostProcessing->IsActive() && pSRPPostProcessing->IsInstanceOf("PLCompositing::SRPPostProcessing")) ? pSRPPostProcessing->SetRenderTarget(cRenderer) : true;
+	return true;
 }
 
 /**
@@ -167,23 +174,27 @@ void SceneRenderer::DrawScene(Renderer &cRenderer, const SQCull &cCullQuery)
 	cRenderer.GetDrawHelpers().End2DMode();
 	cRenderer.GetDrawHelpers().Set2DZValue();
 
+	/*
+	// [TODO] Remove this!
 	// [TODO] Solve this within another, universal way!
 	// Get 'light effects' scene render pass
 	SceneRendererPass *pSRPSolidFunctions = NULL;
 	SRPLightEffects   *pSRPLightEffects   = (SRPLightEffects*)Get("LightEffects");
-	if (pSRPLightEffects && pSRPLightEffects->IsInstanceOf("PLScene::SRPLightEffects") && pSRPLightEffects->IsActive())
+	if (pSRPLightEffects && pSRPLightEffects->IsInstanceOf("PLCompositing::SRPLightEffects") && pSRPLightEffects->IsActive())
 		pSRPSolidFunctions = Get("FunctionsSolid");
 	else
 		pSRPLightEffects = NULL;
+*/
 
 	// Draw all scene renderer passes
 	for (uint32 i=0; i<GetNumOfElements(); i++) {
 		// Get the current pass
 		SceneRendererPass *pPass = Get(i);
 
+		// [TODO] Remove this!
 		// Can we now prepare the light effects scene render pass?
-		if (pPass == pSRPSolidFunctions && pSRPLightEffects)
-			pSRPLightEffects->Prepare(cRenderer, cCullQuery);
+//		if (pPass == pSRPSolidFunctions && pSRPLightEffects)
+//			pSRPLightEffects->Prepare(cRenderer, cCullQuery);
 
 		// Do ONLY take it into account if it's valid and active
 		if (pPass && pPass->IsActive())

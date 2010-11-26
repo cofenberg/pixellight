@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color4.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Color manipulation.
 */
-class SNMPostProcessSepia2 : public PLScene::SNMPostProcess {
+class SNMPostProcessSepia2 : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessSepia2, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessSepia2, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(TintColor0, PLGraphics::Color4, PLGraphics::Color4(0.299f, 0.587f, 0.184f,  0.31f), ReadWrite, DirectValue, "Tint color 0 (red component)",		"")
 		pl_attribute(TintColor1, PLGraphics::Color4, PLGraphics::Color4(0.299f, 0.587f, 0.184f,  0.17f), ReadWrite, DirectValue, "Tint color 1 (green component)",		"")
@@ -88,7 +88,7 @@ class SNMPostProcessSepia2 : public PLScene::SNMPostProcess {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

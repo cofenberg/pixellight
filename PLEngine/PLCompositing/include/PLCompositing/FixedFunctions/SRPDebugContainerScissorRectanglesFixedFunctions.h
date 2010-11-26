@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/Debug/SRPDebugContainerScissorRectangles.h>
-#include "PLCompositing/PLCompositing.h"
+#include "PLCompositing/SRPDebugContainerScissorRectangles.h"
 
 
 //[-------------------------------------------------------]
@@ -45,13 +44,13 @@ namespace PLCompositing {
 *  @brief
 *    Fixed functions based scene renderer pass drawing just simple container scissor rectangles
 */
-class SRPDebugContainerScissorRectanglesFixedFunctions : public PLScene::SRPDebugContainerScissorRectangles {
+class SRPDebugContainerScissorRectanglesFixedFunctions : public SRPDebugContainerScissorRectangles {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugContainerScissorRectanglesFixedFunctions, "PLCompositing", PLScene::SRPDebugContainerScissorRectangles, "Fixed functions based scene renderer pass drawing just simple container scissor rectangles")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugContainerScissorRectanglesFixedFunctions, "PLCompositing", PLCompositing::SRPDebugContainerScissorRectangles, "Fixed functions based scene renderer pass drawing just simple container scissor rectangles")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 

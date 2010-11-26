@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/General/SRPDiffuseOnly.h>
-#include "PLCompositing/PLCompositing.h"
+#include "PLCompositing/SRPDiffuseOnly.h"
 
 
 //[-------------------------------------------------------]
@@ -82,13 +81,13 @@ namespace PLCompositing {
 *    </Material>
 *  @endverbatim
 */
-class SRPDiffuseOnlyFixedFunctions : public PLScene::SRPDiffuseOnly {
+class SRPDiffuseOnlyFixedFunctions : public SRPDiffuseOnly {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnlyFixedFunctions, "PLCompositing", PLScene::SRPDiffuseOnly, "Fixed functions based diffuse only scene renderer pass implementation, can also be used as depth only renderer pass")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnlyFixedFunctions, "PLCompositing", PLCompositing::SRPDiffuseOnly, "Fixed functions based diffuse only scene renderer pass implementation, can also be used as depth only renderer pass")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 
@@ -120,7 +119,7 @@ class SRPDiffuseOnlyFixedFunctions : public PLScene::SRPDiffuseOnly {
 
 
 	//[-------------------------------------------------------]
-	//[ Private PLScene::SRPDiffuseOnly functions             ]
+	//[ Private SRPDiffuseOnly functions                      ]
 	//[-------------------------------------------------------]
 	private:
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);

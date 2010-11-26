@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color3.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Monochromes colors.
 */
-class SNMPostProcessMonochrome : public PLScene::SNMPostProcess {
+class SNMPostProcessMonochrome : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessMonochrome, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessMonochrome, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(LuminanceConvert,	PLGraphics::Color3,	PLGraphics::Color3(0.2125f, 0.7154f, 0.0721f),	ReadWrite, DirectValue,	"Luminance convert",					"")
 		// Overloaded SNMPostProcess variables
@@ -83,7 +83,7 @@ class SNMPostProcessMonochrome : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

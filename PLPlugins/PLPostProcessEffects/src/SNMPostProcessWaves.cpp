@@ -26,7 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLScene/Scene/SceneNode.h>
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessWaves.h"
 
 
@@ -102,7 +102,7 @@ void SNMPostProcessWaves::OnSceneNodeUpdate()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SNMPostProcess functions      ]
+//[ Public virtual PLCompositing::SNMPostProcess functions ]
 //[-------------------------------------------------------]
 void SNMPostProcessWaves::SetParameters()
 {

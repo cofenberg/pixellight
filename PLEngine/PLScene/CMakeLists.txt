@@ -84,9 +84,6 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMBillboard.cpp
 	src/Scene/SceneNodeModifiers/SNMBillboardSpherical.cpp
 	src/Scene/SceneNodeModifiers/SNMBillboardCylindrical.cpp
-	src/Scene/SceneNodeModifiers/SNMPostProcess.cpp
-	src/Scene/SceneNodeModifiers/SNMPostProcessDepthOfField.cpp
-	src/Scene/SceneNodeModifiers/SNMPostProcessGlow.cpp
 	src/Scene/SceneNodeModifiers/SNMMesh.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshMorph.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshJoint.cpp
@@ -152,39 +149,11 @@ add_sources(
 	src/Visibility/VisPortal.cpp
 	src/Compositing/SceneRendererLoaderPL.cpp
 	src/Compositing/SceneRendererLoader.cpp
-	src/Compositing/General/SRPBegin.cpp
-	src/Compositing/General/SRPEnd.cpp
-	src/Compositing/General/SRPBackground.cpp
-	src/Compositing/General/SRPBackgroundBitmap.cpp
-	src/Compositing/General/SRPBackgroundColorGradient.cpp
-	src/Compositing/General/SRPBackgroundSky.cpp
-	src/Compositing/General/SRPDiffuseOnly.cpp
-	src/Compositing/General/SRPDirectionalLighting.cpp
-	src/Compositing/General/SRPLightEffects.cpp
-	src/Compositing/General/SRPPostProcessing.cpp
-	src/Compositing/General/SRPFunctions.cpp
-	src/Compositing/General/SRPFunctionsPre.cpp
-	src/Compositing/General/SRPFunctionsSolid.cpp
-	src/Compositing/General/SRPFunctionsTransparent.cpp
-	src/Compositing/General/SRPFunctionsPost.cpp
-	src/Compositing/Debug/SRPDebug.cpp
-	src/Compositing/Debug/SRPDebugFunctions.cpp
-	src/Compositing/Debug/SRPDebugWireframes.cpp
-	src/Compositing/Debug/SRPDebugHierarchies.cpp
-	src/Compositing/Debug/SRPDebugSceneNodeIcons.cpp
-	src/Compositing/Debug/SRPDebugSceneNodeNames.cpp
-	src/Compositing/Debug/SRPDebugContainerScissorRectangles.cpp
 	src/Compositing/SceneRenderer.cpp
 	src/Compositing/SceneRendererHandler.cpp
 	src/Compositing/SceneRendererManager.cpp
 	src/Compositing/SceneRendererPass.cpp
 	src/Compositing/FullscreenQuad.cpp
-	src/Compositing/PostProcessing/PostProcess.cpp
-	src/Compositing/PostProcessing/PostProcessor.cpp
-	src/Compositing/PostProcessing/PostProcessHandler.cpp
-	src/Compositing/PostProcessing/PostProcessManager.cpp
-	src/Compositing/PostProcessing/PostProcessLoader.cpp
-	src/Compositing/PostProcessing/PostProcessLoaderPL.cpp
 	src/PLScene.cpp
 	src/Config.cpp
 )

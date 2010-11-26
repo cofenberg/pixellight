@@ -108,7 +108,7 @@ SNDirectionalLight *SRPDirectionalLightingShaders::GetUsedLight() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLScene::SRPDirectionalLighting functions ]
+//[ Private virtual SRPDirectionalLighting functions      ]
 //[-------------------------------------------------------]
 void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel, VertexBuffer &cVertexBuffer)
 {
@@ -1014,7 +1014,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 			// DOF enabled?
 			if (!(GetFlags() & NoDOF)) {
 				// Is there an active DOF post process modifier?
-				SceneNodeModifier *pModifier = pCamera->GetModifier("PLScene::SNMPostProcessDepthOfField");
+				SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcessDepthOfField");
 				if (pModifier && pModifier->IsActive()) {
 					if (pModifier->GetAttribute("EffectWeight")->GetFloat() > 0.0f) {
 						m_fDOFNearBlurDepth    = pModifier->GetAttribute("NearBlurDepth")   ->GetFloat();
@@ -1029,7 +1029,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 			// Glow enabled?
 			if (!m_fDOFBlurrinessCutoff && !(GetFlags() & NoGlow)) {
 				// Is there an active glow post process modifier?
-				SceneNodeModifier *pModifier = pCamera->GetModifier("PLScene::SNMPostProcessGlow");
+				SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcessGlow");
 				if (pModifier && pModifier->IsActive())
 					m_bGlowEnabled = bWriteAlpha = true;
 			}

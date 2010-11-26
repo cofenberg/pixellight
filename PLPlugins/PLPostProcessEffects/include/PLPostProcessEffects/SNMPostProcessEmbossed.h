@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
 #include <PLGraphics/Color/Color3.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Embosses colors.
 */
-class SNMPostProcessEmbossed : public PLScene::SNMPostProcess {
+class SNMPostProcessEmbossed : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessEmbossed, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessEmbossed, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(StartColor,	PLGraphics::Color3,	PLGraphics::Color3(0.5f, 0.5f, 0.5f),	ReadWrite, DirectValue,	"Start color",								"")
 		pl_attribute(ColorScale,	PLMath::Vector2,	PLMath::Vector2( 2.0f,  2.0f),			ReadWrite, DirectValue,	"Color scale (for pixel kernel 0 and 1)",	"")
@@ -87,7 +87,7 @@ class SNMPostProcessEmbossed : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

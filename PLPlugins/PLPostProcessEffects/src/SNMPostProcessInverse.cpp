@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessInverse.h"
 
 

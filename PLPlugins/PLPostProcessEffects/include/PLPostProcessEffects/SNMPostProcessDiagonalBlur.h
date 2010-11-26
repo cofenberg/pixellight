@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Performs a diagonal blur.
 */
-class SNMPostProcessDiagonalBlur : public PLScene::SNMPostProcess {
+class SNMPostProcessDiagonalBlur : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessDiagonalBlur, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessDiagonalBlur, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(ColorScale,	float,				4.0f,									ReadWrite, DirectValue,	"Color scale",							"")
 		pl_attribute(PixelKernel0,	PLMath::Vector2,	PLMath::Vector2( 2.0f, 2.0f),			ReadWrite, DirectValue,	"Pixel kernel 0",						"")
@@ -87,7 +87,7 @@ class SNMPostProcessDiagonalBlur : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

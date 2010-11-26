@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/General/SRPDirectionalLighting.h>
-#include "PLCompositing/PLCompositing.h"
+#include "PLCompositing/SRPDirectionalLighting.h"
 
 
 //[-------------------------------------------------------]
@@ -91,7 +90,7 @@ namespace PLCompositing {
 *  @note
 *    - Do ONLY use power of two textures!
 */
-class SRPDirectionalLightingFixedFunctions : public PLScene::SRPDirectionalLighting {
+class SRPDirectionalLightingFixedFunctions : public SRPDirectionalLighting {
 
 
 	//[-------------------------------------------------------]
@@ -109,7 +108,7 @@ class SRPDirectionalLightingFixedFunctions : public PLScene::SRPDirectionalLight
 			NoAmbientOcclusionMap = 1<<8	/**< Ignore ambient occlusion map */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(PLScene::SRPDirectionalLighting::EFlags)
+			pl_enum_base(SRPDirectionalLighting::EFlags)
 			pl_enum_value(NoSpecular,				"No specular")
 			pl_enum_value(NoReflectionMap,			"Ignore reflection map")
 			pl_enum_value(NoLightMap,				"Ignore light map")
@@ -120,7 +119,7 @@ class SRPDirectionalLightingFixedFunctions : public PLScene::SRPDirectionalLight
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLightingFixedFunctions, "PLCompositing", PLScene::SRPDirectionalLighting, "Scene renderer pass for rendering transparent meshes with lighting")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLightingFixedFunctions, "PLCompositing", PLCompositing::SRPDirectionalLighting, "Scene renderer pass for rendering transparent meshes with lighting")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		// Overwritten SceneRendererPass variables
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
@@ -154,7 +153,7 @@ class SRPDirectionalLightingFixedFunctions : public PLScene::SRPDirectionalLight
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SRPDirectionalLighting functions ]
+	//[ Private virtual SRPDirectionalLighting functions      ]
 	//[-------------------------------------------------------]
 	private:
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);

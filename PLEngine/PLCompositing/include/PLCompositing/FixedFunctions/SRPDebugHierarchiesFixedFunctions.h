@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/Debug/SRPDebugHierarchies.h>
-#include "PLCompositing/PLCompositing.h"
+#include "PLCompositing/SRPDebugHierarchies.h"
 
 
 //[-------------------------------------------------------]
@@ -45,13 +44,13 @@ namespace PLCompositing {
 *  @brief
 *    Fixed functions based scene renderer pass drawing scene container hierachies for 'debugging'
 */
-class SRPDebugHierarchiesFixedFunctions : public PLScene::SRPDebugHierarchies {
+class SRPDebugHierarchiesFixedFunctions : public SRPDebugHierarchies {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugHierarchiesFixedFunctions, "PLCompositing", PLScene::SRPDebugHierarchies, "Fixed functions based scene renderer pass drawing scene container hierachies for 'debugging'")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugHierarchiesFixedFunctions, "PLCompositing", PLCompositing::SRPDebugHierarchies, "Fixed functions based scene renderer pass drawing scene container hierachies for 'debugging'")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 

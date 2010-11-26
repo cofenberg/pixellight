@@ -128,13 +128,13 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 			if (pCamera) {
 				// Loop through all available post process scene node modifiers
 				uint32			   nIndex    = 0;
-				SceneNodeModifier *pModifier = pCamera->GetModifier("PLScene::SNMPostProcess", nIndex);
+				SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", nIndex);
 				while (pModifier) {
 					// Toggle the active state of the post process scene node modifier
 					pModifier->SetActive(!pModifier->IsActive());
 
 					// Next modifier, please
-					pModifier = pCamera->GetModifier("PLScene::SNMPostProcess", ++nIndex);
+					pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nIndex);
 				}
 			}
 			break;
@@ -219,7 +219,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					pSceneRenderer->Create("SRP2DGame", "2DGame");
 
 					// Add post processing scene renderer pass
-					pSceneRenderer->Create("PLScene::SRPPostProcessing", "PostProcessing");
+					pSceneRenderer->Create("PLCompositing::SRPPostProcessing", "PostProcessing");
 
 					// Make this scene renderer to the default scene renderer of our scene surface painter
 					pSPScene->SetDefaultSceneRenderer(pSceneRenderer->GetName());

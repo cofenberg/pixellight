@@ -8,6 +8,28 @@ define_project(PLCompositing)
 ##################################################
 add_sources(
 	src/PLCompositing.cpp
+	src/SRPBegin.cpp
+	src/SRPEnd.cpp
+	src/SRPBackground.cpp
+	src/SRPBackgroundBitmap.cpp
+	src/SRPBackgroundColorGradient.cpp
+	src/SRPBackgroundSky.cpp
+	src/SRPDiffuseOnly.cpp
+	src/SRPDirectionalLighting.cpp
+	src/SRPLightEffects.cpp
+	src/SRPPostProcessing.cpp
+	src/SRPFunctions.cpp
+	src/SRPFunctionsPre.cpp
+	src/SRPFunctionsSolid.cpp
+	src/SRPFunctionsTransparent.cpp
+	src/SRPFunctionsPost.cpp
+	src/SRPDebug.cpp
+	src/SRPDebugFunctions.cpp
+	src/SRPDebugWireframes.cpp
+	src/SRPDebugHierarchies.cpp
+	src/SRPDebugSceneNodeIcons.cpp
+	src/SRPDebugSceneNodeNames.cpp
+	src/SRPDebugContainerScissorRectangles.cpp
 	src/FixedFunctions/SRPDebugContainerScissorRectanglesFixedFunctions.cpp
 	src/FixedFunctions/SRPDebugHierarchiesFixedFunctions.cpp
 	src/FixedFunctions/SRPDebugWireframesFixedFunctions.cpp
@@ -41,6 +63,15 @@ add_sources(
 	src/Shaders/ShadowMapping/ShadowMappingUSM.cpp
 	src/Shaders/ShadowMapping/ShadowMappingPSM.cpp
 	src/Shaders/ShadowMapping/ShadowMappingLiSPSM.cpp
+	src/Shaders/PostProcessing/PostProcess.cpp
+	src/Shaders/PostProcessing/PostProcessor.cpp
+	src/Shaders/PostProcessing/PostProcessHandler.cpp
+	src/Shaders/PostProcessing/PostProcessManager.cpp
+	src/Shaders/PostProcessing/PostProcessLoader.cpp
+	src/Shaders/PostProcessing/PostProcessLoaderPL.cpp
+	src/SceneNodeModifiers/SNMPostProcess.cpp
+	src/SceneNodeModifiers/SNMPostProcessDepthOfField.cpp
+	src/SceneNodeModifiers/SNMPostProcessGlow.cpp
 )
 
 ##################################################

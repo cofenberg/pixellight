@@ -103,13 +103,13 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 			if (pCamera) {
 				// Loop through all available post process scene node modifiers
 				uint32			   nIndex    = 0;
-				SceneNodeModifier *pModifier = pCamera->GetModifier("PLScene::SNMPostProcess", nIndex);
+				SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", nIndex);
 				while (pModifier) {
 					// Toggle the active state of the post process scene node modifier
 					pModifier->SetActive(!pModifier->IsActive());
 
 					// Next modifier, please
-					pModifier = pCamera->GetModifier("PLScene::SNMPostProcess", ++nIndex);
+					pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nIndex);
 				}
 			}
 			break;
@@ -284,7 +284,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 		// Get class list of all available post process scene node modifiers
 		m_lstModifierClasses.Clear();
-		PLCore::ClassManager::GetInstance()->GetClasses(m_lstModifierClasses, "PLScene::SNMPostProcess", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
+		PLCore::ClassManager::GetInstance()->GetClasses(m_lstModifierClasses, "PLCompositing::SNMPostProcess", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
 
 		// 'Activate' the first effect
 		if (m_lstModifierClasses.GetNumOfElements())

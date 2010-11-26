@@ -31,7 +31,7 @@
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
-#include <PLScene/Compositing/General/SRPBegin.h>
+#include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredEdgeAA.h"
 
@@ -96,8 +96,8 @@ void SRPDeferredEdgeAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// Get the normal/depth texture buffer to use
 				TextureBufferRectangle *pNormalDepthTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
 				if (pNormalDepthTextureBuffer) {
-					// Get the "PLScene::SRPBegin" instance
-					SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
+					// Get the "PLCompositing::SRPBegin" instance
+					SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
 					if (pSRPBegin) {
 						// We need up-to-date front render target content, so swap the render targets
 						pSRPBegin->SwapRenderTargets();

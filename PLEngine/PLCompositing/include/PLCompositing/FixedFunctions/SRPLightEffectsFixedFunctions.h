@@ -29,8 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/Pool.h>
-#include <PLScene/Compositing/General/SRPLightEffects.h>
-#include "PLCompositing/PLCompositing.h"
+#include "PLCompositing/SRPLightEffects.h"
 
 
 //[-------------------------------------------------------]
@@ -58,13 +57,13 @@ namespace PLCompositing {
 *  @brief
 *    Fixed functions based scene renderer pass drawing light effects like lens flares
 */
-class SRPLightEffectsFixedFunctions : public PLScene::SRPLightEffects {
+class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPLightEffectsFixedFunctions, "PLCompositing", PLScene::SRPLightEffects, "Fixed functions based scene renderer pass drawing light effects like lens flares")
+	pl_class(PLCOM_RTTI_EXPORT, SRPLightEffectsFixedFunctions, "PLCompositing", PLCompositing::SRPLightEffects, "Fixed functions based scene renderer pass drawing light effects like lens flares")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 
@@ -199,7 +198,7 @@ class SRPLightEffectsFixedFunctions : public PLScene::SRPLightEffects {
 
 
 	//[-------------------------------------------------------]
-	//[ public virtual PLScene::SRPLightEffects functions     ]
+	//[ public virtual SRPLightEffects functions              ]
 	//[-------------------------------------------------------]
 	public:
 		PLCOM_API void Prepare(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);

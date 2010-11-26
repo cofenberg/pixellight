@@ -694,7 +694,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 
 
 //[-------------------------------------------------------]
-//[ public virtual PLScene::SRPLightEffects functions     ]
+//[ public virtual SRPLightEffects functions              ]
 //[-------------------------------------------------------]
 void SRPLightEffectsFixedFunctions::Prepare(Renderer &cRenderer, const SQCull &cCullQuery)
 {

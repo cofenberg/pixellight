@@ -14,6 +14,8 @@
      gebracht wird - falls überhaupt. Mittlerweile bin ich wirklich froh mich damals für ein neues PLCompositing Projekt entschieden zu haben -
      denn hier liegt bereits einiges an Funktionalität drinnen, und es ist abzusehen das hier zusammen mit der Hardware Entwicklung öfters Änderungen
      und Erweiterungen stattfinden werden als z.B. im PLScene Projekt.
+- Alles was bisher in "Compositing/General/" & "Compositing/Debug/" & "Compositing/PostProcessing" lag in das Grundverzeichnis von PLCompositing verschoben
+- "SNMPostProcess" & "SNMPostProcessDepthOfField" & "SNMPostProcessGlow" von PLScene nach PLCompositing verschoben
 
 
 

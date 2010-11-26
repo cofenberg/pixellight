@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Sharpen the image.
 */
-class SNMPostProcessLaplaceSharpen : public PLScene::SNMPostProcess {
+class SNMPostProcessLaplaceSharpen : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessLaplaceSharpen, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessLaplaceSharpen, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		// Overloaded SNMPostProcess variables
 		pl_attribute(Filename, PLGeneral::String, "Data/PostProcesses/LaplaceSharpen.pp", ReadWrite, ModifyAttr, "Filename of the post process to use", "Type='PostProcess'")

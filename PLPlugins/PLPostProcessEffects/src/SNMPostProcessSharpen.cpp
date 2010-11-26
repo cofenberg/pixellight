@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Material/Parameter.h>
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessSharpen.h"
 
 

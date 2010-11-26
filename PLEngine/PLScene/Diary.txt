@@ -1,3 +1,10 @@
+>> 26.11.2010
+[CO]
+- Alles was bisher in "Compositing/General/" & "Compositing/Debug/" & "Compositing/PostProcessing" lag in das Grundverzeichnis von PLCompositing verschoben
+- "SNMPostProcess" & "SNMPostProcessDepthOfField" & "SNMPostProcessGlow" von PLScene nach PLCompositing verschoben
+
+
+
 >> 14.11.2010
 [CO]
 - SRPBackgroundBitmap: "Material"-Attribute ist nun leer anstatt einen Standard-Wert zu haben. In den Scene Renderer Dateien ist

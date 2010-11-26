@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector2.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Chalk colors.
 */
-class SNMPostProcessChalk : public PLScene::SNMPostProcess {
+class SNMPostProcessChalk : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessChalk, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessChalk, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(ColorScale,	PLMath::Vector2,	PLMath::Vector2(10.0f, 10.0f),	ReadWrite, DirectValue,	"Color scale (for pixel kernel 0 and 1)",	"")
 		pl_attribute(PixelKernel0,	PLMath::Vector2,	PLMath::Vector2( 1.0f,  1.0f),	ReadWrite, DirectValue,	"Pixel kernel 0",							"")
@@ -85,7 +85,7 @@ class SNMPostProcessChalk : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

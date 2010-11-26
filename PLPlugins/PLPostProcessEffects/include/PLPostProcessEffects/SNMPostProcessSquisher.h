@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color4.h>
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -48,13 +48,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Squishes colors within a range.
 */
-class SNMPostProcessSquisher : public PLScene::SNMPostProcess {
+class SNMPostProcessSquisher : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessSquisher, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessSquisher, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(MinColor,	PLGraphics::Color4,	PLGraphics::Color4(0.2f, 0.5f, 0.3f, 1.0f),	ReadWrite, DirectValue,	"Minimum color",						"")
 		pl_attribute(MaxColor,	PLGraphics::Color4,	PLGraphics::Color4(0.8f, 0.9f, 1.0f, 1.0f),	ReadWrite, DirectValue,	"Maximum color",						"")
@@ -84,7 +84,7 @@ class SNMPostProcessSquisher : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

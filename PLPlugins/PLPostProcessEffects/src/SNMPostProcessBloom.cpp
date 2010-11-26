@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Material/Parameter.h>
-#include <PLScene/Compositing/PostProcessing/PostProcessManager.h>
+#include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessBloom.h"
 
 
@@ -71,7 +71,7 @@ SNMPostProcessBloom::~SNMPostProcessBloom()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SNMPostProcess functions      ]
+//[ Public virtual PLCompositing::SNMPostProcess functions ]
 //[-------------------------------------------------------]
 void SNMPostProcessBloom::SetParameters()
 {

@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/Debug/SRPDebugWireframes.h>
-#include "PLCompositing/PLCompositing.h"
+#include "PLCompositing/SRPDebugWireframes.h"
 
 
 //[-------------------------------------------------------]
@@ -53,13 +52,13 @@ namespace PLCompositing {
 *  @brief
 *    Fixed functions based scene renderer pass drawing just simple wireframes
 */
-class SRPDebugWireframesFixedFunctions : public PLScene::SRPDebugWireframes {
+class SRPDebugWireframesFixedFunctions : public SRPDebugWireframes {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugWireframesFixedFunctions, "PLCompositing", PLScene::SRPDebugWireframes, "Fixed functions based scene renderer pass drawing just simple wireframes")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugWireframesFixedFunctions, "PLCompositing", PLCompositing::SRPDebugWireframes, "Fixed functions based scene renderer pass drawing just simple wireframes")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 

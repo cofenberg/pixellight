@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLScene/Scene/SceneNodeHandler.h>
-#include <PLScene/Compositing/General/SRPDirectionalLighting.h>
+#include "PLCompositing/SRPDirectionalLighting.h"
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -42,7 +42,7 @@ namespace PLRenderer {
 	class ProgramUniform;
 	class ProgramAttribute;
 }
-namespace PLScene {
+namespace PLCompositing {
 	class SNDirectionalLight;
 }
 
@@ -143,7 +143,7 @@ namespace PLCompositing {
 *    - Build in support for a glow post processing effect writing values into the alpha channel of the framebuffer
 *    - Build in support for a DOF post processing effect writing values into the alpha channel of the framebuffer
 */
-class SRPDirectionalLightingShaders : public PLScene::SRPDirectionalLighting {
+class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 
 
 	//[-------------------------------------------------------]
@@ -175,7 +175,7 @@ class SRPDirectionalLightingShaders : public PLScene::SRPDirectionalLighting {
 			NoDOF                 = 1<<22	/**< Ignore DOF - please note, this only disables writing DOF information into the alpha channel of the framebuffer */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(PLScene::SRPDirectionalLighting::EFlags)
+			pl_enum_base(SRPDirectionalLighting::EFlags)
 			pl_enum_value(NoGammaCorrection,		"Do not perform gamma correction (in general gamma correction done for: DiffuseMap, LightMap, EmissiveMap, ReflectionMap) - if gamma correction is enabled, there should be a gamma correction at the end of the render pipeline")
 			pl_enum_value(NoAmbientOcclusionMap,	"Ignore ambient occlusion maps")
 			pl_enum_value(NoLightMap,				"Ignore light maps")
@@ -200,7 +200,7 @@ class SRPDirectionalLightingShaders : public PLScene::SRPDirectionalLighting {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLightingShaders, "PLCompositing", PLScene::SRPDirectionalLighting, "Shaders based diffuse only scene renderer pass implementation")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLightingShaders, "PLCompositing", PLCompositing::SRPDirectionalLighting, "Shaders based diffuse only scene renderer pass implementation")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		// Overwritten PLScene::SceneRendererPass variables
@@ -235,7 +235,7 @@ class SRPDirectionalLightingShaders : public PLScene::SRPDirectionalLighting {
 		*    - This information can for example be used to skip the light rendering for the already rendered light
 		*      within a following scene renderer pass
 		*/
-		PLCOM_API PLScene::SNDirectionalLight *GetUsedLight() const;
+		PLCOM_API SNDirectionalLight *GetUsedLight() const;
 
 
 	//[-------------------------------------------------------]
@@ -368,7 +368,7 @@ class SRPDirectionalLightingShaders : public PLScene::SRPDirectionalLighting {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SRPDirectionalLighting functions ]
+	//[ Private virtual SRPDirectionalLighting functions      ]
 	//[-------------------------------------------------------]
 	private:
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);

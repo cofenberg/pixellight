@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/ProgramGenerator.h>
-#include <PLScene/Compositing/General/SRPDiffuseOnly.h>
+#include "PLCompositing/SRPDiffuseOnly.h"
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -84,7 +84,7 @@ namespace PLCompositing {
 *    </Material>
 *  @endverbatim
 */
-class SRPDiffuseOnlyShaders : public PLScene::SRPDiffuseOnly {
+class SRPDiffuseOnlyShaders : public SRPDiffuseOnly {
 
 
 	//[-------------------------------------------------------]
@@ -99,7 +99,7 @@ class SRPDiffuseOnlyShaders : public PLScene::SRPDiffuseOnly {
 			NoGammaCorrection = 1<<5,	/**< Do not perform gamma correction (in general gamma correction done for: DiffuseMap, LightMap, EmissiveMap, ReflectionMap) - if gamma correction is enabled, there should be a gamma correction at the end of the render pipeline */
 		};
 		pl_enum(EFlags)
-			pl_enum_base(PLScene::SRPDiffuseOnly::EFlags)
+			pl_enum_base(SRPDiffuseOnly::EFlags)
 			pl_enum_value(NoGammaCorrection, "Do not perform gamma correction (in general gamma correction done for: DiffuseMap, LightMap, EmissiveMap, ReflectionMap) - if gamma correction is enabled, there should be a gamma correction at the end of the render pipeline")
 		pl_enum_end
 
@@ -107,7 +107,7 @@ class SRPDiffuseOnlyShaders : public PLScene::SRPDiffuseOnly {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnlyShaders, "PLCompositing", PLScene::SRPDiffuseOnly, "Shaders based diffuse only scene renderer pass implementation, can also be used as depth only renderer pass")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnlyShaders, "PLCompositing", PLCompositing::SRPDiffuseOnly, "Shaders based diffuse only scene renderer pass implementation, can also be used as depth only renderer pass")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		// Overwritten PLScene::SceneRendererPass variables
@@ -181,7 +181,7 @@ class SRPDiffuseOnlyShaders : public PLScene::SRPDiffuseOnly {
 
 
 	//[-------------------------------------------------------]
-	//[ Private PLScene::SRPDiffuseOnly functions             ]
+	//[ Private SRPDiffuseOnly functions                      ]
 	//[-------------------------------------------------------]
 	private:
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);

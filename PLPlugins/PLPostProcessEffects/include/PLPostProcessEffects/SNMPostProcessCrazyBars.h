@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodeModifiers/SNMPostProcess.h>
+#include <PLCompositing/SceneNodeModifiers/SNMPostProcess.h>
 
 
 //[-------------------------------------------------------]
@@ -47,13 +47,13 @@ namespace PLPostProcessEffects {
 *  @remarks
 *    Crazy bar.
 */
-class SNMPostProcessCrazyBars : public PLScene::SNMPostProcess {
+class SNMPostProcessCrazyBars : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SNMPostProcessCrazyBars, "PLPostProcessEffects", PLScene::SNMPostProcess, "")
+	pl_class(pl_rtti_export, SNMPostProcessCrazyBars, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_slot_0		(OnSceneNodeUpdate,							 "Slot for SceneNode::EventUpdate", "")
 		pl_attribute(ColorScaleY,	float,				1.0f,								ReadWrite, DirectValue,	"Color scale Y (0.002 for a rainbow :) )",	"")
@@ -109,7 +109,7 @@ class SNMPostProcessCrazyBars : public PLScene::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNMPostProcess functions      ]
+	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void SetParameters();

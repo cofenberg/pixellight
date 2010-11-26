@@ -36,7 +36,7 @@
 #include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include <PLScene/Compositing/FullscreenQuad.h>
-#include <PLScene/Compositing/General/SRPBegin.h>
+#include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredDOF.h"
 
@@ -661,7 +661,7 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		bDOFActive = false;
 		SNCamera *pCamera = SNCamera::GetCamera();
 		if (pCamera) {
-			SceneNodeModifier *pModifier = pCamera->GetModifier("PLScene::SNMPostProcessDepthOfField");
+			SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcessDepthOfField");
 			if (pModifier && pModifier->IsActive()) {
 				fEffectWeight = pModifier->GetAttribute("EffectWeight")->GetFloat();
 				if (fEffectWeight > 0.0f) {
@@ -689,8 +689,8 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Get the vertex buffer of the fullscreen quad
 					VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
 					if (pVertexBuffer) {
-						// Get the "PLScene::SRPBegin" instance
-						SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLScene::SRPBegin");
+						// Get the "PLCompositing::SRPBegin" instance
+						SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
 						if (pSRPBegin) {
 							// We need up-to-date front render target content, so swap the render targets
 							pSRPBegin->SwapRenderTargets();

@@ -82,7 +82,7 @@ SRPDiffuseOnlyFixedFunctions::~SRPDiffuseOnlyFixedFunctions()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLScene::SRPDiffuseOnly functions     ]
+//[ Private virtual SRPDiffuseOnly functions              ]
 //[-------------------------------------------------------]
 void SRPDiffuseOnlyFixedFunctions::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const VisNode &cVisNode, SceneNode &cSceneNode, const MeshHandler &cMeshHandler, const Mesh &cMesh, const MeshLODLevel &cMeshLODLevel, VertexBuffer &cVertexBuffer)
 {
