@@ -25,8 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
 #include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/DrawHelpers.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
 
 // [TODO] Remove this!
 //#include "PLScene/Compositing/General/SRPLightEffects.h"
@@ -149,31 +147,6 @@ bool SceneRenderer::SetRenderTarget(Renderer &cRenderer)
 */
 void SceneRenderer::DrawScene(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	// Set all render states to known default settings
-	cRenderer.ResetRenderStates();
-//	cRenderer.ResetTransformStates(); // Would also reset camera settings, not ok
-	cRenderer.ResetSamplerStates();
-	cRenderer.SetTextureBuffer();
-	cRenderer.SetIndexBuffer();
-	cRenderer.SetViewport();
-	cRenderer.SetScissorRect();
-	cRenderer.SetColorMask();
-	// Fixed functions
-	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-	if (pFixedFunctions) {
-		pFixedFunctions->SetColor();
-		pFixedFunctions->ResetRenderStates();
-		pFixedFunctions->ResetTextureStageStates();
-		pFixedFunctions->ResetMaterialStates();
-		pFixedFunctions->ResetLights();
-		pFixedFunctions->SetClipPlaneEnabled();
-		pFixedFunctions->SetClipPlane();
-		pFixedFunctions->SetVertexBuffer();
-	}
-	// Draw helpers
-	cRenderer.GetDrawHelpers().End2DMode();
-	cRenderer.GetDrawHelpers().Set2DZValue();
-
 	/*
 	// [TODO] Remove this!
 	// [TODO] Solve this within another, universal way!

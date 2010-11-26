@@ -25,6 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/Renderer.h>
+#include <PLRenderer/Renderer/DrawHelpers.h>
+#include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLScene/Scene/SNCamera.h>
 #include "PLCompositing/SRPBegin.h"
 
@@ -130,6 +132,34 @@ void SRPBegin::SwapRenderTargets()
 //[-------------------------------------------------------]
 void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
+	{ // Set all render states to known default settings
+		cRenderer.ResetRenderStates();
+	//	cRenderer.ResetTransformStates(); // Would also reset camera settings, not ok
+		cRenderer.ResetSamplerStates();
+		cRenderer.SetTextureBuffer();
+		cRenderer.SetIndexBuffer();
+		cRenderer.SetViewport();
+		cRenderer.SetScissorRect();
+		cRenderer.SetColorMask();
+
+		// Fixed functions
+		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
+		if (pFixedFunctions) {
+			pFixedFunctions->SetColor();
+			pFixedFunctions->ResetRenderStates();
+			pFixedFunctions->ResetTextureStageStates();
+			pFixedFunctions->ResetMaterialStates();
+			pFixedFunctions->ResetLights();
+			pFixedFunctions->SetClipPlaneEnabled();
+			pFixedFunctions->SetClipPlane();
+			pFixedFunctions->SetVertexBuffer();
+		}
+
+		// Draw helpers
+		cRenderer.GetDrawHelpers().End2DMode();
+		cRenderer.GetDrawHelpers().Set2DZValue();
+	}
+
 	// Get the currently set render target
 	m_pOriginalRenderTarget = cRenderer.GetRenderTarget();
 	if (m_pOriginalRenderTarget) {

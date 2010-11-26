@@ -59,7 +59,7 @@ class SceneRendererManager;
 *    for more information about this topic.
 *
 *  @note
-*    - Derived classes should use a 'SR'-prefix (example: SRBasic)
+*    - Derived classes should use a 'SR'-prefix (example: SRBegin)
 *    - Prefer creating new scene renderer passes instead of scene renderer
 */
 class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::ElementManager<SceneRendererPass> {

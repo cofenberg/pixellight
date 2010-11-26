@@ -3,6 +3,8 @@
 - Alles was bisher in "Compositing/General/" & "Compositing/Debug/" & "Compositing/PostProcessing" lag in das Grundverzeichnis von PLCompositing verschoben
 - "SNMPostProcess" & "SNMPostProcessDepthOfField" & "SNMPostProcessGlow" von PLScene nach PLCompositing verschoben
 - "FullscreenQuad" von PLScene nach PLCompositing verschoben
+- "SceneRenderer::DrawScene()": Nahm das ändern von Render-States raus, diese Methode macht nun nichts anderes mehr als die Draw-Methoden aller Szene
+  Renderer Schritte aufzurufen
 
 
 

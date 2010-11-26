@@ -19,6 +19,7 @@
 - "FullscreenQuad" von PLScene nach PLCompositing verschoben. Diese kleine Helferlein-Klasse hätte man auch genauso gut nach PLRenderer verschieben können,
   allerdings will ich in PLRenderer, wenn es sich vermeiden lässt, nicht noch mehr Zeug packen, vorallem wenn etwas bisher eigentlich nur in einem einzigen
   Projekt verwendet wird.
+- "SRPBegin" setzt nun zuallererst die Render-States auf bekannte Werte, das war früher direkt in "PLScene::SceneRenderer::DrawScene()" drinnen
 
 
 
