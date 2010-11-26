@@ -28,16 +28,24 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/PLGeneral.h>
 #include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLGeneral {
+	class String;
+}
+namespace PLCore {
+	class DynVar;
+}
 namespace PLRenderer {
 	class SurfacePainter;
 }
 namespace PLScene {
+	class SceneRenderer;
 	class SceneRendererPass;
 }
 
@@ -102,6 +110,18 @@ class SceneRendererTool {
 
 		/**
 		*  @brief
+		*    Returns the used scene renderer instance
+		*
+		*  @return
+		*    The used scene renderer instance, can be NULL
+		*
+		*  @note
+		*    - Same as "SceneRenderer *pSceneRenderer = ((SPScene*)GetPainter())->GetDefaultSceneRenderer()" (with security checks!)
+		*/
+		PL_API PLScene::SceneRenderer *GetSceneRenderer() const;
+
+		/**
+		*  @brief
 		*    Gets a scene renderer pass
 		*
 		*  @param[in] sName
@@ -114,7 +134,7 @@ class SceneRendererTool {
 
 		/**
 		*  @brief
-		*    Gets a scene renderer pass attribute value as string
+		*    Gets a scene renderer pass attribute
 		*
 		*  @param[in] sSceneRendererPassName
 		*    Name of the scene renderer pass
@@ -122,9 +142,9 @@ class SceneRendererTool {
 		*    Name of the scene renderer pass attribute
 		*
 		*  @return
-		*    The requested scene renderer pass attribute as string
+		*    The requested scene renderer pass attribute, NULL on error
 		*/
-		PL_API PLGeneral::String GetPassAttribute(const PLGeneral::String &sSceneRendererPassName, const PLGeneral::String &sAttributeName) const;
+		PL_API PLCore::DynVar *GetPassAttribute(const PLGeneral::String &sSceneRendererPassName, const PLGeneral::String &sAttributeName) const;
 
 		/**
 		*  @brief
@@ -141,6 +161,43 @@ class SceneRendererTool {
 		*    'true' if the attribute was set, else 'false'
 		*/
 		PL_API bool SetPassAttribute(const PLGeneral::String &sSceneRendererPassName, const PLGeneral::String &sAttributeName, const PLGeneral::String &sValue) const;
+
+		/**
+		*  @brief
+		*    Sets scene renderer pass attribute values using a string
+		*
+		*  @param[in] sAttributeName
+		*    Name of the scene renderer pass attribute (e.g. "AmbientColor")
+		*  @param[in] sValue
+		*    Value to set (e.g. "0.2 0.2 0.2")
+		*
+		*  @return
+		*    Number of set scene renderer pass attribute values
+		*
+		*  @remarks
+		*    Unlike "SetPassAttribute()", "SetAttribute()" sets the "sAttributeName"-attribute from all
+		*    scene renderer passes to the given value.
+		*/
+		PL_API PLGeneral::uint32 SetAttribute(const PLGeneral::String &sAttributeName, const PLGeneral::String &sValue) const;
+
+		/**
+		*  @brief
+		*    Sets scene renderer pass attribute values using a string
+		*
+		*  @param[in] sValues
+		*    Values to set (e.g.: "ColorClear=\"0 0 0 0\" AmbientColor=\"0.2 0.2 0.2\"")
+		*
+		*  @remarks
+		*    Unlike "SetPassAttribute()" and "SetAttribute()", "SetValues()" sets multiple attributes from all
+		*    scene renderer passes to the given value at once.
+		*/
+		PL_API void SetValues(const PLGeneral::String &sValues) const;
+
+		/**
+		*  @brief
+		*    Sets all scene renderer pass attribute values to their default value
+		*/
+		PL_API void SetDefaultValues() const;
 
 
 	//[-------------------------------------------------------]

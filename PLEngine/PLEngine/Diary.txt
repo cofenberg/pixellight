@@ -1,3 +1,17 @@
+>> 26.11.2010
+[CO]
+- SceneRendererTool: "GetPassAttribute()" gibt nun die "DynVar"-Instanz zurück da universeller, "SetPassAttribute()" lasse ich drinnen
+  da noch einen Tick einfacher zu nutzen wenn man nur anhand eines Strings setzen will. :D
+- SceneRendererTool: Weitere Methode "SetAttribute()" hinzugefügt die ALLE Szene Renderer Schritte durchschaut und alle Attribute mit
+  gegebenen Name auf den gegebenen Wert setzt - praktisch wenn es einen z.B. nur interessiert die "AmbientColor" zu setzen, aber NICHT
+  welche Szene Renderer Schritte alle eine "AmbientColor"-Variable besitzen.
+- SceneRendererTool: Weitere Methode "SetValues()" hinzugefügt, dies stellt den "ultimativen Luxus" da - man gibt einfach z.B.
+  "ColorClear=\"0 0 0 0\" AmbientColor=\"0.2 0.2 0.2\"" rein und alles weitere braucht einen nicht zu Interessieren
+- SceneRendererTool: Weitere Methode "SetDefaultValues()" hinzugefügt, setzt die Attribute aller Szene Renderer Schritte auf
+  ihre Default-Werte
+
+
+
 >> 20.11.2010
 [CO]
 - "WindowConnection::SetFullscreen()": Wenn ein Fenster maximiert ist, und man nun in den Vollbild-Modus wechselt sah man die Titel-Leiste

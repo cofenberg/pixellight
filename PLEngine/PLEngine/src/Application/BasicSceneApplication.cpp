@@ -143,17 +143,8 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 			// Reset to default scene renderer
 			m_sDefaultSceneRenderer = DefaultSceneRenderer;
 
-			{ // Reset to default clear color
-				SceneRenderer *pSceneRenderer = pSPScene->GetDefaultSceneRenderer();
-				if (pSceneRenderer) {
-					SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get("Begin");
-					if (pSceneRendererPass) {
-						DynVar *pDynVar = pSceneRendererPass->GetAttribute("ColorClear");
-						if (pDynVar)
-							pDynVar->SetDefault();
-					}
-				}
-			}
+			// Sets all scene renderer pass attribute values to their default value
+			GetSceneRendererTool().SetDefaultValues();
 
 			// Assign the first found camera scene node to your surface listener and look for
 			// known key/value data scene nodes
@@ -233,15 +224,8 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 
 				// SceneRendererVariables
 				if (pKeyValue && pKeyValue->Key.GetString() == "SceneRendererVariables") {
-					SceneRenderer *pSceneRenderer = pSPScene->GetDefaultSceneRenderer();
-					if (pSceneRenderer) {
-						const String sValue = pKeyValue->Value.GetString();
-						for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
-							SceneRendererPass *pPass = pSceneRenderer->Get(nPass);
-							if (pPass)
-								pPass->SetValues(sValue);
-						}
-					}
+					// Sets scene renderer pass attribute values using a string
+					GetSceneRendererTool().SetValues(pKeyValue->Value.GetString());
 				}
 			}
 		}

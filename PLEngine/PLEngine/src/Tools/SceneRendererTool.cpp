@@ -81,43 +81,52 @@ void SceneRendererTool::SetPainter(SurfacePainter *pSurfacePainter)
 
 /**
 *  @brief
-*    Gets a scene renderer pass
+*    Returns the used scene renderer instance
 */
-SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
+SceneRenderer *SceneRendererTool::GetSceneRenderer() const
 {
 	// Get the painter
 	if (m_pSurfacePainter && m_pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
-		// Get the default scene renderer
-		SceneRenderer *pSceneRenderer = ((SPScene*)m_pSurfacePainter)->GetDefaultSceneRenderer();
-		if (pSceneRenderer) {
-			// Return the requested scene renderer pass
-			return pSceneRenderer->Get(sName);
-		}
+		// Return the default scene renderer
+		return ((SPScene*)m_pSurfacePainter)->GetDefaultSceneRenderer();
 	}
 
-	// Error
+	// Error!
 	return NULL;
 }
 
 /**
 *  @brief
-*    Gets a scene renderer pass attribute value as string
+*    Gets a scene renderer pass
 */
-String SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName, const String &sAttributeName) const
+SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
+{
+	// Get the scene renderer
+	SceneRenderer *pSceneRenderer = GetSceneRenderer();
+	if (pSceneRenderer) {
+		// Return the requested scene renderer pass
+		return pSceneRenderer->Get(sName);
+	}
+
+	// Error!
+	return NULL;
+}
+
+/**
+*  @brief
+*    Gets a scene renderer pass attribute
+*/
+DynVar *SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName, const String &sAttributeName) const
 {
 	// Get the scene renderer pass
 	SceneRendererPass *pSceneRendererPass = GetPass(sSceneRendererPassName);
 	if (pSceneRendererPass) {
 		// Get the attribute
-		DynVar *pDynVar = pSceneRendererPass->GetAttribute(sAttributeName);
-		if (pDynVar) {
-			// Return the value of the attribute as string
-			return pDynVar->GetString();
-		}
+		return pSceneRendererPass->GetAttribute(sAttributeName);
 	}
 
 	// Error!
-	return "";
+	return NULL;
 }
 
 /**
@@ -142,6 +151,81 @@ bool SceneRendererTool::SetPassAttribute(const String &sSceneRendererPassName, c
 
 	// Error!
 	return false;
+}
+
+/**
+*  @brief
+*    Sets scene renderer pass attribute values using a string
+*/
+uint32 SceneRendererTool::SetAttribute(const String &sAttributeName, const String &sValue) const
+{
+	uint32 nNumOfSetAttributes = 0;
+
+	// Get the scene renderer
+	SceneRenderer *pSceneRenderer = GetSceneRenderer();
+	if (pSceneRenderer) {
+		// Loop through all scene renderer passes
+		for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
+			// Get the current scene renderer pass
+			SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get(nPass);
+			if (pSceneRendererPass) {
+				// Get the attribute
+				DynVar *pDynVar = pSceneRendererPass->GetAttribute(sAttributeName);
+				if (pDynVar) {
+					// Set the value of the attribute using a string
+					pDynVar->SetString(sValue);
+
+					// Update the number of set attributes
+					nNumOfSetAttributes++;
+				}
+			}
+		}
+	}
+
+	// Done
+	return nNumOfSetAttributes;
+}
+
+/**
+*  @brief
+*    Sets scene renderer pass attribute values using a string
+*/
+void SceneRendererTool::SetValues(const String &sValues) const
+{
+	// Get the scene renderer
+	SceneRenderer *pSceneRenderer = GetSceneRenderer();
+	if (pSceneRenderer) {
+		// Loop through all scene renderer passes
+		for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
+			// Get the current scene renderer pass
+			SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get(nPass);
+			if (pSceneRendererPass) {
+				// Set the values
+				pSceneRendererPass->SetValues(sValues);
+			}
+		}
+	}
+}
+
+/**
+*  @brief
+*    Sets all scene renderer pass attribute values to their default value
+*/
+void SceneRendererTool::SetDefaultValues() const
+{
+	// Get the scene renderer
+	SceneRenderer *pSceneRenderer = GetSceneRenderer();
+	if (pSceneRenderer) {
+		// Loop through all scene renderer passes
+		for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
+			// Get the current scene renderer pass
+			SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get(nPass);
+			if (pSceneRendererPass) {
+				// Set the values
+				pSceneRendererPass->SetDefaultValues();
+			}
+		}
+	}
 }
 
 

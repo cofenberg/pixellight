@@ -30,7 +30,6 @@
 #include <PLGui/Widgets/Widget.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SPScene.h>
-#include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "Application.h"
 
@@ -203,16 +202,6 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			}
 		}
 		pSPScene->SetDefaultSceneRenderer(sSceneRenderer);
-
-		// By default, "AmbientColor" is set to white (1, 1, 1), set this value to (0.2 0.2 0.2) to give lighting more impact
-		SceneRenderer *pSceneRenderer = pSPScene->GetDefaultSceneRenderer();
-		if (pSceneRenderer) {
-			for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
-				SceneRendererPass *pPass = pSceneRenderer->Get(nPass);
-				if (pPass)
-					pPass->SetAttribute("AmbientColor", "0.2 0.2 0.2");
-			}
-		}
 	}
 
 	// Set scene container
