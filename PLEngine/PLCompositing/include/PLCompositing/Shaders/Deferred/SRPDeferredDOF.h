@@ -62,6 +62,7 @@ namespace PLCompositing {
 *
 *  @note
 *    - The technique described within \url{http://ati.amd.com/developer/gdc/Scheuermann_DepthOfField.pdf} is used
+*    - Can also be controlled by a "PLCompositing::SNMPostProcessDepthOfField" scene node modifier attached to the used camera
 */
 class SRPDeferredDOF : public SRPDeferred {
 

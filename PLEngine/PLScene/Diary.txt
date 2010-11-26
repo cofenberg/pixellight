@@ -5,6 +5,8 @@
 - "FullscreenQuad" von PLScene nach PLCompositing verschoben
 - "SceneRenderer::DrawScene()": Nahm das ändern von Render-States raus, diese Methode macht nun nichts anderes mehr als die Draw-Methoden aller Szene
   Renderer Schritte aufzurufen
+- "SceneRenderer::DrawPass()" entfernt da mittlerweile überflüssig
+- "SceneRenderer::SetRenderTarget()" entfernt da mittlerweile überflüssig
 
 
 

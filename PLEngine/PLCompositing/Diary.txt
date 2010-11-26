@@ -20,6 +20,8 @@
   allerdings will ich in PLRenderer, wenn es sich vermeiden lässt, nicht noch mehr Zeug packen, vorallem wenn etwas bisher eigentlich nur in einem einzigen
   Projekt verwendet wird.
 - "SRPBegin" setzt nun zuallererst die Render-States auf bekannte Werte, das war früher direkt in "PLScene::SceneRenderer::DrawScene()" drinnen
+- Das aktuelle Post Processing System "SRPPostProcessing" ans Compositing-System angestöpselt, somit kann man auch beim Deferred Renderer Post Processing
+  nutzen
 
 
 

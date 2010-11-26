@@ -129,47 +129,11 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::
 		*/
 		PLS_API virtual ~SceneRenderer();
 
-		/**
-		*  @brief
-		*    Draws a scene renderer pass
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cCullQuery
-		*    Cull scene query to use
-		*  @param[in] cPass
-		*    Scene renderer pass to draw
-		*
-		*  @remarks
-		*    Because ONLY 'SceneRenderer' is allowed to actually 'draw' a scene renderer pass, you have
-		*    to use this function instead of calling the draw function of a scene renderer pass directly.
-		*/
-		PLS_API void DrawPass(PLRenderer::Renderer &cRenderer, const SQCull &cCullQuery, SceneRendererPass &cPass);
-
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		/**
-		*  @brief
-		*    Sets another render target if required
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*
-		*  @remarks
-		*    - If you want to draw your scene first into a texture use this
-		*      function to set the new render target (required for post processing)
-		*    - You should backup the current render target in order to be able to
-		*      restore it
-		*    - By default, this function does nothing
-		*/
-		PLS_API virtual bool SetRenderTarget(PLRenderer::Renderer &cRenderer);
-
 		/**
 		*  @brief
 		*    Draws the scene using this scene renderer

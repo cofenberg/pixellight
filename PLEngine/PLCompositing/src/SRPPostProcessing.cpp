@@ -23,13 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/Tools/Profiling.h>
 #include <PLGeneral/Tools/Stopwatch.h>
-#include <PLGeneral/System/System.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Scene/SNCamera.h>
-#include <PLScene/Scene/SceneNodeModifier.h>
+#include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/SceneNodeModifiers/SNMPostProcess.h"
 #include "PLCompositing/Shaders/PostProcessing/PostProcessor.h"
 #include "PLCompositing/Shaders/PostProcessing/PostProcessManager.h"
@@ -40,7 +38,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLCompositing {
@@ -60,9 +57,7 @@ pl_implement_class(SRPPostProcessing)
 *    Default constructor
 */
 SRPPostProcessing::SRPPostProcessing() :
-	m_pColorMap(NULL),
-	m_pPostProcessor(NULL),
-	m_pSurfaceT(NULL)
+	m_pPostProcessor(NULL)
 {
 }
 
@@ -72,8 +67,6 @@ SRPPostProcessing::SRPPostProcessing() :
 */
 SRPPostProcessing::~SRPPostProcessing()
 {
-	if (m_pColorMap)
-		delete m_pColorMap;
 	if (m_pPostProcessor)
 		delete m_pPostProcessor;
 }
@@ -89,54 +82,6 @@ PostProcessor *SRPPostProcessing::GetPostProcessor()
 	return m_pPostProcessor;
 }
 
-/**
-*  @brief
-*    Sets another render target if required
-*/
-bool SRPPostProcessing::SetRenderTarget(Renderer &cRenderer)
-{
-	// Do we really perform post processing?
-	if (SNCamera::GetCamera() && IsPostProcessingRequired(*SNCamera::GetCamera())) {
-		if (m_pPostProcessor) {
-			// Get the size of the current render target
-			const Vector2i vRTSize = cRenderer.GetRenderTarget()->GetSize();
-			if (vRTSize.x != 0 && vRTSize.y != 0) {
-				// Create/update the color map
-				if (m_pColorMap) {
-					// Do we need to recreate the color map?
-					if (m_pColorMap->GetSize()   != vRTSize ||
-						m_pColorMap->GetFormat() != m_pPostProcessor->GetTextureFormat()) {
-						// Yes! Recreate it!
-						delete m_pColorMap;
-						m_pColorMap = cRenderer.CreateSurfaceTextureBufferRectangle(vRTSize, m_pPostProcessor->GetTextureFormat());
-					}
-				} else {
-					m_pColorMap = cRenderer.CreateSurfaceTextureBufferRectangle(vRTSize, m_pPostProcessor->GetTextureFormat());
-				}
-			} else {
-				// Invalid render target dimension, so no color map, please
-				if (m_pColorMap) {
-					delete m_pColorMap;
-					m_pColorMap = NULL;
-				}
-			}
-
-			// Is there a valid color map we can render in?
-			if (m_pColorMap) {
-				// Backup current render target and set a new one
-				m_pSurfaceT = cRenderer.GetRenderTarget();
-				return cRenderer.SetRenderTarget(m_pColorMap);
-			} else {
-				// Error!
-				return false;
-			}
-		}
-	}
-
-	// Done
-	return true;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -148,11 +93,20 @@ bool SRPPostProcessing::SetRenderTarget(Renderer &cRenderer)
 bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 {
 	// Loop through all modifiers of the camera scene node
-	uint32			   nModifier = 0;
-	SceneNodeModifier *pModifier = cCamera.GetModifier("PLCompositing::SNMPostProcess", nModifier);
+	uint32		    nModifier = 0;
+	SNMPostProcess *pModifier = (SNMPostProcess*)cCamera.GetModifier("PLCompositing::SNMPostProcess", nModifier);
 	while (pModifier) {
-		// Is this modifier active?
-		if (pModifier->IsActive()) {
+		// Is this modifier active and the effect weight greater than zero?
+		if (pModifier->IsActive() && pModifier->EffectWeight.GetFloat() > 0.0f) {
+
+
+			// [TODO] If there's an "PLCompositing::SRPDeferredDOF" instance, "PLCompositing::SNMPostProcessDepthOfField" has already been processed -> Find a way to deal with build in post process effects!
+			if (GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPDeferredDOF") && pModifier->GetClass()->GetClassName() == "PLCompositing::SNMPostProcessDepthOfField") {
+				pModifier = (SNMPostProcess*)cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+				continue;
+			}
+
+
 			// Get the post process manager
 			PostProcessManager &cPPM = ((SNMPostProcess*)pModifier)->GetPostProcessManager();
 
@@ -174,7 +128,7 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 		}
 
 		// Next modifier, please
-		pModifier = cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+		pModifier = (SNMPostProcess*)cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
 	}
 
 	// Done, we need not need post processing
@@ -187,68 +141,91 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 //[-------------------------------------------------------]
 void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	// Perform post process
-	if (m_pColorMap && m_pPostProcessor && SNCamera::GetCamera() && IsPostProcessingRequired(*SNCamera::GetCamera())) {
-		// Ensure alpha is used
-		cRenderer.SetColorMask(true, true, true, true);
+	// Perform post processing?
+	if (SNCamera::GetCamera() && IsPostProcessingRequired(*SNCamera::GetCamera()) && m_pPostProcessor) {
+		// Get the "PLCompositing::SRPBegin" instance
+		SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
+		if (pSRPBegin) {
+			// We need up-to-date front render target content, so swap the render targets
+			pSRPBegin->SwapRenderTargets();
 
-		// Start stopwatch
-		Stopwatch cStopwatch;
-		cStopwatch.Start();
+			// Get the front render target of SRPBegin, this holds the current content
+			SurfaceTextureBuffer *pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
+			if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer()) {
+				// Backup the current render target
+				Surface *pSurfaceBackup = cRenderer.GetRenderTarget();
 
-		// Begin the processing
-		if (m_pPostProcessor->BeginProcessing(cRenderer, *m_pColorMap)) {
-			// Perform all active post processes in order
-			SNCamera *pCamera = SNCamera::GetCamera();
-			if (pCamera) {
-				// Loop through all modifiers of the camera scene node
-				uint32			   nModifier = 0;
-				SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", nModifier);
-				while (pModifier) {
-					// Is this modifier active?
-					if (pModifier->IsActive()) {
-						SNMPostProcess *pPostProcessModifier = (SNMPostProcess*)pModifier;
+				// Ensure alpha is used
+				cRenderer.SetColorMask(true, true, true, true);
 
-						// Get the post process manager
-						PostProcessManager &cPPM = pPostProcessModifier->GetPostProcessManager();
+				// Start stopwatch
+				Stopwatch cStopwatch;
+				cStopwatch.Start();
 
-						// Loop through all post processes
-						bool bSetParameters = true;
-						for (uint32 nPostProcess=0; nPostProcess<cPPM.GetNumOfElements(); nPostProcess++) {
-							PostProcess *pPostProcess = cPPM.Get(nPostProcess);
-							if (pPostProcess->IsActive()) {
-								// Set post process settings now?
-								if (bSetParameters) {
-									pPostProcessModifier->SetParameters();
-									bSetParameters = false;
+				// Begin the processing
+				if (m_pPostProcessor->BeginProcessing(cRenderer, *pFrontSurfaceTextureBuffer)) {
+					// Perform all active post processes in order
+					SNCamera *pCamera = SNCamera::GetCamera();
+					if (pCamera) {
+						// Loop through all modifiers of the camera scene node
+						uint32		    nModifier = 0;
+						SNMPostProcess *pModifier = (SNMPostProcess*)pCamera->GetModifier("PLCompositing::SNMPostProcess", nModifier);
+						while (pModifier) {
+							// Is this modifier active and the effect weight greater than zero?
+							if (pModifier->IsActive() && pModifier->EffectWeight.GetFloat() > 0.0f) {
+
+
+								// [TODO] If there's an "PLCompositing::SRPDeferredDOF" instance, "PLCompositing::SNMPostProcessDepthOfField" has already been processed -> Find a way to deal with build in post process effects!
+								if (GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPDeferredDOF") && pModifier->GetClass()->GetClassName() == "PLCompositing::SNMPostProcessDepthOfField") {
+									pModifier = (SNMPostProcess*)pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+									continue;
 								}
 
-								// Process this post process
-								m_pPostProcessor->Process(*pPostProcess);
+
+								SNMPostProcess *pPostProcessModifier = (SNMPostProcess*)pModifier;
+
+								// Get the post process manager
+								PostProcessManager &cPPM = pPostProcessModifier->GetPostProcessManager();
+
+								// Loop through all post processes
+								bool bSetParameters = true;
+								for (uint32 nPostProcess=0; nPostProcess<cPPM.GetNumOfElements(); nPostProcess++) {
+									PostProcess *pPostProcess = cPPM.Get(nPostProcess);
+									if (pPostProcess->IsActive()) {
+										// Set post process settings now?
+										if (bSetParameters) {
+											pPostProcessModifier->SetParameters();
+											bSetParameters = false;
+										}
+
+										// Process this post process
+										m_pPostProcessor->Process(*pPostProcess);
+									}
+								}
 							}
+
+							// Next modifier, please
+							pModifier = (SNMPostProcess*)pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
 						}
 					}
 
-					// Next modifier, please
-					pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+					// End the processing
+					m_pPostProcessor->EndProcessing();
+
+					// Reset current render target
+					if (cRenderer.SetRenderTarget(pSurfaceBackup)) {
+						// Draw the result on screen
+						m_pPostProcessor->DrawResult(cRenderer);
+					}
 				}
-			}
 
-			// End the processing
-			m_pPostProcessor->EndProcessing();
+				// Stop stopwatch
+				cStopwatch.Stop();
 
-			// Reset current render target
-			if (cRenderer.SetRenderTarget(m_pSurfaceT)) {
-				// Draw the result on screen
-				m_pPostProcessor->DrawResult(cRenderer);
+				// Update profiling information
+				Profiling::GetInstance()->Set(GetClass()->GetClassName(), "PostProcessTime", String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
 			}
 		}
-
-		// Stop stopwatch
-		cStopwatch.Stop();
-
-		// Update profiling information
-		Profiling::GetInstance()->Set(GetClass()->GetClassName(), "PostProcessTime", String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
 	}
 }
 

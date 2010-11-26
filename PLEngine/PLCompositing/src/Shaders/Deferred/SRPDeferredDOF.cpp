@@ -661,8 +661,10 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		bDOFActive = false;
 		SNCamera *pCamera = SNCamera::GetCamera();
 		if (pCamera) {
+			// Is there an active "PLCompositing::SNMPostProcessDepthOfField" modifier attached to the current camera?
 			SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcessDepthOfField");
 			if (pModifier && pModifier->IsActive()) {
+				// Is the effect weight greater than zero?
 				fEffectWeight = pModifier->GetAttribute("EffectWeight")->GetFloat();
 				if (fEffectWeight > 0.0f) {
 					fNearPlaneDepth   = pModifier->GetAttribute("NearBlurDepth")   ->GetFloat();

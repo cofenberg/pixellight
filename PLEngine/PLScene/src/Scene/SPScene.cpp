@@ -383,57 +383,54 @@ void SPScene::OnPaint(Surface &cSurface)
 		// Get the root scene container
 		SceneContainer *pRootContainer = GetRootContainer();
 		if (pRootContainer) {
-			// Set another render target if required
-			if (pSceneRenderer->SetRenderTarget(cRenderer)) {
-				// Get the cull query
-				SQCull *pCullQuery = (SQCull*)m_pCullQuery->GetElement();
-				if (pCullQuery) {
-					// Set camera (can be NULL)
-					if (pCamera) {
-						// Setup render query
-						SceneContainer *pCameraContainer = pCamera->GetContainer();
-						pCullQuery->SetCameraContainer((pCameraContainer && pCameraContainer->IsCell()) ? pCameraContainer : NULL);
-						pCullQuery->SetCameraPosition(pCamera->GetTransform().GetPosition());
-						pCullQuery->SetViewFrustum(pCamera->GetFrustum(cRenderer.GetViewport()));
-						pCullQuery->SetViewMatrix(pCamera->GetViewMatrix());
-						pCullQuery->SetViewProjectionMatrix(pCamera->GetProjectionMatrix(cRenderer.GetViewport())*pCamera->GetViewMatrix());
-					} else {
-						// Set default states
-						pCullQuery->SetCameraContainer(NULL);
-						pCullQuery->SetCameraPosition(Vector3::Zero);
-						Matrix4x4 mProj;
-						mProj.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.001f, 10000.0f);
-						Frustum cFrustum;
-						cFrustum.CreateViewPlanes(mProj, false);
-						pCullQuery->SetViewFrustum(cFrustum);
-					}
-
-					// Perform the visibility determination
-					pCullQuery->PerformQuery();
+			// Get the cull query
+			SQCull *pCullQuery = (SQCull*)m_pCullQuery->GetElement();
+			if (pCullQuery) {
+				// Set camera (can be NULL)
+				if (pCamera) {
+					// Setup render query
+					SceneContainer *pCameraContainer = pCamera->GetContainer();
+					pCullQuery->SetCameraContainer((pCameraContainer && pCameraContainer->IsCell()) ? pCameraContainer : NULL);
+					pCullQuery->SetCameraPosition(pCamera->GetTransform().GetPosition());
+					pCullQuery->SetViewFrustum(pCamera->GetFrustum(cRenderer.GetViewport()));
+					pCullQuery->SetViewMatrix(pCamera->GetViewMatrix());
+					pCullQuery->SetViewProjectionMatrix(pCamera->GetProjectionMatrix(cRenderer.GetViewport())*pCamera->GetViewMatrix());
+				} else {
+					// Set default states
+					pCullQuery->SetCameraContainer(NULL);
+					pCullQuery->SetCameraPosition(Vector3::Zero);
+					Matrix4x4 mProj;
+					mProj.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.001f, 10000.0f);
+					Frustum cFrustum;
+					cFrustum.CreateViewPlanes(mProj, false);
+					pCullQuery->SetViewFrustum(cFrustum);
 				}
 
-				// Get the scene container (can be NULL)
-				SceneContainer *pContainer = GetSceneContainer();
-
-				// Pre all scene nodes
-				DrawPre(cRenderer, *pRootContainer);
-
-				// Draw all scene nodes solid
-				DrawSolid(cRenderer, *pRootContainer);
-
-				// Draw the scene container (if there's one)
-				if (pContainer && pCullQuery)
-					pSceneRenderer->DrawScene(cRenderer, *pCullQuery);
-
-				// Draw all scene nodes transparent
-				DrawTransparent(cRenderer, *pRootContainer);
-
-				// Debug all scene nodes
-				DrawDebug(cRenderer, *pRootContainer);
-
-				// Post all scene nodes
-				DrawPost(cRenderer, *pRootContainer);
+				// Perform the visibility determination
+				pCullQuery->PerformQuery();
 			}
+
+			// Get the scene container (can be NULL)
+			SceneContainer *pContainer = GetSceneContainer();
+
+			// Pre all scene nodes
+			DrawPre(cRenderer, *pRootContainer);
+
+			// Draw all scene nodes solid
+			DrawSolid(cRenderer, *pRootContainer);
+
+			// Draw the scene container (if there's one)
+			if (pContainer && pCullQuery)
+				pSceneRenderer->DrawScene(cRenderer, *pCullQuery);
+
+			// Draw all scene nodes transparent
+			DrawTransparent(cRenderer, *pRootContainer);
+
+			// Debug all scene nodes
+			DrawDebug(cRenderer, *pRootContainer);
+
+			// Post all scene nodes
+			DrawPost(cRenderer, *pRootContainer);
 		}
 	}
 }

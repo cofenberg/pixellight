@@ -116,31 +116,10 @@ SceneRenderer::~SceneRenderer()
 {
 }
 
-/**
-*  @brief
-*    Draws a scene renderer pass
-*/
-void SceneRenderer::DrawPass(Renderer &cRenderer, const SQCull &cCullQuery, SceneRendererPass &cPass)
-{
-	cPass.Draw(cRenderer, cCullQuery);
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Sets another render target if required
-*/
-bool SceneRenderer::SetRenderTarget(Renderer &cRenderer)
-{
-	// [TODO] Remove this!
-//	SRPPostProcessing *pSRPPostProcessing = (SRPPostProcessing*)Get("PostProcessing");
-//	return (pSRPPostProcessing && pSRPPostProcessing->IsActive() && pSRPPostProcessing->IsInstanceOf("PLCompositing::SRPPostProcessing")) ? pSRPPostProcessing->SetRenderTarget(cRenderer) : true;
-	return true;
-}
-
 /**
 *  @brief
 *    Draws the scene using this scene renderer
@@ -171,7 +150,7 @@ void SceneRenderer::DrawScene(Renderer &cRenderer, const SQCull &cCullQuery)
 
 		// Do ONLY take it into account if it's valid and active
 		if (pPass && pPass->IsActive())
-			DrawPass(cRenderer, cCullQuery, *pPass);
+			pPass->Draw(cRenderer, cCullQuery);
 	}
 }
 

@@ -35,10 +35,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLRenderer {
-	class Surface;
-	class SurfaceTextureBuffer;
-}
 namespace PLScene {
 	class SNCamera;
 }
@@ -96,23 +92,6 @@ class SRPPostProcessing : public PLScene::SceneRendererPass {
 		*/
 		PLCOM_API PostProcessor *GetPostProcessor();
 
-		/**
-		*  @brief
-		*    Sets another render target if required
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*
-		*  @remarks
-		*    - If you want to draw your scene first into a texture use this
-		*      function to set the new render target (required for post processing)
-		*    - You should backup the current render target in order to be able to restore it
-		*/
-		PLCOM_API bool SetRenderTarget(PLRenderer::Renderer &cRenderer);
-
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -135,10 +114,7 @@ class SRPPostProcessing : public PLScene::SceneRendererPass {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		// Private data
-		PLRenderer::SurfaceTextureBuffer *m_pColorMap;		/**< Can be NULL */
-		PostProcessor					 *m_pPostProcessor;	/**< Can be NULL */
-		PLRenderer::Surface				 *m_pSurfaceT;		/**< Can be NULL */
+		PostProcessor *m_pPostProcessor;	/**< Can be NULL */
 
 
 	//[-------------------------------------------------------]
