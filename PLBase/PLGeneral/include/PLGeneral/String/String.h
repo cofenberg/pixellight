@@ -962,8 +962,6 @@ class String {
 		*  @param[in] nNumOfBytes
 		*    Number of bytes of the string buffer (excluding the terminating zero, MUST be valid!)
 		*/
-		void SetStringBuffer(char *pszStringBuffer, uint32 nLength);
-		void SetStringBuffer(wchar_t *pszStringBuffer, uint32 nLength);
 		void SetStringBuffer(utf8 *pszStringBuffer, uint32 nLength, uint32 nNumOfBytes);
 
 		/**

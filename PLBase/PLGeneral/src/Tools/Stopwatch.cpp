@@ -52,9 +52,14 @@ void Stopwatch::Start()
 */
 uint32 Stopwatch::Stop()
 {
-	m_nStop    = System::GetInstance()->GetMicroseconds();
-	m_bRunning = false;
-	return m_nStop-m_nStart;
+	// Is the stopwatch currently running?
+	if (m_bRunning) {
+		m_nStop    = System::GetInstance()->GetMicroseconds();
+		m_bRunning = false;
+		return m_nStop-m_nStart;
+	} else {
+		return 0;
+	}
 }
 
 /**

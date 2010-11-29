@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGeneral/Base/RefCount.h"
 #include "PLGeneral/String/String.h"
+#include "PLGeneral/String/StringBufferManager.h"
 
 
 //[-------------------------------------------------------]
@@ -39,27 +39,27 @@ namespace PLGeneral {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class StringBufferUTF8;
-class StringBufferASCII;
-class StringBufferUnicode;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Abstract base class that contains the buffer for a string
 */
-class StringBuffer : protected RefCount<StringBuffer> {
+class StringBuffer {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class String;
+	friend class StringBufferManager;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected static data                                 ]
+	//[-------------------------------------------------------]
+	protected:
+		static StringBufferManager Manager;	/**< String buffer manager */
 
 
 	//[-------------------------------------------------------]
@@ -72,8 +72,10 @@ class StringBuffer : protected RefCount<StringBuffer> {
 		*
 		*  @param[in] nLength
 		*    Length of the string buffer (excluding the terminating zero)
+		*  @param[in] nMaxLength
+		*    Maximum available length of the string buffer (excluding the terminating zero)
 		*/
-		StringBuffer(uint32 nLength, uint8 nType);
+		StringBuffer(uint32 nLength, uint32 nMaxLength, uint8 nType);
 
 		/**
 		*  @brief
@@ -89,6 +91,33 @@ class StringBuffer : protected RefCount<StringBuffer> {
 		*    Length of the string buffer, NEVER 0!
 		*/
 		uint32 GetLength() const;
+
+		/**
+		*  @brief
+		*    Increases the reference count
+		*
+		*  @return
+		*    Current reference count
+		*/
+		uint32 AddReference();
+
+		/**
+		*  @brief
+		*    Decreases the reference count
+		*
+		*  @return
+		*    Current reference count
+		*/
+		uint32 Release();
+
+		/**
+		*  @brief
+		*    Gets the current reference count
+		*
+		*  @return
+		*    Current reference count
+		*/
+		uint32 GetRefCount() const;
 
 
 	//[-------------------------------------------------------]
@@ -157,7 +186,7 @@ class StringBuffer : protected RefCount<StringBuffer> {
 		*    Returns a clone of this string buffer
 		*
 		*  @return
-		*    Clone of this string buffer
+		*    Clone of this string buffer, NULL on terrible error
 		*
 		*  @note
 		*    - The internal memory is also cloned
@@ -170,7 +199,7 @@ class StringBuffer : protected RefCount<StringBuffer> {
 		*    Returns a duplicate of this string buffer
 		*
 		*  @return
-		*    Duplicate of this string buffer
+		*    Duplicate of this string buffer, NULL on terrible error
 		*
 		*  @remarks
 		*    Unlike Clone(), this function ONLY returns a duplicate if the string buffer
@@ -380,6 +409,21 @@ class StringBuffer : protected RefCount<StringBuffer> {
 
 		/**
 		*  @brief
+		*    Appends a string at the end of the current string
+		*
+		*  @param[in] szString
+		*    String to insert (NEVER empty!)
+		*  @param[in] nCount
+		*    Number of characters to add (MUST be valid!)
+		*
+		*  @return
+		*    The new string buffer (without any initial reference)
+		*/
+		virtual StringBuffer *Append(const char szString[], uint32 nCount) = 0;
+		virtual StringBuffer *Append(const wchar_t szString[], uint32 nCount) = 0;
+
+		/**
+		*  @brief
 		*    Insert a string at a given location
 		*
 		*  @param[in] szString
@@ -391,6 +435,11 @@ class StringBuffer : protected RefCount<StringBuffer> {
 		*
 		*  @return
 		*    The new string buffer (without any initial reference)
+		*
+		*  @note
+		*    - Due to the possibility to insert the new string at every position,
+		*      the implementation is more complex as the one of "Append()", so,
+		*      whenever possible use "Append()" for better performance!
 		*/
 		virtual StringBuffer *Insert(const char szString[], uint32 nPos, uint32 nCount) = 0;
 		virtual StringBuffer *Insert(const wchar_t szString[], uint32 nPos, uint32 nCount) = 0;
@@ -483,7 +532,9 @@ class StringBuffer : protected RefCount<StringBuffer> {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		uint32 m_nLength;	/**< Length of the string (excluding the terminating zero, NEVER 0!) */
+		uint32 m_nRefCount;		/**< Reference count - the "RefCount"-template isn't used because the string buffer manager requires some "special" access to this reference counter */
+		uint32 m_nLength;		/**< Length of the string (excluding the terminating zero, NEVER 0!) */
+		uint32 m_nMaxLength;	/**< Maximum available length of the string (excluding the terminating zero, NEVER 0!) */
 		#ifdef _DEBUG
 			uint8 m_nType;	/**< String buffer type for variable inspection in debug mode */
 		#endif

@@ -52,7 +52,7 @@ namespace PLGeneral {
 *  @brief
 *    Constructor
 */
-StringBufferUnicode::StringBufferUnicode(wchar_t szString[], uint32 nLength) : StringBuffer(nLength, String::Unicode),
+StringBufferUnicode::StringBufferUnicode(wchar_t szString[], uint32 nLength, uint32 nMaxLength) : StringBuffer(nLength, nMaxLength, String::Unicode),
 	m_pszString(szString),
 	m_pASCII(NULL),
 	m_pUTF8(NULL)
@@ -63,7 +63,7 @@ StringBufferUnicode::StringBufferUnicode(wchar_t szString[], uint32 nLength) : S
 *  @brief
 *    Constructor
 */
-StringBufferUnicode::StringBufferUnicode(const char szString[], uint32 nLength) : StringBuffer(nLength, String::Unicode),
+StringBufferUnicode::StringBufferUnicode(const char szString[], uint32 nLength, uint32 nMaxLength) : StringBuffer(nLength, nMaxLength, String::Unicode),
 	m_pszString(new wchar_t[nLength + 1]),
 	m_pASCII(NULL),
 	m_pUTF8(NULL)
@@ -76,7 +76,7 @@ StringBufferUnicode::StringBufferUnicode(const char szString[], uint32 nLength) 
 *  @brief
 *    Constructor
 */
-StringBufferUnicode::StringBufferUnicode(utf8 szString[], uint32 nLength, uint32 nNumOfBytes) : StringBuffer(nLength, String::Unicode),
+StringBufferUnicode::StringBufferUnicode(utf8 szString[], uint32 nLength, uint32 nMaxLength, uint32 nNumOfBytes) : StringBuffer(nLength, nMaxLength, String::Unicode),
 	m_pszString(new wchar_t[nLength + 1]),
 	m_pASCII(NULL),
 	m_pUTF8(NULL)
@@ -91,8 +91,10 @@ StringBufferUnicode::StringBufferUnicode(utf8 szString[], uint32 nLength, uint32
 */
 StringBufferUnicode::~StringBufferUnicode()
 {
-	if (m_pASCII) m_pASCII->Release();
-	if (m_pUTF8) m_pUTF8->Release();
+	if (m_pASCII)
+		Manager.ReleaseStringBuffer(*m_pASCII);
+	if (m_pUTF8)
+		Manager.ReleaseStringBuffer(*m_pUTF8);
 	delete [] m_pszString; // (there MUST by such a string :)
 }
 
@@ -100,17 +102,17 @@ StringBufferUnicode::~StringBufferUnicode()
 *  @brief
 *    Sets the string
 */
-bool StringBufferUnicode::SetString(wchar_t szString[], uint32 nLength)
+void StringBufferUnicode::SetString(wchar_t szString[], uint32 nLength)
 {
 	// The ASCII version is now dirty
 	if (m_pASCII) {
-		m_pASCII->Release();
+		Manager.ReleaseStringBuffer(*m_pASCII);
 		m_pASCII = NULL;
 	}
 
 	// The UTF8 version is now dirty
 	if (m_pUTF8) {
-		m_pUTF8->Release();
+		Manager.ReleaseStringBuffer(*m_pUTF8);
 		m_pUTF8 = NULL;
 	}
 
@@ -120,9 +122,28 @@ bool StringBufferUnicode::SetString(wchar_t szString[], uint32 nLength)
 	// Set new string
 	m_pszString = szString;
 	m_nLength   = nLength;
+}
 
-	// Done
-	return true;
+/**
+*  @brief
+*    Sets the new string length
+*/
+void StringBufferUnicode::SetNewStringLength(uint32 nLength)
+{
+	// The ASCII version is now dirty
+	if (m_pASCII) {
+		Manager.ReleaseStringBuffer(*m_pASCII);
+		m_pASCII = NULL;
+	}
+
+	// The UTF8 version is now dirty
+	if (m_pUTF8) {
+		Manager.ReleaseStringBuffer(*m_pUTF8);
+		m_pUTF8 = NULL;
+	}
+
+	// Set new string length
+	m_nLength = nLength;
 }
 
 /**
@@ -140,19 +161,7 @@ void StringBufferUnicode::SetCharacter(wchar_t nCharacter)
 	m_pszString[1] = '\0';
 
 	// Just ignore the 'old stuff' behind the first character (=> NO memory leak!)
-	m_nLength = 1;
-
-	// The ASCII version is now dirty
-	if (m_pASCII) {
-		m_pASCII->Release();
-		m_pASCII = NULL;
-	}
-
-	// The UTF8 version is now dirty
-	if (m_pUTF8) {
-		m_pUTF8->Release();
-		m_pUTF8 = NULL;
-	}
+	SetNewStringLength(1);
 }
 
 
@@ -169,8 +178,15 @@ StringBufferASCII *StringBufferUnicode::GetASCII()
 	// Is there already a current ASCII version?
 	if (!m_pASCII) {
 		// Nope, let's create one
-		m_pASCII = new StringBufferASCII(m_pszString, m_nLength);
-		m_pASCII->AddReference();
+
+		// Request an ASCII string buffer from the string buffer manager
+		m_pASCII = Manager.GetStringBufferASCII(m_nLength);
+		if (m_pASCII) {
+			m_pASCII->AddReference();
+
+			// We need to convert the given Unicode string into an ASCII one
+			wcstombs(m_pASCII->m_pszString, m_pszString, m_nLength + 1);
+		}
 	}
 
 	// Return it
@@ -203,30 +219,35 @@ uint32 StringBufferUnicode::GetNumOfBytes() const
 
 StringBuffer *StringBufferUnicode::Clone() const
 {
-	wchar_t *pszClone = new wchar_t[m_nLength + 1];
-	wcsncpy(pszClone, m_pszString, m_nLength + 1);
-	return new StringBufferUnicode(pszClone, m_nLength);
+	// Request an unicode string buffer from the string buffer manager
+	StringBuffer *pStringBuffer = Manager.GetStringBufferUnicode(m_nLength);
+	if (pStringBuffer)
+		pStringBuffer->Append(m_pszString, m_nLength);
+
+	// Done
+	return pStringBuffer;
 }
 
 StringBuffer *StringBufferUnicode::Duplicate()
 {
 	// Do we need to clone this string buffer?
-	if (GetRefCount() > 1) return Clone();
-	else {
+	if (GetRefCount() > 1) {
+		return Clone();
+	} else {
 		// The ASCII version is now dirty
 		if (m_pASCII) {
-			m_pASCII->Release();
+			Manager.ReleaseStringBuffer(*m_pASCII);
 			m_pASCII = NULL;
 		}
 
 		// The UTF8 version is now dirty
 		if (m_pUTF8) {
-			m_pUTF8->Release();
+			Manager.ReleaseStringBuffer(*m_pUTF8);
 			m_pUTF8 = NULL;
 		}
 
 		// Just return this string buffer
-		return (StringBuffer*)this;
+		return this;
 	}
 }
 
@@ -235,7 +256,7 @@ bool StringBufferUnicode::IsLessThan(const char szString[], uint32 nLength) cons
 	// We need to convert the given ASCII string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[nLength + 1];
 	mbstowcs(pUnicode, szString, nLength + 1);
-	bool bResult = wcscmp(m_pszString, pUnicode) < 0;
+	const bool bResult = wcscmp(m_pszString, pUnicode) < 0;
 	delete [] pUnicode;
 	return bResult;
 }
@@ -250,7 +271,7 @@ bool StringBufferUnicode::IsGreaterThan(const char szString[], uint32 nLength) c
 	// We need to convert the given ASCII string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[nLength + 1];
 	mbstowcs(pUnicode, szString, nLength + 1);
-	bool bResult = wcscmp(m_pszString, pUnicode) > 0;
+	const bool bResult = wcscmp(m_pszString, pUnicode) > 0;
 	delete [] pUnicode;
 	return bResult;
 }
@@ -264,19 +285,22 @@ bool StringBufferUnicode::Compare(const char szString[], uint32 nLength, uint32 
 {
 	if (!nPos && !nCount) {
 		// Compare hole strings
-		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
-		else {
+		if (nLength != m_nLength) {
+			// THAT was pretty easy, the length of the strings is not equal :)
+			return false;
+		} else {
 			// We need to convert the given ASCII string into an Unicode one :(
 			wchar_t *pUnicode = new wchar_t[nLength + 1];
 			mbstowcs(pUnicode, szString, nLength + 1);
-			bool bResult = !wcscmp(m_pszString, pUnicode);
+			const bool bResult = !wcscmp(m_pszString, pUnicode);
 			delete [] pUnicode;
 			return bResult;
 		}
 
 	} else {
 		// Check start position
-		if (nPos >= m_nLength) return false; // Strings are not equal
+		if (nPos >= m_nLength)
+			return false; // Strings are not equal
 
 		// We need to convert the given ASCII string into an Unicode one :(
 		wchar_t *pUnicode = new wchar_t[nLength + 1];
@@ -284,8 +308,10 @@ bool StringBufferUnicode::Compare(const char szString[], uint32 nLength, uint32 
 
 		// Compare strings (count can be > maximum string length)
 		bool bResult;
-		if (nCount)	bResult = !wcsncmp(&m_pszString[nPos], pUnicode, nCount);
-		else		bResult = !wcscmp (&m_pszString[nPos], pUnicode);
+		if (nCount)
+			bResult = !wcsncmp(&m_pszString[nPos], pUnicode, nCount);
+		else
+			bResult = !wcscmp (&m_pszString[nPos], pUnicode);
 		delete [] pUnicode;
 		return bResult;
 	}
@@ -295,16 +321,20 @@ bool StringBufferUnicode::Compare(const wchar_t szString[], uint32 nLength, uint
 {
 	if (!nPos && !nCount) {
 		// Compare hole strings
-		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
-		else					  return !wcscmp(m_pszString, szString);
-
+		if (nLength != m_nLength)
+			return false; // THAT was pretty easy, the length of the strings is not equal :)
+		else
+			return !wcscmp(m_pszString, szString);
 	} else {
 		// Check start position
-		if (nPos >= m_nLength) return false; // Strings are not equal
+		if (nPos >= m_nLength)
+			return false; // Strings are not equal
 
 		// Compare strings (count can be > maximum string length)
-		if (nCount)	return !wcsncmp(&m_pszString[nPos], szString, nCount);
-		else		return !wcscmp (&m_pszString[nPos], szString);
+		if (nCount)
+			return !wcsncmp(&m_pszString[nPos], szString, nCount);
+		else
+			return !wcscmp (&m_pszString[nPos], szString);
 	}
 }
 
@@ -312,19 +342,22 @@ bool StringBufferUnicode::CompareNoCase(const char szString[], uint32 nLength, u
 {
 	if (!nPos && !nCount) {
 		// Compare hole strings
-		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
-		else {
+		if (nLength != m_nLength) {
+			// THAT was pretty easy, the length of the strings is not equal :)
+			return false;
+		} else {
 			// We need to convert the given ASCII string into an Unicode one :(
 			wchar_t *pUnicode = new wchar_t[nLength + 1];
 			mbstowcs(pUnicode, szString, nLength + 1);
-			bool bResult = !_wcsicmp(m_pszString, pUnicode);
+			const bool bResult = !_wcsicmp(m_pszString, pUnicode);
 			delete [] pUnicode;
 			return bResult;
 		}
 
 	} else {
 		// Check start position
-		if (nPos >= m_nLength) return false; // Strings are not equal
+		if (nPos >= m_nLength)
+			return false; // Strings are not equal
 
 		// We need to convert the given ASCII string into an Unicode one :(
 		wchar_t *pUnicode = new wchar_t[nLength + 1];
@@ -332,8 +365,10 @@ bool StringBufferUnicode::CompareNoCase(const char szString[], uint32 nLength, u
 
 		// Compare strings (count can be > maximum string length)
 		bool bResult;
-		if (nCount)	bResult = !_wcsnicmp(&m_pszString[nPos], pUnicode, nCount);
-		else		bResult = !_wcsicmp (&m_pszString[nPos], pUnicode);
+		if (nCount)
+			bResult = !_wcsnicmp(&m_pszString[nPos], pUnicode, nCount);
+		else
+			bResult = !_wcsicmp (&m_pszString[nPos], pUnicode);
 		delete [] pUnicode;
 		return bResult;
 	}
@@ -343,16 +378,20 @@ bool StringBufferUnicode::CompareNoCase(const wchar_t szString[], uint32 nLength
 {
 	if (!nPos && !nCount) {
 		// Compare hole strings
-		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
-		else					  return !_wcsicmp(m_pszString, szString);
-
+		if (nLength != m_nLength)
+			return false; // THAT was pretty easy, the length of the strings is not equal :)
+		else
+			return !_wcsicmp(m_pszString, szString);
 	} else {
 		// Check start position
-		if (nPos >= m_nLength) return false; // Strings are not equal
+		if (nPos >= m_nLength)
+			return false; // Strings are not equal
 
 		// Compare strings (count can be > maximum string length)
-		if (nCount)	return !_wcsnicmp(&m_pszString[nPos], szString, nCount);
-		else		return !_wcsicmp (&m_pszString[nPos], szString);
+		if (nCount)
+			return !_wcsnicmp(&m_pszString[nPos], szString, nCount);
+		else
+			return !_wcsicmp (&m_pszString[nPos], szString);
 	}
 }
 
@@ -360,8 +399,10 @@ bool StringBufferUnicode::IsAlphabetic() const
 {
 	const wchar_t *pszString    = m_pszString;
 	const wchar_t *pszStringEnd = pszString + m_nLength;
-	for (; pszString<pszStringEnd; pszString++)
-		if (!iswalpha(*pszString)) return false; // The string is not alphabetic
+	for (; pszString<pszStringEnd; pszString++) {
+		if (!iswalpha(*pszString))
+			return false; // The string is not alphabetic
+	}
 
 	// The string is alphabetic
 	return true;
@@ -371,8 +412,10 @@ bool StringBufferUnicode::IsAlphaNumeric() const
 {
 	const wchar_t *pszString    = m_pszString;
 	const wchar_t *pszStringEnd = pszString + m_nLength;
-	for (; pszString<pszStringEnd; pszString++)
-		if (!iswalpha(*pszString) && !iswdigit(*pszString)) return false; // The string is not alpha-numeric
+	for (; pszString<pszStringEnd; pszString++) {
+		if (!iswalpha(*pszString) && !iswdigit(*pszString))
+			return false; // The string is not alpha-numeric
+	}
 
 	// The string is alpha-numeric
 	return true;
@@ -382,8 +425,10 @@ bool StringBufferUnicode::IsNumeric() const
 {
 	const wchar_t *pszString    = m_pszString;
 	const wchar_t *pszStringEnd = pszString + m_nLength;
-	for (; pszString<pszStringEnd; pszString++)
-		if (!iswdigit(*pszString)) return false; // The string is not numeric
+	for (; pszString<pszStringEnd; pszString++) {
+		if (!iswdigit(*pszString))
+			return false; // The string is not numeric
+	}
 
 	// The string is numeric
 	return true;
@@ -394,14 +439,14 @@ bool StringBufferUnicode::IsSubstring(const char szString[], uint32 nLength) con
 	// We need to convert the given ASCII string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[nLength + 1];
 	mbstowcs(pUnicode, szString, nLength + 1);
-	bool bResult = wcsstr(m_pszString, pUnicode) != NULL;
+	const bool bResult = wcsstr(m_pszString, pUnicode) != NULL;
 	delete [] pUnicode;
 	return bResult;
 }
 
 bool StringBufferUnicode::IsSubstring(const wchar_t szString[], uint32 nLength) const
 {
-	return wcsstr(m_pszString, szString) != NULL;
+	return (wcsstr(m_pszString, szString) != NULL);
 }
 
 int StringBufferUnicode::IndexOf(const char szString[], uint32 nPos, uint32 nLength) const
@@ -457,10 +502,13 @@ int StringBufferUnicode::LastIndexOf(const wchar_t szString[], int nPos, uint32 
 
 StringBuffer *StringBufferUnicode::GetSubstring(uint32 nPos, uint32 nCount) const
 {
-	wchar_t *pszNewString = new wchar_t[nCount + 1];
-	wcsncpy(pszNewString, m_pszString + nPos, nCount);
-	pszNewString[nCount] = L'\0';
-	return new StringBufferUnicode(pszNewString, nCount);
+	// Request an unicode string buffer from the string buffer manager
+	StringBuffer *pStringBuffer = Manager.GetStringBufferUnicode(nCount);
+	if (pStringBuffer)
+		pStringBuffer->Append(m_pszString + nPos, nCount);
+
+	// Done
+	return pStringBuffer;
 }
 
 StringBuffer *StringBufferUnicode::ToLower()
@@ -472,13 +520,13 @@ StringBuffer *StringBufferUnicode::ToLower()
 		// Is this already a lower character?
 		if (!iswlower(*pszString)) {
 			// Nope, now we have to clone the string buffer :(
-			StringBufferUnicode *pClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
 			// Start with an offset - we KNOW the characters before will not be changed!
-			_wcslwr(pClone->m_pszString + (pszString - m_pszString));
+			_wcslwr(pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString));
 
 			// Return the new, lower case string buffer
-			return pClone;
+			return pStringBufferUnicodeClone;
 		}
 	}
 
@@ -495,13 +543,13 @@ StringBuffer *StringBufferUnicode::ToUpper()
 		// Is this already a upper character?
 		if (!iswupper(*pszString)) {
 			// Nope, now we have to clone the string buffer :(
-			StringBufferUnicode *pClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
 			// Start with an offset - we KNOW the characters before will not be changed!
-			_wcsupr(pClone->m_pszString + (pszString - m_pszString));
+			_wcsupr(pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString));
 
 			// Return the new, upper case string buffer
-			return pClone;
+			return pStringBufferUnicodeClone;
 		}
 	}
 
@@ -511,57 +559,164 @@ StringBuffer *StringBufferUnicode::ToUpper()
 
 StringBuffer *StringBufferUnicode::Delete(uint32 nPos, uint32 nCount)
 {
-	// Characters are deleted by moving up the data following the region to delete
-	uint32   nNewLength   = m_nLength - nCount;
-	wchar_t *pszNewString = new wchar_t[nNewLength + 1];
-	if (nPos) wcsncpy(pszNewString, m_pszString, nPos);
-	wcsncpy(&pszNewString[nPos], m_pszString + nPos + nCount, nNewLength - nPos);
-	pszNewString[nNewLength] = L'\0';
+	// We have to clone the string buffer
+	StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
-	// Return the new string buffer
-	if (GetRefCount() > 1) return new StringBufferUnicode(pszNewString, nNewLength);
-	else {
-		// Just modify and return this string buffer
-		SetString(pszNewString, nNewLength);
+	// Characters are deleted by moving up the data following the region to delete (FAST!)
+	const uint32 nNewLength = m_nLength - nCount;
+	wcsncpy(&pStringBufferUnicodeClone->m_pszString[nPos], pStringBufferUnicodeClone->m_pszString + nPos + nCount, nNewLength - nPos);
+	pStringBufferUnicodeClone->m_pszString[nNewLength] = L'\0';
+
+	// Set the new length
+	pStringBufferUnicodeClone->SetNewStringLength(nNewLength);
+
+	// Done
+	return pStringBufferUnicodeClone;
+}
+
+StringBuffer *StringBufferUnicode::Append(const char szString[], uint32 nCount)
+{
+	// Calculate the new total length of the string (excluding the terminating zero)
+	const uint32 nNewLength = m_nLength + nCount;
+
+	// Is it possible to just modify the current internal string in place? (FAST!)
+	if (nNewLength <= m_nMaxLength && GetRefCount() < 2) {
+		// Just modify the current internal string in place
+		mbstowcs(&m_pszString[m_nLength], szString, nCount);	// Append the new string
+		m_pszString[nNewLength] = L'\0';						// Set the terminating zero
+		SetNewStringLength(nNewLength);							// Set the new string length
+
+		// Return this string buffer
 		return this;
+	} else {
+		// Request an unicode string buffer from the string buffer manager
+		StringBuffer *pStringBuffer = Manager.GetStringBufferUnicode(nNewLength);
+		if (pStringBuffer) {
+			// Add old string
+			if (m_nLength)
+				pStringBuffer->Append(m_pszString, m_nLength);
+
+			// Add string to append
+			pStringBuffer->Append(szString, nCount);
+		}
+
+		// Done
+		return pStringBuffer;
+	}
+}
+
+StringBuffer *StringBufferUnicode::Append(const wchar_t szString[], uint32 nCount)
+{
+	// Calculate the new total length of the string (excluding the terminating zero)
+	const uint32 nNewLength = m_nLength + nCount;
+
+	// Is it possible to just modify the current internal string in place? (FAST!)
+	if (nNewLength <= m_nMaxLength && GetRefCount() < 2) {
+		// Just modify the current internal string in place
+		wcsncpy(&m_pszString[m_nLength], szString, nCount);	// Append the new string
+		m_pszString[nNewLength] = L'\0';					// Set the terminating zero
+		SetNewStringLength(nNewLength);						// Set the new string length
+
+		// Return this string buffer
+		return this;
+	} else {
+		// Request an unicode string buffer from the string buffer manager
+		StringBuffer *pStringBuffer = Manager.GetStringBufferUnicode(nNewLength);
+		if (pStringBuffer) {
+			// Add old string
+			if (m_nLength)
+				pStringBuffer->Append(m_pszString, m_nLength);
+
+			// Add string to append
+			pStringBuffer->Append(szString, nCount);
+		}
+
+		// Done
+		return pStringBuffer;
 	}
 }
 
 StringBuffer *StringBufferUnicode::Insert(const char szString[], uint32 nPos, uint32 nCount)
 {
-	// Compose the new string (we need to convert the given ASCII string into an Unicode one)
-	uint32   nNewLength   = m_nLength + nCount;
-	wchar_t *pszNewString = new wchar_t[nNewLength + 1];
-	if (nPos) wcsncpy(pszNewString, m_pszString, nPos);
-	mbstowcs(&pszNewString[nPos], szString, nCount);
-	wcsncpy(&pszNewString[nPos + nCount], &m_pszString[nPos], m_nLength - nPos);
-	pszNewString[nNewLength] = L'\0';
+	// Calculate the new total length of the string (excluding the terminating zero)
+	const uint32 nNewLength = m_nLength + nCount;
 
-	// Return the new string buffer
-	if (GetRefCount() > 1) return new StringBufferUnicode(pszNewString, nNewLength);
-	else {
-		// Just modify and return this string buffer
-		SetString(pszNewString, nNewLength);
+	// Is it possible to just modify the current internal string in place? (FAST!)
+	if (nNewLength <= m_nMaxLength && GetRefCount() < 2) {
+		// Just modify the current internal string in place
+		const int nLeftCharacters = m_nLength - nPos;
+		if (nLeftCharacters > 0) {
+			// Make space for the new string by moving everything to the right
+			// (in here, we KNOW that there's enough memory in the right to hold the string!)
+			wcsncpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters);
+		}
+		mbstowcs(&m_pszString[nPos], szString, nCount);	// Append the new string at the now free space
+		m_pszString[nNewLength] = L'\0';				// Set the terminating zero
+		SetNewStringLength(nNewLength);					// Set the new string length
+
+		// Return this string buffer
 		return this;
+	} else {
+		// Request an unicode string buffer from the string buffer manager
+		StringBuffer *pStringBuffer = Manager.GetStringBufferUnicode(nNewLength);
+		if (pStringBuffer) {
+			// Add old string in front of the insert place
+			if (m_nLength && nPos)
+				pStringBuffer->Append(m_pszString, nPos);
+
+			// Add new string
+			pStringBuffer->Append(szString, nCount);
+
+			// Add old string in back of the insert place
+			const int nLeftCharacters = m_nLength - nPos;
+			if (m_nLength && nLeftCharacters > 0)
+				pStringBuffer->Append(&m_pszString[nPos], nLeftCharacters);
+		}
+
+		// Done
+		return pStringBuffer;
 	}
 }
 
 StringBuffer *StringBufferUnicode::Insert(const wchar_t szString[], uint32 nPos, uint32 nCount)
 {
-	// Compose the new string
-	uint32   nNewLength   = m_nLength + nCount;
-	wchar_t *pszNewString = new wchar_t[nNewLength + 1];
-	if (nPos) wcsncpy(pszNewString, m_pszString, nPos);
-	wcsncpy(&pszNewString[nPos],		  szString,			  nCount);
-	wcsncpy(&pszNewString[nPos + nCount], &m_pszString[nPos], m_nLength - nPos);
-	pszNewString[nNewLength] = L'\0';
+	// Calculate the new total length of the string (excluding the terminating zero)
+	const uint32 nNewLength = m_nLength + nCount;
 
-	// Return the new string buffer
-	if (GetRefCount() > 1) return new StringBufferUnicode(pszNewString, nNewLength);
-	else {
-		// Just modify and return this string buffer
-		SetString(pszNewString, nNewLength);
+	// Is it possible to just modify the current internal string in place? (FAST!)
+	if (nNewLength <= m_nMaxLength && GetRefCount() < 2) {
+		// Just modify the current internal string in place
+		const int nLeftCharacters = m_nLength - nPos;
+		if (nLeftCharacters > 0) {
+			// Make space for the new string by moving everything to the right
+			// (in here, we KNOW that there's enough memory in the right to hold the string!)
+			wcsncpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters);
+		}
+		wcsncpy(&m_pszString[nPos], szString, nCount);	// Append the new string at the now free space
+		m_pszString[nNewLength] = L'\0';				// Set the terminating zero
+		SetNewStringLength(nNewLength);					// Set the new string length
+
+		// Return this string buffer
 		return this;
+	} else {
+		// Request an unicode string buffer from the string buffer manager
+		StringBuffer *pStringBuffer = Manager.GetStringBufferUnicode(nNewLength);
+		if (pStringBuffer) {
+			// Add old string in front of the insert place
+			if (m_nLength && nPos)
+				pStringBuffer->Append(m_pszString, nPos);
+
+			// Add new string
+			pStringBuffer->Append(szString, nCount);
+
+			// Add old string in back of the insert place
+			const int nLeftCharacters = m_nLength - nPos;
+			if (m_nLength && nLeftCharacters > 0)
+				pStringBuffer->Append(&m_pszString[nPos], nLeftCharacters);
+		}
+
+		// Done
+		return pStringBuffer;
 	}
 }
 
@@ -580,11 +735,11 @@ StringBuffer *StringBufferUnicode::Replace(char nOld, char nNew, uint32 &nReplac
 	for (; pszString<pszStringEnd; pszString++) {
 		if (*pszString == nOldUnicode) {
 			// Fork string buffer when the first character has been found
-			StringBufferUnicode *pClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
 			// Set pointers to new location
-			pszString    = pClone->m_pszString + (pszString - m_pszString);
-			pszStringEnd = pClone->m_pszString + m_nLength;
+			pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
+			pszStringEnd = pStringBufferUnicodeClone->m_pszString + m_nLength;
 
 			// Replace characters
 			for (; pszString<pszStringEnd; pszString++) {
@@ -595,7 +750,7 @@ StringBuffer *StringBufferUnicode::Replace(char nOld, char nNew, uint32 &nReplac
 			}
 
 			// Return the new string buffer
-			return pClone;
+			return pStringBufferUnicodeClone;
 		}
 	}
 
@@ -613,11 +768,11 @@ StringBuffer *StringBufferUnicode::Replace(wchar_t nOld, wchar_t nNew, uint32 &n
 	for (; pszString<pszStringEnd; pszString++) {
 		if (*pszString == nOld) {
 			// Fork string buffer when the first character has been found
-			StringBufferUnicode *pClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
 			// Set pointers to new location
-			pszString    = pClone->m_pszString + (pszString - m_pszString);
-			pszStringEnd = pClone->m_pszString + m_nLength;
+			pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
+			pszStringEnd = pStringBufferUnicodeClone->m_pszString + m_nLength;
 
 			// Replace characters
 			for (; pszString<pszStringEnd; pszString++) {
@@ -628,7 +783,7 @@ StringBuffer *StringBufferUnicode::Replace(wchar_t nOld, wchar_t nNew, uint32 &n
 			}
 
 			// Return the new string buffer
-			return pClone;
+			return pStringBufferUnicodeClone;
 		}
 	}
 
@@ -638,6 +793,8 @@ StringBuffer *StringBufferUnicode::Replace(wchar_t nOld, wchar_t nNew, uint32 &n
 
 StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength, const char szNew[], uint32 nNewLength, uint32 &nReplaced)
 {
+	// [TODO] Use the string buffer manager
+
 	// Check for only character replace
 	if (nOldLength == 1 && nNewLength == 1)
 		return Replace(szOld[0], szNew[0], nReplaced);
@@ -656,7 +813,9 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 		if (!wcsncmp(pszString, pszOldUnicode, nOldLength)) {
 			nReplaced++;
 			pszString += nOldLength;
-		} else pszString++;
+		} else {
+			pszString++;
+		}
 	}
 
 	// Jipi, no substrings, no further work to do :)
@@ -667,7 +826,7 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 	}
 
 	// Get and check the new length
-	uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
+	const uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
 	if (!nFinalLength) {
 		delete [] pszOldUnicode;
 		delete [] pszNewUnicode;
@@ -701,7 +860,7 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 
 	// Copy the rest of the old string to the new string
 	if (*pszString != L'\0') {
-		uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
+		const uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
 		wcsncpy(pszNewStringT, pszString, i);
 		pszNewStringT += i;
 	}
@@ -714,8 +873,9 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 	delete [] pszNewUnicode;
 
 	// Return the new string buffer
-	if (GetRefCount() > 1) return new StringBufferUnicode(pszNewString, nFinalLength);
-	else {
+	if (GetRefCount() > 1) {
+		return new StringBufferUnicode(pszNewString, nFinalLength, nFinalLength);
+	} else {
 		// Just modify and return this string buffer
 		SetString(pszNewString, nFinalLength);
 		return this;
@@ -724,6 +884,8 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 
 StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLength, const wchar_t szNew[], uint32 nNewLength, uint32 &nReplaced)
 {
+	// [TODO] Use the string buffer manager
+
 	// Check for only character replace
 	if (nOldLength == 1 && nNewLength == 1)
 		return Replace(szOld[0], szNew[0], nReplaced);
@@ -736,15 +898,19 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 		if (!wcsncmp(pszString, szOld, nOldLength)) {
 			nReplaced++;
 			pszString += nOldLength;
-		} else pszString++;
+		} else {
+			pszString++;
+		}
 	}
 
 	// Jipi, no substrings, no further work to do :)
-	if (!nReplaced) return this; // Nothing was changed and we can just return this string buffer
+	if (!nReplaced)
+		return this; // Nothing was changed and we can just return this string buffer
 
 	// Get and check the new length
-	uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
-	if (!nFinalLength) return NULL; // The string is now empty!
+	const uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
+	if (!nFinalLength)
+		return NULL; // The string is now empty!
 
 	// Create the new string
 	wchar_t *pszNewString  = new wchar_t[nFinalLength + 1];
@@ -773,7 +939,7 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 
 	// Copy the rest of the old string to the new string
 	if (*pszString != L'\0') {
-		uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
+		const uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
 		wcsncpy(pszNewStringT, pszString, i);
 		pszNewStringT += i;
 	}
@@ -782,8 +948,9 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 	*pszNewStringT = L'\0';
 
 	// Return the new string buffer
-	if (GetRefCount() > 1) return new StringBufferUnicode(pszNewString, nFinalLength);
-	else {
+	if (GetRefCount() > 1) {
+		return new StringBufferUnicode(pszNewString, nFinalLength, nFinalLength);
+	} else {
 		// Just modify and return this string buffer
 		SetString(pszNewString, nFinalLength);
 		return this;
@@ -797,49 +964,56 @@ StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, char nCharacter)
 	mbtowc(&nCharacterUnicode, &nCharacter, 1);
 
 	// Do we need to clone this string buffer?
-	if (m_pszString[nIndex] == nCharacterUnicode) return this; // Nothing was changed
-	else {
+	if (m_pszString[nIndex] == nCharacterUnicode) {
+		// Nothing was changed
+		return this;
+	} else {
 		// We have to clone the string buffer :(
-		StringBufferUnicode *pClone = (StringBufferUnicode*)Duplicate();
+		StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
 		// Set the new character
-		pClone->m_pszString[nIndex] = nCharacterUnicode;
+		pStringBufferUnicodeClone->m_pszString[nIndex] = nCharacterUnicode;
 
 		// Return the new string buffer
-		return pClone;
+		return pStringBufferUnicodeClone;
 	}
 }
 
 StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, wchar_t nCharacter)
 {
 	// Do we need to clone this string buffer?
-	if (m_pszString[nIndex] == nCharacter) return this; // Nothing was changed
-	else {
+	if (m_pszString[nIndex] == nCharacter) {
+		// Nothing was changed
+		return this;
+	} else {
 		// We have to clone the string buffer :(
-		StringBufferUnicode *pClone = (StringBufferUnicode*)Duplicate();
+		StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
 
 		// Set the new character
-		pClone->m_pszString[nIndex] = nCharacter;
+		pStringBufferUnicodeClone->m_pszString[nIndex] = nCharacter;
 
 		// Return the new string buffer
-		return pClone;
+		return pStringBufferUnicodeClone;
 	}
 }
 
 StringBuffer *StringBufferUnicode::TrimLeading()
 {
 	const wchar_t *pszString = m_pszString;
-	while (*pszString == L' ' || *pszString == L'\t') pszString++;
+	while (*pszString == L' ' || *pszString == L'\t')
+		pszString++;
 	if (pszString == m_pszString) {
 		// Nothing to change
 		return this;
 	} else {
 		// Get the number of characters to delete
-		uint32 nCount = uint32(pszString - m_pszString);
+		const uint32 nCount = uint32(pszString - m_pszString);
 
 		// Is the string now empty?
-		if (nCount == m_nLength) return NULL;			   // The string is now empty
-		else					 return Delete(0, nCount); // Return the new string buffer
+		if (nCount == m_nLength)
+			return NULL;				// The string is now empty
+		else
+			return Delete(0, nCount);	// Return the new string buffer
 	}
 }
 
@@ -847,17 +1021,20 @@ StringBuffer *StringBufferUnicode::TrimTrailing()
 {
 	const wchar_t *pszEnd    = m_pszString + m_nLength - 1;
 	const wchar_t *pszString = pszEnd;
-	while (*pszString == L' ' || *pszString == L'\t') pszString--;
+	while (*pszString == L' ' || *pszString == L'\t')
+		pszString--;
 	if (pszString == pszEnd) {
 		// Nothing to change
 		return this;
 	} else {
 		// Get the number of characters to delete
-		uint32 nCount = uint32(pszEnd - pszString);
+		const uint32 nCount = uint32(pszEnd - pszString);
 
 		// Is the string now empty?
-		if (nCount == m_nLength) return NULL;												 // The string is now empty
-		else					 return Delete(uint32(pszString - m_pszString) + 1, nCount); // Return the new string buffer
+		if (nCount == m_nLength)
+			return NULL;													// The string is now empty
+		else
+			return Delete(uint32(pszString - m_pszString) + 1, nCount);		// Return the new string buffer
 	}
 }
 
@@ -865,17 +1042,20 @@ StringBuffer *StringBufferUnicode::RemoveLineEndings()
 {
 	const wchar_t *pszEnd    = m_pszString + m_nLength - 1;
 	const wchar_t *pszString = pszEnd;
-	while (*pszString == L'\r' || *pszString == L'\n') pszString--;
+	while (*pszString == L'\r' || *pszString == L'\n')
+		pszString--;
 	if (pszString == pszEnd) {
 		// Nothing to change
 		return this;
 	} else {
 		// Get the number of characters to delete
-		uint32 nCount = uint32(pszEnd - pszString);
+		const uint32 nCount = uint32(pszEnd - pszString);
 
 		// Is the string now empty?
-		if (nCount == m_nLength) return NULL;												 // The string is now empty
-		else					 return Delete(uint32(pszString - m_pszString) + 1, nCount); // Return the new string buffer
+		if (nCount == m_nLength)
+			return NULL;													// The string is now empty
+		else
+			return Delete(uint32(pszString - m_pszString) + 1, nCount);		// Return the new string buffer
 	}
 }
 

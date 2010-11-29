@@ -451,6 +451,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\String\StringBufferManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\PLGeneral\String\StringBufferManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\String\StringBufferUnicode.cpp"
 				>
 			</File>

@@ -238,8 +238,11 @@ const char *XmlBase::ReadText(const char *pszData, String &sText, bool bTrimWhit
 		while (pszData && *pszData && !StringEqual(pszData, pszEndTag, bCaseInsensitive, nEncoding)) {
 			int nLength;
 			char szCharacters[4] = { 0, 0, 0, 0 };
-			pszData = GetChar( pszData, szCharacters, nLength, nEncoding);
-			sText.Insert(szCharacters, sText.GetLength(), nLength);
+			pszData = GetChar(pszData, szCharacters, nLength, nEncoding);
+			if (nLength == 1)
+				sText += szCharacters[0];	// More efficient because we already know that we just add a single character
+			else
+				sText.Insert(szCharacters, sText.GetLength(), nLength);
 		}
 	} else {
 		bool bWhitespace = false;
@@ -263,7 +266,7 @@ const char *XmlBase::ReadText(const char *pszData, String &sText, bool bTrimWhit
 				char szCharacters[4] = { 0, 0, 0, 0 };
 				pszData = GetChar(pszData, szCharacters, nLength, nEncoding);
 				if (nLength == 1)
-					sText += szCharacters[0];	// More efficient
+					sText += szCharacters[0];	// More efficient because we already know that we just add a single character
 				else
 					sText.Insert(szCharacters, sText.GetLength(), nLength);
 			}

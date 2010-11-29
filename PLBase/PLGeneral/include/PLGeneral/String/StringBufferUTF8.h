@@ -51,6 +51,7 @@ class StringBufferUTF8 : public StringBuffer {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class String;
+	friend class StringBufferManager;
 	friend class StringBufferASCII;
 	friend class StringBufferUnicode;
 
@@ -111,10 +112,10 @@ class StringBufferUTF8 : public StringBuffer {
 		*  @param[in] nNumOfBytes
 		*    Number of bytes of the string
 		*
-		*  @return
-		*    'true' if all went fine, else 'false'
+		*  @note
+		*    - Makes the buffered ASCII/unicode versions invalid
 		*/
-		bool SetString(utf8 szString[], uint32 nLength, uint32 nNumOfBytes);
+		void SetString(utf8 szString[], uint32 nLength, uint32 nNumOfBytes);
 
 
 	//[-------------------------------------------------------]
@@ -159,6 +160,8 @@ class StringBufferUTF8 : public StringBuffer {
 		virtual StringBuffer *ToLower();
 		virtual StringBuffer *ToUpper();
 		virtual StringBuffer *Delete(uint32 nPos, uint32 nCount);
+		virtual StringBuffer *Append(const char szString[], uint32 nCount);
+		virtual StringBuffer *Append(const wchar_t szString[], uint32 nCount);
 		virtual StringBuffer *Insert(const char szString[], uint32 nPos, uint32 nCount);
 		virtual StringBuffer *Insert(const wchar_t szString[], uint32 nPos, uint32 nCount);
 		virtual StringBuffer *Replace(char nOld, char nNew, uint32 &nReplaced);

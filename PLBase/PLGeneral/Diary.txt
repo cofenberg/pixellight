@@ -1,3 +1,42 @@
+>> 29.11.2010
+[CO]
+- "Stopwatch::Stop()"-Bugfix: Wenn die Stopuhr gerade nicht läuft, und man "Stop()" aufruft sollte natürlich "0" als gemessene
+  Zeit zurückgegeben werden...
+-> Die im Tagebucheintrag vom "30.10.2010" angesprochenen String Optimierungen angepackt...
+- StringBuffer: "Append()" hinzugefügt, wenn immer möglich wird in der String-Implementation nun "Append()" verwendet da dessen
+  Implementation einfacher gehalten ist (wodurch Optimierungen und bessere Performance leichter zu realisieren sind)
+- StringBuffer um "m_nMaxLength"-Variable erweitert, damit ist es nun möglich, dass ein String Buffer intern größer ist als der
+  tatsächlich gespeicherte String. Hintergrund ist, das Speichermanagement teuer ist und derzeit die String Klasse für ein paar
+  Dinge performancemäßig leider unbrauchbar ist. Da wir meist nur ASCII nutzen, konzentriere ich mich erstmal auf Optimierungen
+  für ASCII Strings - aufgrund des Umfangs der String Klasse, wird es sicherlich nen bischn dauern bis alles etwas flotter geht.
+  Oft werden mehrere Strings konkateniert, hier zeigte die String Klasse performance mäßig deutliche schwächen. Sinnfreies aber
+  einfaches Beispiel:
+    String sString;
+    for (int i=0; i<100000; i++)
+      sString += 'a';
+  Vor dem Beginn der Performance optimierungen dauerte das im Release Modus unglaubliche 2995 ms. Nach dem einbauen von "Append()"
+  noch 2757 ms, und sobald bei "Append()" intern Speicher für zukünfige Zeichen reserviert und dann genutzt wurde nur noch
+  47 ms. Das zeigt denke ich, dass es Sinnvoll ist diese Optimierung weiterzuverfolgen da es doch schon ein deutlicher Unterschied ist -
+  gerade bei großen Datenmengen! (der Code wird dadurch aber leider nicht einfacher oder gar weniger :/)
+- StringBufferManager hinzugefügt. Zukünftig sollten StringBuffer-Instanzen nur noch hierüber erfragt, und sobald nicht mehr benötigt
+  hierhin zurückgegeben werden. Sobald man einen StringBuffer benötigt, fragt man einfach den StringBufferManager nach einer StringBuffer
+  Instanz die eine bestimmte String länge halten kann... es obliegt dann dem StringBufferManager zu entscheiden ob man einen Buffer
+  mit GENAU der länge zurückbekommt, oder einen Buffer der *mehr* halten kann. Es ist ebenfalls dem StringBufferManager überlassen ob
+  er gerade nicht benötigte StringBuffer Instanzen buffert statt sofort zu löschen, um dann diese wiederverwenden zu können um dynamisches
+  Speicher anlegen/freigeben zu reduzieren. Durch den StringBufferManager wurde hier und da die Implementation der String Klasse etwas einfacher. :D
+  Die StringBuffer-Klasse hat eine statische Instanz von StringBufferManager und StringBufferManager speichert gerade nicht benötigte
+  StringBuffer Instanzen zwischen - das ist momentan eher noch Experimentiell und sicherlich definitiv nicht optimal (u.a. weil die statische initialisierungs
+  und deinitialisierungs Reihenfolge ja nicht festgelegt werden kann), läuft aber bereits halbwechs ordentlich und reduziert das dynamische anlegen
+  und freigeben von Speicher zur Laufzeit.
+-> Uff, das waren nun fast 14 Stunden am Stück mit Strings jonglieren, aber ich denke es ist schonmal besser als vorher, vorallem wurde die Implementation
+   an einigen Stellen deutlich überschauberer. Das mit Strings intern mehr Speicher geben + StringBufferManager wollte ich nun schon seit Jahren mal
+   ausprobieren... und da mir wiedermal aufviel wie laaaam die String Klasse stellenweise ist/war, hatte ich mich nun endlich einfach mal drangesetzt und
+   es durchgezogen. Ich merke hier bei mir nun eine allgemeine leichte Performance verbesserung... wie gehofft. :D
+   Morgen mal noch etwas weitertesten, aber bisher siehts so aus als ob sich durch das interne String-Refactoring (das Interface nach Außen hin hat sich
+   nicht verändert!) keine total üblen Bugs eingeschlichen hätten die sofort alles zum Crashen bringen.
+
+
+
 >> 14.11.2010
 [SB]
 - String::Format(): Hier gab es einen Bug, da nicht darauf geachtet wurde, dass laut Dokumentation die Funktion
@@ -37,7 +76,7 @@
   -> Das XML Laden (XmlDocument::Load) ist im Augenblick etwas langsamer als vorher da unsere String Klasse bei z.B. "sMyString +=" immer einen internen
      neuen String erzeugt... hier sollte man wohl demnächst kleinere Optimierungen machen so das der interne String immer etwas mehr Speicher belegt
      als eigentlich nötig ist, was dann aber ein performanteres anhängen von weiteren Zeichen oder kurzen Strings ermöglicht.
-  -> Am XML Interface hat sich zwar nicht wirklich was großartig verändert, unter der Haupt gabs allerdings einiges an Änderungen... darum wäre es gut
+  -> Am XML Interface hat sich zwar nicht wirklich was großartig verändert, unter der Haupe gabs allerdings einiges an Änderungen... darum wäre es gut
      wenn jemand das nochmal kritisch durchgeht (auch z.B. die Copy-Operatoren) und testet.
 
 

@@ -55,6 +55,7 @@ add_sources(
 	src/String/StringBufferASCII.cpp
 	src/String/StringBufferUnicode.cpp
 	src/String/StringBufferUTF8.cpp
+	src/String/StringBufferManager.cpp
 	src/String/Tokenizer.cpp
 	src/String/UTF8Tools.cpp
 	src/String/ParseTools.cpp

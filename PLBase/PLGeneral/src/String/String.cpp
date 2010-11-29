@@ -72,27 +72,32 @@ String String::Format(const char *pszFormat, ...)
 	char *pSaveLocale = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
 #endif
+
 	// Check format string
 	if (pszFormat && strlen(pszFormat)) {
 		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
-		int nLength = _vscprintf(pszFormat, vaList);
+		const int nLength = _vscprintf(pszFormat, vaList);
 		va_end(vaList);
 
 		// Check length
 		if (nLength > 0) {
-			// Allocate memory
-			uint32  nBufferSize = nLength + 1;
-			char   *pszBuffer   = new char[nBufferSize];
-			if (pszBuffer) {
+			// Request an ASCII string buffer from the string buffer manager
+			sString.m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(nLength);
+			if (sString.m_pStringBuffer) {
+				sString.m_pStringBuffer->AddReference();
+
+				// In here, because we KNOW what we're doing, we access the internal string buffer data directly
+				StringBufferASCII *pStringBufferASCII = (StringBufferASCII*)sString.m_pStringBuffer;
+
 				// Print the formatted string
 				va_start(vaList, pszFormat);
-				vsprintf(pszBuffer, pszFormat, vaList);
+				vsprintf(pStringBufferASCII->m_pszString, pszFormat, vaList);
 				va_end(vaList);
 
-				// The string class takes over the control
-				sString.SetStringBuffer(pszBuffer, nLength);
+				// Set the correct string length
+				pStringBufferASCII->m_nLength = nLength;
 			}
 		}
 	}
@@ -100,6 +105,7 @@ String String::Format(const char *pszFormat, ...)
 #ifdef LINUX
 	setlocale(LC_ALL, pSaveLocale);
 #endif
+
 	// Return new string
 	return sString;
 }
@@ -112,24 +118,32 @@ String String::Format(const wchar_t *pszFormat, ...)
 	char *pSaveLocale = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
 #endif
+
 	// Check format string
 	if (pszFormat && wcslen(pszFormat)) {
 		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
-		int nLength = _vscwprintf(pszFormat, vaList);
+		const int nLength = _vscwprintf(pszFormat, vaList);
 		va_end(vaList);
 
 		// Check length
 		if (nLength > 0) {
-			// Allocate memory
-			wchar_t *pszBuffer = new wchar_t[nLength + 1];
-			if (pszBuffer) {
+			// Request an unicode string buffer from the string buffer manager
+			sString.m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(nLength);
+			if (sString.m_pStringBuffer) {
+				sString.m_pStringBuffer->AddReference();
+
+				// In here, because we KNOW what we're doing, we access the internal string buffer data directly
+				StringBufferUnicode *pStringBufferUnicode = (StringBufferUnicode*)sString.m_pStringBuffer;
+
 				// Print the formatted string
 				va_start(vaList, pszFormat);
-				vswprintf(pszBuffer, nLength + 1, pszFormat, vaList);
-				sString.SetStringBuffer(pszBuffer, nLength);
+				vswprintf(pStringBufferUnicode->m_pszString, nLength + 1, pszFormat, vaList);
 				va_end(vaList);
+
+				// Set the correct string length
+				pStringBufferUnicode->m_nLength = nLength;
 			}
 		}
 	}
@@ -137,6 +151,7 @@ String String::Format(const wchar_t *pszFormat, ...)
 #ifdef LINUX
 	setlocale(LC_ALL, pSaveLocale);
 #endif
+
 	// Return new string
 	return sString;
 }
@@ -160,29 +175,35 @@ String::String() :
 *  @brief
 *    Constructor
 */
-String::String(char nValue) :
-	m_pStringBuffer(NULL)
+String::String(char nValue)
 {
 	// Terminating zero?
 	if (nValue != '\0') {
-		// Save single character as string
-		char *pszNewString = new char[2];
-		pszNewString[0] = nValue;
-		pszNewString[1] = '\0';
-		SetStringBuffer(pszNewString, 1);
+		// Request an ASCII string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(1);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(&nValue, 1);
+		}
+	} else {
+		// Empty string
+		m_pStringBuffer = NULL;
 	}
 }
 
-String::String(wchar_t nValue) :
-	m_pStringBuffer(NULL)
+String::String(wchar_t nValue)
 {
 	// Terminating zero?
 	if (nValue != L'\0') {
-		// Save single character as string
-		wchar_t *pszNewString = new wchar_t[2];
-		pszNewString[0] = nValue;
-		pszNewString[1] = L'\0';
-		SetStringBuffer(pszNewString, 1);
+		// Request an unicode string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(1);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(&nValue, 1);
+		}
+	} else {
+		// Empty string
+		m_pStringBuffer = NULL;
 	}
 }
 
@@ -190,41 +211,61 @@ String::String(wchar_t nValue) :
 *  @brief
 *    Constructor
 */
-String::String(const char *pszString, bool bCopy, int nLength) :
-	m_pStringBuffer(NULL)
+String::String(const char *pszString, bool bCopy, int nLength)
 {
 	// Get the length of the given string?
-	if (nLength < 0)
+	if (nLength < 0) {
+		// Get the length of the given string (excluding the terminating zero)
 		nLength = pszString ? (uint32)strlen(pszString) : 0;
+	}
 
 	// Set string
 	if (nLength) {
-		// Copy string
+		// Copy string?
 		if (bCopy) {
-			char *pszNewString = new char[nLength + 1];
-			strncpy(pszNewString, pszString, nLength);
-			pszNewString[nLength] = '\0';
-			SetStringBuffer(pszNewString, nLength);
-		} else SetStringBuffer((char*)pszString, nLength);
+			// Request an ASCII string buffer from the string buffer manager
+			m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(nLength);
+			if (m_pStringBuffer) {
+				m_pStringBuffer->AddReference();
+				m_pStringBuffer->Append(pszString, nLength);
+			}
+		} else {
+			// Create a new string buffer and take over the control of the given memory
+			m_pStringBuffer = new StringBufferASCII((char*)pszString, nLength, nLength);
+			m_pStringBuffer->AddReference();
+		}
+	} else {
+		// Empty string
+		m_pStringBuffer = NULL;
 	}
 }
 
-String::String(const wchar_t *pszString, bool bCopy, int nLength) :
-	m_pStringBuffer(NULL)
+String::String(const wchar_t *pszString, bool bCopy, int nLength)
 {
 	// Get the length of the given string?
-	if (nLength < 0)
+	if (nLength < 0) {
+		// Get the length of the given string (excluding the terminating zero)
 		nLength = pszString ? (uint32)wcslen(pszString) : 0;
+	}
 
 	// Set string
 	if (nLength) {
 		// Copy string
 		if (bCopy) {
-			wchar_t *pszNewString = new wchar_t[nLength + 1];
-			wcsncpy(pszNewString, pszString, nLength);
-			pszNewString[nLength] = L'\0';
-			SetStringBuffer(pszNewString, nLength);
-		} else SetStringBuffer((wchar_t*)pszString, nLength);
+			// Request an unicode string buffer from the string buffer manager
+			m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(nLength);
+			if (m_pStringBuffer) {
+				m_pStringBuffer->AddReference();
+				m_pStringBuffer->Append(pszString, nLength);
+			}
+		} else {
+			// Create a new string buffer and take over the control of the given memory
+			m_pStringBuffer = new StringBufferUnicode((wchar_t*)pszString, nLength, nLength);
+			m_pStringBuffer->AddReference();
+		}
+	} else {
+		// Empty string
+		m_pStringBuffer = NULL;
 	}
 }
 
@@ -252,7 +293,10 @@ String::String(const utf8 *pszString, bool bCopy, int nLength, uint32 nNumOfByte
 				MemoryManager::Copy(pszNewString, pszString, nNumOfBytes);
 				pszNewString[nNumOfBytes] = '\0';
 				SetStringBuffer(pszNewString, nLength, nNumOfBytes);
-			} else SetStringBuffer((utf8*)pszString, nLength, nNumOfBytes);
+			} else {
+				// Take over the control of the given memory
+				SetStringBuffer((utf8*)pszString, nLength, nNumOfBytes);
+			}
 		}
 	}
 }
@@ -261,13 +305,15 @@ String::String(const utf8 *pszString, bool bCopy, int nLength, uint32 nNumOfByte
 *  @brief
 *    Copy constructor
 */
-String::String(const String &sString) :
-	m_pStringBuffer(NULL)
+String::String(const String &sString)
 {
 	// Copy source string by assigning to it's string buffer
 	if (sString.m_pStringBuffer) {
 		m_pStringBuffer = sString.m_pStringBuffer;
 		m_pStringBuffer->AddReference();
+	} else {
+		// Empty string
+		m_pStringBuffer = NULL;
 	}
 }
 
@@ -275,13 +321,15 @@ String::String(const String &sString) :
 *  @brief
 *    Internal copy constructor
 */
-String::String(StringBuffer *pStringBuffer) :
-	m_pStringBuffer(NULL)
+String::String(StringBuffer *pStringBuffer)
 {
 	// Copy source string by assigning to it's string buffer
 	if (pStringBuffer) {
 		m_pStringBuffer = pStringBuffer;
 		m_pStringBuffer->AddReference();
+	} else {
+		// Empty string
+		m_pStringBuffer = NULL;
 	}
 }
 
@@ -292,7 +340,8 @@ String::String(StringBuffer *pStringBuffer) :
 String::~String()
 {
 	// Release string buffer
-	ReleaseStringBuffer();
+	if (m_pStringBuffer)
+		StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
 }
 
 /**
@@ -405,19 +454,26 @@ String &String::operator =(const String &sString)
 */
 String &String::operator =(const char *pszString)
 {
-	// Get the length of the given string
-	uint32 nLength = pszString ? (uint32)strlen(pszString) : 0;
+	// Get the length of the given string (excluding the terminating zero)
+	const uint32 nLength = pszString ? (uint32)strlen(pszString) : 0;
 
 	// Set new string
 	if (nLength) {
-		// Copy string
-		char *pszNewString = new char[nLength + 1];
-		strncpy(pszNewString, pszString, nLength);
-		pszNewString[nLength] = '\0';
-		SetStringBuffer(pszNewString, nLength);
+		// Release old string buffer
+		if (m_pStringBuffer)
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+		// Request an ASCII string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(nLength);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(pszString, nLength);
+		}
 
 	// Empty string
-	} else ReleaseStringBuffer();
+	} else {
+		ReleaseStringBuffer();
+	}
 
 	// Return a reference to this instance
 	return *this;
@@ -425,19 +481,26 @@ String &String::operator =(const char *pszString)
 
 String &String::operator =(const wchar_t *pszString)
 {
-	// Get the length of the given string
-	uint32 nLength = pszString ? (uint32)wcslen(pszString) : 0;
+	// Get the length of the given string (excluding the terminating zero)
+	const uint32 nLength = pszString ? (uint32)wcslen(pszString) : 0;
 
 	// Set new string
 	if (nLength) {
-		// Copy string
-		wchar_t *pszNewString = new wchar_t[nLength + 1];
-		wcsncpy(pszNewString, pszString, nLength);
-		pszNewString[nLength] = L'\0';
-		SetStringBuffer(pszNewString, nLength);
+		// Release old string buffer
+		if (m_pStringBuffer)
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+		// Request an unicode string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(nLength);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(pszString, nLength);
+		}
 
 	// Empty string
-	} else ReleaseStringBuffer();
+	} else {
+		ReleaseStringBuffer();
+	}
 
 	// Return a reference to this instance
 	return *this;
@@ -449,9 +512,7 @@ String &String::operator =(const utf8 *pszString)
 	if (pszString) {
 		// Get the length and number of bytes of the given string
 		uint32 nNumOfBytes = 0;
-		uint32 nLength;
-		if (nNumOfBytes) nLength = UTF8Tools::GetNumOfCharacters(pszString);
-		else			 nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszString, nNumOfBytes);
+		const uint32 nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszString, nNumOfBytes);
 
 		// Set string
 		if (nLength) {
@@ -462,8 +523,12 @@ String &String::operator =(const utf8 *pszString)
 			SetStringBuffer(pszNewString, nLength, nNumOfBytes);
 
 		// Empty string
-		} else ReleaseStringBuffer();
-	} else ReleaseStringBuffer();
+		} else {
+			ReleaseStringBuffer();
+		}
+	} else {
+		ReleaseStringBuffer();
+	}
 
 	// Return a reference to this instance
 	return *this;
@@ -476,10 +541,12 @@ String &String::operator =(const utf8 *pszString)
 String String::operator +(const String &sString) const
 {
 	// Check whether this string is empty
-	if (!m_pStringBuffer) return sString; // Just return the other string
+	if (!m_pStringBuffer)
+		return sString; // Just return the other string
 
 	// Check whether the other string is empty
-	if (!sString.m_pStringBuffer) return *this; // Just return this string
+	if (!sString.m_pStringBuffer)
+		return *this; // Just return this string
 
 	// Create concatenated string
 	String sResult = *this;
@@ -494,15 +561,17 @@ String String::operator +(const String &sString) const
 String String::operator +(const char *pszString) const
 {
 	// Check whether this string is empty
-	if (!m_pStringBuffer) return pszString; // Just return the other string
+	if (!m_pStringBuffer)
+		return pszString; // Just return the other string
 
 	// Check whether the other string is empty
 	if (pszString) {
-		uint32 nLength = (uint32)strlen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)strlen(pszString);
 		if (nLength) {
 			// Compose new string
 			String sResult = *this;
-			sResult.SetStringBuffer(sResult.m_pStringBuffer->Insert(pszString, m_pStringBuffer->GetLength(), nLength));
+			sResult.SetStringBuffer(sResult.m_pStringBuffer->Append(pszString, nLength));
 			return sResult;
 		}
 	}
@@ -514,15 +583,17 @@ String String::operator +(const char *pszString) const
 String String::operator +(const wchar_t *pszString) const
 {
 	// Check whether this string is empty
-	if (!m_pStringBuffer) return pszString; // Just return the other string
+	if (!m_pStringBuffer)
+		return pszString; // Just return the other string
 
 	// Check whether the other string is empty
 	if (pszString) {
-		uint32 nLength = (uint32)wcslen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)wcslen(pszString);
 		if (nLength) {
 			// Compose new string
 			String sResult = *this;
-			sResult.SetStringBuffer(sResult.m_pStringBuffer->Insert(pszString, m_pStringBuffer->GetLength(), nLength));
+			sResult.SetStringBuffer(sResult.m_pStringBuffer->Append(pszString, nLength));
 			return sResult;
 		}
 	}
@@ -544,15 +615,17 @@ String String::operator +(const utf8 *pszString) const
 String operator +(const char *pszString, const String &sString)
 {
 	// Is the second string empty?
-	if (!sString.GetLength()) return pszString; // Just return the first string
+	if (!sString.GetLength())
+		return pszString; // Just return the first string
 
 	// Check whether the first string is empty
 	if (pszString) {
-		uint32 nLength = (uint32)strlen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)strlen(pszString);
 		if (nLength) {
 			// Compose new string
-			String sResult = sString;
-			sResult.SetStringBuffer(sResult.m_pStringBuffer->Insert(pszString, 0, nLength));
+			String sResult = pszString;
+			sResult += sString;
 			return sResult;
 		}
 	}
@@ -564,15 +637,17 @@ String operator +(const char *pszString, const String &sString)
 String operator +(const wchar_t *pszString, const String &sString)
 {
 	// Is the second string empty?
-	if (!sString.GetLength()) return pszString; // Just return the first string
+	if (!sString.GetLength())
+		return pszString; // Just return the first string
 
 	// Check whether the first string is empty
 	if (pszString) {
-		uint32 nLength = (uint32)wcslen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)wcslen(pszString);
 		if (nLength) {
 			// Compose new string
-			String sResult = sString;
-			sResult.SetStringBuffer(sResult.m_pStringBuffer->Insert(pszString, 0, nLength));
+			String sResult = pszString;
+			sResult += sString;
 			return sResult;
 		}
 	}
@@ -620,18 +695,20 @@ String &String::operator +=(const char *pszString)
 {
 	// Get the length of the given string
 	if (pszString) {
-		uint32 nLength = (uint32)strlen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)strlen(pszString);
 		if (nLength) {
 			// Check whether this string is empty
 			if (m_pStringBuffer) {
 				// Combine the two strings
-				SetStringBuffer(m_pStringBuffer->Insert(pszString, m_pStringBuffer->GetLength(), nLength));
+				SetStringBuffer(m_pStringBuffer->Append(pszString, nLength));
 			} else {
-				// Copy string
-				char *pszNewString = new char[nLength + 1];
-				strncpy(pszNewString, pszString, nLength);
-				pszNewString[nLength] = '\0';
-				SetStringBuffer(pszNewString, nLength);
+				// Request an ASCII string buffer from the string buffer manager
+				m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(nLength);
+				if (m_pStringBuffer) {
+					m_pStringBuffer->AddReference();
+					m_pStringBuffer->Append(pszString, nLength);
+				}
 			}
 		}
 	}
@@ -644,18 +721,20 @@ String &String::operator +=(const wchar_t *pszString)
 {
 	// Get the length of the given string
 	if (pszString) {
-		uint32 nLength = (uint32)wcslen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)wcslen(pszString);
 		if (nLength) {
 			// Check whether this string is empty
 			if (m_pStringBuffer) {
 				// Combine the two strings
-				SetStringBuffer(m_pStringBuffer->Insert(pszString, m_pStringBuffer->GetLength(), nLength));
+				SetStringBuffer(m_pStringBuffer->Append(pszString, nLength));
 			} else {
-				// Copy string
-				wchar_t *pszNewString = new wchar_t[nLength + 1];
-				wcsncpy(pszNewString, pszString, nLength);
-				pszNewString[nLength] = L'\0';
-				SetStringBuffer(pszNewString, nLength);
+				// Request an unicode string buffer from the string buffer manager
+				m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(nLength);
+				if (m_pStringBuffer) {
+					m_pStringBuffer->AddReference();
+					m_pStringBuffer->Append(pszString, nLength);
+				}
 			}
 		}
 	}
@@ -680,21 +759,28 @@ bool String::operator <(const String &sString) const
 	// Check whether this string is empty
 	if (m_pStringBuffer) {
 		// Check whether the other string is valid
-		if (!sString.m_pStringBuffer) return false; // The other string is empty while the this one is not, empty is less :)
+		if (!sString.m_pStringBuffer)
+			return false; // The other string is empty while the this one is not, empty is less :)
 
 		// Compare
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				switch (sString.GetFormat()) {
-					case ASCII:   return ((StringBufferASCII*)m_pStringBuffer)->IsLessThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
-					case Unicode: return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsGreaterThan(GetUnicode(), m_pStringBuffer->GetLength());
+					case ASCII:
+						return ((StringBufferASCII*)m_pStringBuffer)->IsLessThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+
+					case Unicode:
+						return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsGreaterThan(GetUnicode(), m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
 
 			case Unicode:
 				switch (sString.GetFormat()) {
-					case ASCII:   return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
-					case Unicode: return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+					case ASCII:
+						return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
+
+					case Unicode:
+						return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
@@ -703,8 +789,10 @@ bool String::operator <(const String &sString) const
 		return false;
 	} else {
 		// Check whether the other string is empty, too
-		if (sString.m_pStringBuffer) return true;  // This string is empty while the other is not, empty is less :)
-		else						 return false; // Both strings are empty, so they are equal
+		if (sString.m_pStringBuffer)
+			return true;  // This string is empty while the other is not, empty is less :)
+		else
+			return false; // Both strings are empty, so they are equal
 	}
 }
 
@@ -718,7 +806,8 @@ bool String::operator <(const char *pszString) const
 	if (m_pStringBuffer) {
 		// Check whether the other string is valid
 		if (pszString) {
-			uint32 nLength = (uint32)strlen(pszString);
+			// Get the length of the given string (excluding the terminating zero)
+			const uint32 nLength = (uint32)strlen(pszString);
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsLessThan(pszString, nLength);
@@ -729,8 +818,10 @@ bool String::operator <(const char *pszString) const
 		return false;
 	} else {
 		// Check whether the other string is empty, too
-		if (pszString && strlen(pszString)) return true;  // This string is empty while the other is not, empty is less :)
-		else								return false; // Both strings are empty, so they are equal
+		if (pszString && strlen(pszString))
+			return true;  // This string is empty while the other is not, empty is less :)
+		else
+			return false; // Both strings are empty, so they are equal
 	}
 }
 
@@ -740,7 +831,8 @@ bool String::operator <(const wchar_t *pszString) const
 	if (m_pStringBuffer) {
 		// Check whether the other string is valid
 		if (pszString) {
-			uint32 nLength = (uint32)wcslen(pszString);
+			// Get the length of the given string (excluding the terminating zero)
+			const uint32 nLength = (uint32)wcslen(pszString);
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsLessThan(pszString, nLength);
@@ -751,8 +843,10 @@ bool String::operator <(const wchar_t *pszString) const
 		return false;
 	} else {
 		// Check whether the other string is empty, too
-		if (pszString && wcslen(pszString)) return true;  // This string is empty while the other is not, empty is less :)
-		else								return false; // Both strings are empty, so they are equal
+		if (pszString && wcslen(pszString))
+			return true;  // This string is empty while the other is not, empty is less :)
+		else
+			return false; // Both strings are empty, so they are equal
 	}
 }
 
@@ -771,28 +865,38 @@ bool String::operator >(const String &sString) const
 	// Check whether this string is empty
 	if (m_pStringBuffer) {
 		// Check whether the other string is valid
-		if (!sString.m_pStringBuffer) return true; // The other string is empty while the this one is not, empty is less :)
+		if (!sString.m_pStringBuffer)
+			return true; // The other string is empty while the this one is not, empty is less :)
 
 		// Compare
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				switch (sString.GetFormat()) {
-					case ASCII:   return ((StringBufferASCII*)m_pStringBuffer)->IsGreaterThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
-					case Unicode: return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsLessThan(GetUnicode(), m_pStringBuffer->GetLength());
+					case ASCII:
+						return ((StringBufferASCII*)m_pStringBuffer)->IsGreaterThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+
+					case Unicode:
+						return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsLessThan(GetUnicode(), m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
 
 			case Unicode:
 				switch (sString.GetFormat()) {
-					case ASCII:   return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
-					case Unicode: return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+					case ASCII:
+						return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
+
+					case Unicode:
+						return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
 
 		// We should NEVER get in here!
 		return false;
-	} else return false; // Because this string is empty the other one is ALWAYS greater or equal
+	} else {
+		// Because this string is empty the other one is ALWAYS greater or equal
+		return false;
+	}
 }
 
 /**
@@ -805,7 +909,8 @@ bool String::operator >(const char *pszString) const
 	if (m_pStringBuffer) {
 		// Check whether the other string is valid
 		if (pszString) {
-			uint32 nLength = (uint32)strlen(pszString);
+			// Get the length of the given string (excluding the terminating zero)
+			const uint32 nLength = (uint32)strlen(pszString);
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsGreaterThan(pszString, nLength);
@@ -814,7 +919,10 @@ bool String::operator >(const char *pszString) const
 
 		// The other string is empty while the this one is not, empty is less :)
 		return true;
-	} else return false; // Because this string is empty the other one is ALWAYS greater or equal
+	} else {
+		// Because this string is empty the other one is ALWAYS greater or equal
+		return false;
+	}
 }
 
 bool String::operator >(const wchar_t *pszString) const
@@ -823,7 +931,8 @@ bool String::operator >(const wchar_t *pszString) const
 	if (m_pStringBuffer) {
 		// Check whether the other string is valid
 		if (pszString) {
-			uint32 nLength = (uint32)wcslen(pszString);
+			// Get the length of the given string (excluding the terminating zero)
+			const uint32 nLength = (uint32)wcslen(pszString);
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsGreaterThan(pszString, nLength);
@@ -832,7 +941,10 @@ bool String::operator >(const wchar_t *pszString) const
 
 		// The other string is empty while the this one is not, empty is less :)
 		return true;
-	} else return false; // Because this string is empty the other one is ALWAYS greater or equal
+	} else {
+		// Because this string is empty the other one is ALWAYS greater or equal
+		return false;
+	}
 }
 
 bool String::operator >(const utf8 *pszString) const
@@ -908,10 +1020,12 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 		// Check whether this string is empty
 		if (m_pStringBuffer) {
 			// Check whether the other string is valid
-			if (!sString.m_pStringBuffer) return false; // Strings are not equal
+			if (!sString.m_pStringBuffer)
+				return false; // Strings are not equal
 
 			// Check whether both use the same buffer
-			if (!nPos && m_pStringBuffer == sString.m_pStringBuffer) return true; // Strings MUST be equal :)
+			if (!nPos && m_pStringBuffer == sString.m_pStringBuffer)
+				return true; // Strings MUST be equal :)
 
 			// Compare
 			switch (m_pStringBuffer->GetFormat()) {
@@ -955,8 +1069,10 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (sString.m_pStringBuffer) return false; // Strings are not equal
-			else						 return true;  // Both strings are empty, so they are equal
+			if (sString.m_pStringBuffer)
+				return false; // Strings are not equal
+			else
+				return true;  // Both strings are empty, so they are equal
 		}
 	} else {
 		// Return "strings are equal"
@@ -976,7 +1092,8 @@ bool String::Compare(const char *pszString, uint32 nPos, int nCount) const
 		if (m_pStringBuffer) {
 			// Check whether the other string is valid
 			if (pszString) {
-				uint32 nLength = (uint32)strlen(pszString);
+				// Get the length of the given string (excluding the terminating zero)
+				const uint32 nLength = (uint32)strlen(pszString);
 				if (nLength)
 					return m_pStringBuffer->Compare(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
 			}
@@ -985,8 +1102,10 @@ bool String::Compare(const char *pszString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && strlen(pszString)) return false; // Strings are not equal
-			else								return true;  // Both strings are empty, so they are equal
+			if (pszString && strlen(pszString))
+				return false; // Strings are not equal
+			else
+				return true;  // Both strings are empty, so they are equal
 		}
 	} else {
 		// Return "strings are equal"
@@ -1002,7 +1121,8 @@ bool String::Compare(const wchar_t *pszString, uint32 nPos, int nCount) const
 		if (m_pStringBuffer) {
 			// Check whether the other string is valid
 			if (pszString) {
-				uint32 nLength = (uint32)wcslen(pszString);
+				// Get the length of the given string (excluding the terminating zero)
+				const uint32 nLength = (uint32)wcslen(pszString);
 				if (nLength)
 					return m_pStringBuffer->Compare(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
 			}
@@ -1011,8 +1131,10 @@ bool String::Compare(const wchar_t *pszString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && wcslen(pszString)) return false; // Strings are not equal
-			else								return true;  // Both strings are empty, so they are equal
+			if (pszString && wcslen(pszString))
+				return false; // Strings are not equal
+			else
+				return true;  // Both strings are empty, so they are equal
 		}
 	} else {
 		// Return "strings are equal"
@@ -1037,10 +1159,12 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 		// Check whether this string is empty
 		if (m_pStringBuffer) {
 			// Check whether the other string is valid
-			if (!sString.m_pStringBuffer) return false; // Strings are not equal
+			if (!sString.m_pStringBuffer)
+				return false; // Strings are not equal
 
 			// Check whether both use the same buffer
-			if (!nPos && m_pStringBuffer == sString.m_pStringBuffer) return true; // Strings MUST be equal :)
+			if (!nPos && m_pStringBuffer == sString.m_pStringBuffer)
+				return true; // Strings MUST be equal :)
 
 			// Compare
 			switch (m_pStringBuffer->GetFormat()) {
@@ -1084,8 +1208,10 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (sString.m_pStringBuffer) return false; // Strings are not equal
-			else						 return true;  // Both strings are empty, so they are equal
+			if (sString.m_pStringBuffer)
+				return false; // Strings are not equal
+			else
+				return true;  // Both strings are empty, so they are equal
 		}
 	} else {
 		// Return "strings are equal"
@@ -1105,7 +1231,8 @@ bool String::CompareNoCase(const char *pszString, uint32 nPos, int nCount) const
 		if (m_pStringBuffer) {
 			// Check whether the other string is valid
 			if (pszString) {
-				uint32 nLength = (uint32)strlen(pszString);
+				// Get the length of the given string (excluding the terminating zero)
+				const uint32 nLength = (uint32)strlen(pszString);
 				if (nLength)
 					return m_pStringBuffer->CompareNoCase(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
 			}
@@ -1114,8 +1241,10 @@ bool String::CompareNoCase(const char *pszString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && strlen(pszString)) return false; // Strings are not equal
-			else								return true;  // Both strings are empty, so they are equal
+			if (pszString && strlen(pszString))
+				return false; // Strings are not equal
+			else
+				return true;  // Both strings are empty, so they are equal
 		}
 	} else {
 		// Return "strings are equal"
@@ -1131,7 +1260,8 @@ bool String::CompareNoCase(const wchar_t *pszString, uint32 nPos, int nCount) co
 		if (m_pStringBuffer) {
 			// Check whether the other string is valid
 			if (pszString) {
-				uint32 nLength = (uint32)wcslen(pszString);
+				// Get the length of the given string (excluding the terminating zero)
+				const uint32 nLength = (uint32)wcslen(pszString);
 				if (nLength)
 					return m_pStringBuffer->CompareNoCase(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
 			}
@@ -1140,8 +1270,10 @@ bool String::CompareNoCase(const wchar_t *pszString, uint32 nPos, int nCount) co
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && wcslen(pszString)) return false; // Strings are not equal
-			else								return true;  // Both strings are empty, so they are equal
+			if (pszString && wcslen(pszString))
+				return false; // Strings are not equal
+			else
+				return true;  // Both strings are empty, so they are equal
 		}
 	} else {
 		// Return "strings are equal"
@@ -1191,22 +1323,30 @@ bool String::IsNumeric() const
 bool String::IsSubstring(const String &sString) const
 {
 	// Empty strings?
-	if (!sString.GetLength()) return true; // Substring
-	if (!m_pStringBuffer) return false; // No substring
+	if (!sString.GetLength())
+		return true; // Substring
+	if (!m_pStringBuffer)
+		return false; // No substring
 
 	// Find substring
 	switch (m_pStringBuffer->GetFormat()) {
 		case ASCII:
 			switch (sString.GetFormat()) {
-				case ASCII:   return m_pStringBuffer->IsSubstring(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
-				case Unicode: return m_pStringBuffer->IsSubstring(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength());
+				case ASCII:
+					return m_pStringBuffer->IsSubstring(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+
+				case Unicode:
+					return m_pStringBuffer->IsSubstring(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength());
 			}
 			break; // We should NEVER get in here!
 
 		case Unicode:
 			switch (sString.GetFormat()) {
-				case ASCII:   return m_pStringBuffer->IsSubstring(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
-				case Unicode: return m_pStringBuffer->IsSubstring(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+				case ASCII:
+					return m_pStringBuffer->IsSubstring(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
+
+				case Unicode:
+					return m_pStringBuffer->IsSubstring(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
 			}
 			break; // We should NEVER get in here!
 	}
@@ -1223,11 +1363,14 @@ bool String::IsSubstring(const char *pszString) const
 {
 	// Is the given string empty
 	if (pszString) {
-		uint32 nLength = (uint32)strlen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)strlen(pszString);
 		if (nLength) {
 			// Is this string emtpy?
-			if (m_pStringBuffer) return m_pStringBuffer->IsSubstring(pszString, nLength);
-			else				 return false; // No substring
+			if (m_pStringBuffer)
+				return m_pStringBuffer->IsSubstring(pszString, nLength);
+			else
+				return false; // No substring
 		}
 	}
 
@@ -1239,11 +1382,14 @@ bool String::IsSubstring(const wchar_t *pszString) const
 {
 	// Is the given string empty
 	if (pszString) {
-		uint32 nLength = (uint32)wcslen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)wcslen(pszString);
 		if (nLength) {
 			// Is this string emtpy?
-			if (m_pStringBuffer) return m_pStringBuffer->IsSubstring(pszString, nLength);
-			else				 return false; // No substring
+			if (m_pStringBuffer)
+				return m_pStringBuffer->IsSubstring(pszString, nLength);
+			else
+				return false; // No substring
 		}
 	}
 
@@ -1269,15 +1415,21 @@ int String::IndexOf(const String &sString, uint32 nPos) const
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				switch (sString.GetFormat()) {
-					case ASCII:   return m_pStringBuffer->IndexOf(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
-					case Unicode: return m_pStringBuffer->IndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.m_pStringBuffer->GetLength());
+					case ASCII:
+						return m_pStringBuffer->IndexOf(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
+
+					case Unicode:
+						return m_pStringBuffer->IndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
 
 			case Unicode:
 				switch (sString.GetFormat()) {
-					case ASCII:   return m_pStringBuffer->IndexOf(sString.GetUnicode(), nPos, sString.m_pStringBuffer->GetLength());
-					case Unicode: return m_pStringBuffer->IndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
+					case ASCII:
+						return m_pStringBuffer->IndexOf(sString.GetUnicode(), nPos, sString.m_pStringBuffer->GetLength());
+
+					case Unicode:
+						return m_pStringBuffer->IndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
@@ -1295,8 +1447,10 @@ int String::IndexOf(const char *pszString, uint32 nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < m_pStringBuffer->GetLength() && pszString) {
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)strlen(pszString);
+
 		// Is the given string empty?
-		uint32 nLength = (uint32)strlen(pszString);
 		if (nLength) {
 			// Get the index
 			return m_pStringBuffer->IndexOf(pszString, nPos, nLength);
@@ -1311,8 +1465,10 @@ int String::IndexOf(const wchar_t *pszString, uint32 nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < m_pStringBuffer->GetLength() && pszString) {
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)wcslen(pszString);
+
 		// Is the given string empty?
-		uint32 nLength = (uint32)wcslen(pszString);
 		if (nLength) {
 			// Get the index
 			return m_pStringBuffer->IndexOf(pszString, nPos, nLength);
@@ -1338,21 +1494,28 @@ int String::LastIndexOf(const String &sString, int nPos) const
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < (int)m_pStringBuffer->GetLength() && sString.GetLength()) {
 		// Start at the last character?
-		if (nPos < 0) nPos = m_pStringBuffer->GetLength() - 1;
+		if (nPos < 0)
+			nPos = m_pStringBuffer->GetLength() - 1;
 
 		// Get last index
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				switch (sString.GetFormat()) {
-					case ASCII:   return m_pStringBuffer->LastIndexOf(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
-					case Unicode: return m_pStringBuffer->LastIndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+					case ASCII:
+						return m_pStringBuffer->LastIndexOf(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+
+					case Unicode:
+						return m_pStringBuffer->LastIndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
 				}
 				break; // We should NEVER get in here!
 
 			case Unicode:
 				switch (sString.GetFormat()) {
-					case ASCII:   return m_pStringBuffer->LastIndexOf(sString.GetUnicode(), nPos, sString.GetLength());
-					case Unicode: return m_pStringBuffer->LastIndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+					case ASCII:
+						return m_pStringBuffer->LastIndexOf(sString.GetUnicode(), nPos, sString.GetLength());
+
+					case Unicode:
+						return m_pStringBuffer->LastIndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
 				}
 				break; // We should NEVER get in here!
 		}
@@ -1370,11 +1533,14 @@ int String::LastIndexOf(const char *pszString, int nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < (int)m_pStringBuffer->GetLength() && pszString) {
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)strlen(pszString);
+
 		// Is the given string empty?
-		uint32 nLength = (uint32)strlen(pszString);
 		if (nLength) {
 			// Start at the last character?
-			if (nPos < 0) nPos = m_pStringBuffer->GetLength() - 1;
+			if (nPos < 0)
+				nPos = m_pStringBuffer->GetLength() - 1;
 
 			// Get the last index
 			return m_pStringBuffer->LastIndexOf(pszString, nPos, nLength);
@@ -1389,11 +1555,14 @@ int String::LastIndexOf(const wchar_t *pszString, int nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < (int)m_pStringBuffer->GetLength() && pszString) {
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nLength = (uint32)wcslen(pszString);
+
 		// Is the given string empty?
-		uint32 nLength = (uint32)wcslen(pszString);
 		if (nLength) {
 			// Start at the last character?
-			if (nPos < 0) nPos = m_pStringBuffer->GetLength() - 1;
+			if (nPos < 0)
+				nPos = m_pStringBuffer->GetLength() - 1;
 
 			// Get the last index
 			return m_pStringBuffer->LastIndexOf(pszString, nPos, nLength);
@@ -1419,7 +1588,7 @@ String String::GetSubstring(uint32 nPos, int nCount) const
 	// Is this string empty or the given count zero?
 	if (m_pStringBuffer && nCount) {
 		// Is the given position valid?
-		uint32 nLength = GetLength();
+		const uint32 nLength = GetLength();
 		if (nPos < nLength) {
 			// Check count
 			if (nCount < 0 || (uint32)nCount > nLength - nPos)
@@ -1475,16 +1644,20 @@ String &String::Delete(uint32 nPos, int nCount)
 	// Is the given count not null?
 	if (nCount) {
 		// Check the length and the start position
-		uint32 nLength = GetLength();
+		const uint32 nLength = GetLength();
 		if (nLength && nPos < nLength) {
 			// Check count
 			if (nCount < 0 || (uint32)nCount > nLength - nPos)
 				nCount = nLength - nPos;
 
 			// Is the string empty now?
-			if (!(nLength-nCount)) ReleaseStringBuffer();
-			// If not, delete the given part
-			else 				   SetStringBuffer(m_pStringBuffer->Delete(nPos, (uint32)nCount));
+			if (nLength - nCount) {
+				// If not, delete the given part
+				SetStringBuffer(m_pStringBuffer->Delete(nPos, (uint32)nCount));
+			} else {
+				// The string is now empty!
+				ReleaseStringBuffer();
+			}
 		}
 	}
 
@@ -1501,7 +1674,7 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 	// Check if the count is not null and whether the position is valid
 	if (nCount && nPos <= GetLength()) {
 		// Check count
-		uint32 nStringLength = sString.GetLength();
+		const uint32 nStringLength = sString.GetLength();
 		if (nStringLength) {
 			// Check count
 			if (nCount < 0 || (uint32)nCount > nStringLength)
@@ -1509,49 +1682,95 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 
 			// Check if the string is empty
 			if (m_pStringBuffer) {
-				// Compose new string
-				switch (m_pStringBuffer->GetFormat()) {
-					case ASCII:
-						switch (sString.GetFormat()) {
-							case ASCII:
-								SetStringBuffer(m_pStringBuffer->Insert(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
-								break;
+				// Compose new string by appending?
+				if (nPos == GetLength()) {
+					switch (m_pStringBuffer->GetFormat()) {
+						case ASCII:
+							switch (sString.GetFormat()) {
+								case ASCII:
+									SetStringBuffer(m_pStringBuffer->Append(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
+									break;
 
-							case Unicode:
-								SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
-								break;
+								case Unicode:
+									SetStringBuffer(m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
+									break;
 
-							case UTF8:
-								SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
-								break;
-						}
-						break;
+								case UTF8:
+									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
+									break;
+							}
+							break;
 
-					case Unicode:
-						switch (sString.GetFormat()) {
-							case ASCII:
-								SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
-								break;
+						case Unicode:
+							switch (sString.GetFormat()) {
+								case ASCII:
+									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
+									break;
 
-							case Unicode:
-								SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
-								break;
+								case Unicode:
+									SetStringBuffer(m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
+									break;
 
-							case UTF8:
-								SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
-								break;
-						}
-						break;
+								case UTF8:
+									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
+									break;
+							}
+							break;
 
-					case UTF8:
-						switch (sString.GetFormat()) {
-							case ASCII:
-							case Unicode:
-							case UTF8:
-								SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
-								break;
-						}
-						break;
+						case UTF8:
+							switch (sString.GetFormat()) {
+								case ASCII:
+								case Unicode:
+								case UTF8:
+									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
+									break;
+							}
+							break;
+					}
+				} else {
+					switch (m_pStringBuffer->GetFormat()) {
+						case ASCII:
+							switch (sString.GetFormat()) {
+								case ASCII:
+									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
+									break;
+
+								case Unicode:
+									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
+									break;
+
+								case UTF8:
+									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
+									break;
+							}
+							break;
+
+						case Unicode:
+							switch (sString.GetFormat()) {
+								case ASCII:
+									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
+									break;
+
+								case Unicode:
+									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
+									break;
+
+								case UTF8:
+									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
+									break;
+							}
+							break;
+
+						case UTF8:
+							switch (sString.GetFormat()) {
+								case ASCII:
+								case Unicode:
+								case UTF8:
+									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
+									break;
+							}
+							break;
+					}
 				}
 
 			// No string to insert into, create new string
@@ -1561,20 +1780,26 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 					m_pStringBuffer->AddReference();
 				} else {
 					if (sString.GetFormat() == Unicode) {
-						wchar_t *pszNewString = new wchar_t[nCount + 1];
-						wcsncpy(pszNewString, ((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nCount);
-						pszNewString[nCount] = L'\0';
-						SetStringBuffer(pszNewString, (uint32)nCount);
+						// Request an unicode string buffer from the string buffer manager
+						m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+						if (m_pStringBuffer) {
+							m_pStringBuffer->AddReference();
+							m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount);
+						}
 					} else if (sString.GetFormat() == UTF8) {
-						wchar_t *pszNewString = new wchar_t[nCount + 1];
-						wcsncpy(pszNewString, sString.GetUnicode(), nCount);
-						pszNewString[nCount] = L'\0';
-						SetStringBuffer(pszNewString, (uint32)nCount);
+						// Request an unicode string buffer from the string buffer manager
+						m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+						if (m_pStringBuffer) {
+							m_pStringBuffer->AddReference();
+							m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount);
+						}
 					} else {
-						char *pszNewString = new char[nCount + 1];
-						strncpy(pszNewString, ((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nCount);
-						pszNewString[nCount] = '\0';
-						SetStringBuffer(pszNewString, (uint32)nCount);
+						// Request an ASCII string buffer from the string buffer manager
+						m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII((uint32)nCount);
+						if (m_pStringBuffer) {
+							m_pStringBuffer->AddReference();
+							m_pStringBuffer->Append(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount);
+						}
 					}
 				}
 			}
@@ -1593,8 +1818,8 @@ String &String::Insert(const char *pszString, uint32 nPos, int nCount)
 {
 	// Check if the string to insert and the position are valid
 	if (pszString && nCount && nPos <= GetLength()) {
-		// Check count
-		uint32 nStringLength = (uint32)strlen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nStringLength = (uint32)strlen(pszString);
 		if (nStringLength) {
 			// Check count
 			if (nCount < 0 || (uint32)nCount > nStringLength)
@@ -1602,16 +1827,18 @@ String &String::Insert(const char *pszString, uint32 nPos, int nCount)
 
 			// Check if the string is empty
 			if (m_pStringBuffer) {
-				// Compose new string
-				SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, (uint32)nCount));
+				// Compose new string by appending?
+				if (nPos == GetLength())
+					SetStringBuffer(m_pStringBuffer->Append(pszString, (uint32)nCount));
+				else
+					SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, (uint32)nCount));
 			} else {
-				// No string to insert into, create new string
-				char *pszNewString = new char[nCount + 1];
-				strncpy(pszNewString, pszString, nCount);
-				pszNewString[nCount] = '\0';
-
-				// Save to string buffer
-				SetStringBuffer(pszNewString, (uint32)nCount);
+				// Request an ASCII string buffer from the string buffer manager
+				m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII((uint32)nCount);
+				if (m_pStringBuffer) {
+					m_pStringBuffer->AddReference();
+					m_pStringBuffer->Append(pszString, (uint32)nCount);
+				}
 			}
 		}
 	}
@@ -1624,24 +1851,26 @@ String &String::Insert(const wchar_t *pszString, uint32 nPos, int nCount)
 {
 	// Check if the string to insert and the position are valid
 	if (pszString && nCount && nPos <= GetLength()) {
-		// Check count
-		uint32 nStringLength = (uint32)wcslen(pszString);
+		// Get the length of the given string (excluding the terminating zero)
+		const uint32 nStringLength = (uint32)wcslen(pszString);
 		if (nStringLength) {
 			if (nCount < 0 || (uint32)nCount > nStringLength)
 				nCount = nStringLength;
 
 			// Check if the string is empty
 			if (m_pStringBuffer) {
-				// Compose new string
-				SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, (uint32)nCount));
+				// Compose new string by appending?
+				if (nPos == GetLength())
+					SetStringBuffer(m_pStringBuffer->Append(pszString, (uint32)nCount));
+				else
+					SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, (uint32)nCount));
 			} else {
-				// No string to insert into, create new string
-				wchar_t *pszNewString = new wchar_t[nCount + 1];
-				wcsncpy(pszNewString, pszString, nCount);
-				pszNewString[nCount] = L'\0';
-
-				// Save to string buffer
-				SetStringBuffer(pszNewString, (uint32)nCount);
+				// Request an unicode string buffer from the string buffer manager
+				m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+				if (m_pStringBuffer) {
+					m_pStringBuffer->AddReference();
+					m_pStringBuffer->Append(pszString, (uint32)nCount);
+				}
 			}
 		}
 	}
@@ -1663,8 +1892,8 @@ String &String::Insert(const utf8 *pszString, uint32 nPos, int nCount)
 */
 String &String::Copy(const char *pszString, int nCount)
 {
-	// Get the length of the given string
-	uint32 nLength = (pszString && nCount) ? (uint32)strlen(pszString) : 0;
+	// Get the length of the given string (excluding the terminating zero)
+	const uint32 nLength = (pszString && nCount) ? (uint32)strlen(pszString) : 0;
 
 	// Set new string
 	if (nLength) {
@@ -1676,11 +1905,16 @@ String &String::Copy(const char *pszString, int nCount)
 			nCount = nLength;
 		}
 
-		// Copy string
-		char *pszNewString = new char[nCount + 1];
-		strncpy(pszNewString, pszString, nCount);
-		pszNewString[nCount] = '\0';
-		SetStringBuffer(pszNewString, (uint32)nCount);
+		// Release old string buffer
+		if (m_pStringBuffer)
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+		// Request an ASCII string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII((uint32)nCount);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(pszString, (uint32)nCount);
+		}
 	} else {
 		// Empty string
 		ReleaseStringBuffer();
@@ -1692,8 +1926,8 @@ String &String::Copy(const char *pszString, int nCount)
 
 String &String::Copy(const wchar_t *pszString, int nCount)
 {
-	// Get the length of the given string
-	uint32 nLength = (pszString && nCount) ? (uint32)wcslen(pszString) : 0;
+	// Get the length of the given string (excluding the terminating zero)
+	const uint32 nLength = (pszString && nCount) ? (uint32)wcslen(pszString) : 0;
 
 	// Set new string
 	if (nLength) {
@@ -1705,11 +1939,16 @@ String &String::Copy(const wchar_t *pszString, int nCount)
 			nCount = nLength;
 		}
 
-		// Copy string
-		wchar_t *pszNewString = new wchar_t[nCount + 1];
-		wcsncpy(pszNewString, pszString, nCount);
-		pszNewString[nCount] = L'\0';
-		SetStringBuffer(pszNewString, (uint32)nCount);
+		// Release old string buffer
+		if (m_pStringBuffer)
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+		// Request an unicode string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(pszString, (uint32)nCount);
+		}
 	} else {
 		// Empty string
 		ReleaseStringBuffer();
@@ -1733,7 +1972,8 @@ String &String::Copy(const utf8 *pszString, int nCount)
 uint32 String::Replace(char nOld, char nNew)
 {
 	// Check length of string
-	if (!m_pStringBuffer || nOld == nNew) return 0; // Nothing to do :)
+	if (!m_pStringBuffer || nOld == nNew)
+		return 0; // Nothing to do :)
 
 	// Replace
 	uint32 nReplaced;
@@ -1746,7 +1986,8 @@ uint32 String::Replace(char nOld, char nNew)
 uint32 String::Replace(wchar_t nOld, wchar_t nNew)
 {
 	// Check length of string
-	if (!m_pStringBuffer || nOld == nNew) return 0; // Nothing to do :)
+	if (!m_pStringBuffer || nOld == nNew)
+		return 0; // Nothing to do :)
 
 	// Replace
 	uint32 nReplaced;
@@ -1763,13 +2004,13 @@ uint32 String::Replace(wchar_t nOld, wchar_t nNew)
 uint32 String::Replace(const String &sOld, const String &sNew)
 {
 	// Check the two given strings
-	if (m_pStringBuffer && sOld.GetLength() &&
-		sOld.GetLength() <= m_pStringBuffer->GetLength() && sOld != sNew) {
+	if (m_pStringBuffer && sOld.GetLength() && sOld.GetLength() <= m_pStringBuffer->GetLength() && sOld != sNew) {
 		// Replace
 		uint32 nReplaced;
 		if (m_pStringBuffer->GetFormat() == ASCII && sOld.GetFormat() == ASCII && sNew.GetFormat() == ASCII)
 			SetStringBuffer(m_pStringBuffer->Replace(sOld.GetASCII(), sOld.GetLength(), sNew.GetASCII(), sNew.GetLength(), nReplaced));
-		else SetStringBuffer(m_pStringBuffer->Replace(sOld.GetUnicode(), sOld.GetLength(), sNew.GetUnicode(), sNew.GetLength(), nReplaced));
+		else
+			SetStringBuffer(m_pStringBuffer->Replace(sOld.GetUnicode(), sOld.GetLength(), sNew.GetUnicode(), sNew.GetLength(), nReplaced));
 
 		// Return the number of replaced substrings
 		return nReplaced;
@@ -1787,12 +2028,14 @@ uint32 String::Replace(const char *pszOld, const char *pszNew)
 {
 	// Is this string or the old string empty?
 	if (m_pStringBuffer && pszOld) {
+		// Get the length of the given old string (excluding the terminating zero)
+		const uint32 nOldLength = (uint32)strlen(pszOld);
+
 		// Is the old string empty?
-		uint32 nOldLength = (uint32)strlen(pszOld);
 		if (nOldLength) {
 			// Check the two given strings
-			uint32 nLength    = m_pStringBuffer->GetLength();
-			uint32 nNewLength = pszNew ? (uint32)strlen(pszNew) : 0;
+			const uint32 nLength    = m_pStringBuffer->GetLength();
+			const uint32 nNewLength = pszNew ? (uint32)strlen(pszNew) : 0;
 			if (nOldLength <= nLength && !(nNewLength && nOldLength == nNewLength && !strcmp(pszOld, pszNew))) {
 				// Replace
 				uint32 nReplaced;
@@ -1812,12 +2055,14 @@ uint32 String::Replace(const wchar_t *pszOld, const wchar_t *pszNew)
 {
 	// Is this string or the old string empty?
 	if (m_pStringBuffer && pszOld) {
+		// Get the length of the given old string (excluding the terminating zero)
+		const uint32 nOldLength = (uint32)wcslen(pszOld);
+
 		// Is the old string empty?
-		uint32 nOldLength = (uint32)wcslen(pszOld);
 		if (nOldLength) {
 			// Check the two given strings
-			uint32 nLength    = m_pStringBuffer->GetLength();
-			uint32 nNewLength = pszNew ? (uint32)wcslen(pszNew) : 0;
+			const uint32 nLength    = m_pStringBuffer->GetLength();
+			const uint32 nNewLength = pszNew ? (uint32)wcslen(pszNew) : 0;
 			if (nOldLength <= nLength && !(nNewLength && nOldLength == nNewLength && !wcscmp(pszOld, pszNew))) {
 				// Replace
 				uint32 nReplaced;
@@ -1993,7 +2238,8 @@ bool String::IsValidInteger() const
 				}
 
 				// Check length
-				if (!nLength) return true; // Valid integer
+				if (!nLength)
+					return true; // Valid integer
 
 				// Skip spaces and tabs
 				while (nLength > 0 && *pszASCII == ' ' || *pszASCII == '\t') {
@@ -2001,7 +2247,8 @@ bool String::IsValidInteger() const
 					nLength--;
 				}
 
-				if (!nLength) return true; // Valid integer
+				if (!nLength)
+					return true; // Valid integer
 			}
 		}
 	}
@@ -2037,7 +2284,8 @@ bool String::IsValidFloat() const
 				// Digits
 				bool bGotDot = false;
 				while (nLength > 0 && (isdigit((unsigned char)*pszASCII) || (!bGotDot && *pszASCII == '.'))) {
-					if (*pszASCII == '.') bGotDot = true;
+					if (*pszASCII == '.')
+						bGotDot = true;
 
 					// Next character
 					pszASCII++;
@@ -2045,7 +2293,8 @@ bool String::IsValidFloat() const
 				}
 
 				// Check length
-				if (!nLength) return true; // Valid float
+				if (!nLength)
+					return true; // Valid float
 
 				// Exponent
 				if (*pszASCII == 'e' || *pszASCII == 'E') {
@@ -2053,7 +2302,8 @@ bool String::IsValidFloat() const
 					nLength--;
 
 					// Check length
-					if (!nLength) return true; // Valid float
+					if (!nLength)
+						return true; // Valid float
 
 					// Skip sign
 					if (*pszASCII == '-' || *pszASCII == '+') {
@@ -2071,7 +2321,8 @@ bool String::IsValidFloat() const
 						}
 
 						// Check length
-						if (!nLength) return true; // Valid float
+						if (!nLength)
+							return true; // Valid float
 
 						// Skip spaces and tabs
 						while (nLength > 0 && *pszASCII == ' ' || *pszASCII == '\t') {
@@ -2080,7 +2331,8 @@ bool String::IsValidFloat() const
 						}
 
 						// Check length
-						if (!nLength) return true; // Valid float
+						if (!nLength)
+							return true; // Valid float
 					}
 				}
 			}
@@ -2095,13 +2347,19 @@ bool String::IsValidFloat() const
 bool String::GetBool() const
 {
 	if (GetFormat() == Unicode) {
-			 if (CompareNoCase(L"true"))  return true;
-		else if (CompareNoCase(L"false")) return false;
-		else							  return (GetInt() != 0);
+		if (CompareNoCase(L"true"))
+			return true;
+		else if (CompareNoCase(L"false"))
+			return false;
+		else
+			return (GetInt() != 0);
 	} else {
-			 if (CompareNoCase("true"))  return true;
-		else if (CompareNoCase("false")) return false;
-		else							 return (GetInt() != 0);
+		if (CompareNoCase("true"))
+			return true;
+		else if (CompareNoCase("false"))
+			return false;
+		else
+			return (GetInt() != 0);
 	}
 }
 
@@ -2313,7 +2571,8 @@ String &String::operator =(bool bValue)
 String &String::operator =(char nValue)
 {
 	// Terminating zero?
-	if (nValue == '\0') ReleaseStringBuffer();
+	if (nValue == '\0')
+		ReleaseStringBuffer();
 	else {
 		// Optimization: If we have our own unique string buffer instance in the required format we 'just'
 		// cut it down to use a single character
@@ -2321,11 +2580,16 @@ String &String::operator =(char nValue)
 			// Just set a character
 			((StringBufferASCII*)m_pStringBuffer)->SetCharacter(nValue);
 		} else {
-			// Save single character as string
-			char *pszNewString = new char[2];
-			pszNewString[0] = nValue;
-			pszNewString[1] = '\0';
-			SetStringBuffer(pszNewString, 1);
+			// Release old string buffer
+			if (m_pStringBuffer)
+				StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+			// Request an ASCII string buffer from the string buffer manager
+			m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(1);
+			if (m_pStringBuffer) {
+				m_pStringBuffer->AddReference();
+				m_pStringBuffer->Append(&nValue, 1);
+			}
 		}
 	}
 
@@ -2336,7 +2600,8 @@ String &String::operator =(char nValue)
 String &String::operator =(wchar_t nValue)
 {
 	// Terminating zero?
-	if (nValue == L'\0') ReleaseStringBuffer();
+	if (nValue == L'\0')
+		ReleaseStringBuffer();
 	else {
 		// Optimization: If we have our own unique string buffer instance in the required format we 'just'
 		// cut it down to use a single character
@@ -2344,11 +2609,16 @@ String &String::operator =(wchar_t nValue)
 			// Just set a character
 			((StringBufferUnicode*)m_pStringBuffer)->SetCharacter(nValue);
 		} else {
-			// Save single character as string
-			wchar_t *pszNewString = new wchar_t[2];
-			pszNewString[0] = nValue;
-			pszNewString[1] = L'\0';
-			SetStringBuffer(pszNewString, 1);
+			// Release old string buffer
+			if (m_pStringBuffer)
+				StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+			// Request an unicode string buffer from the string buffer manager
+			m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(1);
+			if (m_pStringBuffer) {
+				m_pStringBuffer->AddReference();
+				m_pStringBuffer->Append(&nValue, 1);
+			}
 		}
 	}
 
@@ -2433,21 +2703,27 @@ String String::operator +(bool bValue) const
 String String::operator +(char nValue) const
 {
 	// Terminating zero?
-	if (nValue == '\0') return *this; // Ingore this, please!
+	if (nValue == '\0')
+		return *this; // Ingore this, please!
 
 	// Check if the string is empty
-	if (m_pStringBuffer) return *this + String(nValue);	// Compose new string
-	else				 return nValue;					// Set just this character
+	if (m_pStringBuffer)
+		return *this + String(nValue);	// Compose new string
+	else
+		return nValue;					// Set just this character
 }
 
 String String::operator +(wchar_t nValue) const
 {
 	// Terminating zero?
-	if (nValue == L'\0') return *this; // Ingore this, please!
+	if (nValue == L'\0')
+		return *this; // Ingore this, please!
 
 	// Check if the string is empty
-	if (m_pStringBuffer) return *this + String(nValue);	// Compose new string
-	else				 return nValue;					// Set just this character
+	if (m_pStringBuffer)
+		return *this + String(nValue);	// Compose new string
+	else
+		return nValue;					// Set just this character
 }
 
 String String::operator +(int nValue) const
@@ -2507,21 +2783,27 @@ String operator +(bool bValue, const String &sString)
 String operator +(char nValue, const String &sString)
 {
 	// Terminating zero?
-	if (nValue == '\0') return sString; // Ingore this, please!
+	if (nValue == '\0')
+		return sString; // Ingore this, please!
 
 	// Check if the string is empty
-	if (sString.m_pStringBuffer) return String(nValue) + sString;	// Compose new string
-	else						 return nValue;						// Set just this character
+	if (sString.m_pStringBuffer)
+		return String(nValue) + sString;	// Compose new string
+	else
+		return nValue;						// Set just this character
 }
 
 String operator +(wchar_t nValue, const String &sString)
 {
 	// Terminating zero?
-	if (nValue == L'\0') return sString; // Ingore this, please!
+	if (nValue == L'\0')
+		return sString; // Ingore this, please!
 
 	// Check if the string is empty
-	if (sString.m_pStringBuffer) return String(nValue) + sString;	// Compose new string
-	else						 return nValue;						// Set just this character
+	if (sString.m_pStringBuffer)
+		return String(nValue) + sString;	// Compose new string
+	else
+		return nValue;						// Set just this character
 }
 
 String operator +(int nValue, const String &sString)
@@ -2569,17 +2851,19 @@ String &String::operator +=(bool bValue)
 	// Check if the string is empty
 	if (m_pStringBuffer) {
 		// Compose new string
-		if (GetFormat() == Unicode) SetStringBuffer(m_pStringBuffer->Insert(bValue ? L"1" : L"0", m_pStringBuffer->GetLength(), 1));
-		else						SetStringBuffer(m_pStringBuffer->Insert(bValue ? "1" : "0", m_pStringBuffer->GetLength(), 1));
+		if (GetFormat() == Unicode)
+			SetStringBuffer(m_pStringBuffer->Append(bValue ? L"1" : L"0", 1));
+		else
+			SetStringBuffer(m_pStringBuffer->Append(bValue ?  "1" :  "0", 1));
 
 	// No string to insert into, create new string
 	} else {
-		char *pszNewString = new char[2];
-		pszNewString[0] = bValue ? '1' : '0';
-		pszNewString[1] = '\0';
-
-		// Save to string buffer
-		SetStringBuffer(pszNewString, 1);
+		// Request an ASCII string buffer from the string buffer manager
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(1);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+			m_pStringBuffer->Append(bValue ? "1" : "0", 1);
+		}
 	}
 
 	// Done
@@ -2593,16 +2877,16 @@ String &String::operator +=(char nValue)
 		// Check if the string is empty
 		if (m_pStringBuffer) {
 			// Compose new string
-			SetStringBuffer(m_pStringBuffer->Insert(&nValue, m_pStringBuffer->GetLength(), 1));
+			SetStringBuffer(m_pStringBuffer->Append(&nValue, 1));
 
 		// No string to insert into, create new string
 		} else {
-			char *pszNewString = new char[2];
-			pszNewString[0] = nValue;
-			pszNewString[1] = '\0';
-
-			// Save to string buffer
-			SetStringBuffer(pszNewString, 1);
+			// Request an ASCII string buffer from the string buffer manager
+			m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(1);
+			if (m_pStringBuffer) {
+				m_pStringBuffer->AddReference();
+				m_pStringBuffer->Append(&nValue, 1);
+			}
 		}
 	}
 
@@ -2617,16 +2901,16 @@ String &String::operator +=(wchar_t nValue)
 		// Check if the string is empty
 		if (m_pStringBuffer) {
 			// Compose new string
-			SetStringBuffer(m_pStringBuffer->Insert(&nValue, m_pStringBuffer->GetLength(), 1));
+			SetStringBuffer(m_pStringBuffer->Append(&nValue, 1));
 
 		// No string to insert into, create new string
 		} else {
-			wchar_t *pszNewString = new wchar_t[2];
-			pszNewString[0] = nValue;
-			pszNewString[1] = L'\0';
-
-			// Save to string buffer
-			SetStringBuffer(pszNewString, 1);
+			// Request an unicode string buffer from the string buffer manager
+			m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(1);
+			if (m_pStringBuffer) {
+				m_pStringBuffer->AddReference();
+				m_pStringBuffer->Append(&nValue, 1);
+			}
 		}
 	}
 
@@ -2636,20 +2920,26 @@ String &String::operator +=(wchar_t nValue)
 
 String &String::operator +=(int nValue)
 {
-	if (GetFormat() == Unicode)	*this += Format(L"%d", nValue);
-	else						*this += Format("%d", nValue);
+	if (GetFormat() == Unicode)
+		*this += Format(L"%d", nValue);
+	else
+		*this += Format("%d", nValue);
 	return *this;
 }
 
 String &String::operator +=(uint32 nValue)
 {
 	#ifdef WIN32
-		if (GetFormat() == Unicode)	*this += Format(L"%I32u", nValue);
-		else						*this += Format("%I32u", nValue);
+		if (GetFormat() == Unicode)
+			*this += Format(L"%I32u", nValue);
+		else
+			*this += Format("%I32u", nValue);
 	#else
 		// [TODO] Is this working correctly on Linux?
-		if (GetFormat() == Unicode)	*this += Format(L"%u", nValue);
-		else						*this += Format("%u", nValue);
+		if (GetFormat() == Unicode)
+			*this += Format(L"%u", nValue);
+		else
+			*this += Format("%u", nValue);
 	#endif
 	return *this;
 }
@@ -2658,8 +2948,10 @@ String &String::operator +=(uint64 nValue)
 {
 	// Set data
 	#ifdef WIN32
-		if (GetFormat() == Unicode)	*this += Format(L"%I64u", nValue);
-		else						*this += Format("%I64u", nValue);
+		if (GetFormat() == Unicode)
+			*this += Format(L"%I64u", nValue);
+		else
+			*this += Format("%I64u", nValue);
 	#else
 		// [TODO] Is this working correctly on Linux or do we need something like
 		/*
@@ -2667,23 +2959,29 @@ String &String::operator +=(uint64 nValue)
 		int64_t var;
 		sprintf (buf, "%" PRId64, var);
 		*/
-		if (GetFormat() == Unicode)	*this += Format(L"%llu", nValue);
-		else						*this += Format("%llu", nValue);
+		if (GetFormat() == Unicode)
+			*this += Format(L"%llu", nValue);
+		else
+			*this += Format("%llu", nValue);
 	#endif
 	return *this;
 }
 
 String &String::operator +=(float fValue)
 {
-	if (GetFormat() == Unicode) *this += Format(L"%g", fValue);
-	else						*this += Format("%g", fValue);
+	if (GetFormat() == Unicode)
+		*this += Format(L"%g", fValue);
+	else
+		*this += Format("%g", fValue);
 	return *this;
 }
 
 String &String::operator +=(double dValue)
 {
-	if (GetFormat() == Unicode) *this += Format(L"%g", dValue);
-	else						*this += Format("%g", dValue);
+	if (GetFormat() == Unicode)
+		*this += Format(L"%g", dValue);
+	else
+		*this += Format("%g", dValue);
 	return *this;
 }
 
@@ -2691,56 +2989,6 @@ String &String::operator +=(double dValue)
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Use a new string buffer
-*/
-void String::SetStringBuffer(char *pszStringBuffer, uint32 nLength)
-{
-	// Check old string buffer
-	if (m_pStringBuffer) {
-		// Is the string buffer not ASCII or used more than once?
-		if (m_pStringBuffer->GetFormat() != ASCII || m_pStringBuffer->GetRefCount() > 1) {
-			// Release old string buffer
-			m_pStringBuffer->Release();
-
-			// Create a new string buffer
-			m_pStringBuffer = new StringBufferASCII(pszStringBuffer, nLength);
-			m_pStringBuffer->AddReference();
-		} else {
-			// Just, modify string buffer directly
-			((StringBufferASCII*)m_pStringBuffer)->SetString(pszStringBuffer, nLength);
-		}
-	} else {
-		// Create a new string buffer
-		m_pStringBuffer = new StringBufferASCII(pszStringBuffer, nLength);
-		m_pStringBuffer->AddReference();
-	}
-}
-
-void String::SetStringBuffer(wchar_t *pszStringBuffer, uint32 nLength)
-{
-	// Check old string buffer
-	if (m_pStringBuffer) {
-		// Is the string buffer not Unicode or used more than once?
-		if (m_pStringBuffer->GetFormat() != Unicode || m_pStringBuffer->GetRefCount() > 1) {
-			// Release old string buffer
-			m_pStringBuffer->Release();
-
-			// Create a new string buffer
-			m_pStringBuffer = new StringBufferUnicode(pszStringBuffer, nLength);
-			m_pStringBuffer->AddReference();
-		} else {
-			// Just, modify string buffer directly
-			((StringBufferUnicode*)m_pStringBuffer)->SetString(pszStringBuffer, nLength);
-		}
-	} else {
-		// Create a new string buffer
-		m_pStringBuffer = new StringBufferUnicode(pszStringBuffer, nLength);
-		m_pStringBuffer->AddReference();
-	}
-}
-
 void String::SetStringBuffer(utf8 *pszStringBuffer, uint32 nLength, uint32 nNumOfBytes)
 {
 	// Check old string buffer
@@ -2748,7 +2996,7 @@ void String::SetStringBuffer(utf8 *pszStringBuffer, uint32 nLength, uint32 nNumO
 		// Is the string buffer not UTF8 or used more than once?
 		if (m_pStringBuffer->GetFormat() != UTF8 || m_pStringBuffer->GetRefCount() > 1) {
 			// Release old string buffer
-			m_pStringBuffer->Release();
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
 
 			// Create a new string buffer
 			m_pStringBuffer = new StringBufferUTF8(pszStringBuffer, nLength, nNumOfBytes);
@@ -2773,11 +3021,13 @@ void String::SetStringBuffer(StringBuffer *pStringBuffer)
 	// Is this already the current used string buffer?
 	if (m_pStringBuffer != pStringBuffer) {
 		// Release old string buffer
-		if (m_pStringBuffer) m_pStringBuffer->Release();
+		if (m_pStringBuffer)
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);;
 
 		// Set the a new string buffer
 		m_pStringBuffer = pStringBuffer;
-		if (m_pStringBuffer) m_pStringBuffer->AddReference();
+		if (m_pStringBuffer)
+			m_pStringBuffer->AddReference();
 	}
 }
 
@@ -2789,7 +3039,7 @@ void String::ReleaseStringBuffer()
 {
 	// Check string buffer
 	if (m_pStringBuffer) {
-		m_pStringBuffer->Release();
+		StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);;
 		m_pStringBuffer = NULL;
 	}
 }

@@ -51,6 +51,7 @@ class StringBufferUnicode : public StringBuffer {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class String;
+	friend class StringBufferManager;
 	friend class StringBufferASCII;
 	friend class StringBufferUTF8;
 
@@ -67,8 +68,10 @@ class StringBufferUnicode : public StringBuffer {
 		*    The string (this string buffer takes over the control)
 		*  @param[in] nLength
 		*    Length of the string buffer (excluding the terminating zero)
+		*  @param[in] nMaxLength
+		*    Maximum available length of the string buffer (excluding the terminating zero)
 		*/
-		StringBufferUnicode(wchar_t szString[], uint32 nLength);
+		StringBufferUnicode(wchar_t szString[], uint32 nLength, uint32 nMaxLength);
 
 		/**
 		*  @brief
@@ -78,8 +81,10 @@ class StringBufferUnicode : public StringBuffer {
 		*    The string (converted to Unicode)
 		*  @param[in] nLength
 		*    Length of the string buffer (excluding the terminating zero)
+		*  @param[in] nMaxLength
+		*    Maximum available length of the string buffer (excluding the terminating zero)
 		*/
-		StringBufferUnicode(const char szString[], uint32 nLength);
+		StringBufferUnicode(const char szString[], uint32 nLength, uint32 nMaxLength);
 
 		/**
 		*  @brief
@@ -91,8 +96,10 @@ class StringBufferUnicode : public StringBuffer {
 		*    Length of the string buffer (excluding the terminating zero)
 		*  @param[in] nNumOfBytes
 		*    Number of bytes of the string (excluding the terminating zero)
+		*  @param[in] nMaxLength
+		*    Maximum available length of the string buffer (excluding the terminating zero)
 		*/
-		StringBufferUnicode(utf8 szString[], uint32 nLength, uint32 nNumOfBytes);
+		StringBufferUnicode(utf8 szString[], uint32 nLength, uint32 nMaxLength, uint32 nNumOfBytes);
 
 		/**
 		*  @brief
@@ -109,10 +116,22 @@ class StringBufferUnicode : public StringBuffer {
 		*  @param[in] nLength
 		*    Length of the string buffer (excluding the terminating zero)
 		*
-		*  @return
-		*    'true' if all went fine, else 'false'
+		*  @note
+		*    - Makes the buffered ASCII/UTF8 versions invalid
 		*/
-		bool SetString(wchar_t szString[], uint32 nLength);
+		void SetString(wchar_t szString[], uint32 nLength);
+
+		/**
+		*  @brief
+		*    Sets the new string length
+		*
+		*  @param[in] nLength
+		*    Length of the string buffer (excluding the terminating zero)
+		*
+		*  @note
+		*    - Makes the buffered ASCII/UTF8 versions invalid
+		*/
+		void SetNewStringLength(uint32 nLength);
 
 		/**
 		*  @brief
@@ -165,6 +184,8 @@ class StringBufferUnicode : public StringBuffer {
 		virtual StringBuffer *ToLower();
 		virtual StringBuffer *ToUpper();
 		virtual StringBuffer *Delete(uint32 nPos, uint32 nCount);
+		virtual StringBuffer *Append(const char szString[], uint32 nCount);
+		virtual StringBuffer *Append(const wchar_t szString[], uint32 nCount);
 		virtual StringBuffer *Insert(const char szString[], uint32 nPos, uint32 nCount);
 		virtual StringBuffer *Insert(const wchar_t szString[], uint32 nPos, uint32 nCount);
 		virtual StringBuffer *Replace(char nOld, char nNew, uint32 &nReplaced);
