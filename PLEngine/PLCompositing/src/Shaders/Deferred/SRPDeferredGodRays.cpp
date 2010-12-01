@@ -130,7 +130,7 @@ void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 							// Create the program generator
 							if (sDeferredGodRays_VS.GetLength() && sDeferredGodRays_FS.GetLength())
-								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_VS, "glslv", sDeferredGodRays_FS, "glslf");
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_VS, "glslv", sDeferredGodRays_FS, "glslf", true);
 						}
 
 						// If there's no program generator, we don't need to continue

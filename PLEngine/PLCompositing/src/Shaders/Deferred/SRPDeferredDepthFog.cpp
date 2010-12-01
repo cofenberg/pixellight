@@ -128,7 +128,7 @@ void SRPDeferredDepthFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 						// Create the program generator
 						if (sDeferredDepthFog_VS.GetLength() && sDeferredDepthFog_FS.GetLength())
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredDepthFog_VS, "arbvp1", sDeferredDepthFog_FS, "arbfp1");
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredDepthFog_VS, "arbvp1", sDeferredDepthFog_FS, "arbfp1", true);
 					}
 
 					// If there's no program generator, we don't need to continue

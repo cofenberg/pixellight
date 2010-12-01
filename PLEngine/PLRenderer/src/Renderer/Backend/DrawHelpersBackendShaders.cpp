@@ -522,7 +522,7 @@ ProgramGenerator *DrawHelpersBackendShaders::GetProgramGenerator()
 
 		// Create the program generator
 		if (sVertexShaderSourceCode.GetLength() && sFragmentShaderSourceCode.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCode, "arbvp1", sFragmentShaderSourceCode, "arbfp1");
+			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCode, "arbvp1", sFragmentShaderSourceCode, "arbfp1", true);
 	}
 
 	// Return the program generator

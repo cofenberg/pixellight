@@ -77,8 +77,8 @@ SPTexturingShaders::SPTexturingShaders(Renderer &cRenderer) : SPTexturing(cRende
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 			#include "SPTexturingShaders_GLSL.h"
-			sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
-			sFragmentShaderSourceCode = sFragmentShaderSourceCodeGLSL;
+			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
+			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTexturingShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

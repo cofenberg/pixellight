@@ -119,8 +119,8 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			String sFragmentShaderSourceCode;
 			if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 				#include "SPRTTShaders_GLSL.h"
-				sVertexShaderSourceCode   = sSceneVertexShaderSourceCodeGLSL;
-				sFragmentShaderSourceCode = sSceneFragmentShaderSourceCodeGLSL;
+				sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sSceneVertexShaderSourceCodeGLSL);
+				sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sSceneFragmentShaderSourceCodeGLSL);
 			} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 				#include "SPRTTShaders_Cg.h"
 				sVertexShaderSourceCode   = sSceneVertexShaderSourceCodeCg;
@@ -156,8 +156,8 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			String sFragmentShaderSourceCode;
 			if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 				#include "SPRTTShaders_GLSL.h"
-				sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
-				sFragmentShaderSourceCode = sFragmentShaderSourceCodeGLSL;
+				sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
+				sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
 			} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 				#include "SPRTTShaders_Cg.h"
 				sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

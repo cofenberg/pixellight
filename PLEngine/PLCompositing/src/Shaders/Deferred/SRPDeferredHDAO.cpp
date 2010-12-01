@@ -110,7 +110,7 @@ void SRPDeferredHDAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 
 		// Create the program generator
 		if (sDeferredHDAO_VS.GetLength() && sDeferredHDAO_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHDAO_VS, "glslv", sDeferredHDAO_FS, "glslf");
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHDAO_VS, "glslv", sDeferredHDAO_FS, "glslf", true);
 	}
 
 	// If there's no program generator, we don't need to continue

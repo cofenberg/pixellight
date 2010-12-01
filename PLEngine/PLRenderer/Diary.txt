@@ -1,3 +1,13 @@
+>> 01.12.2010
+[CO]
+- Ich hatte heute kurz die Gelegenheit den Dungeon Demo auf einem NVIDIA System an der Hochschule, wo ich derzeit für meinen
+  Master studiere, zu testen... leider bekam ich tausende von Shader Compiler fehler, die ältere Version mit GLSL hack ging
+  allerdings - verdammt. Hab den Hack erstmal wieder rein und schau zu morgen auf diesem NVIDIA System mal die neusten Treiber
+  zu installieren und nochmals zu testen... unglaublich dieses unterschiedliche Treiber verhalten, vorallem wenns laut OpenGL
+  Spezifikation gehen sollte (diesmal sich also die ATI Treiber korrekt verhalten)...
+
+
+
 >> 26.11.2010
 [CO]
 - Die am "07.07.2010" (siehe entsprechenden Tagebucheintrag für mehr Informationen) erstellte Methode "PLRenderer::ProgramGenerator::ApplyGLSLHacks()"

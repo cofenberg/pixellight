@@ -168,7 +168,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 
 				// Create the downscale program generator
 				if (sHDRBloom_VS.GetLength() && sHDRBloom_FS.GetLength())
-					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_VS, "glslv", sHDRBloom_FS, "glslf");
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_VS, "glslv", sHDRBloom_FS, "glslf", true);
 			}
 
 			// If there's no downscale program generator, we don't need to continue

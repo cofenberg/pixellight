@@ -701,7 +701,7 @@ void SRPDeferredLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 			// Create the program generator
 			if (sDeferredLighting_VS.GetLength() && sDeferredLighting_FS.GetLength())
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredLighting_VS, "arbvp1", sDeferredLighting_FS, "arbfp1");
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredLighting_VS, "arbvp1", sDeferredLighting_FS, "arbfp1", true);
 		}
 
 		// If there's no program generator, we don't need to continue

@@ -75,8 +75,8 @@ SPMultiViewShaders::SPMultiViewShaders(Renderer &cRenderer) : SPMultiView(cRende
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 			#include "SPMultiViewShaders_GLSL.h"
-			sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
-			sFragmentShaderSourceCode = sFragmentShaderSourceCodeGLSL;
+			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
+			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPMultiViewShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

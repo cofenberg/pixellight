@@ -252,7 +252,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 
 						// Create the program generator
 						if (sSRPShadowMapping_VS.GetLength() && sSRPShadowMapping_FS.GetLength())
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_VS, "arbvp1", sSRPShadowMapping_FS, "arbfp1");
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_VS, "arbvp1", sSRPShadowMapping_FS, "arbfp1", true);
 					}
 
 					// If there's no program generator, we don't need to continue

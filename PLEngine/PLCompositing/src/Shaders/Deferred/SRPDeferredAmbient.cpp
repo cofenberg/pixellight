@@ -121,7 +121,7 @@ void SRPDeferredAmbient::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 						// Create the program generator
 						if (sDeferredAmbient_VS.GetLength() && sDeferredAmbient_FS.GetLength())
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_VS, "arbvp1", sDeferredAmbient_FS, "arbfp1");
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_VS, "arbvp1", sDeferredAmbient_FS, "arbfp1", true);
 					}
 
 					// If there's no program generator, we don't need to continue

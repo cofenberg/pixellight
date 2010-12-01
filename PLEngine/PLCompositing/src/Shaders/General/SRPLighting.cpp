@@ -1308,7 +1308,7 @@ void SRPLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 		// Create the program generator
 		if (sDiffuseOnly_VS.GetLength() && sDiffuseOnly_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_VS, "arbvp1", sDiffuseOnly_FS, "arbfp1");
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_VS, "arbvp1", sDiffuseOnly_FS, "arbfp1", true);
 	}
 
 	// If there's no program generator, we don't need to continue

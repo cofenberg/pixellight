@@ -39,6 +39,30 @@ namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
+//[ Public static functions                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Removes precision qualifiers from the given GLSL shader source code
+*/
+String ProgramGenerator::ApplyGLSLHacks(const String &sSourceCode)
+{
+	// Please note, this hacks are not really robust and may cause errors in certain situations,
+	// but because this is just a hack for a buggy driver and currently works for our shaders,
+	// it should do the job...
+
+	// Remove precision qualifiers
+	String sModifiedSourceCode = sSourceCode;
+	sModifiedSourceCode.Replace("lowp",    "");
+	sModifiedSourceCode.Replace("mediump", "");
+	sModifiedSourceCode.Replace("highp",   "");
+
+	// Done
+	return sModifiedSourceCode;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -46,7 +70,7 @@ namespace PLRenderer {
 *    Constructor
 */
 ProgramGenerator::ProgramGenerator(Renderer &cRenderer, const String &sShaderLanguage, const String &sVertexShader, const String &sVertexShaderProfile,
-								   const String &sFragmentShader, const String &sFragmentShaderProfile) :
+								   const String &sFragmentShader, const String &sFragmentShaderProfile, bool bGLSLHacks) :
 	EventHandlerDirty(&ProgramGenerator::OnDirty, this),
 	m_pRenderer(&cRenderer),
 	m_sShaderLanguage(sShaderLanguage),
@@ -55,6 +79,11 @@ ProgramGenerator::ProgramGenerator(Renderer &cRenderer, const String &sShaderLan
 	m_sFragmentShader(sFragmentShader),
 	m_sFragmentShaderProfile(sFragmentShaderProfile)
 {
+	// [HACK] Precision qualifiers within GLSL source code and NVIDIA GPU's (see ApplyGLSLHacks() documentation)
+	if (bGLSLHacks && m_sShaderLanguage == "GLSL" && cRenderer.GetClass()->GetClassName() != "PLRendererOpenGLES::Renderer") {
+		m_sVertexShader   = ApplyGLSLHacks(m_sVertexShader);
+		m_sFragmentShader = ApplyGLSLHacks(m_sFragmentShader);
+	}
 }
 
 /**
