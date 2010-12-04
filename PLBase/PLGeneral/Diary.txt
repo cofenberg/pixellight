@@ -1,3 +1,13 @@
+>> 04.12.2010
+[CO]
+- Beim über die Codes "schweifen" (hin und wieder passiert mir soetwas unbeabsichtigt *g*) vielen mir in der String Klasse ein
+  paar Stellen wie z.B. "if (pszFormat && strlen(pszFormat))" auf. Sinn ist hier eigentlich nur rauszufinden ob direkt das erste
+  Zeichen im String eine terminierende Null ist - die String länge braucht man hier gar nicht. Änderte diese Stellen daher in
+  "if (pszFormat && pszFormat[0] != '\0')" - spart einen Funktionsaufruf und ändert die komplexität hier von n zu 1 da nicht mehr
+  im String nach '\0' gesucht werden muss. Interessant das mir das noch nicht vorher ins Auge gestochen ist. *g*
+
+
+
 >> 29.11.2010
 [CO]
 - "Stopwatch::Stop()"-Bugfix: Wenn die Stopuhr gerade nicht läuft, und man "Stop()" aufruft sollte natürlich "0" als gemessene

@@ -74,7 +74,7 @@ String String::Format(const char *pszFormat, ...)
 #endif
 
 	// Check format string
-	if (pszFormat && strlen(pszFormat)) {
+	if (pszFormat && pszFormat[0] != '\0') {
 		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
@@ -120,7 +120,7 @@ String String::Format(const wchar_t *pszFormat, ...)
 #endif
 
 	// Check format string
-	if (pszFormat && wcslen(pszFormat)) {
+	if (pszFormat && pszFormat[0] != L'\0') {
 		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
@@ -818,7 +818,7 @@ bool String::operator <(const char *pszString) const
 		return false;
 	} else {
 		// Check whether the other string is empty, too
-		if (pszString && strlen(pszString))
+		if (pszString && pszString[0] != '\0')
 			return true;  // This string is empty while the other is not, empty is less :)
 		else
 			return false; // Both strings are empty, so they are equal
@@ -843,7 +843,7 @@ bool String::operator <(const wchar_t *pszString) const
 		return false;
 	} else {
 		// Check whether the other string is empty, too
-		if (pszString && wcslen(pszString))
+		if (pszString && pszString[0] != L'\0')
 			return true;  // This string is empty while the other is not, empty is less :)
 		else
 			return false; // Both strings are empty, so they are equal
@@ -1102,7 +1102,7 @@ bool String::Compare(const char *pszString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && strlen(pszString))
+			if (pszString && pszString[0] != '\0')
 				return false; // Strings are not equal
 			else
 				return true;  // Both strings are empty, so they are equal
@@ -1131,7 +1131,7 @@ bool String::Compare(const wchar_t *pszString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && wcslen(pszString))
+			if (pszString && pszString[0] != L'\0')
 				return false; // Strings are not equal
 			else
 				return true;  // Both strings are empty, so they are equal
@@ -1241,7 +1241,7 @@ bool String::CompareNoCase(const char *pszString, uint32 nPos, int nCount) const
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && strlen(pszString))
+			if (pszString && pszString[0] != '\0')
 				return false; // Strings are not equal
 			else
 				return true;  // Both strings are empty, so they are equal
@@ -1270,7 +1270,7 @@ bool String::CompareNoCase(const wchar_t *pszString, uint32 nPos, int nCount) co
 			return false;
 		} else {
 			// Check whether the other string is empty, too
-			if (pszString && wcslen(pszString))
+			if (pszString && pszString[0] != L'\0')
 				return false; // Strings are not equal
 			else
 				return true;  // Both strings are empty, so they are equal
