@@ -1,3 +1,10 @@
+>> 06.12.2010
+[CO]
+- DynEvent um "GetNumOfConnects()"-Methode erweitert, bei z.B. Profiling ist es hin und wieder interessant zu
+  erfahren wie viele Connections gerade vorhanden sind
+
+
+
 >> 16.08.2010
 [SB]
 - ConsoleApplication: Basispfad für Daten, die direkt im Runtime-Verzeichnis liegen, korrigiert.

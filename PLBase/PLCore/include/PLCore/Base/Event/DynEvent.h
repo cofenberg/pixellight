@@ -94,6 +94,19 @@ class DynEvent {
 		*/
 		PLCORE_API void Disconnect(DynEventHandler *pHandler);
 
+		/**
+		*  @brief
+		*    Return the number of connections
+		*
+		*  @return
+		*    The number of connections
+		*
+		*  @note
+		*    - Don't use this method within performance critical situations because due internal
+		*      implementation, this request has a linear, not constant runtime!
+		*/
+		PLCORE_API PLGeneral::uint32 GetNumOfConnects() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual DynEvent functions                     ]
