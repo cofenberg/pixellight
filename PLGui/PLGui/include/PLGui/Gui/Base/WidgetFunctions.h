@@ -215,7 +215,7 @@ class WidgetFunctions {
 		*    Called when the widget has been activated or deactivated (focus has changed)
 		*
 		*  @param[in] bActivate
-		*    'true' if the widget itself or one of it's child widgets hat the focus, else 'false'
+		*    'true' if the widget itself or one of it's child widgets had the focus, else 'false'
 		*/
 		PLGUI_API virtual void OnActivate(bool bActivate);
 
