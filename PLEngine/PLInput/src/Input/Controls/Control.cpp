@@ -61,6 +61,8 @@ Control::Control(Controller *pController, EControlType nType, const PLGeneral::S
 */
 Control::~Control()
 {
+	// Inform input manager
+	InputManager::GetInstance()->RemoveControl(this);
 }
 
 /**

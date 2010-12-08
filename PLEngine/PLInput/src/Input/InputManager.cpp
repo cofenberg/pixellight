@@ -300,19 +300,41 @@ bool InputManager::RemoveDevice(Device *pDevice)
 
 /**
 *  @brief
+*    Remove control
+*/
+void InputManager::RemoveControl(Control *pControl)
+{
+	// Valid pointer?
+	if (pControl) {
+		// Lock data
+		m_pMutex->Lock();
+
+		// Remove control from list (if it's within the list at all)
+		m_lstUpdatedControls.Remove(pControl);
+
+		// Unlock data
+		m_pMutex->Unlock();
+	}
+}
+
+/**
+*  @brief
 *    Update control
 */
 void InputManager::UpdateControl(Control *pControl)
 {
-	// Lock data
-	m_pMutex->Lock();
+	// Valid pointer?
+	if (pControl) {
+		// Lock data
+		m_pMutex->Lock();
 
-	// Add control to list
-	if (pControl)
-		m_lstUpdatedControls.Add(pControl);
+		// Add control to list, but only if it's not already within the list!
+		if (!m_lstUpdatedControls.IsElement(pControl))
+			m_lstUpdatedControls.Add(pControl);
 
-	// Unlock data
-	m_pMutex->Unlock();
+		// Unlock data
+		m_pMutex->Unlock();
+	}
 }
 
 

@@ -1,3 +1,13 @@
+>> 08.12.2010
+[CO]
+- "InputManager::UpdateControl()": Bevor etwas in m_lstUpdatedControls eingefügt wird, sollte geprüft werden obs bereits drinnen ist
+  (hatte hier beim Testen Situationen wo ein Control am Ende mehrmals drinnen war)
+- Im Control-Destruktor wird die neue "InputManager::RemoveControl()"-Methode aufgerufen, hier wird sichergestellt das dieses nun gelöschte
+  Control nicht mehr in m_lstUpdatedControls ist... und so auch nicht mehr in "InputManager::Update()" verwendet wird (hatte hier eine Situation
+  wo's hier einen Crash gab)
+
+
+
 >> 23.10.2010
 [CO]
 - Auf Stefans Wunsch hin "Axis::IsValueAbsolute()" in "Axis::IsValueRelative()" umbenannt

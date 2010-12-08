@@ -268,6 +268,15 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 
 		/**
 		*  @brief
+		*    Remove control
+		*
+		*  @param[in] pControl
+		*    Input control to remove, shouldn't be NULL (but NULL is catched internally)
+		*/
+		void RemoveControl(Control *pControl);
+
+		/**
+		*  @brief
 		*    Update control
 		*
 		*  @param[in] pControl
