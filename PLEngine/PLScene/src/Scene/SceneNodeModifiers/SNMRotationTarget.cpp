@@ -30,6 +30,7 @@
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include "PLScene/Visibility/VisNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMRotationTarget.h"
 
@@ -48,31 +49,6 @@ namespace PLScene {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMRotationTarget)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMRotationTarget::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Update the rotation also on position change: If this is not done in here, too, the camera may 'shiver'
-	// if it's rotation is changed 'before' it's position is updated
-
-	// Connect/disconnect event handlers
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.EventUpdate.   Connect(&EventHandlerPositionUpdate);
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionUpdate);
-	} else {
-		cSceneNode.EventUpdate.   Disconnect(&EventHandlerPositionUpdate);
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionUpdate);
-	}
-}
 
 
 //[-------------------------------------------------------]
@@ -97,6 +73,34 @@ SNMRotationTarget::SNMRotationTarget(SceneNode &cSceneNode) : SNMTransform(cScen
 */
 SNMRotationTarget::~SNMRotationTarget()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMRotationTarget::OnActivate(bool bActivate)
+{
+	// Update the rotation also on position change: If this is not done in here, too, the camera may 'shiver'
+	// if it's rotation is changed 'before' it's position is updated
+
+	// Connect/disconnect event handlers
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handlers
+		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionUpdate);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Connect(&EventHandlerPositionUpdate);
+	} else {
+		// Disconnect event handlers
+		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionUpdate);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerPositionUpdate);
+	}
 }
 
 

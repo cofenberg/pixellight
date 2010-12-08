@@ -26,6 +26,7 @@
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/EulerAngles.h>
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMRotationMoveDirection.h"
 
 
@@ -41,22 +42,6 @@ namespace PLScene {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMRotationMoveDirection)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMRotationMoveDirection::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -80,6 +65,22 @@ SNMRotationMoveDirection::SNMRotationMoveDirection(SceneNode &cSceneNode) : SNMT
 */
 SNMRotationMoveDirection::~SNMRotationMoveDirection()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMRotationMoveDirection::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

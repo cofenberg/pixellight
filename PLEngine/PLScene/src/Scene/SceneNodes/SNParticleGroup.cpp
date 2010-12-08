@@ -745,9 +745,6 @@ void SNParticleGroup::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 			// Call base implementation
 			SceneNode::DrawSolid(cRenderer, pVisNode);
 
-			// Mark this scene node as drawn
-			SetDrawn();
-
 			// Are the particles within the local scene node space?
 			if (!(GetFlags() & SceneNodeSpaceParticles)) {
 				// Each particle is in 'world' space

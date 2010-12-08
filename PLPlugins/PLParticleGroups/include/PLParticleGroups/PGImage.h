@@ -89,7 +89,33 @@ class PGImage : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	private:
 		virtual void InitFunction();
-		virtual void UpdateFunction();
+		virtual void OnActivate(bool bActivate);
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		bool m_bUpdate;	/**< Perform an update the next time? */
 
 
 };

@@ -339,7 +339,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	protected:
 		PLS_API virtual void InitFunction();
 		PLS_API virtual void DeInitFunction();
-		PLS_API virtual void UpdateFunction();
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]
@@ -347,7 +347,6 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual bool DeInit();
-		PLS_API virtual bool Update();
 		PLS_API virtual SceneNode *Get(PLGeneral::uint32 nIndex = 0) const;
 		PLS_API virtual SceneNode *Get(const PLGeneral::String &sName) const;
 

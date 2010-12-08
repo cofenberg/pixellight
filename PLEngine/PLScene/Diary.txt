@@ -1,3 +1,64 @@
+>> 10.12.2010
+[CO]
+- Das was bisher in "SNMesh::UpdateFunction()" lag, liegt nun in "SNMMeshUpdate::NotifyUpdate()", sprich, in einem Scene Node Modifier.
+  Mit "SNMesh::UpdateFunction()" war ich nun ebenfalls schon gut seit 2 Jahren überhaupt nicht mehr zufrieden, hier passiert einfach
+  zuviel was aber oft überhaupt nicht nötig ist da die meisten Meshes statisch sind.
+  Will man das ein Mesh regelmäßig aktualisiert wird (MeshHandler::Update), so muss man nun also einen SNMMeshUpdate Scene Node Modifier
+  anhängen. Dies ist denke ich aber weniger ein Problem da man ohnehin meist Manipulationen über Scene Node Modifier ausführen lässt.
+  Spielt man Animationen über SNMMeshAnimation ab, muss man sich z.B. nicht weiter um ein Update kümmern.
+
+
+
+>> 09.12.2010
+[CO]
+- SceneNode: "EventDrawn"-Event und "GetDrawn()" & "SetDrawn()" Methoden entfernt. Mit dieser Lösung rauszufinden ob etwas
+  "Sichtbarkeits relevant" ist und daher z.B. ein Update benötigt, war ich noch nie sonderlich zufrieden da man an zu vielen Stellen
+  "SetDrawn()" aufrufen musste und der interne "Drawn"-Zustand irgendwann auch wieder zurückgesetzt werden musste - was bisher in
+  der nun nicht mehr vorhandenen "Update()"-Methode passierte. Viel zu kompliziert.
+- SceneNode: "EventAddedToVisibilityTree"-Event und "OnAddedToVisibilityTree()"-Methode hinzugefügt... der Nachfolger von
+  "Drawn". Sobald etwas in einen Sichtbarkeitsbaum eingehängt wird, der anschließend zum Rendern verwended wird, wird
+  "OnAddedToVisibilityTree()" der Scene Node aufgerufen. Die Standardimplementation dieser neuen Methode erzeugt standardmäßig
+  ein "EventAddedToVisibilityTree"-Event. Die "AddedToVisibilityTree" Benachrichtung kann nun dazu verwendet werden um sich z.B.
+  zu merken "aha, diese Partikel sind auf dem Bildschirm und sollten daher eventuell animiert werden". Ein anderes bisher bestehendes
+  Problem konnte ich mit dieser Lösung nun auch endlich erschlagen: Scene Nodes die sich wie Billboards verhalten, also "immer in die
+  Kamera schaun" -> "AddedToVisibilityTree" erhält als Parameter den Sichtbarkeitsknoten der diese Scene Node representiert, hier
+  kann man nun z.B. die World Matrix noch manipulieren. :D
+  Ich frage mich wieso ich nicht schon früher auf diese relativ einfache Lösung, über die sich mehrere Problemstellungen lösen lassen,
+  gekommen bin ...
+
+
+
+>> 08.12.2010
+[CO]
+- Am Scene Graph Update Refactoring weitergearbeitet (mit nur max ein paar wenigen Stunden pro Tag kommt man einfach schleppend voran :/)
+
+
+
+>> 07.12.2010
+[CO]
+- SceneNode und SceneNodeModifier eine virtuelle "OnActivate()"-Methode erweitert, diese Methode wird immer aufgerufen wenn etwas "wirklich"
+  Aktiv oder Inaktiv wird (da z.B. alle Scene Nodes eines Scene Containers inaktiv werden sobald der Scene Container inaktiv wird). In dieser
+  Methode träge man dann normalerweise Events ein/aus, je nach active-State - bisher wurde hierfür immer "SetFlags()" mißbraucht was definitiv
+  nicht gut war. Mittlerweile trägt das Update-Refactoring erste Früchte - statt in größeren Szenen über 1000 Nodes-Updates in jedem Frame zu haben,
+  hat man nun oft nur noch so um die 50 Node-Updates pro Frame (Look Around Scene Node Modifier etc.).
+  Ich weis nicht ob der Name "OnActivate()" optimal ist, da man das eventuell mit "IsActive()" verwechseln könnte, ich fand allerdings keinen besseren
+  treffenden Namen. :/
+
+
+
+>> 06.12.2010
+[CO]
+- SceneNode: "EventUpdate"-Event entfernt, "UpdateNode()"-Methode entfernt, virtuelle "UpdateFunction()"-Methode entfernt.
+  -> Da es von Scene Nodes eine enorme Masse von Instanzen geben kann, sollte eine Scene Node von sich aus passiv sein und kein ständiges
+     Update benötigen - der großteil von Scene Nodes benötigt ohnehin keine Updates. Entsprechende Umbauten wollte ich schon seit Jahren
+     vornehmen, und jetzt ist's einfach höchste Eisenbahn da gerade bei größeren Szenen hier CPU-Leistung unnötig verheizt wird. :/
+- SceneContext: Um "Update()"-Methode, die das neue "EventUpdate"-Event auslöst, erweitert - eine art von "Taktgeber". Wenn sich etwas,
+  z.B. eine Scene Node regelmäßig aktualisieren muss, kann es sich hier einklinken. Natürlich kann man über die Update-Reihenfolge keine
+  Aussage treffen, aber das war auch vorher nicht immer so einfach - und generell sollte die Update-Reihenfolge egal sein. Ich hätte gleich
+  ein kompliziertes "Scheduling"-System einbauen können, wollte den ersten Refactoring Schritt betreffend Scene Graph Update aber einfach halten.
+
+
+
 >> 26.11.2010
 [CO]
 - Alles was bisher in "Compositing/General/" & "Compositing/Debug/" & "Compositing/PostProcessing" lag in das Grundverzeichnis von PLCompositing verschoben

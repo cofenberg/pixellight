@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGDust.h"
 
 
@@ -49,7 +50,9 @@ pl_implement_class(PGDust)
 *  @brief
 *    Default constructor
 */
-PGDust::PGDust()
+PGDust::PGDust() :
+	EventHandlerUpdate(&PGDust::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 }
 
@@ -68,7 +71,7 @@ PGDust::~PGDust()
 void PGDust::InitFunction()
 {
 	// Call base implementation
-	SNParticleGroup::InitFunction();
+	PGPhysics::InitFunction();
 
 	// If there are free particles, create new particles
 	float fLength = 0.01f;
@@ -87,14 +90,41 @@ void PGDust::InitFunction()
 	}
 }
 
-void PGDust::UpdateFunction()
+void PGDust::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	PGPhysics::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGDust::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGDust::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
 		uint32 nActive = 0;
 
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+		m_bUpdate = false;
 
 		{ // Update particles
 			float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

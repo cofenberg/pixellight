@@ -63,13 +63,6 @@ class SNMPhysicsCorrectDistance : public SNMPhysics {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -87,6 +80,13 @@ class SNMPhysicsCorrectDistance : public SNMPhysics {
 		*    Destructor
 		*/
 		PLPHYSICS_API virtual ~SNMPhysicsCorrectDistance();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
+	//[-------------------------------------------------------]
+	protected:
+		PLPHYSICS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

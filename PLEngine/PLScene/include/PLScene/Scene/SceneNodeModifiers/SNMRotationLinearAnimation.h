@@ -62,13 +62,6 @@ class SNMRotationLinearAnimation : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -86,6 +79,13 @@ class SNMRotationLinearAnimation : public SNMTransform {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMRotationLinearAnimation();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

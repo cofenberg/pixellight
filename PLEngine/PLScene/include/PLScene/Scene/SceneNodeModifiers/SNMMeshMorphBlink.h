@@ -65,13 +65,6 @@ class SNMMeshMorphBlink : public SNMMeshMorph {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -89,6 +82,13 @@ class SNMMeshMorphBlink : public SNMMeshMorph {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMMeshMorphBlink();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

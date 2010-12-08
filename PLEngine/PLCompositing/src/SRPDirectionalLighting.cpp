@@ -162,9 +162,6 @@ void SRPDirectionalLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQue
 							if (pVertexBuffer && pVertexBuffer->GetVertexAttribute(VertexBuffer::Position)) {
 								// Draw the mesh
 								DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel, *pVertexBuffer);
-
-								// Mark this scene node as drawn
-								pSceneNode->SetDrawn();
 							}
 						}
 					}

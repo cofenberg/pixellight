@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMRotationFixRoll.cpp                         *
+ *  File: SNMMeshUpdate.cpp                              *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,10 +24,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
-#include <PLMath/Matrix3x3.h>
+#include <PLRenderer/Renderer/VertexBuffer.h>
+#include <PLMesh/MeshHandler.h>
+#include <PLMesh/SkeletonHandler.h>
 #include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMRotationFixRoll.h"
+#include "PLScene/Scene/SceneNodeModifiers/SNMMeshUpdate.h"
 
 
 //[-------------------------------------------------------]
@@ -35,13 +37,15 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLMath;
+using namespace PLRenderer;
+using namespace PLMesh;
 namespace PLScene {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMRotationFixRoll)
+pl_implement_class(SNMMeshUpdate)
 
 
 //[-------------------------------------------------------]
@@ -51,10 +55,12 @@ pl_implement_class(SNMRotationFixRoll)
 *  @brief
 *    Constructor
 */
-SNMRotationFixRoll::SNMRotationFixRoll(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
-	UpVector(this),
-	Speed(this),
-	EventHandlerUpdate(&SNMRotationFixRoll::NotifyUpdate, this)
+SNMMeshUpdate::SNMMeshUpdate(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
+	Flags(this),
+	EventHandlerAddedToVisibilityTree(&SNMMeshUpdate::NotifyAddedToVisibilityTree, this),
+	EventHandlerUpdate(&SNMMeshUpdate::NotifyUpdate, this),
+	m_bUpdate(true),	// Should be true so for example a valid bounding box, used for visibility detection, is calculated
+	m_bFirstUpdate(true)
 {
 }
 
@@ -62,7 +68,7 @@ SNMRotationFixRoll::SNMRotationFixRoll(SceneNode &cSceneNode) : SNMTransform(cSc
 *  @brief
 *    Destructor
 */
-SNMRotationFixRoll::~SNMRotationFixRoll()
+SNMMeshUpdate::~SNMMeshUpdate()
 {
 }
 
@@ -70,15 +76,18 @@ SNMRotationFixRoll::~SNMRotationFixRoll()
 //[-------------------------------------------------------]
 //[ Protected virtual SceneNodeModifier functions         ]
 //[-------------------------------------------------------]
-void SNMRotationFixRoll::OnActivate(bool bActivate)
+void SNMMeshUpdate::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
-		if (bActivate)
+		if (bActivate) {
+			GetSceneNode().EventAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
-		else
+		} else {
+			GetSceneNode().EventAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+		}
 	}
 }
 
@@ -88,26 +97,59 @@ void SNMRotationFixRoll::OnActivate(bool bActivate)
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Called when the owner scene node was added to a visibility tree
+*/
+void SNMMeshUpdate::NotifyAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
+}
+
+/**
+*  @brief
 *    Called when the scene node needs to be updated
 */
-void SNMRotationFixRoll::NotifyUpdate()
+void SNMMeshUpdate::NotifyUpdate()
 {
-	// Get the scene node
-	SceneNode &cSceneNode = GetSceneNode();
+	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
+	MeshHandler *pMeshHandler = GetSceneNode().GetMeshHandler();
+	if (pMeshHandler && (m_bUpdate || (GetFlags() & UpdateUnseen))) {
+		m_bUpdate = false;
 
-	/*
-	// This will 'flat' the rotation for example for an up-vector of '0 1 0' on the xz-plane
-	Vector3    vLocalY = cSceneNode.GetRotation()*UpVector.Get();
-	Quaternion qQuat   = vLocalY.GetRotationTo(UpVector.Get());
-	cSceneNode.SetRotation(qQuat*cSceneNode.GetRotation());
-	*/
-	Matrix3x3 mRot;
-	mRot.LookAt(cSceneNode.GetTransform().GetPosition(), cSceneNode.GetTransform().GetPosition()-cSceneNode.GetTransform().GetRotation().GetZAxis(), UpVector.Get());
-	Quaternion qQ = mRot;
-	qQ.UnitInvert();
-	if (Speed > 0.0f)
-		qQ.Slerp(cSceneNode.GetTransform().GetRotation(), qQ, Timing::GetInstance()->GetTimeDifference()*Speed);
-	cSceneNode.GetTransform().SetRotation(qQ);
+		// Do we need a frequent bounding box update?
+		const bool bJointAABoundingBox = (pMeshHandler->GetVertexBuffer() && pMeshHandler->GetSkeletonHandler());
+
+		// Lock the vertex buffer once to avoid many internal locks...
+		if (bJointAABoundingBox)
+			pMeshHandler->GetVertexBuffer()->Lock(Lock::ReadWrite);
+
+		// Update mesh handler
+		pMeshHandler->Update(Timing::GetInstance()->GetTimeDifference());
+
+		if (bJointAABoundingBox) {
+			if (m_bFirstUpdate) {
+				m_bFirstUpdate = false;
+
+				// Set default mesh axis align bounding box
+				m_cDefaultMeshAABoundingBox = GetSceneNode().GetAABoundingBox();
+
+				// Set default joint axis align bounding box
+				pMeshHandler->CalculateJointBoundingBox(m_cDefaultJointAABoundingBox);
+			}
+
+			// Unlock the vertex buffer
+			pMeshHandler->GetVertexBuffer()->Unlock();
+
+			// Get current joint axis align bounding box
+			AABoundingBox cJointBB;
+			pMeshHandler->CalculateJointBoundingBox(cJointBB);
+
+			// Update the bounding box of the scene node
+			// [TODO] Remove 'm_cDefaultMeshAABoundingBox'
+			GetSceneNode().SetAABoundingBox(cJointBB);
+//			SetAABoundingBox(AABoundingBox(m_cDefaultMeshAABoundingBox.vMin + (cJointBB.vMin - m_cDefaultJointAABoundingBox.vMin),
+//										   m_cDefaultMeshAABoundingBox.vMax + (cJointBB.vMax - m_cDefaultJointAABoundingBox.vMax)));
+		}
+	}
 }
 
 

@@ -84,6 +84,14 @@ class PGSparkles : public PGPhysics {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNode functions          ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -96,12 +104,25 @@ class PGSparkles : public PGPhysics {
 		*/
 		void InitParticle(PLScene::SNParticleGroup::Particle &cParticle) const;
 
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
+	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void UpdateFunction();
+		PLCore::EventHandler<> EventHandlerUpdate;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		bool m_bUpdate;	/**< Perform an update the next time? */
 
 
 };

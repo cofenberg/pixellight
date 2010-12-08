@@ -44,19 +44,6 @@ pl_implement_class(SNMCameraZoomController)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMCameraZoomController::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMCameraZoom::SetFlags(nValue);
-
-	// Activate/deactivate the input controller
-	m_pController->SetActive(IsActive());
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -97,11 +84,17 @@ Controller *SNMCameraZoomController::GetInputController() const
 //[-------------------------------------------------------]
 void SNMCameraZoomController::InformedOnInit()
 {
-	// Call base implementation
-	SNMCameraZoom::InformedOnInit();
-
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
 	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+void SNMCameraZoomController::OnActivate(bool bActivate)
+{
+	// Call base implementation
+	SNMCameraZoom::OnActivate(bActivate);
+
+	// Activate/deactivate the input controller
+	m_pController->SetActive(bActivate);
 }
 
 

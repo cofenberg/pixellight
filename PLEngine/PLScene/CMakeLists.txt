@@ -87,7 +87,10 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMMesh.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshMorph.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshJoint.cpp
+	src/Scene/SceneNodeModifiers/SNMMeshUpdate.cpp
 	src/Scene/SceneNodeModifiers/SNMMeshAnimation.cpp
+	src/Scene/SceneNodeModifiers/SNMMeshMorphBlink.cpp
+	src/Scene/SceneNodeModifiers/SNMMeshMorphCameraNear.cpp
 	src/Scene/SceneNodeModifiers/SNMDraw.cpp
 	src/Scene/SceneNodeModifiers/SNMDrawRectangle.cpp
 	src/Scene/SceneNodeModifiers/SNMKeyValue.cpp
@@ -99,8 +102,6 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMCameraZoom.cpp
 	src/Scene/SceneNodeModifiers/SNMCameraZoomController.cpp
 	src/Scene/SceneNodeModifiers/CameraZoomController.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshMorphBlink.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshMorphCameraNear.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionRandomAnimation.cpp
 	src/Scene/SceneNodeModifiers/SNMScaleRandomAnimation.cpp
 	src/Scene/SceneNodeModifiers/SNMLightRandomAnimation.cpp

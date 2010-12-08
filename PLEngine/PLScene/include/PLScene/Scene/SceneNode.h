@@ -92,6 +92,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class SNFog;
+	friend class SQCull;
 	friend class SCCell;
 	friend class SNLight;
 	friend class SNPortal;
@@ -225,20 +226,19 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 	//[ Events                                                ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<>											EventDestroy;			/**< Scene node destruction event */
-		PLCore::Event<>											EventActive;			/**< Scene node active state change event */
-		PLCore::Event<>											EventVisible;			/**< Scene node visible state change event */
-		PLCore::Event<>											EventContainer;			/**< Scene node parent container change event */
-		PLCore::Event<>											EventAABoundingBox;		/**< Scene node axis aligned bounding box change event */
-		PLCore::Event<>											EventInit;				/**< Scene node initialization event */
-		PLCore::Event<>											EventDeInit;			/**< Scene node de-initialization change event */
-		PLCore::Event<>											EventUpdate;			/**< Scene node update event */
-		PLCore::Event<>											EventDrawn;				/**< Scene node draw event */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPre;			/**< Scene node pre-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawSolid;			/**< Scene node solid-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawTransparent;	/**< Scene node transparent-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawDebug;			/**< Scene node debug-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPost;			/**< Scene node post-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<>											EventDestroy;				/**< Scene node destruction event */
+		PLCore::Event<>											EventActive;				/**< Scene node active state change event */
+		PLCore::Event<>											EventVisible;				/**< Scene node visible state change event */
+		PLCore::Event<>											EventContainer;				/**< Scene node parent container change event */
+		PLCore::Event<>											EventAABoundingBox;			/**< Scene node axis aligned bounding box change event */
+		PLCore::Event<>											EventInit;					/**< Scene node initialization event */
+		PLCore::Event<>											EventDeInit;				/**< Scene node de-initialization change event */
+		PLCore::Event<VisNode &>								EventAddedToVisibilityTree;	/**< Scene node was added to a visibility tree event. Visibility node representing this scene node within the visibility tree as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPre;				/**< Scene node pre-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawSolid;				/**< Scene node solid-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawTransparent;		/**< Scene node transparent-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawDebug;				/**< Scene node debug-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPost;				/**< Scene node post-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
 
 
 	//[-------------------------------------------------------]
@@ -699,43 +699,6 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*/
 		PLS_API void ClearModifiers();
 
-		//[-------------------------------------------------------]
-		//[ Misc                                                  ]
-		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    Updates the scene node
-		*
-		*  @note
-		*    - Done by the engine but in some situations it can be
-		*      useful to update only a desired scene node
-		*/
-		PLS_API void UpdateNode();
-
-		/**
-		*  @brief
-		*    Returns whether the scene node was visible since it's last update or not
-		*
-		*  @return
-		*    'true' if the scene node was drawn since it's last update, else 'false'
-		*
-		*  @see
-		*    - DrawPre()
-		*/
-		PLS_API bool GetDrawn() const;
-
-		/**
-		*  @brief
-		*    Sets that the scene node was drawn since it's last update
-		*
-		*  @note
-		*    - It's recommended to call this function BEFORE you draw anything
-		*
-		*  @see
-		*    - DrawPre()
-		*/
-		PLS_API void SetDrawn();
-
 
 	//[-------------------------------------------------------]
 	//[ Public virtual functions                              ]
@@ -785,7 +748,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    during scene rendering. It's not predictable which render states are currently set if these functions
 		*    are called and these draw functions will NOT interact automatically with 'uniform lighting and shadowing'
 		*    performed on nodes providing a mesh. (GetMeshHandler()) So, try to avoid using these functions whenever
-		*    possible and provide a scene node mesh instead. The default implementation does only call SetDrawn() and then
+		*    possible and provide a scene node mesh instead. The default implementation does only
 		*    informing the listeners, functions can be implemented in derived classes - only DrawDebug() provides a default
 		*    implementation to draw for instance the bounding box of the scene node. From outside, this draw functions
 		*    should ONLY be called if a node is active & visible & 'on the screen' & the draw function of the function is
@@ -797,6 +760,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    currently 'invisible'.
 		*
 		*  @note
+		*    - The default implementation only emits the EventDrawPre event
 		*    - Should only be called if the draw function flag 'UseDrawPre' is set
 		*/
 		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
@@ -809,6 +773,9 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The used renderer
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @note
+		*    - The default implementation only emits the EventDrawSolid event
 		*
 		*  @see
 		*    - DrawPre()
@@ -823,6 +790,9 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The used renderer
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @note
+		*    - The default implementation only emits the EventDrawTransparent event
 		*
 		*  @see
 		*    - DrawPre()
@@ -841,6 +811,9 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @note
 		*    - Should only be called if the 'UseDrawDebug' draw flag and the 'DebugEnabled' debug flag is set
 		*
+		*  @note
+		*    - Beside drawing scene node stuff, the default implementation emits the EventDrawDebug event
+		*
 		*  @see
 		*    - DrawPre()
 		*/
@@ -854,6 +827,9 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The used renderer
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be NULL
+		*
+		*  @note
+		*    - The default implementation only emits the EventDrawPost event
 		*
 		*  @see
 		*    - DrawPre()
@@ -902,6 +878,20 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 
 		/**
 		*  @brief
+		*    Called when the scene node has been activated or deactivated
+		*
+		*  @param[in] bActivate
+		*    'true' if the scene node is now active, else 'false'
+		*
+		*  @note
+		*    - 'bActivate' will be 'true' if the scene node AND the parent scene container (recursive!) are active
+		*    - 'bActivate' will be 'false' if the scene node OR the parent scene container (recursive!) is inactive
+		*    - The default implementation calls the "OnActivate()" of all attached scene node modifiers
+		*/
+		PLS_API virtual void OnActivate(bool bActivate);
+
+		/**
+		*  @brief
 		*    Updates the axis align bounding box in 'scene node space'
 		*
 		*  @remarks
@@ -942,12 +932,18 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 
 		/**
 		*  @brief
-		*    This function is called when the scene node is updated
+		*    Called when the scene node was added to a visibility tree
+		*
+		*  @param[in] cVisNode
+		*    Visibility node which is representing this scene node within the visibility tree
 		*
 		*  @note
-		*    - The base implementation is empty
+		*    - The default implementation only emits the EventAddedToVisibilityTree event
+		*    - You can use this method to get informed whether or not the scene node was, for example,
+		*      rendered to the screen in order to update only seen scene nodes
+		*    - You can use this method to manipulate the world matrix of the visibility node (for example useful for billboards)
 		*/
-		PLS_API virtual void UpdateFunction();
+		PLS_API virtual void OnAddedToVisibilityTree(VisNode &cVisNode);
 
 
 	//[-------------------------------------------------------]
@@ -974,8 +970,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 			ClassFog						   = 1<<10,	/**< Derived from 'SNFog' */
 			// Misc
 			Initialized						   = 1<<11,	/**< The scene node is initialized */
-			DestroyThis						   = 1<<12,	/**< The scene node should be destroyed */
-			Drawn							   = 1<<13	/**< The scene node was drawn since it's last update */
+			DestroyThis						   = 1<<12	/**< The scene node should be destroyed */
 		};
 
 

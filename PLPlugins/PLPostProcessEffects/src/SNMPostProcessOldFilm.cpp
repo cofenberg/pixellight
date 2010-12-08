@@ -26,6 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLScene/Scene/SceneNode.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessOldFilm.h"
 
@@ -43,22 +44,6 @@ namespace PLPostProcessEffects {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMPostProcessOldFilm)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMPostProcessOldFilm::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPostProcess::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&SlotOnSceneNodeUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&SlotOnSceneNodeUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -83,6 +68,22 @@ SNMPostProcessOldFilm::SNMPostProcessOldFilm(PLScene::SceneNode &cSceneNode) : S
 */
 SNMPostProcessOldFilm::~SNMPostProcessOldFilm()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNodeModifier functions  ]
+//[-------------------------------------------------------]
+void SNMPostProcessOldFilm::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&SlotOnSceneNodeUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&SlotOnSceneNodeUpdate);
+	}
 }
 
 

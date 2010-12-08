@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGExplosion.h"
 
 
@@ -54,7 +55,9 @@ PGExplosion::PGExplosion() :
 	Material(this),
 	Particles(this),
 	TextureAnimationColumns(this),
-	TextureAnimationRows(this)
+	TextureAnimationRows(this),
+	EventHandlerUpdate(&PGExplosion::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial				   = "Data/Textures/PGExplosion.dds";
@@ -69,6 +72,39 @@ PGExplosion::PGExplosion() :
 */
 PGExplosion::~PGExplosion()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void PGExplosion::InitFunction()
+{
+	// Call base implementation
+	PGPhysics::InitFunction();
+
+	// Initialize the particles
+	InitParticles();
+}
+
+void PGExplosion::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	PGPhysics::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGExplosion::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
 }
 
 
@@ -100,27 +136,17 @@ void PGExplosion::InitParticles()
 	}
 }
 
-
-//[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
-//[-------------------------------------------------------]
-void PGExplosion::InitFunction()
-{
-	// Call base implementation
-	SNParticleGroup::InitFunction();
-
-	// Initialize the particles
-	InitParticles();
-}
-
-void PGExplosion::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGExplosion::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
 		uint32 nActive = 0;
 
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+		m_bUpdate = false;
 
 		{ // Update particles
 			float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

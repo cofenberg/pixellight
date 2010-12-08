@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLSound/Source.h>
 #include "SNBomb.h"
 
@@ -34,6 +35,7 @@
 using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLSound;
+using namespace PLScene;
 
 
 //[-------------------------------------------------------]
@@ -53,6 +55,7 @@ SNBomb::SNBomb() :
 	Killed(this),
 	Sound(this),
 	Flags(this),
+	EventHandlerUpdate(&SNBomb::NotifyUpdate, this),
 	m_fTimer(0.0f),
 	m_nFrame(0),
 	m_fFrame(0.0f),
@@ -87,9 +90,13 @@ char SNBomb::GetFrame() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-void SNBomb::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNBomb::NotifyUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -149,5 +156,24 @@ void SNBomb::UpdateFunction()
 				}
 			}
 		}
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void SNBomb::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNSound::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }

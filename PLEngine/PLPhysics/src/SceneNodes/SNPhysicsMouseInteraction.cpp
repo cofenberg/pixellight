@@ -86,6 +86,7 @@ SNPhysicsMouseInteraction::SNPhysicsMouseInteraction() :
 	ThrowForce(this),
 	ForceLineName(this),
 	Flags(this),
+	EventHandlerUpdate(&SNPhysicsMouseInteraction::NotifyUpdate, this),
 	m_sForceLineName("PhysicsForceLine"),
 	m_bPicking(false),
 	m_pPickedPhysicsBody(NULL),
@@ -139,11 +140,30 @@ void SNPhysicsMouseInteraction::InitFunction()
 	GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
 }
 
+void SNPhysicsMouseInteraction::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SceneNode::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
 
 //[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-void SNPhysicsMouseInteraction::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNPhysicsMouseInteraction::NotifyUpdate()
 {
 	// Get the used camera and check if input is active
 	SNCamera *pCamera = SNCamera::GetCamera();

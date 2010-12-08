@@ -208,8 +208,7 @@ SNMesh::SNMesh() :
 	m_bCalculateNormals(false),
 	m_bCalculateTSVs(false),
 	m_bGenerateStrips(false),
-	m_pMeshHandler(NULL),
-	m_bFirstUpdate(true)
+	m_pMeshHandler(NULL)
 {
 }
 
@@ -519,8 +518,6 @@ void SNMesh::MeshInitFunction()
 	// Setup scene node bounding box
 	MeshHandler *pMeshHandler = GetMeshHandler();
 	if (pMeshHandler && pMeshHandler->GetResource()) {
-		m_bFirstUpdate = true;
-
 		// Get and set the mesh bounding box automatically?
 		if (!(GetFlags() & NoAutomaticBoundingBox)) {
 			AABoundingBox cAABB;
@@ -543,6 +540,7 @@ void SNMesh::MeshInitFunction()
 */
 void SNMesh::MeshDeInitFunction()
 {
+	// The default implementation is empty
 }
 
 
@@ -660,47 +658,6 @@ void SNMesh::DeInitFunction()
 {
 	// Unload the used mesh... we do this in here while virtual functions still work correctly...
 	UnloadMesh();
-}
-
-void SNMesh::UpdateFunction()
-{
-	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if (m_pMeshHandler && GetDrawn()) {
-		// Do we need a frequent bounding box update?
-		bool bJointAABoundingBox = (!m_bStaticMesh && m_pMeshHandler->GetVertexBuffer() && m_pMeshHandler->GetSkeletonHandler());
-
-		// Lock the vertex buffer once to avoid many internal locks...
-		if (bJointAABoundingBox)
-			m_pMeshHandler->GetVertexBuffer()->Lock(Lock::ReadWrite);
-
-		// Update mesh handler
-		m_pMeshHandler->Update(Timing::GetInstance()->GetTimeDifference());
-
-		if (bJointAABoundingBox) {
-			if (m_bFirstUpdate) {
-				m_bFirstUpdate = false;
-
-				// Set default mesh axis align bounding box
-				m_cDefaultMeshAABoundingBox = GetAABoundingBox();
-
-				// Set default joint axis align bounding box
-				m_pMeshHandler->CalculateJointBoundingBox(m_cDefaultJointAABoundingBox);
-			}
-
-			// Unlock the vertex buffer
-			m_pMeshHandler->GetVertexBuffer()->Unlock();
-
-			// Get current joint axis align bounding box
-			AABoundingBox cJointBB;
-			m_pMeshHandler->CalculateJointBoundingBox(cJointBB);
-
-			// Update the bounding box of the scene node
-			// [TODO] Remove 'm_cDefaultMeshAABoundingBox'
-			SetAABoundingBox(cJointBB);
-//			SetAABoundingBox(AABoundingBox(m_cDefaultMeshAABoundingBox.vMin + (cJointBB.vMin - m_cDefaultJointAABoundingBox.vMin),
-//										   m_cDefaultMeshAABoundingBox.vMax + (cJointBB.vMax - m_cDefaultJointAABoundingBox.vMax)));
-		}
-	}
 }
 
 

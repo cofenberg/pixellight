@@ -83,13 +83,6 @@ class SNMLookController : public SNMTransform {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -121,6 +114,7 @@ class SNMLookController : public SNMTransform {
 	//[-------------------------------------------------------]
 	protected:
 		PLS_API virtual void InformedOnInit();
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

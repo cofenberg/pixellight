@@ -26,6 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGImage.h"
 
 
@@ -61,7 +62,9 @@ PGImage::PGImage() :
 	ImageScale(this),
 	Material(this),
 	Particles(this),
-	Flags(this)
+	Flags(this),
+	EventHandlerUpdate(&PGImage::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Effects/PGImage.plfx";
@@ -158,12 +161,39 @@ void PGImage::InitFunction()
 	}
 }
 
-void PGImage::UpdateFunction()
+void PGImage::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNParticleGroup::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGImage::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGImage::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = false;
 
 		{ // Update particles
 			float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

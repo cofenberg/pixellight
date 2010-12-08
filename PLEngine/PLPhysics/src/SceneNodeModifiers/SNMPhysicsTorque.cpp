@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScene/Scene/SceneNode.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLPhysics/Body.h"
 #include "PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h"
 #include "PLPhysics/SceneNodeModifiers/SNMPhysicsTorque.h"
@@ -41,22 +42,6 @@ namespace PLPhysics {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMPhysicsTorque)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMPhysicsTorque::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysics::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -78,6 +63,22 @@ SNMPhysicsTorque::SNMPhysicsTorque(SceneNode &cSceneNode) : SNMPhysics(cSceneNod
 */
 SNMPhysicsTorque::~SNMPhysicsTorque()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
+//[-------------------------------------------------------]
+void SNMPhysicsTorque::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

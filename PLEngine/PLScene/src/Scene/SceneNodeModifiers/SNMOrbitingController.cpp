@@ -47,22 +47,6 @@ pl_implement_class(SNMOrbitingController)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMOrbitingController::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMOrbiting::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -101,11 +85,23 @@ Controller *SNMOrbitingController::GetInputController() const
 //[-------------------------------------------------------]
 void SNMOrbitingController::InformedOnInit()
 {
-	// Call base implementation
-	SNMOrbiting::InformedOnInit();
-
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
 	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+void SNMOrbitingController::OnActivate(bool bActivate)
+{
+	// Call base implementation
+	SNMOrbiting::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

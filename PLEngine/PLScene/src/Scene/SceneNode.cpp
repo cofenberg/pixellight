@@ -335,6 +335,9 @@ void SceneNode::SetActive(bool bActive)
 				}
 			}
 
+			// Call the "OnActivate()"-method
+			OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+
 			// Emit event
 			EventActive.Emit();
 		}
@@ -387,10 +390,17 @@ bool SceneNode::IsFrozen() const
 */
 void SceneNode::SetFrozen(bool bFrozen)
 {
-	if (bFrozen)
-		m_nFlags |=  Frozen;
-	else
-		m_nFlags &= ~Frozen;
+	// State change?
+	if (((m_nFlags & Frozen) != 0) != bFrozen) {
+		// Set the new frozen state
+		if (bFrozen)
+			m_nFlags |=  Frozen;
+		else
+			m_nFlags &= ~Frozen;
+
+		// Call the "OnActivate()"-method
+		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+	}
 }
 
 /**
@@ -693,6 +703,9 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 						if (IsInitialized())
 							pModifier->InformedOnInit();
 
+						// Call the "OnActivate()"-method of the modifier
+						pModifier->OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+
 						// Return the created modifier
 						return pModifier;
 					} else {
@@ -803,58 +816,6 @@ void SceneNode::ClearModifiers()
 
 
 //[-------------------------------------------------------]
-//[ Misc                                                  ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Updates the scene node
-*/
-void SceneNode::UpdateNode()
-{
-	// Update scene node?
-	if ((m_nInternalFlags & DestroyThis) || !IsActive() || (Timing::GetInstance()->IsPaused() &&
-		!(m_nFlags & NoPause)) || (m_nFlags & Frozen)) {
-		// Clear the drawn flag
-		m_nInternalFlags &= ~Drawn;
-	} else {
-		// Call the virtual update function
-		UpdateFunction();
-
-		// Emit event
-		EventUpdate.Emit();
-
-		// Clear the drawn flag
-		m_nInternalFlags &= ~Drawn;
-	}
-}
-
-/**
-*  @brief
-*    Returns whether the scene node was drawn since it's last update or not
-*/
-bool SceneNode::GetDrawn() const
-{
-	return (m_nInternalFlags & Drawn) != 0;
-}
-
-/**
-*  @brief
-*    Sets that the scene node was drawn since it's last update
-*/
-void SceneNode::SetDrawn()
-{
-	// Inform listeners
-	if (!(m_nInternalFlags & Drawn)) {
-		// Emit event
-		EventDrawn.Emit();
-	}
-
-	// Set drawn flag
-	m_nInternalFlags |= Drawn;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public virtual functions                              ]
 //[-------------------------------------------------------]
 /**
@@ -863,6 +824,7 @@ void SceneNode::SetDrawn()
 */
 MeshHandler *SceneNode::GetMeshHandler()
 {
+	// The default implementation is empty
 	return NULL;
 }
 
@@ -882,9 +844,6 @@ PLInput::Controller *SceneNode::GetInputController() const
 */
 void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Mark this scene node as drawn
-	SetDrawn();
-
 	// Emit event
 	EventDrawPre.Emit(cRenderer, pVisNode);
 }
@@ -895,9 +854,6 @@ void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Mark this scene node as drawn
-	SetDrawn();
-
 	// Emit event
 	EventDrawSolid.Emit(cRenderer, pVisNode);
 }
@@ -908,9 +864,6 @@ void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Mark this scene node as drawn
-	SetDrawn();
-
 	// Emit event
 	EventDrawTransparent.Emit(cRenderer, pVisNode);
 }
@@ -921,9 +874,6 @@ void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Mark this scene node as drawn
-	SetDrawn();
-
 	// Inform listeners?
 	if (!(m_nDebugFlags & DebugNoDrawEvent)) {
 		// Emit event
@@ -1094,9 +1044,6 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Mark this scene node as drawn
-	SetDrawn();
-
 	// Emit event
 	EventDrawPost.Emit(cRenderer, pVisNode);
 }
@@ -1168,10 +1115,12 @@ void SceneNode::InitFunction()
 
 		// Scene node is initialized
 		m_nInternalFlags |= Initialized;
-		m_nInternalFlags |= Drawn;
 
 		// Emit event
 		EventInit.Emit();
+
+		// Call the "OnActivate()"-method
+		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
 	}
 }
 
@@ -1189,6 +1138,17 @@ void SceneNode::DeInitFunction()
 
 	// Clear modifiers
 	ClearModifiers();
+}
+
+/**
+*  @brief
+*    Called when the scene node has been activated or deactivated
+*/
+void SceneNode::OnActivate(bool bActivate)
+{
+	// Loop through all modifiers
+	for (uint32 i=0; i<m_lstModifiers.GetNumOfElements(); i++)
+		m_lstModifiers[i]->OnActivate(bActivate);
 }
 
 /**
@@ -1259,11 +1219,12 @@ void SceneNode::GetContainerBoundingSphere(Sphere &cSphere)
 
 /**
 *  @brief
-*    This function is called if the scene node is updated
+*    Called when the scene node was added to a visibility tree
 */
-void SceneNode::UpdateFunction()
+void SceneNode::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
-	// No default implementation required
+	// Emit event
+	EventAddedToVisibilityTree.Emit(cVisNode);
 }
 
 

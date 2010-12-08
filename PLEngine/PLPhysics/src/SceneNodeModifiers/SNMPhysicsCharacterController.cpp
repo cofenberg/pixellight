@@ -53,22 +53,6 @@ pl_implement_class(SNMPhysicsCharacterController)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMPhysicsCharacterController::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysicsCharacter::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -116,11 +100,23 @@ Controller *SNMPhysicsCharacterController::GetInputController() const
 //[-------------------------------------------------------]
 void SNMPhysicsCharacterController::InformedOnInit()
 {
-	// Call base implementation
-	SNMPhysicsCharacter::InformedOnInit();
-
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
 	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+void SNMPhysicsCharacterController::OnActivate(bool bActivate)
+{
+	// Call base implementation
+	SNMPhysicsCharacter::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 
@@ -139,18 +135,6 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 	// Get the scene node
 	SceneNode &cSceneNode = GetSceneNode();
 
-	// Get direction vectors from the owner node or a special rotation node
-	const SceneNode *pRotationNode = &cSceneNode;
-	if (RotationNode.Get().GetLength() && cSceneNode.GetContainer()) {
-		const SceneNode *pSceneNode = cSceneNode.GetContainer()->Get(RotationNode.Get());
-		if (pSceneNode)
-			pRotationNode = pSceneNode;
-	}
-	const Quaternion &qRot = pRotationNode->GetTransform().GetRotation();
-	const Vector3 vDirLeftVector = qRot.GetXAxis();
-	const Vector3 vDirUpVector   = qRot.GetYAxis();
-	const Vector3 vDirVector     = qRot.GetZAxis();
-
 	// Revert animation?
 	bool bRevert = false;
 
@@ -159,6 +143,18 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 
 	// Check if input is active
 	if (m_pController->GetActive()) {
+		// Get direction vectors from the owner node or a special rotation node
+		const SceneNode *pRotationNode = &cSceneNode;
+		if (RotationNode.Get().GetLength() && cSceneNode.GetContainer()) {
+			const SceneNode *pSceneNode = cSceneNode.GetContainer()->Get(RotationNode.Get());
+			if (pSceneNode)
+				pRotationNode = pSceneNode;
+		}
+		const Quaternion &qRot = pRotationNode->GetTransform().GetRotation();
+		const Vector3 vDirLeftVector = qRot.GetXAxis();
+		const Vector3 vDirUpVector   = qRot.GetYAxis();
+		const Vector3 vDirVector     = qRot.GetZAxis();
+
 		// Forward/backward
 		if (m_pController->Forward.IsPressed())
 			vMovement += vDirVector;
@@ -278,10 +274,32 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 					else
 						pAni->SetSpeed(IsRunning() ?  RunAnimationSpeed.GetFloat() :  WalkAnimationSpeed);
 					pAni->SetWeight(IsRunning() ? 1.5f : 1.0f);
+
+					// Is the animation currently running?
+					if (pAni->IsRunning()) {
+						// Ensure that there's a "PLScene::SNMMeshUpdate" instance within the owner scene node which takes care of the frequent mesh update
+						GetSNMMeshUpdate();
+					}
 				}
 			}
 		}
 	}
+}
+
+/**
+*  @brief
+*    Returns a "PLScene::SNMMeshUpdate" instance from the owner scene node
+*/
+SNMMeshUpdate *SNMPhysicsCharacterController::GetSNMMeshUpdate() const
+{
+	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
+	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
+	SNMMeshUpdate *pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().GetModifier(sSNMMeshUpdate);
+	if (!pSNMMeshUpdate)
+		pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\"");
+
+	// Return the SNMMeshUpdate instance
+	return pSNMMeshUpdate;
 }
 
 

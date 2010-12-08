@@ -151,9 +151,6 @@ void SNMPostProcess::SetParameters()
 //[-------------------------------------------------------]
 void SNMPostProcess::InformedOnInit()
 {
-	// Call base implementation
-	SceneNodeModifier::InformedOnInit();
-
 	// Load the post process
 	m_pPostProcessManager->Load(GetFilename());
 }

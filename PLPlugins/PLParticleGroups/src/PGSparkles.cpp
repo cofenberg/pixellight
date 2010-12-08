@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/System/System.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGSparkles.h"
 
 
@@ -60,7 +61,9 @@ PGSparkles::PGSparkles() :
 	DownVsAwayRatio(this),
 	BuildPerSec(this),
 	Material(this),
-	Particles(this)
+	Particles(this),
+	EventHandlerUpdate(&PGSparkles::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGSparkles.dds";
@@ -73,6 +76,30 @@ PGSparkles::PGSparkles() :
 */
 PGSparkles::~PGSparkles()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void PGSparkles::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	PGPhysics::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGSparkles::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
 }
 
 
@@ -120,16 +147,15 @@ void PGSparkles::InitParticle(Particle &cParticle) const
 	cParticle.vDistortion.z = 0.0f;
 }
 
-
-//[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
-//[-------------------------------------------------------]
-void PGSparkles::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGSparkles::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = true;
 
 		// If there are free particles, create new particles
 		if (!(System::GetInstance()->GetMicroseconds() % BuildPerSec)) {

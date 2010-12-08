@@ -154,32 +154,6 @@ void SNMPhysicsBody::SetCollisionGroup(uint8 nValue)
 	}
 }
 
-void SNMPhysicsBody::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysics::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.EventActive.Connect(&EventHandlerActive);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerRotation);
-	} else {
-		cSceneNode.EventActive. Disconnect(&EventHandlerActive);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerRotation);
-	}
-
-	// Is there a PL physics body?
-	Body *pBody = GetBody();
-	if (pBody) {
-		// Active state changed?
-		if (!(GetFlags() & Inactive) != pBody->IsActive())
-			pBody->SetActive(cSceneNode.IsActive() && !(GetFlags() & Inactive));
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -257,6 +231,44 @@ void SNMPhysicsBody::RecreatePhysicsBody()
 
 	// Create the physics body
 	CreatePhysicsBody();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
+//[-------------------------------------------------------]
+void SNMPhysicsBody::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handler
+		cSceneNode.EventActive.Connect(&EventHandlerActive);
+		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPosition);
+		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerRotation);
+	} else {
+		// Disconnect event handler
+		cSceneNode.EventActive. Disconnect(&EventHandlerActive);
+		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
+		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerRotation);
+	}
+
+	// Is there a PL physics body?
+	Body *pBody = GetBody();
+	if (pBody) {
+		// Active state changed?
+		if (bActivate != pBody->IsActive()) {
+			// Is the physics body now active?
+			if (bActivate) {
+				// Synchronize the position and rotation of the physics body with the scene node
+				NotifyPosition();
+				NotifyRotation();
+			}
+
+			// Set physics body state
+			pBody->SetActive(bActivate);
+		}
+	}
 }
 
 
@@ -490,9 +502,6 @@ void SNMPhysicsBody::InformedOnInit()
 		// No world, no physics...
 		m_pWorldContainer = NULL;
 	}
-
-	// Call base implementation
-	SNMPhysics::InformedOnInit();
 }
 
 

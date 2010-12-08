@@ -206,6 +206,12 @@ void SNMMeshAnimation::UpdateMesh()
 				} else {
 					pAni->Stop();
 				}
+
+				// Is the animation currently running?
+				if (pAni->IsRunning()) {
+					// Ensure that there's a "PLScene::SNMMeshUpdate" instance within the owner scene node which takes care of the frequent mesh update
+					GetSNMMeshUpdate();
+				}
 			}
 		}
 	}

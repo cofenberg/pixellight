@@ -45,6 +45,7 @@ namespace PLScene {
 *    Mesh scene node animation modifier class
 *
 *  @note
+*    - Adds automatically a "PLScene::SNMMeshUpdate" scene node modifier (if there's not yet one) in order to frequently update the mesh
 *    - If the node has no mesh with animations, this modifier will have no effect
 */
 class SNMMeshAnimation : public SNMMesh {

@@ -27,6 +27,7 @@
 #include <PLGeneral/Log/Log.h>
 #include <PLCore/Tools/Chunk.h>
 #include <PLRenderer/Animation/Animation.h>
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMPositionKeyframeAnimation.h"
 
@@ -93,18 +94,6 @@ void SNMPositionKeyframeAnimation::SetKeys(const String &sValue)
 	}
 }
 
-void SNMPositionKeyframeAnimation::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -153,6 +142,22 @@ Chunk &SNMPositionKeyframeAnimation::GetChunk()
 Animation &SNMPositionKeyframeAnimation::GetAnimation()
 {
 	return *m_pAnimation;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMPositionKeyframeAnimation::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

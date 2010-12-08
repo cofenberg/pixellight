@@ -73,7 +73,6 @@ class SNMPhysicsBodyBox : public SNMPhysicsBody {
 	public:
 		PLPHYSICS_API const PLMath::Vector3 &GetDimension() const;
 		PLPHYSICS_API void SetDimension(const PLMath::Vector3 &vValue);
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -124,6 +123,13 @@ class SNMPhysicsBodyBox : public SNMPhysicsBody {
 	//[-------------------------------------------------------]
 	private:
 		PLMath::Vector3 m_vDimension;	/**< Box dimension, if null, axis align bounding box in 'scene node space' is used as default */
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNodeModifier functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGFountain.h"
 
 
@@ -175,13 +176,15 @@ PGFountain::PGFountain() :
 	AccFactor(this),
 	Material(this),
 	Particles(this),
+	m_bUpdate(false),
 	m_nSteps(8),
 	m_nRaysPerStep(6),
 	m_nDropsPerRay(50),
 	m_fAngleOfDeepestStep(80.0f),
 	m_fAngleOfHighestStep(85.0f),
 	m_fRandomAngleAddition(20.0f),
-	m_fAccFactor(0.11f)
+	m_fAccFactor(0.11f),
+	EventHandlerUpdate(&PGFountain::NotifyUpdate, this)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGFountain.dds";
@@ -254,12 +257,39 @@ void PGFountain::InitFunction()
 	}
 }
 
-void PGFountain::UpdateFunction()
+void PGFountain::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNParticleGroup::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGFountain::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGFountain::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = false;
 
 		{ // Update particles
 			float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

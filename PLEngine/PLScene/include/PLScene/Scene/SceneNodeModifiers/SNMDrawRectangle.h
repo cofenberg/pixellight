@@ -90,13 +90,6 @@ class SNMDrawRectangle : public SNMDraw {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -114,6 +107,13 @@ class SNMDrawRectangle : public SNMDraw {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMDrawRectangle();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

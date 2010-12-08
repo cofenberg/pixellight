@@ -40,6 +40,7 @@ namespace PLInput {
 }
 namespace PLScene {
 	class SceneNode;
+	class SceneContext;
 }
 
 
@@ -85,12 +86,12 @@ class SceneNodeModifier : public PLCore::Object {
 		enum EFlags {
 			Inactive  = 1<<0,	/**< This scene node modifier is currently NOT active */
 			Automatic = 1<<1	/**< This scene node modifier was created automatically during runtime and should
-									 not be saved with the scene. Such scene nodes modifiers are also hidden for
-									 instance within the scene editor. */
+									 not be saved with the scene. Such scene nodes modifiers may also be hidden for
+									 instance within a scene editor. */
 		};
 		pl_enum(EFlags)
 			pl_enum_value(Inactive,		"This scene renderer pass is currently NOT active")
-			pl_enum_value(Automatic,	"This scene node modifier was created automatically during runtime and should not be saved with the scene. Such scene nodes modifiers are also hidden for instance within the scene editor.")
+			pl_enum_value(Automatic,	"This scene node modifier was created automatically during runtime and should not be saved with the scene. Such scene nodes modifiers may also be hidden for instance within a scene editor.")
 		pl_enum_end
 
 
@@ -128,6 +129,15 @@ class SceneNodeModifier : public PLCore::Object {
 
 		/**
 		*  @brief
+		*    Returns the scene context the owner scene node is in
+		*
+		*  @return
+		*    The scene context the owner scene node is in, can but shouldn't be NULL
+		*/
+		PLS_API SceneContext *GetSceneContext() const;
+
+		/**
+		*  @brief
 		*    Returns the scene node class this modifier operates on
 		*
 		*  @return
@@ -141,6 +151,9 @@ class SceneNodeModifier : public PLCore::Object {
 		*
 		*  @return
 		*    'true' if the scene node modifier is active, else 'false'
+		*
+		*  @note
+		*    - Please note that this active state doesn't necessarily mean that the owner scene node is active as well!
 		*/
 		PLS_API bool IsActive() const;
 
@@ -153,6 +166,9 @@ class SceneNodeModifier : public PLCore::Object {
 		*
 		*  @note
 		*    - Sets/unsets the 'Inactive'-flag
+		*
+		*  @see
+		*    - IsActive()
 		*/
 		PLS_API void SetActive(bool bActive = true);
 
@@ -185,9 +201,23 @@ class SceneNodeModifier : public PLCore::Object {
 		*    Informed on scene node modifier initialization
 		*
 		*  @note
-		*    - The default implementation calls SetFlags(GetFlags())
+		*    - The default implementation is empty
 		*/
 		PLS_API virtual void InformedOnInit();
+
+		/**
+		*  @brief
+		*    Called when the scene node modifier has been activated or deactivated
+		*
+		*  @param[in] bActivate
+		*    'true' if the scene node modifier is now active, else 'false'
+		*
+		*  @note
+		*    - 'bActivate' will be 'true' if the scene node modifier AND the owner scene node AND it's parent scene container (recursive!) are active
+		*    - 'bActivate' will be 'false' if the scene node modifier OR the owner scene node OR it's parent scene container (recursive!) is inactive
+		*    - The default implementation is empty
+		*/
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

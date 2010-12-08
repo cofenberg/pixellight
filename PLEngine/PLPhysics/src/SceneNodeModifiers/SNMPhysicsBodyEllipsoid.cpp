@@ -70,18 +70,6 @@ void SNMPhysicsBodyEllipsoid::SetRadius(const Vector3 &vValue)
 	}
 }
 
-void SNMPhysicsBodyEllipsoid::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysicsBody::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
-	else
-		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -151,6 +139,22 @@ void SNMPhysicsBodyEllipsoid::NotifyDrawDebug(Renderer &cRenderer, const VisNode
 			}
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNodeModifier functions  ]
+//[-------------------------------------------------------]
+void SNMPhysicsBodyEllipsoid::OnActivate(bool bActivate)
+{
+	// Call base implementation
+	SNMPhysicsBody::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	if (bActivate)
+		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
+	else
+		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
 }
 
 

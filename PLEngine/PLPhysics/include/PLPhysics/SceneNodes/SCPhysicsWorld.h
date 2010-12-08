@@ -137,6 +137,12 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	private:
 		/**
 		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+		/**
+		*  @brief
 		*    Called when the scene node axis aligned bounding box changed
 		*/
 		void NotifyAABoundingBox();
@@ -146,6 +152,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
 		PLCore::EventHandler<> EventHandlerAABoundingBox;
 
 
@@ -171,7 +178,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	protected:
 		PLPHYSICS_API virtual void InitFunction();
 		PLPHYSICS_API virtual void DeInitFunction();
-		PLPHYSICS_API virtual void UpdateFunction();
+		PLPHYSICS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

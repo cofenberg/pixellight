@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLPhysics/Body.h"
 #include "PLPhysics/World.h"
@@ -45,22 +46,6 @@ namespace PLPhysics {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMPhysicsCharacter)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMPhysicsCharacter::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysics::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -230,6 +215,22 @@ Body *SNMPhysicsCharacter::GetPhysicsBody() const
 
 	// Return the PL physics body this modifier is using
 	return pModifier ? pModifier->GetBody() : NULL;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
+//[-------------------------------------------------------]
+void SNMPhysicsCharacter::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

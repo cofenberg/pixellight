@@ -281,8 +281,9 @@ bool SceneApplication::OnUpdate()
 	// Update the root scene container - we need to do this before drawing the first frame
 	if (m_pSceneContext) {
 		m_pSceneContext->Cleanup();
-		if (m_pSceneContext->GetRoot())
-			m_pSceneContext->GetRoot()->Update();
+
+		// Update the scene context
+		m_pSceneContext->Update();
 	}
 
 	// Call base implementation

@@ -26,6 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLScene/Scene/SceneNode.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
 #include "PLPostProcessEffects/SNMPostProcessCrazyColors.h"
 
@@ -35,6 +36,7 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLRenderer;
+using namespace PLScene;
 namespace PLPostProcessEffects {
 
 
@@ -42,22 +44,6 @@ namespace PLPostProcessEffects {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMPostProcessCrazyColors)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMPostProcessCrazyColors::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPostProcess::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&SlotOnSceneNodeUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&SlotOnSceneNodeUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -88,6 +74,22 @@ SNMPostProcessCrazyColors::SNMPostProcessCrazyColors(PLScene::SceneNode &cSceneN
 */
 SNMPostProcessCrazyColors::~SNMPostProcessCrazyColors()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNodeModifier functions  ]
+//[-------------------------------------------------------]
+void SNMPostProcessCrazyColors::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&SlotOnSceneNodeUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&SlotOnSceneNodeUpdate);
+	}
 }
 
 

@@ -149,12 +149,6 @@ void SNMSound::SetFlags(uint32 nValue)
 	}
 
 	// [TODO] Start/stop sound playback
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().GetTransform().EventPosition.Connect(&EventHandlerPosition);
-	else
-		GetSceneNode().GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
 }
 
 
@@ -203,6 +197,21 @@ SNMSound::~SNMSound()
 Source *SNMSound::GetSoundSource() const
 {
 	return (Source*)m_pSoundSourceHandler->GetResource();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
+//[-------------------------------------------------------]
+void SNMSound::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	if (bActivate)
+		GetSceneNode().GetTransform().EventPosition.Connect(&EventHandlerPosition);
+	else
+		GetSceneNode().GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
+
+	// [TODO] Start/stop sound playback
 }
 
 

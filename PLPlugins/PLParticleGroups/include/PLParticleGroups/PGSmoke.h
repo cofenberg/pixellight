@@ -126,6 +126,14 @@ class PGSmoke : public PLScene::SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNode functions          ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -138,21 +146,28 @@ class PGSmoke : public PLScene::SNParticleGroup {
 		*/
 		void InitParticle(PLScene::SNParticleGroup::Particle &cParticle) const;
 
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		bool	 m_bUpdate;				/**< Perform an update the next time? */
 		InitData m_SData;				/**< Init data */
 		float	 m_fParticleTime;		/**< Timer for particle generation */
 		bool	 m_bCreateNewParticles;	/**< Create new particles? */
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void UpdateFunction();
 
 
 	//[-------------------------------------------------------]

@@ -178,7 +178,7 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 			// Draw texts
 			cDrawHelpers.DrawText(*pFont, PLT("Keys:"),						 Color4::White, Vector2(0.01f, 0.01f));
-			cDrawHelpers.DrawText(*pFont, PLT("Left/right = Gun control"),   Color4::White, Vector2(0.06f, 0.03f));
+			cDrawHelpers.DrawText(*pFont, PLT("a/d = Gun control"),			 Color4::White, Vector2(0.06f, 0.03f));
 			cDrawHelpers.DrawText(*pFont, PLT("Space = Start projectile"),   Color4::White, Vector2(0.06f, 0.05f));
 			cDrawHelpers.DrawText(*pFont, PLT("r = Restart game"),			 Color4::White, Vector2(0.06f, 0.07f));
 			cDrawHelpers.DrawText(*pFont, PLT("p = Toggle post processing"), Color4::White, Vector2(0.06f, 0.09f));

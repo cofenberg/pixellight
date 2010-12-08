@@ -91,7 +91,8 @@ SNEngineInformation::SNEngineInformation() :
 	Flags(this),
 	m_sProfilingMaterial("Data/Effects/PLProfiling.plfx"),
 	m_bProfilingMaterial(false),
-	m_pProfilingMaterial(new MaterialHandler())
+	m_pProfilingMaterial(new MaterialHandler()),
+	EventHandlerUpdate(&SNEngineInformation::NotifyUpdate, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|NoCulling);
@@ -214,6 +215,30 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 		cRenderer.SetRenderState(RenderState::BlendEnable,  nBlendEnable);
 		cRenderer.SetRenderState(RenderState::SrcBlendFunc, nSrcBlendFunc);
 		cRenderer.SetRenderState(RenderState::DstBlendFunc, nDstBlendFunc);
+	}
+}
+
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNEngineInformation::NotifyUpdate()
+{
+	// Check profiling keys
+	if ((InfoFlags & Profiling) && Profiling::GetInstance()->IsActive()) {
+		// Check if input is active
+		// [TODO] Don't use devices directly, use a virtual controller instead
+		Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
+		if ((pController && pController->GetActive()) || !pController) {
+			// Get keyboard input device
+			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+			if (pKeyboard) {
+				if (pKeyboard->KeyPageUp.IsHit())
+					Profiling::GetInstance()->SelectPreviousGroup();
+				if (pKeyboard->KeyPageDown.IsHit())
+					Profiling::GetInstance()->SelectNextGroup();
+			}
+		}
 	}
 }
 
@@ -390,25 +415,20 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual SceneNode functions                   ]
+//[ Protected virtual SceneNode functions                 ]
 //[-------------------------------------------------------]
-void SNEngineInformation::UpdateFunction()
+void SNEngineInformation::OnActivate(bool bActivate)
 {
-	// Check profiling keys
-	if ((InfoFlags & Profiling) && Profiling::GetInstance()->IsActive()) {
-		// Check if input is active
-		// [TODO] Don't use devices directly, use a virtual controller instead
-		Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
-		if ((pController && pController->GetActive()) || !pController) {
-			// Get keyboard input device
-			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-			if (pKeyboard) {
-				if (pKeyboard->KeyPageUp.IsHit())
-					Profiling::GetInstance()->SelectPreviousGroup();
-				if (pKeyboard->KeyPageDown.IsHit())
-					Profiling::GetInstance()->SelectNextGroup();
-			}
-		}
+	// Call the base implementation
+	SceneNode::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }
 

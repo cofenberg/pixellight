@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMesh.h"
 
 
@@ -40,7 +41,7 @@ pl_implement_class(SNMMesh)
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -56,6 +57,22 @@ SNMMesh::SNMMesh(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode)
 */
 SNMMesh::~SNMMesh()
 {
+}
+
+/**
+*  @brief
+*    Returns a "PLScene::SNMMeshUpdate" instance from the owner scene node
+*/
+SNMMeshUpdate *SNMMesh::GetSNMMeshUpdate() const
+{
+	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
+	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
+	SNMMeshUpdate *pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().GetModifier(sSNMMeshUpdate);
+	if (!pSNMMeshUpdate)
+		pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\"");
+
+	// Return the SNMMeshUpdate instance
+	return pSNMMeshUpdate;
 }
 
 

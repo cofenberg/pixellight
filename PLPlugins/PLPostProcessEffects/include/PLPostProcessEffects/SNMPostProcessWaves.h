@@ -66,13 +66,6 @@ class SNMPostProcessWaves : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -90,6 +83,13 @@ class SNMPostProcessWaves : public PLCompositing::SNMPostProcess {
 		*    Destructor
 		*/
 		virtual ~SNMPostProcessWaves();
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNodeModifier functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

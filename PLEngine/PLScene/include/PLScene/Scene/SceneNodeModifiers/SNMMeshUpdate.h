@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PGExplosion.h                                  *
+ *  File: SNMMeshUpdate.h                                *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,21 +20,28 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGEXPLOSION_H__
-#define __PLPG1_PGEXPLOSION_H__
+#ifndef __PLSCENE_SCENENODEMODIFIER_MESHUPDATE_H__
+#define __PLSCENE_SCENENODEMODIFIER_MESHUPDATE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLParticleGroups/PGPhysics.h"
+#include <PLMath/AABoundingBox.h>
+#include "PLScene/Scene/SceneNodeModifiers/SNMMesh.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLParticleGroups {
+namespace PLScene {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class VisNode;
 
 
 //[-------------------------------------------------------]
@@ -42,9 +49,12 @@ namespace PLParticleGroups {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Explosion particle group
+*    Mesh scene node modifier which performs frequent mesh updates
+*
+*  @note
+*    - Usually, there should be only once instance of this scene node modifier per scene node to avoid multiple mesh updates per frame (performance!)
 */
-class PGExplosion : public PGPhysics {
+class SNMMeshUpdate : public SNMMesh {
 
 
 	//[-------------------------------------------------------]
@@ -53,31 +63,24 @@ class PGExplosion : public PGPhysics {
 	public:
 		/**
 		*  @brief
-		*    Mode
+		*    Flags (SceneNodeModifier flags extension)
 		*/
-		enum EMode {
-			None   = 0,	/**< Do nothing special */
-			Repeat = 1,	/**< Repeat the explosion on finish */
-			Remove = 2	/**< Remove the particle group finish */
+		enum EFlags {
+			UpdateUnseen = 1<<2	/**< Do also perform an update if the owner scene node is currently not seen */
 		};
-		pl_enum(EMode)
-			pl_enum_value(None,		"Do nothing special")
-			pl_enum_value(Repeat,	"Repeat the explosion on finish")
-			pl_enum_value(Remove,	"Remove the particle group finish")
+		pl_enum(EFlags)
+			pl_enum_base(SceneNodeModifier::EFlags)
+			pl_enum_value(UpdateUnseen, "Do also perform an update if the owner scene node is currently not seen")
 		pl_enum_end
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGExplosion, "PLParticleGroups", PLParticleGroups::PGPhysics, "Explosion particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(Mode,						pl_enum_type(EMode),	Repeat,								ReadWrite,	DirectValue,	"Explosion mode",									"")
-		// Overwritten PLScene::SNParticleGroup variables
-		pl_attribute(Material,					PLGeneral::String,		"Data/Textures/PGExplosion.dds",	ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,					PLGeneral::uint32,		5,									ReadWrite,	GetSet,			"Number of particles",								"Min=1")
-		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,		4,									ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
-		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,		4,									ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+	pl_class(PLS_RTTI_EXPORT, SNMMeshUpdate, "PLScene", PLScene::SNMMesh, "Mesh scene node modifier which performs frequent mesh updates")
+		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Overwritten SceneNodeModifier variables
+		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
 	pl_class_end
 
 
@@ -87,24 +90,25 @@ class PGExplosion : public PGPhysics {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] cSceneNode
+		*    Owner scene node
 		*/
-		PLPG1_API PGExplosion();
+		PLS_API SNMMeshUpdate(SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGExplosion();
+		PLS_API virtual ~SNMMeshUpdate();
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
+	//[ Protected virtual SceneNodeModifier functions         ]
 	//[-------------------------------------------------------]
-	private:
-		virtual void InitFunction();
-		virtual void OnActivate(bool bActivate);
-		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]
@@ -113,9 +117,12 @@ class PGExplosion : public PGPhysics {
 	private:
 		/**
 		*  @brief
-		*    Initializes the particles
+		*    Called when the owner scene node was added to a visibility tree
+		*
+		*  @param[in] cVisNode
+		*    Visibility node which is representing the owner scene node within the visibility tree
 		*/
-		void InitParticles();
+		void NotifyAddedToVisibilityTree(VisNode &cVisNode);
 
 		/**
 		*  @brief
@@ -128,14 +135,18 @@ class PGExplosion : public PGPhysics {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
+		PLCore::EventHandler<VisNode &> EventHandlerAddedToVisibilityTree;
+		PLCore::EventHandler<>			EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool m_bUpdate;	/**< Perform an update the next time? */
+		bool				   m_bUpdate;						/**< Perform an update the next time? */
+		bool				   m_bFirstUpdate;					/**< First update performed? */
+		PLMath::AABoundingBox  m_cDefaultMeshAABoundingBox;		/**< Default mesh axis align bounding box */
+		PLMath::AABoundingBox  m_cDefaultJointAABoundingBox;	/**< Default joint axis align bounding box */
 
 
 };
@@ -144,7 +155,7 @@ class PGExplosion : public PGPhysics {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLParticleGroups
+} // PLScene
 
 
-#endif // __PLPG1_PGEXPLOSION_H__
+#endif // __PLSCENE_SCENENODEMODIFIER_MESHUPDATE_H__

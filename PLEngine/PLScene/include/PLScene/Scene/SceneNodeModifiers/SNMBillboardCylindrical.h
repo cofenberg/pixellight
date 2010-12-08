@@ -36,9 +36,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLRenderer {
-	class Renderer;
-}
 namespace PLScene {
 	class VisNode;
 }
@@ -73,13 +70,6 @@ class SNMBillboardCylindrical : public SNMBillboard {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -97,6 +87,13 @@ class SNMBillboardCylindrical : public SNMBillboard {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMBillboardCylindrical();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]
@@ -118,21 +115,19 @@ class SNMBillboardCylindrical : public SNMBillboard {
 
 		/**
 		*  @brief
-		*    Called on scene node draw
+		*    Called when the owner scene node was added to a visibility tree
 		*
-		*  @param[in] cRenderer
-		*    The used renderer
-		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*  @param[in] cVisNode
+		*    Visibility node which is representing the owner scene node within the visibility tree
 		*/
-		void NotifyDraw(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		void NotifyAddedToVisibilityTree(VisNode &cVisNode);
 
 
 	//[-------------------------------------------------------]
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLRenderer::Renderer &, const VisNode *> EventHandlerDraw;
+		PLCore::EventHandler<VisNode &> EventHandlerAddedToVisibilityTree;
 
 
 };

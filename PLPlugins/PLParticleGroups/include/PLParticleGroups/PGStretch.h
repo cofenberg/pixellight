@@ -80,20 +80,40 @@ class PGStretch : public PLScene::SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNode functions          ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		bool m_bUpdate;	/**< Perform an update the next time? */
 		// Exported variables
 		float				m_fSize;
 		float				m_fLength;
 		PLGraphics::Color4	m_cColor;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void UpdateFunction();
 
 
 };

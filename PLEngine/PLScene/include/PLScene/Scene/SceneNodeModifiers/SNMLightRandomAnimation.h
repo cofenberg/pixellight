@@ -93,13 +93,6 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -117,6 +110,13 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMLightRandomAnimation();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

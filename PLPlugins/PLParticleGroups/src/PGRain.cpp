@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/System/System.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGRain.h"
 
 
@@ -60,7 +61,9 @@ PGRain::PGRain() :
 	DownVsAwayRatio(this),
 	BuildPerSec(this),
 	Material(this),
-	Particles(this)
+	Particles(this),
+	EventHandlerUpdate(&PGRain::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGRain.dds";
@@ -73,6 +76,30 @@ PGRain::PGRain() :
 */
 PGRain::~PGRain()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void PGRain::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	PGPhysics::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGRain::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
 }
 
 
@@ -123,16 +150,15 @@ void PGRain::InitParticle(Particle &cParticle) const
 	cParticle.vDistortion.z = 0.0f;
 }
 
-
-//[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
-//[-------------------------------------------------------]
-void PGRain::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGRain::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = false;
 
 		// If there are free particles, create new particles
 		if (!(System::GetInstance()->GetMicroseconds() % BuildPerSec)) {

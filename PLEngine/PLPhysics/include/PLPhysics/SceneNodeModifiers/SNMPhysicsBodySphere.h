@@ -80,7 +80,6 @@ class SNMPhysicsBodySphere : public SNMPhysicsBody {
 	public:
 		PLPHYSICS_API float GetRadius() const;
 		PLPHYSICS_API void SetRadius(float fValue);
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -131,6 +130,13 @@ class SNMPhysicsBodySphere : public SNMPhysicsBody {
 	//[-------------------------------------------------------]
 	private:
 		float m_fRadius;	/**< Sphere radius, if null, a sphere 'inside' the axis align bounding box in 'scene node space' is used as default */
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNodeModifier functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

@@ -131,6 +131,25 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[-------------------------------------------------------]
 	protected:
 		PLPHYSICS_API virtual void InitFunction();
+		PLPHYSICS_API virtual void OnActivate(bool bActivate);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]
@@ -145,13 +164,6 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		PLMath::Vector3				m_vAttachmentPoint;		/**< Picking attachment point */
 		PLScene::SceneNodeHandler	m_cForceLineHandler;	/**< Scene handler for the physics force line */
 		PhysicsMouseInteraction	   *m_pController;			/**< Physics mouse interaction input controller instance, always valid! */
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void UpdateFunction();
 
 
 };

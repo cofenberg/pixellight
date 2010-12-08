@@ -226,9 +226,19 @@ void SQCull::SetViewFrustum(const PlaneSet &cFrustum)
 }
 
 // [TODO] Cleanup
+const Matrix4x4 &SQCull::GetViewMatrix() const
+{
+	return m_mView;
+}
+
 void SQCull::SetViewMatrix(const Matrix4x4 &mView)
 {
 	m_mView = mView;
+}
+
+const Matrix4x4 &SQCull::GetViewProjectionMatrix() const
+{
+	return m_mViewProjection;
 }
 
 void SQCull::SetViewProjectionMatrix(const Matrix4x4 &mViewProjection)
@@ -733,6 +743,9 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					pNode->m_mWorldViewProj  = m_mViewProjection;
 					pNode->m_mWorldViewProj *= pNode->m_mWorld;
 
+					// Inform the scene node
+					pSceneNode->OnAddedToVisibilityTree(*pNode);
+
 					// [TODO] No fixed functions in here
 					FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 					if (pFixedFunctions) {
@@ -1166,6 +1179,9 @@ bool SQCull::PerformQuery()
 					// Set the world view projection transform matrix
 					pNode->m_mWorldViewProj  = m_mViewProjection;
 					pNode->m_mWorldViewProj *= pNode->m_mWorld;
+
+					// Inform the scene node
+					pContainer->OnAddedToVisibilityTree(*pNode);
 
 					// Set the projection information
 					VisContainer::Projection &sNewProjection = ((VisContainer*)pNode)->m_sProjection;

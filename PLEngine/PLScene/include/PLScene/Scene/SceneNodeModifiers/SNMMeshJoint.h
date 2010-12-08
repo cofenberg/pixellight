@@ -58,6 +58,7 @@ namespace PLScene {
 *    Mesh scene node joint modifier class
 *
 *  @note
+*    - Adds automatically a "PLScene::SNMMeshUpdate" scene node modifier (if there's not yet one) in order to frequently update the mesh
 *    - If the node has no mesh with a skeleton, this modifier will have no effect
 */
 class SNMMeshJoint : public SNMMesh {
@@ -110,7 +111,6 @@ class SNMMeshJoint : public SNMMesh {
 		PLS_API void SetMin(const PLMath::Vector3 &vValue);
 		PLS_API const PLMath::Vector3 &GetMax() const;
 		PLS_API void SetMax(const PLMath::Vector3 &vValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -131,6 +131,13 @@ class SNMMeshJoint : public SNMMesh {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMMeshJoint();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

@@ -52,6 +52,7 @@ pl_implement_class(SNGui)
 *    Default constructor
 */
 SNGui::SNGui() :
+	EventHandlerUpdate(&SNGui::NotifyUpdate, this),
 	m_pGui(NULL),
 	m_bFocus(true)
 {
@@ -101,6 +102,28 @@ void SNGui::SetFocus(bool bFocus)
 
 
 //[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNGui::NotifyUpdate()
+{
+	// Get the PixelLight ingame GUI implementation
+	GuiPL *pGuiPL = (GuiPL*)m_pGui->GetImpl();
+	if (pGuiPL) {
+		// Check if there are system messages waiting
+		if (m_pGui->HasPendingMessages())
+			m_pGui->ProcessMessages();
+
+		// Update the ingame GUI
+		pGuiPL->Update();
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Public virtual SceneNode functions                    ]
 //[-------------------------------------------------------]
 void SNGui::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
@@ -139,20 +162,11 @@ void SNGui::InitFunction()
 			pGuiPL->SetInputController(GetSceneContext()->GetDefaultInputController());
 		}
 	}
-}
 
-void SNGui::UpdateFunction()
-{
-	// Get the PixelLight ingame GUI implementation
-	GuiPL *pGuiPL = (GuiPL*)m_pGui->GetImpl();
-	if (pGuiPL) {
-		// Check if there are system messages waiting
-		if (m_pGui->HasPendingMessages())
-			m_pGui->ProcessMessages();
-
-		// Update the ingame GUI
-		pGuiPL->Update();
-	}
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext)
+		pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
 }
 
 

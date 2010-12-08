@@ -50,22 +50,6 @@ pl_implement_class(SNMDrawRectangle)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMDrawRectangle::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMDraw::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventDrawTransparent.Connect(&EventHandlerDrawTransparent);
-	else
-		GetSceneNode().EventDrawTransparent.Disconnect(&EventHandlerDrawTransparent);
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -88,6 +72,19 @@ SNMDrawRectangle::SNMDrawRectangle(SceneNode &cSceneNode) : SNMDraw(cSceneNode),
 */
 SNMDrawRectangle::~SNMDrawRectangle()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMDrawRectangle::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	if (bActivate)
+		GetSceneNode().EventDrawTransparent.Connect(&EventHandlerDrawTransparent);
+	else
+		GetSceneNode().EventDrawTransparent.Disconnect(&EventHandlerDrawTransparent);
 }
 
 

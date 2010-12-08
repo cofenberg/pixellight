@@ -372,7 +372,8 @@ SNSky::SNSky() :
 	MaxDrawDistance(this),
 	AABBMin(this),
 	AABBMax(this),
-	Filename(this)
+	Filename(this),
+	EventHandlerUpdate(&SNSky::NotifyUpdate, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|NoCulling);
@@ -444,17 +445,18 @@ void SNSky::InitFunction()
 	Load(m_sFilename);
 }
 
-void SNSky::UpdateFunction()
+void SNSky::OnActivate(bool bActivate)
 {
-	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if (GetDrawn()) {
-		// Update sky layers
-		const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
-		for (uint32 i=0; i<GetNumOfElements(); i++) {
-			MeshHandler *pMeshHandler = ((SkyLayer*)Get(i))->GetMeshHandler();
-			if (pMeshHandler)
-				pMeshHandler->Update(fTimeDiff);
-		}
+	// Call the base implementation
+	SceneNode::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }
 
@@ -502,6 +504,25 @@ bool SNSky::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, co
 		Params<bool, SNSky&, File&> cParams(*this, cFile);
 		cLoader.CallMethod(sMethod, cParams);
 		return cParams.Return;
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNSky::NotifyUpdate()
+{
+	// Update sky layers
+	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
+	for (uint32 i=0; i<GetNumOfElements(); i++) {
+		MeshHandler *pMeshHandler = ((SkyLayer*)Get(i))->GetMeshHandler();
+		if (pMeshHandler)
+			pMeshHandler->Update(fTimeDiff);
 	}
 }
 

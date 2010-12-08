@@ -109,9 +109,37 @@ class PGFountain : public PLScene::SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNode functions          ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void InitFunction();
+		virtual void OnActivate(bool bActivate);
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		bool m_bUpdate;	/**< Perform an update the next time? */
 		// Exported variables
 		PLGeneral::uint32 m_nSteps;
 		PLGeneral::uint32 m_nRaysPerStep;
@@ -120,14 +148,6 @@ class PGFountain : public PLScene::SNParticleGroup {
 		float			  m_fAngleOfHighestStep;
 		float			  m_fRandomAngleAddition;
 		float			  m_fAccFactor;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void InitFunction();
-		virtual void UpdateFunction();
 
 
 };

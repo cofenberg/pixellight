@@ -28,6 +28,7 @@
 #include <PLMesh/Skeleton.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/SkeletonHandler.h>
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMAnchor.h"
 
@@ -64,26 +65,6 @@ void SNMAnchor::SetAttachedNode(const String &sValue)
 	}
 }
 
-void SNMAnchor::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SceneNodeModifier::SetFlags(nValue);
-
-	// Connect/disconnect event handlers
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.EventContainer.Connect(&EventHandlerContainer);
-		cSceneNode.EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
-	} else {
-		cSceneNode.EventContainer.Disconnect(&EventHandlerContainer);
-		cSceneNode.EventUpdate.Disconnect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -111,6 +92,33 @@ SNMAnchor::SNMAnchor(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 */
 SNMAnchor::~SNMAnchor()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMAnchor::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handlers
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handlers
+		cSceneNode.EventContainer.Connect(&EventHandlerContainer);
+		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
+	} else {
+		// Disconnect event handlers
+		cSceneNode.EventContainer.Disconnect(&EventHandlerContainer);
+		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerPositionRotationUpdate);
+	}
 }
 
 

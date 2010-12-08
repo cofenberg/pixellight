@@ -260,6 +260,9 @@ class SNMesh : public SceneNode {
 		*  @brief
 		*    This function is called after the mesh handler unloads a mesh
 		*
+		*  @note
+		*    - The default implementation is empty
+		*
 		*  @see
 		*    - MeshInitFunction()
 		*/
@@ -270,17 +273,14 @@ class SNMesh : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	   m_sMesh;							/**< Mesh to use */
-		PLGeneral::String	   m_sSkin;							/**< Skin file overwriting the default materials of the used mesh */
-		bool				   m_bStaticMesh;					/**< Make the mesh static (better performance!) */
-		bool				   m_bBuildInfo;					/**< Build for instance edge information? */
-		bool				   m_bCalculateNormals;				/**< Calculate normal vectors? (if not already there) */
-		bool				   m_bCalculateTSVs;				/**< Calculate tangent space vectors? (if not already there) */
-		bool				   m_bGenerateStrips;				/**< Generate triangle strips? */
-		PLMesh::MeshHandler   *m_pMeshHandler;					/**< The mesh handler, can be NULL */
-		bool				   m_bFirstUpdate;
-		PLMath::AABoundingBox  m_cDefaultMeshAABoundingBox;		/**< Default mesh axis align bounding box */
-		PLMath::AABoundingBox  m_cDefaultJointAABoundingBox;	/**< Default joint axis align bounding box */
+		PLGeneral::String	   m_sMesh;				/**< Mesh to use */
+		PLGeneral::String	   m_sSkin;				/**< Skin file overwriting the default materials of the used mesh */
+		bool				   m_bStaticMesh;		/**< Make the mesh static (better performance!) */
+		bool				   m_bBuildInfo;		/**< Build for instance edge information? */
+		bool				   m_bCalculateNormals;	/**< Calculate normal vectors? (if not already there) */
+		bool				   m_bCalculateTSVs;	/**< Calculate tangent space vectors? (if not already there) */
+		bool				   m_bGenerateStrips;	/**< Generate triangle strips? */
+		PLMesh::MeshHandler   *m_pMeshHandler;		/**< The mesh handler, can be NULL */
 
 
 	//[-------------------------------------------------------]
@@ -296,7 +296,6 @@ class SNMesh : public SceneNode {
 	//[-------------------------------------------------------]
 	protected:
 		PLS_API virtual void DeInitFunction();
-		PLS_API virtual void UpdateFunction();
 
 
 };

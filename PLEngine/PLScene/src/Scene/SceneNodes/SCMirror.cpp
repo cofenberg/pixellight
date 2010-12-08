@@ -482,21 +482,6 @@ void SCMirror::UpdateAABoundingBox()
 	}
 }
 
-void SCMirror::UpdateFunction()
-{
-	// Call base implementation
-	SCRenderToTexture::UpdateFunction();
-
-	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if (GetDrawn()) {
-		// Is there a mesh handler?
-		if (m_pMeshHandler) {
-			// Update the mesh handler
-			m_pMeshHandler->Update(Timing::GetInstance()->GetTimeDifference());
-		}
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -38,6 +38,12 @@ namespace PLScene {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class SNMMeshUpdate;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -72,6 +78,18 @@ class SNMMesh : public SceneNodeModifier {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMMesh();
+
+		/**
+		*  @brief
+		*    Returns a "PLScene::SNMMeshUpdate" instance from the owner scene node
+		*
+		*  @return
+		*    A "PLScene::SNMMeshUpdate" instance
+		*
+		*  @note
+		*    - If not already there, this method creates an instance of the "PLScene::SNMMeshUpdate" scene node modifier which frequently updates the mesh
+		*/
+		PLS_API SNMMeshUpdate *GetSNMMeshUpdate() const;
 
 
 };

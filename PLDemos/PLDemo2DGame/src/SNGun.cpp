@@ -59,6 +59,7 @@ SNGun::SNGun() :
 	InputSemantic(this),
 	Sound(this),
 	Flags(this),
+	EventHandlerUpdate(&SNGun::NotifyUpdate, this),
 	EventHandlerOnSceneNode(&SNGun::OnSceneNode, this),
 	m_pController(new GunController()),
 	m_nFrame(0),
@@ -104,19 +105,6 @@ Controller *SNGun::GetInputController() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLScene::SceneNode functions        ]
-//[-------------------------------------------------------]
-void SNGun::InitFunction()
-{
-	// Call base implementation
-	SNSound::InitFunction();
-
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
-}
-
-
-//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -144,11 +132,11 @@ void SNGun::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 	}
 }
 
-
-//[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
-//[-------------------------------------------------------]
-void SNGun::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNGun::NotifyUpdate()
 {
 	// Get the current time difference between the last frame and the current frame
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -227,5 +215,33 @@ void SNGun::UpdateFunction()
 		// ... and clean up if we are done, we don't use 'GetContainer()' in here because this node
 		// can be destroyed inside our query
 		pSceneQuery->GetSceneContainer().DestroyQuery(*pSceneQuery);
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNode functions        ]
+//[-------------------------------------------------------]
+void SNGun::InitFunction()
+{
+	// Call base implementation
+	SNSound::InitFunction();
+
+	// Emit the input controller found event of the scene context to tell everyone about our input controller
+	GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+void SNGun::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNSound::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }

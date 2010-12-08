@@ -26,6 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMRotationLinearAnimation.h"
 
 
@@ -41,22 +42,6 @@ namespace PLScene {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMRotationLinearAnimation)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMRotationLinearAnimation::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -78,6 +63,22 @@ SNMRotationLinearAnimation::SNMRotationLinearAnimation(SceneNode &cSceneNode) : 
 */
 SNMRotationLinearAnimation::~SNMRotationLinearAnimation()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMRotationLinearAnimation::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

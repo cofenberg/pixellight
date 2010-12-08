@@ -70,18 +70,6 @@ void SNMPhysicsBodySphere::SetRadius(float fValue)
 	}
 }
 
-void SNMPhysicsBodySphere::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysicsBody::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
-	else
-		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -151,6 +139,22 @@ void SNMPhysicsBodySphere::NotifyDrawDebug(Renderer &cRenderer, const VisNode *p
 			}
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNodeModifier functions  ]
+//[-------------------------------------------------------]
+void SNMPhysicsBodySphere::OnActivate(bool bActivate)
+{
+	// Call base implementation
+	SNMPhysicsBody::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	if (bActivate)
+		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
+	else
+		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
 }
 
 

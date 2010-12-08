@@ -263,9 +263,6 @@ void SRPVolumetricFog::DrawVolumetricSphereFogRec(Renderer &cRenderer, const SQC
 							if (pVertexBuffer && pVertexBuffer->GetVertexAttribute(VertexBuffer::Position)) {
 								// Draw the mesh
 								DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel, *pVertexBuffer, cSphereFog, cSphereFogVisNode);
-
-								// Mark this scene node as drawn
-								pSceneNode->SetDrawn();
 							}
 						}
 					}

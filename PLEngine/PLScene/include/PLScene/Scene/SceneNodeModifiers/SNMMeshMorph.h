@@ -45,6 +45,7 @@ namespace PLScene {
 *    Mesh scene node morph modifier class
 *
 *  @note
+*    - Adds automatically a "PLScene::SNMMeshUpdate" scene node modifier (if there's not yet one) in order to frequently update the mesh
 *    - If the node has no mesh with morph targets, this modifier will have no effect
 */
 class SNMMeshMorph : public SNMMesh {
@@ -74,7 +75,6 @@ class SNMMeshMorph : public SNMMesh {
 		PLS_API void SetMinWeight(float fValue);
 		PLS_API float GetMaxWeight() const;
 		PLS_API void SetMaxWeight(float fValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -95,6 +95,13 @@ class SNMMeshMorph : public SNMMesh {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMMeshMorph();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

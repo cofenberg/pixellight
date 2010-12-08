@@ -25,10 +25,12 @@
 //[-------------------------------------------------------]
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/Matrix4x4.h>
+#include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include "PLScene/Visibility/VisNode.h"
 #include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SNCamera.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMBillboardCylindrical.h"
 
 
@@ -48,30 +50,6 @@ pl_implement_class(SNMBillboardCylindrical)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMBillboardCylindrical::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMBillboard::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.EventDrawPre			.Connect(&EventHandlerDraw);
-		cSceneNode.EventDrawSolid		.Connect(&EventHandlerDraw);
-		cSceneNode.EventDrawTransparent	.Connect(&EventHandlerDraw);
-		cSceneNode.EventDrawPost		.Connect(&EventHandlerDraw);
-	} else {
-		cSceneNode.EventDrawPre			.Disconnect(&EventHandlerDraw);
-		cSceneNode.EventDrawSolid		.Disconnect(&EventHandlerDraw);
-		cSceneNode.EventDrawTransparent	.Disconnect(&EventHandlerDraw);
-		cSceneNode.EventDrawPost		.Disconnect(&EventHandlerDraw);
-	}
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -80,7 +58,7 @@ void SNMBillboardCylindrical::SetFlags(uint32 nValue)
 */
 SNMBillboardCylindrical::SNMBillboardCylindrical(SceneNode &cSceneNode) : SNMBillboard(cSceneNode),
 	UpVector(this),
-	EventHandlerDraw(&SNMBillboardCylindrical::NotifyDraw, this)
+	EventHandlerAddedToVisibilityTree(&SNMBillboardCylindrical::NotifyAddedToVisibilityTree, this)
 {
 }
 
@@ -90,6 +68,22 @@ SNMBillboardCylindrical::SNMBillboardCylindrical(SceneNode &cSceneNode) : SNMBil
 */
 SNMBillboardCylindrical::~SNMBillboardCylindrical()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMBillboardCylindrical::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	if (bActivate) {
+		// Connect event handler
+		GetSceneNode().EventAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
+	} else {
+		// Disconnect event handler
+		GetSceneNode().EventAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
+	}
 }
 
 
@@ -145,31 +139,33 @@ void SNMBillboardCylindrical::BuildTransformMatrix(const Matrix4x4 &mView, const
 
 /**
 *  @brief
-*    Called on scene node draw
+*    Called when the owner scene node was added to a visibility tree
 */
-void SNMBillboardCylindrical::NotifyDraw(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMBillboardCylindrical::NotifyAddedToVisibilityTree(VisNode &cVisNode)
 {
-	if (pVisNode) {
-		// Get the view matrix
-		Matrix4x4 mView;
+	// Get the view matrix
+	Matrix4x4 mView;
+	{
+		// Get the projection matrix
+		Matrix4x4 mProjection;
 		{
-			// Get the projection matrix
-			Matrix4x4 mProjection;
-			{
-				SNCamera *pCamera = SNCamera::GetCamera();
-				if (pCamera)
-					mProjection = pCamera->GetProjectionMatrix(cRenderer.GetViewport());
+			SNCamera *pCamera = SNCamera::GetCamera();
+			if (pCamera) {
+				// Get the scene context
+				SceneContext *pSceneContext = GetSceneContext();
+				if (pSceneContext)
+					mProjection = pCamera->GetProjectionMatrix(pSceneContext->GetRendererContext().GetRenderer().GetViewport());
 			}
-			mView = mProjection.GetInverted()*pVisNode->GetWorldViewProjectionMatrix();
 		}
-
-		// Get the new world transform matrix
-		Matrix3x4 mTransform;
-		BuildTransformMatrix(mView, pVisNode->GetWorldMatrix(), mTransform);
-
-		// [TODO] Set the new world transform matrix of the visibility node, find another solution
-		((VisNode*)pVisNode)->SetWorldMatrix(mTransform);
+		mView = mProjection.GetInverted()*cVisNode.GetWorldViewProjectionMatrix();
 	}
+
+	// Get the new world transform matrix
+	Matrix3x4 mTransform;
+	BuildTransformMatrix(mView, cVisNode.GetWorldMatrix(), mTransform);
+
+	// Set the new world transform matrix of the visibility node
+	cVisNode.SetWorldMatrix(mTransform);
 }
 
 

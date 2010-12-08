@@ -40,6 +40,9 @@ namespace PLMesh {
 	class Skeleton;
 	class SkeletonHandler;
 }
+namespace PLScene {
+	class SNMMeshUpdate;
+}
 namespace PLPhysics {
 	class RagdollBody;
 	class RagdollJoint;
@@ -555,6 +558,31 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*/
 		void ApplyControlTorques();
 
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+		/**
+		*  @brief
+		*    Returns a "PLScene::SNMMeshUpdate" instance from the owner scene node
+		*
+		*  @return
+		*    A "PLScene::SNMMeshUpdate" instance
+		*
+		*  @note
+		*    - If not already there, this method creates an instance of the "PLScene::SNMMeshUpdate" scene node modifier which frequently updates the mesh
+		*/
+		PLScene::SNMMeshUpdate *GetSNMMeshUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<>	EventHandlerUpdate;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
@@ -594,7 +622,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 	protected:
 		PLPHYSICS_API virtual void InitFunction();
 		PLPHYSICS_API virtual void DeInitFunction();
-		PLPHYSICS_API virtual void UpdateFunction();
+		PLPHYSICS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

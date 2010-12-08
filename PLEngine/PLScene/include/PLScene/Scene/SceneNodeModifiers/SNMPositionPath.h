@@ -121,7 +121,6 @@ class SNMPositionPath : public SNMTransform {
 	public:
 		PLS_API PLGeneral::String GetFilename() const;
 		PLS_API void SetFilename(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -151,6 +150,13 @@ class SNMPositionPath : public SNMTransform {
 		*    The used graph path, can be NULL
 		*/
 		PLS_API PLMath::GraphPath *GetGraphPath() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

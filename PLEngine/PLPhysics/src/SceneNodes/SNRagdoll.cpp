@@ -36,6 +36,7 @@
 #include <PLMesh/Skeleton.h>
 #include <PLMesh/SkeletonHandler.h>
 #include <PLMesh/MeshAnimationManager.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLPhysics/Body.h"
 #include "PLPhysics/World.h"
@@ -152,6 +153,7 @@ SNRagdoll::SNRagdoll() :
 	InitFrozen(this),
 	StaticMesh(this),
 	DebugFlags(this),
+	EventHandlerUpdate(&SNRagdoll::NotifyUpdate, this),
 	m_pWorldContainer(NULL),
 	m_bEnabled(false),
 	m_pRagdollSkeletonHandler(NULL),
@@ -963,6 +965,108 @@ void SNRagdoll::ApplyControlTorques()
 	}
 }
 
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNRagdoll::NotifyUpdate()
+{
+	MeshHandler *pMeshHandler = GetMeshHandler();
+	if (pMeshHandler) {
+		SkeletonHandler *pMeshSkeletonHandler = pMeshHandler->GetSkeletonHandler();
+		if (pMeshSkeletonHandler) {
+			if (!GetMeshHandler()->GetMeshAnimationManager()) {
+				GetMeshHandler()->CreateMeshAnimationManager();
+				if (pMeshSkeletonHandler) {
+					pMeshSkeletonHandler->ResetJointStates();
+					pMeshSkeletonHandler->ApplyBaseJointStates();
+					pMeshSkeletonHandler->CalculateStates();
+				}
+			}
+
+			// Get skeleton
+			const Skeleton *pSkeleton = m_pRagdollSkeletonHandler->GetResource();
+			if (pSkeleton) {
+				const Skeleton *pMeshSkeleton = pMeshSkeletonHandler->GetResource();
+				if (pMeshSkeleton) {
+					// Get absolute joint states
+					const Array<JointHandler> &lstJointHandlers = pMeshSkeletonHandler->GetJointHandlers();
+					for (uint32 i=0; i<m_lstBodies.GetNumOfElements(); i++) {
+						// Get this body
+						const RagdollBody *pBody = m_lstBodies[i];
+
+						const PLMesh::Joint *pJoint = pSkeleton->Get(pBody->sName);
+						if (pJoint) {
+							const RagdollJoint *pJointProperty = GetJoint(pBody->sJoint);
+							if (pJointProperty) {
+								const uint32 nID = pJoint->GetID();
+								JointHandler &cJointHandler = lstJointHandlers[nID];
+								if (&cJointHandler != &Array<JointHandler>::Null) {
+									// Mark this joint handler as user controlled
+									cJointHandler.SetUserControlled(true);
+
+									// Get the absolute position of the joint
+									Vector3 vAnchor;
+									pJointProperty->GetCurrentAnchor(vAnchor);
+									cJointHandler.SetTranslationAbsolute(vAnchor);
+
+									// Get the absolute rotation of the joint
+									Quaternion qQ;
+									pBody->GetRotation(qQ);
+									cJointHandler.SetRotationAbsolute(pJoint->GetRotationAbsolute()*(GetTransform().GetRotation().GetUnitInverted()*qQ*pBody->qRot.GetUnitInverted()).GetUnitInverted());
+								}
+							}
+						}
+					}
+
+					// Set scene node position by using the root joint of the skeleton
+					if (pSkeleton->GetRootJoints().GetNumOfElements()) {
+						const JointHandler &cRootBaseJointHandler = pMeshSkeletonHandler->GetBaseJointHandlers()[pSkeleton->GetRootJoints()[0]];
+						const JointHandler &cRootJointHandler     = lstJointHandlers[pSkeleton->GetRootJoints()[0]];
+						if ((&cRootBaseJointHandler != &Array<JointHandler>::Null) &&
+							(&cRootJointHandler != &Array<JointHandler>::Null)) {
+							const PLMesh::Joint *pRootJoint = cRootJointHandler.GetElement();
+							if (pRootJoint) {
+								const Vector3 vRootTranslation = cRootJointHandler.GetTranslationAbsolute() - cRootBaseJointHandler.GetTranslation()*GetTransform().GetScale();
+								MoveTo(vRootTranslation);
+
+								// Update all joints
+								Vector3 vInvScale(1/GetTransform().GetScale().x, 1/GetTransform().GetScale().y, 1/GetTransform().GetScale().z);
+								for (uint32 i=0; i<lstJointHandlers.GetNumOfElements(); i++) {
+									JointHandler &cJointHandler = lstJointHandlers[i];
+									cJointHandler.SetTranslationAbsolute(GetTransform().GetRotation().GetUnitInverted()*(cJointHandler.GetTranslationAbsolute()-vRootTranslation)*vInvScale);
+								}
+							}
+						}
+					}
+
+					// The mesh requires an update
+					pMeshHandler->MeshUpdateRequired();
+
+					// Ensure that there's a "PLScene::SNMMeshUpdate" instance within the owner scene node which takes care of the frequent mesh update
+					GetSNMMeshUpdate();
+				}
+			}
+		}
+	}
+}
+
+/**
+*  @brief
+*    Returns a "PLScene::SNMMeshUpdate" instance from the owner scene node
+*/
+SNMMeshUpdate *SNRagdoll::GetSNMMeshUpdate()
+{
+	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
+	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
+	SNMMeshUpdate *pSNMMeshUpdate = (SNMMeshUpdate*)GetModifier(sSNMMeshUpdate);
+	if (!pSNMMeshUpdate)
+		pSNMMeshUpdate = (SNMMeshUpdate*)AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\"");
+
+	// Return the SNMMeshUpdate instance
+	return pSNMMeshUpdate;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual PLScene::SceneNode functions           ]
@@ -1038,85 +1142,18 @@ void SNRagdoll::DeInitFunction()
 	SNMesh::DeInitFunction();
 }
 
-void SNRagdoll::UpdateFunction()
+void SNRagdoll::OnActivate(bool bActivate)
 {
-	MeshHandler *pMeshHandler = GetMeshHandler();
-	if (pMeshHandler) {
-		SkeletonHandler *pMeshSkeletonHandler = pMeshHandler->GetSkeletonHandler();
-		if (pMeshSkeletonHandler) {
-			if (!GetMeshHandler()->GetMeshAnimationManager()) {
-				GetMeshHandler()->CreateMeshAnimationManager();
-				if (pMeshSkeletonHandler) {
-					pMeshSkeletonHandler->ResetJointStates();
-					pMeshSkeletonHandler->ApplyBaseJointStates();
-					pMeshSkeletonHandler->CalculateStates();
-				}
-			}
+	// Call the base implementation
+	SNMesh::OnActivate(bActivate);
 
-			// Get skeleton
-			const Skeleton *pSkeleton = m_pRagdollSkeletonHandler->GetResource();
-			if (pSkeleton) {
-				const Skeleton *pMeshSkeleton = pMeshSkeletonHandler->GetResource();
-				if (pMeshSkeleton) {
-					// Get absolute joint states
-					const Array<JointHandler> &lstJointHandlers = pMeshSkeletonHandler->GetJointHandlers();
-					for (uint32 i=0; i<m_lstBodies.GetNumOfElements(); i++) {
-						// Get this body
-						const RagdollBody *pBody = m_lstBodies[i];
-
-						const PLMesh::Joint *pJoint = pSkeleton->Get(pBody->sName);
-						if (pJoint) {
-							const RagdollJoint *pJointProperty = GetJoint(pBody->sJoint);
-							if (pJointProperty) {
-								const uint32 nID = pJoint->GetID();
-								JointHandler &cJointHandler = lstJointHandlers[nID];
-								if (&cJointHandler != &Array<JointHandler>::Null) {
-									// Mark this joint handler as user controlled
-									cJointHandler.SetUserControlled(true);
-
-									// Get the absolute position of the joint
-									Vector3 vAnchor;
-									pJointProperty->GetCurrentAnchor(vAnchor);
-									cJointHandler.SetTranslationAbsolute(vAnchor);
-
-									// Get the absolute rotation of the joint
-									Quaternion qQ;
-									pBody->GetRotation(qQ);
-									cJointHandler.SetRotationAbsolute(pJoint->GetRotationAbsolute()*(GetTransform().GetRotation().GetUnitInverted()*qQ*pBody->qRot.GetUnitInverted()).GetUnitInverted());
-								}
-							}
-						}
-					}
-
-					// Set scene node position by using the root joint of the skeleton
-					if (pSkeleton->GetRootJoints().GetNumOfElements()) {
-						const JointHandler &cRootBaseJointHandler = pMeshSkeletonHandler->GetBaseJointHandlers()[pSkeleton->GetRootJoints()[0]];
-						const JointHandler &cRootJointHandler     = lstJointHandlers[pSkeleton->GetRootJoints()[0]];
-						if ((&cRootBaseJointHandler != &Array<JointHandler>::Null) &&
-							(&cRootJointHandler != &Array<JointHandler>::Null)) {
-							const PLMesh::Joint *pRootJoint = cRootJointHandler.GetElement();
-							if (pRootJoint) {
-								const Vector3 vRootTranslation = cRootJointHandler.GetTranslationAbsolute() - cRootBaseJointHandler.GetTranslation()*GetTransform().GetScale();
-								MoveTo(vRootTranslation);
-
-								// Update all joints
-								Vector3 vInvScale(1/GetTransform().GetScale().x, 1/GetTransform().GetScale().y, 1/GetTransform().GetScale().z);
-								for (uint32 i=0; i<lstJointHandlers.GetNumOfElements(); i++) {
-									JointHandler &cJointHandler = lstJointHandlers[i];
-									cJointHandler.SetTranslationAbsolute(GetTransform().GetRotation().GetUnitInverted()*(cJointHandler.GetTranslationAbsolute()-vRootTranslation)*vInvScale);
-								}
-							}
-						}
-					}
-
-					// The mesh requires an update
-					pMeshHandler->MeshUpdateRequired();
-
-					// Call base implementation
-					SNMesh::UpdateFunction();
-				}
-			}
-		}
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }
 

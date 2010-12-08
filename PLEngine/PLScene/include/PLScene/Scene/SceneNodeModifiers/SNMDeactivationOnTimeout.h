@@ -66,7 +66,6 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 	public:
 		PLS_API float GetTimeout() const;
 		PLS_API void SetTimeout(float fValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -87,6 +86,13 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMDeactivationOnTimeout();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

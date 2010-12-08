@@ -33,15 +33,20 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLScene {
+	class SNMMeshUpdate;
+}
+namespace PLPhysics {
+	class PhysicsCharacterController;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLPhysics {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class PhysicsCharacterController;
 
 
 //[-------------------------------------------------------]
@@ -55,6 +60,9 @@ class PhysicsCharacterController;
 *    When using the unchanged virtual standard controller:
 *    Use a/w/d/s or cursor keys to walk, q/e to rotate and 'space' to jump. 'PageUp/PageDown'
 *    to move upwards/downwards. Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
+*
+*  @note
+*    - Adds automatically a "PLScene::SNMMeshUpdate" scene node modifier (if there's not yet one) in order to frequently update the mesh
 */
 class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 
@@ -99,13 +107,6 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -137,6 +138,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	//[-------------------------------------------------------]
 	protected:
 		PLPHYSICS_API virtual void InformedOnInit();
+		PLPHYSICS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]
@@ -148,6 +150,18 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 		*    Called when the scene node needs to be updated
 		*/
 		void NotifyUpdate();
+
+		/**
+		*  @brief
+		*    Returns a "PLScene::SNMMeshUpdate" instance from the owner scene node
+		*
+		*  @return
+		*    A "PLScene::SNMMeshUpdate" instance
+		*
+		*  @note
+		*    - If not already there, this method creates an instance of the "PLScene::SNMMeshUpdate" scene node modifier which frequently updates the mesh
+		*/
+		PLScene::SNMMeshUpdate *GetSNMMeshUpdate() const;
 
 
 	//[-------------------------------------------------------]

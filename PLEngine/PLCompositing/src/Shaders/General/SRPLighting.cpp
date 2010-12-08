@@ -336,9 +336,6 @@ void SRPLighting::RenderLightRec(Renderer &cRenderer, const SQCull &cCullQuery, 
 									if (pVertexBuffer && pVertexBuffer->GetVertexAttribute(VertexBuffer::Position)) {
 										// Draw the mesh
 										DrawMesh(cRenderer, cCullQuery, *pVisNode, *pSceneNode, *pMeshHandler, *pMesh, *pLODLevel, *pVertexBuffer, cLight, cLightVisNode, pSRPShadowMapping);
-
-										// Mark this scene node as drawn
-										pSceneNode->SetDrawn();
 									}
 								}
 							}

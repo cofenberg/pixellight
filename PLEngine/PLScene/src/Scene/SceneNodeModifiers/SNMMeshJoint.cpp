@@ -36,6 +36,7 @@
 #include <PLMesh/JointHandler.h>
 #include <PLMesh/SkeletonHandler.h>
 #include "PLScene/Visibility/VisNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMeshJoint.h"
 
@@ -160,26 +161,6 @@ void SNMMeshJoint::SetMax(const Vector3 &vValue)
 	}
 }
 
-void SNMMeshJoint::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMMesh::SetFlags(nValue);
-
-	// Connect/disconnect event handlers
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		UpdateJoint();
-
-		// Connect event handlers
-		cSceneNode.EventUpdate.   Connect(&EventHandlerUpdate);
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
-	} else {
-		// Connect event handlers
-		cSceneNode.EventUpdate.   Disconnect(&EventHandlerUpdate);
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -208,6 +189,9 @@ SNMMeshJoint::SNMMeshJoint(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
 		if (!pAniManager)
 			pAniManager = pMeshHandler->CreateMeshAnimationManager();
 	}
+
+	// Ensure that there's a "PLScene::SNMMeshUpdate" instance within the owner scene node which takes care of the frequent mesh update
+	GetSNMMeshUpdate();
 }
 
 /**
@@ -216,6 +200,31 @@ SNMMeshJoint::SNMMeshJoint(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
 */
 SNMMeshJoint::~SNMMeshJoint()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMMeshJoint::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handlers
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		UpdateJoint();
+
+		// Connect event handlers
+		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+	} else {
+		// Disconnect event handlers
+		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

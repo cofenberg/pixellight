@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMScaleRandomAnimation.h"
 
 
@@ -40,22 +41,6 @@ namespace PLScene {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMScaleRandomAnimation)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMScaleRandomAnimation::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -82,6 +67,22 @@ SNMScaleRandomAnimation::SNMScaleRandomAnimation(SceneNode &cSceneNode) : SNMTra
 */
 SNMScaleRandomAnimation::~SNMScaleRandomAnimation()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMScaleRandomAnimation::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

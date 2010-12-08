@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include "PLScene/Scene/SNCamera.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodes/SNMesh.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMeshMorphCameraNear.h"
 
@@ -41,22 +42,6 @@ namespace PLScene {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SNMMeshMorphCameraNear)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMMeshMorphCameraNear::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMMeshMorph::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
 
 
 //[-------------------------------------------------------]
@@ -81,6 +66,22 @@ SNMMeshMorphCameraNear::SNMMeshMorphCameraNear(SceneNode &cSceneNode) : SNMMeshM
 */
 SNMMeshMorphCameraNear::~SNMMeshMorphCameraNear()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMMeshMorphCameraNear::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

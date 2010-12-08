@@ -124,15 +124,6 @@ void SNMMeshMorph::SetMaxWeight(float fValue)
 	}
 }
 
-void SNMMeshMorph::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMMesh::SetFlags(nValue);
-
-	if (IsActive())
-		UpdateMorphTarget();
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -158,6 +149,16 @@ SNMMeshMorph::SNMMeshMorph(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
 */
 SNMMeshMorph::~SNMMeshMorph()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMMeshMorph::OnActivate(bool bActivate)
+{
+	if (bActivate)
+		UpdateMorphTarget();
 }
 
 
@@ -190,6 +191,10 @@ void SNMMeshMorph::UpdateMorphTarget()
 
 						// Update the morph target weight
 						pMeshHandler->GetBaseMorphTargetWeights()[nIndex] = m_fWeight;
+
+						// Ensure that there's a "PLScene::SNMMeshUpdate" instance within the owner scene node which takes care of the frequent mesh update
+						if (m_fWeight)
+							GetSNMMeshUpdate();
 					}
 				}
 			}

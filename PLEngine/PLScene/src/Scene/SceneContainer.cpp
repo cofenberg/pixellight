@@ -491,11 +491,14 @@ void SceneContainer::DeInitFunction()
 	SceneNode::DeInitFunction();
 }
 
-void SceneContainer::UpdateFunction()
+void SceneContainer::OnActivate(bool bActivate)
 {
-	// Update all scene nodes
+	// Call the base implementation
+	SceneNode::OnActivate(bActivate);
+
+	// Loop through all scene nodes
 	for (uint32 i=0; i<GetNumOfElements(); i++)
-		Get(i)->UpdateNode();
+		Get(i)->OnActivate(bActivate);
 }
 
 
@@ -506,14 +509,6 @@ bool SceneContainer::DeInit()
 {
 	// Cleanup
 	Clear();
-
-	// Done
-	return true;
-}
-
-bool SceneContainer::Update()
-{
-	UpdateNode();
 
 	// Done
 	return true;

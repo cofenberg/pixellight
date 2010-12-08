@@ -106,6 +106,12 @@ class SNGun : public PLSound::SNSound {
 	private:
 		/**
 		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+		/**
+		*  @brief
 		*    Called when a scene node was found
 		*
 		*  @param[in] cQuery
@@ -120,6 +126,7 @@ class SNGun : public PLSound::SNSound {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
+		PLCore::EventHandler<>												EventHandlerUpdate;
 		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	EventHandlerOnSceneNode;
 
 
@@ -136,7 +143,7 @@ class SNGun : public PLSound::SNSound {
 	//[ Private virtual PLScene::SceneNode functions          ] 
 	//[-------------------------------------------------------]
 	private:
-		virtual void UpdateFunction();
+		virtual void OnActivate(bool bActivate);
 
 
 };

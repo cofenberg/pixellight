@@ -73,6 +73,12 @@ class SNProjectile : public PLScene::SceneNode {
 	private:
 		/**
 		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+		/**
+		*  @brief
 		*    Called when a scene node was found
 		*
 		*  @param[in] cQuery
@@ -87,14 +93,15 @@ class SNProjectile : public PLScene::SceneNode {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &> EventHandlerSceneNode;
+		PLCore::EventHandler<>												EventHandlerUpdate;
+		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	EventHandlerSceneNode;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void UpdateFunction();
+		virtual void OnActivate(bool bActivate);
 
 
 };

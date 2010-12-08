@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGFume.h"
 
 
@@ -59,8 +60,10 @@ PGFume::PGFume() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
+	m_bUpdate(false),
 	m_fParticleTime(0.0f),
-	m_bCreateNewParticles(true)
+	m_bCreateNewParticles(true),
+	EventHandlerUpdate(&PGFume::NotifyUpdate, this)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial				   = "Data/Effects/PGFume.plfx";
@@ -114,6 +117,30 @@ void PGFume::CreateNewParticles(bool bCreate)
 
 
 //[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void PGFume::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNParticleGroup::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGFume::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -142,16 +169,15 @@ void PGFume::InitParticle(Particle &cParticle) const
 	cParticle.fCustom1      = Math::GetRandNegFloat()*0.5f;
 }
 
-
-//[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
-//[-------------------------------------------------------]
-void PGFume::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGFume::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = false;
 
 		// Check new particle generation
 		float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

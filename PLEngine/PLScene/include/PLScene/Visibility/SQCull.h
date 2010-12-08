@@ -266,7 +266,9 @@ class SQCull : public SceneQuery {
 		PLS_API void SetViewFrustum(const PLMath::PlaneSet &cFrustum);
 
 		// [TODO] Cleanup
+		PLS_API const PLMath::Matrix4x4 &GetViewMatrix() const;
 		PLS_API void SetViewMatrix(const PLMath::Matrix4x4 &mView);
+		PLS_API const PLMath::Matrix4x4 &GetViewProjectionMatrix() const;
 		PLS_API void SetViewProjectionMatrix(const PLMath::Matrix4x4 &mViewProjection);
 
 		/**

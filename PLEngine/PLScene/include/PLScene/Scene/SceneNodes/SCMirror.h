@@ -155,7 +155,6 @@ class SCMirror : public SCRenderToTexture {
 	private:
 		virtual void InitFunction();
 		virtual void UpdateAABoundingBox();
-		virtual void UpdateFunction();
 
 
 };

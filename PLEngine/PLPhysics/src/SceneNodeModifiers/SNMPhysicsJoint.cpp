@@ -148,9 +148,6 @@ void SNMPhysicsJoint::RecreatePhysicsJoint()
 //[-------------------------------------------------------]
 void SNMPhysicsJoint::InformedOnInit()
 {
-	// Call base implementation
-	SNMPhysics::InformedOnInit();
-
 	// Get PL physics world this joint is in
 	const SceneContainer *pContainer = GetSceneNode().GetContainer();
 	while (pContainer && !pContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld"))

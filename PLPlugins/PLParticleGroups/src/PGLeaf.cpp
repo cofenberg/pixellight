@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGLeaf.h"
 
 
@@ -58,7 +59,9 @@ PGLeaf::PGLeaf() :
 	LeafSize(this),
 	LeafSizeVariation(this),
 	Material(this),
-	Particles(this)
+	Particles(this),
+	EventHandlerUpdate(&PGLeaf::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Effects/PGLeaf.plfx";
@@ -71,6 +74,30 @@ PGLeaf::PGLeaf() :
 */
 PGLeaf::~PGLeaf()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void PGLeaf::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNParticleGroup::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGLeaf::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
 }
 
 
@@ -108,16 +135,15 @@ void PGLeaf::InitParticle(Particle &cParticle) const
 	cParticle.vColor[3] = 1.0f;
 }
 
-
-//[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
-//[-------------------------------------------------------]
-void PGLeaf::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGLeaf::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = false;
 
 		// If there are free particles, create new particles
 		Particle *pParticle = AddParticle();

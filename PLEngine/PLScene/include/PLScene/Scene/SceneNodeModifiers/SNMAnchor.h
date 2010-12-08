@@ -96,7 +96,6 @@ class SNMAnchor : public SceneNodeModifier {
 	public:
 		PLS_API PLGeneral::String GetAttachedNode() const;
 		PLS_API void SetAttachedNode(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -117,6 +116,13 @@ class SNMAnchor : public SceneNodeModifier {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMAnchor();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

@@ -46,22 +46,6 @@ pl_implement_class(SNMMoveController)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMMoveController::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventUpdate.Connect(&EventHandlerUpdate);
-	else
-		GetSceneNode().EventUpdate.Disconnect(&EventHandlerUpdate);
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -101,11 +85,20 @@ Controller *SNMMoveController::GetInputController() const
 //[-------------------------------------------------------]
 void SNMMoveController::InformedOnInit()
 {
-	// Call base implementation
-	SNMTransform::InformedOnInit();
-
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
 	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+}
+
+void SNMMoveController::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 
@@ -118,17 +111,17 @@ void SNMMoveController::InformedOnInit()
 */
 void SNMMoveController::NotifyUpdate()
 {
-	// Get the scene node
-	SceneNode &cSceneNode = GetSceneNode();
-
-	// Get direction vectors
-	const Quaternion &qRot = cSceneNode.GetTransform().GetRotation();
-	const Vector3 vDirLeftVector = qRot.GetXAxis();
-	const Vector3 vDirUpVector   = qRot.GetYAxis();
-	const Vector3 vDirVector     = qRot.GetZAxis();
-
 	// Check if input is active
 	if (m_pController->GetActive()) {
+		// Get the scene node
+		SceneNode &cSceneNode = GetSceneNode();
+
+		// Get direction vectors
+		const Quaternion &qRot = cSceneNode.GetTransform().GetRotation();
+		const Vector3 vDirLeftVector = qRot.GetXAxis();
+		const Vector3 vDirUpVector   = qRot.GetYAxis();
+		const Vector3 vDirVector     = qRot.GetZAxis();
+
 		// Set movement speed and don't forget to apply the current time difference
 		float fCurrentSpeed = Speed*Timing::GetInstance()->GetTimeDifference();
 

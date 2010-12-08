@@ -88,6 +88,21 @@ const Matrix3x4 &VisNode::GetWorldMatrix() const
 void VisNode::SetWorldMatrix(const Matrix3x4 &mWorld)
 {
 	m_mWorld = mWorld;
+
+	m_mInvWorld = m_mWorld.GetInverted();
+
+	const VisNode *pVisNodeParent = GetParent();
+	if (pVisNodeParent && pVisNodeParent->IsContainer()) {
+		 const SQCull *pSQCull = ((VisContainer*)pVisNodeParent)->GetCullQuery();
+
+		// Set the world view transform matrix
+		m_mWorldView  = pSQCull->GetViewMatrix();
+		m_mWorldView *= m_mWorld;
+
+		// Set the world view projection transform matrix
+		m_mWorldViewProj  = pSQCull->GetViewProjectionMatrix();
+		m_mWorldViewProj *= m_mWorld;
+	}
 }
 
 /**

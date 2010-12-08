@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Matrix3x3.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLSound/SoundManager.h"
 #include "PLSound/SceneNodes/SCSound.h"
 
@@ -89,7 +90,7 @@ void SCSound::SetListener(const String &sValue)
 	if (m_sListener != sValue) {
 		m_sListener = sValue;
 		m_cListenerNodeHandler.SetElement(Get(m_sListener));
-		UpdateFunction();
+		NotifyUpdate();
 	}
 }
 
@@ -106,6 +107,7 @@ SCSound::SCSound() :
 	Volume(this),
 	Pitch(this),
 	Listener(this),
+	EventHandlerUpdate(&SCSound::NotifyUpdate, this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_pSoundManager(NULL)
@@ -137,36 +139,14 @@ SoundManager *SCSound::GetSoundManager() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLScene::SceneNode functions        ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-void SCSound::InitFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SCSound::NotifyUpdate()
 {
-	// Call base implementation
-	SceneContainer::InitFunction();
-
-	// Is the sound manager already created?
-	if (!m_pSoundManager) {
-		// Create the PL sound manager
-		const Class *pClass = ClassManager::GetInstance()->GetClass(SoundAPI.Get());
-		if (pClass && pClass->IsDerivedFrom("PLSound::SoundManager")) {
-			Object *pObject = pClass->Create();
-			if (pObject) {
-				m_pSoundManager = (SoundManager*)pObject;
-				if (m_pSoundManager->Init()) {
-					m_pSoundManager->SetVolume(m_fVolume);
-					m_pSoundManager->SetPitch (m_fPitch);
-					UpdateFunction();
-				}
-			}
-		}
-	}
-}
-
-void SCSound::UpdateFunction()
-{
-	// Call base implementation
-	SceneContainer::UpdateFunction();
-
 	// Update the PL sound manager
 	if (m_pSoundManager) {
 		// Get the scene node used as listener
@@ -193,6 +173,48 @@ void SCSound::UpdateFunction()
 
 		// Update sound manger
 		m_pSoundManager->Update();
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNode functions        ]
+//[-------------------------------------------------------]
+void SCSound::InitFunction()
+{
+	// Call base implementation
+	SceneContainer::InitFunction();
+
+	// Is the sound manager already created?
+	if (!m_pSoundManager) {
+		// Create the PL sound manager
+		const Class *pClass = ClassManager::GetInstance()->GetClass(SoundAPI.Get());
+		if (pClass && pClass->IsDerivedFrom("PLSound::SoundManager")) {
+			Object *pObject = pClass->Create();
+			if (pObject) {
+				m_pSoundManager = (SoundManager*)pObject;
+				if (m_pSoundManager->Init()) {
+					m_pSoundManager->SetVolume(m_fVolume);
+					m_pSoundManager->SetPitch (m_fPitch);
+					NotifyUpdate();
+				}
+			}
+		}
+	}
+}
+
+void SCSound::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SceneContainer::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }
 

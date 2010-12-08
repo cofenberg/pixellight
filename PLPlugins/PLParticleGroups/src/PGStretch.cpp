@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include "PLParticleGroups/PGStretch.h"
 
 
@@ -54,7 +55,9 @@ PGStretch::PGStretch() :
 	Length(this),
 	Color(this),
 	Material(this),
-	Particles(this)
+	Particles(this),
+	EventHandlerUpdate(&PGStretch::NotifyUpdate, this),
+	m_bUpdate(false)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGStretch.dds";
@@ -73,12 +76,39 @@ PGStretch::~PGStretch()
 //[-------------------------------------------------------]
 //[ Private virtual PLScene::SceneNode functions          ]
 //[-------------------------------------------------------]
-void PGStretch::UpdateFunction()
+void PGStretch::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNParticleGroup::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
+}
+
+void PGStretch::OnAddedToVisibilityTree(VisNode &cVisNode)
+{
+	m_bUpdate = true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void PGStretch::NotifyUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
-	if ((GetFlags() & ForceUpdate) || GetDrawn()) {
-		// Call base implementation
-		SNParticleGroup::UpdateFunction();
+	if ((GetFlags() & ForceUpdate) || m_bUpdate) {
+		m_bUpdate = false;
 
 		// If there are free particles, create new particles
 		Particle *pParticle = AddParticle();

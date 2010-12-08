@@ -64,13 +64,6 @@ class SNMMeshMorphCameraNear : public SNMMeshMorph {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -88,6 +81,13 @@ class SNMMeshMorphCameraNear : public SNMMeshMorph {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMMeshMorphCameraNear();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

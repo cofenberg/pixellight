@@ -81,7 +81,8 @@ class SceneContext {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<PLInput::Controller*, PLGeneral::String> EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
+		PLCore::Event<PLInput::Controller*, PLGeneral::String>	EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
+		PLCore::Event<>											EventUpdate;				/**< Scene context update event */
 
 
 	//[-------------------------------------------------------]
@@ -144,6 +145,18 @@ class SceneContext {
 		*    is called once per frame automatically.
 		*/
 		PLS_API void Cleanup();
+
+		/**
+		*  @brief
+		*    Method that is called once per update loop
+		*
+		*  @remarks
+		*    You can use this method to do work you have to to within each frame. It's
+		*    recommended to keep the work done within the implementation as compact as possible.
+		*    Don't use this method to perform 'polling'-everything, use events or if required
+		*    for example timers instead.
+		*/
+		PLS_API void Update();
 
 		/**
 		*  @brief

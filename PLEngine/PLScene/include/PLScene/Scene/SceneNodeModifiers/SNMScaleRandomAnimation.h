@@ -64,13 +64,6 @@ class SNMScaleRandomAnimation : public PLScene::SNMTransform {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -88,6 +81,13 @@ class SNMScaleRandomAnimation : public PLScene::SNMTransform {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMScaleRandomAnimation();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

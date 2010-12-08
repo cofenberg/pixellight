@@ -71,6 +71,7 @@ pl_implement_class(SNConsole)
 *    Default constructor
 */
 SNConsole::SNConsole() :
+	EventHandlerUpdate(&SNConsole::NotifyUpdate, this),
 	m_nRow(0),
 	m_nLastRow(0),
 	m_fPos(0.0f),
@@ -141,126 +142,13 @@ String SNConsole::GetDescription() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual SceneNode functions                    ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-void SNConsole::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
-{
-	// Check whether the console is inactive
-	if (m_nState != Inactive) {
-		DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-
-		// Call base implementation
-		SNConsoleBase::DrawPost(cRenderer, pVisNode);
-
-		// Backup renderer states
-		uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
-		uint32 nFillModeBackup      = cRenderer.GetRenderState(RenderState::FillMode);
-
-		// Set new renderer states
-		cRenderer.SetRenderState(RenderState::FixedFillMode, Fill::Solid);
-		cRenderer.SetRenderState(RenderState::FillMode,      Fill::Solid);
-
-		// Draw the background material
-		Material *pMaterial = m_cMaterial.GetResource();
-		if (pMaterial) {
-			SamplerStates cSamplerStates;
-			for (uint32 i=0; i<pMaterial->GetNumOfPasses(); i++) {
-				pMaterial->SetupPass(i);
-				TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
-				if (pTextureBuffer) {
-					// Begin 2D mode
-					cDrawHelpers.Begin2DMode();
-
-						// Draw image
-						cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
-						cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2::Zero, Vector2::One, Color4(0.5f, 0.5f, 0.5f, m_fAlpha/255*0.6f));
-
-					// End 2D mode
-					cDrawHelpers.End2DMode();
-				}
-			}
-		}
-
-		// Get the font
-		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
-		if (pFont) {
-			// Set render states
-			cRenderer.GetRendererContext().GetEffectManager().Use();
-			cRenderer.SetRenderState(RenderState::ZEnable,      false);
-			cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
-
-			// Begin 2D mode
-			static const float VirtualWidth  = 800.0f;
-			static const float VirtualHeight = 600.0f;
-			cDrawHelpers.Begin2DMode(0.0f, 0.0f, VirtualWidth, VirtualHeight);
-
-				// Draw current console line
-				const float fY = 100*((255-m_fAlpha)/255);
-				cDrawHelpers.DrawText(*pFont, ">>" + m_sFoundCommand, Color4(0.5f, 0.5f, 0.5f, m_fAlpha/255), Vector2(5, 480-fY));
-				const Color4 cColor(1.0f, 1.0f, 1.0f, m_fAlpha/255);
-				cDrawHelpers.DrawText(*pFont, ">>" + m_sCommand, cColor, Vector2(5, 480-fY));
-
-				// Draw cursor
-				if ((Timing::GetInstance()->GetPastTime()/500)%2) {
-					const float fX = m_nCursor ? cDrawHelpers.GetTextWidth(*pFont, ">>" + m_sCommand.GetSubstring(0, m_nCursor)) : cDrawHelpers.GetTextWidth(*pFont, ">>");
-					if (m_nCursor)
-						cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
-					else
-						cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
-				}
-
-				// Draw selection
-				if (m_nSelStart != -1 && m_nSelEnd != -1 && m_nSelStart != m_nSelEnd) {
-					// Get the start and end of the selection
-					uint32 nSelStart = m_nSelStart;
-					uint32 nSelEnd   = m_nSelEnd;
-					if (nSelStart > nSelEnd) {
-						nSelStart = m_nSelEnd;
-						nSelEnd   = m_nSelStart;
-					}
-
-					// Draw selection
-					float fX = 5+cDrawHelpers.GetTextWidth(*pFont, ">>")*VirtualWidth;
-					if (nSelStart)
-						fX += cDrawHelpers.GetTextWidth(*pFont, m_sCommand.GetSubstring(0, nSelStart))*VirtualWidth;
-					const float fHeight = cDrawHelpers.GetTextHeight(*pFont)*VirtualHeight;
-					cDrawHelpers.DrawLine(cColor,
-										  Vector2(fX, 482-fY+fHeight),
-										  Vector2(fX+cDrawHelpers.GetTextWidth(*pFont, m_sCommand.GetSubstring(nSelStart, nSelEnd-nSelStart))*VirtualWidth, 482-fY+fHeight),
-										  1.0f);
-				}
-
-				// Print console description
-				cDrawHelpers.DrawText(*pFont, GetDescription(), cColor, Vector2(400, 500-fY), Font::CenterText);
-
-				// Draw the log
-				for (uint32 i=0; i<m_lstLogLines.GetNumOfElements(); i++)
-					cDrawHelpers.DrawText(*pFont, m_lstLogLines[i], cColor, Vector2(5, 460 - fY - i*15.0f), 0, Vector2(0.8f, 0.8f));
-
-			// End 2D mode
-			cDrawHelpers.End2DMode();
-
-			// Reset renderer states
-			cRenderer.SetRenderState(RenderState::FillMode,		 nFillModeBackup);
-			cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
-		}
-	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual SceneNode functions                   ]
-//[-------------------------------------------------------]
-void SNConsole::InitFunction()
-{
-	// Call base implementation
-	SNConsoleBase::InitFunction();
-
-	// Load material
-	m_cMaterial.SetResource(GetSceneContext()->GetRendererContext().GetMaterialManager().LoadResource(StandardMaterial));
-}
-
-void SNConsole::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNConsole::NotifyUpdate()
 {
 	// Ignore time scale
 	float fTimeDiff = Timing::GetInstance()->GetTimeDifference()/Timing::GetInstance()->GetTimeScaleFactor();
@@ -427,6 +315,132 @@ void SNConsole::UpdateFunction()
 			cFile.Close();
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual SceneNode functions                    ]
+//[-------------------------------------------------------]
+void SNConsole::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
+{
+	// Check whether the console is inactive
+	if (m_nState != Inactive) {
+		DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+
+		// Call base implementation
+		SNConsoleBase::DrawPost(cRenderer, pVisNode);
+
+		// Backup renderer states
+		uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
+		uint32 nFillModeBackup      = cRenderer.GetRenderState(RenderState::FillMode);
+
+		// Set new renderer states
+		cRenderer.SetRenderState(RenderState::FixedFillMode, Fill::Solid);
+		cRenderer.SetRenderState(RenderState::FillMode,      Fill::Solid);
+
+		// Draw the background material
+		Material *pMaterial = m_cMaterial.GetResource();
+		if (pMaterial) {
+			SamplerStates cSamplerStates;
+			for (uint32 i=0; i<pMaterial->GetNumOfPasses(); i++) {
+				pMaterial->SetupPass(i);
+				TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
+				if (pTextureBuffer) {
+					// Begin 2D mode
+					cDrawHelpers.Begin2DMode();
+
+						// Draw image
+						cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
+						cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2::Zero, Vector2::One, Color4(0.5f, 0.5f, 0.5f, m_fAlpha/255*0.6f));
+
+					// End 2D mode
+					cDrawHelpers.End2DMode();
+				}
+			}
+		}
+
+		// Get the font
+		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		if (pFont) {
+			// Set render states
+			cRenderer.GetRendererContext().GetEffectManager().Use();
+			cRenderer.SetRenderState(RenderState::ZEnable,      false);
+			cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
+
+			// Begin 2D mode
+			static const float VirtualWidth  = 800.0f;
+			static const float VirtualHeight = 600.0f;
+			cDrawHelpers.Begin2DMode(0.0f, 0.0f, VirtualWidth, VirtualHeight);
+
+				// Draw current console line
+				const float fY = 100*((255-m_fAlpha)/255);
+				cDrawHelpers.DrawText(*pFont, ">>" + m_sFoundCommand, Color4(0.5f, 0.5f, 0.5f, m_fAlpha/255), Vector2(5, 480-fY));
+				const Color4 cColor(1.0f, 1.0f, 1.0f, m_fAlpha/255);
+				cDrawHelpers.DrawText(*pFont, ">>" + m_sCommand, cColor, Vector2(5, 480-fY));
+
+				// Draw cursor
+				if ((Timing::GetInstance()->GetPastTime()/500)%2) {
+					const float fX = m_nCursor ? cDrawHelpers.GetTextWidth(*pFont, ">>" + m_sCommand.GetSubstring(0, m_nCursor)) : cDrawHelpers.GetTextWidth(*pFont, ">>");
+					if (m_nCursor)
+						cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
+					else
+						cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
+				}
+
+				// Draw selection
+				if (m_nSelStart != -1 && m_nSelEnd != -1 && m_nSelStart != m_nSelEnd) {
+					// Get the start and end of the selection
+					uint32 nSelStart = m_nSelStart;
+					uint32 nSelEnd   = m_nSelEnd;
+					if (nSelStart > nSelEnd) {
+						nSelStart = m_nSelEnd;
+						nSelEnd   = m_nSelStart;
+					}
+
+					// Draw selection
+					float fX = 5+cDrawHelpers.GetTextWidth(*pFont, ">>")*VirtualWidth;
+					if (nSelStart)
+						fX += cDrawHelpers.GetTextWidth(*pFont, m_sCommand.GetSubstring(0, nSelStart))*VirtualWidth;
+					const float fHeight = cDrawHelpers.GetTextHeight(*pFont)*VirtualHeight;
+					cDrawHelpers.DrawLine(cColor,
+										  Vector2(fX, 482-fY+fHeight),
+										  Vector2(fX+cDrawHelpers.GetTextWidth(*pFont, m_sCommand.GetSubstring(nSelStart, nSelEnd-nSelStart))*VirtualWidth, 482-fY+fHeight),
+										  1.0f);
+				}
+
+				// Print console description
+				cDrawHelpers.DrawText(*pFont, GetDescription(), cColor, Vector2(400, 500-fY), Font::CenterText);
+
+				// Draw the log
+				for (uint32 i=0; i<m_lstLogLines.GetNumOfElements(); i++)
+					cDrawHelpers.DrawText(*pFont, m_lstLogLines[i], cColor, Vector2(5, 460 - fY - i*15.0f), 0, Vector2(0.8f, 0.8f));
+
+			// End 2D mode
+			cDrawHelpers.End2DMode();
+
+			// Reset renderer states
+			cRenderer.SetRenderState(RenderState::FillMode,		 nFillModeBackup);
+			cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
+		}
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual SceneNode functions                   ]
+//[-------------------------------------------------------]
+void SNConsole::InitFunction()
+{
+	// Call base implementation
+	SNConsoleBase::InitFunction();
+
+	// Load material
+	m_cMaterial.SetResource(GetSceneContext()->GetRendererContext().GetMaterialManager().LoadResource(StandardMaterial));
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext)
+		pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
 }
 
 

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifier.h"
 
 
@@ -65,6 +66,16 @@ void SceneNodeModifier::SetFlags(uint32 nValue)
 SceneNode &SceneNodeModifier::GetSceneNode() const
 {
 	return *m_pSceneNode;
+}
+
+/**
+*  @brief
+*    Returns the scene context the owner scene node is in
+*/
+SceneContext *SceneNodeModifier::GetSceneContext() const
+{
+	// There's always a valid owner scene node, so we don't need to check for NULL!
+	return m_pSceneNode->GetSceneContext();
 }
 
 /**
@@ -130,7 +141,16 @@ Controller *SceneNodeModifier::GetInputController() const
 */
 void SceneNodeModifier::InformedOnInit()
 {
-	SetFlags(GetFlags());
+	// The default implementation is empty
+}
+
+/**
+*  @brief
+*    Called when the scene node modifier has been activated or deactivated
+*/
+void SceneNodeModifier::OnActivate(bool bActivate)
+{
+	// The default implementation is empty
 }
 
 

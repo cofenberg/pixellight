@@ -91,7 +91,6 @@ class SNMOrbiting : public SceneNodeModifier {
 		PLS_API void SetMaxDistance(float fValue);
 		PLS_API float GetDistance();
 		PLS_API void SetDistance(float fValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -112,6 +111,13 @@ class SNMOrbiting : public SceneNodeModifier {
 		*    Destructor
 		*/
 		PLS_API virtual ~SNMOrbiting();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

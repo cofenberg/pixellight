@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Tools/Stopwatch.h>
+#include <PLGeneral/Tools/Profiling.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLMesh/MeshManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
@@ -158,6 +160,34 @@ void SceneContext::Cleanup()
 			}
 		}
 		m_lstDeleteNodes.Clear();
+	}
+}
+
+/**
+*  @brief
+*    Method that is called once per update loop
+*/
+void SceneContext::Update()
+{
+	// Perform profiling?
+	Profiling *pProfiling = Profiling::GetInstance();
+	if (pProfiling->IsActive()) {
+		// Start the stopwatch
+		Stopwatch cStopwatch;
+		cStopwatch.Start();
+
+		// Emit event
+		EventUpdate.Emit();
+
+		// Stop the stopwatch
+		cStopwatch.Stop();
+
+		// Update the profiling data
+		pProfiling->Set("Scene context", "Updated elements", String::Format("%d", EventUpdate.GetNumOfConnects()));
+		pProfiling->Set("Scene context", "Update time",		 String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
+	} else {
+		// Emit event
+		EventUpdate.Emit();
 	}
 }
 

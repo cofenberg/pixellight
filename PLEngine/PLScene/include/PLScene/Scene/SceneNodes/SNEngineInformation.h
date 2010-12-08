@@ -146,6 +146,19 @@ class SNEngineInformation : public SceneNode {
 		*/
 		void DrawProfiling(PLRenderer::Renderer &cRenderer);
 
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
@@ -164,10 +177,10 @@ class SNEngineInformation : public SceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual SceneNode functions                   ]
+	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
-	private:
-		virtual void UpdateFunction();
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 };

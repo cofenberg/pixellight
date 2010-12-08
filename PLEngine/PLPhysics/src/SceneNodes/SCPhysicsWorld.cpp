@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLScene/Scene/SceneContext.h>
 #include "PLPhysics/World.h"
 #include "PLPhysics/SceneNodes/SCPhysicsWorld.h"
 
@@ -167,6 +168,7 @@ SCPhysicsWorld::SCPhysicsWorld() :
 	Gravity(this),
 	BuoyancyActive(this),
 	BuoyancyPlaneY(this),
+	EventHandlerUpdate(&SCPhysicsWorld::NotifyUpdate, this),
 	EventHandlerAABoundingBox(&SCPhysicsWorld::NotifyAABoundingBox, this),
 	m_bSimulationActive(true),
 	m_fSimulationSpeed(1.0f),
@@ -214,6 +216,17 @@ World *SCPhysicsWorld::GetWorld() const
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SCPhysicsWorld::NotifyUpdate()
+{
+	// Update the PL physics simulation
+	if (m_pWorld && m_bSimulationActive)
+		m_pWorld->UpdateSimulation();
+}
+
 /**
 *  @brief
 *    Called when the scene node axis aligned bounding box changed
@@ -280,14 +293,19 @@ void SCPhysicsWorld::DeInitFunction()
 		m_pWorld->SetSimulationActive(bSimulationActive);
 }
 
-void SCPhysicsWorld::UpdateFunction()
+void SCPhysicsWorld::OnActivate(bool bActivate)
 {
-	// Call base implementation
-	SceneContainer::UpdateFunction();
+	// Call the base implementation
+	SceneContainer::OnActivate(bActivate);
 
-	// Update the PL physics simulation
-	if (m_pWorld && m_bSimulationActive)
-		m_pWorld->UpdateSimulation();
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

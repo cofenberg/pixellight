@@ -144,6 +144,13 @@ class SNMSound : public PLScene::SceneNodeModifier {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
+	//[-------------------------------------------------------]
+	protected:
+		PLSOUND_API virtual void OnActivate(bool bActivate);
+
+
+	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:

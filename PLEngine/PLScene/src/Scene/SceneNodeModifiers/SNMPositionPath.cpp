@@ -38,6 +38,7 @@
 #include "PLScene/Visibility/SQCull.h"
 #include "PLScene/Visibility/VisContainer.h"
 #include "PLScene/Scene/SceneNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMPositionPath.h"
 
 
@@ -87,22 +88,6 @@ void SNMPositionPath::SetFilename(const String &sValue)
 	}
 }
 
-void SNMPositionPath::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMTransform::SetFlags(nValue);
-
-	// Connect/disconnect event handlers
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.EventUpdate.   Connect(&EventHandlerUpdate);
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
-	} else {
-		cSceneNode.EventUpdate.   Disconnect(&EventHandlerUpdate);
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -140,6 +125,29 @@ SNMPositionPath::~SNMPositionPath()
 GraphPath *SNMPositionPath::GetGraphPath() const
 {
 	return m_pPathHandler->GetResource();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMPositionPath::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handlers
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handlers
+		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+	} else {
+		// Disconnect event handlers
+		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+	}
 }
 
 

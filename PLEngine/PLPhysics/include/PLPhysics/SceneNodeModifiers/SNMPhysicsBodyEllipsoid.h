@@ -80,7 +80,6 @@ class SNMPhysicsBodyEllipsoid : public SNMPhysicsBody {
 	public:
 		PLPHYSICS_API const PLMath::Vector3 &GetRadius() const;
 		PLPHYSICS_API void SetRadius(const PLMath::Vector3 &vValue);
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -131,6 +130,13 @@ class SNMPhysicsBodyEllipsoid : public SNMPhysicsBody {
 	//[-------------------------------------------------------]
 	private:
 		PLMath::Vector3 m_vRadius;	/**< Ellipsoid radius along each axis, if null, a ellipsoid 'inside' the axis align bounding box in 'scene node space' is used as default */
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNodeModifier functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

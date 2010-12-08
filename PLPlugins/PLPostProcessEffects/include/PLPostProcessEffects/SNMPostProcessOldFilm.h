@@ -62,13 +62,6 @@ class SNMPostProcessOldFilm : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -86,6 +79,13 @@ class SNMPostProcessOldFilm : public PLCompositing::SNMPostProcess {
 		*    Destructor
 		*/
 		virtual ~SNMPostProcessOldFilm();
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNodeModifier functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

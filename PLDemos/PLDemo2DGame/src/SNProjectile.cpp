@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQAABoundingBox.h>
 #include "SNProjectile.h"
@@ -52,6 +53,7 @@ pl_implement_class(SNProjectile)
 */
 SNProjectile::SNProjectile() :
 	Direction(this),
+	EventHandlerUpdate(&SNProjectile::NotifyUpdate, this),
 	EventHandlerSceneNode(&SNProjectile::NotifySceneNode, this)
 {
 	// Set the bounding box
@@ -70,6 +72,43 @@ SNProjectile::~SNProjectile()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNProjectile::NotifyUpdate()
+{
+	// Get time difference
+	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
+
+	// Update the bomb timer
+	GetTransform().SetPosition(GetTransform().GetPosition() + Vector3(Direction.Get().x, Direction.Get().y, 0.0f)*fTimeDiff*100);
+
+	// Has the projectile left the screen?
+	if (GetTransform().GetPosition().x < -3  || GetTransform().GetPosition().y < -3 || GetTransform().GetPosition().x > 323 || GetTransform().GetPosition().y > 203) {
+		Delete(); // Destroy the projectile
+
+	// Collision detection
+	} else {
+		// Create a new scene query we can use to check which scene nodes are within a given axis aligned bounding box
+		SQAABoundingBox *pSceneQuery = (SQAABoundingBox*)GetContainer()->CreateQuery("PLScene::SQAABoundingBox");
+		if (pSceneQuery) {
+			// Connect event handler
+			pSceneQuery->EventSceneNode.Connect(&EventHandlerSceneNode);
+
+			// Setup axis aligned bounding box
+			pSceneQuery->GetAABoundingBox() = GetContainerAABoundingBox();
+
+			// Let's perform the query...
+			pSceneQuery->PerformQuery();
+
+			// ... and clean up if we are done, we don't use 'GetContainer()' in here because this node
+			// can be destroyed inside our query
+			pSceneQuery->GetSceneContainer().DestroyQuery(*pSceneQuery);
+		}
+	}
+}
+
 /**
 *  @brief
 *    Called when a scene node was found
@@ -107,35 +146,18 @@ void SNProjectile::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 //[-------------------------------------------------------]
 //[ Private virtual PLScene::SceneNode functions          ]
 //[-------------------------------------------------------]
-void SNProjectile::UpdateFunction()
+void SNProjectile::OnActivate(bool bActivate)
 {
-	// Get time difference
-	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
+	// Call the base implementation
+	SceneNode::OnActivate(bActivate);
 
-	// Update the bomb timer
-	GetTransform().SetPosition(GetTransform().GetPosition() + Vector3(Direction.Get().x, Direction.Get().y, 0.0f)*fTimeDiff*100);
-
-	// Has the projectile left the screen?
-	if (GetTransform().GetPosition().x < -3  || GetTransform().GetPosition().y < -3 || GetTransform().GetPosition().x > 323 || GetTransform().GetPosition().y > 203) {
-		Delete(); // Destroy the projectile
-
-	// Collision detection
-	} else {
-		// Create a new scene query we can use to check which scene nodes are within a given axis aligned bounding box
-		SQAABoundingBox *pSceneQuery = (SQAABoundingBox*)GetContainer()->CreateQuery("PLScene::SQAABoundingBox");
-		if (pSceneQuery) {
-			// Connect event handler
-			pSceneQuery->EventSceneNode.Connect(&EventHandlerSceneNode);
-
-			// Setup axis aligned bounding box
-			pSceneQuery->GetAABoundingBox() = GetContainerAABoundingBox();
-
-			// Let's perform the query...
-			pSceneQuery->PerformQuery();
-
-			// ... and clean up if we are done, we don't use 'GetContainer()' in here because this node
-			// can be destroyed inside our query
-			pSceneQuery->GetSceneContainer().DestroyQuery(*pSceneQuery);
-		}
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }
+

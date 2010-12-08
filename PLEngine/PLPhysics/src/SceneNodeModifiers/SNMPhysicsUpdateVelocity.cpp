@@ -47,26 +47,6 @@ pl_implement_class(SNMPhysicsUpdateVelocity)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-void SNMPhysicsUpdateVelocity::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysics::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerRotation);
-	} else {
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerRotation);
-	}
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -87,6 +67,25 @@ SNMPhysicsUpdateVelocity::SNMPhysicsUpdateVelocity(SceneNode &cSceneNode) : SNMP
 */
 SNMPhysicsUpdateVelocity::~SNMPhysicsUpdateVelocity()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
+//[-------------------------------------------------------]
+void SNMPhysicsUpdateVelocity::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handler
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handler
+		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPosition);
+		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerRotation);
+	} else {
+		// Disconnect event handler
+		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
+		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerRotation);
+	}
 }
 
 

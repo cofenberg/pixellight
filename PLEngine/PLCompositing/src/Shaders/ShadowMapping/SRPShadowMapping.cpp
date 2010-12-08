@@ -590,9 +590,6 @@ void SRPShadowMapping::CollectMeshBatchesRec(const SQCull &cCullQuery)
 									}
 								}
 							}
-
-							// Mark this scene node as drawn
-							pSceneNode->SetDrawn();
 						}
 					}
 				}

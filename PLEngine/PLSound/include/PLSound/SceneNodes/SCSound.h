@@ -106,6 +106,24 @@ class SCSound : public PLScene::SceneContainer {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
@@ -121,7 +139,7 @@ class SCSound : public PLScene::SceneContainer {
 	//[-------------------------------------------------------]
 	protected:
 		PLSOUND_API virtual void InitFunction();
-		PLSOUND_API virtual void UpdateFunction();
+		PLSOUND_API virtual void OnActivate(bool bActivate);
 
 
 };

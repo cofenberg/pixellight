@@ -100,7 +100,6 @@ class SNMRotationKeyframeAnimation : public SNMTransform {
 	public:
 		PLS_API PLGeneral::String GetKeys() const;
 		PLS_API void SetKeys(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -139,6 +138,13 @@ class SNMRotationKeyframeAnimation : public SNMTransform {
 		*    The animation controller
 		*/
 		PLS_API PLRenderer::Animation &GetAnimation();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual SceneNodeModifier functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

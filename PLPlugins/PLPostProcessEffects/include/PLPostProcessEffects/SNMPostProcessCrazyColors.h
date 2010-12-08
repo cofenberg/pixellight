@@ -69,13 +69,6 @@ class SNMPostProcessCrazyColors : public PLCompositing::SNMPostProcess {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -93,6 +86,13 @@ class SNMPostProcessCrazyColors : public PLCompositing::SNMPostProcess {
 		*    Destructor
 		*/
 		virtual ~SNMPostProcessCrazyColors();
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneNodeModifier functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

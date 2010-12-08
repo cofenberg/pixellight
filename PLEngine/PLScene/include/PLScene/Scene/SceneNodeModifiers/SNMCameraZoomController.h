@@ -67,13 +67,6 @@ class SNMCameraZoomController : public SNMCameraZoom {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -105,6 +98,7 @@ class SNMCameraZoomController : public SNMCameraZoom {
 	//[-------------------------------------------------------]
 	protected:
 		PLS_API virtual void InformedOnInit();
+		PLS_API virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]

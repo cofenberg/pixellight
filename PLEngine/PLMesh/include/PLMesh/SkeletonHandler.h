@@ -31,6 +31,7 @@
 #include <PLGeneral/Container/Array.h>
 #include <PLCore/Tools/ResourceHandler.h>
 #include "PLMesh/Joint.h"
+#include "PLMesh/Skeleton.h"
 #include "PLMesh/JointHandler.h"
 
 
@@ -43,9 +44,6 @@ namespace PLGraphics {
 namespace PLRenderer {
 	class Font;
 	class Renderer;
-}
-namespace PLMesh {
-	class Skeleton;
 }
 
 

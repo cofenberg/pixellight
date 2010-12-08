@@ -195,9 +195,6 @@ void SRPEmissiveFixedFunctions::DrawRec(Renderer &cRenderer, const SQCull &cCull
 												if (bFirst) {
 													bFirst = false;
 
-													// Mark this scene node as drawn
-													pSceneNode->SetDrawn();
-
 													// Bind buffers
 													cRenderer.SetIndexBuffer(pIndexBuffer);
 													pFixedFunctions->SetVertexBuffer(pMeshHandler->GetVertexBuffer());

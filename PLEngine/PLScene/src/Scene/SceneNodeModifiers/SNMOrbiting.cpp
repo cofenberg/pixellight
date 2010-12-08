@@ -30,6 +30,7 @@
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include "PLScene/Visibility/VisNode.h"
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMOrbiting.h"
 
@@ -106,26 +107,6 @@ void SNMOrbiting::SetDistance(float fValue)
 	}
 }
 
-void SNMOrbiting::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SceneNodeModifier::SetFlags(nValue);
-
-	// Connect/disconnect event handlers
-	SceneNode &cSceneNode = GetSceneNode();
-	if (IsActive()) {
-		cSceneNode.EventUpdate.   Connect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
-	} else {
-		cSceneNode.EventUpdate.   Disconnect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -159,6 +140,33 @@ SNMOrbiting::SNMOrbiting(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 */
 SNMOrbiting::~SNMOrbiting()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual SceneNodeModifier functions         ]
+//[-------------------------------------------------------]
+void SNMOrbiting::OnActivate(bool bActivate)
+{
+	// Connect/disconnect event handlers
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handlers
+		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
+	} else {
+		// Disconnect event handlers
+		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
+		SceneContext *pSceneContext = GetSceneContext();
+		if (pSceneContext)
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerPositionRotationUpdate);
+	}
 }
 
 

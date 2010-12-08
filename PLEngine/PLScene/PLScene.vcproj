@@ -1253,6 +1253,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\Scene\SceneNodeModifiers\SNMMeshUpdate.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\PLScene\Scene\SceneNodeModifiers\SNMMeshUpdate.h"
+					>
+				</File>
+				<File
 					RelativePath="src\Scene\SceneNodeModifiers\SNMMoveController.cpp"
 					>
 				</File>

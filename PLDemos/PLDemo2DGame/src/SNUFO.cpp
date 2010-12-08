@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLSound/Source.h>
 #include "SNUFO.h"
@@ -34,6 +35,7 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLMath;
+using namespace PLScene;
 
 
 //[-------------------------------------------------------]
@@ -51,6 +53,7 @@ pl_implement_class(SNUFO)
 */
 SNUFO::SNUFO() :
 	Sound(this),
+	EventHandlerUpdate(&SNUFO::NotifyUpdate, this),
 	m_fTimer(0.0f),
 	m_fBombTimer(0.0f)
 {
@@ -74,9 +77,13 @@ SNUFO::~SNUFO()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLScene::SceneNode functions          ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-void SNUFO::UpdateFunction()
+/**
+*  @brief
+*    Called when the scene node needs to be updated
+*/
+void SNUFO::NotifyUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -94,5 +101,24 @@ void SNUFO::UpdateFunction()
 		// Drop a bomb?
 		if (!(Math::GetRand() % 3))
 			GetContainer()->Create("SNBomb", "", String::Format("Position=\"%g %g\"", GetTransform().GetPosition().x+18, GetTransform().GetPosition().y+10));
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNode functions          ]
+//[-------------------------------------------------------]
+void SNUFO::OnActivate(bool bActivate)
+{
+	// Call the base implementation
+	SNSound::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate)
+			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		else
+			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 	}
 }

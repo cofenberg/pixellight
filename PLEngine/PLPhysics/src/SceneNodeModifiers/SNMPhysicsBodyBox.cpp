@@ -67,18 +67,6 @@ void SNMPhysicsBodyBox::SetDimension(const Vector3 &vValue)
 	}
 }
 
-void SNMPhysicsBodyBox::SetFlags(uint32 nValue)
-{
-	// Call base implementation
-	SNMPhysicsBody::SetFlags(nValue);
-
-	// Connect/disconnect event handler
-	if (IsActive())
-		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
-	else
-		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -144,6 +132,22 @@ void SNMPhysicsBodyBox::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVis
 		// Draw transparent
 		cRenderer.GetDrawHelpers().DrawBox(Color4(1.0f, 0.5f, 0.5f, 0.5f), Vector3::NegativeOne, Vector3::One, mWorldViewProjection, 0.0f);
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneNodeModifier functions  ]
+//[-------------------------------------------------------]
+void SNMPhysicsBodyBox::OnActivate(bool bActivate)
+{
+	// Call base implementation
+	SNMPhysicsBody::OnActivate(bActivate);
+
+	// Connect/disconnect event handler
+	if (bActivate)
+		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
+	else
+		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
 }
 
 

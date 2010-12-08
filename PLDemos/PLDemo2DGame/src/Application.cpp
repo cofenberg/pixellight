@@ -127,15 +127,21 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 			const SceneNode *pCamera = (SceneNode*)GetCamera();
 			if (pCamera) {
 				// Loop through all available post process scene node modifiers
-				uint32			   nIndex    = 0;
-				SceneNodeModifier *pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", nIndex);
+				bool			   bRenderToTexture = false;
+				uint32			   nIndex			= 0;
+				SceneNodeModifier *pModifier		= pCamera->GetModifier("PLCompositing::SNMPostProcess", nIndex);
 				while (pModifier) {
 					// Toggle the active state of the post process scene node modifier
 					pModifier->SetActive(!pModifier->IsActive());
+					if (pModifier->IsActive())
+						bRenderToTexture = true;
 
 					// Next modifier, please
 					pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nIndex);
 				}
+
+				// Enable/disable render to texture for the post processing feature
+				GetSceneRendererTool().SetPassAttribute("Begin", "Flags", bRenderToTexture ? "" : "Inactive");
 			}
 			break;
 		}
@@ -172,7 +178,7 @@ void Application::OnInputControllerFound(Controller *pInputController, String sI
 
 	// Is there an application input controller? If so, connect gun (SNGun)...
 	if (m_pInputController && sInputSemantic == "Gun") {
-		pInputController->Connect("X",		m_pInputController->GetControl("RotX"));
+		pInputController->Connect("X",		m_pInputController->GetControl("RotY"), -0.05f);
 		// "Left" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
 		// "Right" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
 		pInputController->Connect("Left",	m_pInputController->GetControl("Forward"));
@@ -215,11 +221,17 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Create us a scene renderer
 				SceneRenderer *pSceneRenderer = pSceneContext->GetSceneRendererManager().Create("2DGame");
 				if (pSceneRenderer) {
+					// Add begin scene renderer pass
+					pSceneRenderer->Create("PLCompositing::SRPBegin", "Begin", "TextureFormat=\"R8G8B8A8\" Flags=\"Inactive\"");
+
 					// Add our own scene renderer pass
 					pSceneRenderer->Create("SRP2DGame", "2DGame");
 
 					// Add post processing scene renderer pass
 					pSceneRenderer->Create("PLCompositing::SRPPostProcessing", "PostProcessing");
+
+					// Add end scene renderer pass
+					pSceneRenderer->Create("PLCompositing::SRPEnd", "End");
 
 					// Make this scene renderer to the default scene renderer of our scene surface painter
 					pSPScene->SetDefaultSceneRenderer(pSceneRenderer->GetName());

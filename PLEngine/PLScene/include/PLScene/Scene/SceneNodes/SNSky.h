@@ -265,7 +265,7 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 	//[-------------------------------------------------------]
 	private:
 		virtual void InitFunction();
-		virtual void UpdateFunction();
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]
@@ -288,6 +288,24 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 	//[-------------------------------------------------------]
 	private:
 		virtual bool CallLoadable(PLGeneral::File &cFile, PLCore::Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node needs to be updated
+		*/
+		void NotifyUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 };
