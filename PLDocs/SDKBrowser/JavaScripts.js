@@ -88,6 +88,7 @@ shortcut("Doc_PLInput", "Doc\\PLInput.pdf");
 shortcut("Doc_PLRenderer", "Doc\\PLRenderer.pdf");
 shortcut("Doc_PLMesh", "Doc\\PLMesh.pdf");
 shortcut("Doc_PLScene", "Doc\\PLScene.pdf");
+shortcut("Doc_PLCompositing", "Doc\\PLCompositing.pdf");
 shortcut("Doc_PLSound", "Doc\\PLSound.pdf");
 shortcut("Doc_PLPhysics", "Doc\\PLPhysics.pdf");
 shortcut("Doc_PLEngine", "Doc\\PLEngine.pdf");

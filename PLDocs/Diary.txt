@@ -1,3 +1,11 @@
+>> 10.12.2010
+[CO]
+- PLCompositing hat nun eine eigenständige Dokumentation. Bisher war das noch in der PLScene Dokumentation mit drinnen - da PLCompositing
+  mittlerweile allerdings recht umfangreich ist, und auch sicherlich hier noch einiges hinzukommen wird, ist eine eigenständige Dokumentation
+  gerechtfertigt.
+
+
+
 >> 03.11.2010
 [CO]
 - PLInput: Dokumentation etwas umstrukturiert und mit dem ausdetalieren begonnen
