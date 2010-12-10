@@ -104,66 +104,21 @@ void SNMesh::SetSkin(const String &sValue)
 	}
 }
 
-bool SNMesh::GetStaticMesh() const
+void SNMesh::SetFlags(uint32 nValue)
 {
-	return m_bStaticMesh;
-}
+	// State change?
+	if (GetFlags() != nValue) {
+		// Update the mesh?
+		const bool bUpdate = (GetFlags() & DynamicMesh)      != (nValue & DynamicMesh)      ||
+							 (GetFlags() & GenerateStrips)   != (nValue & GenerateStrips)   ||
+							 (GetFlags() & CalculateNormals) != (nValue & CalculateNormals) ||
+							 (GetFlags() & CalculateTSVs)    != (nValue & CalculateTSVs);
 
-void SNMesh::SetStaticMesh(bool bValue)
-{
-	if (m_bStaticMesh != bValue) {
-		m_bStaticMesh = bValue;
+		// Call base implementation
+		SceneNode::SetFlags(nValue);
 
 		// Is this node visible?
-		if ((GetFlags() & LoadAtOnce) || IsVisible())
-			LoadMesh(m_sMesh);
-	}
-}
-
-bool SNMesh::GetCalculateNormals() const
-{
-	return m_bCalculateNormals;
-}
-
-void SNMesh::SetCalculateNormals(bool bValue)
-{
-	if (m_bCalculateNormals != bValue) {
-		m_bCalculateNormals = bValue;
-
-		// Is this node visible?
-		if ((GetFlags() & LoadAtOnce) || IsVisible())
-			LoadMesh(m_sMesh);
-	}
-}
-
-bool SNMesh::GetCalculateTSVs() const
-{
-	return m_bCalculateTSVs;
-}
-
-void SNMesh::SetCalculateTSVs(bool bValue)
-{
-	if (m_bCalculateTSVs != bValue) {
-		m_bCalculateTSVs = bValue;
-
-		// Is this node visible?
-		if ((GetFlags() & LoadAtOnce) || IsVisible())
-			LoadMesh(m_sMesh);
-	}
-}
-
-bool SNMesh::GetGenerateStrips() const
-{
-	return m_bGenerateStrips;
-}
-
-void SNMesh::SetGenerateStrips(bool bValue)
-{
-	if (m_bGenerateStrips != bValue) {
-		m_bGenerateStrips = bValue;
-
-		// Is this node visible?
-		if ((GetFlags() & LoadAtOnce) || IsVisible())
+		if (bUpdate && (((GetFlags() & LoadAtOnce) || IsVisible())))
 			LoadMesh(m_sMesh);
 	}
 }
@@ -179,17 +134,9 @@ void SNMesh::SetGenerateStrips(bool bValue)
 SNMesh::SNMesh() :
 	Mesh(this),
 	Skin(this),
-	StaticMesh(this),
-	CalculateNormals(this),
-	CalculateTSVs(this),
-	GenerateStrips(this),
 	Icon(this),
 	Flags(this),
 	DebugFlags(this),
-	m_bStaticMesh(true),
-	m_bCalculateNormals(false),
-	m_bCalculateTSVs(false),
-	m_bGenerateStrips(false),
 	m_pMeshHandler(NULL)
 {
 }
@@ -224,24 +171,24 @@ bool SNMesh::LoadMesh(const String &sFilename, const String &sParams, const Stri
 		PLMesh::Mesh *pMesh = GetSceneContext()->GetMeshManager().Get(sFilename);
 		if (!pMesh) {
 			// Create and load mesh
-			pMesh = GetSceneContext()->GetMeshManager().LoadMesh(sFilename, sParams, sMethod, false, m_bStaticMesh);
+			pMesh = GetSceneContext()->GetMeshManager().LoadMesh(sFilename, sParams, sMethod, false, !(GetFlags() & DynamicMesh));
 			if (pMesh) {
 				// Perform some mesh operations
-				if (m_bCalculateNormals || m_bCalculateTSVs || m_bGenerateStrips) {
+				if ((GetFlags() & CalculateNormals) || (GetFlags() & CalculateTSVs) || (GetFlags() & GenerateStrips)) {
 					MeshMorphTarget *pMorphTarget = pMesh->GetMorphTarget(0);
 					VertexBuffer *pVertexBuffer = pMorphTarget ? pMorphTarget->GetVertexBuffer() : NULL;
 					if (pVertexBuffer) {
 						// Calculate the normal vectors
-						if (m_bCalculateNormals && !pVertexBuffer->GetData(0, VertexBuffer::Normal))
+						if ((GetFlags() & CalculateNormals) && !pVertexBuffer->GetData(0, VertexBuffer::Normal))
 							pMesh->CalculateNormals();
 
 						// Calculate the tangent space vectors
-						if (m_bCalculateTSVs && (!pVertexBuffer->GetData(0, VertexBuffer::Tangent) ||
+						if ((GetFlags() & CalculateTSVs) && (!pVertexBuffer->GetData(0, VertexBuffer::Tangent) ||
 							!pVertexBuffer->GetData(0, VertexBuffer::Binormal)))
 							pMesh->CalculateTangentSpaceVectors();
 
 						// Optimize geometries
-						if (m_bGenerateStrips && pMesh->GetLODLevel(0))
+						if ((GetFlags() & GenerateStrips) && pMesh->GetLODLevel(0))
 							pMesh->GetLODLevel(0)->GenerateStrips();
 					}
 				}

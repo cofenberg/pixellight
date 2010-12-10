@@ -66,12 +66,20 @@ class SNMesh : public SceneNode {
 		*/
 		enum EFlags {
 			NoAutomaticBoundingBox = 1<<10,	/**< Do not create the bounding box of the scene node automatically using the bounding box of the used mesh */
-			LoadAtOnce			   = 1<<11	/**< Load the mesh at once even if not used at the moment */
+			LoadAtOnce			   = 1<<11,	/**< Load the mesh at once even if not used at the moment */
+			DynamicMesh			   = 1<<12,	/**< Hint that this is a dynamic mesh, may have an impact on the performance */
+			GenerateStrips		   = 1<<13,	/**< Generate triangle strips? (if possible, don't use this flag -> loading times...) */
+			CalculateNormals	   = 1<<14,	/**< Calculate normal vectors? (if not already there) (if possible, don't use this flag -> loading times...) */
+			CalculateTSVs		   = 1<<15	/**< Calculate tangent space vectors? (if not already there) (if possible, don't use this flag -> loading times...) */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneNode::EFlags)
 			pl_enum_value(NoAutomaticBoundingBox,	"Do not create the bounding box of the scene node automatically using the bounding box of the used mesh")
 			pl_enum_value(LoadAtOnce,				"Load the mesh at once even if not used at the moment")
+			pl_enum_value(DynamicMesh,				"Hint that this is a dynamic mesh, may have an impact on the performance")
+			pl_enum_value(GenerateStrips,			"Generate triangle strips? (if possible, don't use this flag -> loading times...)")
+			pl_enum_value(CalculateNormals,			"Calculate normal vectors? (if not already there) (if possible, don't use this flag -> loading times...)")
+			pl_enum_value(CalculateTSVs,			"Calculate tangent space vectors? (if not already there) (if possible, don't use this flag -> loading times...)")
 		pl_enum_end
 
 		/**
@@ -116,16 +124,12 @@ class SNMesh : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMesh, "PLScene", PLScene::SceneNode, "An mesh is a special scene node that has a 3D mesh attached to it by default")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(Mesh,				PLGeneral::String,			"",			ReadWrite,	GetSet,			"Mesh to use",													"Type='Mesh'")
-		pl_attribute(Skin,				PLGeneral::String,			"",			ReadWrite,	GetSet,			"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
-		pl_attribute(StaticMesh,		bool,						true,		ReadWrite,	GetSet,			"Make the mesh static (better performance!)",					"")
-		pl_attribute(CalculateNormals,	bool,						false,		ReadWrite,	GetSet,			"Calculate normal vectors? (if not already there)",				"")
-		pl_attribute(CalculateTSVs,		bool,						false,		ReadWrite,	GetSet,			"Calculate tangent space vectors? (if not already there)",		"")
-		pl_attribute(GenerateStrips,	bool,						false,		ReadWrite,	GetSet,			"Generate triangle strips?",									"")
+		pl_attribute(Mesh,			PLGeneral::String,			"",			ReadWrite,	GetSet,		"Mesh to use",													"Type='Mesh'")
+		pl_attribute(Skin,			PLGeneral::String,			"",			ReadWrite,	GetSet,		"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
 		// Overwritten SceneNode variables
-		pl_attribute(Icon,				PLGeneral::String,			IconMesh,	ReadWrite,	ModifyAttr,		"Scene node icon",												"Type='Material Effect Image TextureAni'")
-		pl_attribute(Flags,				pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,			"Flags",														"")
-		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,			"Debug flags",													"")
+		pl_attribute(Icon,			PLGeneral::String,			IconMesh,	ReadWrite,	ModifyAttr,	"Scene node icon",												"Type='Material Effect Image TextureAni'")
+		pl_attribute(Flags,			pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,		"Flags",														"")
+		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,		"Debug flags",													"")
 	pl_class_end
 
 
@@ -137,14 +141,7 @@ class SNMesh : public SceneNode {
 		PLS_API void SetMesh(const PLGeneral::String &sValue);
 		PLS_API PLGeneral::String GetSkin() const;
 		PLS_API void SetSkin(const PLGeneral::String &sValue);
-		PLS_API bool GetStaticMesh() const;
-		PLS_API void SetStaticMesh(bool bValue);
-		PLS_API bool GetCalculateNormals() const;
-		PLS_API void SetCalculateNormals(bool bValue);
-		PLS_API bool GetCalculateTSVs() const;
-		PLS_API void SetCalculateTSVs(bool bValue);
-		PLS_API bool GetGenerateStrips() const;
-		PLS_API void SetGenerateStrips(bool bValue);
+		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);	// From SceneNode
 
 
 	//[-------------------------------------------------------]
@@ -272,10 +269,6 @@ class SNMesh : public SceneNode {
 	private:
 		PLGeneral::String	   m_sMesh;				/**< Mesh to use */
 		PLGeneral::String	   m_sSkin;				/**< Skin file overwriting the default materials of the used mesh */
-		bool				   m_bStaticMesh;		/**< Make the mesh static (better performance!) */
-		bool				   m_bCalculateNormals;	/**< Calculate normal vectors? (if not already there) */
-		bool				   m_bCalculateTSVs;	/**< Calculate tangent space vectors? (if not already there) */
-		bool				   m_bGenerateStrips;	/**< Generate triangle strips? */
 		PLMesh::MeshHandler   *m_pMeshHandler;		/**< The mesh handler, can be NULL */
 
 

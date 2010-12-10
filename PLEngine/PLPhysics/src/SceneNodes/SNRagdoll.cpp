@@ -151,7 +151,7 @@ SNRagdoll::SNRagdoll() :
 	AutoFreeze(this),
 	UseGravity(this),
 	InitFrozen(this),
-	StaticMesh(this),
+	Flags(this),
 	DebugFlags(this),
 	EventHandlerUpdate(&SNRagdoll::NotifyUpdate, this),
 	m_pWorldContainer(NULL),
@@ -161,6 +161,8 @@ SNRagdoll::SNRagdoll() :
 	m_bAutoFreeze(true),
 	m_bUseGravity(true)
 {
+	// Overwrite the default setting of the flags
+	SetFlags(GetFlags()|DynamicMesh);
 }
 
 /**
