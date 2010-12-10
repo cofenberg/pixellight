@@ -131,7 +131,7 @@ class MyClass {
 Because this can, and certainly will, cause fatal errors were many will result in a mysterious behaviour or even crash's! Now, we want to have a mesh in our scene:
 
 \begin{lstlisting}[caption=Creating a new scene node mesh instance]
-pContainer->Create("PLScene::SNMesh", "Statue", "Position=\"0.0 0.0 5.0\" Rotation=\"0.0 180.0 0.0\" Mesh=\"Statue.3ds\" CalculateNormals=\"1\"");
+pContainer->Create("PLScene::SNMesh", "Statue", "Position=\"0.0 0.0 5.0\" Rotation=\"0.0 180.0 0.0\" Mesh=\"Statue.3ds\" Flags=\"CalculateNormals\"");
 \end{lstlisting}
 
 Nothing new here. Create an instance of \emph{PLScene::SNMesh} which can deal with meshes, setup the position and rotation of the node, define the filename of the used mesh and tell the node that it should (re-)calculate normals for this mesh. Now we need a camera node which can be seen as your window into the scene and backup a pointer to it, we will need it soon:
