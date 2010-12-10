@@ -87,7 +87,7 @@ class SNSpotLight : public SNPointLight {
 			DebugFrustumVertices = 1<<11	/**< Draw the (green) frustum vertices */
 		};
 		pl_enum(EDebugFlags)
-			pl_enum_base(SNPointLight::EFlags)
+			pl_enum_base(SNPointLight::EDebugFlags)
 			pl_enum_value(DebugDepthTest,		"Perform a depth test when render the debug stuff like lines")
 			pl_enum_value(DebugNoFrustum,		"Do not draw the (green) frustum")
 			pl_enum_value(DebugFrustumVertices,	"Draw the (green) frustum vertices")

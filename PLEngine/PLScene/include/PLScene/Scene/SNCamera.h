@@ -99,7 +99,7 @@ class SNCamera : public SceneNode {
 			DebugFrustumVertices = 1<<9		/**< Draw the (green) frustum vertices */
 		};
 		pl_enum(EDebugFlags)
-			pl_enum_base(SceneNode::EFlags)
+			pl_enum_base(SceneNode::EDebugFlags)
 			pl_enum_value(DebugNoFrustum,		"Do not draw the (green) frustum")
 			pl_enum_value(DebugFrustumVertices,	"Draw the (green) frustum vertices")
 		pl_enum_end

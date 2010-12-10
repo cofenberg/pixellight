@@ -62,7 +62,7 @@ class SNPointLight : public SNLight {
 			DebugNoScissorRectangle = 1<<8	/**< Do not draw the (pink) scissor rectangle */
 		};
 		pl_enum(EDebugFlags)
-			pl_enum_base(SNLight::EFlags)
+			pl_enum_base(SNLight::EDebugFlags)
 			pl_enum_value(DebugNoScissorRectangle, "Do not draw the (pink) scissor rectangle")
 		pl_enum_end
 

@@ -80,7 +80,7 @@ class SCRenderToTexture : public SceneContainer {
 			DebugNoTexturePreview = 1<<8	/**< Do not draw the texture preview */
 		};
 		pl_enum(EDebugFlags)
-			pl_enum_base(SceneContainer::EFlags)
+			pl_enum_base(SceneContainer::EDebugFlags)
 			pl_enum_value(DebugNoTexturePreview, "Do not draw the texture preview")
 		pl_enum_end
 
