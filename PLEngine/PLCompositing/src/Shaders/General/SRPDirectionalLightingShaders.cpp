@@ -756,9 +756,9 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 								}
 
 								// Set the "ViewSpaceToWorldSpace" fragment shader parameter
-								if (pGeneratedProgramUserData->pViewSpaceToWorldSpace && SNCamera::GetCamera()) {
-									// [TODO] Add *SNCamera::GetInvViewMatrix()?
-									Matrix3x3 mRot = SNCamera::GetCamera()->GetViewMatrix().GetInverted();
+								if (pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
+									// [TODO] Add *SQCullQuery::GetInvViewMatrix()?
+									Matrix3x3 mRot = cCullQuery.GetViewMatrix().GetInverted();
 									pGeneratedProgramUserData->pViewSpaceToWorldSpace->Set(mRot);
 								}
 							}

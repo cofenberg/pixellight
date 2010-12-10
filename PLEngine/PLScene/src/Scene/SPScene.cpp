@@ -393,8 +393,9 @@ void SPScene::OnPaint(Surface &cSurface)
 					pCullQuery->SetCameraContainer((pCameraContainer && pCameraContainer->IsCell()) ? pCameraContainer : NULL);
 					pCullQuery->SetCameraPosition(pCamera->GetTransform().GetPosition());
 					pCullQuery->SetViewFrustum(pCamera->GetFrustum(cRenderer.GetViewport()));
+					pCullQuery->SetProjectionMatrix(pCamera->GetProjectionMatrix(cRenderer.GetViewport()));
 					pCullQuery->SetViewMatrix(pCamera->GetViewMatrix());
-					pCullQuery->SetViewProjectionMatrix(pCamera->GetProjectionMatrix(cRenderer.GetViewport())*pCamera->GetViewMatrix());
+					pCullQuery->SetViewProjectionMatrix(pCullQuery->GetProjectionMatrix()*pCamera->GetViewMatrix());
 				} else {
 					// Set default states
 					pCullQuery->SetCameraContainer(NULL);

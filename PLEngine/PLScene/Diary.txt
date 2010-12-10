@@ -10,6 +10,8 @@
 - "SNMesh": "StaticMesh", "CalculateNormals", "CalculateTSVs" und "GenerateStrips" zu Flags gemacht (... Speicherverbrauch...), auch
   das stand bereits seit etlichen Jahren auf meiner gigantischen ToDo-Liste *g*
   "StaticMesh" in "DynamicMesh" geändert, standardmäßig sind Meshes statisch.
+- VisNode um "GetProjectionMatrix()", "GetViewMatrix()" und "GetViewProjectionMatrix()" erweitert so das man direkt alle gängigen Matrizen
+  Griffbereit hat, und nicht z.B. umständlich eine View Projection Matrix "herausrechnen" muss obwohl diese intern bereits vorliegt
 
 
 

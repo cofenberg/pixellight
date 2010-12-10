@@ -25,12 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/Matrix4x4.h>
-#include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/Renderer.h>
 #include "PLScene/Visibility/VisNode.h"
 #include "PLScene/Scene/SceneNode.h"
-#include "PLScene/Scene/SNCamera.h"
-#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMBillboardCylindrical.h"
 
 
@@ -124,12 +120,15 @@ void SNMBillboardCylindrical::BuildTransformMatrix(const Matrix4x4 &mView, const
 	mTransform.yx = vScale.x*(y*x + ct*(0.0f - y*x) + st*z);  mTransform.yy = vScale.y*(y*y + ct*(1.0f - y*y));         mTransform.yz = vScale.z*(y*z + ct*(0.0f - y*z) + st*-x);
 	mTransform.zx = vScale.x*(z*x + ct*(0.0f - z*x) + st*-y); mTransform.zy = vScale.y*(z*y + ct*(0.0f - z*y) + st*x);  mTransform.zz = vScale.z*(z*z + ct*(1.0f - z*z));
 
+	/*
+	// [TODO] Currently, this doesn't look correct - do we really need/want a possible rotation offset?
 	// Apply rotation (can be seen as offset in here)
 	if (GetSceneNode().GetTransform().GetRotation() != Quaternion::Identity) {
 		Matrix3x4 mRotation;
 		GetSceneNode().GetTransform().GetRotation().ToRotationMatrix(mRotation);
 		mTransform = mRotation*mTransform;
 	}
+	*/
 
 	// Finally, set the position
 	mTransform.xw = vPosition.x;
@@ -143,26 +142,9 @@ void SNMBillboardCylindrical::BuildTransformMatrix(const Matrix4x4 &mView, const
 */
 void SNMBillboardCylindrical::NotifyAddedToVisibilityTree(VisNode &cVisNode)
 {
-	// Get the view matrix
-	Matrix4x4 mView;
-	{
-		// Get the projection matrix
-		Matrix4x4 mProjection;
-		{
-			SNCamera *pCamera = SNCamera::GetCamera();
-			if (pCamera) {
-				// Get the scene context
-				SceneContext *pSceneContext = GetSceneContext();
-				if (pSceneContext)
-					mProjection = pCamera->GetProjectionMatrix(pSceneContext->GetRendererContext().GetRenderer().GetViewport());
-			}
-		}
-		mView = mProjection.GetInverted()*cVisNode.GetWorldViewProjectionMatrix();
-	}
-
 	// Get the new world transform matrix
 	Matrix3x4 mTransform;
-	BuildTransformMatrix(mView, cVisNode.GetWorldMatrix(), mTransform);
+	BuildTransformMatrix(cVisNode.GetViewMatrix(), cVisNode.GetWorldMatrix(), mTransform);
 
 	// Set the new world transform matrix of the visibility node
 	cVisNode.SetWorldMatrix(mTransform);

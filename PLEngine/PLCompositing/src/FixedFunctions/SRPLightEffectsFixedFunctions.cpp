@@ -29,7 +29,6 @@
 #include <PLRenderer/Renderer/SamplerStates.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Renderer/OcclusionQuery.h>
-#include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SNEffectLight.h>
 #include <PLScene/Visibility/SQCull.h>
@@ -426,10 +425,8 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 			// Draw anything?
 			if (!(GetFlags() & NoCorona) || !(GetFlags() & NoFlares) || !(GetFlags() & NoBlend)) {
 				// Ensure the correct projection and view matrix is set
-				if (SNCamera::GetCamera()) {
-					pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
-					pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
-				}
+				pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, cCullQuery.GetProjectionMatrix());
+				pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       cCullQuery.GetViewMatrix());
 
 				// Backup the color mask
 				bool bRed, bGreen, bBlue, bAlpha;
@@ -451,10 +448,8 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 				// Are there any light effects to draw?
 				if (pSRPLightEffectsFixedFunctions->m_lstLightEffects.GetNumOfElements()) {
 					// Ensure the correct projection and view matrix is set
-					if (SNCamera::GetCamera()) {
-						pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
-						pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
-					}
+					pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, cCullQuery.GetProjectionMatrix());
+					pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       cCullQuery.GetViewMatrix());
 
 					// Set the initial world matrix
 					pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, Matrix4x4::Identity);

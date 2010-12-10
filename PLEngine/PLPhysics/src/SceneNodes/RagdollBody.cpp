@@ -112,7 +112,7 @@ void RagdollBody::Draw(Renderer &cRenderer, const Color4 &cColor, const VisNode 
 	// Calculate the world view projection matrix
 	Matrix3x4 mTrans;
 	GetTransformMatrix(mTrans);
-	const Matrix4x4 mWorldViewProjection = cVisNode.GetWorldViewProjectionMatrix()*cVisNode.GetInverseWorldMatrix()*mTrans;
+	const Matrix4x4 mWorldViewProjection = cVisNode.GetViewProjectionMatrix()*mTrans;
 
 	// Draw
 	const Vector3 &vNodeScale = m_pParentRagdoll->GetTransform().GetScale();

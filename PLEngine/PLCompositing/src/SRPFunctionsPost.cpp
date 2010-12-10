@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
-#include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
@@ -139,14 +138,11 @@ void SRPFunctionsPost::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	// Enable scissor test
 	cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 
-	// Ensure the correct projection and view matrix is set
-	if (SNCamera::GetCamera()) {
-		// [TODO] Remove FixedFunctions usage, currently it's just in here for backward compatibility
-		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-		if (pFixedFunctions) {
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, SNCamera::GetCamera()->GetProjectionMatrix(cRenderer.GetViewport()));
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       SNCamera::GetCamera()->GetViewMatrix());
-		}
+	// [TODO] Remove FixedFunctions usage, currently it's just in here for backward compatibility - Ensure the correct projection and view matrix is set
+	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
+	if (pFixedFunctions) {
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, cCullQuery.GetProjectionMatrix());
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       cCullQuery.GetViewMatrix());
 	}
 
 	// Draw recursive from front to back

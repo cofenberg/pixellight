@@ -104,6 +104,33 @@ class VisNode {
 
 		/**
 		*  @brief
+		*    Returns the used projection matrix
+		*
+		*  @return
+		*    The used projection matrix
+		*/
+		PLS_API const PLMath::Matrix4x4 &GetProjectionMatrix() const;
+
+		/**
+		*  @brief
+		*    Returns the used view matrix
+		*
+		*  @return
+		*    The used view matrix
+		*/
+		PLS_API const PLMath::Matrix4x4 &GetViewMatrix() const;
+
+		/**
+		*  @brief
+		*    Returns the used view projection matrix
+		*
+		*  @return
+		*    The used view projection matrix
+		*/
+		PLS_API const PLMath::Matrix4x4 &GetViewProjectionMatrix() const;
+
+		/**
+		*  @brief
 		*    Returns the absolute world matrix of the scene node
 		*
 		*  @return
@@ -229,16 +256,33 @@ class VisNode {
 
 
 	//[-------------------------------------------------------]
+	//[ Private definitions                                   ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Flags which hold ínternal information
+		*/
+		enum EInternalFlags {
+			RecalculateInvWorld		 = 1<<0,	/**< Recalculation of the current absolute inverse world matrix of the scene node required */
+			RecalculateWorldView	 = 1<<1,	/**< Recalculation of the current absolute world view matrix of the scene node required */
+			RecalculateWorldViewProj = 1<<2		/**< Recalculation of the current absolute world view projection matrix of the scene node required */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		VisNode			  *m_pParent;					/**< Parent visibility node (VisContainer or VisPortal, can be NULL) */
 		SceneNodeHandler  *m_pSceneNodeHandler;			/**< Scene node this visibility node is linked to (always valid!) */
 		PLMath::Matrix3x4  m_mWorld;					/**< Absolute world matrix of the scene node */
-		PLMath::Matrix3x4  m_mInvWorld;					/**< Absolute inverse world matrix of the scene node */
-		PLMath::Matrix4x4  m_mWorldView;				/**< Absolute world view matrix of the scene node */
-		PLMath::Matrix4x4  m_mWorldViewProj;			/**< Absolute world view projection matrix of the scene node */
 		float			   m_fSquaredDistanceToCamera;	/**< Squared distance to the camera */
+		// Lazy evaluation
+		mutable PLGeneral::uint8  m_nInternalFlags;		/**< Internal flags */
+		mutable PLMath::Matrix3x4 m_mInvWorld;			/**< Absolute inverse world matrix of the scene node (derived on demand from m_mWorld and SQCull data) */
+		mutable PLMath::Matrix4x4 m_mWorldView;			/**< Absolute world view matrix of the scene node (derived on demand from m_mWorld and SQCull data) */
+		mutable PLMath::Matrix4x4 m_mWorldViewProj;		/**< Absolute world view projection matrix of the scene node (derived on demand from m_mWorld and SQCull data) */
 
 
 };

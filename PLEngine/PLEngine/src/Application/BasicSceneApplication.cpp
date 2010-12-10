@@ -437,7 +437,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 		pCamera->AddModifier("PLScene::SNMRotationFixRoll");
 
 		// Add a controller modifier so we can move around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMMoveController", "Flags=\"FlipXAxis|FlipZAxis\"");
+		pCamera->AddModifier("PLScene::SNMMoveController");
 	}
 
 	// Create a scene node with the statue mesh which can produce a shadow

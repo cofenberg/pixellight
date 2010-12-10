@@ -40,7 +40,6 @@
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
-#include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SNProjectiveSpotLight.h>
 #include <PLScene/Scene/SNProjectivePointLight.h>
 #include <PLScene/Scene/SNCellPortal.h>
@@ -910,9 +909,9 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								}
 
 								// Set the "ViewSpaceToWorldSpace" fragment shader parameter
-								if (pGeneratedProgramUserData->pViewSpaceToWorldSpace && SNCamera::GetCamera()) {
-									// [TODO] Add *SNCamera::GetInvViewMatrix()?
-									Matrix3x3 mRot = SNCamera::GetCamera()->GetViewMatrix().GetInverted();
+								if (pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
+									// [TODO] Add *SQCullQuery::GetInvViewMatrix()?
+									Matrix3x3 mRot = cCullQuery.GetViewMatrix().GetInverted();
 									pGeneratedProgramUserData->pViewSpaceToWorldSpace->Set(mRot);
 								}
 							}

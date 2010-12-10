@@ -494,7 +494,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 	// Is there a mesh handler?
 	if (pVisNode && m_pMeshHandler) {
 		// Draw anything?
-		uint32 nDebugFlags = GetDebugFlags();
+		const uint32 nDebugFlags = GetDebugFlags();
 		if ((nDebugFlags & DebugShowWireframe) ||
 			(nDebugFlags & DebugShowVertices) ||
 			(nDebugFlags & DebugShowTangents) ||

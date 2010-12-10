@@ -88,27 +88,19 @@ void SNCoordinateAxisRotation::DrawPost(Renderer &cRenderer, const VisNode *pVis
 		const Vector3 &vPosition = GetTransform().GetPosition();
 		const Vector3 &vScale    = GetTransform().GetScale();
 
-		// Get the projection matrix
-		Matrix4x4 mProjection;
-		{
-			SNCamera *pCamera = SNCamera::GetCamera();
-			if (pCamera)
-				mProjection = pCamera->GetProjectionMatrix(cRenderer.GetViewport());
-		}
-
 		// Get the view matrix
 		Matrix4x4 mView;
 		mView.SetTranslation(-4.0f, -2.5f);
 
 		// Get the current view matrix
-		Matrix4x4 mCurrentView = mProjection.GetInverted()*pVisNode->GetWorldViewProjectionMatrix();
+		const Matrix4x4 &mCurrentView = pVisNode->GetViewMatrix();
 
 		// Get the world matrix
 		Matrix4x4 mWorld = mCurrentView;
 		mWorld.SetTranslation(vPosition.x, vPosition.y, -10.0f+vPosition.z);
 
 		// Calculate the world view projection matrix
-		Matrix4x4 mWorldViewProjection = mProjection;
+		Matrix4x4 mWorldViewProjection = pVisNode->GetProjectionMatrix();
 		mWorldViewProjection *= mView;
 		mWorldViewProjection *= mWorld;
 

@@ -291,6 +291,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
 								pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
 								pLightCullQuery->SetViewFrustum(cLightFrustum);
+								pLightCullQuery->SetProjectionMatrix(m_mLightProjection);
 								pLightCullQuery->SetViewMatrix(m_mLightView);
 								pLightCullQuery->SetViewProjectionMatrix(m_mLightViewProjection);
 
@@ -403,6 +404,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
 								pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
 								pLightCullQuery->SetViewFrustum(cLightFrustum);
+								pLightCullQuery->SetProjectionMatrix(m_mLightProjection);
 								pLightCullQuery->SetViewMatrix(m_mLightView);
 								pLightCullQuery->SetViewProjectionMatrix(m_mLightViewProjection);
 

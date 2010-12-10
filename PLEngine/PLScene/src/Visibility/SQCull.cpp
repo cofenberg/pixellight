@@ -226,6 +226,16 @@ void SQCull::SetViewFrustum(const PlaneSet &cFrustum)
 }
 
 // [TODO] Cleanup
+const Matrix4x4 &SQCull::GetProjectionMatrix() const
+{
+	return m_mProjection;
+}
+
+void SQCull::SetProjectionMatrix(const Matrix4x4 &mProjection)
+{
+	m_mProjection = mProjection;
+}
+
 const Matrix4x4 &SQCull::GetViewMatrix() const
 {
 	return m_mView;
@@ -734,14 +744,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 					// Set the world transform matrix
-					pNode->m_mWorld = cVisContainer.m_mWorld*pSceneNode->GetTransform().GetMatrix();
-					pNode->m_mInvWorld = pNode->m_mWorld.GetInverted();
-					// Set the world view transform matrix
-					pNode->m_mWorldView  = m_mView;
-					pNode->m_mWorldView *= pNode->m_mWorld;
-					// Set the world view projection transform matrix
-					pNode->m_mWorldViewProj  = m_mViewProjection;
-					pNode->m_mWorldViewProj *= pNode->m_mWorld;
+					pNode->SetWorldMatrix(cVisContainer.m_mWorld*pSceneNode->GetTransform().GetMatrix());
 
 					// Inform the scene node
 					pSceneNode->OnAddedToVisibilityTree(*pNode);
@@ -804,6 +807,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 								pCullQuery->m_cViewFrustum *= pSceneNode->GetTransform().GetInverseMatrix();
 
 								// [TODO] Cleanup
+								pCullQuery->m_mProjection     = m_mProjection;
 								pCullQuery->m_mView			  = m_mView;
 								pCullQuery->m_mViewProjection = m_mViewProjection;
 
@@ -888,14 +892,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 											VisContainer &cPortalVisContainer = (VisContainer&)pCullQuery->GetVisContainer();
 											SceneContainer *pCameraContainer = ((SQCull*)m_pVisRootContainer->m_pQueryHandler->GetElement())->GetCameraContainer();
 											if (pCameraContainer) {
-												cPortalVisContainer.m_mWorld	= pCell->GetSceneNode()->GetTransform().GetMatrix()*pCameraContainer->GetTransform().GetInverseMatrix();
-												cPortalVisContainer.m_mInvWorld = cPortalVisContainer.m_mWorld.GetInverted();
-												// Set the world view transform matrix
-												cPortalVisContainer.m_mWorldView  = m_mView;
-												cPortalVisContainer.m_mWorldView *= cPortalVisContainer.m_mWorld;
-												// Set the world view projection transform matrix
-												cPortalVisContainer.m_mWorldViewProj  = m_mViewProjection;
-												cPortalVisContainer.m_mWorldViewProj *= cPortalVisContainer.m_mWorld;
+												cPortalVisContainer.SetWorldMatrix(pCell->GetSceneNode()->GetTransform().GetMatrix()*pCameraContainer->GetTransform().GetInverseMatrix());
 
 												// If the camera is inside the axis aligned bounding box of the portal, just reuse the camera view
 												// frustum instead of calculating a new, tight, one - to ensure this test also works for 'flat'
@@ -912,6 +909,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 												pCullQuery->m_cViewFrustum *= cCellPortal.GetWarpMatrix();
 
 												// [TODO] Cleanup
+												pCullQuery->m_mProjection     = m_mProjection;
 												pCullQuery->m_mView			  = m_mView;
 												pCullQuery->m_mViewProjection = m_mViewProjection;
 
@@ -1171,14 +1169,7 @@ bool SQCull::PerformQuery()
 				VisNode *pNode = m_pVisContainer->AddSceneNode(*pContainer, 0.0f);
 				if (pNode) {
 					// Set the world transform matrix
-					pNode->m_mWorld.SetIdentity();
-					pNode->m_mInvWorld.SetIdentity();
-					// Set the world view transform matrix
-					pNode->m_mWorldView  = m_mView;
-					pNode->m_mWorldView *= pNode->m_mWorld;
-					// Set the world view projection transform matrix
-					pNode->m_mWorldViewProj  = m_mViewProjection;
-					pNode->m_mWorldViewProj *= pNode->m_mWorld;
+					pNode->SetWorldMatrix(Matrix3x4::Identity);
 
 					// Inform the scene node
 					pContainer->OnAddedToVisibilityTree(*pNode);
@@ -1201,6 +1192,7 @@ bool SQCull::PerformQuery()
 						pCullQuery->m_cViewFrustum    = m_cViewFrustum;
 
 						// [TODO] Cleanup
+						pCullQuery->m_mProjection     = m_mProjection;
 						pCullQuery->m_mView			  = m_mView;
 						pCullQuery->m_mViewProjection = m_mViewProjection;
 

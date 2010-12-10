@@ -339,7 +339,7 @@ void SNSpotLight::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		// Draw light frustum?
 		if (!(GetDebugFlags() & DebugNoFrustum)) {
 			// Get the view projection matrix
-			const Matrix4x4 mViewProjection = pVisNode->GetWorldViewProjectionMatrix()*pVisNode->GetInverseWorldMatrix();
+			const Matrix4x4 &mViewProjection = pVisNode->GetViewProjectionMatrix();
 
 			// Get world transform matrix with a 180 degree y offset (see SNSpotLight class documentation) and no scale
 			Matrix4x4 mTransform;

@@ -549,7 +549,7 @@ void SNCamera::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			mWorld *= GetProjectionMatrix(cRenderer.GetViewport()).GetInverted();
 
 			// Draw
-			const Matrix4x4 mWorldViewProjection = pVisNode->GetWorldViewProjectionMatrix()*pVisNode->GetInverseWorldMatrix()*mWorld;
+			const Matrix4x4 mWorldViewProjection = pVisNode->GetViewProjectionMatrix()*mWorld;
 			cRenderer.GetDrawHelpers().DrawBox(cColor, Vector3::NegativeOne, Vector3::One, mWorldViewProjection, 1.0f);
 		}
 

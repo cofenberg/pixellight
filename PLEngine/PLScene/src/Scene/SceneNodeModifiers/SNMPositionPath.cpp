@@ -181,7 +181,7 @@ void SNMPositionPath::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNo
 	const GraphPath *pPath = m_pPathHandler->GetResource();
 	if (pVisNode && pPath && pPath->GetNumOfNodes()) {
 		// We need a view space transform
-		const Matrix4x4 mWorldViewProjection = pVisNode->GetWorldViewProjectionMatrix()*pVisNode->GetInverseWorldMatrix();
+		const Matrix4x4 &mWorldViewProjection = pVisNode->GetViewProjectionMatrix();
 
 		{ // Visualize the path
 			// Draw nodes

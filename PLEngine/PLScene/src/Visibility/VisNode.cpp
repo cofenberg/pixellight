@@ -77,6 +77,45 @@ SceneNode *VisNode::GetSceneNode() const
 
 /**
 *  @brief
+*    Returns the used projection matrix
+*/
+const Matrix4x4 &VisNode::GetProjectionMatrix() const
+{
+	const VisNode *pVisNodeParent = GetParent();
+	if (pVisNodeParent && pVisNodeParent->IsContainer())
+		return ((VisContainer*)pVisNodeParent)->GetCullQuery()->GetProjectionMatrix();
+	else
+		return Matrix4x4::Identity;
+}
+
+/**
+*  @brief
+*    Returns the used view matrix
+*/
+const Matrix4x4 &VisNode::GetViewMatrix() const
+{
+	const VisNode *pVisNodeParent = GetParent();
+	if (pVisNodeParent && pVisNodeParent->IsContainer())
+		return ((VisContainer*)pVisNodeParent)->GetCullQuery()->GetViewMatrix();
+	else
+		return Matrix4x4::Identity;
+}
+
+/**
+*  @brief
+*    Returns the used view projection matrix
+*/
+const Matrix4x4 &VisNode::GetViewProjectionMatrix() const
+{
+	const VisNode *pVisNodeParent = GetParent();
+	if (pVisNodeParent && pVisNodeParent->IsContainer())
+		return ((VisContainer*)pVisNodeParent)->GetCullQuery()->GetViewProjectionMatrix();
+	else
+		return Matrix4x4::Identity;
+}
+
+/**
+*  @brief
 *    Returns the absolute world matrix of the scene node
 */
 const Matrix3x4 &VisNode::GetWorldMatrix() const
@@ -87,22 +126,13 @@ const Matrix3x4 &VisNode::GetWorldMatrix() const
 // [TODO] VisNode refactoring -> currently, this method should not be used if possible because it doesn't update for example GetInverseWorldMatrix()
 void VisNode::SetWorldMatrix(const Matrix3x4 &mWorld)
 {
+	// Set the new world matrix
 	m_mWorld = mWorld;
 
-	m_mInvWorld = m_mWorld.GetInverted();
-
-	const VisNode *pVisNodeParent = GetParent();
-	if (pVisNodeParent && pVisNodeParent->IsContainer()) {
-		 const SQCull *pSQCull = ((VisContainer*)pVisNodeParent)->GetCullQuery();
-
-		// Set the world view transform matrix
-		m_mWorldView  = pSQCull->GetViewMatrix();
-		m_mWorldView *= m_mWorld;
-
-		// Set the world view projection transform matrix
-		m_mWorldViewProj  = pSQCull->GetViewProjectionMatrix();
-		m_mWorldViewProj *= m_mWorld;
-	}
+	// We now have to recalculate some derived data
+	m_nInternalFlags |= RecalculateInvWorld;
+	m_nInternalFlags |= RecalculateWorldView;
+	m_nInternalFlags |= RecalculateWorldViewProj;
 }
 
 /**
@@ -111,6 +141,16 @@ void VisNode::SetWorldMatrix(const Matrix3x4 &mWorld)
 */
 const Matrix3x4 &VisNode::GetInverseWorldMatrix() const
 {
+	// Recalculation required?
+	if (m_nInternalFlags & RecalculateInvWorld) {
+		// Calculate the matrix
+		m_mInvWorld = m_mWorld.GetInverted();
+
+		// Recalculation done
+		m_nInternalFlags &= ~RecalculateInvWorld;
+	}
+
+	// Return the matrix
 	return m_mInvWorld;
 }
 
@@ -120,6 +160,16 @@ const Matrix3x4 &VisNode::GetInverseWorldMatrix() const
 */
 const Matrix4x4 &VisNode::GetWorldViewMatrix() const
 {
+	// Recalculation required?
+	if (m_nInternalFlags & RecalculateWorldView) {
+		// Calculate the world view transform matrix
+		m_mWorldView = GetViewMatrix()*m_mWorld;
+
+		// Recalculation done
+		m_nInternalFlags &= ~RecalculateWorldView;
+	}
+
+	// Return the matrix
 	return m_mWorldView;
 }
 
@@ -129,6 +179,16 @@ const Matrix4x4 &VisNode::GetWorldViewMatrix() const
 */
 const Matrix4x4 &VisNode::GetWorldViewProjectionMatrix() const
 {
+	// Recalculation required?
+	if (m_nInternalFlags & RecalculateWorldViewProj) {
+		// Calculate the world view projection transform matrix
+		m_mWorldViewProj = GetViewProjectionMatrix()*m_mWorld;
+
+		// Recalculation done
+		m_nInternalFlags &= ~RecalculateWorldViewProj;
+	}
+
+	// Return the matrix
 	return m_mWorldViewProj;
 }
 
@@ -183,7 +243,8 @@ bool VisNode::IsPortal() const
 VisNode::VisNode(VisNode *pParent) :
 	m_pParent(pParent),
 	m_pSceneNodeHandler(new SceneNodeHandler()),
-	m_fSquaredDistanceToCamera(0.0f)
+	m_fSquaredDistanceToCamera(0.0f),
+	m_nInternalFlags(0)
 {
 }
 

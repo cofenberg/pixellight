@@ -266,6 +266,8 @@ class SQCull : public SceneQuery {
 		PLS_API void SetViewFrustum(const PLMath::PlaneSet &cFrustum);
 
 		// [TODO] Cleanup
+		PLS_API const PLMath::Matrix4x4 &GetProjectionMatrix() const;
+		PLS_API void SetProjectionMatrix(const PLMath::Matrix4x4 &mProjection);
 		PLS_API const PLMath::Matrix4x4 &GetViewMatrix() const;
 		PLS_API void SetViewMatrix(const PLMath::Matrix4x4 &mView);
 		PLS_API const PLMath::Matrix4x4 &GetViewProjectionMatrix() const;
@@ -438,6 +440,7 @@ class SQCull : public SceneQuery {
 		PLMath::PlaneSet   m_cViewFrustum;				/**< View frustum used for the query (container space) */
 		bool			   m_bSetIdentityWorldMatrix;	/**< Do we need to set the world matrix to identity? */
 		SceneHierarchy    *m_pHierarchy;				/**< The hierarchy we are working on */
+		PLMath::Matrix4x4  m_mProjection;				/**< Projection matrix */
 		PLMath::Matrix4x4  m_mView;						/**< View matrix */
 		PLMath::Matrix4x4  m_mViewProjection;			/**< View projection matrix */
 

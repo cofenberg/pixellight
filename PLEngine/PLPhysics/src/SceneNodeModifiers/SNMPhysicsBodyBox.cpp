@@ -116,7 +116,7 @@ void SNMPhysicsBodyBox::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVis
 		mWorld *= mScale;
 
 		// Calculate the world view projection matrix
-		const Matrix4x4 mWorldViewProjection = pVisNode->GetWorldViewProjectionMatrix()*pVisNode->GetInverseWorldMatrix()*mWorld;
+		const Matrix4x4 mWorldViewProjection = pVisNode->GetViewProjectionMatrix()*mWorld;
 
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();
