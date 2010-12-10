@@ -6,6 +6,7 @@
   Will man das ein Mesh regelmäßig aktualisiert wird (MeshHandler::Update), so muss man nun also einen SNMMeshUpdate Scene Node Modifier
   anhängen. Dies ist denke ich aber weniger ein Problem da man ohnehin meist Manipulationen über Scene Node Modifier ausführen lässt.
   Spielt man Animationen über SNMMeshAnimation ab, muss man sich z.B. nicht weiter um ein Update kümmern.
+- "SNMesh": "BuildInfo"-Attribut entfernt da schon seit längerer Zeit nicht mehr verwendet
 
 
 

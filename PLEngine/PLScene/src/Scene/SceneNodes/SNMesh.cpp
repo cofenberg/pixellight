@@ -120,22 +120,6 @@ void SNMesh::SetStaticMesh(bool bValue)
 	}
 }
 
-bool SNMesh::GetBuildInfo() const
-{
-	return m_bBuildInfo;
-}
-
-void SNMesh::SetBuildInfo(bool bValue)
-{
-	if (m_bBuildInfo != bValue) {
-		m_bBuildInfo = bValue;
-
-		// Is this node visible?
-		if ((GetFlags() & LoadAtOnce) || IsVisible())
-			LoadMesh(m_sMesh);
-	}
-}
-
 bool SNMesh::GetCalculateNormals() const
 {
 	return m_bCalculateNormals;
@@ -196,7 +180,6 @@ SNMesh::SNMesh() :
 	Mesh(this),
 	Skin(this),
 	StaticMesh(this),
-	BuildInfo(this),
 	CalculateNormals(this),
 	CalculateTSVs(this),
 	GenerateStrips(this),
@@ -204,7 +187,6 @@ SNMesh::SNMesh() :
 	Flags(this),
 	DebugFlags(this),
 	m_bStaticMesh(true),
-	m_bBuildInfo(false),
 	m_bCalculateNormals(false),
 	m_bCalculateTSVs(false),
 	m_bGenerateStrips(false),

@@ -119,7 +119,6 @@ class SNMesh : public SceneNode {
 		pl_attribute(Mesh,				PLGeneral::String,			"",			ReadWrite,	GetSet,			"Mesh to use",													"Type='Mesh'")
 		pl_attribute(Skin,				PLGeneral::String,			"",			ReadWrite,	GetSet,			"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
 		pl_attribute(StaticMesh,		bool,						true,		ReadWrite,	GetSet,			"Make the mesh static (better performance!)",					"")
-		pl_attribute(BuildInfo,			bool,						false,		ReadWrite,	GetSet,			"Build for instance edge information?",							"")
 		pl_attribute(CalculateNormals,	bool,						false,		ReadWrite,	GetSet,			"Calculate normal vectors? (if not already there)",				"")
 		pl_attribute(CalculateTSVs,		bool,						false,		ReadWrite,	GetSet,			"Calculate tangent space vectors? (if not already there)",		"")
 		pl_attribute(GenerateStrips,	bool,						false,		ReadWrite,	GetSet,			"Generate triangle strips?",									"")
@@ -140,8 +139,6 @@ class SNMesh : public SceneNode {
 		PLS_API void SetSkin(const PLGeneral::String &sValue);
 		PLS_API bool GetStaticMesh() const;
 		PLS_API void SetStaticMesh(bool bValue);
-		PLS_API bool GetBuildInfo() const;
-		PLS_API void SetBuildInfo(bool bValue);
 		PLS_API bool GetCalculateNormals() const;
 		PLS_API void SetCalculateNormals(bool bValue);
 		PLS_API bool GetCalculateTSVs() const;
@@ -276,7 +273,6 @@ class SNMesh : public SceneNode {
 		PLGeneral::String	   m_sMesh;				/**< Mesh to use */
 		PLGeneral::String	   m_sSkin;				/**< Skin file overwriting the default materials of the used mesh */
 		bool				   m_bStaticMesh;		/**< Make the mesh static (better performance!) */
-		bool				   m_bBuildInfo;		/**< Build for instance edge information? */
 		bool				   m_bCalculateNormals;	/**< Calculate normal vectors? (if not already there) */
 		bool				   m_bCalculateTSVs;	/**< Calculate tangent space vectors? (if not already there) */
 		bool				   m_bGenerateStrips;	/**< Generate triangle strips? */
