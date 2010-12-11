@@ -74,6 +74,7 @@ add_libs(
 	PLMath
 	PLGraphics
 	PLRenderer
+	PLScene
 	PLCompositing
 )
 
