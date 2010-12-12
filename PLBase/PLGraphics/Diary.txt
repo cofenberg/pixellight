@@ -1,3 +1,10 @@
+>> 12.12.2010
+[CO]
+- "ImageLoaderJPG": Beside "jpg" and "jpeg" as file endings, "jpe", "jif", "jfif" and "jfi" (http://en.wikipedia.org/wiki/JPEG) are now supported as well.
+  It looks like that there are even more jpg file extensions out there, but I think the current ones should be more than enough. :D
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/
