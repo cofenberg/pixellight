@@ -1,4 +1,10 @@
-﻿>> 07.08.2010
+﻿/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
+>> 07.08.2010
 [CO]
 - SoundManager: Eigene Config entfernt, spezielle Einstellungen müssen nun wie schon bei PLPhysics auch über das RTTI der Klasse gesetzt werden
 
@@ -511,7 +517,11 @@ PLSoundOpenAL:
 
 
 
->> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+/*********************************************************\
+ *  Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+\*********************************************************/
+
+
 
 [SB] Der Rückgabewert von PLTSound::Play() war beim Abspielen vom mods undefiniert, dies wurde behoben, so daß der
      Rückgabewert nun -1 ist

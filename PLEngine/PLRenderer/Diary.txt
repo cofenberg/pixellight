@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 01.12.2010
 [CO]
 - Ich hatte heute kurz die Gelegenheit den Dungeon Demo auf einem NVIDIA System an der Hochschule, wo ich derzeit für meinen
@@ -4251,7 +4257,11 @@ PLRendererOpenGL:
 
 
 
->> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+/*********************************************************\
+ *  Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+\*********************************************************/
+
+
 
 [CO] PL::Renderer: Neue Funktion: GetMaxTextureSize() -> gibt die größt mögliche Texture größe zurück
 [SB] PLTRenderer: Für die 2D Funktionen kann nun angegeben werden, auf welcher Z-Position sie zeichnen sollen. Dieser

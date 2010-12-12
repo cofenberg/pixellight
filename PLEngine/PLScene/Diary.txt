@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 10.12.2010
 [CO]
 - Das was bisher in "SNMesh::UpdateFunction()" lag, liegt nun in "SNMMeshUpdate::NotifyUpdate()", sprich, in einem Scene Node Modifier.
@@ -7097,7 +7103,11 @@ PLTInput:
 
 
 
->> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+/*********************************************************\
+ *  Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+\*********************************************************/
+
+
 
 [SB] GuiPL eingebaut und alte Gui2D entfernt
 [SB] Der Z-Buffer wird nun verwendet, um das Child-Clipping in der GuiPL zu realisieren

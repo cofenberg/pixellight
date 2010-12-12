@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 08.12.2010
 [CO]
 - "InputManager::UpdateControl()": Bevor etwas in m_lstUpdatedControls eingefügt wird, sollte geprüft werden obs bereits drinnen ist

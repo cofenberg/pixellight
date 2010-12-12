@@ -1,4 +1,10 @@
-﻿>> 24.08.2008
+﻿/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
+>> 24.08.2008
 [CO]
 - Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
 

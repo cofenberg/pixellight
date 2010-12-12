@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 11.08.2010
 [CO]
 - "XmlTextText::OnDraw(": Font-Backup hatte ich wohl nicht richtig auf PLGui3 portiert, ausgebessert

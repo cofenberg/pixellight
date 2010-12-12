@@ -1,4 +1,10 @@
-﻿>> 15.03.2010
+﻿/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
+>> 15.03.2010
 [SB]
 - SNMPostProcessBrighten noch etwas überarbeitet: Es kann nun eine beliebige Farbe angegeben werden, die über das Bild
   geblendet wird. Auch wird nicht mehr simpel addiert, sondern vernünftiges Alpha-Blending verwendet. Der Grad der

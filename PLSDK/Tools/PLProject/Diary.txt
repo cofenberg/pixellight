@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 22.08.2010
 [CO]
 - PLProject um "publish"-Option erweitert... derzeit wird Publish ausgeführt wenn man PLProject nur mit einem Verzeichnis

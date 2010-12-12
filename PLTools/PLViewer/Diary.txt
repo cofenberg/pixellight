@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 21.08.2010
 [CO]
 - "PLViewerStandalone" hinzugefügt welches sich von "PLViewer" nur darin unterscheidet das es "SetMultiUser(true)" aufruft

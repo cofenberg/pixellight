@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 26.11.2010
 [CO]
 - SceneRendererTool: "GetPassAttribute()" gibt nun die "DynVar"-Instanz zurück da universeller, "SetPassAttribute()" lasse ich drinnen

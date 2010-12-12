@@ -1,4 +1,10 @@
-﻿>> 12.11.2010
+﻿/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
+>> 12.11.2010
 [CO]
 - "PlaneSet::CreateViewPlanes()" existiert nun nur noch in einer Variante die Matrix4x4 akzepiert die View*Projection vereint...
   das jedesmal innerhalb dieser Methode selbst zu multiplizieren ist einfach nur ungeschickt da man hin und wieder z.B. kein "Projection"
@@ -1261,7 +1267,11 @@ unter die Lupe nehmen. :)
 
 
 
->> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+/*********************************************************\
+ *  Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+\*********************************************************/
+
+
 
 [CO] PLTMath::GetNearestPowerOfTwo erweitert, man kann nun auch die nächst größere Zahl zurückgeben lassen
 [CO] PLMath: Inline Vektor Hilfs Funktionen eingebaut

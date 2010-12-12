@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 05.11.2010
 [CO]
 - Auf Basis von "PLDemoRendererTriangle" erstelltes kleines Demo "PLDemoRendererTexturing" hinzugefügt das Texturierung auf
@@ -1758,6 +1764,11 @@ Der 'Actual/Bin/PLSamples' Ordner wurde aktualisiert.
 
 
 
->> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+/*********************************************************\
+ *  Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+\*********************************************************/
+
+
+
 [CO] SampeApplication auf neue Kamera-Klasse umgeschrieben
 [CO] Beispielprogramm: Freie Kamera, Partikel Entity (rotierende und verzogene Partikel folgen :)

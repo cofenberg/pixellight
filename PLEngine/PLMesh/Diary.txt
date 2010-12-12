@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 16.09.2010
 [CO]
 - MeshCreatorCube: Support für Normal Vektoren hinzugefügt
@@ -2743,7 +2749,11 @@ PLTMesh:
 
 
 
->> Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+/*********************************************************\
+ *  Einträge aus altem Diary, damals noch ohne genaue Datum angaben. (oben -> unten = neuer -> älter)
+\*********************************************************/
+
+
 
 [CO] plt-Format erweitert: unter General -> FitLower kann nun pro Textur festlegen ob diese beim Autoskalieren
      vergrößert oder verkleinert wird. Wird nichts extra angegeben so werden die Einstellungen im Texture Manager

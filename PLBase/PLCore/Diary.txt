@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 06.12.2010
 [CO]
 - DynEvent um "GetNumOfConnects()"-Methode erweitert, bei z.B. Profiling ist es hin und wieder interessant zu

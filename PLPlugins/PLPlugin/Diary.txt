@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 16.04.2009
 [SB]
 - Fehlende Abhängigkeiten in der CMakeLists.txt hinzugefügt.

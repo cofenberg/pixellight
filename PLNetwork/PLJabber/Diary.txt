@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 10.09.2008
 [CO]
 - Ging das Projekt zum ersten mal genau durch und machte Kommentare wo mir etwas 'Merkwürdig' vorkommt (potentielle Speicherlecks :) 

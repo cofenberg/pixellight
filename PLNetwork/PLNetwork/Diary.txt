@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 23.10.2009
 [SB]
 - Netzwerk-Basisklassen nach PLGeneral verschoben. Dieses Projekt ist damit zwar erstmal leer, bleibt jedoch erhalten,

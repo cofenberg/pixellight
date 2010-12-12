@@ -1,4 +1,10 @@
-﻿>> 05.08.2010
+﻿/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
+>> 05.08.2010
 [CO]
 - "PLTestBase" in "PLTest" und "PLBaseTest" in "PLTestBase" umbenannt
 - "PLSoundTest" entfernt und ins Archive verschoben ("Removed_PLSountTest_05082010") da nicht wirklich brauchbar + bei den verwendeten

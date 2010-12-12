@@ -1,3 +1,9 @@
+/*********************************************************\
+ *  The entries below are in german only
+\*********************************************************/
+
+
+
 >> 07.11.2010
 [SB]
 - maketool: Unterstützung für Code::Blocks-Generator von CMake eingebaut. Damit kann ich
