@@ -52,7 +52,7 @@ class GraphLoaderPL : public GraphLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLMATH_RTTI_EXPORT, GraphLoaderPL, "PLMath", PLMath::GraphLoader, "Graph loader implementation for the PixelLight graph XML file format")
 		pl_properties
-			pl_property("Formats",	"graph")
+			pl_property("Formats",	"graph,GRAPH")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

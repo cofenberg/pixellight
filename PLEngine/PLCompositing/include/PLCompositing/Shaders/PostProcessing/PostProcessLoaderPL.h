@@ -52,7 +52,7 @@ class PostProcessLoaderPL : public PostProcessLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, PostProcessLoaderPL, "PLCompositing", PLCompositing::PostProcessLoader, "Post process loader implementation for the PixelLight post process XML file format")
 		pl_properties
-			pl_property("Formats",	"pp")
+			pl_property("Formats",	"pp,PP")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

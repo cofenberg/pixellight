@@ -1,3 +1,31 @@
+>> 12.12.2010
+[CO]
+- Loadable-System: At the PixelLight mailing list (pixellight@lists.pixellight.org), a discussion about case-sensitive file-extensions
+  came up. In general, while for instance UNIX like systems have case-sensitive file systems, MS Windows does not. At the
+  beginning of the development of PixelLight, we made the design decision that PixelLight should be case-sensitive in general
+  to avoid porting problems across multiple-platforms. Naturally, for MS Windows only users, this leads to confusion when
+  they try to load in, for example an image named "MyImage.JPG", and nothing happens although the jpg file format is supported.
+  The reason behind this is, that the file extension is used to figure out which loadable implementation is responsible for
+  loading the concrete data. In this case, "jpg" tells the (plugin based) system to use "PLGraphics::ImageLoaderJPG" to load
+  in the data. The extension string test is case-sensitive, and as such, "JPG" is unknown to the system.
+  Ideas came up to add an option to make the extension case handling configurable, or to make file extensions in general case-insensitive.
+  I did some research on the topic to see how other developers handle this situation or think about this - as expected, there are a lot
+  of different opinions about "what's best".
+  I thought about the issue, and I see the point that this can be a problem using a lot of content - to be honest, from time to time
+  I have some "problems" with this as well. For example, "The Compressonator" (http://ati.amd.com/developer/compressonator.html) from ATI (ok,
+  AMD nowadays *g*) always wants to write "DDS" instead of "dds" as file extension.
+  In my opinion, I still think that it's no good idea to weaken the "PixelLight is in general case-sensitive" design decision and adding a huge
+  comment that this is the one and only place within PixelLight were it's handled by using strategy A instead of strategy B. I really think that, on
+  the long term, this will cause more problems than solving them.
+  Fortunately, the loadable system already supports multiple aliases for one and the same file format. For example "PLGraphics::ImageLoaderJPG"
+  can be addressed by using "jpg", "jpeg", "jpe", "jif", "jfif" or "jfi" as jpg file extension. So, why not add "JPG", "JPEG", "JPE", "JIF", "JFIF"
+  and "JFI" as well? Of course, something like "JpG" will still not be recognized, but I can't remember a program using this case convention... and
+  as a computer scientist, I love orderliness and don't really want to support spelling chaos intentionally. I saw that some other developers are
+  using this solution as well, and I think it's a good compromise - it doesn't weaken a general system design decision by adding an exception, but
+  it allows to use for example "JPG" instead of just "jpg", too.
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

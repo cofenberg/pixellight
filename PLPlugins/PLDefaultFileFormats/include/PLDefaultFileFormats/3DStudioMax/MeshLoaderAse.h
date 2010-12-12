@@ -52,7 +52,7 @@ class MeshLoaderAse : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderAse, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for ase (3D Studio Max ASCII Export)")
 		pl_properties
-			pl_property("Formats",	"ase")
+			pl_property("Formats",	"ase,ASE")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

@@ -55,7 +55,7 @@ class ImageLoaderJPG : public ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderJPG, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for JPEG (\"Joint Photographic Experts Group\") file formats")
 		pl_properties
-			pl_property("Formats",	"jpg,jpeg,jpe,jif,jfif,jfi")
+			pl_property("Formats",	"jpg,jpeg,jpe,jif,jfif,jfi,JPG,JPEG,JPE,JIF,JFIF,JFI")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

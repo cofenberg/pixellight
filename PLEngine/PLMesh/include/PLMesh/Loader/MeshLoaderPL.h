@@ -73,7 +73,7 @@ class MeshLoaderPL : public MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshLoaderPL, "PLMesh", PLMesh::MeshLoader, "Mesh loader implementation for the PixelLight mesh binary (Little-Endian) file format")
 		pl_properties
-			pl_property("Formats",	"mesh")
+			pl_property("Formats",	"mesh,MESH")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

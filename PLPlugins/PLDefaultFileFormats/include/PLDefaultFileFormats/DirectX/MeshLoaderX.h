@@ -67,7 +67,7 @@ class MeshLoaderX : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderX, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for the x-format (DirectX)")
 		pl_properties
-			pl_property("Formats",	"x")
+			pl_property("Formats",	"x,X")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

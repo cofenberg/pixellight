@@ -52,7 +52,7 @@ class SkinLoaderPL : public SkinLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkinLoaderPL, "PLScene", PLScene::SkinLoader, "Skin loader implementation for the PixelLight skin XML file format")
 		pl_properties
-			pl_property("Formats",	"skin")
+			pl_property("Formats",	"skin,SKIN")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

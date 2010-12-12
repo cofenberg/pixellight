@@ -52,7 +52,7 @@ class TerrainLoaderPL : public TerrainLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, TerrainLoaderPL, "PLScene", PLScene::TerrainLoader, "Terrain loader implementation for the PixelLight terrain XML file format")
 		pl_properties
-			pl_property("Formats",	"terrain")
+			pl_property("Formats",	"terrain,TERRAIN")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

@@ -52,7 +52,7 @@ class SkyLoaderPL : public SkyLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkyLoaderPL, "PLScene", PLScene::SkyLoader, "Sky loader implementation for the PixelLight sky XML file format")
 		pl_properties
-			pl_property("Formats",	"sky")
+			pl_property("Formats",	"sky,SKY")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

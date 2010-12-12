@@ -60,7 +60,7 @@ class ConfigLoaderPL : public ConfigLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, ConfigLoaderPL, "PLCore", PLCore::ConfigLoader, "Config loader implementation for the PixelLight config XML file format")
 		pl_properties
-			pl_property("Formats",	"cfg")
+			pl_property("Formats",	"cfg,CFG")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

@@ -57,7 +57,7 @@ class ImageLoaderEXR : public PLGraphics::ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ImageLoaderEXR, "PLImageLoaderEXR", PLGraphics::ImageLoader, "Image loader implementation for the OpenEXR format")
 		pl_properties
-			pl_property("Formats",	"exr")
+			pl_property("Formats",	"exr,EXR")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

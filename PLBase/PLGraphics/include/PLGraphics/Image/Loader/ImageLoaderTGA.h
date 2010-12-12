@@ -56,7 +56,7 @@ class ImageLoaderTGA : public ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderTGA, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for TGA (\"Targa Image File\"... \"Targa\"=\"Truevision Advanced Raster Graphics Array\") file formats")
 		pl_properties
-			pl_property("Formats",	"tga")
+			pl_property("Formats",	"tga,TGA")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

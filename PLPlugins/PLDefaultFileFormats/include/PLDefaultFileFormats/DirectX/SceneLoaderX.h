@@ -74,7 +74,7 @@ class SceneLoaderX : public PLScene::SceneLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SceneLoaderX, "PLDefaultFileFormats", PLScene::SceneLoader, "Scene loader implementation for the x-format (DirectX)")
 		pl_properties
-			pl_property("Formats",	"x")
+			pl_property("Formats",	"x,X")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

@@ -68,7 +68,7 @@ class SceneLoaderPL : public SceneLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneLoaderPL, "PLScene", PLScene::SceneLoader, "Scene loader implementation for the PixelLight scene XML file format")
 		pl_properties
-			pl_property("Formats",	"scene")
+			pl_property("Formats",	"scene,SCENE")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

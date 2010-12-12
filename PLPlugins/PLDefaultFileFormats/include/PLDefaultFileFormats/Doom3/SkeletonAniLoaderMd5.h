@@ -64,7 +64,7 @@ class SkeletonAniLoaderMd5 : public PLMesh::SkeletonAniLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SkeletonAniLoaderMd5, "PLDefaultFileFormats", PLMesh::SkeletonAniLoader, "Skeleton animation loader implementation for Md5 (Doom3) version 6 and 10")
 		pl_properties
-			pl_property("Formats",	"md5anim")
+			pl_property("Formats",	"md5anim,MD5ANIM")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

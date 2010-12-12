@@ -57,7 +57,7 @@ class MeshLoaderObj : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderObj, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for obj (Wavefront Object Files)")
 		pl_properties
-			pl_property("Formats",	"obj")
+			pl_property("Formats",	"obj,OBJ")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

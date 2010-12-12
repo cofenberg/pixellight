@@ -52,7 +52,7 @@ class MaterialLoaderPL : public MaterialLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, MaterialLoaderPL, "PLRenderer", PLRenderer::MaterialLoader, "Material loader implementation for the PixelLight material XML file format")
 		pl_properties
-			pl_property("Formats",	"mat")
+			pl_property("Formats",	"mat,MAT")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

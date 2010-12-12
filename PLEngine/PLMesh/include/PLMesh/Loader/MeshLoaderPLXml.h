@@ -73,7 +73,7 @@ class MeshLoaderPLXml : public MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshLoaderPLXml, "PLMesh", PLMesh::MeshLoader, "Mesh loader implementation for the PixelLight mesh XML file format")
 		pl_properties
-			pl_property("Formats",	"xmesh")
+			pl_property("Formats",	"xmesh,XMESH")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

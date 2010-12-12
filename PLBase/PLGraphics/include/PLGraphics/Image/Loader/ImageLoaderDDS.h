@@ -61,7 +61,7 @@ class ImageLoaderDDS : public ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderDDS, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for DDS file formats")
 		pl_properties
-			pl_property("Formats",	"dds")
+			pl_property("Formats",	"dds,DDS")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

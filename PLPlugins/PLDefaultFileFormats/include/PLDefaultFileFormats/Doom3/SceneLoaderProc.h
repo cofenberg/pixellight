@@ -72,7 +72,7 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SceneLoaderProc, "PLDefaultFileFormats", PLScene::SceneLoader, "Scene loader for the Doom 3 'proc' format")
 		pl_properties
-			pl_property("Formats",	"proc")
+			pl_property("Formats",	"proc,PROC")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

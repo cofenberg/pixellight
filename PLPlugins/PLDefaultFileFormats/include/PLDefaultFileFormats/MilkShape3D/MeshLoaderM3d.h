@@ -52,7 +52,7 @@ class MeshLoaderM3d : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderM3d, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for m3d (MilkShape 3D ASCII)")
 		pl_properties
-			pl_property("Formats",	"m3d")
+			pl_property("Formats",	"m3d,M3D")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

@@ -55,7 +55,7 @@ class ImageLoaderPNG : public ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderPNG, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for PNG file formats")
 		pl_properties
-			pl_property("Formats",	"png")
+			pl_property("Formats",	"png,PNG")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

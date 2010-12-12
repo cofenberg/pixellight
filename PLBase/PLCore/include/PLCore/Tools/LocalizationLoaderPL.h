@@ -58,7 +58,7 @@ class LocalizationLoaderPL : public LocalizationLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, LocalizationLoaderPL, "PLCore", PLCore::LocalizationLoader, "Localization loader implementation for the PixelLight localization XML file format")
 		pl_properties
-			pl_property("Formats",	"loc")
+			pl_property("Formats",	"loc,LOC")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

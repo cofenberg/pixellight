@@ -56,7 +56,7 @@ class MeshLoader3ds : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoader3ds, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for 3ds (3D Studio Max)")
 		pl_properties
-			pl_property("Formats",	"3ds")
+			pl_property("Formats",	"3ds,3DS")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

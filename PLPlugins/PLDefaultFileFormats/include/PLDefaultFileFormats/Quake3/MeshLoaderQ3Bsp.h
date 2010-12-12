@@ -58,7 +58,7 @@ class MeshLoaderQ3Bsp : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderQ3Bsp, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for bsp (Quake 3 bsp)")
 		pl_properties
-			pl_property("Formats",	"bsp")
+			pl_property("Formats",	"bsp,BSP")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

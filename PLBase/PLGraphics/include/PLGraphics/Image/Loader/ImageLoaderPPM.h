@@ -55,7 +55,7 @@ class ImageLoaderPPM : public ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderPPM, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for PPM file formats")
 		pl_properties
-			pl_property("Formats",	"ppm")
+			pl_property("Formats",	"ppm,PPM")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

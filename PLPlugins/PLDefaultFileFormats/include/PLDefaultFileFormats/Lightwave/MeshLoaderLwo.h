@@ -56,7 +56,7 @@ class MeshLoaderLwo : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderLwo, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for lwo2 (Lightwave 6+)")
 		pl_properties
-			pl_property("Formats",	"lwo")
+			pl_property("Formats",	"lwo,LWO")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

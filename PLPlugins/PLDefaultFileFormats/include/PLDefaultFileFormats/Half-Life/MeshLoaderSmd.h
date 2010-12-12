@@ -62,7 +62,7 @@ class MeshLoaderSmd : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderSmd, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for smd version 1")
 		pl_properties
-			pl_property("Formats",	"smd")
+			pl_property("Formats",	"smd,SMD")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

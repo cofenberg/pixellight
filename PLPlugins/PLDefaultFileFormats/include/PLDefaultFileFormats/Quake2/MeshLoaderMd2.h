@@ -52,7 +52,7 @@ class MeshLoaderMd2 : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderMd2, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for md2 (Quake 2)")
 		pl_properties
-			pl_property("Formats",	"md2")
+			pl_property("Formats",	"md2,MD2")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

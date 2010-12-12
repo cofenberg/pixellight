@@ -60,7 +60,7 @@ class EffectLoaderPL : public EffectLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, EffectLoaderPL, "PLRenderer", PLRenderer::EffectLoader, "Effect loader implementation for the PixelLight effect XML file format")
 		pl_properties
-			pl_property("Formats",	"plfx")
+			pl_property("Formats",	"plfx,PLFX")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

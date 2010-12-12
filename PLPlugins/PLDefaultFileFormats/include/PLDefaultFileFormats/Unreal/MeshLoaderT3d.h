@@ -66,7 +66,7 @@ class MeshLoaderT3d : public PLMesh::MeshLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderT3d, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for t3d (Unreal text file)")
 		pl_properties
-			pl_property("Formats",	"t3d")
+			pl_property("Formats",	"t3d,T3D")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

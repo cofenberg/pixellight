@@ -52,7 +52,7 @@ class RagdollLoaderPL : public RagdollLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, RagdollLoaderPL, "PLPhysics", PLPhysics::RagdollLoader, "Ragdoll loader implementation for the PixelLight ragdoll XML file format")
 		pl_properties
-			pl_property("Formats",	"ragdoll")
+			pl_property("Formats",	"ragdoll,RAGDOLL")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

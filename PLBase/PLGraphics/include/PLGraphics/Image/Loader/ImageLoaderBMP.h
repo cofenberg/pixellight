@@ -56,7 +56,7 @@ class ImageLoaderBMP : public ImageLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderBMP, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for BMP file formats")
 		pl_properties
-			pl_property("Formats",	"bmp")
+			pl_property("Formats",	"bmp,BMP")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end

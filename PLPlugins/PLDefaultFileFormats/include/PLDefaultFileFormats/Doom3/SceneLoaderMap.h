@@ -69,7 +69,7 @@ class SceneLoaderMap : public PLScene::SceneLoader {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SceneLoaderMap, "PLDefaultFileFormats", PLScene::SceneLoader, "Scene loader for the standard 'map' format")
 		pl_properties
-			pl_property("Formats",	"map")
+			pl_property("Formats",	"map,MAP")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end

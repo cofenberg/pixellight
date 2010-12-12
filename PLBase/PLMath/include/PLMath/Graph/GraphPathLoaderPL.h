@@ -52,7 +52,7 @@ class GraphPathLoaderPL : public GraphPathLoader {
 	//[-------------------------------------------------------]
 	pl_class(PLMATH_RTTI_EXPORT, GraphPathLoaderPL, "PLMath", PLMath::GraphPathLoader, "Graph path loader implementation for the PixelLight graph path XML file format")
 		pl_properties
-			pl_property("Formats",	"path")
+			pl_property("Formats",	"path,PATH")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
