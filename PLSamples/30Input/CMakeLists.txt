@@ -19,7 +19,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/PLGui/PLGui/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLInput/include
 )
 
@@ -36,7 +35,6 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
-	PLGui
 	PLInput
 )
 
@@ -98,7 +96,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLGui PLInput)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLInput)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -129,6 +127,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.suo" EXCLUDE
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
-	PATTERN "20GuiInternal.sln" EXCLUDE
-	PATTERN "20GuiInternal.vcproj" EXCLUDE
+	PATTERN "30InputInternal.sln" EXCLUDE
+	PATTERN "30InputInternal.vcproj" EXCLUDE
 )

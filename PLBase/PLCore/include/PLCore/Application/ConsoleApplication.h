@@ -56,7 +56,7 @@ namespace PLCore {
 *    This class provides a most basic framework for console applications.
 *    It keeps the filename and startup directory of the executable for later use and
 *    provides a name, title and version of the application. It also provides an instance
-*    of the command line parser to work with command line parameters (see CommandLine
+*    of the command line parser to work with command line parameters (see PLGeneral::CommandLine
 *    for further explanations).
 */
 class ConsoleApplication {
@@ -72,7 +72,7 @@ class ConsoleApplication {
 		*/
 		enum ESignal {
 			SignalInterrupt = 1,	/**< Application interrupted (caused by ctrl-c) */
-			SignalTerm,				/**< Exit application */
+			SignalTerm				/**< Exit application */
 		};
 
 
