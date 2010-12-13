@@ -115,6 +115,7 @@ elseif(LINUX)
 	## Linux
 	##################################################
 	add_libs(
+		${LINUX_X11_LIBS}
 		dbus-1
 	)
 endif()
