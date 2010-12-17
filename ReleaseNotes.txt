@@ -8,6 +8,7 @@ Changes in PixelLight 0.9.3-R2 (not yet released)
 - Change: Moved nearly all compositing relevant classes from PLScene to PLCompositing
 - Change: Scene graph update refactoring for less CPU usage
 - Change: All file loader implementations now also have versions of the filename extensions written in capital letters (e.g. beside "tga" also "TGA")
+- Change: Updated libpng from "1.2.44" to "1.4.5"
 
 
 Changes in PixelLight 0.9.3-R1 (released on October 23, 2010)

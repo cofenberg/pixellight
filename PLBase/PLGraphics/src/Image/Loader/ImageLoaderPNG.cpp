@@ -61,7 +61,7 @@ void PngWarning(png_structp pPtr, png_const_charp pszWarning)
 void PngReadData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 {
 	// Get file pointer
-	File *pFile = (File*)pPng->io_ptr;
+	File *pFile = (File*)png_get_io_ptr(pPng);
 
 	// Read data from file
 	pFile->Read(pBuffer, nSize, 1);
@@ -70,7 +70,7 @@ void PngReadData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 void PngWriteData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 {
 	// Get file pointer
-	File *pFile = (File*)pPng->io_ptr;
+	File *pFile = (File*)png_get_io_ptr(pPng);
 
 	// Write data to file
 	pFile->Write(pBuffer, nSize, 1);
@@ -79,7 +79,7 @@ void PngWriteData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 void PngFlushData(png_structp pPng)
 {
 	// Get file pointer
-	File *pFile = (File*)pPng->io_ptr;
+	File *pFile = (File*)png_get_io_ptr(pPng);
 
 	// Flush the file buffer
 	pFile->Flush();

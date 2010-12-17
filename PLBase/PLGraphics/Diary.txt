@@ -1,3 +1,9 @@
+>> 17.12.2010
+[CO]
+- Updated libpng from "1.2.44" to "1.4.5"
+
+
+
 >> 12.12.2010
 [CO]
 - "ImageLoaderJPG": Beside "jpg" and "jpeg" as file endings, "jpe", "jif", "jfif" and "jfi" (http://en.wikipedia.org/wiki/JPEG) are now supported as well.
