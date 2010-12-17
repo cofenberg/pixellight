@@ -385,7 +385,11 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 
 			// Write the text into the OS console - it would be nice if this could be done using 'File::StandardOutput.Print()',
 			// but this may cause problems when de-initializing the static variables :/
-			fputs(sLogMessage.GetASCII(), stdout);
+			#ifdef WIN32
+				(sLogMessage.GetFormat() == String::ASCII) ? fputs(sLogMessage.GetASCII(), stdout) : fputws(sLogMessage.GetUnicode(), stdout);
+			#else
+				fputs((sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : (char*)sLogMessage.GetUTF8(), stdout);
+			#endif
 		}
 
 		// Is there a log formater?

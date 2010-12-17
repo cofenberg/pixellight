@@ -121,7 +121,7 @@ bool DynLibWindows::Unload()
 
 void *DynLibWindows::GetSymbol(const String &sSymbol) const
 {
-	// Is the library loaded?
+	// Is the library loaded? ... it looks like as if there's only a ASCII version of "GetProcAddress()"...
 	return m_hModule ? ::GetProcAddress(m_hModule, sSymbol.GetASCII()) : NULL;
 }
 

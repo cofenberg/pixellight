@@ -45,7 +45,7 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 void ConsoleWindows::Print(const String &sString) const
 {
-	fputs(sString.GetASCII(), stdout);
+	(sString.GetFormat() == String::ASCII) ? fputs(sString.GetASCII(), stdout) : fputws(sString.GetUnicode(), stdout);
 }
 
 int ConsoleWindows::IsKeyHit() const

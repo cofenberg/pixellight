@@ -1,6 +1,7 @@
 >> 17.12.2010
 [CO]
-- Added unicode support to "FileLinux", "FileSearchLinux", "ConsoleLinux", "DynLibLinux", "SystemLinux", "FileStdStream" and "Process"
+- Added unicode support to "FileLinux", "FileSearchLinux", "ConsoleLinux", "DynLibLinux", "SystemLinux", "FileStdStream", "Log",
+  "ConsoleWindows" and "Process"
 
 
 
