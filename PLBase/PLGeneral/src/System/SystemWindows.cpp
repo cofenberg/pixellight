@@ -26,14 +26,13 @@
 #include <Tchar.h>
 #include <conio.h>
 #include <stdlib.h>
+#include <shlobj.h>
 #include <locale.h>
 #include <windows.h>
 #include <Userenv.h>
 #include <shellapi.h>
 #include "PLGeneral/File/Url.h"
 #include "PLGeneral/System/SystemWindows.h"
-
-#include <shlobj.h>
 
 
 //[-------------------------------------------------------]
@@ -594,10 +593,13 @@ String SystemWindows::GetCurrentDir() const
 bool SystemWindows::SetCurrentDir(const String &sPath)
 {
 	// Get path in Windows style
-	String sWindowsPath = Url(sPath).GetWindowsPath();
+	const String sWindowsPath = Url(sPath).GetWindowsPath();
 
 	// Set current directory
-	return (SetCurrentDirectoryW(sWindowsPath.GetUnicode()) != 0);
+	if (sWindowsPath.GetFormat() == String::ASCII)
+		return (SetCurrentDirectoryA(sWindowsPath.GetASCII()) != 0);
+	else
+		return (SetCurrentDirectoryW(sWindowsPath.GetUnicode()) != 0);
 }
 
 Thread *SystemWindows::GetCurrentThread() const
