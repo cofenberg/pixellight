@@ -155,6 +155,40 @@ float Math::GetRandFloat()
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Ensures that the given value is within the given interval [fMin, fMax] by clamping the value
+*/
+float Math::ClampToInterval(float fValue, float fMin, float fMax)
+{
+	if (fValue > fMax)
+		return fMax;
+	else if (fValue < fMin)
+		return fMin;
+	else
+		return fValue;
+}
+
+/**
+*  @brief
+*    Ensures that the given value is within the given interval [fMin, fMax] by wrapping the value
+*/
+float Math::WrapToInterval(float fValue, float fMin, float fMax)
+{
+	const float fInterval = fMax - fMin;
+	if (fInterval) {
+		if (fValue > fMax)
+			return fValue - floor(fValue/fInterval)*fInterval;
+		else if (fValue < fMin)
+			return fMax + (fValue - ceil(fValue/fInterval)*fInterval);
+		else
+			return fValue;
+	} else {
+		// Hm, an interval of 0?
+		return fMin;
+	}
+}
+
+/**
+*  @brief
 *    Returns the floor of the given value
 */
 float Math::Floor(float fValue)

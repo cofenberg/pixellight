@@ -1,4 +1,11 @@
-﻿/*********************************************************\
+﻿>> 17.12.2010
+[CO]
+- Added "Math::ClampToInterval()": Ensures that the given value is within the given interval [min, max] by clamping the value
+- Added "Math::WrapToInterval()": Ensures that the given value is within the given interval [min, max] by wrapping the value
+
+
+
+/*********************************************************\
  *  The entries below are in german only
 \*********************************************************/
 

@@ -294,6 +294,38 @@ class Math {
 
 		/**
 		*  @brief
+		*    Ensures that the given value is within the given interval [fMin, fMax] by clamping the value
+		*
+		*  @param[in] fValue
+		*    Value to check
+		*  @param[in] fMin
+		*    Minimum of the interval, must be < fMax!
+		*  @param[in] fMax
+		*    Maximum of the interval, must be > fMin!
+		*
+		*  @return
+		*    The value within the interval [fMin, fMax]
+		*/
+		PLMATH_API static float ClampToInterval(float fValue, float fMin, float fMax);
+
+		/**
+		*  @brief
+		*    Ensures that the given value is within the given interval [fMin, fMax] by wrapping the value
+		*
+		*  @param[in] fValue
+		*    Value to check
+		*  @param[in] fMin
+		*    Minimum of the interval, must be < fMax!
+		*  @param[in] fMax
+		*    Maximum of the interval, must be > fMin!
+		*
+		*  @return
+		*    The value within the interval [fMin, fMax]
+		*/
+		PLMATH_API static float WrapToInterval(float fValue, float fMin, float fMax);
+
+		/**
+		*  @brief
 		*    Returns the absolute value of the given value
 		*
 		*  @param[in] x
