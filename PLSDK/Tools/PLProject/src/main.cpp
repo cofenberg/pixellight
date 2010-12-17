@@ -121,7 +121,7 @@ void Message(int nType, const String &sMessage)
 	if (nType == ERR)    System::GetInstance()->GetConsole().Print("!! ");
 
 	// Print message
-	System::GetInstance()->GetConsole().Print(sMessage.GetASCII());
+	System::GetInstance()->GetConsole().Print(sMessage);
 	System::GetInstance()->GetConsole().Print("\n");
 }
 
