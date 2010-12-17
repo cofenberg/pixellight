@@ -43,7 +43,7 @@ FileSearchLinux::FileSearchLinux(const String &sPath, const FileAccess *pAccess)
 	m_sPath(sPath)
 {
 	// Start search
-	m_pDir = opendir(m_sPath.GetASCII());
+	m_pDir = opendir((m_sPath.GetFormat() == String::ASCII) ? m_sPath.GetASCII() : (char*)m_sPath.GetUTF8());
 	if (m_pDir) {
 		// Something has been found
 		m_pDirEntry	= readdir(m_pDir);
@@ -62,7 +62,8 @@ FileSearchLinux::FileSearchLinux(const String &sPath, const FileAccess *pAccess)
 FileSearchLinux::~FileSearchLinux()
 {
 	// Close the search
-	if (m_pDir) closedir(m_pDir);
+	if (m_pDir)
+		closedir(m_pDir);
 }
 
 
@@ -81,7 +82,9 @@ String FileSearchLinux::GetNextFile()
 		m_pDirEntry = readdir(m_pDir);
 		m_bHasNext  = (m_pDirEntry != NULL);
 		return m_sFilename;
-	} else return "";
+	} else {
+		return "";
+	}
 }
 
 

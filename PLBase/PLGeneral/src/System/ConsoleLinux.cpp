@@ -41,7 +41,7 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 void ConsoleLinux::Print(const String &sString) const
 {
-	fputs(sString.GetASCII(), stdout);
+	fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : (char*)sString.GetUTF8(), stdout);
 	fflush(stdout);
 }
 
@@ -81,11 +81,12 @@ int ConsoleLinux::GetCharacter(bool bEcho) const
 	struct termios newt = oldt;
 	newt.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-	int nCharacter = getchar();
+	const int nCharacter = getchar();
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 
 	// Echo on the console?
-	if (bEcho) putc(nCharacter, stdout);
+	if (bEcho)
+		putc(nCharacter, stdout);
 
 	// Return the character
 	return nCharacter;

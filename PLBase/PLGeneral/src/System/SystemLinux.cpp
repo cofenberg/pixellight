@@ -84,10 +84,14 @@ bool SystemLinux::GetMemoryInformation(MemoryInformation &sMemoryInformation) co
 			if (cRegEx.Match(sLine)) {
 				const String sName   = cRegEx.GetResult(0);
 				const String sResult = cRegEx.GetResult(1);
-				if (sName == "MemTotal")  sMemoryInformation.nTotalPhysicalMemory = sResult.GetInt() * 1024;
-				if (sName == "MemFree")   sMemoryInformation.nFreePhysicalMemory  = sResult.GetInt() * 1024;
-				if (sName == "SwapTotal") sMemoryInformation.nTotalSwapMemory	  = sResult.GetInt() * 1024;
-				if (sName == "SwapFree")  sMemoryInformation.nFreeSwapMemory	  = sResult.GetInt() * 1024;
+				if (sName == "MemTotal")
+					sMemoryInformation.nTotalPhysicalMemory = sResult.GetInt() * 1024;
+				if (sName == "MemFree")
+					sMemoryInformation.nFreePhysicalMemory = sResult.GetInt() * 1024;
+				if (sName == "SwapTotal")
+					sMemoryInformation.nTotalSwapMemory = sResult.GetInt() * 1024;
+				if (sName == "SwapFree")
+					sMemoryInformation.nFreeSwapMemory = sResult.GetInt() * 1024;
 			}
 		}
 
@@ -182,14 +186,13 @@ String SystemLinux::GetDataDirName(const String &sName) const
 
 String SystemLinux::GetExecutableFilename() const
 {
-	char szLinkName[512];
-	char szProgram [512];
-
 	// Get PID of current process
-	pid_t nPID = getpid();
+	const pid_t nPID = getpid();
+	char szLinkName[512];
 	if (snprintf(szLinkName, 512, "/proc/%d/exe", nPID) >= 0) {
 		// Read symbolice link
-		int nRet = readlink(szLinkName, szProgram, 512);
+		char szProgram[512];
+		const int nRet = readlink(szLinkName, szProgram, 512);
 		if (nRet < 512) {
 			szProgram[nRet] = 0;
 			return szProgram;
@@ -207,12 +210,14 @@ String SystemLinux::GetEnvironmentVariable(const String &sName) const
 
 bool SystemLinux::SetEnvironmentVariable(const String &sName, const String &sValue) const
 {
-	return (setenv(sName.GetASCII(), sValue.GetASCII(), 1) > -1);
+	return (setenv((sName .GetFormat() == String::ASCII) ? sName .GetASCII() : (char*)sName .GetUTF8(),
+				   (sValue.GetFormat() == String::ASCII) ? sValue.GetASCII() : (char*)sValue.GetUTF8(),
+				   1) > -1);
 }
 
 void SystemLinux::DeleteEnvironmentVariable(const String &sName) const
 {
-	unsetenv(sName.GetASCII());
+	unsetenv((sName.GetFormat() == String::ASCII) ? sName.GetASCII() : (char*)sName.GetUTF8());
 }
 
 bool SystemLinux::Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir) const
@@ -228,15 +233,28 @@ bool SystemLinux::Execute(const String &sCommand, const String &sParameters, con
 			pszOldWorkingDir = getcwd(NULL, 0);
 
 			// Change directory
-			chdir(sWorkingDir.GetASCII());
+			if (chdir((sWorkingDir.GetFormat() == String::ASCII) ? sWorkingDir.GetASCII() : (char*)sWorkingDir.GetUTF8()) != 0) {
+				// Cleanup
+				free(pszOldWorkingDir);
+
+				// Error!
+				return false;
+			}
 		}
 
 		// Execute command
-		size_t nResult = (size_t)system((sCommand + ' ' + sParameters).GetASCII());
+		const String sCommandAndParameters = sCommand + ' ' + sParameters;
+		const size_t nResult = (size_t)system((sCommandAndParameters.GetFormat() == String::ASCII) ? sCommandAndParameters.GetASCII() : (char*)sCommandAndParameters.GetUTF8());
 
 		// Restore the old working directory
 		if (pszOldWorkingDir) {
-			chdir(pszOldWorkingDir);
+			if (chdir(pszOldWorkingDir) != 0) {
+				// Cleanup
+				free(pszOldWorkingDir);
+
+				// Error!
+				return false;
+			}
 			free(pszOldWorkingDir);
 		}
 
@@ -254,11 +272,11 @@ String SystemLinux::GetLocaleLanguage() const
 	// Get the locale
 	const char *pszSaveLocale = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "");
-	String sLocal = setlocale(LC_ALL, NULL);
+	const String sLocal = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, pszSaveLocale);
 
 	// Find the '_'
-	int nIndex = sLocal.IndexOf("_");
+	const int nIndex = sLocal.IndexOf("_");
 	return (nIndex >= 0) ? sLocal.GetSubstring(0, nIndex) : "";
 }
 
@@ -266,7 +284,7 @@ String SystemLinux::GetCurrentDir() const
 {
 	// Get current directory and allocates the buffer dynamically
 	char *pszTemp = getcwd(NULL, 0);
-	String sDir = String(pszTemp, false); // Do not copy, please
+	const String sDir = String(pszTemp, false); // Do not copy, please
 
 	// Return the URL
 	return Url(sDir).GetNativePath();
@@ -275,10 +293,10 @@ String SystemLinux::GetCurrentDir() const
 bool SystemLinux::SetCurrentDir(const String &sPath)
 {
 	// Get path in Unix style
-	String sUnixPath = Url(sPath).GetUnixPath();
+	const String sUnixPath = Url(sPath).GetUnixPath();
 
 	// Set current directory
-	return (chdir(sUnixPath.GetASCII()) == 0);
+	return (chdir((sUnixPath.GetFormat() == String::ASCII) ? sUnixPath.GetASCII() : (char*)sUnixPath.GetUTF8()) == 0);
 }
 
 Thread *SystemLinux::GetCurrentThread() const
@@ -346,7 +364,8 @@ float SystemLinux::GetPercentageOfUsedPhysicalMemory() const
 	MemoryInformation sMemoryInformation;
 	if (GetMemoryInformation(sMemoryInformation))
 		return ((float)(sMemoryInformation.nTotalPhysicalMemory-sMemoryInformation.nFreePhysicalMemory)/sMemoryInformation.nTotalPhysicalMemory)*100.0f;
-	else return 0.0f;
+	else
+		return 0.0f;
 }
 
 uint64 SystemLinux::GetTotalPhysicalMemory() const

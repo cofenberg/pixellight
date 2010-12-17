@@ -72,16 +72,15 @@ bool FileLinux::Exists() const
 {
 	// Get file status
 	struct stat sStat;
-	return (stat(m_sFilename.GetASCII(), &sStat) == 0);
+	return (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), &sStat) == 0);
 }
 
 bool FileLinux::IsFile() const
 {
 	// Get file status
 	struct stat sStat;
-	if (stat(m_sFilename.GetASCII(), &sStat) == 0) {
+	if (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), &sStat) == 0)
 		return ((sStat.st_mode & S_IFREG) != 0);
-	}
 
 	// Error!
 	return false;
@@ -91,9 +90,8 @@ bool FileLinux::IsDirectory() const
 {
 	// Get file status
 	struct stat sStat;
-	if (stat(m_sFilename.GetASCII(), &sStat) == 0) {
+	if (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), &sStat) == 0)
 		return ((sStat.st_mode & S_IFDIR) != 0);
-	}
 
 	// Error!
 	return false;
@@ -102,10 +100,10 @@ bool FileLinux::IsDirectory() const
 bool FileLinux::CopyTo(const String &sDest, bool bOverwrite) const
 {
 	// Get destination as a unix path
-	Url cDestUrl = Url(sDest);
+	const Url cDestUrl(sDest);
 	if (cDestUrl.IsValid() && cDestUrl.IsValidUnixPath()) {
 		// Get absolute path of old and new filename (in Windows notation)
-		String sNewFilename = Url(cDestUrl.CutFilename() + Url(m_sFilename).GetFilename()).GetUnixPath();
+		const String sNewFilename = Url(cDestUrl.CutFilename() + Url(m_sFilename).GetFilename()).GetUnixPath();
 
 		// Note: This might be dangerous, because the destination URL is blindly used, so if e.g.
 		// the user tries to move "C:\test.txt" to "C:\test.zip\test2.txt", this will be passed
@@ -117,7 +115,8 @@ bool FileLinux::CopyTo(const String &sDest, bool bOverwrite) const
 
 		// Copy file (-d same as --no-dereference --preserve=links)
 		// [TODO] Linux copy file: There must be another way to copy a file using c functions...
-		system(String::Format("cp -d \"%s\" \"%s\"", m_sFilename.GetASCII(), sNewFilename.GetASCII()).GetASCII());
+		const String sTarget = "cp -d \"" + m_sFilename + "\" \"" + sNewFilename + '\"';
+		system((sTarget.GetFormat() == String::ASCII) ? sTarget.GetASCII() : (char*)sTarget.GetUTF8());
 //		if (??) {
 			// Done
 			return true;
@@ -134,10 +133,10 @@ bool FileLinux::MoveTo(const String &sDest)
 	Close();
 
 	// Get destination as a unix path
-	Url cDestUrl = Url(sDest);
+	const Url cDestUrl(sDest);
 	if (cDestUrl.IsValid() && cDestUrl.IsValidUnixPath()) {
 		// Get absolute path of old and new filename (in Unix notation)
-		String sNewFilename = cDestUrl.GetUnixPath();
+		const String sNewFilename = cDestUrl.GetUnixPath();
 
 		// Note: This might be dangerous, because the destination URL is blindly used, so if e.g.
 		// the user tries to move "C:\test.txt" to "C:\test.zip\test2.txt", this will be passed
@@ -148,7 +147,8 @@ bool FileLinux::MoveTo(const String &sDest)
 		// in 90% of all cases both the URLs are on the local file system anyway.
 
 		// Move file
-		if (rename(m_sFilename.GetASCII(), sNewFilename.GetASCII()) == 0) {
+		if (rename((m_sFilename .GetFormat() == String::ASCII) ? m_sFilename .GetASCII() : (char*)m_sFilename .GetUTF8(),
+				   (sNewFilename.GetFormat() == String::ASCII) ? sNewFilename.GetASCII() : (char*)sNewFilename.GetUTF8()) == 0) {
 			// Set new file name
 			m_cUrl = sNewFilename;
 
@@ -171,10 +171,11 @@ bool FileLinux::Rename(const String &sName)
 		return false; // Error!
 
 	// Get absolute path of old and new name (in Unix notation)
-	String sNewFilename = Url(m_cUrl.CutFilename() + sName).GetUnixPath();
+	const String sNewFilename = Url(m_cUrl.CutFilename() + sName).GetUnixPath();
 
 	// Rename file
-	if (rename(m_sFilename.GetASCII(),sNewFilename.GetASCII()) == 0) {
+	if (rename((m_sFilename .GetFormat() == String::ASCII) ? m_sFilename .GetASCII() : (char*)m_sFilename .GetUTF8(),
+			   (sNewFilename.GetFormat() == String::ASCII) ? sNewFilename.GetASCII() : (char*)sNewFilename.GetUTF8()) == 0) {
 		// Set new file name
 		m_cUrl = sNewFilename;
 
@@ -192,7 +193,7 @@ bool FileLinux::CreateNewFile(bool bAlways)
 	Close();
 
 	// Create file
-	int nFile = open(m_sFilename.GetASCII(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	const int nFile = open((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (nFile != -1) {
 		// Success
 		close(nFile);
@@ -209,7 +210,7 @@ bool FileLinux::CreateNewDirectory()
 	Close();
 
 	// Create directory
-	return (mkdir(m_sFilename.GetASCII(), 0711) != -1);
+	return (mkdir((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), 0711) != -1);
 }
 
 bool FileLinux::Delete()
@@ -218,7 +219,7 @@ bool FileLinux::Delete()
 	Close();
 
 	// Delete file
-	return (unlink(m_sFilename.GetASCII()) == 0);
+	return (unlink((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8()) == 0);
 }
 
 bool FileLinux::DeleteDirectory()
@@ -227,7 +228,7 @@ bool FileLinux::DeleteDirectory()
 	Close();
 
 	// Delete directory
-	return (rmdir(m_sFilename.GetASCII()) == 0);
+	return (rmdir((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8()) == 0);
 }
 
 void FileLinux::Close()
@@ -249,39 +250,47 @@ bool FileLinux::Open(uint32 nAccess)
 	char szMode[4];
 	if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && (nAccess & File::FileAppend)) {
 		// Append at the end of the file
-		if (nAccess & File::FileRead)	strcpy(szMode, "a+");	// Append, read and write
-		else							strcpy(szMode, "a");	// Append, write only
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "a+");	// Append, read and write
+		else
+			strcpy(szMode, "a");	// Append, write only
 	} else if ((nAccess & File::FileWrite) && (nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Create and open writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "w+");	// Create, read and write
-		else							strcpy(szMode, "w");	// Create, write only
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "w+");	// Create, read and write
+		else
+			strcpy(szMode, "w");	// Create, write only
 	} else if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "r+");	// Open, read and write
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "r+");	// Open, read and write
 
 		// We need to check whether the file already exist, if so, we can go on...
 		else {
-			if (Exists())				strcpy(szMode, "w");	// Open, write only
-			else						return false;			// Invalid
+			if (Exists())
+				strcpy(szMode, "w");	// Open, write only
+			else
+				return false;			// Invalid
 		}
 	} else if (!(nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open not writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "r");	// Open, read only
-		else							return false;			// Invalid
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "r");	// Open, read only
+		else
+			return false;			// Invalid
 	} else {
 		// Invalid combination
 		return false;
 	}
 
 	// Set text or binary mode
-	if (nAccess & File::FileText)	strcat(szMode, "t");
-	else							strcat(szMode, "b");
+	strcat(szMode, (nAccess & File::FileText) ? "t" : "b");
 
 	// Save access modes
 	m_nAccess = nAccess;
 
 	// Open file
-	m_pFile = fopen(m_sFilename.GetASCII(), szMode);
+	m_pFile = fopen((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), szMode);
 
 	// Done
 	return (m_pFile != NULL);
@@ -340,7 +349,7 @@ int FileLinux::PutS(const String &sString)
 {
 	// Write string
 	if (IsWritable()) {
-		int nSize = fputs(sString, m_pFile);
+		const int nSize = fputs(sString, m_pFile);
 		if (nSize >= 0)
 			return sString.GetLength();
 	}
@@ -382,7 +391,10 @@ bool FileLinux::Seek(int32 nOffset, File::ESeek nLocation)
 
 		// Seek file
 		return !fseek(m_pFile, nOffset, nSeek);
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 int32 FileLinux::Tell() const
@@ -396,12 +408,15 @@ uint32 FileLinux::GetSize() const
 	// Check file pointer
 	if (m_pFile) {
 		// Get file size
-		int32 nPos = Tell();
+		const int32 nPos = Tell();
 		fseek(m_pFile, 0, SEEK_END);
-		int32 nSize = ftell(m_pFile);
+		const int32 nSize = ftell(m_pFile);
 		fseek(m_pFile, nPos, SEEK_SET);
 		return nSize;
-	} else return 0; // Error!
+	} else {
+		// Error!
+		return 0;
+	}
 }
 
 FileSearchImpl *FileLinux::CreateSearch()

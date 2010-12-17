@@ -253,15 +253,15 @@ bool HttpHandle::IsEof() const
 bool HttpHandle::Connect()
 {
 	// Recreate socket
-	if (!m_cSocket.IsValid()) {
+	if (!m_cSocket.IsValid())
 		m_cSocket = Socket();
-	}
 
 	// Connect
 	if (m_cSocket.Connect(m_sDomain, 80)) {
 		// Compose HTTP request
 		String sRequest = "GET " + m_cUrl.GetUrl() + " HTTP/1.0\nUser-Agent: PixelLight HTTP Client\n";
-		if (m_sUsername.GetLength()) sRequest += "Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\n";
+		if (m_sUsername.GetLength())
+			sRequest += "Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\n";
 		sRequest += "\n";
 
 		// Send HTTP request

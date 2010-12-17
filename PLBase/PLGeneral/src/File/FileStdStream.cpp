@@ -149,7 +149,8 @@ void FileStdStream::Close()
 bool FileStdStream::Open(uint32 nAccess)
 {
 	// If a standard stream has been used, we cannot open/reopen it
-	if (m_bStream) return false;
+	if (m_bStream)
+		return false;
 
 	// Close file
 	Close();
@@ -158,48 +159,55 @@ bool FileStdStream::Open(uint32 nAccess)
 	char szMode[4];
 	if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && (nAccess & File::FileAppend)) {
 		// Append at the end of the file
-		if (nAccess & File::FileRead)	strcpy(szMode, "a+");	// Append, read and write
-		else							strcpy(szMode, "a");	// Append, write only
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "a+");	// Append, read and write
+		else
+			strcpy(szMode, "a");	// Append, write only
 	} else if ((nAccess & File::FileWrite) && (nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Create and open writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "w+");	// Create, read and write
-		else							strcpy(szMode, "w");	// Create, write only
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "w+");	// Create, read and write
+		else
+			strcpy(szMode, "w");	// Create, write only
 	} else if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "r+");	// Open, read and write
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "r+");	// Open, read and write
 
 		// We need to check whether the file already exist, if so, we can go on...
 		else {
-			if (Exists())				strcpy(szMode, "w");	// Open, write only
-			else						return false;			// Invalid
+			if (Exists())
+				strcpy(szMode, "w");	// Open, write only
+			else
+				return false;			// Invalid
 		}
 	} else if (!(nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open not writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "r");	// Open, read only
-		else							return false;			// Invalid
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "r");	// Open, read only
+		else
+			return false;			// Invalid
 	} else {
 		// Invalid combination
 		return false;
 	}
 
 	// Set text or binary mode
-	if (nAccess & File::FileText)	strcat(szMode, "t");
-	else							strcat(szMode, "b");
+	strcat(szMode, (nAccess & File::FileText) ? "t" : "b");
 
 	// Save access modes
 	m_nAccess = nAccess;
 
 	// Get OS file handle
 	#if defined(WIN32)
-		int nFile = _open_osfhandle(m_hFile, 0);
+		const int nFile = _open_osfhandle(m_hFile, 0);
 	#elif defined(LINUX)
 		int nFile = m_hFile;
 	#endif
 
 	// Open file
-	if (nFile > -1) {
+	if (nFile > -1)
 		m_pFile = _fdopen(nFile, szMode);
-	}
 
 	// Done
 	return (m_pFile != NULL);
@@ -258,8 +266,13 @@ int FileStdStream::PutS(const String &sString)
 {
 	// Write string
 	if (m_pFile && IsWritable()) {
-		int nSize = fputs(sString.GetASCII(), m_pFile);
-		if (nSize >= 0) return sString.GetLength();
+		#ifdef WIN32
+			const int nSize = (sString.GetFormat() == String::ASCII) ? fputs(sString.GetASCII(), m_pFile) : fputws(sString.GetUnicode(), m_pFile);
+		#else
+			const int nSize = fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : (char*)sString.GetUTF8(), m_pFile);
+		#endif
+		if (nSize >= 0)
+			return sString.GetLength();
 	}
 
 	// Error!
@@ -299,7 +312,10 @@ bool FileStdStream::Seek(int32 nOffset, File::ESeek nLocation)
 
 		// Seek file
 		return !fseek(m_pFile, nOffset, nSeek);
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 int32 FileStdStream::Tell() const
@@ -313,12 +329,15 @@ uint32 FileStdStream::GetSize() const
 	// Check file pointer
 	if (m_pFile) {
 		// Get file size
-		int32 nPos = Tell();
+		const int32 nPos = Tell();
 		fseek(m_pFile, 0, SEEK_END);
-		int32 nSize = ftell(m_pFile);
+		const int32 nSize = ftell(m_pFile);
 		fseek(m_pFile, nPos, SEEK_SET);
 		return nSize;
-	} else return 0; // Error!
+	} else {
+		// Error!
+		return 0;
+	}
 }
 
 FileSearchImpl *FileStdStream::CreateSearch()

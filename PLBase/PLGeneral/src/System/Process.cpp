@@ -130,16 +130,20 @@ void Process::Execute(const String &sCommand, const String &sArguments)
 			}
 
 			// Make array for arguments
-			int nSize = lstArgs.GetNumOfElements();
+			const int nSize = lstArgs.GetNumOfElements();
 			if (nSize > 0) {
 				char **ppszParams = new char*[nSize+1];
-				for (int i=0; i<nSize; i++) {
-					ppszParams[i] = (char*)lstArgs[i].GetASCII();
+				if (sCommand.GetFormat() == String::ASCII) {
+					for (int i=0; i<nSize; i++)
+						ppszParams[i] = (char*)lstArgs[i].GetASCII();
+				} else {
+					for (int i=0; i<nSize; i++)
+						ppszParams[i] = (char*)lstArgs[i].GetUTF8();
 				}
 				ppszParams[nSize] = NULL;
 
 				// Execute application
-				execv(lstArgs[0].GetASCII(), ppszParams);
+				execv((lstArgs[0].GetFormat() == String::ASCII) ? lstArgs[0].GetASCII() : (char*)lstArgs[0].GetUTF8(), ppszParams);
 			}
 		}
 	#endif
@@ -387,26 +391,49 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 		// Create process
 		PROCESS_INFORMATION piProcInfo;
 		ZeroMemory(&piProcInfo, sizeof(PROCESS_INFORMATION));
-		STARTUPINFOA siStartInfo;
-		ZeroMemory(&siStartInfo, sizeof(STARTUPINFO));
-		siStartInfo.cb = sizeof(STARTUPINFO);
-		siStartInfo.hStdInput  = (HANDLE)hPipeInRd;
-		siStartInfo.hStdOutput = (HANDLE)hPipeOutWr;
-		siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
-		siStartInfo.dwFlags = STARTF_USESTDHANDLES;
-		String sCmdLine = sCommand + " " + sArguments;
-		BOOL bResult = CreateProcessA(
+		const String sCmdLine = sCommand + ' ' + sArguments;
+		BOOL bResult = FALSE;
+		if (sCmdLine.GetFormat() == String::ASCII) {
+			STARTUPINFOA siStartInfo;
+			ZeroMemory(&siStartInfo, sizeof(STARTUPINFO));
+			siStartInfo.cb = sizeof(STARTUPINFO);
+			siStartInfo.hStdInput  = (HANDLE)hPipeInRd;
+			siStartInfo.hStdOutput = (HANDLE)hPipeOutWr;
+			siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
+			siStartInfo.dwFlags = STARTF_USESTDHANDLES;
+			bResult = CreateProcessA(
 							NULL,
 							(LPSTR)sCmdLine.GetASCII(),	// Command line
-							NULL,					// Process security attributes
-							NULL,					// Primary thread security attributes
-							TRUE,					// Handles are inherited
-							0,						// Creation flags
-							NULL,					// Use parent's environment
-							NULL,					// Use parent's current directory
-							&siStartInfo,			// STARTUPINFO pointer
-							&piProcInfo				// Receives PROCESS_INFORMATION
+							NULL,						// Process security attributes
+							NULL,						// Primary thread security attributes
+							TRUE,						// Handles are inherited
+							0,							// Creation flags
+							NULL,						// Use parent's environment
+							NULL,						// Use parent's current directory
+							&siStartInfo,				// STARTUPINFO pointer
+							&piProcInfo					// Receives PROCESS_INFORMATION
 						);
+		} else {
+			STARTUPINFOW siStartInfo;
+			ZeroMemory(&siStartInfo, sizeof(STARTUPINFOW));
+			siStartInfo.cb = sizeof(STARTUPINFOW);
+			siStartInfo.hStdInput  = (HANDLE)hPipeInRd;
+			siStartInfo.hStdOutput = (HANDLE)hPipeOutWr;
+			siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
+			siStartInfo.dwFlags = STARTF_USESTDHANDLES;
+			bResult = CreateProcessW(
+							NULL,
+							(LPWSTR)sCmdLine.GetUnicode(),	// Command line
+							NULL,							// Process security attributes
+							NULL,							// Primary thread security attributes
+							TRUE,							// Handles are inherited
+							0,								// Creation flags
+							NULL,							// Use parent's environment
+							NULL,							// Use parent's current directory
+							&siStartInfo,					// STARTUPINFO pointer
+							&piProcInfo						// Receives PROCESS_INFORMATION
+						);
+		}
 
 		// Check result
 		if (bResult) {
