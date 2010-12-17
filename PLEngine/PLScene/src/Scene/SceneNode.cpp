@@ -111,16 +111,45 @@ void SceneNode::SetPosition(const Vector3 &vValue)
 	m_cTransform.SetPosition(vValue);
 }
 
-const Vector3 &SceneNode::GetRotation() const
+Vector3 SceneNode::GetRotation() const
 {
-	return m_vRotation;
+	// Internally, the rotation is stored as quaternion, so we now have to calculate an reasonable Euler angles representation...
+
+	// Get an Euler angles representation of the rotation in radian
+	float fAngleX = 0.0f;
+	float fAngleY = 0.0f;
+	float fAngleZ = 0.0f;
+	EulerAngles::FromQuaternion(m_cTransform.GetRotation(), fAngleX, fAngleY, fAngleZ);
+
+	// Something like "-0" just looks stupied within for instance a GUI, so make it to "0"
+	if (fAngleX == -0.0f)
+		fAngleX = 0.0f;
+	if (fAngleY == -0.0f)
+		fAngleY = 0.0f;
+	if (fAngleZ == -0.0f)
+		fAngleZ = 0.0f;
+
+	// To have well defined values, ensure that the Euler angles are between [0, 360]
+	static const float Min = 0.0f;
+	static const float Max = 360.0f;
+	fAngleX = Math::WrapToInterval(float(fAngleX*Math::RadToDeg), Min, Max);
+	fAngleY = Math::WrapToInterval(float(fAngleY*Math::RadToDeg), Min, Max);
+	fAngleZ = Math::WrapToInterval(float(fAngleZ*Math::RadToDeg), Min, Max);
+
+	// Return the Euler angles representation of the rotation in degree
+	return Vector3(fAngleX, fAngleY, fAngleZ);
 }
 
 void SceneNode::SetRotation(const Vector3 &vValue)
 {
-	m_vRotation = vValue;
+	// Internally, the rotation is stored as quaternion, so we have to construct a quaternion by using the given Euler angles representation...
+	// To have well defined values, ensure that the Euler angles are between [0, 360]
 	Quaternion qRotation;
-	EulerAngles::ToQuaternion(float(m_vRotation.x*Math::DegToRad), float(m_vRotation.y*Math::DegToRad), float(m_vRotation.z*Math::DegToRad), qRotation);
+	static const float Min = 0.0f;
+	static const float Max = 360.0f;
+	EulerAngles::ToQuaternion(float(Math::WrapToInterval(vValue.x, Min, Max)*Math::DegToRad),
+							  float(Math::WrapToInterval(vValue.y, Min, Max)*Math::DegToRad),
+							  float(Math::WrapToInterval(vValue.z, Min, Max)*Math::DegToRad), qRotation);
 	m_cTransform.SetRotation(qRotation);
 }
 
@@ -1239,11 +1268,6 @@ void SceneNode::InitSceneNode()
 {
 	// Initialization allowed?
 	if (!(m_nInternalFlags & DestroyThis)) {
-		// Set rotation
-		Quaternion qRotation;
-		EulerAngles::ToQuaternion(float(m_vRotation.x*Math::DegToRad), float(m_vRotation.y*Math::DegToRad), float(m_vRotation.z*Math::DegToRad), qRotation);
-		m_cTransform.SetRotation(qRotation);
-
 		// Call the virtual initialization function
 		InitFunction();
 	}
@@ -1307,14 +1331,6 @@ void SceneNode::OnRotation()
 
 	// We need a hierarchy refresh for this scene node
 	HierarchyRefreshRequired();
-
-	/* [TODO] Initial rotation, don't update it?
-	// Get an Euler angles representation of the rotation in degree
-	EulerAngles::FromQuaternion(m_cTransform.GetRotation(), m_vRotation.x, m_vRotation.y, m_vRotation.z);
-	m_vRotation.x = float(m_vRotation.x*Math::RadToDeg);
-	m_vRotation.y = float(m_vRotation.y*Math::RadToDeg);
-	m_vRotation.z = float(m_vRotation.z*Math::RadToDeg);
-	*/
 }
 
 /**

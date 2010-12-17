@@ -84,6 +84,8 @@ namespace PLScene {
 *    - The name 'This' is NOT allowed for scene nodes, this name is reserved for the 'this scene node'
 *    - The name of the 'root scene container' can NOT be changed
 *    - Derived classes should use a 'SN'-prefix (example: SNLight)
+*    - The "Rotation"-attribute of the scene node is a derived (human friendly) Euler angles (in degree) representation of the internal rotation quaternion,
+*      so, whenever possible, work internally with "GetTransform()" instead of "GetRotation()"!
 */
 class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 
@@ -193,7 +195,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		pl_attribute(Flags,				pl_flag_type(EFlags),		0,									ReadWrite,	GetSet,			"Flags",																															"")
 		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,									ReadWrite,	GetSet,			"Debug flags",																														"")
 		pl_attribute(Position,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Position",																															"")
-		pl_attribute(Rotation,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Initial rotation in degree, [0, 360]",																								"Inc=1")
+		pl_attribute(Rotation,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Rotation as Euler angles in degree, [0, 360]",																						"Inc=1")
 		pl_attribute(Scale,				PLMath::Vector3,			PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,			"Scale",																															"")
 		pl_attribute(MaxDrawDistance,	float,						0.0f,								ReadWrite,	DirectValue,	"Maximum draw distance of the scene node to the camera, if 0 do always draw, if negative, do always draw this node before other",	"")
 		pl_attribute(AABBMin,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Minimum position of the 'scene node space' axis aligned bounding box",																"")
@@ -212,7 +214,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		PLS_API virtual void SetDebugFlags(PLGeneral::uint32 nValue);
 		PLS_API const PLMath::Vector3 &GetPosition() const;
 		PLS_API void SetPosition(const PLMath::Vector3 &vValue);
-		PLS_API const PLMath::Vector3 &GetRotation() const;
+		PLS_API PLMath::Vector3 GetRotation() const;
 		PLS_API void SetRotation(const PLMath::Vector3 &vValue);
 		PLS_API const PLMath::Vector3 &GetScale() const;
 		PLS_API void SetScale(const PLMath::Vector3 &vValue);
@@ -1035,7 +1037,6 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 	private:
 		PLGeneral::uint32					 m_nFlags;							/**< Flags */
 		PLGeneral::uint32					 m_nDebugFlags;						/**< Debug flags */
-		PLMath::Vector3						 m_vRotation;						/**< Initial rotation in degree, [0, 360] */
 		PLMath::AABoundingBox				 m_cAABoundingBox;					/**< Axis align bounding box in 'scene node space' */
 		PLGeneral::uint8					 m_nDrawFunctionFlags;				/**< Scene node draw function flags */
 		PLGeneral::uint32					 m_nCounter;						/**< Internal scene node counter */

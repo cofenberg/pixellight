@@ -1,3 +1,12 @@
+>> 17.12.2010
+[CO]
+- SceneNode: The "Rotation"-attribute of the scene node is now a derived (human friendly) Euler angles (in degree) representation of the internal
+  rotation quaternion, so, whenever possible, work internally with "GetTransform()" instead of "GetRotation()". Of course, it's not always 100%
+  possible to transform an Euler angles rotation representation into an quaternion rotation representation and vice versa - but most times, it's
+  sufficient. At least I found an acceptable way to get rid of the stupied double rotation storage inside scene nodes! :D
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/
