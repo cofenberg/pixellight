@@ -46,12 +46,6 @@ pl_implement_class(SNSound)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SNSound::IconSound = "Data/Textures/IconSound.dds";
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
 String SNSound::GetSound() const
@@ -170,7 +164,6 @@ SNSound::SNSound() :
 	ReferenceDistance(this),
 	MaxDistance(this),
 	RolloffFactor(this),
-	Icon(this),
 	Flags(this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),

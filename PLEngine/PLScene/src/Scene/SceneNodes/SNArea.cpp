@@ -43,12 +43,6 @@ pl_implement_class(SNArea)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SNArea::IconArea = "Data/Textures/IconArea.dds";
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
 String SNArea::GetBox() const
@@ -88,7 +82,6 @@ void SNArea::SetPlanes(const String &sValue)
 SNArea::SNArea() :
 	Box(this),
 	Planes(this),
-	Icon(this),
 	m_sBox("-0.5 -0.5 -0.5 0.5 0.5 0.5")
 {
 }

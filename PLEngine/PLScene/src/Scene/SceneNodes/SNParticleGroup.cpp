@@ -52,12 +52,6 @@ pl_implement_class(SNParticleGroup)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SNParticleGroup::IconParticles = "Data/Textures/IconParticles.dds";
-
-
-//[-------------------------------------------------------]
 //[ SNParticleGroup::Particle                             ]
 //[-------------------------------------------------------]
 //[-------------------------------------------------------]
@@ -357,7 +351,6 @@ SNParticleGroup::SNParticleGroup() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
-	Icon(this),
 	Flags(this),
 	m_sMaterial("Data/Effects/DefaultParticle.plfx"),
 	m_nParticles(10),

@@ -72,8 +72,6 @@ class SNCamera : public SceneNode {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API static const PLGeneral::String IconCamera;	/**< 'Data/Textures/IconCamera.dds' string */
-
 		/**
 		*  @brief
 		*    Scene node flags (SceneNode flags extension)
@@ -109,16 +107,18 @@ class SNCamera : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNCamera, "PLScene", PLScene::SceneNode, "PixelLight standard camera scene node")
+		pl_properties
+			pl_property("Icon", "Data/Textures/IconCamera.dds")
+		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(FOV,					float,						45.0f,		ReadWrite,	GetSet,		"Field of view in degree",																									"Min='10.0' Max='170.0'")
-		pl_attribute(Aspect,				float,						1.0f,		ReadWrite,	GetSet,		"Aspect factor",																											"")
-		pl_attribute(ZNear,					float,						0.01f,		ReadWrite,	GetSet,		"Near clipping plane",																										"")
-		pl_attribute(ZFar,					float,						1000.0f,	ReadWrite,	GetSet,		"Far clipping plane",																										"")
-		pl_attribute(SceneRendererFilename,	PLGeneral::String,			"",			ReadWrite,	GetSet,		"Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used",	"Type='SceneRenderer'")
+		pl_attribute(FOV,					float,						45.0f,		ReadWrite,	GetSet,	"Field of view in degree",																									"Min='10.0' Max='170.0'")
+		pl_attribute(Aspect,				float,						1.0f,		ReadWrite,	GetSet,	"Aspect factor",																											"")
+		pl_attribute(ZNear,					float,						0.01f,		ReadWrite,	GetSet,	"Near clipping plane",																										"")
+		pl_attribute(ZFar,					float,						1000.0f,	ReadWrite,	GetSet,	"Far clipping plane",																										"")
+		pl_attribute(SceneRendererFilename,	PLGeneral::String,			"",			ReadWrite,	GetSet,	"Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used",	"Type='SceneRenderer'")
 		// Overwritten SceneNode variables
-		pl_attribute(Icon,					PLGeneral::String,			IconCamera,	ReadWrite,	ModifyAttr,	"Scene node icon",																											"Type='Material Effect Image TextureAni'")
-		pl_attribute(Flags,					pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,		"Flags",																													"")
-		pl_attribute(DebugFlags,			pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,		"Debug flags",																												"")
+		pl_attribute(Flags,					pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,	"Flags",																													"")
+		pl_attribute(DebugFlags,			pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,	"Debug flags",																												"")
 	pl_class_end
 
 

@@ -66,12 +66,6 @@ pl_implement_class(SceneNode)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SceneNode::IconSceneNode = "Data/Textures/IconSceneNode.dds";
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
 uint32 SceneNode::GetFlags() const
@@ -1086,7 +1080,6 @@ void SceneNode::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 *    Default constructor
 */
 SceneNode::SceneNode() :
-	Icon(this),
 	Flags(this),
 	DebugFlags(this),
 	Position(this),

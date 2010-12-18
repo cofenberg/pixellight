@@ -67,12 +67,6 @@ pl_implement_class(SNMesh)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SNMesh::IconMesh = "Data/Textures/IconMesh.dds";
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
 String SNMesh::GetMesh() const
@@ -134,7 +128,6 @@ void SNMesh::SetFlags(uint32 nValue)
 SNMesh::SNMesh() :
 	Mesh(this),
 	Skin(this),
-	Icon(this),
 	Flags(this),
 	DebugFlags(this),
 	m_pMeshHandler(NULL)

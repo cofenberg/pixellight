@@ -145,7 +145,8 @@ void SRPDebugSceneNodeIcons::DrawIcon(Renderer &cRenderer, const SQCull &cCullQu
 	if ((MaxDrawDistance <= 0.0f || cVisNode.GetSquaredDistanceToCamera() <= MaxDrawDistance*MaxDrawDistance) &&
 		Intersect::PlaneSetPoint(cCullQuery.GetViewFrustum(), cSceneNode.GetTransform().GetPosition())) {
 		// Get/load the icon texture
-		Texture *pTexture = cRenderer.GetRendererContext().GetTextureManager().LoadResource(cSceneNode.Icon.GetString());
+		static const String sIcon = "Icon";
+		Texture *pTexture = cRenderer.GetRendererContext().GetTextureManager().LoadResource(cSceneNode.GetClass()->GetProperties().Get(sIcon));
 		if (pTexture && pTexture->GetTextureBuffer()) {
 			pTexture->SetProtected(true);
 

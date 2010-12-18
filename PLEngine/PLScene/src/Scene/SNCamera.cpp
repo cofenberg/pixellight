@@ -52,12 +52,6 @@ pl_implement_class(SNCamera)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SNCamera::IconCamera = "Data/Textures/IconCamera.dds";
-
-
-//[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 SNCamera *SNCamera::m_pCamera = NULL;
@@ -214,7 +208,6 @@ SNCamera::SNCamera() :
 	ZNear(this),
 	ZFar(this),
 	SceneRendererFilename(this),
-	Icon(this),
 	Flags(this),
 	DebugFlags(this),
 	m_fFOV(45.0f),

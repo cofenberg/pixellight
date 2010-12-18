@@ -60,8 +60,6 @@ class SNSound : public PLScene::SceneNode {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLSOUND_API static const PLGeneral::String IconSound;	/**< 'Data/Textures/IconSound.dds' string */
-
 		/**
 		*  @brief
 		*    Scene node flags (SceneNode flags extension)
@@ -85,6 +83,9 @@ class SNSound : public PLScene::SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLSOUND_RTTI_EXPORT, SNSound, "PLSound", PLScene::SceneNode, "Scene node which is able to playback a sound")
+		pl_properties
+			pl_property("Icon", "Data/Textures/IconSound.dds")
+		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Sound,				PLGeneral::String,		"",			ReadWrite,	GetSet,		"Filename of the sound which should be played (full path, supported file formats are API dependent)",			"Ext='mp3 ogg wav mid midi it mod s3m xm'")
 		pl_attribute(Volume,			float,					1.0f,		ReadWrite,	GetSet,		"Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume)",												"Min='0.0' Max='1.0'")
@@ -93,7 +94,6 @@ class SNSound : public PLScene::SceneNode {
 		pl_attribute(MaxDistance,		float,					10000.0f,	ReadWrite,	GetSet,		"Defines a distance beyond which the source will not be further attenuated by distance",						"Min='0.0'")
 		pl_attribute(RolloffFactor,		float,					1.0f,		ReadWrite,	GetSet,		"This will scale the distance attenuation over the applicable range",											"Min='0.0'")
 		// Overwritten PLScene::SceneNode variables
-		pl_attribute(Icon,				PLGeneral::String,		IconSound,	ReadWrite,	ModifyAttr,	"Scene node icon",																								"Type='Material Effect Image TextureAni'")
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,		"Flags",																										"")
 	pl_class_end
 

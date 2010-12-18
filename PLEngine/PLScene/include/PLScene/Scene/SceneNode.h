@@ -112,8 +112,6 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API static const PLGeneral::String IconSceneNode;	/**< 'Data/Textures/IconSceneNode.dds' string */
-
 		/**
 		*  @brief
 		*    Scene node flags
@@ -191,7 +189,9 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneNode, "PLScene", PLCore::Object, "Abstract scene node (leaf node) class")
-		pl_attribute(Icon,				PLGeneral::String,			IconSceneNode,						ReadWrite,	DirectValue,	"Scene node icon",																													"Type='Material Effect Image TextureAni'")
+		pl_properties
+			pl_property("Icon", "Data/Textures/IconSceneNode.dds")
+		pl_properties_end
 		pl_attribute(Flags,				pl_flag_type(EFlags),		0,									ReadWrite,	GetSet,			"Flags",																															"")
 		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,									ReadWrite,	GetSet,			"Debug flags",																														"")
 		pl_attribute(Position,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Position",																															"")

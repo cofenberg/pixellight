@@ -73,8 +73,6 @@ class SNParticleGroup : public SceneNode {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API static const PLGeneral::String IconParticles;	/**< 'Data/Textures/IconParticles.dds' string */
-
 		/**
 		*  @brief
 		*    Scene node flags (SceneNode flags extension)
@@ -98,13 +96,15 @@ class SNParticleGroup : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNParticleGroup, "PLScene", PLScene::SceneNode, "Abstract particle group scene node")
+		pl_properties
+			pl_property("Icon", "Data/Textures/IconParticles.dds")
+		pl_properties_end
 		pl_attribute(Material,					PLGeneral::String,		"Data/Effects/DefaultParticle.plfx",		ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(GlobalColor,				PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Global particle color",							"")
 		pl_attribute(Particles,					PLGeneral::uint32,		10,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,		1,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
 		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,		1,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
 		// Overwritten SceneNode variables
-		pl_attribute(Icon,						PLGeneral::String,		IconParticles,								ReadWrite,	ModifyAttr,		"Scene node icon",									"Type='Material Effect Image TextureAni'")
 		pl_attribute(Flags,						pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",											"")
 	pl_class_end
 

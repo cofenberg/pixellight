@@ -58,8 +58,6 @@ class SNMesh : public SceneNode {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API static const PLGeneral::String IconMesh;	/**< 'Data/Textures/IconMesh.dds' string */
-
 		/**
 		*  @brief
 		*    Scene node flags (SceneNode flags extension)
@@ -123,13 +121,15 @@ class SNMesh : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMesh, "PLScene", PLScene::SceneNode, "An mesh is a special scene node that has a 3D mesh attached to it by default")
+		pl_properties
+			pl_property("Icon", "Data/Textures/IconMesh.dds")
+		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(Mesh,			PLGeneral::String,			"",			ReadWrite,	GetSet,		"Mesh to use",													"Type='Mesh'")
-		pl_attribute(Skin,			PLGeneral::String,			"",			ReadWrite,	GetSet,		"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
+		pl_attribute(Mesh,			PLGeneral::String,			"",	ReadWrite,	GetSet,	"Mesh to use",													"Type='Mesh'")
+		pl_attribute(Skin,			PLGeneral::String,			"",	ReadWrite,	GetSet,	"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
 		// Overwritten SceneNode variables
-		pl_attribute(Icon,			PLGeneral::String,			IconMesh,	ReadWrite,	ModifyAttr,	"Scene node icon",												"Type='Material Effect Image TextureAni'")
-		pl_attribute(Flags,			pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,		"Flags",														"")
-		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,		"Debug flags",													"")
+		pl_attribute(Flags,			pl_flag_type(EFlags),		0,	ReadWrite,	GetSet,	"Flags",														"")
+		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,	ReadWrite,	GetSet,	"Debug flags",													"")
 	pl_class_end
 
 

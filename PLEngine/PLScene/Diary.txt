@@ -1,3 +1,10 @@
+>> 18.12.2010
+[CO]
+- "SceneNode::Icon" is now a property instead of an attribute because this icon should be the same for all scene node instances of the same class
+  (and beside that reasonable reason, we safe a few bytes per scene node instance *g*)
+
+
+
 >> 17.12.2010
 [CO]
 - SceneNode: The "Rotation"-attribute of the scene node is now a derived (human friendly) Euler angles (in degree) representation of the internal

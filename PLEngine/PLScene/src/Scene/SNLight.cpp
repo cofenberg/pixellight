@@ -40,12 +40,6 @@ pl_implement_class(SNLight)
 
 
 //[-------------------------------------------------------]
-//[ Public definitions                                    ]
-//[-------------------------------------------------------]
-const String SNLight::IconLight = "Data/Textures/IconLight.dds";
-
-
-//[-------------------------------------------------------]
 //[ Public virtual functions                              ]
 //[-------------------------------------------------------]
 bool SNLight::IsRenderLight() const
@@ -96,7 +90,6 @@ SNLight::SNLight() :
 	CoronaSize(this),
 	FlareSize(this),
 	ScreenBrighten(this),
-	Icon(this),
 	Flags(this)
 {
 	// Set the internal flag
