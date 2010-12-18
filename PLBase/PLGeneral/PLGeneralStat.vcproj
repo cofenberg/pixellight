@@ -419,6 +419,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\PLGeneral\String\QtStringAdapter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\String\RegEx.cpp"
 				>
 			</File>

@@ -126,3 +126,33 @@ Because the string \emph{BeerNumber99} matches the expression \emph{\textasciici
 
 \section{Wildcard}
 It's practical to only support regular expressions or wildcards, but not both - so you don't need multiple implementations. Usually it's best to support regular expressions because they are more powerful than wildcards. Wildcards on the other side are more compact and users may already be familiar with them through \emph{Microsoft Windows} - therefore we added \emph{PLGeneral::RegEx::WildcardToRegEx()} so one can convert a given wildcard into an regular expression\footnote{Wildcard: \emph{BeerNumber*} = regular expression: \emph{\textasciicircum BeerNumber.*\$}} and then passing this to a function.
+
+
+
+
+\section{Qt string adapter}
+Within PLGeneral, there's a static adapter class for mapping Qt\footnote{Qt is a cross-platform application and UI framework, \url{http://qt.nokia.com/}} strings to PixelLight strings and vice versa.
+
+We provide this string adapter class because it's nice to be able to use PixelLight within Qt as comfortable as possible. Please note that the existence of this adapter class doesn't mean that PixelLight depends on Qt - inside PixelLight, neither this class nor Qt are used!\footnote{That's the reason why there's just a header file for this class, and no c++ file}
+
+The following source code example shows how to convert a Qt string to \emph{PLGeneral::String}.
+\begin{lstlisting}[caption=Qt string to PLGeneral::String]
+	QString sQtString = "Qt says hello to PixelLight";
+	String sPLString = QtStringAdapter::QtToPL(sQtString);
+\end{lstlisting}
+
+The following source code example shows how to convert \emph{PLGeneral::String} to a Qt string.
+\begin{lstlisting}[caption=PLGeneral::String string to Qt]
+	String sPLString = "Greetings from PixelLight to Qt";
+	QString sQtString = QtStringAdapter::PLToQt(sPLString);
+\end{lstlisting}
+
+
+\paragraph{wchar\_t}
+Please note that there's a perfidy when using \emph{wchar\_t} in combination with PixelLight \& Qt...
+
+When using the default settings within e.g. \emph{Visual Studio 2008}, \emph{wchar\_t} is treated as built-in type, so third party unicode shared libraries usually use it. So, this is also the default setting for PixelLight projects. On the other hand, if you want to use PixelLight within Qt and write something like \begin{quote}PLGeneral::String sString = L"Test";\end{quote}, the linker will give you an error message like \begin{quote}error:  unresolved external symbol "\_\_declspec(dllimport) public: \_\_thiscall PLGeneral::String::String(unsigned short const *,bool,int)" (\_\_imp\_??0String@PLGeneral@@QAE@PBG\_NH@Z) referenced in function \_main\end{quote} because within Qt, \emph{wchar\_t} is defined as \emph{unsigned short} and not as build in type \emph{wchar\_t}.
+
+One solution is to remove \emph{-Zc:wchar\_t-} from \emph{QMAKE\_CFLAGS} within \emph{qmake.conf} of Qt, and then recompiling Qt.
+
+Another solution, one that we don't recommend, is to recompile PixelLight with a set \emph{-Zc:wchar\_t-}... which means that it might be necessary to modify external dependencies as well!

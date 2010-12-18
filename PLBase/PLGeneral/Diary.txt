@@ -1,3 +1,11 @@
+>> 18.12.2010
+[CO]
+- "PLGeneralWindows.h": If "_MSC_VER" (VisualStudio) or "_WCHAR_T_DEFINED" is not defined, "wctype.h" will be included for
+  "wchar_t". Now PLGeneral can be used within for example QtCreator at once.
+- Added a static adapter class within PLGeneral for mapping Qt strings to PixelLight strings and vice versa
+
+
+
 >> 17.12.2010
 [CO]
 - Added unicode support to "FileLinux", "FileSearchLinux", "ConsoleLinux", "DynLibLinux", "SystemLinux", "FileStdStream", "Log",

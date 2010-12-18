@@ -4,6 +4,7 @@ Changes in PixelLight 0.9.3-R2 (not yet released)
 - Feature: Added "PLEngine::SceneRendererTool" helper class for simplified scene renderer access
 - Feature: Autodesk 3ds Max 2011 scene exporter added
 - Feature: Performance improvements within the string implementation
+- Feature: Added a static adapter class within PLGeneral for mapping Qt strings to PixelLight strings and vice versa
 - Change: Integrated "PLCompositing::SRPPostProcessing" into the compositing system, now it's possible to use post processing within the deferred scene renderer
 - Change: Moved nearly all compositing relevant classes from PLScene to PLCompositing
 - Change: Scene graph update refactoring for less CPU usage
