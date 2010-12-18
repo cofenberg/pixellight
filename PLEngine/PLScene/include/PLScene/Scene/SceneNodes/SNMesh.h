@@ -267,9 +267,9 @@ class SNMesh : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	   m_sMesh;				/**< Mesh to use */
-		PLGeneral::String	   m_sSkin;				/**< Skin file overwriting the default materials of the used mesh */
-		PLMesh::MeshHandler   *m_pMeshHandler;		/**< The mesh handler, can be NULL */
+		PLGeneral::String    m_sMesh;			/**< Mesh to use */
+		PLGeneral::String    m_sSkin;			/**< Skin file overwriting the default materials of the used mesh */
+		PLMesh::MeshHandler *m_pMeshHandler;	/**< The mesh handler, can be NULL */
 
 
 	//[-------------------------------------------------------]

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include "Application.h"
 

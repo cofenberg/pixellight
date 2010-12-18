@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/System/System.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
 

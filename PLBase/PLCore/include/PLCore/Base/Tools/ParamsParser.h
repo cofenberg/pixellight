@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include <PLGeneral/String/RegEx.h>
 #include "PLCore/PLCore.h"
 

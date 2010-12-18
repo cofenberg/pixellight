@@ -28,12 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include <PLGeneral/Xml/XmlElement.h>
 #include <PLGeneral/Container/List.h>
 #include "PLCore/PLCoreDefinitions.h"
-#include "PLCore/Base/Object.h"
-#include "PLCore/Base/Class.h"
 #include "PLCore/Base/Rtti.h"
 
 

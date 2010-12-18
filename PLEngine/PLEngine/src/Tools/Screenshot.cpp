@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/File/Directory.h>
+#include <PLGeneral/System/System.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>

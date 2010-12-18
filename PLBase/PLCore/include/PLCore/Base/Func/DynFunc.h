@@ -29,21 +29,25 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
-#include <PLGeneral/Xml/XmlElement.h>
 #include "PLCore/PLCore.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class XmlElement;
+}
+namespace PLCore {
+	class DynParams;
+	class FuncDesc;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class DynParams;
-class FuncDesc;
 
 
 //[-------------------------------------------------------]

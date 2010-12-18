@@ -28,8 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Xml/XmlElement.h>
 #include "PLCore/Base/Type/Type.h"
 #include "PLCore/Base/Type/DefaultValue.h"
 #include "PLCore/Base/Tools/TypeTraits.h"

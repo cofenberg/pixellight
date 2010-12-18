@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Core/MemoryManager.inl>	// By adding this in here, usually every PixelLight basing project will add automatically the correct memory manager features
-#include "PLCore/Base/ClassManager.h"
 #include "PLCore/Base/Rtti.h"
 
 

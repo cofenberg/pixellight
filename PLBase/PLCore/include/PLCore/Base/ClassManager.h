@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/String/String.h>
 #include <PLGeneral/Container/List.h>
 #include <PLGeneral/Container/HashMap.h>
 #include "PLCore/PLCoreDefinitions.h"

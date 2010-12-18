@@ -23,8 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLGeneral/Tools/Timing.h>
+#include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Widget.h>

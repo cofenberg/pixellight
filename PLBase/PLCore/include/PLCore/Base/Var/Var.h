@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include "PLCore/Base/Tools/TypeTraits.h"
 #include "PLCore/Base/Type/Type.h"
 #include "PLCore/Base/Var/DynVar.h"

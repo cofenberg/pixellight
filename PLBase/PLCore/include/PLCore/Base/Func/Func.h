@@ -35,9 +35,13 @@
 
 
 // [DEBUG]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#define DEBUG_MESSAGE(MSG)	{ PLGeneral::System::GetInstance()->GetConsole().Print(MSG); }
+#ifdef _DEBUG
+	#include <PLGeneral/System/System.h>
+	#include <PLGeneral/System/Console.h>
+	#define DEBUG_MESSAGE(MSG)	{ PLGeneral::System::GetInstance()->GetConsole().Print(MSG); }
+#else
+	#define DEBUG_MESSAGE(MSG)
+#endif
 
 
 //[-------------------------------------------------------]
