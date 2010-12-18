@@ -47,7 +47,7 @@ namespace PLGeneral {
 *
 *  @remarks
 *    We provide this string adapter class because it's nice to be able to use PixelLight within Qt as comfortable as possible. Please note
-*    that the existence of this adapter class doesn't mean that PixelLight depends on Qt - inside PixelLight, neither this class nor Qt are NOT used!
+*    that the existence of this adapter class doesn't mean that PixelLight depends on Qt - inside PixelLight, neither this class nor Qt are used!
 *    (that's the reason why there's just a header file for this class, and no c++ file)
 *
 *    Please note that there's a perfidy when using wchar_t in combination with PixelLight & Qt...
