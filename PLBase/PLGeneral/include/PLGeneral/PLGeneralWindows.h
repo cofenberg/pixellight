@@ -85,8 +85,8 @@
 		#define NULL 0
 	#endif
 
-	// Below VC8 'wchar_t' is no native type, we need to add it
-	#if _MSC_VER < 1400
+	// Within VisualStudio, 'wchar_t' can be defined as native type, in this case we don't need a special include
+	#if !defined(_MSC_VER) || !defined(_WCHAR_T_DEFINED)
 		#include <wctype.h>
 	#endif
 #endif
