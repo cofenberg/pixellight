@@ -89,6 +89,8 @@ class QtStringAdapter {
 			//    return (const PLGeneral::utf8*)sString.toUtf8().constData();
 			// But PixelLight works best with wchar_t, so we use wchar_t...
 
+			// [TODO] As soon as the UTF8 implementation within PixelLight is complete, do only use UTF8 to avoid the need to recompile Qt with other wchar_t settings!
+
 			// Get the number of characters in this string (excluding the terminating zero)
 			const int nLength = sString.length();
 			if (nLength) {
@@ -124,6 +126,8 @@ class QtStringAdapter {
 		*/
 		static QString PLToQt(const String &sString)
 		{
+			// [TODO] As soon as the UTF8 implementation within PixelLight is complete, do only use UTF8 to avoid the need to recompile Qt with other wchar_t settings!
+
 			// Check the internal PixelLight string format
 			switch (sString.GetFormat()) {
 				case String::ASCII:
