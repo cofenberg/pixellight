@@ -1,3 +1,9 @@
+>> 19.12.2010
+[CO]
+- SceneNode debug text: Printed rotation is now between [0, 360]
+
+
+
 >> 18.12.2010
 [CO]
 - "SceneNode::Icon" is now a property instead of an attribute because this icon should be the same for all scene node instances of the same class

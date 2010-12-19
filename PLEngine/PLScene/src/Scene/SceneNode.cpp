@@ -1038,21 +1038,14 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 					// General
 					cRenderer.GetDrawHelpers().DrawText(*pFont, String::Format("Active: %d", IsActive()), Color4::White, Vector2(10.0f, 550.0f));
 
-					{ // Position
-						const Vector3 &vPosition = m_cTransform.GetPosition();
-						cRenderer.GetDrawHelpers().DrawText(*pFont, String::Format("Position: %g %g %g", vPosition.x, vPosition.y, vPosition.z), Color4::White, Vector2(10.0f, 530.0f));
-					}
+					// Position
+					cRenderer.GetDrawHelpers().DrawText(*pFont, "Position: " + m_cTransform.GetPosition().ToString(), Color4::White, Vector2(10.0f, 530.0f));
 
-					{ // Show an Euler angles representation of the rotation in degree
-						float fX, fY, fZ;
-						EulerAngles::FromQuaternion(m_cTransform.GetRotation(), fX, fY, fZ);
-						cRenderer.GetDrawHelpers().DrawText(*pFont, String::Format("Rotation: %g %g %g", fX*Math::RadToDeg, fY*Math::RadToDeg, fZ*Math::RadToDeg), Color4::White, Vector2(10.0f, 510.0f));
-					}
+					// Show an Euler angles representation of the rotation in degree
+					cRenderer.GetDrawHelpers().DrawText(*pFont, "Rotation: " + GetRotation().ToString(), Color4::White, Vector2(10.0f, 510.0f));
 
-					{ // Scale
-						const Vector3 &vScale = m_cTransform.GetScale();
-						cRenderer.GetDrawHelpers().DrawText(*pFont, String::Format("Scale: %g %g %g", vScale.x, vScale.y, vScale.z), Color4::White, Vector2(10.0f, 490.0f));
-					}
+					// Scale
+					cRenderer.GetDrawHelpers().DrawText(*pFont, "Scale: " + m_cTransform.GetScale().ToString(), Color4::White, Vector2(10.0f, 490.0f));
 
 				// End 2D mode
 				cDrawHelpers.End2DMode();
