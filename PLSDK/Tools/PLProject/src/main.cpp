@@ -32,6 +32,7 @@
 #include <PLGeneral/String/String.h>
 #include <PLGeneral/String/RegEx.h>
 #include <PLGeneral/Registry/Registry.h>
+#include <PLCore/Core.h>
 #include <PLCore/Tools/LocalizationLoaderPL.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
@@ -577,10 +578,13 @@ bool CreatePluginFile(Project &cProject)
 	if (cFile.Open(File::FileCreate | File::FileWrite | File::FileText)) {
 		// Write plugin file
 		Write(cFile, "<?xml version=\"1.0\" ?>");
-		Write(cFile, "<Plugin Version=\"1\">");
+		Write(cFile, "<Plugin Version=\"1\" PixelLightVersion=\"" + Core::GetVersion().ToString() + "\">");
 		Write(cFile, String("	<Active>") + (cProject.bModuleActive ? "1" : "0") + "</Active>");
 		Write(cFile, "	<Name>" + cProject.sModuleName + "</Name>");
-		Write(cFile, "	<Version>" + cProject.sModuleVersion + "</Version>");
+
+		// Version
+		if (cProject.sModuleVersion.GetLength())
+			Write(cFile, "	<Version>" + cProject.sModuleVersion + "</Version>");
 
 		// Vendor
 		if (cProject.sModuleVendor.GetLength())
