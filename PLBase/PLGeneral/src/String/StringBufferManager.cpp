@@ -171,6 +171,8 @@ StringBufferUnicode *StringBufferManager::GetStringBufferUnicode(uint32 nLength)
 */
 void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 {
+	// [TODO] StringBuffer caching is currently experimental and may cause problems, so it's deactivated by default
+	/*
 	// Is the string buffer going to be destroyed if we release one more reference?
 	if (cStringBuffer.GetRefCount() < 2) {
 		// Ok, this is the reason why we can't use the "RefCount"-template in here - the string buffer manager may keep the string buffer
@@ -255,9 +257,10 @@ void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 		if (!bBackuped)
 			cStringBuffer.Release();	// Sorry, no more backup space left!
 	} else {
+	*/
 		// Just release the reference - after this, the string buffer will still be there because it's still referenced
 		cStringBuffer.Release();
-	}
+//	}
 }
 
 
