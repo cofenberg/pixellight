@@ -25,9 +25,6 @@
 //[-------------------------------------------------------]
 #include <PixelLight.h>
 #include <PLGeneral/System/System.h>
-
-#include <PLGeneral/System/Console.h>
-
 #include <PLGeneral/Registry/Registry.h>
 #include <PLGeneral/File/Directory.h>
 #include "PLCore/Core.h"

@@ -1,4 +1,4 @@
-Changes in PixelLight 0.9.3-R2 (not yet released)
+Changes in PixelLight 0.9.4-R1 (not yet released)
 - Feature: Linux 64 bit support for a minimal build added (64 bit support for optional projects not yet added)
 - Feature: Added basic PLDemoRendererTexturing demo
 - Feature: Added "PLEngine::SceneRendererTool" helper class for simplified scene renderer access
