@@ -141,5 +141,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoRendererRTTInternal.sln" EXCLUDE
-	PATTERN "PLDemoRendererRTTInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoRendererRTTInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoRendererRTTInternal.vcxproj.filters" EXCLUDE
 )

@@ -1,3 +1,5 @@
+[TODO] Update vcproj (Microsoft Visual Studio 2008) to vcxproj (Microsoft Visual Studio 2010)
+
 #!/usr/bin/python
 import sys
 import os

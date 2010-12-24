@@ -41,8 +41,8 @@ copy_file(${CMAKE_SOURCE_DIR}/ReleaseNotes.txt	${PL_BIN_DIR})
 
 # Copy Microsoft Visual C++ Redistributables
 if(WIN32)
-	file(MAKE_DIRECTORY ${PL_BIN_DIR}/VC2008_Redistributable)
-	copy_files("${CMAKE_SOURCE_DIR}/Bin/VC2008_Redistributable/*.*" "${PL_BIN_DIR}/VC2008_Redistributable")
+	file(MAKE_DIRECTORY ${PL_BIN_DIR}/VC2010_Redistributable)
+	copy_files("${CMAKE_SOURCE_DIR}/Bin/VC2010_Redistributable/*.*" "${PL_BIN_DIR}/VC2010_Redistributable")
 endif()
 
 ##################################################
@@ -82,7 +82,7 @@ install(FILES	${CMAKE_SOURCE_DIR}/AUTHORS
 
 # Microsoft Visual C++ Redistributables
 if(WIN32)
-	install(DIRECTORY ${CMAKE_SOURCE_DIR}/Bin/VC2008_Redistributable
+	install(DIRECTORY ${CMAKE_SOURCE_DIR}/Bin/VC2010_Redistributable
 		DESTINATION ${PL_INSTALL_ROOT}		COMPONENT SDK		PATTERN ".svn" EXCLUDE
 	)
 endif()

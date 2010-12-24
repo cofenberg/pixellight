@@ -1,0 +1,986 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2eaabf95-9f4b-48f5-ba55-a6c0a14c79be}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{63891ce8-86de-43a2-a26e-1365cddd1315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{e86ed039-9155-4fbf-9ee7-92e2dcdef9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Container">
+      <UniqueIdentifier>{a41dd731-1109-4d65-aad8-05258f8689a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{8e7140e8-4f4b-4b68-90ca-174b59728e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{3734df25-1e68-462f-907e-daec44f73350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{ff628e91-b3e2-456c-b72b-e5e0c119f01a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{19270fb8-27eb-4677-ad56-f05abeaabc22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{7de49393-1846-45aa-80ff-d2c721c90861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Http">
+      <UniqueIdentifier>{a125fc41-7fd0-49c3-8784-f33073a8995e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Registry">
+      <UniqueIdentifier>{dafa1bce-b984-4d46-8695-e29dba9675d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{9db74567-e7b1-4a77-896b-1bf739c85d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{313791bd-4505-4e1c-b0f5-8e6fb83218fe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLGeneral\Main.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\PLGeneral.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\PLGeneralLinux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\PLGeneralLinuxIncludes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\PLGeneralLinuxWrapper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\PLGeneralWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\PLGeneralWindowsIncludes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\Element.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\ElementHandler.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\ElementManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\RefCount.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\RefCountPtr.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\Singleton.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Base\SmartPtr.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Core\MemoryManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Array.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\ArrayIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\BinaryHeap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\BinaryHeapIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\BinominalHeap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\BinominalHeapIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Bitset.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\BitsetIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\ConstIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Container.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\FastPool.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\FastPoolIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\FibonacciHeap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\FibonacciHeapIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Functions.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\HashMap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\HashMapIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\HashMapKeyIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Heap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Iterable.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Iterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\IteratorImpl.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\List.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\ListIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Map.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Pool.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\PoolIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Queue.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\SimpleList.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\SimpleListIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\SimpleMap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\SimpleMapIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\SimpleMapKeyIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Container\Stack.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Checksum.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\ChecksumCRC32.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\ChecksumMD5.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\ChecksumSHA1.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\CommandLine.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\CommandLineOption.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\HTMLParser.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Profiling.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\QuickSort.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Stopwatch.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Time.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Timing.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Tools.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Version.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Tools\Wrapper.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\Xml.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlAttribute.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlBase.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlComment.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlDeclaration.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlDocument.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlElement.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlNode.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlParsingData.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlText.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Xml\XmlUnknown.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\Console.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\ConsoleLinux.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\ConsoleWindows.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\DynLib.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\DynLibImpl.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\DynLibLinux.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\DynLibWindows.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\Mutex.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\MutexImpl.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\MutexLinux.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\MutexWindows.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\Pipe.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\Process.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\Semaphore.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\SemaphoreImpl.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\SemaphoreLinux.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\SemaphoreWindows.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\System.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\SystemImpl.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\SystemLinux.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\SystemWindows.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\Thread.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\ThreadFunction.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\ThreadImpl.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\ThreadLinux.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\ThreadWindows.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\Directory.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\File.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileAccess.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileHttp.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileImpl.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileLinux.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileObject.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileSearch.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileSearchHttp.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileSearchImpl.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileSearchLinux.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileSearchWindows.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileSearchZip.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileStdStream.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileWindows.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\FileZip.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\HttpHandle.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\SearchFilter.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\SearchFilterRegEx.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\SearchFilterWildcard.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\StdIo.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\Url.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\File\ZipHandle.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Buffer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Client.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Connection.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Host.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Server.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Socket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\SocketAddress.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\Http.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\HttpClient.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\HttpClientConnection.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\HttpHeader.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\HttpServer.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\HttpServerConnection.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Network\Http\MimeTypeManager.h">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Registry\Registry.h">
+      <Filter>Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Registry\RegistryImpl.h">
+      <Filter>Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Registry\RegistryWindows.h">
+      <Filter>Registry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\BufferedReader.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\BufferedReaderFile.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\BufferedReaderString.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\ParseTools.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\QtStringAdapter.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\RegEx.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\String.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\StringBuffer.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\StringBufferASCII.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\StringBufferManager.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\StringBufferUnicode.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\StringBufferUTF8.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\Tokenizer.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\String\UTF8Tools.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Log\Log.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Log\LogFormater.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Log\LogFormaterHtml.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Log\LogFormaterText.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGeneral\Log\LogFormaterXml.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PLGeneral.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLGeneralLinux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\MemoryManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Container\Bitset.cpp">
+      <Filter>Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Container\BitsetIterator.cpp">
+      <Filter>Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Container\Functions.cpp">
+      <Filter>Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Checksum.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\ChecksumCRC32.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\ChecksumMD5.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\ChecksumSHA1.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\CommandLine.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\CommandLineOption.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\HTMLParser.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Profiling.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\QuickSort.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Stopwatch.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Time.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Timing.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Version.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Wrapper.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlAttribute.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlBase.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlComment.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlDeclaration.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlDocument.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlElement.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlNode.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlParsingData.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlText.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xml\XmlUnknown.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Console.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ConsoleLinux.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ConsoleWindows.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\DynLib.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\DynLibImpl.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\DynLibLinux.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\DynLibWindows.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Mutex.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexImpl.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexLinux.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexWindows.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Pipe.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Process.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Semaphore.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SemaphoreImpl.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SemaphoreLinux.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SemaphoreWindows.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\System.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SystemImpl.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SystemLinux.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\SystemWindows.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\Thread.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ThreadFunction.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ThreadImpl.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ThreadLinux.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ThreadWindows.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\Directory.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\File.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileAccess.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileHttp.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileImpl.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileLinux.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileObject.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearch.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearchHttp.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearchImpl.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearchLinux.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearchWindows.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearchZip.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileStdStream.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileWindows.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\FileZip.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\HttpHandle.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\SearchFilter.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\SearchFilterRegEx.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\SearchFilterWildcard.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\Url.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\File\ZipHandle.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Buffer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Client.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Connection.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Host.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Network.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Server.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Socket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\SocketAddress.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\Http.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\HttpClient.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\HttpClientConnection.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\HttpHeader.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\HttpServer.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\HttpServerConnection.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Http\MimeTypeManager.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Registry\Registry.cpp">
+      <Filter>Registry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Registry\RegistryImpl.cpp">
+      <Filter>Registry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Registry\RegistryWindows.cpp">
+      <Filter>Registry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\BufferedReaderFile.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\BufferedReaderString.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\ParseTools.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\RegEx.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\String.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\StringBuffer.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\StringBufferASCII.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\StringBufferManager.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\StringBufferUnicode.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\StringBufferUTF8.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\Tokenizer.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\String\UTF8Tools.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log\Log.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log\LogFormater.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log\LogFormaterHtml.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log\LogFormaterText.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log\LogFormaterXml.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\PLGeneral\Base\Element.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Base\ElementHandler.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Base\ElementManager.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Base\RefCount.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Base\RefCountPtr.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Base\Singleton.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Base\SmartPtr.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLGeneral\Core\MemoryManager.inl">
+      <Filter>Core</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\Array.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\ArrayIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\BinaryHeap.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\BinaryHeapIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\BinominalHeap.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\BinominalHeapIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\Bitset.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\ConstIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\FastPool.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\FastPoolIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\FibonacciHeap.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\FibonacciHeapIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\HashMap.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\HashMapIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\HashMapKeyIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\Iterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\List.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\ListIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\Pool.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\PoolIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\Queue.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\SimpleList.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\SimpleListIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\SimpleMap.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\SimpleMapIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\SimpleMapKeyIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Container\Stack.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLGeneral\Tools\Stopwatch.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLGeneral\Tools\Tools.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLGeneral\String\UTF8Tools.inl">
+      <Filter>String</Filter>
+    </None>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+</Project>

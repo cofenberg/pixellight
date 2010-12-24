@@ -128,7 +128,6 @@ set(WIN32_LINKER_FLAGS
 	/NOLOGO													# Suppress logo
 	/INCREMENTAL:NO											# Enable Incremental Linking: No
 	/MANIFEST												# Generate Manifest: Yes
-	/MANIFESTUAC:"level='asInvoker' uiAccess='false'"		# UAC Execution Level: asInvoker, UAC Bypass UI Protection: false
 	/NXCOMPAT												# Data Execution Prevention (DEP): Image is compatible with DEP
 	/DYNAMICBASE:NO											# Randomized Base Address: Disable Image Randomization
 )

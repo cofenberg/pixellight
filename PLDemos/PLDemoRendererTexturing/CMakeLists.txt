@@ -139,5 +139,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoRendererTexturingInternal.sln" EXCLUDE
-	PATTERN "PLDemoRendererTexturingInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoRendererTexturingInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoRendererTexturingInternal.vcxproj.filters" EXCLUDE
 )

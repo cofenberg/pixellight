@@ -1,3 +1,33 @@
+>> 24.12.2010
+[CO]
+- When using CMake to create Visual Studio 2010 project files a few month ago, I ran into a problem with UAC settings also described at
+  http://www.vtk.org/Bug/view.php?id=11171 . In short, while the UAC VC project settings of created Visual Studio 2008 files were
+    UAC Executation Level = asInvoker
+    UAC Bypass UI Protection = No
+  under Visual Studio 2010 they were	
+    UAC Executation Level = asInvoker (/level='asInvoker')
+    UAC Bypass UI Protection = level='asInvoker' uiAccess='false'
+  and "level='asInvoker' uiAccess='false'" is definitely not ok and will cause the VC linker to fail with an error message. Back then we
+  decided to stay a little longer with Visual Studio 2008, so I didn't looked in detail for a usable solution.
+  Now, at the end of the year 2010, I already used Visual Studio 2010 for several month for a university project and I begin to miss some of the
+  Visual Studio 2010 features in Visual Studio 2008. While the IDE of the 2010'er version feels sometimes some kind of sluggish (at least without service pack...),
+  there are some really cool features like the possibility to scale the text view by holding the strg-key and using the mouse wheel. Also, I begin to like the
+  "on the fly" c++ compiler telling you about e.g. syntax errors while working on the source code... and of course, it's fantastic that my quad core CPU
+  can now also be used for compiling within a single project by setting the new "Multi-processor Compilation"-option to "Yes (/MP)", this really speeds up
+  the compiling a lot! (the GCC already supports this feature for some time :)
+  Now that there's also a public Visual Studio 2010 Service Pack 1 beta available, I think the time is right to migrate the Windows main IDE of
+  PixelLight from Visual Studio 2008 to Visual Studio 2010... the only thing troubling me was the CMake Visual Studio 2010 project file UAC bug.
+  To my surprise, my first attempt to fix the issue worked at once! Within "WindowsMSVC.cmake", I just removed the following line
+    /MANIFESTUAC:"level='asInvoker' uiAccess='false'"		# UAC Execution Level: asInvoker, UAC Bypass UI Protection: false
+  which results in default settings for this options... which seem to be
+    UAC Executation Level = asInvoker (/level='asInvoker')
+    UAC Bypass UI Protection = No (/uiAccess='false')
+  ... exactly what we're using. I don't remember why we added this line a few years ago within the CMake script, but it seems to work also under
+  Visual Studio 2008 correctly without this line.
+
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

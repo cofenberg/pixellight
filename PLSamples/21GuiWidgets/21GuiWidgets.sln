@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21GuiWidgets", "21GuiWidgets.vcproj", "{D10B2B86-5227-4088-BFF7-554B94A38F33}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21GuiWidgets", "21GuiWidgets.vcxproj", "{D10B2B86-5227-4088-BFF7-554B94A38F33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

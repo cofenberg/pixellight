@@ -1,8 +1,8 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLXmlText", "PLXmlText\PLXmlText.vcproj", "{DCFD2AD6-88C6-465D-A1BD-243F9CF3D93E}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLXmlText", "PLXmlText\PLXmlText.vcxproj", "{DCFD2AD6-88C6-465D-A1BD-243F9CF3D93E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLGui", "PLGui\PLGui.vcproj", "{BE939BC0-5787-4AB9-A3D8-0259F58BE436}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLGui", "PLGui\PLGui.vcxproj", "{BE939BC0-5787-4AB9-A3D8-0259F58BE436}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

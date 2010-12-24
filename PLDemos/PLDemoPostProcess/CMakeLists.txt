@@ -137,5 +137,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoPostProcessInternal.sln" EXCLUDE
-	PATTERN "PLDemoPostProcessInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoPostProcessInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoPostProcessInternal.vcxproj.filters" EXCLUDE
 )

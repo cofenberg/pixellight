@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCoreStat", "PLCoreStat.vcproj", "{E795F59A-0152-4143-9809-6EEEF19360A7}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCoreStat", "PLCoreStat.vcxproj", "{E795F59A-0152-4143-9809-6EEEF19360A7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCore", "PLCore.vcproj", "{E793F581-0152-4143-9809-6EEEF19360A6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCore", "PLCore.vcxproj", "{E793F581-0152-4143-9809-6EEEF19360A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

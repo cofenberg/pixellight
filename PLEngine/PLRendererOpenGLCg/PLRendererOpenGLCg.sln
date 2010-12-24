@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLCg", "PLRendererOpenGLCg.vcproj", "{46113319-9691-4D72-9CCA-931296449AB1}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLCg", "PLRendererOpenGLCg.vcxproj", "{46113319-9691-4D72-9CCA-931296449AB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

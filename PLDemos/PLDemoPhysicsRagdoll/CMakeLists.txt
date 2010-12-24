@@ -140,5 +140,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoPhysicsRagdollInternal.sln" EXCLUDE
-	PATTERN "PLDemoPhysicsRagdollInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoPhysicsRagdollInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoPhysicsRagdollInternal.vcxproj.filters" EXCLUDE
 )

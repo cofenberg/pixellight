@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-#define POINTER_64 __ptr64	// We need this for VC 2008, else we get "error C2146: syntax error : missing ';' before identifier 'PVOID64'"
+#define POINTER_64 __ptr64	// We need this for VC 2010, else we get "error C2146: syntax error : missing ';' before identifier 'PVOID64'"
 
 
 //[-------------------------------------------------------]

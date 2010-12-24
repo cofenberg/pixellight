@@ -147,5 +147,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoRendererMultiViewInternal.sln" EXCLUDE
-	PATTERN "PLDemoRendererMultiViewInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoRendererMultiViewInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoRendererMultiViewInternal.vcxproj.filters" EXCLUDE
 )

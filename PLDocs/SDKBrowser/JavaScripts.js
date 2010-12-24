@@ -103,7 +103,7 @@ shortcut("Dir_Doc", "Doc\\");
 shortcut("Dir_Lib", "Lib\\");
 shortcut("Dir_Runtime", "Runtime\\");
 shortcut("Dir_BrowserPlugins", "BrowserPlugins\\");
-shortcut("Dir_VC2008_Redistributable", "VC2008_Redistributable\\");
+shortcut("Dir_VC2010_Redistributable", "VC2010_Redistributable\\");
 // Tools
 shortcut("Dir_Tools", "Tools\\");
 shortcut("Dir_Tools_PLViewer", "Tools\\PLViewer\\");

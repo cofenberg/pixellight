@@ -204,9 +204,9 @@ bool Publish(const String &sTargetDirectory)
 									Message(MESSAGE, "Copy PLSound plugins...");
 									if (CopyFiles(sPluginsDirectory + "/PLSound", sTargetDirectory, sPLSoundPlugins)) {
 										#ifdef WIN32
-											// Copy VC2008 redistributable
-											Message(MESSAGE, "Copy VC2008 redistributable...");
-											if (CopyFiles(sRuntimeSharedLibrariesDirectory + "/../VC2008_Redistributable", sTargetDirectory, sVC2008Redistributable))
+											// Copy VC2010 redistributable
+											Message(MESSAGE, "Copy VC2010 redistributable...");
+											if (CopyFiles(sRuntimeSharedLibrariesDirectory + "/../VC2010_Redistributable", sTargetDirectory, sVC2010Redistributable))
 												Message(MESSAGE, "Copy process successfully finished");
 										#else
 											Message(MESSAGE, "Copy process successfully finished");

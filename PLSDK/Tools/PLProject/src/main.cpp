@@ -231,7 +231,7 @@ String GetQuotedString(const String &sValue)
 bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 {
 	// This function does:
-	// - Parse for comments like '//<<nodebug>>' and add information to the registry for Visual Studio options
+	// - Parse for comments like '//<<nodebug>>' and add information to the registry for Microsoft Visual Studio options
 	// - Parse Text-Macros for localization
 
 	// Setup regular expressions
@@ -269,7 +269,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 				// Write to registry
 				Registry cReg;
 				String sValue = EscapeString(sExpression) + "=NoStepInto";
-				if (cReg.Open(Registry::KeyLocalMachine, "SOFTWARE\\Microsoft\\VisualStudio\\9.0\\NativeDE\\StepOver",
+				if (cReg.Open(Registry::KeyLocalMachine, "SOFTWARE\\Microsoft\\VisualStudio\\10.0\\NativeDE\\StepOver",
 								Registry::RegRead | Registry::RegWrite))
 				{
 					cReg.SetValueString(sExpression, sValue);
@@ -286,7 +286,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 				// Write to registry
 				Registry cReg;
 				String sValue = EscapeString(sExpression) + "=NoStepInto";
-				if (cReg.Open(Registry::KeyLocalMachine, "SOFTWARE\\Microsoft\\VisualStudio\\9.0\\NativeDE\\StepOver",
+				if (cReg.Open(Registry::KeyLocalMachine, "SOFTWARE\\Microsoft\\VisualStudio\\10.0\\NativeDE\\StepOver",
 								Registry::RegRead | Registry::RegWrite))
 				{
 					cReg.SetValueString(sExpression, sValue);
@@ -473,7 +473,7 @@ bool ParseProject(Project &cProject)
 	// Find VC projects
 	Message(STATUS, "Looking for project files");
 	Array<String> lstProjects;
-	Find(lstProjects, sPath, "*.vcproj", false);
+	Find(lstProjects, sPath, "*.vcxproj", false);
 	PrintList(DEBUG, "found ", lstProjects);
 
 	// Find out name of project

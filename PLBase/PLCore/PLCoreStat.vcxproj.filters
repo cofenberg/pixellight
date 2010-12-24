@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{071ee9ea-c081-47c3-b8e4-1448b4e6de8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{9a30019b-2b06-46b8-a78f-7b68e5007a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{429e2f19-b0c3-498b-be22-7adff6d4e027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Event">
+      <UniqueIdentifier>{b6594163-0384-4849-9e79-5d2458e51c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Func">
+      <UniqueIdentifier>{99e2606f-1637-4bb8-8b2b-30a56c45fb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Tools">
+      <UniqueIdentifier>{d22a8a7c-57b8-41bb-a914-2f5d85bca8cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Type">
+      <UniqueIdentifier>{35518b44-865c-47eb-bf6e-e5588a97f08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Var">
+      <UniqueIdentifier>{2f75bf2f-b66d-4884-88f4-c9a0c10c7886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\TypeInfo">
+      <UniqueIdentifier>{32ad1b67-9e2a-4066-823c-41d831ff714b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\ApplicationContext.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\ConsoleApplication.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Config\Config.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Config\ConfigLoader.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Config\ConfigLoaderPL.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Config\CoreConfigGroup.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Class.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\ClassManager.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\MemberDesc.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Module.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Object.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Event\DynEvent.cpp">
+      <Filter>Base\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Event\DynEventHandler.cpp">
+      <Filter>Base\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Event\EventDesc.cpp">
+      <Filter>Base\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Event\EventHandlerDesc.cpp">
+      <Filter>Base\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\ConstructorDesc.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\DynFunc.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\DynParams.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\FuncDesc.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Tools\ParamsParser.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Tools\ParamsParserXml.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Var\DynVar.cpp">
+      <Filter>Base\Var</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Var\VarDesc.cpp">
+      <Filter>Base\Var</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\TypeInfo\DynTypeInfo.cpp">
+      <Filter>Base\TypeInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Chunk.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\ChunkLoader.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\ChunkLoaderPL.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Loadable.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\LoadableManager.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\LoadableType.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Loader.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Localization.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\LocalizationGroup.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\LocalizationLoader.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\LocalizationLoaderPL.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\LocalizationText.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLCore\Core.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\ModuleMain.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\PLCore.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\PLCoreDefinitions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\PLCoreLinux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\PLCoreWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Application\ApplicationContext.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Application\ConsoleApplication.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Config\Config.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Config\ConfigLoader.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Config\ConfigLoaderPL.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Config\CoreConfigGroup.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Class.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\ClassManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\MemberDesc.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Module.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Object.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Rtti.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\DynEvent.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\DynEventHandler.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\Event.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\EventDesc.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\EventHandler.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\EventHandlerDesc.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\Signal.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Event\Slot.h">
+      <Filter>Base\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Constructor.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\ConstructorDesc.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\DynFunc.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\DynParams.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Func.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncConstructor.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncDesc.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncFunPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncMemPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Functor.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Method.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Params.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Signature.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\CompileError.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\IntegralType.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\NullType.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\ParamsParser.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\ParamsParserXml.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\Trait.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Type\DefaultValue.h">
+      <Filter>Base\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Type\EnumType.h">
+      <Filter>Base\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Type\Type.h">
+      <Filter>Base\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Var\Attribute.h">
+      <Filter>Base\Var</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Var\DynVar.h">
+      <Filter>Base\Var</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Var\Var.h">
+      <Filter>Base\Var</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Var\VarAccess.h">
+      <Filter>Base\Var</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Var\VarDesc.h">
+      <Filter>Base\Var</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Var\VarStorage.h">
+      <Filter>Base\Var</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\TypeInfo\DynTypeInfo.h">
+      <Filter>Base\TypeInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\TypeInfo\TypeInfo.h">
+      <Filter>Base\TypeInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\Chunk.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\ChunkLoader.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\ChunkLoaderPL.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\Loadable.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LoadableManager.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LoadableType.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\Loader.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\Localization.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LocalizationGroup.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LocalizationLoader.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LocalizationLoaderPL.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LocalizationText.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\Resource.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\ResourceHandler.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\ResourceManager.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\PLCore\Base\Type\TypeBool.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeDouble.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeEnum.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeFlag.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeFloat.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeInt.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeInt16.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeInt32.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeInt8.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeNull.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeObjectPtr.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypePtr.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeRef.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeString.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeUInt16.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeUInt32.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeUInt8.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Type\TypeVoid.inl">
+      <Filter>Base\Type</Filter>
+    </None>
+    <None Include="include\PLCore\Base\TypeInfo\TypeInfoEnum.inl">
+      <Filter>Base\TypeInfo</Filter>
+    </None>
+    <None Include="include\PLCore\Base\TypeInfo\TypeInfoFlag.inl">
+      <Filter>Base\TypeInfo</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Resource.inl">
+      <Filter>Base\Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\ResourceHandler.inl">
+      <Filter>Base\Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\ResourceManager.inl">
+      <Filter>Base\Tools</Filter>
+    </None>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+</Project>

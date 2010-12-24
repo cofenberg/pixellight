@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ea33c7ae-dd61-4436-93d2-3543e1dec98f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Quake2">
+      <UniqueIdentifier>{932b409b-1a1c-4407-bb2d-cb722bcd0e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quake3">
+      <UniqueIdentifier>{e7902804-98d5-4f46-8b97-01b7bcb4a595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doom3">
+      <UniqueIdentifier>{199431f9-38a8-426f-b58e-4accdfe10f94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DStudioMax">
+      <UniqueIdentifier>{631a673e-ad9e-430d-a697-56512ecccece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX">
+      <UniqueIdentifier>{6afdbac4-1b9a-4d25-9bb7-a52843a761b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lightwave">
+      <UniqueIdentifier>{0957ef4b-2053-4df2-91d1-e1a6cfe2c055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wavefront">
+      <UniqueIdentifier>{556b3afe-2229-4c79-b8f9-3398a1fd6bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MilkShape3D">
+      <UniqueIdentifier>{570f22b3-dd86-4a1b-aeaf-e8dce515a832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Half-Life">
+      <UniqueIdentifier>{1ede6bb7-c326-4f67-83b9-3a5fcbb2ab87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unreal">
+      <UniqueIdentifier>{fe9c59a4-66fa-4a70-bc73-06ffbab3b05e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cg">
+      <UniqueIdentifier>{f9c9fce9-8c47-4dfb-94a4-e4e23f88ff6b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PLDefaultFileFormats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quake2\MeshLoaderMd2.cpp">
+      <Filter>Quake2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quake3\MeshLoaderQ3Bsp.cpp">
+      <Filter>Quake3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Doom3\MeshLoaderMd5.cpp">
+      <Filter>Doom3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Doom3\SceneLoaderMap.cpp">
+      <Filter>Doom3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Doom3\SceneLoaderProc.cpp">
+      <Filter>Doom3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Doom3\SkeletonAniLoaderMd5.cpp">
+      <Filter>Doom3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3DStudioMax\MeshLoader3ds.cpp">
+      <Filter>3DStudioMax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3DStudioMax\MeshLoaderAse.cpp">
+      <Filter>3DStudioMax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectX\MeshLoaderX.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectX\SceneLoaderX.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectX\XBinaryParser.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectX\XProcessor.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectX\XProcessorBinary.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectX\XProcessorText.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lightwave\MeshLoaderLwo.cpp">
+      <Filter>Lightwave</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wavefront\MeshLoaderObj.cpp">
+      <Filter>Wavefront</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MilkShape3D\MeshLoaderM3d.cpp">
+      <Filter>MilkShape3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Half-Life\MeshLoaderSmd.cpp">
+      <Filter>Half-Life</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Half-Life\SkeletonAniLoaderSmd.cpp">
+      <Filter>Half-Life</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Unreal\MeshLoaderT3d.cpp">
+      <Filter>Unreal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cg\EffectLoaderFX.cpp">
+      <Filter>Cg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLDefaultFileFormats\Quake2\MeshLoaderMd2.h">
+      <Filter>Quake2</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Quake3\MeshLoaderQ3Bsp.h">
+      <Filter>Quake3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Doom3\MeshLoaderMd5.h">
+      <Filter>Doom3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Doom3\SceneLoaderMap.h">
+      <Filter>Doom3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Doom3\SceneLoaderProc.h">
+      <Filter>Doom3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Doom3\SkeletonAniLoaderMd5.h">
+      <Filter>Doom3</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\3DStudioMax\MeshLoader3ds.h">
+      <Filter>3DStudioMax</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\3DStudioMax\MeshLoaderAse.h">
+      <Filter>3DStudioMax</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\DirectX\MeshLoaderX.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\DirectX\SceneLoaderX.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\DirectX\XBinaryParser.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\DirectX\XProcessor.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\DirectX\XProcessorBinary.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\DirectX\XProcessorText.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Lightwave\MeshLoaderLwo.h">
+      <Filter>Lightwave</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Wavefront\MeshLoaderObj.h">
+      <Filter>Wavefront</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\MilkShape3D\MeshLoaderM3d.h">
+      <Filter>MilkShape3D</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Half-Life\MeshLoaderSmd.h">
+      <Filter>Half-Life</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Half-Life\SkeletonAniLoaderSmd.h">
+      <Filter>Half-Life</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Unreal\MeshLoaderT3d.h">
+      <Filter>Unreal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLDefaultFileFormats\Cg\EffectLoaderFX.h">
+      <Filter>Cg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+</Project>

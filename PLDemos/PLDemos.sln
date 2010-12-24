@@ -1,30 +1,30 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoMeshTeapot", "PLDemoMeshTeapot\PLDemoMeshTeapot.vcproj", "{06B77003-6140-4BC1-A814-89CB833F2C06}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoMeshTeapot", "PLDemoMeshTeapot\PLDemoMeshTeapot.vcxproj", "{06B77003-6140-4BC1-A814-89CB833F2C06}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererMultiView", "PLDemoRendererMultiView\PLDemoRendererMultiView.vcproj", "{2CC1CEA5-EAA8-4C5B-BCE4-0E757ED77424}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererMultiView", "PLDemoRendererMultiView\PLDemoRendererMultiView.vcxproj", "{2CC1CEA5-EAA8-4C5B-BCE4-0E757ED77424}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererRTT", "PLDemoRendererRTT\PLDemoRendererRTT.vcproj", "{E84E205D-28F8-42CD-82E5-EFDA7E089995}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererRTT", "PLDemoRendererRTT\PLDemoRendererRTT.vcxproj", "{E84E205D-28F8-42CD-82E5-EFDA7E089995}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererTriangle", "PLDemoRendererTriangle\PLDemoRendererTriangle.vcproj", "{DAD5B28F-9A68-4CC9-B05B-4A691C7AA77A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererTriangle", "PLDemoRendererTriangle\PLDemoRendererTriangle.vcxproj", "{DAD5B28F-9A68-4CC9-B05B-4A691C7AA77A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPhysicsBasic", "PLDemoPhysicsBasic\PLDemoPhysicsBasic.vcproj", "{F9A8046F-6B50-4E10-974B-45F6404A6D10}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPhysicsBasic", "PLDemoPhysicsBasic\PLDemoPhysicsBasic.vcxproj", "{F9A8046F-6B50-4E10-974B-45F6404A6D10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPhysicsRagdoll", "PLDemoPhysicsRagdoll\PLDemoPhysicsRagdoll.vcproj", "{B184937B-E5E0-4671-AA77-F06484DD897B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPhysicsRagdoll", "PLDemoPhysicsRagdoll\PLDemoPhysicsRagdoll.vcxproj", "{B184937B-E5E0-4671-AA77-F06484DD897B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoNetworkChat", "PLDemoNetworkChat\PLDemoNetworkChat.vcproj", "{D2F1F849-22BA-4903-9F7B-57C9D50A67E0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoNetworkChat", "PLDemoNetworkChat\PLDemoNetworkChat.vcxproj", "{D2F1F849-22BA-4903-9F7B-57C9D50A67E0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSoundBasic", "PLDemoSoundBasic\PLDemoSoundBasic.vcproj", "{DFA79562-15AA-40F1-A37A-C97C76E5260D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSoundBasic", "PLDemoSoundBasic\PLDemoSoundBasic.vcxproj", "{DFA79562-15AA-40F1-A37A-C97C76E5260D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo2DGame", "PLDemo2DGame\PLDemo2DGame.vcproj", "{ACA53951-17F2-46C5-9F96-CE8466E3F978}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo2DGame", "PLDemo2DGame\PLDemo2DGame.vcxproj", "{ACA53951-17F2-46C5-9F96-CE8466E3F978}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSimpleScene", "PLDemoSimpleScene\PLDemoSimpleScene.vcproj", "{1D26E779-AA33-4C39-8A3B-F65D2A87E2F8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSimpleScene", "PLDemoSimpleScene\PLDemoSimpleScene.vcxproj", "{1D26E779-AA33-4C39-8A3B-F65D2A87E2F8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPostProcessInternal", "PLDemoPostProcess\PLDemoPostProcess.vcproj", "{47B20EC9-7B09-46C9-BAAD-F87E9F82A629}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPostProcessInternal", "PLDemoPostProcess\PLDemoPostProcess.vcxproj", "{47B20EC9-7B09-46C9-BAAD-F87E9F82A629}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoIngameGUI", "PLDemoIngameGUI\PLDemoIngameGUI.vcproj", "{C6CB4DDE-FC32-424A-BB1C-A9457585E6AD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoIngameGUI", "PLDemoIngameGUI\PLDemoIngameGUI.vcxproj", "{C6CB4DDE-FC32-424A-BB1C-A9457585E6AD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererTexturing", "PLDemoRendererTexturing\PLDemoRendererTexturing.vcproj", "{C7043D7D-C5B8-481C-AC81-1CE1A90A19E2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererTexturing", "PLDemoRendererTexturing\PLDemoRendererTexturing.vcxproj", "{C7043D7D-C5B8-481C-AC81-1CE1A90A19E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

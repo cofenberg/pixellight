@@ -127,5 +127,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoNetworkChatInternal.sln" EXCLUDE
-	PATTERN "PLDemoNetworkChatInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoNetworkChatInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoNetworkChatInternal.vcxproj.filters" EXCLUDE
 )

@@ -140,5 +140,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoPhysicsBasicInternal.sln" EXCLUDE
-	PATTERN "PLDemoPhysicsBasicInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoPhysicsBasicInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoPhysicsBasicInternal.vcfiltersproj" EXCLUDE
 )

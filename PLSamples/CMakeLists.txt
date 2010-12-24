@@ -44,7 +44,7 @@ add_dependencies(PixelLight Samples)
 ## Install
 ##################################################
 
-# Visual Studio Solution
+# Microsoft Visual Studio Solution
 if(WIN32)
 	install(FILES ${CMAKE_SOURCE_DIR}/PLSamples/PLSamples.sln
 		DESTINATION ${PL_INSTALL_SAMPLES}	COMPONENT SDK

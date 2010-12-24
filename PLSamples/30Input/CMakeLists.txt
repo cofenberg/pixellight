@@ -128,5 +128,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "30InputInternal.sln" EXCLUDE
-	PATTERN "30InputInternal.vcproj" EXCLUDE
+	PATTERN "30InputInternal.vcxproj" EXCLUDE
+	PATTERN "30InputInternal.vcxproj.filters" EXCLUDE
 )

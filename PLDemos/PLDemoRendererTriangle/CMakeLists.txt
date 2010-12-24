@@ -139,5 +139,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoRendererTriangleInternal.sln" EXCLUDE
-	PATTERN "PLDemoRendererTriangleInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoRendererTriangleInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoRendererTriangleInternal.vcxproj.filters" EXCLUDE
 )

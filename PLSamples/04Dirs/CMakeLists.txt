@@ -124,5 +124,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "04DirsInternal.sln" EXCLUDE
-	PATTERN "04DirsInternal.vcproj" EXCLUDE
+	PATTERN "04DirsInternal.vcxproj" EXCLUDE
+	PATTERN "04DirsInternal.vcxproj.filters" EXCLUDE
 )

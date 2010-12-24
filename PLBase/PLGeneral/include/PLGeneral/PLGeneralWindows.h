@@ -85,7 +85,7 @@
 		#define NULL 0
 	#endif
 
-	// Within VisualStudio, 'wchar_t' can be defined as native type, in this case we don't need a special include
+	// Within Microsoft Visual Studio, 'wchar_t' can be defined as native type, in this case we don't need a special include
 	#if !defined(_MSC_VER) || !defined(_WCHAR_T_DEFINED)
 		#include <wctype.h>
 	#endif

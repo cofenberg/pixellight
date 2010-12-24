@@ -154,13 +154,13 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1.12.854		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0.7.0			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0.7.1			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0.4.4		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0.4.5		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3.3.2	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3.3.4	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 		)
 	endif()
 endif()
@@ -199,13 +199,13 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libopenal.so.1.12.854
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so.0
-					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so.0.7.0
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so.0.7.1
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbis.so
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbis.so.0
-					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbis.so.0.4.4
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbis.so.0.4.5
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbisfile.so
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbisfile.so.3
-					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbisfile.so.3.3.2
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libvorbisfile.so.3.3.4
 			DESTINATION ${PL_INSTALL_SHARED}						COMPONENT Runtime
 		)
 	endif()

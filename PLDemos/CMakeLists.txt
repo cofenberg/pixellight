@@ -50,7 +50,7 @@ install(DIRECTORY ${PL_BIN_DIR}/PLDemos/Data
 	DESTINATION ${PL_INSTALL_DEMOS_BIN}	COMPONENT SDK	PATTERN ".svn" EXCLUDE
 )
 
-# Visual Studio Solution
+# Microsoft Visual Studio Solution
 if(WIN32)
 	install(FILES ${CMAKE_SOURCE_DIR}/PLDemos/PLDemos.sln
 		DESTINATION ${PL_INSTALL_DEMOS}	COMPONENT SDK

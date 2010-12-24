@@ -27,7 +27,7 @@ This document describes how to build PixelLight from the sources.
 ----------
 
 If you want to build PixelLight on Windows, you have two choices:
-- Use the provided Visual Studio solutions to build the engine
+- Use the provided Microsoft Visual Studio solutions to build the engine
 - Use the cmake based build system
 
 If you want to create SDK packages or documentation or intend to e.g. use the mingw compiler or something
@@ -75,7 +75,7 @@ Then start 'Build'.
 --------------------
 
 Here's a list of required programs that you need to fully build the SDK on Windows.
-- cmake-2.8.2-win32-x86.exe (http://www.cmake.org)
+- cmake-2.8.3-win32-x86.exe (http://www.cmake.org)
 	- Cross platform build tool used to build the SDK
 
 - nsis-2.46-setup.exe
@@ -117,7 +117,7 @@ Here's how to compile PixelLight by using the CMake-GUI:
 
 - Configure
 
-- Choose the generator, for instance "Visual Studio 9 2008"
+- Choose the generator, for instance "Visual Studio 10"
 
 - Generate
 

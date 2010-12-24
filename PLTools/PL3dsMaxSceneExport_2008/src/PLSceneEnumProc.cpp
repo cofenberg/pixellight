@@ -485,16 +485,15 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			CopyFile(sViewer.c_str(), (sTargetDirectory+"PLViewerStandalone.exe").c_str(), false);
 		}
 
-		{ // Copy VC2008 redistributable files
-			const int NumOfFiles = 3;
+		{ // Copy VC2010 redistributable files
+			const int NumOfFiles = 2;
 			static const std::string sFiles[] =
 			{
 				"msvcr90.dll",
-				"msvcp90.dll",
-				"Microsoft.VC90.CRT.manifest"
+				"msvcp90.dll"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\..\\VC2008_Redistributable\\"+sFiles[i];
+				const std::string sAbsSourceFilename = sSourceDirectory+"\\..\\VC2010_Redistributable\\"+sFiles[i];
 				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}

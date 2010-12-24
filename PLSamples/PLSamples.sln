@@ -1,13 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01Application", "01Application\01Application.vcproj", "{0748F780-0459-4D70-B462-DF9E43B30A97}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01Application", "01Application\01Application.vcxproj", "{0748F780-0459-4D70-B462-DF9E43B30A97}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02CommandLine", "02CommandLine\02CommandLine.vcproj", "{90BF16CC-BBFF-464D-B4FC-708090624589}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02CommandLine", "02CommandLine\02CommandLine.vcxproj", "{90BF16CC-BBFF-464D-B4FC-708090624589}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03Signals", "03Signals\03Signals.vcproj", "{417EC33F-AE29-413C-AABC-C9B46D9F9225}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03Signals", "03Signals\03Signals.vcxproj", "{417EC33F-AE29-413C-AABC-C9B46D9F9225}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04Dirs", "04Dirs\04Dirs.vcproj", "{A87EC42B-A421-4C37-A91A-C9B26D9A921B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04Dirs", "04Dirs\04Dirs.vcxproj", "{A87EC42B-A421-4C37-A91A-C9B26D9A921B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

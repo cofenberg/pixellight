@@ -1,17 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLNetwork", "PLNetwork\PLNetwork.vcproj", "{95C7BF76-169A-41C5-8982-B64841BE6A47}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLNetwork", "PLNetwork\PLNetwork.vcxproj", "{95C7BF76-169A-41C5-8982-B64841BE6A47}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLIRC", "PLIRC\PLIRC.vcproj", "{F4FB735A-4ECD-473A-B59E-25B051DA2D61}"
-	ProjectSection(ProjectDependencies) = postProject
-		{95C7BF76-169A-41C5-8982-B64841BE6A47} = {95C7BF76-169A-41C5-8982-B64841BE6A47}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLIRC", "PLIRC\PLIRC.vcxproj", "{F4FB735A-4ECD-473A-B59E-25B051DA2D61}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLJabber", "PLJabber\PLJabber.vcproj", "{7DA0B88B-8B4D-49BD-8954-3EAEFFBE1A04}"
-	ProjectSection(ProjectDependencies) = postProject
-		{95C7BF76-169A-41C5-8982-B64841BE6A47} = {95C7BF76-169A-41C5-8982-B64841BE6A47}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLJabber", "PLJabber\PLJabber.vcxproj", "{7DA0B88B-8B4D-49BD-8954-3EAEFFBE1A04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

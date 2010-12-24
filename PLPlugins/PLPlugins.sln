@@ -1,18 +1,18 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLImageLoaderEXR", "PLImageLoaderEXR\PLImageLoaderEXR.vcproj", "{50749B23-113D-4E19-8D99-C85EA89EB37E}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLImageLoaderEXR", "PLImageLoaderEXR\PLImageLoaderEXR.vcxproj", "{50749B23-113D-4E19-8D99-C85EA89EB37E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPostProcessEffects", "PLPostProcessEffects\PLPostProcessEffects.vcproj", "{C1E61563-AC6C-4E49-89D1-B414C57CABF8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPostProcessEffects", "PLPostProcessEffects\PLPostProcessEffects.vcxproj", "{C1E61563-AC6C-4E49-89D1-B414C57CABF8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDefaultFileFormats", "PLDefaultFileFormats\PLDefaultFileFormats.vcproj", "{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDefaultFileFormats", "PLDefaultFileFormats\PLDefaultFileFormats.vcxproj", "{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLParticleGroups", "PLParticleGroups\PLParticleGroups.vcproj", "{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLParticleGroups", "PLParticleGroups\PLParticleGroups.vcxproj", "{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPlugin", "PLPlugin\PLPlugin.vcproj", "{83BE427B-1F76-45F2-9301-A3E9838537DD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPlugin", "PLPlugin\PLPlugin.vcxproj", "{83BE427B-1F76-45F2-9301-A3E9838537DD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginActiveX", "PLPluginActiveX\PLPluginActiveX.vcproj", "{701BB342-804B-4AC4-AF6A-64327389B157}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginActiveX", "PLPluginActiveX\PLPluginActiveX.vcxproj", "{701BB342-804B-4AC4-AF6A-64327389B157}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginMozilla", "PLPluginMozilla\PLPluginMozilla.vcproj", "{0A32AAB1-57AE-4209-BA36-BA06896D2222}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginMozilla", "PLPluginMozilla\PLPluginMozilla.vcxproj", "{0A32AAB1-57AE-4209-BA36-BA06896D2222}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

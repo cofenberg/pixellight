@@ -1,16 +1,17 @@
-VisualStudio 2008 Release Settings (settings not mentioned = default)
+Microsoft Visual Studio 2010 Release Settings (settings not mentioned = default)
 
 - General
 	- Whole Program Optimization:				Use Link Time Code Generation
 	- Character Set:							Use Unicode Character Set
 - C/C++
 	- General
-		- Debug Information Format:				Program Database (/Zi) (required for "Enable Minimal Rebuild: Yes (/Gm)")
+		- Debug Information Format:				Program Database (/Zi)
 		- Suppress Startup Banner:				Yes (/nologo)
 		- Warning Level:						Level 3 (/W3)
 		- Detect 64-bit Portability Issues:		No ("deprecated")
 		- Treat Warnings As Errors:				No ("By default, /WX is not in effect")
 		- Use UNICODE Response Files:			Yes
+		- Multi-processor Compilation:			Yes (/MP)
 	- Optimization
 		- Optimization: 						Full Optimization (/Ox)
 		- Inline Function Expansion:			Any Suitable (/Ob2)
@@ -25,7 +26,7 @@ VisualStudio 2008 Release Settings (settings not mentioned = default)
 		- Keep Comments:						No
 	- Code Generation
 		- Enable String Pooling:				Yes (/GF)
-		- Enable Minimal Rebuild:				Yes (/Gm)
+		- Enable Minimal Rebuild:				No
 		- Enable C++ Exceptions:				No
 		- Smaller Type Check:					No
 		- Basic Runtime Checks:					Default

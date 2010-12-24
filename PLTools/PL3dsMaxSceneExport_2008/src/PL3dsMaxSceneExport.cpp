@@ -217,7 +217,6 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
 	g_hInstance = hinstDLL;
 	if (!bControlsInit) {
 		bControlsInit = true;
-		InitCustomControls(hinstDLL);
 		InitCommonControls();
 	}
 	return true;

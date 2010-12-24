@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseNull", "PLDatabaseNull.vcproj", "{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseNull", "PLDatabaseNull.vcxproj", "{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

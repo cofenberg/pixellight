@@ -1,11 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPlugin", "PLPlugin.vcproj", "{83BE427B-1F76-45F2-9301-A3E9838537DD}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPlugin", "PLPlugin.vcxproj", "{83BE427B-1F76-45F2-9301-A3E9838537DD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginActiveX", "..\PLPluginActiveX\PLPluginActiveX.vcproj", "{701BB342-804B-4AC4-AF6A-64327389B157}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginActiveX", "..\PLPluginActiveX\PLPluginActiveX.vcxproj", "{701BB342-804B-4AC4-AF6A-64327389B157}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginMozilla", "..\PLPluginMozilla\PLPluginMozilla.vcproj", "{0A32AAB1-57AE-4209-BA36-BA06896D2222}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginMozilla", "..\PLPluginMozilla\PLPluginMozilla.vcxproj", "{0A32AAB1-57AE-4209-BA36-BA06896D2222}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

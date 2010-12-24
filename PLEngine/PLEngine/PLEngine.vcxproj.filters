@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{ff7f0e12-7e76-482e-bd8d-4f38e385c376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{94b1413c-71a3-48c8-a366-84c48f1cf222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Picking">
+      <UniqueIdentifier>{43ca270e-c824-4baf-8e78-22c5579a0cd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{e8c40946-35cc-4bd1-80a8-d6107af9bbc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{d7727eb9-0d5c-48be-8c10-747009ceeebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{05f4bc58-495c-476d-9efb-ca9fdea8f1a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Application\BasicSceneApplication.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\RenderApplication.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\SceneApplication.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Picking\MousePicking.cpp">
+      <Filter>Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Picking\Picking.cpp">
+      <Filter>Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Picking\PickingResult.cpp">
+      <Filter>Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui\ModTrapMouse.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui\PreviewWidget.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui\RenderWidget.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui\RenderWindow.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui\WindowConnection.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Config\RendererConfigGroup.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\SceneRendererTool.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Screenshot.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Application\RenderApplication.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Application\SceneApplication.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\PLEngine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\PLEngineLinux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\PLEngineWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Picking\MousePicking.h">
+      <Filter>Picking</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Picking\Picking.h">
+      <Filter>Picking</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Picking\PickingResult.h">
+      <Filter>Picking</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Gui\ModTrapMouse.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Gui\PreviewWidget.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Gui\RenderWidget.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Gui\RenderWindow.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Gui\WindowConnection.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\Screenshot.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+</Project>

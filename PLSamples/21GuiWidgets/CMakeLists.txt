@@ -131,5 +131,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "21GuiWidgetsInternal.sln" EXCLUDE
-	PATTERN "21GuiWidgetsInternal.vcproj" EXCLUDE
+	PATTERN "21GuiWidgetsInternal.vcxproj" EXCLUDE
+	PATTERN "21GuiWidgetsInternal.vcxproj.filters" EXCLUDE
 )

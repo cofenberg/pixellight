@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04Dirs", "04DirsInternal.vcproj", "{A87EC42B-A421-4C37-A91A-C9B26D9A921B}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04Dirs", "04DirsInternal.vcxproj", "{A87EC42B-A421-4C37-A91A-C9B26D9A921B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -52,7 +52,7 @@ namespace PLGeneral {
 *
 *    Please note that there's a perfidy when using wchar_t in combination with PixelLight & Qt...
 *
-*    When using the default settings within e.g. Visual Studio 2008, wchar_t is treated as built-in type, so third party unicode
+*    When using the default settings within e.g. Microsoft Visual Studio 2010, wchar_t is treated as built-in type, so third party unicode
 *    shared libraries usually use it. So, this is also the default setting for PixelLight projects. On the other hand, if you
 *    want to use PixelLight within Qt and write something like "PLGeneral::String sString = L"Test";", the linker will give you an error
 *    message like

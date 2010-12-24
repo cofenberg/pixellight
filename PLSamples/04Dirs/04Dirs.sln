@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{236C0EB4-8BC1-114A-5D23-01A0C92BCA08}") = "04Dirs", "04Dirs.vcproj", "{A87EC42B-A421-4C37-A91A-C9B26D9A921B}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04Dirs", "04Dirs.vcxproj", "{A87EC42B-A421-4C37-A91A-C9B26D9A921B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,10 +8,8 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{417EC33F-AE29-413C-AABC-C9B46D9F9225}.Debug|Win32.ActiveCfg = Debug|Win32
-		{417EC33F-AE29-413C-AABC-C9B46D9F9225}.Debug|Win32.Build.0 = Debug|Win32
-		{417EC33F-AE29-413C-AABC-C9B46D9F9225}.Release|Win32.ActiveCfg = Release|Win32
-		{417EC33F-AE29-413C-AABC-C9B46D9F9225}.Release|Win32.Build.0 = Release|Win32
+		{A87EC42B-A421-4C37-A91A-C9B26D9A921B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A87EC42B-A421-4C37-A91A-C9B26D9A921B}.Release|Win32.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

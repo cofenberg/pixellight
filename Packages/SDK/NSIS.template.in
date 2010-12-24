@@ -203,7 +203,9 @@ FunctionEnd
 Section -Prerequisites
   SetOutPath $INSTDIR\Prerequisites
 
-  ; Test if Visual Studio Redistributables 2008 x86 SP1 installed
+  ; [TODO] Update to VC 2010
+
+  ; Test if Microsoft Visual Studio Redistributables 2008 x86 SP1 installed
   ; Returns -1 if there is no VC redistributables intstalled
   ; Basing on http://nsis.sourceforge.net/VC_8.0_Redistributables
 
@@ -224,7 +226,7 @@ Section -Prerequisites
   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F333A33D-125C-32A2-8DCE-5C5D14231E27}" "Version"
   IfErrors 0 SkipRedist
 
-  ; No known Visual Studio Redistributables found
+  ; No known Microsoft Visual Studio Redistributables found
   MessageBox MB_YESNO "@CPACK_PL_VC_MESSAGE@" /SD IDYES IDNO SkipRedist
   File "@CPACK_PL_PACKAGE_PATH@\@CPACK_PL_VC_REDIST@"
   ExecWait "$INSTDIR\Prerequisites\vcredist_x86.exe"

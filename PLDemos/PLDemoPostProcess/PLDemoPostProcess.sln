@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPostProcessInternal", "PLDemoPostProcessInternal.vcproj", "{47B20EC9-7B09-46C9-BAAD-F87E9F82A629}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPostProcess", "PLDemoPostProcessInternal.vcxproj", "{47B20EC9-7B09-46C9-BAAD-F87E9F82A629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

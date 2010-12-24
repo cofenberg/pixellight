@@ -1,23 +1,14 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabase", "PLDatabase.vcproj", "{D32C2CA0-8D6F-4801-98D1-78D871A00945}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabase", "PLDatabase.vcxproj", "{D32C2CA0-8D6F-4801-98D1-78D871A00945}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseMySQL", "..\PLDatabaseMySQL\PLDatabaseMySQL.vcproj", "{259F0649-8EBF-4167-BF30-499E9E006225}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D32C2CA0-8D6F-4801-98D1-78D871A00945} = {D32C2CA0-8D6F-4801-98D1-78D871A00945}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseMySQL", "..\PLDatabaseMySQL\PLDatabaseMySQL.vcxproj", "{259F0649-8EBF-4167-BF30-499E9E006225}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabasePostgreSQL", "..\PLDatabasePostgreSQL\PLDatabasePostgreSQL.vcproj", "{AF78660F-3D4E-47D7-B742-866AFBED6A77}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D32C2CA0-8D6F-4801-98D1-78D871A00945} = {D32C2CA0-8D6F-4801-98D1-78D871A00945}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabasePostgreSQL", "..\PLDatabasePostgreSQL\PLDatabasePostgreSQL.vcxproj", "{AF78660F-3D4E-47D7-B742-866AFBED6A77}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseSQLite", "..\PLDatabaseSQLite\PLDatabaseSQLite.vcproj", "{2623883A-B5CC-4318-988C-B76A6DF6DC5E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D32C2CA0-8D6F-4801-98D1-78D871A00945} = {D32C2CA0-8D6F-4801-98D1-78D871A00945}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseSQLite", "..\PLDatabaseSQLite\PLDatabaseSQLite.vcxproj", "{2623883A-B5CC-4318-988C-B76A6DF6DC5E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseNull", "..\PLDatabaseNull\PLDatabaseNull.vcproj", "{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseNull", "..\PLDatabaseNull\PLDatabaseNull.vcxproj", "{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

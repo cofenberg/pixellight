@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPhysicsRagdoll", "PLDemoPhysicsRagdollInternal.vcproj", "{B184937B-E5E0-4671-AA77-F06484DD897B}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPhysicsRagdoll", "PLDemoPhysicsRagdollInternal.vcxproj", "{B184937B-E5E0-4671-AA77-F06484DD897B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

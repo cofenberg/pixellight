@@ -1,5 +1,5 @@
-This directory contains two files for MS Visual Studio that can make it easier
-to debug PixelLight applications using Visual Studio. Those files contain settings
+This directory contains two files for Microsoft Visual Studio that can make it easier
+to debug PixelLight applications using Microsoft Visual Studio. Those files contain settings
 for the MSVC debugger that allow it e.g. to directly display PixelLight data types
 in the debugger or to avoid stepping into certain functions that are considered internal
 to the API.
@@ -9,8 +9,8 @@ autoexp.dat
 -----------
 Contains rules on how to display custom data types in the debugger.
 
-Install (MSVC9):
-- Copy 'autoexp.dat' to  'C:\Program Files\Microsoft Visual Studio 9\Common7\Packages\Debugger'
+Install (MSVC10):
+- Copy 'autoexp.dat' to  'C:\Program Files\Microsoft Visual Studio 10\Common7\Packages\Debugger'
 
 Description:
 - Contains rules on how to display PixelLight data types, e.g. a PLGeneral::String will be displayed

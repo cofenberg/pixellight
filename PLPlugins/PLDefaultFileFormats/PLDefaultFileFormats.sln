@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDefaultFileFormats", "PLDefaultFileFormats.vcproj", "{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDefaultFileFormats", "PLDefaultFileFormats.vcxproj", "{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

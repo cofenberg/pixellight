@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2009", "PL3dsMaxSceneExport_2009.vcproj", "{D1C0C5B4-A40A-465C-BE2A-873FC42F1F7D}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2009", "PL3dsMaxSceneExport_2009.vcxproj", "{D1C0C5B4-A40A-465C-BE2A-873FC42F1F7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

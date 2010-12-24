@@ -1,11 +1,8 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLTest", "PLTest\PLTest.vcproj", "{FCC7A17A-9B09-4AED-B859-728F8CB74F10}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLTest", "PLTest\PLTest.vcxproj", "{FCC7A17A-9B09-4AED-B859-728F8CB74F10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLTestBase", "PLTestBase\PLTestBase.vcproj", "{5F50784F-148B-4F30-854D-021185506877}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FCC7A17A-9B09-4AED-B859-728F8CB74F10} = {FCC7A17A-9B09-4AED-B859-728F8CB74F10}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLTestBase", "PLTestBase\PLTestBase.vcxproj", "{5F50784F-148B-4F30-854D-021185506877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

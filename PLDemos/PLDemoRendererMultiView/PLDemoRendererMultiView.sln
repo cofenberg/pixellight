@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererMultiView", "PLDemoRendererMultiView.vcproj", "{2CC1CEA5-EAA8-4C5B-BCE4-0E757ED77424}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererMultiView", "PLDemoRendererMultiView.vcxproj", "{2CC1CEA5-EAA8-4C5B-BCE4-0E757ED77424}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -141,5 +141,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoMeshTeapotInternal.sln" EXCLUDE
-	PATTERN "PLDemoMeshTeapotInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoMeshTeapotInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoMeshTeapotInternal.vcxproj.filters" EXCLUDE
 )

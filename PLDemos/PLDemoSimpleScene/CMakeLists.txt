@@ -137,5 +137,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoSimpleSceneInternal.sln" EXCLUDE
-	PATTERN "PLDemoSimpleSceneInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoSimpleSceneInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoSimpleSceneInternal.vcxproj.filters" EXCLUDE
 )

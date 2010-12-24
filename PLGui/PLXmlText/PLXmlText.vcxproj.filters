@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="XmlText">
+      <UniqueIdentifier>{5a5d6075-a7c2-4845-b9fb-ac82c3905061}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PLXmlText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextBreak.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextElement.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextImage.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextList.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextListElement.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextRenderer.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextSection.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextText.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextTextNode.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlText\XmlTextView.cpp">
+      <Filter>XmlText</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLXmlText\PLXmlText.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\PLXmlTextLinux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\PLXmlTextWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextBreak.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextElement.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextImage.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextList.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextListElement.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextPrimitive.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextRenderer.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextSection.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextText.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextTextNode.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLXmlText\XmlText\XmlTextView.h">
+      <Filter>XmlText</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+</Project>

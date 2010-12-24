@@ -137,5 +137,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoSoundBasicInternal.sln" EXCLUDE
-	PATTERN "PLDemoSoundBasicInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoSoundBasicInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoSoundBasicInternal.vcxprojfilters" EXCLUDE
 )

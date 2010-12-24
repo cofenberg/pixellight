@@ -24,7 +24,7 @@
 
 
 //[-------------------------------------------------------]
-//[ Debugging options for Visual Studio                   ]
+//[ Debugging options for Microsoft Visual Studio         ]
 //[-------------------------------------------------------]
 // <<nostepinto>> PLGeneral::String::.*
 

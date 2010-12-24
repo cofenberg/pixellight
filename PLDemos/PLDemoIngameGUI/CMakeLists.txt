@@ -142,5 +142,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
 	PATTERN "PLDemoIngameGUIInternal.sln" EXCLUDE
-	PATTERN "PLDemoIngameGUIInternal.vcproj" EXCLUDE
+	PATTERN "PLDemoIngameGUIInternal.vcxproj" EXCLUDE
+	PATTERN "PLDemoIngameGUIInternal.vcxproj.filters" EXCLUDE
 )

@@ -1,6 +1,6 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLParticleGroups", "PLParticleGroups.vcproj", "{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLParticleGroups", "PLParticleGroups.vcxproj", "{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

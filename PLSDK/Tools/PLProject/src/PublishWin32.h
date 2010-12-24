@@ -80,10 +80,9 @@ static const PLGeneral::String sPLSoundPlugins[] =
 	"OpenAL32.dll",
 	""
 };
-static const PLGeneral::String sVC2008Redistributable[] =
+static const PLGeneral::String sVC2010Redistributable[] =
 {
-	"Microsoft.VC90.CRT.manifest",
-	"msvcp90.dll",
-	"msvcr90.dll",
+	"msvcp100.dll",
+	"msvcr100.dll",
 	""
 };
