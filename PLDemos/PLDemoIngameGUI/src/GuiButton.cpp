@@ -222,7 +222,7 @@ void GuiButton::OnDraw(Graphics &cGraphics)
 		if (m_nAlign == AlignLeft) {
 			// Left aligned
 			uint32 nHeight = cGraphics.GetTextHeight(*m_pFont, m_sText);
-			cGraphics.DrawText(*m_pFont, cColor, Color4::Transparent, Vector2i(0.0f, GetSize().y/2 - nHeight/2), m_sText);
+			cGraphics.DrawText(*m_pFont, cColor, Color4::Transparent, Vector2i(0, GetSize().y/2 - nHeight/2), m_sText);
 		} else if (m_nAlign == AlignRight) {
 			// Right aligned
 			uint32 nWidth = cGraphics.GetTextWidth(*m_pFont, m_sText);
