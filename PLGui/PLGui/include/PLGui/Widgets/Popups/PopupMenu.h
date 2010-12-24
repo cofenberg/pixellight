@@ -78,7 +78,7 @@ class PopupMenu : public AbstractMenu {
 		*  @brief
 		*    Get popup size
 		*
-		*  @Return
+		*  @return
 		*    Size of popup menu
 		*/
 		PLGUI_API PLMath::Vector2i GetPopupSize();

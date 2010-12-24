@@ -107,7 +107,7 @@ class ModSnap : public Modifier {
 		*
 		*  @param[in] vPos
 		*    Position
-		*  @param[in] pWidget
+		*  @param[in] pSnapWidget
 		*    Widget to snap to, can be either the parent or a sibling widget
 		*  @param[in] bParent
 		*    'true', if pWidget is the parent window of this widget, else 'false'

@@ -252,7 +252,7 @@ class Graphics {
 		*    Text color
 		*  @param[in] cBkColor
 		*    Background color
-		*  @param[in] vPosition
+		*  @param[in] vPos
 		*    Text position
 		*  @param[in] sText
 		*    Text

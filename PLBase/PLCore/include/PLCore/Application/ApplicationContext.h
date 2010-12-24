@@ -185,7 +185,7 @@ class ApplicationContext {
 		*  @brief
 		*    Sets the current directory to the path of the application executable
 		*
-		*  @notes
+		*  @note
 		*    - Whenever possible, do not manipulate the current directory, this may backfire when you don't expect it
 		*    - Because the executable filename is used, which is set within "ConsoleApplication::Run()",
 		*      calling this method from inside a application constructor is not recommended

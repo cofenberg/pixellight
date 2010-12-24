@@ -147,7 +147,7 @@ class WindowContainer : public Widget {
 		*  @brief
 		*    Set currently selected window
 		*
-		*  @param[in] nSelection
+		*  @param[in] nWindow
 		*    Index of currently selected window
 		*/
 		PLGUI_API void SetSelection(int nWindow);
@@ -156,7 +156,7 @@ class WindowContainer : public Widget {
 		*  @brief
 		*    Set currently selected window
 		*
-		*  @param[in] pSelection
+		*  @param[in] pWindow
 		*    Pointer to currently selected window
 		*/
 		PLGUI_API void SetSelection(Widget *pWindow);

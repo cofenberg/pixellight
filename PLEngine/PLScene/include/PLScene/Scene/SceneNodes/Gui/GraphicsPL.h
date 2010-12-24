@@ -73,7 +73,7 @@ class GraphicsPL : public PLGui::GraphicsImpl {
 		*    Screen size
 		*  @param[in] nTransparency
 		*    Transparency mode (see ETransparency)
-		*  @param[in] cColor
+		*  @param[in] cTransparencyColor
 		*    If nMode is ColorKey, all pixels of the specified color will be transparent.
 		*    If nMode is Alpha, only the alpha channel of the color will be used (1.0 = opaque, 0.0 = transparent)
 		*/
@@ -91,7 +91,7 @@ class GraphicsPL : public PLGui::GraphicsImpl {
 		*    Absolute widget position
 		*  @param[in] nTransparency
 		*    Transparency mode (see ETransparency)
-		*  @param[in] cColor
+		*  @param[in] cTransparencyColor
 		*    If nMode is ColorKey, all pixels of the specified color will be transparent.
 		*    If nMode is Alpha, only the alpha channel of the color will be used (1.0 = opaque, 0.0 = transparent)
 		*/

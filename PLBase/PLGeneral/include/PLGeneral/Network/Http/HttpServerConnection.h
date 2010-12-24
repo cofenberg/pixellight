@@ -62,6 +62,9 @@ class HttpServerConnection : public Connection {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cServer
+		*    HTTP server
 		*/
 		PLGENERAL_API HttpServerConnection(HttpServer &cServer);
 
@@ -75,8 +78,6 @@ class HttpServerConnection : public Connection {
 		*  @brief
 		*    Send a file to the client
 		*
-		*  @param[in] pConnection
-		*    Connection
 		*  @param[in] nStatus
 		*    HTTP status code
 		*  @param[in] sFilename
@@ -88,8 +89,6 @@ class HttpServerConnection : public Connection {
 		*  @brief
 		*    Send data to the client
 		*
-		*  @param[in] pConnection
-		*    Connection
 		*  @param[in] nStatus
 		*    HTTP status code
 		*  @param[in] sMimeType
@@ -103,8 +102,6 @@ class HttpServerConnection : public Connection {
 		*  @brief
 		*    Send a redirect
 		*
-		*  @param[in] pConnection
-		*    Connection
 		*  @param[in] sLocation
 		*    New location
 		*/
@@ -114,8 +111,6 @@ class HttpServerConnection : public Connection {
 		*  @brief
 		*    Send an error
 		*
-		*  @param[in] pConnection
-		*    Connection
 		*  @param[in] nStatus
 		*    HTTP status code
 		*/
@@ -125,8 +120,6 @@ class HttpServerConnection : public Connection {
 		*  @brief
 		*    Send HTTP header
 		*
-		*  @param[in] pConnection
-		*    Connection
 		*  @param[in] nStatus
 		*    HTTP status code
 		*  @param[in] sMimeType

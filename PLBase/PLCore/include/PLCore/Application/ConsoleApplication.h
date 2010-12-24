@@ -407,7 +407,7 @@ class ConsoleApplication {
 		*      - On '--help' or on error, call OnPrintHelp() and exit
 		*      - On '--version', call OnPrintVersion() and exit
 		*
-		*  @notes
+		*  @note
 		*    - To end the application here, use Application::Exit()
 		*/
 		PLCORE_API virtual void OnInitCmdLine();
