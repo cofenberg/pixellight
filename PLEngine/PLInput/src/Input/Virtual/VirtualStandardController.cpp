@@ -330,11 +330,11 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			Connect("RotX",				&pSpaceMouse->RotX,   -0.8f);
+			Connect("RotX",				&pSpaceMouse->RotX,   -0.4f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
-			Connect("RotY",				&pSpaceMouse->RotZ,   -0.8f);
+			Connect("RotY",				&pSpaceMouse->RotZ,   -0.4f);
 			// RotZ: Roll (also called 'attitude') change is moving one wingtip up and the other down
-			Connect("RotZ",				&pSpaceMouse->RotY,   -0.8f);
+			Connect("RotZ",				&pSpaceMouse->RotY,   -0.4f);
 			// X translation axis: Strafe left/right (+/-)
 			Connect("TransX",			&pSpaceMouse->TransX, -1.0f/90.0f);
 			// Y translation axis: Move up/down (+/-)
