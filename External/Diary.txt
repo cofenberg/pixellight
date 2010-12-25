@@ -7,6 +7,9 @@
   http://www.newtondynamics.com/forum/viewtopic.php?f=10&t=6034 - it really looks like that there's a kind of license version chaos within the
   downloadable SDKs... and it's really allowed to redistribute the library! That's good news, because now, we can provide a automatically public
   downloadable package on the PixelLight server which makes compiling PixelLight from it's source codes one step easier! :D
+- Linux: Switched back the "Newton Game Dynamics" version from "2.26" to "2.24" because it looks like this version is broken. When starting an application,
+  I get "undefined symbol: _Z14Determinant3x3PA3_K8dgGoogol" within "libNewton.so" (and according to http://www.newtondynamics.com/forum/viewtopic.php?f=9&t=6351
+  I'am not the only one with this problem).
 
 
 

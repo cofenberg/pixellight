@@ -70,6 +70,7 @@ BodyBox::BodyBox(PLPhysics::World &cWorld, const Vector3 &vDimension) :
 	Newton::NewtonCollision *pCollision = NewtonCreateBox(pNewtonWorld, m_vDimension.x, m_vDimension.y, m_vDimension.z, 0, NULL);
 
 	// Create the rigid body
+	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
 	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
 		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
 	#else

@@ -85,6 +85,7 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld, uint32 nWidth, uint32 nHeight
 	NewtonCollision *pCollision = NewtonCreateUserMeshCollision(pNewtonWorld, m_vBoxMin, m_vBoxMax, this, MeshCollisionCollideCallback, UserMeshCollisionRayHitCallback, NULL, NULL, NULL, 0);
 
 	// Create the rigid body
+	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
 	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
 		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
 	#else

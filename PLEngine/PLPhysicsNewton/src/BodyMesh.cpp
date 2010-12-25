@@ -231,6 +231,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 
 	// Create the rigid body
 	if (pCollision) {
+		// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
 		#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
 			Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
 		#else

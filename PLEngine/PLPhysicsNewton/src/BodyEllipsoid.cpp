@@ -70,6 +70,7 @@ BodyEllipsoid::BodyEllipsoid(PLPhysics::World &cWorld, const Vector3 &vRadius) :
 	Newton::NewtonCollision *pCollision = NewtonCreateSphere(pNewtonWorld, m_vRadius.x, m_vRadius.y, m_vRadius.z, 0, NULL);
 
 	// Create the rigid body
+	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
 	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
 		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
 	#else
