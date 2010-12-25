@@ -1,15 +1,4 @@
 ﻿Newton Game Dynamics 2.28 for Windows and 2.26 for Linux
-- License: See "license.txt"
+- License: See "License.txt"
 - Used by the physics backend "PLPhysicsNewton" (external Windows dependencies: "newton.dll")
-- We're sorry, but due to legal issues we can't provide you with a downloadable package
 - Download from: http://www.newtondynamics.com/
-- Here's what you need for the Windows platform and where to put the files:
-	- "External\_Windows_x86_32\Newton\include\Newton"
-		- "Newton.h"
-	- "External\_Windows_x86_32\Newton\lib"
-		- "newton.lib"
-- Here's what you need for the Linux platform and were to put the files:
-	- "External\_Linux_x86_32\Newton\include\Newton"
-		- "Newton.h"
-	- "External\_Linux_x86_32\Newton\lib"
-		- "libNewton.so"

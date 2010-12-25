@@ -2,6 +2,11 @@
 [CO]
 - Updated from "Cg Toookit 3.0 - July 2010" to "Cg Toookit 3.0 - November 2010"
 - Updated "Newton Game Dynamics" from "2.24" to "2.28" on Windows and "2.26" on Linux
+- By accident I found within the latest "Newton Game Dynamics" Linux version a text file stating that this library can be redistributed while
+  there are some other license files of this library stating it's not allowed to redistribute it. I did some research and found a discussion at
+  http://www.newtondynamics.com/forum/viewtopic.php?f=10&t=6034 - it really looks like that there's a kind of license version chaos within the
+  downloadable SDKs... and it's really allowed to redistribute the library! That's good news, because now, we can provide a automatically public
+  downloadable package on the PixelLight server which makes compiling PixelLight from it's source codes one step easier! :D
 
 
 
