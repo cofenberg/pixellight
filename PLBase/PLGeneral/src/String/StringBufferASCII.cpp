@@ -522,7 +522,7 @@ StringBuffer *StringBufferASCII::ToLower()
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
 		// Is this already a lower character?
-		if (!islower(*pszString)) {
+		if (!islower((unsigned char)*pszString)) {
 			// Nope, now we have to clone the string buffer :(
 			StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
 
@@ -545,7 +545,7 @@ StringBuffer *StringBufferASCII::ToUpper()
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
 		// Is this already a upper character?
-		if (!isupper(*pszString)) {
+		if (!isupper((unsigned char)*pszString)) {
 			// Nope, now we have to clone the string buffer :(
 			StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
 

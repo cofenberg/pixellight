@@ -512,8 +512,7 @@ bool MeshLoaderPLXml::ReadVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nInde
 
 	// Read data
 	bool bResult = true; // No error by default
-	void *pData = cVertexBuffer.Lock(Lock::WriteOnly);
-	if (pData) {
+	if (cVertexBuffer.Lock(Lock::WriteOnly)) {
 		// Get the vertices element
 		const XmlElement *pVerticesElement = cVertexBufferElement.GetFirstChildElement("Vertices");
 		if (pVerticesElement) {
@@ -1488,8 +1487,7 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 
 	// Write vertex buffer
 	bool bResult = true; // No error by default
-	void *pData = cVertexBuffer.Lock(Lock::ReadOnly);
-	if (pData) {
+	if (cVertexBuffer.Lock(Lock::ReadOnly)) {
 		// Add vertices
 		XmlElement *pVerticesElement = new XmlElement("Vertices");
 

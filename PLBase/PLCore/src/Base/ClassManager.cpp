@@ -509,24 +509,26 @@ void ClassManager::RegisterModule(uint32 nModuleID, const String &sName, const S
 void ClassManager::UnregisterModule(Module *pModule)
 {
 	// Check if module is valid
-	if (pModule && m_lstModules.IsElement(pModule)) {
-		// Get list of classes (make a copy!)
-		List<const Class*> lstClasses = pModule->GetClasses();
+	if (pModule) {
+		if (m_lstModules.IsElement(pModule)) {
+			// Get list of classes (make a copy!)
+			List<const Class*> lstClasses = pModule->GetClasses();
 
-		// Remove all classes from that module
-		Iterator<const Class*> cIterator = lstClasses.GetIterator();
-		while (cIterator.HasNext()) {
-			UnregisterClass(pModule->GetModuleID(), (Class*)cIterator.Next());
+			// Remove all classes from that module
+			Iterator<const Class*> cIterator = lstClasses.GetIterator();
+			while (cIterator.HasNext()) {
+				UnregisterClass(pModule->GetModuleID(), (Class*)cIterator.Next());
+			}
 		}
+
+		// Module has been unloaded (emit event)
+		EventModuleUnloaded.Emit(pModule);
+
+		// Remove module
+		m_lstModules.Remove(pModule);
+		m_mapModules.Remove(pModule->GetModuleID());
+		delete pModule;
 	}
-
-	// Module has been unloaded (emit event)
-	EventModuleUnloaded.Emit(pModule);
-
-	// Remove module
-	m_lstModules.Remove(pModule);
-	m_mapModules.Remove(pModule->GetModuleID());
-	delete pModule;
 }
 
 /**

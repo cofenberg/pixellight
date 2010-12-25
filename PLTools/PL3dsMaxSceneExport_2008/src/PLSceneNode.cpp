@@ -413,22 +413,23 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const std::string &s
 									fPercentageAlongPath = pIParamBlock2->GetFloat(path_percent, 0);
 							}
 
-							// Add scene node modifier
-							XmlElement *pModifierElement = new XmlElement("Modifier");
-							pModifierElement->SetAttribute("Class",   "PLScene::SNMPositionPath");
-							pModifierElement->SetAttribute("Filename", sPathFilename.c_str());
-							pModifierElement->SetAttribute("Progress", String::Format("%f", fPercentageAlongPath));
+							{ // Add scene node modifier
+								XmlElement *pModifierElement = new XmlElement("Modifier");
+								pModifierElement->SetAttribute("Class",   "PLScene::SNMPositionPath");
+								pModifierElement->SetAttribute("Filename", sPathFilename.c_str());
+								pModifierElement->SetAttribute("Progress", String::Format("%f", fPercentageAlongPath));
 
-							// [TODO] Any change to setup speed inside 3ds Max?
-							float fSpeed = 0.03f;
-							// Automatic animation playback?
-							if (g_SEOptions.bAnimationPlayback)
-								pModifierElement->SetAttribute("Speed", String::Format("%f", (pPathController->GetFlip() ? -fSpeed : fSpeed)));
-							else
-								pModifierElement->SetAttribute("Speed", "0.0");
+								// [TODO] Any change to setup speed inside 3ds Max?
+								float fSpeed = 0.03f;
+								// Automatic animation playback?
+								if (g_SEOptions.bAnimationPlayback)
+									pModifierElement->SetAttribute("Speed", String::Format("%f", (pPathController->GetFlip() ? -fSpeed : fSpeed)));
+								else
+									pModifierElement->SetAttribute("Speed", "0.0");
 
-							// Link modifier element
-							cSceneElement.LinkEndChild(*pModifierElement);
+								// Link modifier element
+								cSceneElement.LinkEndChild(*pModifierElement);
+							}
 
 							// Follow?
 							if (pPathController->GetFollow()) {

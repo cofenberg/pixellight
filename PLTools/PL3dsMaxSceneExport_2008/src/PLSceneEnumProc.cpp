@@ -166,7 +166,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 				// Get log filename
 				std::string sLogFilename;
 				std::string sName = szName;
-				size_t nIndex = sName.find_last_of(".");
+				nIndex = sName.find_last_of(".");
 				if (nIndex != std::string::npos)
 					sName.erase(nIndex);
 				sLogFilename = sName + "Log.txt";
@@ -259,7 +259,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			// Show the scene right now?
 			if (g_SEOptions.bShowExportedScene && g_SEOptions.sViewer.length()) {
 				std::string sDirectory = g_SEOptions.sViewer;
-				size_t nIndex = sDirectory.find_last_of("/");
+				nIndex = sDirectory.find_last_of("/");
 				if (nIndex == std::string::npos)
 					nIndex = sDirectory.find_last_of("\\");
 				if (nIndex != std::string::npos) {

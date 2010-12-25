@@ -806,12 +806,12 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 						vCenter -= GetWorldSpaceCenter();
 
 						// Add the scene node
-						XmlElement *pNodeElement = new XmlElement("Node");
-						pNodeElement->SetAttribute("Class", "PLScene::SNHelper");
-						pNodeElement->SetAttribute("Name",  sTargetName.c_str());
+						XmlElement *pHelperNodeElement = new XmlElement("Node");
+						pHelperNodeElement->SetAttribute("Class", "PLScene::SNHelper");
+						pHelperNodeElement->SetAttribute("Name",  sTargetName.c_str());
 						if (vCenter.x || vCenter.y || vCenter.z)
-							pNodeElement->SetAttribute("Position", String::Format("%f %f %f", vCenter.x, vCenter.y, vCenter.z));
-						cSceneElement.LinkEndChild(*pNodeElement);
+							pHelperNodeElement->SetAttribute("Position", String::Format("%f %f %f", vCenter.x, vCenter.y, vCenter.z));
+						cSceneElement.LinkEndChild(*pHelperNodeElement);
 					}
 				} else {
 					// Add scene node modifier so we can automatically look around

@@ -409,7 +409,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 								pLightCullQuery->SetViewProjectionMatrix(m_mLightViewProjection);
 
 								// Set the new render target
-								if (cRenderer.SetRenderTarget(*m_pCurrentCubeShadowRenderTarget, nFace)) {
+								if (m_pCurrentCubeShadowRenderTarget && cRenderer.SetRenderTarget(*m_pCurrentCubeShadowRenderTarget, nFace)) {
 									// Perform the visibility determination
 									pLightCullQuery->PerformQuery();
 

@@ -90,7 +90,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 						SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), (const char*)sSlotName);
 
 						// Is this a reflection map?
-						if (!_strnicmp(sSlotName, "Reflection", 10))
+						if (pMaxStandardMat && !_strnicmp(sSlotName, "Reflection", 10))
 							fReflectionColor = pMaxStandardMat->GetTexmapAmt(nSlot, m_pScene->GetMaxInterface().GetTime());
 
 					// Is this a "Normal Bump" texture map?
@@ -145,9 +145,10 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 				XmlElement *pFloatElement = new XmlElement("Float");
 				pFloatElement->SetAttribute("Name", "Opacity");
 
-				// Add value
-				XmlText *pValue = new XmlText(String::Format("%f", fOpacity));
-				pFloatElement->LinkEndChild(*pValue);
+				{ // Add value
+					XmlText *pValue = new XmlText(String::Format("%f", fOpacity));
+					pFloatElement->LinkEndChild(*pValue);
+				}
 
 				// Link float element
 				cMaterialElement.LinkEndChild(*pFloatElement);

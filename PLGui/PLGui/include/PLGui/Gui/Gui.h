@@ -618,7 +618,7 @@ class Gui {
 	//[-------------------------------------------------------]
 	private:
 		// Data
-		GuiImpl							 *m_pGuiImpl;				/**< Gui implementation */
+		GuiImpl							 *m_pGuiImpl;				/**< Gui implementation, always valid! */
 		bool							  m_bShutdown;				/**< Has the GUI shut down? */
 		Theme							 *m_pTheme;					/**< Current theme */
 		PLGeneral::uint32				  m_nHoverTime;				/**< Time in milliseconds before a hove event shall occur */

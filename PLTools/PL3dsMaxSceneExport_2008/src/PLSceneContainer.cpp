@@ -485,14 +485,14 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	std::map<std::string, PLSceneNode*>::iterator pIterator = pContainer->m_mapNodes.find(sSceneNodeNameLower);
 	if (pIterator != pContainer->m_mapNodes.end()) {
 		std::string sNewName;
-		int nIndex = 1;
+		int nConflictIndex = 1;
 
 		// Find an unused scene node name
 		do {
 			sNewName = sSceneNodeName;
 			sNewName += "_Conflict_";
-			sNewName += PLTools::ToString(nIndex);
-			nIndex++;
+			sNewName += PLTools::ToString(nConflictIndex);
+			nConflictIndex++;
 			sSceneNodeNameLower = PLTools::ToLower(sNewName); // Do ONLY use lower case, else the hashing will NOT return the same values!
 			pIterator = pContainer->m_mapNodes.find(sSceneNodeNameLower);
 		} while (pIterator != pContainer->m_mapNodes.end());

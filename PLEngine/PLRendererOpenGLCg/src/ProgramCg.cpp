@@ -298,9 +298,9 @@ void ProgramCg::BuildUniformInformation()
 		if (m_bLinked) {
 			// Iterate through all Cg programs of the Cg combined program
 			const int nNumOfProgramDomains = cgGetNumProgramDomains(pCgCombinedProgram);
-			for (int i=0; i<nNumOfProgramDomains; i++) {
+			for (int nDomain=0; nDomain<nNumOfProgramDomains; nDomain++) {
 				// Get the Cg program of the current domain
-				CGprogram pCgDomainProgram = cgGetProgramDomainProgram(pCgCombinedProgram, i);
+				CGprogram pCgDomainProgram = cgGetProgramDomainProgram(pCgCombinedProgram, nDomain);
 
 				// Iterate through all Cg parameters of the Cg vertex program
 				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);

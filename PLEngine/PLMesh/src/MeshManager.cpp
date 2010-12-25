@@ -244,7 +244,7 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 							pMesh = NULL;
 						}
 					} else {
-						if (!pMesh->Load(sFilename, "Static=" + bStatic + '\"')) {
+						if (!pMesh->Load(sFilename, String("Static=") + bStatic + '\"')) {
 							// Can't load mesh...
 							delete pMesh;
 							pMesh = NULL;

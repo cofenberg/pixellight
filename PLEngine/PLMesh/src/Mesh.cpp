@@ -279,7 +279,7 @@ void Mesh::Draw(const Matrix4x4 &mWorldViewProjection, bool bBlend, uint32 nFlag
 			// Draw points
 			if (nFlags & DrawVertices) {
 				m_pRenderer->SetRenderState(RenderState::PointSize, Tools::FloatToUInt32(4.0f));
-				FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
+				pFixedFunctions = m_pRenderer->GetFixedFunctions();
 				if (pFixedFunctions)
 					pFixedFunctions->SetColor(Color4::White);
 				m_pRenderer->SetTextureBuffer();

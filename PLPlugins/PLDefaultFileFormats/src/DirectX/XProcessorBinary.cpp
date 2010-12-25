@@ -412,7 +412,7 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 
 				// Next must be the vertices list
 				pToken = pToken->GetNextToken();
-				if (pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
+				if (pToken && pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
 					XTokenFloatList *pVerticesToken = (XTokenFloatList*)pToken;
 					if (pVerticesToken->m_nLength == pcMesh->nVertices*3) {
 						// 'Steal' the vertex data
@@ -422,7 +422,7 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 
 						// Next must be the face list
 						pToken = pToken->GetNextToken();
-						if (pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
+						if (pToken && pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
 							XTokenIntList *pFacesToken = (XTokenIntList*)pToken;
 
 							// Set number of faces
@@ -563,7 +563,7 @@ XMeshTextureCoords *XRootBinary::ProcessMeshTextureCoords(XTokenName &cTokenName
 
 				// Next must be the texture coordinates list
 				pToken = pToken->GetNextToken();
-				if (pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
+				if (pToken && pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
 					XTokenFloatList *pTextureCoordsToken = (XTokenFloatList*)pToken;
 					if (pTextureCoordsToken->m_nLength == pTextureCoords->nTextureCoords*2) {
 						// 'Steal' the texture coordinate data
@@ -616,7 +616,7 @@ XMeshNormals *XRootBinary::ProcessMeshNormals(XTokenName &cTokenName)
 
 				// Next must be the normals list
 				pToken = pToken->GetNextToken();
-				if (pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
+				if (pToken && pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
 					XTokenFloatList *pNormalsToken = (XTokenFloatList*)pToken;
 					if (pNormalsToken->m_nLength == pNormals->nNormals*3) {
 						// 'Steal' the normal data

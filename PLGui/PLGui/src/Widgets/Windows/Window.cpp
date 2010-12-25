@@ -410,7 +410,7 @@ void Window::OnMouseMove(const Vector2i &vPos)
 	else if (m_bSizeXLeft | m_bSizeXRight | m_bSizeYTop | m_bSizeYBottom) {
 		// Get current position and size
 		Vector2i vPos_ = GetPos();
-		Vector2i vSize = GetSize();
+				 vSize = GetSize();
 
 		// Alter size
 		if (m_bSizeXLeft)   vSize.x -= vRel.x;

@@ -720,7 +720,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 					}
 				} else {
 					// If 'DXT5 xGxR' or 'LATC2_XYSwizzle' is used, the data is also uncompressed... BUT the data is STILL swizzled!
-					if (m_nCompressionHint != Texture::DXT5_xGxR || m_nCompressionHint != Texture::LATC2_XYSwizzle)
+					if (m_nCompressionHint != Texture::DXT5_xGxR && m_nCompressionHint != Texture::LATC2_XYSwizzle)
 						m_nCompressionHint = None; // Do never ever use texture compression!
 				}
 

@@ -390,11 +390,13 @@ void GuiWindows::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
 {
 	// Enumerate all styles and charsets of all fonts
 	PLGeneral::List<String> lstFontNames;
-	LOGFONT lf;
-	lf.lfFaceName[0]	= '\0';
-	lf.lfCharSet		= DEFAULT_CHARSET;
-	lf.lfPitchAndFamily	= 0;
-	EnumFontFamiliesEx(::GetDC(NULL), &lf, (FONTENUMPROCW)FontEnumProc, (LPARAM)(void*)&lstFontNames, 0);
+	{
+		LOGFONT lf;
+		lf.lfFaceName[0]	= '\0';
+		lf.lfCharSet		= DEFAULT_CHARSET;
+		lf.lfPitchAndFamily	= 0;
+		EnumFontFamiliesEx(::GetDC(NULL), &lf, (FONTENUMPROCW)FontEnumProc, (LPARAM)(void*)&lstFontNames, 0);
+	}
 
 	// Enumerate all styles and charsets of all fonts
 	for (uint32 i=0; i<lstFontNames.GetNumOfElements(); i++) {
@@ -493,13 +495,15 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				pWidgetWindows->m_hWnd = hWnd;
 
 				// Send OnCreate message
-				pGui->SendMessage(GuiMessage::OnCreate(pWidget));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnCreate(pWidget));
 				return 0;
 
 			// Destroy widget
 			case WM_DESTROY:
 				// Send OnDestroy message
-				pGui->SendMessage(GuiMessage::OnDestroy(pWidget));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnDestroy(pWidget));
 
 				// Mark widget destroyed
 				pWidgetWindows->m_bDestroyed = true;
@@ -509,14 +513,17 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// Close widget
 			case WM_CLOSE:
 				// Send OnClose message
-				pGui->SendMessage(GuiMessage::OnClose(pWidget));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnClose(pWidget));
 				return 0;
 
 			// Show widget
 			case WM_SHOWWINDOW:
 				// Send OnShow/OnHide message
-				if (wParam)	pGui->SendMessage(GuiMessage::OnShow(pWidget));
-				else		pGui->SendMessage(GuiMessage::OnHide(pWidget));
+				if (pGui) {
+					if (wParam)	pGui->SendMessage(GuiMessage::OnShow(pWidget));
+					else		pGui->SendMessage(GuiMessage::OnHide(pWidget));
+				}
 				return 0;
 
 			// Activate/Deactivate widget
@@ -551,7 +558,8 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 					// Do not trust window messages and set focus only, if the widget really want's it
 					if ((pWidget->GetFocusStyle() == AcceptFocus || pWidget->GetFocusStyle() == ChildFocusOrSelf) && pWidget->IsEnabled()) {
 						// Send OnGetFocus message
-						pGui->SendMessage(GuiMessage::OnGetFocus(pWidget));
+						if (pGui)
+							pGui->SendMessage(GuiMessage::OnGetFocus(pWidget));
 					}
 				} else pWidgetWindows->m_bIgnoreSetFocus = false;
 				return 0;
@@ -563,14 +571,15 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				Widget *pFocus = GetPLGuiWidget((HWND)wParam);
 				if (pFocus && pFocus != pWidget) {
 					// Send OnGetFocus message first!
-					pGui->SendMessage(GuiMessage::OnGetFocus(pFocus));
+					if (pGui)
+						pGui->SendMessage(GuiMessage::OnGetFocus(pFocus));
 
 					// Ignore coming WM_SETFOCUS message
 					((WidgetWindows*)pFocus->GetImpl())->m_bIgnoreSetFocus = true;
 				}
 
 				// Send OnLooseFocus message
-				if (pFocus != pWidget) {
+				if (pFocus != pWidget && pGui) {
 					pGui->SendMessage(GuiMessage::OnLooseFocus(pWidget));
 				}
 				return 0;
@@ -593,13 +602,15 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				GraphicsWindows cGraphicsWindows(sPaint.hdc);
 				Graphics cGraphics(*pGuiWindows->m_pGui, cGraphicsWindows);
 
-				// Send OnDrawBackground message
-				if (sPaint.fErase != FALSE) {
-					pGui->SendMessage(GuiMessage::OnDrawBackground(pWidget, &cGraphics));
-				}
+				if (pGui) {
+					// Send OnDrawBackground message
+					if (sPaint.fErase != FALSE) {
+						pGui->SendMessage(GuiMessage::OnDrawBackground(pWidget, &cGraphics));
+					}
 
-				// Send OnDraw message
-				pGui->SendMessage(GuiMessage::OnDraw(pWidget, &cGraphics));
+					// Send OnDraw message
+					pGui->SendMessage(GuiMessage::OnDraw(pWidget, &cGraphics));
+				}
 
 				// End paint
 				EndPaint(hWnd, &sPaint);
@@ -609,11 +620,13 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// Move widget
 			case WM_MOVE:
 			{
-				// Get position
-				POINTS sPos = MAKEPOINTS(lParam);
+				if (pGui) {
+					// Get position
+					POINTS sPos = MAKEPOINTS(lParam);
 
-				// Send OnMove message
-				pGui->SendMessage(GuiMessage::OnMove(pWidget, Vector2i(sPos.x, sPos.y)));
+					// Send OnMove message
+					pGui->SendMessage(GuiMessage::OnMove(pWidget, Vector2i(sPos.x, sPos.y)));
+				}
 
 				// Done
 				return 0;
@@ -622,7 +635,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// Size widget
 			case WM_SIZE:
 				// Restore from fullscreen mode
-				if (pWidgetWindows->m_nWindowState == StateFullscreen) {
+				if (pWidgetWindows->m_nWindowState == StateFullscreen && pGui) {
 					// Send OnLeaveFullscreen message
 					pGui->SendMessage(GuiMessage::OnLeaveFullscreen(pWidget));
 				}
@@ -633,11 +646,13 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				else if (wParam == SIZE_MAXIMIZED)		pWidgetWindows->m_nWindowState = StateMaximized;
 				else if (wParam == SIZE_RESTORED)		pWidgetWindows->m_nWindowState = StateNormal;
 
-				// Send OnWindowState message
-				pGui->SendMessage(GuiMessage::OnWindowState(pWidget, pWidgetWindows->m_nWindowState));
+				if (pGui) {
+					// Send OnWindowState message
+					pGui->SendMessage(GuiMessage::OnWindowState(pWidget, pWidgetWindows->m_nWindowState));
 
-				// Send OnSize message
-				pGui->SendMessage(GuiMessage::OnSize(pWidget, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+					// Send OnSize message
+					pGui->SendMessage(GuiMessage::OnSize(pWidget, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				}
 
 				// Done
 				return 0;
@@ -663,18 +678,21 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 					pGuiWindows->m_pMouseOver = pWidget;
 
 					// Send OnMouseEnter message
-					pGui->SendMessage(GuiMessage::OnMouseEnter(pWidget));
+					if (pGui)
+						pGui->SendMessage(GuiMessage::OnMouseEnter(pWidget));
 				}
 
 				// Send OnMouseMove message
-				pGui->SendMessage(GuiMessage::OnMouseMove(pWidget, vPos));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseMove(pWidget, vPos));
 				return 0;
 			}
 
 			// Mouse leaves the widget
 			case WM_MOUSELEAVE:
 				// Send OnMouseLeave message
-				pGui->SendMessage(GuiMessage::OnMouseLeave(pWidget));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseLeave(pWidget));
 
 				// Check if mouse-enter widget has changed
 				if (pGuiWindows->m_pMouseOver == pWidget) {
@@ -686,65 +704,76 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// Left mouse button down
 			case WM_LBUTTONDOWN:
 				// Send OnMouseButtonDown message
-				pGui->SendMessage(GuiMessage::OnMouseButtonDown(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonDown(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Left mouse button up
 			case WM_LBUTTONUP:
-				// Send OnMouseButtonUp message
-				pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui) {
+					// Send OnMouseButtonUp message
+					pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 
-				// [TODO] When to send a click-event, and when not?
-				// Send OnMouseButtonClick message
-				pGui->SendMessage(GuiMessage::OnMouseButtonClick(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+					// [TODO] When to send a click-event, and when not?
+					// Send OnMouseButtonClick message
+					pGui->SendMessage(GuiMessage::OnMouseButtonClick(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				}
 				return 0;
 
 			// Left mouse button double click
 			case WM_LBUTTONDBLCLK:
 				// Send OnMouseButtonDoubleClick message
-				pGui->SendMessage(GuiMessage::OnMouseButtonDoubleClick(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonDoubleClick(pWidget, LeftButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Right mouse button down
 			case WM_RBUTTONDOWN:
 				// Send OnMouseButtonDown message
-				pGui->SendMessage(GuiMessage::OnMouseButtonDown(pWidget, RightButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonDown(pWidget, RightButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Right mouse button up
 			case WM_RBUTTONUP:
 				// Send OnMouseButtonUp message
-				pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, RightButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, RightButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Right mouse button double click
 			case WM_RBUTTONDBLCLK:
 				// Send OnMouseButtonDoubleClick message
-				pGui->SendMessage(GuiMessage::OnMouseButtonDoubleClick(pWidget, RightButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonDoubleClick(pWidget, RightButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Middle mouse button down
 			case WM_MBUTTONDOWN:
 				// Send OnMouseButtonDown message
-				pGui->SendMessage(GuiMessage::OnMouseButtonDown(pWidget, MiddleButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonDown(pWidget, MiddleButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Middle mouse button up
 			case WM_MBUTTONUP:
 				// Send OnMouseButtonUp message
-				pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, MiddleButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, MiddleButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Middle mouse button double click
 			case WM_MBUTTONDBLCLK:
 				// Send OnMouseButtonDoubleClick message
-				pGui->SendMessage(GuiMessage::OnMouseButtonDoubleClick(pWidget, MiddleButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseButtonDoubleClick(pWidget, MiddleButton, Vector2i(LOWORD(lParam), HIWORD(lParam))));
 				return 0;
 
 			// Mouse wheel
 			case WM_MOUSEWHEEL:
 				// Send OnMouseWheel message
-				pGui->SendMessage(GuiMessage::OnMouseWheel(pWidget, (short)HIWORD(wParam)/120));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnMouseWheel(pWidget, (short)HIWORD(wParam)/120));
 				return 0;
 
 			// Keyboard key down
@@ -759,7 +788,8 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				if (GetAsyncKeyState(VK_RWIN))	  nModifiers |= PLGUIMOD_WIN;
 
 				// Send OnKeyDown message
-				pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)wParam, nModifiers));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)wParam, nModifiers));
 				return 0;
 			}
 
@@ -775,7 +805,8 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				if (GetAsyncKeyState(VK_RWIN))	  nModifiers |= PLGUIMOD_WIN;
 
 				// Send OnKeyUp message
-				pGui->SendMessage(GuiMessage::OnKeyUp(pWidget, (uint32)wParam, nModifiers));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnKeyUp(pWidget, (uint32)wParam, nModifiers));
 				return 0;
 			}
 
@@ -783,15 +814,18 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			case WM_SYSCHAR:
 			{
 				// Send OnKeyDown followed by an OnKeyUp message
-				pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)wParam, PLGUIMOD_ALT));
-				pGui->SendMessage(GuiMessage::OnKeyUp  (pWidget, (uint32)wParam, PLGUIMOD_ALT));
+				if (pGui) {
+					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)wParam, PLGUIMOD_ALT));
+					pGui->SendMessage(GuiMessage::OnKeyUp  (pWidget, (uint32)wParam, PLGUIMOD_ALT));
+				}
 				return 0;
 			}
 
 			// Process hotkey
 			case WM_HOTKEY:
 				// Send OnHotkey message
-				pGui->SendMessage(GuiMessage::OnHotkey(pWidget, (uint32)wParam));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnHotkey(pWidget, (uint32)wParam));
 				return 0;
 
 			// Drag and drop of files
@@ -820,7 +854,8 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 					DataObject cData(lstFiles);
 
 					// Send OnDrop message
-					pGui->SendMessage(GuiMessage::OnDrop(pWidget, &cData));
+					if (pGui)
+						pGui->SendMessage(GuiMessage::OnDrop(pWidget, &cData));
 					return 0;
 				}
 			}
@@ -828,7 +863,8 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// OnThemeChanged message
 			case PL_THEMECHANGED:
 				// Send OnThemeChanged message
-				pGui->SendMessage(GuiMessage::OnThemeChanged(pWidget));
+				if (pGui)
+					pGui->SendMessage(GuiMessage::OnThemeChanged(pWidget));
 				return 0;
 
 			// Tray icon message
@@ -840,7 +876,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 	}
 
 	// Let the OS handle this message...
-	return DefWindowProc(hWnd, nMsg, wParam, lParam);
+	return hWnd ? DefWindowProc(hWnd, nMsg, wParam, lParam) : 0;
 }
 
 /**

@@ -998,7 +998,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 										const Material *pProjectiveMaterial = ((SNProjectivePointLight&)cLight).GetProjectedMaterialHandler().GetResource();
 										if (pProjectiveMaterial) {
 											// Get the DiffuseMap-parameter of the projective material
-											const Parameter *pParameter = pProjectiveMaterial->GetParameter(Material::DiffuseMap);
+											pParameter = pProjectiveMaterial->GetParameter(Material::DiffuseMap);
 											if (pParameter) {
 												// Get the texture we're going to project
 												const Texture *pTexture = pParameter->GetValueTexture();
@@ -1050,7 +1050,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 											const Material *pProjectiveMaterial = ((SNProjectiveSpotLight&)cLight).GetProjectedMaterialHandler().GetResource();
 											if (pProjectiveMaterial) {
 												// Get the DiffuseMap-parameter of the projective material
-												const Parameter *pParameter = pProjectiveMaterial->GetParameter(Material::DiffuseMap);
+												pParameter = pProjectiveMaterial->GetParameter(Material::DiffuseMap);
 												if (pParameter) {
 													// Get the texture we're going to project
 													const Texture *pTexture = pParameter->GetValueTexture();

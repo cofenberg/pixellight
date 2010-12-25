@@ -85,16 +85,14 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 		HANDLE hFile = CreateFile(sAbsBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		if (hFile == INVALID_HANDLE_VALUE) {
 			// Get the current path of the loaded 3ds Max scene
-			Url cUrl = GetCOREInterface()->GetCurFilePath().data();
-			std::string sCurFilePath = cUrl.CutFilename();
+			std::string sCurFilePath = Url(GetCOREInterface()->GetCurFilePath().data()).CutFilename();
 			if (sCurFilePath.length()) {
 				// Compose absolute filename by just concatenating the two filenames (for relative filenames)
 				std::string sBitmapFilename = sCurFilePath + sAbsBitmapFilename;
 				hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 				if (hFile == INVALID_HANDLE_VALUE) {
 					// Get the filename without any path information
-					Url cUrl = sName.c_str();
-					std::string sFilenameOnly  = cUrl.GetFilename().GetASCII();
+					std::string sFilenameOnly  = Url(sName.c_str()).GetFilename().GetASCII();
 
 					// Compose absolute filename
 					if (sFilenameOnly.length()) {
@@ -111,7 +109,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 								const TCHAR *pMapDir = TheManager->GetMapDir(nMapDir);
 								size_t nLength = strlen(pMapDir);
 								if (nLength) {
-									char nLastCharacter = pMapDir[nLength-1];
+									nLastCharacter = pMapDir[nLength-1];
 									if (nLastCharacter == '\\' || nLastCharacter == '/')
 										sBitmapFilename = pMapDir + sFilenameOnly;
 									else
@@ -141,8 +139,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 			CloseHandle(hFile);
 
 			// Cut of the filename
-			Url cUrl = g_SEOptions.sFilename.c_str();
-			std::string sFilename = cUrl.CutFilename();
+			std::string sFilename = Url(g_SEOptions.sFilename.c_str()).CutFilename();
 
 			// Construct the absolute target filename
 			size_t nLength = sFilename.length();
@@ -166,8 +163,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 				}
 
 				{ // Before we copy, we need to ensure that the target directory is there, else 'CopyFile()' will fail!
-					Url cUrl = sFilename.c_str();
-					Directory cDirectory(cUrl.CutFilename());
+					Directory cDirectory(Url(sFilename.c_str()).CutFilename());
 					cDirectory.CreateRecursive();
 				}
 

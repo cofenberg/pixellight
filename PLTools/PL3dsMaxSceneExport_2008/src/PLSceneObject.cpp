@@ -141,10 +141,10 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					pSkinElement->SetAttribute("Version", "1");
 
 					// Loop through all sub-materials
-					for (int i=0; i<pMaxMeshMaterial->NumSubMtls(); i++) {
+					for (int nSubMaterial=0; nSubMaterial<pMaxMeshMaterial->NumSubMtls(); nSubMaterial++) {
 						// Get 3ds Max materials
-						Mtl *pMaxMeshSubMaterial = pMaxMeshMaterial->GetSubMtl(i);
-						Mtl *pMaxNodeSubMaterial = pMaxNodeMaterial->GetSubMtl(i);
+						Mtl *pMaxMeshSubMaterial = pMaxMeshMaterial->GetSubMtl(nSubMaterial);
+						Mtl *pMaxNodeSubMaterial = pMaxNodeMaterial->GetSubMtl(nSubMaterial);
 						if (pMaxMeshSubMaterial && pMaxNodeSubMaterial) {
 							// Get PixelLight material coresponding to the mesh material
 							PLSceneMaterial *pMeshSubMaterial = GetScene().GetMaterial(*pMaxMeshSubMaterial);
@@ -238,13 +238,13 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 		plstMorphChannels = &m_pMesh->GetMorphChannels();
 
 	// Get the animation list of the mesh
-	const Array<PLSceneMesh::Animation*> &lstAnimations = m_pMesh->GetAnimations();
+	const Array<PLSceneMesh::Animation*> *plstAnimations = m_pMesh ? &m_pMesh->GetAnimations() : NULL;
 
 	// Write modifiers
 	WriteModifiers(*pNodeElement, sApplicationDrive, sApplicationDir);
 
 	// Are there any morph channels?
-	if (plstMorphChannels || lstAnimations.GetNumOfElements()) {
+	if (plstMorphChannels || (plstAnimations && plstAnimations->GetNumOfElements())) {
 		// Write modifiers for morph channels
 		if (plstMorphChannels) {
 			// Loop through all morph channels
@@ -268,10 +268,10 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 		}
 
 		// Write modifiers for animations
-		if (lstAnimations.GetNumOfElements()) {
+		if (plstAnimations && plstAnimations->GetNumOfElements()) {
 			// Loop through all animations
 			bool bFirst = true;
-			ConstIterator<PLSceneMesh::Animation*> cIterator = lstAnimations.GetConstIterator();
+			ConstIterator<PLSceneMesh::Animation*> cIterator = plstAnimations->GetConstIterator();
 			while (cIterator.HasNext()) {
 				// Get the animation
 				const PLSceneMesh::Animation *pAnimation = cIterator.Next();

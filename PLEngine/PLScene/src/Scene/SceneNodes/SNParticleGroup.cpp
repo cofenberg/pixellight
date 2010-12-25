@@ -705,7 +705,7 @@ void SNParticleGroup::DrawShapes(Renderer &cRenderer)
 		// Draw primitives
 		if (GetFlags() & PointSprites) {
 			if (GetFlags() & UseGlobalColor) {
-				FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
+				pFixedFunctions = cRenderer.GetFixedFunctions();
 				if (pFixedFunctions)
 					pFixedFunctions->SetColor(GlobalColor.Get());
 			}

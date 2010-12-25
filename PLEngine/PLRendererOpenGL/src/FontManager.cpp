@@ -132,7 +132,6 @@ PLRenderer::Program *FontManager::GetProgram(GeneratedProgramUserData **ppGenera
 			GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
 			if (!pGeneratedProgramUserData) {
 				pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
-				PLRenderer::Program *pProgram = pGeneratedProgram->pProgram;
 				// Vertex shader attributes
 				static const String sVertexPosition = "VertexPosition";
 				pGeneratedProgramUserData->pVertexPosition					= pProgram->GetAttribute(sVertexPosition);

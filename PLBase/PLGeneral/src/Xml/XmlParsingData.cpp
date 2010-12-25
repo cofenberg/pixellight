@@ -114,7 +114,7 @@ void XmlParsingData::Stamp(const char *pszNow, XmlBase::EEncoding nEncoding)
 			default:
 				if (nEncoding == XmlBase::EncodingUTF8) {
 					// Eat the 1 to 4 byte utf8 character
-					int nStep = XmlBase::utf8ByteTable[*((const unsigned char*)pszData)];
+					int nStep = XmlBase::utf8ByteTable[(unsigned char)*pszData];
 					if (nStep == 0)
 						nStep = 1;	// Error case from bad encoding, but handle gracefully
 					pszData += nStep;

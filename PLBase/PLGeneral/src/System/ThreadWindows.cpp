@@ -114,7 +114,7 @@ bool ThreadWindows::Terminate()
 {
 	// Check if the thread has been started
 	if (m_hThread) {
-		// Terminate thread
+		// Terminate thread - we warned the user within the method documentation that this does not allow proper thread clean up...
 		if (TerminateThread(m_hThread, 0)) {
 			// Termination successful
 			m_hThread = NULL;

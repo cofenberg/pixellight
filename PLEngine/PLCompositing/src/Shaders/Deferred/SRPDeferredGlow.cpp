@@ -319,7 +319,7 @@ void SRPDeferredGlow::CalculateGlow(const String &sShaderLanguage, VertexBuffer 
 
 			// Set the "Texture" fragment shader parameter
 			if (m_pBlurTextureProgramUniform) {
-				const int nTextureUnit = m_pBlurTextureProgramUniform->Set(m_pRenderTarget[m_bResultIndex]->GetTextureBuffer());
+				const int nTextureUnit = m_pBlurTextureProgramUniform->Set(m_pRenderTarget[m_bResultIndex != 0]->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);

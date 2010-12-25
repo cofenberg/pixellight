@@ -205,8 +205,8 @@ class Thread : public ThreadFunction {
 		*    'true' if the thread could be stopped
 		*
 		*  @remarks
-		*    Terminates the thread ungracefully. Instead of using this function you
-		*    should signal the thread and wait until it has quit by itself.
+		*    Terminates the thread ungracefully (does not allow proper thread clean up!). Instead of
+		*    using this function you should signal the thread and wait until it has quit by itself.
 		*/
 		PLGENERAL_API bool Terminate();
 

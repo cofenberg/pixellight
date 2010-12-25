@@ -150,10 +150,18 @@ String SystemWindows::GetOS() const
 			return "Windows";
 	}
 
-	// Call GetNativeSystemInfo if supported or GetSystemInfo otherwise
-	PGNSI pGNSI = (PGNSI)GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")), "GetNativeSystemInfo");
-	if (pGNSI) pGNSI(&si);
-	else	   GetSystemInfo(&si);
+	{ // Call GetNativeSystemInfo if supported or GetSystemInfo otherwise
+		HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
+		if (hModule) {
+			PGNSI pGNSI = (PGNSI)GetProcAddress(hModule, "GetNativeSystemInfo");
+			if (pGNSI)
+				pGNSI(&si);
+			else
+				GetSystemInfo(&si);
+		} else {
+			GetSystemInfo(&si);
+		}
+	}
 
 	// Compose version string
 	String sVersion;
@@ -269,17 +277,17 @@ String SystemWindows::GetOS() const
 				if (lRet != ERROR_SUCCESS || dwBufLen > 80*sizeof(TCHAR))
 					break;
 
-				if (!lstrcmpi(TEXT("WINNT"), szProductType))
+				if (CompareString(LOCALE_INVARIANT, NORM_IGNORECASE, TEXT("WINNT"), -1, szProductType, -1) == CSTR_EQUAL)
 					sVersion += "Workstation ";
-				if (!lstrcmpi(TEXT("LANMANNT"), szProductType))
+				if (CompareString(LOCALE_INVARIANT, NORM_IGNORECASE, TEXT("LANMANNT"), -1, szProductType, -1) == CSTR_EQUAL)
 					sVersion += "Server ";
-				if (!lstrcmpi(TEXT("SERVERNT"), szProductType))
+				if (CompareString(LOCALE_INVARIANT, NORM_IGNORECASE, TEXT("SERVERNT"), -1, szProductType, -1) == CSTR_EQUAL)
 					sVersion += "Advanced Server ";
 				sVersion += String::Format("%d.%d ", osvi.dwMajorVersion, osvi.dwMinorVersion);
 			}
 
 			// Display service pack (if any) and build number
-			if (osvi.dwMajorVersion == 4 && !lstrcmpi(osvi.szCSDVersion, TEXT("Service Pack 6"))) {
+			if (osvi.dwMajorVersion == 4 && CompareString(LOCALE_INVARIANT, NORM_IGNORECASE, osvi.szCSDVersion, -1, TEXT("Service Pack 6"), -1) == CSTR_EQUAL) {
 				// Test for SP6 versus SP6a
 				HKEY hKey;
 				LONG lRet = RegOpenKeyEx(HKEY_LOCAL_MACHINE,

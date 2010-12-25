@@ -387,12 +387,12 @@ bool LoadableManager::ScanPackages(const String &sPath, const String &sExtension
 			FileSearch cSearch(cDir);
 			while (cSearch.HasNextFile()) {
 				// Get next file
-				String sFilename = cSearch.GetNextFile();
-				String sPath     = cDir.GetUrl().GetUrl() + "/" + sFilename;
+				String sNextFilename = cSearch.GetNextFile();
+				String sNextPath     = cDir.GetUrl().GetUrl() + "/" + sNextFilename;
 
 				// Add all found files to the base-directories (meaning these must be packages ...)
-				if (File(sPath).IsFile())
-					AddBaseDir(sPath + "/");
+				if (File(sNextPath).IsFile())
+					AddBaseDir(sNextPath + "/");
 			}
 
 			// Done
@@ -479,7 +479,6 @@ void LoadableManager::RegisterClasses()
 							// Currently, there's no such loadable type, add one
 
 							// Find the base class, all loader implementations of this type are derived from
-							static const String sClassString = "PLCore::Loader";
 							const Class *pLoaderClass = ClassManager::GetInstance()->GetClass(sClassString);
 							const Class *pLoaderTypeClass = pClass->GetBaseClass();
 							while (pLoaderTypeClass && pLoaderTypeClass->GetBaseClass() != pLoaderClass)

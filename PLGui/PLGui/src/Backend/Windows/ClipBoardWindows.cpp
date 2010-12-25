@@ -132,8 +132,10 @@ void ClipBoardWindows::SetData(const DataObject &cData)
 					if (hClipBuffer) {
 						// Lock the handle and copy the text to the buffer
 						char *pszBuffer = (char*)GlobalLock(hClipBuffer);
-						MemoryManager::Copy(pszBuffer, sText.GetASCII(), sText.GetLength());
-						pszBuffer[sText.GetLength()] = '\0'; // Set terminating zero
+						if (pszBuffer) {
+							MemoryManager::Copy(pszBuffer, sText.GetASCII(), sText.GetLength());
+							pszBuffer[sText.GetLength()] = '\0'; // Set terminating zero
+						}
 						GlobalUnlock(hClipBuffer);
 
 						// Place the handle on the clipboard
@@ -146,8 +148,10 @@ void ClipBoardWindows::SetData(const DataObject &cData)
 					if (hClipBuffer) {
 						// Lock the handle and copy the text to the buffer
 						wchar_t *pszBuffer = (wchar_t*)GlobalLock(hClipBuffer);
-						MemoryManager::Copy(pszBuffer, sText.GetUnicode(), uint32(sText.GetLength()*nCharacterSize));
-						pszBuffer[sText.GetLength()] = '\0'; // Set terminating zero
+						if (pszBuffer) {
+							MemoryManager::Copy(pszBuffer, sText.GetUnicode(), uint32(sText.GetLength()*nCharacterSize));
+							pszBuffer[sText.GetLength()] = '\0'; // Set terminating zero
+						}
 						GlobalUnlock(hClipBuffer);
 
 						// Place the handle on the clipboard
