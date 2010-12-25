@@ -170,8 +170,8 @@ When using the maketool flag '--syslibs', you also need the following packages:
 - libjpeg62-dev (required by PLGraphics)
 - libpng12-dev (required by PLGraphics)
 - libfreetype6-dev (required by PLRendererOpenGL and PLRendererOpenGLES)
-- nvidia-cg-toolkit (required by PLRendererOpenGLCg - >= Cg Toookit 3.0 - July 2010 required)
-	- "nvidia-cg-toolkit" may be out-of-date, install a newer Cg SDK: http://developer.download.nvidia.com/cg/Cg_3.0/Cg-3.0_July2010_x86.deb
+- nvidia-cg-toolkit (required by PLRendererOpenGLCg - >= Cg Toookit 3.0 - November 2010 required)
+	- "nvidia-cg-toolkit" may be out-of-date, install a newer Cg SDK: http://developer.download.nvidia.com/cg/Cg_3.0/Cg-3.0_November2010_x86.deb
 - libopenal-dev (required by PLSoundOpenAL)
 - libogg-dev (PLSoundOpenAL)
 - libvorbis-dev (PLSoundOpenAL)
