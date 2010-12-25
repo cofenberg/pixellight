@@ -1,4 +1,4 @@
-﻿Newton Game Dynamics 2.24
+﻿Newton Game Dynamics 2.28 for Windows and 2.26 for Linux
 - License: See "license.txt"
 - Used by the physics backend "PLPhysicsNewton" (external Windows dependencies: "newton.dll")
 - We're sorry, but due to legal issues we can't provide you with a downloadable package

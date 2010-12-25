@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Matrix4x4.h>
 #include "PLPhysicsNewton/BodyImpl.h"
 #include "PLPhysicsNewton/World.h"
 #include "PLPhysicsNewton/BodyCapsule.h"
@@ -69,7 +70,11 @@ BodyCapsule::BodyCapsule(PLPhysics::World &cWorld, float fRadius, float fHeight)
 	Newton::NewtonCollision *pCollision = NewtonCreateCapsule(pNewtonWorld, m_fRadius, m_fHeight, 0, NULL);
 
 	// Create the rigid body
-	Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
+		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
+	#else
+		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+	#endif
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Calculate the collision volume

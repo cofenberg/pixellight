@@ -172,7 +172,7 @@ World::World() :
 
 	// Create the Newton world
 	m_pNewtonWorld = NewtonCreate();
-	PL_LOG(Info, String::Format("Created Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion(m_pNewtonWorld)))
+	PL_LOG(Info, String::Format("Created Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion()))
 
 	// Save the pointer to this PL physics world
 	NewtonWorldSetUserData(m_pNewtonWorld, this);
@@ -229,7 +229,7 @@ World::~World()
 
 	// Destroy the Newton world
 	NewtonDestroy(m_pNewtonWorld);
-	PL_LOG(Info, String::Format("Destroyed Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion(m_pNewtonWorld)))
+	PL_LOG(Info, String::Format("Destroyed Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion()))
 }
 
 /**

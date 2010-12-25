@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Matrix4x4.h>
 #include "PLPhysicsNewton/BodyImpl.h"
 #include "PLPhysicsNewton/World.h"
 #include "PLPhysicsNewton/BodyTerrain.h"
@@ -84,7 +85,11 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld, uint32 nWidth, uint32 nHeight
 	NewtonCollision *pCollision = NewtonCreateUserMeshCollision(pNewtonWorld, m_vBoxMin, m_vBoxMax, this, MeshCollisionCollideCallback, UserMeshCollisionRayHitCallback, NULL, NULL, NULL, 0);
 
 	// Create the rigid body
-	NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
+		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
+	#else
+		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+	#endif
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Initialize the Newton physics body

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Matrix4x4.h>
 #include "PLPhysicsNewton/BodyImpl.h"
 #include "PLPhysicsNewton/World.h"
 #include "PLPhysicsNewton/BodyChamferCylinder.h"
@@ -69,7 +70,12 @@ BodyChamferCylinder::BodyChamferCylinder(PLPhysics::World &cWorld, float fRadius
 	Newton::NewtonCollision *pCollision = NewtonCreateChamferCylinder(pNewtonWorld, m_fRadius, m_fHeight, 0, NULL);
 
 	// Create the rigid body
-	Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
+	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
+		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
+	#else
+		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+	#endif
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Calculate the collision volume

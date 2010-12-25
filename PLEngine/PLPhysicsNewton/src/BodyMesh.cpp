@@ -27,6 +27,7 @@
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/File/Url.h>
+#include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Material/Material.h>
@@ -230,7 +231,11 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 
 	// Create the rigid body
 	if (pCollision) {
-		Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+		#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
+			Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision, Matrix4x4::Identity);
+		#else
+			Newton::NewtonBody *pNewtonBody = NewtonCreateBody(pNewtonWorld, pCollision);
+		#endif
 
 		// Initialize the Newton physics body
 		((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
