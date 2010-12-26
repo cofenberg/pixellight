@@ -195,7 +195,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 	// Calculate the scissor rectangle
 	Rectangle cScissorRectangle;
 	if (bDirectional) {
-		// Directional lights influence the hole screen, as a result, the scissor rectangle is equal to the rectangle of the viewport
+		// Directional lights influence the whole screen, as a result, the scissor rectangle is equal to the rectangle of the viewport
 		cScissorRectangle = cRenderer.GetViewport();
 	} else {
 		// Get the vertices of the light scene node bounding box

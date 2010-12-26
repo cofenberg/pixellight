@@ -62,7 +62,7 @@ namespace PLScene {
 *
 *  @remarks
 *    There are two major strategies how to move along a path:
-*    - By giving the percentage along the hole path, 0-1. This is the default setting and has the
+*    - By giving the percentage along the whole path, 0-1. This is the default setting and has the
 *      advantage that the movement speed is constant and not depend of the length of each path segment.
 *    - By giving the percentage by node index, 0-<number of nodes>. By using this approach the movement
 *      speed on the path may vary, this depends on whether or not all path segments have the same length.

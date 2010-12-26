@@ -208,7 +208,7 @@ class SceneContext {
 		*    processed so it isn't touched multiple times. The scene graph class offers 3 functions for this
 		*    purpose: StartProcess(), TouchNode() and EndProcess(). If a scene process starts, StartProcess()
 		*    is called with internally increases a counter. If a node should be processes TouchNode() is called,
-		*    if 'true' is retured the node was already processed. After the hole scene process is finished, call
+		*    if 'true' is retured the node was already processed. After the whole scene process is finished, call
 		*    EndProcess(). This is NOT 'multi threading save' and only ONE scene process can be performed at the
 		*    same time, but this technique is incredible fast because internally only counters are compared!
 		*

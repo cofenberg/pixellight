@@ -594,7 +594,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Will receive the maximum bounding box position
 		*
 		*  @remarks
-		*    This bounding box should enclose the hole mesh. If it is a 0-bounding box
+		*    This bounding box should enclose the whole mesh. If it is a 0-bounding box
 		*    you can use CalculateBoundingBox() to calculate a valid bounding box.
 		*/
 		PLMESH_API void GetBoundingBox(PLMath::Vector3 &vMin, PLMath::Vector3 &vMax) const;

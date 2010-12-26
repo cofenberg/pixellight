@@ -915,7 +915,7 @@ class Renderer : public PLCore::Object {
 		*    which a 3-D volume projects
 		*
 		*  @param[in] pRectangle
-		*    Viewport rectangle, if NULL, use the hole render target surface
+		*    Viewport rectangle, if NULL, use the whole render target surface
 		*  @param[in] fMinZ
 		*    Minimum z value
 		*  @param[in] fMaxZ
@@ -955,7 +955,7 @@ class Renderer : public PLCore::Object {
 		*    Sets the scissor rectangle
 		*
 		*  @param[in] pRectangle
-		*    Viewport rectangle, if NULL, use the hole set viewport
+		*    Viewport rectangle, if NULL, use the whole set viewport
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

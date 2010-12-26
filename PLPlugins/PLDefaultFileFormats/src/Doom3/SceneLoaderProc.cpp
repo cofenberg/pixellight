@@ -115,7 +115,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 			// ONLY 'areas', please (no trigger, func_static etc.)
 			// Keep areas without any surfaces, else the portal area indices will be wrong!
 			if (!sModelName.Compare("_area", 0, 5)) {
-				// Skip the hole block
+				// Skip the whole block
 				cTokenizer.SetDelimiters(" \t\r\n{()[]=,;\"");
 				while (cTokenizer.GetNextToken().GetLength()) {
 					if (cTokenizer.GetToken() == sCloseBracket) break;
