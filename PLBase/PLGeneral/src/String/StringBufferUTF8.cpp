@@ -133,6 +133,7 @@ void StringBufferUTF8::SetString(utf8 szString[], uint32 nLength, uint32 nNumOfB
 	// Set new string
 	m_pszString   = szString;
 	m_nLength     = nLength;
+	m_nMaxLength  = nLength;
 	m_nNumOfBytes = nNumOfBytes;
 }
 
@@ -233,7 +234,6 @@ bool StringBufferUTF8::IsLessThan(const wchar_t szString[], uint32 nLength) cons
 
 bool StringBufferUTF8::IsGreaterThan(const char szString[], uint32 nLength) const
 {
-	
 	return (UTF8Tools::Compare(m_pszString, (const utf8*)szString, nLength) > 0);
 }
 
@@ -247,7 +247,7 @@ bool StringBufferUTF8::IsGreaterThan(const wchar_t szString[], uint32 nLength) c
 	// We need to convert this UTF8 string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
 	UTF8Tools::ToWideCharacterString(pUnicode, m_nLength + 1, m_pszString, m_nNumOfBytes);
-	const bool bResult = wcscmp(pUnicode, szString) > 0;
+	const bool bResult = (wcscmp(pUnicode, szString) > 0);
 	delete [] pUnicode;
 	return bResult;
 }
@@ -255,7 +255,7 @@ bool StringBufferUTF8::IsGreaterThan(const wchar_t szString[], uint32 nLength) c
 bool StringBufferUTF8::Compare(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength)
 			return false; // THAT was pretty easy, the length of the strings is not equal :)
 		else
@@ -276,7 +276,7 @@ bool StringBufferUTF8::Compare(const char szString[], uint32 nLength, uint32 nPo
 bool StringBufferUTF8::Compare(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) {
 			// THAT was pretty easy, the length of the strings is not equal :)
 			return false;
@@ -314,7 +314,7 @@ bool StringBufferUTF8::CompareNoCase(const char szString[], uint32 nLength, uint
 	// [TODO]
 	return false;
 /*	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) return false; // THAT was pretty easy, the length of the strings is not equal :)
 		else					  return !stricmp(m_pszString, szString);
 
@@ -332,7 +332,7 @@ bool StringBufferUTF8::CompareNoCase(const char szString[], uint32 nLength, uint
 bool StringBufferUTF8::CompareNoCase(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) {
 			// THAT was pretty easy, the length of the strings is not equal :)
 			return false;

@@ -120,8 +120,9 @@ void StringBufferUnicode::SetString(wchar_t szString[], uint32 nLength)
 	delete [] m_pszString;
 
 	// Set new string
-	m_pszString = szString;
-	m_nLength   = nLength;
+	m_pszString  = szString;
+	m_nLength    = nLength;
+	m_nMaxLength = nLength;
 }
 
 /**
@@ -284,7 +285,7 @@ bool StringBufferUnicode::IsGreaterThan(const wchar_t szString[], uint32 nLength
 bool StringBufferUnicode::Compare(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) {
 			// THAT was pretty easy, the length of the strings is not equal :)
 			return false;
@@ -320,7 +321,7 @@ bool StringBufferUnicode::Compare(const char szString[], uint32 nLength, uint32 
 bool StringBufferUnicode::Compare(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength)
 			return false; // THAT was pretty easy, the length of the strings is not equal :)
 		else
@@ -341,7 +342,7 @@ bool StringBufferUnicode::Compare(const wchar_t szString[], uint32 nLength, uint
 bool StringBufferUnicode::CompareNoCase(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) {
 			// THAT was pretty easy, the length of the strings is not equal :)
 			return false;
@@ -377,7 +378,7 @@ bool StringBufferUnicode::CompareNoCase(const char szString[], uint32 nLength, u
 bool StringBufferUnicode::CompareNoCase(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength)
 			return false; // THAT was pretty easy, the length of the strings is not equal :)
 		else

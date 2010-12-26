@@ -115,13 +115,11 @@ class StringBufferASCII : public StringBuffer {
 		*    The string
 		*  @param[in] nLength
 		*    Length of the string buffer (excluding the terminating zero)
-		*  @param[in] nMaxLength
-		*    Maximum available length of the string buffer (excluding the terminating zero)
 		*
 		*  @note
 		*    - Makes the buffered unicode/UTF8 versions invalid
 		*/
-		void SetString(char szString[], uint32 nLength, uint32 nMaxLength);
+		void SetString(char szString[], uint32 nLength);
 
 		/**
 		*  @brief

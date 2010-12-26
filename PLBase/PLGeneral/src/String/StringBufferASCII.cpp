@@ -105,7 +105,7 @@ StringBufferASCII::~StringBufferASCII()
 *  @brief
 *    Sets the string
 */
-void StringBufferASCII::SetString(char szString[], uint32 nLength, uint32 nMaxLength)
+void StringBufferASCII::SetString(char szString[], uint32 nLength)
 {
 	// The Unicode version is now dirty
 	if (m_pUnicode) {
@@ -125,7 +125,7 @@ void StringBufferASCII::SetString(char szString[], uint32 nLength, uint32 nMaxLe
 	// Set new string
 	m_pszString  = szString;
 	m_nLength    = nLength;
-	m_nMaxLength = nMaxLength;
+	m_nMaxLength = nLength;
 }
 
 /**
@@ -286,7 +286,7 @@ bool StringBufferASCII::IsGreaterThan(const wchar_t szString[], uint32 nLength) 
 bool StringBufferASCII::Compare(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength)
 			return false; // THAT was pretty easy, the length of the strings is not equal :)
 		else
@@ -308,7 +308,7 @@ bool StringBufferASCII::Compare(const char szString[], uint32 nLength, uint32 nP
 bool StringBufferASCII::Compare(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) {
 			// THAT was pretty easy, the length of the strings is not equal :)
 			return false;
@@ -343,7 +343,7 @@ bool StringBufferASCII::Compare(const wchar_t szString[], uint32 nLength, uint32
 bool StringBufferASCII::CompareNoCase(const char szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength)
 			return false; // THAT was pretty easy, the length of the strings is not equal :)
 		else
@@ -364,7 +364,7 @@ bool StringBufferASCII::CompareNoCase(const char szString[], uint32 nLength, uin
 bool StringBufferASCII::CompareNoCase(const wchar_t szString[], uint32 nLength, uint32 nPos, uint32 nCount) const
 {
 	if (!nPos && !nCount) {
-		// Compare hole strings
+		// Compare whole strings
 		if (nLength != m_nLength) {
 			// THAT was pretty easy, the length of the strings is not equal :)
 			return false;
@@ -838,7 +838,7 @@ StringBuffer *StringBufferASCII::Replace(const char szOld[], uint32 nOldLength, 
 		return new StringBufferASCII(pszNewString, nFinalLength, nFinalLength);
 	} else {
 		// Just modify and return this string buffer
-		SetString(pszNewString, nFinalLength, nFinalLength);
+		SetString(pszNewString, nFinalLength);
 		return this;
 	}
 }
