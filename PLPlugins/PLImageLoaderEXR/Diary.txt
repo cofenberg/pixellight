@@ -1,4 +1,10 @@
-﻿/*********************************************************\
+﻿>> 27.12.2010
+[CO]
+- The PLImageLoaderEXR plugin was broken, loading exr (high dynamic range image file format) images is working again
+
+
+
+/*********************************************************\
  *  The entries below are in german only
 \*********************************************************/
 

@@ -42,11 +42,11 @@ namespace PLImageLoaderEXR {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Image loader implementation for the OpenEXR format
-*    (High Dynamic Range Image)
+*    Image loader implementation for the OpenEXR format (high dynamic range image file format)
 *
 *  @note
 *    - Have a look at http://www.openexr.com
+*    - There's sample data at http://www.openexr.com/downloads.html if you want to play around with the exr format
 *    - Internally the OpenEXR half image is handled as float
 */
 class ImageLoaderEXR : public PLGraphics::ImageLoader {
@@ -55,14 +55,24 @@ class ImageLoaderEXR : public PLGraphics::ImageLoader {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ImageLoaderEXR, "PLImageLoaderEXR", PLGraphics::ImageLoader, "Image loader implementation for the OpenEXR format")
+	pl_class(pl_rtti_export, ImageLoaderEXR, "PLImageLoaderEXR", PLGraphics::ImageLoader, "Image loader implementation for the OpenEXR format (high dynamic range image file format)")
 		pl_properties
 			pl_property("Formats",	"exr,EXR")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_2(Load, bool, PLGraphics::Image&, PLGeneral::File&, "Load method", "")
+		pl_method_2(Save, bool, const PLGraphics::Image&, PLGeneral::File&, "Save method", "")
 	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI methods                                   ]
+	//[-------------------------------------------------------]
+	public:
+		bool Load(PLGraphics::Image &cImage, PLGeneral::File &cFile);
+		bool Save(const PLGraphics::Image &cImage, PLGeneral::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -80,14 +90,6 @@ class ImageLoaderEXR : public PLGraphics::ImageLoader {
 		*    Destructor
 		*/
 		virtual ~ImageLoaderEXR();
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLGraphics::ImageLoader functions     ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool Load(PLGraphics::Image &cImage, PLGeneral::File &cFile, const PLGeneral::Parameters *pParams) const;
-		virtual bool Save(PLGraphics::Image &cImage, PLGeneral::File &cFile, const PLGeneral::Parameters *pParams) const;
 
 
 };

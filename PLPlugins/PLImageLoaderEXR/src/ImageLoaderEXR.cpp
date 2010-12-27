@@ -26,10 +26,8 @@
 #include <PLGeneral/PLGeneral.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4244) // "'conversion' conversion from 'type1' to 'type2', possible loss of data"
-	PL_WARNING_DISABLE(4290) // "C++ exception specification ignored except to indicate a function is not __declspec(nothrow)"
 	PL_WARNING_DISABLE(4530) // "C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	PL_WARNING_DISABLE(4541) // "'identifier' used on polymorphic type 'type' with /GR-; unpredictable behavior may result"
-	PL_WARNING_DISABLE(4996) // "'function': was declared deprecated"
 	#include <ImfRgbaFile.h>
 	#include <ImfStringAttribute.h>
 	#include <ImfMatrixAttribute.h>
@@ -159,29 +157,9 @@ class EXROStream : public Imf::OStream {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Default constructor
-*/
-ImageLoaderEXR::ImageLoaderEXR()
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ImageLoaderEXR::~ImageLoaderEXR()
-{
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLGraphics::ImageLoader functions     ]
-//[-------------------------------------------------------]
-bool ImageLoaderEXR::Load(Image &cImage, File &cFile, const Parameters *pParams) const
+bool ImageLoaderEXR::Load(Image &cImage, File &cFile)
 {
 	// [TODO] Do these functions support ZIP or HTTP? Or only local files?
 
@@ -237,7 +215,7 @@ bool ImageLoaderEXR::Load(Image &cImage, File &cFile, const Parameters *pParams)
 	return true;
 }
 
-bool ImageLoaderEXR::Save(Image &cImage, File &cFile, const Parameters *pParams) const
+bool ImageLoaderEXR::Save(const Image &cImage, File &cFile)
 {
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
@@ -313,6 +291,28 @@ bool ImageLoaderEXR::Save(Image &cImage, File &cFile, const Parameters *pParams)
 
 	// Error!
 	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Default constructor
+*/
+ImageLoaderEXR::ImageLoaderEXR() :
+	MethodLoad(this),
+	MethodSave(this)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+ImageLoaderEXR::~ImageLoaderEXR()
+{
 }
 
 
