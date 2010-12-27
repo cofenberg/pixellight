@@ -2,6 +2,8 @@
 [CO]
 - Bugfix: "PLGraphics::IEConvert" e.g. RGB to RGBA is now working for floating point image formats
 - D'OH!-Bugfix: "PLGraphics::IEScale" was not always working correctly (integer division which in fact, should have been a floating point division...)
+- "PLGraphics::IEConvert": If an alpha channel is added, the set alpha value for every pixel is 255 for integer formats and 1.0 for floating point formats...
+  this way, such an image can usually directly be used as a solid texture
 
 
 

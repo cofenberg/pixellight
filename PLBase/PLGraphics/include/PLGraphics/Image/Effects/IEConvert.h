@@ -46,6 +46,8 @@ namespace PLGraphics {
 *
 *  @note
 *    - The color format "ColorPalette" is not supported as destination format
+*    - If an alpha channel is added, the set alpha value for every pixel is 255 for integer formats and 1.0 for floating point formats...
+*      this way, such an image can usually directly be used as a solid texture
 */
 class IEConvert : public ImageEffect {
 

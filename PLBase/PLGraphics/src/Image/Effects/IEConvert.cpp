@@ -58,8 +58,10 @@ class ConvertData {
 		*    Source image buffer (MUST have valid data!)
 		*  @param[out] cDestinationImageBuffer
 		*    Destination image buffer (MUST have valid data!)
+		*  @param[out] AlphaValue
+		*    If an alpha channel is added, this is the set alpha value for every pixel
 		*/
-		ConvertData(const ImageBuffer &cSourceImageBuffer, ImageBuffer &cDestinationImageBuffer)
+		ConvertData(const ImageBuffer &cSourceImageBuffer, ImageBuffer &cDestinationImageBuffer, DestinationType AlphaValue)
 		{
 			// Get the data pointers
 			const SourceType      *pSourceData      = (SourceType*)     cSourceImageBuffer     .GetData();
@@ -98,8 +100,8 @@ class ConvertData {
 								pDestinationData[1] = (DestinationType)pSourceData[1];
 								pDestinationData[2] = (DestinationType)pSourceData[2];
 
-								// Set alpha to 0
-								pDestinationData[3] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[3] = AlphaValue;
 							}
 							break;
 
@@ -123,8 +125,8 @@ class ConvertData {
 								pDestinationData[1] = (DestinationType)pSourceData[1];
 								pDestinationData[2] = (DestinationType)pSourceData[0];
 
-								// Set alpha to 0
-								pDestinationData[3] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[3] = AlphaValue;
 							}
 							break;
 
@@ -144,8 +146,8 @@ class ConvertData {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
-								// Set alpha to 0
-								pDestinationData[1] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[1] = AlphaValue;
 							}
 							break;
 					}
@@ -254,8 +256,8 @@ class ConvertData {
 								pDestinationData[1] = (DestinationType)pSourceData[1];
 								pDestinationData[2] = (DestinationType)pSourceData[0];
 
-								// Set alpha to 0
-								pDestinationData[3] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[3] = AlphaValue;
 							}
 							break;
 
@@ -279,8 +281,8 @@ class ConvertData {
 								pDestinationData[1] = (DestinationType)pSourceData[1];
 								pDestinationData[2] = (DestinationType)pSourceData[2];
 
-								// Set alpha to 0
-								pDestinationData[3] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[3] = AlphaValue;
 							}
 							break;
 
@@ -300,8 +302,8 @@ class ConvertData {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
-								// Set alpha to 0
-								pDestinationData[1] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[1] = AlphaValue;
 							}
 							break;
 					}
@@ -410,8 +412,8 @@ class ConvertData {
 								pDestinationData[1] = (DestinationType)pSourceData[0];
 								pDestinationData[2] = (DestinationType)pSourceData[0];
 
-								// Set alpha to 0
-								pDestinationData[3] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[3] = AlphaValue;
 							}
 							break;
 
@@ -435,8 +437,8 @@ class ConvertData {
 								pDestinationData[1] = (DestinationType)pSourceData[0];
 								pDestinationData[2] = (DestinationType)pSourceData[0];
 
-								// Set alpha to 0
-								pDestinationData[3] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[3] = AlphaValue;
 							}
 							break;
 
@@ -456,8 +458,8 @@ class ConvertData {
 								// Copy over grayscale
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 
-								// Set alpha to 0
-								pDestinationData[1] = 0;
+								// Set alpha to AlphaValue
+								pDestinationData[1] = AlphaValue;
 							}
 							break;
 					}
@@ -604,28 +606,28 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					//   DataByte     Source (old data format)
 					case DataByte: // Destination (new data format)
 					{
-						ConvertData<uint8, uint8> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint8, uint8> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataByte     Source (old data format)
 					case DataWord: // Destination (new data format)
 					{
-						ConvertData<uint8, uint16> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint8, uint16> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataByte      Source (old data format)
 					case DataFloat: // Destination (new data format)
 					{
-						ConvertData<uint8, float> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint8, float> cConvertData(cOldImageBuffer, cImageBuffer, 1.0f);
 						break;
 					}
 
 					//   DataByte       Source (old data format)
 					case DataDouble: // Destination (new data format)
 					{
-						ConvertData<uint8, double> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint8, double> cConvertData(cOldImageBuffer, cImageBuffer, 1.0);
 						break;
 					}
 				}
@@ -638,28 +640,28 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					//   DataWord     Source (old data format)
 					case DataByte: // Destination (new data format)
 					{
-						ConvertData<uint16, uint8> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint16, uint8> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataWord     Source (old data format)
 					case DataWord: // Destination (new data format)
 					{
-						ConvertData<uint16, uint16> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint16, uint16> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataWord      Source (old data format)
 					case DataFloat: // Destination (new data format)
 					{
-						ConvertData<uint16, float> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint16, float> cConvertData(cOldImageBuffer, cImageBuffer, 1.0f);
 						break;
 					}
 
 					//   DataWord       Source (old data format)
 					case DataDouble: // Destination (new data format)
 					{
-						ConvertData<uint16, double> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<uint16, double> cConvertData(cOldImageBuffer, cImageBuffer, 1.0);
 						break;
 					}
 				}
@@ -672,28 +674,28 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					//   DataFloat    Source (old data format)
 					case DataByte: // Destination (new data format)
 					{
-						ConvertData<float, uint8> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<float, uint8> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataFloat    Source (old data format)
 					case DataWord: // Destination (new data format)
 					{
-						ConvertData<float, uint16> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<float, uint16> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataFloat     Source (old data format)
 					case DataFloat: // Destination (new data format)
 					{
-						ConvertData<float, float> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<float, float> cConvertData(cOldImageBuffer, cImageBuffer, 1.0f);
 						break;
 					}
 
 					//   DataFloat      Source (old data format)
 					case DataDouble: // Destination (new data format)
 					{
-						ConvertData<float, double> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<float, double> cConvertData(cOldImageBuffer, cImageBuffer, 1.0);
 						break;
 					}
 				}
@@ -706,28 +708,28 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					//   DataDouble   Source (old data format)
 					case DataByte: // Destination (new data format)
 					{
-						ConvertData<double, uint8> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<double, uint8> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataDouble   Source (old data format)
 					case DataWord: // Destination (new data format)
 					{
-						ConvertData<double, uint16> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<double, uint16> cConvertData(cOldImageBuffer, cImageBuffer, 255);
 						break;
 					}
 
 					//   DataDouble    Source (old data format)
 					case DataFloat: // Destination (new data format)
 					{
-						ConvertData<double, float> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<double, float> cConvertData(cOldImageBuffer, cImageBuffer, 1.0f);
 						break;
 					}
 
 					//   DataDouble     Source (old data format)
 					case DataDouble: // Destination (new data format)
 					{
-						ConvertData<double, double> cConvertData(cOldImageBuffer, cImageBuffer);
+						ConvertData<double, double> cConvertData(cOldImageBuffer, cImageBuffer, 1.0);
 						break;
 					}
 				}
