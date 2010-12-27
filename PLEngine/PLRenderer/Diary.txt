@@ -1,3 +1,9 @@
+>> 27.12.2010
+[CO]
+- "PLRenderer::TextureBuffer::GetFormatFromImage": Added L32F support
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

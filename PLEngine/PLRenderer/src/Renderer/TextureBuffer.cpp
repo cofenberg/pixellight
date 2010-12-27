@@ -55,8 +55,19 @@ TextureBuffer::EPixelFormat TextureBuffer::GetFormatFromImage(const Image &cImag
 		// Check for float format
 		if (pImageBuffer->GetDataFormat() == DataFloat) {
 			switch (pImageBuffer->GetComponentsPerPixel()) {
+				// Luminance
+				case 1:
+					return L32F;
+
+				// Luminance & alpha
+				//   -> Not supported
+
+				// RGB
+				//   -> Not supported
+
 				// RGBA
-				case 4: return R32G32B32A32F;
+				case 4:
+					return R32G32B32A32F;
 			}
 		} else {
 			// Check for supported compressed/uncompressed
