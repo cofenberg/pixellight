@@ -69,6 +69,9 @@ class ConvertData {
 			const uint32 nNumOfSourceColorComponents      = cSourceImageBuffer.GetComponentsPerPixel();
 			const uint32 nNumOfDestinationColorComponents = cDestinationImageBuffer.GetComponentsPerPixel();
 
+			// Get the total number of source elements (e.g. the total number of floats the image is made up of)
+			const uint32 nNumOfSourceElements = cSourceImageBuffer.GetNumOfPixels()*cSourceImageBuffer.GetComponentsPerPixel();
+
 			// Convert source color format dependent
 			switch (cSourceImageBuffer.GetColorFormat()) {
 				// Source
@@ -78,7 +81,7 @@ class ConvertData {
 						//   ColorRGB     Source
 						case ColorRGB: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -89,7 +92,7 @@ class ConvertData {
 						//   ColorRGB      Source
 						case ColorRGBA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -103,7 +106,7 @@ class ConvertData {
 						//   ColorRGB     Source
 						case ColorBGR: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -114,7 +117,7 @@ class ConvertData {
 						//   ColorRGB      Source
 						case ColorBGRA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -128,7 +131,7 @@ class ConvertData {
 						//   ColorRGB           Source
 						case ColorGrayscale: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 							}
@@ -137,7 +140,7 @@ class ConvertData {
 						//   ColorRGB            Source
 						case ColorGrayscaleA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
@@ -155,7 +158,7 @@ class ConvertData {
 						//   ColorRGBA    Source
 						case ColorRGB: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -168,7 +171,7 @@ class ConvertData {
 						//   ColorRGBA     Source
 						case ColorRGBA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -180,7 +183,7 @@ class ConvertData {
 						//   ColorRGBA    Source
 						case ColorBGR: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -193,7 +196,7 @@ class ConvertData {
 						//   ColorRGBA     Source
 						case ColorBGRA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -205,7 +208,7 @@ class ConvertData {
 						//   ColorRGBA          Source
 						case ColorGrayscale: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
@@ -216,7 +219,7 @@ class ConvertData {
 						//   ColorRGBA           Source
 						case ColorGrayscaleA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
@@ -234,7 +237,7 @@ class ConvertData {
 						//   ColorBGR     Source
 						case ColorRGB: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -245,7 +248,7 @@ class ConvertData {
 						//   ColorBGR      Source
 						case ColorRGBA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -259,7 +262,7 @@ class ConvertData {
 						//   ColorBGR     Source
 						case ColorBGR: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -270,7 +273,7 @@ class ConvertData {
 						//   ColorBGR      Source
 						case ColorBGRA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -284,7 +287,7 @@ class ConvertData {
 						//   ColorBGR           Source
 						case ColorGrayscale: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 							}
@@ -293,7 +296,7 @@ class ConvertData {
 						//   ColorBGR            Source
 						case ColorGrayscaleA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
@@ -311,7 +314,7 @@ class ConvertData {
 						//   ColorBGRA    Source
 						case ColorRGB: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -324,7 +327,7 @@ class ConvertData {
 						//   ColorBGRA     Source
 						case ColorRGBA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA with R and B flipped
 								pDestinationData[0] = (DestinationType)pSourceData[2];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -336,7 +339,7 @@ class ConvertData {
 						//   ColorBGRA    Source
 						case ColorBGR: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -349,7 +352,7 @@ class ConvertData {
 						//   ColorBGRA     Source
 						case ColorBGRA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
@@ -361,7 +364,7 @@ class ConvertData {
 						//   ColorBGRA          Source
 						case ColorGrayscale: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
@@ -372,7 +375,7 @@ class ConvertData {
 						//   ColorBGRA           Source
 						case ColorGrayscaleA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
 								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
@@ -390,7 +393,7 @@ class ConvertData {
 						//   ColorGrayscale  Source
 						case ColorRGB: //    Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -401,7 +404,7 @@ class ConvertData {
 						//   ColorGrayscale  Source
 						case ColorRGBA: //   Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -415,7 +418,7 @@ class ConvertData {
 						//   ColorGrayscale  Source
 						case ColorBGR: //    Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -426,7 +429,7 @@ class ConvertData {
 						//   ColorGrayscale  Source
 						case ColorBGRA: //   Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -440,7 +443,7 @@ class ConvertData {
 						//   ColorGrayscale     Source
 						case ColorGrayscale: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 							}
@@ -449,7 +452,7 @@ class ConvertData {
 						//   ColorGrayscale      Source
 						case ColorGrayscaleA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 
@@ -467,7 +470,7 @@ class ConvertData {
 						//   ColorGrayscaleA  Source
 						case ColorRGB: //     Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -480,7 +483,7 @@ class ConvertData {
 						//   ColorGrayscaleA  Source
 						case ColorRGBA: //    Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -494,7 +497,7 @@ class ConvertData {
 						//   ColorGrayscaleA  Source
 						case ColorBGR: //     Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -507,7 +510,7 @@ class ConvertData {
 						//   ColorGrayscaleA  Source
 						case ColorBGRA: //    Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[0];
@@ -521,7 +524,7 @@ class ConvertData {
 						//   ColorGrayscaleA    Source
 						case ColorGrayscale: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 
@@ -532,7 +535,7 @@ class ConvertData {
 						//   ColorGrayscaleA     Source
 						case ColorGrayscaleA: // Destination
 							// Loop through all pixels
-							for (const SourceType *pSourceDataEnd=pSourceData+cSourceImageBuffer.GetDataSize(); pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
+							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale and alpha
 								pDestinationData[0] = (DestinationType)pSourceData[0];
 								pDestinationData[1] = (DestinationType)pSourceData[1];
