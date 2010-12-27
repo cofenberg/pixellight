@@ -1,6 +1,7 @@
 >> 27.12.2010
 [CO]
 - "PLRenderer::TextureBuffer::GetFormatFromImage": Added L32F support
+- "PLRenderer::Texture": For floating point image data: GrayscaleA and RGB data is converted into RGBA internally so it can be used as texture
 
 
 

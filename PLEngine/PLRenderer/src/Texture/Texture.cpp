@@ -275,8 +275,6 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 			// Color key
 			int nCKR = 0, nCKG = 0, nCKB = 0, nCKTolerance = 0;
 			bool bColorKey = false;
-			// Floating point image?
-			bool bFloat = false;
 
 			// Get the image buffer
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
@@ -465,10 +463,6 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 				// Update the image buffer pointer
 				pImageBuffer = cImage.GetBuffer();
 			}
-
-			// Check for float format
-			if (pImageBuffer->GetDataFormat() == DataFloat)
-				bFloat = true;
 
 			// Perform requested image manipulations
 			// Get width
@@ -679,7 +673,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 
 				// Is texture compression allowed in general? (for none floating point formats only)
 				TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown;
-				if (!bFloat && GetTextureManager().IsTextureCompressionAllowed()) {
+				if (pImageBuffer->GetDataFormat() != DataFloat && GetTextureManager().IsTextureCompressionAllowed()) {
 					// Check if texture compression should be used internally and the image is currently not compressed
 					switch (m_nCompressionHint) {
 						case Default:
@@ -723,6 +717,10 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 					if (m_nCompressionHint != Texture::DXT5_xGxR && m_nCompressionHint != Texture::LATC2_XYSwizzle)
 						m_nCompressionHint = None; // Do never ever use texture compression!
 				}
+
+				// Currently, GrayscaleA and RGB is not supported by float formats, so, just convert to RGBA so we're still able to use the image data as texture!
+				if (pImageBuffer->GetDataFormat() == DataFloat && (pImageBuffer->GetColorFormat() != ColorGrayscale || pImageBuffer->GetColorFormat() != ColorRGB))
+					cImage.ApplyEffect(ImageEffects::Convert(DataFloat, ColorRGBA));
 
 				// Create the renderer texture buffer resource
 				TextureBuffer *pTextureBuffer;
