@@ -1,6 +1,7 @@
 >> 27.12.2010
 [CO]
 - Bugfix: "PLGraphics::IEConvert" e.g. RGB to RGBA is now working for floating point image formats
+- D'OH!-Bugfix: "PLGraphics::IEScale" was not always working correctly (integer division which in fact, should have been a floating point division...)
 
 
 

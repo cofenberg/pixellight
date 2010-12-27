@@ -81,8 +81,8 @@ class ScaleDownData {
 		ScaleDownData(const ImageBuffer &cOldImageBuffer, ImageBuffer &cImageBuffer, uint32 nNewWidth, uint32 nNewHeight, uint32 nOldWidth, uint32 nOldHeight, const Matrix3x3 &mFilter)
 		{
 			// Scale factors
-			const float fToOriginalWidthFactor  = float(nOldWidth /nNewWidth);
-			const float fToOriginalHeightFactor = float(nOldHeight/nNewHeight);
+			const float fToOriginalWidthFactor  = float(nOldWidth) /nNewWidth;
+			const float fToOriginalHeightFactor = float(nOldHeight)/nNewHeight;
 
 			// Get the number of components
 			const uint32 nNumOfComponents = cOldImageBuffer.GetComponentsPerPixel();
