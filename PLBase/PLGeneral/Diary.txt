@@ -3,8 +3,7 @@
 - Removed "String::Unknown"-definition, it was only used once internally and less variations are usually the better choice
 - Removed "String::UTF8"-definition
 - Removed "utf8" data type
-
-"GetUTF8()" and "SetUTF8()"
+- "String": Refactoring of the UTF8 support, in fact reduced the support to the two methods "GetUTF8()" and "SetUTF8()"
 - "QtStringAdapter" is now using UTF8 instead of wchar_t to avoid the need to recompile Qt or PixelLight with other compiler settings
 
 
