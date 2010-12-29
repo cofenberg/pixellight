@@ -70,11 +70,14 @@ class StringBuffer;
 *    const char *pS = sS;              // Get pointer to ASCII string content (same as above)
 *    sS = L"Mini";                     // Set string to 'Mini' as Unicode
 *    sS = L"\u65e5\u672c\u8a9e";       // Set string to 'nihon' (= Japanese) as Unicode
-*    sS = (const utf8*)"Mini";         // Set string to 'Mini' as UTF8
+*    sS = String::FromUTF8("Mini");    // Set string to 'Mini' as UTF8
 *  @endverbatim
 *
 *  @note
 *    - With 'length' we mean the 'number of characters' and not the 'number of bytes'
+*    - Don't forget that wchar_t does not have the same number of bytes on every OS, so DO NOT use wchar_t for serialization, use UTF8 for that!
+*    - PixelLight is using the compiler option "wchar_t is treated as built-in type", while other libraries like Qt are not - so you may want to
+*      use UTF8 for string exchange between different libraries...
 */
 class String {
 
@@ -88,10 +91,8 @@ class String {
 		*    Internal string format
 		*/
 		enum EFormat {
-			Unknown = 0,	/**< Unknown format (can indicate an empty string) */
-			ASCII   = 1,	/**< ASCII, 1 byte per character (American Standard Code for Information Interchange, 0-128 defined, above undefined) */
-			Unicode = 2,	/**< Unicode, (sometimes called 'multi-byte' or 'wide character') normally 2 bytes (unsigned short) per character */
-			UTF8    = 3		/**< [TODO] Under construction! UTF8 (8-bit Unicode Transformation Format) with 1 to 6 bytes to encode one Unicode character */
+			ASCII   = 0,	/**< ASCII, 1 byte per character (American Standard Code for Information Interchange, 0-128 defined, above undefined) */
+			Unicode = 1		/**< Unicode, (sometimes called 'multi-byte' or 'wide character') normally two bytes (UTF-16) on Microsoft Windows per character, four bytes long on UNIX systems (UTF-32) */
 		};
 
 
@@ -111,7 +112,23 @@ class String {
 		*/
 		PLGENERAL_API static String Format(const char *pszFormat, ...);
 		PLGENERAL_API static String Format(const wchar_t *pszFormat, ...);
-		PLGENERAL_API static String Format(const utf8 *pszFormat, ...);
+
+		/**
+		*  @brief
+		*    Sets the character string as UTF8
+		*
+		*  @param[in] pszUTF8
+		*    Pointer to the character string as UTF8, can be NULL
+		*  @param[in] nLength
+		*    Length of the given string, (excluding the terminating zero) if negative, the length is
+		*    calculated automatically
+		*  @param[in] nNumOfBytes
+		*    Number of bytes of the string buffer (excluding the terminating zero, MUST be valid if not 0!)
+		*
+		*  @return
+		*    New UTF8 string
+		*/
+		PLGENERAL_API static String FromUTF8(const char *pszUTF8, int nLength = -1, uint32 nNumOfBytes = 0);
 
 
 	//[-------------------------------------------------------]
@@ -143,16 +160,13 @@ class String {
 		*  @param[in] bCopy
 		*    Copy the given string or use this one directly? Do ONLY set bCopy to 'false'
 		*    if you are sure there can't go anything wrong - the string class will take over
-		*    control of the string buffer and also destroy it.
+		*    control of the string buffer and also destroy it
 		*  @param[in] nLength
 		*    Length of the given string, (excluding the terminating zero) if negative, the length is
 		*    calculated automatically
-		*  @param[in] nNumOfBytes
-		*    Number of bytes of the string buffer (excluding the terminating zero, MUST be valid if not 0!)
 		*/
 		PLGENERAL_API String(const char *pszString, bool bCopy = true, int nLength = -1);
 		PLGENERAL_API String(const wchar_t *pszString, bool bCopy = true, int nLength = -1);
-		PLGENERAL_API String(const utf8 *pszString, bool bCopy = true, int nLength = -1, uint32 nNumOfBytes = 0);
 
 		/**
 		*  @brief
@@ -209,8 +223,7 @@ class String {
 		*
 		*  @remarks
 		*    Note that the number of bytes a string is using is NOT always equal to the length of it!
-		*    For a pure ASCII string the number of bytes is always equal to it's length. For a UTF8 string
-		*    the number of bytes 'can', but 'must not' be equal to it's length!
+		*    For a pure ASCII string the number of bytes is always equal to it's length.
 		*/
 		PLGENERAL_API uint32 GetNumOfBytes() const;
 
@@ -281,30 +294,6 @@ class String {
 
 		/**
 		*  @brief
-		*    Returns the character string as UTF8
-		*
-		*  @return
-		*    Pointer to the character string as UTF8, never NULL
-		*
-		*  @see
-		*    - GetASCII()
-		*/
-		PLGENERAL_API const utf8 *GetUTF8() const;
-
-		/**
-		*  @brief
-		*    Returns the character string as UTF8
-		*
-		*  @return
-		*    Pointer to the character string as UTF8, never NULL
-		*
-		*  @see
-		*    - GetASCII()
-		*/
-		PLGENERAL_API operator const utf8 *() const;
-
-		/**
-		*  @brief
 		*    Copy operator
 		*
 		*  @param[in] sString
@@ -327,7 +316,6 @@ class String {
 		*/
 		PLGENERAL_API String &operator =(const char *pszString);
 		PLGENERAL_API String &operator =(const wchar_t *pszString);
-		PLGENERAL_API String &operator =(const utf8 *pszString);
 
 		/**
 		*  @brief
@@ -353,7 +341,6 @@ class String {
 		*/
 		PLGENERAL_API String operator +(const char *pszString) const;
 		PLGENERAL_API String operator +(const wchar_t *pszString) const;
-		PLGENERAL_API String operator +(const utf8 *pszString) const;
 
 		/**
 		*  @brief
@@ -369,7 +356,6 @@ class String {
 		*/
 		PLGENERAL_API friend String operator +(const char *pszString, const String &sString);
 		PLGENERAL_API friend String operator +(const wchar_t *pszString, const String &sString);
-		PLGENERAL_API friend String operator +(const utf8 *pszString, const String &sString);
 
 		/**
 		*  @brief
@@ -395,7 +381,6 @@ class String {
 		*/
 		PLGENERAL_API String &operator +=(const char *pszString);
 		PLGENERAL_API String &operator +=(const wchar_t *pszString);
-		PLGENERAL_API String &operator +=(const utf8 *pszString);
 
 		/**
 		*  @brief
@@ -421,7 +406,6 @@ class String {
 		*/
 		PLGENERAL_API bool operator <(const char *pszString) const;
 		PLGENERAL_API bool operator <(const wchar_t *pszString) const;
-		PLGENERAL_API bool operator <(const utf8 *pszString) const;
 
 		/**
 		*  @brief
@@ -447,7 +431,6 @@ class String {
 		*/
 		PLGENERAL_API bool operator >(const char *pszString) const;
 		PLGENERAL_API bool operator >(const wchar_t *pszString) const;
-		PLGENERAL_API bool operator >(const utf8 *pszString) const;
 
 		/**
 		*  @brief
@@ -473,7 +456,6 @@ class String {
 		*/
 		PLGENERAL_API bool operator ==(const char *pszString) const;
 		PLGENERAL_API bool operator ==(const wchar_t *pszString) const;
-		PLGENERAL_API bool operator ==(const utf8 *pszString) const;
 
 		/**
 		*  @brief
@@ -499,7 +481,6 @@ class String {
 		*/
 		PLGENERAL_API bool operator !=(const char *pszString) const;
 		PLGENERAL_API bool operator !=(const wchar_t *pszString) const;
-		PLGENERAL_API bool operator !=(const utf8 *pszString) const;
 
 		/**
 		*  @brief
@@ -533,7 +514,6 @@ class String {
 		*/
 		PLGENERAL_API bool Compare(const char *pszString, uint32 nPos = 0, int nCount = -1) const;
 		PLGENERAL_API bool Compare(const wchar_t *pszString, uint32 nPos = 0, int nCount = -1) const;
-		PLGENERAL_API bool Compare(const utf8 *pszString, uint32 nPos = 0, int nCount = -1) const;
 
 		/**
 		*  @brief
@@ -567,7 +547,6 @@ class String {
 		*/
 		PLGENERAL_API bool CompareNoCase(const char *pszString, uint32 nPos = 0, int nCount = -1) const;
 		PLGENERAL_API bool CompareNoCase(const wchar_t *pszString, uint32 nPos = 0, int nCount = -1) const;
-		PLGENERAL_API bool CompareNoCase(const utf8 *pszString, uint32 nPos = 0, int nCount = -1) const;
 
 		/**
 		*  @brief
@@ -630,7 +609,6 @@ class String {
 		*/
 		PLGENERAL_API bool IsSubstring(const char *pszString) const;
 		PLGENERAL_API bool IsSubstring(const wchar_t *pszString) const;
-		PLGENERAL_API bool IsSubstring(const utf8 *pszString) const;
 
 		/**
 		*  @brief
@@ -662,7 +640,6 @@ class String {
 		*/
 		PLGENERAL_API int IndexOf(const char *pszString, uint32 nPos = 0) const;
 		PLGENERAL_API int IndexOf(const wchar_t *pszString, uint32 nPos = 0) const;
-		PLGENERAL_API int IndexOf(const utf8 *pszString, uint32 nPos = 0) const;
 
 		/**
 		*  @brief
@@ -694,7 +671,6 @@ class String {
 		*/
 		PLGENERAL_API int LastIndexOf(const char *pszString, int nPos = -1) const;
 		PLGENERAL_API int LastIndexOf(const wchar_t *pszString, int nPos = -1) const;
-		PLGENERAL_API int LastIndexOf(const utf8 *pszString, int nPos = -1) const;
 
 		/**
 		*  @brief
@@ -774,7 +750,6 @@ class String {
 		*/
 		PLGENERAL_API String &Insert(const char *pszString, uint32 nPos = 0, int nCount = -1);
 		PLGENERAL_API String &Insert(const wchar_t *pszString, uint32 nPos = 0, int nCount = -1);
-		PLGENERAL_API String &Insert(const utf8 *pszString, uint32 nPos = 0, int nCount = -1);
 
 		/**
 		*  @brief
@@ -790,7 +765,6 @@ class String {
 		*/
 		PLGENERAL_API String &Copy(const char *pszString, int nCount = -1);
 		PLGENERAL_API String &Copy(const wchar_t *pszString, int nCount = -1);
-		PLGENERAL_API String &Copy(const utf8 *pszString, int nCount = -1);
 
 		/**
 		*  @brief
@@ -835,7 +809,6 @@ class String {
 		*/
 		PLGENERAL_API uint32 Replace(const char *pszOld, const char *pszNew);
 		PLGENERAL_API uint32 Replace(const wchar_t *pszOld, const wchar_t *pszNew);
-		PLGENERAL_API uint32 Replace(const utf8 *pszOld, const utf8 *pszNew);
 
 		/**
 		*  @brief
@@ -851,7 +824,6 @@ class String {
 		*/
 		PLGENERAL_API bool SetCharacter(uint32 nIndex, char nCharacter);
 		PLGENERAL_API bool SetCharacter(uint32 nIndex, wchar_t nCharacter);
-		PLGENERAL_API bool SetCharacter(uint32 nIndex, const utf8 *pnCharacter);
 
 		/**
 		*  @brief
@@ -894,6 +866,18 @@ class String {
 	//[ Conversion functions                                  ]
 	//[-------------------------------------------------------]
 	public:
+		/**
+		*  @brief
+		*    Returns the character string as UTF8
+		*
+		*  @return
+		*    Pointer to the character string as UTF8, never NULL - do NOT destroy the returned memory, it's owned by this string instance!
+		*
+		*  @see
+		*    - GetASCII()
+		*/
+		PLGENERAL_API const char *GetUTF8() const;
+
 		// Is valid tests
 		PLGENERAL_API bool IsValidInteger() const;
 		PLGENERAL_API bool IsValidFloat() const;
@@ -951,19 +935,6 @@ class String {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		/**
-		*  @brief
-		*    Use a new string buffer
-		*
-		*  @param[in] pszStringBuffer
-		*    New string buffer to use, can be NULL
-		*  @param[in] nLength
-		*    Length of the string buffer (excluding the terminating zero, MUST be valid!)
-		*  @param[in] nNumOfBytes
-		*    Number of bytes of the string buffer (excluding the terminating zero, MUST be valid!)
-		*/
-		void SetStringBuffer(utf8 *pszStringBuffer, uint32 nLength, uint32 nNumOfBytes);
-
 		/**
 		*  @brief
 		*    Use a new string buffer

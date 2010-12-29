@@ -20,9 +20,6 @@
 \*********************************************************/
 
 
-// [TODO] At the moment for UTF8 only 'from UTF8' and 'to UTF8' (GetUTF8()...) operations are implemented!
-
-
 //[-------------------------------------------------------]
 //[ Debugging options for Microsoft Visual Studio         ]
 //[-------------------------------------------------------]
@@ -68,13 +65,13 @@ String String::Format(const char *pszFormat, ...)
 {
 	String sString;
 
-#ifdef LINUX
-	char *pSaveLocale = setlocale(LC_ALL, NULL);
-	setlocale(LC_ALL, "C");
-#endif
-
 	// Check format string
 	if (pszFormat && pszFormat[0] != '\0') {
+	#ifdef LINUX
+		char *pSaveLocale = setlocale(LC_ALL, NULL);
+		setlocale(LC_ALL, "C");
+	#endif
+
 		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
@@ -100,11 +97,11 @@ String String::Format(const char *pszFormat, ...)
 				pStringBufferASCII->m_nLength = nLength;
 			}
 		}
-	}
 
-#ifdef LINUX
-	setlocale(LC_ALL, pSaveLocale);
-#endif
+	#ifdef LINUX
+		setlocale(LC_ALL, pSaveLocale);
+	#endif
+	}
 
 	// Return new string
 	return sString;
@@ -114,13 +111,13 @@ String String::Format(const wchar_t *pszFormat, ...)
 {
 	String sString;
 
-#ifdef LINUX
-	char *pSaveLocale = setlocale(LC_ALL, NULL);
-	setlocale(LC_ALL, "C");
-#endif
-
 	// Check format string
 	if (pszFormat && pszFormat[0] != L'\0') {
+	#ifdef LINUX
+		char *pSaveLocale = setlocale(LC_ALL, NULL);
+		setlocale(LC_ALL, "C");
+	#endif
+
 		// Get the required buffer length, does not include the terminating null character
 		va_list vaList;
 		va_start(vaList, pszFormat);
@@ -146,19 +143,49 @@ String String::Format(const wchar_t *pszFormat, ...)
 				pStringBufferUnicode->m_nLength = nLength;
 			}
 		}
-	}
 
-#ifdef LINUX
-	setlocale(LC_ALL, pSaveLocale);
-#endif
+	#ifdef LINUX
+		setlocale(LC_ALL, pSaveLocale);
+	#endif
+	}
 
 	// Return new string
 	return sString;
 }
 
-String String::Format(const utf8 *pszFormat, ...)
+/**
+*  @brief
+*    Sets the character string as UTF8
+*/
+String String::FromUTF8(const char *pszUTF8, int nLength, uint32 nNumOfBytes)
 {
-	// [TODO]
+	// Valid string?
+	if (pszUTF8) {
+		// Get the number of characters and number of bytes of the given string
+		if (nLength > 0) {
+			if (!nNumOfBytes)
+				UTF8Tools::GetNumOfCharactersAndBytes(pszUTF8, nNumOfBytes);
+		} else {
+			if (nNumOfBytes)
+				nLength = UTF8Tools::GetNumOfCharacters(pszUTF8, nNumOfBytes);
+			else
+				nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszUTF8, nNumOfBytes);
+		}
+
+		// Valid string?
+		if (nLength && nNumOfBytes) {
+			// Allocate the wide character string (+1 for the terminating zero)
+			wchar_t *pszWideCharacterString = new wchar_t[nLength + 1];
+
+			// Get the wide character string (+1 for the terminating zero)
+			UTF8Tools::ToWideCharacterString(pszWideCharacterString, nLength + 1, pszUTF8, nNumOfBytes);
+
+			// Create a new string buffer and take over the control of the given memory
+			return String(pszWideCharacterString, false, nLength);
+		}
+	}
+
+	// Just return an empty string...
 	return "";
 }
 
@@ -213,10 +240,16 @@ String::String(wchar_t nValue)
 */
 String::String(const char *pszString, bool bCopy, int nLength)
 {
-	// Get the length of the given string?
-	if (nLength < 0) {
-		// Get the length of the given string (excluding the terminating zero)
-		nLength = pszString ? (uint32)strlen(pszString) : 0;
+	// Is pszString a NULL pointer?
+	if (pszString) {
+		// Get the length of the given string?
+		if (nLength < 0) {
+			// Get the length of the given string (excluding the terminating zero)
+			nLength = pszString ? (uint32)strlen(pszString) : 0;
+		}
+	} else {
+		// NULL pointer string = length of 0!
+		nLength = 0;
 	}
 
 	// Set string
@@ -237,15 +270,26 @@ String::String(const char *pszString, bool bCopy, int nLength)
 	} else {
 		// Empty string
 		m_pStringBuffer = NULL;
+
+		// Lookout, the length may be 0, but it's still possible that the pszString pointer is valid -
+		// and now we really have to fullfill the duties described within the method documentation!
+		if (pszString && !bCopy)
+			delete [] pszString;
 	}
 }
 
 String::String(const wchar_t *pszString, bool bCopy, int nLength)
 {
-	// Get the length of the given string?
-	if (nLength < 0) {
-		// Get the length of the given string (excluding the terminating zero)
-		nLength = pszString ? (uint32)wcslen(pszString) : 0;
+	// Is pszString a NULL pointer?
+	if (pszString) {
+		// Get the length of the given string?
+		if (nLength < 0) {
+			// Get the length of the given string (excluding the terminating zero)
+			nLength = pszString ? (uint32)wcslen(pszString) : 0;
+		}
+	} else {
+		// NULL pointer string = length of 0!
+		nLength = 0;
 	}
 
 	// Set string
@@ -266,38 +310,11 @@ String::String(const wchar_t *pszString, bool bCopy, int nLength)
 	} else {
 		// Empty string
 		m_pStringBuffer = NULL;
-	}
-}
 
-String::String(const utf8 *pszString, bool bCopy, int nLength, uint32 nNumOfBytes) :
-	m_pStringBuffer(NULL)
-{
-	// Check string pointer
-	if (pszString && nLength) {
-		// Get the length and number of bytes of the given string
-		if (nLength > 0) {
-			if (!nNumOfBytes)
-				UTF8Tools::GetNumOfCharactersAndBytes(pszString, nNumOfBytes);
-		} else {
-			if (nNumOfBytes)
-				nLength = UTF8Tools::GetNumOfCharacters(pszString, nNumOfBytes);
-			else
-				nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszString, nNumOfBytes);
-		}
-
-		// Set string
-		if (nLength) {
-			// Copy string
-			if (bCopy) {
-				utf8 *pszNewString = new utf8[nNumOfBytes + 1];
-				MemoryManager::Copy(pszNewString, pszString, nNumOfBytes);
-				pszNewString[nNumOfBytes] = '\0';
-				SetStringBuffer(pszNewString, nLength, nNumOfBytes);
-			} else {
-				// Take over the control of the given memory
-				SetStringBuffer((utf8*)pszString, nLength, nNumOfBytes);
-			}
-		}
+		// Lookout, the length may be 0, but it's still possible that the pszString pointer is valid -
+		// and now we really have to fullfill the duties described within the method documentation!
+		if (pszString && !bCopy)
+			delete [] pszString;
 	}
 }
 
@@ -359,7 +376,7 @@ uint32 String::GetLength() const
 */
 String::EFormat String::GetFormat() const
 {
-	return m_pStringBuffer ? m_pStringBuffer->GetFormat() : Unknown;
+	return m_pStringBuffer ? m_pStringBuffer->GetFormat() : ASCII;
 }
 
 /**
@@ -415,24 +432,6 @@ const wchar_t *String::GetUnicode() const
 String::operator const wchar_t *() const
 {
 	return m_pStringBuffer ? m_pStringBuffer->GetUnicode()->m_pszString : L"";
-}
-
-/**
-*  @brief
-*    Returns the character string as UTF8
-*/
-const utf8 *String::GetUTF8() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetUTF8()->m_pszString : (utf8*)"";
-}
-
-/**
-*  @brief
-*    Returns the UTF8 character string
-*/
-String::operator const utf8 *() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetUTF8()->m_pszString : (utf8*)"";
 }
 
 /**
@@ -498,34 +497,6 @@ String &String::operator =(const wchar_t *pszString)
 		}
 
 	// Empty string
-	} else {
-		ReleaseStringBuffer();
-	}
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(const utf8 *pszString)
-{
-	// Check string pointer
-	if (pszString) {
-		// Get the length and number of bytes of the given string
-		uint32 nNumOfBytes = 0;
-		const uint32 nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszString, nNumOfBytes);
-
-		// Set string
-		if (nLength) {
-			// Copy string
-			utf8 *pszNewString = new utf8[nNumOfBytes + 1];
-			MemoryManager::Copy(pszNewString, pszString, nNumOfBytes);
-			pszNewString[nNumOfBytes] = '\0';
-			SetStringBuffer(pszNewString, nLength, nNumOfBytes);
-
-		// Empty string
-		} else {
-			ReleaseStringBuffer();
-		}
 	} else {
 		ReleaseStringBuffer();
 	}
@@ -602,12 +573,6 @@ String String::operator +(const wchar_t *pszString) const
 	return *this;
 }
 
-String String::operator +(const utf8 *pszString) const
-{
-	// [TODO]
-	return "";
-}
-
 /**
 *  @brief
 *    Concatenate strings
@@ -654,12 +619,6 @@ String operator +(const wchar_t *pszString, const String &sString)
 
 	// Just return the second string
 	return sString;
-}
-
-String operator +(const utf8 *pszString, const String &sString)
-{
-	// [TODO]
-	return "";
 }
 
 /**
@@ -739,13 +698,6 @@ String &String::operator +=(const wchar_t *pszString)
 		}
 	}
 
-	// Done
-	return *this;
-}
-
-String &String::operator +=(const utf8 *pszString)
-{
-	// [TODO]
 	// Done
 	return *this;
 }
@@ -850,12 +802,6 @@ bool String::operator <(const wchar_t *pszString) const
 	}
 }
 
-bool String::operator <(const utf8 *pszString) const
-{
-	// [TODO]
-	return false;
-}
-
 /**
 *  @brief
 *    Compares this string and the given one lexicographically
@@ -947,12 +893,6 @@ bool String::operator >(const wchar_t *pszString) const
 	}
 }
 
-bool String::operator >(const utf8 *pszString) const
-{
-	// [TODO]
-	return false;
-}
-
 /**
 *  @brief
 *    Compare operator (case sensitive)
@@ -976,11 +916,6 @@ bool String::operator ==(const wchar_t *pszString) const
 	return Compare(pszString);
 }
 
-bool String::operator ==(const utf8 *pszString) const
-{
-	return Compare(pszString);
-}
-
 /**
 *  @brief
 *    Compare operator (case sensitive)
@@ -1000,11 +935,6 @@ bool String::operator !=(const char *pszString) const
 }
 
 bool String::operator !=(const wchar_t *pszString) const
-{
-	return !Compare(pszString);
-}
-
-bool String::operator !=(const utf8 *pszString) const
 {
 	return !Compare(pszString);
 }
@@ -1036,9 +966,6 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->Compare(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
-
-						case UTF8:
-							return m_pStringBuffer->Compare(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
 					}
 					break; // We should NEVER get in here!
 
@@ -1049,18 +976,6 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->Compare(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
-
-						case UTF8:
-							return m_pStringBuffer->Compare(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
-					}
-					break; // We should NEVER get in here!
-
-				case UTF8:
-					switch (sString.GetFormat()) {
-						case ASCII:
-						case Unicode:
-						case UTF8:
-							return m_pStringBuffer->Compare(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
 					}
 					break; // We should NEVER get in here!
 			}
@@ -1142,12 +1057,6 @@ bool String::Compare(const wchar_t *pszString, uint32 nPos, int nCount) const
 	}
 }
 
-bool String::Compare(const utf8 *pszString, uint32 nPos, int nCount) const
-{
-	// [TODO]
-	return false;
-}
-
 /**
 *  @brief
 *    Compare function (case insensitive)
@@ -1175,9 +1084,6 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->CompareNoCase(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
-
-						case UTF8:
-							return m_pStringBuffer->CompareNoCase(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
 					}
 					break; // We should NEVER get in here!
 
@@ -1188,18 +1094,6 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->CompareNoCase(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
-
-						case UTF8:
-							return m_pStringBuffer->CompareNoCase(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
-					}
-					break; // We should NEVER get in here!
-
-				case UTF8:
-					switch (sString.GetFormat()) {
-						case ASCII:
-						case Unicode:
-						case UTF8:
-							return m_pStringBuffer->CompareNoCase(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
 					}
 					break; // We should NEVER get in here!
 			}
@@ -1279,11 +1173,6 @@ bool String::CompareNoCase(const wchar_t *pszString, uint32 nPos, int nCount) co
 		// Return "strings are equal"
 		return true;
 	}
-}
-
-bool String::CompareNoCase(const utf8 *pszString, uint32 nPos, int nCount) const
-{
-	return false;
 }
 
 /**
@@ -1397,12 +1286,6 @@ bool String::IsSubstring(const wchar_t *pszString) const
 	return true;
 }
 
-bool String::IsSubstring(const utf8 *pszString) const
-{
-	// [TODO]
-	return false;
-}
-
 /**
 *  @brief
 *    Returns the index of the substring if contained in this string
@@ -1476,12 +1359,6 @@ int String::IndexOf(const wchar_t *pszString, uint32 nPos) const
 	}
 
 	// No substring
-	return -1;
-}
-
-int String::IndexOf(const utf8 *pszString, uint32 nPos) const
-{
-	// [TODO]
 	return -1;
 }
 
@@ -1570,12 +1447,6 @@ int String::LastIndexOf(const wchar_t *pszString, int nPos) const
 	}
 
 	// No substring
-	return -1;
-}
-
-int String::LastIndexOf(const utf8 *pszString, int nPos) const
-{
-	// [TODO]
 	return -1;
 }
 
@@ -1694,10 +1565,6 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
 									break;
-
-								case UTF8:
-									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
-									break;
 							}
 							break;
 
@@ -1709,20 +1576,6 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
-									break;
-
-								case UTF8:
-									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
-									break;
-							}
-							break;
-
-						case UTF8:
-							switch (sString.GetFormat()) {
-								case ASCII:
-								case Unicode:
-								case UTF8:
-									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
 									break;
 							}
 							break;
@@ -1738,10 +1591,6 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
 									break;
-
-								case UTF8:
-									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
-									break;
 							}
 							break;
 
@@ -1753,20 +1602,6 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
-									break;
-
-								case UTF8:
-									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
-									break;
-							}
-							break;
-
-						case UTF8:
-							switch (sString.GetFormat()) {
-								case ASCII:
-								case Unicode:
-								case UTF8:
-									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
 									break;
 							}
 							break;
@@ -1785,13 +1620,6 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 						if (m_pStringBuffer) {
 							m_pStringBuffer->AddReference();
 							m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount);
-						}
-					} else if (sString.GetFormat() == UTF8) {
-						// Request an unicode string buffer from the string buffer manager
-						m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
-						if (m_pStringBuffer) {
-							m_pStringBuffer->AddReference();
-							m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount);
 						}
 					} else {
 						// Request an ASCII string buffer from the string buffer manager
@@ -1879,13 +1707,6 @@ String &String::Insert(const wchar_t *pszString, uint32 nPos, int nCount)
 	return *this;
 }
 
-String &String::Insert(const utf8 *pszString, uint32 nPos, int nCount)
-{
-	// [TODO]
-	// Done
-	return *this;
-}
-
 /**
 *  @brief
 *    Copies a string
@@ -1954,13 +1775,6 @@ String &String::Copy(const wchar_t *pszString, int nCount)
 		ReleaseStringBuffer();
 	}
 
-	// Done
-	return *this;
-}
-
-String &String::Copy(const utf8 *pszString, int nCount)
-{
-	// [TODO]
 	// Done
 	return *this;
 }
@@ -2078,12 +1892,6 @@ uint32 String::Replace(const wchar_t *pszOld, const wchar_t *pszNew)
 	return 0;
 }
 
-uint32 String::Replace(const utf8 *pszOld, const utf8 *pszNew)
-{
-	// [TODO]
-	return 0;
-}
-
 /**
 *  @brief
 *    Sets a character at the given index
@@ -2122,13 +1930,6 @@ bool String::SetCharacter(uint32 nIndex, wchar_t nCharacter)
 
 	// Error!
 	return false;
-}
-
-bool String::SetCharacter(uint32 nIndex, const utf8 *pnCharacter)
-{
-	// [TODO]
-	// Done
-	return true;
 }
 
 /**
@@ -2205,6 +2006,15 @@ String &String::RemoveLineEndings()
 //[-------------------------------------------------------]
 //[ Conversion functions                                  ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the character string as UTF8
+*/
+const char *String::GetUTF8() const
+{
+	return m_pStringBuffer ? m_pStringBuffer->GetUTF8()->m_pszString : "";
+}
+
 // Is valid tests
 bool String::IsValidInteger() const
 {
@@ -2372,9 +2182,6 @@ char String::GetChar() const
 
 			case Unicode:
 				return (char)_wtoi(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
-
-			case UTF8:
-				return (char)atoi(GetASCII());
 		}
 	}
 
@@ -2391,9 +2198,6 @@ wchar_t String::GetWideChar() const
 
 			case Unicode:
 				return (wchar_t)_wtoi(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
-
-			case UTF8:
-				return (wchar_t)atoi(GetASCII());
 		}
 	}
 
@@ -2410,9 +2214,6 @@ int String::GetInt() const
 
 			case Unicode:
 				return _wtoi(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
-
-			case UTF8:
-				return atoi(GetASCII());
 		}
 	}
 
@@ -2433,11 +2234,6 @@ uint32 String::GetUInt32() const
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
 				return wcstoul(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, NULL, 10);
-
-			case UTF8:
-				// We don't use "return atol(GetASCII());"
-				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return strtoul(GetASCII(), NULL, 10);
 		}
 	}
 
@@ -2458,9 +2254,6 @@ uint64 String::GetUInt64() const
 				#elif defined(WIN32)
 					return _wtoi64(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
 				#endif
-
-			case UTF8:
-				return _atoi64(GetASCII());
 		}
 	}
 
@@ -2486,9 +2279,6 @@ long String::GetLong() const
 
 			case Unicode:
 				return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
-
-			case UTF8:
-				return atol(GetASCII());
 		}
 	}
 
@@ -2510,9 +2300,6 @@ float String::GetFloat() const
 
 			case Unicode:
 				return (float)_wtof(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
-
-			case UTF8:
-				return (float)atof(GetASCII());
 
 			default:
 				fReturnValue = 0.0f;
@@ -2541,9 +2328,6 @@ double String::GetDouble() const
 
 			case Unicode:
 				return _wtof(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
-
-			case UTF8:
-				return atof(GetASCII());
 
 			default:
 				fReturnValue = 0.0;
@@ -2989,29 +2773,6 @@ String &String::operator +=(double dValue)
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-void String::SetStringBuffer(utf8 *pszStringBuffer, uint32 nLength, uint32 nNumOfBytes)
-{
-	// Check old string buffer
-	if (m_pStringBuffer) {
-		// Is the string buffer not UTF8 or used more than once?
-		if (m_pStringBuffer->GetFormat() != UTF8 || m_pStringBuffer->GetRefCount() > 1) {
-			// Release old string buffer
-			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
-
-			// Create a new string buffer
-			m_pStringBuffer = new StringBufferUTF8(pszStringBuffer, nLength, nNumOfBytes);
-			m_pStringBuffer->AddReference();
-		} else {
-			// Just, modify string buffer directly
-			((StringBufferUTF8*)m_pStringBuffer)->SetString(pszStringBuffer, nLength, nNumOfBytes);
-		}
-	} else {
-		// Create a new string buffer
-		m_pStringBuffer = new StringBufferUTF8(pszStringBuffer, nLength, nNumOfBytes);
-		m_pStringBuffer->AddReference();
-	}
-}
-
 /**
 *  @brief
 *    Use a new string buffer

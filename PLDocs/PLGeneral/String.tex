@@ -35,14 +35,30 @@ sS = L"Mini";
 sS = L"\u65e5\u672c\u8a9e";
 
 // Set string to 'Mini' as UTF8
-sS = (const utf8*)"Mini";
+sS = String::FromUTF8("Mini");
 \end{lstlisting}
 
-As you can see the well known \emph{char*} and \emph{wchar\_t} are used for ASCII and Unicode strings - but wait, that's this? \emph{utf8}? Because the compiler can distinguish \emph{char*} and \emph{wchar\_t} by using \emph{L} in front of strings, but not ASCII from UTF8, we introduced the \emph{utf8} data type. If the compiler should interpret a given string as UTF8, cast it to \emph{utf8}. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";} or even \emph{String sS = (const utf8*)"Mini";} It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode/UTF8 for you, so you can even mix strings with different internal formats!
+As you can see the well known \emph{char*} and \emph{wchar\_t} are used for ASCII and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode for you, so you can even mix strings with different internal formats!
 
 We strongly recommend to use only this class when working with strings and not using for instance \emph{c}-functions like \emph{strcmp()}. Do also avoid to use the string data you can get from the \emph{String::GetASCII()} directly to search for substrings and so on - use the provided string functions instead. By doing so, the string class will automatically take care of tricky stuff mentioned above.
 
 In general, it's a good idea to use functions like \emph{String::GetASCII()} to get the \emph{internal data} only if really required, for instance if the string data is given to another non PixelLight system.
+
+
+\paragraph{UTF8}
+Originally, the string class had native UTF8 support build in. For each \emph{char} and \emph{wchar\_t} method, there was also an equivalent UTF8 method. Because the compiler can distinguish \emph{char*} and \emph{wchar\_t} by using \emph{L} in front of strings, but not ASCII from UTF8, we introduced the \emph{utf8} data type. If the compiler should interpret a given string as UTF8, we casted it to \emph{utf8} like \emph{String sS = (const utf8*)"Mini";}.
+
+Due to the complexity of the UTF8 implementation and the possible combinations with \emph{char} and \emph{wchar\_t} and a constant lack of time, the UTF8 implementation was not fully implemented and there were a lot of TODO-points. At the end of the year 2010 the decision was made to give up the internal native UTF8 implementation - the alternatives were to keep the unfinished string codes for some more years, or to spend some weeks in completing and testing the native UTF8 implementation... with the possibility that the resulting implementation would have a poor performance and tons of hidden bugs (waiting quietly in the dark to attack) due to it's complexity. Both options were not that attractive.
+
+Now, the string class offers a \emph{ToUTF8}-method to return the current string content as, internally cached, UTF8 formatted string as well as a \emph{FromUTF8}-method to create a PixelLight string instance by using a given UTF8 formatted string. This two methods can be used to exchange strings with for example UNIX systems or with other APIs like Qt.
+
+
+\paragraph{wchar\_t}
+In contrast to UTF8, \emph{wchar\_t} is quite comfortable to use in practice because each character has the same number of bytes. But there's also a dark side... while on Microsoft Windows a \emph{wchar\_t} is two bytes long (UTF-16), it's four bytes long on UNIX systems (UTF-32). When saving a \emph{wchar\_t} string under Microsoft Windows, and loading it on a UNIX system you will get an ugly surprise (\emph{kawoom!}).
+
+To make it even more interesting, there's a compiler flag called "wchar\_t is treated as built-in type" you may set by using \emph{Zc:wchar\_t}, or not by using \emph{-Zc:wchar\_t-}. While the one libraries, like PixelLight, are using "wchar\_t is treated as built-in type", other libraries are using the other way - resulting in incompatible libraries!
+
+So, be carefully when using \emph{wchar\_t} to serialize data or to pass strings to other libraries, or better, don't do it and use UTF8 instead!
 
 
 \paragraph{Strings and dynamic variable parameters}
@@ -153,6 +169,4 @@ Please note that there's a perfidy when using \emph{wchar\_t} in combination wit
 
 When using the default settings within e.g. \emph{Microsoft Visual Studio 2010}, \emph{wchar\_t} is treated as built-in type, so third party unicode shared libraries usually use it. So, this is also the default setting for PixelLight projects. On the other hand, if you want to use PixelLight within Qt and write something like \begin{quote}PLGeneral::String sString = L"Test";\end{quote}, the linker will give you an error message like \begin{quote}error:  unresolved external symbol "\_\_declspec(dllimport) public: \_\_thiscall PLGeneral::String::String(unsigned short const *,bool,int)" (\_\_imp\_??0String@PLGeneral@@QAE@PBG\_NH@Z) referenced in function \_main\end{quote} because within Qt, \emph{wchar\_t} is defined as \emph{unsigned short} and not as build in type \emph{wchar\_t}.
 
-One solution is to remove \emph{-Zc:wchar\_t-} from \emph{QMAKE\_CFLAGS} within \emph{qmake.conf} of Qt, and then recompiling Qt.
-
-Another solution, one that we don't recommend, is to recompile PixelLight with a set \emph{-Zc:wchar\_t-}... which means that it might be necessary to modify external dependencies as well!
+One solution is to remove \emph{-Zc:wchar\_t-} from \emph{QMAKE\_CFLAGS} within \emph{qmake.conf} of Qt, and then recompiling Qt. Another solution,  is to recompile PixelLight with a set \emph{-Zc:wchar\_t-}... which means that it might be necessary to modify external dependencies as well! Both solutions are poor because they enforce to much work and potential additional conflicts! Therefore we pass over the string by using UTF8 to avoid the need to recompile PixelLight/Qt with other compiler settings.

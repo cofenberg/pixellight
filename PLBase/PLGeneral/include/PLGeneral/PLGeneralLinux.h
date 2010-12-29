@@ -136,7 +136,6 @@ namespace PLGeneral {
 
 	typedef char				int8;
 	typedef unsigned char		uint8;
-	typedef unsigned char		utf8;
 
 	typedef short				int16;
 	typedef unsigned short		uint16;

@@ -1,3 +1,14 @@
+>> 29.12.2010
+[CO]
+- Removed "String::Unknown"-definition, it was only used once internally and less variations are usually the better choice
+- Removed "String::UTF8"-definition
+- Removed "utf8" data type
+
+"GetUTF8()" and "SetUTF8()"
+- "QtStringAdapter" is now using UTF8 instead of wchar_t to avoid the need to recompile Qt or PixelLight with other compiler settings
+
+
+
 >> 18.12.2010
 [CO]
 - "PLGeneralWindows.h": If "_MSC_VER" (VisualStudio) or "_WCHAR_T_DEFINED" is not defined, "wctype.h" will be included for

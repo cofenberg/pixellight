@@ -54,7 +54,7 @@ inline bool UTF8Tools::IsHexDigit(char nCharacter)
 *  @brief
 *    Returns whether the given character is the start of an UTF8 sequence or not
 */
-inline bool UTF8Tools::IsSequenceStart(utf8 nCharacter)
+inline bool UTF8Tools::IsSequenceStart(char nCharacter)
 {
 	return ((nCharacter & 0xC0) != 0x80);
 }

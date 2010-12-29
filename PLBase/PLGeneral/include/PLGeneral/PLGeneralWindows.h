@@ -151,7 +151,6 @@ namespace PLGeneral {
 	// Standard types
 	typedef __int8				int8;
 	typedef unsigned __int8		uint8;
-	typedef unsigned __int8		utf8;
 
 	typedef __int16				int16;
 	typedef unsigned __int16	uint16;

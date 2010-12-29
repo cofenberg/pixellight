@@ -43,6 +43,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Class that contains the buffer for a UTF8 string
+*
+*  @note
+*    - Unlike StringBufferASCII and StringBufferUnicode, the sole purpose of this implementation is to keep a cached UTF8 version of a string
 */
 class StringBufferUTF8 : public StringBuffer {
 
@@ -84,48 +87,17 @@ class StringBufferUTF8 : public StringBuffer {
 
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] szString
-		*    The string (this string buffer takes over the control)
-		*  @param[in] nLength
-		*    Length of the string buffer (excluding the terminating zero)
-		*  @param[in] nNumOfBytes
-		*    Number of bytes of the string (excluding the terminating zero)
-		*/
-		StringBufferUTF8(utf8 szString[], uint32 nLength, uint32 nNumOfBytes);
-
-		/**
-		*  @brief
 		*    Destructor
 		*/
 		virtual ~StringBufferUTF8();
-
-		/**
-		*  @brief
-		*    Sets the string
-		*
-		*  @param[in] szString
-		*    The string
-		*  @param[in] nLength
-		*    Length of the string buffer (excluding the terminating zero)
-		*  @param[in] nNumOfBytes
-		*    Number of bytes of the string
-		*
-		*  @note
-		*    - Makes the buffered ASCII/unicode versions invalid
-		*/
-		void SetString(utf8 szString[], uint32 nLength, uint32 nNumOfBytes);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		utf8				*m_pszString;	/**< The string itself (NEVER NULL!) */
-		uint32				 m_nNumOfBytes;	/**< Number of bytes of the string */
-		StringBufferASCII   *m_pASCII;		/**< ASCII string buffer version of the current string (can be NULL) */
-		StringBufferUnicode *m_pUnicode;	/**< Unicode string buffer version of the current string (can be NULL) */
+		char   *m_pszString;	/**< The string itself (NEVER NULL!) */
+		uint32  m_nNumOfBytes;	/**< Number of bytes of the string */
 
 
 	//[-------------------------------------------------------]

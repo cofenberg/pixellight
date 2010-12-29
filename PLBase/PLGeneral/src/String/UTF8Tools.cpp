@@ -65,7 +65,7 @@ static const uint8 g_nTrailingBytesForUTF8[256] = {
 *  @brief
 *    Returns the number of bytes a character requires
 */
-uint8 UTF8Tools::GetNumOfCharacterBytes(utf8 nCharacter)
+uint8 UTF8Tools::GetNumOfCharacterBytes(char nCharacter)
 {
 	return g_nTrailingBytesForUTF8[(uint32)(unsigned char)nCharacter] + 1;
 }
@@ -87,7 +87,7 @@ uint8 UTF8Tools::GetNumOfCharacterBytes(wchar_t nWideCharacter)
 *  @brief
 *    Returns a character as wide character
 */
-wchar_t UTF8Tools::GetWideCharacter(const utf8 *pnCharacter)
+wchar_t UTF8Tools::GetWideCharacter(const char *pnCharacter)
 {
 	// Check the given pointer
 	if (pnCharacter) {
@@ -95,7 +95,7 @@ wchar_t UTF8Tools::GetWideCharacter(const utf8 *pnCharacter)
 		uint32 nNumOfCharacters = 0;
 
 		// Get the wide character
-		const utf8 *pnCurrentCharacter = pnCharacter;
+		const char *pnCurrentCharacter = pnCharacter;
 		do {
 			nWideCharacter <<= 6;
 			nWideCharacter += (unsigned char)*pnCurrentCharacter;
@@ -116,7 +116,7 @@ wchar_t UTF8Tools::GetWideCharacter(const utf8 *pnCharacter)
 *  @brief
 *    Returns the next character as wide character
 */
-wchar_t UTF8Tools::GetNextWideCharacter(const utf8 **ppszString)
+wchar_t UTF8Tools::GetNextWideCharacter(const char **ppszString)
 {
 	// Check for terminating NULL
 	if (**ppszString == '\0') return 0; // Error!
@@ -140,7 +140,7 @@ wchar_t UTF8Tools::GetNextWideCharacter(const utf8 **ppszString)
 *  @brief
 *    Moves to the next character
 */
-uint8 UTF8Tools::MoveToNextCharacter(const utf8 **ppszString)
+uint8 UTF8Tools::MoveToNextCharacter(const char **ppszString)
 {
 	// Check for terminating NULL
 	if (**ppszString == '\0') return 0; // Error!
@@ -162,7 +162,7 @@ uint8 UTF8Tools::MoveToNextCharacter(const utf8 **ppszString)
 *  @brief
 *    Moves to the previous character
 */
-uint8 UTF8Tools::MoveToPreviousCharacter(const utf8 **ppszString)
+uint8 UTF8Tools::MoveToPreviousCharacter(const char **ppszString)
 {
 	(*ppszString)--; // Previous character, please
 	if (!IsSequenceStart(**ppszString)) {
@@ -179,9 +179,9 @@ uint8 UTF8Tools::MoveToPreviousCharacter(const utf8 **ppszString)
 
 /**
 *  brief
-*    Character index => byte offset
+*    Character index => byte offset were the character starts within the given UTF8 string
 */
-uint32 UTF8Tools::CharacterIndexToByteOffset(const utf8 *pszString, uint32 nCharacterIndex)
+uint32 UTF8Tools::CharacterIndexToByteOffset(const char *pszString, uint32 nCharacterIndex)
 {
 	// Check the given pointer
 	if (pszString) {
@@ -201,9 +201,9 @@ uint32 UTF8Tools::CharacterIndexToByteOffset(const utf8 *pszString, uint32 nChar
 
 /**
 *  brief
-*    Byte offset => character index
+*    Byte offset => character index were the character starts within the given UTF8 string
 */
-uint32 UTF8Tools::ByteOffsetToCharacterIndex(const utf8 *pszString, uint32 nOffset)
+uint32 UTF8Tools::ByteOffsetToCharacterIndex(const char *pszString, uint32 nOffset)
 {
 	// Check the given pointer
 	if (pszString) {
@@ -225,7 +225,7 @@ uint32 UTF8Tools::ByteOffsetToCharacterIndex(const utf8 *pszString, uint32 nOffs
 *  @brief
 *    Returns the number of bytes a given string requires
 */
-uint32 UTF8Tools::GetNumOfStringBytes(const utf8 *pszString, uint32 nCount)
+uint32 UTF8Tools::GetNumOfStringBytes(const char *pszString, uint32 nCount)
 {
 	// Check the given pointer
 	if (pszString) {
@@ -235,7 +235,7 @@ uint32 UTF8Tools::GetNumOfStringBytes(const utf8 *pszString, uint32 nCount)
 		if (nCount) {
 			// Get the number of bytes of a string part
 			uint32 nCharacterIndex = 0;
-			for (const utf8 *pszCurrent=pszString; *pszCurrent!='\0'&&nCharacterIndex<nCount; nCharacterIndex++) {
+			for (const char *pszCurrent=pszString; *pszCurrent!='\0'&&nCharacterIndex<nCount; nCharacterIndex++) {
 				// Next character, please
 				const uint32 nCharacterSize = GetNumOfCharacterBytes(*pszCurrent);
 				nNumOfBytes += nCharacterSize;
@@ -244,7 +244,7 @@ uint32 UTF8Tools::GetNumOfStringBytes(const utf8 *pszString, uint32 nCount)
 			}
 		} else {
 			// Get the number of bytes of the whole string
-			for (const utf8 *pszCurrent=pszString; *pszCurrent!='\0'; nNumOfBytes++, pszCurrent++)
+			for (const char *pszCurrent=pszString; *pszCurrent!='\0'; nNumOfBytes++, pszCurrent++)
 				; // Nothing to do
 		}
 
@@ -260,13 +260,13 @@ uint32 UTF8Tools::GetNumOfStringBytes(const utf8 *pszString, uint32 nCount)
 *  @brief
 *    Returns the number of characters within a given string
 */
-uint32 UTF8Tools::GetNumOfCharacters(const utf8 *pszString)
+uint32 UTF8Tools::GetNumOfCharacters(const char *pszString)
 {
 	// Check the given pointer
 	if (pszString) {
 		// Get the number of characters
 		uint32 nNumOfCharacters = 0;
-		for (const utf8 *pszCurrent=pszString; *pszCurrent!='\0'; nNumOfCharacters++) {
+		for (const char *pszCurrent=pszString; *pszCurrent!='\0'; nNumOfCharacters++) {
 			// Next character, please
 			uint32 nCharacterSize = GetNumOfCharacterBytes(*pszCurrent);
 			if (nCharacterSize) pszCurrent += nCharacterSize;
@@ -285,14 +285,14 @@ uint32 UTF8Tools::GetNumOfCharacters(const utf8 *pszString)
 *  @brief
 *    Returns the number of characters within a given string
 */
-uint32 UTF8Tools::GetNumOfCharacters(const utf8 *pszString, uint32 nNumOfBytes)
+uint32 UTF8Tools::GetNumOfCharacters(const char *pszString, uint32 nNumOfBytes)
 {
 	// Check the given pointer
 	if (pszString) {
 		// Get the number of characters
-		const utf8   *pszStringEnd     = pszString + nNumOfBytes;
+		const char   *pszStringEnd     = pszString + nNumOfBytes;
 		uint32        nNumOfCharacters = 0;
-		for (const utf8 *pszCurrent=pszString; pszCurrent<pszStringEnd; nNumOfCharacters++) {
+		for (const char *pszCurrent=pszString; pszCurrent<pszStringEnd; nNumOfCharacters++) {
 			// Next character, please
 			uint32 nCharacterSize = GetNumOfCharacterBytes(*pszCurrent);
 			if (nCharacterSize) pszCurrent += nCharacterSize;
@@ -311,12 +311,12 @@ uint32 UTF8Tools::GetNumOfCharacters(const utf8 *pszString, uint32 nNumOfBytes)
 *  @brief
 *    Returns the number of characters and bytes within a given string
 */
-uint32 UTF8Tools::GetNumOfCharactersAndBytes(const utf8 *pszString, uint32 &nNumOfBytes)
+uint32 UTF8Tools::GetNumOfCharactersAndBytes(const char *pszString, uint32 &nNumOfBytes)
 {
 	// Check the given pointer
 	if (pszString) {
 		// Get the number of characters
-		const utf8   *pszCurrent       = pszString;
+		const char   *pszCurrent       = pszString;
 		uint32        nNumOfCharacters = 0;
 		for (; *pszCurrent!='\0'; nNumOfCharacters++) {
 			// Next character, please
@@ -343,12 +343,12 @@ uint32 UTF8Tools::GetNumOfCharactersAndBytes(const utf8 *pszString, uint32 &nNum
 *  @brief
 *    Returns a pointer to the first occurrence of the given wide character in the given string, or NULL if not found
 */
-const utf8 *UTF8Tools::FindCharacter(const utf8 *pszString, wchar_t nWideCharacter, uint32 *pnCharacterIndex)
+const char *UTF8Tools::FindCharacter(const char *pszString, wchar_t nWideCharacter, uint32 *pnCharacterIndex)
 {
 	// Check the given pointer
 	if (pszString) {
-		const utf8 *pszStringCurrent = pszString;
-		const utf8 *pszStringLast    = pszString;
+		const char *pszStringCurrent = pszString;
+		const char *pszStringLast    = pszString;
 
 		// Find the character
 		if (pnCharacterIndex) {
@@ -379,13 +379,13 @@ const utf8 *UTF8Tools::FindCharacter(const utf8 *pszString, wchar_t nWideCharact
 *  @brief
 *    Same as the above, but searches a buffer of a given size instead of a NULL-terminated string
 */
-const utf8 *UTF8Tools::FindCharacter(const utf8 *pszString, uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex)
+const char *UTF8Tools::FindCharacter(const char *pszString, uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex)
 {
 	// Check the given pointer
 	if (pszString) {
-		const utf8 *pszStringEnd     = pszString + nNumOfBytes;
-		const utf8 *pszStringCurrent = pszString;
-		const utf8 *pszStringLast    = pszString;
+		const char *pszStringEnd     = pszString + nNumOfBytes;
+		const char *pszStringCurrent = pszString;
+		const char *pszStringLast    = pszString;
 		uint32 c, csz;	// wchar_t may be just 2 bytes long, so use uint32 during the conversion to be on the safe side...
 
 		// Find character
@@ -433,7 +433,7 @@ const utf8 *UTF8Tools::FindCharacter(const utf8 *pszString, uint32 nNumOfBytes, 
 *  @brief
 *    Single wide character character to UTF8
 */
-uint8 UTF8Tools::FromWideCharacter(utf8 *pszDestination, wchar_t nWideCharacter)
+uint8 UTF8Tools::FromWideCharacter(char *pszDestination, wchar_t nWideCharacter)
 {
 	// Check the given pointer
 	if (pszDestination) {
@@ -443,18 +443,18 @@ uint8 UTF8Tools::FromWideCharacter(utf8 *pszDestination, wchar_t nWideCharacter)
 			pszDestination[1] = '\0';
 			return 1;
 		} else if (nWideCharacter32 < 0x800) {
-			pszDestination[0] = utf8((nWideCharacter32 >> 6) | 0xC0);
+			pszDestination[0] = char((nWideCharacter32 >> 6) | 0xC0);
 			pszDestination[1] = (nWideCharacter32 & 0x3F) | 0x80;
 			pszDestination[2] = '\0';
 			return 2;
 		} else if (nWideCharacter32 < 0x10000) {
-			pszDestination[0] = utf8((nWideCharacter32 >> 12) | 0xE0);
+			pszDestination[0] = char((nWideCharacter32 >> 12) | 0xE0);
 			pszDestination[1] = ((nWideCharacter32 >> 6) & 0x3F) | 0x80;
 			pszDestination[2] = (nWideCharacter32 & 0x3F) | 0x80;
 			pszDestination[3] = '\0';
 			return 3;
 		} else if (nWideCharacter32 < 0x110000) {
-			pszDestination[0] = utf8((nWideCharacter32 >> 18) | 0xF0);
+			pszDestination[0] = char((nWideCharacter32 >> 18) | 0xF0);
 			pszDestination[1] = ((nWideCharacter32 >> 12) & 0x3F) | 0x80;
 			pszDestination[2] = ((nWideCharacter32 >> 6) & 0x3F) | 0x80;
 			pszDestination[3] = (nWideCharacter32 & 0x3F) | 0x80;
@@ -471,7 +471,7 @@ uint8 UTF8Tools::FromWideCharacter(utf8 *pszDestination, wchar_t nWideCharacter)
 *  @brief
 *    Wide character string to UTF8
 */
-uint32 UTF8Tools::FromWideCharacterString(utf8 *pszDestination, uint32 nNumOfBytes, const wchar_t *pszSource, uint32 nSourceLength)
+uint32 UTF8Tools::FromWideCharacterString(char *pszDestination, uint32 nNumOfBytes, const wchar_t *pszSource, uint32 nSourceLength)
 {
 	// Check the given source pointer
 	if (pszSource) {
@@ -480,7 +480,7 @@ uint32 UTF8Tools::FromWideCharacterString(utf8 *pszDestination, uint32 nNumOfByt
 		// Just return the number of required bytes?
 		if (pszDestination) {
 			const wchar_t *pszCurrentSource = pszSource;
-			uint8 *pnDestinationEnd = pszDestination + nNumOfBytes;
+			char *pnDestinationEnd = pszDestination + nNumOfBytes;
 			while (!nSourceLength ? *pszCurrentSource!='\0' : nNumOfCharacters<nSourceLength) {
 				if (*pszCurrentSource < 0x80) {
 					if (pszDestination >= pnDestinationEnd)
@@ -490,7 +490,7 @@ uint32 UTF8Tools::FromWideCharacterString(utf8 *pszDestination, uint32 nNumOfByt
 				} else if (*pszCurrentSource < 0x800) {
 					if (pszDestination >= pnDestinationEnd-1)
 						return nNumOfBytes;
-					*pszDestination++ = utf8((*pszCurrentSource>>6) | 0xC0);
+					*pszDestination++ = char((*pszCurrentSource>>6) | 0xC0);
 					*pszDestination++ = (*pszCurrentSource & 0x3F) | 0x80;
 					nNumOfUsedBytes += 2;
 				} else if (*pszCurrentSource < 0x10000) {
@@ -543,12 +543,12 @@ uint32 UTF8Tools::FromWideCharacterString(utf8 *pszDestination, uint32 nNumOfByt
 *  @brief
 *    UTF8 to wide character string
 */
-uint32 UTF8Tools::ToWideCharacterString(wchar_t *pszDestination, uint32 nLength, const utf8 *pszSource, uint32 nSourceNumOfBytes)
+uint32 UTF8Tools::ToWideCharacterString(wchar_t *pszDestination, uint32 nLength, const char *pszSource, uint32 nSourceNumOfBytes)
 {
 	// Check the given pointers
 	if (pszDestination && pszSource) {
-		const utf8 *pszCurrentSource = pszSource;
-		const utf8 *pszSourceEnd     = pszCurrentSource + nSourceNumOfBytes;
+		const char *pszCurrentSource = pszSource;
+		const char *pszSourceEnd     = pszCurrentSource + nSourceNumOfBytes;
 		uint32 nNumOfCharacters = 0;
 
 		while (nNumOfCharacters < nLength-1) {
@@ -621,12 +621,12 @@ uint32 UTF8Tools::EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, 
 *  @brief
 *    Converts an UTF8 string to an ASCII string with escape sequences
 */
-uint32 UTF8Tools::Escape(char *pszDestination, uint32 nNumOfBytes, const utf8 *pszSource, bool bEscapeQuotes)
+uint32 UTF8Tools::Escape(char *pszDestination, uint32 nNumOfBytes, const char *pszSource, bool bEscapeQuotes)
 {
 	// Check the given source pointer
 	if (pszSource) {
 		uint32 nNumOfCharacters = 0, nCount;
-		const utf8 *pszCurrentSource = pszSource;
+		const char *pszCurrentSource = pszSource;
 
 		// Just return the number of required bytes?
 		if (pszDestination) {
@@ -721,14 +721,14 @@ uint32 UTF8Tools::ReadEscapeSequence(wchar_t &nDestination, const char *pszSourc
 *  @brief
 *    Converts a string with literal \uxxxx or \Uxxxxxxxx characters to UTF8
 */
-uint32 UTF8Tools::Unescape(utf8 *pszDestination, uint32 nNumOfBytes, const char *pszSource)
+uint32 UTF8Tools::Unescape(char *pszDestination, uint32 nNumOfBytes, const char *pszSource)
 {
 	// Check the given source pointer for NULL
 	if (pszSource) {
 		uint32 nNumOfProcessedBytes = 0, nCount;
 		const char *pszCurrentSource = pszSource;
 		wchar_t nWideCharacter;
-		utf8 szTemp[4];
+		char szTemp[4];
 
 		// Just return the number of required bytes?
 		if (pszDestination) {
@@ -776,7 +776,7 @@ uint32 UTF8Tools::Unescape(utf8 *pszDestination, uint32 nNumOfBytes, const char 
 *  @brief
 *    Compares two UTF8 strings
 */
-int UTF8Tools::Compare(const utf8 *pszFirst, const utf8 *pszSecond, uint32 nCount)
+int UTF8Tools::Compare(const char *pszFirst, const char *pszSecond, uint32 nCount)
 {
 	// Check the given pointers
 	if (pszFirst && pszSecond) {
@@ -803,8 +803,8 @@ int UTF8Tools::Compare(const utf8 *pszFirst, const utf8 *pszSecond, uint32 nCoun
 		}
 
 		// Both strings have the same length (character-wise)
-		const utf8 *pString1 = pszFirst;
-		const utf8 *pString2 = pszSecond;
+		const char *pString1 = pszFirst;
+		const char *pString2 = pszSecond;
 		uint32 nLength = nFirstLength;
 
 		// Should only 'nCount' characters be compared?
@@ -843,7 +843,7 @@ int UTF8Tools::Compare(const utf8 *pszFirst, const utf8 *pszSecond, uint32 nCoun
 *  @brief
 *    Find a substring in a UTF8 string
 */
-utf8 *UTF8Tools::FindSubstring(const utf8 *pszSource, const utf8 *pszSubstring)
+char *UTF8Tools::FindSubstring(const char *pszSource, const char *pszSubstring)
 {
 	// Check the given pointers
 	if (pszSource && pszSubstring) {
@@ -853,10 +853,10 @@ utf8 *UTF8Tools::FindSubstring(const utf8 *pszSource, const utf8 *pszSubstring)
 		uint32 nSourceLength    = GetNumOfCharactersAndBytes(pszSource,    nSourceNumOfBytes);
 		uint32 nSubstringLength = GetNumOfCharactersAndBytes(pszSubstring, nSubstringNumOfBytes);
 
-		utf8 *pszSubStart = NULL;
+		char *pszSubStart = NULL;
 		uint32 nNextSubChar = 0;
-		const utf8 *pszSourceTemp    = pszSource;
-		const utf8 *pszSubstringTemp = pszSubstring;
+		const char *pszSourceTemp    = pszSource;
+		const char *pszSubstringTemp = pszSubstring;
 
 		for (uint32 i=0; i<nSourceLength; i++) {
 			// Check if both characters are either ASCII or UTF8
@@ -872,14 +872,17 @@ utf8 *UTF8Tools::FindSubstring(const utf8 *pszSource, const utf8 *pszSubstring)
 						if (pszSourceTemp[j] != pszSubstringTemp[j]) {
 							bSame = false;
 							break;
-						} else if (!bSame) bSame = true;
+						} else {
+							if (!bSame)
+								bSame = true;
+						}
 					}
 				}
 			}
 			if (bSame) {
 				// Both characters are the same
 				if (!pszSubStart)
-					pszSubStart = (utf8*)pszSourceTemp;
+					pszSubStart = (char*)pszSourceTemp;
 
 				nNextSubChar++;
 				MoveToNextCharacter(&pszSubstringTemp);
@@ -910,7 +913,7 @@ utf8 *UTF8Tools::FindSubstring(const utf8 *pszSource, const utf8 *pszSubstring)
 *  @brief
 *    Copies the given UTF8 source string into the destination string
 */
-utf8 *UTF8Tools::Copy(utf8 *pszDestination, const utf8 *pszSource, uint32 nCount)
+char *UTF8Tools::Copy(char *pszDestination, const char *pszSource, uint32 nCount)
 {
 	// Check the given pointers
 	if (pszDestination && pszSource) {

@@ -88,21 +88,6 @@ class StringBufferUnicode : public StringBuffer {
 
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] szString
-		*    The string (converted to Unicode)
-		*  @param[in] nLength
-		*    Length of the string buffer (excluding the terminating zero)
-		*  @param[in] nNumOfBytes
-		*    Number of bytes of the string (excluding the terminating zero)
-		*  @param[in] nMaxLength
-		*    Maximum available length of the string buffer (excluding the terminating zero)
-		*/
-		StringBufferUnicode(utf8 szString[], uint32 nLength, uint32 nMaxLength, uint32 nNumOfBytes);
-
-		/**
-		*  @brief
 		*    Destructor
 		*/
 		virtual ~StringBufferUnicode();

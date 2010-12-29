@@ -114,22 +114,6 @@ uint32 HashFunction::Hash(const String &sKey)
 			return h;
 		}
 
-		case String::UTF8:
-		{
-			const utf8 *pszKey = sKey.GetUTF8();
-			uint32 h = 0;
-
-			while (*pszKey) {
-				h = (h << 4) + *pszKey++;
-				uint32 g = h & 0xF0000000;
-				if (g)
-					h ^= g >> 24;
-				h &= ~g;
-			}
-
-			return h;
-		}
-
 		default:
 			return 0; // Error!
 	}

@@ -74,19 +74,6 @@ StringBufferUnicode::StringBufferUnicode(const char szString[], uint32 nLength, 
 
 /**
 *  @brief
-*    Constructor
-*/
-StringBufferUnicode::StringBufferUnicode(utf8 szString[], uint32 nLength, uint32 nMaxLength, uint32 nNumOfBytes) : StringBuffer(nLength, nMaxLength, String::Unicode),
-	m_pszString(new wchar_t[nLength + 1]),
-	m_pASCII(NULL),
-	m_pUTF8(NULL)
-{
-	// Get the Unicode string
-	UTF8Tools::ToWideCharacterString(m_pszString, nLength + 1, szString, nNumOfBytes);
-}
-
-/**
-*  @brief
 *    Destructor
 */
 StringBufferUnicode::~StringBufferUnicode()

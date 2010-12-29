@@ -208,10 +208,6 @@ void GraphicsLinux::DrawText(const Font &cFont, const Color4 &cTextColor, const 
 		// [TODO] For UTC-2 strings, look at FontSet instead of FontStruct and
 		//        XmbDrawString or Xutf8DrawString instead of XDrawString
 		XDrawString(m_pDisplay, m_nWindow, m_sGC, vPos.x, vPos.y + nHeight, sText.GetASCII(), sText.GetLength());
-	else if (sText.GetFormat() == String::UTF8)
-		// [TODO] For UTF-8 strings, look at FontSet instead of FontStruct and
-		//        XmbDrawString or Xutf8DrawString instead of XDrawString
-		XDrawString(m_pDisplay, m_nWindow, m_sGC, vPos.x, vPos.y + nHeight, sText.GetASCII(), sText.GetLength());
 }
 
 uint32 GraphicsLinux::GetTextWidth(const Font &cFont, const String &sText)
@@ -221,9 +217,6 @@ uint32 GraphicsLinux::GetTextWidth(const Font &cFont, const String &sText)
 	if (sText.GetFormat() == String::ASCII)
 		nWidth = XTextWidth(((FontLinux*)cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
 	else if (sText.GetFormat() == String::Unicode)
-		// [TODO] Look at XTextWidth16 etc.
-		nWidth = XTextWidth(((FontLinux*)cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
-	else if (sText.GetFormat() == String::UTF8)
 		// [TODO] Look at XTextWidth16 etc.
 		nWidth = XTextWidth(((FontLinux*)cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
 

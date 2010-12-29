@@ -64,9 +64,10 @@ String Checksum::Get(const uint8 nBuffer[], uint32 nNumOfBytes)
 String Checksum::Get(const String &sString)
 {
 	// Get the checksum
-		 if (sString.GetFormat() == String::Unicode) Update((uint8*)sString.GetUnicode(), sString.GetNumOfBytes());
-	else if (sString.GetFormat() == String::UTF8)	 Update((uint8*)sString.GetUTF8(),    sString.GetNumOfBytes());
-	else											 Update((uint8*)sString.GetASCII(),   sString.GetNumOfBytes());
+	if (sString.GetFormat() == String::Unicode)
+		Update((uint8*)sString.GetUnicode(), sString.GetNumOfBytes());
+	else
+		Update((uint8*)sString.GetASCII(),   sString.GetNumOfBytes());
 	String sChecksum = Final();
 
 	// Return the checksum

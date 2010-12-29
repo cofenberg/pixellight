@@ -329,7 +329,7 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 				m_nPosition = nMatches[1];
 
 				// Get pointer to subject string
-				const utf8 *pszSubject = sSubject.GetUTF8();
+				const char *pszSubject = sSubject.GetUTF8();
 
 				// Save matching substrings by index
 				m_lstGroups.Resize(nMatchCount-1);
@@ -353,7 +353,7 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 					const int nNum = (pszEntry[0] << 8) | pszEntry[1];
 
 					// Get name
-					const String sName = (const utf8*)&pszEntry[2];
+					String sName = String::FromUTF8(&pszEntry[2]);
 
 					// Get substring
 					const int nIndex0 = nMatches[nNum*2];
@@ -361,7 +361,7 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 
 					// Add name->substring to map
 					if (nIndex0 >= 0 && nIndex1 >= 0)
-						m_mapGroups.Add(sName, String(&pszSubject[nIndex0], true, 0, nIndex1 - nIndex0));
+						m_mapGroups.Add(sName, String::FromUTF8(&pszSubject[nIndex0], 0, nIndex1 - nIndex0));
 					else
 						m_mapGroups.Add(sName, "");
 				}

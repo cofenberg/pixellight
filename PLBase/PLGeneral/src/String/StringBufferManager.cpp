@@ -247,10 +247,6 @@ void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 					}
 				}
 				break;
-
-			case String::UTF8:
-				// [TODO] Add reuse
-				break;
 		}
 
 		// String buffer backuped?

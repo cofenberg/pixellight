@@ -55,7 +55,7 @@ void StringTest::Test()
 {
 	String sString, sStringT;
 	const wchar_t *pszTempWide;
-	const utf8 *pszTempUTF8;
+	const char *pszTempUTF8;
 	const char *pszTemp;
 	bool bResult;
 
@@ -242,26 +242,6 @@ void StringTest::Test()
 	delete [] pszTempWide;
 	EndTask(bResult);
 
-	// GetASCII(): From UTF8
-	StartTask("GetASCII(): From UTF8");
-	bResult = true;
-	sString = (const utf8*)"";
-	if (!sString.GetASCII() || strcmp(sString.GetASCII(), "")) bResult = false;
-	sString = (const utf8*)"abcd";
-	if (!sString.GetASCII() || strcmp(sString.GetASCII(), "abcd")) bResult = false;
-/* [TODO]
-	pszTemp = sString.GetASCII();
-	sString.ToLower();
-	pszTempWide = new wchar_t; // If the internal memory manager is reusing the same free address, we need THIS! :)
-	if (sString.GetASCII() != pszTemp) bResult = false;
-	delete pszTempWide;
-	sString.Insert((const utf8*)"Hi");
-	pszTempWide = new wchar_t[100]; // If the internal memory manager is reusing the same free address, we need THIS! :)
-	if (sString.GetASCII() == pszTemp) bResult = false;
-	delete [] pszTempWide;
-*/
-	EndTask(bResult);
-
 	// GetUnicode(): From ASCII
 	StartTask("GetUnicode(): From ASCII");
 	bResult = true;
@@ -296,26 +276,6 @@ void StringTest::Test()
 	pszTemp = new char[100]; // If the internal memory manager is reusing the same free address, we need THIS! :)
 	if (sString.GetUnicode() == pszTempWide) bResult = false;
 	delete [] pszTemp;
-	EndTask(bResult);
-
-	// GetUnicode(): From UTF8
-	StartTask("GetUnicode(): From UTF8");
-	bResult = true;
-	sString = (const utf8*)"";
-	if (!sString.GetUnicode() || wcscmp(sString.GetUnicode(), L"")) bResult = false;
-	sString = (const utf8*)"abcd";
-	if (!sString.GetUnicode() || wcscmp(sString.GetUnicode(), L"abcd")) bResult = false;
-/*	[TODO]
-	pszTempWide = sString.GetUnicode();
-	sString.ToLower();
-	pszTemp = new char[100]; // If the internal memory manager is reusing the same free address, we need THIS! :)
-	if (sString.GetUnicode() != pszTempWide) bResult = false;
-	delete [] pszTemp;
-	sString.Insert(L"Hi");
-	pszTemp = new char[100]; // If the internal memory manager is reusing the same free address, we need THIS! :)
-	if (sString.GetUnicode() == pszTempWide) bResult = false;
-	delete [] pszTemp;
-*/
 	EndTask(bResult);
 
 	// GetUTF8(): From ASCII
@@ -354,26 +314,6 @@ void StringTest::Test()
 	delete [] pszTemp;
 	EndTask(bResult);
 
-	// GetUTF8(): From UTF8
-	StartTask("GetUTF8(): From UTF8");
-	bResult = true;
-	sString = (const utf8*)"";
-	if (!sString.GetUTF8() || strcmp((const char*)sString.GetUTF8(), "")) bResult = false;
-	sString = (const utf8*)"abcd";
-	if (!sString.GetUTF8() || strcmp((const char*)sString.GetUTF8(), "abcd")) bResult = false;
-/*	[TODO]
-	pszTempUTF8 = sString.GetUTF8();
-	sString.ToLower();
-	pszTemp = new char[100]; // If the internal memory manager is reusing the same free address, we need THIS! :)
-	if (sString.GetUTF8() != pszTempUTF8) bResult = false;
-	delete [] pszTemp;
-	sString.Insert(L"Hi");
-	pszTemp = new char[100]; // If the internal memory manager is reusing the same free address, we need THIS! :)
-	if (sString.GetUTF8() == pszTempUTF8) bResult = false;
-	delete [] pszTemp;
-*/
-	EndTask(bResult);
-
 	// =(const String &sString)
 	StartTask("=(const String &sString)");
 	bResult = true;
@@ -405,19 +345,6 @@ void StringTest::Test()
 	if (sString.GetLength() != 0 || sString != L"") bResult = false;
 	sString = L"\u65e5\u672c\u8a9e";
 	if (sString.GetLength() != 3 || sString != L"\u65e5\u672c\u8a9e") bResult = false;
-	EndTask(bResult);
-
-	// =(const utf8 *pszString)
-	StartTask("=(const utf8 *pszString)");
-	bResult = true;
-/* [TODO]
-	sString = (const utf8*)NULL;
-	if (sString.GetLength() != 0 || sString != (const utf8*)"") bResult = false;
-	sString = (const utf8*)"";
-	if (sString.GetLength() != 0 || sString != (const utf8*)"\u65e5\u672c\u8a9e") bResult = false;
-	sString = (const utf8*)"\\u65e5\\u672c\\u8a9e";
-	if (sString.GetLength() != 3 || sString != "\u65e5\u672c\u8a9e") bResult = false;
-*/
 	EndTask(bResult);
 
 	// +(const String &sString)

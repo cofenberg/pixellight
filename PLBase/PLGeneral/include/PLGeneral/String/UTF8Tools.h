@@ -85,7 +85,7 @@ class UTF8Tools {
 		*  @return
 		*    'true' if the given character is the start of a UTF8 sequence, else 'false'
 		*/
-		inline static bool IsSequenceStart(utf8 nCharacter);
+		inline static bool IsSequenceStart(char nCharacter);
 
 		/**
 		*  @brief
@@ -97,7 +97,7 @@ class UTF8Tools {
 		*  @return
 		*    Returns the number of bytes the given character requires
 		*/
-		PLGENERAL_API static uint8 GetNumOfCharacterBytes(utf8 nCharacter);
+		PLGENERAL_API static uint8 GetNumOfCharacterBytes(char nCharacter);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class UTF8Tools {
 		*  @return
 		*    The character as wide character
 		*/
-		PLGENERAL_API static wchar_t GetWideCharacter(const utf8 *pnCharacter);
+		PLGENERAL_API static wchar_t GetWideCharacter(const char *pnCharacter);
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class UTF8Tools {
 		*  @note
 		*    - The given string pointer is updated
 		*/
-		PLGENERAL_API static wchar_t GetNextWideCharacter(const utf8 **ppszString);
+		PLGENERAL_API static wchar_t GetNextWideCharacter(const char **ppszString);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class UTF8Tools {
 		*  @return
 		*    Number of skipped bytes
 		*/
-		PLGENERAL_API static uint8 MoveToNextCharacter(const utf8 **ppszString);
+		PLGENERAL_API static uint8 MoveToNextCharacter(const char **ppszString);
 
 		/**
 		*  @brief
@@ -160,11 +160,11 @@ class UTF8Tools {
 		*  @return
 		*    Number of skipped bytes
 		*/
-		PLGENERAL_API static uint8 MoveToPreviousCharacter(const utf8 **ppszString);
+		PLGENERAL_API static uint8 MoveToPreviousCharacter(const char **ppszString);
 
 		/**
 		*  brief
-		*    Character index => byte offset
+		*    Character index => byte offset were the character starts within the given UTF8 string
 		*
 		*  @param[in] pszString
 		*    Pointer to string to use, if NULL '0' will be returned
@@ -174,11 +174,11 @@ class UTF8Tools {
 		*  @return
 		*    Byte offset
 		*/
-		PLGENERAL_API static uint32 CharacterIndexToByteOffset(const utf8 *pszString, uint32 nCharacterIndex);
+		PLGENERAL_API static uint32 CharacterIndexToByteOffset(const char *pszString, uint32 nCharacterIndex);
 
 		/**
 		*  brief
-		*    Byte offset => character index
+		*    Byte offset => character index were the character starts within the given UTF8 string
 		*
 		*  @param[in] pszString
 		*    Pointer to string to use, if NULL '0' will be returned
@@ -188,7 +188,7 @@ class UTF8Tools {
 		*  @return
 		*    Character index
 		*/
-		PLGENERAL_API static uint32 ByteOffsetToCharacterIndex(const utf8 *pszString, uint32 nOffset);
+		PLGENERAL_API static uint32 ByteOffsetToCharacterIndex(const char *pszString, uint32 nOffset);
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class UTF8Tools {
 		*  @return
 		*    Returns the number of bytes the given string requires
 		*/
-		PLGENERAL_API static uint32 GetNumOfStringBytes(const utf8 *pszString, uint32 nCount = 0);
+		PLGENERAL_API static uint32 GetNumOfStringBytes(const char *pszString, uint32 nCount = 0);
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class UTF8Tools {
 		*  @return
 		*    The number of characters within a given string
 		*/
-		PLGENERAL_API static uint32 GetNumOfCharacters(const utf8 *pszString);
+		PLGENERAL_API static uint32 GetNumOfCharacters(const char *pszString);
 
 		/**
 		*  @brief
@@ -228,7 +228,7 @@ class UTF8Tools {
 		*  @return
 		*    The number of characters within a given string
 		*/
-		PLGENERAL_API static uint32 GetNumOfCharacters(const utf8 *pszString, uint32 nNumOfBytes);
+		PLGENERAL_API static uint32 GetNumOfCharacters(const char *pszString, uint32 nNumOfBytes);
 
 		/**
 		*  @brief
@@ -242,7 +242,7 @@ class UTF8Tools {
 		*  @return
 		*    The number of characters within a given string
 		*/
-		PLGENERAL_API static uint32 GetNumOfCharactersAndBytes(const utf8 *pszString, uint32 &nNumOfBytes);
+		PLGENERAL_API static uint32 GetNumOfCharactersAndBytes(const char *pszString, uint32 &nNumOfBytes);
 
 		/**
 		*  @brief
@@ -258,7 +258,7 @@ class UTF8Tools {
 		*  @return
 		*    Pointer to the first occurrence of the given wide character in the given string, or NULL if not found
 		*/
-		PLGENERAL_API static const utf8 *FindCharacter(const utf8 *pszString, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
+		PLGENERAL_API static const char *FindCharacter(const char *pszString, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
 
 		/**
 		*  @brief
@@ -276,7 +276,7 @@ class UTF8Tools {
 		*  @return
 		*    Pointer to the first occurrence of the given character in the given string, or NULL if not found
 		*/
-		PLGENERAL_API static const utf8 *FindCharacter(const utf8 *pszString, uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
+		PLGENERAL_API static const char *FindCharacter(const char *pszString, uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
 
 		/**
 		*  @brief
@@ -293,7 +293,7 @@ class UTF8Tools {
 		*  @note
 		*    - Use GetNumOfCharacterBytes() to get the number of bytes a wide character requires
 		*/
-		PLGENERAL_API static uint8 FromWideCharacter(utf8 *pszDestination, wchar_t nWideCharacter);
+		PLGENERAL_API static uint8 FromWideCharacter(char *pszDestination, wchar_t nWideCharacter);
 
 		/**
 		*  @brief
@@ -316,7 +316,7 @@ class UTF8Tools {
 		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
 		*      (excluding the terminating NULL) is returned
 		*/
-		PLGENERAL_API static uint32 FromWideCharacterString(utf8 *pszDestination, uint32 nNumOfBytes, const wchar_t *pszSource, uint32 nSourceLength);
+		PLGENERAL_API static uint32 FromWideCharacterString(char *pszDestination, uint32 nNumOfBytes, const wchar_t *pszSource, uint32 nSourceLength);
 
 		/**
 		*  @brief
@@ -337,7 +337,7 @@ class UTF8Tools {
 		*  @note
 		*    - Only works for valid UTF8, i.e. no 5- or 6-byte sequences
 		*/
-		PLGENERAL_API static uint32 ToWideCharacterString(wchar_t *pszDestination, uint32 nLength, const utf8 *pszSource, uint32 nSourceNumOfBytes);
+		PLGENERAL_API static uint32 ToWideCharacterString(wchar_t *pszDestination, uint32 nLength, const char *pszSource, uint32 nSourceNumOfBytes);
 
 		/**
 		*  @brief
@@ -379,7 +379,7 @@ class UTF8Tools {
 		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
 		*      (excluding the terminating NULL) is returned
 		*/
-		PLGENERAL_API static uint32 Escape(char *pszDestination, uint32 nNumOfBytes, const utf8 *pszSource, bool bEscapeQuotes);
+		PLGENERAL_API static uint32 Escape(char *pszDestination, uint32 nNumOfBytes, const char *pszSource, bool bEscapeQuotes);
 
 		/**
 		*  @brief
@@ -415,7 +415,7 @@ class UTF8Tools {
 		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
 		*      (excluding the terminating NULL) is returned
 		*/
-		PLGENERAL_API static uint32 Unescape(utf8 *pszDestination, uint32 nNumOfBytes, const char *pszSource);
+		PLGENERAL_API static uint32 Unescape(char *pszDestination, uint32 nNumOfBytes, const char *pszSource);
 
 		/**
 		*  @brief
@@ -433,7 +433,7 @@ class UTF8Tools {
 		*     0 if both strings are equal
 		*     1 if the first string is greater then the second one
 		*/
-		PLGENERAL_API static int Compare(const utf8 *pszFirst, const utf8 *pszSecond, uint32 nCount = 0);
+		PLGENERAL_API static int Compare(const char *pszFirst, const char *pszSecond, uint32 nCount = 0);
 
 		/**
 		*  @brief
@@ -447,7 +447,7 @@ class UTF8Tools {
 		*  @return
 		*    A pointer to the start position of the substring or NULL if the search fails
 		*/
-		PLGENERAL_API static utf8 *FindSubstring(const utf8 *pszSource, const utf8 *pszSubstring);
+		PLGENERAL_API static char *FindSubstring(const char *pszSource, const char *pszSubstring);
 
 		/**
 		*  @brief
@@ -466,7 +466,7 @@ class UTF8Tools {
 		*  @note
 		*    - If 'nCount' is 0 or the source string is < 'nCount' then the '\0'-terminator is also copied
 		*/
-		PLGENERAL_API static utf8 *Copy(utf8 *pszDestination, const utf8 *pszSource, uint32 nCount = 0);
+		PLGENERAL_API static char *Copy(char *pszDestination, const char *pszSource, uint32 nCount = 0);
 
 
 };

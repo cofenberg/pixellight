@@ -73,23 +73,6 @@ StringBufferASCII::StringBufferASCII(const wchar_t szString[], uint32 nLength, u
 
 /**
 *  @brief
-*    Constructor
-*/
-StringBufferASCII::StringBufferASCII(utf8 szString[], uint32 nLength, uint32 nMaxLength, uint32 nNumOfBytes) : StringBuffer(nLength, nMaxLength, String::ASCII),
-	m_pszString(NULL),
-	m_pUnicode(NULL),
-	m_pUTF8(NULL)
-{
-	// Get the number of bytes the ASCII string requires
-	m_nLength = m_nMaxLength = UTF8Tools::Escape(NULL, 0, szString, 0);
-
-	// Get the ASCII string
-	m_pszString = new char[m_nLength + 1];
-	UTF8Tools::Escape(m_pszString, m_nLength + 1, szString, 0);
-}
-
-/**
-*  @brief
 *    Destructor
 */
 StringBufferASCII::~StringBufferASCII()
