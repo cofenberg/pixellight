@@ -4,7 +4,7 @@
  *  File: PLGeneralLinuxWrapper.h
  *      Linux wrapper definitions for PLGeneral (use them ONLY if REALLY required!)
  *
- *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

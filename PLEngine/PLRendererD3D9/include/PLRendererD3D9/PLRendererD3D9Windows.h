@@ -2,7 +2,7 @@
  *  File: PLRendererD3D9Windows.h                        *
  *      Windows definitions for PLRendererD3D9
  *
- *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

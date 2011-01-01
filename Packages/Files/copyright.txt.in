@@ -1,5 +1,5 @@
 ${CMAKETOOLS_PROJECT_NAME} ${CMAKETOOLS_CONFIG_SUFFIX} ${CMAKETOOLS_PROJECT_VERSION_MAJOR}.${CMAKETOOLS_PROJECT_VERSION_MINOR}.${CMAKETOOLS_PROJECT_VERSION_PATCH}-${CMAKETOOLS_PROJECT_VERSION_RELEASE}
-Copyright (C) 2002-2010 by The PixelLight Team - all rights reserved
+Copyright (C) 2002-2011 by The PixelLight Team - all rights reserved
 
 PixelLight is released under the terms of the GNU Lesser General Public License, (addition to GNU General Public License) either version 3 of the license, or (at your option) any later version.
 The documentation of PixelLight is released under the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.

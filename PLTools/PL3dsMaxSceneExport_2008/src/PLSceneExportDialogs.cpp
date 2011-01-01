@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PLSceneExportDialogs.cpp                       *
  *
- *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -41,7 +41,7 @@ static INT_PTR CALLBACK AboutBoxDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 {
 	switch (msg)  {
 		case WM_INITDIALOG:
-			SetDlgItemText(hWnd, IDC_VERSION, PLCore::Core::GetVersion().ToString() + "\nPixelLight scene exporter\nCopyright (C) 2002-2010 by The PixelLight Team");
+			SetDlgItemText(hWnd, IDC_VERSION, PLCore::Core::GetVersion().ToString() + "\nPixelLight scene exporter\nCopyright (C) 2002-2011 by The PixelLight Team");
 			SetDlgItemText(hWnd, IDC_BUILD, "Build:  Date: " __DATE__ "  Time: " __TIME__);
 			break;
 

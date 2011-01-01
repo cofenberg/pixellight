@@ -2,7 +2,7 @@
  *  File: Vector2i.inl                                   *
  *      2D integer vector inline implementation
  *
- *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

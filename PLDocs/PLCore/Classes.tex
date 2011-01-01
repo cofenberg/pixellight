@@ -128,7 +128,7 @@ A RTTI module is a unit like for example an executable or a shared library that 
 \begin{lstlisting}[float=htb,label=Code:RTTIModuleDefinition,caption={Defining a new RTTI module}]
 #include <PLCore/ModuleMain.h>
 pl_module("MyModule")
-	pl_module_vendor("Copyright (C) 2002-2010 by Me")
+	pl_module_vendor("Copyright (C) 2002-2011 by Me")
 	pl_module_license("LGPL")
 	pl_module_description("Description of my module")
 pl_module_end
@@ -149,7 +149,7 @@ PixelLight ships with dozens of plugins. Plugins are dynamically linked librarie
 \begin{lstlisting}[float=htb,label=Code:RTTIModulePluginDefinition,caption={Defining a new RTTI module plugin}]
 #include <PLCore/ModuleMain.h>
 pl_module_plugin("MyPlugin")
-	pl_module_vendor("Copyright (C) 2002-2010 by Me")
+	pl_module_vendor("Copyright (C) 2002-2011 by Me")
 	pl_module_license("LGPL")
 	pl_module_description("Description of my plugin")
 pl_module_end
@@ -169,7 +169,7 @@ The resulting XML file may look like
   <Active>1</Active>
   <Name>MyPlugin</Name>
   <Version>1.0</Version>
-  <Vendor>Copyright (C) 2002-2010 by Me</Vendor>
+  <Vendor>Copyright (C) 2002-2011 by Me</Vendor>
   <License>LGPL</License>
   <Description>Description of my plugin</Description>
   <Platform Name="Win32">

@@ -2,7 +2,7 @@
  *  File: Main.cpp                                       *
  *      Ingame GUI demo
  *
- *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -39,7 +39,7 @@ using namespace PLGeneral;
 //[ Module implementation                                 ]
 //[-------------------------------------------------------]
 pl_module("PLDemoIngameGUI")
-	pl_module_vendor("Copyright (C) 2002-2010 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight ingame GUI demo")
 pl_module_end
