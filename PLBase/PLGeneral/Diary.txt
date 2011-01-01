@@ -1,3 +1,12 @@
+>> 01.01.2011
+[CO]
+- Renamed the method "Mutex::Lock()" with a timeout as parameter into "Mutex::TryLock()" so one can see that it's really wise to
+  check whether or not a lock was actually received
+- Added "PLGeneral::MutexGuard" helper class using the really cool "Scoped Locking"-idiom which can make the code more compact while
+  also increasing the maintainability
+
+
+
 >> 29.12.2010
 [CO]
 - Removed "String::Unknown"-definition, it was only used once internally and less variations are usually the better choice

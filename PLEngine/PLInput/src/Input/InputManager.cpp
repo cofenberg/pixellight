@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/Mutex.h>
+#include <PLGeneral/System/MutexGuard.h>
 #include <PLGeneral/Log/Log.h>
 #include "PLInput/Input/InputManager.h"
 #include "PLInput/Input/Devices/Mouse.h"
@@ -50,11 +50,11 @@ void InputManager::Update()
 	// Lock data
 	m_pMutex->Lock();
 
-	// Copy list of controls that have changed
-	List<Control*> lstUpdatedControls = m_lstUpdatedControls;
+		// Copy list of controls that have changed
+		List<Control*> lstUpdatedControls = m_lstUpdatedControls;
 
-	// Clear list
-	m_lstUpdatedControls.Clear();
+		// Clear list
+		m_lstUpdatedControls.Clear();
 
 	// Unlock data
 	m_pMutex->Unlock();
@@ -82,7 +82,7 @@ void InputManager::Update()
 void InputManager::DetectDevices(bool bReset)
 {
 	// Lock data
-	m_pMutex->Lock();
+	const MutexGuard cMutexGuard(*m_pMutex);
 
 	// Delete all existing providers and devices?
 	if (bReset) Clear();
@@ -115,9 +115,6 @@ void InputManager::DetectDevices(bool bReset)
 
 	// Done
 	PL_LOG(Info, "InputManager: Detecting done.")
-
-	// Unlock data
-	m_pMutex->Unlock();
 }
 
 /**
@@ -307,13 +304,10 @@ void InputManager::RemoveControl(Control *pControl)
 	// Valid pointer?
 	if (pControl) {
 		// Lock data
-		m_pMutex->Lock();
+		const MutexGuard cMutexGuard(*m_pMutex);
 
 		// Remove control from list (if it's within the list at all)
 		m_lstUpdatedControls.Remove(pControl);
-
-		// Unlock data
-		m_pMutex->Unlock();
 	}
 }
 
@@ -326,14 +320,11 @@ void InputManager::UpdateControl(Control *pControl)
 	// Valid pointer?
 	if (pControl) {
 		// Lock data
-		m_pMutex->Lock();
+		const MutexGuard cMutexGuard(*m_pMutex);
 
 		// Add control to list, but only if it's not already within the list!
 		if (!m_lstUpdatedControls.IsElement(pControl))
 			m_lstUpdatedControls.Add(pControl);
-
-		// Unlock data
-		m_pMutex->Unlock();
 	}
 }
 

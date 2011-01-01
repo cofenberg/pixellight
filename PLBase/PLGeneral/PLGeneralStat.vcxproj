@@ -300,6 +300,7 @@
     <ClInclude Include="include\PLGeneral\System\DynLibLinux.h" />
     <ClInclude Include="include\PLGeneral\System\DynLibWindows.h" />
     <ClInclude Include="include\PLGeneral\System\Mutex.h" />
+    <ClInclude Include="include\PLGeneral\System\MutexGuard.h" />
     <ClInclude Include="include\PLGeneral\System\MutexImpl.h" />
     <ClInclude Include="include\PLGeneral\System\MutexLinux.h" />
     <ClInclude Include="include\PLGeneral\System\MutexWindows.h" />
@@ -528,6 +529,7 @@
     <None Include="include\PLGeneral\Container\SimpleMapIterator.inl" />
     <None Include="include\PLGeneral\Container\Stack.inl" />
     <None Include="include\PLGeneral\Core\MemoryManager.inl" />
+    <None Include="include\PLGeneral\System\MutexGuard.inl" />
     <None Include="include\PLGeneral\Tools\Stopwatch.inl" />
     <None Include="include\PLGeneral\Tools\Tools.inl" />
   </ItemGroup>

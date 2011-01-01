@@ -315,6 +315,7 @@ copy build\release64\PLGeneral64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLGeneral\Container\SimpleMapIterator.h" />
     <ClInclude Include="include\PLGeneral\Container\SimpleMapKeyIterator.h" />
     <ClInclude Include="include\PLGeneral\Container\Stack.h" />
+    <ClInclude Include="include\PLGeneral\System\MutexGuard.h" />
     <ClInclude Include="include\PLGeneral\Tools\Checksum.h" />
     <ClInclude Include="include\PLGeneral\Tools\ChecksumCRC32.h" />
     <ClInclude Include="include\PLGeneral\Tools\ChecksumMD5.h" />
@@ -802,6 +803,7 @@ copy build\release64\PLGeneral64.lib ..\..\Bin\Lib\
     <None Include="include\PLGeneral\Container\SimpleMapIterator.inl" />
     <None Include="include\PLGeneral\Container\SimpleMapKeyIterator.inl" />
     <None Include="include\PLGeneral\Container\Stack.inl" />
+    <None Include="include\PLGeneral\System\MutexGuard.inl" />
     <None Include="include\PLGeneral\Tools\Stopwatch.inl" />
     <None Include="include\PLGeneral\Tools\Tools.inl" />
     <None Include="include\PLGeneral\String\UTF8Tools.inl" />

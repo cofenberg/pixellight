@@ -466,6 +466,9 @@
     <ClInclude Include="include\PLGeneral\Log\LogFormaterXml.h">
       <Filter>Log</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLGeneral\System\MutexGuard.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLGeneral.cpp">
@@ -871,6 +874,9 @@
     </None>
     <None Include="include\PLGeneral\Tools\Tools.inl">
       <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLGeneral\System\MutexGuard.inl">
+      <Filter>System</Filter>
     </None>
   </ItemGroup>
 </Project>

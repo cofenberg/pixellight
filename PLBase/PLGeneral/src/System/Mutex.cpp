@@ -84,10 +84,10 @@ bool Mutex::Lock()
 *  @brief
 *    Locks the mutex, but only wait until timeout
 */
-bool Mutex::Lock(uint32 nTimeout)
+bool Mutex::TryLock(uint32 nTimeout)
 {
 	// Call system implementation
-	return m_pMutexImpl->Lock(nTimeout);
+	return m_pMutexImpl->TryLock(nTimeout);
 }
 
 /**

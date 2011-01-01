@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Mutex.h>
+#include <PLGeneral/System/MutexGuard.h>
 #include "PLPhysicsNewton/World.h"
 #include "PLPhysicsNewton/WorldThread.h"
 
@@ -75,7 +75,7 @@ WorldThread::~WorldThread()
 {
 	// Stop the physics simulation
 	m_pMutex->Lock();
-	m_bShutDown = true;
+		m_bShutDown = true;
 	m_pMutex->Unlock();
 	Join(100); // Use timeout, else this may block forever...
 
@@ -129,13 +129,10 @@ int WorldThread::Run()
 			m_nLastTime = System::GetInstance()->GetMilliseconds();
 		} else {
 			// Lock the synchronisation object
-			m_pMutex->Lock();
+			const MutexGuard cMutexGuard(*m_pMutex);
 
 			// Update the physics
 			WorldUpdate::Update(m_fTimeScaleFactor, m_fMaxTimeDifference, m_fSimulationSpeed, m_fFrameRate);
-
-			// Unlock the synchronisation object
-			m_pMutex->Unlock();
 		}
 
 		// Sleep...

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Mutex.h                                        *
+ *  File: MutexGuard.h                                   *
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLGENERAL_MUTEX_H__
-#define __PLGENERAL_MUTEX_H__
+#ifndef __PLGENERAL_MUTEXGUARD_H__
+#define __PLGENERAL_MUTEXGUARD_H__
 #pragma once
 
 
@@ -40,7 +40,7 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class MutexImpl;
+class Mutex;
 
 
 //[-------------------------------------------------------]
@@ -48,12 +48,14 @@ class MutexImpl;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mutex (Mutual Exclusion, binary semaphore) class
+*    Mutex guard class ("Scoped Locking"-idiom, also known as "synchronized block")
 *
-*  @note
-*    - It's a good idea to lock/unlock a mutex by using the MutexGuard helper class on the runtime stack so there's always an unlock for each lock!
+*  @remarks
+*    When using a mutex in more complex situations there's the risk that one forgets the unlock a locked mutex. To avoid this
+*    situation it's a good idea to use this mutex guard on the runtime stack (the runtime stack is your friend!) in order to
+*    lock the mutex and automatically unlock it as soon as the critical scope is left.
 */
-class Mutex {
+class MutexGuard {
 
 
 	//[-------------------------------------------------------]
@@ -63,58 +65,53 @@ class Mutex {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cMutex
+		*    Mutex to use
+		*
+		*  @note
+		*    - Blocking if the mutex is already locked
+		*    - Use the constructor with a timeout to avoid potential deadlocks
 		*/
-		PLGENERAL_API Mutex();
+		inline MutexGuard(Mutex &cMutex);
+
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cMutex
+		*    Mutex to use
+		*  @param[in] nTimeout
+		*    Timeout in milliseconds
+		*
+		*  @note
+		*    - 'nTimeout = 0' means: Return immediately if the mutex is already locked
+		*/
+		inline MutexGuard(Mutex &cMutex, uint32 nTimeout);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGENERAL_API ~Mutex();
+		inline ~MutexGuard();
 
 		/**
 		*  @brief
-		*    Locks the mutex
+		*    Returns whether the used mutex was locked successfully
 		*
 		*  @return
-		*    'true' if successful, 'false' on error
-		*
-		*  @note
-		*    - Blocking if already locked
-		*    - Use the lock method with a timeout to avoid potential deadlocks
-		*    - In the literature, this operation is also known as "acquire"
+		*    'true' if the used mutex was locked successfully, else 'false'
 		*/
-		PLGENERAL_API bool Lock();
+		inline bool IsLocked() const;
 
 		/**
 		*  @brief
-		*    Locks the mutex, but only wait until timeout
-		*
-		*  @param[in] nTimeout
-		*    Timeout in milliseconds
+		*    Returns the used mutex
 		*
 		*  @return
-		*    'true' if successful, 'false' on error
-		*
-		*  @note
-		*    - 'nTimeout = 0' means: Return immediately if already locked
-		*
-		*  @see
-		*    - Lock()
+		*    The used mutex
 		*/
-		PLGENERAL_API bool TryLock(uint32 nTimeout);
-
-		/**
-		*  @brief
-		*    Unlocks the mutex
-		*
-		*  @return
-		*    'true' if successful, 'false' on error
-		*
-		*  @note
-		*    - In the literature, this operation is also known as "release"
-		*/
-		PLGENERAL_API bool Unlock();
+		inline Mutex &GetMutex() const;
 
 
 	//[-------------------------------------------------------]
@@ -128,7 +125,7 @@ class Mutex {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		Mutex(const Mutex &cSource);
+		inline MutexGuard(const MutexGuard &cSource);
 
 		/**
 		*  @brief
@@ -140,14 +137,15 @@ class Mutex {
 		*  @return
 		*    Reference to this instance
 		*/
-		Mutex &operator =(const Mutex &cSource);
+		inline MutexGuard &operator =(const MutexGuard &cSource);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		MutexImpl *m_pMutexImpl;	/**< Pointer to the system specific implementation (assumed to be never NULL!) */
+		Mutex *m_pMutex;	/**< Pointer to the used mutex, always valid! */
+		bool   m_bLocked;	/**< 'true' if the used mutex was locked successfully, else 'false' */
 
 
 };
@@ -159,4 +157,10 @@ class Mutex {
 } // PLGeneral
 
 
-#endif // __PLGENERAL_MUTEX_H__
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGeneral/System/MutexGuard.inl"
+
+
+#endif // __PLGENERAL_MUTEXGUARD_H__

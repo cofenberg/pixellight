@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: MutexLinux.cpp                                 *
+ *  File: MutexGuard.inl                                 *
+ *      Mutex guard implementation
  *
  *  Copyright (C) 2002-2010 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +24,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGeneral/System/MutexLinux.h"
+#include "PLGeneral/System/Mutex.h"
 
 
 //[-------------------------------------------------------]
@@ -33,53 +34,81 @@ namespace PLGeneral {
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-MutexLinux::MutexLinux()
+MutexGuard::MutexGuard(Mutex &cMutex) :
+	m_pMutex(&cMutex)
 {
-	// Create system mutex
-	pthread_mutex_init(&m_sMutex, NULL);
+	// Lock the given mutex, or at least try it! ("usually", this lock is ensuring that we're getting only out of here if we've got a lock!)
+	m_bLocked = cMutex.Lock();
+}
+
+/**
+*  @brief
+*    Constructor
+*/
+MutexGuard::MutexGuard(Mutex &cMutex, uint32 nTimeout) :
+	m_pMutex(&cMutex)
+{
+	// Lock the given mutex, or at least try it!
+	m_bLocked = cMutex.TryLock(nTimeout);
 }
 
 /**
 *  @brief
 *    Destructor
 */
-MutexLinux::~MutexLinux()
+MutexGuard::~MutexGuard()
 {
-	// Destroy system mutex
-	pthread_mutex_destroy(&m_sMutex);
+	// If the mutex was locked successfully, unlock it right now!
+	if (m_bLocked)
+		m_pMutex->Unlock();
+}
+
+/**
+*  @brief
+*    Returns whether the used mutex was locked successfully
+*/
+bool MutexGuard::IsLocked() const
+{
+	return m_bLocked;
+}
+
+/**
+*  @brief
+*    Returns the used mutex
+*/
+Mutex &MutexGuard::GetMutex() const
+{
+	return *m_pMutex;
 }
 
 
 //[-------------------------------------------------------]
-//[ Private virtual MutexImpl functions                   ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-bool MutexLinux::Lock()
+/**
+*  @brief
+*    Copy constructor
+*/
+MutexGuard::MutexGuard(const MutexGuard &cSource) :
+	m_pMutex(NULL),
+	m_bLocked(false)
 {
-	// Lock mutex
-	return !pthread_mutex_lock(&m_sMutex);
+	// Not implemented
 }
 
-bool MutexLinux::TryLock(uint32 nTimeout)
+/**
+*  @brief
+*    Copy operator
+*/
+MutexGuard &MutexGuard::operator =(const MutexGuard &cSource)
 {
-	// Setup timeout structure
-	struct timespec timeout;
-	timeout.tv_sec  = nTimeout/1000;
-	timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
-
-	// Lock mutex
-	return !pthread_mutex_timedlock(&m_sMutex, &timeout);
-}
-
-bool MutexLinux::Unlock()
-{
-	// Release mutex
-	return !pthread_mutex_unlock(&m_sMutex);
+	// Not implemented
 }
 
 

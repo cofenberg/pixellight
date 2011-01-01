@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/System/Mutex.h>
+#include <PLGeneral/System/MutexGuard.h>
 #include <PLMath/Rectangle.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Screen.h>
@@ -226,50 +226,36 @@ void GuiPL::Update()
 //[-------------------------------------------------------]
 bool GuiPL::HasPendingMessages()
 {
-	bool bResult = false;
-
 	// Lock the GUI message queue
-	if (m_pMessageQueueMutex->Lock()) {
-		// Is there anything within the GUI message queue?
-		bResult = (m_lstMessageQueue.GetNumOfElements() != 0);
+	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
 
-		// Unlock the GUI message queue
-		m_pMessageQueueMutex->Unlock();
-	}
-
-	// Done
-	return bResult;
+	// Is there anything within the GUI message queue?
+	return (m_lstMessageQueue.GetNumOfElements() != 0);
 }
 
 void GuiPL::ProcessMessage()
 {
 	// Lock the GUI message queue
-	if (m_pMessageQueueMutex->Lock()) {
-		// Is there anything within the GUI message queue?
-		if (m_lstMessageQueue.GetNumOfElements()) {
-			// Pop a message from the queue
-			GuiMessage cMessage;
-			m_lstMessageQueue.Pop(&cMessage);
+	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
 
-			// Pass on the GUI message
-			m_pGui->SendMessage(cMessage);
-		}
+	// Is there anything within the GUI message queue?
+	if (m_lstMessageQueue.GetNumOfElements()) {
+		// Pop a message from the queue
+		GuiMessage cMessage;
+		m_lstMessageQueue.Pop(&cMessage);
 
-		// Unlock the GUI message queue
-		m_pMessageQueueMutex->Unlock();
+		// Pass on the GUI message
+		m_pGui->SendMessage(cMessage);
 	}
 }
 
 void GuiPL::PostMessage(const GuiMessage &cMessage)
 {
 	// Lock the GUI message queue
-	if (m_pMessageQueueMutex->Lock()) {
-		// Add the GUI message to the internal GUI message queue processed by GuiPL::ProcessMessage()
-		m_lstMessageQueue.Push(cMessage);
+	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
 
-		// Unlock the GUI message queue
-		m_pMessageQueueMutex->Unlock();
-	}
+	// Add the GUI message to the internal GUI message queue processed by GuiPL::ProcessMessage()
+	m_lstMessageQueue.Push(cMessage);
 }
 
 void GuiPL::EnumerateScreens(List<Screen*> &lstScreens)
