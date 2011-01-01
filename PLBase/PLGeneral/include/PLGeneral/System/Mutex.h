@@ -51,6 +51,8 @@ class MutexImpl;
 *    Mutex (Mutual Exclusion, binary semaphore) class
 *
 *  @note
+*    - The mutex is non-recursive, meaning that you have to be careful to avoid creating a "self-deadlock" by calling the lock method
+*      multiple times directly or indirectly by other method calls
 *    - It's a good idea to lock/unlock a mutex by using the MutexGuard helper class on the runtime stack so there's always an unlock for each lock!
 */
 class Mutex {
@@ -63,6 +65,9 @@ class Mutex {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @note
+		*    - A new constructed mutex is unlocked by default
 		*/
 		PLGENERAL_API Mutex();
 

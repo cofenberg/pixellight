@@ -81,7 +81,7 @@ class SemaphoreWindows : public SemaphoreImpl {
 	//[-------------------------------------------------------]
 	private:
 		virtual bool Lock();
-		virtual bool Lock(uint32 nTimeout);
+		virtual bool TryLock(uint32 nTimeout);
 		virtual bool Unlock();
 
 

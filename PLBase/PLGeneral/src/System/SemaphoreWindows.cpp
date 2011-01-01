@@ -64,7 +64,7 @@ bool SemaphoreWindows::Lock()
 	return (m_hSemaphore && WaitForSingleObject(m_hSemaphore, INFINITE) == WAIT_OBJECT_0);
 }
 
-bool SemaphoreWindows::Lock(uint32 nTimeout)
+bool SemaphoreWindows::TryLock(uint32 nTimeout)
 {
 	// Lock semaphore
 	return (m_hSemaphore && WaitForSingleObject(m_hSemaphore, nTimeout) == WAIT_OBJECT_0);

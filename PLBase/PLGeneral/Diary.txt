@@ -4,6 +4,8 @@
   check whether or not a lock was actually received
 - Added "PLGeneral::MutexGuard" helper class using the really cool "Scoped Locking"-idiom which can make the code more compact while
   also increasing the maintainability
+- Renamed the method "Semaphore::Lock()" with a timeout as parameter into "Semaphore::TryLock()" so one can see that it's really wise to
+  check whether or not a lock was actually received...
 
 
 

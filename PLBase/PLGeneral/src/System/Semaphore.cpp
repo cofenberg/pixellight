@@ -78,7 +78,7 @@ Semaphore::~Semaphore()
 bool Semaphore::Lock()
 {
 	// Lock semaphore
-	if (m_pSemaphoreImpl->Lock(0)) {
+	if (m_pSemaphoreImpl->Lock()) {
 		// Success
 		m_nValue--;
 		return true;
@@ -89,10 +89,10 @@ bool Semaphore::Lock()
 *  @brief
 *    Locks the semaphore, but only wait until timeout
 */
-bool Semaphore::Lock(uint32 nTimeout)
+bool Semaphore::TryLock(uint32 nTimeout)
 {
 	// Lock semaphore
-	if (m_pSemaphoreImpl->Lock(nTimeout)) {
+	if (m_pSemaphoreImpl->TryLock(nTimeout)) {
 		// Success
 		m_nValue--;
 		return true;
