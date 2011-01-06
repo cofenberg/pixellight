@@ -20,6 +20,15 @@ Set the used character set to \emph{Unicode} and NOT to \emph{Multi-Byte} which 
 
 
 
+\section{Null pointer}
+For null pointers, PixelLight is using \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer 0.
+\begin{lstlisting}[caption=Null pointer]
+char *pszMyString = nullptr;
+\end{lstlisting}
+
+
+
+
 \section{Flags}
 Often flags are used within the PixelLight framework to set up different properties. This is quite efficient because all those properties are stored in one single variable. Normally a 32 bit variable is used where you can manage up to 32 flags. To manipulate the flags you have to use the binary operations:
 \begin{tabular}{ll}
