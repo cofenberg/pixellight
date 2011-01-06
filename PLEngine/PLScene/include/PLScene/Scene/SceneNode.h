@@ -236,11 +236,11 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		PLCore::Event<>											EventInit;					/**< Scene node initialization event */
 		PLCore::Event<>											EventDeInit;				/**< Scene node de-initialization change event */
 		PLCore::Event<VisNode &>								EventAddedToVisibilityTree;	/**< Scene node was added to a visibility tree event. Visibility node representing this scene node within the visibility tree as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPre;				/**< Scene node pre-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawSolid;				/**< Scene node solid-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawTransparent;		/**< Scene node transparent-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawDebug;				/**< Scene node debug-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPost;				/**< Scene node post-draw event. Used renderer and current visibility node of the scene node (can be NULL) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPre;				/**< Scene node pre-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawSolid;				/**< Scene node solid-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawTransparent;		/**< Scene node transparent-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawDebug;				/**< Scene node debug-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
+		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPost;				/**< Scene node post-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
 
 
 	//[-------------------------------------------------------]
@@ -252,7 +252,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Returns the scene context the scene node is in
 		*
 		*  @return
-		*    The scene context the scene node is in, can but shouldn't be NULL
+		*    The scene context the scene node is in, can but shouldn't be a null pointer
 		*
 		*  @note
 		*    - Do NOT use this function inside a SceneNode-constructor
@@ -264,7 +264,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Returns the scene container the scene node is in
 		*
 		*  @return
-		*    Scene container this node is in, or NULL if this is the root node
+		*    Scene container this node is in, or a null pointer if this is the root node
 		*
 		*  @note
 		*    - You can also use GetManager() from PLGeneral::Element directly
@@ -291,7 +291,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Returns the scene root container
 		*
 		*  @return
-		*    Scene root container, (this scene container can be the root scene container) NULL on error
+		*    Scene root container, (this scene container can be the root scene container) a null pointer on error
 		*
 		*  @remarks
 		*    This function searches for the scene root container (scene container without a parent) and returns it.
@@ -306,7 +306,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The other scene node
 		*
 		*  @return
-		*    Common container, or NULL
+		*    Common container, or a null pointer
 		*/
 		PLS_API SceneContainer *GetCommonContainer(SceneNode &cSceneNode) const;
 
@@ -315,7 +315,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Returns the scene hierarchy this scene node is linked into
 		*
 		*  @return
-		*    Scene hierarchy this scene node is linked into, NULL on error
+		*    Scene hierarchy this scene node is linked into, a null pointer on error
 		*/
 		PLS_API SceneHierarchy *GetHierarchy() const;
 
@@ -648,7 +648,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Optional parameter string
 		*
 		*  @return
-		*    Pointer to the modifier instance if all went fine, else NULL
+		*    Pointer to the modifier instance if all went fine, else a null pointer
 		*    (maybe unknown/incompatible modifier)
 		*/
 		PLS_API SceneNodeModifier *AddModifier(const PLGeneral::String &sClass, const PLGeneral::String &sParameters = "");
@@ -664,7 +664,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    of this modifier class
 		*
 		*  @return
-		*    The requested modifier, NULL on error
+		*    The requested modifier, a null pointer on error
 		*/
 		PLS_API SceneNodeModifier *GetModifier(const PLGeneral::String &sClass, PLGeneral::uint32 nIndex = 0) const;
 
@@ -711,10 +711,10 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Returns a pointer to the mesh handler
 		*
 		*  @return
-		*    Pointer to the mesh handler, NULL if there's no mesh handler
+		*    Pointer to the mesh handler, a null pointer if there's no mesh handler
 		*
 		*  @note
-		*    - Returns NULL by default, function can be implemented in derived classes
+		*    - Returns a null pointer by default, function can be implemented in derived classes
 		*
 		*  @see
 		*    - DrawPre()
@@ -726,7 +726,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Get input controller
 		*
 		*  @return
-		*    Input controller (can be NULL)
+		*    Input controller (can be a null pointer)
 		*
 		*  @note
 		*    - The default implementation is empty
@@ -742,7 +742,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @remarks
 		*    The DrawPre(), DrawSolid(), DrawTransparent(), DrawDebug() and DrawPost() allows custom draw
@@ -765,7 +765,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    - The default implementation only emits the EventDrawPre event
 		*    - Should only be called if the draw function flag 'UseDrawPre' is set
 		*/
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 		/**
 		*  @brief
@@ -774,7 +774,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
 		*    - The default implementation only emits the EventDrawSolid event
@@ -782,7 +782,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @see
 		*    - DrawPre()
 		*/
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 		/**
 		*  @brief
@@ -791,7 +791,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
 		*    - The default implementation only emits the EventDrawTransparent event
@@ -799,7 +799,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @see
 		*    - DrawPre()
 		*/
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 		/**
 		*  @brief
@@ -808,7 +808,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
 		*    - Should only be called if the 'UseDrawDebug' draw flag and the 'DebugEnabled' debug flag is set
@@ -819,7 +819,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @see
 		*    - DrawPre()
 		*/
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 		/**
 		*  @brief
@@ -828,7 +828,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
 		*    - The default implementation only emits the EventDrawPost event
@@ -836,7 +836,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*  @see
 		*    - DrawPre()
 		*/
-		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -1046,7 +1046,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		PLMath::Sphere						 m_cBoundingSphere;					/**< Bounding sphere in 'scene node space' */
 		PLMath::Sphere						 m_cContainerBoundingSphere;		/**< Current bounding sphere in 'scene container space'*/
 		PLGeneral::List<SceneNodeModifier*>  m_lstModifiers;					/**< List of scene node modifiers */
-		SceneHierarchyNodeItem				*m_pFirstSceneHierarchyNodeItem;	/**< The first scene hierarchy node item, can be NULL */
+		SceneHierarchyNodeItem				*m_pFirstSceneHierarchyNodeItem;	/**< The first scene hierarchy node item, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

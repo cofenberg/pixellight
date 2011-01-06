@@ -87,7 +87,7 @@ class SNGui : public SceneNode {
 		*    Returns the GUI
 		*
 		*  @return
-		*    GUI, NULL on error
+		*    GUI, a null pointer on error
 		*/
 		PLS_API PLGui::Gui *GetGui() const;
 
@@ -140,7 +140,7 @@ class SNGui : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

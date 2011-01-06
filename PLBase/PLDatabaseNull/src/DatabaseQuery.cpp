@@ -83,7 +83,7 @@ DatabaseQuery &DatabaseQuery::operator =(const DatabaseQuery &cSource)
 PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 {
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

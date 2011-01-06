@@ -109,7 +109,7 @@ class BodyMesh : public PLPhysics::BodyMesh {
 		*    Create the file if it doen't exist?
 		*
 		*  @return
-		*    The opened file, NULL on error (or maybe caching is not activated)
+		*    The opened file, a null pointer on error (or maybe caching is not activated)
 		*/
 		PLGeneral::File *OpenFile(PLPhysics::World &cWorld, const PLGeneral::String &sFilename, bool bCreate = false) const;
 

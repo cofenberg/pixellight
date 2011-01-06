@@ -42,13 +42,14 @@ namespace PLGeneral {
 *    Constructor
 */
 Buffer::Buffer(uint32 nSize) :
-	m_pBuffer(NULL),
+	m_pBuffer(nullptr),
 	m_nSize(0),
 	m_nUsed(0),
 	m_bRemoveDelimiters(true)
 {
 	// Allocate buffer?
-	if (nSize) Allocate(nSize);
+	if (nSize)
+		Allocate(nSize);
 }
 
 /**
@@ -56,15 +57,14 @@ Buffer::Buffer(uint32 nSize) :
 *    Copy constructor
 */
 Buffer::Buffer(const Buffer &cSource) :
-	m_pBuffer(cSource.m_nUsed ? new char[cSource.m_nUsed] : NULL),
+	m_pBuffer(cSource.m_nUsed ? new char[cSource.m_nUsed] : nullptr),
 	m_nSize(cSource.m_nUsed),
 	m_nUsed(cSource.m_nUsed),
 	m_bRemoveDelimiters(cSource.m_bRemoveDelimiters)
 {
 	// Copy buffer data
-	if (m_pBuffer) {
+	if (m_pBuffer)
 		MemoryManager::Copy(m_pBuffer, cSource.m_pBuffer, m_nUsed);
-	}
 }
 
 /**
@@ -106,7 +106,7 @@ void Buffer::Clear()
 	// Release memory
 	if (m_pBuffer) {
 		delete [] m_pBuffer;
-		m_pBuffer = NULL;
+		m_pBuffer = nullptr;
 	}
 
 	// Reset
@@ -121,7 +121,8 @@ void Buffer::Clear()
 void Buffer::Allocate(uint32 nSize)
 {
 	// Clear buffer first
-	if (m_pBuffer) Clear();
+	if (m_pBuffer)
+		Clear();
 
 	// Allocate new buffer
 	if (nSize) {
@@ -174,20 +175,23 @@ String Buffer::GetLine()
 		const char *pszEOL = strstr(m_pBuffer, "\n");
 		if (pszEOL) {
 			// Allocate new string
-			int   nSize     = (int)(pszEOL - m_pBuffer);
+			const int nSize = (int)(pszEOL - m_pBuffer);
 			char *pszString = new char[nSize+1];
 			MemoryManager::Copy(pszString, m_pBuffer, nSize);
 			pszString[nSize] = '\0';
 
 			// Remove line from buffer
-			int nRemaining = m_nUsed - nSize - 1;
-			if (nRemaining > 0) MemoryManager::Copy(m_pBuffer, m_pBuffer + nSize + 1, nRemaining);
-			else				m_pBuffer[0] = 0;
+			const int nRemaining = m_nUsed - nSize - 1;
+			if (nRemaining > 0)
+				MemoryManager::Copy(m_pBuffer, m_pBuffer + nSize + 1, nRemaining);
+			else
+				m_pBuffer[0] = 0;
 			m_nUsed = nRemaining;
 
 			// Save string. The string will take control over the created buffer
 			String sLine = String(pszString, false, nSize);
-			if (m_bRemoveDelimiters) sLine.RemoveLineEndings();
+			if (m_bRemoveDelimiters)
+				sLine.RemoveLineEndings();
 
 			// Return string
 			return sLine;
@@ -207,7 +211,7 @@ Buffer &Buffer::operator =(const Buffer &cSource)
 	// Release memory
 	if (m_pBuffer) {
 		delete [] m_pBuffer;
-		m_pBuffer = NULL;
+		m_pBuffer = nullptr;
 	}
 
 	// Set data

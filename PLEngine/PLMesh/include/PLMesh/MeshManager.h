@@ -81,7 +81,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*    Returns the used renderer
 		*
 		*  @return
-		*    Pointer to the renderer the meshes should use, can be NULL
+		*    Pointer to the renderer the meshes should use, can be a null pointer
 		*/
 		PLMESH_API PLRenderer::Renderer *GetRenderer() const;
 
@@ -90,7 +90,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*    Creates the mesh and adds the required LODs
 		*
 		*  @return
-		*   The created mesh, NULL on error
+		*   The created mesh, a null pointer on error
 		*
 		*  @note
 		*    - If the mesh is created, the 'Material' is added automatically
@@ -107,7 +107,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*    Static mesh? (better performance!)
 		*
 		*  @return
-		*    Pointer to the created resource, NULL if there was an error
+		*    Pointer to the created resource, a null pointer if there was an error
 		*
 		*  @note
 		*    - If there's already a resource with this name, this resource is returned
@@ -127,7 +127,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*    This parameters depend on the used mesh creator.
 		*
 		*  @return
-		*    Pointer to the created resource, NULL if there was an error
+		*    Pointer to the created resource, a null pointer if there was an error
 		*    (maybe unknown class or the class is not derived from 'MeshCreator')
 		*/
 		PLMESH_API Mesh *CreateMesh(const PLGeneral::String &sName, bool bStatic, const PLGeneral::String &sParameters);
@@ -151,7 +151,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*    Static mesh? (better performance!)
 		*
 		*  @return
-		*    The loaded mesh, NULL on error
+		*    The loaded mesh, a null pointer on error
 		*/
 		PLMESH_API Mesh *LoadMesh(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "", bool bReloadMesh = false, bool bStatic = true);
 

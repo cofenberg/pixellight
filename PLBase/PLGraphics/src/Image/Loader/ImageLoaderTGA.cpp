@@ -86,7 +86,7 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 	cFile.Seek(sHeader.IDLength, File::SeekCurrent);
 
 	// Read the palette, if there's one
-	uint8 *pnPalette = NULL;
+	uint8 *pnPalette = nullptr;
 	EColorFormat nColorFormat;
 	const uint32 nPaletteLength = sHeader.nColorMapEntries*sHeader.nColorMapBits/8;
 	if (nPaletteLength) {

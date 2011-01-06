@@ -106,7 +106,7 @@ class XmlComment : public XmlNode {
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
 		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
-		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]

@@ -219,7 +219,7 @@ EffectPass &EffectPass::operator =(const EffectPass &cSource)
 	} else {
 		if (m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
 	}
 
@@ -231,7 +231,7 @@ EffectPass &EffectPass::operator =(const EffectPass &cSource)
 	} else {
 		if (m_pFragmentShader) {
 			delete m_pFragmentShader;
-			m_pFragmentShader = NULL;
+			m_pFragmentShader = nullptr;
 		}
 	}
 */
@@ -412,7 +412,7 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 		// Destroy old shader
 		if (!m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
 
 		// Get the shader language to use
@@ -431,7 +431,7 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 					// Destroy the current GPU program
 					if (m_pProgram) {
 						delete m_pProgram;
-						m_pProgram = NULL;
+						m_pProgram = nullptr;
 					}
 
 					// Done
@@ -456,7 +456,7 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 		// Destroy old shader
 		if (!m_pFragmentShader) {
 			delete m_pFragmentShader;
-			m_pFragmentShader = NULL;
+			m_pFragmentShader = nullptr;
 		}
 
 		// Get the shader language to use
@@ -475,7 +475,7 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 					// Destroy the current GPU program
 					if (m_pProgram) {
 						delete m_pProgram;
-						m_pProgram = NULL;
+						m_pProgram = nullptr;
 					}
 
 					// Done
@@ -526,9 +526,9 @@ EffectPass::EffectPass(EffectTechnique &cTechnique) :
 	m_pTechnique(&cTechnique),
 	m_sName("Pass"),
 	m_cColor(Color4::White),
-	m_pVertexShader(NULL),
-	m_pFragmentShader(NULL),
-	m_pProgram(NULL)
+	m_pVertexShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr)
 {
 	ResetMaterialStates();
 }
@@ -593,7 +593,7 @@ String EffectPass::LoadStringFromFile(const String &sFilename) const
 
 	// Check if the file has been found
 	if (cFile.Open(File::FileRead)) {
-		// Load in the file, we also take care of the terminating NULL (\0)
+		// Load in the file, we also take care of the terminating zero (\0)
 		const uint32 nFileSize = cFile.GetSize();
 		char *pData = new char[nFileSize + 1];
 		cFile.Read(pData, nFileSize, 1);

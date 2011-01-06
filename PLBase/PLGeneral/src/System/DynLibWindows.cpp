@@ -42,7 +42,7 @@ namespace PLGeneral {
 *    Constructor
 */
 DynLibWindows::DynLibWindows() :
-	m_hModule(NULL)
+	m_hModule(nullptr)
 {
 }
 
@@ -61,20 +61,21 @@ DynLibWindows::~DynLibWindows()
 bool DynLibWindows::IsLoaded() const
 {
 	// Return whether the library has been loaded
-	return (m_hModule != NULL);
+	return (m_hModule != nullptr);
 }
 
 bool DynLibWindows::Load(const Url &cUrl)
 {
 	// Is already a library loaded?
-	if (m_hModule) return false; // Error!
+	if (m_hModule)
+		return false; // Error!
 
 	// Load library
-	String sWindowsPath = cUrl.GetWindowsPath();
+	const String sWindowsPath = cUrl.GetWindowsPath();
 	if (sWindowsPath.GetFormat() == String::ASCII)
-		m_hModule = ::LoadLibraryExA(sWindowsPath.GetASCII(),   NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+		m_hModule = ::LoadLibraryExA(sWindowsPath.GetASCII(),   nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 	else
-		m_hModule = ::LoadLibraryExW(sWindowsPath.GetUnicode(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+		m_hModule = ::LoadLibraryExW(sWindowsPath.GetUnicode(), nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 
 	// Return whether loading of the library was successful
 	if (m_hModule) {
@@ -105,10 +106,10 @@ String DynLibWindows::GetAbsPath() const
 
 bool DynLibWindows::Unload()
 {
-	if (m_hModule != NULL) {
+	if (m_hModule != nullptr) {
 		// Unload library
 		if (::FreeLibrary(m_hModule)) {
-			m_hModule = NULL;
+			m_hModule = nullptr;
 
 			// Done
 			return true;
@@ -122,7 +123,7 @@ bool DynLibWindows::Unload()
 void *DynLibWindows::GetSymbol(const String &sSymbol) const
 {
 	// Is the library loaded? ... it looks like as if there's only a ASCII version of "GetProcAddress()"...
-	return m_hModule ? ::GetProcAddress(m_hModule, sSymbol.GetASCII()) : NULL;
+	return m_hModule ? ::GetProcAddress(m_hModule, sSymbol.GetASCII()) : nullptr;
 }
 
 

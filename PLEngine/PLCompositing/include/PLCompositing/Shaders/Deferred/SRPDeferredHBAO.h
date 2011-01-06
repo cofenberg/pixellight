@@ -164,8 +164,8 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::uint32					 m_nNumberOfDirections;		/**< The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion. */
-		PLRenderer::TextureBuffer2D			*m_pRandomNormalsTexture;	/**< Texture with random normal vectors, can be NULL */
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::TextureBuffer2D			*m_pRandomNormalsTexture;	/**< Texture with random normal vectors, can be a null pointer */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 

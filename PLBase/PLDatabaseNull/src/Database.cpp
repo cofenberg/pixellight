@@ -94,8 +94,7 @@ String Database::GetVersion() const
 	return sString;
 }
 
-bool Database::Connect(const String &sServer, const String &sUserName,
-					   const String &sUserPassword, const String &sDatabase)
+bool Database::Connect(const String &sServer, const String &sUserName, const String &sUserPassword, const String &sDatabase)
 {
 	// Already connected?
 	if (!m_bConnected) {
@@ -126,7 +125,10 @@ bool Database::Disconnect()
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 PLDatabase::DatabaseQuery *Database::CreateQuery() const

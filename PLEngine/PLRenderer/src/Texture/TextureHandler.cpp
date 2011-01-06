@@ -69,7 +69,7 @@ Texture *TextureHandler::AnimationState::GetTexture() const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -89,7 +89,7 @@ TextureHandler *TextureHandler::AnimationState::GetFrameTextureHandler(int nInde
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -321,7 +321,7 @@ void TextureHandler::AnimationState::NotifyUpdate()
 *    Constructor
 */
 TextureHandler::TextureHandler() :
-	m_pAnimationState(NULL)
+	m_pAnimationState(nullptr)
 {
 }
 
@@ -348,7 +348,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 	if (sExtension == "tani") {
 		if (m_pAnimationState) {
 			delete m_pAnimationState;
-			m_pAnimationState = NULL;
+			m_pAnimationState = nullptr;
 		}
 
 		Texture *pTexture = cTextureManager.Get(sFilename);
@@ -391,7 +391,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 			}
 		} else {
 			// Create the texture by using a texture creator?
-			Texture *pTexture = NULL;
+			Texture *pTexture = nullptr;
 			if (sFilename.Compare("Create ", 0, 7)) {
 				// Get texture creator class to use
 				Tokenizer cTokenizer;
@@ -425,7 +425,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 					}
 
 					// Check whether the texture is already within the texture manager
-					pTexture = bUseName ? cTextureManager.Get(sName) : NULL;
+					pTexture = bUseName ? cTextureManager.Get(sName) : nullptr;
 					if (!pTexture) {
 						// Get the parameters
 						String sParameters = sFilename.GetSubstring(cTokenizer.GetPosition());
@@ -446,7 +446,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 					if (pTexture && !pTexture->Load(sFilename)) {
 						// Can't load texture...
 						delete pTexture;
-						pTexture = NULL;
+						pTexture = nullptr;
 					}
 				}
 			}
@@ -466,7 +466,7 @@ bool TextureHandler::Unload()
 	// Destroy texture animationm state
 	if (m_pAnimationState) {
 		delete m_pAnimationState;
-		m_pAnimationState = NULL;
+		m_pAnimationState = nullptr;
 	}
 
 	// Unload texture
@@ -554,7 +554,7 @@ TextureHandler &TextureHandler::operator =(const TextureHandler &cSource)
 	} else {
 		if (m_pAnimationState) {
 			delete m_pAnimationState;
-			m_pAnimationState = NULL;
+			m_pAnimationState = nullptr;
 		}
 	}
 

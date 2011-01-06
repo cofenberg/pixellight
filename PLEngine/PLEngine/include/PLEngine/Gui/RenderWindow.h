@@ -74,9 +74,9 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*  @param[in] pDisplayMode
-		*    Display mode information, can be NULL
+		*    Display mode information, can be a null pointer
 		*  @param[in] bFullscreen
 		*    Initial in fullscreen mode? If yes, 'pDisplayMode' information is required, if not given,
 		*    no fullscreen is possible!
@@ -85,7 +85,7 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 		*    - If 'pDisplayMode' is not given, default settings are used
 		*    - If no fullscreen mode, just the size from 'pDisplayMode' are used.
 		*/
-		PL_API RenderWindow(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = NULL, const PLRenderer::DisplayMode *pDisplayMode = NULL, bool bFullscreen = false);
+		PL_API RenderWindow(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr, const PLRenderer::DisplayMode *pDisplayMode = nullptr, bool bFullscreen = false);
 
 		/**
 		*  @brief

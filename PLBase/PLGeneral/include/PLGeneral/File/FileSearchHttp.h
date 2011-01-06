@@ -63,7 +63,7 @@ class FileSearchHttp : public FileSearchImpl {
 		*    Constructor
 		*
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		FileSearchHttp(const FileAccess *pAccess);
 

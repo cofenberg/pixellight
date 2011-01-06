@@ -117,7 +117,7 @@ class DynEvent {
 		*    Get event descriptor
 		*
 		*  @return
-		*    Descriptor (can be NULL)
+		*    Descriptor (can be a null pointer)
 		*/
 		PLCORE_API virtual const EventDesc *GetDesc() const;
 

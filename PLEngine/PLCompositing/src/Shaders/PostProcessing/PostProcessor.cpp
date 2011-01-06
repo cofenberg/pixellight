@@ -61,8 +61,8 @@ namespace PLCompositing {
 */
 PostProcessor::PostProcessor() :
 	m_nTextureFormat(TextureBuffer::R8G8B8A8),
-	m_pColorSurface(NULL),
-	m_pVertexBuffer(NULL),
+	m_pColorSurface(nullptr),
+	m_pVertexBuffer(nullptr),
 	m_bProcessing(false),
 	m_bFirstPostProcess(true),
 	m_fExtentX(1.0f),
@@ -70,7 +70,7 @@ PostProcessor::PostProcessor() :
 	m_nFixedFillModeBackup(0),
 	m_bCurrentRenderTarget(false)
 {
-	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
+	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
 	m_bClearRenderTarget[0] = m_bClearRenderTarget[1] = false;
 }
 
@@ -323,7 +323,7 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 			if (m_pColorSurface->GetTextureBuffer())
 				nType = m_pColorSurface->GetTextureBuffer()->GetType();
 			uint32 nKernel = 0;
-			Parameter *pParameter = NULL;
+			Parameter *pParameter = nullptr;
 			do {
 				pParameter = pMaterial->GetParameter(String::Format("PixelKernel[%d]", nKernel));
 				if (pParameter) {

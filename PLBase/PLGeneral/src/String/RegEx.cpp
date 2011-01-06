@@ -130,8 +130,8 @@ String RegEx::WildcardToRegEx(const String &sWildcard)
 *    Constructor
 */
 RegEx::RegEx() :
-	m_pPCRE(NULL),
-	m_pExtra(NULL),
+	m_pPCRE(nullptr),
+	m_pExtra(nullptr),
 	m_nFlags(MatchCaseSensitive | MatchGreedy),
 	m_nPosition(0)
 {
@@ -142,8 +142,8 @@ RegEx::RegEx() :
 *    Constructor
 */
 RegEx::RegEx(const String &sExpression, uint32 nFlags) :
-	m_pPCRE(NULL),
-	m_pExtra(NULL),
+	m_pPCRE(nullptr),
+	m_pExtra(nullptr),
 	m_nFlags(nFlags),
 	m_nPosition(0)
 {
@@ -156,8 +156,8 @@ RegEx::RegEx(const String &sExpression, uint32 nFlags) :
 *    Copy constructor
 */
 RegEx::RegEx(const RegEx &cRegEx) :
-	m_pPCRE(NULL),
-	m_pExtra(NULL),
+	m_pPCRE(nullptr),
+	m_pExtra(nullptr),
 	m_nFlags(cRegEx.m_nFlags),
 	m_nPosition(0)
 {
@@ -231,7 +231,7 @@ void RegEx::SetExpression(const String &sExpression, uint32 nFlags)
 bool RegEx::IsValid() const
 {
 	// Return valid flag
-	return (m_pPCRE != NULL);
+	return (m_pPCRE != nullptr);
 }
 
 /**
@@ -353,7 +353,7 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 					const int nNum = (pszEntry[0] << 8) | pszEntry[1];
 
 					// Get name
-					String sName = String::FromUTF8(&pszEntry[2]);
+					const String sName = String::FromUTF8(&pszEntry[2]);
 
 					// Get substring
 					const int nIndex0 = nMatches[nNum*2];
@@ -524,13 +524,13 @@ void RegEx::CompilePCRE()
 		int nErrorOffset;
 
 		// Compile regular expression
-		m_pPCRE = pcre_compile((const char*)m_sExpression.GetUTF8(), nOptions | PCRE_UTF8, &pszError, &nErrorOffset, NULL);
+		m_pPCRE = pcre_compile((const char*)m_sExpression.GetUTF8(), nOptions | PCRE_UTF8, &pszError, &nErrorOffset, nullptr);
 	} else {
 		const char *pszError;
 		int nErrorOffset;
 
 		// Compile regular expression
-		m_pPCRE = pcre_compile(m_sExpression.GetASCII(), nOptions, &pszError, &nErrorOffset, NULL);
+		m_pPCRE = pcre_compile(m_sExpression.GetASCII(), nOptions, &pszError, &nErrorOffset, nullptr);
 	}
 	if (!m_pPCRE) {
 		// Error!
@@ -546,8 +546,8 @@ void RegEx::FreePCRE()
 	// Free PCRE expression
 	if (m_pPCRE) {
 		pcre_free(m_pPCRE);
-		m_pPCRE  = NULL;
-		m_pExtra = NULL;
+		m_pPCRE  = nullptr;
+		m_pExtra = nullptr;
 	}
 }
 

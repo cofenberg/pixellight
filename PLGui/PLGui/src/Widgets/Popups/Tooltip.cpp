@@ -59,7 +59,7 @@ pl_implement_class(Tooltip)
 *    Constructor
 */
 Tooltip::Tooltip(Widget *pParent) : AbstractTooltip(pParent),
-	m_pLabel(NULL)
+	m_pLabel(nullptr)
 {
 	// Colors
 	Color4 cTooltipBackgroundColor(1.0f,  1.0f,  0.88f, 1.0f);

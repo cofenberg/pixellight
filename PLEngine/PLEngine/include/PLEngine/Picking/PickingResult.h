@@ -88,7 +88,7 @@ class PickingResult {
 		*    Returns the picked scene node
 		*
 		*  @return
-		*    The picked scene node, NULL on error
+		*    The picked scene node, a null pointer on error
 		*/
 		PL_API PLScene::SceneNode *GetSceneNode() const;
 
@@ -124,7 +124,7 @@ class PickingResult {
 		*    Returns the scene container the picking line and distance is in
 		*
 		*  @return
-		*    The scene container the picking line and distance is in, NULL on error (in this case result is scene node space)
+		*    The scene container the picking line and distance is in, a null pointer on error (in this case result is scene node space)
 		*/
 		PL_API PLScene::SceneContainer *GetSceneContainer() const;
 
@@ -192,11 +192,11 @@ class PickingResult {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLScene::SceneNode		*m_pSceneNode;				/**< Current picked scene node, can be NULL */
+		PLScene::SceneNode		*m_pSceneNode;				/**< Current picked scene node, can be a null pointer */
 		PLGeneral::uint32		 m_nGeometry;				/**< Picked geometry */
 		PLGeneral::uint32		 m_nTriangle;				/**< Picked triangle */
 		PLMath::Vector3			 m_vPoint;					/**< Picked point in node space */
-		PLScene::SceneContainer	*m_pSceneContainer;			/**< Scene container our line start position and squared distance are in, can be NULL */
+		PLScene::SceneContainer	*m_pSceneContainer;			/**< Scene container our line start position and squared distance are in, can be a null pointer */
 		PLMath::Vector3			 m_vLineStartPos;			/**< Line start position, see 'm_pSceneContainer' */
 		float					 m_fNearestSquaredDistance;	/**< Nearest squared distance to the line start position, less 0 means 'not initialized yet', see 'm_pSceneContainer' */
 

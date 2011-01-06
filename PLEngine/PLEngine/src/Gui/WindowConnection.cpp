@@ -142,7 +142,7 @@ void WindowConnection::SetDisplayMode(const DisplayMode &sDisplayMode)
 				// Backup information
 				bool			bFullscreen = IsFullscreen();
 				SurfacePainter *pPainter    = GetSurface()->GetPainter();
-				GetSurface()->SetPainter(NULL, false);
+				GetSurface()->SetPainter(nullptr, false);
 
 				// De-init window
 				DeInit();
@@ -241,7 +241,7 @@ void WindowConnection::SetFullscreen(bool bFullscreen)
 		if (pSurface && pSurface->GetWindow()) {
 			// Backup information
 			SurfacePainter *pPainter = GetSurface()->GetPainter();
-			GetSurface()->SetPainter(NULL, false);
+			GetSurface()->SetPainter(nullptr, false);
 
 			// De-init window
 			DeInit();
@@ -304,7 +304,7 @@ void WindowConnection::OnFullscreenMode()
 *    Copy constructor
 */
 WindowConnection::WindowConnection(const WindowConnection &cSource) :
-	m_pWidget(NULL),
+	m_pWidget(nullptr),
 	m_bFullscreenMode(false),
 	m_bToggleFullscreenMode(false),
 	m_bFullscreenAltTab(false),

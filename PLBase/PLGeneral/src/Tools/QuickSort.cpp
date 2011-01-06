@@ -41,9 +41,9 @@ namespace PLGeneral {
 *    Constructor
 */
 QuickSort::QuickSort() :
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nElementSize(0),
-	m_pTemp(NULL)
+	m_pTemp(nullptr)
 {
 }
 
@@ -62,7 +62,8 @@ QuickSort::~QuickSort()
 bool QuickSort::Sort(void *pData, uint32 nNumOfElements, uint32 nElementSize)
 {
 	// Check parameters
-	if (!pData || !nElementSize) return false; // Error!
+	if (!pData || !nElementSize)
+		return false; // Error!
 
 	// Already 'sorted'? (no elements are sorted *g*)
 	if (nNumOfElements) {
@@ -76,7 +77,7 @@ bool QuickSort::Sort(void *pData, uint32 nNumOfElements, uint32 nElementSize)
 
 		// Cleanup
 		delete [] m_pTemp;
-		m_pTemp = NULL;
+		m_pTemp = nullptr;
 	}
 
 	// Done
@@ -92,9 +93,9 @@ bool QuickSort::Sort(void *pData, uint32 nNumOfElements, uint32 nElementSize)
 *    Copy constructor
 */
 QuickSort::QuickSort(const QuickSort &cSource) :
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nElementSize(0),
-	m_pTemp(NULL)
+	m_pTemp(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -123,13 +124,16 @@ void QuickSort::SortRec(uint8 *pLeftStart, uint8 *pRightStart)
 	uint8 *pRight = pRightStart;
 	while (pLeft<pRight) {
 		// Find left element to swap
-		while (Compare(pLeft, pPivot) < 0)  pLeft  += m_nElementSize;
+		while (Compare(pLeft, pPivot) < 0)
+			pLeft  += m_nElementSize;
 
 		// Find right element to swap
-		while (Compare(pRight, pPivot) > 0) pRight -= m_nElementSize;
+		while (Compare(pRight, pPivot) > 0)
+			pRight -= m_nElementSize;
 
 		// Finished?
-		if (pLeft >= pRight) break;
+		if (pLeft >= pRight)
+			break;
 
 		// Swap the two elements
 		MemoryManager::Copy(m_pTemp, pLeft,   m_nElementSize);
@@ -147,10 +151,12 @@ void QuickSort::SortRec(uint8 *pLeftStart, uint8 *pRightStart)
 	MemoryManager::Copy(pLeft,   m_pTemp, m_nElementSize);
 
 	// Left recursion
-	if (pLeft-m_nElementSize > pLeftStart)  SortRec(pLeftStart,			  pLeft-m_nElementSize);
+	if (pLeft-m_nElementSize > pLeftStart)
+		SortRec(pLeftStart,	pLeft-m_nElementSize);
 
 	// Right recursion
-	if (pLeft+m_nElementSize < pRightStart) SortRec(pLeft+m_nElementSize, pRightStart);
+	if (pLeft+m_nElementSize < pRightStart)
+		SortRec(pLeft+m_nElementSize, pRightStart);
 }
 
 

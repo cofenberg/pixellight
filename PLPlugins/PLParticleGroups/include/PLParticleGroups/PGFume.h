@@ -174,8 +174,7 @@ class PGFume : public PLScene::SNParticleGroup {
 	//[ Public virtual PLScene::SNParticleGroup functions     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "",
-									   const void *pData = NULL);
+		virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);
 	
 
 };

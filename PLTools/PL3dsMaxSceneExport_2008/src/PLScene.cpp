@@ -48,7 +48,7 @@ using namespace PLGeneral;
 *    Constructor
 */
 PLScene::PLScene(Interface &cMaxInterface, IGameScene &cIGame, int nProgressMin, int nProgressMax, const char szApplicationDrive[], const char szApplicationDir[]) :
-	PLSceneContainer(NULL, g_SEOptions.sFilenameOnly, TypeScene),
+	PLSceneContainer(nullptr, g_SEOptions.sFilenameOnly, TypeScene),
 	m_pMaxInterface(&cMaxInterface),
 	m_pIGame(&cIGame),
 	m_nTotalNumOfMaxNodes(cIGame.GetTotalNodeCount()),
@@ -166,7 +166,7 @@ PLSceneNode *PLScene::GetPLSceneNode(INode &cMaxNode)
 	std::string sKey = "XXXXXXXXXXXXXXXXXXXX";
 	sprintf((char*)sKey.c_str(), "%19p", &cMaxNode);
 	std::map<std::string, PLSceneNode*>::iterator pIterator = m_mapMaxToPLNodes.find(sKey);
-	return pIterator == m_mapMaxToPLNodes.end() ? NULL : pIterator->second;
+	return pIterator == m_mapMaxToPLNodes.end() ? nullptr : pIterator->second;
 }
 
 /**
@@ -481,7 +481,7 @@ PLSceneMaterial *PLScene::GetMaterial(Mtl &cMaxMaterial) const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -515,7 +515,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 				g_pLog->LogFLine(PLLog::Error, "Material '%s' is a dangerous name, we demand to NOT to use absolute filenames as material names!", pszName);
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 			sName = pszName;
 
@@ -526,7 +526,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 			// Material with no name found - ignore it!
 
 			// Error!
-			return NULL;
+			return nullptr;
 		}
 
 		int nIndex = 0;
@@ -556,13 +556,13 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 		// [TODO] Don't use the 3ds Max material directly!
 		Mtl *pMaxMat = cIGameMaterial.GetMaxMaterial();
 		if (!pMaxMat)
-			return NULL;
+			return nullptr;
 
 		// See if it's a standard material
-		StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMat : NULL;
+		StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMat : nullptr;
 
 		// Do NOT create material files, do ONLY use the first found active texture...
-		BitmapTex *pBitmapTex = NULL;
+		BitmapTex *pBitmapTex = nullptr;
 		for (int nSlot=0; nSlot<pMaxMat->NumSubTexmaps(); nSlot++) {
 			// If this is a standard material, is the map enabled?
 			if (!pMaxStandardMat || pMaxStandardMat->MapEnabled(nSlot)) {

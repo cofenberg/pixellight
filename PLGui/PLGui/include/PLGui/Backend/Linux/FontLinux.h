@@ -72,7 +72,7 @@ class FontLinux : public FontImpl {
 		*    Get X font
 		*
 		*  @return
-		*    Pointer to font, can be NULL
+		*    Pointer to font, can be a null pointer
 		*/
 		PLGUI_API XFontStruct *GetXFont() const;
 
@@ -99,7 +99,7 @@ class FontLinux : public FontImpl {
 	//[-------------------------------------------------------]
 	private:
 		Display			  *m_pDisplay;	/**< X Display */
-		XFontStruct		  *m_pXFont;	/**< Pointer to X-Font, can be NULL */
+		XFontStruct		  *m_pXFont;	/**< Pointer to X-Font, can be a null pointer */
 		PLGeneral::uint32  m_nHeight;	/**< Font height */
 
 

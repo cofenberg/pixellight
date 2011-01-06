@@ -46,12 +46,12 @@ namespace PLScene {
 const VisContainer *VisNode::GetVisRootContainer() const
 {
 	if (m_pParent) {
-		const SQCull *pSceneQuery = NULL;
+		const SQCull *pSceneQuery = nullptr;
 		if (m_pParent->IsContainer())
 			pSceneQuery = ((VisContainer*)m_pParent)->GetCullQuery();
 		else if (m_pParent->IsPortal())
 			pSceneQuery = ((VisContainer*)m_pParent->GetParent())->GetCullQuery();
-		return pSceneQuery ? pSceneQuery->GetVisRootContainer() : NULL;
+		return pSceneQuery ? pSceneQuery->GetVisRootContainer() : nullptr;
 	} else {
 		return (VisContainer*)this;
 	}

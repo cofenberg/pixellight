@@ -67,7 +67,7 @@ SRPDeferredDepthFog::SRPDeferredDepthFog() :
 	FogEnd(this),
 	FogDensity(this),
 	Flags(this),
-	m_pProgramGenerator(NULL)
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -110,7 +110,7 @@ void SRPDeferredDepthFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						// If there's an previous instance of the program generator, destroy it first
 						if (m_pProgramGenerator) {
 							delete m_pProgramGenerator;
-							m_pProgramGenerator = NULL;
+							m_pProgramGenerator = nullptr;
 						}
 
 						// Choose the shader source codes depending on the requested shader language

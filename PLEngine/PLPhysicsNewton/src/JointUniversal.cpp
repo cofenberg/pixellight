@@ -129,16 +129,16 @@ JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParen
 		((BodyImpl&)pChildBody ->GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent and child bodies
-	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : NULL;
-	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : NULL;
+	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
 
 
 	// [TODO] ??
 	/*
 	if (pNewtonParentBody)
-		NewtonBodySetUserData(pNewtonParentBody, NULL);
+		NewtonBodySetUserData(pNewtonParentBody, nullptr);
 	if (pNewtonChildBody)
-		NewtonBodySetUserData(pNewtonChildBody, NULL);
+		NewtonBodySetUserData(pNewtonChildBody, nullptr);
 	*/
 
 

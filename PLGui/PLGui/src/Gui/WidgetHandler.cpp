@@ -49,7 +49,7 @@ namespace PLGui {
 */
 WidgetHandler::WidgetHandler() :
 	EventHandlerDestroy(&WidgetHandler::OnWidgetDestroy, this),
-	m_pWidget(NULL)
+	m_pWidget(nullptr)
 {
 }
 
@@ -58,7 +58,7 @@ WidgetHandler::WidgetHandler() :
 *    Copy constructor
 */
 WidgetHandler::WidgetHandler(const WidgetHandler &cOther) :
-	m_pWidget(NULL)
+	m_pWidget(nullptr)
 {
 	// Set widget pointer
 	SetWidget(cOther.m_pWidget);
@@ -118,7 +118,7 @@ void WidgetHandler::Clear()
 		m_pWidget->EventDestroy.Disconnect(&EventHandlerDestroy);
 
 		// Reset widget pointer
-		m_pWidget = NULL;
+		m_pWidget = nullptr;
 	}
 }
 
@@ -129,7 +129,7 @@ void WidgetHandler::Clear()
 bool WidgetHandler::IsValid() const
 {
 	// Check if pointer is set
-	return (m_pWidget != NULL);
+	return (m_pWidget != nullptr);
 }
 
 /**

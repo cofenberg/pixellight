@@ -224,7 +224,7 @@ void UTF8ToolsTest::Test()
 	if (UTF8Tools::FindCharacter(pszUTF8String1, nWideCharacter1, &nTemp) != pszUTF8String1   || nTemp != 0) bResult = false;
 	if (UTF8Tools::FindCharacter(pszUTF8String1, nWideCharacter2, &nTemp) != pszUTF8String1+3 || nTemp != 1) bResult = false;
 	if (UTF8Tools::FindCharacter(pszUTF8String1, nWideCharacter3, &nTemp) != pszUTF8String1+6 || nTemp != 2) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, 55,			  &nTemp) != NULL			  || nTemp != 0) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, 55,			  &nTemp) != nullptr		  || nTemp != 0) bResult = false;
 	EndTask(bResult);
 
 	// FindCharacter(const char szString[], uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex)
@@ -233,8 +233,8 @@ void UTF8ToolsTest::Test()
 	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), nWideCharacter1, &nTemp) != pszUTF8String1   || nTemp != 0) bResult = false;
 	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), nWideCharacter2, &nTemp) != pszUTF8String1+3 || nTemp != 1) bResult = false;
 	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), nWideCharacter3, &nTemp) != pszUTF8String1+6 || nTemp != 2) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), 55,				 &nTemp) != NULL			 || nTemp != 0) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, 3,										nWideCharacter2, &nTemp) != NULL			 || nTemp != 0) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), 55,				 &nTemp) != nullptr			 || nTemp != 0) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, 3,										nWideCharacter2, &nTemp) != nullptr			 || nTemp != 0) bResult = false;
 	EndTask(bResult);
 
 	// FromWideCharacter(char szDestination[], wchar_t nWideCharacter)
@@ -249,7 +249,7 @@ void UTF8ToolsTest::Test()
 	// FromWideCharacterString(char *pszDestination, uint32 nNumOfBytes, wchar_t szSource[], uint32 nSourceLength)
 	StartTask("FromWideCharacterString(char *pszDestination, uint32 nNumOfBytes, wchar_t szSource[], uint32 nSourceLength)");
 	bResult = true;
-	if (UTF8Tools::FromWideCharacterString(NULL, 0, pszWCharString1, 0) != 9) bResult = false;
+	if (UTF8Tools::FromWideCharacterString(nullptr, 0, pszWCharString1, 0) != 9) bResult = false;
 	if (UTF8Tools::FromWideCharacterString(szUTF8Temp, 256, pszWCharString1, 0) == 9) {
 		// Is the result correct?
 		if (strncmp((char*)szUTF8Temp, (char*)pszUTF8String1, 3)) bResult = false;
@@ -268,7 +268,7 @@ void UTF8ToolsTest::Test()
 	// EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, wchar_t nWideCharacter)
 	StartTask("EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, wchar_t nWideCharacter)");
 	bResult = true;
-	if (UTF8Tools::EscapeWideCharacter(NULL, 0, nWideCharacter1) != strlen(pszASCIICharacter1)) bResult = false;
+	if (UTF8Tools::EscapeWideCharacter(nullptr, 0, nWideCharacter1) != strlen(pszASCIICharacter1)) bResult = false;
 	if (UTF8Tools::EscapeWideCharacter(szASCIITemp, 256, nWideCharacter1) == strlen(pszASCIICharacter1)) {
 		// Is the result correct? (not case sensitive...)
 		if (_stricmp(szASCIITemp, pszASCIICharacter1))
@@ -279,7 +279,7 @@ void UTF8ToolsTest::Test()
 	// Escape(char *pszDestination, uint32 nNumOfBytes, const char szSource[], bool bEscapeQuotes)
 	StartTask("Escape(char *pszDestination, uint32 nNumOfBytes, const char szSource[], bool bEscapeQuotes)");
 	bResult = true;
-	if (UTF8Tools::Escape(NULL, 0, pszUTF8String1, true) != strlen(pszASCIIString1)) bResult = false;
+	if (UTF8Tools::Escape(nullptr, 0, pszUTF8String1, true) != strlen(pszASCIIString1)) bResult = false;
 	if (UTF8Tools::Escape(szASCIITemp, 256, pszUTF8String1, true) == strlen(pszASCIIString1)) {
 		// Is the result correct? (not case sensitive...)
 		if (_stricmp(szASCIITemp, pszASCIIString1)) bResult = false;
@@ -296,7 +296,7 @@ void UTF8ToolsTest::Test()
 	// Unescape(char *pszDestination, uint32 nNumOfBytes, const char szSource[])
 	StartTask("Unescape(char *pszDestination, uint32 nNumOfBytes, const char szSource[])");
 	bResult = true;
-	if (UTF8Tools::Unescape(NULL, 0, pszASCIIString1) != strlen((char*)pszUTF8String1)) bResult = false;
+	if (UTF8Tools::Unescape(nullptr, 0, pszASCIIString1) != strlen((char*)pszUTF8String1)) bResult = false;
 	if (UTF8Tools::Unescape(szUTF8Temp, 256, pszASCIIString1) == strlen((char*)pszUTF8String1)) {
 		// Is the result correct?
 		if (strcmp((char*)szUTF8Temp, (char*)pszUTF8String1)) bResult = false;

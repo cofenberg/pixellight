@@ -41,7 +41,7 @@ namespace PLSound {
 *    Constructor
 */
 ResourceHandler::ResourceHandler() :
-	m_pResource(NULL)
+	m_pResource(nullptr)
 {
 }
 
@@ -50,7 +50,7 @@ ResourceHandler::ResourceHandler() :
 *    Copy constructor
 */
 ResourceHandler::ResourceHandler(const ResourceHandler &cSource) :
-	m_pResource(NULL)
+	m_pResource(nullptr)
 {
 	if (cSource.m_pResource) {
 		m_pResource = cSource.m_pResource;

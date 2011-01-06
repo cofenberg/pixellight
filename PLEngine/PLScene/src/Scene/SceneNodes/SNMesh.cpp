@@ -130,7 +130,7 @@ SNMesh::SNMesh() :
 	Skin(this),
 	Flags(this),
 	DebugFlags(this),
-	m_pMeshHandler(NULL)
+	m_pMeshHandler(nullptr)
 {
 }
 
@@ -169,7 +169,7 @@ bool SNMesh::LoadMesh(const String &sFilename, const String &sParams, const Stri
 				// Perform some mesh operations
 				if ((GetFlags() & CalculateNormals) || (GetFlags() & CalculateTSVs) || (GetFlags() & GenerateStrips)) {
 					MeshMorphTarget *pMorphTarget = pMesh->GetMorphTarget(0);
-					VertexBuffer *pVertexBuffer = pMorphTarget ? pMorphTarget->GetVertexBuffer() : NULL;
+					VertexBuffer *pVertexBuffer = pMorphTarget ? pMorphTarget->GetVertexBuffer() : nullptr;
 					if (pVertexBuffer) {
 						// Calculate the normal vectors
 						if ((GetFlags() & CalculateNormals) && !pVertexBuffer->GetData(0, VertexBuffer::Normal))
@@ -382,7 +382,7 @@ bool SNMesh::UnloadMesh()
 		// Clear handler
 		m_pMeshHandler->SetMesh();
 		delete m_pMeshHandler;
-		m_pMeshHandler = NULL;
+		m_pMeshHandler = nullptr;
 	}
 
 	// Done

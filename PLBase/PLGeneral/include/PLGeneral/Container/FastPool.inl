@@ -78,10 +78,10 @@ FastPoolElement<ValueType> &FastPoolElement<ValueType>::operator =(const FastPoo
 template <class ValueType>
 FastPool<ValueType>::FastPool() :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL),
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr),
 	m_nNumOfFreeElements(0),
-	m_pFirstFreeElement(NULL)
+	m_pFirstFreeElement(nullptr)
 {
 }
 
@@ -92,10 +92,10 @@ FastPool<ValueType>::FastPool() :
 template <class ValueType>
 FastPool<ValueType>::FastPool(const FastPool<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL),
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr),
 	m_nNumOfFreeElements(0),
-	m_pFirstFreeElement(NULL)
+	m_pFirstFreeElement(nullptr)
 {
 	// Copy
 	Copy((Container<ValueType>&)lstSource, nStart, nCount);
@@ -108,10 +108,10 @@ FastPool<ValueType>::FastPool(const FastPool<ValueType> &lstSource, uint32 nStar
 template <class ValueType>
 FastPool<ValueType>::FastPool(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL),
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr),
 	m_nNumOfFreeElements(0),
-	m_pFirstFreeElement(NULL)
+	m_pFirstFreeElement(nullptr)
 {
 	// Copy
 	Copy(lstSource, nStart, nCount);
@@ -177,8 +177,8 @@ void FastPool<ValueType>::FreeElements()
 
 		// Clear the list of current used elements
 		m_nNumOfElements = 0;
-		m_pFirstElement  = NULL;
-		m_pLastElement   = NULL;
+		m_pFirstElement  = nullptr;
+		m_pLastElement   = nullptr;
 	}
 }
 
@@ -199,7 +199,7 @@ void FastPool<ValueType>::RemoveAllFreeElements()
 
 	// Init data
 	m_nNumOfFreeElements = 0;
-	m_pFirstFreeElement  = NULL;
+	m_pFirstFreeElement  = nullptr;
 }
 
 /**
@@ -265,7 +265,7 @@ ValueType &FastPool<ValueType>::AddElement()
 		m_pFirstFreeElement = m_pFirstFreeElement->m_pNextElement;
 
 		// Setting the previous element is not really required here :)
-		// if (m_pFirstFreeElement) m_pFirstFreeElement->m_pPreviousElement = NULL;
+		// if (m_pFirstFreeElement) m_pFirstFreeElement->m_pPreviousElement = nullptr;
 
 		// Decrease the number of free elements
 		m_nNumOfFreeElements--;
@@ -352,8 +352,8 @@ void FastPool<ValueType>::Clear()
 
 	// Init data
 	m_nNumOfElements = 0;
-	m_pFirstElement  = NULL;
-	m_pLastElement   = NULL;
+	m_pFirstElement  = nullptr;
+	m_pLastElement   = nullptr;
 
 	// Same for the free elements
 	RemoveAllFreeElements();
@@ -531,7 +531,7 @@ ValueType &FastPool<ValueType>::Add()
 {
 	// Create the new pool element
 	ValueType &cNewElement = AddElement();
-	cNewElement.m_pNextElement     = NULL;
+	cNewElement.m_pNextElement     = nullptr;
 	cNewElement.m_pPreviousElement = m_pLastElement;
 
 	// Add the new pool element to the pool
@@ -553,7 +553,7 @@ ValueType &FastPool<ValueType>::Add(const ValueType &Element)
 	// Create the new pool element
 	ValueType &cNewElement = AddElement();
 	cNewElement					   = Element;
-	cNewElement.m_pNextElement	   = NULL;
+	cNewElement.m_pNextElement	   = nullptr;
 	cNewElement.m_pPreviousElement = m_pLastElement;
 
 	// Add the new pool element to the pool

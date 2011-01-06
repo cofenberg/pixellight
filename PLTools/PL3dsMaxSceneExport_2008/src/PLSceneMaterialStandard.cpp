@@ -70,7 +70,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 		float fReflectionColor = 1.0f;
 
 		// See if it's a standard material
-		StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMaterial : NULL;
+		StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMaterial : nullptr;
 
 		// Textures
 		for (int nSlot=0; nSlot<pMaxMaterial->NumSubTexmaps(); nSlot++) {

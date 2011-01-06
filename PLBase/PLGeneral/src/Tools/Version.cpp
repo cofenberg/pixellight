@@ -186,16 +186,19 @@ String Version::ToString() const
 	String sVersion;
 
 	// "Name "
-	if (m_sName.GetLength()) sVersion = m_sName + " ";
+	if (m_sName.GetLength())
+		sVersion = m_sName + " ";
 
 	// "Major.Minor.Patch"
 	sVersion += String() + (int)m_nMajor + "." + (int)m_nMinor + "." + (int)m_nPatch;
 
 	// "-release"
-	if (m_sRelease.GetLength())  sVersion += "-" + m_sRelease;
+	if (m_sRelease.GetLength())
+		sVersion += "-" + m_sRelease;
 
 	// " - Codename"
-	if (m_sCodename.GetLength()) sVersion += " - " + m_sCodename;
+	if (m_sCodename.GetLength())
+		sVersion += " - " + m_sCodename;
 
 	// Done
 	return sVersion;
@@ -228,13 +231,16 @@ bool Version::operator !=(const Version &cVersion) const
 bool Version::operator >=(const Version &cVersion) const
 {
 	// Major
-	if (m_nMajor > cVersion.m_nMajor) return true;
+	if (m_nMajor > cVersion.m_nMajor)
+		return true;
 	else if (m_nMajor == cVersion.m_nMajor) {
 		// Minor
-		if (m_nMinor > cVersion.m_nMinor) return true;
+		if (m_nMinor > cVersion.m_nMinor)
+			return true;
 		else if (m_nMinor == cVersion.m_nMinor) {
 			// Patch
-			if (m_nPatch > cVersion.m_nPatch) return true;
+			if (m_nPatch > cVersion.m_nPatch)
+				return true;
 		}
 	}
 	return false;
@@ -243,13 +249,16 @@ bool Version::operator >=(const Version &cVersion) const
 bool Version::operator <=(const Version &cVersion) const
 {
 	// Major
-	if (m_nMajor < cVersion.m_nMajor) return true;
+	if (m_nMajor < cVersion.m_nMajor)
+		return true;
 	else if (m_nMajor == cVersion.m_nMajor) {
 		// Minor
-		if (m_nMinor < cVersion.m_nMinor) return true;
+		if (m_nMinor < cVersion.m_nMinor)
+			return true;
 		else if (m_nMinor == cVersion.m_nMinor) {
 			// Patch
-			if (m_nPatch < cVersion.m_nPatch) return true;
+			if (m_nPatch < cVersion.m_nPatch)
+				return true;
 		}
 	}
 	return false;
@@ -258,13 +267,16 @@ bool Version::operator <=(const Version &cVersion) const
 bool Version::operator >(const Version &cVersion) const
 {
 	// Major
-	if (m_nMajor > cVersion.m_nMajor) return true;
+	if (m_nMajor > cVersion.m_nMajor)
+		return true;
 	else if (m_nMajor == cVersion.m_nMajor) {
 		// Minor
-		if (m_nMinor > cVersion.m_nMinor) return true;
+		if (m_nMinor > cVersion.m_nMinor)
+			return true;
 		else if (m_nMinor == cVersion.m_nMinor) {
 			// Patch
-			if (m_nPatch > cVersion.m_nPatch) return true;
+			if (m_nPatch > cVersion.m_nPatch)
+				return true;
 		}
 	}
 	return false;
@@ -273,13 +285,16 @@ bool Version::operator >(const Version &cVersion) const
 bool Version::operator <(const Version &cVersion) const
 {
 	// Major
-	if (m_nMajor < cVersion.m_nMajor) return true;
+	if (m_nMajor < cVersion.m_nMajor)
+		return true;
 	else if (m_nMajor == cVersion.m_nMajor) {
 		// Minor
-		if (m_nMinor < cVersion.m_nMinor) return true;
+		if (m_nMinor < cVersion.m_nMinor)
+			return true;
 		else if (m_nMinor == cVersion.m_nMinor) {
 			// Patch
-			if (m_nPatch < cVersion.m_nPatch) return true;
+			if (m_nPatch < cVersion.m_nPatch)
+				return true;
 		}
 	}
 	return false;

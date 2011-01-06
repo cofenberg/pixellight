@@ -60,10 +60,10 @@ VertexBuffer::~VertexBuffer()
 *    Constructor
 */
 VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::VertexBuffer(cRenderer),
-	m_pVertexBuffer(NULL),
-	m_pVertexDeclaration(NULL),
-	m_pData(NULL),
-	m_pLockedData(NULL),
+	m_pVertexBuffer(nullptr),
+	m_pVertexDeclaration(nullptr),
+	m_pData(nullptr),
+	m_pLockedData(nullptr),
 	m_nUsageAPI(0)
 {
 	// Init data
@@ -229,7 +229,7 @@ void VertexBuffer::DestroyVertexDeclaration()
 {
 	if (m_pVertexDeclaration) {
 		m_pVertexDeclaration->Release();
-		m_pVertexDeclaration = NULL;
+		m_pVertexDeclaration = nullptr;
 	}
 }
 
@@ -253,7 +253,7 @@ void *VertexBuffer::GetData(uint32 nIndex, uint32 nSemantic, uint32 nChannel)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 Color4 VertexBuffer::GetColor(uint32 nIndex, uint32 nChannel)
@@ -346,7 +346,7 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 //[-------------------------------------------------------]
 bool VertexBuffer::IsAllocated() const
 {
-	return (m_pVertexBuffer != NULL || m_pData != NULL);
+	return (m_pVertexBuffer != nullptr || m_pData != nullptr);
 }
 
 bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
@@ -383,7 +383,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// If the buffer is already allocated...
-		uint8 *pDataBackup = NULL;
+		uint8 *pDataBackup = nullptr;
 		uint32 nSizeBackup = m_nSize;
 		if (m_pData && m_nSize != m_nVertexSize*nElements) {
 			// Backup the current data
@@ -392,7 +392,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 			// Delete data
 			delete [] m_pData;
-			m_pData = NULL;
+			m_pData = nullptr;
 		} else if (m_pVertexBuffer && Lock(PLRenderer::Lock::ReadOnly)) {
 			// Backup the current data
 			pDataBackup = new uint8[m_nSize];
@@ -401,7 +401,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 			// Delete vertex buffer object
 			m_pVertexBuffer->Release();
-			m_pVertexBuffer = NULL;
+			m_pVertexBuffer = nullptr;
 		}
 		ForceUnlock();
 
@@ -419,7 +419,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 			// Create the Direct3D vertex buffer
 			if (pDevice->CreateVertexBuffer(m_nSize, m_nUsageAPI,
 											0, m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
-											&m_pVertexBuffer, NULL) != D3D_OK)
+											&m_pVertexBuffer, nullptr) != D3D_OK)
 				return false; // Error!
 
 			// Create vertex declaration
@@ -467,10 +467,10 @@ bool VertexBuffer::Clear()
 	DestroyVertexDeclaration();
 	if (m_pVertexBuffer) {
 		m_pVertexBuffer->Release();
-		m_pVertexBuffer = NULL;
+		m_pVertexBuffer = nullptr;
 	} else if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	} else {
 		// Error!
 		return false;
@@ -494,7 +494,7 @@ void *VertexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's a vertex buffer
 	if (!m_pVertexBuffer && !m_pData)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Check whether the vertex buffer is already locked
 	m_nLockCount++;
@@ -508,13 +508,13 @@ void *VertexBuffer::Lock(uint32 nFlag)
 		else if (nFlag == PLRenderer::Lock::ReadWrite)
 			nFlagAPI = 0;
 		else
-			return NULL; // Error!
+			return nullptr; // Error!
 
 		// Lock the vertex buffer
 		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
 		m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 		if (m_pVertexBuffer && m_pVertexBuffer->Lock(0, 0, &m_pLockedData, nFlagAPI) != D3D_OK)
-			return NULL; // Error!
+			return nullptr; // Error!
 		if (m_pData)
 			m_pLockedData = m_pData;
 
@@ -542,7 +542,7 @@ bool VertexBuffer::Unlock()
 	m_nLockCount--;
 	if (!m_nLockCount) {
 		// Unlock the vertex buffer
-		m_pLockedData = NULL;
+		m_pLockedData = nullptr;
 		if (m_pVertexBuffer && m_pVertexBuffer->Unlock() != D3D_OK)
 			return false; // Error!
 		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
@@ -561,7 +561,7 @@ void VertexBuffer::BackupDeviceData(uint8 **ppBackup)
 	// Backup required?
 	if (m_bManaged || GetUsage() >= PLRenderer::Usage::Software) {
 		// Nope, D3D will do the dirty work for us if required!
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	} else {
 		// Backup data
 		if (Lock(PLRenderer::Lock::ReadOnly)) {
@@ -569,13 +569,13 @@ void VertexBuffer::BackupDeviceData(uint8 **ppBackup)
 			MemoryManager::Copy(ppBackup, GetData(), m_nSize);
 			ForceUnlock();
 		} else {
-			*ppBackup = NULL;
+			*ppBackup = nullptr;
 		}
 
 		// Release the vertex buffer
 		if (m_pVertexBuffer) {
 			m_pVertexBuffer->Release();
-			m_pVertexBuffer = NULL;
+			m_pVertexBuffer = nullptr;
 		}
 		DestroyVertexDeclaration();
 	}
@@ -588,7 +588,7 @@ void VertexBuffer::RestoreDeviceData(uint8 **ppBackup)
 		// Restore data
 		((Renderer&)GetRenderer()).GetDevice()->CreateVertexBuffer(m_nSize,
 																   m_nUsageAPI, 0, m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
-																   &m_pVertexBuffer, NULL);
+																   &m_pVertexBuffer, nullptr);
 		CreateVertexDeclaration();
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);

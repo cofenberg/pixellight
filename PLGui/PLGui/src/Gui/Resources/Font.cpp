@@ -45,7 +45,7 @@ namespace PLGui {
 */
 Font::Font(Gui &cGui) :
 	m_pGui(&cGui),
-	m_pFontImpl(NULL),
+	m_pFontImpl(nullptr),
 	m_sFamily(),
 	m_nHeight(0),
 	m_nWeight(WeightNormal),
@@ -62,7 +62,7 @@ Font::Font(Gui &cGui) :
 */
 Font::Font(Gui &cGui, const String &sFamily, uint32 nHeight, EFontWeight nWeight, EFontStyle nStyle) :
 	m_pGui(&cGui),
-	m_pFontImpl(NULL),
+	m_pFontImpl(nullptr),
 	m_sFamily(sFamily),
 	m_nHeight(nHeight),
 	m_nWeight(nWeight),
@@ -79,7 +79,7 @@ Font::Font(Gui &cGui, const String &sFamily, uint32 nHeight, EFontWeight nWeight
 */
 Font::Font(Gui &cGui, const FontInfo &cFontInfo) :
 	m_pGui(&cGui),
-	m_pFontImpl(NULL),
+	m_pFontImpl(nullptr),
 	m_sFamily(cFontInfo.GetFamily()),
 	m_nHeight(cFontInfo.GetHeight()),
 	m_nWeight(cFontInfo.GetWeight()),
@@ -129,7 +129,7 @@ Font &Font::operator =(const Font &cFont)
 	// Release font
 	if (m_pFontImpl) {
 		m_pFontImpl->Release();
-		m_pFontImpl = NULL;
+		m_pFontImpl = nullptr;
 	}
 
 	// Copy font
@@ -176,7 +176,7 @@ bool Font::Load(const String &sFamily, uint32 nHeight, EFontWeight nWeight, EFon
 	// Release font
 	if (m_pFontImpl) {
 		m_pFontImpl->Release();
-		m_pFontImpl = NULL;
+		m_pFontImpl = nullptr;
 	}
 
 	// Save font data
@@ -203,7 +203,7 @@ bool Font::LoadFromFile(const String &sFilename, uint32 nHeight)
 	// Release font
 	if (m_pFontImpl) {
 		m_pFontImpl->Release();
-		m_pFontImpl = NULL;
+		m_pFontImpl = nullptr;
 	}
 
 	// Save font data

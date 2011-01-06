@@ -97,7 +97,7 @@ SCMirror::~SCMirror()
 			m_pMeshHandler->SetMesh();
 		}
 		delete m_pMeshHandler;
-		m_pMeshHandler = NULL;
+		m_pMeshHandler = nullptr;
 	}
 }
 
@@ -248,7 +248,7 @@ MeshHandler *SCMirror::GetMeshHandler()
 {
 	// [TODO] Checkme
 //	return m_pMeshHandler;
-	return NULL;
+	return nullptr;
 }
 
 void SCMirror::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)

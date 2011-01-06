@@ -99,10 +99,10 @@ Time::EDay Time::CalculateDayOfWeek(uint8 nDayOfMonth, EMonth nMonth, uint16 nYe
 	int nDayOfWeek = a + b - c;
 	int nCurrentMonth = nMonth;
 	while (nCurrentMonth--) {
-		if (nCurrentMonth == 1 || nCurrentMonth == 3 || nCurrentMonth == 5 ||
-			nCurrentMonth == 7 || nCurrentMonth == 8 || nCurrentMonth == 10)
+		if (nCurrentMonth == 1 || nCurrentMonth == 3 || nCurrentMonth == 5 || nCurrentMonth == 7 || nCurrentMonth == 8 || nCurrentMonth == 10)
 			nDayOfWeek += 31;
-		else nDayOfWeek += (nCurrentMonth != 2) ? 30 : nFebruaryDays;
+		else
+			nDayOfWeek += (nCurrentMonth != 2) ? 30 : nFebruaryDays;
 	}
 	nDayOfWeek += nDayOfMonth + 3;
 	nDayOfWeek %= 7;
@@ -384,17 +384,21 @@ void Time::SetUnixDate(uint32 nUnixDate)
 	uint32 i = 1970;
 	for (;; i++) {
 		uint32 k = IsLeapYear(i) ? 366 : 365;
-		if (nWork >= k) nWork -= k;
-		else			break;
+		if (nWork >= k)
+			nWork -= k;
+		else
+			break;
 	}
 	m_nYear = (uint16)i;
 	m_nDayOfMonth = 1;
 	if (IsLeapYear(i) && (nWork>58)) {
-		if (nWork == 59) m_nDayOfMonth; // 29.2.
+		if (nWork == 59)
+			m_nDayOfMonth; // 29.2.
 		nWork -= 1;
 	}
 
-	for (i=11; i && (DaysPerMonth[i]>nWork); i--) ;
+	for (i=11; i && (DaysPerMonth[i]>nWork); i--)
+		;	// Nothing to do
 	m_nMonth = (EMonth)(i+1);
 	m_nDayOfMonth = uint8(m_nDayOfMonth + (nWork - DaysPerMonth[i]));
 }

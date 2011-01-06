@@ -60,8 +60,8 @@ namespace PLEngine {
 */
 RenderApplication::RenderApplication(const String &sSurfacePainter) : GuiApplication(),
 	m_sSurfacePainter(sSurfacePainter),
-	m_pRendererContext(NULL),
-	m_pInputController(NULL),
+	m_pRendererContext(nullptr),
+	m_pInputController(nullptr),
 	EventHandlerDestroy       (&RenderApplication::NotifyDestroy,    this),
 	EventHandlerActivate	  (&RenderApplication::NotifyActivate,	 this),
 	EventHandlerDisplayMode   (&RenderApplication::OnDisplayMode,    this),
@@ -106,7 +106,7 @@ SurfacePainter *RenderApplication::GetPainter() const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -235,7 +235,7 @@ Surface *RenderApplication::GetSurface(const Widget *pWidget) const
 	}
 
 	// No surface attached to this widget
-	return NULL;
+	return nullptr;
 }
 
 
@@ -319,13 +319,13 @@ void RenderApplication::DeInit()
 	// Destroy renderer context
 	if (m_pRendererContext) {
 		delete m_pRendererContext;
-		m_pRendererContext = NULL;
+		m_pRendererContext = nullptr;
 	}
 
 	// Destroy virtual input controller
 	if (m_pInputController) {
 		delete m_pInputController;
-		m_pInputController = NULL;
+		m_pInputController = nullptr;
 	}
 
 	// Call base implementation
@@ -346,7 +346,7 @@ void RenderApplication::OnCreateMainWindow()
 	sDisplayMode.nFrequency = GetConfig().GetVarInt("PLEngine::RendererConfig", "DisplayFrequency");
 
 	// Create renderer window
-	RenderWindow *pWindow = new RenderWindow(m_pRendererContext->GetRenderer(), NULL, &sDisplayMode,
+	RenderWindow *pWindow = new RenderWindow(m_pRendererContext->GetRenderer(), nullptr, &sDisplayMode,
 											 GetConfig().GetVar("PLEngine::RendererConfig", "Fullscreen").GetBool());
 	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=true");	// By default, when clicking on 'x', close the application
 	pWindow->SetTitle(GetTitle());
@@ -390,7 +390,7 @@ void RenderApplication::OnCreateRendererContext()
 	const String sDefaultShaderLanguage = GetConfig().GetVar("PLEngine::RendererConfig", "DefaultShaderLanguage");
 
 	// Create and return renderer context instance
-	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, (Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : NULL;
+	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, (Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : nullptr;
 	if (!m_pRendererContext) {
 		// Error!
 		PL_LOG(Error, "Can't create renderer context instance: " + sRenderer)

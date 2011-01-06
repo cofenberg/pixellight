@@ -52,7 +52,7 @@ Bitset::Bitset(uint32 nMaxNumOfElements, bool bAdded, bool bInit) :
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
 	m_nNumOfIntegers(0),
-	m_pnIntegers(NULL),
+	m_pnIntegers(nullptr),
 	m_nResizeCount(64)
 {
 	// Resize
@@ -67,7 +67,7 @@ Bitset::Bitset(const Bitset &lstSource, uint32 nStart, uint32 nCount) :
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
 	m_nNumOfIntegers(0),
-	m_pnIntegers(NULL),
+	m_pnIntegers(nullptr),
 	m_nResizeCount(lstSource.m_nResizeCount)
 {
 	// Copy
@@ -82,7 +82,7 @@ Bitset::Bitset(const Container<bool> &lstContainer, uint32 nStart, uint32 nCount
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
 	m_nNumOfIntegers(0),
-	m_pnIntegers(NULL),
+	m_pnIntegers(nullptr),
 	m_nResizeCount(64)
 {
 	// Copy
@@ -240,7 +240,7 @@ void Bitset::Clear()
 	// Clear data
 	if (m_pnIntegers) {
 		delete [] m_pnIntegers;
-		m_pnIntegers = NULL;
+		m_pnIntegers = nullptr;
 	}
 
 	// Init data
@@ -273,7 +273,7 @@ bool &Bitset::Add(const bool &Element)
 	}
 
 	// Add element
-	uint32 nOldNumOfElements = m_nNumOfElements;
+	const uint32 nOldNumOfElements = m_nNumOfElements;
 	m_nNumOfElements++;
 	if (Element)
 		Set(nOldNumOfElements);
@@ -302,7 +302,7 @@ uint32 Bitset::Add(const bool *pElements, uint32 nCount)
 	}
 
 	// Set the bits
-	uint32 nOldNumOfElements = m_nNumOfElements;
+	const uint32 nOldNumOfElements = m_nNumOfElements;
 	m_nNumOfElements += nCount;
 	const bool *pElement = pElements;
 	for (uint32 i=nOldNumOfElements; i<m_nNumOfElements; i++, pElement++) {
@@ -423,7 +423,7 @@ bool Bitset::RemoveAtIndex(uint32 nIndex)
 
 	// Check whether the array can be reduced
 	if (m_nResizeCount) {
-		uint32 nNewNumOfElements = (m_nMaxNumOfElements > m_nResizeCount) ? m_nMaxNumOfElements-m_nResizeCount : 0;
+		const uint32 nNewNumOfElements = (m_nMaxNumOfElements > m_nResizeCount) ? m_nMaxNumOfElements-m_nResizeCount : 0;
 		if (m_nNumOfElements <= nNewNumOfElements)
 			Resize(nNewNumOfElements, false, false);
 	}

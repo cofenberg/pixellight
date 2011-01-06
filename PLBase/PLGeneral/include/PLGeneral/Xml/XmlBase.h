@@ -215,7 +215,7 @@ class XmlBase {
 		*    Returns the user data
 		*
 		*  @return
-		*    User data, can be NULL
+		*    User data, can be a null pointer
 		*
 		*  @note
 		*    - The user data is not used internally, it's really user only :)
@@ -227,7 +227,7 @@ class XmlBase {
 		*    Sets the user data
 		*
 		*  @param[in] pUser
-		*    User data, can be NULL
+		*    User data, can be a null pointer
 		*
 		*  @see
 		*    - GetUserData()
@@ -270,21 +270,21 @@ class XmlBase {
 		*    Parse the given null terminated block of XML data
 		*
 		*  @param[in] pszData
-		*    Parsing data, if NULL, an error will be returned
+		*    Parsing data, if a null pointer, an error will be returned
 		*  @param[in] pData
-		*    Parsing data, can be NULL
+		*    Parsing data, can be a null pointer
 		*  @param[in] nEncoding
 		*    Encoding
 		*
 		*  @return
-		*    The pointer to the parameter 'pszData' if all went fine, else NULL
+		*    The pointer to the parameter 'pszData' if all went fine, else a null pointer
 		*
 		*  @remarks
 		*    Passing in an encoding to this method (either 'EncodingLegacy' or
 		*    'EncodingUTF8' will force the parser to use that encoding, regardless
 		*    of what the parser might otherwise try to detect.
 		*/
-		virtual const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown) = 0;
+		virtual const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -405,7 +405,7 @@ class XmlBase {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		void   *m_pUserData;	/**< User data, can be NULL */
+		void   *m_pUserData;	/**< User data, can be a null pointer */
 		Cursor  m_cCursor;		/**< Cursor */
 
 

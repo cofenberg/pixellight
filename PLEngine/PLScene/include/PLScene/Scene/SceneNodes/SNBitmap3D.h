@@ -138,8 +138,8 @@ class SNBitmap3D : public SNBitmap {
 	//[-------------------------------------------------------]
 	private:
 		PLMath::Vector3				 m_vPositionOffset;				/**< Position offset (scene node space) */
-		PLRenderer::IndexBuffer		*m_pIndexBuffer;				/**< Index buffer, can be NULL */
-		PLRenderer::VertexBuffer	*m_pVertexBuffer;				/**< Vertex buffer, can be NULL */
+		PLRenderer::IndexBuffer		*m_pIndexBuffer;				/**< Index buffer, can be a null pointer */
+		PLRenderer::VertexBuffer	*m_pVertexBuffer;				/**< Vertex buffer, can be a null pointer */
 		bool						 m_bUpdatePositionOffset;		/**< Update the position data of the vertex buffer? */
 		bool						 m_bUpdateTextureCoordinates;	/**< Update the texture coordinate data of the vertex buffer? */
 		bool						 m_bUpdateColor;				/**< Update the color data of the vertex buffer? */
@@ -149,8 +149,8 @@ class SNBitmap3D : public SNBitmap {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

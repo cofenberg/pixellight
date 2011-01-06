@@ -60,7 +60,7 @@ void NS_PluginShutdown()
 nsPluginInstanceBase * NS_NewPluginInstance(nsPluginCreateData * aCreateDataStruct)
 {
   if(!aCreateDataStruct)
-    return NULL;
+    return nullptr;
 
   nsPluginInstance * plugin = new nsPluginInstance(aCreateDataStruct->instance);
   return plugin;
@@ -81,7 +81,7 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInitialized(FALSE),
   m_cPlugin(*this)
 {
-  mhWnd = NULL;
+  mhWnd = nullptr;
 }
 
 nsPluginInstance::~nsPluginInstance()
@@ -89,15 +89,15 @@ nsPluginInstance::~nsPluginInstance()
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND, UINT, WPARAM, LPARAM);
-static WNDPROC lpOldProc = NULL;
+static WNDPROC lpOldProc = nullptr;
 
 NPBool nsPluginInstance::init(NPWindow* aWindow)
 {
-  if(aWindow == NULL)
+  if(aWindow == nullptr)
     return FALSE;
 
   mhWnd = (HWND)aWindow->window;
-  if(mhWnd == NULL)
+  if(mhWnd == nullptr)
     return FALSE;
 	// Save window and device context handles
 	m_hPluginWnd = (HWND)aWindow->window;
@@ -127,7 +127,7 @@ void nsPluginInstance::shut()
 {
   // subclass it back
   SubclassWindow(mhWnd, lpOldProc);
-  mhWnd = NULL;
+  mhWnd = nullptr;
   mInitialized = FALSE;
 }
 
@@ -173,7 +173,7 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 void nsPluginInstance::Redraw()
 {
 	// Redraw plugin window
-	RedrawWindow(m_hPluginWnd, NULL, NULL, 0);
+	RedrawWindow(m_hPluginWnd, nullptr, nullptr, 0);
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

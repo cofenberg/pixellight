@@ -78,9 +78,9 @@ class MeshMorphTarget {
 		*    Constructor
 		*
 		*  @param[in] pMesh
-		*    Pointer to the owner mesh, can be NULL
+		*    Pointer to the owner mesh, can be a null pointer
 		*/
-		PLMESH_API MeshMorphTarget(Mesh *pMesh = NULL);
+		PLMESH_API MeshMorphTarget(Mesh *pMesh = nullptr);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class MeshMorphTarget {
 		*    Returns the mesh the morph target belongs to
 		*
 		*  @return
-		*    Pointer to the owner mesh, can be NULL
+		*    Pointer to the owner mesh, can be a null pointer
 		*/
 		PLMESH_API Mesh *GetMesh() const;
 
@@ -102,9 +102,9 @@ class MeshMorphTarget {
 		*    Sets the mesh the morph target belongs to
 		*
 		*  @param[in] pMesh
-		*    Pointer to the owner mesh, can be NULL
+		*    Pointer to the owner mesh, can be a null pointer
 		*/
-		PLMESH_API void SetMesh(Mesh *pMesh = NULL);
+		PLMESH_API void SetMesh(Mesh *pMesh = nullptr);
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class MeshMorphTarget {
 		*    Returns the vertex buffer
 		*
 		*  @return
-		*    Vertex buffer, can be NULL
+		*    Vertex buffer, can be a null pointer
 		*/
 		PLMESH_API PLRenderer::VertexBuffer *GetVertexBuffer() const;
 
@@ -286,13 +286,13 @@ class MeshMorphTarget {
 		// Internal data
 		PLGeneral::String  m_sName;								/**< Name of the morph target */
 		bool			   m_bRelative;							/**< Is this morph target relative to the basis morph target? */
-		Mesh			  *m_pMesh;								/**< Owner mesh, can be NULL */
+		Mesh			  *m_pMesh;								/**< Owner mesh, can be a null pointer */
 
 		// Only used if relative
 		PLGeneral::Array<PLGeneral::uint32> m_lstVertexIDs;		/**< Vertex ID's */
 
 		// Vertex data
-		PLRenderer::VertexBuffer *m_pVertexBuffer;				/**< A vertex buffer, can be NULL */
+		PLRenderer::VertexBuffer *m_pVertexBuffer;				/**< A vertex buffer, can be a null pointer */
 
 		// Precalculated data
 		PLGeneral::Array<PLMath::Plane> m_lstTrianglePlanes;	/**< List of triangle planes */

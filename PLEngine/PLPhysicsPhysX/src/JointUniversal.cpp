@@ -65,8 +65,8 @@ JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParen
 	if (pPhysXScene) {
 		// Create the PhysX physics joint
 		NxD6JointDesc sJointDesc;
-		sJointDesc.actor[0] = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetPhysXActor() : NULL;
-		sJointDesc.actor[1] = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetPhysXActor() : NULL;
+		sJointDesc.actor[0] = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetPhysXActor() : nullptr;
+		sJointDesc.actor[1] = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetPhysXActor() : nullptr;
 		sJointDesc.setGlobalAnchor(NxVec3(m_vPivotPoint.x, m_vPivotPoint.y, m_vPivotPoint.z));
 		sJointDesc.setGlobalAxis(NxVec3(m_vPinDir1.x, m_vPinDir1.y, m_vPinDir1.z));
 		NxJoint *pPhysXJoint = pPhysXScene->createJoint(sJointDesc);

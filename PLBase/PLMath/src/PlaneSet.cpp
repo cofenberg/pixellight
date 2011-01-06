@@ -74,7 +74,7 @@ PlaneSet::~PlaneSet()
 Plane *PlaneSet::Create()
 {
 	Plane &cPlane = m_lstPlane.Add();
-	return (&cPlane != &Array<Plane>::Null) ? &cPlane : NULL;
+	return (&cPlane != &Array<Plane>::Null) ? &cPlane : nullptr;
 }
 
 /**
@@ -285,7 +285,7 @@ uint32 PlaneSet::GetNumOfPlanes() const
 const Plane *PlaneSet::operator [](int nID) const
 {
 	const Plane &cPlane = m_lstPlane[nID];
-	return (&cPlane != &Array<Plane>::Null) ? &cPlane : NULL;
+	return (&cPlane != &Array<Plane>::Null) ? &cPlane : nullptr;
 }
 
 /**
@@ -295,7 +295,7 @@ const Plane *PlaneSet::operator [](int nID) const
 Plane *PlaneSet::operator [](int nID)
 {
 	Plane &cPlane = m_lstPlane[nID];
-	return (&cPlane != &Array<Plane>::Null) ? &cPlane : NULL;
+	return (&cPlane != &Array<Plane>::Null) ? &cPlane : nullptr;
 }
 
 /**

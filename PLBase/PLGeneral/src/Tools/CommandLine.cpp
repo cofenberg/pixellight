@@ -155,17 +155,23 @@ String CommandLine::ArgumentsToString(const Array<String> &lstArray)
 
 		// Loop through all elements of the given array
 		for (uint32 i=0; i<lstArray.GetNumOfElements(); i++) {
-			if (i > 0) sString += " ";
+			if (i > 0)
+				sString += " ";
 			if (sString.IndexOf(' ') >= 0) {
 				sString += "\"";
 				sString += lstArray[i];
 				sString += "\"";
-			} else sString += lstArray[i];
+			} else {
+				sString += lstArray[i];
+			}
 		}
 
 		// Return the constructed string
 		return sString;
-	} else return ""; // Return the constructed string - which is astoundingly empty :D
+	} else {
+		// Return the constructed string - which is astoundingly empty :D
+		return "";
+	}
 }
 
 /**
@@ -187,7 +193,9 @@ Array<String> CommandLine::StringToArguments(const String &sCmdLine)
 			sToken = cTokenizer.GetNextToken();
 			lstArray.Add(sToken);
 			sToken = cTokenizer.GetNextToken();
-		} else lstArray.Add(sToken);
+		} else {
+			lstArray.Add(sToken);
+		}
 
 		// Next token, please
 		sToken = cTokenizer.GetNextToken();
@@ -258,9 +266,8 @@ CommandLineOption *CommandLine::GetOption(const String &sName) const
 void CommandLine::Clear()
 {
 	// Delete options
-	for (uint32 i=0; i<m_lstOptions.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<m_lstOptions.GetNumOfElements(); i++)
 		delete m_lstOptions[i];
-	}
 
 	// Clear lists
 	m_lstOptions.Clear();
@@ -276,9 +283,9 @@ void CommandLine::Clear()
 bool CommandLine::AddParameter(const String &sName, const String &sShort, const String &sLong, const String &sDescription, const String &sDefault, bool bRequired)
 {
 	// Check that a name and at least one flag name is given and the names have not been used before
-	if ( (sName .GetLength() && m_mapOptions.Get(sName) == NULL) && (sShort.GetLength() || sLong.GetLength()) &&
-		 (sShort.GetLength() == 0 || m_mapOptions.Get(sShort) == NULL) &&
-		 (sLong .GetLength() == 0 || m_mapOptions.Get(sLong)  == NULL) )
+	if ( (sName .GetLength() && m_mapOptions.Get(sName) == nullptr) && (sShort.GetLength() || sLong.GetLength()) &&
+		 (sShort.GetLength() == 0 || m_mapOptions.Get(sShort) == nullptr) &&
+		 (sLong .GetLength() == 0 || m_mapOptions.Get(sLong)  == nullptr) )
 	{
 		// Create option
 		CommandLineOption *pOption = new CommandLineOption();
@@ -293,8 +300,10 @@ bool CommandLine::AddParameter(const String &sName, const String &sShort, const 
 		// Add option to lists
 		m_lstOptions.Add(pOption);
 		m_mapOptions.Add(sName, pOption);
-		if (sShort.GetLength()) m_mapOptions.Add(sShort, pOption);
-		if (sLong .GetLength()) m_mapOptions.Add(sLong,  pOption);
+		if (sShort.GetLength())
+			m_mapOptions.Add(sShort, pOption);
+		if (sLong .GetLength())
+			m_mapOptions.Add(sLong,  pOption);
 		return true;
 	}
 
@@ -309,9 +318,9 @@ bool CommandLine::AddParameter(const String &sName, const String &sShort, const 
 bool CommandLine::AddFlag(const String &sName, const String &sShort, const String &sLong, const String &sDescription, bool bRequired)
 {
 	// Check that a name and at least one flag name is given and the names have not been used before
-	if ( (sName .GetLength() && m_mapOptions.Get(sName) == NULL) && (sShort.GetLength() || sLong.GetLength()) &&
-		 (sShort.GetLength() == 0 || m_mapOptions.Get(sShort) == NULL) &&
-		 (sLong .GetLength() == 0 || m_mapOptions.Get(sLong)  == NULL) )
+	if ( (sName .GetLength() && m_mapOptions.Get(sName) == nullptr) && (sShort.GetLength() || sLong.GetLength()) &&
+		 (sShort.GetLength() == 0 || m_mapOptions.Get(sShort) == nullptr) &&
+		 (sLong .GetLength() == 0 || m_mapOptions.Get(sLong)  == nullptr) )
 	{
 		// Create option
 		CommandLineOption *pOption = new CommandLineOption();
@@ -325,8 +334,10 @@ bool CommandLine::AddFlag(const String &sName, const String &sShort, const Strin
 		// Add option to lists
 		m_lstOptions.Add(pOption);
 		m_mapOptions.Add(sName, pOption);
-		if (sShort.GetLength()) m_mapOptions.Add(sShort, pOption);
-		if (sLong .GetLength()) m_mapOptions.Add(sLong,  pOption);
+		if (sShort.GetLength())
+			m_mapOptions.Add(sShort, pOption);
+		if (sLong .GetLength())
+			m_mapOptions.Add(sLong,  pOption);
 		return true;
 	}
 
@@ -341,8 +352,7 @@ bool CommandLine::AddFlag(const String &sName, const String &sShort, const Strin
 bool CommandLine::AddArgument(const String &sName, const String &sDescription, const String &sDefault, bool bRequired)
 {
 	// Check that a name is given and has not been used before
-	if (sName.GetLength() && m_mapOptions.Get(sName) == NULL)
-	{
+	if (sName.GetLength() && m_mapOptions.Get(sName) == nullptr) {
 		// Create option
 		CommandLineOption *pOption = new CommandLineOption();
 		pOption->SetType(CommandLineOption::OptionArgument);
@@ -353,7 +363,8 @@ bool CommandLine::AddArgument(const String &sName, const String &sDescription, c
 
 		// Add option to lists
 		m_lstOptions.Add(pOption);
-		if (sName.GetLength()) m_mapOptions.Add(sName, pOption);
+		if (sName.GetLength())
+			m_mapOptions.Add(sName, pOption);
 		return true;
 	}
 
@@ -377,15 +388,14 @@ bool CommandLine::ParseCommandLine(const Array<String> &lstArgs)
 		m_lstOptions[i]->SetValue(m_lstOptions[i]->GetDefault());
 
 		// Add arguments to list
-		if (m_lstOptions[i]->GetType() == CommandLineOption::OptionArgument) {
+		if (m_lstOptions[i]->GetType() == CommandLineOption::OptionArgument)
 			lstArguments.Add(m_lstOptions[i]);
-		}
 	}
 
 	// Loop through arguments
 	m_bError = false;
 	uint32 nArgument = 0;
-	CommandLineOption *pLastOption = NULL;
+	CommandLineOption *pLastOption = nullptr;
 	String sLastOption;
 	for (uint32 i=0; i<lstArgs.GetNumOfElements(); i++) {
 		// Get argument
@@ -431,7 +441,7 @@ bool CommandLine::ParseCommandLine(const Array<String> &lstArgs)
 				// Set 'true' for boolean options or wait for a value
 				if (pLastOption->GetType() == CommandLineOption::OptionFlag) {
 					pLastOption->SetValue("true");
-					pLastOption = NULL;
+					pLastOption = nullptr;
 					sLastOption = "";
 				}
 			}
@@ -453,7 +463,7 @@ bool CommandLine::ParseCommandLine(const Array<String> &lstArgs)
 			if (pLastOption) {
 				// Set option value
 				pLastOption->SetValue(sValue);
-				pLastOption = NULL;
+				pLastOption = nullptr;
 				sLastOption = "";
 			} else {
 				// Argument
@@ -472,9 +482,8 @@ bool CommandLine::ParseCommandLine(const Array<String> &lstArgs)
 	// Produce an error if not all required options have been set
 	for (uint32 i=0; i<m_lstOptions.GetNumOfElements() && !m_bError; i++) {
 		// Check if option has been set
-		if (m_lstOptions[i]->IsRequired() && !m_lstOptions[i]->IsSet()) {
+		if (m_lstOptions[i]->IsRequired() && !m_lstOptions[i]->IsSet())
 			m_bError = true;
-		}
 	}
 
 	// Return error-status
@@ -499,8 +508,7 @@ bool CommandLine::IsValueSet(const String &sName) const
 {
 	// Get option
 	const CommandLineOption *pOption = GetOption(sName);
-	if (pOption) return pOption->IsSet();
-	else		 return false;
+	return pOption ? pOption->IsSet() : false;
 }
 
 /**
@@ -511,8 +519,7 @@ String CommandLine::GetValue(const String &sName) const
 {
 	// Get option
 	const CommandLineOption *pOption = GetOption(sName);
-	if (pOption) return pOption->GetValue();
-	else		 return "";
+	return pOption ? pOption->GetValue() : "";
 }
 
 /**
@@ -546,8 +553,10 @@ void CommandLine::PrintHelp(const String &sProgramName) const
 	for (uint32 i=0; i<m_lstOptions.GetNumOfElements(); i++) {
 		const CommandLineOption *pOption = m_lstOptions[i];
 		if (pOption->GetType() == CommandLineOption::OptionArgument) {
-			if (pOption->IsRequired())	System::GetInstance()->GetConsole().Print(" <" + pOption->GetName() + ">");
-			else						System::GetInstance()->GetConsole().Print(" [" + pOption->GetName() + "]");
+			if (pOption->IsRequired())
+				System::GetInstance()->GetConsole().Print(" <" + pOption->GetName() + ">");
+			else
+				System::GetInstance()->GetConsole().Print(" [" + pOption->GetName() + "]");
 		}
 	}
 	System::GetInstance()->GetConsole().Print("\n\n");
@@ -602,7 +611,8 @@ void CommandLine::PrintHelp(const String &sProgramName) const
 				String sShort = SetStringLength(pOption->GetShortName(), nMaxShort);
 				String sLong  = SetStringLength(pOption->GetLongName (), nMaxLong );
 				String sInfo  = sShort + (bComma ? ", " : "  ") + sLong;
-				if (pOption->GetType() == CommandLineOption::OptionParam) sInfo += " <" + sName + ">";
+				if (pOption->GetType() == CommandLineOption::OptionParam)
+					sInfo += " <" + sName + ">";
 				sInfo = "  " + SetStringLength(sInfo, nMaxAll) + "  ";
 				System::GetInstance()->GetConsole().Print(sInfo);
 

@@ -173,7 +173,7 @@ class SNEngineInformation : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

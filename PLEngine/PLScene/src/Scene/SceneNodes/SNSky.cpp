@@ -76,7 +76,7 @@ void SkyLayer::SetType(EType nValue)
 		m_nType = (EType)nValue;
 
 		// Create the sky mesh
-		Mesh *pMesh = NULL;
+		Mesh *pMesh = nullptr;
 		MeshManager &cMeshManager = GetSky()->GetSceneContext()->GetMeshManager();
 		switch (m_nType) {
 			case Plane:

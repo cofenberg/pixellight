@@ -212,9 +212,9 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 		*  @param[in] cLight
 		*    Light to push down
 		*  @param[in] pNode
-		*    Current node, can be NULL
+		*    Current node, can be a null pointer
 		*/
-		void PushLight(SInstance &sInstance, PLScene::SNPointLight &cLight, Node *pNode = NULL) const;
+		void PushLight(SInstance &sInstance, PLScene::SNPointLight &cLight, Node *pNode = nullptr) const;
 
 
 };

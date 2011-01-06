@@ -65,7 +65,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		*    Returns the ODE physics body
 		*
 		*  @return
-		*    The ODE physics body, NULL if there's no ODE physics body which means
+		*    The ODE physics body, a null pointer if there's no ODE physics body which means
 		*    that this body is static
 		*
 		*  @note
@@ -79,7 +79,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		*    Returns the ODE physics geometry
 		*
 		*  @return
-		*    The ODE physics geometry, NULL on error (if that's the case, something went totally wrong :)
+		*    The ODE physics geometry, a null pointer on error (if that's the case, something went totally wrong :)
 		*
 		*  @note
 		*    - Do NOT change the user data of the ODE physics geometry! (using dGeomSetData())
@@ -174,8 +174,8 @@ class BodyImpl : public PLPhysics::BodyImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		dBodyID			 m_pODEBody;			/**< ODE physics body, can be NULL */
-		dGeomID			 m_pODEGeometry;		/**< ODE physics geometry, can be NULL */
+		dBodyID			 m_pODEBody;			/**< ODE physics body, can be a null pointer */
+		dGeomID			 m_pODEGeometry;		/**< ODE physics geometry, can be a null pointer */
 		bool			 m_bActive;				/**< Currently active? */
 		float			 m_fCollisionVolume;	/**< Collision volume */
 		float			 m_fMass;				/**< Mass of the physics body */

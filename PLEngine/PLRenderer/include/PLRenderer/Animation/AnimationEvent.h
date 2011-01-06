@@ -68,7 +68,7 @@ class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
 		*  @param[in] nFrame
 		*    Frame causing this event
 		*  @param[in] pManager
-		*    Event manager using this element, can be NULL
+		*    Event manager using this element, can be a null pointer
 		*  @param[in] sName
 		*    Name of the event, if empty, a default name is set automatically
 		*
@@ -76,8 +76,7 @@ class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
 		*    - If you provide the pointer to the owner manager the animation
 		*      event will check in the animation event manager name list
 		*/
-		PLRENDERER_API AnimationEvent(int nID, PLGeneral::uint32 nFrame, AnimationEventManager *pManager = NULL,
-								  const PLGeneral::String &sName = "");
+		PLRENDERER_API AnimationEvent(int nID, PLGeneral::uint32 nFrame, AnimationEventManager *pManager = nullptr, const PLGeneral::String &sName = "");
 
 		/**
 		*  @brief

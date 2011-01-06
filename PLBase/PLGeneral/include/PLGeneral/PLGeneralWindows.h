@@ -72,19 +72,8 @@
 	#include <_mingw.h>	// For "__int8", "__int16" and so so definitions
 	// Within "_mingw.h", "__int32" is defined as "long" while PixelLight assumes "int", so, we change the definition
 	#define __int32 int
-	#include <stddef.h>	// For "size_t" and "NULL"
+	#include <stddef.h>	// For "size_t"
 #else
-	/**
-	*  @brief
-	*    The 'NULL'-definition is for instance used to null a pointer
-	*
-	*  @note
-	*    - Do NOT use this for 'virtual Test() = NULL', use 'virtual Test() = 0' instead!
-	*/
-	#ifndef NULL
-		#define NULL 0
-	#endif
-
 	// Within Microsoft Visual Studio, 'wchar_t' can be defined as native type, in this case we don't need a special include
 	#if !defined(_MSC_VER) || !defined(_WCHAR_T_DEFINED)
 		#include <wctype.h>
@@ -96,9 +85,35 @@
 *    Invalid handle value (for data type PLGeneral::handle)
 */
 #ifdef WIN64
+	#define NULL_HANDLE    0x0000000000000000
 	#define INVALID_HANDLE 0xffffffffffffffff
 #else
+	#define NULL_HANDLE    0x00000000
 	#define INVALID_HANDLE 0xffffffff
+#endif
+
+
+//[-------------------------------------------------------]
+//[ C++0x definitions                                     ]
+//[-------------------------------------------------------]
+// Microsoft Visual Studio 2010: Have a look at http://blogs.msdn.com/b/vcblog/archive/2010/04/06/c-0x-core-language-features-in-vc10-the-table.aspx see which C++0x features are supported
+
+// "nullptr"-definition
+#if !defined(_MSC_VER) || _MSC_VER < 1600	// Microsoft Visual Studio 2010
+	/**
+	*  @brief
+	*    nullptr definition for compilers don't supporting this C++0x feature
+	*
+	*  @note
+	*    - The implementation comes from the "A name for the null pointer: nullptr"-document (http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2431.pdf)
+	*/
+	const class {
+		public:
+			template<class T> operator T*() const  { return 0; }
+			template<class C, class T> operator T C::*() const  { return 0; }
+		private:
+			void operator&() const;
+	} nullptr = {}; 
 #endif
 
 

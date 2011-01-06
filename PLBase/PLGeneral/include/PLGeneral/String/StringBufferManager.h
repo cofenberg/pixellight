@@ -99,7 +99,7 @@ class StringBufferManager {
 		*    Minimum internal length of the string buffer (excluding the terminating zero, MUST be valid!)
 		*
 		*  @return
-		*    Instance of a ASCII string buffer, NULL on error
+		*    Instance of a ASCII string buffer, a null pointer on error
 		*
 		*  @note
 		*    - The length of the string buffer is 0, but it has already reserved memory for at least "nLength" characters (+ an additional terminating zero)
@@ -114,7 +114,7 @@ class StringBufferManager {
 		*    Minimum internal length of the string buffer (excluding the terminating zero, MUST be valid!)
 		*
 		*  @return
-		*    Instance of a unicode string buffer, NULL on error
+		*    Instance of a unicode string buffer, a null pointer on error
 		*
 		*  @note
 		*    - The length of the string buffer is 0, but it has already reserved memory for at least "nLength" characters (+ an additional terminating zero)
@@ -135,8 +135,8 @@ class StringBufferManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		StringBufferASCII   **m_pStringBufferASCII;		/**< Reusable ASCII string buffers, can be NULL */
-		StringBufferUnicode **m_pStringBufferUnicode;	/**< Reusable unicode string buffers, can be NULL */
+		StringBufferASCII   **m_pStringBufferASCII;		/**< Reusable ASCII string buffers, can be a null pointer */
+		StringBufferUnicode **m_pStringBufferUnicode;	/**< Reusable unicode string buffers, can be a null pointer */
 
 
 };

@@ -112,7 +112,7 @@ template <class AType> class ElementManager {
 		*    Element name, if "" an unused name is set automatically
 		*
 		*  @return
-		*    Pointer to the created element, NULL if there was an error
+		*    Pointer to the created element, a null pointer if there was an error
 		*
 		*  @note
 		*    - If there's already a element with this name, this element is returned
@@ -198,7 +198,7 @@ template <class AType> class ElementManager {
 		*    Get the standard element
 		*
 		*  @return
-		*    The standart element, NULL if there's no such element
+		*    The standart element, a null pointer if there's no such element
 		*
 		*  @note
 		*    - There should always be a standart element!
@@ -211,7 +211,7 @@ template <class AType> class ElementManager {
 		*    Set the standard element
 		*
 		*  @param[in] pElement
-		*    Element which should be the standart element, NULL to set no such element
+		*    Element which should be the standart element, a null pointer to set no such element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe invalid element)
@@ -219,7 +219,7 @@ template <class AType> class ElementManager {
 		*  @see
 		*    - GetStandard()
 		*/
-		bool SetStandard(AType *pElement = NULL);
+		bool SetStandard(AType *pElement = nullptr);
 
 		/**
 		*  @brief
@@ -282,7 +282,7 @@ template <class AType> class ElementManager {
 		*    Index of the element
 		*
 		*  @return
-		*    The corresponding object, NULL if there's no match
+		*    The corresponding object, a null pointer if there's no match
 		*/
 		virtual AType *Get(uint32 nIndex = 0) const;
 
@@ -294,7 +294,7 @@ template <class AType> class ElementManager {
 		*    Element name
 		*
 		*  @return
-		*    The corresponding element, NULL if there's no match
+		*    The corresponding element, a null pointer if there's no match
 		*
 		*  @note
 		*    - You can overload this function to specialize the behaviour. This is done
@@ -354,7 +354,7 @@ template <class AType> class ElementManager {
 		*    Element name
 		*
 		*  @return
-		*    Pointer to the created element, NULL if there was an error
+		*    Pointer to the created element, a null pointer if there was an error
 		*
 		*  @note
 		*    - This function is used inside the function Create(). If AType is an abstract
@@ -368,7 +368,7 @@ template <class AType> class ElementManager {
 	//[-------------------------------------------------------]
 	protected:
 		String					 m_sManagerName;		/**< Manager name */
-		AType					*m_pStandardElement;	/**< Standard element, can be NULL */
+		AType					*m_pStandardElement;	/**< Standard element, can be a null pointer */
 		bool					 m_bUnloadUnused;		/**< Unload unused resoures? */
 		Array<AType*>			 m_lstElements;			/**< Element list */
 		HashMap<String, AType*>	 m_mapElements;			/**< Element map */

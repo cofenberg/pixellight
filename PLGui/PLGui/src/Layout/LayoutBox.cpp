@@ -75,7 +75,7 @@ void LayoutBox::SetOrientation(EOrientation nOrientation)
 LayoutBox::LayoutBox(EOrientation nOrientation) : Layout(),
 	Orientation(this),
 	m_nOrientation(nOrientation),
-	m_pSizes(NULL),
+	m_pSizes(nullptr),
 	m_nWidgets(0)
 {
 }

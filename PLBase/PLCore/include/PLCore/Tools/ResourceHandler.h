@@ -81,7 +81,7 @@ template <class AType> class ResourceHandler {
 		*    Returns a pointer to the handlers resource
 		*
 		*  @return
-		*    A pointer to the handlers resource, NULL if no resource
+		*    A pointer to the handlers resource, a null pointer if no resource
 		*/
 		AType *GetResource() const;
 
@@ -95,7 +95,7 @@ template <class AType> class ResourceHandler {
 		*    Sets the handlers resource
 		*
 		*  @param[in] pResource
-		*    Resouce to set, NULL to set no element
+		*    Resouce to set, a null pointer to set no element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -106,14 +106,14 @@ template <class AType> class ResourceHandler {
 		*      destroyed within this function if the resource is no longer used by any
 		*      handlers and if the resource is not marked as protected.
 		*/
-		virtual bool SetResource(AType *pResource = NULL);
+		virtual bool SetResource(AType *pResource = nullptr);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		AType *m_pResource; /**< Loaded resource, can be NULL */
+		AType *m_pResource; /**< Loaded resource, can be a null pointer */
 
 
 };

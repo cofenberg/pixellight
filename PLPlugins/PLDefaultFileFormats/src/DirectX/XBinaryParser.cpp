@@ -76,8 +76,8 @@ XToken *XToken::GetNextToken() const
 */
 XToken::XToken(EType nType) :
 	m_nType(nType),
-	m_pChildToken(NULL),
-	m_pNextToken(NULL)
+	m_pChildToken(nullptr),
+	m_pNextToken(nullptr)
 {
 }
 
@@ -97,13 +97,13 @@ XToken::~XToken()
 */
 void XToken::ReadTokens(File &cFile, XToken &cParentToken)
 {
-	XToken *pCurrentToken = NULL;
+	XToken *pCurrentToken = nullptr;
 
 	// Read the first token type
 	uint16 nTokenType;
 	int nNumOfReadBytes = (int)cFile.Read(&nTokenType, sizeof(nTokenType), 1);
 	while (nNumOfReadBytes) {
-		XToken *pNewToken = NULL;
+		XToken *pNewToken = nullptr;
 
 		// Process the token
 		switch (nTokenType) {
@@ -202,7 +202,7 @@ char *XTokenName::GetName() const
 void XTokenName::ControlTaken()
 {
 	m_nLength = 0;
-	m_pszName = NULL;
+	m_pszName = nullptr;
 }
 
 //[-------------------------------------------------------]
@@ -213,7 +213,7 @@ void XTokenName::ControlTaken()
 *    Constructor
 */
 XTokenName::XTokenName(File &cFile) : XToken(TOKEN_NAME),
-	m_pszName(NULL)
+	m_pszName(nullptr)
 {
 	// Read the name
 	cFile.Read(&m_nLength, sizeof(uint32), 1);
@@ -266,7 +266,7 @@ char *XTokenString::GetString() const
 void XTokenString::ControlTaken()
 {
 	m_nLength   = 0;
-	m_pszString = NULL;
+	m_pszString = nullptr;
 }
 
 //[-------------------------------------------------------]
@@ -277,7 +277,7 @@ void XTokenString::ControlTaken()
 *    Constructor
 */
 XTokenString::XTokenString(File &cFile) : XToken(TOKEN_STRING),
-	m_pszString(NULL)
+	m_pszString(nullptr)
 {
 	// Read the string
 	cFile.Read(&m_nLength, sizeof(uint32), 1);
@@ -340,7 +340,7 @@ XTokenGUID::XTokenGUID(File &cFile) : XToken(TOKEN_GUID)
 *    Constructor
 */
 XTokenIntList::XTokenIntList(File &cFile) : XToken(TOKEN_INTEGER_LIST),
-	m_list(NULL)
+	m_list(nullptr)
 {
 	cFile.Read(&m_nLength, sizeof(uint32), 1);
 	if (m_nLength) {
@@ -367,7 +367,7 @@ XTokenIntList::~XTokenIntList()
 *    Constructor
 */
 XTokenFloatList::XTokenFloatList(File &cFile) : XToken(TOKEN_FLOAT_LIST),
-	m_list(NULL)
+	m_list(nullptr)
 {
 	cFile.Read(&m_nLength, sizeof(uint32), 1);
 	if (m_nLength) {
@@ -394,8 +394,8 @@ XTokenFloatList::~XTokenFloatList()
 *    Constructor
 */
 XTokenTemplate::XTokenTemplate(File &cFile) : XToken(TOKEN_TEMPLATE),
-	pszName(NULL),
-	pGUID(NULL)
+	pszName(nullptr),
+	pGUID(nullptr)
 {
 	// Template name
 	uint16 nTokenType;

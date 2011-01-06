@@ -114,10 +114,10 @@ class ThreadLinux : public ThreadImpl {
 		*    Static thread callback function
 		*
 		*  @param[in] pParameter
-		*    Parameter, can be NULL
+		*    Parameter, can be a null pointer
 		*
 		*  @return
-		*    Return value, can be NULL
+		*    Return value, can be a null pointer
 		*/
 		static void *RunThread(void *pParameter);
 

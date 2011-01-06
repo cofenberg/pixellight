@@ -48,10 +48,10 @@ namespace PLRendererNull {
 FixedFunctions::FixedFunctions(Renderer &cRendererNull) :
 	m_pRendererNull(&cRendererNull),
 	m_cColor(Color4::White),
-	m_ppnTextureStageState(NULL),
-	m_ppnInternalTextureStageState(NULL),
-	m_ppCurrentVertexBuffer(NULL),
-	m_nVertexBufferOffsets(NULL),
+	m_ppnTextureStageState(nullptr),
+	m_ppnInternalTextureStageState(nullptr),
+	m_ppCurrentVertexBuffer(nullptr),
+	m_nVertexBufferOffsets(nullptr),
 	m_nVertexOffset(0)
 {
 	{ // Capabilities
@@ -116,7 +116,7 @@ FixedFunctions::FixedFunctions(Renderer &cRendererNull) :
 	{ // Vertex buffer states
 		// Allocate vertex buffer streams
 		m_ppCurrentVertexBuffer = new PLRenderer::VertexBuffer*[m_sCapabilities.nMaxVertexBufferStreams];
-		MemoryManager::Set(m_ppCurrentVertexBuffer, NULL, sizeof(PLRenderer::VertexBuffer**)*m_sCapabilities.nMaxVertexBufferStreams);
+		MemoryManager::Set(m_ppCurrentVertexBuffer, 0, sizeof(PLRenderer::VertexBuffer**)*m_sCapabilities.nMaxVertexBufferStreams);
 		m_nVertexBufferOffsets = new uint32[m_sCapabilities.nMaxVertexBufferStreams];
 		MemoryManager::Set(m_nVertexBufferOffsets, 0, sizeof(uint32)*m_sCapabilities.nMaxVertexBufferStreams);
 	}
@@ -134,7 +134,7 @@ FixedFunctions::~FixedFunctions()
 			for (uint32 i=0; i<m_pRendererNull->GetCapabilities().nMaxTextureUnits; i++)
 				delete [] m_ppnTextureStageState[i];
 			delete [] m_ppnTextureStageState;
-			m_ppnTextureStageState = NULL;
+			m_ppnTextureStageState = nullptr;
 		}
 	}
 
@@ -142,11 +142,11 @@ FixedFunctions::~FixedFunctions()
 		// Free vertex buffer streams
 		if (m_ppCurrentVertexBuffer) {
 			delete [] m_ppCurrentVertexBuffer;
-			m_ppCurrentVertexBuffer = NULL;
+			m_ppCurrentVertexBuffer = nullptr;
 		}
 		if (m_nVertexBufferOffsets) {
 			delete [] m_nVertexBufferOffsets;
-			m_nVertexBufferOffsets = NULL;
+			m_nVertexBufferOffsets = nullptr;
 		}
 	}
 }
@@ -523,7 +523,7 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 PLRenderer::VertexBuffer *FixedFunctions::GetVertexBuffer(uint32 nStreamNumber, uint32 *pnOffset) const
 {
 	if (nStreamNumber >= m_sCapabilities.nMaxVertexBufferStreams || !m_ppCurrentVertexBuffer)
-		return NULL; // Error!
+		return nullptr; // Error!
 	if (pnOffset && m_nVertexBufferOffsets)
 		*pnOffset = m_nVertexBufferOffsets[nStreamNumber];
 	return m_ppCurrentVertexBuffer[nStreamNumber];
@@ -551,7 +551,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 	// Disable all client states
 	if (!pVertexBuffer || !nStreamNumber) {
 		for (uint32 i=1; i<m_sCapabilities.nMaxVertexBufferStreams; i++) {
-			m_ppCurrentVertexBuffer[i] = NULL;
+			m_ppCurrentVertexBuffer[i] = nullptr;
 			m_nVertexBufferOffsets[i] = 0;
 		}
 	}

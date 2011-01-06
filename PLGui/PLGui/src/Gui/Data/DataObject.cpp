@@ -45,7 +45,7 @@ DataObject::DataObject() :
 	m_nDataType(DataEmpty),
 	m_sString(""),
 	m_nValue(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0)
 {
 }
@@ -58,7 +58,7 @@ DataObject::DataObject(const String &sString) :
 	m_nDataType(DataString),
 	m_sString(sString),
 	m_nValue(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0)
 {
 }
@@ -71,7 +71,7 @@ DataObject::DataObject(const Container<String> &lstFiles) :
 	m_nDataType(DataFiles),
 	m_sString(""),
 	m_nValue(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0)
 {
 	// Copy file names
@@ -86,7 +86,7 @@ DataObject::DataObject(uint32 nValue) :
 	m_nDataType(DataCustom),
 	m_sString(""),
 	m_nValue(nValue),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0)
 {
 }
@@ -99,7 +99,7 @@ DataObject::DataObject(uint8 *pData, uint32 nSize) :
 	m_nDataType(DataBinary),
 	m_sString(""),
 	m_nValue(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0)
 {
 	// Check if data is valid
@@ -121,7 +121,7 @@ DataObject::DataObject(const DataObject &cOther) :
 	m_nDataType(DataEmpty),
 	m_sString(""),
 	m_nValue(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0)
 {
 	// Copy string
@@ -345,7 +345,7 @@ void DataObject::Set(uint8 *pData, uint32 nSize)
 
 	// Set binary data
 	m_nDataType	= DataBinary;
-	m_pData		= NULL;
+	m_pData		= nullptr;
 	m_nDataSize	= 0;
 
 	// Check if data is valid
@@ -374,7 +374,7 @@ void DataObject::Clear()
 	m_nDataType	= DataEmpty;
 	m_sString	= "";
 	m_nValue	= 0;
-	m_pData		= NULL;
+	m_pData		= nullptr;
 	m_nDataSize = 0;
 }
 

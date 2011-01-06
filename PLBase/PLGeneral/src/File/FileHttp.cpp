@@ -134,11 +134,12 @@ bool FileHttp::Open(uint32 nAccess)
 		m_nAccess = nAccess;
 
 		// Close first
-		if (m_cHttp.IsOpen()) Close();
+		if (m_cHttp.IsOpen())
+			Close();
 
 		// Open HTTP handle
 		String sUsername, sPassword;
-		String sDomain = m_cUrl.GetProtocol() + m_cUrl.GetFirstPath();
+		const String sDomain = m_cUrl.GetProtocol() + m_cUrl.GetFirstPath();
 		if (m_pAccess && m_pAccess->HasEntry(sDomain)) {
 			const FileAccess::Entry &cHttpAccess = m_pAccess->GetEntry(sDomain);
 			sUsername = cHttpAccess.GetUsername();
@@ -184,7 +185,8 @@ int FileHttp::GetC()
 		if (m_cHttp.Read(&c, 1, 1) == 1) {
 			// Text mode: \r\n -> \n
 			if ((m_nAccess & File::FileText) && c == 13) {
-				if (m_cHttp.Read(&c, 1, 1) != 1) return -1; // Error!
+				if (m_cHttp.Read(&c, 1, 1) != 1)
+					return -1; // Error!
 			}
 			return (int)c;
 		}
@@ -225,7 +227,8 @@ String FileHttp::GetS()
 		*pszPos = 0;
 
 		// Return string
-		if (pszPos > szString || nChar != -1) return szString;
+		if (pszPos > szString || nChar != -1)
+			return szString;
 	}
 
 	// Error!

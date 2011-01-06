@@ -136,7 +136,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyBox(const PLMath::Vector3 &vDimension, bool bStatic = false) = 0;
 
@@ -150,7 +150,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodySphere(float fRadius, bool bStatic = false) = 0;
 
@@ -164,7 +164,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyEllipsoid(const PLMath::Vector3 &vRadius, bool bStatic = false) = 0;
 
@@ -182,7 +182,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported? invalid mesh?)
+		*    The created physics body, a null pointer on error (body type not supported? invalid mesh?)
 		*
 		*  @remarks
 		*    The physics implementation is free to don't use the mesh at all. For example if no support or when
@@ -206,7 +206,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Allow the physics API to optimize the mesh? (if supported)
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported? invalid mesh?)
+		*    The created physics body, a null pointer on error (body type not supported? invalid mesh?)
 		*
 		*  @remarks
 		*    The physics implementation is free to don't use the mesh at all. For example if no support or when
@@ -234,7 +234,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Scale
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyTerrain(PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight, const float fTerrain[],
 										const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale) = 0;
@@ -251,7 +251,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyCylinder(float fRadius, float fHeight, bool bStatic = false) = 0;
 
@@ -267,7 +267,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyCone(float fRadius, float fHeight, bool bStatic = false) = 0;
 
@@ -283,7 +283,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyCapsule(float fRadius, float fHeight, bool bStatic = false) = 0;
 
@@ -299,7 +299,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Is this physics body static?
 		*
 		*  @return
-		*    The created physics body, NULL on error (body type not supported?)
+		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
 		virtual Body *CreateBodyChamferCylinder(float fRadius, float fHeight, bool bStatic = false) = 0;
 
@@ -311,21 +311,21 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Creates a physics ball and socket joint
 		*
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*  @param[in] vPivotPoint
 		*    Origin of the ball and socket in world space
 		*  @param[in] vPinDir
 		*    Vector defining the cone axis in world space
 		*
 		*  @return
-		*    The created physics joint, NULL on error (joint type not supported?)
+		*    The created physics joint, a null pointer on error (joint type not supported?)
 		*
 		*  @note
-		*    - If 'pParentBody' or 'pChildBody' is NULL, the joint is attached to the world (static joint)
-		*    - ONLY 'pParentBody' OR 'pChildBody' can be NULL, if both are NULL this function will return NULL
-		*    - If 'pParentBody' is the same as 'pChildBody' this function will return NULL
+		*    - If 'pParentBody' or 'pChildBody' is a null pointer, the joint is attached to the world (static joint)
+		*    - ONLY 'pParentBody' OR 'pChildBody' can be a null pointer, if both are a null pointer this function will return a null pointer
+		*    - If 'pParentBody' is the same as 'pChildBody' this function will return a null pointer
 		*/
 		virtual Joint *CreateJointBall(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
 									   const PLMath::Vector3 &vPinDir) = 0;
@@ -335,16 +335,16 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Creates a physics slider joint
 		*
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*  @param[in] vPivotPoint
 		*    Origin of the slider in world space
 		*  @param[in] vPinDir
 		*    The line of action of the slider in world space
 		*
 		*  @return
-		*    The created physics joint, NULL on error (joint type not supported?)
+		*    The created physics joint, a null pointer on error (joint type not supported?)
 		*
 		*  @see
 		*    - CreateJointBall()
@@ -357,16 +357,16 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Creates a physics hinge joint
 		*
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*  @param[in] vPivotPoint
 		*    Origin of the hinge in world space
 		*  @param[in] vPinDir
 		*    The line of action of the hinge in world space
 		*
 		*  @return
-		*    The created physics joint, NULL on error (joint type not supported?)
+		*    The created physics joint, a null pointer on error (joint type not supported?)
 		*
 		*  @see
 		*    - CreateJointBall()
@@ -379,9 +379,9 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Creates a physics universal joint
 		*
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*  @param[in] vPivotPoint
 		*    Origin of the universal in world space
 		*  @param[in] vPinDir1
@@ -390,7 +390,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Second axis of rotation fixed on 'Parent' body and perpendicular to 'PinDir1' in world space
 		*
 		*  @return
-		*    The created physics joint, NULL on error (joint type not supported?)
+		*    The created physics joint, a null pointer on error (joint type not supported?)
 		*
 		*  @see
 		*    - CreateJointBall()
@@ -403,16 +403,16 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Creates a physics corkscrew joint
 		*
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*  @param[in] vPivotPoint
 		*    Origin of the corkscrew in world space
 		*  @param[in] vPinDir
 		*    The line of action of the corkscrew in world space
 		*
 		*  @return
-		*    The created physics joint, NULL on error (joint type not supported?)
+		*    The created physics joint, a null pointer on error (joint type not supported?)
 		*
 		*  @see
 		*    - CreateJointBall()
@@ -430,7 +430,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    The aligning vector in world space
 		*
 		*  @return
-		*    The created physics joint, NULL on error (joint type not supported?)
+		*    The created physics joint, a null pointer on error (joint type not supported?)
 		*/
 		virtual Joint *CreateJointUpVector(Body &cParentBody, const PLMath::Vector3 &vPinDir) = 0;
 
@@ -449,7 +449,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Flags (see Sensor::EFlags)
 		*
 		*  @return
-		*    The created physics sensor, NULL on error (sensor type not supported?)
+		*    The created physics sensor, a null pointer on error (sensor type not supported?)
 		*/
 		virtual Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0) = 0;
 
@@ -465,7 +465,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    Flags (see Sensor::EFlags)
 		*
 		*  @return
-		*    The created physics sensor, NULL on error (sensor type not supported?)
+		*    The created physics sensor, a null pointer on error (sensor type not supported?)
 		*/
 		virtual Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0) = 0;
 

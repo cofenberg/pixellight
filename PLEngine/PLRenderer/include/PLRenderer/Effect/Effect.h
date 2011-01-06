@@ -206,7 +206,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*    Index where the new technique should be added, if < 0 the add at the end
 		*
 		*  @return
-		*    The new effect technique, NULL on error
+		*    The new effect technique, a null pointer on error
 		*/
 		PLRENDERER_API EffectTechnique *AddTechnique(int nTechnique = -1);
 
@@ -218,7 +218,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*    Index of the technique to return
 		*
 		*  @return
-		*    The effect technique, NULL on error
+		*    The effect technique, a null pointer on error
 		*/
 		PLRENDERER_API EffectTechnique *GetTechnique(PLGeneral::uint32 nIndex) const;
 
@@ -245,7 +245,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*    Gets the current selected technique
 		*
 		*  @return
-		*    The current selected technique, NULL if no technique is selected
+		*    The current selected technique, a null pointer if no technique is selected
 		*/
 		PLRENDERER_API EffectTechnique *GetSelectedTechnique() const;
 
@@ -303,7 +303,7 @@ class Effect : public PLCore::Resource<Effect> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ParameterManager				   *m_pParameterManager;	/**< Parameter manager (NEVER NULL!) */
+		ParameterManager				   *m_pParameterManager;	/**< Parameter manager (NEVER a null pointer!) */
 		PLGeneral::String					m_sFilename;			/**< Effect filename */
 		PLGeneral::uint32					m_nFlags;				/**< Flags */
 		bool								m_bBlend;				/**< Is the effect blend? */

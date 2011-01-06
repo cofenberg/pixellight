@@ -519,7 +519,7 @@ class Body : public Element {
 		*    Index of the partner body to return
 		*
 		*  @return
-		*    The requested partner body, NULL on error
+		*    The requested partner body, a null pointer on error
 		*
 		*  @see
 		*    - GetNumOfPartners()

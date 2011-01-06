@@ -45,7 +45,7 @@ namespace PLGeneral {
 FileWindows::FileWindows(const Url &cUrl, const FileAccess *pAccess) : FileImpl(cUrl, pAccess),
 	m_sFilename(cUrl.GetWindowsPath()),
 	m_nAccess(0),
-	m_pFile(NULL)
+	m_pFile(nullptr)
 {
 }
 
@@ -76,8 +76,10 @@ bool FileWindows::IsFile() const
 {
 	// Check file attributes
 	DWORD nAttributes;
-	if (m_sFilename.GetFormat() == String::ASCII)	nAttributes = GetFileAttributesA(m_sFilename.GetASCII());
-	else											nAttributes = GetFileAttributesW(m_sFilename.GetUnicode());
+	if (m_sFilename.GetFormat() == String::ASCII)
+		nAttributes = GetFileAttributesA(m_sFilename.GetASCII());
+	else
+		nAttributes = GetFileAttributesW(m_sFilename.GetUnicode());
 
 	// Is it a regular file?
 	return (nAttributes != INVALID_FILE_ATTRIBUTES && !(nAttributes & FILE_ATTRIBUTE_DIRECTORY));
@@ -87,8 +89,10 @@ bool FileWindows::IsDirectory() const
 {
 	// Check file attributes
 	DWORD nAttributes;
-	if (m_sFilename.GetFormat() == String::ASCII)	nAttributes = GetFileAttributesA(m_sFilename.GetASCII());
-	else											nAttributes = GetFileAttributesW(m_sFilename.GetUnicode());
+	if (m_sFilename.GetFormat() == String::ASCII)
+		nAttributes = GetFileAttributesA(m_sFilename.GetASCII());
+	else
+		nAttributes = GetFileAttributesW(m_sFilename.GetUnicode());
 
 	// Is it a regular file?
 	return (nAttributes != INVALID_FILE_ATTRIBUTES && (nAttributes & FILE_ATTRIBUTE_DIRECTORY));
@@ -97,10 +101,10 @@ bool FileWindows::IsDirectory() const
 bool FileWindows::CopyTo(const String &sDest, bool bOverwrite) const
 {
 	// Get destination as a windows path
-	Url cDestUrl = Url(sDest);
+	const Url cDestUrl = Url(sDest);
 	if (cDestUrl.IsValid() && cDestUrl.IsValidWindowsPath()) {
 		// Get absolute path of old and new filename (in Windows notation)
-		String sNewFilename = Url(cDestUrl.CutFilename() + Url(m_sFilename).GetFilename()).GetWindowsPath();
+		const String sNewFilename = Url(cDestUrl.CutFilename() + Url(m_sFilename).GetFilename()).GetWindowsPath();
 
 		// Note: See MoveTo, same applies here
 
@@ -121,10 +125,10 @@ bool FileWindows::MoveTo(const String &sDest)
 	Close();
 
 	// Get destination as a windows path
-	Url cDestUrl = Url(sDest);
+	const Url cDestUrl = Url(sDest);
 	if (cDestUrl.IsValid() && cDestUrl.IsValidWindowsPath()) {
 		// Get absolute path of old and new filename (in Windows notation)
-		String sNewFilename = Url(cDestUrl.CutFilename()).GetWindowsPath();
+		const String sNewFilename = Url(cDestUrl.CutFilename()).GetWindowsPath();
 
 		// Note: This might be dangerous, because the destination URL is blindly used, so if e.g.
 		// the user tries to move "C:\test.txt" to "C:\test.zip\test2.txt", this will be passed
@@ -162,7 +166,7 @@ bool FileWindows::Rename(const String &sName)
 		return false; // Error!
 
 	// Get absolute path of old and new name (in Windows notation)
-	String sNewFilename = Url(m_cUrl.CutFilename() + sName).GetWindowsPath();
+	const String sNewFilename = Url(m_cUrl.CutFilename() + sName).GetWindowsPath();
 
 	// Rename file (if the old absolute filename was Unicode, the new absolute one is also Unicode)
 	bool bSuccess;
@@ -172,9 +176,8 @@ bool FileWindows::Rename(const String &sName)
 		bSuccess = (MoveFileW(m_sFilename.GetUnicode(), sNewFilename.GetUnicode()) != 0);
 
 	// Set new file name
-	if (bSuccess) {
+	if (bSuccess)
 		m_cUrl = sNewFilename;
-	}
 
 	// Done
 	return bSuccess;
@@ -188,9 +191,9 @@ bool FileWindows::CreateNewFile(bool bAlways)
 	// Create file
 	HANDLE hFile;
 	if (m_sFilename.GetFormat() == String::ASCII)
-		hFile = CreateFileA(m_sFilename.GetASCII(), 0, 0, NULL, bAlways ? CREATE_ALWAYS : CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+		hFile = CreateFileA(m_sFilename.GetASCII(), 0, 0, nullptr, bAlways ? CREATE_ALWAYS : CREATE_NEW, FILE_ATTRIBUTE_NORMAL, nullptr);
 	else
-		hFile = CreateFileW(m_sFilename.GetUnicode(), 0, 0, NULL, bAlways ? CREATE_ALWAYS : CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+		hFile = CreateFileW(m_sFilename.GetUnicode(), 0, 0, nullptr, bAlways ? CREATE_ALWAYS : CREATE_NEW, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	// Check return value
 	if (hFile != INVALID_HANDLE_VALUE) {
@@ -210,9 +213,9 @@ bool FileWindows::CreateNewDirectory()
 
 	// Create directory
 	if (m_sFilename.GetFormat() == String::ASCII)
-		return (CreateDirectoryA(m_sFilename.GetASCII(), NULL) != 0);
+		return (CreateDirectoryA(m_sFilename.GetASCII(), nullptr) != 0);
 	else
-		return (CreateDirectoryW(m_sFilename.GetUnicode(), NULL) != 0);
+		return (CreateDirectoryW(m_sFilename.GetUnicode(), nullptr) != 0);
 }
 
 bool FileWindows::Delete()
@@ -245,7 +248,7 @@ void FileWindows::Close()
 	if (m_pFile) {
 		// Close file
 		fclose(m_pFile);
-		m_pFile = NULL;
+		m_pFile = nullptr;
 	}
 }
 
@@ -258,33 +261,41 @@ bool FileWindows::Open(uint32 nAccess)
 	char szMode[4];
 	if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && (nAccess & File::FileAppend)) {
 		// Append at the end of the file
-		if (nAccess & File::FileRead)	strcpy(szMode, "a+");	// Append, read and write
-		else							strcpy(szMode, "a");	// Append, write only
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "a+");	// Append, read and write
+		else
+			strcpy(szMode, "a");	// Append, write only
 	} else if ((nAccess & File::FileWrite) && (nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Create and open writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "w+");	// Create, read and write
-		else							strcpy(szMode, "w");	// Create, write only
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "w+");	// Create, read and write
+		else
+			strcpy(szMode, "w");	// Create, write only
 	} else if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "r+");	// Open, read and write
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "r+");	// Open, read and write
 
 		// We need to check whether the file already exist, if so, we can go on...
 		else {
-			if (Exists())				strcpy(szMode, "w");	// Open, write only
-			else						return false;			// Invalid
+			if (Exists())
+				strcpy(szMode, "w");	// Open, write only
+			else
+				return false;			// Invalid
 		}
 	} else if (!(nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open not writable
-		if (nAccess & File::FileRead)	strcpy(szMode, "r");	// Open, read only
-		else							return false;			// Invalid
+		if (nAccess & File::FileRead)
+			strcpy(szMode, "r");	// Open, read only
+		else
+			return false;			// Invalid
 	} else {
 		// Invalid combination
 		return false;
 	}
 
 	// Set text or binary mode
-	if (nAccess & File::FileText)	strcat(szMode, "t");
-	else							strcat(szMode, "b");
+	strcat(szMode, (nAccess & File::FileText) ? "t" : "b");
 
 	// Save access modes
 	m_nAccess = nAccess;
@@ -300,13 +311,13 @@ bool FileWindows::Open(uint32 nAccess)
 	}
 
 	// Done
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 bool FileWindows::IsOpen() const
 {
 	// Check whether the file is open
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 bool FileWindows::IsReadable() const
@@ -356,8 +367,9 @@ int FileWindows::PutS(const String &sString)
 {
 	// Write string
 	if (IsWritable()) {
-		int nSize = fputs(sString, m_pFile);
-		if (nSize >= 0) return sString.GetLength();
+		const int nSize = fputs(sString, m_pFile);
+		if (nSize >= 0)
+			return sString.GetLength();
 	}
 
 	// Error!
@@ -389,15 +401,28 @@ bool FileWindows::Seek(int32 nOffset, File::ESeek nLocation)
 		// Convert seek position to Windows value
 		int nSeek;
 		switch (nLocation) {
-			case File::SeekCurrent:	nSeek = SEEK_CUR; break;
-			case File::SeekEnd:		nSeek = SEEK_END; break;
-			case File::SeekSet:		nSeek = SEEK_SET; break;
-			default:				return false; // Error!
+			case File::SeekCurrent:
+				nSeek = SEEK_CUR;
+				break;
+
+			case File::SeekEnd:
+				nSeek = SEEK_END;
+				break;
+
+			case File::SeekSet:
+				nSeek = SEEK_SET;
+				break;
+
+			default:
+				return false; // Error!
 		}
 
 		// Seek file
 		return !fseek(m_pFile, nOffset, nSeek);
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 int32 FileWindows::Tell() const
@@ -411,12 +436,15 @@ uint32 FileWindows::GetSize() const
 	// Check file pointer
 	if (m_pFile) {
 		// Get file size
-		int32 nPos = Tell();
+		const int32 nPos = Tell();
 		fseek(m_pFile, 0, SEEK_END);
-		int32 nSize = ftell(m_pFile);
+		const int32 nSize = ftell(m_pFile);
 		fseek(m_pFile, nPos, SEEK_SET);
 		return nSize;
-	} else return 0; // Error!
+	} else {
+		// Error!
+		return 0;
+	}
 }
 
 FileSearchImpl *FileWindows::CreateSearch()

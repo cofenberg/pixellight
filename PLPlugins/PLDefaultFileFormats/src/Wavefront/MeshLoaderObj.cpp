@@ -256,7 +256,7 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 	Array<Obj::Material*>			 lstMaterials;
 	HashMap<String, Obj::Material*>  mapMaterials;
-	Obj::Material					*pMaterial = NULL;	/**< Current face material */
+	Obj::Material					*pMaterial = nullptr;	/**< Current face material */
 	Array<Array<Obj::Vertex*>*>		 lstVertices;
 	Array<Obj::Normal*>				 lstNormals;
 	Array<Obj::TexCoord*>			 lstTexCoords;

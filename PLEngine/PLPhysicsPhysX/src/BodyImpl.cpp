@@ -71,7 +71,7 @@ void BodyImpl::InitializePhysXActor(PLPhysics::Body &cBody, NxActor &cPhysXActor
 //[-------------------------------------------------------]
 PLPhysics::Body *BodyImpl::GetBody() const
 {
-	return m_pPhysXActor ? (PLPhysics::Body*)m_pPhysXActor->userData : NULL;
+	return m_pPhysXActor ? (PLPhysics::Body*)m_pPhysXActor->userData : nullptr;
 }
 
 bool BodyImpl::IsActive() const
@@ -421,7 +421,7 @@ PLPhysics::Body *BodyImpl::GetPartner(uint32 nIndex) const
 *    Constructor
 */
 BodyImpl::BodyImpl() :
-	m_pPhysXActor(NULL),
+	m_pPhysXActor(nullptr),
 	m_bActive(false),
 	m_fCollisionVolume(0.0f),
 	m_bAutoFreeze(true),

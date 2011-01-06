@@ -254,7 +254,7 @@ class FileAccess {
 				*    Get user data
 				*
 				*  @return
-				*    User data, can be NULL
+				*    User data, can be a null pointer
 				*/
 				PLGENERAL_API void *GetUserData() const;
 
@@ -263,7 +263,7 @@ class FileAccess {
 				*    Set user data
 				*
 				*  @param[in] pUserData
-				*    User data, can be NULL
+				*    User data, can be a null pointer
 				*/
 				PLGENERAL_API void SetUserData(void *pUserData);
 
@@ -297,7 +297,7 @@ class FileAccess {
 				uint32  m_nFlagsMask;		/**< Mask of file-flags (see File::EAccess) */
 				uint32  m_nFlagsValue;		/**< Values of file-flags (see File::EAccess) */
 				uint32  m_nUserFlags;		/**< User defined flags */
-				void   *m_pUserData;		/**< User defined data, can be NULL */
+				void   *m_pUserData;		/**< User defined data, can be a null pointer */
 				String  m_sUserInfo;		/**< USer defined string */
 
 

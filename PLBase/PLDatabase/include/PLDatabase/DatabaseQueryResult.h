@@ -109,7 +109,7 @@ class DatabaseQueryResult {
 		*    Fetches current row from cursor and moves forward
 		*
 		*  @return
-		*    Pointer to the current row map, NULL on error (do NOT delete this!)
+		*    Pointer to the current row map, a null pointer on error (do NOT delete this!)
 		*/
 		virtual const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> *FetchRow() = 0;
 

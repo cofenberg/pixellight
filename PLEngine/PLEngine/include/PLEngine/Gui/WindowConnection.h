@@ -80,7 +80,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @note
 		*    - Don't forget to call Initialize() to initialize the connection
 		*/
-		PL_API WindowConnection(PLRenderer::Renderer &cRenderer, PLGui::Widget &cWidget, PLGui::Widget *pEventWidget = NULL);
+		PL_API WindowConnection(PLRenderer::Renderer &cRenderer, PLGui::Widget &cWidget, PLGui::Widget *pEventWidget = nullptr);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*    Initializes the window connection
 		*
 		*  @param[in] pDisplayMode
-		*    Display mode information, can be NULL
+		*    Display mode information, can be a null pointer
 		*  @param[in] bFullscreen
 		*    Initial in fullscreen mode?
 		*
@@ -101,7 +101,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*    - If 'pDisplayMode' is not given, default settings are used
 		*    - If no fullscreen mode, just the size from 'pDisplayMode' are used
 		*/
-		PL_API void Initialize(const PLRenderer::DisplayMode *pDisplayMode = NULL, bool bFullscreen = false);
+		PL_API void Initialize(const PLRenderer::DisplayMode *pDisplayMode = nullptr, bool bFullscreen = false);
 
 		/**
 		*  @brief

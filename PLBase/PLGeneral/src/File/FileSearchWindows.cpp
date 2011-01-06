@@ -51,7 +51,7 @@ FileSearchWindows::FileSearchWindows(const String &sPath, const FileAccess *pAcc
 	} else {
 		// Error
 		m_bHasNext = false;
-		m_hFind    = NULL;
+		m_hFind    = nullptr;
 	}
 }
 
@@ -62,7 +62,8 @@ FileSearchWindows::FileSearchWindows(const String &sPath, const FileAccess *pAcc
 FileSearchWindows::~FileSearchWindows()
 {
 	// Close the search
-	if (m_hFind) FindClose(m_hFind);
+	if (m_hFind)
+		FindClose(m_hFind);
 }
 
 
@@ -80,7 +81,9 @@ String FileSearchWindows::GetNextFile()
 		m_sFilename = m_sFindData.cFileName;
 		m_bHasNext  = (FindNextFile(m_hFind, &m_sFindData) > 0);
 		return m_sFilename;
-	} else return "";
+	} else {
+		return "";
+	}
 }
 
 

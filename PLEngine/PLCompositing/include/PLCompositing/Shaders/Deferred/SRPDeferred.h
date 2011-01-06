@@ -78,7 +78,7 @@ class SRPDeferred : public PLScene::SceneRendererPass {
 		*    Returns the first found instance of a SRPDeferredGBuffer scene renderer pass instance within the scene renderer pipeline
 		*
 		*  @return
-		*    The first found instance of a SRPDeferredGBuffer scene renderer pass instance within the scene renderer pipeline, can be NULL
+		*    The first found instance of a SRPDeferredGBuffer scene renderer pass instance within the scene renderer pipeline, can be a null pointer
 		*/
 		PLCOM_API SRPDeferredGBuffer *GetGBuffer() const;
 
@@ -87,7 +87,7 @@ class SRPDeferred : public PLScene::SceneRendererPass {
 		*    Returns the vertex buffer of this deferred scene renderer pass
 		*
 		*  @return
-		*    The vertex buffer of this deferred scene renderer pass, NULL on error
+		*    The vertex buffer of this deferred scene renderer pass, a null pointer on error
 		*
 		*  @remarks
 		*    The default content of the vertex buffer is a fullscreen quad consisting of 4 vertices:
@@ -128,7 +128,7 @@ class SRPDeferred : public PLScene::SceneRendererPass {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::VertexBuffer *m_pVertexBuffer;	/**< Vertex buffer, can be NULL */
+		PLRenderer::VertexBuffer *m_pVertexBuffer;	/**< Vertex buffer, can be a null pointer */
 
 
 };

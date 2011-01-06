@@ -194,7 +194,7 @@ Texture *TextureManager::CreateTexture(const String &sName, const String &sParam
 					pTC->SetValues(sParameters);
 
 				// Create the texture
-				Texture *pTexture = pTC->Create(*this, NULL);
+				Texture *pTexture = pTC->Create(*this, nullptr);
 
 				// Destroy the texture creator
 				delete pTC;
@@ -206,7 +206,7 @@ Texture *TextureManager::CreateTexture(const String &sName, const String &sParam
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

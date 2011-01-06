@@ -158,7 +158,7 @@ class Semaphore {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SemaphoreImpl *m_pSemaphoreImpl;	/**< Pointer to the system specific implementation (assumed to be never NULL!) */
+		SemaphoreImpl *m_pSemaphoreImpl;	/**< Pointer to the system specific implementation (assumed to be never a null pointer!) */
 		uint32         m_nValue;			/**< Current value of the semaphore */
 
 

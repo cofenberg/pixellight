@@ -104,7 +104,7 @@ class FontManager : public PLRenderer::FontManager {
 		*    Returns the FreeType library object
 		*
 		*  @return
-		*    The FreeType library object, NULL on error (in case of an terrible error), do not delete the instance!
+		*    The FreeType library object, a null pointer on error (in case of an terrible error), do not delete the instance!
 		*/
 		FT_Library *GetFTLibrary() const;
 
@@ -113,16 +113,16 @@ class FontManager : public PLRenderer::FontManager {
 		*    Returns the program for font rendering
 		*
 		*  @param[in] ppGeneratedProgramUserData
-		*    If not NULL, this receives a pointer to an GeneratedProgramUserData instance for fast direct uniform access
+		*    If not a null pointer, this receives a pointer to an GeneratedProgramUserData instance for fast direct uniform access
 		*
 		*  @return
-		*    The program for font rendering, can be NULL
+		*    The program for font rendering, can be a null pointer
 		*
 		*  @note
 		*    - The program is using the default shader language of the renderer
 		*    - The program has already proper vertex attributes set
 		*/
-		PLRenderer::Program *GetProgram(GeneratedProgramUserData **ppGeneratedProgramUserData = NULL);
+		PLRenderer::Program *GetProgram(GeneratedProgramUserData **ppGeneratedProgramUserData = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -141,7 +141,7 @@ class FontManager : public PLRenderer::FontManager {
 		*    Returns the vertex buffer used for font rendering
 		*
 		*  @return
-		*    The vertex buffer used for font rendering, NULL on error
+		*    The vertex buffer used for font rendering, a null pointer on error
 		*/
 		PLRenderer::VertexBuffer *GetVertexBuffer();
 
@@ -150,10 +150,10 @@ class FontManager : public PLRenderer::FontManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FT_Library							*m_pFTLibrary;			/**< FreeType library object, NULL on error (in case of an terrible error) */
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		FT_Library							*m_pFTLibrary;			/**< FreeType library object, a null pointer on error (in case of an terrible error) */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
-		PLRenderer::VertexBuffer			*m_pVertexBuffer;		/**< Vertex buffer used for font rendering, can be NULL */
+		PLRenderer::VertexBuffer			*m_pVertexBuffer;		/**< Vertex buffer used for font rendering, can be a null pointer */
 
 
 };

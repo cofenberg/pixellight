@@ -176,7 +176,7 @@ class SceneLoaderPL : public SceneLoader {
 		*    Is this a scene container?
 		*
 		*  @return
-		*    The created scene node, NULL on error (maybe XML element has no class attribute?)
+		*    The created scene node, a null pointer on error (maybe XML element has no class attribute?)
 		*/
 		SceneNode *LoadNode(SInstance &sInstance, SceneContainer &cContainer, const PLGeneral::XmlElement &cNode, bool bContainer) const;
 
@@ -192,7 +192,7 @@ class SceneLoaderPL : public SceneLoader {
 		*    Scene node where to add the modifier
 		*
 		*  @return
-		*    The created scene node modifier, NULL on error (maybe XML element has no class attribute?)
+		*    The created scene node modifier, a null pointer on error (maybe XML element has no class attribute?)
 		*/
 		SceneNodeModifier *LoadModifier(SInstance &sInstance, const PLGeneral::XmlElement &cNode, SceneNode &cSceneNode) const;
 

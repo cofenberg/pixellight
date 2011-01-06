@@ -119,7 +119,7 @@ class XToken {
 		*    Returns the first child token
 		*
 		*  @return
-		*    The first child token, NULL if there's no first child token
+		*    The first child token, a null pointer if there's no first child token
 		*/
 		XToken *GetFirstChildToken() const;
 
@@ -128,7 +128,7 @@ class XToken {
 		*    Returns the next token
 		*
 		*  @return
-		*    The next token, NULL if there's no next token
+		*    The next token, a null pointer if there's no next token
 		*/
 		XToken *GetNextToken() const;
 
@@ -169,8 +169,8 @@ class XToken {
 	//[-------------------------------------------------------]
 	protected:
 		EType   m_nType;		/**< Token type */
-		XToken *m_pChildToken;	/**< First child token, can be NULL */
-		XToken *m_pNextToken;	/**< Next token, can be NULL */
+		XToken *m_pChildToken;	/**< First child token, can be a null pointer */
+		XToken *m_pNextToken;	/**< Next token, can be a null pointer */
 
 
 };
@@ -239,7 +239,7 @@ class XTokenName : public XToken {
 		*    Returns the ASCII name
 		*
 		*  @return
-		*    The ASCII name, NULL on error
+		*    The ASCII name, a null pointer on error
 		*/
 		char *GetName() const;
 
@@ -275,7 +275,7 @@ class XTokenName : public XToken {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::uint32  m_nLength;	/**< Length of name field, in bytes */
-		char			  *m_pszName;	/**< Array count ASCII name, can be NULL */
+		char			  *m_pszName;	/**< Array count ASCII name, can be a null pointer */
 
 
 };
@@ -311,7 +311,7 @@ class XTokenString : public XToken {
 		*    Returns the ASCII string
 		*
 		*  @return
-		*    The ASCII string, NULL on error
+		*    The ASCII string, a null pointer on error
 		*/
 		char *GetString() const;
 
@@ -347,7 +347,7 @@ class XTokenString : public XToken {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::uint32	m_nLength;		/**< DWORD 4 length of string field in bytes (excluding the terminating zero) */
-		char			   *m_pszString;	/**< BYTE array count ASCII string, can be NULL */
+		char			   *m_pszString;	/**< BYTE array count ASCII string, can be a null pointer */
 		PLGeneral::uint16	m_nTerminator;	/**< DWORD 4 TOKEN_SEMICOLON or TOKEN_COMMA */
 
 
@@ -447,7 +447,7 @@ class XTokenIntList : public XToken {
 	//[-------------------------------------------------------]
 	public:
 		PLGeneral::uint32  m_nLength;	/**< DWORD 4 number of integers in list field */
-		PLGeneral::uint32 *m_list;		/**< DWORD 4 x count integer list, can be NULL */
+		PLGeneral::uint32 *m_list;		/**< DWORD 4 x count integer list, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -491,7 +491,7 @@ class XTokenFloatList : public XToken {
 	public:
 		PLGeneral::uint32  m_nLength;	/**< DWORD 4 number of floats or doubles in list field */
 		float			  *m_list;		/**< float/double array 4 or 8 x count float or double list
-											 determined from the header accuracy, can be NULL */
+											 determined from the header accuracy, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -533,8 +533,8 @@ class XTokenTemplate : public XToken {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		XTokenName *pszName;	/**< TOKEN_NAME, can be NULL */
-		XTokenGUID *pGUID;		/**< TOKEN_GUID, can be NULL */
+		XTokenName *pszName;	/**< TOKEN_NAME, can be a null pointer */
+		XTokenGUID *pGUID;		/**< TOKEN_GUID, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

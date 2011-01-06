@@ -72,7 +72,7 @@ class CursorWindows : public CursorImpl {
 		*    Returns the cursor handle
 		*
 		*  @return
-		*    Cursor handle, can be NULL
+		*    Cursor handle, can be a null pointer
 		*/
 		PLGUI_API HCURSOR GetHandle() const;
 
@@ -89,7 +89,7 @@ class CursorWindows : public CursorImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		HCURSOR m_hCursor;	/**< Cursor handle, can be NULL */
+		HCURSOR m_hCursor;	/**< Cursor handle, can be a null pointer */
 
 
 };

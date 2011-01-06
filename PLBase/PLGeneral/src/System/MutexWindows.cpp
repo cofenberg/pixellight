@@ -40,7 +40,7 @@ namespace PLGeneral {
 *    Constructor
 */
 MutexWindows::MutexWindows() :
-	m_hMutex(::CreateMutex(NULL, false, NULL))
+	m_hMutex(::CreateMutex(nullptr, false, nullptr))
 {
 }
 
@@ -51,7 +51,8 @@ MutexWindows::MutexWindows() :
 MutexWindows::~MutexWindows()
 {
 	// Destroy system mutex
-	if (m_hMutex) CloseHandle(m_hMutex);
+	if (m_hMutex)
+		CloseHandle(m_hMutex);
 }
 
 

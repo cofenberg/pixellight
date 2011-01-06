@@ -989,13 +989,13 @@ class Vector3 {
 		*  @param[in] fDepthRangeMax
 		*    Depth range maximum
 		*  @param[in] pfHomogeneousDivide
-		*    If not NULL, this receives the homogeneous divide
+		*    If not a null pointer, this receives the homogeneous divide
 		*
 		*  @return
 		*    The corresponding 2D screen coordinate (x, y, z depth)
 		*/
 		PLMATH_API Vector3 To2DCoordinate(const Matrix4x4 &mWorldViewProjection, const Rectangle &cViewportRectangle,
-										  float fDepthRangeMin = 0.0f, float fDepthRangeMax = 1.0f, float *pfHomogeneousDivide = NULL) const;
+										  float fDepthRangeMin = 0.0f, float fDepthRangeMax = 1.0f, float *pfHomogeneousDivide = nullptr) const;
 
 		/**
 		*  @brief

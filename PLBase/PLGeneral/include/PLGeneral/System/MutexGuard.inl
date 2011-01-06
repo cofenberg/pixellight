@@ -96,7 +96,7 @@ Mutex &MutexGuard::GetMutex() const
 *    Copy constructor
 */
 MutexGuard::MutexGuard(const MutexGuard &cSource) :
-	m_pMutex(NULL),
+	m_pMutex(nullptr),
 	m_bLocked(false)
 {
 	// Not implemented

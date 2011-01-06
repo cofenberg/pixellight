@@ -70,7 +70,7 @@ class Splitter : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API Splitter(Widget *pParent = NULL);
+		PLGUI_API Splitter(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

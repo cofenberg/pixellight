@@ -72,7 +72,7 @@ class ImageWindows : public ImageImpl {
 		*    Get bitmap handle
 		*
 		*  @return
-		*    Bitmap handle, can be NULL
+		*    Bitmap handle, can be a null pointer
 		*/
 		PLGUI_API HBITMAP GetBitmapHandle() const;
 
@@ -81,7 +81,7 @@ class ImageWindows : public ImageImpl {
 		*    Get icon handle of the image
 		*
 		*  @return
-		*    Icon handle, can be NULL
+		*    Icon handle, can be a null pointer
 		*/
 		PLGUI_API HICON GetIconHandle();
 
@@ -104,7 +104,7 @@ class ImageWindows : public ImageImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		HBITMAP m_hBitmap;		/**< Bitmap handle, can be NULL */
+		HBITMAP m_hBitmap;		/**< Bitmap handle, can be a null pointer */
 		HICON	m_hIcon;		/**< Icon handle of bitmap */
 
 

@@ -94,7 +94,7 @@ void JointImpl::SetBreakTorque(const Vector3 &vTorque)
 *    Constructor
 */
 JointImpl::JointImpl() :
-	m_pJoint(NULL),
+	m_pJoint(nullptr),
 	m_bBreakable(false)
 {
 }

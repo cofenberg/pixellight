@@ -207,7 +207,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Get image data
 		*
 		*  @return
-		*    Pointer to image data, NULL on error
+		*    Pointer to image data, a null pointer on error
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetData();
@@ -235,7 +235,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Get compressed image data
 		*
 		*  @return
-		*    Pointer to compressed image data, NULL on error
+		*    Pointer to compressed image data, a null pointer on error
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetCompressedData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetCompressedData();
@@ -265,7 +265,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Set color palette
 		*
 		*  @param[in] pPalette
-		*    Pointer to color palette, or NULL if the image has no palette
+		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
 		PLGRAPHICS_API void SetPalette(ImagePalette *pPalette);
 
@@ -274,7 +274,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Get color palette
 		*
 		*  @return
-		*    Pointer to color palette, or NULL if the image has no palette
+		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
 		PLGRAPHICS_API const ImagePalette *GetPalette() const;
 		PLGRAPHICS_API ImagePalette *GetPalette();
@@ -394,11 +394,11 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		EColorFormat		 m_nColorFormat;		/**< Color format of the image */
 		ECompression		 m_nCompression;		/**< Compression format */
 		PLMath::Vector3i	 m_vSize;				/**< Size of the image */
-		PLGeneral::uint8	*m_pData;				/**< Uncompressed image data, can be NULL */
+		PLGeneral::uint8	*m_pData;				/**< Uncompressed image data, can be a null pointer */
 		PLGeneral::uint32	 m_nDataSize;			/**< Size of uncompressed image data in bytes */
-		PLGeneral::uint8	*m_pCompressedData;		/**< Compressed image data, can be NULL */
+		PLGeneral::uint8	*m_pCompressedData;		/**< Compressed image data, can be a null pointer */
 		PLGeneral::uint32	 m_nCompressedSize;		/**< Size of compressed image data in bytes */
-		ImagePalette		*m_pPalette;			/**< Color palette, can be NULL */
+		ImagePalette		*m_pPalette;			/**< Color palette, can be a null pointer */
 
 
 };

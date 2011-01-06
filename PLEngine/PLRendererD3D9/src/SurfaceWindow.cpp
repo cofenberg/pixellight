@@ -64,8 +64,8 @@ SurfaceWindow::~SurfaceWindow()
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
 	EventHandlerSize(&SurfaceWindow::NotifySize, this),
-	m_pSwapChain(NULL),
-	m_pBackBuffer(NULL)
+	m_pSwapChain(nullptr),
+	m_pBackBuffer(nullptr)
 {
 	// [TODO] Window size change
 	// Connect event handler
@@ -203,7 +203,7 @@ void SurfaceWindow::DeInit()
 
 		// Release swap chain
 		if (cRenderer.m_pFirstSwapChainUserSurface == this)
-			cRenderer.m_pFirstSwapChainUserSurface = NULL;
+			cRenderer.m_pFirstSwapChainUserSurface = nullptr;
 		else
 			m_pSwapChain->Release();
 	}
@@ -236,9 +236,9 @@ bool SurfaceWindow::Present()
 	// Is there a swap chain and a back buffer?
 	if (m_pSwapChain && m_pBackBuffer && GetWindow()) {
 		// Get surface window and present swap chain to window
-		if (m_pSwapChain->Present(NULL, NULL, (HWND)GetWindow(), NULL, 0) == D3D_OK) {
+		if (m_pSwapChain->Present(nullptr, nullptr, (HWND)GetWindow(), nullptr, 0) == D3D_OK) {
 			m_pBackBuffer->Release();
-			m_pBackBuffer = NULL;
+			m_pBackBuffer = nullptr;
 
 			// Done
 			return true;

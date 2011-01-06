@@ -42,7 +42,7 @@ namespace PLGeneral {
 RegistryWindows::RegistryWindows() :
 	m_nKey(Registry::KeyNone),
 	m_nAccess(0),
-	m_hKey(NULL)
+	m_hKey(nullptr)
 {
 }
 
@@ -77,20 +77,36 @@ bool RegistryWindows::Open(Registry::EKey nKey, const String &sSubKey, uint32 nA
 	m_nAccess = nAccess;
 
 	// Get root key
-	HKEY hRootKey = NULL;
+	HKEY hRootKey = nullptr;
 	switch (nKey) {
-		case Registry::KeyClassesRoot:	hRootKey = HKEY_CLASSES_ROOT;	break;
-		case Registry::KeyCurrentUser:	hRootKey = HKEY_CURRENT_USER;	break;
-		case Registry::KeyLocalMachine:	hRootKey = HKEY_LOCAL_MACHINE;	break;
-		case Registry::KeyUsers:		hRootKey = HKEY_USERS;			break;
-		default:						return false; // Error!
+		case Registry::KeyClassesRoot:
+			hRootKey = HKEY_CLASSES_ROOT;
+			break;
+
+		case Registry::KeyCurrentUser:
+			hRootKey = HKEY_CURRENT_USER;
+			break;
+
+		case Registry::KeyLocalMachine:
+			hRootKey = HKEY_LOCAL_MACHINE;
+			break;
+
+		case Registry::KeyUsers:
+			hRootKey = HKEY_USERS;
+			break;
+
+		default:
+			return false; // Error!
 	}
 
 	// Get access modes
 	REGSAM nMode = 0;
-	if (nAccess & Registry::RegRead)	nMode |= KEY_READ;
-	if (nAccess & Registry::RegWrite)	nMode |= KEY_WRITE;
-	if (nAccess & Registry::RegNotify)	nMode |= KEY_NOTIFY;
+	if (nAccess & Registry::RegRead)
+		nMode |= KEY_READ;
+	if (nAccess & Registry::RegWrite)
+		nMode |= KEY_WRITE;
+	if (nAccess & Registry::RegNotify)
+		nMode |= KEY_NOTIFY;
 
 	// Open key
 	return (RegOpenKeyExW(hRootKey, sSubKey.GetUnicode(), 0, nMode, &m_hKey) == ERROR_SUCCESS);
@@ -107,23 +123,39 @@ bool RegistryWindows::Create(Registry::EKey nKey, const String &sSubKey, uint32 
 	m_nAccess = nAccess;
 
 	// Get root key
-	HKEY hRootKey = NULL;
+	HKEY hRootKey = nullptr;
 	switch (nKey) {
-		case Registry::KeyClassesRoot:	hRootKey = HKEY_CLASSES_ROOT;	break;
-		case Registry::KeyCurrentUser:	hRootKey = HKEY_CURRENT_USER;	break;
-		case Registry::KeyLocalMachine:	hRootKey = HKEY_LOCAL_MACHINE;	break;
-		case Registry::KeyUsers:		hRootKey = HKEY_USERS;			break;
-		default:						return false; // Error!
+		case Registry::KeyClassesRoot:
+			hRootKey = HKEY_CLASSES_ROOT;
+			break;
+
+		case Registry::KeyCurrentUser:
+			hRootKey = HKEY_CURRENT_USER;
+			break;
+
+		case Registry::KeyLocalMachine:
+			hRootKey = HKEY_LOCAL_MACHINE;
+			break;
+
+		case Registry::KeyUsers:
+			hRootKey = HKEY_USERS;
+			break;
+
+		default:
+			return false; // Error!
 	}
 
 	// Get access modes
 	REGSAM nMode = 0;
-	if (nAccess & Registry::RegRead)	nMode |= KEY_READ;
-	if (nAccess & Registry::RegWrite)	nMode |= KEY_WRITE;
-	if (nAccess & Registry::RegNotify)	nMode |= KEY_NOTIFY;
+	if (nAccess & Registry::RegRead)
+		nMode |= KEY_READ;
+	if (nAccess & Registry::RegWrite)
+		nMode |= KEY_WRITE;
+	if (nAccess & Registry::RegNotify)
+		nMode |= KEY_NOTIFY;
 
 	// Create key
-	return (RegCreateKeyExW(hRootKey, sSubKey.GetUnicode(), 0, NULL, REG_OPTION_NON_VOLATILE, nMode, NULL, &m_hKey, NULL) == ERROR_SUCCESS);
+	return (RegCreateKeyExW(hRootKey, sSubKey.GetUnicode(), 0, nullptr, REG_OPTION_NON_VOLATILE, nMode, nullptr, &m_hKey, nullptr) == ERROR_SUCCESS);
 }
 
 bool RegistryWindows::Delete()
@@ -132,13 +164,26 @@ bool RegistryWindows::Delete()
 	Close();
 
 	// Get root key
-	HKEY hRootKey = NULL;
+	HKEY hRootKey = nullptr;
 	switch (m_nKey) {
-		case Registry::KeyClassesRoot:	hRootKey = HKEY_CLASSES_ROOT;	break;
-		case Registry::KeyCurrentUser:	hRootKey = HKEY_CURRENT_USER;	break;
-		case Registry::KeyLocalMachine:	hRootKey = HKEY_LOCAL_MACHINE;	break;
-		case Registry::KeyUsers:		hRootKey = HKEY_USERS;			break;
-		default:						return false; // Error!
+		case Registry::KeyClassesRoot:
+			hRootKey = HKEY_CLASSES_ROOT;
+			break;
+
+		case Registry::KeyCurrentUser:
+			hRootKey = HKEY_CURRENT_USER;
+			break;
+
+		case Registry::KeyLocalMachine:
+			hRootKey = HKEY_LOCAL_MACHINE;
+			break;
+
+		case Registry::KeyUsers:
+			hRootKey = HKEY_USERS;
+			break;
+
+		default:
+			return false; // Error!
 	}
 
 	// Delete key
@@ -148,9 +193,9 @@ bool RegistryWindows::Delete()
 void RegistryWindows::Close()
 {
 	// Close registry key
-	if (m_hKey != NULL) {
+	if (m_hKey != nullptr) {
 		RegCloseKey(m_hKey);
-		m_hKey = NULL;
+		m_hKey = nullptr;
 	}
 }
 
@@ -178,9 +223,8 @@ uint32 RegistryWindows::GetNumOfSubKeys() const
 	if (m_hKey) {
 		// Get number of sub-keys
 		DWORD nSubKeys = 0;
-		if (RegQueryInfoKeyW(m_hKey, NULL, NULL, NULL, &nSubKeys, NULL, NULL, NULL, NULL, NULL, NULL, NULL) == ERROR_SUCCESS) {
+		if (RegQueryInfoKeyW(m_hKey, nullptr, nullptr, nullptr, &nSubKeys, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr) == ERROR_SUCCESS)
 			return nSubKeys; // Done
-		}
 	}
 
 	// Error!
@@ -193,15 +237,16 @@ String RegistryWindows::GetSubKey(uint32 nIndex) const
 	if (m_hKey) {
 		// Get maximum size of name
 		DWORD nSize = 0;
-		if (RegQueryInfoKeyW(m_hKey, NULL, NULL, NULL, NULL, &nSize, NULL, NULL, NULL, NULL, NULL, NULL) == ERROR_SUCCESS) {
+		if (RegQueryInfoKeyW(m_hKey, nullptr, nullptr, nullptr, nullptr, &nSize, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr) == ERROR_SUCCESS) {
 			// Allocate buffer
 			nSize++;
 			wchar_t *pszName = new wchar_t[nSize];
 
 			// Get name of sub-key
-			if (RegEnumKeyW(m_hKey, nIndex, pszName, nSize) == ERROR_SUCCESS) {
+			if (RegEnumKeyW(m_hKey, nIndex, pszName, nSize) == ERROR_SUCCESS)
 				return String(pszName, false); // Do not copy, please
-			} else delete [] pszName;
+			else
+				delete [] pszName;
 		}
 	}
 
@@ -215,9 +260,8 @@ uint32 RegistryWindows::GetNumOfValues() const
 	if (m_hKey) {
 		// Get number of sub-keys
 		DWORD nValues = 0;
-		if (RegQueryInfoKeyW(m_hKey, NULL, NULL, NULL, NULL, NULL, NULL, &nValues, NULL, NULL, NULL, NULL) == ERROR_SUCCESS) {
+		if (RegQueryInfoKeyW(m_hKey, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, &nValues, nullptr, nullptr, nullptr, nullptr) == ERROR_SUCCESS)
 			return nValues; // Done
-		}
 	}
 
 	// Error!
@@ -230,15 +274,16 @@ String RegistryWindows::GetValue(uint32 nIndex) const
 	if (m_hKey) {
 		// Query maximum size of name
 		DWORD nSize = 0;
-		if (RegQueryInfoKeyW(m_hKey, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &nSize, NULL, NULL, NULL) == ERROR_SUCCESS) {
+		if (RegQueryInfoKeyW(m_hKey, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, &nSize, nullptr, nullptr, nullptr) == ERROR_SUCCESS) {
 			// Allocate buffer
 			nSize++;
 			wchar_t *pszName = new wchar_t[nSize];
 
 			// Get name of value
-			if (RegEnumValueW(m_hKey, nIndex, pszName, &nSize, NULL, NULL, NULL, NULL) == ERROR_SUCCESS) {
+			if (RegEnumValueW(m_hKey, nIndex, pszName, &nSize, nullptr, nullptr, nullptr, nullptr) == ERROR_SUCCESS)
 				return String(pszName, false); // Do not copy, please
-			} else delete [] pszName;
+			else
+				delete [] pszName;
 		}
 	}
 
@@ -252,14 +297,23 @@ Registry::EType RegistryWindows::GetValueType(const String &sName) const
 	if (m_hKey) {
 		// Get value type
 		DWORD nType;
-		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, &nType, NULL, NULL) == ERROR_SUCCESS) {
+		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, &nType, nullptr, nullptr) == ERROR_SUCCESS) {
 			// Return type of value
 			switch (nType) {
-				case REG_BINARY:	return Registry::TypeBinary;
-				case REG_DWORD:		return Registry::TypeDWord;
-				case REG_SZ:		return Registry::TypeString;
-				case REG_EXPAND_SZ:	return Registry::TypeExpandString;
-				case REG_MULTI_SZ:	return Registry::TypeMultiString;
+				case REG_BINARY:
+					return Registry::TypeBinary;
+
+				case REG_DWORD:
+					return Registry::TypeDWord;
+
+				case REG_SZ:
+					return Registry::TypeString;
+
+				case REG_EXPAND_SZ:
+					return Registry::TypeExpandString;
+
+				case REG_MULTI_SZ:
+					return Registry::TypeMultiString;
 			}
 		}
 	}
@@ -274,15 +328,16 @@ String RegistryWindows::GetValueString(const String &sName) const
 	if (m_hKey) {
 		// Query size of value
 		DWORD nSize = 0;
-		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, NULL, NULL, &nSize) == ERROR_SUCCESS) {
+		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 			// Allocate buffer
 			nSize++;
 			wchar_t *pszValue = new wchar_t[nSize];
 
 			// Get value
-			if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, NULL, (BYTE*)pszValue, &nSize) == ERROR_SUCCESS) {
+			if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, (BYTE*)pszValue, &nSize) == ERROR_SUCCESS)
 				return String(pszValue, false); // Do not copy, please
-			} else delete [] pszValue;
+			else
+				delete [] pszValue;
 		}
 	}
 
@@ -297,9 +352,8 @@ uint32 RegistryWindows::GetValueDWord(const String &sName) const
 		// Get value
 		DWORD nSize = sizeof(DWORD);
 		DWORD nValue;
-		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, NULL, (BYTE*)&nValue, &nSize) == ERROR_SUCCESS) {
+		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, (BYTE*)&nValue, &nSize) == ERROR_SUCCESS)
 			return nValue; // Done
-		}
 	}
 
 	// Error!
@@ -312,9 +366,8 @@ uint32 RegistryWindows::GetValueBinary(const String &sName, uint8 *pBuffer, uint
 	if (m_hKey) {
 		// Get value
 		DWORD dwSize = nSize;
-		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, NULL, (BYTE*)pBuffer, &dwSize) == ERROR_SUCCESS) {
+		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, (BYTE*)pBuffer, &dwSize) == ERROR_SUCCESS) 
 			return dwSize; // Done
-		}
 	}
 
 	// Error!
@@ -326,10 +379,9 @@ bool RegistryWindows::SetValueString(const String &sName, const String &sValue)
 	// Key opened?
 	if (m_hKey) {
 		// Set value
-		String sValueW = sValue.GetUnicode();
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_SZ, (BYTE*)sValueW.GetUnicode(), sValueW.GetNumOfBytes()) == ERROR_SUCCESS) {
+		const String sValueW = sValue.GetUnicode();
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_SZ, (BYTE*)sValueW.GetUnicode(), sValueW.GetNumOfBytes()) == ERROR_SUCCESS)
 			return true; // Done
-		}
 	}
 
 	// Error!
@@ -341,9 +393,8 @@ bool RegistryWindows::SetValueDWord(const String &sName, uint32 nValue)
 	// Key opened?
 	if (m_hKey) {
 		// Set value
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_DWORD, (BYTE*)&nValue, sizeof(nValue)) == ERROR_SUCCESS) {
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_DWORD, (BYTE*)&nValue, sizeof(nValue)) == ERROR_SUCCESS)
 			return true; // Done
-		}
 	}
 
 	// Error!
@@ -355,9 +406,8 @@ bool RegistryWindows::SetValueBinary(const String &sName, const uint8 *pBuffer, 
 	// Key opened?
 	if (m_hKey && pBuffer && nSize) {
 		// Set value
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_BINARY, (BYTE*)pBuffer, nSize) == ERROR_SUCCESS) {
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_BINARY, (BYTE*)pBuffer, nSize) == ERROR_SUCCESS)
 			return true; // Done
-		}
 	}
 
 	// Error!

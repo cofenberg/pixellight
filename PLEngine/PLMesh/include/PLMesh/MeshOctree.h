@@ -87,13 +87,13 @@ class MeshOctree : public PLMath::Octree {
 		*  @param[in]  nGeometries
 		*    Geometry indices
 		*  @param[out] plstOctreeIDList
-		*    Will optionally store a list of octrees each geometry is in if not NULL
+		*    Will optionally store a list of octrees each geometry is in if not a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
 		PLMESH_API bool Build(MeshLODLevel &cMeshLODLevel, PLGeneral::uint32 nNumOfGeometries, const PLGeneral::uint32 nGeometries[],
-							  PLGeneral::Array<PLGeneral::Array<PLGeneral::uint32>*> *plstOctreeIDList = NULL);
+							  PLGeneral::Array<PLGeneral::Array<PLGeneral::uint32>*> *plstOctreeIDList = nullptr);
 
 		/**
 		*  @brief
@@ -113,16 +113,16 @@ class MeshOctree : public PLMath::Octree {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		MeshLODLevel	  *m_pOwnerMeshLODLevel;	/**< Pointer to the owner, can be NULL */
+		MeshLODLevel	  *m_pOwnerMeshLODLevel;	/**< Pointer to the owner, can be a null pointer */
 		PLGeneral::uint32  m_nNumOfGeometries;		/**< Number of geometry indices */
-		PLGeneral::uint32 *m_pnGeometries;			/**< Geometry indices, can be NULL */
+		PLGeneral::uint32 *m_pnGeometries;			/**< Geometry indices, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLMath::Octree functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CustomVisible(PLGeneral::Bitset *pBitset = NULL);
+		virtual void CustomVisible(PLGeneral::Bitset *pBitset = nullptr);
 
 
 };

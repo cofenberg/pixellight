@@ -40,7 +40,7 @@ namespace PLGeneral {
 *    Constructor
 */
 SemaphoreWindows::SemaphoreWindows(uint32 nValue, uint32 nMaxValue) :
-	m_hSemaphore(::CreateSemaphore(NULL, nValue, nMaxValue, NULL))
+	m_hSemaphore(::CreateSemaphore(nullptr, nValue, nMaxValue, nullptr))
 {
 }
 
@@ -51,7 +51,8 @@ SemaphoreWindows::SemaphoreWindows(uint32 nValue, uint32 nMaxValue) :
 SemaphoreWindows::~SemaphoreWindows()
 {
 	// Destroy system semaphore
-	if (m_hSemaphore) CloseHandle(m_hSemaphore);
+	if (m_hSemaphore)
+		CloseHandle(m_hSemaphore);
 }
 
 
@@ -73,7 +74,7 @@ bool SemaphoreWindows::TryLock(uint32 nTimeout)
 bool SemaphoreWindows::Unlock()
 {
 	// Release semaphore
-	return (m_hSemaphore && ReleaseSemaphore(m_hSemaphore, 1, NULL));
+	return (m_hSemaphore && ReleaseSemaphore(m_hSemaphore, 1, nullptr));
 }
 
 

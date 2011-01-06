@@ -92,9 +92,9 @@ class GuiButton : public GuiBase {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*/
-		GuiButton(Widget *pParent = NULL);
+		GuiButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

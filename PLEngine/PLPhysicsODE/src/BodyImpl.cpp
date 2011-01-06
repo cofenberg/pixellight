@@ -164,9 +164,9 @@ void BodyImpl::SetMass(float fMass)
 		// Destroy the ODE physics body
 		if (m_pODEBody) {
 			m_bFrozen = (dBodyIsEnabled(m_pODEBody) == 0);
-			dGeomSetBody(m_pODEGeometry, NULL);
+			dGeomSetBody(m_pODEGeometry, nullptr);
 			dBodyDestroy(m_pODEBody);
-			m_pODEBody = NULL;
+			m_pODEBody = nullptr;
 		}
 	}
 }
@@ -427,8 +427,8 @@ PLPhysics::Body *BodyImpl::GetPartner(PLGeneral::uint32 nIndex) const
 *    Constructor
 */
 BodyImpl::BodyImpl() :
-	m_pODEBody(NULL),
-	m_pODEGeometry(NULL),
+	m_pODEBody(nullptr),
+	m_pODEGeometry(nullptr),
 	m_bActive(true),
 	m_fCollisionVolume(0.0f),
 	m_fMass(0.0f),

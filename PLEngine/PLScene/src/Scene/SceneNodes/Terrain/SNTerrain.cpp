@@ -81,8 +81,8 @@ void SNTerrain::SetFilename(const String &sValue)
 */
 SNTerrain::SNTerrain() :
 	Filename(this),
-	m_pfHeightMap(NULL),
-	m_pGMMSurface(NULL)
+	m_pfHeightMap(nullptr),
+	m_pGMMSurface(nullptr)
 {
 	// Set draw function flags
 	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid));
@@ -232,7 +232,7 @@ bool SNTerrain::Unload()
 		m_pGMMSurface->Destroy();
 	if (m_pfHeightMap) {
 		delete [] m_pfHeightMap;
-		m_pfHeightMap = NULL;
+		m_pfHeightMap = nullptr;
 	}
 
 	// Call base implementation

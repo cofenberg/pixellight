@@ -172,7 +172,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		LPDIRECT3D9			  m_pD3D;						/**< Instance of the IDirect3D9 object*/
 		HWND				  m_hWnd;						/**< Handle to top level window */
 		LPDIRECT3DDEVICE9	  m_pDevice;					/**< Rendering device */
-		FixedFunctions		 *m_pFixedFunctions;			/**< Fixed functions interface implementation, can be NULL */
+		FixedFunctions		 *m_pFixedFunctions;			/**< Fixed functions interface implementation, can be a null pointer */
 		FontManager			 *m_pFontManager;				/**< D3D9 renderer font manager, always valid! */
 		PLRenderer::Surface	 *m_pFirstSwapChainUserSurface;	/**< The surface window which uses the first swap chain */
 
@@ -181,7 +181,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const;
+		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const;
 		virtual PLGeneral::String GetVendor() const;
 		virtual PLGeneral::String GetDefaultShaderLanguage() const;
 		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
@@ -217,8 +217,8 @@ class Renderer : public PLRenderer::RendererBackend {
 		//[-------------------------------------------------------]
 		virtual bool BeginScene();
 		virtual bool EndScene();
-		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = NULL, float fMinZ = 0.0f, float fMaxZ = 1.0f);
-		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = NULL);
+		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
+		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr);
 		virtual bool GetDepthBounds(float &fZMin, float &fZMax) const;
 		virtual bool SetDepthBounds(float fZMin = 0.0f, float fZMax = 1.0f);
 		virtual void GetColorMask(bool &bRed, bool &bGreen, bool &bBlue, bool &bAlpha) const;
@@ -232,8 +232,8 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLGeneral::uint8 nFace = 0);
 		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLGeneral::uint8 nColorIndex = 0, PLGeneral::uint8 nFace = 0);
 		virtual bool MakeScreenshot(PLGraphics::Image &cImage);
-		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
-		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = NULL);
+		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
+		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Draw                                                  ]

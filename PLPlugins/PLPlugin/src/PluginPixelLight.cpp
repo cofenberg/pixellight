@@ -30,7 +30,7 @@ namespace PLPlugin {
 *    Constructor
 */
 PluginPixelLight::PluginPixelLight(PluginImpl &cImpl) : Plugin(cImpl),
-	m_pApplication(NULL)
+	m_pApplication(nullptr)
 {
 }
 
@@ -58,7 +58,7 @@ void PluginPixelLight::OnDeInit()
 // [TODO] PLGui: Native widget
 	//	m_pApplication->StopEmbedded();
 	delete m_pApplication;
-	m_pApplication = NULL;
+	m_pApplication = nullptr;
 }
 
 void PluginPixelLight::OnDraw()

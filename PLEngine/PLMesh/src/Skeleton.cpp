@@ -102,7 +102,7 @@ void Skeleton::UpdateJointInformation()
 		for (uint32 i=0; i<m_lstRootJoints.GetNumOfElements(); i++) {
 			Joint *pJoint = m_lstElements[m_lstRootJoints[i]];
 			if (pJoint)
-				RecCalculateStates(*pJoint, NULL);
+				RecCalculateStates(*pJoint, nullptr);
 		}
 	}
 }

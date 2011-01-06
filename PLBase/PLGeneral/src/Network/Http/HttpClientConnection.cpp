@@ -63,7 +63,8 @@ const HttpHeader &HttpClientConnection::ReadHttpHeader()
 	// Read until header is complete
 	while (IsConnected() && !m_cHttpHeader.IsComplete()) {
 		// Disconnect on read error
-		if (ReadLine() == "") Disconnect();
+		if (ReadLine() == "")
+			Disconnect();
 	}
 
 	// Return header

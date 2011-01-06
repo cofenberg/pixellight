@@ -110,9 +110,9 @@ class HashMapIterator : public IteratorImpl<ValueType> {
 	private:
 		const HashMap<KeyType, ValueType, Hasher, Comparer, Grower>			 *m_pmapOwner;		/**< Hash map to operate on (always valid!) */
 		uint32																  m_nNextSlots;		/**< Next slots list */
-		typename HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Slot *m_pNextSlot;		/**< Next slot, can be NULL */
+		typename HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Slot *m_pNextSlot;		/**< Next slot, can be a null pointer */
 		uint32																  m_nPreviousSlots;	/**< Next slots list */
-		typename HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Slot *m_pPreviousSlot;	/**< Previous slot, can be NULL */
+		typename HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Slot *m_pPreviousSlot;	/**< Previous slot, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

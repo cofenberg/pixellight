@@ -59,7 +59,7 @@ uint32 HashFunction::Hash(const uint64 &nKey)
 
 uint32 HashFunction::Hash(const char *pszKey)
 {
-	// Check the given pointer for NULL
+	// Check the given pointer for a null pointer
 	if (pszKey) {
 		uint32 h = 0;
 

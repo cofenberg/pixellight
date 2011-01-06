@@ -537,7 +537,7 @@ void ProgramGLSL::BackupDeviceData(uint8 **ppBackup)
 	if (m_nOpenGLProgram) {
 		// Destroy the OpenGL program
 		glDeleteObjectARB(m_nOpenGLProgram);
-		m_nOpenGLProgram = NULL;
+		m_nOpenGLProgram = 0;
 	}
 }
 

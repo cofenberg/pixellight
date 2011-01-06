@@ -126,7 +126,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		*    Returns the PL physics world
 		*
 		*  @return
-		*    The PL physics world, NULL on error (if that's the case, something went totally wrong :)
+		*    The PL physics world, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICS_API World *GetWorld() const;
 
@@ -169,7 +169,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		PLMath::Vector3    m_vGravity;				/**< Gravity vector */
 		bool			   m_bBuoyancyActive;		/**< Is buoyancy force active? */
 		float			   m_fBuoyancyPlaneY;		/**< Buoyancy plane y position */
-		World			  *m_pWorld;				/**< The PL physics world, can be NULL */
+		World			  *m_pWorld;				/**< The PL physics world, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

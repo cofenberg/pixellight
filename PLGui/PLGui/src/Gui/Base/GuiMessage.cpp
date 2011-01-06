@@ -41,21 +41,21 @@ namespace PLGui {
 GuiMessage GuiMessage::OnWakeup()
 {
 	// Create message
-	GuiMessage cMessage(NULL, MessageOnWakeup);
+	GuiMessage cMessage(nullptr, MessageOnWakeup);
 	return cMessage;
 }
 
 GuiMessage GuiMessage::OnExit()
 {
 	// Create message
-	GuiMessage cMessage(NULL, MessageOnExit);
+	GuiMessage cMessage(nullptr, MessageOnExit);
 	return cMessage;
 }
 
 GuiMessage GuiMessage::OnTimer(Timer *pTimer)
 {
 	// Create message
-	GuiMessage cMessage(NULL, MessageOnTimer);
+	GuiMessage cMessage(nullptr, MessageOnTimer);
 	cMessage.m_nData  = 0;
 	cMessage.m_pTimer = pTimer;
 	return cMessage;
@@ -73,7 +73,7 @@ GuiMessage GuiMessage::OnUserMessage(Widget *pWidget, PLGeneral::uint32 nData, v
 GuiMessage GuiMessage::OnInternalMessage(PLGeneral::uint32 nData, PLGeneral::uint32 nExtData)
 {
 	// Create message
-	GuiMessage cMessage(NULL, MessageOnInternalMessage);
+	GuiMessage cMessage(nullptr, MessageOnInternalMessage);
 	cMessage.m_nData	= nData;
 	cMessage.m_nExtData = nExtData;
 	return cMessage;
@@ -392,7 +392,7 @@ GuiMessage::GuiMessage(Widget *pWidget, EMessageType nType) :
 	m_pWidget(pWidget),
 	m_nType(nType),
 	m_nData(0),
-	m_pDataPtr(NULL),
+	m_pDataPtr(nullptr),
 	m_vPosSize(0, 0)
 {
 }
@@ -709,7 +709,7 @@ String GuiMessage::ToString() const
 		// Data has been dropped onto the widget
 		case MessageOnDrop:
 			sMessage += "OnDrop";
-			sMessage += String() + " (Data=" + (m_pDataObject ? m_pDataObject->GetString() : "NULL") + ")";
+			sMessage += String() + " (Data=" + (m_pDataObject ? m_pDataObject->GetString() : "nullptr") + ")";
 			break;
 	}
 

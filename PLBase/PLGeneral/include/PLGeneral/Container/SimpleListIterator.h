@@ -109,8 +109,8 @@ class SimpleListIterator : public IteratorImpl<ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		const SimpleList<ValueType>					*m_plstSimpleList;		/**< Simple list to operate on (always valid!) */
-		typename SimpleList<ValueType>::ListElement *m_pNextElement;		/**< Next list element, can be NULL */
-		typename SimpleList<ValueType>::ListElement *m_pPreviousElement;	/**< Previous list element, can be NULL */
+		typename SimpleList<ValueType>::ListElement *m_pNextElement;		/**< Next list element, can be a null pointer */
+		typename SimpleList<ValueType>::ListElement *m_pPreviousElement;	/**< Previous list element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -75,7 +75,7 @@ class FontTexture : public PLRenderer::FontTexture {
 		*    Returns the FreeType library face object (aka "The Font")
 		*
 		*  @return
-		*    The FreeType library face object, NULL on error
+		*    The FreeType library face object, a null pointer on error
 		*/
 		FT_Face *GetFTFace() const;
 
@@ -155,8 +155,8 @@ class FontTexture : public PLRenderer::FontTexture {
 	//[-------------------------------------------------------]
 	protected:
 		PLGeneral::uint32  m_nFontFileSize;				/**< Font file size in bytes */
-		PLGeneral::uint8  *m_pFontFileData;				/**< Font file data, can be NULL */
-		FT_Face			  *m_pFTFace;					/**< FreeType library face (aka "The Font"), NULL on error */
+		PLGeneral::uint8  *m_pFontFileData;				/**< Font file data, can be a null pointer */
+		FT_Face			  *m_pFTFace;					/**< FreeType library face (aka "The Font"), a null pointer on error */
 		PLGeneral::uint32  m_nGlyphTextureAtlasPadding;	/**< Glyph texture atlas gab between glyphs in pixel */
 		GLuint			   m_nOpenGLGlyphTextureAtlas;	/**< OpenGL glyph texture atlas, can be null */
 		PLMath::Vector2i   m_vGlyphTextureAtlasSize;	/**< Glyph texture atlas size */

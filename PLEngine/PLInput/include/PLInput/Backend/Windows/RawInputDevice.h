@@ -223,7 +223,7 @@ class RawInputDevice : public UpdateDevice {
 		*    Virtual key code
 		*
 		*  @return
-		*    Corresponding key, NULL if key code is invalid
+		*    Corresponding key, a null pointer if key code is invalid
 		*/
 		PLINPUT_API Button *GetKeyboardKey(Keyboard *pKeyboard, unsigned short nKey);
 

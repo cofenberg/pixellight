@@ -93,7 +93,7 @@ class Source : public Resource {
 		*    Returns the buffer the source is using
 		*
 		*  @return
-		*    The used sound buffer, NULL on error
+		*    The used sound buffer, a null pointer on error
 		*/
 		PLSOUND_API Buffer *GetBuffer() const;
 
@@ -125,12 +125,12 @@ class Source : public Resource {
 		*    Loads the sound source with the given sound buffer
 		*
 		*  @param[in] pBuffer
-		*    Sound buffer the source should load, can be NULL (in this case just the same as Unload())
+		*    Sound buffer the source should load, can be a null pointer (in this case just the same as Unload())
 		*
 		*  @return
 		*   'true' if all went fine, else 'false'
 		*/
-		PLSOUND_API virtual bool Load(Buffer *pBuffer = NULL);
+		PLSOUND_API virtual bool Load(Buffer *pBuffer = nullptr);
 
 		/**
 		*  @brief

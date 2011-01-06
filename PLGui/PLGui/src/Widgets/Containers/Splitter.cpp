@@ -65,8 +65,8 @@ Splitter::Splitter(Widget *pParent) : Widget(pParent),
 	SizeRight(this),
 	m_nOrientation(Horizontal),
 	m_bSizable(true),
-	m_pContentLeft(NULL),
-	m_pContentRight(NULL),
+	m_pContentLeft(nullptr),
+	m_pContentRight(nullptr),
 	m_bSizing(false)
 {
 	// Create left content widget

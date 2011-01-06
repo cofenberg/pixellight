@@ -136,7 +136,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLPhysics::Body	  *m_pBody;						/**< PL physics body this is the implementation from, can be NULL */
+		PLPhysics::Body	  *m_pBody;						/**< PL physics body this is the implementation from, can be a null pointer */
 		bool			   m_bActive;					/**< Currently active? */
 		float			   m_fCollisionVolume;			/**< Collision volume */
 		float			   m_fMass;						/**< Mass of the physics body */

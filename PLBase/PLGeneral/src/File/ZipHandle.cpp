@@ -53,10 +53,18 @@ static const int CentralDirItemSize = 0x2e;		/**< Size of the central directory 
 
 uLong __ucrc32(uLong nCRC, const Byte *pBuf, uInt nLen)
 {
-	if (pBuf == Z_NULL) return 0L;
+	if (pBuf == Z_NULL)
+		return 0L;
 	nCRC = nCRC ^ 0xffffffffL;
-	while (nLen >= 8)  {CRC_DO8(pBuf); nLen -= 8;}
-	if (nLen) do {CRC_DO1(pBuf);} while (--nLen);
+	while (nLen >= 8) {
+		CRC_DO8(pBuf);
+		nLen -= 8;
+	}
+	if (nLen) {
+		do {
+			CRC_DO1(pBuf);
+		} while (--nLen);
+	}
 	return nCRC ^ 0xffffffffL;
 }
 
@@ -69,7 +77,7 @@ void __Uupdate_keys(uint32 *pnKeys, char c)
 }
 char __Udecrypt_byte(uint32 *pnKeys)
 {
-	unsigned temp = ((unsigned)pnKeys[2] & 0xffff) | 2;
+	const unsigned temp = ((unsigned)pnKeys[2] & 0xffff) | 2;
 	return (char)(((temp * (temp ^ 1)) >> 8) & 0xff);
 }
 char __zdecode(uint32 *pnKeys, char c)
@@ -104,7 +112,7 @@ ZipHandle::ZipEntry::ZipEntry() :
 	m_nInternalAttr(0),
 	m_nExternalAttr(0),
 	m_nOffsetCurFile(0),
-	m_pExtraField(NULL)
+	m_pExtraField(nullptr)
 {
 }
 
@@ -131,7 +139,7 @@ ZipHandle::ZipEntry::ZipEntry(const ZipEntry &cZipEntry) :
 	m_nInternalAttr(cZipEntry.m_nInternalAttr),
 	m_nExternalAttr(cZipEntry.m_nExternalAttr),
 	m_nOffsetCurFile(cZipEntry.m_nOffsetCurFile),
-	m_pExtraField(NULL)
+	m_pExtraField(nullptr)
 {
 	// Copy extra field
 	if (m_nSizeFileExtra > 0) {
@@ -178,7 +186,7 @@ ZipHandle::ZipEntry &ZipHandle::ZipEntry::operator =(const ZipEntry &cZipEntry)
 	m_nInternalAttr		 = cZipEntry.m_nInternalAttr;
 	m_nExternalAttr		 = cZipEntry.m_nExternalAttr;
 	m_nOffsetCurFile	 = cZipEntry.m_nOffsetCurFile;
-	m_pExtraField		 = NULL;
+	m_pExtraField		 = nullptr;
 
 	// Copy extra field
 	if (m_nSizeFileExtra > 0) {
@@ -199,7 +207,7 @@ void ZipHandle::ZipEntry::Clear()
 	// Delete extra field
 	if (m_pExtraField) {
 		delete [] m_pExtraField;
-		m_pExtraField = NULL;
+		m_pExtraField = nullptr;
 	}
 }
 
@@ -211,9 +219,8 @@ void ZipHandle::ZipEntry::AllocateExtraField(uint16 nSize)
 {
 	Clear();
 	m_nSizeFileExtra = nSize;
-	if (m_nSizeFileExtra > 0) {
+	if (m_nSizeFileExtra > 0)
 		m_pExtraField = new uint8[m_nSizeFileExtra];
-	}
 }
 
 
@@ -240,7 +247,7 @@ ZipHandle::ZipHandle() :
 	m_nCurFile(0),
 	m_nCurCentralDirPos(0),
 	m_pReadBuffer(new uint8[BufferSize]),
-	m_pStream(NULL),
+	m_pStream(nullptr),
 	m_nPosInZip(0),
 	m_nPosLocalExtra(0),
 	m_nSizeLocalExtra(0),
@@ -306,7 +313,7 @@ bool ZipHandle::Open(const String &sFilename, const String &sPassword, bool bCas
 	m_nMainEntries		 = 0;
 	m_nCurFile			 = 0;
 	m_nCurCentralDirPos	 = 0;
-	m_pStream			 = NULL;
+	m_pStream			 = nullptr;
 	m_nPosInZip			 = 0;
 	m_nPosLocalExtra	 = 0;
 	m_nSizeLocalExtra	 = 0;
@@ -394,7 +401,8 @@ bool ZipHandle::LocateNextFile()
 	CloseFile();
 
 	// Check number of files
-	if (m_nCurFile + 1 == m_nNumEntries) m_cCurFile.Clear();
+	if (m_nCurFile + 1 == m_nNumEntries)
+		m_cCurFile.Clear();
 
 	// Is the current file valid?
 	if (m_cCurFile.m_bValid) {
@@ -402,7 +410,10 @@ bool ZipHandle::LocateNextFile()
 		m_nCurCentralDirPos += CentralDirItemSize + m_cCurFile.m_nSizeFilename + m_cCurFile.m_nSizeFileExtra + m_cCurFile.m_nSizeFileComment;
 		m_nCurFile++;
 		return ReadCurrentFileInfo();
-	} else return false; // No, return error
+	} else {
+		// No, return error
+		return false;
+	}
 }
 
 /**
@@ -423,9 +434,8 @@ bool ZipHandle::LocateFile(const String &sFilename)
 	while (m_cCurFile.m_bValid) {
 		// Get current filename (without '/')
 		String sCurFile = m_cCurFile.m_sFilename;
-		if (sCurFile.GetSubstring(sCurFile.GetLength()-1) == "/") {
+		if (sCurFile.GetSubstring(sCurFile.GetLength()-1) == "/")
 			sCurFile = sCurFile.GetSubstring(0, sCurFile.GetLength()-1);
-		}
 
 		// Check filename
 		if (m_bCaseSensitive ? sCurFile == sFilename : sCurFile.CompareNoCase(sFilename)) {
@@ -460,7 +470,7 @@ const ZipHandle::ZipEntry &ZipHandle::GetCurrentFile() const
 */
 bool ZipHandle::IsFileOpen() const
 {
-	return (m_pStream != NULL);
+	return (m_pStream != nullptr);
 }
 
 /**
@@ -489,8 +499,10 @@ bool ZipHandle::OpenFile()
 
 			// Encryption data
 			bool bExtlochead = ((nFlags&8) != 0);
-			if (bExtlochead) m_nCRCEncTest = (char)((m_cCurFile.m_nDOSDate>>8) & 0xff);
-			else			 m_nCRCEncTest = (char)(m_cCurFile.m_nCRC >> 24);
+			if (bExtlochead)
+				m_nCRCEncTest = (char)((m_cCurFile.m_nDOSDate>>8) & 0xff);
+			else
+				m_nCRCEncTest = (char)(m_cCurFile.m_nCRC >> 24);
 
 			// Close stream first
 			CloseFile();
@@ -499,9 +511,9 @@ bool ZipHandle::OpenFile()
 			m_pStream = new z_stream;
 			m_pStream->total_out = 0;
 			m_pStream->avail_in  = 0;
-			m_pStream->zalloc    = (alloc_func)NULL;
-			m_pStream->zfree     = (free_func)NULL;
-			m_pStream->opaque    = (voidpf)NULL;
+			m_pStream->zalloc    = (alloc_func)nullptr;
+			m_pStream->zfree     = (free_func)nullptr;
+			m_pStream->opaque    = (voidpf)nullptr;
 
 			// Init zlib decompression
 			if (inflateInit2(m_pStream, -MAX_WBITS) != Z_OK) {
@@ -529,7 +541,7 @@ bool ZipHandle::CloseFile()
 	if (m_pStream) {
 		inflateEnd(m_pStream);
 		delete m_pStream;
-		m_pStream = NULL;
+		m_pStream = nullptr;
 
 		// Done
 		return true;
@@ -558,12 +570,15 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 			// Read data
 			if (m_pStream->avail_in == 0 && m_nReadCompressed > 0) {
 				// Determine size to read
-				uint32 nRead = BufferSize < m_nReadCompressed ? BufferSize : m_nReadCompressed;
-				if (nRead == 0) return 0;
+				const uint32 nRead = BufferSize < m_nReadCompressed ? BufferSize : m_nReadCompressed;
+				if (nRead == 0)
+					return 0;
 
 				// Read data
-				if (!m_cZipFile.Seek(m_nPosInZip + m_nBytesBeforeZip)) return 0;
-				if (m_cZipFile.Read(m_pReadBuffer, 1, nRead) < nRead)  return 0;
+				if (!m_cZipFile.Seek(m_nPosInZip + m_nBytesBeforeZip))
+					return 0;
+				if (m_cZipFile.Read(m_pReadBuffer, 1, nRead) < nRead)
+					return 0;
 
 				// Adjust data
 				m_nPosInZip		   += nRead;
@@ -581,9 +596,10 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 
 			// Encryption
 			uint32 uDoEncHead = m_nEncheadLeft;
-			if (uDoEncHead > m_pStream->avail_in) uDoEncHead = m_pStream->avail_in;
+			if (uDoEncHead > m_pStream->avail_in)
+				uDoEncHead = m_pStream->avail_in;
 			if (uDoEncHead > 0) {
-				char nBufCRC = m_pStream->next_in[uDoEncHead-1];
+				const char nBufCRC = m_pStream->next_in[uDoEncHead-1];
 				m_nReadUncompressed	-= uDoEncHead;
 				m_pStream->avail_in	-= uDoEncHead;
 				m_pStream->next_in	+= uDoEncHead;
@@ -597,10 +613,9 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 			// Check compression method
 			if (m_cCurFile.m_nCompressionMethod == 0) {
 				// No compression, copy data directly
-				uint32 nCopy = (m_pStream->avail_out < m_pStream->avail_in) ? m_pStream->avail_out : m_pStream->avail_in;
-				for (uint32 i=0; i<nCopy; i++) {
+				const uint32 nCopy = (m_pStream->avail_out < m_pStream->avail_in) ? m_pStream->avail_out : m_pStream->avail_in;
+				for (uint32 i=0; i<nCopy; i++)
 					*(m_pStream->next_out+i) = *(m_pStream->next_in+i);
-				}
 
 				// Adjust data
 				m_nCRC32 = crc32(m_nCRC32, m_pStream->next_out, nCopy);
@@ -613,13 +628,13 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 				nReadCount			 += nCopy;
 			} else {
 				// Decompress data
-				uint32 nTotalOutBefore  = m_pStream->total_out;
+				const uint32 nTotalOutBefore = m_pStream->total_out;
 				const Bytef *pBufBefore = m_pStream->next_out;
 				nErr = inflate(m_pStream, Z_SYNC_FLUSH);
 
 				// Get size of read data
-				uint32 nTotalOutAfter = m_pStream->total_out;
-				uint32 nOutThis		  = nTotalOutAfter - nTotalOutBefore;
+				const uint32 nTotalOutAfter = m_pStream->total_out;
+				const uint32 nOutThis		= nTotalOutAfter - nTotalOutBefore;
 
 				// Adjust data
 				m_nCRC32			 = crc32(m_nCRC32, pBufBefore, nOutThis);
@@ -627,13 +642,16 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 				nReadCount			+= (nTotalOutAfter - nTotalOutBefore);
 
 				// Check return value
-				if (nErr == Z_STREAM_END) return nReadCount/nSize;	// End of stream
-				if (nErr != Z_OK)		  return 0;					// Error
+				if (nErr == Z_STREAM_END)
+					return nReadCount/nSize;	// End of stream
+				if (nErr != Z_OK)
+					return 0;					// Error
 			}
 		}
 
 		// Return number of bytes read
-		if (nErr == Z_OK) return nReadCount/nSize;
+		if (nErr == Z_OK)
+			return nReadCount/nSize;
 	}
 
 	// Error!
@@ -650,20 +668,27 @@ bool ZipHandle::Seek(int32 nOffset, File::ESeek nLocation)
 	if (m_pStream) {
 		// Calculate offset
 		int nOfs;
-		if (nLocation == File::SeekCurrent)	nOfs = Tell() + nOffset;
-		else if (nLocation == File::SeekEnd)	nOfs = m_cCurFile.m_nUncompressedSize + nOffset;
-		else if (nLocation == File::SeekSet)	nOfs = nOffset;
-		else									return false; // Error!
+		if (nLocation == File::SeekCurrent)
+			nOfs = Tell() + nOffset;
+		else if (nLocation == File::SeekEnd)
+			nOfs = m_cCurFile.m_nUncompressedSize + nOffset;
+		else if (nLocation == File::SeekSet)
+			nOfs = nOffset;
+		else
+			return false; // Error!
 
 		// [TODO] This is a slow, dirty hack
 		CloseFile();
 		if (OpenFile()) {
 			if (nOfs) {
 				uint8 *pBuffer = new uint8[nOfs];
-				int nRead = Read(pBuffer, 1, nOfs);
+				const int nRead = Read(pBuffer, 1, nOfs);
 				delete [] pBuffer;
 				return nRead == nOfs;
-			} else return true; // Done
+			} else {
+				// Done
+				return true;
+			}
 		}
 	}
 
@@ -711,7 +736,8 @@ bool ZipHandle::GetLocalExtrafield(void *pBuffer, uint32 nSize)
 	if (pBuffer && nSize > 0) {
 		// Calculate size to read
 		uint32 nReadSize = m_nSizeLocalExtra - m_nPosInLocalExtra;
-		if (nSize < nReadSize) nReadSize = nSize;
+		if (nSize < nReadSize)
+			nReadSize = nSize;
 
 		// Seek to local extrafield
 		if (m_cZipFile.Seek(m_nPosLocalExtra +  m_nPosInLocalExtra)) {
@@ -749,7 +775,7 @@ ZipHandle::ZipHandle(const ZipHandle &cSource) :
 	m_nCurFile(0),
 	m_nCurCentralDirPos(0),
 	m_pReadBuffer(new uint8[BufferSize]),
-	m_pStream(NULL),
+	m_pStream(nullptr),
 	m_nPosInZip(0),
 	m_nPosLocalExtra(0),
 	m_nSizeLocalExtra(0),
@@ -791,41 +817,53 @@ bool ZipHandle::OpenZipFile()
 
 	// Search for central directory
 	m_nCentralDirPos = SearchCentralDir();
-	if (m_nCentralDirPos == 0)				return false; // Error!
-	if (!m_cZipFile.Seek(m_nCentralDirPos)) return false; // Error!
+	if (m_nCentralDirPos == 0)
+		return false; // Error!
+	if (!m_cZipFile.Seek(m_nCentralDirPos))
+		return false; // Error!
 
 	// Local variables
 	uint32 nTemp;	// Unused values
 
 	// Ignore signature (checked in SearchCentralDir())
-	if (!ReadLong(nTemp))					return false; // Error!
+	if (!ReadLong(nTemp))
+		return false; // Error!
 
 	// Read the number of disks
-	if (!ReadShort(m_nDiskNum))				return false; // Error!
+	if (!ReadShort(m_nDiskNum))
+		return false; // Error!
 
 	// Read disk number with the central directory
-	if (!ReadShort(m_nMainDisk))			return false; // Error!
+	if (!ReadShort(m_nMainDisk))
+		return false; // Error!
 
 	// Read number of entries in the central dir on this disk
-	if (!ReadShort(m_nNumEntries))			return false; // Error!
+	if (!ReadShort(m_nNumEntries))
+		return false; // Error!
 
 	// Read number of entries in the central dir
-	if (!ReadShort(m_nMainEntries))			return false; // Error!
+	if (!ReadShort(m_nMainEntries))
+		return false; // Error!
 
 	// Read the size of the central directory
-	if (!ReadLong(m_nCentralDirSize))		return false; // Error!
+	if (!ReadLong(m_nCentralDirSize))
+		return false; // Error!
 
 	// Read the offset of the central directory
-	if (!ReadLong(m_nCentralDirOffset))		return false; // Error!
+	if (!ReadLong(m_nCentralDirOffset))
+		return false; // Error!
 
 	// Read the length of the comment
-	if (!ReadShort(m_nCommentSize))			return false; // Error!
+	if (!ReadShort(m_nCommentSize))
+		return false; // Error!
 
 	// Check number of disks (we only support unsplitted ZIP-file)
-	if (m_nMainEntries != m_nNumEntries || m_nMainDisk != 0 || m_nDiskNum != 0)	return false; // Error!
+	if (m_nMainEntries != m_nNumEntries || m_nMainDisk != 0 || m_nDiskNum != 0)
+		return false; // Error!
 
 	// Check central directory position
-	if (m_nCentralDirPos < m_nCentralDirOffset + m_nCentralDirSize)	return false; // Error!
+	if (m_nCentralDirPos < m_nCentralDirOffset + m_nCentralDirSize)
+		return false; // Error!
 
 	// Calculate start of ZIP-file
 	m_nBytesBeforeZip = m_nCentralDirPos - (m_nCentralDirOffset + m_nCentralDirSize);
@@ -843,8 +881,8 @@ uint32 ZipHandle::SearchCentralDir()
 	static const uint32 CommentBufferSize = 1024;	/**< Size of the comment buffer in bytes */
 
 	// Get file size
-	int32  nFileSize = m_cZipFile.GetSize();
-	uint32 nMaxRead  = nFileSize < 0xffff ? nFileSize : 0xffff;
+	const int32  nFileSize = m_cZipFile.GetSize();
+	const uint32 nMaxRead  = nFileSize < 0xffff ? nFileSize : 0xffff;
 
 	// Create a temporary buffer on the stack
 	uint8 nBuffer[CommentBufferSize+4];
@@ -853,12 +891,14 @@ uint32 ZipHandle::SearchCentralDir()
 	uint32 nRead = 4;
 	while (nRead < nMaxRead) {
 		// Determine read size
-		if (nRead + CommentBufferSize > nMaxRead)	nRead  = nMaxRead;
-		else										nRead += CommentBufferSize;
+		if (nRead + CommentBufferSize > nMaxRead)
+			nRead  = nMaxRead;
+		else
+			nRead += CommentBufferSize;
 
 		// Read data
-		uint32 nReadPos  = nFileSize - nRead;
-		uint32 nReadSize = (CommentBufferSize+4 < nFileSize-nReadPos) ? CommentBufferSize+4 : nFileSize-nReadPos;
+		const uint32 nReadPos  = nFileSize - nRead;
+		const uint32 nReadSize = (CommentBufferSize+4 < nFileSize-nReadPos) ? CommentBufferSize+4 : nFileSize-nReadPos;
 		if (m_cZipFile.Seek(nReadPos) && m_cZipFile.Read(nBuffer, 1, nReadSize) >= nReadSize) {
 			// Check central directory ID
 			for (int i=(int)nReadSize-3; (i--)>0;) {
@@ -889,25 +929,42 @@ bool ZipHandle::ReadCurrentFileInfo()
 
 	// Read magic number
 	uint32 nMagic;
-	if (!ReadLong(nMagic))			bResult = false; // Error!
-	else if (nMagic != 0x02014b50)	bResult = false; // Error!
+	if (!ReadLong(nMagic))
+		bResult = false; // Error!
+	else if (nMagic != 0x02014b50)
+		bResult = false; // Error!
 
 	// Read file info
-	if (!ReadShort(m_cCurFile.m_nVersion))				bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nVersionNeeded))		bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nFlags))				bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nCompressionMethod))	bResult = false; // Error!
-	if (!ReadLong (m_cCurFile.m_nDOSDate))				bResult = false; // Error!
-	if (!ReadLong (m_cCurFile.m_nCRC))					bResult = false; // Error!
-	if (!ReadLong (m_cCurFile.m_nCompressedSize))		bResult = false; // Error!
-	if (!ReadLong (m_cCurFile.m_nUncompressedSize))		bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nSizeFilename))			bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nSizeFileExtra))		bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nSizeFileComment))		bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nDiskNumStart))			bResult = false; // Error!
-	if (!ReadShort(m_cCurFile.m_nInternalAttr))			bResult = false; // Error!
-	if (!ReadLong (m_cCurFile.m_nExternalAttr))			bResult = false; // Error!
-	if (!ReadLong (m_cCurFile.m_nOffsetCurFile))		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nVersion))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nVersionNeeded))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nFlags))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nCompressionMethod))
+		bResult = false; // Error!
+	if (!ReadLong (m_cCurFile.m_nDOSDate))
+		bResult = false; // Error!
+	if (!ReadLong (m_cCurFile.m_nCRC))
+		bResult = false; // Error!
+	if (!ReadLong (m_cCurFile.m_nCompressedSize))
+		bResult = false; // Error!
+	if (!ReadLong (m_cCurFile.m_nUncompressedSize))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nSizeFilename))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nSizeFileExtra))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nSizeFileComment))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nDiskNumStart))
+		bResult = false; // Error!
+	if (!ReadShort(m_cCurFile.m_nInternalAttr))
+		bResult = false; // Error!
+	if (!ReadLong (m_cCurFile.m_nExternalAttr))
+		bResult = false; // Error!
+	if (!ReadLong (m_cCurFile.m_nOffsetCurFile))
+		bResult = false; // Error!
 	m_cCurFile.m_cTime.SetDOSDate(m_cCurFile.m_nDOSDate);
 
 	// Read filename
@@ -924,7 +981,9 @@ bool ZipHandle::ReadCurrentFileInfo()
 			// The string class takes over the control of the string buffer
 			m_cCurFile.m_sFilename = String(pszFilename, false, m_cCurFile.m_nSizeFilename);
 		}
-	} else m_cCurFile.m_sFilename = "";
+	} else {
+		m_cCurFile.m_sFilename = "";
+	}
 
 	// Read extra field
 	m_cCurFile.AllocateExtraField(m_cCurFile.m_nSizeFileExtra);
@@ -945,10 +1004,13 @@ bool ZipHandle::ReadCurrentFileInfo()
 			// The string class takes over the control of the string buffer
 			m_cCurFile.m_sComment = String(pszComment, false, m_cCurFile.m_nSizeFileComment);
 		}
-	} else m_cCurFile.m_sComment = "";
+	} else {
+		m_cCurFile.m_sComment = "";
+	}
 
 	// Close ZIP-file on error
-	if (!bResult) m_cZipFile.Close();
+	if (!bResult)
+		m_cZipFile.Close();
 
 	// Set file valid flag
 	m_cCurFile.m_bValid = bResult;
@@ -977,42 +1039,58 @@ bool ZipHandle::CheckFileHeader(uint32 &nSizeVar, uint32 &nPosLocalExtra, uint32
 	bool bResult = true; // No error by default
 
 	// Read magic number
-	if (!ReadLong(nMagic))			bResult = false; // Error!
-	else if (nMagic != 0x04034b50)	bResult = false; // Error!
+	if (!ReadLong(nMagic))
+		bResult = false; // Error!
+	else if (nMagic != 0x04034b50)
+		bResult = false; // Error!
 
 	// Read flags
-	if (!ReadShort(nShort))			bResult = false; // Error!
-	if (!ReadShort(nFlags))			bResult = false; // Error!
+	if (!ReadShort(nShort))
+		bResult = false; // Error!
+	if (!ReadShort(nFlags))
+		bResult = false; // Error!
 
 	// Read compression method
-	if (!ReadShort(nShort))								bResult = false; // Error!
-	else if (nShort != m_cCurFile.m_nCompressionMethod)	bResult = false; // Error!
+	if (!ReadShort(nShort))
+		bResult = false; // Error!
+	else if (nShort != m_cCurFile.m_nCompressionMethod)
+		bResult = false; // Error!
 
 	// Check compression method
 	if (m_cCurFile.m_nCompressionMethod != 0 && m_cCurFile.m_nCompressionMethod != Z_DEFLATED)
 		bResult = false; // Error!
 
 	// Ignore date/time field
-	if (!ReadLong(nLong)) bResult = false; // Error!
+	if (!ReadLong(nLong))
+		bResult = false; // Error!
 
 	// Check CRC
-	if (!ReadLong(nLong))									bResult = false; // Error!
-	else if (nLong != m_cCurFile.m_nCRC && (nFlags&8) == 0) bResult = false; // Error!
+	if (!ReadLong(nLong))
+		bResult = false; // Error!
+	else if (nLong != m_cCurFile.m_nCRC && (nFlags&8) == 0)
+		bResult = false; // Error!
 
 	// Check compressed file size
-	if (!ReadLong(nLong))												bResult = false; // Error!
-	else if (nLong != m_cCurFile.m_nCompressedSize && (nFlags&8) == 0)	bResult = false; // Error!
+	if (!ReadLong(nLong))
+		bResult = false; // Error!
+	else if (nLong != m_cCurFile.m_nCompressedSize && (nFlags&8) == 0)
+		bResult = false; // Error!
 
 	// Check uncompressed file size
-	if (!ReadLong(nLong))												 bResult = false; // Error!
-	else if (nLong != m_cCurFile.m_nUncompressedSize && (nFlags&8) == 0) bResult = false; // Error!
+	if (!ReadLong(nLong))
+		bResult = false; // Error!
+	else if (nLong != m_cCurFile.m_nUncompressedSize && (nFlags&8) == 0)
+		bResult = false; // Error!
 
 	// Check size of filename
-	if (!ReadShort(nSizeFilename))							bResult = false; // Error!
-	else if (nSizeFilename != m_cCurFile.m_nSizeFilename)	bResult = false; // Error!
+	if (!ReadShort(nSizeFilename))
+		bResult = false; // Error!
+	else if (nSizeFilename != m_cCurFile.m_nSizeFilename)
+		bResult = false; // Error!
 
 	// Read size of extra field
-	if (!ReadShort(nSizeExtraField)) bResult = false; // Error!
+	if (!ReadShort(nSizeExtraField))
+		bResult = false; // Error!
 
 	// Set return values
 	nSizeVar		= nSizeFilename + nSizeExtraField;
@@ -1030,7 +1108,7 @@ bool ZipHandle::CheckFileHeader(uint32 &nSizeVar, uint32 &nPosLocalExtra, uint32
 bool ZipHandle::ReadByte(uint8 &nByte)
 {
 	// Read byte
-	int c = m_cZipFile.GetC();
+	const int c = m_cZipFile.GetC();
 	if (c != -1) {
 		// Return byte
 		nByte = (uint8)c;
@@ -1051,9 +1129,9 @@ bool ZipHandle::ReadByte(uint8 &nByte)
 bool ZipHandle::ReadShort(uint16 &nShort)
 {
 	// Read bytes
-	int c1 = m_cZipFile.GetC();
+	const int c1 = m_cZipFile.GetC();
 	if (c1 != -1) {
-		int c2 = m_cZipFile.GetC();
+		const int c2 = m_cZipFile.GetC();
 		if (c2 != -1) {
 			// Return short
 			nShort = (uint16)((((uint32)c2) << 8) + c1);
@@ -1075,13 +1153,13 @@ bool ZipHandle::ReadShort(uint16 &nShort)
 bool ZipHandle::ReadLong(uint32 &nLong)
 {
 	// Read bytes
-	int c1 = m_cZipFile.GetC();
+	const int c1 = m_cZipFile.GetC();
 	if (c1 != -1) {
-		int c2 = m_cZipFile.GetC();
+		const int c2 = m_cZipFile.GetC();
 		if (c2 != -1) {
-			int c3 = m_cZipFile.GetC();
+			const int c3 = m_cZipFile.GetC();
 			if (c3 != -1) {
-				int c4 = m_cZipFile.GetC();
+				const int c4 = m_cZipFile.GetC();
 				if (c4 != -1) {
 					// Return short
 					nLong = (((uint32)c4) << 24) + (((uint32)c3) << 16) + (((uint32)c2) << 8) + c1;

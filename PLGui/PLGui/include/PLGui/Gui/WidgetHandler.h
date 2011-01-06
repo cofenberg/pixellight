@@ -53,7 +53,7 @@ class Widget;
 *
 *  @remarks
 *    A widget handler is a smart pointer to widgets. Use it whenever you want to store a pointer
-*    to a widget for a longer time, this way you can be sure that the pointer will be reset to NULL
+*    to a widget for a longer time, this way you can be sure that the pointer will be reset to a null pointer
 *    if the widget has been destroyed in the meantime.
 */
 class WidgetHandler {
@@ -89,7 +89,7 @@ class WidgetHandler {
 		*    Get widget pointer
 		*
 		*  @return
-		*    Pointer to widget, can be NULL
+		*    Pointer to widget, can be a null pointer
 		*/
 		PLGUI_API Widget *GetWidget() const;
 
@@ -98,7 +98,7 @@ class WidgetHandler {
 		*    Set widget pointer
 		*
 		*  @param[in] pWidget
-		*    Pointer to widget, can be NULL
+		*    Pointer to widget, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -160,7 +160,7 @@ class WidgetHandler {
 		PLCore::EventHandler<>	EventHandlerDestroy;	/**< Widget is going to be destroyed */
 
 		// Data
-		Widget *m_pWidget; /**< Pointer to widget, can be NULL */
+		Widget *m_pWidget; /**< Pointer to widget, can be a null pointer */
 
 
 };

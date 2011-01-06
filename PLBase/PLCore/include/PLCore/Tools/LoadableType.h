@@ -146,7 +146,7 @@ class LoadableType {
 		*    Loader index
 		*
 		*  @return
-		*    The requested loader, NULL on error
+		*    The requested loader, a null pointer on error
 		*/
 		PLCORE_API Loader *GetLoader(PLGeneral::uint32 nIndex) const;
 
@@ -158,7 +158,7 @@ class LoadableType {
 		*    Extension of loader
 		*
 		*  @return
-		*    The requested loader, NULL on error (format is not supported)
+		*    The requested loader, a null pointer on error (format is not supported)
 		*/
 		PLCORE_API Loader *GetLoader(const PLGeneral::String &sExtension) const;
 

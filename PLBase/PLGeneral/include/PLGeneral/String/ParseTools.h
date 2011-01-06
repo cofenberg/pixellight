@@ -70,7 +70,7 @@ class ParseTools {
 		*  @param[in]  sString
 		*    String containing integer numbers
 		*  @param[out] pnValues
-		*    Pointer to C-array which will receive the integer values, if NULL nothing happens
+		*    Pointer to C-array which will receive the integer values, if a null pointer nothing happens
 		*  @param[in]  nMaxNumOfElements
 		*    The maximum number of elements 'nValues' can hold
 		*
@@ -89,7 +89,7 @@ class ParseTools {
 		*  @param[in]  sString
 		*    String containing floating point numbers
 		*  @param[out] pfValues
-		*    Pointer to C-array which will receive the float values, if NULL nothing happens
+		*    Pointer to C-array which will receive the float values, if a null pointer nothing happens
 		*  @param[in]  nMaxNumOfElements
 		*    The maximum number of elements 'fValues' can hold
 		*
@@ -108,7 +108,7 @@ class ParseTools {
 		*  @param[in]  sString
 		*    String containg double precision floating point numbers
 		*  @param[out] pdValues
-		*    Pointer to C-array which will receive the double values, if NULL nothing happens
+		*    Pointer to C-array which will receive the double values, if a null pointer nothing happens
 		*  @param[in]  nMaxNumOfElements
 		*    The maximum number of elements 'dValues' can hold
 		*

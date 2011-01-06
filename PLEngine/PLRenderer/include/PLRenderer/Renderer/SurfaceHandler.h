@@ -103,7 +103,7 @@ class SurfaceHandler {
 		*    Returns the renderer surface of this handler
 		*
 		*  @return
-		*    The renderer surface of this handler, can be NULL
+		*    The renderer surface of this handler, can be a null pointer
 		*/
 		PLRENDERER_API Surface *GetSurface() const;
 
@@ -112,16 +112,16 @@ class SurfaceHandler {
 		*    Set the renderer surface of this handler
 		*
 		*  @param[in] pSurface
-		*    The renderer surface of this handler, can be NULL
+		*    The renderer surface of this handler, can be a null pointer
 		*/
-		PLRENDERER_API void SetSurface(Surface *pSurface = NULL);
+		PLRENDERER_API void SetSurface(Surface *pSurface = nullptr);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Surface *m_pSurface;	/**< The renderer handlers surface, can be NULL */
+		Surface *m_pSurface;	/**< The renderer handlers surface, can be a null pointer */
 
 
 };

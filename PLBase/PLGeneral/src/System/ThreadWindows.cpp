@@ -47,7 +47,7 @@ extern DWORD g_nTlsIndex; // 'Thread Local Storage' (TLS), TLS_OUT_OF_INDEXES on
 */
 ThreadWindows::ThreadWindows(Thread &cThread, bool bThreadID, uint32 nThreadID) :
 	ThreadImpl(cThread, bThreadID, nThreadID),
-	m_hThread(NULL),
+	m_hThread(nullptr),
 	m_nThreadID(0)
 {
 	// Open exisiting thread?
@@ -58,8 +58,7 @@ ThreadWindows::ThreadWindows(Thread &cThread, bool bThreadID, uint32 nThreadID) 
 			HANDLE hThread = GetCurrentThread();
 			if (DuplicateHandle(GetCurrentProcess(), hThread,
 								GetCurrentProcess(), &m_hThread,
-								0, false, DUPLICATE_SAME_ACCESS))
-			{
+								0, false, DUPLICATE_SAME_ACCESS)) {
 				// Success
 				m_nThreadID = GetCurrentThreadId();
 			}
@@ -78,7 +77,8 @@ ThreadWindows::ThreadWindows(Thread &cThread, bool bThreadID, uint32 nThreadID) 
 ThreadWindows::~ThreadWindows()
 {
 	// Close thread handle
-	if (m_hThread) CloseHandle(m_hThread);
+	if (m_hThread)
+		CloseHandle(m_hThread);
 }
 
 
@@ -94,7 +94,7 @@ uint32 ThreadWindows::GetID() const
 bool ThreadWindows::IsActive() const
 {
 	// Check if the thread is active
-	return (m_hThread != NULL);
+	return (m_hThread != nullptr);
 }
 
 bool ThreadWindows::Start()
@@ -102,8 +102,9 @@ bool ThreadWindows::Start()
 	// Check if the thread has already been started
 	if (!m_hThread) {
 		// Create thread
-		m_hThread = ::CreateThread(NULL, 0, ThreadProc, (void*)&GetThread(), 0, &m_nThreadID);
-		if (m_hThread) return true; // Done
+		m_hThread = ::CreateThread(nullptr, 0, ThreadProc, (void*)&GetThread(), 0, &m_nThreadID);
+		if (m_hThread)
+			return true; // Done
 	}
 
 	// Error, could not start thread
@@ -117,7 +118,7 @@ bool ThreadWindows::Terminate()
 		// Terminate thread - we warned the user within the method documentation that this does not allow proper thread clean up...
 		if (TerminateThread(m_hThread, 0)) {
 			// Termination successful
-			m_hThread = NULL;
+			m_hThread = nullptr;
 			return true;
 		}
 	}
@@ -134,7 +135,7 @@ bool ThreadWindows::Join()
 		if (WaitForSingleObject(m_hThread, INFINITE) == WAIT_OBJECT_0) {
 			// Release thread
 			CloseHandle(m_hThread);
-			m_hThread = NULL;
+			m_hThread = nullptr;
 
 			// Done
 			return true;
@@ -153,7 +154,7 @@ bool ThreadWindows::Join(uint32 nTimeout)
 		if (WaitForSingleObject(m_hThread, nTimeout) == WAIT_OBJECT_0) {
 			// Release thread
 			CloseHandle(m_hThread);
-			m_hThread = NULL;
+			m_hThread = nullptr;
 
 			// Done
 			return true;
@@ -167,7 +168,7 @@ bool ThreadWindows::Join(uint32 nTimeout)
 Thread::EPriorityClass ThreadWindows::GetPriorityClass() const
 {
 	// Call OS function
-	DWORD dwPriorityClass = ::GetPriorityClass(m_hThread);
+	const DWORD dwPriorityClass = ::GetPriorityClass(m_hThread);
 
 	// Wrap the priority setting
 	switch (dwPriorityClass) {
@@ -202,7 +203,7 @@ bool ThreadWindows::SetPriorityClass(Thread::EPriorityClass nPriorityClass)
 Thread::EPriority ThreadWindows::GetPriority() const
 {
 	// Call OS function
-	int nPriority = ::GetThreadPriority(m_hThread);
+	const int nPriority = ::GetThreadPriority(m_hThread);
 
 	// Wrap the priority setting
 	switch (nPriority) {

@@ -111,7 +111,7 @@ void JointImpl::SetBreakTorque(const Vector3 &vTorque)
 *    Constructor
 */
 JointImpl::JointImpl() :
-	m_pNewtonJoint(NULL),
+	m_pNewtonJoint(nullptr),
 	m_bBreakable(false)
 {
 }
@@ -135,7 +135,7 @@ JointImpl::~JointImpl()
 				cWorld.SetSimulationActive(false);
 
 			// Reset the pointer to the PL physics joint
-			NewtonJointSetUserData(m_pNewtonJoint, NULL);
+			NewtonJointSetUserData(m_pNewtonJoint, nullptr);
 
 			// Destroy the Newton physics joint, there's no function like NewtonJointGetWorld(m_pNewtonJoint) :(
 			NewtonDestroyJoint(((World&)cWorld).GetNewtonWorld(), m_pNewtonJoint);

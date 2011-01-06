@@ -66,7 +66,7 @@ class Button : public AbstractButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API Button(Widget *pParent = NULL);
+		PLGUI_API Button(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

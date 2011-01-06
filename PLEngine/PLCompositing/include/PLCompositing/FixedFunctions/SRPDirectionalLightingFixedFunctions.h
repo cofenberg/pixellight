@@ -149,7 +149,7 @@ class SRPDirectionalLightingFixedFunctions : public SRPDirectionalLighting {
 	private:
 		PLRenderer::RenderStates   *m_pRenderStates;	/**< Used to 'translate' render state strings, always valid! */
 		PLGeneral::uint32			m_nMaterialChanges;	/**< Number of material changes */
-		const PLRenderer::Material *m_pCurrentMaterial;	/**< Current used material, can be NULL */
+		const PLRenderer::Material *m_pCurrentMaterial;	/**< Current used material, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

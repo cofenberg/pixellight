@@ -384,8 +384,8 @@ uint64 System::GetFreeVirtualMemory() const
 *    Constructor
 */
 System::System() :
-	m_pSystemImpl(NULL),
-	m_pMainThread(NULL)
+	m_pSystemImpl(nullptr),
+	m_pMainThread(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -408,8 +408,8 @@ System::System() :
 *    Copy constructor
 */
 System::System(const System &cSource) :
-	m_pSystemImpl(NULL),
-	m_pMainThread(NULL)
+	m_pSystemImpl(nullptr),
+	m_pMainThread(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -424,7 +424,8 @@ System::~System()
 	delete m_pMainThread;
 
 	// Destroy system specific implementation
-	if (m_pSystemImpl) delete m_pSystemImpl;
+	if (m_pSystemImpl)
+		delete m_pSystemImpl;
 }
 
 /**

@@ -53,7 +53,7 @@ NPError OSCALL NP_Shutdown()
 
 static NPError fillPluginFunctionTable(NPPluginFuncs* aNPPFuncs)
 {
-  if(aNPPFuncs == NULL)
+  if(aNPPFuncs == nullptr)
     return NPERR_INVALID_FUNCTABLE_ERROR;
 
   // Set up the plugin function table that Netscape will use to
@@ -91,7 +91,7 @@ static NPError fillPluginFunctionTable(NPPluginFuncs* aNPPFuncs)
   aNPPFuncs->setvalue      = NPP_SetValue;
 #endif
 #ifdef OJI
-  aNPPFuncs->javaClass     = NULL;
+  aNPPFuncs->javaClass     = nullptr;
 #endif
 
   return NPERR_NO_ERROR;
@@ -99,7 +99,7 @@ static NPError fillPluginFunctionTable(NPPluginFuncs* aNPPFuncs)
 
 static NPError fillNetscapeFunctionTable(NPNetscapeFuncs* aNPNFuncs)
 {
-  if(aNPNFuncs == NULL)
+  if(aNPNFuncs == nullptr)
     return NPERR_INVALID_FUNCTABLE_ERROR;
 
   if(HIBYTE(aNPNFuncs->version) > NP_VERSION_MAJOR)
@@ -299,7 +299,7 @@ NPError main(NPNetscapeFuncs* aNPNFuncs, NPPluginFuncs* aNPPFuncs, NPP_ShutdownU
 {
   NPError rv = NPERR_NO_ERROR;
 
-  if (aUnloadUpp == NULL)
+  if (aUnloadUpp == nullptr)
     rv = NPERR_INVALID_FUNCTABLE_ERROR;
 
   if (rv == NPERR_NO_ERROR)

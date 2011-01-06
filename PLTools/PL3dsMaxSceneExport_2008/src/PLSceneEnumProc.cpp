@@ -68,7 +68,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			// Show an error message box
 			std::string sError = "Error: 3ds Max version mismatch!\nYou are using version '" + PLTools::ToString(nRunning3dsMaxVersion/1000.0f) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(nBuild3dsMaxVersion/1000.0f) + "'!";
-			MessageBox(NULL, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -87,7 +87,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			// Show an error message box
 			std::string sError = "Error: 'IGame.dll' version mismatch!\nYou are using version '" + PLTools::ToString(fRunningIGameVersion) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(fBuildIGameVersion)+ "'!";
-			MessageBox(NULL, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -98,7 +98,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 	g_SEOptions.Load();
 
 	// Setup export options
-	cMaxInterface.ProgressStart("Export", true, fn, NULL);
+	cMaxInterface.ProgressStart("Export", true, fn, nullptr);
 	if (!PLSceneOpenExportDialog(cMaxInterface)) {
 		char szApplicationDrive[_MAX_DRIVE], szApplicationDir[_MAX_DIR];
 		std::string sFilename;
@@ -108,7 +108,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 		g_SEOptions.Save();
 
 		// Get filename without path
-		_splitpath(szName, szApplicationDrive, szApplicationDir, NULL, NULL);
+		_splitpath(szName, szApplicationDrive, szApplicationDir, nullptr, nullptr);
 		const char *pszNameT = &szName[strlen(szApplicationDrive) + strlen(szApplicationDir)];
 		g_SEOptions.sFilenameOnly = pszNameT;
 
@@ -121,28 +121,28 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 		if (g_SEOptions.bPLDirectories) {
 			// Data
 			std::string sDataFilename = std::string(szApplicationDrive) + szApplicationDir + "Data";
-			CreateDirectory(sDataFilename.c_str(), NULL);
+			CreateDirectory(sDataFilename.c_str(), nullptr);
 			// Meshes
 			if (g_SEOptions.bExportMeshes) {
 				sFilename = sDataFilename + "\\Meshes\\";
-				CreateDirectory(sFilename.c_str(), NULL);
+				CreateDirectory(sFilename.c_str(), nullptr);
 				if (g_SEOptions.bSubDirectories) {
 					sFilename.append(g_SEOptions.sFilenameOnly);
 					sFilename.append("\\");
-					CreateDirectory(sFilename.c_str(), NULL);
+					CreateDirectory(sFilename.c_str(), nullptr);
 				}
 			}
 			// Scenes
 			sFilename = sDataFilename + "\\Scenes\\";
-			CreateDirectory(sFilename.c_str(), NULL);
+			CreateDirectory(sFilename.c_str(), nullptr);
 			// Materials
 			if (g_SEOptions.bExportMaterials && g_SEOptions.bCreateMaterials) {
 				sFilename = sDataFilename + "\\Materials\\";
-				CreateDirectory(sFilename.c_str(), NULL);
+				CreateDirectory(sFilename.c_str(), nullptr);
 				if (g_SEOptions.bSubDirectories) {
 					sFilename.append(g_SEOptions.sFilenameOnly);
 					sFilename.append("\\");
-					CreateDirectory(sFilename.c_str(), NULL);
+					CreateDirectory(sFilename.c_str(), nullptr);
 				}
 			}
 			sFilename = sDataFilename + "\\Scenes\\" + pszNameT;
@@ -250,7 +250,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			// Close the log
 			std::string sLogFilename = g_pLog->GetFilename();
 			delete g_pLog;
-			g_pLog = NULL;
+			g_pLog = nullptr;
 
 			// Open the log right now?
 			if (g_SEOptions.bLog && g_SEOptions.bLogOpen)
@@ -270,7 +270,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 		} else {
 			// Show an error message box
 			std::string sError = "Error: Can't create the file \"" + sFilename + "\"";
-			MessageBox(NULL, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
 		}
 	}
 

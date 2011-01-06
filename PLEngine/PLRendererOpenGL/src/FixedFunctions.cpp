@@ -50,14 +50,14 @@ namespace PLRendererOpenGL {
 FixedFunctions::FixedFunctions(Renderer &cRendererOpenGL) :
 	m_pRendererOpenGL(&cRendererOpenGL),
 	m_cColor(Color4::White),
-	m_ppnTextureStageState(NULL),
-	m_ppnInternalTextureStageState(NULL),
-	m_pLightEnabled(NULL),
-	m_pLight(NULL),
-	m_pbClipPlane(NULL),
-	m_ppdClipPlane(NULL),
-	m_ppCurrentVertexBuffer(NULL),
-	m_nVertexBufferOffsets(NULL)
+	m_ppnTextureStageState(nullptr),
+	m_ppnInternalTextureStageState(nullptr),
+	m_pLightEnabled(nullptr),
+	m_pLight(nullptr),
+	m_pbClipPlane(nullptr),
+	m_ppdClipPlane(nullptr),
+	m_ppCurrentVertexBuffer(nullptr),
+	m_nVertexBufferOffsets(nullptr)
 {
 	{ // Capabilities
 		GLint nGLTemp;
@@ -164,7 +164,7 @@ FixedFunctions::FixedFunctions(Renderer &cRendererOpenGL) :
 	{ // Vertex buffer states
 		// Allocate vertex buffer streams
 		m_ppCurrentVertexBuffer = new PLRenderer::VertexBuffer*[m_sCapabilities.nMaxVertexBufferStreams];
-		MemoryManager::Set(m_ppCurrentVertexBuffer, NULL, sizeof(PLRenderer::VertexBuffer**)*m_sCapabilities.nMaxVertexBufferStreams);
+		MemoryManager::Set(m_ppCurrentVertexBuffer, 0, sizeof(PLRenderer::VertexBuffer**)*m_sCapabilities.nMaxVertexBufferStreams);
 		m_nVertexBufferOffsets = new uint32[m_sCapabilities.nMaxVertexBufferStreams];
 		MemoryManager::Set(m_nVertexBufferOffsets, 0, sizeof(uint32)*m_sCapabilities.nMaxVertexBufferStreams);
 	}
@@ -182,7 +182,7 @@ FixedFunctions::~FixedFunctions()
 			for (uint32 i=0; i<m_pRendererOpenGL->GetCapabilities().nMaxTextureUnits; i++)
 				delete [] m_ppnTextureStageState[i];
 			delete [] m_ppnTextureStageState;
-			m_ppnTextureStageState = NULL;
+			m_ppnTextureStageState = nullptr;
 		}
 
 		// Free internal texture stage states
@@ -190,31 +190,31 @@ FixedFunctions::~FixedFunctions()
 			for (uint32 i=0; i<m_pRendererOpenGL->GetCapabilities().nMaxTextureUnits; i++)
 				delete [] m_ppnInternalTextureStageState[i];
 			delete [] m_ppnInternalTextureStageState;
-			m_ppnInternalTextureStageState = NULL;
+			m_ppnInternalTextureStageState = nullptr;
 		}
 	}
 
 	{ // Light states
 		if (m_pLightEnabled) {
 			delete [] m_pLightEnabled;
-			m_pLightEnabled = NULL;
+			m_pLightEnabled = nullptr;
 		}
 		if (m_pLight) {
 			delete [] m_pLight;
-			m_pLight = NULL;
+			m_pLight = nullptr;
 		}
 	}
 
 	{ // Clip plane states
 		if (m_pbClipPlane) {
 			delete [] m_pbClipPlane;
-			m_pbClipPlane = NULL;
+			m_pbClipPlane = nullptr;
 		}
 		if (m_ppdClipPlane) {
 			for (uint32 i=0; i<m_sCapabilities.nMaxClipPlanes; i++)
 				delete [] m_ppdClipPlane[i];
 			delete [] m_ppdClipPlane;
-			m_ppdClipPlane = NULL;
+			m_ppdClipPlane = nullptr;
 		}
 	}
 
@@ -222,11 +222,11 @@ FixedFunctions::~FixedFunctions()
 		// Free vertex buffer streams
 		if (m_ppCurrentVertexBuffer) {
 			delete [] m_ppCurrentVertexBuffer;
-			m_ppCurrentVertexBuffer = NULL;
+			m_ppCurrentVertexBuffer = nullptr;
 		}
 		if (m_nVertexBufferOffsets) {
 			delete [] m_nVertexBufferOffsets;
-			m_nVertexBufferOffsets = NULL;
+			m_nVertexBufferOffsets = nullptr;
 		}
 	}
 }
@@ -307,7 +307,7 @@ void FixedFunctions::RestoreDeviceStates()
 	for (uint32 i=0; i<m_sCapabilities.nMaxVertexBufferStreams; i++) {
 		PLRenderer::VertexBuffer *pBuffer = m_ppCurrentVertexBuffer[i];
 		uint32 nOffset = m_nVertexBufferOffsets[i];
-		m_ppCurrentVertexBuffer[i] = NULL;
+		m_ppCurrentVertexBuffer[i] = nullptr;
 		m_nVertexBufferOffsets[i]  = 0;
 		SetVertexBuffer(pBuffer, nOffset, i);
 	}
@@ -1294,7 +1294,7 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 PLRenderer::VertexBuffer *FixedFunctions::GetVertexBuffer(uint32 nStreamNumber, uint32 *pnOffset) const
 {
 	if (nStreamNumber >= m_sCapabilities.nMaxVertexBufferStreams || !m_ppCurrentVertexBuffer)
-		return NULL; // Error!
+		return nullptr; // Error!
 	if (pnOffset && m_nVertexBufferOffsets)
 		*pnOffset = m_nVertexBufferOffsets[nStreamNumber];
 	return m_ppCurrentVertexBuffer[nStreamNumber];
@@ -1320,7 +1320,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 	// Disable all client states
 	if (!pVertexBuffer || !nStreamNumber) {
 		for (uint32 i=1; i<m_sCapabilities.nMaxVertexBufferStreams; i++) {
-			m_ppCurrentVertexBuffer[i] = NULL;
+			m_ppCurrentVertexBuffer[i] = nullptr;
 			m_nVertexBufferOffsets[i] = 0;
 		}
 		glDisableClientState(GL_VERTEX_ARRAY);	// PLRenderer::VertexBuffer::Position
@@ -1358,7 +1358,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 		// Setup buffer offset
 		const uint32 nVertexSize  = pVertexBufferOpenGL->GetVertexSize();
 		const uint32 nBytesOffset = nVertexSize*nOffset; // Get the vertex offset in bytes
-		const uint8 *pData		  = pVertexBufferOpenGL->GetOpenGLVertexBuffer() ? NULL : pVertexBufferOpenGL->GetDynamicBuffer();
+		const uint8 *pData		  = pVertexBufferOpenGL->GetOpenGLVertexBuffer() ? nullptr : pVertexBufferOpenGL->GetDynamicBuffer();
 
 		// Define an offset helper macro just used inside this function
 		#define BUFFER_OFFSET(i) ((char*)pData+(i+nBytesOffset))

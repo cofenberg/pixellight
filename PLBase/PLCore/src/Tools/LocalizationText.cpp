@@ -92,7 +92,7 @@ LocalizationText::LocalizationText(LocalizationGroup &cGroup, const String &sNam
 *    Copy constructor
 */
 LocalizationText::LocalizationText(const LocalizationText &cSource) :
-	m_pGroup(NULL)
+	m_pGroup(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

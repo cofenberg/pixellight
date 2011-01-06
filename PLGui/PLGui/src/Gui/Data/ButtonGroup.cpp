@@ -41,7 +41,7 @@ namespace PLGui {
 */
 ButtonGroup::ButtonGroup() :
 	m_bExclusive(true),
-	m_pButton(NULL)
+	m_pButton(nullptr)
 {
 }
 

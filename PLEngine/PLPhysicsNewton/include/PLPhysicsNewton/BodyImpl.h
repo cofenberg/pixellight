@@ -65,7 +65,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		*    Returns the Newton physics body
 		*
 		*  @return
-		*    The Newton physics body, NULL on error (if that's the case, something went totally wrong :)
+		*    The Newton physics body, a null pointer on error (if that's the case, something went totally wrong :)
 		*
 		*  @note
 		*    - Do NOT change the user data of the Newton physics body! (using NewtonBodySetUserData())
@@ -194,7 +194,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Newton::NewtonBody *m_pNewtonBody;				/**< Newton physics body, can be NULL */
+		Newton::NewtonBody *m_pNewtonBody;				/**< Newton physics body, can be a null pointer */
 		bool			    m_bActive;					/**< Currently active? */
 		float				m_fCollisionVolume;			/**< Collision volume */
 		float				m_fMass;					/**< Mass of the physics body */

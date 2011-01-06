@@ -83,8 +83,8 @@ SRPLighting::SRPLighting() :
 	ShaderLanguage(this),
 	LightingIntensity(this),
 	Flags(this),
-	m_pProgramGenerator(NULL),
-	m_pIgnoredLight(NULL)
+	m_pProgramGenerator(nullptr),
+	m_pIgnoredLight(nullptr)
 {
 }
 
@@ -212,13 +212,13 @@ void SRPLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 void SRPLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQuery, SNLight &cLight, const VisNode &cLightVisNode)
 {
 	// Get the shadow mapping scene renderer pass
-	SRPShadowMapping *pSRPShadowMapping = NULL;
+	SRPShadowMapping *pSRPShadowMapping = nullptr;
 	static const String sClassName = "PLCompositing::SRPShadowMapping";
 	pSRPShadowMapping = (SRPShadowMapping*)GetFirstInstanceOfSceneRendererPassClass(sClassName);
 
 	// Is the shadow mapping scene renderer pass active?
 	if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
-		pSRPShadowMapping = NULL;	// Just do like there's no shadow mapping scene renderer pass at all
+		pSRPShadowMapping = nullptr;	// Just do like there's no shadow mapping scene renderer pass at all
 
 	// Updates shadow maps
 	if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pSRPShadowMapping) {
@@ -396,10 +396,10 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 
 	// Get available vertex buffer attributes
 	// Binormal and tangent make only sense in this usage when there's also a normal, we need all three vectors!
-	const bool bHasVertexTexCoord0 = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord, 0) != NULL);	// e.g. for diffuse maps
-	const bool bHasVertexNormal    = (cVertexBuffer.GetVertexAttribute(VertexBuffer::Normal) != NULL);
-		  bool bHasVertexTangent   = bHasVertexNormal && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Tangent) != NULL);
-	const bool bHasVertexBinormal  = bHasVertexTangent && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Binormal) != NULL);
+	const bool bHasVertexTexCoord0 = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord, 0) != nullptr);	// e.g. for diffuse maps
+	const bool bHasVertexNormal    = (cVertexBuffer.GetVertexAttribute(VertexBuffer::Normal) != nullptr);
+		  bool bHasVertexTangent   = bHasVertexNormal && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Tangent) != nullptr);
+	const bool bHasVertexBinormal  = bHasVertexTangent && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Binormal) != nullptr);
 	if (!bHasVertexBinormal)
 		bHasVertexTangent = false;
 
@@ -445,7 +445,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 						}
 
 						// Shadow mapping
-						TextureBuffer *pShadowMap = NULL;
+						TextureBuffer *pShadowMap = nullptr;
 						if (bShadow) {
 							// Get the shadow map
 							if (bSpot) {
@@ -499,7 +499,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 
 						// Diffuse map and alpha reference
 						float fAlphaReference = 0.0f;
-						TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord0 || (GetFlags() & NoDiffuseMap)) ? NULL : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+						TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord0 || (GetFlags() & NoDiffuseMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
 						if (pDiffuseMap) {
 							PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
@@ -516,7 +516,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 
 						// Diffuse ramp map
 						static const String sDiffuseRampMap = "DiffuseRampMap";
-						TextureBuffer *pDiffuseRampMap = (GetFlags() & NoDiffuseRampMap) ? NULL : pMaterial->GetParameterTextureBuffer(sDiffuseRampMap);
+						TextureBuffer *pDiffuseRampMap = (GetFlags() & NoDiffuseRampMap) ? nullptr : pMaterial->GetParameterTextureBuffer(sDiffuseRampMap);
 						if (pDiffuseRampMap)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSERAMPMAP)
 
@@ -544,7 +544,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 						}
 
 						// Get (2D/cube) reflection map
-						TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? NULL : pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
+						TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
 						bool b2DReflectionMap = true;
 						if (pReflectionMap) {
 							if (pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D) {
@@ -554,14 +554,14 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								b2DReflectionMap = false;
 								PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
 							} else
-								pReflectionMap   = NULL; // NOT supported!
+								pReflectionMap   = nullptr; // NOT supported!
 						}
 
 						// Figure out whether or not there's reflection on this material
 						const bool bReflection = (fIndexOfRefraction > 0.0f) || pReflectionMap;
 
 						// Get reflection parameters
-						TextureBuffer *pReflectivityMap = NULL;
+						TextureBuffer *pReflectivityMap = nullptr;
 						float fReflectivity = 1.0f;
 						Color3 cReflectionColor = Color3::White;
 						static const String sReflectionColor = "ReflectionColor";
@@ -590,7 +590,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 						}
 
 						// Get normal map
-						TextureBuffer *pNormalMap = (!bNormalMappingPossible || (GetFlags() & NoNormalMap)) ? NULL : pMaterial->GetParameterTextureBuffer(Material::NormalMap);
+						TextureBuffer *pNormalMap = (!bNormalMappingPossible || (GetFlags() & NoNormalMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::NormalMap);
 						float fNormalMapBumpiness = 1.0f;
 						static const String sNormalMapBumpiness = "NormalMapBumpiness";
 						if (pNormalMap) {
@@ -617,13 +617,13 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								}
 							} else {
 								// The normal map has no longer an influence!
-								pNormalMap = NULL;
+								pNormalMap = nullptr;
 							}
 						}
 
 						// Get detail normal map
 						static const String sDetailNormalMap = "DetailNormalMap";
-						TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? NULL : pMaterial->GetParameterTextureBuffer(sDetailNormalMap);
+						TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sDetailNormalMap);
 						float fDetailNormalMapBumpiness = 1.0f;
 						Vector2 vDetailNormalMapUVScale(4.0f, 4.0f);
 						static const String sDetailNormalMapBumpiness = "DetailNormalMapBumpiness";
@@ -654,13 +654,13 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								}
 							} else {
 								// The detail normal map has no longer an influence!
-								pDetailNormalMap = NULL;
+								pDetailNormalMap = nullptr;
 							}
 						}
 
 						// Get parallax mapping settings
 						float fParallax = 0.04f;
-						TextureBuffer *pHeightMap = NULL;
+						TextureBuffer *pHeightMap = nullptr;
 						if (pNormalMap && !(GetFlags() & NoParallaxMapping)) {
 							// Get parallax
 							static const String sParallax = "Parallax";
@@ -683,7 +683,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 						static const String sSpecularColor    = "SpecularColor";
 						static const String sSpecularExponent = "SpecularExponent";
 						Color3 cSpecularColor = Color3::White;
-						TextureBuffer *pSpecularMap = NULL;
+						TextureBuffer *pSpecularMap = nullptr;
 						float fSpecularExponent = 45.0f;
 						if (!(GetFlags() & NoSpecular)) {
 							// First, get specular color - if it's 0, we don't have any specular at all
@@ -709,13 +709,13 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 
 						// Specular ramp map
 						static const String sSpecularRampMap = "SpecularRampMap";
-						TextureBuffer *pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (GetFlags() & NoSpecularRampMap)) ? NULL : pMaterial->GetParameterTextureBuffer(sSpecularRampMap);
+						TextureBuffer *pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (GetFlags() & NoSpecularRampMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sSpecularRampMap);
 						if (pSpecularRampMap)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARRAMPMAP)
 
 						// Edge ramp map
 						static const String sEdgeRampMap = "EdgeRampMap";
-						TextureBuffer *pEdgeRampMap = (GetFlags() & NoEdgeRampMap) ? NULL : pMaterial->GetParameterTextureBuffer(sEdgeRampMap);
+						TextureBuffer *pEdgeRampMap = (GetFlags() & NoEdgeRampMap) ? nullptr : pMaterial->GetParameterTextureBuffer(sEdgeRampMap);
 						if (pEdgeRampMap)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_EDGERAMPMAP)
 
@@ -992,7 +992,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								if (bProjectivePoint) {
 									if (pGeneratedProgramUserData->pProjectivePointCubeMap) {
 										// The texture buffer we're going to project
-										TextureBuffer *pCubeMap = NULL;
+										TextureBuffer *pCubeMap = nullptr;
 
 										// Get the projective material to use
 										const Material *pProjectiveMaterial = ((SNProjectivePointLight&)cLight).GetProjectedMaterialHandler().GetResource();
@@ -1044,7 +1044,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 										// Projective spot light
 										if (pGeneratedProgramUserData->pProjectiveSpotMap) {
 											// The texture buffer we're going to project
-											TextureBuffer *pSpotMap = NULL;
+											TextureBuffer *pSpotMap = nullptr;
 
 											// Get the projective material to use
 											const Material *pProjectiveMaterial = ((SNProjectiveSpotLight&)cLight).GetProjectedMaterialHandler().GetResource();
@@ -1286,7 +1286,7 @@ void SRPLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;
-			m_pProgramGenerator = NULL;
+			m_pProgramGenerator = nullptr;
 		}
 
 		// Choose the shader source codes depending on the requested shader language

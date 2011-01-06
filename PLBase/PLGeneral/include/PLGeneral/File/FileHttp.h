@@ -68,7 +68,7 @@ class FileHttp : public FileImpl {
 		*  @param[in] cUrl
 		*    URL of the file
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		FileHttp(const Url &cUrl, const FileAccess *pAccess);
 

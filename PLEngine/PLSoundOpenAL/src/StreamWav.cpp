@@ -44,14 +44,14 @@ namespace PLSoundOpenAL {
 *    Constructor
 */
 StreamWav::StreamWav(ALuint nSource, const Buffer &cBuffer) : Stream(nSource, cBuffer),
-	m_pFile(NULL),
-	m_pnData(NULL),
+	m_pFile(nullptr),
+	m_pnData(nullptr),
 	m_nStreamSize(0),
 	m_nStreamPos(0),
 	m_nFormat(0),
 	m_nFrequency(0),
 	m_nSwapSize(0),
-	m_pnSwap(NULL)
+	m_pnSwap(nullptr)
 {
 	// Create front and back buffers
 	alGenBuffers(2, m_nBuffers);
@@ -233,9 +233,9 @@ void StreamWav::DeInit()
 		if (m_pFile) {
 			m_pFile->Close();
 			delete m_pFile;
-			m_pFile = NULL;
+			m_pFile = nullptr;
 		}
-		m_pnData	  = NULL; // Don't delete the shared data!
+		m_pnData	  = nullptr; // Don't delete the shared data!
 		m_nStreamSize = 0;
 		m_nStreamPos  = 0;
 		m_nFormat	  = 0;
@@ -244,7 +244,7 @@ void StreamWav::DeInit()
 	if (m_pnSwap) {
 		delete [] m_pnSwap;
 		m_nSwapSize = 0;
-		m_pnSwap    = NULL;
+		m_pnSwap    = nullptr;
 	}
 }
 

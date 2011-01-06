@@ -44,7 +44,7 @@ namespace PLGeneral {
 *    Constructor
 */
 Registry::Registry() :
-	m_pRegistryImpl(NULL)
+	m_pRegistryImpl(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -58,7 +58,7 @@ Registry::Registry() :
 *    Constructor
 */
 Registry::Registry(EKey nKey, const String &sSubKey, uint32 nAccess) :
-	m_pRegistryImpl(NULL)
+	m_pRegistryImpl(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -67,9 +67,8 @@ Registry::Registry(EKey nKey, const String &sSubKey, uint32 nAccess) :
 	#endif
 
 	// Open registry key
-	if (m_pRegistryImpl) {
+	if (m_pRegistryImpl)
 		m_pRegistryImpl->Open(nKey, sSubKey, nAccess);
-	}
 }
 
 /**
@@ -77,7 +76,7 @@ Registry::Registry(EKey nKey, const String &sSubKey, uint32 nAccess) :
 *    Copy constructor
 */
 Registry::Registry(const Registry &cRegistry) :
-	m_pRegistryImpl(NULL)
+	m_pRegistryImpl(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -86,9 +85,8 @@ Registry::Registry(const Registry &cRegistry) :
 	#endif
 
 	// Open the same key again
-	if (m_pRegistryImpl) {
+	if (m_pRegistryImpl)
 		Open(cRegistry.GetOpenKey(), cRegistry.GetOpenSubKey(), cRegistry.GetOpenAccessMode());
-	}
 }
 
 /**
@@ -98,7 +96,8 @@ Registry::Registry(const Registry &cRegistry) :
 Registry::~Registry()
 {
 	// Delete system implementation
-	if (m_pRegistryImpl) delete m_pRegistryImpl;
+	if (m_pRegistryImpl)
+		delete m_pRegistryImpl;
 }
 
 /**
@@ -107,8 +106,7 @@ Registry::~Registry()
 */
 Registry::ERegistry Registry::GetRegistryType() const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetRegistryType();
-	else				 return None;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetRegistryType() : None;
 }
 
 /**
@@ -117,8 +115,7 @@ Registry::ERegistry Registry::GetRegistryType() const
 */
 bool Registry::Open(EKey nKey, const String &sSubKey, uint32 nAccess)
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->Open(nKey, sSubKey, nAccess);
-	else				 return false;
+	return m_pRegistryImpl ? m_pRegistryImpl->Open(nKey, sSubKey, nAccess) : false;
 }
 
 /**
@@ -127,8 +124,7 @@ bool Registry::Open(EKey nKey, const String &sSubKey, uint32 nAccess)
 */
 bool Registry::Create(EKey nKey, const String &sSubKey, uint32 nAccess)
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->Create(nKey, sSubKey, nAccess);
-	else				 return false;
+	return m_pRegistryImpl ? m_pRegistryImpl->Create(nKey, sSubKey, nAccess) : false;
 }
 
 /**
@@ -137,8 +133,7 @@ bool Registry::Create(EKey nKey, const String &sSubKey, uint32 nAccess)
 */
 bool Registry::Delete()
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->Delete();
-	else				 return false;
+	return m_pRegistryImpl ? m_pRegistryImpl->Delete() : false;
 }
 
 /**
@@ -147,7 +142,8 @@ bool Registry::Delete()
 */
 void Registry::Close()
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->Close();
+	if (m_pRegistryImpl)
+		return m_pRegistryImpl->Close();
 }
 
 /**
@@ -156,8 +152,7 @@ void Registry::Close()
 */
 Registry::EKey Registry::GetOpenKey() const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetOpenKey();
-	else				 return KeyNone;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetOpenKey() : KeyNone;
 }
 
 /**
@@ -166,8 +161,7 @@ Registry::EKey Registry::GetOpenKey() const
 */
 String Registry::GetOpenSubKey() const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetOpenSubKey();
-	else				 return "";
+	return m_pRegistryImpl ? m_pRegistryImpl->GetOpenSubKey() : "";
 }
 
 /**
@@ -176,8 +170,7 @@ String Registry::GetOpenSubKey() const
 */
 uint32 Registry::GetOpenAccessMode() const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetOpenAccessMode();
-	else				 return 0;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetOpenAccessMode() : 0;
 }
 
 /**
@@ -186,8 +179,7 @@ uint32 Registry::GetOpenAccessMode() const
 */
 uint32 Registry::GetNumOfSubKeys() const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetNumOfSubKeys();
-	else				 return 0;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetNumOfSubKeys() : 0;
 }
 
 /**
@@ -196,8 +188,7 @@ uint32 Registry::GetNumOfSubKeys() const
 */
 String Registry::GetSubKey(uint32 nIndex) const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetSubKey(nIndex);
-	else				 return "";
+	return m_pRegistryImpl ? m_pRegistryImpl->GetSubKey(nIndex) : "";
 }
 
 /**
@@ -206,8 +197,7 @@ String Registry::GetSubKey(uint32 nIndex) const
 */
 uint32 Registry::GetNumOfValues() const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetNumOfValues();
-	else				 return 0;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetNumOfValues() : 0;
 }
 
 /**
@@ -216,8 +206,7 @@ uint32 Registry::GetNumOfValues() const
 */
 String Registry::GetValue(uint32 nIndex) const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetValue(nIndex);
-	else				 return "";
+	return m_pRegistryImpl ? m_pRegistryImpl->GetValue(nIndex) : "";
 }
 
 /**
@@ -226,8 +215,7 @@ String Registry::GetValue(uint32 nIndex) const
 */
 Registry::EType Registry::GetValueType(const String &sName) const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetValueType(sName);
-	else				 return TypeNone;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetValueType(sName) : TypeNone;
 }
 
 /**
@@ -236,8 +224,7 @@ Registry::EType Registry::GetValueType(const String &sName) const
 */
 String Registry::GetValueString(const String &sName) const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetValueString(sName);
-	else				 return "";
+	return m_pRegistryImpl ? m_pRegistryImpl->GetValueString(sName) : "";
 }
 
 /**
@@ -246,8 +233,7 @@ String Registry::GetValueString(const String &sName) const
 */
 uint32 Registry::GetValueDWord(const String &sName) const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetValueDWord(sName);
-	else				 return 0;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetValueDWord(sName) : 0;
 }
 
 /**
@@ -256,8 +242,7 @@ uint32 Registry::GetValueDWord(const String &sName) const
 */
 uint32 Registry::GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSize) const
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->GetValueBinary(sName, pBuffer, nSize);
-	else				 return 0;
+	return m_pRegistryImpl ? m_pRegistryImpl->GetValueBinary(sName, pBuffer, nSize) : 0;
 }
 
 /**
@@ -266,8 +251,7 @@ uint32 Registry::GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSiz
 */
 bool Registry::SetValueString(const String &sName, const String &sValue)
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->SetValueString(sName, sValue);
-	else				 return false;
+	return m_pRegistryImpl ? m_pRegistryImpl->SetValueString(sName, sValue) : false;
 }
 
 /**
@@ -276,8 +260,7 @@ bool Registry::SetValueString(const String &sName, const String &sValue)
 */
 bool Registry::SetValueDWord(const String &sName, uint32 nValue)
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->SetValueDWord(sName, nValue);
-	else				 return false;
+	return m_pRegistryImpl ? m_pRegistryImpl->SetValueDWord(sName, nValue) : false;
 }
 
 /**
@@ -286,8 +269,7 @@ bool Registry::SetValueDWord(const String &sName, uint32 nValue)
 */
 bool Registry::SetValueBinary(const String &sName, const uint8 *pBuffer, uint32 nSize)
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->SetValueBinary(sName, pBuffer, nSize);
-	else				 return false;
+	return m_pRegistryImpl ? m_pRegistryImpl->SetValueBinary(sName, pBuffer, nSize) : false;
 }
 
 /**
@@ -296,7 +278,8 @@ bool Registry::SetValueBinary(const String &sName, const uint8 *pBuffer, uint32 
 */
 void Registry::Flush()
 {
-	if (m_pRegistryImpl) return m_pRegistryImpl->Flush();
+	if (m_pRegistryImpl)
+		return m_pRegistryImpl->Flush();
 }
 
 /**

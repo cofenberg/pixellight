@@ -58,7 +58,7 @@ AbstractToggleButton::AbstractToggleButton(Widget *pParent) : AbstractButton(pPa
 	PartiallyAllowed(this),
 	State(this),
 	SlotOnGroupActivate(this),
-	m_pGroup(NULL),
+	m_pGroup(nullptr),
 	m_bPartiallyAllowed(false),
 	m_nState(NotChecked)
 {

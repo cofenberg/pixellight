@@ -86,7 +86,8 @@ bool Directory::Create()
 bool Directory::CreateRecursive()
 {
 	// Does this directory already exist?
-	if (Exists()) return true; // Done
+	if (Exists())
+		return true; // Done
 	else {
 		// Get the first path
 		String sNextPath;

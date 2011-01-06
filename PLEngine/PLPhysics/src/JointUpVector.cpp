@@ -62,7 +62,7 @@ const Vector3 &JointUpVector::GetPinDir() const
 *    Constructor
 */
 JointUpVector::JointUpVector(World &cWorld, JointImpl &cJointImpl, Body &cParentBody, const Vector3 &vPinDir) :
-	Joint(cWorld, cJointImpl, NULL, &cParentBody),
+	Joint(cWorld, cJointImpl, nullptr, &cParentBody),
 	m_vPinDir(vPinDir)
 {
 }

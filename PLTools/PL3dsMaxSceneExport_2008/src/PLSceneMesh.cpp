@@ -122,7 +122,7 @@ const Array<PLSceneMaterial*> &PLSceneMesh::GetMaterials() const
 PLSceneMesh::PLSceneMesh(PLScene &cScene, IGameNode &cIGameNode, const std::string &sName) :
 	m_pScene(&cScene),
 	m_pIGameNode(&cIGameNode),
-	m_p3dsMaxObject(NULL),
+	m_p3dsMaxObject(nullptr),
 	m_sName(sName),
 	m_nNumOfVertices(0),
 	m_nOriginalNumOfVertices(0),
@@ -249,7 +249,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 	IGameMesh *pIGameMesh = (IGameMesh*)&cIGameObject;
 
 	// By default there is no skinning modifier
-	IGameSkin *pIGameSkin = NULL;
+	IGameSkin *pIGameSkin = nullptr;
 
 	// Loop through all modifiers and collect the active morph targets and process the
 	// skinning modifier if there's one
@@ -264,9 +264,9 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 				if (p3dsMaxModifier->IsEnabled()) {
 					// Is this modifier a morpher modifier?
 					if (pIGameModifier->IsMorpher()) {
-						// Because IGameMorpher::GetMorphTarget() always return NULL for me I can't
+						// Because IGameMorpher::GetMorphTarget() always return a null pointer for me I can't
 						// use it and have to go the 'old way'. Note that this solution is also only
-						// working in release mode... in debug mode we still get NULL...
+						// working in release mode... in debug mode we still get a null pointer...
 						if (p3dsMaxModifier->ClassID() == MR3_CLASS_ID) {
 							// Get the morpher interface
 							MorphR3 *pMorphR3 = (MorphR3*)p3dsMaxModifier;
@@ -280,7 +280,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 						}
 
 						// Done
-						p3dsMaxModifier = NULL;
+						p3dsMaxModifier = nullptr;
 
 					// Is this modifier a skinning modifier?
 					} else if (pIGameModifier->IsSkin()) {
@@ -336,7 +336,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 						}
 
 						// Done
-						p3dsMaxModifier = NULL;
+						p3dsMaxModifier = nullptr;
 					}
 				}
 
@@ -357,7 +357,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 									if (pParamBlock2) {
 										// Get the value
 										Interval interval;
-										MCHAR *pszFilename = NULL;
+										MCHAR *pszFilename = nullptr;
 									#if MAX_RELEASE >= 12000	// For R12 release
 										pParamBlock2->GetValue(0, 0, (const MCHAR*&)pszFilename, interval);
 									#else
@@ -593,7 +593,7 @@ IGameMaterial *PLSceneMesh::GetIGameMaterial(IGameMesh &cIGameMesh, int nFace) c
 	}
 
 	// Error, no material!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -675,7 +675,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 		// Invalid face vertex id found
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	// Get vertex candidate
@@ -720,7 +720,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 			Mtl *pMaxMat = pIGameMaterial->GetMaxMaterial();
 			if (pMaxMat) {
 				// See if it's a standard material (we need this information for a possible uv generator)
-				StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMat : NULL;
+				StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMat : nullptr;
 
 				// Get the active map channels
 				Tab<int> lstMapNumbers = cIGameMesh.GetActiveMapChannelNum();
@@ -896,7 +896,7 @@ void PLSceneMesh::AddNodeTrackAnimations(INode &c3dsMaxNode)
 
 								// Done
 								m_lstAnimations.Add(pAnimation);
-								pAnimation = NULL;
+								pAnimation = nullptr;
 							}
 
 						// Unknown note track key

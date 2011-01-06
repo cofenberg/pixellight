@@ -72,7 +72,8 @@ bool HttpHandle::IsOpen() const
 bool HttpHandle::Open(const String &sUrl, const String &sUsername, const String &sPassword)
 {
 	// Close
-	if (IsOpen()) Close();
+	if (IsOpen())
+		Close();
 
 	// Save URL
 	m_cUrl		= sUrl;
@@ -88,9 +89,8 @@ bool HttpHandle::Open(const String &sUrl, const String &sUsername, const String 
 	}
 
 	// Check for errors
-	if (bSuccess) {
+	if (bSuccess)
 		return true;
-	}
 
 	// Error!
 	m_cSocket.Close();
@@ -180,7 +180,9 @@ uint32 HttpHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 				m_nPosition	+= nRead;
 				pszBuffer	+= nRead;
 				nRetry		 = 0;
-			} else nRetry++;
+			} else {
+				nRetry++;
+			}
 		}
 		return nTotalRead / nSize;
 	}
@@ -199,10 +201,14 @@ bool HttpHandle::Seek(int32 nOffset, File::ESeek nLocation)
 	if (m_cSocket.IsValid()) {
 		// Calculate offset
 		int nOfs;
-		if (nLocation == File::SeekCurrent)	nOfs = m_nPosition + nOffset;
-		else if (nLocation == File::SeekEnd)	nOfs = m_nContentLength + nOffset;
-		else if (nLocation == File::SeekSet)	nOfs = nOffset;
-		else									return false; // Error!
+		if (nLocation == File::SeekCurrent)
+			nOfs = m_nPosition + nOffset;
+		else if (nLocation == File::SeekEnd)
+			nOfs = m_nContentLength + nOffset;
+		else if (nLocation == File::SeekSet)
+			nOfs = nOffset;
+		else
+			return false; // Error!
 
 		// This is a slow, dirty hack
 		Close();
@@ -214,7 +220,10 @@ bool HttpHandle::Seek(int32 nOffset, File::ESeek nLocation)
 				Read(pBuffer, 1, nOfs);
 				delete [] pBuffer;
 				return (m_nPosition == nOfs);
-			} else return true; // Done
+			} else {
+				// Done
+				return true;
+			}
 		}
 	}
 
@@ -269,19 +278,18 @@ bool HttpHandle::Connect()
 			// Read HTTP header
 			String sLine = ReadLine();
 			while (sLine.GetLength()) {
-				if (sLine.GetSubstring(0, 4) == "HTTP") {
+				if (sLine.GetSubstring(0, 4) == "HTTP")
 					m_sResponse = sLine;
-				} else if (sLine.GetSubstring(0, 18) == "WWW-Authenticate: ") {
+				else if (sLine.GetSubstring(0, 18) == "WWW-Authenticate: ")
 					m_sAuthenticate = sLine.GetSubstring(18);
-				} else if (sLine.GetSubstring(0,  8) == "Server: ") {
+				else if (sLine.GetSubstring(0,  8) == "Server: ")
 					m_sServer = sLine.GetSubstring(8);
-				} else if (sLine.GetSubstring(0,  6) == "Date: ") {
+				else if (sLine.GetSubstring(0,  6) == "Date: ")
 					m_sDate = sLine.GetSubstring(6);
-				} else if (sLine.GetSubstring(0, 14) == "Content-Type: ") {
+				else if (sLine.GetSubstring(0, 14) == "Content-Type: ")
 					m_sContentType = sLine.GetSubstring(14);
-				} else if (sLine.GetSubstring(0, 16) == "Content-Length: ") {
+				else if (sLine.GetSubstring(0, 16) == "Content-Length: ")
 					m_nContentLength = sLine.GetSubstring(16).GetInt();
-				}
 				sLine = ReadLine();
 			}
 

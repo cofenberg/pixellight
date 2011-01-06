@@ -258,9 +258,9 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 		HKEY hKey;
 		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, szSubkeySDK, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 			DWORD nSize;
-			if (RegQueryValueEx(hKey, "Runtime", 0, NULL, NULL, &nSize) == ERROR_SUCCESS) {
+			if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 				char *pszBuffer = new char[nSize];
-				if (RegQueryValueEx(hKey, "Runtime", 0, NULL, (BYTE*)pszBuffer, &nSize) == ERROR_SUCCESS) {
+				if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, (BYTE*)pszBuffer, &nSize) == ERROR_SUCCESS) {
 					// Valid directory?
 					if (GetFileAttributesA(pszBuffer) != INVALID_FILE_ATTRIBUTES) {
 						RegCloseKey(hKey);
@@ -275,9 +275,9 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 		// Read registry key "PixelLight-Runtime"
 		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, szSubkeyRT, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 			DWORD nSize;
-			if (RegQueryValueEx(hKey, "Runtime", 0, NULL, NULL, &nSize) == ERROR_SUCCESS) {
+			if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 				char *pszBuffer = new char[nSize];
-				if (RegQueryValueEx(hKey, "Runtime", 0, NULL, (BYTE*)pszBuffer, &nSize) == ERROR_SUCCESS) {
+				if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, (BYTE*)pszBuffer, &nSize) == ERROR_SUCCESS) {
 					// Valid directory?
 					if (GetFileAttributesA(pszBuffer) != INVALID_FILE_ATTRIBUTES) {
 						RegCloseKey(hKey);
@@ -291,7 +291,7 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 	}
 
 	// No runtime directory was found in the registry
-	return NULL;
+	return nullptr;
 }
 
 /**

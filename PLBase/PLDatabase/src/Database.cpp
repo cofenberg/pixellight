@@ -51,7 +51,8 @@ Database *Database::Create(const String &sClass)
 {
 	// Get the database RTTI class
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
-	if (!pClass || !pClass->IsDerivedFrom("PLDatabase::Database")) return NULL; // Error!
+	if (!pClass || !pClass->IsDerivedFrom("PLDatabase::Database"))
+		return nullptr; // Error!
 
 	// Create an instance of the database class and return it
 	return (Database*)pClass->Create();

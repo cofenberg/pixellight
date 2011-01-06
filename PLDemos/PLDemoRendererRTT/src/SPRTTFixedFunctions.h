@@ -95,7 +95,7 @@ class SPRTTFixedFunctions : public SPRTT {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget;	/**< The render target the teapot is rendered in, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget;	/**< The render target the teapot is rendered in, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

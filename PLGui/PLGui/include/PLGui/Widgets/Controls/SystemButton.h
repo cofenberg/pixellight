@@ -73,7 +73,7 @@ class SystemButton: public AbstractButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API SystemButton(Widget *pParent = NULL);
+		PLGUI_API SystemButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

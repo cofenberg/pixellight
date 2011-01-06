@@ -75,11 +75,11 @@ SRPEndHDR::SRPEndHDR() :
 	BloomDownscale(this),
 	Gamma(this),
 	Flags(this),
-	m_pFullscreenQuad(NULL),
-	m_pHDRAverageLuminance(NULL),
-	m_pHDRLightAdaptation(NULL),
-	m_pHDRBloom(NULL),
-	m_pProgramGenerator(NULL)
+	m_pFullscreenQuad(nullptr),
+	m_pHDRAverageLuminance(nullptr),
+	m_pHDRLightAdaptation(nullptr),
+	m_pHDRBloom(nullptr),
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -139,7 +139,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// If there's an previous instance of the program generator, destroy it first
 					if (m_pProgramGenerator) {
 						delete m_pProgramGenerator;
-						m_pProgramGenerator = NULL;
+						m_pProgramGenerator = nullptr;
 					}
 
 					// Choose the shader source codes depending on the requested shader language
@@ -185,7 +185,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					bool bGammaCorrection			= !(GetFlags() & NoGammaCorrection);
 
 					// Calculate average luminance, required for tone mapping with automatically calculated average luminance
-					TextureBuffer *pHDRAverageLuminanceTextureBuffer = NULL;
+					TextureBuffer *pHDRAverageLuminanceTextureBuffer = nullptr;
 					if (bAutomaticAverageLuminance) {
 						if (!m_pHDRAverageLuminance)
 							m_pHDRAverageLuminance = new HDRAverageLuminance(cRenderer);

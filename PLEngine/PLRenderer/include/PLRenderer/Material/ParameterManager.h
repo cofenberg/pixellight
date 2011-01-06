@@ -103,7 +103,7 @@ class ParameterManager : public Parameters {
 		*    parameter is returned instead creating a new one
 		*
 		*  @return
-		*    The created parameter, NULL on error (maybe unknown data type?)
+		*    The created parameter, a null pointer on error (maybe unknown data type?)
 		*/
 		PLRENDERER_API Parameter *CreateParameter(EDataType nType, const PLGeneral::String &sName);
 
@@ -115,7 +115,7 @@ class ParameterManager : public Parameters {
 		*    Parameter index
 		*
 		*  @return
-		*    The requested parameter, NULL on error
+		*    The requested parameter, a null pointer on error
 		*/
 		PLRENDERER_API Parameter *GetParameter(PLGeneral::uint32 nIndex) const;
 
@@ -127,7 +127,7 @@ class ParameterManager : public Parameters {
 		*    Parameter name
 		*
 		*  @return
-		*    The requested parameter, NULL on error
+		*    The requested parameter, a null pointer on error
 		*/
 		PLRENDERER_API Parameter *GetParameter(const PLGeneral::String &sName) const;
 

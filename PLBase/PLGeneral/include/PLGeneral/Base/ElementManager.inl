@@ -60,7 +60,10 @@ bool ElementManager<AType>::SetManagerName(const String &sName)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -72,7 +75,8 @@ AType *ElementManager<AType>::Create(const String &sName)
 {
 	// Check whether this element is already within the manager
 	AType *pElement = Get(sName);
-	if (pElement) return pElement;
+	if (pElement)
+		return pElement;
 
 	// Get name
 	if (!sName.GetLength()) {
@@ -105,7 +109,8 @@ bool ElementManager<AType>::Add(AType &cElement)
 		// Check element name, managed elements MUST have valid names
 		if (cElement.GetName().GetLength()) {
 			// Check whether there's already a element with this name
-			if (m_mapElements.Get(cElement.GetName())) return false; // Error!
+			if (m_mapElements.Get(cElement.GetName()))
+				return false; // Error!
 		} else {
 			// Find an unused element name
 			String sNewName = "0";
@@ -117,7 +122,8 @@ bool ElementManager<AType>::Add(AType &cElement)
 		}
 
 		// Add element to list
-		if (!m_lstElements.Add(&cElement)) return false; // Error!
+		if (!m_lstElements.Add(&cElement))
+			return false; // Error!
 		cElement.m_pManager = this;
 
 		// Add element to hash lists
@@ -141,10 +147,11 @@ bool ElementManager<AType>::Unload(AType &cElement)
 		const AType *pElement = m_mapElements.Get(cElement.GetName());
 		if (pElement && &cElement == pElement) {
 			// Remove the element
-			if (m_pStandardElement == &cElement) m_pStandardElement = NULL;
+			if (m_pStandardElement == &cElement)
+				m_pStandardElement = nullptr;
 			m_mapElements.Remove(cElement.GetName());
 			m_lstElements.Remove(&cElement);
-			cElement.m_pManager = NULL;
+			cElement.m_pManager = nullptr;
 
 			// Destroy the element
 			cElement.DeleteElement();
@@ -169,10 +176,11 @@ bool ElementManager<AType>::Remove(AType &cElement)
 	const AType *pElement = m_mapElements.Get(cElement.GetName());
 	if (pElement && &cElement == pElement) {
 		// Remove the element
-		if (m_pStandardElement == &cElement) m_pStandardElement = NULL;
+		if (m_pStandardElement == &cElement)
+			m_pStandardElement = nullptr;
 		m_mapElements.Remove(cElement.GetName());
 		m_lstElements.Remove(&cElement);
-		cElement.m_pManager = NULL;
+		cElement.m_pManager = nullptr;
 
 		// Done
 		return true;
@@ -255,7 +263,10 @@ bool ElementManager<AType>::SetStandard(AType *pElement)
 			// element is now unused (if there's one :)
 			if (m_bUnloadUnused && m_pStandardElement && !m_pStandardElement->GetNumOfHandlers())
 				m_pStandardElement->DeleteElement(); // Kill this element NOW
-		} else return false; // Error!
+		} else {
+			// Error!
+			return false;
+		}
 	}
 
 	// Set new standard element
@@ -393,7 +404,7 @@ AType *ElementManager<AType>::Get(const String &sName) const
 */
 template <class AType>
 ElementManager<AType>::ElementManager() :
-	m_pStandardElement(NULL),
+	m_pStandardElement(nullptr),
 	m_bUnloadUnused(false)
 {
 }

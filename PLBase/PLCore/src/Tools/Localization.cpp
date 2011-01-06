@@ -116,7 +116,8 @@ LocalizationGroup *Localization::AddGroup(const String &sName)
 {
 	// Is there already a group with the given name?
 	LocalizationGroup *pGroup = m_mapGroups.Get(sName);
-	if (pGroup) return NULL; // Jap, error!
+	if (pGroup)
+		return nullptr; // Jap, error!
 
 	// Create the new group
 	pGroup = new LocalizationGroup(sName);

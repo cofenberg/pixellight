@@ -192,11 +192,11 @@ class SRPEndHDR : public SRPEnd {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FullscreenQuad						*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be NULL */
-		HDRAverageLuminance					*m_pHDRAverageLuminance;	/**< HDR logarithmic average luminance calculation component, can be NULL */
-		HDRLightAdaptation					*m_pHDRLightAdaptation;		/**< HDR light adaptation calculation component, can be NULL */
-		HDRBloom							*m_pHDRBloom;				/**< HDR bloom calculation component, can be NULL */
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be NULL */
+		FullscreenQuad						*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be a null pointer */
+		HDRAverageLuminance					*m_pHDRAverageLuminance;	/**< HDR logarithmic average luminance calculation component, can be a null pointer */
+		HDRLightAdaptation					*m_pHDRLightAdaptation;		/**< HDR light adaptation calculation component, can be a null pointer */
+		HDRBloom							*m_pHDRBloom;				/**< HDR bloom calculation component, can be a null pointer */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 

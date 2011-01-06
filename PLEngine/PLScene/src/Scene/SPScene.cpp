@@ -220,7 +220,7 @@ void SPScene::SetDefaultSceneRenderer(const String &sSceneRenderer)
 	// Set new scene renderer
 	if (m_sDefaultSceneRenderer != sSceneRenderer) {
 		m_sDefaultSceneRenderer = sSceneRenderer;
-		m_pDefaultSceneRendererHandler->SetResource(NULL);
+		m_pDefaultSceneRendererHandler->SetResource(nullptr);
 	}
 }
 
@@ -234,7 +234,7 @@ void SPScene::SetDefaultSceneRenderer(const String &sSceneRenderer)
 */
 void SPScene::DrawPre(Renderer &cRenderer, SceneContainer &cContainer)
 {
-	// Get the scene container (can be NULL)
+	// Get the scene container (can be a null pointer)
 	SceneContainer *pContainer = GetSceneContainer();
 
 	// Draw parent container
@@ -259,7 +259,7 @@ void SPScene::DrawPre(Renderer &cRenderer, SceneContainer &cContainer)
 */
 void SPScene::DrawSolid(Renderer &cRenderer, SceneContainer &cContainer)
 {
-	// Get the scene container (can be NULL)
+	// Get the scene container (can be a null pointer)
 	SceneContainer *pContainer = GetSceneContainer();
 
 	// Draw parent container
@@ -284,7 +284,7 @@ void SPScene::DrawSolid(Renderer &cRenderer, SceneContainer &cContainer)
 */
 void SPScene::DrawTransparent(Renderer &cRenderer, SceneContainer &cContainer)
 {
-	// Get the scene container (can be NULL)
+	// Get the scene container (can be a null pointer)
 	SceneContainer *pContainer = GetSceneContainer();
 
 	// Draw parent container
@@ -309,7 +309,7 @@ void SPScene::DrawTransparent(Renderer &cRenderer, SceneContainer &cContainer)
 */
 void SPScene::DrawDebug(Renderer &cRenderer, SceneContainer &cContainer)
 {
-	// Get the scene container (can be NULL)
+	// Get the scene container (can be a null pointer)
 	SceneContainer *pContainer = GetSceneContainer();
 
 	// Draw parent container
@@ -336,7 +336,7 @@ void SPScene::DrawDebug(Renderer &cRenderer, SceneContainer &cContainer)
 */
 void SPScene::DrawPost(Renderer &cRenderer, SceneContainer &cContainer)
 {
-	// Get the scene container (can be NULL)
+	// Get the scene container (can be a null pointer)
 	SceneContainer *pContainer = GetSceneContainer();
 
 	// Draw parent container
@@ -365,8 +365,8 @@ void SPScene::OnPaint(Surface &cSurface)
 	Renderer &cRenderer = GetRenderer();
 
 	// Get camera
-	SNCamera *pCamera = NULL;
-	SceneRenderer *pSceneRenderer = NULL;
+	SNCamera *pCamera = nullptr;
+	SceneRenderer *pSceneRenderer = nullptr;
 	if (m_pCameraNodeHandler->GetElement()) {
 		pCamera = (SNCamera*)m_pCameraNodeHandler->GetElement();
 		if (pCamera)
@@ -386,11 +386,11 @@ void SPScene::OnPaint(Surface &cSurface)
 			// Get the cull query
 			SQCull *pCullQuery = (SQCull*)m_pCullQuery->GetElement();
 			if (pCullQuery) {
-				// Set camera (can be NULL)
+				// Set camera (can be a null pointer)
 				if (pCamera) {
 					// Setup render query
 					SceneContainer *pCameraContainer = pCamera->GetContainer();
-					pCullQuery->SetCameraContainer((pCameraContainer && pCameraContainer->IsCell()) ? pCameraContainer : NULL);
+					pCullQuery->SetCameraContainer((pCameraContainer && pCameraContainer->IsCell()) ? pCameraContainer : nullptr);
 					pCullQuery->SetCameraPosition(pCamera->GetTransform().GetPosition());
 					pCullQuery->SetViewFrustum(pCamera->GetFrustum(cRenderer.GetViewport()));
 					pCullQuery->SetProjectionMatrix(pCamera->GetProjectionMatrix(cRenderer.GetViewport()));
@@ -398,7 +398,7 @@ void SPScene::OnPaint(Surface &cSurface)
 					pCullQuery->SetViewProjectionMatrix(pCullQuery->GetProjectionMatrix()*pCamera->GetViewMatrix());
 				} else {
 					// Set default states
-					pCullQuery->SetCameraContainer(NULL);
+					pCullQuery->SetCameraContainer(nullptr);
 					pCullQuery->SetCameraPosition(Vector3::Zero);
 					Matrix4x4 mProj;
 					mProj.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.001f, 10000.0f);
@@ -411,7 +411,7 @@ void SPScene::OnPaint(Surface &cSurface)
 				pCullQuery->PerformQuery();
 			}
 
-			// Get the scene container (can be NULL)
+			// Get the scene container (can be a null pointer)
 			SceneContainer *pContainer = GetSceneContainer();
 
 			// Pre all scene nodes

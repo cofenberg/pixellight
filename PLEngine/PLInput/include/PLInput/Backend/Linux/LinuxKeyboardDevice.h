@@ -109,7 +109,7 @@ class LinuxKeyboardDevice : public UpdateDevice {
 		*    Virtual key code
 		*
 		*  @return
-		*    Corresponding key, NULL if key code is invalid
+		*    Corresponding key, a null pointer if key code is invalid
 		*/
 		Button *GetKeyboardKey(Keyboard *pKeyboard, int nKey);
 

@@ -45,7 +45,7 @@ namespace PLJabber {
 */
 OutputStream::OutputStream(JabberConnection &cJabberConnection) :
 	m_pJabberConnection(&cJabberConnection),
-	m_pStream(NULL)
+	m_pStream(nullptr)
 {
 }
 
@@ -126,7 +126,7 @@ void OutputStream::Save(const String &sFilename)
 *    Copy constructor
 */
 OutputStream::OutputStream(const OutputStream &cSource) :
-	m_pJabberConnection(NULL)
+	m_pJabberConnection(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

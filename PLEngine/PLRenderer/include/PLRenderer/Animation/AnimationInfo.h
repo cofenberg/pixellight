@@ -185,7 +185,7 @@ class AnimationInfo {
 		*    Index of the frame the information should be returned
 		*
 		*  @return
-		*    Frame information, NULL if there's an error
+		*    Frame information, a null pointer if there's an error
 		*/
 		PLRENDERER_API AnimationFrameInfo *GetFrameInfo(PLGeneral::uint32 nIndex = 0) const;
 

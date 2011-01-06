@@ -111,7 +111,7 @@ class PLSceneMesh {
 		*    Returns the 3ds Max object this mesh comes from
 		*
 		*  @return
-		*    The 3ds Max object node this mesh comes from, NULL on error
+		*    The 3ds Max object node this mesh comes from, a null pointer on error
 		*/
 		Object *Get3dsMaxObject() const;
 
@@ -286,7 +286,7 @@ class PLSceneMesh {
 				*    Vertex to add (nIndex is only used internally!)
 				*
 				*  @return
-				*    The vertex from the hash table, NULL on error
+				*    The vertex from the hash table, a null pointer on error
 				*/
 				Vertex *Add(Vertex &cVertex)
 				{
@@ -310,7 +310,7 @@ class PLSceneMesh {
 						// Return the index of the added vertex
 						return &cVertex;
 					} else {
-						return NULL; // Error!
+						return nullptr; // Error!
 					}
 				}
 
@@ -424,7 +424,7 @@ class PLSceneMesh {
 		*    Returns the correct material index of a face
 		*
 		*  @param[in] pIGameMaterial
-		*    The IGame material, can be NULL
+		*    The IGame material, can be a null pointer
 		*  @param[in] nFaceMaterialIndex
 		*    Material index of the current face
 		*
@@ -443,7 +443,7 @@ class PLSceneMesh {
 		*    Face index to get the IGame material from
 		*
 		*  @return
-		*    The IGame material at the given index, NULL on error
+		*    The IGame material at the given index, a null pointer on error
 		*/
 		IGameMaterial *GetIGameMaterial(IGameMesh &cIGameMesh, int nFace) const;
 
@@ -452,9 +452,9 @@ class PLSceneMesh {
 		*    Adds a material to the mesh
 		*
 		*  @param[in] pParentIGameMaterial
-		*    Parent of the IGame material, can be NULL
+		*    Parent of the IGame material, can be a null pointer
 		*  @param[in] pIGameMaterial
-		*    IGame material to add, can be NULL
+		*    IGame material to add, can be a null pointer
 		*
 		*  @return
 		*    The index of the material within the mesh material list, < 0 on error
@@ -468,7 +468,7 @@ class PLSceneMesh {
 		*  @param[in] cIGameMesh
 		*    IGame mesh to use
 		*  @param[in] pIGameSkin
-		*    IGame skinning modifier, can be NULL
+		*    IGame skinning modifier, can be a null pointer
 		*  @param[in] cFace
 		*    Current face
 		*  @param[in] nFaceVertexId
@@ -479,7 +479,7 @@ class PLSceneMesh {
 		*    Current face index
 		*
 		*  @return
-		*    The vertex, NULL on error
+		*    The vertex, a null pointer on error
 		*/
 		PLSceneMesh::Vertex *GetVertex(IGameMesh &cIGameMesh, IGameSkin *pIGameSkin, const FaceEx &cFace, int nFaceVertexId, int nMat, int nFaceId);
 

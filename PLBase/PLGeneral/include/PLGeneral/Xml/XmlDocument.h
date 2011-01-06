@@ -193,7 +193,7 @@ class XmlDocument : public XmlNode {
 		*    Get the root element -- the only top level element -- of the document
 		*
 		*  @return
-		*    The root element, NULL on error
+		*    The root element, a null pointer on error
 		*
 		*  @note
 		*    - In well formed XML, there should only be one. This parser is tolerant of
@@ -320,7 +320,7 @@ class XmlDocument : public XmlNode {
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
 		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
-		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]

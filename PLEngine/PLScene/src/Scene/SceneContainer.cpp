@@ -63,7 +63,7 @@ void SceneContainer::SetHierarchy(const String &sValue)
 	// is done if the new hierarchy is requested the first time  :)
 	if (m_pHierarchy && m_pHierarchy->GetClass()->GetClassName() != m_sHierarchy) {
 		delete m_pHierarchy;
-		m_pHierarchy = NULL;
+		m_pHierarchy = nullptr;
 	}
 }
 
@@ -92,10 +92,10 @@ SceneContainer::SceneContainer() :
 	AABBMin(this),
 	AABBMax(this),
 	Filename(this),
-	m_pSceneContext(NULL),
+	m_pSceneContext(nullptr),
 	m_sHierarchy("PLScene::SHList"),
-	m_pHierarchy(NULL),
-	m_pQueryManager(NULL)
+	m_pHierarchy(nullptr),
+	m_pQueryManager(nullptr)
 {
 	// Overwritten SceneNode variables
 	m_cAABoundingBox.vMin.SetXYZ(-10000.0f, -10000.0f, -10000.0f);
@@ -159,7 +159,7 @@ SceneNode *SceneContainer::Create(const String &sClass, const String &sName, con
 	}
 
 	// Error
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -337,7 +337,7 @@ SceneQuery *SceneContainer::CreateQuery(const String &sClass)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -353,7 +353,7 @@ bool SceneContainer::DestroyQuery(SceneQuery &cQuery)
 			// Check query manager
 			if (!m_pQueryManager->GetNumOfElements()) {
 				delete m_pQueryManager;
-				m_pQueryManager = NULL;
+				m_pQueryManager = nullptr;
 			}
 
 			// Done
@@ -450,7 +450,7 @@ bool SceneContainer::Remove(SceneNode &cNode, bool bDeInitNode)
 		cNode.DeInitSceneNode();
 	m_mapElements.Remove(cNode.GetName());
 	const bool bResult = m_lstElements.Remove(&cNode);
-	cNode.m_pManager = NULL;
+	cNode.m_pManager = nullptr;
 
 	// Remove the scene node from the refresh list if required
 	if (cNode.m_nInternalFlags & SceneNode::RecalculateHierarchy)
@@ -544,7 +544,7 @@ SceneNode *SceneContainer::Get(const String &sName) const
 
 			// Did a '.' follow?
 			if (sName[(uint32)4] == '.')
-				return m_pSceneContext->GetRoot() ? m_pSceneContext->GetRoot()->Get(sName.GetSubstring(5)) : NULL;
+				return m_pSceneContext->GetRoot() ? m_pSceneContext->GetRoot()->Get(sName.GetSubstring(5)) : nullptr;
 		}
 
 		// 'Parent' at the beginning?
@@ -557,7 +557,7 @@ SceneNode *SceneContainer::Get(const String &sName) const
 			// Did a '.' follow?
 			if (sName[(uint32)6] == '.') {
 				// Is there a parent container?
-				return GetContainer() ? GetContainer()->Get(sName.GetSubstring(7)) : NULL;
+				return GetContainer() ? GetContainer()->Get(sName.GetSubstring(7)) : nullptr;
 			}
 		}
 
@@ -583,7 +583,7 @@ SceneNode *SceneContainer::Get(const String &sName) const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

@@ -122,9 +122,9 @@ bool ImageLinux::LoadPixmap(const PLGeneral::String &sFilename, const PLGraphics
 	// Free pixmap
 	if (m_pPixmap)		XFreePixmap(m_pDisplay, m_pPixmap);
 	if (m_pMaskPixmap)	XFreePixmap(m_pDisplay, m_pMaskPixmap);
-	m_pPixmap	  = NULL;
-	m_pMaskPixmap = NULL;
-	m_pImage	  = NULL;
+	m_pPixmap	  = nullptr;
+	m_pMaskPixmap = nullptr;
+	m_pImage	  = nullptr;
 
 	// Check file name
 	if (sFilename.GetLength()) {
@@ -145,9 +145,9 @@ bool ImageLinux::LoadPixmap(const PLGeneral::String &sFilename, const PLGraphics
 		// Error, free pixmap
 		if (m_pPixmap)		XFreePixmap(m_pDisplay, m_pPixmap);
 		if (m_pMaskPixmap)	XFreePixmap(m_pDisplay, m_pMaskPixmap);
-		m_pPixmap	  = NULL;
-		m_pMaskPixmap = NULL;
-		m_pImage	  = NULL;
+		m_pPixmap	  = nullptr;
+		m_pMaskPixmap = nullptr;
+		m_pImage	  = nullptr;
 	}
 
 	// Error!

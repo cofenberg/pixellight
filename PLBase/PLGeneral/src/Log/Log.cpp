@@ -87,7 +87,7 @@ bool Log::Open(const String &sFilename)
 	const String sExtension = Url(sFilename).GetExtension();
 
 	// Create log formater instance by using the filename extension
-	LogFormater *pLogFormater = NULL;
+	LogFormater *pLogFormater = nullptr;
 	if (sExtension == "txt" || sExtension == "log")
 		pLogFormater = new LogFormaterText();
 	else if (sExtension == "xml")
@@ -149,7 +149,7 @@ bool Log::Close()
 
 		// Destroy the log formater
 		delete m_pLogFormater;
-		m_pLogFormater = NULL;
+		m_pLogFormater = nullptr;
 
 		// Reset data
 		m_sFilename = "";
@@ -270,7 +270,7 @@ void Log::SetBufferCount(uint32 nBufferCount)
 
 	// Remove surplus log messages
 	if (m_nBufferedMessages > nBufferCount) {
-		uint32 nToRemove = m_nBufferedMessages-nBufferCount;
+		const uint32 nToRemove = m_nBufferedMessages-nBufferCount;
 		for (uint32 i=0; i<nToRemove; i++)
 			m_qLastMessages.Pop();
 	}
@@ -294,9 +294,12 @@ const Queue<String> &Log::GetLastMessages() const
 */
 String Log::LogLevelToString(uint8 nLogLevel) const
 {
-		 if (!nLogLevel)		return "";
-	else if (nLogLevel > Debug)	return String::Format("Debug%d", nLogLevel-Debug);
-	else						return g_sLogLevelToString[nLogLevel-1];
+	if (!nLogLevel)
+		return "";
+	else if (nLogLevel > Debug)
+		return String::Format("Debug%d", nLogLevel-Debug);
+	else
+		return g_sLogLevelToString[nLogLevel-1];
 }
 
 /**
@@ -323,7 +326,7 @@ Log::Log() :
 	m_nFlushLogLevel(Error),
 	m_nFlushMessages(0),
 	m_nBufferedMessages(10),
-	m_pLogFormater(NULL)
+	m_pLogFormater(nullptr)
 {
 }
 
@@ -338,7 +341,7 @@ Log::Log(const Log &cSource) :
 	m_nFlushLogLevel(Error),
 	m_nFlushMessages(0),
 	m_nBufferedMessages(10),
-	m_pLogFormater(NULL)
+	m_pLogFormater(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

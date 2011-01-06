@@ -113,7 +113,7 @@ bool SQByClassName::PerformQueryRec(const SceneContainer &cContainer)
 							return false; // Stop the query right now
 
 						// We're done
-						pClass = NULL;
+						pClass = nullptr;
 					} else {
 						// Next base class, please
 						pClass = pClass->GetBaseClass();

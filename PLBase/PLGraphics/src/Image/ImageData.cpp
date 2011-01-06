@@ -47,11 +47,11 @@ ImageData::ImageData() :
 	m_nDataFormat(DataByte),
 	m_nColorFormat(ColorRGB),
 	m_nCompression(CompressionNone),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(0),
-	m_pCompressedData(NULL),
+	m_pCompressedData(nullptr),
 	m_nCompressedSize(0),
-	m_pPalette(NULL)
+	m_pPalette(nullptr)
 {
 }
 
@@ -64,11 +64,11 @@ ImageData::ImageData(const ImageData &cSource) :
 	m_nColorFormat(cSource.m_nColorFormat),
 	m_nCompression(cSource.m_nCompression),
 	m_vSize(cSource.m_vSize),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nDataSize(cSource.m_nDataSize),
-	m_pCompressedData(NULL),
+	m_pCompressedData(nullptr),
 	m_nCompressedSize(cSource.m_nCompressedSize),
-	m_pPalette(NULL)
+	m_pPalette(nullptr)
 {
 	// Copy image data
 	if (cSource.m_pData && m_nDataSize) {
@@ -112,11 +112,11 @@ ImageData &ImageData::operator =(const ImageData &cSource)
 	m_nColorFormat		= cSource.m_nColorFormat;
 	m_nCompression		= cSource.m_nCompression;
 	m_vSize				= cSource.m_vSize;
-	m_pData				= NULL;
+	m_pData				= nullptr;
 	m_nDataSize			= cSource.m_nDataSize;
-	m_pCompressedData	= NULL;
+	m_pCompressedData	= nullptr;
 	m_nCompressedSize	= cSource.m_nCompressedSize;
-	m_pPalette			= NULL;
+	m_pPalette			= nullptr;
 
 	// Copy image data
 	if (cSource.m_pData && m_nDataSize) {
@@ -178,18 +178,21 @@ void ImageData::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, 
 void ImageData::Clear()
 {
 	// Destroy image data
-	if (m_pData) delete [] m_pData;
-	m_pData		= NULL;
+	if (m_pData)
+		delete [] m_pData;
+	m_pData		= nullptr;
 	m_nDataSize = 0;
 
 	// Destroy compressed image data
-	if (m_pCompressedData) delete [] m_pCompressedData;
-	m_pCompressedData = NULL;
+	if (m_pCompressedData)
+		delete [] m_pCompressedData;
+	m_pCompressedData = nullptr;
 	m_nCompressedSize = 0;
 
 	// Destroy palette
-	if (m_pPalette) delete m_pPalette;
-	m_pPalette = NULL;
+	if (m_pPalette)
+		delete m_pPalette;
+	m_pPalette = nullptr;
 
 	// Reset image data
 	m_nDataFormat	= DataByte;
@@ -335,7 +338,7 @@ Vector3i ImageData::GetSize() const
 bool ImageData::HasData() const
 {
 	// Check if image buffer is valid
-	return (m_pData != NULL);
+	return (m_pData != nullptr);
 }
 
 /**
@@ -392,7 +395,7 @@ uint8 *ImageData::GetData()
 bool ImageData::HasCompressedData() const
 {
 	// Check if compressed image buffer is valid
-	return (m_pCompressedData != NULL);
+	return (m_pCompressedData != nullptr);
 }
 
 /**
@@ -574,7 +577,7 @@ void ImageData::SetPalette(ImagePalette *pPalette)
 	// Destroy old palette
 	if (m_pPalette) {
 		delete m_pPalette;
-		m_pPalette = NULL;
+		m_pPalette = nullptr;
 	}
 
 	// Set new palette
@@ -641,7 +644,7 @@ void ImageData::DestroyBuffer()
 	// Destroy image data
 	if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 }
 
@@ -654,7 +657,7 @@ void ImageData::DestroyCompressedBuffer()
 	// Destroy compressed image data
 	if (m_pCompressedData) {
 		delete [] m_pCompressedData;
-		m_pCompressedData = NULL;
+		m_pCompressedData = nullptr;
 	}
 }
 

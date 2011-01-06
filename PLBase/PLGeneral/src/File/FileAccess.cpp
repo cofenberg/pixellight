@@ -51,7 +51,7 @@ FileAccess::Entry::Entry() :
 	m_nFlagsMask(0),
 	m_nFlagsValue(0),
 	m_nUserFlags(0),
-	m_pUserData(NULL)
+	m_pUserData(nullptr)
 {
 }
 

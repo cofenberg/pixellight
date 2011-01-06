@@ -45,7 +45,7 @@ namespace PLScene {
 */
 ConsoleCommand::ConsoleCommand(bool bDebug, const String &sCommand, const String &sParameters,
 							   const String &sHelp, const Functor<void, ConsoleCommand &> &cFunctor) :
-	m_pConsole(NULL),
+	m_pConsole(nullptr),
 	m_bDebug(bDebug),
 	m_sCommand(sCommand),
 	m_sParameters(sParameters),
@@ -59,7 +59,7 @@ ConsoleCommand::ConsoleCommand(bool bDebug, const String &sCommand, const String
 *    Copy constructor
 */
 ConsoleCommand::ConsoleCommand(const ConsoleCommand &cSource) :
-	m_pConsole(NULL)
+	m_pConsole(nullptr)
 {
 	*this = cSource;
 }

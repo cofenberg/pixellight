@@ -90,7 +90,7 @@ void ResourceManagementTest::Test()
 	cPtr2 = cPtr;
 	if (!cPtr2.GetPointer() || !cPtr2 || !(cPtr == cPtr2) || cPtr != cPtr2 ||
 		cPtr.GetPointer()->GetRefCount() != 2) bResult = false;
-	cPtr = NULL;
+	cPtr = nullptr;
 	if (cPtr2.GetPointer()->GetRefCount() != 1) bResult = false;
 	cPtr = new TestClass();
 	cPtr->i = 1;
@@ -117,7 +117,7 @@ void ResourceManagementTest::Test()
 		*cRawPtr.GetPointer() != 55) bResult = false;
 	*pI = 56;
 	if (*cRawPtr.GetPointer() != 56 || *cRawPtr2.GetPointer() != 56) bResult = false;
-	cRawPtr = NULL;
+	cRawPtr = nullptr;
 	if (cRawPtr.GetPointer() || !cRawPtr == false || cRawPtr == cRawPtr2 || !(cRawPtr != cRawPtr2) ||
 		*cRawPtr2.GetPointer() != 56) bResult = false;
 	EndTask(bResult);

@@ -68,7 +68,7 @@ class PLSceneMaterial {
 		*    Returns the IGame material this material comes from
 		*
 		*  @return
-		*    The IGame node this material comes from, can be NULL
+		*    The IGame node this material comes from, can be a null pointer
 		*/
 		IGameMaterial *GetIGameMaterial() const;
 
@@ -116,9 +116,9 @@ class PLSceneMaterial {
 		*  @param[in] cScene
 		*    Scene this material is in
 		*  @param[in] pParentIGameMaterial
-		*    Parent of the IGame material, can be NULL
+		*    Parent of the IGame material, can be a null pointer
 		*  @param[in] pIGameMaterial
-		*    IGame material this material comes from, can be NULL
+		*    IGame material this material comes from, can be a null pointer
 		*  @param[in] sName
 		*    Name of this material
 		*/
@@ -165,7 +165,7 @@ class PLSceneMaterial {
 	//[-------------------------------------------------------]
 	protected:
 		PLScene		  *m_pScene;				/**< PL owner scene (always valid!) */
-		IGameMaterial *m_pParentIGameMaterial;	/**< Parent of the IGame material, can be NULL */
+		IGameMaterial *m_pParentIGameMaterial;	/**< Parent of the IGame material, can be a null pointer */
 		IGameMaterial *m_pIGameMaterial;		/**< IGame material this material comes from (always valid!) */
 		std::string	   m_sName;					/**< Name of this material */
 		unsigned int   m_nReferenceCount;		/**< Reference count of this material */
@@ -182,14 +182,14 @@ class PLSceneMaterial {
 		*  @param[in] cScene
 		*    Scene this material is in
 		*  @param[in] pParentIGameMaterial
-		*    Parent of the IGame material, can be NULL
+		*    Parent of the IGame material, can be a null pointer
 		*  @param[in] cIGameMaterial
 		*    IGame material this material comes from
 		*  @param[in] sName
 		*    Name of this material
 		*
 		*  @return
-		*    The created material, NULL on error
+		*    The created material, a null pointer on error
 		*/
 		static PLSceneMaterial *Create(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName);
 

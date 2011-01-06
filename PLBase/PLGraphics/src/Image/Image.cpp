@@ -240,7 +240,7 @@ const Container<ImagePart*> &Image::GetParts() const
 ImagePart *Image::CreatePart(uint32 nSemantics)
 {
 	// Create if semantics ID is already used
-	if (m_mapParts.Get(nSemantics) == NULL) {
+	if (m_mapParts.Get(nSemantics) == nullptr) {
 		// Create image part
 		ImagePart *pPart = new ImagePart();
 		pPart->SetSemantics(nSemantics);
@@ -254,7 +254,7 @@ ImagePart *Image::CreatePart(uint32 nSemantics)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -297,7 +297,7 @@ ImageBuffer *Image::GetBuffer(uint32 nPart, uint32 nMipmap) const
 	}
 
 	// Invalid buffer requested
-	return NULL;
+	return nullptr;
 }
 
 /**

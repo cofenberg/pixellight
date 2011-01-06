@@ -82,7 +82,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    Creates a vertex shader
 		*
 		*  @return
-		*    The created vertex shader, NULL on error
+		*    The created vertex shader, a null pointer on error
 		*/
 		virtual VertexShader *CreateVertexShader() = 0;
 
@@ -91,7 +91,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    Creates a geometry shader
 		*
 		*  @return
-		*    The created geometry shader, NULL on error
+		*    The created geometry shader, a null pointer on error
 		*/
 		virtual GeometryShader *CreateGeometryShader() = 0;
 
@@ -100,7 +100,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    Creates a fragment shader
 		*
 		*  @return
-		*    The created fragment shader, NULL on error
+		*    The created fragment shader, a null pointer on error
 		*/
 		virtual FragmentShader *CreateFragmentShader() = 0;
 
@@ -109,7 +109,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    Creates a program
 		*
 		*  @return
-		*    The created program, NULL on error
+		*    The created program, a null pointer on error
 		*/
 		virtual Program *CreateProgram() = 0;
 

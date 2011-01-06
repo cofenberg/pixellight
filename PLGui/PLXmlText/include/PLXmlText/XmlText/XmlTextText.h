@@ -61,9 +61,9 @@ class XmlTextText : public XmlTextElement {
 		*  @param[in] bParagraph
 		*    If 'true', create an own paragraph, otherwise just change options within paragraph
 		*  @param[in] pParent
-		*    Parent object, can be NULL
+		*    Parent object, can be a null pointer
 		*/
-		PLXMLTEXT_API XmlTextText(bool bParagraph, XmlTextElement *pParent = NULL);
+		PLXMLTEXT_API XmlTextText(bool bParagraph, XmlTextElement *pParent = nullptr);
 
 		/**
 		*  @brief

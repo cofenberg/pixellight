@@ -105,8 +105,8 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 					}
 
 					// Get the projector map... I found no way to do this using IGame...
-					BitmapTex *pBitmapTex = NULL;
-					Texmap *pMap = cMaxLight.GetProjector() ? cMaxLight.GetProjMap() : NULL;
+					BitmapTex *pBitmapTex = nullptr;
+					Texmap *pMap = cMaxLight.GetProjector() ? cMaxLight.GetProjMap() : nullptr;
 					if (pMap && pMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0x00))
 						pBitmapTex = (BitmapTex*)pMap;
 

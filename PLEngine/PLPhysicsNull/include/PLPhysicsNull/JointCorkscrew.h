@@ -76,9 +76,9 @@ class JointCorkscrew : public PLPhysics::JointCorkscrew {
 		*  @param[in] cWorld
 		*    World this joint is in
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*  @param[in] vPivotPoint
 		*    Origin of the corkscrew in world space
 		*  @param[in] vPinDir

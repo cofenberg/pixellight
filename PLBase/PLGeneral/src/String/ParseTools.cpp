@@ -90,7 +90,8 @@ uint32 ParseTools::ParseHexValue(const String &sString)
 int ParseTools::ParseIntegerArray(const String &sString, int *pnValues, uint32 nMaxNumOfElements)
 {
 	// Check parameters
-	if (!pnValues || !sString.GetLength() || !nMaxNumOfElements) return 0;
+	if (!pnValues || !sString.GetLength() || !nMaxNumOfElements)
+		return 0;
 
 	// Parse string
 	Tokenizer cTokenizer;
@@ -114,7 +115,8 @@ int ParseTools::ParseIntegerArray(const String &sString, int *pnValues, uint32 n
 int ParseTools::ParseFloatArray(const String &sString, float *pfValues, uint32 nMaxNumOfElements)
 {
 	// Check parameters
-	if (!pfValues || !sString.GetLength() || !nMaxNumOfElements) return 0;
+	if (!pfValues || !sString.GetLength() || !nMaxNumOfElements)
+		return 0;
 
 	// Parse string
 	Tokenizer cTokenizer;
@@ -138,7 +140,8 @@ int ParseTools::ParseFloatArray(const String &sString, float *pfValues, uint32 n
 int ParseTools::ParseDoubleArray(const String &sString, double *pdValues, uint32 nMaxNumOfElements)
 {
 	// Check parameters
-	if (!pdValues || !sString.GetLength() || !nMaxNumOfElements) return 0;
+	if (!pdValues || !sString.GetLength() || !nMaxNumOfElements)
+		return 0;
 
 	// Parse string
 	Tokenizer cTokenizer;
@@ -167,7 +170,8 @@ uint32 ParseTools::GetFlagsFromString(const String &sFlags)
 		Tokenizer cTokenizer;
 		cTokenizer.Start(sFlags);
 		cTokenizer.SetDelimiters(" \t\r\n&,|");
-		while (cTokenizer.GetNextToken().GetLength()) nFlags |= cTokenizer.GetToken().GetInt();
+		while (cTokenizer.GetNextToken().GetLength())
+			nFlags |= cTokenizer.GetToken().GetInt();
 		cTokenizer.Stop();
 	}
 	return nFlags;
@@ -189,7 +193,8 @@ String ParseTools::GetStringFromFlags(uint32 nFlags)
 		// Check current flag
 		if (nFlag & 1) {
 			// Add to string
-			if (nPos > 1 && sFlags.GetLength()) sFlags += "|";
+			if (nPos > 1 && sFlags.GetLength())
+				sFlags += "|";
 			sFlags += nPos;
 		}
 

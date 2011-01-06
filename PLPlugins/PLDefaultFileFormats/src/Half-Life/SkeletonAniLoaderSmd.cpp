@@ -123,7 +123,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 			// Loop through all root joints
 			for (uint32 i=0; i<cSkeleton.GetRootJoints().GetNumOfElements(); i++) {
 				Joint *pJoint = cSkeleton.Get(cSkeleton.GetRootJoints()[i]);
-				RecCalculateStates(cSkeleton, *pJoint, NULL);
+				RecCalculateStates(cSkeleton, *pJoint, nullptr);
 			}
 			if (!cTokenizer.CompareToken("end")) {
 				// Read frame keys

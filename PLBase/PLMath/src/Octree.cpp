@@ -83,7 +83,7 @@ void Octree::Init(Octree *pParent, int nSubdivide, uint32 nMinGeometries, uint32
 	}
 	m_pParent		 = pParent;
 	m_nNumOfChildren = 0;
-	m_ppChild		 = NULL;
+	m_ppChild		 = nullptr;
 	m_bVisible		 = false;
 	m_bBuild		 = false;
 	m_nSubdivide	 = nSubdivide;
@@ -338,11 +338,11 @@ void Octree::CheckBox(const BoundingBox &cBox)
 Octree::Octree(const Octree &cSource) :
 	m_nIDOffset(0),
 	m_nID(0),
-	m_pTopmost(NULL),
-	m_pParent(NULL),
+	m_pTopmost(nullptr),
+	m_pParent(nullptr),
 	m_nLevel(0),
 	m_nNumOfChildren(0),
-	m_ppChild(NULL),
+	m_ppChild(nullptr),
 	m_bVisible(0),
 	m_bBuild(0),
 	m_nSubdivide(0),

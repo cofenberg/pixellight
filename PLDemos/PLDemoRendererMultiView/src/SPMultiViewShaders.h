@@ -83,9 +83,9 @@ class SPMultiViewShaders : public SPMultiView {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::VertexShader	*m_pVertexShader;	/**< Vertex shader, can be NULL */
-		PLRenderer::FragmentShader	*m_pFragmentShader;	/**< Fragment shader, can be NULL */
-		PLRenderer::Program			*m_pProgram;		/**< GPU program, can be NULL */
+		PLRenderer::VertexShader	*m_pVertexShader;	/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader	*m_pFragmentShader;	/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program			*m_pProgram;		/**< GPU program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

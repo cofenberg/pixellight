@@ -86,7 +86,7 @@ bool LogFormaterText::Open(const String &sFilename)
 	m_pFile = OpenFile(sFilename);
 
 	// Error?
-	return m_pFile != NULL;
+	return m_pFile != nullptr;
 }
 
 bool LogFormaterText::Close()
@@ -98,7 +98,7 @@ bool LogFormaterText::Close()
 
 		// Reset data
 		delete m_pFile;
-		m_pFile = NULL;
+		m_pFile = nullptr;
 
 		// Done
 		return true;
@@ -121,7 +121,8 @@ bool LogFormaterText::Output(uint8 nLogLevel, const String &sText)
 		sLogMessage += sText;
 
 		// Write the text and a newline
-		if (m_pFile->PrintLn(sLogMessage)) return true; // Done
+		if (m_pFile->PrintLn(sLogMessage))
+			return true; // Done
 	}
 
 	// Error!

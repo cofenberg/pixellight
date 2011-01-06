@@ -95,7 +95,7 @@ class OcclusionQuery : public PLRenderer::OcclusionQuery {
 	public:
 		virtual bool BeginOcclusionQuery();
 		virtual void EndOcclusionQuery();
-		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = NULL);
+		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = nullptr);
 		virtual PLGeneral::uint32 GetLastQuerysPixelCount() const;
 		virtual PLGeneral::uint32 GetSkipRate() const;
 		virtual void SetSkipRate(PLGeneral::uint32 nRate = 0);

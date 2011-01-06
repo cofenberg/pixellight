@@ -131,7 +131,7 @@ void LinuxEventDevice::Update()
 	int nEvents = (nSize > 0 ? (int)(nSize / sizeof(struct input_event)) : 0);
 	for (int i=0; i<nEvents; i++) {
 		// Get corresponding control
-		Control *pControl = NULL;
+		Control *pControl = nullptr;
 		if (pEvents[i].code == ABS_X)
 			pControl = m_pDevice->GetControl("X");
 		else if (pEvents[i].code == ABS_Y)
@@ -152,8 +152,8 @@ void LinuxEventDevice::Update()
 			pControl = m_pDevice->GetControl(String("Button") + (pEvents[i].code - BTN_GAMEPAD));
 
 		// Get control type
-		Axis   *pAxis   = (pControl != NULL && pControl->GetType() == ControlAxis)   ? (Axis*)  pControl : NULL;
-		Button *pButton = (pControl != NULL && pControl->GetType() == ControlButton) ? (Button*)pControl : NULL;
+		Axis   *pAxis   = (pControl != nullptr && pControl->GetType() == ControlAxis)   ? (Axis*)  pControl : nullptr;
+		Button *pButton = (pControl != nullptr && pControl->GetType() == ControlButton) ? (Button*)pControl : nullptr;
 
 		// Set control value
 		if (pEvents[i].type == EV_KEY && pButton) {

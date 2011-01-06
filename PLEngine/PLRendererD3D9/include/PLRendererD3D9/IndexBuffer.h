@@ -95,9 +95,9 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3DINDEXBUFFER9	m_pIndexBuffer;	/**< Direct3D 9 index buffer, can be NULL (VBO) */
-		void				   *m_pData;		/**< Dynamic buffer, can be NULL (none VBO) */
-		void				   *m_pLockedData;	/**< Locked data, can be NULL */
+		LPDIRECT3DINDEXBUFFER9	m_pIndexBuffer;	/**< Direct3D 9 index buffer, can be a null pointer (VBO) */
+		void				   *m_pData;		/**< Dynamic buffer, can be a null pointer (none VBO) */
+		void				   *m_pLockedData;	/**< Locked data, can be a null pointer */
 		PLGeneral::uint32		m_nUsageAPI;	/**< API usage setting */
 		D3DFORMAT				m_nTypeAPI;		/**< API type */
 

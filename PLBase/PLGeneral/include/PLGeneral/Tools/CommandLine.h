@@ -124,7 +124,7 @@ class CommandLine {
 		*    Index of the option to retrieve
 		*
 		*  @return
-		*    Pointer to option, or NULL
+		*    Pointer to option, or a null pointer
 		*/
 		PLGENERAL_API CommandLineOption *GetOption(uint32 nIndex) const;
 
@@ -136,7 +136,7 @@ class CommandLine {
 		*    Name of the option to retrieve (short or long name)
 		*
 		*  @return
-		*    Pointer to option, or NULL
+		*    Pointer to option, or a null pointer
 		*/
 		PLGENERAL_API CommandLineOption *GetOption(const String &sName) const;
 

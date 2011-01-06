@@ -137,7 +137,7 @@ class Cursor {
 		*    Get owner GUI
 		*
 		*  @return
-		*    Pointer to GUI object (never NULL)
+		*    Pointer to GUI object (never a null pointer)
 		*/
 		PLGUI_API Gui *GetGui() const;
 

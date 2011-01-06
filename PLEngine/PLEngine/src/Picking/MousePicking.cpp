@@ -181,7 +181,7 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 */
 void MousePicking::NotifyWidgetDestroy()
 {
-	m_pWidget = NULL;
+	m_pWidget = nullptr;
 }
 
 /**
@@ -190,7 +190,7 @@ void MousePicking::NotifyWidgetDestroy()
 */
 void MousePicking::NotifyCameraDestroy()
 {
-	m_pCamera = NULL;
+	m_pCamera = nullptr;
 }
 
 

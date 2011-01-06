@@ -41,7 +41,7 @@ namespace PLGui {
 *    Constructor
 */
 FontWindows::FontWindows(Font &cFont) : FontImpl(cFont),
-	m_hFont(NULL)
+	m_hFont(nullptr)
 {
 }
 
@@ -117,7 +117,7 @@ bool FontWindows::LoadFont(const String &sFamily, uint32 nHeight, uint32 nWeight
 	}
 
 	// Return if a font has been successfully created
-	return (m_hFont != NULL);
+	return (m_hFont != nullptr);
 }
 
 bool FontWindows::LoadFont(const String &sFilename, uint32 nHeight)
@@ -126,10 +126,10 @@ bool FontWindows::LoadFont(const String &sFilename, uint32 nHeight)
 	if (m_hFont) DeleteObject(m_hFont);
 
 	// [TODO] Implement
-	m_hFont = NULL;
+	m_hFont = nullptr;
 
 	// Return if a font has been successfully created
-	return (m_hFont != NULL);
+	return (m_hFont != nullptr);
 }
 
 

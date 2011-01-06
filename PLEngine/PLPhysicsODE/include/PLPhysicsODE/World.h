@@ -86,7 +86,7 @@ class World : public PLPhysics::World {
 		*    Returns the ODE physics world
 		*
 		*  @return
-		*    The ODE physics world, NULL on error (of that's the case, something went totally wrong :)
+		*    The ODE physics world, a null pointer on error (of that's the case, something went totally wrong :)
 		*/
 		PLPHYSICSODE_API dWorldID GetODEWorld() const;
 
@@ -95,7 +95,7 @@ class World : public PLPhysics::World {
 		*    Returns the ODE space
 		*
 		*  @return
-		*    The ODE space, NULL on error (of that's the case, something went totally wrong :)
+		*    The ODE space, a null pointer on error (of that's the case, something went totally wrong :)
 		*/
 		PLPHYSICSODE_API dSpaceID GetODESpace() const;
 
@@ -104,7 +104,7 @@ class World : public PLPhysics::World {
 		*    Returns the ODE contact group
 		*
 		*  @return
-		*    The ODE contact group, NULL on error (of that's the case, something went totally wrong :)
+		*    The ODE contact group, a null pointer on error (of that's the case, something went totally wrong :)
 		*/
 		PLPHYSICSODE_API dJointGroupID GetODEContactGroup() const;
 
@@ -210,9 +210,9 @@ class World : public PLPhysics::World {
 		float			  m_fBuoyancyPlaneY;		// [TODO] Implement buoyancy within the ODE backend
 
 		static PLGeneral::uint32 m_nODEInstanceCounter;	/**< ODE instance counter */
-		dWorldID				 m_pODEWorld;			/**< ODE physics world, can be NULL */
-		dSpaceID				 m_pODESpaceID;			/**< ODE world space, can be NULL */
-		dJointGroupID			 m_pODEContactGroup;	/**< ODE contact joint group, can be NULL */
+		dWorldID				 m_pODEWorld;			/**< ODE physics world, can be a null pointer */
+		dSpaceID				 m_pODESpaceID;			/**< ODE world space, can be a null pointer */
+		dJointGroupID			 m_pODEContactGroup;	/**< ODE contact joint group, can be a null pointer */
 		float					 m_fTimeElapsed;		/**< Elapsed time since last update */
 
 		// Body pair flags

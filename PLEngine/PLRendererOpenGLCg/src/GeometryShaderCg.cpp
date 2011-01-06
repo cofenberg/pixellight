@@ -82,7 +82,7 @@ CGprogram GeometryShaderCg::GetCgGeometryProgram() const
 */
 GeometryShaderCg::GeometryShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::GeometryShader(cRenderer),
 	m_pCgProfile(CG_PROFILE_UNKNOWN),
-	m_pCgGeometryProgram(NULL)
+	m_pCgGeometryProgram(nullptr)
 {
 	// Add a Cg context reference
 	ShaderToolsCg::AddCgContextReference();
@@ -117,7 +117,7 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, const String &sP
 	// Destroy the previous Cg geometry program, if there's one
 	if (m_pCgGeometryProgram) {
 		cgDestroyProgram(m_pCgGeometryProgram);
-		m_pCgGeometryProgram = NULL;
+		m_pCgGeometryProgram = nullptr;
 	}
 
 	// Get the profile from a user given string
@@ -157,15 +157,15 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, const String &sP
 void GeometryShaderCg::BackupDeviceData(uint8 **ppBackup)
 {
 	// Backup data
-	const char *pszProgram = m_pCgGeometryProgram ? cgGetProgramString(m_pCgGeometryProgram, CG_PROGRAM_SOURCE) : NULL;
+	const char *pszProgram = m_pCgGeometryProgram ? cgGetProgramString(m_pCgGeometryProgram, CG_PROGRAM_SOURCE) : nullptr;
 	if (pszProgram) {
 		const uint32 nNumOfBytes = Wrapper::GetStringLength(pszProgram) + 1;
 		*ppBackup = new uint8[nNumOfBytes];
 		MemoryManager::Copy(*ppBackup, pszProgram, nNumOfBytes);
 		cgDestroyProgram(m_pCgGeometryProgram);
-		m_pCgGeometryProgram = NULL;
+		m_pCgGeometryProgram = nullptr;
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

@@ -26,7 +26,7 @@
 
 void Message(const wchar_t szMessage[])
 {
-	MessageBox(NULL, szMessage, L"PixelLight Installation", MB_OK);
+	MessageBox(nullptr, szMessage, L"PixelLight Installation", MB_OK);
 }
 
 bool CheckWindowsVersion()
@@ -55,9 +55,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 	if (CheckWindowsVersion()) {
 		// Get current directory
 		wchar_t szDir[_MAX_PATH], szDirUpcase[_MAX_PATH];
-		GetModuleFileName(NULL, szDir, _MAX_PATH);
+		GetModuleFileName(nullptr, szDir, _MAX_PATH);
 		wchar_t szApplicationDrive[_MAX_PATH], szApplicationDir[_MAX_PATH];
-		_wsplitpath(szDir, szApplicationDrive, szApplicationDir, NULL, NULL);
+		_wsplitpath(szDir, szApplicationDrive, szApplicationDir, nullptr, nullptr);
 		wcscpy(szDirUpcase, szApplicationDrive);
 		wcscat(szDirUpcase, szApplicationDir);
 		if (szDirUpcase[wcslen(szDirUpcase)-1] == L'\\')
@@ -70,7 +70,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 		if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Environment", 0, KEY_READ | KEY_WRITE, &hKey) == ERROR_SUCCESS) {
 			// Query size of PATH variable
 			DWORD nPathSize = 0;
-			RegQueryValueEx(hKey, L"PATH", 0, NULL, NULL, &nPathSize);
+			RegQueryValueEx(hKey, L"PATH", 0, nullptr, nullptr, &nPathSize);
 			nPathSize += _MAX_PATH + 8;
 			wchar_t *pszPath = new wchar_t[nPathSize];
 
@@ -126,7 +126,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 		}
 
 		// Add directory to registry key "SOFTWARE\\PixelLight\\PixelLight-SDK"
-		if (RegCreateKeyEx(HKEY_LOCAL_MACHINE, szSubkey, 0, NULL, 0, KEY_READ | KEY_WRITE, NULL, &hKey, NULL) == ERROR_SUCCESS) {
+		if (RegCreateKeyEx(HKEY_LOCAL_MACHINE, szSubkey, 0, nullptr, 0, KEY_READ | KEY_WRITE, nullptr, &hKey, nullptr) == ERROR_SUCCESS) {
 			// Set value
 			RegSetValueEx(hKey, L"Runtime", 0, REG_SZ, (BYTE*)szDir, (DWORD)sizeof(wchar_t)*wcslen(szDir));
 			RegFlushKey(hKey);

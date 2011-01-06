@@ -65,7 +65,7 @@ pl_implement_class(SRPDiffuseOnlyFixedFunctions)
 SRPDiffuseOnlyFixedFunctions::SRPDiffuseOnlyFixedFunctions() :
 	m_pRenderStates(new RenderStates()),
 	m_nMaterialChanges(0),
-	m_pCurrentMaterial(NULL)
+	m_pCurrentMaterial(nullptr)
 {
 }
 
@@ -175,9 +175,9 @@ void SRPDiffuseOnlyFixedFunctions::DrawMesh(Renderer &cRenderer, const SQCull &c
 								}
 
 								// Bind diffuse map at texture unit 0
-								const Texture *pTexture = NULL;
+								const Texture *pTexture = nullptr;
 								if (GetFlags() & NoDiffuseMap)
-									cRenderer.SetTextureBuffer(0, NULL);
+									cRenderer.SetTextureBuffer(0, nullptr);
 								else {
 									pParameter = pMaterial->GetParameter(Material::DiffuseMap);
 									if (pParameter)
@@ -199,14 +199,14 @@ void SRPDiffuseOnlyFixedFunctions::DrawMesh(Renderer &cRenderer, const SQCull &c
 
 												// If this a z write only render pass, we only need the diffuse map to perform an alpha test...
 												if (GetFlags() & ZWriteOnly)
-													pTexture = NULL;
+													pTexture = nullptr;
 											}
 										} else {
 											pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
 
 											// If this a z write only render pass, we only need the diffuse map to perform an alpha test...
 											if (GetFlags() & ZWriteOnly)
-												pTexture = NULL;
+												pTexture = nullptr;
 										}
 
 										// Is the diffuse map still there?
@@ -214,10 +214,10 @@ void SRPDiffuseOnlyFixedFunctions::DrawMesh(Renderer &cRenderer, const SQCull &c
 											pTexture->Bind(0);
 											SetupTextureFiltering(cRenderer, 0);
 										} else {
-											cRenderer.SetTextureBuffer(0, NULL);
+											cRenderer.SetTextureBuffer(0, nullptr);
 										}
 									} else {
-										cRenderer.SetTextureBuffer(0, NULL);
+										cRenderer.SetTextureBuffer(0, nullptr);
 
 										// Disable alpha test
 										pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
@@ -277,7 +277,7 @@ void SRPDiffuseOnlyFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCull
 
 			// Reset current material
 			m_nMaterialChanges = 0;
-			m_pCurrentMaterial = NULL;
+			m_pCurrentMaterial = nullptr;
 
 			// Draw recursive from front to back
 			DrawRec(cRenderer, cCullQuery);

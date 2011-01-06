@@ -98,7 +98,7 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::
 		*    Optional parameter string
 		*
 		*  @return
-		*    Pointer to the new scene renderer pass or NULL if something went wrong
+		*    Pointer to the new scene renderer pass or a null pointer if something went wrong
 		*    (maybe unknown class or the class is not derived from SceneRendererPass)
 		*
 		*  @note

@@ -103,12 +103,12 @@ class EffectPass {
 		*    Binds the pass
 		*
 		*  @param[in] pParameterManager
-		*    Parameters set instead of existing effect parameters, can be NULL
+		*    Parameters set instead of existing effect parameters, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Bind(ParameterManager *pParameterManager = NULL);
+		PLRENDERER_API bool Bind(ParameterManager *pParameterManager = nullptr);
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class EffectPass {
 		*    Adds a new layer
 		*
 		*  @return
-		*    The new effect pass layer, NULL on error
+		*    The new effect pass layer, a null pointer on error
 		*/
 		PLRENDERER_API EffectPassLayer *AddLayer();
 
@@ -227,7 +227,7 @@ class EffectPass {
 		*    Layer index
 		*
 		*  @return
-		*    Effect pass layer, NULL if there was an error
+		*    Effect pass layer, a null pointer if there was an error
 		*/
 		PLRENDERER_API EffectPassLayer *GetLayer(PLGeneral::uint32 nIndex = 0) const;
 
@@ -289,7 +289,7 @@ class EffectPass {
 		*    Returns the used GPU program
 		*
 		*  @return
-		*    The used GPU program, NULL if there's no such GPU program
+		*    The used GPU program, a null pointer if there's no such GPU program
 		*/
 		PLRENDERER_API Program *GetProgram();
 
@@ -340,9 +340,9 @@ class EffectPass {
 		// Layers
 		PLGeneral::Array<EffectPassLayer*> m_lstLayers;	/**< Texture layers */
 		// Shaders
-		VertexShader   *m_pVertexShader;	/**< Used vertex shader, can be NULL */
-		FragmentShader *m_pFragmentShader;	/**< Used fragment shader, can be NULL */
-		Program		   *m_pProgram;			/**< GPU program, can be NULL */
+		VertexShader   *m_pVertexShader;	/**< Used vertex shader, can be a null pointer */
+		FragmentShader *m_pFragmentShader;	/**< Used fragment shader, can be a null pointer */
+		Program		   *m_pProgram;			/**< GPU program, can be a null pointer */
 
 
 };

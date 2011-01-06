@@ -78,7 +78,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*    Returns the dynamic buffer (none VBO)
 		*
 		*  @return
-		*    The dynamic buffer, can be NULL
+		*    The dynamic buffer, can be a null pointer
 		*/
 		PLRENDEREROPENGL_API const PLGeneral::uint8 *GetDynamicBuffer() const;
 

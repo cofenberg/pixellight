@@ -44,9 +44,9 @@ namespace PLGeneral {
 *    Default constructor
 */
 XmlAttribute::XmlAttribute() :
-	m_pDocument(NULL),
-	m_pPreviousAttribute(NULL),
-	m_pNextAttribute(NULL)
+	m_pDocument(nullptr),
+	m_pPreviousAttribute(nullptr),
+	m_pNextAttribute(nullptr)
 {
 }
 
@@ -163,13 +163,13 @@ void XmlAttribute::SetDoubleValue(double dValue)
 XmlAttribute *XmlAttribute::GetNext()
 {
 	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? NULL : m_pNextAttribute;
+	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? nullptr : m_pNextAttribute;
 }
 
 const XmlAttribute *XmlAttribute::GetNext() const
 {
 	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? NULL : m_pNextAttribute;
+	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? nullptr : m_pNextAttribute;
 }
 
 /**
@@ -179,13 +179,13 @@ const XmlAttribute *XmlAttribute::GetNext() const
 XmlAttribute *XmlAttribute::GetPrevious()
 {
 	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? NULL : m_pPreviousAttribute;
+	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? nullptr : m_pPreviousAttribute;
 }
 
 const XmlAttribute *XmlAttribute::GetPrevious() const
 {
 	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? NULL : m_pPreviousAttribute;
+	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? nullptr : m_pPreviousAttribute;
 }
 
 bool XmlAttribute::operator ==(const XmlAttribute &cOther) const
@@ -240,7 +240,7 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 {
 	pszData = SkipWhiteSpace(pszData, nEncoding);
 	if (!pszData || !*pszData)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	if (pData) {
 		pData->Stamp(pszData, nEncoding);
@@ -256,7 +256,7 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 			m_pDocument->SetError(ErrorReadingAttributes, pszError, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 	pszData = SkipWhiteSpace(pszData, nEncoding);
 	if (!pszData || !*pszData || *pszData != '=') {
@@ -265,7 +265,7 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 			m_pDocument->SetError(ErrorReadingAttributes, pszData, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	++pszData;	// skip '='
@@ -276,7 +276,7 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 			m_pDocument->SetError(ErrorReadingAttributes, pszData, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	// Constants
@@ -307,7 +307,7 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 					m_pDocument->SetError(ErrorReadingAttributes, pszData, pData, nEncoding);
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 			m_sValue += *pszData;
 			++pszData;
@@ -327,9 +327,9 @@ const char *XmlAttribute::Parse(const char *pszData, XmlParsingData *pData, EEnc
 *    Copy constructor
 */
 XmlAttribute::XmlAttribute(const XmlAttribute &cSource) :
-	m_pDocument(NULL),
-	m_pPreviousAttribute(NULL),
-	m_pNextAttribute(NULL)
+	m_pDocument(nullptr),
+	m_pPreviousAttribute(nullptr),
+	m_pNextAttribute(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

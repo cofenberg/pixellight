@@ -58,17 +58,17 @@ namespace PLCompositing {
 HDRLightAdaptation::HDRLightAdaptation(Renderer &cRenderer) :
 	EventHandlerDirty(&HDRLightAdaptation::OnDirty, this),
 	m_pRenderer(&cRenderer),
-	m_pFullscreenQuad(NULL),
-	m_pVertexShader(NULL),
-	m_pFragmentShader(NULL),
-	m_pProgram(NULL),
-	m_pPositionProgramAttribute(NULL),
-	m_pFactorProgramUniform(NULL),
-	m_pPreviousTextureProgramUniform(NULL),
-	m_pCurrentTextureProgramUniform(NULL),
+	m_pFullscreenQuad(nullptr),
+	m_pVertexShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr),
+	m_pPositionProgramAttribute(nullptr),
+	m_pFactorProgramUniform(nullptr),
+	m_pPreviousTextureProgramUniform(nullptr),
+	m_pCurrentTextureProgramUniform(nullptr),
 	m_bPreviousIndex(0)
 {
-	m_pLightAdaptationTextureBuffer2D[0] = m_pLightAdaptationTextureBuffer2D[1] = NULL;
+	m_pLightAdaptationTextureBuffer2D[0] = m_pLightAdaptationTextureBuffer2D[1] = nullptr;
 }
 
 /**
@@ -115,20 +115,20 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 		// If there's an previous instance of the program, destroy it first
 		if (m_pProgram) {
 			delete m_pProgram;
-			m_pProgram = NULL;
+			m_pProgram = nullptr;
 		}
 		if (m_pFragmentShader) {
 			delete m_pFragmentShader;
-			m_pFragmentShader = NULL;
+			m_pFragmentShader = nullptr;
 		}
 		if (m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
-		m_pPositionProgramAttribute			= NULL;
-		m_pFactorProgramUniform				= NULL;
-		m_pPreviousTextureProgramUniform	= NULL;
-		m_pCurrentTextureProgramUniform		= NULL;
+		m_pPositionProgramAttribute			= nullptr;
+		m_pFactorProgramUniform				= nullptr;
+		m_pPreviousTextureProgramUniform	= nullptr;
+		m_pCurrentTextureProgramUniform		= nullptr;
 
 		// Get the shader language instance
 		ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(sUsedShaderLanguage);
@@ -194,7 +194,7 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 				// Destroy the result render target
 				if (m_pLightAdaptationTextureBuffer2D[bCurrentIndex]) {
 					delete m_pLightAdaptationTextureBuffer2D[bCurrentIndex];
-					m_pLightAdaptationTextureBuffer2D[bCurrentIndex] = NULL;
+					m_pLightAdaptationTextureBuffer2D[bCurrentIndex] = nullptr;
 				}
 			}
 
@@ -249,7 +249,7 @@ void HDRLightAdaptation::CalculateLightAdaptation(const String &sShaderLanguage,
 */
 TextureBuffer *HDRLightAdaptation::GetTextureBuffer() const
 {
-	return m_pLightAdaptationTextureBuffer2D[!m_bPreviousIndex] ? m_pLightAdaptationTextureBuffer2D[!m_bPreviousIndex]->GetTextureBuffer() : NULL;
+	return m_pLightAdaptationTextureBuffer2D[!m_bPreviousIndex] ? m_pLightAdaptationTextureBuffer2D[!m_bPreviousIndex]->GetTextureBuffer() : nullptr;
 }
 
 

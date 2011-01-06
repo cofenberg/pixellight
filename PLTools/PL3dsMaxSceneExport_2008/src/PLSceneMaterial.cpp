@@ -236,5 +236,5 @@ PLSceneMaterial *PLSceneMaterial::Create(PLScene &cScene, IGameMaterial *pParent
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }

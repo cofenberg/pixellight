@@ -66,7 +66,7 @@ pl_implement_class(SRPDiffuseOnlyShaders)
 SRPDiffuseOnlyShaders::SRPDiffuseOnlyShaders() :
 	ShaderLanguage(this),
 	Flags(this),
-	m_pProgramGenerator(NULL),
+	m_pProgramGenerator(nullptr),
 	m_pRenderStates(new RenderStates())
 {
 }
@@ -99,7 +99,7 @@ void SRPDiffuseOnlyShaders::DrawMesh(Renderer &cRenderer, const SQCull &cCullQue
 	cRenderer.SetIndexBuffer(pIndexBuffer);
 
 	// Get available vertex buffer attributes
-	const bool bHasVertexTexCoord = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord) != NULL);
+	const bool bHasVertexTexCoord = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord) != nullptr);
 
 	// Draw mesh
 	for (uint32 nMat=0; nMat<cMeshHandler.GetNumOfMaterials(); nMat++) {
@@ -166,7 +166,7 @@ void SRPDiffuseOnlyShaders::DrawMesh(Renderer &cRenderer, const SQCull &cCullQue
 
 							// Diffuse map and alpha reference
 							float fAlphaReference = 0.0f;
-							TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord || (GetFlags() & NoDiffuseMap)) ? NULL : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+							TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord || (GetFlags() & NoDiffuseMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
 							if (pDiffuseMap) {
 								// Get alpha reference
 								if (pDiffuseMap->GetComponentsPerPixel() == 4) {
@@ -183,7 +183,7 @@ void SRPDiffuseOnlyShaders::DrawMesh(Renderer &cRenderer, const SQCull &cCullQue
 									PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
 								} else {
 									// We don't need the diffuse map, just ignore it
-									pDiffuseMap = NULL;
+									pDiffuseMap = nullptr;
 								}
 							}
 
@@ -287,7 +287,7 @@ void SRPDiffuseOnlyShaders::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			// If there's an previous instance of the program generator, destroy it first
 			if (m_pProgramGenerator) {
 				delete m_pProgramGenerator;
-				m_pProgramGenerator = NULL;
+				m_pProgramGenerator = nullptr;
 			}
 
 			// Choose the shader source codes depending on the requested shader language

@@ -195,7 +195,7 @@ SceneContext *SceneNode::GetSceneContext() const
 	} else {
 		// Get the scene context the parent scene container is in
 		SceneContainer *pSceneContainer = (SceneContainer*)GetManager();
-		return pSceneContainer ? pSceneContainer->GetSceneContext() : NULL;
+		return pSceneContainer ? pSceneContainer->GetSceneContext() : nullptr;
 	}
 }
 
@@ -242,7 +242,7 @@ SceneContainer *SceneNode::GetRootContainer() const
 		pSceneNode = pSceneNode->GetContainer();
 
 	// Return the found scene root container
-	return (pSceneNode && pSceneNode->IsContainer()) ? (SceneContainer*)pSceneNode : NULL;
+	return (pSceneNode && pSceneNode->IsContainer()) ? (SceneContainer*)pSceneNode : nullptr;
 }
 
 /**
@@ -253,12 +253,12 @@ SceneContainer *SceneNode::GetCommonContainer(SceneNode &cSceneNode) const
 {
 	// Same scene node?
 	if (&cSceneNode == this) {
-		return IsContainer() ? ((SceneContainer*)&cSceneNode) : NULL;
+		return IsContainer() ? ((SceneContainer*)&cSceneNode) : nullptr;
 	} else {
 		// Go down the parents of this scene node
-		for (const SceneContainer *pThisSceneContainer=GetContainer(); pThisSceneContainer!=NULL; pThisSceneContainer=pThisSceneContainer->GetContainer()) {
+		for (const SceneContainer *pThisSceneContainer=GetContainer(); pThisSceneContainer!=nullptr; pThisSceneContainer=pThisSceneContainer->GetContainer()) {
 			// Find the first common parent - go down the parents of the other scene node
-			for (SceneContainer *pOtherSceneContainer=cSceneNode.GetContainer(); pOtherSceneContainer!=NULL; pOtherSceneContainer=pOtherSceneContainer->GetContainer()) {
+			for (SceneContainer *pOtherSceneContainer=cSceneNode.GetContainer(); pOtherSceneContainer!=nullptr; pOtherSceneContainer=pOtherSceneContainer->GetContainer()) {
 				// Common parent found?
 				if (pThisSceneContainer == pOtherSceneContainer)
 					return pOtherSceneContainer;
@@ -266,7 +266,7 @@ SceneContainer *SceneNode::GetCommonContainer(SceneNode &cSceneNode) const
 		}
 
 		// No common parent found
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -282,7 +282,7 @@ SceneHierarchy *SceneNode::GetHierarchy() const
 		return m_pFirstSceneHierarchyNodeItem->GetHierarchyNode()->GetHierarchy();
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -574,7 +574,7 @@ void SceneNode::SetAABoundingBox(const AABoundingBox &cAABoundingBox)
 		SceneContainer *pContainer = (SceneContainer*)this;
 		if (pContainer->m_pHierarchy) {
 			delete pContainer->m_pHierarchy;
-			pContainer->m_pHierarchy = NULL;
+			pContainer->m_pHierarchy = nullptr;
 		}
 	}
 
@@ -741,7 +741,7 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 	}
 
 	// Error
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -767,7 +767,7 @@ SceneNodeModifier *SceneNode::GetModifier(const String &sClass, uint32 nIndex) c
 	}
 
 	// Sorry, requested modifier not found :(
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -848,7 +848,7 @@ void SceneNode::ClearModifiers()
 MeshHandler *SceneNode::GetMeshHandler()
 {
 	// The default implementation is empty
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -858,7 +858,7 @@ MeshHandler *SceneNode::GetMeshHandler()
 PLInput::Controller *SceneNode::GetInputController() const
 {
 	// The default implementation is empty
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -956,7 +956,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		}
 
 		// Get cull query (if available) which enables us to cull 3D debug texts
-		const SQCull *pCullQuery = NULL;
+		const SQCull *pCullQuery = nullptr;
 		if (pVisNode) {
 			const VisNode *pParentVisNode = pVisNode->GetParent();
 			if (pParentVisNode && pParentVisNode->IsContainer()) {
@@ -1090,7 +1090,7 @@ SceneNode::SceneNode() :
 	m_nDrawFunctionFlags(UseDrawDebug),
 	m_nCounter(0),
 	m_nInternalFlags(RecalculateContainerAABoundingBox | RecalculateContainerBoundingSphere),
-	m_pFirstSceneHierarchyNodeItem(NULL)
+	m_pFirstSceneHierarchyNodeItem(nullptr)
 {
 	// Connect transform event handlers
 	m_cTransform.EventPosition.Connect(&EventHandlerPosition);

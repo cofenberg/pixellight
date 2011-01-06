@@ -41,7 +41,7 @@ namespace PLRenderer {
 *    Constructor
 */
 SurfaceHandler::SurfaceHandler() :
-	m_pSurface(NULL)
+	m_pSurface(nullptr)
 {
 }
 
@@ -50,7 +50,7 @@ SurfaceHandler::SurfaceHandler() :
 *    Copy constructor
 */
 SurfaceHandler::SurfaceHandler(const SurfaceHandler &cSource) :
-	m_pSurface(NULL)
+	m_pSurface(nullptr)
 {
 	if (cSource.m_pSurface) {
 		m_pSurface = cSource.m_pSurface;

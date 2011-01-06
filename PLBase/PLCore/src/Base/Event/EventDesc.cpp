@@ -85,7 +85,7 @@ String EventDesc::GetSignature() const
 DynEvent *EventDesc::GetSignal(const Object *pObject) const
 {
 	// To be implemented in derived classes
-	return NULL;
+	return nullptr;
 }
 
 

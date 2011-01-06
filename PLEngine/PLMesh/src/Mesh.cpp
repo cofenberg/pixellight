@@ -558,7 +558,7 @@ Material *Mesh::AddMaterial(Material *pMaterial)
 		// Return the added material
 		return pMaterial;
 	} else {
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -644,7 +644,7 @@ uint32 Mesh::GetMaterialUsage(uint32 nMaterial) const
 Material *Mesh::GetMaterial(uint32 nMaterial) const
 {
 	MaterialHandler *pMH = m_lstMaterials[nMaterial];
-	return pMH ? pMH->GetResource() : NULL;
+	return pMH ? pMH->GetResource() : nullptr;
 }
 
 /**

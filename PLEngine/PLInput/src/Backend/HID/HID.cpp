@@ -77,7 +77,7 @@ const List<HIDDevice*> &HID::GetDevices() const
 *    Constructor
 */
 HID::HID() :
-	m_pHIDImpl(NULL)
+	m_pHIDImpl(nullptr)
 {
 	// Create HID implementation
 	#if defined(WIN32)

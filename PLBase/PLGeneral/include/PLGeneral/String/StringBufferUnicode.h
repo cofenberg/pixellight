@@ -132,9 +132,9 @@ class StringBufferUnicode : public StringBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		wchar_t			  *m_pszString;	/**< The string itself (NEVER NULL!) */
-		StringBufferASCII *m_pASCII;	/**< ASCII string buffer version of the current string (can be NULL) */
-		StringBufferUTF8  *m_pUTF8;		/**< UTF8 string buffer version of the current string (can be NULL) */
+		wchar_t			  *m_pszString;	/**< The string itself (NEVER a null pointer!) */
+		StringBufferASCII *m_pASCII;	/**< ASCII string buffer version of the current string (can be a null pointer) */
+		StringBufferUTF8  *m_pUTF8;		/**< UTF8 string buffer version of the current string (can be a null pointer) */
 
 
 	//[-------------------------------------------------------]

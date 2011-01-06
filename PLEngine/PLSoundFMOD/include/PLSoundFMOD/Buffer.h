@@ -155,9 +155,9 @@ class Buffer : public PLSound::Buffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FMUSIC_MODULE *m_pMod;		/**< Mod pointer, can be NULL */
-		FSOUND_SAMPLE *m_pSample;	/**< Sample pointer, can be NULL */
-		FSOUND_STREAM *m_pStream;	/**< Stream pointer, can be NULL */
+		FMUSIC_MODULE *m_pMod;		/**< Mod pointer, can be a null pointer */
+		FSOUND_SAMPLE *m_pSample;	/**< Sample pointer, can be a null pointer */
+		FSOUND_STREAM *m_pStream;	/**< Stream pointer, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -150,7 +150,7 @@ namespace PLInput {
 */
 RawInputDevice::RawInputDevice() :
 	m_nType(0),
-	m_hDevice(NULL),
+	m_hDevice(nullptr),
 	m_bVirtual(false),
 	m_nOldX(0),
 	m_nOldY(0)
@@ -480,7 +480,7 @@ Button *RawInputDevice::GetKeyboardKey(Keyboard *pKeyboard, unsigned short nKey)
 		case KeyNumLock:		return &pKeyboard->KeyNumLock;
 		case KeyScrollLock:		return &pKeyboard->KeyScrollLock;
 		case KeyCircumflex:		return &pKeyboard->KeyCircumflex;
-		default:				return  NULL;
+		default:				return  nullptr;
 	}
 }
 

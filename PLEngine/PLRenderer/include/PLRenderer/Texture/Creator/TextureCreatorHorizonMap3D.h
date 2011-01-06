@@ -88,7 +88,7 @@ class TextureCreatorHorizonMap3D : public TextureCreator {
 	//[ Private virtual TextureCreator functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Texture *Create(TextureManager &cTextureManager, Texture *pTexture = NULL) const;
+		virtual Texture *Create(TextureManager &cTextureManager, Texture *pTexture = nullptr) const;
 
 
 };

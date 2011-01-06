@@ -206,7 +206,7 @@ bool XmlDocument::Load(File &cFile, EEncoding nEncoding)
 		*pszWriteData = '\0';
 
 		// Parse data
-		Parse(pszData, NULL, nEncoding);
+		Parse(pszData, nullptr, nEncoding);
 
 		// Cleanup the data
 		delete [] pszData;
@@ -384,7 +384,7 @@ const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEnco
 		SetError(ErrorDocumentEmpty, 0, 0, EncodingUnknown);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	// Note that, for a document, this needs to come before the while space skip, so that parsing starts from the pointer we are given
@@ -416,7 +416,7 @@ const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEnco
 		SetError(ErrorDocumentEmpty, 0, 0, EncodingUnknown);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	while (pszData && *pszData) {
@@ -450,7 +450,7 @@ const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEnco
 		SetError(ErrorDocumentEmpty, 0, 0, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	// All is well

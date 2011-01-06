@@ -78,7 +78,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 		*    Returns the Cg vertex program
 		*
 		*  @return
-		*    The Cg vertex program, can be NULL, do not destroy it!
+		*    The Cg vertex program, can be a null pointer, do not destroy it!
 		*/
 		CGprogram GetCgVertexProgram() const;
 
@@ -103,7 +103,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 	private:
 		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
 		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgVertexProgram;	/**< Cg vertex program, can be NULL */
+		CGprogram		  m_pCgVertexProgram;	/**< Cg vertex program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -80,7 +80,7 @@ template <class AType> class ElementHandler {
 		*    Returns a pointer to the handlers element
 		*
 		*  @return
-		*    A pointer to the handlers element, NULL if no element
+		*    A pointer to the handlers element, a null pointer if no element
 		*/
 		AType *GetElement() const;
 
@@ -94,7 +94,7 @@ template <class AType> class ElementHandler {
 		*    Sets the handlers element
 		*
 		*  @param[in] pElement
-		*    Element to set, NULL to set no element
+		*    Element to set, a null pointer to set no element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -105,14 +105,14 @@ template <class AType> class ElementHandler {
 		*      destroyed within this function if the element is no longer used by any
 		*      handlers and if the element is not marked as protected.
 		*/
-		virtual bool SetElement(AType *pElement = NULL);
+		virtual bool SetElement(AType *pElement = nullptr);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		AType *m_pElement; /**< Loaded element, can be NULL */
+		AType *m_pElement; /**< Loaded element, can be a null pointer */
 
 
 };

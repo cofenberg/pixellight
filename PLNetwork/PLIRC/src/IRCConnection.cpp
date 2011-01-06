@@ -216,7 +216,7 @@ const Channel *IRCConnection::GetChannel(const String &sChannel) const
 	}
 
 	// Channel not found
-	return NULL;
+	return nullptr;
 }
 
 
@@ -272,7 +272,7 @@ void IRCConnection::ProcessIRCMessage(const String &sMessage)
 	} else if (pszMsg[0] == ':') {
 		// Init parameters
 		char *pszParams[32];
-		for (int i=0; i<32; i++) pszParams[i] = NULL;
+		for (int i=0; i<32; i++) pszParams[i] = nullptr;
 
 		// Parse string
 		int nParam = 0;
@@ -283,7 +283,7 @@ void IRCConnection::ProcessIRCMessage(const String &sMessage)
 			if (pszPos[0] != ':') pszEnd = strchr(pszPos, ' ');
 			else {
 				pszPos++;
-				pszEnd = NULL;
+				pszEnd = nullptr;
 			}
 			if (pszEnd) pszEnd[0] = '\0';
 
@@ -708,7 +708,7 @@ Channel *IRCConnection::GetChannel(const String &sChannel)
 	}
 
 	// Channel not found
-	return NULL;
+	return nullptr;
 }
 
 // Add a channel

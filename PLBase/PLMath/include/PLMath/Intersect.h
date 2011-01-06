@@ -120,13 +120,13 @@ class Intersect {
 		*  @param[in]  vRayDirection
 		*    Ray direction vector
 		*  @param[out] pvIntersect
-		*    If not NULL, will receive the intersection point (if there's one)
+		*    If not a null pointer, will receive the intersection point (if there's one)
 		*
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
 		PLMATH_API static bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin,
-										 const Vector3 &vRayDirection, Vector3 *pvIntersect = NULL);
+										 const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
 
 		/**
 		*  @brief
@@ -141,13 +141,12 @@ class Intersect {
 		*  @param[in]  fDistance
 		*    Ray 'length'
 		*  @param[out] pvIntersect
-		*    If not NULL, will receive the intersection point (if there's one)
+		*    If not a null pointer, will receive the intersection point (if there's one)
 		*
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin,
-										 const Vector3 &vRayDirection, float fDistance, Vector3 *pvIntersect = NULL);
+		PLMATH_API static bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, float fDistance, Vector3 *pvIntersect = nullptr);
 
 		/**
 		*  @brief
@@ -160,13 +159,12 @@ class Intersect {
 		*  @param[in]  vRayDirection
 		*    Ray direction vector
 		*  @param[out] pvIntersect
-		*    If not NULL, will receive the intersection point (if there's one)
+		*    If not a null pointer, will receive the intersection point (if there's one)
 		*
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereRayInFront(const Sphere &cSphere, const Vector3 &vRayOrigin,
-												const Vector3 &vRayDirection, Vector3 *pvIntersect = NULL);
+		PLMATH_API static bool SphereRayInFront(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
 
 		/**
 		*  @brief
@@ -329,8 +327,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/line intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
-										 const Vector3 &vStart, const Vector3 &vEnd, float *pfIntersection = NULL);
+		PLMATH_API static bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vStart, const Vector3 &vEnd, float *pfIntersection = nullptr);
 
 		/**
 		*  @brief
@@ -348,7 +345,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/line intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Line &cLine, float *pfIntersection = NULL);
+		PLMATH_API static bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Line &cLine, float *pfIntersection = nullptr);
 
 		/**
 		*  @brief
@@ -525,13 +522,12 @@ class Intersect {
 		*  @param[in]  vEndPos
 		*    Line end direction
 		*  @param[out] pvPos
-		*    If not NULL this will receive the intersection point (if there is any :)
+		*    If not a null pointer this will receive the intersection point (if there is any :)
 		*
 		*  @return
 		*    Factor between 0-1 if there was an intersection, -1.0f if no intersection
 		*/
-		PLMATH_API static float PlaneLine(const Plane &cPlane, const Vector3 &vStartPos,
-										  const Vector3 &vEndPos, Vector3 *pvPos = NULL);
+		PLMATH_API static float PlaneLine(const Plane &cPlane, const Vector3 &vStartPos, const Vector3 &vEndPos, Vector3 *pvPos = nullptr);
 
 		/**
 		*  @brief
@@ -687,15 +683,14 @@ class Intersect {
 		*  @param[in]  vMax
 		*    Maximum position
 		*  @param[out] pnOutClipMask
-		*    If not NULL, this clip mask will receive the intersection state of a
+		*    If not a null pointer, this clip mask will receive the intersection state of a
 		*    maximum number of 32 planes if the box intersects the plane set. If this mask is
 		*    0, there was no plane intersection at all. (= complete inside/outside the plane set)
 		*
 		*  @return
 		*    'true' if the axis aligned box is within plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin,
-											 const Vector3 &vMax, PLGeneral::uint32 *pnOutClipMask = NULL);
+		PLMATH_API static bool PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, const Vector3 &vMax, PLGeneral::uint32 *pnOutClipMask = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Triangle                                              ]
@@ -717,7 +712,7 @@ class Intersect {
 		*  @param[in]  vRayDirection
 		*    Ray direction vector
 		*  @param[out] pvIntersectionPointPos
-		*    If not NULL, will receive the position of the intersection point
+		*    If not a null pointer, will receive the position of the intersection point
 		*
 		*  @return
 		*    'true' if the ray intersects the triangle, else 'false'
@@ -725,7 +720,7 @@ class Intersect {
 		PLMATH_API static bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 										   const Vector3 &vV3, const Vector3 &vN,
 										   const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
-										   Vector3 *pvIntersectionPointPos = NULL);
+										   Vector3 *pvIntersectionPointPos = nullptr);
 
 		/**
 		*  @brief
@@ -742,14 +737,14 @@ class Intersect {
 		*  @param[in]  cRay
 		*    Ray to check
 		*  @param[out] pvIntersectionPointPos
-		*    If not NULL, will receive the position of the intersection point
+		*    If not a null pointer, will receive the position of the intersection point
 		*
 		*  @return
 		*    'true' if the ray intersects the triangle, else 'false'
 		*/
 		PLMATH_API static bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 										   const Vector3 &vV3, const Vector3 &vN,
-										   const Ray &cRay, Vector3 *pvIntersectionPointPos = NULL);
+										   const Ray &cRay, Vector3 *pvIntersectionPointPos = nullptr);
 
 
 };

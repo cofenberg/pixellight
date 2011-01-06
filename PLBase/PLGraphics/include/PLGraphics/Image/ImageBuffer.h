@@ -365,7 +365,7 @@ class ImageBuffer {
 		*    Get image data
 		*
 		*  @return
-		*    Pointer to image data, NULL on error
+		*    Pointer to image data, a null pointer on error
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetData();
@@ -393,7 +393,7 @@ class ImageBuffer {
 		*    Get compressed image data
 		*
 		*  @return
-		*    Pointer to compressed image data, NULL on error
+		*    Pointer to compressed image data, a null pointer on error
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetCompressedData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetCompressedData();
@@ -423,7 +423,7 @@ class ImageBuffer {
 		*    Set color palette
 		*
 		*  @param[in] pPalette
-		*    Pointer to color palette, or NULL if the image has no palette
+		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
 		PLGRAPHICS_API void SetPalette(ImagePalette *pPalette);
 
@@ -432,7 +432,7 @@ class ImageBuffer {
 		*    Get color palette
 		*
 		*  @return
-		*    Pointer to color palette, or NULL if the image has no palette
+		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
 		PLGRAPHICS_API const ImagePalette *GetPalette() const;
 		PLGRAPHICS_API ImagePalette *GetPalette();

@@ -146,7 +146,7 @@ class Provider : public PLCore::Object {
 		*  @param[in] sName
 		*    Name of the input device (e.g. "Mouse0")
 		*  @param[in] pDevice
-		*    Pointer to the device (derived from Device), shouldn't be NULL (but NULL is catched internally)
+		*    Pointer to the device (derived from Device), shouldn't be a null pointer (but a null pointer is catched internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

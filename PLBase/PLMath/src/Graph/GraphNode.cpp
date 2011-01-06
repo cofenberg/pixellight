@@ -128,7 +128,7 @@ bool GraphNode::IsNeighbour(const GraphNode &cNode) const
 const GraphNode *GraphNode::GetNeighbour(uint32 nNeighbour) const
 {
 	const Neighbour *pNeighbour = m_lstNeighbours[nNeighbour];
-	return pNeighbour ? pNeighbour->pNode : NULL;
+	return pNeighbour ? pNeighbour->pNode : nullptr;
 }
 
 /**
@@ -138,7 +138,7 @@ const GraphNode *GraphNode::GetNeighbour(uint32 nNeighbour) const
 GraphNode *GraphNode::GetNeighbour(uint32 nNeighbour)
 {
 	Neighbour *pNeighbour = m_lstNeighbours[nNeighbour];
-	return pNeighbour ? pNeighbour->pNode : NULL;
+	return pNeighbour ? pNeighbour->pNode : nullptr;
 }
 
 /**
@@ -181,7 +181,7 @@ bool GraphNode::AddNeighbour(GraphNode &cNode, float fDistance)
 bool GraphNode::RemoveNeighbour(GraphNode &cNode)
 {
 	// Find neighbour list entry
-	Neighbour *pNeighbour = NULL;
+	Neighbour *pNeighbour = nullptr;
 	{
 		Iterator<Neighbour*> cIterator = m_lstNeighbours.GetIterator();
 		while (cIterator.HasNext()) {

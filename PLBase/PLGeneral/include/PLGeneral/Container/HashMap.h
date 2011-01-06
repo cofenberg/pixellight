@@ -160,8 +160,8 @@ class HashMap : public Map<KeyType, ValueType> {
 		struct Slot {
 			KeyType    Key;				/**< The key */
 			ValueType  Value;			/**< The value */
-			Slot      *pNextSlot;		/**< Pointer to the next hash slot, can be NULL */
-			Slot      *pPreviousSlot;	/**< Pointer to the previous hash slot, can be NULL */
+			Slot      *pNextSlot;		/**< Pointer to the next hash slot, can be a null pointer */
+			Slot      *pPreviousSlot;	/**< Pointer to the previous hash slot, can be a null pointer */
 		};
 
 
@@ -339,8 +339,8 @@ class HashMap : public Map<KeyType, ValueType> {
 			//[ Private data                                          ]
 			//[-------------------------------------------------------]
 			private:
-				Slot *m_pFirstSlot; /**< Pointer to the first hash slot, can be NULL */
-				Slot *m_pLastSlot;  /**< Pointer to the last hash slot, can be NULL */
+				Slot *m_pFirstSlot; /**< Pointer to the first hash slot, can be a null pointer */
+				Slot *m_pLastSlot;  /**< Pointer to the last hash slot, can be a null pointer */
 
 
 		};
@@ -351,7 +351,7 @@ class HashMap : public Map<KeyType, ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		uint32     m_nNumOfSlots;		/**< The current number of slots */
-		SlotsList *m_plstSlots;			/**< Slots list, can be NULL (created when the first element is added) */
+		SlotsList *m_plstSlots;			/**< Slots list, can be a null pointer (created when the first element is added) */
 		uint32     m_nNumOfElements;	/**< Current number of elements within the map */
 
 

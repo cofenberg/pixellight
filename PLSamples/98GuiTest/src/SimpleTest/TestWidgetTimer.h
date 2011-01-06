@@ -62,7 +62,7 @@ class TestWidgetTimer : public PLGui::Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		TestWidgetTimer(Widget *pParent = NULL);
+		TestWidgetTimer(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

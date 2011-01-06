@@ -78,12 +78,12 @@ template <class AType> class PLGENERAL_TMPL Singleton {
 		*    Returns the class instance
 		*
 		*  @return
-		*    Pointer to the instance, assumed to be never NULL
+		*    Pointer to the instance, assumed to be never a null pointer
 		*
 		*  @note
 		*    - Returns a pointer to the singleton instance.
 		*      The instance will be created if it has not been created before.
-		*    - The returned pointer can be NULL if the instance has already
+		*    - The returned pointer can be a null pointer if the instance has already
 		*      been destroyed, that is on deinitialization of the program.
 		*      So be careful when using a singleton during deinitialization
 		*      of the program, or better - don't do it :-)
@@ -141,7 +141,7 @@ template <class AType> class PLGENERAL_TMPL Singleton {
 
 		// Static data
 		static __Destruction_Guard __Guard;	/**< Destroyes the object on shutdown */
-		static AType *__Instance;			/**< Pointer to the singleton instance, can be NULL */
+		static AType *__Instance;			/**< Pointer to the singleton instance, can be a null pointer */
 		static bool __Destroyed;			/**< Destruction flag - set only on shutdown */
 
 		// Undefined methods to prevent usage

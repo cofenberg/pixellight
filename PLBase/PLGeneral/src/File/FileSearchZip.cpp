@@ -145,8 +145,8 @@ bool FileSearchZip::CheckFile(const String &sFilename)
 										sFilename.CompareNoCase(m_sPathInZip, 0, m_sPathInZip.GetLength()))))
 	{
 		// After that prefix, '/' must only appear at the end of the string or not at all
-		int nStart = m_sPathInZip.Compare("/") ? 0 : m_sPathInZip.GetLength();
-		int nSlash = sFilename.IndexOf("/", nStart);
+		const int nStart = m_sPathInZip.Compare("/") ? 0 : m_sPathInZip.GetLength();
+		const int nSlash = sFilename.IndexOf("/", nStart);
 		return (nSlash < 0 || (uint32)nSlash == sFilename.GetLength()-1);
 	}
 

@@ -176,7 +176,7 @@ class SRPDirectionalLighting : public PLScene::SceneRendererPass {
 		*    Cull query to use
 		*
 		*  @return
-		*    Visibility node referencing the first visible directional light scene node, NULL if no such scene node was found
+		*    Visibility node referencing the first visible directional light scene node, a null pointer if no such scene node was found
 		*/
 		PLCOM_API const PLScene::VisNode *GetFirstDirectionalLight(const PLScene::SQCull &cCullQuery) const;
 
@@ -221,7 +221,7 @@ class SRPDirectionalLighting : public PLScene::SceneRendererPass {
 		*    Cull query to use
 		*
 		*  @return
-		*    Visibility node referencing the first visible directional light scene node, NULL if no such scene node was found
+		*    Visibility node referencing the first visible directional light scene node, a null pointer if no such scene node was found
 		*/
 		const PLScene::VisNode *GetFirstDirectionalLightRec(const PLScene::SQCull &cCullQuery) const;
 

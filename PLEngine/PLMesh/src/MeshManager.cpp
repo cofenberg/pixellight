@@ -87,7 +87,7 @@ Renderer *MeshManager::GetRenderer() const
 
 /**
 *  @brief
-*    Creates the mesh if a NULL pointer is given and adds the required LODs
+*    Creates the mesh if a null pointer is given and adds the required LODs
 */
 Mesh *MeshManager::CreateMesh()
 {
@@ -167,7 +167,7 @@ Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic, const String &s
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -217,7 +217,7 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 				}
 
 				// Check whether the mesh is already within the mesh manager
-				pMesh = bUseName ? Get(sName) : NULL;
+				pMesh = bUseName ? Get(sName) : nullptr;
 				if (!pMesh) {
 					// Get the parameters
 					String sParameters = sFilename.GetSubstring(cTokenizer.GetPosition());
@@ -241,13 +241,13 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 						if (!pMesh->Load(sFilename, sParams, sMethod)) {
 							// Can't load mesh...
 							delete pMesh;
-							pMesh = NULL;
+							pMesh = nullptr;
 						}
 					} else {
 						if (!pMesh->Load(sFilename, String("Static=") + bStatic + '\"')) {
 							// Can't load mesh...
 							delete pMesh;
-							pMesh = NULL;
+							pMesh = nullptr;
 						}
 					}
 				}

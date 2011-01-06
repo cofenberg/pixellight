@@ -209,7 +209,7 @@ class Controller : public PLCore::Object {
 		*    Name of control
 		*
 		*  @return
-		*    Control, or NULL if no control with that name could be found
+		*    Control, or a null pointer if no control with that name could be found
 		*/
 		PLINPUT_API Control *GetControl(const PLGeneral::String &sName) const;
 
@@ -247,7 +247,7 @@ class Controller : public PLCore::Object {
 		*  @param[in] sControl
 		*    Name of control of this controller (output control)
 		*  @param[in] pControl
-		*    Pointer to control (input control), shouldn't be NULL (but NULL is catched internally)
+		*    Pointer to control (input control), shouldn't be a null pointer (but a null pointer is catched internally)
 		*  @param[in] fScale
 		*    Scale factor
 		*/

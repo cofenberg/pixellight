@@ -140,7 +140,7 @@ class PLScene : public PLSceneContainer {
 		*    3ds Max node
 		*
 		*  @return
-		*    The PL scene node, NULL on error
+		*    The PL scene node, a null pointer on error
 		*/
 		PLSceneNode *GetPLSceneNode(INode &cMaxNode);
 
@@ -157,7 +157,7 @@ class PLScene : public PLSceneContainer {
 		*    Mesh name
 		*
 		*  @return
-		*    The added mesh, NULL on error
+		*    The added mesh, a null pointer on error
 		*
 		*  @remarks
 		*    If there's already a mesh with the same name within the scene, this mesh
@@ -178,7 +178,7 @@ class PLScene : public PLSceneContainer {
 		*    Is this a 'xGxR' normal map?
 		*
 		*  @return
-		*    Resulting PixelLight texture object, NULL on error
+		*    Resulting PixelLight texture object, a null pointer on error
 		*
 		*  @remarks
 		*    The given texture will be copied into the target scene directory given be the options. If there's
@@ -209,7 +209,7 @@ class PLScene : public PLSceneContainer {
 		*    3ds Max material to return the PixelLight material from
 		*
 		*  @return
-		*    The PixelLight material, NULL on error
+		*    The PixelLight material, a null pointer on error
 		*/
 		PLSceneMaterial *GetMaterial(Mtl &cMaxMaterial) const;
 
@@ -218,12 +218,12 @@ class PLScene : public PLSceneContainer {
 		*    Adds a material to the scene
 		*
 		*  @param[in] pParentIGameMaterial
-		*    Parent of the IGame, can be NULL
+		*    Parent of the IGame, can be a null pointer
 		*  @param[in] cIGameMaterial
 		*    IGame material to add
 		*
 		*  @return
-		*    The scene material, NULL on error
+		*    The scene material, a null pointer on error
 		*/
 		PLSceneMaterial *AddMaterial(IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial);
 
@@ -237,7 +237,7 @@ class PLScene : public PLSceneContainer {
 		*    Material name
 		*
 		*  @return
-		*    The scene material, NULL on error
+		*    The scene material, a null pointer on error
 		*/
 		PLSceneMaterial *AddMaterial(const Color &cColor, const std::string &sName);
 

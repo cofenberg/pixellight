@@ -53,7 +53,7 @@ pl_implement_class(SNGui)
 */
 SNGui::SNGui() :
 	EventHandlerUpdate(&SNGui::NotifyUpdate, this),
-	m_pGui(NULL),
+	m_pGui(nullptr),
 	m_bFocus(true)
 {
 	// Set draw function flags
@@ -69,7 +69,7 @@ SNGui::~SNGui()
 	// Destroy the GUI
 	if (m_pGui) {
 		delete m_pGui;
-		m_pGui = NULL;
+		m_pGui = nullptr;
 	}
 }
 

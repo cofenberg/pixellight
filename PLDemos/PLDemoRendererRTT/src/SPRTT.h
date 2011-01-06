@@ -86,8 +86,8 @@ class SPRTT : public PLRenderer::SurfacePainter {
 	protected:
 		PLMesh::MeshManager		 *m_pMeshManager;			/**< Mesh manager (always valid!) */
 		PLMesh::MeshHandler		 *m_pMeshHandler;			/**< Mesh handler holding your teapot (always valid!) */
-		PLRenderer::VertexBuffer *m_pPositionVertexBuffer;	/**< Our renderer vertex buffer holding the position data, can be NULL */
-		PLRenderer::VertexBuffer *m_pColorVertexBuffer;		/**< Our renderer vertex buffer holding the funny color data, can be NULL */
+		PLRenderer::VertexBuffer *m_pPositionVertexBuffer;	/**< Our renderer vertex buffer holding the position data, can be a null pointer */
+		PLRenderer::VertexBuffer *m_pColorVertexBuffer;		/**< Our renderer vertex buffer holding the funny color data, can be a null pointer */
 		float					  m_fRotation;				/**< Current rotation */
 
 

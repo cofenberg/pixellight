@@ -127,7 +127,7 @@ class DynLibImpl {
 		*    Name of the symbol to retrieve
 		*
 		*  @return
-		*    Pointer to the symbol, or NULL on error
+		*    Pointer to the symbol, or a null pointer on error
 		*/
 		virtual void *GetSymbol(const String &sSymbol) const = 0;
 

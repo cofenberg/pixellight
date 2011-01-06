@@ -112,7 +112,7 @@ bool RendererBackend::MakeTextureBufferCurrent(TextureBuffer &cTextureBuffer, ui
 uint32 *RendererBackend::GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const
 {
 	uint32 &nAPI = m_cPLE_TPFWrapper[nPixelFormat];
-	return (&nAPI != &Array<uint32>::Null) ? &nAPI : NULL;
+	return (&nAPI != &Array<uint32>::Null) ? &nAPI : nullptr;
 }
 
 
@@ -124,9 +124,9 @@ uint32 *RendererBackend::GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFor
 *    Constructor
 */
 RendererBackend::RendererBackend(EMode nMode) :
-	m_pDrawHelpers(NULL),
+	m_pDrawHelpers(nullptr),
 	m_nMode(nMode),
-	m_pRendererContext(NULL)
+	m_pRendererContext(nullptr)
 {
 	// Create the draw helpers instance depending on the renderer mode
 	switch (m_nMode) {
@@ -152,7 +152,7 @@ RendererBackend::RendererBackend(EMode nMode) :
 	// Init data
 	MemoryManager::Set(&m_sCapabilities, 0, sizeof(Capabilities));
 	MemoryManager::Set(&m_sStatistics,   0, sizeof(Statistics));
-	m_ppDataBackup = NULL;
+	m_ppDataBackup = nullptr;
 
 	// Init color mask
 	m_bColorMask[0] = true;
@@ -161,8 +161,8 @@ RendererBackend::RendererBackend(EMode nMode) :
 	m_bColorMask[3] = true;
 
 	// States
-	m_ppnSamplerState		  = NULL;
-	m_ppnInternalSamplerState = NULL;
+	m_ppnSamplerState		  = nullptr;
+	m_ppnInternalSamplerState = nullptr;
 	{ // Set default renderer states
 		m_nDefaultRenderState[RenderState::FillMode] = Fill::Solid;
 		m_nDefaultRenderState[RenderState::CullMode] = Cull::CCW;
@@ -230,8 +230,8 @@ RendererBackend::RendererBackend(EMode nMode) :
 	m_fViewPortMinZ				= 0.0f;
 	m_fViewPortMaxZ				= 0.0f;
 	m_nCurrentSurfaceFace		= 0;
-	m_ppCurrentTextureBuffer	= NULL;
-	m_pCurrentIndexBuffer		= NULL;
+	m_ppCurrentTextureBuffer	= nullptr;
+	m_pCurrentIndexBuffer		= nullptr;
 
 	// The rest ist done by the API backends!
 }
@@ -453,7 +453,7 @@ void RendererBackend::RestoreDeviceObjects()
 
 		// Destroy backup slots
 		delete [] m_ppDataBackup;
-		m_ppDataBackup = NULL;
+		m_ppDataBackup = nullptr;
 	}
 }
 
@@ -567,7 +567,7 @@ Surface *RendererBackend::GetSurface(uint32 nIndex) const
 
 bool RendererBackend::AddSurface(Surface &cSurface)
 {
-	return m_lstSurfaces.Add(&cSurface) != NULL;
+	return (m_lstSurfaces.Add(&cSurface) != nullptr);
 }
 
 bool RendererBackend::RemoveSurface(Surface &cSurface)
@@ -575,7 +575,7 @@ bool RendererBackend::RemoveSurface(Surface &cSurface)
 	// Check whether this surface is the current render target
 	if (GetRenderTarget() == &cSurface) {
 		// Set an alternative surface ('>1' because 0 is the internal surface)
-		SetRenderTarget(m_lstSurfaces.GetNumOfElements() > 1 ? m_lstSurfaces[0] : NULL);
+		SetRenderTarget(m_lstSurfaces.GetNumOfElements() > 1 ? m_lstSurfaces[0] : nullptr);
 	}
 
 	// Remove the surface
@@ -591,7 +591,7 @@ SurfacePainter *RendererBackend::CreateSurfacePainter(const String &sClass)
 		return (SurfacePainter*)pClass->Create(Params<Object*, Renderer&>(*this));
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -611,7 +611,7 @@ Resource *RendererBackend::GetResource(uint32 nIndex) const
 
 bool RendererBackend::AddResource(Resource &cResource)
 {
-	return (m_lstResources.Add(&cResource) != NULL);
+	return (m_lstResources.Add(&cResource) != nullptr);
 }
 
 bool RendererBackend::RemoveResource(Resource &cResource)
@@ -750,7 +750,7 @@ TextureBuffer *RendererBackend::GetColorRenderTarget(uint8 nColorIndex) const
 {
 	// Check current surface
 	if (!m_cCurrentSurface.GetSurface() || m_cCurrentSurface.GetSurface()->GetType() != Surface::TextureBuffer)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Return the color render target
 	return (TextureBuffer*)m_cCurrentSurface.GetSurface();
@@ -759,7 +759,7 @@ TextureBuffer *RendererBackend::GetColorRenderTarget(uint8 nColorIndex) const
 TextureBuffer *RendererBackend::GetTextureBuffer(uint32 nStage) const
 {
 	// Check if the stage is correct
-	return nStage < m_sCapabilities.nMaxTextureUnits ? m_ppCurrentTextureBuffer[nStage] : NULL;
+	return nStage < m_sCapabilities.nMaxTextureUnits ? m_ppCurrentTextureBuffer[nStage] : nullptr;
 }
 
 IndexBuffer *RendererBackend::GetIndexBuffer() const

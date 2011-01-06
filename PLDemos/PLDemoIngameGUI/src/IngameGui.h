@@ -58,9 +58,9 @@ class IngameGui : public PLGui::Widget {
 		*  @param[in] cApplication
 		*    Reference to the owner application
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*/
-		IngameGui(Application &cApplication, PLGui::Widget *pParent = NULL);
+		IngameGui(Application &cApplication, PLGui::Widget *pParent = nullptr);
 
 
 	//[-------------------------------------------------------]

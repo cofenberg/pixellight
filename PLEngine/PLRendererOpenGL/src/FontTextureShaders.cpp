@@ -66,7 +66,7 @@ void FontTextureShaders::Draw(const String &sText, const Color4 &cColor, const M
 		CreateGlyphTextureAtlas();
 	if (m_nOpenGLGlyphTextureAtlas) {
 		// Get and set the program for font rendering
-		FontManager::GeneratedProgramUserData *pGeneratedProgramUserData = NULL;
+		FontManager::GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 		PLRenderer::Program *pProgram = ((FontManager*)m_pFontManager)->GetProgram(&pGeneratedProgramUserData);
 		if (pProgram && pGeneratedProgramUserData && pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix &&
 			pGeneratedProgramUserData->pGlyphMap && pGeneratedProgramUserData->pColor && pGeneratedProgramUserData->pGlyphSizePenPosition &&

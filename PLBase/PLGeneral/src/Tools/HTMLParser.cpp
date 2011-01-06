@@ -50,7 +50,7 @@ namespace PLGeneral {
 */
 HTMLParser::HTMLParser() :
 	m_nPos(0),
-	m_pXML(NULL),
+	m_pXML(nullptr),
 	m_nErrors(0)
 {
 }
@@ -80,7 +80,7 @@ void HTMLParser::Clear()
 	// Reset parsed HTML
 	if (m_pXML) {
 		delete m_pXML;
-		m_pXML = NULL;
+		m_pXML = nullptr;
 	}
 	m_nErrors = 0;
 }
@@ -99,7 +99,8 @@ void HTMLParser::Load(const String &sFilename)
 	if (cFile.Open(File::FileRead)) {
 		// Read file to string (the string takes control over the allocated memory)
 		uint32 nSize = cFile.GetSize();
-		if (nSize == 0) nSize = 64 * 1024;
+		if (nSize == 0)
+			nSize = 64 * 1024;
 		char *pszBuffer = new char[nSize + 1];
 		nSize = cFile.Read(pszBuffer, 1, nSize);
 		pszBuffer[nSize] = '\0';
@@ -152,17 +153,18 @@ bool HTMLParser::Parse()
 	static RegEx cRegExDoctype("<![^>]*>");
 
 	// Create XML document
-	if (m_pXML) delete m_pXML;
+	if (m_pXML)
+		delete m_pXML;
 	m_pXML = new XmlDocument();
 	XmlDeclaration *pDeclaration = new XmlDeclaration("1.0", "", "");
 	m_pXML->LinkEndChild(*pDeclaration);
 	XmlNode *pNode = m_pXML;
-	XmlText *pText = NULL;
+	XmlText *pText = nullptr;
 
 	// Parse whole file
 	while (HasNextToken()) {
 		// Get next token
-		String sToken = GetNextToken();
+		const String sToken = GetNextToken();
 
 		// <!-- comment -->
 		if (cRegExComment.Match(sToken)) {
@@ -177,15 +179,16 @@ bool HTMLParser::Parse()
 		// <Tag>
 		else if (cRegExTag.Match(sToken)) {
 			// End text node
-			pText = NULL;
+			pText = nullptr;
 
 			// Get name
-			String sName = cRegExTag.GetNameResult("name");
-			bool bSingleTag = (cRegExTag.GetNameResult("end") == "/");
+			const String sName = cRegExTag.GetNameResult("name");
+			const bool bSingleTag = (cRegExTag.GetNameResult("end") == "/");
 			if (sName == "script") {
 				// Ingore <script> tags
-				int nIndex = m_sTextLower.IndexOf("</script>", m_nPos);
-				if (nIndex > -1) m_nPos = nIndex + 9;
+				const int nIndex = m_sTextLower.IndexOf("</script>", m_nPos);
+				if (nIndex > -1)
+					m_nPos = nIndex + 9;
 			} else {
 				// Add element
 				XmlElement *pElement = new XmlElement(sName);
@@ -196,13 +199,13 @@ bool HTMLParser::Parse()
 				}
 
 				// Get options
-				String sOptions = cRegExTag.GetNameResult("options");
+				const String sOptions = cRegExTag.GetNameResult("options");
 
 				// Parse options
 				int nPosOption = 0;
 				while (cRegExOption.Match(sOptions, nPosOption)) {
 					// Get option and value
-					String sOption = cRegExOption.GetNameResult("option");
+					const String sOption = cRegExOption.GetNameResult("option");
 					String sValue = cRegExOption.GetNameResult("value");
 					if (sValue.GetSubstring(0, 1) == "'" || sValue.GetSubstring(0, 1) == "\"")
 						sValue = sValue.GetSubstring(1, sValue.GetLength()-2);
@@ -215,17 +218,18 @@ bool HTMLParser::Parse()
 		// </Tag>
 		else if (cRegExEndTag.Match(sToken)) {
 			// End text node
-			pText = NULL;
+			pText = nullptr;
 
 			// Get name
-			String sName = cRegExEndTag.GetNameResult("name");
+			const String sName = cRegExEndTag.GetNameResult("name");
 
 			// Now it counts: name should be same as the current elements name. If it is not, we search the
 			// tree upwards until we find a node with the right name. If we don't, we ignore this end-tag
 			XmlNode *pCloseNode = pNode;
 			if (sName != pCloseNode->GetValue()) {
 				// Error, wrong closing tag. Search for a one that fits
-				while (pCloseNode && pCloseNode->GetValue() != sName) pCloseNode = pCloseNode->GetParent();
+				while (pCloseNode && pCloseNode->GetValue() != sName)
+					pCloseNode = pCloseNode->GetParent();
 				m_nErrors++;
 			}
 
@@ -233,7 +237,8 @@ bool HTMLParser::Parse()
 			if (pCloseNode) {
 				// Make parent of closed node to our current node
 				pNode = pCloseNode->GetParent();
-				if (!pNode) pNode = m_pXML;
+				if (!pNode)
+					pNode = m_pXML;
 			}
 		}
 
@@ -261,9 +266,8 @@ bool HTMLParser::Parse()
 bool HTMLParser::HasNextToken()
 {
 	// If there is no token, try to parse next one
-	if (m_sToken == "") {
+	if (m_sToken == "")
 		m_sToken = GetNextToken();
-	}
 
 	// Check if there is a token waiting
 	return (m_sToken != "");

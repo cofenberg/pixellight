@@ -58,7 +58,7 @@ RendererContext *RendererContext::CreateInstance(const String &sBackend, Rendere
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 
@@ -167,9 +167,9 @@ void RendererContext::Update()
 */
 RendererContext::RendererContext(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
-	m_pTextureManager(NULL),
-	m_pEffectManager(NULL),
-	m_pMaterialManager(NULL)
+	m_pTextureManager(nullptr),
+	m_pEffectManager(nullptr),
+	m_pMaterialManager(nullptr)
 {
 }
 

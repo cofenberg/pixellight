@@ -88,7 +88,7 @@ uint32 SHListNode::GetNumOfNodes() const
 SceneHierarchyNode *SHListNode::GetNode(uint32 nIndex) const
 {
 	// Because this is just a simple list, there are ONLY items in here!
-	return NULL;
+	return nullptr;
 }
 
 

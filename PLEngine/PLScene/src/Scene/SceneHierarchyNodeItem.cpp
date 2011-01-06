@@ -83,12 +83,12 @@ SceneHierarchyNodeItem *SceneHierarchyNodeItem::GetNextItem() const
 *    Constructor
 */
 SceneHierarchyNodeItem::SceneHierarchyNodeItem() :
-	m_pSceneNode(NULL),
-	m_pPreviousSceneNodeItem(NULL),
-	m_pNextSceneNodeItem(NULL),
-	m_pSceneHierarchyNode(NULL),
-	m_pPreviousSceneHierarchyNodeItem(NULL),
-	m_pNextSceneHierarchyNodeItem(NULL)
+	m_pSceneNode(nullptr),
+	m_pPreviousSceneNodeItem(nullptr),
+	m_pNextSceneNodeItem(nullptr),
+	m_pSceneHierarchyNode(nullptr),
+	m_pPreviousSceneHierarchyNodeItem(nullptr),
+	m_pNextSceneHierarchyNodeItem(nullptr)
 {
 }
 
@@ -120,7 +120,7 @@ bool SceneHierarchyNodeItem::Link(SceneNode &cSceneNode)
 		m_pSceneNode = &cSceneNode;
 
 		// Update scene node item connectivity (this is now the first item of the scene node)
-		m_pPreviousSceneNodeItem = NULL;
+		m_pPreviousSceneNodeItem = nullptr;
 		m_pNextSceneNodeItem = m_pSceneNode->m_pFirstSceneHierarchyNodeItem;
 		if (m_pNextSceneNodeItem)
 			m_pNextSceneNodeItem->m_pPreviousSceneNodeItem = this;
@@ -146,15 +146,15 @@ bool SceneHierarchyNodeItem::Unlink()
 		m_pSceneNode->m_pFirstSceneHierarchyNodeItem = m_pNextSceneNodeItem;
 
 	// Reset scene node pointer
-	m_pSceneNode = NULL;
+	m_pSceneNode = nullptr;
 
 	// Update scene hierarchy node item connectivity
 	if (m_pPreviousSceneNodeItem)
 		m_pPreviousSceneNodeItem->m_pNextSceneNodeItem = m_pNextSceneNodeItem;
 	if (m_pNextSceneNodeItem)
 		m_pNextSceneNodeItem->m_pPreviousSceneNodeItem = m_pPreviousSceneNodeItem;
-	m_pPreviousSceneNodeItem = NULL;
-	m_pNextSceneNodeItem     = NULL;
+	m_pPreviousSceneNodeItem = nullptr;
+	m_pNextSceneNodeItem     = nullptr;
 
 	// Done
 	return true;
@@ -175,7 +175,7 @@ bool SceneHierarchyNodeItem::Attach(SceneHierarchyNode &cSceneHierarchyNode)
 		m_pSceneHierarchyNode = &cSceneHierarchyNode;
 
 		// Update scene hierarchy node item connectivity (this is now the first item of the scene hierarchy node)
-		m_pPreviousSceneHierarchyNodeItem = NULL;
+		m_pPreviousSceneHierarchyNodeItem = nullptr;
 		m_pNextSceneHierarchyNodeItem = m_pSceneHierarchyNode->m_pFirstItem;
 		if (m_pNextSceneHierarchyNodeItem)
 			m_pNextSceneHierarchyNodeItem->m_pPreviousSceneHierarchyNodeItem = this;
@@ -207,15 +207,15 @@ bool SceneHierarchyNodeItem::Detach()
 		m_pSceneHierarchyNode->m_pFirstItem = m_pNextSceneHierarchyNodeItem;
 
 	// Reset scene hierarchy node pointer
-	m_pSceneHierarchyNode = NULL;
+	m_pSceneHierarchyNode = nullptr;
 
 	// Update scene hierarchy node item connectivity
 	if (m_pPreviousSceneHierarchyNodeItem)
 		m_pPreviousSceneHierarchyNodeItem->m_pNextSceneHierarchyNodeItem = m_pNextSceneHierarchyNodeItem;
 	if (m_pNextSceneHierarchyNodeItem)
 		m_pNextSceneHierarchyNodeItem->m_pPreviousSceneHierarchyNodeItem = m_pPreviousSceneHierarchyNodeItem;
-	m_pPreviousSceneHierarchyNodeItem = NULL;
-	m_pNextSceneHierarchyNodeItem     = NULL;
+	m_pPreviousSceneHierarchyNodeItem = nullptr;
+	m_pNextSceneHierarchyNodeItem     = nullptr;
 
 	// Done
 	return true;

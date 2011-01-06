@@ -72,7 +72,7 @@ class SlimTestWindow : public PLGui::Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		SlimTestWindow(Widget *pParent = NULL);
+		SlimTestWindow(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

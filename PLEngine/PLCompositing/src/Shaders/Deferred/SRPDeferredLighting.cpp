@@ -74,7 +74,7 @@ SRPDeferredLighting::SRPDeferredLighting() :
 	ShaderLanguage(this),
 	TextureFiltering(this),
 	Flags(this),
-	m_pProgramGenerator(NULL)
+	m_pProgramGenerator(nullptr)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|NoShadowLOD|NoAmbientOcclusion);
@@ -219,7 +219,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 
 		// Get the shadow mapping scene renderer pass and update the shadow map
 		bool bShadowMapping = false;
-		SRPShadowMapping *pSRPShadowMapping = NULL;
+		SRPShadowMapping *pSRPShadowMapping = nullptr;
 		if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow)) {
 			// Get the shadow mapping scene renderer pass
 			static const String sClassName = "PLCompositing::SRPShadowMapping";
@@ -227,7 +227,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 
 			// Is the shadow mapping scene renderer pass active?
 			if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
-				pSRPShadowMapping = NULL;	// Just do like there's no shadow mapping scene renderer pass at all
+				pSRPShadowMapping = nullptr;	// Just do like there's no shadow mapping scene renderer pass at all
 
 			// Is there a shadow mapping scene renderer pass?
 			if (pSRPShadowMapping) {
@@ -401,7 +401,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 				// Set cube map
 				if (bProjectivePoint) {
 					// The texture buffer we're going to project
-					TextureBuffer *pCubeMap = NULL;
+					TextureBuffer *pCubeMap = nullptr;
 
 					// Get the projective material to use
 					const Material *pProjectiveMaterial = ((SNProjectivePointLight&)cLight).GetProjectedMaterialHandler().GetResource();
@@ -454,7 +454,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 						// Projective spot light
 						if (bProjectiveSpot) {
 							// The texture buffer we're going to project
-							TextureBuffer *pSpotMap = NULL;
+							TextureBuffer *pSpotMap = nullptr;
 
 							// Get the projective material to use
 							const Material *pProjectiveMaterial = ((SNProjectiveSpotLight&)cLight).GetProjectedMaterialHandler().GetResource();
@@ -527,7 +527,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 				// Shadow mapping
 				if (pGeneratedProgramUserData->pShadowMap) {
 					// Get the shadow map
-					TextureBuffer *pShadowMap = NULL;
+					TextureBuffer *pShadowMap = nullptr;
 					if (bSpot) {
 						if (pSRPShadowMapping->GetSpotShadowRenderTarget())
 							pShadowMap = pSRPShadowMapping->GetSpotShadowRenderTarget()->GetTextureBuffer();
@@ -683,7 +683,7 @@ void SRPDeferredLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			// If there's an previous instance of the program generator, destroy it first
 			if (m_pProgramGenerator) {
 				delete m_pProgramGenerator;
-				m_pProgramGenerator = NULL;
+				m_pProgramGenerator = nullptr;
 			}
 
 			// Choose the shader source codes depending on the requested shader language

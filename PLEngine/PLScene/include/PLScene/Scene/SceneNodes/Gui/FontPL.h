@@ -82,7 +82,7 @@ class FontPL : public PLGui::FontImpl {
 		*    Returns the renderer font
 		*
 		*  @return
-		*    Renderer font, can be NULL
+		*    Renderer font, can be a null pointer
 		*/
 		PLS_API PLRenderer::Font *GetRendererFont();
 

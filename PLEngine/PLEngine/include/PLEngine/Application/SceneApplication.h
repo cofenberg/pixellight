@@ -91,7 +91,7 @@ class SceneApplication : public RenderApplication {
 		*    Returns the scene context
 		*
 		*  @return
-		*    The scene context, NULL on error
+		*    The scene context, a null pointer on error
 		*/
 		PL_API PLScene::SceneContext *GetSceneContext() const;
 
@@ -100,7 +100,7 @@ class SceneApplication : public RenderApplication {
 		*    Returns the root scene
 		*
 		*  @return
-		*    Pointer to root scene container, can be NULL
+		*    Pointer to root scene container, can be a null pointer
 		*/
 		PL_API PLScene::SceneContainer *GetRootScene() const;
 
@@ -154,7 +154,7 @@ class SceneApplication : public RenderApplication {
 		*    Opens the edit dialog
 		*
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*
 		*  @note
 		*    - Can only be opened if edit mode is enabled!
@@ -162,7 +162,7 @@ class SceneApplication : public RenderApplication {
 		*  @see
 		*    - IsEditModeEnabled()
 		*/
-		PL_API void OpenEditDialog(PLGui::Widget *pParent = NULL);
+		PL_API void OpenEditDialog(PLGui::Widget *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -207,7 +207,7 @@ class SceneApplication : public RenderApplication {
 		*    Set root scene
 		*
 		*  @param[in] pSceneContainer
-		*    Pointer to root scene container, can be NULL
+		*    Pointer to root scene container, can be a null pointer
 		*/
 		PL_API void SetRootScene(PLScene::SceneContainer *pSceneContainer);
 
@@ -296,8 +296,8 @@ class SceneApplication : public RenderApplication {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLScene::SceneContext	*m_pSceneContext;		/**< The scene context, can be NULL */
-		PLScene::SceneContainer	*m_pRootScene;			/**< Root scene (can be NULL) */
+		PLScene::SceneContext	*m_pSceneContext;		/**< The scene context, can be a null pointer */
+		PLScene::SceneContainer	*m_pRootScene;			/**< Root scene (can be a null pointer) */
 		bool					 m_bEditModeEnabled;	/**< Edit mode enabled? */
 		PLGui::WidgetHandler	 m_cEditDialog;			/**< Edit dialog handler */
 

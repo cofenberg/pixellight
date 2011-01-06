@@ -66,7 +66,7 @@ pl_implement_class(MeshLoader3ds)
 //[-------------------------------------------------------]
 Lib3dsBool Lib3dsError(void *pSelf)
 {
-	return pSelf == NULL;
+	return pSelf == nullptr;
 }
 
 long Lib3dsSeek(void *pSelf, long nOffset, Lib3dsIoSeek nOrigin)
@@ -368,7 +368,7 @@ void FillBuffers(Lib3dsFile *pFile, VertexBuffer *pVertexBuffer,
 		// Sometimes there are only meshes...
 		Lib3dsMesh *p3dsMesh = pFile->meshes;
 		while (p3dsMesh) {
-			ProcessMesh(pFile, p3dsMesh, pVertexBuffer, pIndexBuffer, nStartVertex, nStartIndex, lstGeometries, cMesh, NULL);
+			ProcessMesh(pFile, p3dsMesh, pVertexBuffer, pIndexBuffer, nStartVertex, nStartIndex, lstGeometries, cMesh, nullptr);
 			p3dsMesh = p3dsMesh->next;
 		}
 	}
@@ -398,7 +398,7 @@ Lib3dsFile *lib3ds_file_load_PL(File *pPLFile)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

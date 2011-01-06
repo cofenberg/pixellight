@@ -46,7 +46,7 @@ namespace PLGui {
 */
 FontLinux::FontLinux(Font &cFont) : FontImpl(cFont),
 	m_pDisplay(((GuiLinux*)cFont.GetGui()->GetImpl())->GetDisplay()),
-	m_pXFont(NULL),
+	m_pXFont(nullptr),
 	m_nHeight(0)
 {
 }
@@ -90,7 +90,7 @@ bool FontLinux::LoadFont(const String &sFamily, uint32 nHeight, uint32 nWeight, 
 	// Release font
 	if (m_pXFont) {
 		XFreeFont(m_pDisplay, m_pXFont);
-		m_pXFont = NULL;
+		m_pXFont = nullptr;
 	}
 
 	// Load font

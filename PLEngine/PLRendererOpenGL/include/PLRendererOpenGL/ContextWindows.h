@@ -81,7 +81,7 @@ class ContextWindows : public Context {
 		*    Returns the primary device context
 		*
 		*  @return
-		*    The primary device context, NULL on error
+		*    The primary device context, a null pointer on error
 		*/
 		HDC GetDeviceContext() const;
 
@@ -90,7 +90,7 @@ class ContextWindows : public Context {
 		*    Returns the primary render context
 		*
 		*  @return
-		*    The primary render context, NULL on error
+		*    The primary render context, a null pointer on error
 		*/
 		HGLRC GetRenderContext() const;
 
@@ -110,9 +110,9 @@ class ContextWindows : public Context {
 	//[-------------------------------------------------------]
 	private:
 		Renderer *m_pRenderer;					/**< The owner renderer, always valid! */
-		HWND	  m_hDummyWindow;				/**< OpenGL dummy window, can be NULL */
-		HDC		  m_hDummyWindowDeviceContext;	/**< The device context of the OpenGL dummy window, can be NULL */
-		HGLRC	  m_hDummyWindowRenderContext;	/**< The render context of the OpenGL dummy window, can be NULL */
+		HWND	  m_hDummyWindow;				/**< OpenGL dummy window, can be a null pointer */
+		HDC		  m_hDummyWindowDeviceContext;	/**< The device context of the OpenGL dummy window, can be a null pointer */
+		HGLRC	  m_hDummyWindowRenderContext;	/**< The render context of the OpenGL dummy window, can be a null pointer */
 
 
 };

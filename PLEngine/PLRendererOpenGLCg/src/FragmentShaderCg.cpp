@@ -82,7 +82,7 @@ CGprogram FragmentShaderCg::GetCgFragmentProgram() const
 */
 FragmentShaderCg::FragmentShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::FragmentShader(cRenderer),
 	m_pCgProfile(CG_PROFILE_UNKNOWN),
-	m_pCgFragmentProgram(NULL)
+	m_pCgFragmentProgram(nullptr)
 {
 	// Add a Cg context reference
 	ShaderToolsCg::AddCgContextReference();
@@ -117,7 +117,7 @@ bool FragmentShaderCg::SetSourceCode(const String &sSourceCode, const String &sP
 	// Destroy the previous Cg fragment program, if there's one
 	if (m_pCgFragmentProgram) {
 		cgDestroyProgram(m_pCgFragmentProgram);
-		m_pCgFragmentProgram = NULL;
+		m_pCgFragmentProgram = nullptr;
 	}
 
 	// Get the profile from a user given string
@@ -157,15 +157,15 @@ bool FragmentShaderCg::SetSourceCode(const String &sSourceCode, const String &sP
 void FragmentShaderCg::BackupDeviceData(uint8 **ppBackup)
 {
 	// Backup data
-	const char *pszProgram = m_pCgFragmentProgram ? cgGetProgramString(m_pCgFragmentProgram, CG_PROGRAM_SOURCE) : NULL;
+	const char *pszProgram = m_pCgFragmentProgram ? cgGetProgramString(m_pCgFragmentProgram, CG_PROGRAM_SOURCE) : nullptr;
 	if (pszProgram) {
 		const uint32 nNumOfBytes = Wrapper::GetStringLength(pszProgram) + 1;
 		*ppBackup = new uint8[nNumOfBytes];
 		MemoryManager::Copy(*ppBackup, pszProgram, nNumOfBytes);
 		cgDestroyProgram(m_pCgFragmentProgram);
-		m_pCgFragmentProgram = NULL;
+		m_pCgFragmentProgram = nullptr;
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

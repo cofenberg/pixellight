@@ -84,7 +84,7 @@ class OcclusionQuery : public PLRenderer::OcclusionQuery {
 	//[-------------------------------------------------------]
 	private:
 		bool			   m_bHWOcclusionSupport;	/**< Occlusion query supported by hardware? */
-		IDirect3DQuery9	  *m_pQuery;				/**< Direct3D9 occlusion query, can be NULL */
+		IDirect3DQuery9	  *m_pQuery;				/**< Direct3D9 occlusion query, can be a null pointer */
 		PLGeneral::uint32  m_nSkipRate;				/**< Skip rate */
 		PLGeneral::uint32  m_nSkipCounter;			/**< Skip counter */
 		PLGeneral::uint32  m_nMinFragments;			/**< Minimum number of visible fragments */
@@ -97,7 +97,7 @@ class OcclusionQuery : public PLRenderer::OcclusionQuery {
 	public:
 		virtual bool BeginOcclusionQuery();
 		virtual void EndOcclusionQuery();
-		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = NULL);
+		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = nullptr);
 		virtual PLGeneral::uint32 GetLastQuerysPixelCount() const;
 		virtual PLGeneral::uint32 GetSkipRate() const;
 		virtual void SetSkipRate(PLGeneral::uint32 nRate = 0);

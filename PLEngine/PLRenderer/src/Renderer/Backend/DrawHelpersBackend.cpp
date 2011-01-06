@@ -336,7 +336,7 @@ void DrawHelpersBackend::DrawPlane(const Color4 &cColor, const Vector3 &vN, floa
 */
 DrawHelpersBackend::DrawHelpersBackend(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
-	m_pTempVertexBuffer(NULL),
+	m_pTempVertexBuffer(nullptr),
 	m_b2DMode(false),
 	m_fZValue2D(0.0f)
 {

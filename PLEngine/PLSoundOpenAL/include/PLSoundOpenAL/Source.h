@@ -99,7 +99,7 @@ class Source : public PLSound::Source {
 	//[-------------------------------------------------------]
 	private:
 		ALuint			 m_nSource;				/**< Sound source */
-		Stream			*m_pStream;				/**< Sound source stream if streamed buffer is used, else NULL */
+		Stream			*m_pStream;				/**< Sound source stream if streamed buffer is used, else a null pointer */
 		bool			 m_b2D;					/**< Is this a 2D sound? */
 		bool			 m_bLooping;			/**< Is the source looping? */
 		float			 m_fPitch;				/**< Pitch */
@@ -114,7 +114,7 @@ class Source : public PLSound::Source {
 	//[ Public virtual PLSound::Source functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(PLSound::Buffer *pBuffer = NULL);
+		virtual bool Load(PLSound::Buffer *pBuffer = nullptr);
 		virtual void Unload();
 		virtual bool Play(bool bRestart = false);
 		virtual bool IsPlaying() const;

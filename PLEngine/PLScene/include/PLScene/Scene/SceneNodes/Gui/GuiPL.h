@@ -118,7 +118,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*    Returns the used renderer
 		*
 		*  @return
-		*    The used renderer, NULL on error
+		*    The used renderer, a null pointer on error
 		*/
 		PLS_API PLRenderer::Renderer *GetRenderer() const;
 
@@ -127,7 +127,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*    Get virtual input controller
 		*
 		*  @return
-		*    Virtual input controller (can be NULL)
+		*    Virtual input controller (can be a null pointer)
 		*/
 		PLS_API PLInput::VirtualController *GetInputController() const;
 
@@ -136,7 +136,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*    Set virtual input controller
 		*
 		*  @param[in] pInputController
-		*    Virtual input controller (can be NULL)
+		*    Virtual input controller (can be a null pointer)
 		*/
 		PLS_API void SetInputController(PLInput::VirtualController *pInputController);
 
@@ -244,7 +244,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*    Absolute ingame GUI mouse cursor position
 		*
 		*  @return
-		*    The found widget at the given absolute ingame GUI mouse cursor position, NULL if no widget was found
+		*    The found widget at the given absolute ingame GUI mouse cursor position, a null pointer if no widget was found
 		*/
 		PLGui::Widget *FindWidgetAtPos(const PLMath::Vector2i &vMousePos) const;
 
@@ -258,7 +258,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*    Parent widget
 		*
 		*  @return
-		*    The found widget at the given absolute ingame GUI mouse cursor position, NULL if no widget was found
+		*    The found widget at the given absolute ingame GUI mouse cursor position, a null pointer if no widget was found
 		*/
 		PLGui::Widget *FindWidgetAtPos(const PLMath::Vector2i &vMousePos, PLGui::Widget &cParentWidget) const;
 
@@ -281,9 +281,9 @@ class GuiPL : public PLGui::GuiImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Gui							*m_pGui;									/**< Platform independent GUI, NULL on error */
+		PLGui::Gui							*m_pGui;									/**< Platform independent GUI, a null pointer on error */
 		PLMath::Vector2i					 m_vScreenSize;								/**< Screen size */
-		PLRenderer::Renderer				*m_pRenderer;								/**< Used renderer, NULL on error */
+		PLRenderer::Renderer				*m_pRenderer;								/**< Used renderer, a null pointer on error */
 		PLGeneral::Mutex					*m_pMessageQueueMutex;						/**< GUI message queue mutex, always valid! */
 		PLGeneral::Queue<PLGui::GuiMessage>  m_lstMessageQueue;							/**< GUI message queue */
 
@@ -292,7 +292,7 @@ class GuiPL : public PLGui::GuiImpl {
 		PLGeneral::Array<PLGui::Widget*>	 m_lstTopLevelWidgets;						/**< List of z position sorted top-level widgets, smaller number for widgets below other with higher numbers */
 
 		// Input
-		PLInput::VirtualController			*m_pInputController;						/**< Virtual input controller, can be NULL */
+		PLInput::VirtualController			*m_pInputController;						/**< Virtual input controller, can be a null pointer */
 
 		// Keyboard
 		PLGeneral::Bitset					 m_lstKeys;									/**< State of keys buttons */

@@ -183,7 +183,7 @@ void SRPEmissiveFixedFunctions::DrawRec(Renderer &cRenderer, const SQCull &cCull
 										if (cGeometry.IsActive() && nMat == cGeometry.GetMaterial()) {
 											// Bind textures
 											// Emissive map (stage 0)
-											const Texture *pTexture = NULL;
+											const Texture *pTexture = nullptr;
 											const Parameter *pParameter = pMaterial->GetParameter(Material::EmissiveMap);
 											if (pParameter)
 												pTexture = pParameter->GetValueTexture();

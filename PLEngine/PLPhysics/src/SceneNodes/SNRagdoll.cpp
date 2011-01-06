@@ -154,9 +154,9 @@ SNRagdoll::SNRagdoll() :
 	Flags(this),
 	DebugFlags(this),
 	EventHandlerUpdate(&SNRagdoll::NotifyUpdate, this),
-	m_pWorldContainer(NULL),
+	m_pWorldContainer(nullptr),
 	m_bEnabled(false),
-	m_pRagdollSkeletonHandler(NULL),
+	m_pRagdollSkeletonHandler(nullptr),
 	m_bAttachToWorldEnabled(false),
 	m_bAutoFreeze(true),
 	m_bUseGravity(true)
@@ -253,7 +253,7 @@ bool SNRagdoll::CreateRagdoll(SkeletonHandler *pSkeletonHandler)
 							pRagdollJoint->vRotAxis1 = vRight;
 							pRagdollJoint->vRotAxis2 = vUp;
 
-							RagdollBody *pBody = NULL;
+							RagdollBody *pBody = nullptr;
 							{ // Add new body
 								pBody = new RagdollBody(this);
 								pBody->nIndex = m_lstBodies.GetNumOfElements();
@@ -339,7 +339,7 @@ bool SNRagdoll::CreateRagdoll(SkeletonHandler *pSkeletonHandler)
 void SNRagdoll::CreatePhysics(bool bAllowAttachToWorld)
 {
 	// Get the physics world
-	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : NULL;
+	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : nullptr;
 
 	// Deactivate the physics simulation if required (just for sure :)
 	const bool bSimulationActive = pWorld && pWorld->IsSimulationActive();
@@ -381,7 +381,7 @@ void SNRagdoll::CreatePhysics(bool bAllowAttachToWorld)
 void SNRagdoll::CreatePhysicsBodies()
 {
 	// Get the physics world
-	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : NULL;
+	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : nullptr;
 
 	// Deactivate the physics simulation if required (just for sure :)
 	const bool bSimulationActive = pWorld && pWorld->IsSimulationActive();
@@ -417,7 +417,7 @@ void SNRagdoll::CreatePhysicsBodies()
 void SNRagdoll::CreatePhysicsJoints(bool bAllowAttachToWorld)
 {
 	// Get the physics world
-	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : NULL;
+	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : nullptr;
 
 	// Deactivate the physics simulation if required (just for sure :)
 	const bool bSimulationActive = pWorld && pWorld->IsSimulationActive();
@@ -602,7 +602,7 @@ RagdollBody *SNRagdoll::CloneBody(uint32 nIndex, bool bCreatePhysics)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -777,7 +777,7 @@ RagdollJoint *SNRagdoll::CloneJoint(uint32 nIndex, bool bCreatePhysics)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1103,7 +1103,7 @@ void SNRagdoll::InitFunction()
 	MeshHandler *pMeshHandler = GetMeshHandler();
 
 	// Initialization
-	m_pWorldContainer = NULL;
+	m_pWorldContainer = nullptr;
 	SkeletonHandler *pMeshSkeletonHandler = pMeshHandler->GetSkeletonHandler();
 	if (!pMeshHandler->GetMeshAnimationManager()) {
 		pMeshHandler->CreateMeshAnimationManager();
@@ -1138,7 +1138,7 @@ void SNRagdoll::DeInitFunction()
 	// Destroy the ragdoll
 	Unload();
 	delete m_pRagdollSkeletonHandler;
-	m_pRagdollSkeletonHandler = NULL;
+	m_pRagdollSkeletonHandler = nullptr;
 
 	// Call base implementation
 	SNMesh::DeInitFunction();
@@ -1166,7 +1166,7 @@ void SNRagdoll::OnActivate(bool bActivate)
 bool SNRagdoll::Unload()
 {
 	// Get the physics world
-	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : NULL;
+	World *pWorld = m_pWorldContainer ? m_pWorldContainer->GetWorld() : nullptr;
 
 	// Deactivate the physics simulation if required (just for sure :)
 	const bool bSimulationActive = pWorld && pWorld->IsSimulationActive();

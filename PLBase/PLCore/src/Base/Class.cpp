@@ -53,15 +53,17 @@ namespace PLCore {
 Class::Class(uint32 nModuleID, const String &sName, const String &sDescription, const String &sNamespace, const String &sBaseClass) :
 	m_nModuleID(nModuleID),
 	m_bInitialized(false),
-	m_pBaseClass(NULL),
+	m_pBaseClass(nullptr),
 	m_sName(sName),
 	m_sNamespace(sNamespace),
 	m_sDescription(sDescription),
 	m_sBaseClass(sBaseClass)
 {
 	// Compose namespace and name
-	if (m_sNamespace != "")	m_sClassName = m_sNamespace + "::" + m_sName;
-	else					m_sClassName = m_sName;
+	if (m_sNamespace != "")
+		m_sClassName = m_sNamespace + "::" + m_sName;
+	else
+		m_sClassName = m_sName;
 
 	// Register at class manager
 	ClassManager::GetInstance()->RegisterClass(m_nModuleID, this);
@@ -239,7 +241,7 @@ const VarDesc *Class::GetAttribute(const String &sName) const
 		return (VarDesc*)pMember;
 
 	// Attribute could not be found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -272,7 +274,7 @@ const FuncDesc *Class::GetMethod(const String &sName) const
 		return (FuncDesc*)pMember;
 
 	// Method could not be found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -305,7 +307,7 @@ const EventDesc *Class::GetSignal(const String &sName) const
 		return (EventDesc*)pMember;
 
 	// Signal could not be found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -338,7 +340,7 @@ const EventHandlerDesc *Class::GetSlot(const String &sName) const
 		return (EventHandlerDesc*)pMember;
 
 	// Slot could not be found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -412,7 +414,7 @@ const ConstructorDesc *Class::GetConstructor(const String &sName) const
 		return (ConstructorDesc*)pMember;
 
 	// Constructor could not be found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -439,7 +441,7 @@ Object *Class::Create() const
 	}
 
 	// Error, no value constructor found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -465,7 +467,7 @@ Object *Class::Create(const DynParams &cParams) const
 	}
 
 	// Error, no value constructor found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -491,7 +493,7 @@ Object *Class::Create(const String &sName, const DynParams &cParams) const
 	}
 
 	// Error, no value constructor found
-	return NULL;
+	return nullptr;
 }
 
 
@@ -659,16 +661,15 @@ void Class::DeInitClass() const
 	m_lstConstructors.Clear();
 
 	// Remove base class
-	m_pBaseClass = NULL;
+	m_pBaseClass = nullptr;
 
 	// Class de-initialized
 	m_bInitialized = false;
 
 	// De-initialize derived classes
 	List<const Class*> lstClasses = GetDerivedClasses();
-	for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++)
 		lstClasses[i]->DeInitClass();
-	}
 }
 
 

@@ -43,8 +43,8 @@ namespace PLGeneral {
 template <class ValueType>
 List<ValueType>::List() :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL)
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr)
 {
 }
 
@@ -55,8 +55,8 @@ List<ValueType>::List() :
 template <class ValueType>
 List<ValueType>::List(const List<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL)
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr)
 {
 	// Copy
 	Copy((Container<ValueType>&)lstSource, nStart, nCount);
@@ -69,8 +69,8 @@ List<ValueType>::List(const List<ValueType> &lstSource, uint32 nStart, uint32 nC
 template <class ValueType>
 List<ValueType>::List(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL)
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr)
 {
 	// Copy
 	Copy(lstSource, nStart, nCount);
@@ -169,8 +169,8 @@ void List<ValueType>::Clear()
 
 	// Init data
 	m_nNumOfElements = 0;
-	m_pFirstElement  = NULL;
-	m_pLastElement   = NULL;
+	m_pFirstElement  = nullptr;
+	m_pLastElement   = nullptr;
 }
 
 template <class ValueType>
@@ -318,7 +318,7 @@ ValueType &List<ValueType>::Add()
 {
 	// Create the new list element
 	ListElement *pNewElement = new ListElement;
-	pNewElement->pNextElement	  = NULL;
+	pNewElement->pNextElement	  = nullptr;
 	pNewElement->pPreviousElement = m_pLastElement;
 
 	// Add the new list element to the list
@@ -341,7 +341,7 @@ ValueType &List<ValueType>::Add(const ValueType &Element)
 	// Create the new list element
 	ListElement *pNewElement = new ListElement;
 	pNewElement->Data			  = Element;
-	pNewElement->pNextElement	  = NULL;
+	pNewElement->pNextElement	  = nullptr;
 	pNewElement->pPreviousElement = m_pLastElement;
 
 	// Add the new list element to the list

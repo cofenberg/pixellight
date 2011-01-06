@@ -131,7 +131,7 @@ bool Application::ChooseSoundAPI()
 			/*
 			// Show your choose dialog
 			ChooseSoundAPIGui *pDialog = new ChooseSoundAPIGui();
-			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, NULL) && m_sSoundAPI != pDialog->GetName()) {
+			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, nullptr) && m_sSoundAPI != pDialog->GetName()) {
 				// A new API was chosen...
 				m_sSoundAPI = pDialog->GetName();
 				bResult = true; // Done
@@ -149,13 +149,13 @@ bool Application::ChooseSoundAPI()
 				SurfacePainter *pPainter = GetPainter();
 				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
 					SPScene *pSPScene = (SPScene*)pPainter;
-					pSPScene->SetRootContainer(NULL);
-					pSPScene->SetSceneContainer(NULL);
-					pSPScene->SetCamera(NULL);
+					pSPScene->SetRootContainer(nullptr);
+					pSPScene->SetSceneContainer(nullptr);
+					pSPScene->SetCamera(nullptr);
 				}
 
 				// Destroy old root scene
-				SetRootScene(NULL);
+				SetRootScene(nullptr);
 				delete pRootScene;
 			}
 
@@ -281,7 +281,7 @@ void Application::OnCreateMainWindow()
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
 	// Set no scene container as default
-	SetScene(NULL);
+	SetScene(nullptr);
 
 	// Sound API given?
 	if (m_sSoundAPI.GetLength()) {

@@ -58,8 +58,8 @@ using namespace PLPhysics;
 Application::Application() : BasicSceneApplication(),
 	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
 	EventHandlerKeyUp  (&Application::NotifyKeyUp,   this),
-	m_pLine(NULL),
-	m_pRagdoll(NULL),
+	m_pLine(nullptr),
+	m_pRagdoll(nullptr),
 	m_bApplyForce(false),
 	m_bTorqueForce(false)
 {
@@ -119,7 +119,7 @@ bool Application::ChoosePhysicsAPI()
 			/*
 			// Show your choose dialog
 			ChoosePhysicsAPIGui *pDialog = new ChoosePhysicsAPIGui();
-			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, NULL) && m_sPhysicsAPI != pDialog->GetName()) {
+			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, nullptr) && m_sPhysicsAPI != pDialog->GetName()) {
 				// A new API was chosen...
 				m_sPhysicsAPI = pDialog->GetName();
 				bResult = true; // Done
@@ -137,19 +137,19 @@ bool Application::ChoosePhysicsAPI()
 				SurfacePainter *pPainter = GetPainter();
 				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
 					SPScene *pSPScene = (SPScene*)pPainter;
-					pSPScene->SetRootContainer(NULL);
-					pSPScene->SetSceneContainer(NULL);
-					pSPScene->SetCamera(NULL);
+					pSPScene->SetRootContainer(nullptr);
+					pSPScene->SetSceneContainer(nullptr);
+					pSPScene->SetCamera(nullptr);
 				}
 
 				// Destroy old root scene
-				SetRootScene(NULL);
+				SetRootScene(nullptr);
 				delete pRootScene;
 			}
 
 			// Reset variables
-			m_pLine        = NULL;
-			m_pRagdoll     = NULL;
+			m_pLine        = nullptr;
+			m_pRagdoll     = nullptr;
 			m_bApplyForce  = false;
 			m_bTorqueForce = false;
 
@@ -181,7 +181,7 @@ Body *Application::GetPhysicsBody() const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -361,7 +361,7 @@ bool Application::OnUpdate()
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
 	// Set no scene container as default
-	SetScene(NULL);
+	SetScene(nullptr);
 
 	// Physics API given?
 	if (m_sPhysicsAPI.GetLength()) {

@@ -41,8 +41,8 @@ namespace PLInput {
 *    Constructor
 */
 HIDDeviceWindows::HIDDeviceWindows() :
-	m_hDevice(NULL),
-	m_pPreparsedData(NULL)
+	m_hDevice(nullptr),
+	m_pPreparsedData(nullptr)
 {
 	// Do not destroy device implementation automatically, because this is managed by HIDWindows
 	m_bDelete = false;
@@ -167,7 +167,7 @@ bool HIDDeviceWindows::Open(uint16 nOutputPort, uint16 nInputPort)
 	if (IsOpen()) Close();
 
 	// Connect to device
-	m_hDevice = CreateFile(GetName().GetUnicode(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+	m_hDevice = CreateFile(GetName().GetUnicode(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, nullptr);
 	if (m_hDevice != INVALID_HANDLE_VALUE) {
 		// Start read thread
 		InitThread();
@@ -216,7 +216,7 @@ bool HIDDeviceWindows::Read(uint8 *pBuffer, uint32 nSize)
 		// Setup asynchronous IO
 		m_sOverlapped.sOverlapped.Offset	 = 0;
 		m_sOverlapped.sOverlapped.OffsetHigh = 0;
-		m_sOverlapped.sOverlapped.hEvent	 = NULL;
+		m_sOverlapped.sOverlapped.hEvent	 = nullptr;
 		m_sOverlapped.pDevice				 = this;
 
 		// Read from device and give back immediatly. EventOnRead will be emitted, when data has been read
@@ -240,7 +240,7 @@ bool HIDDeviceWindows::Write(const uint8 *pBuffer, uint32 nSize)
 		// Setup asynchronous IO
 		m_sOverlapped.sOverlapped.Offset	 = 0;
 		m_sOverlapped.sOverlapped.OffsetHigh = 0;
-		m_sOverlapped.sOverlapped.hEvent	 = NULL;
+		m_sOverlapped.sOverlapped.hEvent	 = nullptr;
 		m_sOverlapped.pDevice				 = this;
 
 		// Write to device

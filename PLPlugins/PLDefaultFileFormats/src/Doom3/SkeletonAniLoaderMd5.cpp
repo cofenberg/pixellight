@@ -80,7 +80,7 @@ bool SkeletonAniLoaderMd5::Load(Skeleton &cSkeleton, File &cFile)
 {
 	// Is there a reference skeleton?
 	// [TODO] New RTTI usage: Dynamic parameters
-	Skeleton *pRefSkeleton = NULL;
+	Skeleton *pRefSkeleton = nullptr;
 
 	Tokenizer cTokenizer;
 	cTokenizer.Start(cFile);
@@ -172,7 +172,7 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 	HashMap<String, Md5Joint*> mapJoints;
 	uint32 nNumOfFrames = 0;
 	for (uint32 nChannel=0; nChannel<nNumChannels; nChannel++) {
-		Md5Joint *pJoint = NULL;
+		Md5Joint *pJoint = nullptr;
 		char nAnimatedComponent = -1;
 		while (cTokenizer.GetNextToken().GetLength() && !cTokenizer.CompareToken("}")) {
 			// joint
@@ -184,7 +184,7 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 					pJoint->sName = cTokenizer.GetToken();
 					pJoint->lstKeys.Resize(6);
 					for (int i=0; i<6; i++)
-						*pJoint->lstKeys[i] = NULL;
+						*pJoint->lstKeys[i] = 0.0f;
 					pJoint->lstRangeStart.Resize(6);
 					pJoint->lstRangeEnd.Resize(6);
 					lstJointsT.Add(pJoint);

@@ -329,7 +329,7 @@ void SNMMeshJoint::NotifyUpdate()
 					pJointHandler->SetUserControlled(true);
 
 					// Get the parent joint handler
-					const JointHandler *pParentJointHandler = NULL;
+					const JointHandler *pParentJointHandler = nullptr;
 					{
 						const Joint *pJoint = pJointHandler->GetElement();
 						if (pJoint) {

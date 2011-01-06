@@ -69,7 +69,7 @@ class Buffer : public PLSound::Buffer {
 		*    Returns the FMOD Ex sound instance
 		*
 		*  @return
-		*    The FMOD Ex sound instance, NULL on error
+		*    The FMOD Ex sound instance, a null pointer on error
 		*/
 		FMOD::Sound *GetSound() const;
 
@@ -96,7 +96,7 @@ class Buffer : public PLSound::Buffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FMOD::Sound *m_pSound;		/**< Sound pointer, can be NULL */
+		FMOD::Sound *m_pSound;		/**< Sound pointer, can be a null pointer */
 		bool		 m_bStreamed;	/**< Is the sound streamed? */
 
 

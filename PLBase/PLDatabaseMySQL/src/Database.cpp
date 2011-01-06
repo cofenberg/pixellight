@@ -54,7 +54,7 @@ pl_implement_class(Database)
 *    Default constructor
 */
 Database::Database() :
-	m_pSQL(NULL)
+	m_pSQL(nullptr)
 {
 }
 
@@ -85,7 +85,7 @@ MYSQL *Database::GetMySQL() const
 *    Copy constructor
 */
 Database::Database(const Database &cSource) :
-	m_pSQL(NULL)
+	m_pSQL(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -110,16 +110,15 @@ String Database::GetVersion() const
 	return sString;
 }
 
-bool Database::Connect(const String &sServer, const String &sUserName,
-					   const String &sUserPassword, const String &sDatabase)
+bool Database::Connect(const String &sServer, const String &sUserName, const String &sUserPassword, const String &sDatabase)
 {
 	// Already connected?
 	if (!m_pSQL) {
 		// Allocate/initialize the connection object
-		m_pSQL = mysql_init(NULL);
+		m_pSQL = mysql_init(nullptr);
 		if (m_pSQL) {
 			// Try to connect to our MySQL server
-			if (mysql_real_connect(m_pSQL, sServer, sUserName, sUserPassword, sDatabase, MYSQL_PORT, NULL, 0))
+			if (mysql_real_connect(m_pSQL, sServer, sUserName, sUserPassword, sDatabase, MYSQL_PORT, nullptr, 0))
 				return true; // Done
 			PL_LOG(Error, String("MySQL could not connect to specified server! Error: ") + mysql_error(m_pSQL))
 		}
@@ -131,7 +130,7 @@ bool Database::Connect(const String &sServer, const String &sUserName,
 
 bool Database::IsConnected() const
 {
-	return (m_pSQL != NULL);
+	return (m_pSQL != nullptr);
 }
 
 bool Database::IsConnectionActive() const
@@ -143,11 +142,13 @@ bool Database::Disconnect()
 {
 	if (m_pSQL) {
 		mysql_close(m_pSQL);
-		m_pSQL = NULL;
+		m_pSQL = nullptr;
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		return false; // Error!
+	}
 }
 
 PLDatabase::DatabaseQuery *Database::CreateQuery() const

@@ -73,7 +73,7 @@ void Animation::Reset()
 	m_nStart		 = 0;
 	m_nEnd			 = 0;
 	m_fSpeed		 = 24.0f;
-	m_pAnimationInfo = NULL;
+	m_pAnimationInfo = nullptr;
 	m_fWeight		 = 1.0f;
 	m_bBounced		 = false;
 
@@ -129,7 +129,7 @@ void Animation::Start(uint32 nStart, uint32 nEnd, float fSpeed, uint32 nFlags)
 	m_nStart		 = nStart;
 	m_nEnd			 = nEnd;
 	m_fSpeed		 = fSpeed;
-	m_pAnimationInfo = NULL;
+	m_pAnimationInfo = nullptr;
 	m_bBounced		 = false;
 
 	// Set the current frame

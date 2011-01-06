@@ -68,7 +68,7 @@ class BitmapToggleButton : public AbstractToggleButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API BitmapToggleButton(Widget *pParent = NULL);
+		PLGUI_API BitmapToggleButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

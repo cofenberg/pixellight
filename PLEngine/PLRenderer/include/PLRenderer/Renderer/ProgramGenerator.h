@@ -174,8 +174,8 @@ class ProgramGenerator {
 			Program			  *pProgram;				/**< The program, always valid! */
 			PLGeneral::uint32  nVertexShaderFlags;		/**< Vertex shader flags used to generate the program */
 			PLGeneral::uint32  nFragmentShaderFlags;	/**< Fragment shader flags used to generate the program */
-			void			  *pUserData;				/**< User data for the generated program, can be NULL, is destroyed automatically of the generated
-															 program is destroyed, may also become NULL if for example the program became dirty */
+			void			  *pUserData;				/**< User data for the generated program, can be a null pointer, is destroyed automatically of the generated
+															 program is destroyed, may also become a null pointer if for example the program became dirty */
 		};
 
 
@@ -276,7 +276,7 @@ class ProgramGenerator {
 		*    Program flags describing the requested program features
 		*
 		*  @return
-		*    Generated program, can be NULL
+		*    Generated program, can be a null pointer
 		*/
 		PLRENDERER_API GeneratedProgram *GetProgram(const Flags &cFlags);
 

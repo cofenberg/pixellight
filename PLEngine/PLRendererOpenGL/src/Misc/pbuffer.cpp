@@ -91,7 +91,7 @@ bool PBuffer::Initialize(int iWidth, int iHeight, bool bShareContexts, bool bSha
     else
     {
         unsigned int nformats;
-        wglChoosePixelFormatARB(hdc, &m_pfAttribList[0], NULL, 1, &format, &nformats);
+        wglChoosePixelFormatARB(hdc, &m_pfAttribList[0], nullptr, 1, &format, &nformats);
         if (nformats == 0)
         {
             PL_LOG(Error, "PBuffer creation: Couldn't find a suitable pixel format")
@@ -216,21 +216,21 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
 
     vector<string> tokens;
     char *buf = strtok(mode, " ");
-    while (buf != NULL)
+    while (buf != nullptr)
     {
-        if (strstr(buf, "ati_float") != NULL)
+        if (strstr(buf, "ati_float") != nullptr)
             bIsATIFloatBuffer = true;
-        else if (strstr(buf, "float") != NULL)
+        else if (strstr(buf, "float") != nullptr)
             bIsFloatBuffer = true;
 
-        if (strstr(buf, "texture") != NULL)
+        if (strstr(buf, "texture") != nullptr)
             bIsTexture = true;
 
-        if (strstr(buf, "alpha") != NULL)
+        if (strstr(buf, "alpha") != nullptr)
             bNeedAlpha = true;
 
         tokens.push_back(buf);
-        buf = strtok(NULL, " ");
+        buf = strtok(nullptr, " ");
     }
 
     pfAttribList->push_back(WGL_PIXEL_TYPE_ARB);
@@ -596,14 +596,14 @@ int PBuffer::Release(int iBuffer, int nFace)
 }
 
 
-void PBuffer::Activate(PBuffer *current /* = NULL */)
+void PBuffer::Activate(PBuffer *current /* = nullptr */)
 {
     if (current == this) 
     {
         return; // no switch necessary
     }
     
-    if (NULL == current || !current->m_bIsActive) 
+    if (nullptr == current || !current->m_bIsActive) 
     {
         if (m_bIsActive)
             return;
@@ -722,7 +722,7 @@ bool PBuffer::Initialize(int iWidth, int iHeight, bool bShareContexts, bool bSha
         if (m_bShareObjects)
             m_glxContext = glXCreateContextWithConfigSGIX(pDisplay, glxConfig[0], GLX_RGBA_TYPE, glxContext, true);
         else
-            m_glxContext = glXCreateContextWithConfigSGIX(pDisplay, glxConfig[0], GLX_RGBA_TYPE, NULL, true);
+            m_glxContext = glXCreateContextWithConfigSGIX(pDisplay, glxConfig[0], GLX_RGBA_TYPE, nullptr, true);
         
         if (!glxConfig)
         {
@@ -773,16 +773,16 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
 
     vector<string> tokens;
     char *buf = strtok(mode, " ");
-    while (buf != NULL)
+    while (buf != nullptr)
     {
-        if (strstr(buf, "float") != NULL)
+        if (strstr(buf, "float") != nullptr)
             bIsFloatBuffer = true;
 
-        if (strstr(buf, "alpha") != NULL)
+        if (strstr(buf, "alpha") != nullptr)
             bNeedAlpha = true;
         
         tokens.push_back(buf);
-        buf = strtok(NULL, " ");
+        buf = strtok(nullptr, " ");
     }
     
     for (unsigned int i = 0; i < tokens.size(); i++)
@@ -873,14 +873,14 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
     }
 }
 
-void PBuffer::Activate(PBuffer *current /* = NULL */)
+void PBuffer::Activate(PBuffer *current /* = nullptr */)
 {
     if (current == this) 
     {
         return; // no switch necessary
     }
 
-    if (NULL == current || !current->m_bIsActive) 
+    if (nullptr == current || !current->m_bIsActive) 
     {
         m_pOldDisplay = glXGetCurrentDisplay();
         m_glxOldDrawable = glXGetCurrentDrawable();

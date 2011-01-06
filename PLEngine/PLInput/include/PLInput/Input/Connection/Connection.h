@@ -62,9 +62,9 @@ class Connection {
 		*    Constructor
 		*
 		*  @param[in] pInput
-		*    Input control, can be NULL
+		*    Input control, can be a null pointer
 		*  @param[in] pOutput
-		*    Output control, can be NULL
+		*    Output control, can be a null pointer
 		*  @param[in] fScale
 		*    Scale factor
 		*/
@@ -81,7 +81,7 @@ class Connection {
 		*    Get input control
 		*
 		*  @return
-		*    Pointer to control that is on the input side of the connection, can be NULL
+		*    Pointer to control that is on the input side of the connection, can be a null pointer
 		*/
 		PLINPUT_API Control *GetInputControl() const;
 
@@ -90,7 +90,7 @@ class Connection {
 		*    Get output control
 		*
 		*  @return
-		*    Pointer to control that is on the output side of the connection, can be NULL
+		*    Pointer to control that is on the output side of the connection, can be a null pointer
 		*/
 		PLINPUT_API Control *GetOutputControl() const;
 
@@ -128,8 +128,8 @@ class Connection {
 	//[-------------------------------------------------------]
 	protected:
 		// Control data
-		Control	*m_pInput;		/**< Input control, can be NULL */
-		Control	*m_pOutput;		/**< Output control, can be NULL */
+		Control	*m_pInput;		/**< Input control, can be a null pointer */
+		Control	*m_pOutput;		/**< Output control, can be a null pointer */
 		bool	 m_bValid;		/**< 'true' if connection is valid, else 'false' */
 		float	 m_fScale;		/**< Scale factor */
 

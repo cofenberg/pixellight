@@ -42,7 +42,7 @@ namespace PLGeneral {
 */
 template <class AType>
 SmartPtr<AType>::SmartPtr() :
-	m_pPtr(NULL)
+	m_pPtr(nullptr)
 {
 }
 
@@ -52,7 +52,7 @@ SmartPtr<AType>::SmartPtr() :
 */
 template <class AType>
 SmartPtr<AType>::SmartPtr(AType *pPtr) :
-	m_pPtr(NULL)
+	m_pPtr(nullptr)
 {
 	SetPtr(pPtr);
 }
@@ -63,7 +63,7 @@ SmartPtr<AType>::SmartPtr(AType *pPtr) :
 */
 template <class AType>
 SmartPtr<AType>::SmartPtr(const SmartPtr<AType> &pPtr) :
-	m_pPtr(NULL)
+	m_pPtr(nullptr)
 {
 	SetPtr(pPtr.GetPtr());
 }
@@ -75,7 +75,7 @@ SmartPtr<AType>::SmartPtr(const SmartPtr<AType> &pPtr) :
 template <class AType>
 SmartPtr<AType>::~SmartPtr()
 {
-	SetPtr((RefCount<AType>*)NULL);
+	SetPtr((RefCount<AType>*)nullptr);
 }
 
 /**
@@ -85,7 +85,8 @@ SmartPtr<AType>::~SmartPtr()
 template <class AType>
 SmartPtr<AType> &SmartPtr<AType>::operator =(AType *pPtr)
 {
-	if (GetPointer() != pPtr) SetPtr(pPtr);
+	if (GetPointer() != pPtr)
+		SetPtr(pPtr);
 	return *this;
 }
 
@@ -96,7 +97,8 @@ SmartPtr<AType> &SmartPtr<AType>::operator =(AType *pPtr)
 template <class AType>
 SmartPtr<AType> &SmartPtr<AType>::operator =(const SmartPtr<AType> &cPtr)
 {
-	if (GetPointer() != cPtr.GetPointer()) SetPtr(cPtr.GetPtr());
+	if (GetPointer() != cPtr.GetPointer())
+		SetPtr(cPtr.GetPtr());
 	return *this;
 }
 
@@ -107,7 +109,7 @@ SmartPtr<AType> &SmartPtr<AType>::operator =(const SmartPtr<AType> &cPtr)
 template <class AType>
 AType *SmartPtr<AType>::GetPointer() const
 {
-	return m_pPtr ? m_pPtr->GetPointer() : NULL;
+	return m_pPtr ? m_pPtr->GetPointer() : nullptr;
 }
 
 /**
@@ -132,12 +134,12 @@ SmartPtr<AType>::operator AType*() const
 
 /**
 *  @brief
-*    Check if the pointer is not NULL
+*    Check if the pointer is not a null pointer
 */
 template <class AType>
 bool SmartPtr<AType>::operator !() const
 {
-	return GetPointer() == NULL;
+	return (GetPointer() == nullptr);
 }
 
 /**
@@ -147,7 +149,7 @@ bool SmartPtr<AType>::operator !() const
 template <class AType>
 bool SmartPtr<AType>::operator ==(AType *pPtr) const
 {
-	return GetPointer() == pPtr;
+	return (GetPointer() == pPtr);
 }
 
 /**
@@ -157,7 +159,7 @@ bool SmartPtr<AType>::operator ==(AType *pPtr) const
 template <class AType>
 bool SmartPtr<AType>::operator ==(const SmartPtr<AType> &cPtr) const
 {
-	return GetPointer() == cPtr.GetPointer();
+	return (GetPointer() == cPtr.GetPointer());
 }
 
 /**
@@ -167,7 +169,7 @@ bool SmartPtr<AType>::operator ==(const SmartPtr<AType> &cPtr) const
 template <class AType>
 bool SmartPtr<AType>::operator !=(AType *pPtr) const
 {
-	return GetPointer() != pPtr;
+	return (GetPointer() != pPtr);
 }
 
 /**
@@ -177,7 +179,7 @@ bool SmartPtr<AType>::operator !=(AType *pPtr) const
 template <class AType>
 bool SmartPtr<AType>::operator !=(const SmartPtr<AType> &cPtr) const
 {
-	return GetPointer() != cPtr.GetPointer();
+	return (GetPointer() != cPtr.GetPointer());
 }
 
 
@@ -192,7 +194,7 @@ template <class AType>
 void SmartPtr<AType>::SetPtr(void *pPtr)
 {
 	// Create a reference counter for the object, then assign it
-	SetPtr(pPtr ? new RefCountPtr<AType>((AType*)pPtr) : (RefCount<AType>*)NULL);
+	SetPtr(pPtr ? new RefCountPtr<AType>((AType*)pPtr) : (RefCount<AType>*)nullptr);
 }
 
 /**
@@ -203,10 +205,12 @@ template <class AType>
 void SmartPtr<AType>::SetPtr(RefCount<AType> *pPtr)
 {
 	// Release old pointer
-	if (m_pPtr) m_pPtr->Release();
+	if (m_pPtr)
+		m_pPtr->Release();
 
 	// Assign new pointer
-	if (pPtr) pPtr->AddReference();
+	if (pPtr)
+		pPtr->AddReference();
 	m_pPtr = pPtr;
 }
 

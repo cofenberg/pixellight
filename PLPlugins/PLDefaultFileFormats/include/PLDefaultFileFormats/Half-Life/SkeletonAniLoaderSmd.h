@@ -110,7 +110,7 @@ class SkeletonAniLoaderSmd : public PLMesh::SkeletonAniLoader {
 		*  @param[in] cJoint
 		*    Current joint
 		*  @param[in] pParentJoint
-		*    Parent joint, can be NULL
+		*    Parent joint, can be a null pointer
 		*/
 		void RecCalculateStates(const PLMesh::Skeleton &cSkeleton, PLMesh::Joint &cJoint, PLMesh::Joint *pParentJoint) const;
 

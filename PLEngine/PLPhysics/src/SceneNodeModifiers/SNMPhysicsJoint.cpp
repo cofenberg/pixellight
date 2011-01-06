@@ -98,7 +98,7 @@ SNMPhysicsBody *SNMPhysicsJoint::GetParentBodyModifier() const
 SNMPhysicsBody *SNMPhysicsJoint::GetChildBodyModifier() const
 {
 	const SceneNode *pSceneNode = GetSceneNode().GetContainer()->Get(m_sChild);
-	return pSceneNode ? (SNMPhysicsBody*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBody") : NULL;
+	return pSceneNode ? (SNMPhysicsBody*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBody") : nullptr;
 }
 
 
@@ -111,7 +111,7 @@ SNMPhysicsBody *SNMPhysicsJoint::GetChildBodyModifier() const
 */
 SNMPhysicsJoint::SNMPhysicsJoint(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	Child(this),
-	m_pWorldContainer(NULL),
+	m_pWorldContainer(nullptr),
 	m_pJointHandler(new ElementHandler())
 {
 }
@@ -162,11 +162,11 @@ void SNMPhysicsJoint::InformedOnInit()
 			CreatePhysicsJoint();
 		} else {
 			// ??
-			m_pWorldContainer = NULL;
+			m_pWorldContainer = nullptr;
 		}
 	} else {
 		// No world, no physics...
-		m_pWorldContainer = NULL;
+		m_pWorldContainer = nullptr;
 	}
 }
 

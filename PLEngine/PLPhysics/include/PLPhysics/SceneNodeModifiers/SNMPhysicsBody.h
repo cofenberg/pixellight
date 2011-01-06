@@ -105,7 +105,7 @@ class SNMPhysicsBody : public SNMPhysics {
 		*    Returns the PL physics world scene node container the physics body is in
 		*
 		*  @return
-		*    The PL physics world scene node container the physics body is in, NULL on error
+		*    The PL physics world scene node container the physics body is in, a null pointer on error
 		*    (if that's the case, something went totally wrong :)
 		*
 		*  @note
@@ -118,7 +118,7 @@ class SNMPhysicsBody : public SNMPhysics {
 		*    Returns the PL physics body
 		*
 		*  @return
-		*    The PL physics body, NULL on error (if that's the case, something went totally wrong :)
+		*    The PL physics body, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICS_API Body *GetBody() const;
 
@@ -177,7 +177,7 @@ class SNMPhysicsBody : public SNMPhysics {
 		bool			  m_bUseGravity;		/**< Did the gravity influence this body? */
 		PLMath::Vector3	  m_vPositionOffset;	/**< Position offset relative to the scene node (=origin) */
 		PLGeneral::uint8  m_nCollisionGroup;	/**< The collision group the body is in (0-31) */
-		SCPhysicsWorld   *m_pWorldContainer;	/**< The PL physics world scene node container the physics body is in, can be NULL */
+		SCPhysicsWorld   *m_pWorldContainer;	/**< The PL physics world scene node container the physics body is in, can be a null pointer */
 		ElementHandler   *m_pBodyHandler;		/**< Holds the PL physics body (ALWAYS valid!) */
 		bool			  m_bListening;			/**< Listening scene node position changes etc.? */
 

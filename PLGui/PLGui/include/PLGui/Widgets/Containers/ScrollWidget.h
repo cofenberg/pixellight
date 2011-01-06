@@ -77,7 +77,7 @@ class ScrollWidget : public ContainerWidget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API ScrollWidget(Widget *pParent = NULL);
+		PLGUI_API ScrollWidget(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -68,7 +68,7 @@ class Bitmap : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API Bitmap(Widget *pParent = NULL);
+		PLGUI_API Bitmap(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -88,7 +88,7 @@ Connection *Host::Connect(const String &sServer, uint32 nPort)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**

@@ -71,7 +71,7 @@ DataObject ClipBoardWindows::GetData()
 	// doesn't fail - we can't figure out if ASCII is enough :(
 	if (IsClipboardFormatAvailable(CF_UNICODETEXT)) {
 		// First at all, open the clipboard
-		if (OpenClipboard(NULL)) {
+		if (OpenClipboard(nullptr)) {
 			// Get the clipboard text
 			String sText;
 			HANDLE hData = GetClipboardData(CF_UNICODETEXT);
@@ -91,7 +91,7 @@ DataObject ClipBoardWindows::GetData()
 	// Is ASCII text on the clipboard?
 	} else if (IsClipboardFormatAvailable(CF_TEXT)) {
 		// First at all, open the clipboard
-		if (OpenClipboard(NULL)) {
+		if (OpenClipboard(nullptr)) {
 			// Get the clipboard text
 			String sText;
 			HANDLE hData = GetClipboardData(CF_TEXT);

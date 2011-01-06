@@ -96,7 +96,7 @@ void FileSystemTest::SpeedTest_CleanUp()
 		String sFile;
 
 		// Get the current working directory (allocates the buffer dynamically)
-		char *pszPath = getcwd(NULL, 0);
+		char *pszPath = getcwd(nullptr, 0);
 
 		while (pEntry) {
 			sFile = String::Format("%s/filetest/%s", pszPath, pEntry->d_name);
@@ -231,7 +231,7 @@ void FileSystemTest::SpeedTest_OS_BigFile()
 #endif
 	// Write byte wise
 	nStart = System::GetInstance()->GetMilliseconds();
-	FILE *f = NULL;
+	FILE *f = nullptr;
 	f = fopen(sFile, "wb");
 	unsigned char b = 0xFF;
 	if (f) {

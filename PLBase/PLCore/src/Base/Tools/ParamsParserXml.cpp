@@ -42,7 +42,7 @@ namespace PLCore {
 *    Constructor
 */
 ParamsParserXml::ParamsParserXml() :
-	m_pElement(NULL)
+	m_pElement(nullptr)
 {
 }
 
@@ -95,7 +95,7 @@ bool ParamsParserXml::Next()
 	}
 
 	// Error, could not parse next expression
-	m_pAttribute = NULL;
+	m_pAttribute = nullptr;
 	m_sName		 = "";
 	m_sValue	 = "";
 	return false;

@@ -64,7 +64,7 @@ BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : Sce
 	EventHandlerSceneNode   (&BasicSceneApplication::NotifySceneNode,    this),
 	EventHandlerLoadProgress(&BasicSceneApplication::NotifyLoadProgress, this),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
-	m_pFirstFoundCamera(NULL),
+	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false)
 {
 	// Set application title
@@ -131,8 +131,8 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 	// Load the scene
 	bool bResult = pContainer->Load(sFilename);
 	if (bResult) {
-		// Set NULL-camera and default scene renderer
-		m_pFirstFoundCamera = NULL;
+		// Set a null pointer camera and default scene renderer
+		m_pFirstFoundCamera = nullptr;
 		m_sStartCamera		= "";
 		m_bHasLoadScreen	= false;
 
@@ -201,7 +201,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 			}
 
 			// Is there a given start camera?
-			SceneNode *pCamera = NULL;
+			SceneNode *pCamera = nullptr;
 			if (m_sStartCamera.GetLength()) {
 				SceneNode *pStartCamera = pContainer->Get(m_sStartCamera);
 				if (pStartCamera && pStartCamera->IsCamera())
@@ -351,7 +351,7 @@ void BasicSceneApplication::OnCreateRootScene()
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		// First, create the scene root container which holds the scene container with our 'concrete' scene within it
-		SceneContainer *pRootContainer = pSceneContext->GetRoot() ? (SceneContainer*)pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene") : NULL;
+		SceneContainer *pRootContainer = pSceneContext->GetRoot() ? (SceneContainer*)pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene") : nullptr;
 		if (pRootContainer) {
 			// Protect this important container!
 			pRootContainer->SetProtected(true);

@@ -107,7 +107,7 @@ class Queue {
 		*    Pops the bottom element from the queue (dequeue)
 		*
 		*  @param[out] pElement
-		*    If not NULL, this will receive the popped element
+		*    If not a null pointer, this will receive the popped element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -115,7 +115,7 @@ class Queue {
 		*  @note
 		*    - On error, pElement is NOT touched, so ensure that you take this case into account!
 		*/
-		bool Pop(ValueType *pElement = NULL);
+		bool Pop(ValueType *pElement = nullptr);
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class Queue {
 		*    Internal queue element
 		*/
 		struct QueueElement {
-			QueueElement *pNext;	/**< Pointer to the next element on the queue, can be NULL */
+			QueueElement *pNext;	/**< Pointer to the next element on the queue, can be a null pointer */
 			ValueType	  Data;		/**< The stored data */
 		};
 
@@ -180,8 +180,8 @@ class Queue {
 	//[-------------------------------------------------------]
 	private:
 		uint32		  m_nNumOfElements;	/**< Number of elements on the queue */
-		QueueElement *m_pTop;			/**< Pointer to the top element, can be NULL */
-		QueueElement *m_pBottom;		/**< Pointer to the bottom element, can be NULL */
+		QueueElement *m_pTop;			/**< Pointer to the top element, can be a null pointer */
+		QueueElement *m_pBottom;		/**< Pointer to the bottom element, can be a null pointer */
 
 
 };

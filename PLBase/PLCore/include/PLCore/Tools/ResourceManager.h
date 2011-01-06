@@ -112,7 +112,7 @@ template <class AType> class ResourceManager {
 		*    Resource name, if "" an unused name is set automatically
 		*
 		*  @return
-		*    Pointer to the created resource, NULL if there was an error
+		*    Pointer to the created resource, a null pointer if there was an error
 		*
 		*  @note
 		*    - If there's already a resource with this name, this resource is returned
@@ -169,7 +169,7 @@ template <class AType> class ResourceManager {
 		*    Get the standard resource
 		*
 		*  @return
-		*    The standart resource, NULL if there's no such resource
+		*    The standart resource, a null pointer if there's no such resource
 		*
 		*  @note
 		*    - There should always be a standart resource!
@@ -182,7 +182,7 @@ template <class AType> class ResourceManager {
 		*    Set the standard resource
 		*
 		*  @param[in] pResource
-		*    Resource which should be the standart resource, NULL to set no such resource
+		*    Resource which should be the standart resource, a null pointer to set no such resource
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe invalid resource)
@@ -190,7 +190,7 @@ template <class AType> class ResourceManager {
 		*  @see
 		*    - GetStandard()
 		*/
-		bool SetStandard(AType *pResource = NULL);
+		bool SetStandard(AType *pResource = nullptr);
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ template <class AType> class ResourceManager {
 		*    Filename of the resource to load
 		*
 		*  @return
-		*    Pointer to the loaded resource, NULL on error (maybe the resource can't be load)
+		*    Pointer to the loaded resource, a null pointer on error (maybe the resource can't be load)
 		*
 		*  @remarks
 		*    The resource name is set to the given filename. If there's already a resource with this
@@ -272,7 +272,7 @@ template <class AType> class ResourceManager {
 		*    Index of the resource
 		*
 		*  @return
-		*    The corresponding object, NULL if there's no match
+		*    The corresponding object, a null pointer if there's no match
 		*/
 		virtual AType *Get(PLGeneral::uint32 nIndex = 0) const;
 
@@ -284,7 +284,7 @@ template <class AType> class ResourceManager {
 		*    Resource name
 		*
 		*  @return
-		*    The corresponding resource, NULL if there's no match
+		*    The corresponding resource, a null pointer if there's no match
 		*
 		*  @note
 		*    - You can overload this function to specialize the behaviour. This is done
@@ -344,7 +344,7 @@ template <class AType> class ResourceManager {
 		*    Resource name
 		*
 		*  @return
-		*    Pointer to the created resource, NULL if there was an error
+		*    Pointer to the created resource, a null pointer if there was an error
 		*
 		*  @note
 		*    - This function is used inside the function Create(). If AType is an abstract
@@ -358,7 +358,7 @@ template <class AType> class ResourceManager {
 	//[-------------------------------------------------------]
 	protected:
 		PLGeneral::String								 m_sManagerName;		/**< Manager name */
-		AType											*m_pStandardResource;	/**< Standard resource, can be NULL */
+		AType											*m_pStandardResource;	/**< Standard resource, can be a null pointer */
 		bool											 m_bUnloadUnused;		/**< Unload unused resoures? */
 		PLGeneral::Array<AType*>						 m_lstResources;		/**< Resource list */
 		PLGeneral::HashMap<PLGeneral::String, AType*>	 m_mapResources;		/**< Resource map */

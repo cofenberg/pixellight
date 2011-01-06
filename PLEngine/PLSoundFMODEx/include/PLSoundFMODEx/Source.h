@@ -83,7 +83,7 @@ class Source : public PLSound::Source {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FMOD::Channel  *m_pChannel;						/**< Sound channel the source is played, can be NULL */
+		FMOD::Channel  *m_pChannel;						/**< Sound channel the source is played, can be a null pointer */
 		float			m_fFrequency;					/**< Default frequency */
 		float			m_fVolume;						/**< Source volume */
 		bool			m_b2D;							/**< Is the source 2D? */
@@ -99,7 +99,7 @@ class Source : public PLSound::Source {
 	//[ Public virtual PLSound::Source functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(PLSound::Buffer *pBuffer = NULL);
+		virtual bool Load(PLSound::Buffer *pBuffer = nullptr);
 		virtual void Unload();
 		virtual bool Play(bool bRestart = false);
 		virtual bool IsPlaying() const;

@@ -175,7 +175,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		*    Returns the render target that was set before the current render target was changed to the front/back render target
 		*
 		*  @return
-		*    The render target that was set before the current render target was changed to the front/back render target, can be NULL
+		*    The render target that was set before the current render target was changed to the front/back render target, can be a null pointer
 		*/
 		PLCOM_API PLRenderer::Surface *GetOriginalRenderTarget() const;
 
@@ -184,7 +184,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		*    Returns the current front render target
 		*
 		*  @return
-		*    The current front render target, can be NULL
+		*    The current front render target, can be a null pointer
 		*/
 		PLCOM_API PLRenderer::SurfaceTextureBuffer *GetFrontRenderTarget() const;
 
@@ -193,7 +193,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		*    Returns the current back render target
 		*
 		*  @return
-		*    The current back render target, can be NULL
+		*    The current back render target, can be a null pointer
 		*
 		*  @note
 		*    - The back render target receives the current drawings
@@ -218,8 +218,8 @@ class SRPBegin : public PLScene::SceneRendererPass {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Surface				 *m_pOriginalRenderTarget;		/**< The render target that was set before the current render target was changed to the front/back render target, can be NULL */
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Render targets, can be NULL */
+		PLRenderer::Surface				 *m_pOriginalRenderTarget;		/**< The render target that was set before the current render target was changed to the front/back render target, can be a null pointer */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Render targets, can be a null pointer */
 		bool							  m_bCurrentFrontRenderTarget;	/**< Index of the current front render target */
 
 

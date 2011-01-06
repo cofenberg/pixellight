@@ -88,7 +88,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 		*    Returns the PL physics world scene node container the physics joint is in
 		*
 		*  @return
-		*    The PL physics world scene node container the physics joint is in, NULL on error
+		*    The PL physics world scene node container the physics joint is in, a null pointer on error
 		*    (if that's the case, something went totally wrong :)
 		*
 		*  @note
@@ -101,7 +101,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 		*    Returns the PL physics joint
 		*
 		*  @return
-		*    The PL physics joint, NULL on error (if that's the case, something went totally wrong :)
+		*    The PL physics joint, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICS_API Joint *GetJoint() const;
 
@@ -110,7 +110,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 		*    Returns the parent PL physics body scene node modifier the joint is attached to
 		*
 		*  @return
-		*    The parent PL physics body scene node modifier, NULL if there's no such body
+		*    The parent PL physics body scene node modifier, a null pointer if there's no such body
 		*/
 		PLPHYSICS_API SNMPhysicsBody *GetParentBodyModifier() const;
 
@@ -119,7 +119,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 		*    Returns the child PL physics body scene node modifier the joint is attached to
 		*
 		*  @return
-		*    The child PL physics body scene node modifier, NULL if there's no such body
+		*    The child PL physics body scene node modifier, a null pointer if there's no such body
 		*/
 		PLPHYSICS_API SNMPhysicsBody *GetChildBodyModifier() const;
 
@@ -166,7 +166,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[-------------------------------------------------------]
 	protected:
 		PLGeneral::String  m_sChild;			/**< Name of the child scene node (which must have a 'SNMPhysicsBody' modifier!), can left undefined */
-		SCPhysicsWorld    *m_pWorldContainer;	/**< The PL physics world scene node container the physics joint is in, can be NULL */
+		SCPhysicsWorld    *m_pWorldContainer;	/**< The PL physics world scene node container the physics joint is in, can be a null pointer */
 		ElementHandler    *m_pJointHandler;		/**< Holds the PL physics joint (ALWAYS valid!) */
 
 

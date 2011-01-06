@@ -48,7 +48,7 @@ pl_implement_class(Modifier)
 *    Constructor
 */
 Modifier::Modifier() :
-	m_pWidget(NULL)
+	m_pWidget(nullptr)
 {
 }
 
@@ -122,7 +122,7 @@ void Modifier::Detach()
 		OnDetach(*m_pWidget);
 
 		// Clear pointer to widget
-		m_pWidget = NULL;
+		m_pWidget = nullptr;
 	}
 }
 

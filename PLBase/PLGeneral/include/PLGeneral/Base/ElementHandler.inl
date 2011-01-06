@@ -42,7 +42,7 @@ namespace PLGeneral {
 */
 template <class AType>
 ElementHandler<AType>::ElementHandler() :
-	m_pElement(NULL)
+	m_pElement(nullptr)
 {
 }
 

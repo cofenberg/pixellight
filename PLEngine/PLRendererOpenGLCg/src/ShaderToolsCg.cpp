@@ -37,7 +37,7 @@ namespace PLRendererOpenGLCg {
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-CGcontext ShaderToolsCg::m_pCgContext       = NULL;
+CGcontext ShaderToolsCg::m_pCgContext       = nullptr;
 uint32    ShaderToolsCg::m_nCgContexCounter = 0;
 
 
@@ -75,9 +75,9 @@ void ShaderToolsCg::ReleaseCgContextReference()
 	m_nCgContexCounter--;
 	if (!m_nCgContexCounter && m_pCgContext) {
 		PL_LOG(Info, String::Format("De-initialize Cg %d", CG_VERSION_NUM))
-		cgSetErrorCallback(NULL); // Just for sure :)
+		cgSetErrorCallback(nullptr); // Just for sure :)
 		cgDestroyContext(m_pCgContext);
-		m_pCgContext = NULL;
+		m_pCgContext = nullptr;
 	}
 }
 
@@ -100,7 +100,7 @@ CGprogram ShaderToolsCg::CreateCgProgram(CGprofile pCgProfile, const String &sSo
 	cgGLSetOptimalOptions(pCgProfile);
 
 	// Create the program
-	CGprogram pCgProgram = cgCreateProgram(m_pCgContext, CG_SOURCE, sSourceCode.GetASCII(), pCgProfile, sEntry.GetLength() ? sEntry.GetASCII() : "main", NULL);
+	CGprogram pCgProgram = cgCreateProgram(m_pCgContext, CG_SOURCE, sSourceCode.GetASCII(), pCgProfile, sEntry.GetLength() ? sEntry.GetASCII() : "main", nullptr);
 	if (!pCgProgram) {
 		// Error!
 		PL_LOG(Error, PLGeneral::String::Format("Can't create Cg program! Error: %s", cgGetErrorString(cgGetError())))

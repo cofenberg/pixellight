@@ -227,10 +227,10 @@ bool SystemLinux::Execute(const String &sCommand, const String &sParameters, con
 		errno = 0;
 
 		// Backup the current working directory and change to the given new one
-		char *pszOldWorkingDir = NULL;
+		char *pszOldWorkingDir = nullptr;
 		if (sWorkingDir.GetLength()) {
 			// Allocates the buffer dynamically...
-			pszOldWorkingDir = getcwd(NULL, 0);
+			pszOldWorkingDir = getcwd(nullptr, 0);
 
 			// Change directory
 			if (chdir((sWorkingDir.GetFormat() == String::ASCII) ? sWorkingDir.GetASCII() : (char*)sWorkingDir.GetUTF8()) != 0) {
@@ -270,9 +270,9 @@ bool SystemLinux::Execute(const String &sCommand, const String &sParameters, con
 String SystemLinux::GetLocaleLanguage() const
 {
 	// Get the locale
-	const char *pszSaveLocale = setlocale(LC_ALL, NULL);
+	const char *pszSaveLocale = setlocale(LC_ALL, nullptr);
 	setlocale(LC_ALL, "");
-	const String sLocal = setlocale(LC_ALL, NULL);
+	const String sLocal = setlocale(LC_ALL, nullptr);
 	setlocale(LC_ALL, pszSaveLocale);
 
 	// Find the '_'
@@ -283,7 +283,7 @@ String SystemLinux::GetLocaleLanguage() const
 String SystemLinux::GetCurrentDir() const
 {
 	// Get current directory and allocates the buffer dynamically
-	char *pszTemp = getcwd(NULL, 0);
+	char *pszTemp = getcwd(nullptr, 0);
 	const String sDir = String(pszTemp, false); // Do not copy, please
 
 	// Return the URL
@@ -302,7 +302,7 @@ bool SystemLinux::SetCurrentDir(const String &sPath)
 Thread *SystemLinux::GetCurrentThread() const
 {
 	// [TODO] Implement me! We probably can use 'pthread_getspecific()' for this...
-	return NULL;
+	return nullptr;
 }
 
 void SystemLinux::Exit(int nReturn)
@@ -321,7 +321,7 @@ Time SystemLinux::GetTime() const
 	struct tm sTime;
 	struct timeval now;
 
-	gettimeofday(&now, NULL);
+	gettimeofday(&now, nullptr);
 	localtime_r(&now.tv_sec, &sTime);
 
 	return Time(sTime.tm_year,
@@ -337,14 +337,14 @@ Time SystemLinux::GetTime() const
 uint32 SystemLinux::GetMilliseconds() const
 {
 	struct timeval now;
-	gettimeofday(&now, NULL);
+	gettimeofday(&now, nullptr);
 	return uint32(now.tv_sec*1000 + now.tv_usec/1000);
 }
 
 uint32 SystemLinux::GetMicroseconds() const
 {
 	struct timeval now;
-	gettimeofday(&now, NULL);
+	gettimeofday(&now, nullptr);
 	return uint32(now.tv_sec*1000000 + now.tv_usec);
 }
 

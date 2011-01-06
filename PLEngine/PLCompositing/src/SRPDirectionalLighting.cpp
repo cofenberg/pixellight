@@ -232,7 +232,7 @@ const VisNode *SRPDirectionalLighting::GetFirstDirectionalLightRec(const SQCull 
 	}
 
 	// Sorry, no result :/
-	return NULL;
+	return nullptr;
 }
 
 

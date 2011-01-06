@@ -68,7 +68,7 @@ Parameter *ParameterManager::CreateParameter(EDataType nType, const PLGeneral::S
 {
 	// Check parameter
 	if (nType >= UnknownDataType)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// IS there already a parameter with this name?
 	Parameter *pParameter = m_mapParameters.Get(sName);
@@ -299,7 +299,7 @@ bool ParameterManager::ReloadTextures() const
 //[-------------------------------------------------------]
 bool ParameterManager::IsParameter(const PLGeneral::String &sName) const
 {
-	return (m_mapParameters.Get(sName) != NULL);
+	return (m_mapParameters.Get(sName) != nullptr);
 }
 
 PLGeneral::String ParameterManager::GetParameterString(const PLGeneral::String &sName) const
@@ -733,10 +733,10 @@ TextureBuffer *ParameterManager::GetParameterTextureBuffer(const PLGeneral::Stri
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter) {
 		const Texture *pTexture = pParameter->GetValueTexture();
-		return pTexture ? pTexture->GetTextureBuffer() : NULL;
+		return pTexture ? pTexture->GetTextureBuffer() : nullptr;
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -761,7 +761,7 @@ int ParameterManager::SetParameterTextureBuffer(const PLGeneral::String &sName, 
 					pValueTexture->SetTextureBuffer(pTextureBuffer);
 				}
 			} else {
-				return !pParameter->SetValueTexture(NULL) ? -1 : 0;
+				return !pParameter->SetValueTexture(nullptr) ? -1 : 0;
 			}
 		}
 
@@ -776,7 +776,7 @@ int ParameterManager::SetParameterTextureBuffer(const PLGeneral::String &sName, 
 Texture *ParameterManager::GetParameterTexture(const PLGeneral::String &sName) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
-	return pParameter ? pParameter->GetValueTexture() : NULL;
+	return pParameter ? pParameter->GetValueTexture() : nullptr;
 }
 
 int ParameterManager::SetParameterTexture(const PLGeneral::String &sName, const PLGeneral::String &sFilename)

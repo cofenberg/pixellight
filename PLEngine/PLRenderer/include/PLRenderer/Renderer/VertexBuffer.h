@@ -187,7 +187,7 @@ class VertexBuffer : public Buffer {
 		*    Index of the vertex attribute which should be returned
 		*
 		*  @return
-		*    The requested vertex attribute, NULL on error
+		*    The requested vertex attribute, a null pointer on error
 		*/
 		PLRENDERER_API const Attribute *GetVertexAttribute(PLGeneral::uint32 nIndex = 0) const;
 
@@ -201,7 +201,7 @@ class VertexBuffer : public Buffer {
 		*    Pipeline channel (see ESemantic, maximum see MaxPipelineChannels)
 		*
 		*  @return
-		*    The first found vertex attribute with the requested semantic, NULL on error
+		*    The first found vertex attribute with the requested semantic, a null pointer on error
 		*/
 		PLRENDERER_API const Attribute *GetVertexAttribute(ESemantic nSemantic, PLGeneral::uint32 nChannel = 0) const;
 
@@ -235,9 +235,9 @@ class VertexBuffer : public Buffer {
 		*  @param[out] vMaxPos
 		*    Will receive the maximum bounding box position
 		*  @param[in]  pIndexBuffer
-		*    Optional index buffer to take only a set of vertices into account, set to NULL if not used
+		*    Optional index buffer to take only a set of vertices into account, set to a null pointer if not used
 		*/
-		PLRENDERER_API void CalculateBoundingBox(PLMath::Vector3 &vMinPos, PLMath::Vector3 &vMaxPos, PLRenderer::IndexBuffer *pIndexBuffer = NULL);
+		PLRENDERER_API void CalculateBoundingBox(PLMath::Vector3 &vMinPos, PLMath::Vector3 &vMaxPos, PLRenderer::IndexBuffer *pIndexBuffer = nullptr);
 
 		/**
 		*  @brief
@@ -248,9 +248,9 @@ class VertexBuffer : public Buffer {
 		*  @param[out] fRadius
 		*    Will receive the bounding sphere radius
 		*  @param[in]  pIndexBuffer
-		*    Optional index buffer to take only a set of vertices into account, set to NULL if not used
+		*    Optional index buffer to take only a set of vertices into account, set to a null pointer if not used
 		*/
-		PLRENDERER_API void CalculateBoundingSphere(PLMath::Vector3 &vPos, float &fRadius, PLRenderer::IndexBuffer *pIndexBuffer = NULL);
+		PLRENDERER_API void CalculateBoundingSphere(PLMath::Vector3 &vPos, float &fRadius, PLRenderer::IndexBuffer *pIndexBuffer = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -269,7 +269,7 @@ class VertexBuffer : public Buffer {
 		*    Pipeline channel (see ESemantic)
 		*
 		*  @return
-		*    The data of the locked vertex buffer, NULL on error
+		*    The data of the locked vertex buffer, a null pointer on error
 		*
 		*  @note
 		*    - See GetData() in Buffer

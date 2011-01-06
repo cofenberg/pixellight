@@ -62,9 +62,9 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
-		PLMATH_API GraphNode(const PLGeneral::String &sName = "", PLGeneral::ElementManager<GraphNode> *pManager = NULL);
+		PLMATH_API GraphNode(const PLGeneral::String &sName = "", PLGeneral::ElementManager<GraphNode> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*    Neighbour index
 		*
 		*  @return
-		*    Requested neighbour node, NULL on error
+		*    Requested neighbour node, a null pointer on error
 		*/
 		PLMATH_API const GraphNode *GetNeighbour(PLGeneral::uint32 nNeighbour) const;
 
@@ -131,7 +131,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*    Neighbour index
 		*
 		*  @return
-		*    Requested neighbour node, NULL on error
+		*    Requested neighbour node, a null pointer on error
 		*/
 		PLMATH_API GraphNode *GetNeighbour(PLGeneral::uint32 nNeighbour);
 

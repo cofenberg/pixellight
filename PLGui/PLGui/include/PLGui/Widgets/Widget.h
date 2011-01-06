@@ -163,9 +163,9 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    If 'true', the widget is not automatically destroyed by Gui and will not appear in the list of top-level windows
 		*
 		*  @remarks
-		*    If pParent == NULL, the root widget of the system GUI is used as parent widget
+		*    If pParent == nullptr, the root widget of the system GUI is used as parent widget
 		*/
-		PLGUI_API Widget(Widget *pParent = NULL, bool bManaged = false);
+		PLGUI_API Widget(Widget *pParent = nullptr, bool bManaged = false);
 
 		/**
 		*  @brief
@@ -360,7 +360,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    Get parent widget
 		*
 		*  @return
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*/
 		PLGUI_API Widget *GetParent() const;
 
@@ -372,7 +372,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    The other widget
 		*
 		*  @return
-		*    The first widget that is parent of both widgets, or NULL if there is none
+		*    The first widget that is parent of both widgets, or a null pointer if there is none
 		*/
 		PLGUI_API Widget *GetCommonParent(const Widget &cWidget) const;
 
@@ -416,7 +416,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    Get first child widget
 		*
 		*  @return
-		*    Child widget, or NULL
+		*    Child widget, or a null pointer
 		*/
 		PLGUI_API Widget *GetFirstChild() const;
 
@@ -425,7 +425,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    Get last child widget
 		*
 		*  @return
-		*    Child widget, or NULL
+		*    Child widget, or a null pointer
 		*/
 		PLGUI_API Widget *GetLastChild() const;
 
@@ -434,7 +434,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    Get previous sibling widget
 		*
 		*  @return
-		*    Sibling widget, or NULL
+		*    Sibling widget, or a null pointer
 		*/
 		PLGUI_API Widget *GetPreviousSibling() const;
 
@@ -443,7 +443,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    Get next sibling widget
 		*
 		*  @return
-		*    Sibling widget, or NULL
+		*    Sibling widget, or a null pointer
 		*/
 		PLGUI_API Widget *GetNextSibling() const;
 
@@ -651,7 +651,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] pWidget
 		*    Other widget used to align relative to (only matters for 'ZAbove' or 'ZBehind')
 		*/
-		PLGUI_API void SetZPos(EZPos nZPos, Widget *pWidget = NULL);
+		PLGUI_API void SetZPos(EZPos nZPos, Widget *pWidget = nullptr);
 
 		/**
 		*  @brief
@@ -1035,7 +1035,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    Name of modifier
 		*
 		*  @remarks
-		*    Modifier, or NULL if no modifier with that name exists
+		*    Modifier, or a null pointer if no modifier with that name exists
 		*/
 		PLGUI_API Modifier *GetModifier(const PLGeneral::String &sName) const;
 
@@ -1204,7 +1204,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    don't call anything that would need a real widget backend to be present. It is only used
 		*    to server as a parent for new widgets and should not be used for anything else. Also note
 		*    that if you pass a root widget as parent, it will be used to obtain the GUI pointer but
-		*    than be discarded (afterwards, GetParent() of the new widget will return NULL)
+		*    than be discarded (afterwards, GetParent() of the new widget will return a null pointer)
 		*/
 		PLGUI_API Widget(Gui *pGui);
 

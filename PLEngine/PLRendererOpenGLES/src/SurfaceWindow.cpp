@@ -62,7 +62,7 @@ SurfaceWindow::~SurfaceWindow()
 */
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
-	m_hSurface(NULL)
+	m_hSurface(nullptr)
 {
 	// Init
 	Init();
@@ -127,7 +127,7 @@ bool SurfaceWindow::Init()
 		Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
 
 		// Create window surface
-		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), (EGLNativeWindowType)nWindow, NULL);
+		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), (EGLNativeWindowType)nWindow, nullptr);
 		if (m_hSurface == EGL_NO_SURFACE) {
 			PL_LOG(Warning, "Could not create OpenGL ES surface");
 
@@ -150,7 +150,7 @@ void SurfaceWindow::DeInit()
 		// If this is the current render target, make the main window to the new current one
 		if (cRendererOpenGLES.GetRenderTarget() == this) {
 			// Make the internal dummy surface to the currently used one
-			cRendererOpenGLES.MakeCurrent(NULL);
+			cRendererOpenGLES.MakeCurrent(nullptr);
 		}
 
 		// Destroy the EGL surface
@@ -167,7 +167,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 bool SurfaceWindow::UnmakeCurrent()
 {
 	// Make the internal dummy surface to the currently used one
-	return (((Renderer&)GetRenderer()).MakeCurrent(NULL) == EGL_TRUE);
+	return (((Renderer&)GetRenderer()).MakeCurrent(nullptr) == EGL_TRUE);
 }
 
 bool SurfaceWindow::Present()

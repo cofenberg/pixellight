@@ -186,7 +186,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						// always easy to pinpoint the problem directly to the mipmaps. So, to avoid frustration during bug finding,
 						// we just create the missing mipmap levels down to 1x1 with a white color - so it's possible to 'see' which texture
 						// isn't correct without reading the log message from above. (for some people it appears to be hard to read logs *g*)
-						char *pszBuffer = NULL;
+						char *pszBuffer = nullptr;
 						do {
 							// First at all, 'half' the current dimension
 							if (vSize.x > 1)
@@ -261,7 +261,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 		glBindTexture(GL_TEXTURE_2D, m_nOpenGLESTexture);
 
 		// Upload the data
-		glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
 
 		// If compressed internal format, we would check whether all went fine - but OpenGL ES 2.0 provides no functionality for this :/
 

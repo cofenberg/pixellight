@@ -59,7 +59,7 @@ namespace PLPhysics {
 *
 *  @remarks
 *    A joint will constrain the motion of the two bodies it's attached to. A joint can be
-*    attached to two joints and one of this to bodies may be NULL which means that it's
+*    attached to two joints and one of this to bodies may be a null pointer which means that it's
 *    attached to 'the world'. (static)
 */
 class Joint : public Element {
@@ -89,7 +89,7 @@ class Joint : public Element {
 		*    Returns a pointer to the parent rigid body
 		*
 		*  @return
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*/
 		PLPHYSICS_API Body *GetParentBody() const;
 
@@ -98,7 +98,7 @@ class Joint : public Element {
 		*    Returns a pointer to the attached rigid body
 		*
 		*  @return
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*/
 		PLPHYSICS_API Body *GetChildBody() const;
 
@@ -208,9 +208,9 @@ class Joint : public Element {
 		*  @param[in] cJointImpl
 		*    Reference to the physics API specific joint implementation
 		*  @param[in] pParentBody
-		*    Pointer to the parent rigid body, can be NULL
+		*    Pointer to the parent rigid body, can be a null pointer
 		*  @param[in] pChildBody
-		*    Pointer to the attached rigid body, can be NULL
+		*    Pointer to the attached rigid body, can be a null pointer
 		*/
 		PLPHYSICS_API Joint(World &cWorld, JointImpl &cJointImpl, Body *pParentBody, Body *pChildBody);
 

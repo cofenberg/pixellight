@@ -57,7 +57,7 @@ DatabaseQueryResult::~DatabaseQueryResult()
 DatabaseQueryResult::DatabaseQueryResult(PLDatabase::DatabaseQuery &cParentQuery) : PLDatabase::DatabaseQueryResult(cParentQuery),
 	m_nRow(0),
 	m_nColumn(0),
-	m_ppszResult(NULL),
+	m_ppszResult(nullptr),
 	m_nCurrentRow(1)
 {
 }
@@ -69,7 +69,7 @@ DatabaseQueryResult::DatabaseQueryResult(PLDatabase::DatabaseQuery &cParentQuery
 DatabaseQueryResult::DatabaseQueryResult(const DatabaseQueryResult &cSource) : PLDatabase::DatabaseQueryResult(cSource.GetQuery()),
 	m_nRow(0),
 	m_nColumn(0),
-	m_ppszResult(NULL),
+	m_ppszResult(nullptr),
 	m_nCurrentRow(1)
 {
 	// No implementation because the copy constructor is never used
@@ -139,7 +139,8 @@ const Array<String> &DatabaseQueryResult::FetchFieldList()
 
 const HashMap<String, String> *DatabaseQueryResult::FetchRow()
 {
-	if (EndOfRow()) return NULL; // Error!
+	if (EndOfRow())
+		return nullptr; // Error!
 
 	m_mapRow.Clear();
 	for (int i=0; i<m_nColumn; i++)

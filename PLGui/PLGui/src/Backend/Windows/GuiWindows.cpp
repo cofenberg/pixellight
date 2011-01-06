@@ -78,9 +78,9 @@ ULONG_PTR					 gdiplusToken;
 *    Constructor
 */
 GuiWindows::GuiWindows(Gui *pGui) : GuiImpl(pGui),
-	m_hInstance(GetModuleHandle(NULL)),
+	m_hInstance(GetModuleHandle(nullptr)),
 	m_nThreadID(GetCurrentThreadId()),
-	m_pMouseOver(NULL)
+	m_pMouseOver(nullptr)
 {
 	// Create window class
 	m_WndClass.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
@@ -88,10 +88,10 @@ GuiWindows::GuiWindows(Gui *pGui) : GuiImpl(pGui),
 	m_WndClass.cbClsExtra		= 0;
 	m_WndClass.cbWndExtra		= 0;
 	m_WndClass.hInstance		= m_hInstance;
-	m_WndClass.hIcon			= LoadIcon(NULL, IDI_APPLICATION);
-	m_WndClass.hCursor			= NULL;
-	m_WndClass.hbrBackground	= NULL;
-	m_WndClass.lpszMenuName		= NULL;
+	m_WndClass.hIcon			= LoadIcon(nullptr, IDI_APPLICATION);
+	m_WndClass.hCursor			= nullptr;
+	m_WndClass.hbrBackground	= nullptr;
+	m_WndClass.lpszMenuName		= nullptr;
 	m_WndClass.lpszClassName	= TEXT("PLGuiWidget");
 
 	// Register window class
@@ -101,7 +101,7 @@ GuiWindows::GuiWindows(Gui *pGui) : GuiImpl(pGui),
 	}
 
 	// Initialize GDI+
-	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
 }
 
 /**
@@ -128,14 +128,14 @@ bool GuiWindows::HasPendingMessages()
 {
 	// Look if messages are waiting
 	MSG msg;
-	return PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != 0;
+	return PeekMessage(&msg, nullptr, 0, 0, PM_NOREMOVE) != 0;
 }
 
 void GuiWindows::ProcessMessage()
 {
 	// Wait and get message
 	MSG sMsg;
-	GetMessage(&sMsg, NULL, 0, 0);
+	GetMessage(&sMsg, nullptr, 0, 0);
 
 	// Process non-window messages
 	if (sMsg.message == WM_QUIT) {
@@ -165,7 +165,7 @@ void GuiWindows::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	HWND hWnd = (pWidget ? (HWND)pWidget->GetWindowHandle() : NULL);
+	HWND hWnd = (pWidget ? (HWND)pWidget->GetWindowHandle() : nullptr);
 
 	// Post message
 	switch (cMessage.GetType()) {
@@ -352,7 +352,7 @@ void GuiWindows::EnumerateScreens(List<Screen*> &lstScreens)
 {
 	// Enumerate display monitors
 	m_lstScreens.Clear();
-	if (EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)this)) {
+	if (EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, (LPARAM)this)) {
 		// Copy list of screens
 		lstScreens = m_lstScreens;
 	} else {
@@ -395,7 +395,7 @@ void GuiWindows::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
 		lf.lfFaceName[0]	= '\0';
 		lf.lfCharSet		= DEFAULT_CHARSET;
 		lf.lfPitchAndFamily	= 0;
-		EnumFontFamiliesEx(::GetDC(NULL), &lf, (FONTENUMPROCW)FontEnumProc, (LPARAM)(void*)&lstFontNames, 0);
+		EnumFontFamiliesEx(::GetDC(nullptr), &lf, (FONTENUMPROCW)FontEnumProc, (LPARAM)(void*)&lstFontNames, 0);
 	}
 
 	// Enumerate all styles and charsets of all fonts
@@ -408,7 +408,7 @@ void GuiWindows::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
 		wcscpy_s(lf.lfFaceName, sName.GetUnicode());
 		lf.lfCharSet		= DEFAULT_CHARSET;
 		lf.lfPitchAndFamily	= 0;
-		EnumFontFamiliesEx(::GetDC(NULL), &lf, (FONTENUMPROCW)FontEnumProc2, (LPARAM)(void*)&lstFonts, 0);
+		EnumFontFamiliesEx(::GetDC(nullptr), &lf, (FONTENUMPROCW)FontEnumProc2, (LPARAM)(void*)&lstFonts, 0);
 	}
 }
 
@@ -465,12 +465,12 @@ ClipBoardImpl *GuiWindows::CreateClipBoardImpl(ClipBoard &cClipBoard) const
 LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
 	// Get pointers to widget and GUI
-	WidgetWindows *pWidgetWindows = NULL;
+	WidgetWindows *pWidgetWindows = nullptr;
 	if (nMsg == WM_CREATE) pWidgetWindows = (WidgetWindows*)((CREATESTRUCT*)lParam)->lpCreateParams;
-	else if (hWnd != NULL) pWidgetWindows = (WidgetWindows*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-	Widget	   *pWidget		= (pWidgetWindows ? pWidgetWindows->m_pWidget	 : NULL);
-	Gui		   *pGui		= (pWidget		  ? pWidget->GetGui()			 : NULL);
-	GuiWindows *pGuiWindows	= (pGui			  ? (GuiWindows*)pGui->GetImpl() : NULL);
+	else if (hWnd != nullptr) pWidgetWindows = (WidgetWindows*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+	Widget	   *pWidget		= (pWidgetWindows ? pWidgetWindows->m_pWidget	 : nullptr);
+	Gui		   *pGui		= (pWidget		  ? pWidget->GetGui()			 : nullptr);
+	GuiWindows *pGuiWindows	= (pGui			  ? (GuiWindows*)pGui->GetImpl() : nullptr);
 
 	// Disable screen saver and monitor power management...
 	// [TODO] Always? Shouldn't this be an option?
@@ -485,7 +485,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 	}
 
 	// We need a widget now
-	if (pWidgetWindows != NULL) {
+	if (pWidgetWindows != nullptr) {
 		// Process message
 		switch (nMsg) {
 			// Initialize widget
@@ -507,7 +507,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 
 				// Mark widget destroyed
 				pWidgetWindows->m_bDestroyed = true;
-				pWidgetWindows->m_hWnd		 = NULL;
+				pWidgetWindows->m_hWnd		 = nullptr;
 				return 0;
 
 			// Close widget
@@ -697,7 +697,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 				// Check if mouse-enter widget has changed
 				if (pGuiWindows->m_pMouseOver == pWidget) {
 					// Reset mouse-enter widget
-					pGuiWindows->m_pMouseOver = NULL;
+					pGuiWindows->m_pMouseOver = nullptr;
 				}
 				return 0;
 
@@ -833,14 +833,14 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			{
 				// Get dropped filenames. Because there's no way - without extreme overhead :) - to check whether
 				// we really need to use Unicode or ASCII is quite enough, we always use Unicode just to be sure.
-				uint32 nNumOfFiles = DragQueryFileW((HDROP)wParam, 0xFFFFFFFF, (LPWSTR)NULL, 0);
+				uint32 nNumOfFiles = DragQueryFileW((HDROP)wParam, 0xFFFFFFFF, (LPWSTR)nullptr, 0);
 				if (nNumOfFiles) {
 					// Create the file list
 					Array<String> lstFiles;
 					lstFiles.Resize(nNumOfFiles);
 					for (uint32 i=0; i<nNumOfFiles; i++) {
 						// Get the length of the string (+1 for \0)
-						UINT nSize = DragQueryFileW((HDROP)wParam, i, NULL, 0) + 1;
+						UINT nSize = DragQueryFileW((HDROP)wParam, i, nullptr, 0) + 1;
 
 						// Create the string and fill it
 						wchar_t *pszFile = new wchar_t[nSize];
@@ -1029,7 +1029,7 @@ void GuiWindows::ProcessTrayIconMessage(TrayIcon *pTrayIcon, uint32 nID, uint32 
 Widget *GuiWindows::GetPLGuiWidget(HWND hWnd)
 {
 	// Check window handle
-	if (hWnd != NULL) {
+	if (hWnd != nullptr) {
 		// Check window class name
 		wchar_t szClassName[32];
 		GetClassNameW(hWnd, szClassName, 32);
@@ -1045,7 +1045,7 @@ Widget *GuiWindows::GetPLGuiWidget(HWND hWnd)
 	}
 
 	// Not a valid PLGui widget
-	return NULL;
+	return nullptr;
 }
 
 

@@ -64,8 +64,8 @@ JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParen
 	dWorldID pODEWorld = ((World&)cWorld).GetODEWorld();
 
 	// Get the ODE physics parent and child bodies
-	const dBodyID pODEParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetODEBody() : NULL;
-	const dBodyID pODEChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetODEBody() : NULL;
+	const dBodyID pODEParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetODEBody() : nullptr;
+	const dBodyID pODEChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetODEBody() : nullptr;
 
 	// Create the ODE physics joint
 	dJointID pODEJoint = dJointCreateUniversal(pODEWorld, 0);

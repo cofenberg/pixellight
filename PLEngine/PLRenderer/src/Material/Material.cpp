@@ -133,7 +133,7 @@ Parameter *Material::GetParameter(const String &sName) const
 		}
 
 		// Check effect
-		return GetEffect() ? GetEffect()->GetParameterManager().GetParameter(sName) : NULL;
+		return GetEffect() ? GetEffect()->GetParameterManager().GetParameter(sName) : nullptr;
 	}
 }
 
@@ -153,7 +153,7 @@ TextureBuffer *Material::GetParameterTextureBuffer(const String &sName) const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -263,7 +263,7 @@ bool Material::AddMaterial(Material &cMaterial)
 Material *Material::GetMaterial(uint32 nIndex) const
 {
 	const MaterialHandler *pMaterialHandler = m_lstMaterials.Get(nIndex);
-	return pMaterialHandler ? pMaterialHandler->GetResource() : NULL;
+	return pMaterialHandler ? pMaterialHandler->GetResource() : nullptr;
 }
 
 /**
@@ -305,7 +305,7 @@ bool Material::RemoveAllMaterials()
 */
 Effect *Material::GetEffect() const
 {
-	return m_pFXHandler ? (Effect*)m_pFXHandler->GetResource() : NULL;
+	return m_pFXHandler ? (Effect*)m_pFXHandler->GetResource() : nullptr;
 }
 
 /**
@@ -321,7 +321,7 @@ void Material::SetEffect(Effect *pFX)
 	} else {
 		if (m_pFXHandler) {
 			delete m_pFXHandler;
-			m_pFXHandler = NULL;
+			m_pFXHandler = nullptr;
 		}
 	}
 }
@@ -380,7 +380,7 @@ bool Material::SetupPass(uint32 nIndex) const
 */
 Material::Material(MaterialManager &cManager, const String &sName) : PLCore::Resource<Material>(sName, &cManager),
 	m_pParameterManager(new ParameterManager(cManager.GetRendererContext())),
-	m_pFXHandler(NULL)
+	m_pFXHandler(nullptr)
 {
 }
 

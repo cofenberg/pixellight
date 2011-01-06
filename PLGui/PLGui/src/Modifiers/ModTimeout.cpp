@@ -61,7 +61,7 @@ pl_implement_class(ModTimeout)
 ModTimeout::ModTimeout() :
 	Timeout(this),
 	SlotOnTimer(this),
-	m_pTimer(NULL)
+	m_pTimer(nullptr)
 {
 }
 

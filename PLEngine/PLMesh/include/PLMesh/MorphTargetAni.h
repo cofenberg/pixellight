@@ -107,7 +107,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*  @param[in] sName
 		*    Name
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*
 		*  @note
 		*    - If you provide the pointer to the owner manager the morph target animation
@@ -115,7 +115,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*    - If the desired name is already in use inside the owner manager an alternative
 		*      name is set
 		*/
-		PLMESH_API MorphTargetAni(const PLGeneral::String &sName, PLGeneral::ElementManager<MorphTargetAni> *pManager = NULL);
+		PLMESH_API MorphTargetAni(const PLGeneral::String &sName, PLGeneral::ElementManager<MorphTargetAni> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -144,18 +144,18 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*  @param[in]  fWeight
 		*    Weight (0.0-1.0)
 		*  @param[in]  pMesh
-		*    Mesh of the given morph target weights array, can be NULL
+		*    Mesh of the given morph target weights array, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - If pMesh is not NULL lstMorphTargetWeights is a list of ALL morph target influcences
+		*    - If pMesh is not a null pointer lstMorphTargetWeights is a list of ALL morph target influcences
 		*      of the given mesh, else lstMorphTargetWeights is only a list of the morph target
 		*      weights of THIS animation!
 		*/
 		PLMESH_API bool ApplyMorphTargetWeight(PLGeneral::Array<float> &lstMorphTargetWeights,
-											   PLGeneral::uint32 nFrame, float fWeight = 1.0f, const Mesh *pMesh = NULL) const;
+											   PLGeneral::uint32 nFrame, float fWeight = 1.0f, const Mesh *pMesh = nullptr) const;
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*  @param[in]  fWeight
 		*    Weight (0.0-1.0)
 		*  @param[in]  pMesh
-		*    Mesh of the given morph target weights array, can be NULL
+		*    Mesh of the given morph target weights array, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -183,7 +183,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*/
 		PLMESH_API bool ApplyMorphTargetWeight(PLGeneral::Array<float> &lstMorphTargetWeights,
 											   PLGeneral::uint32 nFrame1, PLGeneral::uint32 nFrame2, float fTime,
-											   float fWeight = 1.0f, const Mesh *pMesh = NULL) const;
+											   float fWeight = 1.0f, const Mesh *pMesh = nullptr) const;
 
 
 	//[-------------------------------------------------------]

@@ -82,7 +82,7 @@ bool JointHandler::CalculateStates(const JointHandler *pJointHandler)
 	if (pJoint) {
 		// Is there a valid parent joint?
 		if (!m_bUserControlled) {
-			const Joint *pParentJoint = pJointHandler ? pJointHandler->GetElement() : NULL;
+			const Joint *pParentJoint = pJointHandler ? pJointHandler->GetElement() : nullptr;
 			if (pParentJoint) {
 				// Valid parent?
 				if (pParentJoint->GetID() == pJoint->GetParent()) {

@@ -52,7 +52,7 @@ namespace PLScene {
 */
 SceneContext *SceneHierarchyNode::GetSceneContext() const
 {
-	return m_pHierarchy ? m_pHierarchy->GetSceneContainer().GetSceneContext() : NULL;
+	return m_pHierarchy ? m_pHierarchy->GetSceneContainer().GetSceneContext() : nullptr;
 }
 
 /**
@@ -188,10 +188,10 @@ SceneHierarchyNodeItem *SceneHierarchyNode::GetFirstItem() const
 */
 SceneHierarchyNode::SceneHierarchyNode(SceneHierarchy &cHierarchy) :
 	m_pHierarchy(&cHierarchy),
-	m_pParentNode(NULL),
+	m_pParentNode(nullptr),
 	m_nLevel(0),
 	m_nNumOfItems(0),
-	m_pFirstItem(NULL)
+	m_pFirstItem(nullptr)
 {
 	// Get an unique ID
 	m_nID = m_pHierarchy->m_nTotalNumOfNodes;
@@ -254,13 +254,13 @@ void SceneHierarchyNode::FreeNode(SceneHierarchyNode &cNode)
 */
 void SceneHierarchyNode::Init()
 {
-//	m_pHierarchy	 = NULL;	// Do not touch!
+//	m_pHierarchy	 = nullptr;	// Do not touch!
 //	m_nID			 = 0;		// Do not touch!
 	m_nLevel		 = 0;
 //	m_cAABoundingBox = ?;		// We do not need touch this
-	m_pParentNode	 = NULL;
+	m_pParentNode	 = nullptr;
 	m_nNumOfItems	 = 0;
-	m_pFirstItem	 = NULL;
+	m_pFirstItem	 = nullptr;
 }
 
 

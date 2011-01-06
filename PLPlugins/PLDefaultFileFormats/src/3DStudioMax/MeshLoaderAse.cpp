@@ -372,14 +372,14 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		} else if (cTokenizer.CompareToken("*GEOMOBJECT")) {
 			// Vertex list
 			uint32 nNumOfVertices = 0;
-			float *pVertexList    = NULL; // float[3]
-			float *pNormalList    = NULL; // float[3]
+			float *pVertexList    = nullptr; // float[3]
+			float *pNormalList    = nullptr; // float[3]
 			// Face list
-			Ase::FaceList *pFaceList = NULL;
-			Ase::TexFace  *pTexFaces = NULL;
+			Ase::FaceList *pFaceList = nullptr;
+			Ase::TexFace  *pTexFaces = nullptr;
 			// Texture coordinates list
 			uint32 nNumOfTexCoords = 0;
-			float *pTexCoordList   = NULL; // float[2]
+			float *pTexCoordList   = nullptr; // float[2]
 
 			// Read *GEOMOBJECT
 			while (cTokenizer.GetNextToken().GetLength() && !cTokenizer.CompareToken("}")) {
@@ -547,7 +547,7 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				Ase::Vertex cVertex;
 				for (uint32 i=0; i<pFaceList->nNumOfFaces; i++) {
 					Ase::Face    &cFace    = pFaceList->pFaces[i];
-					Ase::TexFace *pTexFace = NULL;
+					Ase::TexFace *pTexFace = nullptr;
 					if (pTexFaces) pTexFace = &pTexFaces[i];
 					for (uint32 nVertex=0; nVertex<3; nVertex++) {
 						// Setup face vertex

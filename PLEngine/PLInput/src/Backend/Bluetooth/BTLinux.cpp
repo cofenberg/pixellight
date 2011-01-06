@@ -95,7 +95,7 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 		dbus_message_unref(pMessage);
 		if (pReply) {
 			// Get adapter name
-			const char *pszAdapter = NULL;
+			const char *pszAdapter = nullptr;
 			dbus_message_get_args(pReply, &sError, DBUS_TYPE_OBJECT_PATH, &pszAdapter, DBUS_TYPE_INVALID);
 			String sAdapter = pszAdapter;
 			dbus_message_unref(pReply);
@@ -147,7 +147,7 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 								// Check argument type
 								if (nType == DBUS_TYPE_STRING) {
 									// Device address
-									char *pszAddress = NULL;
+									char *pszAddress = nullptr;
 									dbus_message_iter_get_basic(&sIter, &pszAddress);
 									if (pszAddress) {
 										sDeviceAddress = pszAddress;
@@ -177,7 +177,7 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 													dbus_message_iter_recurse(&sDictIter, &sVariantIter);
 													if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_STRING) {
 														// Get value
-														char *pszValue = NULL;
+														char *pszValue = nullptr;
 														dbus_message_iter_get_basic(&sVariantIter, &pszValue);
 
 														// Save value

@@ -121,7 +121,7 @@ class ConstructorDesc : public MemberDesc {
 		*    Get constructor
 		*
 		*  @return
-		*    Pointer to constructor (can be NULL)
+		*    Pointer to constructor (can be a null pointer)
 		*/
 		PLCORE_API virtual DynFunc *GetConstructor() const;
 
@@ -130,7 +130,7 @@ class ConstructorDesc : public MemberDesc {
 		*    Create object
 		*
 		*  @return
-		*    Pointer to new object (can be NULL)
+		*    Pointer to new object (can be a null pointer)
 		*/
 		PLCORE_API virtual Object *Create(const DynParams &cParams);
 

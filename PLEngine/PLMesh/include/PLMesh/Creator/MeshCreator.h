@@ -127,7 +127,7 @@ class MeshCreator : public PLCore::Object {
 		*    Static mesh?
 		*
 		*  @return
-		*    The created/manipulated mesh, NULL on error
+		*    The created/manipulated mesh, a null pointer on error
 		*
 		*  @note
 		*    - The default implementation sets the first material

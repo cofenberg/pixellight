@@ -53,7 +53,7 @@ MeshMorphTarget::MeshMorphTarget(Mesh *pMesh) :
 	m_sName("Morph target"),
 	m_bRelative(false),
 	m_pMesh(pMesh),
-	m_pVertexBuffer(pMesh && pMesh->GetRenderer() ? pMesh->GetRenderer()->CreateVertexBuffer() : NULL)
+	m_pVertexBuffer(pMesh && pMesh->GetRenderer() ? pMesh->GetRenderer()->CreateVertexBuffer() : nullptr)
 {
 }
 
@@ -178,7 +178,7 @@ MeshMorphTarget &MeshMorphTarget::operator =(const MeshMorphTarget &cSource)
 		} else {
 			// Destroy vertex buffer
 			delete m_pVertexBuffer;
-			m_pVertexBuffer = NULL;
+			m_pVertexBuffer = nullptr;
 		}
 	} else {
 		if (cSource.m_pVertexBuffer && m_pMesh) {

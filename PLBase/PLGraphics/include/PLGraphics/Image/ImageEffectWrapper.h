@@ -80,7 +80,7 @@ class ImageEffectWrapper: public ImageEffect {
 		*    Get wrapped image effect
 		*
 		*  @return
-		*    Pointer to wrapped image effect, can be NULL
+		*    Pointer to wrapped image effect, can be a null pointer
 		*/
 		PLGRAPHICS_API ImageEffect *GetImageEffect() const;
 
@@ -98,7 +98,7 @@ class ImageEffectWrapper: public ImageEffect {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ImageEffect	*m_pImageEffect;	/**< The wrapped image effect, can be NULL */
+		ImageEffect	*m_pImageEffect;	/**< The wrapped image effect, can be a null pointer */
 
 
 };

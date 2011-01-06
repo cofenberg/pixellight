@@ -113,7 +113,7 @@ class SceneQuery : public PLCore::Object, public PLGeneral::Element<SceneQuery> 
 		*    Returns the scene context the scene query is in
 		*
 		*  @return
-		*    The scene context the scene query is in, can but shouldn't be NULL
+		*    The scene context the scene query is in, can but shouldn't be a null pointer
 		*/
 		PLS_API SceneContext *GetSceneContext() const;
 
@@ -198,7 +198,7 @@ class SceneQuery : public PLCore::Object, public PLGeneral::Element<SceneQuery> 
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SceneContainer *m_pSceneContainer;	/**< Scene container this query operates on, NEVER NULL */
+		SceneContainer *m_pSceneContainer;	/**< Scene container this query operates on, NEVER a null pointer */
 
 
 };

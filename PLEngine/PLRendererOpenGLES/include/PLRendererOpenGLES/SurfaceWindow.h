@@ -116,7 +116,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		EGLSurface m_hSurface;	/**< EGL surface handle, can be NULL */
+		EGLSurface m_hSurface;	/**< EGL surface handle, can be a null pointer */
 
 
 };

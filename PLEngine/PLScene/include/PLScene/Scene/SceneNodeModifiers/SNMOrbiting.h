@@ -155,7 +155,7 @@ class SNMOrbiting : public SceneNodeModifier {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*/
 		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 

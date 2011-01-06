@@ -68,9 +68,9 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 		*  @param[in] sName
 		*    Resource name to set
 		*  @param[in] pManager
-		*    Resource manager using this resource, can be NULL
+		*    Resource manager using this resource, can be a null pointer
 		*/
-		PLMATH_API Graph(const PLGeneral::String &sName = "", PLCore::ResourceManager<Graph> *pManager = NULL);
+		PLMATH_API Graph(const PLGeneral::String &sName = "", PLCore::ResourceManager<Graph> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 		*
 		*  @return
 		*    The shortest path from the start node to the end node,
-		*    NULL if no such path exist. (you have do delete this path by yourself!)
+		*    a null pointer if no such path exist. (you have do delete this path by yourself!)
 		*
 		*  @note
 		*    - Dijkstra's single source shortest path algorithm is used
@@ -103,7 +103,7 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 	private:
 		// Temp data used during path finding (so we do not reallocate it each time...)
 		PLGeneral::Array<float>					 m_lstNodeDistance;	/**< Shortest distance of each node to start node */
-		PLGeneral::Array<GraphNode*>			 m_lstPreviousNode;	/**< Previous node, if NULL, not processed yet */
+		PLGeneral::Array<GraphNode*>			 m_lstPreviousNode;	/**< Previous node, if a null pointer, not processed yet */
 		PLGeneral::Bitset						 m_lstTouched;		/**< Holds whether nodes are already touched or not */
 		PLGeneral::Bitset						 m_lstProcessed;	/**< Holds whether nodes are already processed or not */
 		PLGeneral::Array<GraphNode*>			 m_lstNodes;		/**< Temp nodes array */

@@ -93,7 +93,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 				if (m_vMeshScale == Vector3::One) { // We can take the orginal vertex data
 					pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
 														(float*)pVertexBuffer->GetData(0, VertexBuffer::Position),
-														pVertexBuffer->GetVertexSize(), fTolerance, 0, NULL);
+														pVertexBuffer->GetVertexSize(), fTolerance, 0, nullptr);
 				} else { // We have to use own scaled vertex data
 					float *fVertices = new float[3*pVertexBuffer->GetNumOfElements()];
 					float *fVertex = fVertices;
@@ -109,7 +109,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 
 					// Create the convex hull
 					pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
-														fVertices, sizeof(float)*3, fTolerance, 0, NULL);
+														fVertices, sizeof(float)*3, fTolerance, 0, nullptr);
 
 					// Cleanup
 					delete [] fVertices;

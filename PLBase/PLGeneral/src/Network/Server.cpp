@@ -65,7 +65,7 @@ Connection *Server::CreateIncomingConnection()
 Connection *Server::CreateOutgoingConnection()
 {
 	// Not used for servers
-	return NULL;
+	return nullptr;
 }
 
 

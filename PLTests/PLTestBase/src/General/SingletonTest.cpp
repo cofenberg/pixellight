@@ -95,5 +95,5 @@ const char *SingletonTest::GetName() const
 void SingletonTest::Test()
 {
 	StartTask("Get instance");
-	EndTask(Singleton1::GetInstance() != NULL);
+	EndTask(Singleton1::GetInstance() != nullptr);
 }

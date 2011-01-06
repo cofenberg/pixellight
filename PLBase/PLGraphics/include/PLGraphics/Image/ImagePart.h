@@ -163,7 +163,7 @@ class ImagePart {
 		*    Index of mipmap
 		*
 		*  @return
-		*    Image buffer, or NULL if it doesn't exist
+		*    Image buffer, or a null pointer if it doesn't exist
 		*/
 		PLGRAPHICS_API ImageBuffer *GetMipmap(PLGeneral::uint32 nIndex) const;
 
@@ -190,7 +190,7 @@ class ImagePart {
 		*    Create new mipmap
 		*
 		*  @return
-		*    Image buffer of mipmap, or NULL on error
+		*    Image buffer of mipmap, or a null pointer on error
 		*/
 		PLGRAPHICS_API ImageBuffer *CreateMipmap();
 

@@ -97,7 +97,7 @@ class RagdollBody {
 		*    Returns the PL physics body
 		*
 		*  @return
-		*    The PL physics body, NULL on error (if that's the case, something went totally wrong :)
+		*    The PL physics body, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICS_API Body *GetBody() const;
 

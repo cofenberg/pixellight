@@ -68,7 +68,7 @@ class Slider : public AbstractSlider {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API Slider(Widget *pParent = NULL);
+		PLGUI_API Slider(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

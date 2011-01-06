@@ -88,7 +88,7 @@ String VertexShaderGLSL::GetSourceCode() const
 	if (nShaderSourceLength > 1) {
 		// The string class takes over the control of the string memory and also deletes it
 		char *pszSourceCode = new char[nShaderSourceLength];
-		glGetShaderSourceARB(m_nOpenGLVertexShader, nShaderSourceLength, NULL, pszSourceCode);
+		glGetShaderSourceARB(m_nOpenGLVertexShader, nShaderSourceLength, nullptr, pszSourceCode);
 		return String(pszSourceCode, false, nShaderSourceLength-1);	// -1 = excluding the null termination character
 	}
 
@@ -126,11 +126,11 @@ void VertexShaderGLSL::BackupDeviceData(uint8 **ppBackup)
 	glGetObjectParameterivARB(m_nOpenGLVertexShader, GL_OBJECT_SHADER_SOURCE_LENGTH_ARB, &nShaderSourceLength);
 	if (nShaderSourceLength > 1) {
 		*ppBackup = new uint8[nShaderSourceLength];
-		glGetShaderSourceARB(m_nOpenGLVertexShader, nShaderSourceLength, NULL, (GLcharARB*)*ppBackup);
+		glGetShaderSourceARB(m_nOpenGLVertexShader, nShaderSourceLength, nullptr, (GLcharARB*)*ppBackup);
 		glDeleteObjectARB(m_nOpenGLVertexShader);
-		m_nOpenGLVertexShader = NULL;
+		m_nOpenGLVertexShader = 0;
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

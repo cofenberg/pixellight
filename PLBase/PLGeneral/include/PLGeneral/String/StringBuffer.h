@@ -138,7 +138,7 @@ class StringBuffer {
 		*    Returns an ASCII string buffer version of the current string
 		*
 		*  @return
-		*    ASCII string buffer version of the current string, NEVER NULL! (can be THIS)
+		*    ASCII string buffer version of the current string, NEVER a null pointer! (can be THIS)
 		*
 		*  @remarks
 		*    This string buffer keeps a reference to the ASCII string buffer as long as
@@ -151,7 +151,7 @@ class StringBuffer {
 		*    Returns an Unicode string buffer version of the current string
 		*
 		*  @return
-		*    Unicode string buffer version of the current string, NEVER NULL! (can be THIS)
+		*    Unicode string buffer version of the current string, NEVER a null pointer! (can be THIS)
 		*
 		*  @remarks
 		*    This string buffer keeps a reference to the Unicode string buffer as long as
@@ -164,7 +164,7 @@ class StringBuffer {
 		*    Returns an UTF8 string buffer version of the current string
 		*
 		*  @return
-		*    UTF8 string buffer version of the current string, NEVER NULL! (can be THIS)
+		*    UTF8 string buffer version of the current string, NEVER a null pointer! (can be THIS)
 		*
 		*  @remarks
 		*    This string buffer keeps a reference to the UTF8 string buffer as long as
@@ -186,7 +186,7 @@ class StringBuffer {
 		*    Returns a clone of this string buffer
 		*
 		*  @return
-		*    Clone of this string buffer, NULL on terrible error
+		*    Clone of this string buffer, a null pointer on terrible error
 		*
 		*  @note
 		*    - The internal memory is also cloned
@@ -199,7 +199,7 @@ class StringBuffer {
 		*    Returns a duplicate of this string buffer
 		*
 		*  @return
-		*    Duplicate of this string buffer, NULL on terrible error
+		*    Duplicate of this string buffer, a null pointer on terrible error
 		*
 		*  @remarks
 		*    Unlike Clone(), this function ONLY returns a duplicate if the string buffer
@@ -503,7 +503,7 @@ class StringBuffer {
 		*
 		*  @return
 		*    This string buffer if nothing was changed, else new string buffer, (without any initial reference)
-		*    NULL if the string is now empty
+		*    a null pointer if the string is now empty
 		*/
 		virtual StringBuffer *TrimLeading() = 0;
 
@@ -513,7 +513,7 @@ class StringBuffer {
 		*
 		*  @return
 		*    This string buffer if nothing was changed, else new string buffer, (without any initial reference)
-		*    NULL if the string is now empty
+		*    a null pointer if the string is now empty
 		*/
 		virtual StringBuffer *TrimTrailing() = 0;
 
@@ -523,7 +523,7 @@ class StringBuffer {
 		*
 		*  @return
 		*    This string buffer if nothing was changed, else new string buffer, (without any initial reference)
-		*    NULL if the string is now empty
+		*    a null pointer if the string is now empty
 		*/
 		virtual StringBuffer *RemoveLineEndings() = 0;
 

@@ -81,7 +81,7 @@ class SPTriangle : public PLRenderer::SurfacePainter {
 	//[-------------------------------------------------------]
 	protected:
 		PLRenderer::VertexBuffer *m_pVertexBuffer;	/**< Our renderer vertex buffer holding the data
-														 of the funny colorful triangle, can be NULL */
+														 of the funny colorful triangle, can be a null pointer */
 		float					  m_fRotation;		/**< Current rotation of the triangle */
 
 

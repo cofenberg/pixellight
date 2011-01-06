@@ -134,7 +134,7 @@ void Quadtree::Init(uint32 nXOffset, uint32 nYOffset, uint32 nXSize, uint32 nYSi
 	m_pTopmost		  = pParent ? pParent->m_pTopmost : this;
 	m_pParent		  = pParent;
 	m_nNumOfChildren  = 0;
-	m_pChild		  = NULL;
+	m_pChild		  = nullptr;
 	m_vBoundingBox[0] = Vector3::Zero;
 	m_vBoundingBox[1] = Vector3::Zero;
 }
@@ -291,7 +291,7 @@ uint32 Quadtree::GetNumOfChildren() const
 Quadtree *Quadtree::GetChild(uint32 nChild) const
 {
 	// Return the requested child
-	return nChild < m_nNumOfChildren ? &m_pChild[nChild] : NULL;
+	return nChild < m_nNumOfChildren ? &m_pChild[nChild] : nullptr;
 }
 
 
@@ -307,10 +307,10 @@ Quadtree::Quadtree(const Quadtree &cSource) :
 	m_nYOffset(0),
 	m_nXSize(0),
 	m_nYSize(0),
-	m_pTopmost(NULL),
-	m_pParent(NULL),
+	m_pTopmost(nullptr),
+	m_pParent(nullptr),
 	m_nNumOfChildren(0),
-	m_pChild(NULL)
+	m_pChild(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

@@ -83,7 +83,7 @@ class AbstractMenu : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API AbstractMenu(Widget *pParent = NULL);
+		PLGUI_API AbstractMenu(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -72,7 +72,7 @@ class TestManager {
 		*    Returns the name of the test manager
 		*
 		*  @return
-		*    Name of the test manager, NULL on error
+		*    Name of the test manager, a null pointer on error
 		*/
 		PLTEST_API const char *GetName() const;
 

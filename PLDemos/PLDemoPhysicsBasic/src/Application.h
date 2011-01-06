@@ -106,7 +106,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*    Scene node the PL physics body should returned from
 		*
 		*  @return
-		*    The PL physics body of the given scene node, NULL if there's no such body
+		*    The PL physics body of the given scene node, a null pointer if there's no such body
 		*/
 		PLPhysics::Body *GetPhysicsBody(PLScene::SceneNode &cSceneNode) const;
 
@@ -178,8 +178,8 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::String	 m_sPhysicsAPI;		/**< Name of the used physics API */
-		PLScene::SceneNode	*m_pLine;			/**< Pointer to the line scene node, can be NULL */
-		PLScene::SceneNode	*m_pFallingBox;		/**< Pointer to the falling box scene node, can be NULL */
+		PLScene::SceneNode	*m_pLine;			/**< Pointer to the line scene node, can be a null pointer */
+		PLScene::SceneNode	*m_pFallingBox;		/**< Pointer to the falling box scene node, can be a null pointer */
 		bool				 m_bApplyForce;		/**< Apply force to the falling box scene node? */
 		bool				 m_bTorqueForce;	/**< Apply torque to the falling box scene node? */
 

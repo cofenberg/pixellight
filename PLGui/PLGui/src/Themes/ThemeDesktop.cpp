@@ -311,7 +311,7 @@ void ThemeDesktop::DrawSystemButton(Graphics &cGraphics, const Vector2i &vPos, E
 	cGraphics.DrawBox(cColorBackground, vPos, vPos + Vector2i(15, 15), 0, 0);
 
 	// Draw bitmap
-	Image *pImage = NULL;
+	Image *pImage = nullptr;
 		 if (nSystemCommand == CommandMinimize)	pImage = &m_cImageMinimize;
 	else if (nSystemCommand == CommandMaximize)	pImage = &m_cImageMaximize;
 	else if (nSystemCommand == CommandRestore)	pImage = &m_cImageRestore;

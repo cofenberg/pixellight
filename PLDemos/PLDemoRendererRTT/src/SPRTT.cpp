@@ -58,8 +58,8 @@ pl_implement_class(SPRTT)
 SPRTT::SPRTT(Renderer &cRenderer) : SurfacePainter(cRenderer),
 	m_pMeshManager(new MeshManager(GetRenderer())),
 	m_pMeshHandler(new MeshHandler()),
-	m_pPositionVertexBuffer(NULL),
-	m_pColorVertexBuffer(NULL),
+	m_pPositionVertexBuffer(nullptr),
+	m_pColorVertexBuffer(nullptr),
 	m_fRotation(0.0f)
 {
 	// Get/create the 'teapot' mesh

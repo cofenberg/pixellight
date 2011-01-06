@@ -86,7 +86,7 @@ class Database : public PLDatabase::Database {
 		*    Returns the PostgreSQL socket object
 		*
 		*  @return
-		*    The PostgreSQL socket object, can be NULL
+		*    The PostgreSQL socket object, can be a null pointer
 		*/
 		PLDATABASEPOSTGRESQL_API PGconn *GetPostgreSQL() const;
 
@@ -134,7 +134,7 @@ class Database : public PLDatabase::Database {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PGconn *m_pPostgreSQL;	/**< PostgreSQL socket object, can be NULL */
+		PGconn *m_pPostgreSQL;	/**< PostgreSQL socket object, can be a null pointer */
 
 
 };

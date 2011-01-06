@@ -74,7 +74,7 @@ class VisNode {
 		*    Returns the visibility root container
 		*
 		*  @return
-		*    The visibility root container, NULL on error
+		*    The visibility root container, a null pointer on error
 		*/
 		PLS_API const VisContainer *GetVisRootContainer() const;
 
@@ -83,7 +83,7 @@ class VisNode {
 		*    Returns the parent visibility node
 		*
 		*  @return
-		*    The parent visibility node, NULL if this is the root
+		*    The parent visibility node, a null pointer if this is the root
 		*
 		*  @remarks
 		*    The parent visibility node can be a VisContainer or a VisPortal. If the parent
@@ -96,7 +96,7 @@ class VisNode {
 		*    Returns the scene node this visibility node links to
 		*
 		*  @return
-		*    The scene node this visibility node links to, NULL if there's no scene node
+		*    The scene node this visibility node links to, a null pointer if there's no scene node
 		*    linked to this visibility node (maybe the scene node this visibilty node was
 		*    linked to was killed?)
 		*/
@@ -244,9 +244,9 @@ class VisNode {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    The parent visibility node, NULL if this is the root
+		*    The parent visibility node, a null pointer if this is the root
 		*/
-		VisNode(VisNode *pParent = NULL);
+		VisNode(VisNode *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class VisNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VisNode			  *m_pParent;					/**< Parent visibility node (VisContainer or VisPortal, can be NULL) */
+		VisNode			  *m_pParent;					/**< Parent visibility node (VisContainer or VisPortal, can be a null pointer) */
 		SceneNodeHandler  *m_pSceneNodeHandler;			/**< Scene node this visibility node is linked to (always valid!) */
 		PLMath::Matrix3x4  m_mWorld;					/**< Absolute world matrix of the scene node */
 		float			   m_fSquaredDistanceToCamera;	/**< Squared distance to the camera */

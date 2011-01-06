@@ -105,7 +105,7 @@ class Object : public ObjectBase {
 		*    Get class
 		*
 		*  @return
-		*    Class of the object ( should never be NULL, unless something is *terribly* wrong ;-) )
+		*    Class of the object ( should never be a null pointer, unless something is *terribly* wrong ;-) )
 		*/
 		PLCORE_API virtual Class *GetClass() const;
 
@@ -155,7 +155,7 @@ class Object : public ObjectBase {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute (can be NULL, if no attribute with that name could be found)
+		*    Attribute (can be a null pointer, if no attribute with that name could be found)
 		*/
 		PLCORE_API DynVar *GetAttribute(const PLGeneral::String &sName) const;
 
@@ -181,7 +181,7 @@ class Object : public ObjectBase {
 		*    Method name
 		*
 		*  @return
-		*    Method (can be NULL, if no method with that name could be found)
+		*    Method (can be a null pointer, if no method with that name could be found)
 		*/
 		PLCORE_API DynFunc *GetMethod(const PLGeneral::String &sName) const;
 
@@ -207,7 +207,7 @@ class Object : public ObjectBase {
 		*    Signal name
 		*
 		*  @return
-		*    Signal (can be NULL, if no signal with that name could be found)
+		*    Signal (can be a null pointer, if no signal with that name could be found)
 		*/
 		PLCORE_API DynEvent *GetSignal(const PLGeneral::String &sName) const;
 
@@ -233,7 +233,7 @@ class Object : public ObjectBase {
 		*    Slot name
 		*
 		*  @return
-		*    Slot (can be NULL, if no slot with that name could be found)
+		*    Slot (can be a null pointer, if no slot with that name could be found)
 		*/
 		PLCORE_API DynEventHandler *GetSlot(const PLGeneral::String &sName) const;
 

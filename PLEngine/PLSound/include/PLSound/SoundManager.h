@@ -153,7 +153,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*    Index of the resource to return
 		*
 		*  @return
-		*    The resource at the given index, NULL on error
+		*    The resource at the given index, a null pointer on error
 		*/
 		PLSOUND_API Resource *GetResource(PLGeneral::uint32 nIndex = 0) const;
 
@@ -311,7 +311,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*   Stream the file? (recommended for large files!)
 		*
 		*  @return
-		*    The created sound buffer, NULL on error
+		*    The created sound buffer, a null pointer on error
 		*
 		*  @note
 		*    - If there's already a sound buffer with this name, this sound buffer is returned
@@ -325,17 +325,17 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*    Creates a sound source
 		*
 		*  @param[in] pSoundBuffer
-		*    Sound buffer to load, NULL if load no sound buffer by default
+		*    Sound buffer to load, a null pointer if load no sound buffer by default
 		*
 		*  @return
-		*    The created sound source, NULL on error
+		*    The created sound source, a null pointer on error
 		*
 		*  @remarks
 		*    The simplest creation of a sound source ready for playback would be\n
 		*    SoundSource *pSS = pSM->CreateSoundSource(CreateSoundBuffer("MySound.wav"));\n
 		*    Whereby 'MySound.wav' isn't loaded twice if there's already such a sound buffer.
 		*/
-		virtual Source *CreateSoundSource(Buffer *pSoundBuffer = NULL) = 0;
+		virtual Source *CreateSoundSource(Buffer *pSoundBuffer = nullptr) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Listener                                              ]

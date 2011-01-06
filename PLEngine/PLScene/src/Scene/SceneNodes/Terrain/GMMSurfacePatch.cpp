@@ -189,14 +189,14 @@ void GMMSurfacePatch::Init()
 {
 	m_bActive		= true;
 	m_nLevel		= 0;
-	m_pVariance		= NULL;
+	m_pVariance		= nullptr;
 	m_nOffset		= 0;
 	m_nXOffset		= 0;
 	m_nYOffset		= 0;
-	m_pNeighbour[0] = NULL;
-	m_pNeighbour[1] = NULL;
-	m_pNeighbour[2] = NULL;
-	m_pNeighbour[3] = NULL;
+	m_pNeighbour[0] = nullptr;
+	m_pNeighbour[1] = nullptr;
+	m_pNeighbour[2] = nullptr;
+	m_pNeighbour[3] = nullptr;
 }
 
 /**

@@ -69,7 +69,7 @@ String ImageEffect::GetDescription() const
 {
 	// [TODO] New RTTI usage: Remove this method?
 	const PLCore::Class *pClass = GetClass();
-	return (pClass != NULL) ? pClass->GetDescription() : "";
+	return (pClass != nullptr) ? pClass->GetDescription() : "";
 }
 
 

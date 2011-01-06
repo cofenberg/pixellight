@@ -115,7 +115,7 @@ bool FontTexture::SetSize(uint32 nSize, uint32 nResolution)
 
 bool FontTexture::IsValid() const
 {
-	return (m_pFTFace != NULL);
+	return (m_pFTFace != nullptr);
 }
 
 float FontTexture::GetAscender() const
@@ -156,7 +156,7 @@ void FontTexture::Draw(const String &sText, const Color4 &cColor, const Matrix4x
 		CreateGlyphTextureAtlas();
 	if (m_nOpenGLESGlyphTextureAtlas) {
 		// Get and set the program for font rendering
-		FontManager::GeneratedProgramUserData *pGeneratedProgramUserData = NULL;
+		FontManager::GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 		PLRenderer::Program *pProgram = ((FontManager*)m_pFontManager)->GetProgram(&pGeneratedProgramUserData);
 		if (pProgram && pGeneratedProgramUserData && pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix &&
 			pGeneratedProgramUserData->pGlyphMap && pGeneratedProgramUserData->pColor && pGeneratedProgramUserData->pGlyphSizePenPosition &&
@@ -228,7 +228,7 @@ void FontTexture::Draw(const String &sText, const Color4 &cColor, const Matrix4x
 FontTexture::FontTexture(FontManager &cFontManager, File &cFile) : PLRenderer::FontTexture(cFontManager, cFile.GetUrl().GetUrl()),
 	m_nFontFileSize(cFile.GetSize()),
 	m_pFontFileData(new uint8[m_nFontFileSize]),
-	m_pFTFace(NULL),
+	m_pFTFace(nullptr),
 	m_nGlyphTextureAtlasPadding(3),
 	m_nOpenGLESGlyphTextureAtlas(0)
 {
@@ -240,7 +240,7 @@ FontTexture::FontTexture(FontManager &cFontManager, File &cFile) : PLRenderer::F
 	if (FT_New_Memory_Face(*cFontManager.GetFTLibrary(), (FT_Byte const*)m_pFontFileData, (FT_Long)m_nFontFileSize, 0, m_pFTFace)) {
 		// Error!
 		delete m_pFTFace;
-		m_pFTFace = NULL;
+		m_pFTFace = nullptr;
 	}
 }
 

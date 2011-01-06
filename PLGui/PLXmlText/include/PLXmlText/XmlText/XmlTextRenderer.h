@@ -141,7 +141,7 @@ class XmlTextRenderer {
 		*    Get graphics object
 		*
 		*  @return
-		*    Pointer to graphics object, can be NULL
+		*    Pointer to graphics object, can be a null pointer
 		*/
 		PLXMLTEXT_API PLGui::Graphics *GetGraphics();
 
@@ -207,7 +207,7 @@ class XmlTextRenderer {
 		*    Get current font
 		*
 		*  @return
-		*    Font, can be NULL
+		*    Font, can be a null pointer
 		*/
 		PLXMLTEXT_API PLGui::Font *GetFont() const;
 
@@ -385,13 +385,13 @@ class XmlTextRenderer {
 	private:
 		// Renderer data
 		PLGui::Gui							*m_pGui;			/**< Gui containing the XmlText element, always valid */
-		PLGui::Graphics						*m_pGraphics;		/**< Graphics object into which to render, can be NULL, but always valid on rendering */
+		PLGui::Graphics						*m_pGraphics;		/**< Graphics object into which to render, can be a null pointer, but always valid on rendering */
 
 		// Renderer state
 		PLMath::Vector2i					 m_vSectionPos;		/**< Current section position */
 		PLMath::Vector2i					 m_vSectionSize;	/**< Current section size */
 		int									 m_nIndent;			/**< Current indentation */
-		PLGui::Font							*m_pFont;			/**< Current font, can be NULL */
+		PLGui::Font							*m_pFont;			/**< Current font, can be a null pointer */
 		PLGraphics::Color4					 m_cTextColor;		/**< Current text color */
 		PLGraphics::Color4					 m_cBgColor;		/**< Current background color */
 		HAlign								 m_nHAlign;			/**< Horizontal alignment */

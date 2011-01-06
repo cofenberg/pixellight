@@ -238,7 +238,7 @@ class Parameters {
 		*    Returns the texture buffer of the parameter
 		*
 		*  @return
-		*    The texture buffer of the parameter, can be NULL
+		*    The texture buffer of the parameter, can be a null pointer
 		*/
 		virtual PLRenderer::TextureBuffer *GetParameterTextureBuffer(const PLGeneral::String &sName) const = 0;
 
@@ -249,7 +249,7 @@ class Parameters {
 		*  @param[in] sName
 		*    Name of the parameter where to set the texture buffer
 		*  @param[in] pTextureBuffer
-		*    Texture buffer to set, can be NULL
+		*    Texture buffer to set, can be a null pointer
 		*
 		*  @return
 		*    Texture stage the texture buffer was set to, < 0 on error
@@ -261,7 +261,7 @@ class Parameters {
 		*    Returns the texture of the parameter
 		*
 		*  @return
-		*    The texture of the parameter, can be NULL
+		*    The texture of the parameter, can be a null pointer
 		*/
 		virtual PLRenderer::Texture *GetParameterTexture(const PLGeneral::String &sName) const = 0;
 
@@ -286,7 +286,7 @@ class Parameters {
 		*  @param[in] sName
 		*    Name of the parameter where to set the texture
 		*  @param[in] pTexture
-		*    Texture to set, can be NULL
+		*    Texture to set, can be a null pointer
 		*
 		*  @return
 		*    Texture stage the texture was set to, < 0 on error

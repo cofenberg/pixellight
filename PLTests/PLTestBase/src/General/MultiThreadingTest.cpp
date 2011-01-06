@@ -41,7 +41,7 @@ using namespace PLGeneral;
 //[-------------------------------------------------------]
 uint32		   g_nPots     = 0;
 volatile bool  g_bContinue = false;
-Mutex		  *g_pMutex    = NULL;
+Mutex		  *g_pMutex    = nullptr;
 
 
 //[-------------------------------------------------------]

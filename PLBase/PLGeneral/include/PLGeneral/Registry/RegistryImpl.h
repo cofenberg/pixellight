@@ -242,9 +242,9 @@ class RegistryImpl {
 		*  @param[in] sName
 		*    Name of the value
 		*  @param[out] pBuffer
-		*    Buffer to receive the value, if NULL, returns the number of  bytes required
+		*    Buffer to receive the value, if a null pointer, returns the number of  bytes required
 		*  @param[in]  nSize
-		*    Size of the given buffer in bytes, ignored if 'pBuffer' is NULL
+		*    Size of the given buffer in bytes, ignored if 'pBuffer' is a null pointer
 		*
 		*  @return
 		*    Number of bytes written to the buffer
@@ -286,7 +286,7 @@ class RegistryImpl {
 		*  @param[in] sName
 		*    Name of the value
 		*  @param[in] pBuffer
-		*    Buffer containing the value to set (if NULL, the function fails)
+		*    Buffer containing the value to set (if a null pointer, the function fails)
 		*  @param[in] nSize
 		*    Size of the given buffer in bytes
 		*

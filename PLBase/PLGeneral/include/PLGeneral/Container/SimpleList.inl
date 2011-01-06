@@ -42,7 +42,7 @@ namespace PLGeneral {
 */
 template <class ValueType>
 SimpleList<ValueType>::SimpleList() :
-	pFirstElement(NULL)
+	pFirstElement(nullptr)
 {
 }
 
@@ -52,7 +52,7 @@ SimpleList<ValueType>::SimpleList() :
 */
 template <class ValueType>
 SimpleList<ValueType>::SimpleList(const SimpleList<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
-	pFirstElement(NULL)
+	pFirstElement(nullptr)
 {
 	// Copy
 	Copy((SimpleList<ValueType>&)lstSource, nStart, nCount);
@@ -64,7 +64,7 @@ SimpleList<ValueType>::SimpleList(const SimpleList<ValueType> &lstSource, uint32
 */
 template <class ValueType>
 SimpleList<ValueType>::SimpleList(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
-	pFirstElement(NULL)
+	pFirstElement(nullptr)
 {
 	// Copy
 	Copy(lstSource, nStart, nCount);
@@ -143,7 +143,7 @@ ConstIterator<ValueType> SimpleList<ValueType>::GetConstEndIterator() const
 template <class ValueType>
 bool SimpleList<ValueType>::IsEmpty() const
 {
-	return (pFirstElement == NULL);
+	return (pFirstElement == nullptr);
 }
 
 template <class ValueType>
@@ -186,7 +186,7 @@ void SimpleList<ValueType>::Clear()
 	}
 
 	// Init data
-	pFirstElement = NULL;
+	pFirstElement = nullptr;
 }
 
 template <class ValueType>
@@ -297,7 +297,7 @@ ValueType &SimpleList<ValueType>::Add()
 {
 	// Create the new list element
 	ListElement *pNewElement = new ListElement;
-	pNewElement->pNextElement = NULL;
+	pNewElement->pNextElement = nullptr;
 
 	// Add the new list element to the list
 	if (pFirstElement) {
@@ -326,7 +326,7 @@ ValueType &SimpleList<ValueType>::Add(const ValueType &Element)
 	// Create the new list element
 	ListElement *pNewElement = new ListElement;
 	pNewElement->Data		  = Element;
-	pNewElement->pNextElement = NULL;
+	pNewElement->pNextElement = nullptr;
 
 	// Add the new list element to the list
 	if (pFirstElement) {
@@ -414,7 +414,7 @@ ValueType &SimpleList<ValueType>::AddAtIndex(int nIndex)
 
 	// Start with the first element
 	ListElement *pElement		  = pFirstElement;
-	ListElement *pPreviousElement = NULL;
+	ListElement *pPreviousElement = nullptr;
 	uint32		 nCurIndex		  = 0;
 	while (pElement) {
 		// Index reached?
@@ -456,7 +456,7 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 
 	// Start with the first element
 	ListElement *pElement		  = pFirstElement;
-	ListElement *pPreviousElement = NULL;
+	ListElement *pPreviousElement = nullptr;
 	uint32		 nCurIndex		  = 0;
 	while (pElement) {
 		// Index reached?
@@ -495,7 +495,7 @@ bool SimpleList<ValueType>::Remove(const ValueType &Element)
 {
 	// Find the element to remove in the list
 	ListElement *pElement		  = pFirstElement;
-	ListElement *pPreviousElement = NULL;
+	ListElement *pPreviousElement = nullptr;
 	while (pElement) {
 		// Is this the requested element?
 		if (pElement->Data == Element) {
@@ -526,7 +526,7 @@ bool SimpleList<ValueType>::RemoveAtIndex(uint32 nIndex)
 {
 	// Start with the first element
 	ListElement *pElement		  = pFirstElement;
-	ListElement *pPreviousElement = NULL;
+	ListElement *pPreviousElement = nullptr;
 	uint32		 nCurIndex		  = 0;
 	while (pElement) {
 		// Index reached?

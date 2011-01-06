@@ -45,7 +45,7 @@ namespace PLGui {
 */
 ClipBoard::ClipBoard(Gui &cGui) :
 	m_pGui(&cGui),
-	m_pImpl(NULL)
+	m_pImpl(nullptr)
 {
 }
 

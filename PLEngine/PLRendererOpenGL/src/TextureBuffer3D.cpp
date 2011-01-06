@@ -221,7 +221,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						// always easy to pinpoint the problem directly to the mipmaps. So, to avoid frustration during bug finding,
 						// we just create the missing mipmap levels down to 1x1x1 with a white color - so it's possible to 'see' which texture
 						// isn't correct without reading the log message from above. (for some people it appears to be hard to read logs *g*)
-						char *pszBuffer = NULL;
+						char *pszBuffer = nullptr;
 						do {
 							// First at all, 'half' the current dimension
 							if (vSize.x > 1)
@@ -419,7 +419,7 @@ void TextureBuffer3D::BackupDeviceData(uint8 **ppBackup)
 			}
 		}
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

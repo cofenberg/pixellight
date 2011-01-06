@@ -170,7 +170,7 @@ void SCRenderToTexture::SetPainter(const String &sValue)
 				if (pSceneNode && pSceneNode->IsContainer())
 					pPainter->SetSceneContainer((SceneContainer*)pSceneNode);
 				else
-					pPainter->SetSceneContainer(NULL);
+					pPainter->SetSceneContainer(nullptr);
 
 				// Set default scene renderer
 				pPainter->SetDefaultSceneRenderer(m_sSceneRenderer);
@@ -219,7 +219,7 @@ void SCRenderToTexture::SetSceneName(const String &sValue)
 				if (pSceneNode && pSceneNode->IsContainer())
 					pPainter->SetSceneContainer((SceneContainer*)pSceneNode);
 				else
-					pPainter->SetSceneContainer(NULL);
+					pPainter->SetSceneContainer(nullptr);
 			}
 		}
 	}
@@ -256,7 +256,7 @@ SCRenderToTexture::SCRenderToTexture() :
 	m_sSceneRenderer("Forward.sr"),
 	m_sSceneName("Parent"),
 	m_nFPSLimitLastTime(0),
-	m_pSurfaceTextureBuffer(NULL),
+	m_pSurfaceTextureBuffer(nullptr),
 	m_pTextureHandler(new TextureHandler())
 {
 	// Overwrite the default setting of the flags
@@ -275,7 +275,7 @@ SCRenderToTexture::~SCRenderToTexture()
 	// Delete render to texture buffer stuff
 	if (m_pSurfaceTextureBuffer) {
 		delete m_pSurfaceTextureBuffer;
-		m_pSurfaceTextureBuffer = NULL;
+		m_pSurfaceTextureBuffer = nullptr;
 	}
 
 	// Destroy the texture handler
@@ -318,14 +318,14 @@ void SCRenderToTexture::CreateSurfaceTexture()
 	// Delete the old render to texture buffer surface
 	if (m_pSurfaceTextureBuffer) {
 		delete m_pSurfaceTextureBuffer;
-		m_pSurfaceTextureBuffer = NULL;
+		m_pSurfaceTextureBuffer = nullptr;
 	}
 
 	// Delete the old resulting texture
 	Texture *pTexture = m_pTextureHandler->GetResource();
 	if (pTexture) {
 		pTexture->Delete();
-		m_pTextureHandler->SetResource(NULL);
+		m_pTextureHandler->SetResource(nullptr);
 	}
 
 	// Get the desired texture buffer format
@@ -368,7 +368,7 @@ void SCRenderToTexture::CreateSurfaceTexture()
 
 			// Tell the surface scene painter about the 'conrete scene'
 			SceneNode *pSceneNode = Get(m_sSceneName);
-			pPainter->SetSceneContainer((pSceneNode && pSceneNode->IsContainer()) ? (SceneContainer*)pSceneNode : NULL);
+			pPainter->SetSceneContainer((pSceneNode && pSceneNode->IsContainer()) ? (SceneContainer*)pSceneNode : nullptr);
 
 			// Set default scene renderer
 			pPainter->SetDefaultSceneRenderer(m_sSceneRenderer);
@@ -434,7 +434,7 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 				pPainter->SetCamera((SNCamera*)pSceneNode);
 				((SNCamera*)pSceneNode)->SetCamera(cRenderer);
 			} else
-				pPainter->SetCamera(NULL);
+				pPainter->SetCamera(nullptr);
 
 			// Get current render target
 			Surface *pSurfaceBackup = cRenderer.GetRenderTarget();

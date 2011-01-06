@@ -148,8 +148,8 @@ World::World() :
 	m_nThreadPriorityClass(6), // None
 	m_nThreadPriority(3),
 
-	m_pNewtonWorld(NULL),
-	m_pWorldUpdate(NULL),
+	m_pNewtonWorld(nullptr),
+	m_pWorldUpdate(nullptr),
 	m_vWorldSizeMin(-10000.0f, -10000.0f, -10000.0f),
 	m_vWorldSizeMax( 10000.0f,  10000.0f,  10000.0f),
 	m_fFrameRate(60.0f),
@@ -193,7 +193,7 @@ World::World() :
 	NewtonMaterialSetDefaultElasticity(m_pNewtonWorld, nDefaultID, nDefaultID, 0.4f);
 	NewtonMaterialSetDefaultCollidable(m_pNewtonWorld, nDefaultID, nDefaultID, 1);
 	NewtonMaterialSetDefaultFriction(m_pNewtonWorld, nDefaultID, nDefaultID, 1.0f, 0.5f);
-	NewtonMaterialSetCollisionCallback(m_pNewtonWorld, nDefaultID, nDefaultID, NULL, OnAABBOverlap, ContactsProcess);
+	NewtonMaterialSetCollisionCallback(m_pNewtonWorld, nDefaultID, nDefaultID, nullptr, OnAABBOverlap, ContactsProcess);
 //	NewtonMaterialSetSurfaceThickness(m_pNewtonWorld, nDefaultID, nDefaultID, 0.001f); // Looks not good :/
 
 	// Set isle update event
@@ -434,7 +434,7 @@ void World::PhysicsBodyDestructor(const NewtonBody *pPhysicsBody)
 	PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
 	if (pBody) {
 		// Destroy the PL physics body, too
-		((BodyImpl&)pBody->GetBodyImpl()).m_pNewtonBody = NULL;
+		((BodyImpl&)pBody->GetBodyImpl()).m_pNewtonBody = nullptr;
 		delete pBody;
 	}
 }
@@ -449,7 +449,7 @@ void World::PhysicsJointDestructor(const NewtonJoint *pPhysicsJoint)
 	PLPhysics::Joint *pJoint = (PLPhysics::Joint*)NewtonJointGetUserData(pPhysicsJoint);
 	if (pJoint) {
 		// Destroy the PL physics joint, too
-		((JointImpl&)pJoint->GetJointImpl()).m_pNewtonJoint = NULL;
+		((JointImpl&)pJoint->GetJointImpl()).m_pNewtonJoint = nullptr;
 		delete pJoint;
 	}
 }
@@ -595,13 +595,13 @@ PLPhysics::Body *World::CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, 
 {
 	PLPhysics::Body *pBody = new BodyConvexHull(*this, cMeshManager, sMesh, vMeshScale);
 
-	// If the mesh loading failed, the Newton body is NULL...
+	// If the mesh loading failed, the Newton body is a null pointer...
 	if (((BodyImpl&)pBody->GetBodyImpl()).GetNewtonBody())
 		return pBody;
 	else {
 		// Error!
 		delete pBody;
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -609,13 +609,13 @@ PLPhysics::Body *World::CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const 
 {
 	PLPhysics::Body *pBody = new BodyMesh(*this, cMeshManager, sMesh, vMeshScale, bOptimize);
 
-	// If the mesh loading failed, the Newton body is NULL...
+	// If the mesh loading failed, the Newton body is a null pointer...
 	if (((BodyImpl&)pBody->GetBodyImpl()).GetNewtonBody())
 		return pBody;
 	else {
 		// Error!
 		delete pBody;
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -653,7 +653,7 @@ PLPhysics::Joint *World::CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointBall(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -663,7 +663,7 @@ PLPhysics::Joint *World::CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysi
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointSlider(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -673,7 +673,7 @@ PLPhysics::Joint *World::CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysic
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointHinge(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -684,7 +684,7 @@ PLPhysics::Joint *World::CreateJointUniversal(PLPhysics::Body *pParentBody, PLPh
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointUniversal(*this, pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2);
@@ -694,7 +694,7 @@ PLPhysics::Joint *World::CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPh
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointCorkscrew(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -1022,7 +1022,7 @@ void World::UpdateSimulation()
 						NewtonCollisionCalculateAABB(NewtonBodyGetCollision(pNewtonBody), fMatrix, fP0, fP1);
 
 						// Wake up all physics bodies within this physics bodys AABB
-						NewtonWorldForEachBodyInAABBDo(m_pNewtonWorld, fP0, fP1, WakeUp, NULL);
+						NewtonWorldForEachBodyInAABBDo(m_pNewtonWorld, fP0, fP1, WakeUp, nullptr);
 
 						// Now other physics bodies will wake up if they come into contact with a moving,
 						// static physics body like for example a moving platform (also called kinematic/immobile object)
@@ -1141,7 +1141,7 @@ bool World::IsAlwaysStatic() const
 PLPhysics::Element *World::CreateElement(const String &sName)
 {
 	// Nothing to do here
-	return NULL;
+	return nullptr;
 }
 
 

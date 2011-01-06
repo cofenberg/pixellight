@@ -169,7 +169,7 @@ class GMMSurface {
 		*    Returns a pointer to the height map
 		*
 		*  @return
-		*    Pointer to the height map, can be NULL
+		*    Pointer to the height map, can be a null pointer
 		*/
 		PLS_API const float *GetHeightMap() const;
 
@@ -190,7 +190,7 @@ class GMMSurface {
 		*    ID of the vertex
 		*
 		*  @return
-		*    Pointer to a surface vertex, NULL if there was an error
+		*    Pointer to a surface vertex, a null pointer if there was an error
 		*/
 		PLS_API Vertex *GetVertex(PLGeneral::uint32 nID = 0) const;
 
@@ -263,7 +263,7 @@ class GMMSurface {
 		*    ID of the patch which should be returned
 		*
 		*  @return
-		*    A pointer to the patch with the given ID, NULL if there was an error
+		*    A pointer to the patch with the given ID, a null pointer if there was an error
 		*/
 		PLS_API GMMSurfacePatch *GetPatch(PLGeneral::uint32 nID) const;
 
@@ -289,8 +289,8 @@ class GMMSurface {
 		*  @param[in] pBottom
 		*    The bottom neighbour GMM surface
 		*/
-		PLS_API void SetNeighbours(GMMSurface *pLeft  = NULL, GMMSurface *pTop    = NULL,
-								  GMMSurface *pRight = NULL, GMMSurface *pBottom = NULL);
+		PLS_API void SetNeighbours(GMMSurface *pLeft = nullptr, GMMSurface *pTop    = nullptr,
+								  GMMSurface *pRight = nullptr, GMMSurface *pBottom = nullptr);
 
 		/**
 		*  @brief
@@ -372,25 +372,25 @@ class GMMSurface {
 		// General
 		PLRenderer::Renderer		 *m_pRenderer;			/**< Used renderer (always valid!) */
 		PLMath::Vector3				  m_vViewerPos;			/**< Viewer position */
-		GMMSurface					 *m_pNeighbour[4];		/**< Neighbour GMM surfaces, can be NULL */
+		GMMSurface					 *m_pNeighbour[4];		/**< Neighbour GMM surfaces, can be a null pointer */
 		PLGeneral::uint32			  m_nVertices;			/**< Number of surface vertices */
-		PLRenderer::VertexBuffer	 *m_pVertexBuffer;		/**< Vertex buffer, can be NULL */
-		Vertex						 *m_pVertex;			/**< Surface vertices, can be NULL */
+		PLRenderer::VertexBuffer	 *m_pVertexBuffer;		/**< Vertex buffer, can be a null pointer */
+		Vertex						 *m_pVertex;			/**< Surface vertices, can be a null pointer */
 		PLRenderer::MaterialHandler	 *m_pMaterialHandler;	/**< Surface material (always valid!) */
 
 		// Height map
 		PLGeneral::uint32 	 m_nHeightMapSize;	/**< Height map size */
-		float				*m_pfHeightMap;		/**< Height map data, can be NULL */
+		float				*m_pfHeightMap;		/**< Height map data, can be a null pointer */
 
 		// Patches
 		PLGeneral::uint32	 m_nPatchSize,	/**< Patch size */
 							 m_nXYPatches,	/**< Patches per column / row */
 							 m_nPatches;	/**< Total number of patches */
-		GMMSurfacePatch    **m_ppPatches;	/**< The patches, can be NULL */
+		GMMSurfacePatch    **m_ppPatches;	/**< The patches, can be a null pointer */
 
 		// Levels
 		PLGeneral::uint32   m_nGeoMipMaps;	/**< Number of geometrically mip maps */
-		GMMSurfaceLevel   **m_ppLevels;		/**< Levels, can be NULL */
+		GMMSurfaceLevel   **m_ppLevels;		/**< Levels, can be a null pointer */
 
 		// Quadtree
 		PLMath::Quadtree m_cQuadtree;	/**< Quadtree for frustum culling */

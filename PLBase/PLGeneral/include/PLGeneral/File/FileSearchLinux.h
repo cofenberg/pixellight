@@ -67,7 +67,7 @@ class FileSearchLinux : public FileSearchImpl {
 		*  @param[in] sPath
 		*    Search path
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		FileSearchLinux(const String &sPath, const FileAccess *pAccess);
 
@@ -90,8 +90,8 @@ class FileSearchLinux : public FileSearchImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DIR    *m_pDir;			/** Can be NULL */
-		dirent *m_pDirEntry;	/** Can be NULL */
+		DIR    *m_pDir;			/** Can be a null pointer */
+		dirent *m_pDirEntry;	/** Can be a null pointer */
 		String	m_sPath;
 		bool	m_bHasNext;
 		String	m_sFilename;

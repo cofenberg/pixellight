@@ -71,7 +71,7 @@ class ContextLinux : public Context {
 		*    Returns the X server display connection
 		*
 		*  @return
-		*    The X server display connection, NULL on error
+		*    The X server display connection, a null pointer on error
 		*/
 		Display *GetDisplay() const;
 
@@ -80,7 +80,7 @@ class ContextLinux : public Context {
 		*    Returns the primary render context
 		*
 		*  @return
-		*    The primary render context, NULL on error
+		*    The primary render context, a null pointer on error
 		*/
 		GLXContext GetRenderContext() const;
 
@@ -99,10 +99,10 @@ class ContextLinux : public Context {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Display     *m_pDisplay;					/**< X server display connection, NULL on error */
+		Display     *m_pDisplay;					/**< X server display connection, a null pointer on error */
 		Window       m_hDummyNativeWindow;			/**< Native dummy window, always valid */
 		XVisualInfo *m_pDummyVisualInfo;
-		GLXContext	 m_hDummyWindowRenderContext;	/**< The render context of the OpenGL dummy window, can be NULL */
+		GLXContext	 m_hDummyWindowRenderContext;	/**< The render context of the OpenGL dummy window, can be a null pointer */
 
 
 };

@@ -77,7 +77,7 @@ LPDIRECT3DVOLUMETEXTURE9 TextureBuffer3D::GetD3D9Texture() const
 */
 TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage, EPixelFormat nInternalFormat, uint32 nFlags) :
 	PLRenderer::TextureBuffer3D(cRenderer, nFlags),
-	m_pD3D9Texture(NULL)
+	m_pD3D9Texture(nullptr)
 {
 	// Get the concrete renderer implementation
 	Renderer &cRendererD3D9 = (Renderer&)cRenderer;
@@ -130,14 +130,14 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 
 						// Create Direct3D 9 texture - we have to use 'D3DPOOL_MANAGED' if we want to use 'D3DXFilterVolumeTexture()' later
 						if (pDevice->CreateVolumeTexture(m_vSize.x, m_vSize.y, m_vSize.z, m_nNumOfMipmaps, 0, nAPIFormat,
-														(bMipmaps && !nNumOfImageMipmaps) ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT, &m_pD3D9Texture, NULL) != D3D_OK) {
+														(bMipmaps && !nNumOfImageMipmaps) ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT, &m_pD3D9Texture, nullptr) != D3D_OK) {
 							// There was an error and compression was used, use no compression and try again
 							bUsePreCompressedData = false;
 							m_nFormat			  = nImageFormat;
 							pAPIPixelFormat		  = cRendererD3D9.GetAPIPixelFormat(m_nFormat);
 							if (pAPIPixelFormat) {
 								nAPIFormat = (D3DFORMAT)*pAPIPixelFormat;
-								if (pDevice->CreateVolumeTexture(m_vSize.x, m_vSize.y, m_vSize.z, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, NULL) != D3D_OK) {
+								if (pDevice->CreateVolumeTexture(m_vSize.x, m_vSize.y, m_vSize.z, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, nullptr) != D3D_OK) {
 									// Error!
 									m_nFormat		= Unknown;
 									m_nNumOfMipmaps	= 0;
@@ -161,7 +161,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 								vSize = pMipmapImageBuffer->GetSize();
 
 								// Get the volume
-								LPDIRECT3DVOLUME9 pDestVolume = NULL;
+								LPDIRECT3DVOLUME9 pDestVolume = nullptr;
 								m_pD3D9Texture->GetVolumeLevel(nLevel, &pDestVolume);
 								if (pDestVolume) {
 									// Is the source data compressed?
@@ -206,9 +206,9 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 										}
 										if (nSourceFormat != D3DFMT_UNKNOWN) {
 											D3DBOX sSourceBox[] = { 0, 0, vSize.x, vSize.y, 0, vSize.z };
-											D3DXLoadVolumeFromMemory(pDestVolume, NULL, NULL, (uint8*)pMipmapImageBuffer->GetCompressedData(), nSourceFormat,
+											D3DXLoadVolumeFromMemory(pDestVolume, nullptr, nullptr, (uint8*)pMipmapImageBuffer->GetCompressedData(), nSourceFormat,
 																	 pMipmapImageBuffer->GetCompressedDataSize()/((vSize.y+3)/4/vSize.z), pMipmapImageBuffer->GetCompressedDataSize()/vSize.z,
-																	 NULL, sSourceBox, D3DX_FILTER_NONE, 0);
+																	 nullptr, sSourceBox, D3DX_FILTER_NONE, 0);
 										}
 									} else {
 										// Uncompressed source data
@@ -257,8 +257,8 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 										if (nSourceFormat != D3DFMT_UNKNOWN) {
 											D3DBOX sSourceBox[] = { 0, 0, vSize.x, vSize.y, 0, vSize.z };
 											uint32 nRowPitch = vSize.x*nNumOfComponents;
-											D3DXLoadVolumeFromMemory(pDestVolume, NULL, NULL, pTempData, nSourceFormat,
-																	 nRowPitch, nRowPitch*vSize.y, NULL,
+											D3DXLoadVolumeFromMemory(pDestVolume, nullptr, nullptr, pTempData, nSourceFormat,
+																	 nRowPitch, nRowPitch*vSize.y, nullptr,
 																	 sSourceBox, D3DX_FILTER_NONE, 0);
 										}
 										if (pTempData != (uint8*)pMipmapImageBuffer->GetData())
@@ -277,7 +277,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						// Do we need to create mipmaps by hand?
 						if (bMipmaps && !nNumOfImageMipmaps) {
 							// Let the API create the mipmaps for us
-							if (D3DXFilterVolumeTexture(m_pD3D9Texture, NULL, D3DX_DEFAULT, D3DX_FILTER_LINEAR) != D3D_OK)
+							if (D3DXFilterVolumeTexture(m_pD3D9Texture, nullptr, D3DX_DEFAULT, D3DX_FILTER_LINEAR) != D3D_OK)
 								PL_LOG(Error, "Failed to create 3D texture buffer mipmap data")
 
 							// Calculate the total number of bytes this texture buffer requires (note that we already have the base level!)
@@ -314,15 +314,15 @@ bool TextureBuffer3D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 			Vector3i vSize = GetSize(nMipmap);
 
 			// Get the volume
-			LPDIRECT3DVOLUME9 pDestVolume = NULL;
+			LPDIRECT3DVOLUME9 pDestVolume = nullptr;
 			m_pD3D9Texture->GetVolumeLevel(nMipmap, &pDestVolume);
 			if (pDestVolume) {
 				// Upload
 				D3DBOX sSourceBox[] = { 0, 0, vSize.x, vSize.y, 0, vSize.z };
-				D3DXLoadVolumeFromMemory(pDestVolume, NULL, NULL, pData, (D3DFORMAT)*pAPIPixelFormat,
+				D3DXLoadVolumeFromMemory(pDestVolume, nullptr, nullptr, pData, (D3DFORMAT)*pAPIPixelFormat,
 										 IsCompressedFormat() ? GetNumOfBytes(nMipmap)/((vSize.y+3)/4)/vSize.z : vSize.x*GetComponentsPerPixel(),
 										 IsCompressedFormat() ? GetNumOfBytes(nMipmap)/vSize.z				   : vSize.x*vSize.y*GetComponentsPerPixel(),
-										 NULL, sSourceBox, D3DX_FILTER_NONE, 0);
+										 nullptr, sSourceBox, D3DX_FILTER_NONE, 0);
 
 				// Release the volume
 				pDestVolume->Release();

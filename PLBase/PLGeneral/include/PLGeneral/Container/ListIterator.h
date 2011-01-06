@@ -109,8 +109,8 @@ class ListIterator : public IteratorImpl<ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		const List<ValueType>				  *m_plstList;			/**< List to operate on (always valid!) */
-		typename List<ValueType>::ListElement *m_pNextElement;		/**< Next list element, can be NULL */
-		typename List<ValueType>::ListElement *m_pPreviousElement;	/**< Previous list element, can be NULL */
+		typename List<ValueType>::ListElement *m_pNextElement;		/**< Next list element, can be a null pointer */
+		typename List<ValueType>::ListElement *m_pPreviousElement;	/**< Previous list element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

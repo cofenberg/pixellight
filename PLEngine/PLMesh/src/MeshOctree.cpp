@@ -54,9 +54,9 @@ namespace PLMesh {
 *    Constructor
 */
 MeshOctree::MeshOctree() :
-	m_pOwnerMeshLODLevel(NULL),
+	m_pOwnerMeshLODLevel(nullptr),
 	m_nNumOfGeometries(0),
-	m_pnGeometries(NULL)
+	m_pnGeometries(nullptr)
 {
 }
 

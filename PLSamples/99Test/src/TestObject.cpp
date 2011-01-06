@@ -44,7 +44,7 @@ using namespace PLCore;
 //[ Rtti interface                                        ]
 //[-------------------------------------------------------]
 // Class singleton
-TestObject::_Class *TestObject::_Class::Instance = NULL;
+TestObject::_Class *TestObject::_Class::Instance = nullptr;
 bool				TestObject::_Class::Shutdown = false;
 
 // Creation and destruction guard

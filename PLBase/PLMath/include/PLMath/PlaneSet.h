@@ -106,7 +106,7 @@ class PlaneSet {
 		*    Creates and adds a new plane to the plane set
 		*
 		*  @return
-		*    The created and added new plane, NULL if there was an error
+		*    The created and added new plane, a null pointer if there was an error
 		*/
 		PLMATH_API Plane *Create();
 
@@ -227,7 +227,7 @@ class PlaneSet {
 		*    ID of the plane which should be returned
 		*
 		*  @return
-		*    Plane with the given ID, NULL if there was an error
+		*    Plane with the given ID, a null pointer if there was an error
 		*/
 		PLMATH_API const Plane *operator [](int nID) const;
 
@@ -239,7 +239,7 @@ class PlaneSet {
 		*    ID of the plane which should be returned
 		*
 		*  @return
-		*    Plane with the given ID, NULL if there was an error
+		*    Plane with the given ID, a null pointer if there was an error
 		*/
 		PLMATH_API Plane *operator [](int nID);
 

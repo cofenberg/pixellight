@@ -92,17 +92,20 @@ PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 								   &pQueryResult->m_ppszResult,
 								   &pQueryResult->m_nRow,
 								   &pQueryResult->m_nColumn,
-								   NULL);
+								   nullptr);
 	if (nError == SQLITE_OK && pQueryResult->m_ppszResult) {
 		// 'SELECT'-SQL?
-		if (IsSelect(sSQL)) return pQueryResult; // Return the query result
-	} else PL_LOG(Error, String("SQLite can't execute the given SQL statement! Error: ") + sqlite3_errmsg(pSQLite))
+		if (IsSelect(sSQL))
+			return pQueryResult; // Return the query result
+	} else {
+		PL_LOG(Error, String("SQLite can't execute the given SQL statement! Error: ") + sqlite3_errmsg(pSQLite))
+	}
 
 	// Destroy the query result
 	delete pQueryResult;
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

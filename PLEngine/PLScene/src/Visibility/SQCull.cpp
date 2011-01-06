@@ -80,15 +80,15 @@ SQCull::SQCull() :
 	m_bSetIdentityWorldMatrix(true),
 	m_pCameraContainer(new SceneNodeHandler()),
 	m_bCameraInCell(false),
-	m_pHierarchy(NULL),
+	m_pHierarchy(nullptr),
 	m_nMode(Coherent),
 	m_nVisibilityThreshold(10),
 	m_nCurrentQueries(0),
 	m_nOcclusionQueries(0),
-	m_ppOcclusionQueries(NULL),
+	m_ppOcclusionQueries(nullptr),
 	m_nFrame(0),
-	m_pVisRootContainer(NULL),
-	m_pVisContainer(NULL)
+	m_pVisRootContainer(nullptr),
+	m_pVisContainer(nullptr)
 {
 	// Initialize the statistics
 	InitStatistics();
@@ -113,7 +113,7 @@ SQCull::~SQCull()
 
 	// If this is the root of the scene, destroy the visibility tree
 	if (m_pVisRootContainer == m_pVisContainer && m_pVisRootContainer) {
-		m_pVisRootContainer->m_pQueryHandler->SetElement(NULL);
+		m_pVisRootContainer->m_pQueryHandler->SetElement(nullptr);
 		delete m_pVisRootContainer;
 	}
 }
@@ -738,7 +738,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 				VisContainer &cVisContainer = (VisContainer&)GetVisContainer();
 				VisNode *pNode = cVisContainer.AddSceneNode(*pSceneNode, fNearestSquaredDistance);
 				if (pNode) {
-					SQCull *pCullQuery = NULL;
+					SQCull *pCullQuery = nullptr;
 
 					// Get the renderer
 					Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
@@ -795,7 +795,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 								// Setup the container query
 								pCullQuery->SetMode(GetMode());
 								pCullQuery->SetVisibilityThreshold(GetVisibilityThreshold());
-								pCullQuery->SetCameraContainer(NULL);
+								pCullQuery->SetCameraContainer(nullptr);
 								pCullQuery->m_bCameraInCell = m_bCameraInCell;
 
 								// Transform the camera position into container space
@@ -878,7 +878,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 										if (pCullQuery) {
 											pCullQuery->SetMode(GetMode());
 											pCullQuery->SetVisibilityThreshold(GetVisibilityThreshold());
-											pCullQuery->SetCameraContainer(NULL);
+											pCullQuery->SetCameraContainer(nullptr);
 											pCullQuery->m_bCameraInCell = m_bCameraInCell;
 
 											// Transform the camera position into cell space
@@ -1268,7 +1268,7 @@ bool SQCull::PerformQuery()
 		m_sStatistics.nCullTime = (uint32)cStopwatch.GetMilliseconds();
 
 		// Reset hierarchy pointer - just for sure :)
-		m_pHierarchy = NULL;
+		m_pHierarchy = nullptr;
 
 		// End process (but only if we started it :)
 		if (bStartProcessResult)

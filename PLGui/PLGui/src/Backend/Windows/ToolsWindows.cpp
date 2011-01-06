@@ -42,7 +42,7 @@ namespace PLGui {
 void ToolsWindows::GetMaskBitmaps(HBITMAP hBitmap, COLORREF sColorTransparent, HBITMAP &hMaskAnd, HBITMAP &hMaskXor)
 {
 	// Create device contexts
-	HDC hDC			= ::GetDC(NULL);
+	HDC hDC			= ::GetDC(nullptr);
 	HDC hMainDC		= ::CreateCompatibleDC(hDC);
 	HDC hAndMaskDC	= ::CreateCompatibleDC(hDC);
 	HDC hXorMaskDC	= ::CreateCompatibleDC(hDC);
@@ -84,7 +84,7 @@ void ToolsWindows::GetMaskBitmaps(HBITMAP hBitmap, COLORREF sColorTransparent, H
 	::DeleteDC(hXorMaskDC);
 	::DeleteDC(hAndMaskDC);
 	::DeleteDC(hMainDC);
-	::ReleaseDC(NULL, hDC);
+	::ReleaseDC(nullptr, hDC);
 }
 
 /**
@@ -98,7 +98,7 @@ HICON ToolsWindows::CreateIconFromBitmap(HBITMAP hBitmap)
 	::GetObject(hBitmap, sizeof(BITMAP), &sBitmap);
 
 	// Create mask
-	HBITMAP hMask = ::CreateCompatibleBitmap(::GetDC(NULL), sBitmap.bmWidth, sBitmap.bmHeight);
+	HBITMAP hMask = ::CreateCompatibleBitmap(::GetDC(nullptr), sBitmap.bmWidth, sBitmap.bmHeight);
 
 	// Create icon
 	ICONINFO sIconInfo;
@@ -123,8 +123,8 @@ HCURSOR ToolsWindows::CreateCursorFromBitmap(HBITMAP hBitmap, COLORREF sColorTra
 	// Check if the bitmap handle is valid
 	if (hBitmap) {
 		// Create the AND and XOR masks for the bitmap
-		HBITMAP hAndMask = NULL;
-		HBITMAP hXorMask = NULL;
+		HBITMAP hAndMask = nullptr;
+		HBITMAP hXorMask = nullptr;
 		GetMaskBitmaps(hBitmap, sColorTransparent, hAndMask, hXorMask);
 		if (hAndMask && hXorMask) {
 			// Create the cursor using the masks and the hotspot values provided
@@ -141,7 +141,7 @@ HCURSOR ToolsWindows::CreateCursorFromBitmap(HBITMAP hBitmap, COLORREF sColorTra
 	}
 
 	// Error
-	return NULL;
+	return nullptr;
 }
 
 

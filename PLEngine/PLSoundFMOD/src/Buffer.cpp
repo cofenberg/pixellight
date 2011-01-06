@@ -59,9 +59,9 @@ Buffer::~Buffer()
 */
 Buffer::Buffer(PLSound::SoundManager &cSoundManager, const String &sName, bool bStream) :
 	PLSound::Buffer(cSoundManager, sName),
-	m_pMod(NULL),
-	m_pSample(NULL),
-	m_pStream(NULL)
+	m_pMod(nullptr),
+	m_pSample(nullptr),
+	m_pStream(nullptr)
 {
 	// Load the sound buffer
 	if (sName.GetLength())
@@ -207,7 +207,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 	if (nSize) {
 		// Load buffer
 		bool bError = false;
-		m_pMod = FMUSIC_LoadSongEx((const char*)&nData, 0, nSize, FSOUND_LOADMEMORY, NULL, 0);
+		m_pMod = FMUSIC_LoadSongEx((const char*)&nData, 0, nSize, FSOUND_LOADMEMORY, nullptr, 0);
 		if (m_pMod) {
 			if (FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_MOD || FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_S3M)
 				FMUSIC_SetPanSeperation(m_pMod, 0.85f); // 15% crossover
@@ -243,12 +243,12 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 
 bool Buffer::IsLoaded() const
 {
-	return (m_pMod != NULL || m_pSample != NULL || m_pStream != NULL);
+	return (m_pMod != nullptr || m_pSample != nullptr || m_pStream != nullptr);
 }
 
 bool Buffer::IsStreamed() const
 {
-	return (m_pStream != NULL);
+	return (m_pStream != nullptr);
 }
 
 
@@ -269,15 +269,15 @@ bool Buffer::Unload()
 	// Unload buffer
 	if (m_pMod) {
 		FMUSIC_FreeSong(m_pMod);
-		m_pMod = NULL;
+		m_pMod = nullptr;
 	}
 	if (m_pSample) {
 		FSOUND_Sample_Free(m_pSample);
-		m_pSample = NULL;
+		m_pSample = nullptr;
 	}
 	if (m_pStream) {
 		FSOUND_Stream_Close(m_pStream);
-		m_pStream = NULL;
+		m_pStream = nullptr;
 	}
 
 	// Done

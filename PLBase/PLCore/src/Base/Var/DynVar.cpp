@@ -65,7 +65,7 @@ DynVar::~DynVar()
 const VarDesc *DynVar::GetDesc() const
 {
 	// No descriptor by default
-	return NULL;
+	return nullptr;
 }
 
 /**

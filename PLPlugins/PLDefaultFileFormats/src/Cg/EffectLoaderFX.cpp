@@ -220,7 +220,7 @@ void Technique_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokeni
 					}
 				}
 			}
-			sInstance.pFXPass = NULL;
+			sInstance.pFXPass = nullptr;
 		}
 		sInstance.nTechnique = -1;
 
@@ -289,7 +289,7 @@ void Program_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokenize
 			if (!pShader) {
 				pShader = cRendererContext.GetShaderManager().Create(sShaderName);
 				if (pShader) {
-					ShaderProgram *pShaderProgram = NULL;
+					ShaderProgram *pShaderProgram = nullptr;
 					if (sProgramType == "VertexProgram" || sProgramType == "VertexShader") {
 						pShaderProgram = cRenderer.CreateVertexShaderProgram(sInstance.pFileData, sProfile, "", sEntry);
 						sInstance.pFXPass->SetVertexShader(pShader);
@@ -362,8 +362,8 @@ bool EffectLoaderFX::Load(Effect &cEffect, File &cFile)
 	SInstance sInstance;
 	sInstance.pFX        = &cEffect;
 	sInstance.nTechnique = -1;
-	sInstance.pFXPass    = NULL;
-	sInstance.pFileData  = NULL;
+	sInstance.pFXPass    = nullptr;
+	sInstance.pFileData  = nullptr;
 
 	// Load the file into memory because we need to give this data also to the
 	// shader compiler...

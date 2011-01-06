@@ -50,7 +50,7 @@ namespace PLGeneral {
 FileLinux::FileLinux(const Url &cUrl, const FileAccess *pAccess) : FileImpl(cUrl, pAccess),
 	m_sFilename(cUrl.GetUnixPath()),
 	m_nAccess(0),
-	m_pFile(NULL)
+	m_pFile(nullptr)
 {
 }
 
@@ -237,7 +237,7 @@ void FileLinux::Close()
 	if (m_pFile) {
 		// Close file
 		fclose(m_pFile);
-		m_pFile = NULL;
+		m_pFile = nullptr;
 	}
 }
 
@@ -293,13 +293,13 @@ bool FileLinux::Open(uint32 nAccess)
 	m_pFile = fopen((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), szMode);
 
 	// Done
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 bool FileLinux::IsOpen() const
 {
 	// Check whether the file is open
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 bool FileLinux::IsReadable() const
@@ -383,10 +383,20 @@ bool FileLinux::Seek(int32 nOffset, File::ESeek nLocation)
 		// Convert seek position to system value
 		int nSeek;
 		switch (nLocation) {
-			case File::SeekCurrent:	nSeek = SEEK_CUR; break;
-			case File::SeekEnd:		nSeek = SEEK_END; break;
-			case File::SeekSet:		nSeek = SEEK_SET; break;
-			default:				return false; // Error!
+			case File::SeekCurrent:
+				nSeek = SEEK_CUR;
+				break;
+
+			case File::SeekEnd:
+				nSeek = SEEK_END;
+				break;
+
+			case File::SeekSet:
+				nSeek = SEEK_SET;
+				break;
+
+			default:
+				return false; // Error!
 		}
 
 		// Seek file

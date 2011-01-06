@@ -105,7 +105,7 @@ void SPTexturingFixedFunctions::OnPaint(Surface &cSurface)
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProj);
 		}
 
-		// Normally this vertex buffer we created is NEVER NULL, but in this demo
+		// Normally this vertex buffer we created is NEVER a null pointer, but in this demo
 		// we want to go for sure
 		if (m_pVertexBuffer) {
 			// Bind our vertex buffer

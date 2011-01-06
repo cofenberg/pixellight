@@ -197,7 +197,7 @@ SNMPhysicsBody::SNMPhysicsBody(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	m_bAutoFreeze(true),
 	m_bUseGravity(true),
 	m_nCollisionGroup(0),
-	m_pWorldContainer(NULL),
+	m_pWorldContainer(nullptr),
 	m_pBodyHandler(new ElementHandler()),
 	m_bListening(true),
 	EventHandlerActive   (&SNMPhysicsBody::NotifyActive,    this),
@@ -496,11 +496,11 @@ void SNMPhysicsBody::InformedOnInit()
 			CreatePhysicsBody();
 		} else {
 			// ??
-			m_pWorldContainer = NULL;
+			m_pWorldContainer = nullptr;
 		}
 	} else {
 		// No world, no physics...
-		m_pWorldContainer = NULL;
+		m_pWorldContainer = nullptr;
 	}
 }
 

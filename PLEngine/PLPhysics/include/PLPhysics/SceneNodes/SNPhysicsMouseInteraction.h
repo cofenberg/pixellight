@@ -111,12 +111,12 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		*    Returns whether or not picking is currently performed
 		*
 		*  @param[out] pvMousePos
-		*    If picking is currently performed and pvMousePos is not NULL, it will receive the current mouse position used for picking
+		*    If picking is currently performed and pvMousePos is not a null pointer, it will receive the current mouse position used for picking
 		*
 		*  @return
 		*    'true' if picking is currently performed, else 'false'
 		*/
-		PLPHYSICS_API bool IsPicking(PLMath::Vector2i *pvMousePos = NULL) const;
+		PLPHYSICS_API bool IsPicking(PLMath::Vector2i *pvMousePos = nullptr) const;
 
 
 	//[-------------------------------------------------------]
@@ -159,7 +159,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		PLGeneral::String			m_sForceLineName;		/**< Name of the force visualization line node */
 		bool						m_bPicking;				/**< Are we currently picking? */
 		PLMath::Vector2i			m_vPickingMousePos;		/**< Mouse position used for picking */
-		Body					   *m_pPickedPhysicsBody;	/**< The currently picked physics body, can be NULL */
+		Body					   *m_pPickedPhysicsBody;	/**< The currently picked physics body, can be a null pointer */
 		float						m_fPickedDistance;		/**< Picking distance */
 		PLMath::Vector3				m_vAttachmentPoint;		/**< Picking attachment point */
 		PLScene::SceneNodeHandler	m_cForceLineHandler;	/**< Scene handler for the physics force line */

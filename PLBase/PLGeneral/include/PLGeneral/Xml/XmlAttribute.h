@@ -193,7 +193,7 @@ class XmlAttribute : public XmlBase {
 		*    Get the next sibling attribute in the DOM
 		*
 		*  @return
-		*    The next sibling attribute in the DOM, NULL at end
+		*    The next sibling attribute in the DOM, a null pointer at end
 		*/
 		PLGENERAL_API XmlAttribute *GetNext();
 		PLGENERAL_API const XmlAttribute *GetNext() const;
@@ -203,7 +203,7 @@ class XmlAttribute : public XmlBase {
 		*    Get the previous sibling attribute in the DOM
 		*
 		*  @return
-		*    The previous sibling attribute in the DOM, NULL at beginning
+		*    The previous sibling attribute in the DOM, a null pointer at beginning
 		*/
 		PLGENERAL_API XmlAttribute *GetPrevious();
 		PLGENERAL_API const XmlAttribute *GetPrevious() const;
@@ -229,7 +229,7 @@ class XmlAttribute : public XmlBase {
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
 		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
-		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]
@@ -262,11 +262,11 @@ class XmlAttribute : public XmlBase {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		XmlDocument  *m_pDocument;			/**< A pointer back to a document, for error reporting, can be NULL */
+		XmlDocument  *m_pDocument;			/**< A pointer back to a document, for error reporting, can be a null pointer */
 		String		  m_sName;				/**< Name */
 		String		  m_sValue;				/**< Value */
-		XmlAttribute *m_pPreviousAttribute;	/**< Previous attribute, can be NULL */
-		XmlAttribute *m_pNextAttribute;		/**< Next attribute, can be NULL */
+		XmlAttribute *m_pPreviousAttribute;	/**< Previous attribute, can be a null pointer */
+		XmlAttribute *m_pNextAttribute;		/**< Next attribute, can be a null pointer */
 
 
 };

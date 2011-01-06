@@ -59,9 +59,9 @@ IndexBuffer::~IndexBuffer()
 *    Constructor
 */
 IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuffer(cRenderer),
-	m_pIndexBuffer(NULL),
-	m_pData(NULL),
-	m_pLockedData(NULL),
+	m_pIndexBuffer(nullptr),
+	m_pData(nullptr),
+	m_pLockedData(nullptr),
 	m_nUsageAPI(0),
 	m_nTypeAPI(D3DFMT_UNKNOWN)
 {
@@ -94,7 +94,7 @@ bool IndexBuffer::MakeCurrent()
 //[-------------------------------------------------------]
 bool IndexBuffer::IsAllocated() const
 {
-	return (m_pIndexBuffer != NULL || m_pData != NULL);
+	return (m_pIndexBuffer != nullptr || m_pData != nullptr);
 }
 
 bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
@@ -146,7 +146,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 	// Init data
-	uint8 *pDataBackup = NULL;
+	uint8 *pDataBackup = nullptr;
 	uint32 nSizeBackup = m_nSize;
 	if (m_pData && m_nSize != nElementSizeAPI*nElements) {
 		// Backup the current data
@@ -160,7 +160,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 			delete [] (uint32*)m_pData;
 		else
 			delete [] (uint16*)m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	} else if (m_pIndexBuffer) {
 		if (bKeepData && !m_pData && !pDataBackup && Lock(PLRenderer::Lock::ReadOnly)) {
 			// Backup the current data
@@ -171,7 +171,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 
 		// Delete index buffer object
 		m_pIndexBuffer->Release();
-		m_pIndexBuffer = NULL;
+		m_pIndexBuffer = nullptr;
 	}
 	ForceUnlock();
 	m_nElements = nElements;
@@ -187,7 +187,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 																	  m_nTypeAPI,
 																	  m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
 																	  &m_pIndexBuffer,
-																	  NULL) != D3D_OK)
+																	  nullptr) != D3D_OK)
 			return false; // Error!
 	} else {
 		// Create software index buffer
@@ -225,13 +225,13 @@ bool IndexBuffer::Clear()
 	ForceUnlock();
 	if (m_pIndexBuffer) {
 		m_pIndexBuffer->Release();
-		m_pIndexBuffer = NULL;
+		m_pIndexBuffer = nullptr;
 	} else if (m_pData) {
 		if (m_nElementType == UInt)
 			delete [] (uint32*)m_pData;
 		else
 			delete [] (uint16*)m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	} else {
 		// Error!
 		return false;
@@ -255,7 +255,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's an index buffer
 	if (!m_pIndexBuffer && !m_pData)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Check whether the index buffer is already locked
 	m_nLockCount++;
@@ -271,14 +271,14 @@ void *IndexBuffer::Lock(uint32 nFlag)
 	else if (nFlag == PLRenderer::Lock::ReadWrite)
 		nFlagAPI = 0;
 	else
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Lock the index buffer
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 	if (m_pIndexBuffer) {
 		if (m_pIndexBuffer->Lock(0, 0, &m_pLockedData, nFlagAPI) != D3D_OK)
-			return NULL; // Error!
+			return nullptr; // Error!
 	}
 	if (m_pData)
 		m_pLockedData = m_pData;
@@ -308,7 +308,7 @@ bool IndexBuffer::Unlock()
 		return true; // Nope, it's still used somewhere else...
 
 	// Unlock the index buffer
-	m_pLockedData = NULL;
+	m_pLockedData = nullptr;
 	if (m_pIndexBuffer) {
 		if (m_pIndexBuffer->Unlock() != D3D_OK)
 			return false; // Error!
@@ -328,7 +328,7 @@ void IndexBuffer::BackupDeviceData(uint8 **ppBackup)
 	// Backup required?
 	if (m_bManaged || GetUsage() >= PLRenderer::Usage::Software) {
 		// Nope, D3D will do the dirty work for us if required!
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	} else {
 		// Backup data
 		if (Lock(PLRenderer::Lock::ReadOnly)) {
@@ -336,13 +336,13 @@ void IndexBuffer::BackupDeviceData(uint8 **ppBackup)
 			MemoryManager::Copy(*ppBackup, GetData(), m_nSize);
 			ForceUnlock();
 		} else {
-			*ppBackup = NULL;
+			*ppBackup = nullptr;
 		}
 
 		// Release the index buffer
 		if (m_pIndexBuffer) {
 			m_pIndexBuffer->Release();
-			m_pIndexBuffer = NULL;
+			m_pIndexBuffer = nullptr;
 		}
 	}
 }
@@ -357,7 +357,7 @@ void IndexBuffer::RestoreDeviceData(uint8 **ppBackup)
 																  m_nTypeAPI,
 																  m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
 																  &m_pIndexBuffer,
-																  NULL);
+																  nullptr);
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);
 			Unlock();

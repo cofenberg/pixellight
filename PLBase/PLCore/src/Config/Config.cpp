@@ -215,7 +215,7 @@ ConfigGroup *Config::GetClass(const String &sName)
 	}
 
 	// Class not found
-	return NULL;
+	return nullptr;
 }
 
 

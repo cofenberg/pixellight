@@ -230,7 +230,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 								// always easy to pinpoint the problem directly to the mipmaps. So, to avoid frustration during bug finding,
 								// we just create the missing mipmap levels down to 1x1 with a white color - so it's possible to 'see' which texture
 								// isn't correct without reading the log message from above. (for some people it appears to be hard to read logs *g*)
-								char *pszBuffer = NULL;
+								char *pszBuffer = nullptr;
 								do {
 									// First at all, 'half' the current dimension
 									if (nSize > 1)
@@ -316,7 +316,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 
 		// Create texture buffer
 		for (uint8 nFace=0; nFace<6; nFace++) {
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nPixelFormat, nDataFormat, NULL);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nPixelFormat, nDataFormat, nullptr);
 
 			// If compressed internal format, check whether all went fine
 			if (IsCompressedFormat()) {
@@ -327,7 +327,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 					m_nFormat = R8G8B8A8;
 					pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 					if (pAPIPixelFormat)
-						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nPixelFormat, nDataFormat, NULL);
+						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nPixelFormat, nDataFormat, nullptr);
 				}
 			}
 		}
@@ -507,7 +507,7 @@ void TextureBufferCube::BackupDeviceData(uint8 **ppBackup)
 			}
 		}
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

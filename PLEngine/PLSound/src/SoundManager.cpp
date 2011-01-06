@@ -171,7 +171,7 @@ SoundManager &SoundManager::operator =(const SoundManager &cSource)
 Buffer *SoundManager::CreateResource(const String &sName)
 {
 	// This function MUST be overwritten within the concrete sound backend
-	return NULL; // Error!
+	return nullptr; // Error!
 }
 
 

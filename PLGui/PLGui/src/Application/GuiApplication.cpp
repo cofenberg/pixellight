@@ -63,7 +63,7 @@ namespace PLGui {
 */
 GuiApplication::GuiApplication(const PLGeneral::String &sGuiFilename) : ConsoleApplication(),
 	EventHandlerOnDestroy(&GuiApplication::OnDestroyMainWindow, this),
-	m_pMainWindow(NULL)
+	m_pMainWindow(nullptr)
 {
 	// Set application title
 	SetTitle("PixelLight GUI application");
@@ -190,7 +190,7 @@ void GuiApplication::OnCreateMainWindow()
 void GuiApplication::OnDestroyMainWindow()
 {
 	// We lost our main window :/
-	m_pMainWindow = NULL;
+	m_pMainWindow = nullptr;
 }
 
 

@@ -112,9 +112,9 @@ bool Socket::Close()
 	if (m_nSocket != INVALID_SOCKET) {
 		// Close server socket
 		#ifdef WIN32
-			int nResult = closesocket(m_nSocket);
+			const int nResult = closesocket(m_nSocket);
 		#else
-			int nResult = close(m_nSocket);
+			const int nResult = close(m_nSocket);
 		#endif
 
 		// Reset socket address
@@ -123,7 +123,10 @@ bool Socket::Close()
 
 		// Done
 		return !nResult;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -185,7 +188,10 @@ bool Socket::Bind(const SocketAddress &cSocketAddress)
 		// Bind socket to a socket address
 		m_cSocketAddress = cSocketAddress;
 		return (bind(m_nSocket, (sockaddr*)m_cSocketAddress.m_pSockAddress, sizeof(*m_cSocketAddress.m_pSockAddress)) != SOCKET_ERROR);
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**

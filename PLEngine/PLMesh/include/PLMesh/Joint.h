@@ -65,9 +65,9 @@ class Joint : public PLGeneral::Element<Joint>, public JointState {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
-		PLMESH_API Joint(const PLGeneral::String &sName = "", PLGeneral::ElementManager<Joint> *pManager = NULL);
+		PLMESH_API Joint(const PLGeneral::String &sName = "", PLGeneral::ElementManager<Joint> *pManager = nullptr);
 
 		/**
 		*  @brief

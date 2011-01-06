@@ -96,7 +96,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*  @param[in] nColorIndex
 		*    Index of the color render target to set
 		*  @param[in] pTextureBuffer
-		*    Texture buffer to render in, can be NULL
+		*    Texture buffer to render in, can be a null pointer
 		*/
 		void SetColorRenderTarget(PLGeneral::uint8 nColorIndex, PLRenderer::TextureBuffer *pTextureBuffer);
 
@@ -150,8 +150,8 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FrameBufferObject			*m_pFrameBufferObject;		/**< Nice frame buffer object, can be NULL */
-		PBuffer						*m_pPBuffer;				/**< The PBuffer, can be NULL */
+		FrameBufferObject			*m_pFrameBufferObject;		/**< Nice frame buffer object, can be a null pointer */
+		PBuffer						*m_pPBuffer;				/**< The PBuffer, can be a null pointer */
 		PLRenderer::ResourceHandler	 m_cTextureBufferHandler;	/**< Texture buffer to render in */
 		PLGeneral::uint8			 m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
 

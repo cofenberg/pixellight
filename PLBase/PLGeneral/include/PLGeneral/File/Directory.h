@@ -76,9 +76,9 @@ class Directory : public FileObject {
 		*  @param[in] sUrl
 		*    URL of a directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API Directory(const String &sUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API Directory(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -87,9 +87,9 @@ class Directory : public FileObject {
 		*  @param[in] cUrl
 		*    URL of a directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API Directory(const Url &cUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API Directory(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class Directory : public FileObject {
 		*    Filter to be applied (e.g. "*.txt")
 		*
 		*  @return
-		*    Pointer to a new file searcher, NULL on error (has to be deleted be the caller)
+		*    Pointer to a new file searcher, a null pointer on error (has to be deleted be the caller)
 		*/
 		PLGENERAL_API FileSearch *Search(const String &sFilter) const;
 

@@ -47,7 +47,7 @@
 // will do all the neccessary job
 NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, char* argn[], char* argv[], NPSavedData* saved)
 {   
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   NPError rv = NPERR_NO_ERROR;
@@ -65,7 +65,7 @@ NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, ch
   ds.saved    = saved;
 
   nsPluginInstanceBase * plugin = NS_NewPluginInstance(&ds);
-  if(plugin == NULL)
+  if(plugin == nullptr)
     return NPERR_OUT_OF_MEMORY_ERROR;
 
   // associate the plugin instance object with NPP instance
@@ -76,13 +76,13 @@ NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, ch
 // here is the place to clean up and destroy the nsPluginInstance object
 NPError NPP_Destroy (NPP instance, NPSavedData** save)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   NPError rv = NPERR_NO_ERROR;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin != NULL) {
+  if(plugin != nullptr) {
     plugin->shut();
     NS_DestroyPluginInstance(plugin);
   }
@@ -94,21 +94,21 @@ NPError NPP_Destroy (NPP instance, NPSavedData** save)
 // initialization and shutdown
 NPError NPP_SetWindow (NPP instance, NPWindow* pNPWindow)
 {    
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   NPError rv = NPERR_NO_ERROR;
 
-  if(pNPWindow == NULL)
+  if(pNPWindow == nullptr)
     return NPERR_GENERIC_ERROR;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
 
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
   // window just created
-  if(!plugin->isInitialized() && (pNPWindow->window != NULL)) { 
+  if(!plugin->isInitialized() && (pNPWindow->window != nullptr)) { 
     if(!plugin->init(pNPWindow)) {
       NS_DestroyPluginInstance(plugin);
       return NPERR_MODULE_LOAD_FAILED_ERROR;
@@ -116,15 +116,15 @@ NPError NPP_SetWindow (NPP instance, NPWindow* pNPWindow)
   }
 
   // window goes away
-  if((pNPWindow->window == NULL) && plugin->isInitialized())
+  if((pNPWindow->window == nullptr) && plugin->isInitialized())
     return plugin->SetWindow(pNPWindow);
 
   // window resized?
-  if(plugin->isInitialized() && (pNPWindow->window != NULL))
+  if(plugin->isInitialized() && (pNPWindow->window != nullptr))
     return plugin->SetWindow(pNPWindow);
 
   // this should not happen, nothing to do
-  if((pNPWindow->window == NULL) && !plugin->isInitialized())
+  if((pNPWindow->window == nullptr) && !plugin->isInitialized())
     return plugin->SetWindow(pNPWindow);
 
   return rv;
@@ -132,11 +132,11 @@ NPError NPP_SetWindow (NPP instance, NPWindow* pNPWindow)
 
 NPError NPP_NewStream(NPP instance, NPMIMEType type, NPStream* stream, NPBool seekable, uint16* stype)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
   NPError rv = plugin->NewStream(type, stream, seekable, stype);
@@ -145,11 +145,11 @@ NPError NPP_NewStream(NPP instance, NPMIMEType type, NPStream* stream, NPBool se
 
 int32 NPP_WriteReady (NPP instance, NPStream *stream)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return 0x0fffffff;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return 0x0fffffff;
 
   int32 rv = plugin->WriteReady(stream);
@@ -158,11 +158,11 @@ int32 NPP_WriteReady (NPP instance, NPStream *stream)
 
 int32 NPP_Write (NPP instance, NPStream *stream, int32 offset, int32 len, void *buffer)
 {   
-  if(instance == NULL)
+  if(instance == nullptr)
     return len;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return len;
 
   int32 rv = plugin->Write(stream, offset, len, buffer);
@@ -171,11 +171,11 @@ int32 NPP_Write (NPP instance, NPStream *stream, int32 offset, int32 len, void *
 
 NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPError reason)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
   NPError rv = plugin->DestroyStream(stream, reason);
@@ -184,11 +184,11 @@ NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPError reason)
 
 void NPP_StreamAsFile (NPP instance, NPStream* stream, const char* fname)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return;
 
   plugin->StreamAsFile(stream, fname);
@@ -196,11 +196,11 @@ void NPP_StreamAsFile (NPP instance, NPStream* stream, const char* fname)
 
 void NPP_Print (NPP instance, NPPrint* printInfo)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return;
 
   plugin->Print(printInfo);
@@ -208,11 +208,11 @@ void NPP_Print (NPP instance, NPPrint* printInfo)
 
 void NPP_URLNotify(NPP instance, const char* url, NPReason reason, void* notifyData)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return;
 
   plugin->URLNotify(url, reason, notifyData);
@@ -220,11 +220,11 @@ void NPP_URLNotify(NPP instance, const char* url, NPReason reason, void* notifyD
 
 NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
   NPError rv = plugin->GetValue(variable, value);
@@ -233,11 +233,11 @@ NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 
 NPError NPP_SetValue(NPP instance, NPNVariable variable, void *value)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
   NPError rv = plugin->SetValue(variable, value);
@@ -246,11 +246,11 @@ NPError NPP_SetValue(NPP instance, NPNVariable variable, void *value)
 
 int16	NPP_HandleEvent(NPP instance, void* event)
 {
-  if(instance == NULL)
+  if(instance == nullptr)
     return 0;
 
   nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
-  if(plugin == NULL) 
+  if(plugin == nullptr) 
     return 0;
 
   uint16 rv = plugin->HandleEvent(event);
@@ -260,7 +260,7 @@ int16	NPP_HandleEvent(NPP instance, void* event)
 #ifdef OJI
 jref NPP_GetJavaClass (void)
 {
-  return NULL;
+  return nullptr;
 }
 #endif
 
@@ -340,7 +340,7 @@ void Private_URLNotify(NPP instance, const char* url, NPReason reason, void* not
 
 jref Private_GetJavaClass(void)
 {
-  return NULL;
+  return nullptr;
 }
 
 NPError Private_GetValue(NPP instance, NPPVariable variable, void *result)

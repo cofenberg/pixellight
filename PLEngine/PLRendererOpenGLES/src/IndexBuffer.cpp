@@ -87,7 +87,7 @@ bool IndexBuffer::MakeCurrent()
 */
 void *IndexBuffer::GetDynamicData() const
 {
-	return m_nIndexBuffer ? NULL : m_pData;
+	return m_nIndexBuffer ? nullptr : m_pData;
 }
 
 
@@ -100,8 +100,8 @@ void *IndexBuffer::GetDynamicData() const
 */
 IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuffer(cRenderer),
 	m_nIndexBuffer(0),
-	m_pData(NULL),
-	m_pLockedData(NULL),
+	m_pData(nullptr),
+	m_pLockedData(nullptr),
 	m_bLockReadOnly(false),
 	m_bUpdateVBO(false),
 	m_nUsageAPI(0)
@@ -116,7 +116,7 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 //[-------------------------------------------------------]
 bool IndexBuffer::IsAllocated() const
 {
-	return (m_nIndexBuffer != 0 || m_pData != NULL);
+	return (m_nIndexBuffer != 0 || m_pData != nullptr);
 }
 
 bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
@@ -158,7 +158,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 	// Init data
-	uint8 *pDataBackup = NULL;
+	uint8 *pDataBackup = nullptr;
 	uint32 nSizeBackup = m_nSize;
 	if (m_pData && ((m_nSize != nElementSizeAPI*nElements) || (m_bManaged && !bManaged))) {
 		// Backup the current data
@@ -172,7 +172,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 			delete [] (uint16*)m_pData;
 		else
 			delete [] (uint8*)m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 	if (m_nIndexBuffer && nUsage == PLRenderer::Usage::Software) {
 		if (bKeepData && !m_pData && !pDataBackup && Lock(PLRenderer::Lock::ReadOnly)) {
@@ -202,7 +202,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 		GLint nElementArrayBufferBackup;
 		glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &nElementArrayBufferBackup);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nIndexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_nSize, NULL, m_nUsageAPI);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_nSize, nullptr, m_nUsageAPI);
 
 		// Error checking
 		int nArrayObjectSize = 0;
@@ -262,7 +262,7 @@ bool IndexBuffer::Clear()
 				delete [] (uint16*)m_pData;
 			else
 				delete [] (uint8*)m_pData;
-			m_pData = NULL;
+			m_pData = nullptr;
 		}
 
 		// Update renderer statistics
@@ -284,7 +284,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's an index buffer
 	if (!m_nIndexBuffer && !m_pData)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Check whether the index buffer is already locked
 	m_nLockCount++;
@@ -297,7 +297,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 		} else if (nFlag == PLRenderer::Lock::ReadWrite) {
 			m_bLockReadOnly = false;
 		} else {
-			return NULL; // Error!
+			return nullptr; // Error!
 		}
 
 		// Map the index buffer
@@ -314,7 +314,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 			if (nFlag == PLRenderer::Lock::WriteOnly)
 				nFlagAPI = GL_WRITE_ONLY_OES;
 			else
-				return NULL; // Error!
+				return nullptr; // Error!
 
 			// [TODO] GL_OES_mapbuffer
 			// Map
@@ -361,7 +361,7 @@ bool IndexBuffer::Unlock()
 		}
 	}
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
-	m_pLockedData   = NULL;
+	m_pLockedData   = nullptr;
 	m_bLockReadOnly = false;
 
 	// Done
@@ -380,7 +380,7 @@ void IndexBuffer::BackupDeviceData(uint8 **ppBackup)
 		MemoryManager::Copy(*ppBackup, GetData(), m_nSize);
 		ForceUnlock();
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 
 	// Destroy the index buffer
@@ -397,7 +397,7 @@ void IndexBuffer::RestoreDeviceData(uint8 **ppBackup)
 		glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &nElementArrayBufferBackup);
 		glGenBuffers(1, &m_nIndexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nIndexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_nSize, NULL, m_nUsageAPI);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_nSize, nullptr, m_nUsageAPI);
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);
 			Unlock();
@@ -412,7 +412,7 @@ void IndexBuffer::RestoreDeviceData(uint8 **ppBackup)
 			glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &nElementArrayBufferBackup);
 			glGenBuffers(1, &m_nIndexBuffer);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nIndexBuffer);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_nSize, NULL, m_nUsageAPI);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_nSize, nullptr, m_nUsageAPI);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, nElementArrayBufferBackup);
 			m_bUpdateVBO = true;
 		}

@@ -189,7 +189,7 @@ SoundManager::SoundManager() :
 	Channels(this),
 	BufferLength(this),
 	NumOfBuffers(this),
-	m_pSystem(NULL),
+	m_pSystem(nullptr),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_fDopplerFactor(1.0f)
@@ -221,7 +221,7 @@ SoundManager::~SoundManager()
 */
 bool SoundManager::AddActiveSource(PLSound::Source &cSource)
 {
-	return !m_lstActiveSources.IsElement(&cSource) && m_lstActiveSources.Add(&cSource) != NULL;
+	return !m_lstActiveSources.IsElement(&cSource) && m_lstActiveSources.Add(&cSource) != nullptr;
 }
 
 /**
@@ -445,7 +445,7 @@ bool SoundManager::Init()
 	PL_LOG(Info, String::Format("Initialize FMOD Ex (v%08x)", FMOD_VERSION))
 
 	// Set new memory management functions
-	FMOD_RESULT nResult = FMOD_Memory_Initialize(NULL, 0, FMODExAllocationFunction, FMODExReallocationFunction, FMODExDeallocationFunction, FMOD_MEMORY_NORMAL);
+	FMOD_RESULT nResult = FMOD_Memory_Initialize(nullptr, 0, FMODExAllocationFunction, FMODExReallocationFunction, FMODExDeallocationFunction, FMOD_MEMORY_NORMAL);
 	if (ErrorCheck(nResult)) {
 		// Create a system object
 		FMOD::System_Create(&m_pSystem);
@@ -477,7 +477,7 @@ bool SoundManager::Init()
 
 			// Cleanup on error
 			m_pSystem->release();
-			m_pSystem = NULL;
+			m_pSystem = nullptr;
 		}
 	}
 
@@ -498,7 +498,7 @@ bool SoundManager::DeInit()
 	// Close FMOD Ex
 	if (m_pSystem) {
 		m_pSystem->release();
-		m_pSystem = NULL;
+		m_pSystem = nullptr;
 	}
 
 	// Done

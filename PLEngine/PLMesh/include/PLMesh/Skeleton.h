@@ -118,9 +118,9 @@ class Skeleton : public PLCore::Resource<Skeleton>,
 		*  @param[in] cJoint
 		*    Current joint to process
 		*  @param[in] pParentJoint
-		*    Current parent joint to process, can be NULL
+		*    Current parent joint to process, can be a null pointer
 		*/
-		void RecCalculateStates(Joint &cJoint, Joint *pParentJoint = NULL) const;
+		void RecCalculateStates(Joint &cJoint, Joint *pParentJoint = nullptr) const;
 
 
 	//[-------------------------------------------------------]

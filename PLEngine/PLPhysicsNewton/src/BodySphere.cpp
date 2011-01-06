@@ -67,7 +67,7 @@ BodySphere::BodySphere(PLPhysics::World &cWorld, float fRadius) :
 	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
 
 	// Create collision primitive
-	Newton::NewtonCollision *pCollision = NewtonCreateSphere(pNewtonWorld, m_fRadius, m_fRadius, m_fRadius, 0, NULL);
+	Newton::NewtonCollision *pCollision = NewtonCreateSphere(pNewtonWorld, m_fRadius, m_fRadius, m_fRadius, 0, nullptr);
 
 	// Create the rigid body
 	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!

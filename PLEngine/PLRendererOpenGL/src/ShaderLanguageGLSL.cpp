@@ -61,25 +61,25 @@ String ShaderLanguageGLSL::GetShaderLanguage() const
 PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
-	return ((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() ? new VertexShaderGLSL(*m_pRenderer) : NULL;
+	return ((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() ? new VertexShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
 {
 	// Are the OpenGL extensions GL_ARB_shader_objects and GL_EXT_geometry_shader4 available?
-	return (((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() && ((Renderer*)m_pRenderer)->IsGL_EXT_geometry_shader4()) ? new GeometryShaderGLSL(*m_pRenderer) : NULL;
+	return (((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() && ((Renderer*)m_pRenderer)->IsGL_EXT_geometry_shader4()) ? new GeometryShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::FragmentShader *ShaderLanguageGLSL::CreateFragmentShader()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
-	return ((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() ? new FragmentShaderGLSL(*m_pRenderer) : NULL;
+	return ((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() ? new FragmentShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
-	return ((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() ? new ProgramGLSL(*m_pRenderer) : NULL;
+	return ((Renderer*)m_pRenderer)->IsGL_ARB_shader_objects() ? new ProgramGLSL(*m_pRenderer) : nullptr;
 }
 
 

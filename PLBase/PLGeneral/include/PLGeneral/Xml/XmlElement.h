@@ -119,7 +119,7 @@ class XmlElement : public XmlNode {
 		*  @param[in]  sName
 		*    Attribute name
 		*  @param[out] pnValue
-		*    If not NULL, this variable will receive the integer value - if the attribute
+		*    If not a null pointer, this variable will receive the integer value - if the attribute
 		*    value can be converted into an integer, if not, this variable is not touched
 		*
 		*  @return
@@ -128,7 +128,7 @@ class XmlElement : public XmlNode {
 		*  @remarks
 		*    If the attribute exists and can be converted to an integer,
 		*    the integer value will be put in the return 'pnValue', if 'pnValue'
-		*    is not NULL.
+		*    is not a null pointer.
 		*/
 		PLGENERAL_API String GetAttribute(const String &sName, int *pnValue) const;
 
@@ -140,7 +140,7 @@ class XmlElement : public XmlNode {
 		*  @param[in]  sName
 		*    Attribute name
 		*  @param[out] pdValue
-		*    If not NULL, this variable will receive the double value - if the attribute
+		*    If not a null pointer, this variable will receive the double value - if the attribute
 		*    value can be converted into a double, if not, this variable is not touched
 		*
 		*  @return
@@ -149,7 +149,7 @@ class XmlElement : public XmlNode {
 		*  @remarks
 		*    If the attribute exists and can be converted to an double,
 		*    the double value will be put in the return 'pdValue', if 'pdValue'
-		*    is not NULL.
+		*    is not a null pointer.
 		*/
 		PLGENERAL_API String GetAttribute(const String &sName, double *pdValue) const;
 
@@ -160,7 +160,7 @@ class XmlElement : public XmlNode {
 		*  @param[in]  sName
 		*    Attribute name
 		*  @param[out] pnValue
-		*    If not NULL, this variable will receive the integer value - if the attribute
+		*    If not a null pointer, this variable will receive the integer value - if the attribute
 		*    value can be converted into an integer, if not, this variable is not touched
 		*
 		*  @return
@@ -180,7 +180,7 @@ class XmlElement : public XmlNode {
 		*  @param[in]  sName
 		*    Attribute name
 		*  @param[out] pfValue
-		*    If not NULL, this variable will receive the float value - if the attribute
+		*    If not a null pointer, this variable will receive the float value - if the attribute
 		*    value can be converted into a float, if not, this variable is not touched
 		*
 		*  @return
@@ -199,7 +199,7 @@ class XmlElement : public XmlNode {
 		*  @param[in]  sName
 		*    Attribute name
 		*  @param[out] pdValue
-		*    If not NULL, this variable will receive the double value - if the attribute
+		*    If not a null pointer, this variable will receive the double value - if the attribute
 		*    value can be converted into a double, if not, this variable is not touched
 		*
 		*  @return
@@ -267,7 +267,7 @@ class XmlElement : public XmlNode {
 		*    Access the first attribute in this element
 		*
 		*  @return
-		*    The first attribute, NULL if there's no first attribute
+		*    The first attribute, a null pointer if there's no first attribute
 		*/
 		PLGENERAL_API XmlAttribute *GetFirstAttribute();
 		PLGENERAL_API const XmlAttribute *GetFirstAttribute() const;
@@ -277,7 +277,7 @@ class XmlElement : public XmlNode {
 		*    Access the last attribute in this element
 		*
 		*  @return
-		*    The last attribute, NULL if there's no last attribute
+		*    The last attribute, a null pointer if there's no last attribute
 		*/
 		PLGENERAL_API XmlAttribute *GetLastAttribute();
 		PLGENERAL_API const XmlAttribute *GetLastAttribute() const;
@@ -329,7 +329,7 @@ class XmlElement : public XmlNode {
 	public:
 		PLGENERAL_API virtual bool Save(File &cFile, uint32 nDepth = 0);
 		PLGENERAL_API virtual String ToString(uint32 nDepth = 0) const;
-		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = NULL, EEncoding nEncoding = EncodingUnknown);
+		PLGENERAL_API const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown);
 
 
 	//[-------------------------------------------------------]
@@ -386,9 +386,9 @@ class XmlElement : public XmlNode {
 		*    Reads the "value" of the element -- another element, or text
 		*
 		*  @param[in] pszData
-		*    Parsing data, if NULL, an error will be returned
+		*    Parsing data, if a null pointer, an error will be returned
 		*  @param[in] pData
-		*    Parsing data, can be NULL
+		*    Parsing data, can be a null pointer
 		*  @param[in] nEncoding
 		*    Encoding
 		*

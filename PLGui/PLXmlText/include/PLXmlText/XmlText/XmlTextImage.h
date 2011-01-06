@@ -67,9 +67,9 @@ class XmlTextImage : public XmlTextElement {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    Parent object, can be NULL
+		*    Parent object, can be a null pointer
 		*/
-		PLXMLTEXT_API XmlTextImage(XmlTextElement *pParent = NULL);
+		PLXMLTEXT_API XmlTextImage(XmlTextElement *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class XmlTextImage : public XmlTextElement {
 		// Image data
 		PLGeneral::String	 m_sFilename;	/**< Image filename */
 		PLMath::Vector2i	 m_vSize;		/**< Image size */
-		PLGui::Image		*m_pImage;		/**< Image, can be NULL */
+		PLGui::Image		*m_pImage;		/**< Image, can be a null pointer */
 
 
 };

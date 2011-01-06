@@ -94,8 +94,8 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		void *m_pData;			/**< Dynamic buffer, can be NULL (none VBO) */
-		void *m_pLockedData;	/**< Locked data, can be NULL */
+		void *m_pData;			/**< Dynamic buffer, can be a null pointer (none VBO) */
+		void *m_pLockedData;	/**< Locked data, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

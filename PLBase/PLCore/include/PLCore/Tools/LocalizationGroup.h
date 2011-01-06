@@ -134,7 +134,7 @@ class LocalizationGroup : public Loadable {
 		*    Index of the text
 		*
 		*  @return
-		*    The requested text, NULL on error
+		*    The requested text, a null pointer on error
 		*/
 		PLCORE_API LocalizationText *GetText(PLGeneral::uint32 nIndex) const;
 
@@ -146,7 +146,7 @@ class LocalizationGroup : public Loadable {
 		*    Name of the text
 		*
 		*  @return
-		*    The requested text, NULL on error
+		*    The requested text, a null pointer on error
 		*/
 		PLCORE_API LocalizationText *GetText(const PLGeneral::String &sName) const;
 
@@ -160,7 +160,7 @@ class LocalizationGroup : public Loadable {
 		*    The translation of the text
 		*
 		*  @return
-		*    The new text, NULL on error (maybe there's already a text with the given name?)
+		*    The new text, a null pointer on error (maybe there's already a text with the given name?)
 		*/
 		PLCORE_API LocalizationText *AddText(const PLGeneral::String &sName, const PLGeneral::String &sTranslation);
 

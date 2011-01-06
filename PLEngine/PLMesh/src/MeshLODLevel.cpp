@@ -54,9 +54,9 @@ namespace PLMesh {
 MeshLODLevel::MeshLODLevel(Mesh *pMesh) :
 	m_pMesh(pMesh),
 	m_fDistance(0.0f),
-	m_pIndexBuffer(NULL),
-	m_plstGeometries(NULL),
-	m_pOctree(NULL)
+	m_pIndexBuffer(nullptr),
+	m_plstGeometries(nullptr),
+	m_pOctree(nullptr)
 {
 }
 
@@ -124,7 +124,7 @@ MeshLODLevel &MeshLODLevel::operator =(const MeshLODLevel &cSource)
 		} else {
 			// Destroy vertex buffer
 			delete m_pIndexBuffer;
-			m_pIndexBuffer = NULL;
+			m_pIndexBuffer = nullptr;
 		}
 	} else {
 		if (cSource.m_pIndexBuffer && m_pMesh) {
@@ -178,7 +178,7 @@ void MeshLODLevel::ClearIndexBuffer()
 {
 	if (m_pIndexBuffer) {
 		delete m_pIndexBuffer;
-		m_pIndexBuffer = NULL;
+		m_pIndexBuffer = nullptr;
 	}
 }
 
@@ -189,7 +189,7 @@ void MeshLODLevel::ClearIndexBuffer()
 void MeshLODLevel::CreateIndexBuffer()
 {
 	ClearIndexBuffer();
-	m_pIndexBuffer = (m_pMesh && m_pMesh->GetRenderer()) ? m_pMesh->GetRenderer()->CreateIndexBuffer() : NULL;
+	m_pIndexBuffer = (m_pMesh && m_pMesh->GetRenderer()) ? m_pMesh->GetRenderer()->CreateIndexBuffer() : nullptr;
 }
 
 /**
@@ -232,7 +232,7 @@ void MeshLODLevel::ClearGeometries()
 {
 	if (m_plstGeometries) {
 		delete m_plstGeometries;
-		m_plstGeometries = NULL;
+		m_plstGeometries = nullptr;
 	}
 
 	// Destroy precalculated data
@@ -286,13 +286,13 @@ bool MeshLODLevel::CreateOctree(uint32 nSubdivide, uint32 nMinGeometries,
 		m_pOctree = new MeshOctree();
 		for (uint32 i=0; i<nGeometries; i++)
 			plstGeometries[i] = i;
-		m_pOctree->Init(NULL, nSubdivide, nMinGeometries);
+		m_pOctree->Init(nullptr, nSubdivide, nMinGeometries);
 		m_pOctree->Build(*this, nGeometries, plstGeometries, plstOctreeIDList);
 		delete [] plstGeometries;
 	} else {
 		// Create empty octree
 		m_pOctree = new MeshOctree();
-		m_pOctree->Init(NULL, nSubdivide, nMinGeometries);
+		m_pOctree->Init(nullptr, nSubdivide, nMinGeometries);
 	}
 
 	// Done
@@ -307,7 +307,7 @@ void MeshLODLevel::DestroyOctree()
 {
 	if (m_pOctree) {
 		delete m_pOctree;
-		m_pOctree = NULL;
+		m_pOctree = nullptr;
 	}
 }
 
@@ -667,7 +667,7 @@ bool MeshLODLevel::SplitGeometries(bool bSingleGeometries, uint32 *pSplit, uint3
 
 			// Loop through all geometries
 			for (uint32 nGT=0; nGT<m_plstGeometries->GetNumOfElements(); nGT++) {
-				Geometry *pNewGeometry = NULL;
+				Geometry *pNewGeometry = nullptr;
 				{ // Get the geometry
 					const Geometry &cGeometry = m_plstGeometries->Get(nGT);
 
@@ -911,7 +911,7 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 			// Now split the selected geometry
 			if (cGeometry.GetNumOfTriangles() > 0) {
 				// Check if this geometry can be joint with a new geometry
-				Geometry *pNewGeometry = NULL;
+				Geometry *pNewGeometry = nullptr;
 				for (uint32 nNewGeometry=0; nNewGeometry<plstGeometries->GetNumOfElements(); nNewGeometry++) {
 					pNewGeometry = &plstGeometries->Get(nNewGeometry);
 
@@ -1018,7 +1018,7 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 			// Now split the selected geometry
 			if (cGeometry.GetNumOfTriangles() > 0) {
 				// Check if this geometry can be joint with a new geometry
-				Geometry *pNewGeometry = NULL;
+				Geometry *pNewGeometry = nullptr;
 				for (uint32 nNewGeometry=0; nNewGeometry<plstGeometries->GetNumOfElements(); nNewGeometry++) {
 					pNewGeometry = &plstGeometries->Get(nNewGeometry);
 					if (cGeometry.GetName()          == pNewGeometry->GetName() &&
@@ -1110,7 +1110,7 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 			// Now split the selected geometry
 			if (cGeometry.GetNumOfTriangles() > 0) {
 				// Check if this geometry can be joint with a new geometry
-				Geometry *pNewGeometry = NULL;
+				Geometry *pNewGeometry = nullptr;
 				for (uint32 nNewGeometry=0; nNewGeometry<plstGeometries->GetNumOfElements(); nNewGeometry++) {
 					pNewGeometry = &plstGeometries->Get(nNewGeometry);
 					if (cGeometry.GetName()          == pNewGeometry->GetName() &&

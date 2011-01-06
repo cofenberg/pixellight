@@ -89,7 +89,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		case PLGUIKEY_F1:
 		{
 			// Get the info text scene node
-			SceneNode *pSceneNode = GetRootScene() ? GetRootScene()->Get("InfoText") : NULL;
+			SceneNode *pSceneNode = GetRootScene() ? GetRootScene()->Get("InfoText") : nullptr;
 			if (pSceneNode) {
 				// Toggle the active state of the scene node
 				pSceneNode->SetActive(!pSceneNode->IsActive());

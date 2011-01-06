@@ -65,10 +65,10 @@ SurfaceWindow::~SurfaceWindow()
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
 	#ifdef WIN32
-		m_hDC(NULL),
+		m_hDC(nullptr),
 	#endif
 	#ifdef LINUX
-		m_nWindow(NULL),
+		m_nWindow(nullptr),
 	#endif
 		m_bGammaChanged(false)
 {

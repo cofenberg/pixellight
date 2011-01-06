@@ -92,7 +92,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 				pCollision = NewtonCreateCollisionFromSerialization(pNewtonWorld, World::PhysicsDeserialize, pFile);
 				pFile->Close();
 				delete pFile;
-				pFile = NULL;
+				pFile = nullptr;
 			}
 		}
 
@@ -206,7 +206,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 									NewtonCollisionSerialize(pNewtonWorld, pCollision, World::PhysicsSerialize, pFile);
 									pFile->Close();
 									delete pFile;
-									pFile = NULL;
+									pFile = nullptr;
 								}
 							}
 
@@ -272,7 +272,7 @@ File *BodyMesh::OpenFile(PLPhysics::World &cWorld, const String &sFilename, bool
 			if (sCacheFilename.IsSubstring(sDirectory))
 				sCacheFilename = sCacheFilename.GetSubstring(sDirectory.GetLength());
 			else
-				return NULL; // Error!
+				return nullptr; // Error!
 		}
 
 		// We REALLY need a slash at the end of the cache directory name
@@ -290,7 +290,7 @@ File *BodyMesh::OpenFile(PLPhysics::World &cWorld, const String &sFilename, bool
 		if (pFile->Exists() && pFile->IsDirectory()) {
 			// Error!
 			delete pFile;
-			return NULL;
+			return nullptr;
 		}
 
 		// Create the file?
@@ -311,7 +311,7 @@ File *BodyMesh::OpenFile(PLPhysics::World &cWorld, const String &sFilename, bool
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

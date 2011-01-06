@@ -85,7 +85,7 @@ class DynLibLinux : public DynLibImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		void *m_pLib;	/**< System pointer to the library, can be NULL */
+		void *m_pLib;	/**< System pointer to the library, can be a null pointer */
 
 
 };

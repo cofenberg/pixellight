@@ -45,7 +45,7 @@ bool ShaderToolsGLSL::SetSourceCode(GLuint nOpenGLESShader, const String &sSourc
 {
 	// Load the shader source
 	const char *pszSourceCode = sSourceCode.GetASCII();
-	glShaderSource(nOpenGLESShader, 1, &pszSourceCode, NULL);
+	glShaderSource(nOpenGLESShader, 1, &pszSourceCode, nullptr);
 
 	// Compile the shader
 	glCompileShader(nOpenGLESShader);
@@ -67,7 +67,7 @@ bool ShaderToolsGLSL::SetSourceCode(GLuint nOpenGLESShader, const String &sSourc
 			char *pszInformationLog = new char[nInformationLength];
 
 			// Get the information
-			glGetShaderInfoLog(nOpenGLESShader, nInformationLength, NULL, pszInformationLog);
+			glGetShaderInfoLog(nOpenGLESShader, nInformationLength, nullptr, pszInformationLog);
 
 			// Write the error into the log - the PixelLight string class takes over the control of the allocated string buffer
 			String sInformationLog(pszInformationLog, false, nInformationLength-1);	// -1 = excluding the terminating zero
@@ -93,7 +93,7 @@ void ShaderToolsGLSL::WriteProgramInformationIntoLog(GLuint nOpenGLESProgram)
 		char *pszInformationLog = new char[nInformationLength];
 
 		// Get the information
-		glGetProgramInfoLog(nOpenGLESProgram, nInformationLength, NULL, pszInformationLog);
+		glGetProgramInfoLog(nOpenGLESProgram, nInformationLength, nullptr, pszInformationLog);
 
 		// Write the error into the log - the PixelLight string class takes over the control of the allocated string buffer
 		String sInformationLog(pszInformationLog, false, nInformationLength-1);	// -1 = excluding the terminating zero

@@ -95,7 +95,7 @@ void *F_CALLBACKAPI FSOpen(const char *pszName)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 void F_CALLBACKAPI FSClose(void *pHandle)
@@ -200,7 +200,7 @@ SoundManager::~SoundManager()
 */
 bool SoundManager::AddActiveSource(PLSound::Source &cSource)
 {
-	return !m_lstActiveSources.IsElement(&cSource) && m_lstActiveSources.Add(&cSource) != NULL;
+	return !m_lstActiveSources.IsElement(&cSource) && m_lstActiveSources.Add(&cSource) != nullptr;
 }
 
 /**
@@ -397,7 +397,7 @@ bool SoundManager::Init()
 	PL_LOG(Info, String::Format("Initialize FMOD (v%.1f)", FMOD_VERSION))
 
 	// Set new memory management functions
-	FSOUND_SetMemorySystem(NULL, 0, FMODAllocationFunction, FMODReallocationFunction, FMODDeallocationFunction);
+	FSOUND_SetMemorySystem(nullptr, 0, FMODAllocationFunction, FMODReallocationFunction, FMODDeallocationFunction);
 
 	// Set custom file callbacks to use the PixelLight file system
 	FSOUND_File_SetCallbacks(FSOpen, FSClose, FSRead, FSSeek, FSTell);
@@ -411,7 +411,7 @@ bool SoundManager::Init()
 		FSOUND_SetOutput(Output-1); // -1: Because the FMOD settings start with -1!
 		FSOUND_SetDriver(Driver);
 		FSOUND_SetMixer (Mixer);
-		FSOUND_SetHWND(NULL);
+		FSOUND_SetHWND(nullptr);
 
 		// Try to initialize fmod
 		int nRetryCount = 0;

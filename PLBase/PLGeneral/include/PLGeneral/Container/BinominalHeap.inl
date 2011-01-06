@@ -43,8 +43,8 @@ namespace PLGeneral {
 template <class KeyType, class ValueType, class Comparer>
 BinominalHeap<KeyType, ValueType, Comparer>::Tree::Tree(KeyType Key, ValueType Value) :
 	m_nDegree(0),
-	m_pNextSibling(NULL),
-	m_pChild(NULL),
+	m_pNextSibling(nullptr),
+	m_pChild(nullptr),
 	m_Key(Key),
 	m_Value(Value)
 {
@@ -60,13 +60,13 @@ BinominalHeap<KeyType, ValueType, Comparer>::Tree::~Tree()
 	// Destroy child
 	if (m_pChild) {
 		delete m_pChild;
-		m_pChild = NULL;
+		m_pChild = nullptr;
 	}
 
 	// Destroy sibling
 	if (m_pNextSibling) {
 		delete m_pNextSibling;
-		m_pNextSibling = NULL;
+		m_pNextSibling = nullptr;
 	}
 }
 
@@ -83,7 +83,7 @@ typename BinominalHeap<KeyType, ValueType, Comparer>::Tree &BinominalHeap<KeyTyp
 	// For the tree's we have to swap the data :(
 	if (m_nDegree < cTree.m_nDegree) {
 		// Swap
-		uint32 nDegree = m_nDegree;
+		const uint32 nDegree = m_nDegree;
 		m_nDegree = cTree.m_nDegree;
 		cTree.m_nDegree = nDegree;
 
@@ -138,7 +138,7 @@ typename BinominalHeap<KeyType, ValueType, Comparer>::Tree &BinominalHeap<KeyTyp
 			// Compare keys, the tree with the 'greater' key gets a child of the other one
 			if (Comparer::IsGreater(pThisTree->m_Key, pOtherTree->m_Key)) {
 				// 'pThisTree' will become a child of 'pOtherTree'
-				pThisTree->m_pNextSibling = NULL;
+				pThisTree->m_pNextSibling = nullptr;
 				if (pThisTree == pRoot)
 					pRoot = pOtherTree;
 				if (pOtherTree->m_pChild) {
@@ -156,7 +156,7 @@ typename BinominalHeap<KeyType, ValueType, Comparer>::Tree &BinominalHeap<KeyTyp
 				pThisTree->m_pNextSibling = pOtherTree->m_pNextSibling;
 				if (pOtherTree == pRoot)
 					pRoot = pThisTree;
-				pOtherTree->m_pNextSibling = NULL;
+				pOtherTree->m_pNextSibling = nullptr;
 				if (pThisTree->m_pChild) {
 					pThisTree->m_pChild->Union(*pOtherTree);
 					pThisTree->m_nDegree = pThisTree->m_pChild->m_nDegree+1;
@@ -189,7 +189,7 @@ typename BinominalHeap<KeyType, ValueType, Comparer>::Tree &BinominalHeap<KeyTyp
 template <class KeyType, class ValueType, class Comparer>
 BinominalHeap<KeyType, ValueType, Comparer>::BinominalHeap() :
 	m_nNumOfElements(0),
-	m_pRoot(NULL)
+	m_pRoot(nullptr)
 {
 }
 
@@ -214,7 +214,7 @@ BinominalHeap<KeyType, ValueType, Comparer>::~BinominalHeap()
 template <class KeyType, class ValueType, class Comparer>
 BinominalHeap<KeyType, ValueType, Comparer>::BinominalHeap(const BinominalHeap<KeyType, ValueType, Comparer> &cSource) :
 	m_nNumOfElements(0),
-	m_pRoot(NULL)
+	m_pRoot(nullptr)
 {
 	// Not implemented
 }
@@ -270,7 +270,7 @@ void BinominalHeap<KeyType, ValueType, Comparer>::Clear()
 	// Destroy the root tree
 	if (m_pRoot) {
 		delete m_pRoot;
-		m_pRoot			 = NULL;
+		m_pRoot			 = nullptr;
 		m_nNumOfElements = 0;
 	}
 }
@@ -340,7 +340,7 @@ bool BinominalHeap<KeyType, ValueType, Comparer>::ExtractTop(ValueType *pValue, 
 
 // First: Find the top tree
 	// Either the root tree or one of it's siblings must be the top
-	Tree *pTop = m_pRoot, *pPreviousTop = NULL, *pPrevious = m_pRoot, *pNext = pTop->m_pNextSibling;
+	Tree *pTop = m_pRoot, *pPreviousTop = nullptr, *pPrevious = m_pRoot, *pNext = pTop->m_pNextSibling;
 	while (pNext) {
 		// Do we have found a new top tree?
 		if (Comparer::IsGreater(pTop->m_Key, pNext->m_Key)) {
@@ -370,7 +370,7 @@ bool BinominalHeap<KeyType, ValueType, Comparer>::ExtractTop(ValueType *pValue, 
 	pPrevious = pTop->m_pChild;
 	if (pPrevious) {
 		pNext = pPrevious->m_pNextSibling;
-		pPrevious->m_pNextSibling = NULL;
+		pPrevious->m_pNextSibling = nullptr;
 		while (pNext) {
 			// Backup sibling
 			Tree *pTemp = pNext->m_pNextSibling;
@@ -389,8 +389,8 @@ bool BinominalHeap<KeyType, ValueType, Comparer>::ExtractTop(ValueType *pValue, 
 	}
 
 	// Destroy the node of the top tree...
-	pTop->m_pNextSibling = NULL; // Do NOT delete the sibling
-	pTop->m_pChild		 = NULL; // Do NOT delete the child
+	pTop->m_pNextSibling = nullptr; // Do NOT delete the sibling
+	pTop->m_pChild		 = nullptr; // Do NOT delete the child
 	delete pTop;
 
 // ... and finally, decrease the number of elements

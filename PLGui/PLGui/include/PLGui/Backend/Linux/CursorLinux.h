@@ -72,7 +72,7 @@ class CursorLinux : public CursorImpl {
 		*    Get X cursor
 		*
 		*  @return
-		*    Pointer to cursor, can be NULL
+		*    Pointer to cursor, can be a null pointer
 		*/
 		PLGUI_API ::Cursor GetXCursor() const;
 

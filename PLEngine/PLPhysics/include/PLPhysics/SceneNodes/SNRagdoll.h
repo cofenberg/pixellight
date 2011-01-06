@@ -173,7 +173,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Returns the PL physics world scene node container the ragdoll is in
 		*
 		*  @return
-		*    The PL physics world scene node container the ragdoll is in, NULL on error
+		*    The PL physics world scene node container the ragdoll is in, a null pointer on error
 		*    (if that's the case, something went totally wrong :)
 		*
 		*  @note
@@ -192,7 +192,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Creates the ragdoll using a skeleton handler
 		*
 		*  @param[in] pSkeletonHandler
-		*    Skeleton handler to get the ragdoll information from, if NULL, a ragdoll is created automatically using
+		*    Skeleton handler to get the ragdoll information from, if a null pointer, a ragdoll is created automatically using
 		*    the skeleton handler of the used mesh
 		*
 		*  @return
@@ -210,7 +210,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    - Default body mass: 1.0
 		*    - The joint limits are between -0.5 and 0.5
 		*/
-		PLPHYSICS_API bool CreateRagdoll(PLMesh::SkeletonHandler *pSkeletonHandler = NULL);
+		PLPHYSICS_API bool CreateRagdoll(PLMesh::SkeletonHandler *pSkeletonHandler = nullptr);
 
 		/**
 		*  @brief
@@ -267,7 +267,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Returns the ragdoll skeleton
 		*
 		*  @return
-		*    The ragdoll skeleton, NULL on error
+		*    The ragdoll skeleton, a null pointer on error
 		*/
 		PLPHYSICS_API PLMesh::Skeleton *GetSkeleton() const;
 
@@ -306,7 +306,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Index of the requested body
 		*
 		*  @return
-		*    The requested body, NULL on error
+		*    The requested body, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollBody *GetBody(PLGeneral::uint32 nIndex) const;
 
@@ -318,7 +318,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Name of the requested body
 		*
 		*  @return
-		*    The requested body, NULL on error
+		*    The requested body, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollBody *GetBody(const PLGeneral::String &sName) const;
 
@@ -332,7 +332,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Create the physics body after the body was added?
 		*
 		*  @return
-		*    The new ragdoll body, NULL on error
+		*    The new ragdoll body, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollBody *AddBody(const PLGeneral::String &sName = "Joint", bool bCreatePhysics = true);
 
@@ -346,7 +346,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Create the physics body after the cloned body was added?
 		*
 		*  @return
-		*    The new cloned ragdoll body, NULL on error
+		*    The new cloned ragdoll body, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollBody *CloneBody(PLGeneral::uint32 nIndex, bool bCreatePhysics = true);
 
@@ -391,7 +391,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Index of the requested joint
 		*
 		*  @return
-		*    The requested joint, NULL on error
+		*    The requested joint, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollJoint *GetJoint(PLGeneral::uint32 nIndex) const;
 
@@ -403,7 +403,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Name of the requested joint
 		*
 		*  @return
-		*    The requested joint, NULL on error
+		*    The requested joint, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollJoint *GetJoint(const PLGeneral::String &sName) const;
 
@@ -417,7 +417,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Create the physics joint after the joint was added?
 		*
 		*  @return
-		*    The new ragdoll joint, NULL on error
+		*    The new ragdoll joint, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollJoint *AddJoint(const PLGeneral::String &sName = "Joint", bool bCreatePhysics = true);
 
@@ -431,7 +431,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Create the physics joint after the cloned joint was added?
 		*
 		*  @return
-		*    The new cloned ragdoll joint, NULL on error
+		*    The new cloned ragdoll joint, a null pointer on error
 		*/
 		PLPHYSICS_API RagdollJoint *CloneJoint(PLGeneral::uint32 nIndex, bool bCreatePhysics = true);
 
@@ -461,7 +461,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Adds a new no collision
 		*
 		*  @return
-		*    The new no collision, NULL on error
+		*    The new no collision, a null pointer on error
 		*/
 		PLPHYSICS_API NoCollision *AddNoCollision();
 
@@ -473,7 +473,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Index of the requested no collision
 		*
 		*  @return
-		*    The requested no collision, NULL on error
+		*    The requested no collision, a null pointer on error
 		*/
 		PLPHYSICS_API NoCollision *GetNoCollision(PLGeneral::uint32 nIndex) const;
 
@@ -506,7 +506,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Name of the joint to control
 		*
 		*  @return
-		*    The new (if not already created) controller, NULL on error
+		*    The new (if not already created) controller, a null pointer on error
 		*/
 		PLPHYSICS_API JointController *AddController(const PLGeneral::String &sJointName);
 
@@ -518,7 +518,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Index of the requested controller
 		*
 		*  @return
-		*    The requested controller, NULL on error
+		*    The requested controller, a null pointer on error
 		*/
 		PLPHYSICS_API JointController *GetController(PLGeneral::uint32 nIndex) const;
 
@@ -530,7 +530,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*    Name of the requested controller
 		*
 		*  @return
-		*    The requested controller, NULL on error
+		*    The requested controller, a null pointer on error
 		*/
 		PLPHYSICS_API JointController *GetController(const PLGeneral::String &sName) const;
 
@@ -612,7 +612,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = NULL);
+		PLPHYSICS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

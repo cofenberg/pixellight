@@ -78,14 +78,14 @@ class AnchorPoint : public PLGeneral::Element<AnchorPoint> {
 		*  @param[in] nID
 		*    ID of the vertex/bone the anchor is attached to
 		*  @param[in] pManager
-		*    Anchor point manager using this element, can be NULL
+		*    Anchor point manager using this element, can be a null pointer
 		*
 		*  @note
 		*    - If you provide the pointer to the owner manager the anchor point
 		*      will check in the anchor point manager name list
 		*/
 		PLMESH_API AnchorPoint(const PLGeneral::String &sName = "", bool bType = 0,
-							   PLGeneral::uint32 nID = 0, AnchorPointManager *pManager = NULL);
+							   PLGeneral::uint32 nID = 0, AnchorPointManager *pManager = nullptr);
 
 		/**
 		*  @brief

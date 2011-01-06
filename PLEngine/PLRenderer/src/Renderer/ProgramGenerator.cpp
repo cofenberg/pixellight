@@ -224,7 +224,7 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 						pGeneratedProgram->pProgram			    = pProgram;
 						pGeneratedProgram->nVertexShaderFlags   = cFlags.GetVertexShaderFlags();
 						pGeneratedProgram->nFragmentShaderFlags = cFlags.GetFragmentShaderFlags();
-						pGeneratedProgram->pUserData			= NULL;
+						pGeneratedProgram->pUserData			= nullptr;
 
 						// Add our nark which will inform us as soon as the program gets dirty
 						pProgram->EventDirty.Connect(&EventHandlerDirty);
@@ -281,7 +281,7 @@ void ProgramGenerator::ClearCache()
 *    Copy constructor
 */
 ProgramGenerator::ProgramGenerator(const ProgramGenerator &cSource) :
-	m_pRenderer(NULL)
+	m_pRenderer(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -309,7 +309,7 @@ void ProgramGenerator::OnDirty(Program *pProgram)
 			// Is there user data we can destroy?
 			if (pGeneratedProgram->pUserData) {
 				delete pGeneratedProgram->pUserData;
-				pGeneratedProgram->pUserData = NULL;
+				pGeneratedProgram->pUserData = nullptr;
 			}
 
 			// We're done, get us out of the loop

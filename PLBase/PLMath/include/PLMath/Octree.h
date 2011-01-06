@@ -122,7 +122,7 @@ class Octree {
 		*    Initializes the octree
 		*
 		*  @param[in] pParent
-		*    Parent octree, can be NULL
+		*    Parent octree, can be a null pointer
 		*  @param[in] nSubdivide
 		*    Subdivide
 		*  @param[in] nMinGeometries
@@ -133,8 +133,7 @@ class Octree {
 		*  @note
 		*    - You should destroy the old octree before you initialize the new one!
 		*/
-		PLMATH_API void Init(Octree *pParent = NULL,
-							 int nSubdivide = -1, PLGeneral::uint32 nMinGeometries = 0, PLGeneral::uint32 nIDOffset = 0);
+		PLMATH_API void Init(Octree *pParent = nullptr, int nSubdivide = -1, PLGeneral::uint32 nMinGeometries = 0, PLGeneral::uint32 nIDOffset = 0);
 
 		/**
 		*  @brief
@@ -257,7 +256,7 @@ class Octree {
 		*  @param[in]  cPlaneSet
 		*    Plane set to check
 		*  @param[out] pBitset
-		*    Optional (can be NULL) bitset which can for instance be filled in CustomVisible() and
+		*    Optional (can be a null pointer) bitset which can for instance be filled in CustomVisible() and
 		*    CustomInvisible() with current visibility information
 		*
 		*  @remarks
@@ -265,7 +264,7 @@ class Octree {
 		*    The function it will call CustomVisible()/CustomInvisible()
 		*    to mark an octree as visible or invisible.
 		*/
-		PLMATH_API void UpdateVisibility(const PlaneSet &cPlaneSet, PLGeneral::Bitset *pBitset = NULL);
+		PLMATH_API void UpdateVisibility(const PlaneSet &cPlaneSet, PLGeneral::Bitset *pBitset = nullptr);
 
 		/**
 		*  @brief
@@ -301,10 +300,10 @@ class Octree {
 		PLGeneral::uint32	m_nIDOffset;		/**< ID offset from parent (0-7) */
 		PLGeneral::uint32   m_nID;				/**< Octree ID */
 		Octree			   *m_pTopmost;			/**< Topmost octree (always valid!) */
-		Octree			   *m_pParent;			/**< Octree parent, can be NULL */
+		Octree			   *m_pParent;			/**< Octree parent, can be a null pointer */
 		PLGeneral::uint32	m_nLevel;			/**< Node level (0 = topmost) */
 		PLGeneral::uint32   m_nNumOfChildren;	/**< Number of children */
-		Octree			  **m_ppChild;			/**< The children, can be NULL */
+		Octree			  **m_ppChild;			/**< The children, can be a null pointer */
 		BoundingBox			m_cBoundingBox;		/**< Octree bounding box */
 		Vector3				m_vPos;				/**< World position (m_vPos+m_vBBCenter = real world position) */
 		Vector3				m_vBBCenter;		/**< Orginal bounding box center */
@@ -349,24 +348,24 @@ class Octree {
 		*    Custom visible function
 		*
 		*  @param[out] pBitset
-		*    Optional bitset, can be NULL
+		*    Optional bitset, can be a null pointer
 		*
 		*  @note
 		*    - Is called during UpdateVisibility() if the octree is visible
 		*/
-		PLMATH_API virtual void CustomVisible(PLGeneral::Bitset *pBitset = NULL);
+		PLMATH_API virtual void CustomVisible(PLGeneral::Bitset *pBitset = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*
 		*  @param[out] pBitset
-		*    Optional bitset, can be NULL
+		*    Optional bitset, can be a null pointer
 		*
 		*  @note
 		*    - Is called during UpdateVisibility() if the octree is invisible
 		*/
-		PLMATH_API virtual void CustomInvisible(PLGeneral::Bitset *pBitset = NULL);
+		PLMATH_API virtual void CustomInvisible(PLGeneral::Bitset *pBitset = nullptr);
 
 
 };

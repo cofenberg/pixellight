@@ -150,7 +150,7 @@ class GuiWindows : public GuiImpl {
 		*    Window handle
 		*
 		*  @return
-		*    Widget, can be NULL if hWnd is NULL or the window is not a PLGui widget
+		*    Widget, can be a null pointer if hWnd is NULL_HANDLE or the window is not a PLGui widget
 		*/
 		static Widget *GetPLGuiWidget(HWND hWnd);
 

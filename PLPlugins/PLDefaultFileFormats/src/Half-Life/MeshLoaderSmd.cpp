@@ -344,7 +344,7 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			// Loop through all root joints
 			for (uint32 i=0; i<pSkeleton->GetRootJoints().GetNumOfElements(); i++) {
 				Joint *pJoint = pSkeleton->Get(pSkeleton->GetRootJoints()[i]);
-				RecCalculateStates(*pSkeleton, *pJoint, NULL);
+				RecCalculateStates(*pSkeleton, *pJoint, nullptr);
 			}
 
 		// triangles

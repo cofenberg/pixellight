@@ -70,13 +70,13 @@ pl_implement_class(Renderer)
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// Only shaders mode is supported by OpenGL ES 2.0
 	m_pFontManager(new FontManager(*this)),
 	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this)),
-	m_hDisplay(NULL),
-	m_hConfig(NULL),
-	m_hContext(NULL),
-	m_nDummyNativeWindow(NULL),
-	m_hDummySurface(NULL)
+	m_hDisplay(nullptr),
+	m_hConfig(nullptr),
+	m_hContext(nullptr),
+	m_nDummyNativeWindow(nullptr),
+	m_hDummySurface(nullptr)
 	#ifdef LINUX
-		, m_pDisplay(NULL)
+		, m_pDisplay(nullptr)
 	#endif
 {
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
@@ -90,7 +90,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 	// Get X server display connection
 	#ifdef LINUX
-		m_pDisplay = XOpenDisplay(NULL);
+		m_pDisplay = XOpenDisplay(nullptr);
 	#endif
 
 	// Get display
@@ -126,25 +126,25 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 			if (m_hConfig) {
 				// Create context
 				EGLint pContextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
-				m_hContext = eglCreateContext(m_hDisplay, m_hConfig, NULL, pContextAttribs);
+				m_hContext = eglCreateContext(m_hDisplay, m_hConfig, nullptr, pContextAttribs);
 				if (m_hContext != EGL_NO_CONTEXT) {
 					// Create the dummy native window
 					#ifdef WIN32
 					{
-						HINSTANCE hModuleHandle = GetModuleHandle(NULL);
+						HINSTANCE hModuleHandle = GetModuleHandle(nullptr);
 						WNDCLASS sWindowClass;
 						sWindowClass.hInstance		= hModuleHandle;
 						sWindowClass.lpszClassName	= TEXT("PLOpenGLESDummyNativeWindow");
 						sWindowClass.lpfnWndProc	= DefWindowProc;
 						sWindowClass.style			= 0;
-						sWindowClass.hIcon			= NULL;
-						sWindowClass.hCursor		= NULL;
-						sWindowClass.lpszMenuName	= NULL;
+						sWindowClass.hIcon			= nullptr;
+						sWindowClass.hCursor		= nullptr;
+						sWindowClass.lpszMenuName	= nullptr;
 						sWindowClass.cbClsExtra		= 0;
 						sWindowClass.cbWndExtra		= 0;
-						sWindowClass.hbrBackground	= NULL;
+						sWindowClass.hbrBackground	= nullptr;
 						RegisterClass(&sWindowClass);
-						m_nDummyNativeWindow = CreateWindow(TEXT("PLOpenGLESDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, NULL, hModuleHandle, NULL);
+						m_nDummyNativeWindow = CreateWindow(TEXT("PLOpenGLESDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, hModuleHandle, nullptr);
 					}
 					#endif
 					#ifdef LINUX
@@ -158,14 +158,14 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 					#endif
 
 					// Create an EGL dummy surface
-					m_hDummySurface = eglCreateWindowSurface(m_hDisplay, m_hConfig, m_nDummyNativeWindow, NULL);
+					m_hDummySurface = eglCreateWindowSurface(m_hDisplay, m_hConfig, m_nDummyNativeWindow, nullptr);
 					if (m_hDummySurface == EGL_NO_SURFACE) {
 						// Error!
 						PL_LOG(Error, "Failed to create EGL dummy surface!")
 					}
 
 					// Make the internal dummy surface to the currently used one
-					if (MakeCurrent(NULL) == EGL_FALSE) {
+					if (MakeCurrent(nullptr) == EGL_FALSE) {
 						// Error!
 						PL_LOG(Error, "Failed to make the EGL dummy surface to the current one!")
 					}
@@ -221,7 +221,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 					// Allocate current stuff
 					m_ppCurrentTextureBuffer = new PLRenderer::TextureBuffer*[m_sCapabilities.nMaxTextureUnits];
 					for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
-						m_ppCurrentTextureBuffer[i] = NULL;
+						m_ppCurrentTextureBuffer[i] = nullptr;
 
 					// Setup current render states
 					for (uint32 i=0; i<PLRenderer::RenderState::Number; i++) {
@@ -276,15 +276,15 @@ Renderer::~Renderer()
 
 	// Destroy the OpenGL ES renderer font manager while there's still an active OpenGL ES context (... font textures...)
 	delete m_pFontManager;
-	m_pFontManager = NULL;
+	m_pFontManager = nullptr;
 
 	// Destroy the GLSL shader language instance
 	delete m_pShaderLanguageGLSL;
-	m_pShaderLanguageGLSL = NULL;
+	m_pShaderLanguageGLSL = nullptr;
 
 	// Destroy the draw helpers instance
 	delete m_pDrawHelpers;
-	m_pDrawHelpers = NULL;
+	m_pDrawHelpers = nullptr;
 
 	// Destroy all renderer resources of this renderer
 	while (m_lstResources.GetNumOfElements())
@@ -295,7 +295,7 @@ Renderer::~Renderer()
 		for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 			delete [] m_ppnSamplerState[i];
 		delete [] m_ppnSamplerState;
-		m_ppnSamplerState = NULL;
+		m_ppnSamplerState = nullptr;
 	}
 
 	// Free internal sampler states
@@ -303,13 +303,13 @@ Renderer::~Renderer()
 		for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 			delete [] m_ppnInternalSamplerState[i];
 		delete [] m_ppnInternalSamplerState;
-		m_ppnInternalSamplerState = NULL;
+		m_ppnInternalSamplerState = nullptr;
 	}
 
 	// Free current stuff
 	if (m_ppCurrentTextureBuffer) {
 		delete [] m_ppCurrentTextureBuffer;
-		m_ppCurrentTextureBuffer = NULL;
+		m_ppCurrentTextureBuffer = nullptr;
 	}
 
 	// Make 'nothing' current
@@ -320,29 +320,29 @@ Renderer::~Renderer()
 		// Error!
 		PL_LOG(Error, "Failed to destroy the used EGL dummy surface!")
 	}
-	m_hDummySurface = NULL;
+	m_hDummySurface = nullptr;
 
 	// Destroy the EGL context
 	if (eglDestroyContext(m_hDisplay, m_hContext) == EGL_FALSE) {
 		// Error!
 		PL_LOG(Error, "Failed to destroy the used EGL context!")
 	}
-	m_hContext = NULL;
+	m_hContext = nullptr;
 
 	// Terminate the EGL display
 	if (eglTerminate(m_hDisplay) == EGL_FALSE) {
 		// Error!
 		PL_LOG(Error, "Failed to terminate the used EGL display!")
 	}
-	m_hDisplay = NULL;
-	m_hConfig  = NULL;
+	m_hDisplay = nullptr;
+	m_hConfig  = nullptr;
 
 	// Destroy the dummy native window
 	#ifdef WIN32
 		if (m_nDummyNativeWindow) {
 			DestroyWindow(m_nDummyNativeWindow);
-			UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(NULL));
-			m_nDummyNativeWindow = NULL;
+			UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(nullptr));
+			m_nDummyNativeWindow = nullptr;
 		}
 	#endif
 	#ifdef LINUX
@@ -603,7 +603,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 EGLConfig Renderer::ChooseConfig(uint32 nMultisampleAntialiasingSamples) const
 {
 	// Try to find a working EGL configuration
-	EGLConfig hConfig = NULL;
+	EGLConfig hConfig = nullptr;
 	EGLint nConfigs = 0;
 	bool bChooseConfigCapitulated = false;
 	bool bMultisampleAntialiasing = false;
@@ -958,13 +958,13 @@ String Renderer::GetDefaultShaderLanguage() const
 PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
 {
 	// Only the build in GLSL shader language is supported
-	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL) ? m_pShaderLanguageGLSL : NULL;
+	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL) ? m_pShaderLanguageGLSL : nullptr;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
 {
 	// We're in luck - it's not supported by OpenGL ES 2.0
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::FontManager &Renderer::GetFontManager() const
@@ -980,7 +980,7 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 {
 	// Is the surface window handler valid?
 	if (cHandler.GetRenderer() != this)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nWindow, bFullscreen);
@@ -1007,11 +1007,11 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 		return pRendererSurface;
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 //	*/
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
@@ -1030,11 +1030,11 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 		return pRendererSurface;
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 	*/
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
@@ -1043,7 +1043,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint1
 	/*
 	// Valid dimension?
 	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferCube(*this, nSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
@@ -1054,20 +1054,20 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint1
 	return pRendererSurface;
 	*/
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// 1D textures are not supported by OpenGL ES 2.0
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer2D(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the OpenGL ES 2.0 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags, false);
@@ -1077,7 +1077,7 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage,
 {
 	// Check texture buffer
 	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the OpenGL ES 2.0 2D texture buffer - OpenGL ES 2.0 has no special "rectangle"/"non-power-of-two" textures. GL_TEXTURE_2D
 	// can also be used with non-power-of-two texture data, but non-power-of-two textures have restrictions on the allowed texture wrap
@@ -1089,7 +1089,7 @@ PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer3D(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
@@ -1099,7 +1099,7 @@ PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(Image &cImage, 
 {
 	// Check texture buffer
 	if (!CheckTextureBufferCube(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
@@ -1120,7 +1120,7 @@ PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()
 {
 	// OpenGL ES 2.0 has no support for occlusion queries
-	return NULL;
+	return nullptr;
 }
 
 
@@ -2050,7 +2050,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		// Yes, make it current
 		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
 			// Now, no index buffer is set...
-			m_pCurrentIndexBuffer = NULL;
+			m_pCurrentIndexBuffer = nullptr;
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 			// Error!

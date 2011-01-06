@@ -767,7 +767,7 @@ class Tokenizer {
 		bool   m_bCaseSensitive;					/**< Are comparisons case sensitive? */
 
 		// Tokenizer status
-		BufferedReader			*m_pStream;			/**< Character stream to read from, can be NULL */
+		BufferedReader			*m_pStream;			/**< Character stream to read from, can be a null pointer */
 		String					 m_sToken;			/**< The current token */
 		uint32					 m_nPosition;		/**< The current position */
 		uint32					 m_nLine;			/**< The current line */

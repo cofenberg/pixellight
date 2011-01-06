@@ -41,11 +41,11 @@ namespace PLGeneral {
 *    Constructor
 */
 StringBufferUTF8::StringBufferUTF8(char szString[], uint32 nLength) : StringBuffer(nLength, nLength, String::Unicode),
-	m_pszString(NULL),
+	m_pszString(nullptr),
 	m_nNumOfBytes(0)
 {
 	// Get the number of bytes the UTF8 string requires
-	m_nNumOfBytes = UTF8Tools::Unescape(NULL, 0, szString);
+	m_nNumOfBytes = UTF8Tools::Unescape(nullptr, 0, szString);
 
 	// Get the UTF8 string
 	m_pszString = new char[m_nNumOfBytes + 1];
@@ -57,11 +57,11 @@ StringBufferUTF8::StringBufferUTF8(char szString[], uint32 nLength) : StringBuff
 *    Constructor
 */
 StringBufferUTF8::StringBufferUTF8(const wchar_t szString[], uint32 nLength) : StringBuffer(nLength, nLength, String::Unicode),
-	m_pszString(NULL),
+	m_pszString(nullptr),
 	m_nNumOfBytes(0)
 {
 	// Get the number of bytes the UTF8 string requires
-	m_nNumOfBytes = UTF8Tools::FromWideCharacterString(NULL, 0, szString, 0);
+	m_nNumOfBytes = UTF8Tools::FromWideCharacterString(nullptr, 0, szString, 0);
 
 	// Get the UTF8 string
 	m_pszString = new char[m_nNumOfBytes + 1];
@@ -89,13 +89,13 @@ String::EFormat StringBufferUTF8::GetFormat() const
 StringBufferASCII *StringBufferUTF8::GetASCII()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBufferUnicode *StringBufferUTF8::GetUnicode()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBufferUTF8 *StringBufferUTF8::GetUTF8()
@@ -111,13 +111,13 @@ uint32 StringBufferUTF8::GetNumOfBytes() const
 StringBuffer *StringBufferUTF8::Clone() const
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Duplicate()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 bool StringBufferUTF8::IsLessThan(const char szString[], uint32 nLength) const
@@ -225,103 +225,103 @@ int StringBufferUTF8::LastIndexOf(const wchar_t szString[], int nPos, uint32 nLe
 StringBuffer *StringBufferUTF8::GetSubstring(uint32 nPos, uint32 nCount) const
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::ToLower()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::ToUpper()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Delete(uint32 nPos, uint32 nCount)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Append(const char szString[], uint32 nCount)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Append(const wchar_t szString[], uint32 nCount)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Insert(const char szString[], uint32 nPos, uint32 nCount)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Insert(const wchar_t szString[], uint32 nPos, uint32 nCount)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Replace(char nOld, char nNew, uint32 &nReplaced)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Replace(wchar_t nOld, wchar_t nNew, uint32 &nReplaced)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Replace(const char szOld[], uint32 nOldLength, const char szNew[], uint32 nNewLength, uint32 &nReplaced)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::Replace(const wchar_t szOld[], uint32 nOldLength, const wchar_t szNew[], uint32 nNewLength, uint32 &nReplaced)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::SetCharacter(uint32 nIndex, char nCharacter)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::SetCharacter(uint32 nIndex, wchar_t nCharacter)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::TrimLeading()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::TrimTrailing()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 StringBuffer *StringBufferUTF8::RemoveLineEndings()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 

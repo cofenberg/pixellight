@@ -46,8 +46,8 @@ namespace PLScene {
 GMMSurfaceLevel::GMMSurfaceLevel(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
 	m_nLevels(0),
-	m_pBodies(NULL),
-	m_pLinkers(NULL)
+	m_pBodies(nullptr),
+	m_pLinkers(nullptr)
 {
 }
 
@@ -113,7 +113,7 @@ void GMMSurfaceLevel::BuildBodies(uint32 nLevels, uint32 nPatchSize)
 			--nSizeY;
 		if (nCutBottom)
 			--nSizeY;
-		m_pBodies[nVar].pIndexBuffer = NULL;
+		m_pBodies[nVar].pIndexBuffer = nullptr;
 
 		if (nSizeY > 0 && nSizeX > 0) {
 			m_pBodies[nVar].nIndexBufferSize = nSizeX*(2*(nSizeY+1)+1);
@@ -238,9 +238,9 @@ void GMMSurfaceLevel::BuildBodies(uint32 nLevels, uint32 nPatchSize)
 				pIndexBuffer->Unlock();
 			}
 		} else {
-			m_pBodies[nVar].pnCornerIndexBuffer = NULL;
+			m_pBodies[nVar].pnCornerIndexBuffer = nullptr;
 			m_pBodies[nVar].nCornerIndexSize    = 0;
-			m_pBodies[nVar].pCornerIndexBuffer  = NULL;
+			m_pBodies[nVar].pCornerIndexBuffer  = nullptr;
 		}
 	}
 }
@@ -269,7 +269,7 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 				int    f			= 1;
 
 				m_pLinkers[nLowLevel].pnIndexBuffer[nSide] = new uint32[nBuffSize];
-				m_pLinkers[nLowLevel].pIndexBuffer[nSide] = NULL;
+				m_pLinkers[nLowLevel].pIndexBuffer[nSide] = nullptr;
 				uint32 *pBuffer = m_pLinkers[nLowLevel].pnIndexBuffer[nSide];
 
 				// Horizontal Piece

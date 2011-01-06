@@ -105,7 +105,7 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		*    Returns the program generator
 		*
 		*  @return
-		*    The program generator, NULL on error
+		*    The program generator, a null pointer on error
 		*/
 		ProgramGenerator *GetProgramGenerator();
 
@@ -114,7 +114,7 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		*    Returns the generated program using the current flags
 		*
 		*  @return
-		*    The generated program, NULL on error
+		*    The generated program, a null pointer on error
 		*
 		*  @note
 		*    - Makes this generated program also the the current renderer program
@@ -213,7 +213,7 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		PLMath::Matrix4x4					 m_mObjectSpaceToClipSpace;	/**< 2D mode object space to clip space matrix */
 		PLMath::Matrix4x4					 m_m2DModeProjBackup;		/**< Projection matrix backup (fixed functions backwards support) */
 		PLMath::Matrix4x4					 m_m2DModeViewBackup;		/**< View matrix backup (fixed functions backwards support) */
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 

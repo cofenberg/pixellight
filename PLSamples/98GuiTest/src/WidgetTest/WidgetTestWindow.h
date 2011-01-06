@@ -61,7 +61,7 @@ class WidgetTestWindow : public PLGui::Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		WidgetTestWindow(Widget *pParent = NULL);
+		WidgetTestWindow(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

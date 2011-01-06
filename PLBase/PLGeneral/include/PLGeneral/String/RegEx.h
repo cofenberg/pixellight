@@ -332,8 +332,8 @@ class RegEx {
 	private:
 		// Regular expression
 		String					 m_sExpression;		/**< Regular expression */
-		pcre					*m_pPCRE;			/**< PCRE expression, can be NULL */
-		pcre_extra				*m_pExtra;			/**< PCRE extra data, can be NULL */
+		pcre					*m_pPCRE;			/**< PCRE expression, can be a null pointer */
+		pcre_extra				*m_pExtra;			/**< PCRE extra data, can be a null pointer */
 		uint32					 m_nFlags;			/**< Processing mode and encoding (combination of EFlags values) */
 
 		// Matches

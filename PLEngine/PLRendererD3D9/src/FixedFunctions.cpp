@@ -49,14 +49,14 @@ namespace PLRendererD3D9 {
 FixedFunctions::FixedFunctions(Renderer &cRendererD3D9) :
 	m_pRendererD3D9(&cRendererD3D9),
 	m_cColor(Color4::White),
-	m_ppnTextureStageState(NULL),
-	m_ppnInternalTextureStageState(NULL),
-	m_ppCurrentVertexBuffer(NULL),
-	m_nVertexBufferOffsets(NULL),
+	m_ppnTextureStageState(nullptr),
+	m_ppnInternalTextureStageState(nullptr),
+	m_ppCurrentVertexBuffer(nullptr),
+	m_nVertexBufferOffsets(nullptr),
 	m_nVertexOffset(0),
 	m_bUpdateVertexDeclaration(false),
-	m_pConstructedVertexDeclaration(NULL),
-	m_pConstructedDeclarations(NULL),
+	m_pConstructedVertexDeclaration(nullptr),
+	m_pConstructedDeclarations(nullptr),
 	m_nNumOfVertexStreams(0)
 {
 	{ // Capabilities
@@ -145,7 +145,7 @@ FixedFunctions::FixedFunctions(Renderer &cRendererD3D9) :
 	{ // Vertex buffer states
 		// Allocate vertex buffer streams
 		m_ppCurrentVertexBuffer = new PLRenderer::VertexBuffer*[m_sCapabilities.nMaxVertexBufferStreams];
-		MemoryManager::Set(m_ppCurrentVertexBuffer, NULL, sizeof(PLRenderer::VertexBuffer**)*m_sCapabilities.nMaxVertexBufferStreams);
+		MemoryManager::Set(m_ppCurrentVertexBuffer, 0, sizeof(PLRenderer::VertexBuffer**)*m_sCapabilities.nMaxVertexBufferStreams);
 		m_nVertexBufferOffsets = new uint32[m_sCapabilities.nMaxVertexBufferStreams];
 		MemoryManager::Set(m_nVertexBufferOffsets, 0, sizeof(uint32)*m_sCapabilities.nMaxVertexBufferStreams);
 
@@ -166,7 +166,7 @@ FixedFunctions::~FixedFunctions()
 			for (uint32 i=0; i<m_pRendererD3D9->GetCapabilities().nMaxTextureUnits; i++)
 				delete [] m_ppnTextureStageState[i];
 			delete [] m_ppnTextureStageState;
-			m_ppnTextureStageState = NULL;
+			m_ppnTextureStageState = nullptr;
 		}
 
 		// Free internal texture stage states
@@ -174,7 +174,7 @@ FixedFunctions::~FixedFunctions()
 			for (uint32 i=0; i<m_pRendererD3D9->GetCapabilities().nMaxTextureUnits; i++)
 				delete [] m_ppnInternalTextureStageState[i];
 			delete [] m_ppnInternalTextureStageState;
-			m_ppnInternalTextureStageState = NULL;
+			m_ppnInternalTextureStageState = nullptr;
 		}
 	}
 
@@ -182,23 +182,23 @@ FixedFunctions::~FixedFunctions()
 		// Free vertex buffer streams
 		if (m_ppCurrentVertexBuffer) {
 			delete [] m_ppCurrentVertexBuffer;
-			m_ppCurrentVertexBuffer = NULL;
+			m_ppCurrentVertexBuffer = nullptr;
 		}
 		if (m_nVertexBufferOffsets) {
 			delete [] m_nVertexBufferOffsets;
-			m_nVertexBufferOffsets = NULL;
+			m_nVertexBufferOffsets = nullptr;
 		}
 
 		// Destroy dynamic vertex declarations
 		if (m_pConstructedDeclarations) {
 			delete [] m_pConstructedDeclarations;
-			m_pConstructedDeclarations = NULL;
+			m_pConstructedDeclarations = nullptr;
 		}
 
 		// Release the constructed vertex declaration
 		if (m_pConstructedVertexDeclaration) {
 			m_pConstructedVertexDeclaration->Release();
-			m_pConstructedVertexDeclaration = NULL;
+			m_pConstructedVertexDeclaration = nullptr;
 		}
 	}
 }
@@ -305,7 +305,7 @@ bool FixedFunctions::SetVertexDeclaration()
 			// Release the previous constructed vertex declaration
 			if (m_pConstructedVertexDeclaration) {
 				m_pConstructedVertexDeclaration->Release();
-				m_pConstructedVertexDeclaration = NULL;
+				m_pConstructedVertexDeclaration = nullptr;
 			}
 
 			// Construct the vertex declaration dynamically...
@@ -402,7 +402,7 @@ bool FixedFunctions::SetVertexDeclaration()
 		}
 	} else {
 		// There is no vertex stream at all...
-		m_pRendererD3D9->GetDevice()->SetVertexDeclaration(NULL);
+		m_pRendererD3D9->GetDevice()->SetVertexDeclaration(nullptr);
 
 		// Error, there are no vertex streams!
 		return false;
@@ -1243,7 +1243,7 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 PLRenderer::VertexBuffer *FixedFunctions::GetVertexBuffer(uint32 nStreamNumber, uint32 *pnOffset) const
 {
 	if (nStreamNumber >= m_sCapabilities.nMaxVertexBufferStreams || !m_ppCurrentVertexBuffer)
-		return NULL; // Error!
+		return nullptr; // Error!
 	if (pnOffset && m_nVertexBufferOffsets)
 		*pnOffset = m_nVertexBufferOffsets[nStreamNumber];
 	return m_ppCurrentVertexBuffer[nStreamNumber];
@@ -1277,7 +1277,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 		for (uint32 i=1; i<m_sCapabilities.nMaxVertexBufferStreams; i++) {
 			if (m_ppCurrentVertexBuffer[i])	{
 				m_nNumOfVertexStreams--;
-				m_ppCurrentVertexBuffer[i] = NULL;
+				m_ppCurrentVertexBuffer[i] = nullptr;
 			}
 			m_nVertexBufferOffsets[i] = 0;
 		}

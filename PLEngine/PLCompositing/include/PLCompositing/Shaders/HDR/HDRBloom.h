@@ -112,7 +112,7 @@ class HDRBloom {
 		*  @param[in] fAverageLuminance
 		*    Average luminance
 		*  @param[in] pHDRAverageLuminanceTextureBuffer
-		*    Average luminance texture buffer, can be NULL
+		*    Average luminance texture buffer, can be a null pointer
 		*  @param[in] nBloomBlurPasses
 		*    Number of blur passes
 		*  @param[in] fDownscale
@@ -129,7 +129,7 @@ class HDRBloom {
 		*    Returns the rectangle texture buffer storing the bloom
 		*
 		*  @return
-		*    The rectangle texture buffer storing the bloom, NULL on error
+		*    The rectangle texture buffer storing the bloom, a null pointer on error
 		*
 		*  @note
 		*    - The texture buffer is only valid after CalculateBloom() was called
@@ -206,18 +206,18 @@ class HDRBloom {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer				*m_pRenderer;						/**< Renderer to use, always valid! */
-		FullscreenQuad						*m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
-		PLRenderer::SurfaceTextureBuffer	*m_pRenderTarget[2];				/**< Render targets, can be NULL */
+		FullscreenQuad						*m_pFullscreenQuad;					/**< Fullscreen quad instance, can be a null pointer */
+		PLRenderer::SurfaceTextureBuffer	*m_pRenderTarget[2];				/**< Render targets, can be a null pointer */
 		bool								 m_bResultIndex;					/**< Index of the result texture buffer */
-		PLRenderer::ProgramGenerator		*m_pDownscaleProgramGenerator;		/**< Downscale program generator, can be NULL */
+		PLRenderer::ProgramGenerator		*m_pDownscaleProgramGenerator;		/**< Downscale program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cDownscaleProgramFlags;			/**< Downscale program flags as class member to reduce dynamic memory allocations */
-		PLRenderer::VertexShader			*m_pBloomVertexShader;				/**< Bloom vertex shader, can be NULL */
-		PLRenderer::FragmentShader			*m_pBloomFragmentShader;			/**< Bloom fragment shader, can be NULL */
-		PLRenderer::Program					*m_pBloomProgram;					/**< Bloom GPU program, can be NULL */
-		PLRenderer::ProgramAttribute		*m_pBloomPositionProgramAttribute;	/**< Bloom position program attribute, can be NULL */
-		PLRenderer::ProgramUniform			*m_pBloomTextureSizeProgramUniform;	/**< Bloom texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform			*m_pBloomUVScaleProgramUniform;		/**< Bloom uv scale program uniform, can be NULL */
-		PLRenderer::ProgramUniform			*m_pBloomHDRTextureProgramUniform;	/**< Bloom HDR texture program uniform, can be NULL */
+		PLRenderer::VertexShader			*m_pBloomVertexShader;				/**< Bloom vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader			*m_pBloomFragmentShader;			/**< Bloom fragment shader, can be a null pointer */
+		PLRenderer::Program					*m_pBloomProgram;					/**< Bloom GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute		*m_pBloomPositionProgramAttribute;	/**< Bloom position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform			*m_pBloomTextureSizeProgramUniform;	/**< Bloom texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform			*m_pBloomUVScaleProgramUniform;		/**< Bloom uv scale program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform			*m_pBloomHDRTextureProgramUniform;	/**< Bloom HDR texture program uniform, can be a null pointer */
 
 
 };

@@ -42,7 +42,7 @@ namespace PLGeneral {
 MutexLinux::MutexLinux()
 {
 	// Create system mutex
-	pthread_mutex_init(&m_sMutex, NULL);
+	pthread_mutex_init(&m_sMutex, nullptr);
 }
 
 /**

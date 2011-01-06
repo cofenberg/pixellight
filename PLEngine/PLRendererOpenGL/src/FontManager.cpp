@@ -50,14 +50,14 @@ namespace PLRendererOpenGL {
 */
 FontManager::FontManager(PLRenderer::Renderer &cRenderer) : PLRenderer::FontManager(cRenderer),
 	m_pFTLibrary(new FT_Library),
-	m_pProgramGenerator(NULL),
-	m_pVertexBuffer(NULL)
+	m_pProgramGenerator(nullptr),
+	m_pVertexBuffer(nullptr)
 {
 	// Initialize the FreeType library object
 	const FT_Error nError = FT_Init_FreeType(m_pFTLibrary);
 	if (nError) {
 		delete m_pFTLibrary;
-		m_pFTLibrary = NULL;
+		m_pFTLibrary = nullptr;
 	}
 }
 
@@ -161,7 +161,7 @@ PLRenderer::Program *FontManager::GetProgram(GeneratedProgramUserData **ppGenera
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

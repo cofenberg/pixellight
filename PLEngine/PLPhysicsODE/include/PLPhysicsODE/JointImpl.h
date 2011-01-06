@@ -63,7 +63,7 @@ class JointImpl : public PLPhysics::JointImpl {
 		*    Returns the ODE physics joint
 		*
 		*  @return
-		*    The ODE physics joint, NULL on error (of that's the case, something went totally wrong :)
+		*    The ODE physics joint, a null pointer on error (of that's the case, something went totally wrong :)
 		*
 		*  @note
 		*    - Do NOT change the user data of the ODE physics joínt! (using dJointSetData())

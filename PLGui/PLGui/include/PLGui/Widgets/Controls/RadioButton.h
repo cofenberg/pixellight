@@ -66,7 +66,7 @@ class RadioButton : public AbstractToggleButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API RadioButton(Widget *pParent = NULL);
+		PLGUI_API RadioButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

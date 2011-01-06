@@ -105,7 +105,7 @@ uint32 SensorRaycast::Check()
 	Newton::NewtonWorld *pNewtonWorld = ((World&)GetWorld()).GetNewtonWorld();
 
 	// Perform Newton physics ray cast
-	NewtonWorldRayCast(pNewtonWorld, m_vStart, m_vEnd, RayFilterCallback, this, NULL);
+	NewtonWorldRayCast(pNewtonWorld, m_vStart, m_vEnd, RayFilterCallback, this, nullptr);
 
 	// Done
 	return GetNumOfHitBodies();

@@ -93,7 +93,7 @@ FontTexture *FontManager::GetFontTexture(const String &sFilename, uint32 nSize, 
 		return pFont;
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -118,7 +118,7 @@ void FontManager::ClearFontTexture()
 */
 Font *FontManager::CreateFontTexture(const String &sFilename, uint32 nSize, uint32 nResolution)
 {
-	Font *pFont = NULL;
+	Font *pFont = nullptr;
 
 	// Because absolute filenames can be accessed fastest by the file system, we first give
 	// the file system an absolute filename which is hopefully the correct one... if
@@ -192,8 +192,8 @@ FontManager::~FontManager()
 *    Copy constructor
 */
 FontManager::FontManager(const FontManager &cSource) :
-	m_pRenderer(NULL),
-	m_pDefaultFontTextureHandler(NULL)
+	m_pRenderer(nullptr),
+	m_pDefaultFontTextureHandler(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

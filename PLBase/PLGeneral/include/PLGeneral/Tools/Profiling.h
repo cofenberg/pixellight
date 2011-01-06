@@ -66,9 +66,9 @@ class ProfileGroupElement : public Element<ProfileGroupElement> {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
-		PLGENERAL_API ProfileGroupElement(const String &sName = "", ElementManager<ProfileGroupElement> *pManager = NULL);
+		PLGENERAL_API ProfileGroupElement(const String &sName = "", ElementManager<ProfileGroupElement> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -157,9 +157,9 @@ class ProfileGroup : public Element<ProfileGroup>, public ElementManager<Profile
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
-		PLGENERAL_API ProfileGroup(const String &sName = "", ElementManager<ProfileGroup> *pManager = NULL);
+		PLGENERAL_API ProfileGroup(const String &sName = "", ElementManager<ProfileGroup> *pManager = nullptr);
 
 		/**
 		*  @brief

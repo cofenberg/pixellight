@@ -49,7 +49,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-ConsoleApplication *ConsoleApplication::g_pApplication = NULL;	/**< Pointer to the current application instance */
+ConsoleApplication *ConsoleApplication::g_pApplication = nullptr;	/**< Pointer to the current application instance */
 
 
 //[-------------------------------------------------------]
@@ -108,7 +108,7 @@ ConsoleApplication::ConsoleApplication() :
 ConsoleApplication::~ConsoleApplication()
 {
 	// Reset global application pointer
-	g_pApplication = NULL;
+	g_pApplication = nullptr;
 }
 
 /**

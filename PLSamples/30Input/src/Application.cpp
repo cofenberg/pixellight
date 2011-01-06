@@ -177,8 +177,8 @@ void Application::TestInput(const String &sDevice)
 			// Get messages
 			#ifdef WIN32
 				MSG sMsg;
-				if (PeekMessage(&sMsg, NULL, 0, 0, FALSE)) {
-					GetMessage(&sMsg, NULL, 0, 0);
+				if (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
+					GetMessage(&sMsg, nullptr, 0, 0);
 					TranslateMessage(&sMsg);
 					DispatchMessage(&sMsg);
 				}
@@ -213,8 +213,8 @@ void Application::TestGetChar(const String &sDevice)
 			// Get messages
 			#ifdef WIN32
 				MSG sMsg;
-				if (PeekMessage(&sMsg, NULL, 0, 0, FALSE)) {
-					GetMessage(&sMsg, NULL, 0, 0);
+				if (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
+					GetMessage(&sMsg, nullptr, 0, 0);
 					TranslateMessage(&sMsg);
 					DispatchMessage(&sMsg);
 				}
@@ -306,8 +306,8 @@ void Application::TestConnections()
 			// Get messages
 			#ifdef WIN32
 				MSG sMsg;
-				if (PeekMessage(&sMsg, NULL, 0, 0, FALSE)) {
-					GetMessage(&sMsg, NULL, 0, 0);
+				if (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
+					GetMessage(&sMsg, nullptr, 0, 0);
 					TranslateMessage(&sMsg);
 					DispatchMessage(&sMsg);
 				}

@@ -71,7 +71,7 @@ const List<const Module*> &ClassManager::GetModules() const
 */
 const Module *ClassManager::GetModule(uint32 nModuleID) const
 {
-	// Get module with given ID (can be NULL)
+	// Get module with given ID (can be a null pointer)
 	return (Module*)m_mapModules.Get(nModuleID);
 }
 
@@ -83,7 +83,8 @@ bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive)
 {
 	// Get URL from path
 	Url cUrl(sPath);
-	if (!cUrl.IsDirectory()) cUrl = sPath + '/';
+	if (!cUrl.IsDirectory())
+		cUrl = sPath + '/';
 	const String sUrl = cUrl.GetUrl();
 
 	// Open directory

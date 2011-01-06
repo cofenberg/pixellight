@@ -60,7 +60,7 @@ class FocusWindow : public PLGui::Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		FocusWindow(Widget *pParent = NULL);
+		FocusWindow(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

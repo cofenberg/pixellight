@@ -74,7 +74,7 @@ class Label : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API Label(Widget *pParent = NULL);
+		PLGUI_API Label(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

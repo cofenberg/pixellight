@@ -46,7 +46,7 @@ namespace PLGui {
 *    Constructor
 */
 CursorWindows::CursorWindows(Cursor &cCursor) : CursorImpl(cCursor),
-	m_hCursor(NULL)
+	m_hCursor(nullptr)
 {
 }
 
@@ -79,7 +79,7 @@ void CursorWindows::Load(EMouseCursor nCursor)
 	// Store data
 	m_sFilename		= "";
 	m_nMouseCursor	= nCursor;
-	m_hCursor		= NULL;
+	m_hCursor		= nullptr;
 
 	// Get Windows system cursor
 	#ifdef _UNICODE
@@ -120,7 +120,7 @@ void CursorWindows::Load(EMouseCursor nCursor)
 	}
 
 	// Load cursor
-	m_hCursor = LoadCursor(NULL, SysCursor);
+	m_hCursor = LoadCursor(nullptr, SysCursor);
 }
 
 void CursorWindows::Load(const String &sFilename, const Vector2i &vHotspot)
@@ -128,7 +128,7 @@ void CursorWindows::Load(const String &sFilename, const Vector2i &vHotspot)
 	// Store data
 	m_sFilename = sFilename;
 	m_nMouseCursor = CursorCustom;
-	m_hCursor = NULL;
+	m_hCursor = nullptr;
 
 	// Load image
 	if (sFilename.GetLength()) {

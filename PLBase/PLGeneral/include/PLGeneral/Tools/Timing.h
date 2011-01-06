@@ -106,7 +106,7 @@ class Timing : public Singleton<Timing> {
 		*    Checks whether the timing has to be updated or not
 		*
 		*  @param[in] pnTimeToWait
-		*    If not NULL, if there's a FPS limit and it's not time for an update -> receives the time in
+		*    If not a null pointer, if there's a FPS limit and it's not time for an update -> receives the time in
 		*    milliseconds we need to wait until it's time for the next update, receives '0' in all other cases
 		*
 		*  @return
@@ -116,14 +116,14 @@ class Timing : public Singleton<Timing> {
 		*    Normally the timing must be updated every frame. But if theres a frame
 		*    rate limitation it's not allowed to update the timing every frame!
 		*/
-		PLGENERAL_API bool CheckUpdate(uint32 *pnTimeToWait = NULL) const;
+		PLGENERAL_API bool CheckUpdate(uint32 *pnTimeToWait = nullptr) const;
 
 		/**
 		*  @brief
 		*    Updates all time relevant stuff
 		*
 		*  @param[in] pnTimeToWait
-		*    If not NULL, if there's a FPS limit and it's not time for an update -> receives the time in
+		*    If not a null pointer, if there's a FPS limit and it's not time for an update -> receives the time in
 		*    milliseconds we need to wait until it's time for the next update, receives '0' in all other cases
 		*
 		*  @return
@@ -132,7 +132,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - CheckUpdate()
 		*/
-		PLGENERAL_API bool Update(uint32 *pnTimeToWait = NULL);
+		PLGENERAL_API bool Update(uint32 *pnTimeToWait = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Past time                                             ]

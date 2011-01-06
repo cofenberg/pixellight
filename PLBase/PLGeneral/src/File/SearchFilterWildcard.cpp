@@ -78,8 +78,8 @@ bool SearchFilterWildcard::CheckFile(const String &sFilename)
 	uint32 nFilterPos = 0;
 	while (nFilterPos < m_sFilter.GetLength()) {
 		// Get current symbols
-		String sFilterSymbol = m_sFilter.GetSubstring(nFilterPos, 1);
-		String sNameSymbol	 = sFilename.GetSubstring(nNamePos,   1);
+		const String sFilterSymbol = m_sFilter.GetSubstring(nFilterPos, 1);
+		const String sNameSymbol   = sFilename.GetSubstring(nNamePos,   1);
 
 		// Check filter symbol
 		if (sFilterSymbol == "?") {
@@ -91,32 +91,40 @@ bool SearchFilterWildcard::CheckFile(const String &sFilename)
 			// *, check following *'s or ?'s
 			int nMinLength = 0;
 			while (m_sFilter.GetSubstring(nFilterPos+1, 1) == '*' || m_sFilter.GetSubstring(nFilterPos+1, 1) == '?') {
-				if (m_sFilter.GetSubstring(nFilterPos+1, 1) == '?') nMinLength++;
+				if (m_sFilter.GetSubstring(nFilterPos+1, 1) == '?')
+					nMinLength++;
 				nFilterPos++;
 			}
 
 			// Get postfix index
-			uint32 nPostfix = nFilterPos + 1;		 // Start index
-			uint32 nEnd     = m_sFilter.GetLength(); // End index sitting on '\0'
+			const uint32 nPostfix = nFilterPos + 1;			// Start index
+				  uint32 nEnd     = m_sFilter.GetLength();	// End index sitting on '\0'
 
 			// Find the first appearance of '*' and update 'nEnd' if something was found
 			int nIndex = m_sFilter.IndexOf('*', nPostfix);
-			if (nIndex >= 0) nEnd = nIndex; // Set the new '\0'
+			if (nIndex >= 0)
+				nEnd = nIndex; // Set the new '\0'
 
 			// Find the first appearance of '?' and update 'nEnd' if something was found
 			nIndex = m_sFilter.IndexOf('?', nPostfix);
-			if (nIndex >= 0 && nIndex < (int)nEnd) nEnd = nIndex; // Set the new '\0'
+			if (nIndex >= 0 && nIndex < (int)nEnd)
+				nEnd = nIndex; // Set the new '\0'
 
 			// Search for postfix in name
 			int nFound;
-			if (nEnd > nPostfix) nFound = sFilename.IndexOf(m_sFilter.GetSubstring(nPostfix, nEnd - nPostfix));
-			else				 nFound = sFilename.GetLength();
+			if (nEnd > nPostfix)
+				nFound = sFilename.IndexOf(m_sFilter.GetSubstring(nPostfix, nEnd - nPostfix));
+			else
+				nFound = sFilename.GetLength();
 
 			// Check result
 			if (nFound >= 0 && nFound-int(nNamePos) >= nMinLength) {
 				// Postfix found
 				nNamePos = nFound;
-			} else return false; // No match
+			} else {
+				// No match
+				return false;
+			}
 		} else {
 			// Character, must be equal
 			if (m_sFilter.GetSubstring(nFilterPos, 1) != sFilename.GetSubstring(nNamePos, 1))

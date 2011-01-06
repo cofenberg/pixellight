@@ -153,7 +153,7 @@ void XmlBase::SetUserData(void *pUser)
 const char *XmlBase::SkipWhiteSpace(const char *pszData, EEncoding nEncoding)
 {
 	if (!pszData || !*pszData)
-		return NULL;	// Error!
+		return nullptr;	// Error!
 	if (nEncoding == EncodingUTF8) {
 		while (*pszData) {
 			const unsigned char *pU = (const unsigned char*)pszData;
@@ -222,7 +222,7 @@ const char *XmlBase::ReadName(const char *pszData, String &sName, EEncoding nEnc
 			sName.Copy(pszStart, pszData-pszStart);
 		return pszData;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -289,12 +289,12 @@ const char *XmlBase::GetEntity(const char *pszData, char *pszValue, int &nLength
 		if (*(pszData+2) == 'x') {
 			// Hexadecimal
 			if (!*(pszData+3))
-				return NULL;
+				return nullptr;
 
 			const char *pszCurrentData = pszData + 3;
 			pszCurrentData = strchr(pszCurrentData, ';');
 			if (!pszCurrentData || !*pszCurrentData)
-				return NULL;
+				return nullptr;
 
 			pDeltaAddress = pszCurrentData - pszData;
 			--pszCurrentData;
@@ -308,19 +308,19 @@ const char *XmlBase::GetEntity(const char *pszData, char *pszValue, int &nLength
 				else if (*pszCurrentData >= 'A' && *pszCurrentData <= 'F')
 					ucs += nMult * (*pszCurrentData - 'A' + 10);
 				else
-					return NULL;
+					return nullptr;
 				nMult *= 16;
 				--pszCurrentData;
 			}
 		} else {
 			// Decimal
 			if (!*(pszData+2))
-				return NULL;
+				return nullptr;
 
 			const char *pszCurrentData = pszData + 2;
 			pszCurrentData = strchr(pszCurrentData, ';');
 			if (!pszCurrentData || !*pszCurrentData)
-				return NULL;
+				return nullptr;
 
 			pDeltaAddress = pszCurrentData - pszData;
 			--pszCurrentData;
@@ -330,7 +330,7 @@ const char *XmlBase::GetEntity(const char *pszData, char *pszValue, int &nLength
 				if (*pszCurrentData >= '0' && *pszCurrentData <= '9')
 					ucs += nMult * (*pszCurrentData - '0');
 				else
-					return NULL;
+					return nullptr;
 				nMult *= 10;
 				--pszCurrentData;
 			}
@@ -375,7 +375,7 @@ const char *XmlBase::GetChar(const char *pszData, char *pszValue, int &nLength, 
 		return pszData + nLength;
 	} else {
 		// Not valid text
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -531,7 +531,7 @@ void XmlBase::EncodeString(const String &sInString, String &sOutString)
 *    Default constructor
 */
 XmlBase::XmlBase() :
-	m_pUserData(NULL)
+	m_pUserData(nullptr)
 {
 }
 
@@ -544,7 +544,7 @@ XmlBase::XmlBase() :
 *    Copy constructor
 */
 XmlBase::XmlBase(const XmlBase &cSource) :
-	m_pUserData(NULL)
+	m_pUserData(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

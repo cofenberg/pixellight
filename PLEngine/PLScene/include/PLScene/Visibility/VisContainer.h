@@ -91,7 +91,7 @@ class VisContainer : public VisNode {
 		*    Returns the cull scene query of this visibility container
 		*
 		*  @return
-		*    The cull scene query of this visibility container, NULL if there's no such query
+		*    The cull scene query of this visibility container, a null pointer if there's no such query
 		*/
 		PLS_API const SQCull *GetCullQuery() const;
 
@@ -123,9 +123,9 @@ class VisContainer : public VisNode {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    The parent visibility node, NULL if this is the root
+		*    The parent visibility node, a null pointer if this is the root
 		*/
-		VisContainer(VisNode *pParent = NULL);
+		VisContainer(VisNode *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class VisContainer : public VisNode {
 		*    Squared distance of the given scene node to the camera
 		*
 		*  @return
-		*    The added visibility node linking to the given scene node, NULL on error
+		*    The added visibility node linking to the given scene node, a null pointer on error
 		*/
 		VisNode *AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanceToCamera);
 
@@ -164,7 +164,7 @@ class VisContainer : public VisNode {
 		*    Returns the visibility manager
 		*
 		*  @return
-		*    The visibility manager, NULL on error
+		*    The visibility manager, a null pointer on error
 		*/
 		VisManager *GetVisManager() const;
 

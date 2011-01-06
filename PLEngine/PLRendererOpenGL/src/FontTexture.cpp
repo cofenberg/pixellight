@@ -113,7 +113,7 @@ bool FontTexture::SetSize(uint32 nSize, uint32 nResolution)
 
 bool FontTexture::IsValid() const
 {
-	return (m_pFTFace != NULL);
+	return (m_pFTFace != nullptr);
 }
 
 float FontTexture::GetAscender() const
@@ -155,7 +155,7 @@ float FontTexture::GetTextWidth(const String &sText)
 FontTexture::FontTexture(FontManager &cFontManager, File &cFile) : PLRenderer::FontTexture(cFontManager, cFile.GetUrl().GetUrl()),
 	m_nFontFileSize(cFile.GetSize()),
 	m_pFontFileData(new uint8[m_nFontFileSize]),
-	m_pFTFace(NULL),
+	m_pFTFace(nullptr),
 	m_nGlyphTextureAtlasPadding(3),
 	m_nOpenGLGlyphTextureAtlas(0)
 {
@@ -167,7 +167,7 @@ FontTexture::FontTexture(FontManager &cFontManager, File &cFile) : PLRenderer::F
 	if (FT_New_Memory_Face(*cFontManager.GetFTLibrary(), (FT_Byte const*)m_pFontFileData, (FT_Long)m_nFontFileSize, 0, m_pFTFace)) {
 		// Error!
 		delete m_pFTFace;
-		m_pFTFace = NULL;
+		m_pFTFace = nullptr;
 	}
 }
 

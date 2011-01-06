@@ -69,7 +69,7 @@ class FileZip : public FileImpl {
 		*  @param[in] sPathInZip
 		*    Path inside the ZIP-file
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		FileZip(const Url &cUrl, const String &sZipFile, const String &sPathInZip, const FileAccess *pAccess);
 

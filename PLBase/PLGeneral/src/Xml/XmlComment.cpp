@@ -149,7 +149,7 @@ const char *XmlComment::Parse(const char *pszData, XmlParsingData *pData, EEncod
 			pDocument->SetError(ErrorParsingComment, pszData, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 	pszData += nStartTagLength;
 

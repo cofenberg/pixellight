@@ -88,7 +88,7 @@ class SRPPostProcessing : public PLScene::SceneRendererPass {
 		*    Returns the post processor
 		*
 		*  @return
-		*    The post processor, or NULL if currently no post processor is available
+		*    The post processor, or a null pointer if currently no post processor is available
 		*/
 		PLCOM_API PostProcessor *GetPostProcessor();
 
@@ -114,7 +114,7 @@ class SRPPostProcessing : public PLScene::SceneRendererPass {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PostProcessor *m_pPostProcessor;	/**< Can be NULL */
+		PostProcessor *m_pPostProcessor;	/**< Can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -157,7 +157,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::DialogChooseFile *m_pFileDialog;					/**< File dialog, can be NULL */
+		PLGui::DialogChooseFile *m_pFileDialog;					/**< File dialog, can be a null pointer */
 		PLGeneral::String		 m_sCurrentSceneBaseDirectory;	/**< Base directory of the currently loaded scene */
 
 

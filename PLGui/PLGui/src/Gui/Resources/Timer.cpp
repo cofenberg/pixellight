@@ -51,7 +51,7 @@ uint32 Timer::m_nNextID = 1000;
 Timer::Timer(Gui &cGui) :
 	m_pGui(&cGui),
 	m_nID(++m_nNextID),
-	m_pThread(NULL),
+	m_pThread(nullptr),
 	m_bActive(false),
 	m_nTimeout(0)
 {
@@ -187,7 +187,7 @@ void Timer::Stop()
 		// Stop timer thread
 		m_pThread->StopTimer();
 		delete m_pThread;
-		m_pThread = NULL;
+		m_pThread = nullptr;
 
 		// Emit Stop-Event
 		EventStop.Emit();

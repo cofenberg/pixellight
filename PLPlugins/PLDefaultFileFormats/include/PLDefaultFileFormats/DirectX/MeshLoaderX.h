@@ -115,7 +115,7 @@ class MeshLoaderX : public PLMesh::MeshLoader {
 		*  @param[out] cMesh
 		*    Mesh to load into
 		*  @param[in]  pXNode
-		*    Current X node, can be NULL
+		*    Current X node, can be a null pointer
 		*  @param[in]  mTransform
 		*    Current transform matrix
 		*  @param[in]  nVertexOffset

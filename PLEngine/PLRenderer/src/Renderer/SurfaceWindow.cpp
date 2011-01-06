@@ -47,7 +47,7 @@ SurfaceWindow::~SurfaceWindow()
 	// Clean up the surface
 	if (m_pHandler) {
 		// Inform handler
-		m_pHandler->m_pSurfaceHandler->SetSurface(NULL);
+		m_pHandler->m_pSurfaceHandler->SetSurface(nullptr);
 	}
 }
 

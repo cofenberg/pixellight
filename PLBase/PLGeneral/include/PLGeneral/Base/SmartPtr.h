@@ -63,7 +63,7 @@ class SmartPtr {
 		*    Constructor
 		*
 		*  @param[in] pPtr
-		*    Direct pointer to initialize with, can be NULL
+		*    Direct pointer to initialize with, can be a null pointer
 		*/
 		SmartPtr(AType *pPtr);
 
@@ -87,7 +87,7 @@ class SmartPtr {
 		*    Assign a pointer
 		*
 		*  @param[in] pPtr
-		*    Direct pointer to assign, can be NULL
+		*    Direct pointer to assign, can be a null pointer
 		*
 		*  @return
 		*    Reference to the smart pointer
@@ -111,7 +111,7 @@ class SmartPtr {
 		*    Get a direct pointer to the object
 		*
 		*  @return
-		*    Pointer to the object, can be NULL
+		*    Pointer to the object, can be a null pointer
 		*/
 		AType *GetPointer() const;
 
@@ -120,7 +120,7 @@ class SmartPtr {
 		*    Get a pointer to access the object
 		*
 		*  @return
-		*    Pointer to the object, can be NULL
+		*    Pointer to the object, can be a null pointer
 		*/
 		AType *operator ->() const;
 
@@ -129,16 +129,16 @@ class SmartPtr {
 		*    Cast to a pointer to the object
 		*
 		*  @return
-		*    Pointer to the object, can be NULL
+		*    Pointer to the object, can be a null pointer
 		*/
 		operator AType*() const;
 
 		/**
 		*  @brief
-		*    Check if the pointer is not NULL
+		*    Check if the pointer is not a null pointer
 		*
 		*  @return
-		*    'true' if the pointer is not NULL
+		*    'true' if the pointer is not a null pointer
 		*/
 		bool operator !() const;
 
@@ -147,7 +147,7 @@ class SmartPtr {
 		*    Check for equality
 		*
 		*  @param[in] pPtr
-		*    Direct pointer to compare with, can be NULL
+		*    Direct pointer to compare with, can be a null pointer
 		*
 		*  @return
 		*    'true' if the two pointers are equal
@@ -171,7 +171,7 @@ class SmartPtr {
 		*    Check for equality
 		*
 		*  @param[in] pPtr
-		*    Direct pointer to compare with, can be NULL
+		*    Direct pointer to compare with, can be a null pointer
 		*
 		*  @return
 		*    'true' if the two pointers are not equal
@@ -200,7 +200,7 @@ class SmartPtr {
 		*    Assign a pointer to an object that does not implement RefCount
 		*
 		*  @param[in] pPtr
-		*    Pointer to assign, can be NULL
+		*    Pointer to assign, can be a null pointer
 		*/
 		void SetPtr(void *pPtr);
 
@@ -209,7 +209,7 @@ class SmartPtr {
 		*    Assign a pointer to an object that implements RefCount
 		*
 		*  @param[in] pPtr
-		*    Pointer to assign, can be NULL
+		*    Pointer to assign, can be a null pointer
 		*/
 		void SetPtr(RefCount<AType> *pPtr);
 
@@ -218,7 +218,7 @@ class SmartPtr {
 		*    Get pointer to the reference counted object
 		*
 		*  @return
-		*    Pointer to the RefCount object, can be NULL
+		*    Pointer to the RefCount object, can be a null pointer
 		*/
 		RefCount<AType> *GetPtr() const;
 
@@ -227,7 +227,7 @@ class SmartPtr {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		RefCount<AType> *m_pPtr; /**< Pointer to reference counter, can be NULL */
+		RefCount<AType> *m_pPtr; /**< Pointer to reference counter, can be a null pointer */
 
 
 };

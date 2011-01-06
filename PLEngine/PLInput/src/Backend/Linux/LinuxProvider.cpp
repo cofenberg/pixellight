@@ -55,10 +55,10 @@ pl_implement_class(LinuxProvider)
 *    Default constructor
 */
 LinuxProvider::LinuxProvider() :
-	m_pDisplay(NULL)
+	m_pDisplay(nullptr)
 {
 	// Open display
-	m_pDisplay = XOpenDisplay(NULL);
+	m_pDisplay = XOpenDisplay(nullptr);
 }
 
 /**

@@ -163,7 +163,7 @@ bool ProgramCg::IsLinked() const
 *    Constructor
 */
 ProgramCg::ProgramCg(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
-	m_pCgCombinedProgram(NULL),
+	m_pCgCombinedProgram(nullptr),
 	m_bLinked(false),
 	m_bLinkedFailed(false),
 	m_bAttributeInformationBuild(false),
@@ -191,7 +191,7 @@ void ProgramCg::RelinkRequired()
 		// Destroy the Cg combined program
 		if (m_pCgCombinedProgram) {
 			cgDestroyProgram(m_pCgCombinedProgram);
-			m_pCgCombinedProgram = NULL;
+			m_pCgCombinedProgram = nullptr;
 		}
 
 		// The program is now dirty
@@ -566,7 +566,7 @@ void ProgramCg::BackupDeviceData(uint8 **ppBackup)
 	// Destroy the Cg combined program
 	if (m_pCgCombinedProgram) {
 		cgDestroyProgram(m_pCgCombinedProgram);
-		m_pCgCombinedProgram = NULL;
+		m_pCgCombinedProgram = nullptr;
 	}
 }
 

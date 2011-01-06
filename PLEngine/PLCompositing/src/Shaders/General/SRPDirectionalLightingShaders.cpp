@@ -73,7 +73,7 @@ pl_implement_class(SRPDirectionalLightingShaders)
 SRPDirectionalLightingShaders::SRPDirectionalLightingShaders() :
 	ShaderLanguage(this),
 	Flags(this),
-	m_pProgramGenerator(NULL),
+	m_pProgramGenerator(nullptr),
 	m_pRenderStates(new RenderStates()),
 	m_bGlowEnabled(false),
 	m_fDOFNearBlurDepth(0.0f),
@@ -127,11 +127,11 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 
 	// Get available vertex buffer attributes
 	// Binormal and tangent make only sense in this usage when there's also a normal, we need all three vectors!
-	const bool bHasVertexTexCoord0 = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord, 0) != NULL);	// e.g. for diffuse maps
-	const bool bHasVertexTexCoord1 = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord, 1) != NULL);	// e.g. for light maps
-	const bool bHasVertexNormal    = (cVertexBuffer.GetVertexAttribute(VertexBuffer::Normal) != NULL);
-		  bool bHasVertexTangent   = bHasVertexNormal && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Tangent) != NULL);
-	const bool bHasVertexBinormal  = bHasVertexTangent && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Binormal) != NULL);
+	const bool bHasVertexTexCoord0 = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord, 0) != nullptr);	// e.g. for diffuse maps
+	const bool bHasVertexTexCoord1 = (cVertexBuffer.GetVertexAttribute(VertexBuffer::TexCoord, 1) != nullptr);	// e.g. for light maps
+	const bool bHasVertexNormal    = (cVertexBuffer.GetVertexAttribute(VertexBuffer::Normal) != nullptr);
+		  bool bHasVertexTangent   = bHasVertexNormal && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Tangent) != nullptr);
+	const bool bHasVertexBinormal  = bHasVertexTangent && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Binormal) != nullptr);
 	if (!bHasVertexBinormal)
 		bHasVertexTangent = false;
 
@@ -153,14 +153,14 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 					static const String sOpacity = "Opacity";
 					const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
 					if ((GetFlags() & TransparentPass) ? (pParameter && pParameter->GetValue1f() < 1.0f) : (!pParameter || pParameter->GetValue1f() >= 1.0f)) {
-						GeneratedProgramUserData *pGeneratedProgramUserData = NULL;
+						GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 
 						// Reset the program flags
 						m_cProgramFlags.Reset();
 
 						// Get glow
 						float		   fGlow    = 0.0f;
-						TextureBuffer *pGlowMap = NULL;
+						TextureBuffer *pGlowMap = nullptr;
 						if (m_bGlowEnabled) {
 							static const String sGlow = "Glow";
 							pParameter = pMaterial->GetParameter(sGlow);
@@ -170,7 +170,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 								// Get glow map
 								if (fGlow) {
 									static const String sGlowMap = "GlowMap";
-									pGlowMap = (GetFlags() & NoGlowMap) ? NULL : pMaterial->GetParameterTextureBuffer(sGlowMap);
+									pGlowMap = (GetFlags() & NoGlowMap) ? nullptr : pMaterial->GetParameterTextureBuffer(sGlowMap);
 									PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOW)
 								}
 							}
@@ -237,7 +237,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 
 						// Diffuse map and alpha reference
 						float fAlphaReference = 0.0f;
-						TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord0 || (GetFlags() & NoDiffuseMap)) ? NULL : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+						TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord0 || (GetFlags() & NoDiffuseMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
 						if (pDiffuseMap) {
 							PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
@@ -259,13 +259,13 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 
 						// Diffuse ramp map
 						static const String sDiffuseRampMap = "DiffuseRampMap";
-						TextureBuffer *pDiffuseRampMap = (!bLightingEnabled || (GetFlags() & NoDiffuseRampMap)) ? NULL : pMaterial->GetParameterTextureBuffer(sDiffuseRampMap);
+						TextureBuffer *pDiffuseRampMap = (!bLightingEnabled || (GetFlags() & NoDiffuseRampMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sDiffuseRampMap);
 						if (pDiffuseRampMap)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSERAMPMAP)
 
 						// Ambient map and light map require texture coordinate set 1
-						TextureBuffer *pAmbientOcclusionMap = NULL;
-						TextureBuffer *pLightMap			= NULL;
+						TextureBuffer *pAmbientOcclusionMap = nullptr;
+						TextureBuffer *pLightMap			= nullptr;
 						if (bHasVertexTexCoord1) {
 							// Get ambient occlusion map
 							if (!(GetFlags() & NoAmbientOcclusionMap)) {
@@ -287,7 +287,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 						}
 
 						// Get emissive map
-						TextureBuffer *pEmissiveMap = (!bHasVertexTexCoord0 || (GetFlags() & NoEmissiveMap)) ? NULL : pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
+						TextureBuffer *pEmissiveMap = (!bHasVertexTexCoord0 || (GetFlags() & NoEmissiveMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
 						if (pEmissiveMap) {
 							PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_EMISSIVEMAP)
@@ -317,7 +317,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 						}
 
 						// Get (2D/cube) reflection map
-						TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? NULL : pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
+						TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
 						bool b2DReflectionMap = true;
 						if (pReflectionMap) {
 							if (pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D) {
@@ -327,14 +327,14 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 								b2DReflectionMap = false;
 								PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
 							} else
-								pReflectionMap   = NULL; // NOT supported!
+								pReflectionMap   = nullptr; // NOT supported!
 						}
 
 						// Figure out whether or not there's reflection on this material
 						const bool bReflection = (fIndexOfRefraction > 0.0f) || pReflectionMap;
 
 						// Get reflection parameters
-						TextureBuffer *pReflectivityMap = NULL;
+						TextureBuffer *pReflectivityMap = nullptr;
 						float fReflectivity = 1.0f;
 						Color3 cReflectionColor = Color3::White;
 						static const String sReflectionColor = "ReflectionColor";
@@ -364,7 +364,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 						}
 
 						// Get normal map
-						TextureBuffer *pNormalMap = (!bNormalMappingPossible || (GetFlags() & NoNormalMap)) ? NULL : pMaterial->GetParameterTextureBuffer(Material::NormalMap);
+						TextureBuffer *pNormalMap = (!bNormalMappingPossible || (GetFlags() & NoNormalMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::NormalMap);
 						float fNormalMapBumpiness = 1.0f;
 						static const String sNormalMapBumpiness = "NormalMapBumpiness";
 						if (pNormalMap) {
@@ -391,13 +391,13 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 								}
 							} else {
 								// The normal map has no longer an influence!
-								pNormalMap = NULL;
+								pNormalMap = nullptr;
 							}
 						}
 
 						// Get detail normal map
 						static const String sDetailNormalMap = "DetailNormalMap";
-						TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? NULL : pMaterial->GetParameterTextureBuffer(sDetailNormalMap);
+						TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sDetailNormalMap);
 						float fDetailNormalMapBumpiness = 1.0f;
 						Vector2 vDetailNormalMapUVScale(4.0f, 4.0f);
 						static const String sDetailNormalMapBumpiness = "DetailNormalMapBumpiness";
@@ -428,13 +428,13 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 								}
 							} else {
 								// The detail normal map has no longer an influence!
-								pDetailNormalMap = NULL;
+								pDetailNormalMap = nullptr;
 							}
 						}
 
 						// Get parallax mapping settings
 						float fParallax = 0.04f;
-						TextureBuffer *pHeightMap = NULL;
+						TextureBuffer *pHeightMap = nullptr;
 						if (pNormalMap && !(GetFlags() & NoParallaxMapping)) {
 							// Get parallax
 							static const String sParallax = "Parallax";
@@ -457,7 +457,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 						static const String sSpecularColor    = "SpecularColor";
 						static const String sSpecularExponent = "SpecularExponent";
 						Color3 cSpecularColor = Color3::White;
-						TextureBuffer *pSpecularMap = NULL;
+						TextureBuffer *pSpecularMap = nullptr;
 						float fSpecularExponent = 45.0f;
 						if (bLightingEnabled) {
 							PL_ADD_VS_FLAG(m_cProgramFlags, VS_VIEWSPACEPOSITION)
@@ -489,13 +489,13 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 
 						// Specular ramp map
 						static const String sSpecularRampMap = "SpecularRampMap";
-						TextureBuffer *pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (GetFlags() & NoSpecularRampMap)) ? NULL : pMaterial->GetParameterTextureBuffer(sSpecularRampMap);
+						TextureBuffer *pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (GetFlags() & NoSpecularRampMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sSpecularRampMap);
 						if (pSpecularRampMap)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARRAMPMAP)
 
 						// Edge ramp map
 						static const String sEdgeRampMap = "EdgeRampMap";
-						TextureBuffer *pEdgeRampMap = (!bLightingEnabled || (GetFlags() & NoEdgeRampMap)) ? NULL : pMaterial->GetParameterTextureBuffer(sEdgeRampMap);
+						TextureBuffer *pEdgeRampMap = (!bLightingEnabled || (GetFlags() & NoEdgeRampMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sEdgeRampMap);
 						if (pEdgeRampMap)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_EDGERAMPMAP)
 
@@ -977,7 +977,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;
-			m_pProgramGenerator = NULL;
+			m_pProgramGenerator = nullptr;
 		}
 
 		// Choose the shader source codes depending on the requested shader language
@@ -1056,7 +1056,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 		cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 
 		// Search for the first (= nearest) visible directional light scene node - but only if lighting is enabled
-		const VisNode *pVisNode = (GetFlags() & NoLighting) ? NULL : GetFirstDirectionalLight(cCullQuery);
+		const VisNode *pVisNode = (GetFlags() & NoLighting) ? nullptr : GetFirstDirectionalLight(cCullQuery);
 		if (pVisNode && pVisNode->GetSceneNode() && pVisNode->GetSceneNode()->IsLight()) {
 			// Get the view space light direction vector and the light color
 			m_vLightDirection = -pVisNode->GetWorldViewMatrix().GetZAxis().GetNormalized();

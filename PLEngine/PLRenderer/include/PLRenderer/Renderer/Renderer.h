@@ -132,7 +132,7 @@ class Renderer : public PLCore::Object {
 		*    Returns the renderer API (for example 'OpenGL' or 'Direct3D')
 		*
 		*  @param[out] pnVersion
-		*    Version information, can be NULL
+		*    Version information, can be a null pointer
 		*
 		*  @return
 		*    Renderer API
@@ -142,7 +142,7 @@ class Renderer : public PLCore::Object {
 		*    For 'OpenGL', 'nVersion' can for example be '21' for 'OpenGL 2.1'.
 		*    For 'Direct3D', 'nVersion' can for example be '900' for 'Direct3D 9'.
 		*/
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const = 0;
+		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const = 0;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Renderer : public PLCore::Object {
 		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
 		*
 		*  @return
-		*    The shader language instance (do NOT delete it!), NULL on error
+		*    The shader language instance (do NOT delete it!), a null pointer on error
 		*/
 		virtual ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "") = 0;
 
@@ -189,12 +189,12 @@ class Renderer : public PLCore::Object {
 		*    Returns the fixed functions renderer interface
 		*
 		*  @return
-		*    The fixed functions renderer interface, can be NULL
+		*    The fixed functions renderer interface, can be a null pointer
 		*
 		*  @note
 		*    - A legacy renderer interface for previously build in features in old graphics APIs and GPUs
 		*    - A renderer backend is not enforced to implement this interface, so, you have to take it into
-		*      account that this function just returns NULL
+		*      account that this function just returns a null pointer
 		*    - Do NOT delete the instance of the interface!
 		*/
 		virtual FixedFunctions *GetFixedFunctions() const = 0;
@@ -259,7 +259,7 @@ class Renderer : public PLCore::Object {
 		*    Index of the display mode to return (0..'GetNumOfDisplayModes()')
 		*
 		*  @return
-		*    The requested diplay mode, (do NOT delete the display mode!) NULL on error
+		*    The requested diplay mode, (do NOT delete the display mode!) a null pointer on error
 		*
 		*  @see
 		*    - GetNumOfDisplayModes()
@@ -326,7 +326,7 @@ class Renderer : public PLCore::Object {
 		*    Index of the surface to return
 		*
 		*  @return
-		*    The surface at the given index, NULL on error
+		*    The surface at the given index, a null pointer on error
 		*/
 		virtual Surface *GetSurface(PLGeneral::uint32 nIndex = 0) const = 0;
 
@@ -371,7 +371,7 @@ class Renderer : public PLCore::Object {
 		*    Class name of the surface painter to create
 		*
 		*  @return
-		*    The created surface painter, NULL on error (YOU have to destroy the object!)
+		*    The created surface painter, a null pointer on error (YOU have to destroy the object!)
 		*/
 		virtual SurfacePainter *CreateSurfacePainter(const PLGeneral::String &sClass) = 0;
 
@@ -395,7 +395,7 @@ class Renderer : public PLCore::Object {
 		*    Index of the renderer resource to return
 		*
 		*  @return
-		*    The resource at the given index, NULL on error
+		*    The resource at the given index, a null pointer on error
 		*/
 		virtual Resource *GetResource(PLGeneral::uint32 nIndex = 0) const = 0;
 
@@ -449,7 +449,7 @@ class Renderer : public PLCore::Object {
 		*    Fullscreen mode?
 		*
 		*  @return
-		*    The created renderer surface, NULL on error
+		*    The created renderer surface, a null pointer on error
 		*
 		*  @note
 		*    - The new created renderer surface is added to this renderer automatically
@@ -473,7 +473,7 @@ class Renderer : public PLCore::Object {
 		*    target color. Have a look at SetColorRenderTarget()
 		*
 		*  @return
-		*    The created renderer surface, NULL on error
+		*    The created renderer surface, a null pointer on error
 		*
 		*  @note
 		*    - The new created renderer surface is added to this renderer automatically
@@ -497,7 +497,7 @@ class Renderer : public PLCore::Object {
 		*    target color. Have a look at SetColorRenderTarget()
 		*
 		*  @return
-		*    The created renderer surface, NULL on error
+		*    The created renderer surface, a null pointer on error
 		*
 		*  @note
 		*    - The new created renderer surface is added to this renderer automatically
@@ -520,7 +520,7 @@ class Renderer : public PLCore::Object {
 		*    Texture buffer surface flags (see SurfaceTextureBuffer::EFlags)
 		*
 		*  @return
-		*    The created renderer surface, NULL on error
+		*    The created renderer surface, a null pointer on error
 		*
 		*  @note
 		*    - The new created renderer surface is added to this renderer automatically
@@ -540,7 +540,7 @@ class Renderer : public PLCore::Object {
 		*    Texture buffer flags, TextureBuffer::RenderTarget has no effect (see TextureBuffer::EFlags)
 		*
 		*  @return
-		*    The created 1D renderer texture buffer, NULL on error
+		*    The created 1D renderer texture buffer, a null pointer on error
 		*    (maybe the image size is no power of two?)
 		*
 		*  @note
@@ -571,7 +571,7 @@ class Renderer : public PLCore::Object {
 		*    Texture buffer flags (see TextureBuffer::EFlags)
 		*
 		*  @return
-		*    The created 2D renderer texture buffer, NULL on error
+		*    The created 2D renderer texture buffer, a null pointer on error
 		*    (maybe the image size is no power of two?)
 		*
 		*  @see
@@ -593,7 +593,7 @@ class Renderer : public PLCore::Object {
 		*    Texture buffer flags, TextureBuffer::Mipmaps has no effect (see TextureBuffer::EFlags)
 		*
 		*  @return
-		*    The created rectangle renderer texture buffer, NULL on error
+		*    The created rectangle renderer texture buffer, a null pointer on error
 		*
 		*  @remarks
 		*    Please note that it's up to the implementation to decide whether there's a special TextureBufferRectangle implementation
@@ -609,7 +609,7 @@ class Renderer : public PLCore::Object {
 
 		*  @note
 		*    - If rectangle texture buffers are not supported (Capabilities::bTextureBufferRectangle = false)
-		*      this function will fail and NULL is returned
+		*      this function will fail and a null pointer is returned
 		*
 		*  @see
 		*    - CreateTextureBuffer1D()
@@ -630,12 +630,12 @@ class Renderer : public PLCore::Object {
 		*    Texture buffer flags, TextureBuffer::RenderTarget has no effect (see TextureBuffer::EFlags)
 		*
 		*  @return
-		*    The created 3D renderer texture buffer, NULL on error
+		*    The created 3D renderer texture buffer, a null pointer on error
 		*    (maybe the image size is no power of two?)
 		*
 		*  @note
 		*    - If 3D texture buffers are not supported (Capabilities::bTextureBuffer3D = false)
-		*      this function will fail and NULL is returned
+		*      this function will fail and a null pointer is returned
 		*
 		*  @see
 		*    - CreateTextureBuffer1D()
@@ -656,12 +656,12 @@ class Renderer : public PLCore::Object {
 		*    Texture buffer flags (see TextureBuffer::EFlags)
 		*
 		*  @return
-		*    The created cube renderer texture buffer, NULL on error
+		*    The created cube renderer texture buffer, a null pointer on error
 		*    (maybe the image size is no power of two?)
 		*
 		*  @note
 		*    - If cube texture buffers are not supported (Capabilities::bTextureBufferCube = false)
-		*      this function will fail and NULL is returned
+		*      this function will fail and a null pointer is returned
 		*
 		*  @see
 		*    - CreateTextureBuffer1D()
@@ -675,7 +675,7 @@ class Renderer : public PLCore::Object {
 		*    Creates an index buffer
 		*
 		*  @return
-		*    The created index buffer, NULL on error
+		*    The created index buffer, a null pointer on error
 		*
 		*  @remarks
 		*    To use index buffers, create an index buffer, lock it, fill it with indices, unlock it, pass it to
@@ -688,7 +688,7 @@ class Renderer : public PLCore::Object {
 		*    Creates a vertex buffer
 		*
 		*  @return
-		*     The created vertex buffer, NULL on error
+		*     The created vertex buffer, a null pointer on error
 		*
 		*  @remarks
 		*    To use vertex buffers, create an vertex buffer, setup the vertex elements,
@@ -703,7 +703,7 @@ class Renderer : public PLCore::Object {
 		*    Creates an occlusion query
 		*
 		*  @return
-		*    The created occlusion query, NULL on error
+		*    The created occlusion query, a null pointer on error
 		*
 		*  @note
 		*    - If occlusion query is not supported by the hardware, an occlusion query object
@@ -880,10 +880,10 @@ class Renderer : public PLCore::Object {
 		*    which a 3-D volume projects
 		*
 		*  @param[out] pfMinZ
-		*    If not NULL, receives minimum z value describing the range of depth values into
+		*    If not a null pointer, receives minimum z value describing the range of depth values into
 		*    which a scene is to be rendered
 		*  @param[out] pfMaxZ
-		*    If not NULL, receives maximum z value describing the range of depth values into
+		*    If not a null pointer, receives maximum z value describing the range of depth values into
 		*    which a scene is to be rendered
 		*
 		*  @return
@@ -907,7 +907,7 @@ class Renderer : public PLCore::Object {
 		*      to render objects in a scene in the foreground, or you might set them both to 1.0 to
 		*      render an object that should always be in the background.
 		*/
-		virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = NULL, float *pfMaxZ = NULL) const = 0;
+		virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = nullptr, float *pfMaxZ = nullptr) const = 0;
 
 		/**
 		*  @brief
@@ -915,7 +915,7 @@ class Renderer : public PLCore::Object {
 		*    which a 3-D volume projects
 		*
 		*  @param[in] pRectangle
-		*    Viewport rectangle, if NULL, use the whole render target surface
+		*    Viewport rectangle, if a null pointer, use the whole render target surface
 		*  @param[in] fMinZ
 		*    Minimum z value
 		*  @param[in] fMaxZ
@@ -927,7 +927,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetViewport()
 		*/
-		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = NULL, float fMinZ = 0.0f, float fMaxZ = 1.0f) = 0;
+		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f) = 0;
 
 		/**
 		*  @brief
@@ -955,7 +955,7 @@ class Renderer : public PLCore::Object {
 		*    Sets the scissor rectangle
 		*
 		*  @param[in] pRectangle
-		*    Viewport rectangle, if NULL, use the whole set viewport
+		*    Viewport rectangle, if a null pointer, use the whole set viewport
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -963,7 +963,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetScissorRect()
 		*/
-		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = NULL) = 0;
+		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr) = 0;
 
 		/**
 		*  @brief
@@ -1084,12 +1084,12 @@ class Renderer : public PLCore::Object {
 		*    Returns the current render target
 		*
 		*  @param[out] pnFace
-		*    If not NULL, this will receive the current cube map face
+		*    If not a null pointer, this will receive the current cube map face
 		*
 		*  @return
-		*    Current renderer target, NULL if there's no one
+		*    Current renderer target, a null pointer if there's no one
 		*/
-		virtual Surface *GetRenderTarget(PLGeneral::uint8 *pnFace = NULL) const = 0;
+		virtual Surface *GetRenderTarget(PLGeneral::uint8 *pnFace = nullptr) const = 0;
 
 		/**
 		*  @brief
@@ -1099,7 +1099,7 @@ class Renderer : public PLCore::Object {
 		*    Color index of the color render target to return
 		*
 		*  @return
-		*    Current color renderer target, NULL if there's no one
+		*    Current color renderer target, a null pointer if there's no one
 		*/
 		virtual TextureBuffer *GetColorRenderTarget(PLGeneral::uint8 nColorIndex = 0) const = 0;
 
@@ -1108,7 +1108,7 @@ class Renderer : public PLCore::Object {
 		*    Sets the current render target
 		*
 		*  @param[in] pSurface
-		*    Current renderer target, can be NULL
+		*    Current renderer target, can be a null pointer
 		*  @param[in] nFace
 		*    Cube map face to render in (0-5) - only used if 'pSurface' is a cube texture buffer render target
 		*
@@ -1125,7 +1125,7 @@ class Renderer : public PLCore::Object {
 		*    Sets the current color render target (for multi render targets)
 		*
 		*  @param[in] pTextureBuffer
-		*    Current color renderer target, can be NULL
+		*    Current color renderer target, can be a null pointer
 		*  @param[in] nColorIndex
 		*    Color index of this render target, if 0 this will set the main color render target of the
 		*    current set render target. (see SetRenderTarget())
@@ -1160,7 +1160,7 @@ class Renderer : public PLCore::Object {
 		*    Texture stage
 		*
 		*  @return
-		*    The current texture buffer at the given stage, NULL if there's no one
+		*    The current texture buffer at the given stage, a null pointer if there's no one
 		*/
 		virtual TextureBuffer *GetTextureBuffer(PLGeneral::uint32 nStage) const = 0;
 
@@ -1172,7 +1172,7 @@ class Renderer : public PLCore::Object {
 		*    Texture stage. (0 - max texture stages -> see Capabilities::nMaxTextureUnits)
 		*    < 0 = set all available texture stages to this setting.
 		*  @param[in] pTextureBuffer
-		*    The texture buffer which should be set, NULL if no texture buffer should be set
+		*    The texture buffer which should be set, a null pointer if no texture buffer should be set
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe this is already the current
@@ -1181,14 +1181,14 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetTransformState(), bOriginal parameter description
 		*/
-		virtual bool SetTextureBuffer(int nStage = -1, TextureBuffer *pTextureBuffer = NULL) = 0;
+		virtual bool SetTextureBuffer(int nStage = -1, TextureBuffer *pTextureBuffer = nullptr) = 0;
 
 		/**
 		*  @brief
 		*    Gets the current index buffer
 		*
 		*  @return
-		*    The current index buffer, NULL if there's no one
+		*    The current index buffer, a null pointer if there's no one
 		*/
 		virtual IndexBuffer *GetIndexBuffer() const = 0;
 
@@ -1197,19 +1197,19 @@ class Renderer : public PLCore::Object {
 		*    Sets the current index buffer
 		*
 		*  @param[in] pIndexBuffer
-		*    The index buffer which should be set, NULL if no index buffer should be set
+		*    The index buffer which should be set, a null pointer if no index buffer should be set
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe this is already the current index buffer)
 		*/
-		virtual bool SetIndexBuffer(IndexBuffer *pIndexBuffer = NULL) = 0;
+		virtual bool SetIndexBuffer(IndexBuffer *pIndexBuffer = nullptr) = 0;
 
 		/**
 		*  @brief
 		*    Returns the currently used program
 		*
 		*  @return
-		*    The currently used program, can be NULL
+		*    The currently used program, can be a null pointer
 		*/
 		virtual Program *GetProgram() const = 0;
 
@@ -1218,12 +1218,12 @@ class Renderer : public PLCore::Object {
 		*    Sets the currently used program
 		*
 		*  @param[in] pProgram
-		*    Program to use, can be NULL
+		*    Program to use, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid program?)
 		*/
-		virtual bool SetProgram(Program *pProgram = NULL) = 0;
+		virtual bool SetProgram(Program *pProgram = nullptr) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Draw                                                  ]

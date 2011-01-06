@@ -76,42 +76,42 @@ SRPDeferredDOF::SRPDeferredDOF() :
 	BlurDownscale(this),
 	Flags(this),
 	m_bResultIndex(0),
-	m_pVertexShader(NULL),
-	m_pDepthBlurFragmentShader(NULL),
-	m_pDepthBlurProgram(NULL),
-	m_pDepthBlurPositionProgramAttribute(NULL),
-	m_pDepthBlurTextureSizeProgramUniform(NULL),
-	m_pDepthBlurDOFParamsProgramUniform(NULL),
-	m_pDepthBlurRGBTextureProgramUniform(NULL),
-	m_pDepthBlurNormalDepthTextureProgramUniform(NULL),
-	m_pDownscaleFragmentShader(NULL),
-	m_pDownscaleProgram(NULL),
-	m_pDownscalePositionProgramAttribute(NULL),
-	m_pDownscaleTextureSizeProgramUniform(NULL),
-	m_pDownscaleTextureProgramUniform(NULL),
-	m_pBlurFragmentShader(NULL),
-	m_pBlurProgram(NULL),
-	m_pBlurPositionProgramAttribute(NULL),
-	m_pBlurTextureSizeProgramUniform(NULL),
-	m_pBlurUVScaleProgramUniform(NULL),
-	m_pBlurTextureProgramUniform(NULL),
-	m_pResultFragmentShader(NULL),
-	m_pResultProgram(NULL),
-	m_pResultPositionProgramAttribute(NULL),
-	m_pResultTextureSizeProgramUniform(NULL),
-	m_pResultEffectWeightProgramUniform(NULL),
-	m_pResultBlurDownscaleProgramUniform(NULL),
-	m_pResultBlurTextureProgramUniform(NULL),
-	m_pResultTextureProgramUniform(NULL),
-	m_pDebugFragmentShader(NULL),
-	m_pDebugProgram(NULL),
-	m_pDebugPositionProgramAttribute(NULL),
-	m_pDebugTextureSizeProgramUniform(NULL),
-	m_pDebugTextureProgramUniform(NULL),
+	m_pVertexShader(nullptr),
+	m_pDepthBlurFragmentShader(nullptr),
+	m_pDepthBlurProgram(nullptr),
+	m_pDepthBlurPositionProgramAttribute(nullptr),
+	m_pDepthBlurTextureSizeProgramUniform(nullptr),
+	m_pDepthBlurDOFParamsProgramUniform(nullptr),
+	m_pDepthBlurRGBTextureProgramUniform(nullptr),
+	m_pDepthBlurNormalDepthTextureProgramUniform(nullptr),
+	m_pDownscaleFragmentShader(nullptr),
+	m_pDownscaleProgram(nullptr),
+	m_pDownscalePositionProgramAttribute(nullptr),
+	m_pDownscaleTextureSizeProgramUniform(nullptr),
+	m_pDownscaleTextureProgramUniform(nullptr),
+	m_pBlurFragmentShader(nullptr),
+	m_pBlurProgram(nullptr),
+	m_pBlurPositionProgramAttribute(nullptr),
+	m_pBlurTextureSizeProgramUniform(nullptr),
+	m_pBlurUVScaleProgramUniform(nullptr),
+	m_pBlurTextureProgramUniform(nullptr),
+	m_pResultFragmentShader(nullptr),
+	m_pResultProgram(nullptr),
+	m_pResultPositionProgramAttribute(nullptr),
+	m_pResultTextureSizeProgramUniform(nullptr),
+	m_pResultEffectWeightProgramUniform(nullptr),
+	m_pResultBlurDownscaleProgramUniform(nullptr),
+	m_pResultBlurTextureProgramUniform(nullptr),
+	m_pResultTextureProgramUniform(nullptr),
+	m_pDebugFragmentShader(nullptr),
+	m_pDebugProgram(nullptr),
+	m_pDebugPositionProgramAttribute(nullptr),
+	m_pDebugTextureSizeProgramUniform(nullptr),
+	m_pDebugTextureProgramUniform(nullptr),
 	m_nDebugType(0)
 {
 	// Init data
-	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
+	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
 }
 
 /**
@@ -180,21 +180,21 @@ void SRPDeferredDOF::CalculateDepthBlur(const String &sShaderLanguage, VertexBuf
 		// If there's an previous instance of the program, destroy it first
 		if (m_pDepthBlurProgram) {
 			delete m_pDepthBlurProgram;
-			m_pDepthBlurProgram = NULL;
+			m_pDepthBlurProgram = nullptr;
 		}
 		if (m_pDepthBlurFragmentShader) {
 			delete m_pDepthBlurFragmentShader;
-			m_pDepthBlurFragmentShader = NULL;
+			m_pDepthBlurFragmentShader = nullptr;
 		}
 		if (m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
-		m_pDepthBlurPositionProgramAttribute			= NULL;
-		m_pDepthBlurTextureSizeProgramUniform			= NULL;
-		m_pDepthBlurDOFParamsProgramUniform				= NULL;
-		m_pDepthBlurRGBTextureProgramUniform			= NULL;
-		m_pDepthBlurNormalDepthTextureProgramUniform	= NULL;
+		m_pDepthBlurPositionProgramAttribute			= nullptr;
+		m_pDepthBlurTextureSizeProgramUniform			= nullptr;
+		m_pDepthBlurDOFParamsProgramUniform				= nullptr;
+		m_pDepthBlurRGBTextureProgramUniform			= nullptr;
+		m_pDepthBlurNormalDepthTextureProgramUniform	= nullptr;
 
 		// Get the shader language instance
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
@@ -321,7 +321,7 @@ void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &
 					// Destroy the downscale render target
 					if (m_pRenderTarget[i]) {
 						delete m_pRenderTarget[i];
-						m_pRenderTarget[i] = NULL;
+						m_pRenderTarget[i] = nullptr;
 					}
 				}
 
@@ -337,27 +337,27 @@ void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &
 		// If there's an previous instance of the program, destroy it first
 		if (m_pDownscaleProgram) {
 			delete m_pDownscaleProgram;
-			m_pDownscaleProgram = NULL;
+			m_pDownscaleProgram = nullptr;
 		}
 		if (m_pDownscaleFragmentShader) {
 			delete m_pDownscaleFragmentShader;
-			m_pDownscaleFragmentShader = NULL;
+			m_pDownscaleFragmentShader = nullptr;
 		}
 		if (m_pBlurProgram) {
 			delete m_pBlurProgram;
-			m_pBlurProgram = NULL;
+			m_pBlurProgram = nullptr;
 		}
 		if (m_pBlurFragmentShader) {
 			delete m_pBlurFragmentShader;
-			m_pBlurFragmentShader = NULL;
+			m_pBlurFragmentShader = nullptr;
 		}
-		m_pDownscalePositionProgramAttribute	= NULL;
-		m_pDownscaleTextureSizeProgramUniform	= NULL;
-		m_pDownscaleTextureProgramUniform		= NULL;
-		m_pBlurPositionProgramAttribute			= NULL;
-		m_pBlurTextureSizeProgramUniform		= NULL;
-		m_pBlurUVScaleProgramUniform			= NULL;
-		m_pBlurTextureProgramUniform			= NULL;
+		m_pDownscalePositionProgramAttribute	= nullptr;
+		m_pDownscaleTextureSizeProgramUniform	= nullptr;
+		m_pDownscaleTextureProgramUniform		= nullptr;
+		m_pBlurPositionProgramAttribute			= nullptr;
+		m_pBlurTextureSizeProgramUniform		= nullptr;
+		m_pBlurUVScaleProgramUniform			= nullptr;
+		m_pBlurTextureProgramUniform			= nullptr;
 
 		// Get the shader language instance
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
@@ -506,15 +506,15 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 		// If there's an previous instance of the program, destroy it first
 		if (m_pDebugProgram) {
 			delete m_pDebugProgram;
-			m_pDebugProgram = NULL;
+			m_pDebugProgram = nullptr;
 		}
 		if (m_pDebugFragmentShader) {
 			delete m_pDebugFragmentShader;
-			m_pDebugFragmentShader = NULL;
+			m_pDebugFragmentShader = nullptr;
 		}
-		m_pDebugPositionProgramAttribute	= NULL;
-		m_pDebugTextureSizeProgramUniform	= NULL;
-		m_pDebugTextureProgramUniform		= NULL;
+		m_pDebugPositionProgramAttribute	= nullptr;
+		m_pDebugTextureSizeProgramUniform	= nullptr;
+		m_pDebugTextureProgramUniform		= nullptr;
 
 		// Get the shader language instance
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
@@ -603,7 +603,7 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 */
 TextureBuffer *SRPDeferredDOF::GetBlurTextureBuffer() const
 {
-	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : NULL;
+	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : nullptr;
 }
 
 /**
@@ -749,18 +749,18 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 													// If there's an previous instance of the program, destroy it first
 													if (m_pResultProgram) {
 														delete m_pResultProgram;
-														m_pResultProgram = NULL;
+														m_pResultProgram = nullptr;
 													}
 													if (m_pResultFragmentShader) {
 														delete m_pResultFragmentShader;
-														m_pResultFragmentShader = NULL;
+														m_pResultFragmentShader = nullptr;
 													}
-													m_pResultPositionProgramAttribute		= NULL;
-													m_pResultTextureSizeProgramUniform		= NULL;
-													m_pResultEffectWeightProgramUniform		= NULL;
-													m_pResultBlurDownscaleProgramUniform	= NULL;
-													m_pResultBlurTextureProgramUniform		= NULL;
-													m_pResultTextureProgramUniform			= NULL;
+													m_pResultPositionProgramAttribute		= nullptr;
+													m_pResultTextureSizeProgramUniform		= nullptr;
+													m_pResultEffectWeightProgramUniform		= nullptr;
+													m_pResultBlurDownscaleProgramUniform	= nullptr;
+													m_pResultBlurTextureProgramUniform		= nullptr;
+													m_pResultTextureProgramUniform			= nullptr;
 
 													// Get the shader language instance
 													PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);

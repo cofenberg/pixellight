@@ -48,7 +48,7 @@ BinominalHeapIterator<KeyType, ValueType, Comparer>::BinominalHeapIterator(const
 	if (nIndex <= m_pHeapOwner->m_nNumOfElements/2) { // 0 -> (NumOfElements-1)
 		// Initialize data
 		m_pNextTree     = m_pHeapOwner->m_pRoot;
-		m_pPreviousTree = NULL;
+		m_pPreviousTree = nullptr;
 
 		// Go to the correct start index
 		uint32 nCurrentIndex = 0;
@@ -58,7 +58,7 @@ BinominalHeapIterator<KeyType, ValueType, Comparer>::BinominalHeapIterator(const
 		}
 	} else { // (NumOfElements-1) -> 0
 		// Initialize data
-		m_pNextTree     = NULL;
+		m_pNextTree     = nullptr;
 		m_pPreviousTree = m_pHeapOwner->m_pRoot;
 		do {
 			// Find last sibling
@@ -90,7 +90,7 @@ BinominalHeapIterator<KeyType, ValueType, Comparer>::BinominalHeapIterator(const
 template <class KeyType, class ValueType, class Comparer>
 BinominalHeapIterator<KeyType, ValueType, Comparer>::BinominalHeapIterator(const BinominalHeap<KeyType, ValueType, Comparer> &cHeapOwner) :
 	m_pHeapOwner(&cHeapOwner),
-	m_pNextTree(NULL),
+	m_pNextTree(nullptr),
 	m_pPreviousTree(m_pHeapOwner->m_pRoot)
 {
 	// Initialize data
@@ -140,8 +140,8 @@ BinominalHeapIterator<KeyType, ValueType, Comparer>::~BinominalHeapIterator()
 template <class KeyType, class ValueType, class Comparer>
 typename BinominalHeap<KeyType, ValueType, Comparer>::Tree *BinominalHeapIterator<KeyType, ValueType, Comparer>::GetPreviousSibling(typename BinominalHeap<KeyType, ValueType, Comparer>::Tree *pTree) const
 {
-	typename BinominalHeap<KeyType, ValueType, Comparer>::Tree *pPrevious = NULL;
-	typename BinominalHeap<KeyType, ValueType, Comparer>::Tree *pNext     = NULL;
+	typename BinominalHeap<KeyType, ValueType, Comparer>::Tree *pPrevious = nullptr;
+	typename BinominalHeap<KeyType, ValueType, Comparer>::Tree *pNext     = nullptr;
 
 	// Get the FIRST tree
 	if (m_lstParent.GetNumOfElements()) {
@@ -174,7 +174,7 @@ IteratorImpl<ValueType> *BinominalHeapIterator<KeyType, ValueType, Comparer>::Cl
 template <class KeyType, class ValueType, class Comparer>
 bool BinominalHeapIterator<KeyType, ValueType, Comparer>::HasNext() const
 {
-	return (m_pNextTree != NULL);
+	return (m_pNextTree != nullptr);
 }
 
 template <class KeyType, class ValueType, class Comparer>
@@ -215,7 +215,7 @@ ValueType &BinominalHeapIterator<KeyType, ValueType, Comparer>::Next()
 template <class KeyType, class ValueType, class Comparer>
 bool BinominalHeapIterator<KeyType, ValueType, Comparer>::HasPrevious() const
 {
-	return (m_pPreviousTree != NULL);
+	return (m_pPreviousTree != nullptr);
 }
 
 template <class KeyType, class ValueType, class Comparer>
@@ -237,7 +237,7 @@ ValueType &BinominalHeapIterator<KeyType, ValueType, Comparer>::Previous()
 		// Go to parent...
 		if (!m_lstParent.GetNumOfElements()) {
 			// Ok, no parent, no previous sibling - this must be the beginning :)
-			m_pPreviousTree = NULL;
+			m_pPreviousTree = nullptr;
 
 			// Return the value
 			return pValue ? *pValue : BinominalHeap<KeyType, ValueType, Comparer>::Null;

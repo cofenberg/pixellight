@@ -64,7 +64,7 @@ Source::~Source()
 *    Constructor
 */
 Source::Source(PLSound::SoundManager &cSoundManager) : PLSound::Source(cSoundManager),
-	m_pChannel(NULL),
+	m_pChannel(nullptr),
 	m_fFrequency(0.0f),
 	m_fVolume(1.0f),
 	m_b2D(false),
@@ -206,7 +206,7 @@ void Source::Stop()
 	if (m_pChannel) {
 		// Stop playback
 		m_pChannel->stop();
-		m_pChannel = NULL;
+		m_pChannel = nullptr;
 
 		// Remove source from sound manager
 		((SoundManager&)GetSoundManager()).RemoveActiveSource(*this);
@@ -343,11 +343,11 @@ bool Source::SetAttribute(EAttributes nAttribute, const Vector3 &vV)
 		// Set sound API value
 		switch (nAttribute) {
 			case Position:
-				m_pChannel->set3DAttributes((const FMOD_VECTOR*)&m_vAttributes[Position].x, NULL);
+				m_pChannel->set3DAttributes((const FMOD_VECTOR*)&m_vAttributes[Position].x, nullptr);
 				return true; // Done
 
 			case Velocity:
-				m_pChannel->set3DAttributes(NULL, (const FMOD_VECTOR*)&m_vAttributes[Velocity].x);
+				m_pChannel->set3DAttributes(nullptr, (const FMOD_VECTOR*)&m_vAttributes[Velocity].x);
 				return true; // Done
 		}
 	}

@@ -84,7 +84,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    Get main window
 		*
 		*  @return
-		*    Pointer to the main window of the application, NULL on error
+		*    Pointer to the main window of the application, a null pointer on error
 		*/
 		PLGUI_API Widget *GetMainWindow() const;
 
@@ -93,7 +93,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    Set main window
 		*
 		*  @param[in] pMainWindow
-		*    Pointer to the main window of the application (NULL is also valid)
+		*    Pointer to the main window of the application (a null pointer is also valid)
 		*/
 		PLGUI_API void SetMainWindow(Widget *pMainWindow);
 
@@ -176,7 +176,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		PLCore::EventHandler<> EventHandlerOnDestroy;
 
 		// Data
-		Widget *m_pMainWindow;	/**< Main window of the application (can be NULL) */
+		Widget *m_pMainWindow;	/**< Main window of the application (can be a null pointer) */
 
 
 };

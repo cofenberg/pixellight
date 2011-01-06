@@ -179,7 +179,7 @@ SCPhysicsWorld::SCPhysicsWorld() :
 	m_vGravity(0.0f, -9.81f, 0.0f),
 	m_bBuoyancyActive(false),
 	m_fBuoyancyPlaneY(0.0f),
-	m_pWorld(NULL)
+	m_pWorld(nullptr)
 {
 	// Connect event handler
 	EventAABoundingBox.Connect(&EventHandlerAABoundingBox);

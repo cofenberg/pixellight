@@ -84,7 +84,7 @@ SceneRendererPass *SceneRenderer::Create(const String &sClass, const String &sNa
 	}
 
 	// Error
-	return NULL;
+	return nullptr;
 }
 
 

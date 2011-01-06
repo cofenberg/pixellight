@@ -167,8 +167,8 @@ void SceneHierarchy::Draw(Renderer &cRenderer, const Color4 &cColor, const Matri
 *    Constructor
 */
 SceneHierarchy::SceneHierarchy() :
-	m_pSceneContainer(NULL),
-	m_pRootNode(NULL),
+	m_pSceneContainer(nullptr),
+	m_pRootNode(nullptr),
 	m_nTotalNumOfNodes(0),
 	m_nNumOfSceneNodes(0),
 	m_nMaxLevel(16),
@@ -258,7 +258,7 @@ bool SceneHierarchy::RefreshSceneNode(SceneNode &cSceneNode)
 				cSceneNodeAABox.vMax.y > pNodeAABox->vMax.y || cSceneNodeAABox.vMax.z > pNodeAABox->vMax.z) {
 				// Change to the parent hierarchy node until we have found one which can contain the whole scene node
 				// (or break if the root hierarchy node was found :)
-				while ((pNode->m_pParentNode != NULL) &&
+				while ((pNode->m_pParentNode != nullptr) &&
 					   (cSceneNodeAABox.vMin.x < pNodeAABox->vMin.x || cSceneNodeAABox.vMin.y < pNodeAABox->vMin.y ||
 						cSceneNodeAABox.vMin.z < pNodeAABox->vMin.z || cSceneNodeAABox.vMax.x > pNodeAABox->vMax.x ||
 						cSceneNodeAABox.vMax.y > pNodeAABox->vMax.y || cSceneNodeAABox.vMax.z > pNodeAABox->vMax.z)) {

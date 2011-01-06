@@ -165,7 +165,7 @@ class SNParticleGroup : public SceneNode {
 				PLMath::Quaternion *pRot;	/**< Rotation quaternion for individual particle rotation (no billbording!)
 												 If you want to use it you have to use pRot = new PLMath::Quaternion() when
 												 deactivating it delete pRot (Particle group will delete it on destruction
-												 automatically) NULL if not used. */
+												 automatically) a null pointer if not used. */
 
 				// Distortion
 				bool			bDistorted;		/**< Distorted */
@@ -198,7 +198,7 @@ class SNParticleGroup : public SceneNode {
 		*    Name of the particle material/texture, if empty
 		*    the material defined in 'Material' is used
 		*  @param[in] pData
-		*    Additional data, can be NULL
+		*    Additional data, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -209,8 +209,7 @@ class SNParticleGroup : public SceneNode {
 		*    - Normally, this function calls InitParticles() which further calles
 		*      the scene nodes InitFunction() in which you can initialize the individual particles
 		*/
-		PLS_API virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "",
-											  const void *pData = NULL);
+		PLS_API virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);
 
 		/**
 		*  @brief
@@ -235,11 +234,11 @@ class SNParticleGroup : public SceneNode {
 		*    Adds a new particle
 		*
 		*  @return
-		*    Pointer to the new particle, NULL on error
+		*    Pointer to the new particle, a null pointer on error
 		*    (particle limit of this group reached?)
 		*
 		*  @note
-		*    - If GetCreateParticles() is 'false', this function will always return NULL
+		*    - If GetCreateParticles() is 'false', this function will always return a null pointer
 		*/
 		PLS_API Particle *AddParticle();
 
@@ -424,8 +423,8 @@ class SNParticleGroup : public SceneNode {
 		PLGeneral::uint32					 m_nParticles;					/**< Number of particles */
 		PLGeneral::uint32					 m_nTextureAnimationColumns;	/**< Number of animation frame columns in the texture */
 		PLGeneral::uint32					 m_nTextureAnimationRows;		/**< Number of animation frame rows in the texture */
-		PLRenderer::IndexBuffer				*m_pIndexBuffer;				/**< Index buffer, can be NULL */
-		PLRenderer::VertexBuffer			*m_pVertexBuffer;				/**< Vertex buffer, can be NULL */
+		PLRenderer::IndexBuffer				*m_pIndexBuffer;				/**< Index buffer, can be a null pointer */
+		PLRenderer::VertexBuffer			*m_pVertexBuffer;				/**< Vertex buffer, can be a null pointer */
 		PLGeneral::uint32					 m_nUsedIndices;				/**< Number of used indices */
 		PLGeneral::uint32					 m_nUsedVertices;				/**< Number of used vertices */
 		bool								 m_bRemoveAutomatically;		/**< Should the particle group be removed automatically? */
@@ -439,8 +438,8 @@ class SNParticleGroup : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

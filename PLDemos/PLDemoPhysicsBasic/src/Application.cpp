@@ -60,8 +60,8 @@ Application::Application() : BasicSceneApplication(),
 	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
 	EventHandlerKeyUp  (&Application::NotifyKeyUp,   this),
 	EventHandlerContact(&Application::NotifyContact, this),
-	m_pLine(NULL),
-	m_pFallingBox(NULL),
+	m_pLine(nullptr),
+	m_pFallingBox(nullptr),
 	m_bApplyForce(false),
 	m_bTorqueForce(false)
 {
@@ -152,7 +152,7 @@ bool Application::ChoosePhysicsAPI()
 			/*
 			// Show your choose dialog
 			ChoosePhysicsAPIGui *pDialog = new ChoosePhysicsAPIGui();
-			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, NULL) && m_sPhysicsAPI != pDialog->GetName()) {
+			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, nullptr) && m_sPhysicsAPI != pDialog->GetName()) {
 				// A new API was chosen...
 				m_sPhysicsAPI = pDialog->GetName();
 				bResult = true; // Done
@@ -170,19 +170,19 @@ bool Application::ChoosePhysicsAPI()
 				SurfacePainter *pPainter = GetPainter();
 				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
 					SPScene *pSPScene = (SPScene*)pPainter;
-					pSPScene->SetRootContainer(NULL);
-					pSPScene->SetSceneContainer(NULL);
-					pSPScene->SetCamera(NULL);
+					pSPScene->SetRootContainer(nullptr);
+					pSPScene->SetSceneContainer(nullptr);
+					pSPScene->SetCamera(nullptr);
 				}
 
 				// Destroy old root scene
-				SetRootScene(NULL);
+				SetRootScene(nullptr);
 				delete pRootScene;
 			}
 
 			// Reset variables
-			m_pLine        = NULL;
-			m_pFallingBox  = NULL;
+			m_pLine        = nullptr;
+			m_pFallingBox  = nullptr;
 			m_bApplyForce  = false;
 			m_bTorqueForce = false;
 
@@ -207,7 +207,7 @@ Body *Application::GetPhysicsBody(SceneNode &cSceneNode) const
 	const SNMPhysicsBodyBox *pModifier = (SNMPhysicsBodyBox*)cSceneNode.GetModifier("PLPhysics::SNMPhysicsBodyBox");
 
 	// Return the PL physics body this modifier is using
-	return pModifier ? pModifier->GetBody() : NULL;
+	return pModifier ? pModifier->GetBody() : nullptr;
 }
 
 /**
@@ -445,7 +445,7 @@ bool Application::OnUpdate()
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
 	// Set no scene container as default
-	SetScene(NULL);
+	SetScene(nullptr);
 
 	// Physics API given?
 	if (m_sPhysicsAPI.GetLength()) {
@@ -546,7 +546,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					// Get the physics body of 'Box'
 					Body *pBoxBody = pBodyModifier->GetBody();
 					// Second, get the 'SmallBox' scene node
-					pSceneNode = pBoxBody ? pSceneContainer->Get("SmallBox") : NULL;
+					pSceneNode = pBoxBody ? pSceneContainer->Get("SmallBox") : nullptr;
 					if (pSceneNode) {
 						// Get the physics body scene node modifier of the 'SmallBox' scene node
 						pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
@@ -573,7 +573,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					// Get the physics body of 'Box'
 					Body *pBoxBody = pBodyModifier->GetBody();
 					// Second, get the 'SmallBox' scene node
-					pSceneNode = pBoxBody ? pSceneContainer->Get("SmallBox") : NULL;
+					pSceneNode = pBoxBody ? pSceneContainer->Get("SmallBox") : nullptr;
 					if (pSceneNode) {
 						// Get the physics body scene node modifier of the 'SmallBox' scene node
 						pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");

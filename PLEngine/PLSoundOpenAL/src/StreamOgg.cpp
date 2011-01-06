@@ -44,10 +44,10 @@ namespace PLSoundOpenAL {
 *    Constructor
 */
 StreamOgg::StreamOgg(ALuint nSource, const Buffer &cBuffer) : Stream(nSource, cBuffer),
-	m_pVorbisInfo(NULL),
+	m_pVorbisInfo(nullptr),
 	m_nFormat(0),
 	m_nSwapSize(0),
-	m_pnSwap(NULL)
+	m_pnSwap(nullptr)
 {
 	// Create front and back buffers
 	alGenBuffers(2, m_nBuffers);
@@ -88,7 +88,7 @@ bool StreamOgg::OpenStream()
 			ovc.seek_func  = &SoundManager::seek_func_mem;
 			ovc.close_func = &SoundManager::close_func_mem;
 			ovc.tell_func  = &SoundManager::tell_func_mem;
-			if (!ov_open_callbacks(&sMemData, &m_cOggStream, NULL, 0, ovc))
+			if (!ov_open_callbacks(&sMemData, &m_cOggStream, nullptr, 0, ovc))
 				return true; // Done
 		} else { // Stream from file
 			File *pFile = GetBuffer().OpenFile();
@@ -99,7 +99,7 @@ bool StreamOgg::OpenStream()
 				ovc.seek_func  = &SoundManager::seek_func;
 				ovc.close_func = &SoundManager::close_func;
 				ovc.tell_func  = &SoundManager::tell_func;
-				if (!ov_open_callbacks(pFile, &m_cOggStream, NULL, 0, ovc)) {
+				if (!ov_open_callbacks(pFile, &m_cOggStream, nullptr, 0, ovc)) {
 					// Get information
 					m_pVorbisInfo = ov_info(&m_cOggStream, -1);
 					m_nFormat     = (m_pVorbisInfo->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
@@ -182,7 +182,7 @@ bool StreamOgg::Init()
 
 bool StreamOgg::IsInitialized() const
 {
-	return (m_pVorbisInfo != NULL);
+	return (m_pVorbisInfo != nullptr);
 }
 
 void StreamOgg::DeInit()
@@ -197,13 +197,13 @@ void StreamOgg::DeInit()
 			alSourceUnqueueBuffers(GetSource(), 1, &nBuffer);
 		}
 		ov_clear(&m_cOggStream);
-		m_pVorbisInfo = NULL;
+		m_pVorbisInfo = nullptr;
 		m_nFormat	  = 0;
 	}
 	if (m_pnSwap) {
 		delete [] m_pnSwap;
 		m_nSwapSize = 0;
-		m_pnSwap    = NULL;
+		m_pnSwap    = nullptr;
 	}
 }
 

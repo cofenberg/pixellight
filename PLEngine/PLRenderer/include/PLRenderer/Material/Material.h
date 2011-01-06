@@ -134,7 +134,7 @@ class Material : public PLCore::Resource<Material> {
 		*    Parameter name
 		*
 		*  @return
-		*    The requested parameter, NULL on error
+		*    The requested parameter, a null pointer on error
 		*
 		*  @remarks
 		*    While ParameterManager::GetParameter(<Name>) ONLY returns parameters within the
@@ -155,7 +155,7 @@ class Material : public PLCore::Resource<Material> {
 		*    Parameter name
 		*
 		*  @return
-		*    The requested texture buffer, NULL on error
+		*    The requested texture buffer, a null pointer on error
 		*
 		*  @see
 		*    - GetParameter()
@@ -212,7 +212,7 @@ class Material : public PLCore::Resource<Material> {
 		*    Index of the material to return
 		*
 		*  @return
-		*    Pointer to the requested material, NULL on error
+		*    Pointer to the requested material, a null pointer on error
 		*/
 		PLRENDERER_API Material *GetMaterial(PLGeneral::uint32 nIndex) const;
 
@@ -245,7 +245,7 @@ class Material : public PLCore::Resource<Material> {
 		*    Returns the effect of the material
 		*
 		*  @return
-		*    The effect of the material, NULL if there's no effect
+		*    The effect of the material, a null pointer if there's no effect
 		*/
 		PLRENDERER_API Effect *GetEffect() const;
 
@@ -254,9 +254,9 @@ class Material : public PLCore::Resource<Material> {
 		*    Sets the effect of the material
 		*
 		*  @param[in] pFX
-		*    The effect of the material, NULL if there's no effect
+		*    The effect of the material, a null pointer if there's no effect
 		*/
-		PLRENDERER_API void SetEffect(Effect *pFX = NULL);
+		PLRENDERER_API void SetEffect(Effect *pFX = nullptr);
 
 		/**
 		*  @brief
@@ -314,9 +314,9 @@ class Material : public PLCore::Resource<Material> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ParameterManager				   *m_pParameterManager;	/**< Parameter manager (NEVER NULL!) */
+		ParameterManager				   *m_pParameterManager;	/**< Parameter manager (NEVER a null pointer!) */
 		PLGeneral::Array<MaterialHandler*>  m_lstMaterials;			/**< List of materials */
-		EffectHandler					   *m_pFXHandler;			/**< Effect handler, can be NULL */
+		EffectHandler					   *m_pFXHandler;			/**< Effect handler, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

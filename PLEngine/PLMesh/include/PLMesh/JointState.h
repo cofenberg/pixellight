@@ -265,12 +265,12 @@ class JointState {
 		*    Calculates the initial absolute translation and rotation states and the transform joint matrix
 		*
 		*  @param[in] pParentJointState
-		*    Parent joint state, NULL if there's no one
+		*    Parent joint state, a null pointer if there's no one
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool CalculateInitialStates(const JointState *pParentJointState = NULL);
+		bool CalculateInitialStates(const JointState *pParentJointState = nullptr);
 
 
 };

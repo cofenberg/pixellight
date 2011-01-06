@@ -73,16 +73,16 @@ template <class AType> class Element {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
-		Element(const String &sName = "", ElementManager<AType> *pManager = NULL);
+		Element(const String &sName = "", ElementManager<AType> *pManager = nullptr);
 
 		/**
 		*  @brief
 		*    Returns the element manager using this element
 		*
 		*  @return
-		*    Element manager using this element or NULL
+		*    Element manager using this element or a null pointer
 		*/
 		ElementManager<AType> *GetManager() const;
 
@@ -160,7 +160,7 @@ template <class AType> class Element {
 		*    Index of the element handler to return
 		*
 		*  @return
-		*    The requested element handler, NULL on error
+		*    The requested element handler, a null pointer on error
 		*/
 		ElementHandler<AType> *GetHandler(uint32 nIndex) const;
 
@@ -245,7 +245,7 @@ template <class AType> class Element {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		ElementManager<AType>			*m_pManager;	/**< Element manager, can be NULL */
+		ElementManager<AType>			*m_pManager;	/**< Element manager, can be a null pointer */
 		String							 m_sName;		/**< Resouce name */
 		bool							 m_bProtected;	/**< Is the element protected? */
 		Array<ElementHandler<AType>*>	 m_lstHandlers;	/**< Element handler list */

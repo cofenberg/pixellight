@@ -68,7 +68,7 @@ class BitmapButton : public AbstractButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API BitmapButton(Widget *pParent = NULL);
+		PLGUI_API BitmapButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

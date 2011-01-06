@@ -43,8 +43,8 @@ template <class ValueType> ValueType Stack<ValueType>::temp;
 template <class ValueType>
 Stack<ValueType>::Stack() :
 	m_nNumOfElements(0),
-	m_pTop(NULL),
-	m_pBottom(NULL)
+	m_pTop(nullptr),
+	m_pBottom(nullptr)
 {
 }
 
@@ -55,8 +55,8 @@ Stack<ValueType>::Stack() :
 template <class ValueType>
 Stack<ValueType>::Stack(const Stack<ValueType> &cSource) :
 	m_nNumOfElements(0),
-	m_pTop(NULL),
-	m_pBottom(NULL)
+	m_pTop(nullptr),
+	m_pBottom(nullptr)
 {
 	// Copy stack
 	*this = cSource;
@@ -116,7 +116,7 @@ bool Stack<ValueType>::Pop(ValueType *pElement)
 	StackElement *pTopElement = m_pTop;
 	m_pTop = m_pTop->pNext;
 	if (!m_pTop)
-		m_pBottom = NULL;
+		m_pBottom = nullptr;
 	delete pTopElement;
 	m_nNumOfElements--;
 
@@ -190,7 +190,7 @@ bool Stack<ValueType>::PushBack(const ValueType &Element)
 		// No, stack isn't empty
 		StackElement *pElement = new StackElement;
 		pElement->Data = Element;
-		pElement->pNext = NULL;
+		pElement->pNext = nullptr;
 		m_pBottom->pNext = pElement;
 		m_pBottom = pElement;
 		m_nNumOfElements++;

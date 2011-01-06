@@ -62,7 +62,7 @@ SceneContext *SceneQuery::GetSceneContext() const
 */
 SceneQuery::SceneQuery() :
 	m_nFlags(Recursive),
-	m_pSceneContainer(NULL)
+	m_pSceneContainer(nullptr)
 {
 }
 

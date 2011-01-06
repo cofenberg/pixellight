@@ -156,7 +156,7 @@ class Class {
 		*    Get base class
 		*
 		*  @return
-		*    Pointer to base class (can be NULL)
+		*    Pointer to base class (can be a null pointer)
 		*/
 		PLCORE_API const Class *GetBaseClass() const;
 
@@ -230,7 +230,7 @@ class Class {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute descriptor (can be NULL, if no member with that name could be found)
+		*    Attribute descriptor (can be a null pointer, if no member with that name could be found)
 		*/
 		PLCORE_API const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
 
@@ -251,7 +251,7 @@ class Class {
 		*    Method name
 		*
 		*  @return
-		*    Method descriptor (can be NULL, if no member with that name could be found)
+		*    Method descriptor (can be a null pointer, if no member with that name could be found)
 		*/
 		PLCORE_API const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
 
@@ -272,7 +272,7 @@ class Class {
 		*    Signal name
 		*
 		*  @return
-		*    Signal descriptor (can be NULL, if no member with that name could be found)
+		*    Signal descriptor (can be a null pointer, if no member with that name could be found)
 		*/
 		PLCORE_API const EventDesc *GetSignal(const PLGeneral::String &sName) const;
 
@@ -293,7 +293,7 @@ class Class {
 		*    Slot name
 		*
 		*  @return
-		*    Slot descriptor (can be NULL, if no member with that name could be found)
+		*    Slot descriptor (can be a null pointer, if no member with that name could be found)
 		*/
 		PLCORE_API const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
 
@@ -332,7 +332,7 @@ class Class {
 		*    Constructor name
 		*
 		*  @return
-		*    Constructor descriptor (can be NULL, if no member with that name could be found)
+		*    Constructor descriptor (can be a null pointer, if no member with that name could be found)
 		*/
 		PLCORE_API const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
 
@@ -341,11 +341,11 @@ class Class {
 		*    Create object
 		*
 		*  @return
-		*    Pointer to created object (can be NULL)
+		*    Pointer to created object (can be a null pointer)
 		*
 		*  @remarks
 		*    This function will call the default constructor of the class.
-		*    If the class has no default constructor, the function will fail and return NULL.
+		*    If the class has no default constructor, the function will fail and return a null pointer.
 		*/
 		PLCORE_API Object *Create() const;
 
@@ -357,11 +357,11 @@ class Class {
 		*    Constructor parameters
 		*
 		*  @return
-		*    Pointer to created object (can be NULL)
+		*    Pointer to created object (can be a null pointer)
 		*
 		*  @remarks
 		*    This function will search for a constructor that matches the signature of the given parameters.
-		*    If no such contructor can be found, the function will fail and return NULL.
+		*    If no such contructor can be found, the function will fail and return a null pointer.
 		*/
 		PLCORE_API Object *Create(const DynParams &cParams) const;
 
@@ -375,11 +375,11 @@ class Class {
 		*    Constructor parameters
 		*
 		*  @return
-		*    Pointer to created object (can be NULL)
+		*    Pointer to created object (can be a null pointer)
 		*
 		*  @remarks
 		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
-		*    the given parameters do not match the signature of the constructor, the function will fail and return NULL.
+		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
 		PLCORE_API Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const;
 

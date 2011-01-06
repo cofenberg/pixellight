@@ -86,7 +86,7 @@ class ImagePL : public PLGui::ImageImpl {
 		*    Returns the texture buffer
 		*
 		*  @return
-		*    The texture buffer, NULL on error
+		*    The texture buffer, a null pointer on error
 		*/
 		PLS_API PLRenderer::TextureBuffer *GetTextureBuffer();
 
@@ -104,7 +104,7 @@ class ImagePL : public PLGui::ImageImpl {
 	//[-------------------------------------------------------]
 	private:
 		PLGui::Image			  *m_pImage;			/**< Pointer to the platform independent image object */
-		PLRenderer::TextureBuffer *m_pTextureBuffer;	/**< The texture buffer, can be NULL */
+		PLRenderer::TextureBuffer *m_pTextureBuffer;	/**< The texture buffer, can be a null pointer */
 
 
 };

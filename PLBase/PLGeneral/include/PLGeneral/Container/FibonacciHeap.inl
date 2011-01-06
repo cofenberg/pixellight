@@ -45,9 +45,9 @@ namespace PLGeneral {
 template <class KeyType, class ValueType, class Comparer>
 FibonacciHeap<KeyType, ValueType, Comparer>::Tree::Tree(KeyType Key, ValueType Value) :
 	m_nDegree(0),
-	m_pPreviousSibling(NULL),
-	m_pNextSibling(NULL),
-	m_pChild(NULL),
+	m_pPreviousSibling(nullptr),
+	m_pNextSibling(nullptr),
+	m_pChild(nullptr),
 	m_Key(Key),
 	m_Value(Value)
 {
@@ -63,13 +63,13 @@ FibonacciHeap<KeyType, ValueType, Comparer>::Tree::~Tree()
 	// Destroy child
 	if (m_pChild) {
 		delete m_pChild;
-		m_pChild = NULL;
+		m_pChild = nullptr;
 	}
 
 	// Destroy sibling
 	if (m_pNextSibling) {
 		delete m_pNextSibling;
-		m_pNextSibling = NULL;
+		m_pNextSibling = nullptr;
 	}
 }
 
@@ -154,8 +154,8 @@ void FibonacciHeap<KeyType, ValueType, Comparer>::Tree::Union(Tree &cTree)
 					pThisTree->m_pPreviousSibling->m_pNextSibling = pThisTree->m_pNextSibling;
 				if (pThisTree->m_pNextSibling)
 					pThisTree->m_pNextSibling->m_pPreviousSibling = pThisTree->m_pPreviousSibling;
-				pThisTree->m_pPreviousSibling = NULL;
-				pThisTree->m_pNextSibling     = NULL;
+				pThisTree->m_pPreviousSibling = nullptr;
+				pThisTree->m_pNextSibling     = nullptr;
 				// Union
 				if (pOtherTree->m_pChild) {
 					pOtherTree->m_pChild->Union(*pThisTree);
@@ -173,8 +173,8 @@ void FibonacciHeap<KeyType, ValueType, Comparer>::Tree::Union(Tree &cTree)
 					pOtherTree->m_pPreviousSibling->m_pNextSibling = pOtherTree->m_pNextSibling;
 				if (pOtherTree->m_pNextSibling)
 					pOtherTree->m_pNextSibling->m_pPreviousSibling = pOtherTree->m_pPreviousSibling;
-				pOtherTree->m_pPreviousSibling = NULL;
-				pOtherTree->m_pNextSibling     = NULL;
+				pOtherTree->m_pPreviousSibling = nullptr;
+				pOtherTree->m_pNextSibling     = nullptr;
 				// Union
 				if (pThisTree->m_pChild) {
 					pThisTree->m_pChild->Union(*pOtherTree);
@@ -205,8 +205,8 @@ void FibonacciHeap<KeyType, ValueType, Comparer>::Tree::Union(Tree &cTree)
 template <class KeyType, class ValueType, class Comparer>
 FibonacciHeap<KeyType, ValueType, Comparer>::FibonacciHeap() :
 	m_nNumOfElements(0),
-	m_pFirst(NULL),
-	m_pTop(NULL),
+	m_pFirst(nullptr),
+	m_pTop(nullptr),
 	m_nNumOfTrees(0),
 	m_nMaxNumOfMarks(0),
 	m_ppMark(0)
@@ -270,7 +270,7 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 		return false; // Nothing to do here :)
 
 	// Get theoretical maximum degree
-	uint32 nMaxDegree = (uint32)Wrapper::Ceil(Wrapper::Log(float(m_nNumOfElements))+1);
+	const uint32 nMaxDegree = (uint32)Wrapper::Ceil(Wrapper::Log(float(m_nNumOfElements))+1);
 
 	// Increase marked array if required
 	if (m_nMaxNumOfMarks < nMaxDegree) {
@@ -300,8 +300,8 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 					pThisTree->m_pPreviousSibling->m_pNextSibling = pThisTree->m_pNextSibling;
 				if (pThisTree->m_pNextSibling)
 					pThisTree->m_pNextSibling->m_pPreviousSibling = pThisTree->m_pPreviousSibling;
-				pThisTree->m_pPreviousSibling = NULL;
-				pThisTree->m_pNextSibling     = NULL;
+				pThisTree->m_pPreviousSibling = nullptr;
+				pThisTree->m_pNextSibling     = nullptr;
 				// Union
 				if (pOtherTree->m_pChild) {
 					pOtherTree->m_pChild->Union(*pThisTree);
@@ -321,8 +321,8 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 					pOtherTree->m_pPreviousSibling->m_pNextSibling = pOtherTree->m_pNextSibling;
 				if (pOtherTree->m_pNextSibling)
 					pOtherTree->m_pNextSibling->m_pPreviousSibling = pOtherTree->m_pPreviousSibling;
-				pOtherTree->m_pPreviousSibling = NULL;
-				pOtherTree->m_pNextSibling     = NULL;
+				pOtherTree->m_pPreviousSibling = nullptr;
+				pOtherTree->m_pNextSibling     = nullptr;
 				// Union
 				if (pThisTree->m_pChild) {
 					pThisTree->m_pChild->Union(*pOtherTree);
@@ -334,7 +334,7 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 			}
 
 			// Reset mark
-			m_ppMark[nDegree] = NULL;
+			m_ppMark[nDegree] = nullptr;
 
 			// Increase the degree of the current tree
 			nDegree++;
@@ -382,8 +382,8 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 template <class KeyType, class ValueType, class Comparer>
 FibonacciHeap<KeyType, ValueType, Comparer>::FibonacciHeap(const FibonacciHeap<KeyType, ValueType, Comparer> &cSource) :
 	m_nNumOfElements(0),
-	m_pFirst(NULL),
-	m_pTop(NULL),
+	m_pFirst(nullptr),
+	m_pTop(nullptr),
 	m_nNumOfTrees(0),
 	m_nMaxNumOfMarks(0),
 	m_ppMark(0)
@@ -442,7 +442,7 @@ void FibonacciHeap<KeyType, ValueType, Comparer>::Clear()
 	// Destroy the first tree
 	if (m_pFirst) {
 		delete m_pFirst;
-		m_pFirst		 = NULL;
+		m_pFirst		 = nullptr;
 		m_nNumOfElements = 0;
 	}
 
@@ -450,7 +450,7 @@ void FibonacciHeap<KeyType, ValueType, Comparer>::Clear()
 	m_nNumOfTrees = 0;
 	if (m_ppMark) {
 		delete [] m_ppMark;
-		m_ppMark		 = NULL;
+		m_ppMark		 = nullptr;
 		m_nMaxNumOfMarks = 0;
 	}
 }
@@ -545,11 +545,11 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::ExtractTop(ValueType *pValue, 
 		// Link the tree to the list of trees
 		if (m_pFirst) {
 			m_pFirst->m_pPreviousSibling = pTree;
-			pTree->m_pPreviousSibling = NULL;
+			pTree->m_pPreviousSibling = nullptr;
 			pTree->m_pNextSibling     = m_pFirst;
 		} else {
-			pTree->m_pPreviousSibling = NULL;
-			pTree->m_pNextSibling     = NULL;
+			pTree->m_pPreviousSibling = nullptr;
+			pTree->m_pNextSibling     = nullptr;
 		}
 		m_pFirst = pTree;
 		m_nNumOfTrees++;
@@ -559,8 +559,8 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::ExtractTop(ValueType *pValue, 
 	}
 
 // Fourth: Destroy the node of the top tree...
-	m_pTop->m_pNextSibling = NULL; // Do NOT delete the sibling
-	m_pTop->m_pChild	   = NULL; // Do NOT delete the child
+	m_pTop->m_pNextSibling = nullptr; // Do NOT delete the sibling
+	m_pTop->m_pChild	   = nullptr; // Do NOT delete the child
 	delete m_pTop;
 
 // ... and decrease the number of elements

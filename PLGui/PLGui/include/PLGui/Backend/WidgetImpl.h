@@ -159,7 +159,7 @@ class WidgetImpl {
 		*    Move widget to another screen
 		*
 		*  @param[in] pScreen
-		*    Screen to which the widget shall be moved (does nothing if pScreen == NULL)
+		*    Screen to which the widget shall be moved (does nothing if pScreen == nullptr)
 		*/
 		virtual void MoveToScreen(Screen &cScreen) = 0;
 

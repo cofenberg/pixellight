@@ -140,12 +140,12 @@ JointHandler *SkeletonHandler::GetBaseJointHandler(const String &sJointName) con
 		if (pJoint) {
 			// Return the base joint handler for this joint
 			JointHandler &cJointHandler = m_lstBaseJointHandlers[pJoint->GetID()];
-			return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : NULL;
+			return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : nullptr;
 		}
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -176,12 +176,12 @@ JointHandler *SkeletonHandler::GetJointHandler(const String &sJointName) const
 		if (pJoint) {
 			// Return the joint handler for this joint
 			JointHandler &cJointHandler = m_lstJointHandlers[pJoint->GetID()];
-			return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : NULL;
+			return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : nullptr;
 		}
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -305,12 +305,12 @@ bool SkeletonHandler::ApplyJointStates(SkeletonHandler &cSkeletonHandler, float 
 				// joint handler has
 				const Joint *pJoint = pSkeleton->Get(cJH.GetElement()->GetName());
 				if (pJoint) {
-					JointHandler *pJHBase = NULL;
+					JointHandler *pJHBase = nullptr;
 					for (uint32 j=0; j<m_lstJointHandlers.GetNumOfElements(); j++) {
 						pJHBase = &m_lstJointHandlers[j];
 						if (pJHBase->GetElement() == pJoint)
 							break;
-						pJHBase = NULL;
+						pJHBase = nullptr;
 					}
 					if (pJHBase) {
 						// Add deltas
@@ -366,7 +366,7 @@ bool SkeletonHandler::CalculateStates()
 	for (uint32 i=0; i<lstRootJoints.GetNumOfElements(); i++) {
 		JointHandler &cJointHandler = m_lstJointHandlers[lstRootJoints[i]];
 		if (&cJointHandler != &Array<JointHandler>::Null)
-			RecCalculateStates(cJointHandler, NULL);
+			RecCalculateStates(cJointHandler, nullptr);
 	}
 
 	// Done

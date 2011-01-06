@@ -137,7 +137,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*    Returns the texture buffer
 		*
 		*  @return
-		*    The texture buffer, there you can e.g. upload other texture data, can be NULL
+		*    The texture buffer, there you can e.g. upload other texture data, can be a null pointer
 		*/
 		PLRENDERER_API TextureBuffer *GetTextureBuffer() const;
 
@@ -146,9 +146,9 @@ class Texture : public PLCore::Resource<Texture> {
 		*    Sets the texture buffer
 		*
 		*  @param[in] pTextureBuffer
-		*    Texture buffer to set, can be NULL
+		*    Texture buffer to set, can be a null pointer
 		*/
-		PLRENDERER_API void SetTextureBuffer(TextureBuffer *pTextureBuffer = NULL);
+		PLRENDERER_API void SetTextureBuffer(TextureBuffer *pTextureBuffer = nullptr);
 
 		/**
 		*  @brief
@@ -266,7 +266,7 @@ class Texture : public PLCore::Resource<Texture> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ResourceHandler	   *m_pTextureBufferHandler;	/**< Renderer texture buffer resource handler (NEVER NULL!) */
+		ResourceHandler	   *m_pTextureBufferHandler;	/**< Renderer texture buffer resource handler (NEVER a null pointer!) */
 		bool				m_bShareTextureBuffer;		/**< If 'true', do not delete the texture buffer by yourself! */
 		ECompressionFormat  m_nCompressionHint;			/**< Compression hint */
 		PLMath::Vector3i    m_vOriginalSize;			/**< Original texture size */

@@ -132,7 +132,7 @@ bool LogFormaterXml::Close()
 
 		// Reset data
 		delete m_pFile;
-		m_pFile = NULL;
+		m_pFile = nullptr;
 
 		// Done
 		return true;

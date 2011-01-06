@@ -66,7 +66,7 @@ class PopupMenu : public AbstractMenu {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API PopupMenu(Widget *pParent = NULL);
+		PLGUI_API PopupMenu(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -47,7 +47,7 @@ SimpleListIterator<ValueType>::SimpleListIterator(const SimpleList<ValueType> &l
 	// Start at first element?
 	if (!nIndex) {
 		m_pNextElement     = m_plstSimpleList->pFirstElement;
-		m_pPreviousElement = NULL;
+		m_pPreviousElement = nullptr;
 
 	// Ok, we start somewhere between the start/end element
 	} else {
@@ -70,8 +70,8 @@ SimpleListIterator<ValueType>::SimpleListIterator(const SimpleList<ValueType> &l
 template <class ValueType>
 SimpleListIterator<ValueType>::SimpleListIterator(const SimpleList<ValueType> &lstSimpleList) :
 	m_plstSimpleList(&lstSimpleList),
-	m_pNextElement(NULL),
-	m_pPreviousElement(NULL)
+	m_pNextElement(nullptr),
+	m_pPreviousElement(nullptr)
 {
 	// Start with the first element
 	typename SimpleList<ValueType>::ListElement *pElement = lstSimpleList.pFirstElement;
@@ -116,7 +116,7 @@ IteratorImpl<ValueType> *SimpleListIterator<ValueType>::Clone() const
 template <class ValueType>
 bool SimpleListIterator<ValueType>::HasNext() const
 {
-	return (m_pNextElement != NULL);
+	return (m_pNextElement != nullptr);
 }
 
 template <class ValueType>
@@ -132,7 +132,7 @@ ValueType &SimpleListIterator<ValueType>::Next()
 template <class ValueType>
 bool SimpleListIterator<ValueType>::HasPrevious() const
 {
-	return (m_pPreviousElement != NULL);
+	return (m_pPreviousElement != nullptr);
 }
 
 template <class ValueType>
@@ -146,7 +146,7 @@ ValueType &SimpleListIterator<ValueType>::Previous()
 
 	// Start with the first element
 	typename SimpleList<ValueType>::ListElement *pElement = m_plstSimpleList->pFirstElement;
-	m_pPreviousElement = NULL;
+	m_pPreviousElement = nullptr;
 	while (pElement && m_pNextElement != pElement) {
 		// Next, please
 		m_pPreviousElement = pElement;

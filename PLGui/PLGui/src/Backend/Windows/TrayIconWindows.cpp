@@ -61,7 +61,7 @@ namespace PLGui {
 *    Constructor
 */
 TrayIconWindows::TrayIconWindows(TrayIcon &cTrayIcon) : TrayIconImpl(cTrayIcon),
-	m_pWindow(NULL),
+	m_pWindow(nullptr),
 	m_nID(101),
 	m_bVisible(false)
 {
@@ -105,7 +105,7 @@ void TrayIconWindows::SetVisible(bool bVisible)
 
 		// Get icon handle
 		ImageWindows *pImageWindows = (ImageWindows*)m_pTrayIcon->GetIcon().GetImpl();
-		HICON hIcon = pImageWindows ? pImageWindows->GetIconHandle() : LoadIcon(NULL, IDI_QUESTION);
+		HICON hIcon = pImageWindows ? pImageWindows->GetIconHandle() : LoadIcon(nullptr, IDI_QUESTION);
 
 		// Set options to create the icon
 		memset(&m_sNotifyIcon, 0, sizeof(NOTIFYICONDATA));

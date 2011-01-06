@@ -110,8 +110,8 @@ class FibonacciHeapIterator : public IteratorImpl<ValueType> {
 	private:
 		const FibonacciHeap<KeyType, ValueType, Comparer>				   *m_pHeapOwner;		/**< Fibonacci heap to operate on (always valid!) */
 		Stack<typename FibonacciHeap<KeyType, ValueType, Comparer>::Tree*>  m_lstParent;		/**< Parent stack */
-		typename FibonacciHeap<KeyType, ValueType, Comparer>::Tree		   *m_pNextTree;		/**< Next tree, can be NULL */
-		typename FibonacciHeap<KeyType, ValueType, Comparer>::Tree		   *m_pPreviousTree;	/**< Previous tree, can be NULL */
+		typename FibonacciHeap<KeyType, ValueType, Comparer>::Tree		   *m_pNextTree;		/**< Next tree, can be a null pointer */
+		typename FibonacciHeap<KeyType, ValueType, Comparer>::Tree		   *m_pPreviousTree;	/**< Previous tree, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

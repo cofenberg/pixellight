@@ -44,12 +44,12 @@ namespace PLInput {
 */
 ConnectionDevice::ConnectionDevice() :
 	m_nDeviceType(DeviceTypeUnknown),
-	m_pInputBuffer(NULL),
-	m_pOutputBuffer(NULL),
+	m_pInputBuffer(nullptr),
+	m_pOutputBuffer(nullptr),
 	m_nInputReportSize(0),
 	m_nOutputReportSize(0),
-	m_pThread(NULL),
-	m_pMutex(NULL),
+	m_pThread(nullptr),
+	m_pMutex(nullptr),
 	m_bThreadExit(false)
 {
 	// Set backend type
@@ -247,25 +247,25 @@ void ConnectionDevice::StopThread()
 
 		// Delete thread
 		delete m_pThread;
-		m_pThread = NULL;
+		m_pThread = nullptr;
 	}
 
 	// Delete mutex
 	if (m_pMutex) {
 		delete m_pMutex;
-		m_pMutex = NULL;
+		m_pMutex = nullptr;
 	}
 
 	// Destroy input buffer
 	if (m_pInputBuffer) {
 		delete [] m_pInputBuffer;
-		m_pInputBuffer = NULL;
+		m_pInputBuffer = nullptr;
 	}
 
 	// Destroy output buffer
 	if (!m_pOutputBuffer) {
 		delete [] m_pOutputBuffer;
-		m_pOutputBuffer = NULL;
+		m_pOutputBuffer = nullptr;
 	}
 }
 

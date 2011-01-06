@@ -83,7 +83,7 @@ class Buffer : public PLSound::Buffer {
 		*    Sound source using this stream
 		*
 		*  @return
-		*    The created stream, NULL on error (maybe buffer isn't streamed)
+		*    The created stream, a null pointer on error (maybe buffer isn't streamed)
 		*/
 		Stream *CreateStream(ALuint nSource);
 
@@ -113,7 +113,7 @@ class Buffer : public PLSound::Buffer {
 		*    Opens the file the buffer is using
 		*
 		*  @return
-		*    The file the buffer is using, NULL on error
+		*    The file the buffer is using, a null pointer on error
 		*
 		*  @note
 		*    - The returned file is already opened for reading, don't forget
@@ -129,7 +129,7 @@ class Buffer : public PLSound::Buffer {
 		*    The buffer data
 		*
 		*  @note
-		*    - If the data is NULL, the stream was loaded using a filename
+		*    - If the data is a null pointer, the stream was loaded using a filename
 		*
 		*  @see
 		*    - GetFilename()
@@ -144,7 +144,7 @@ class Buffer : public PLSound::Buffer {
 		*    The buffer data size (in bytes)
 		*
 		*  @note
-		*    - If the data is NULL, the stream was loaded using a filename
+		*    - If the data is a null pointer, the stream was loaded using a filename
 		*
 		*  @see
 		*    - GetData()
@@ -178,7 +178,7 @@ class Buffer : public PLSound::Buffer {
 		ALuint					m_nBuffer;		/**< Sound buffer */
 		// For streaming
 		PLGeneral::String		m_sFilename;	/**< Filename */
-		const PLGeneral::uint8 *m_pnData;		/**< Data, can be NULL */
+		const PLGeneral::uint8 *m_pnData;		/**< Data, can be a null pointer */
 		PLGeneral::uint32		m_nDataSize;	/**< Data size (in bytes) */
 
 

@@ -82,7 +82,7 @@ CGprogram VertexShaderCg::GetCgVertexProgram() const
 */
 VertexShaderCg::VertexShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::VertexShader(cRenderer),
 	m_pCgProfile(CG_PROFILE_UNKNOWN),
-	m_pCgVertexProgram(NULL)
+	m_pCgVertexProgram(nullptr)
 {
 	// Add a Cg context reference
 	ShaderToolsCg::AddCgContextReference();
@@ -117,7 +117,7 @@ bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sPro
 	// Destroy the previous Cg vertex program, if there's one
 	if (m_pCgVertexProgram) {
 		cgDestroyProgram(m_pCgVertexProgram);
-		m_pCgVertexProgram = NULL;
+		m_pCgVertexProgram = nullptr;
 	}
 
 	// Get the profile from a user given string
@@ -157,15 +157,15 @@ bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sPro
 void VertexShaderCg::BackupDeviceData(uint8 **ppBackup)
 {
 	// Backup data
-	const char *pszProgram = m_pCgVertexProgram ? cgGetProgramString(m_pCgVertexProgram, CG_PROGRAM_SOURCE) : NULL;
+	const char *pszProgram = m_pCgVertexProgram ? cgGetProgramString(m_pCgVertexProgram, CG_PROGRAM_SOURCE) : nullptr;
 	if (pszProgram) {
 		const uint32 nNumOfBytes = Wrapper::GetStringLength(pszProgram) + 1;
 		*ppBackup = new uint8[nNumOfBytes];
 		MemoryManager::Copy(*ppBackup, pszProgram, nNumOfBytes);
 		cgDestroyProgram(m_pCgVertexProgram);
-		m_pCgVertexProgram = NULL;
+		m_pCgVertexProgram = nullptr;
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

@@ -48,8 +48,8 @@ void RawInput::Clear()
 		delete m_lstDevices[i];
 	m_lstDevices.Clear();
 	m_mapDevices.Clear();
-	m_pDeviceKeyboard = NULL;
-	m_pDeviceMouse	  = NULL;
+	m_pDeviceKeyboard = nullptr;
+	m_pDeviceMouse	  = nullptr;
 }
 
 /**
@@ -63,7 +63,7 @@ void RawInput::DetectDevices()
 
 	// Get length of device list
 	UINT nDeviceCount = 0;
-	if (GetRawInputDeviceList(NULL, &nDeviceCount, sizeof(RAWINPUTDEVICELIST)) == 0 && nDeviceCount > 0) {
+	if (GetRawInputDeviceList(nullptr, &nDeviceCount, sizeof(RAWINPUTDEVICELIST)) == 0 && nDeviceCount > 0) {
 		// Create device array
 		RAWINPUTDEVICELIST *pDevices = new RAWINPUTDEVICELIST[nDeviceCount];
 
@@ -76,7 +76,7 @@ void RawInput::DetectDevices()
 				// Get device name
 				String sName = "Unknown";
 				UINT   nSize = 0;
-				GetRawInputDeviceInfo(pDevices[i].hDevice, RIDI_DEVICENAME, NULL, &nSize);
+				GetRawInputDeviceInfo(pDevices[i].hDevice, RIDI_DEVICENAME, nullptr, &nSize);
 				if (nSize > 0) {
 					wchar_t *pszName = new wchar_t[nSize+1];
 					GetRawInputDeviceInfo(pDevices[i].hDevice, RIDI_DEVICENAME, pszName, &nSize);
@@ -103,7 +103,7 @@ void RawInput::DetectDevices()
 			m_pDeviceKeyboard = new RawInputDevice();
 			m_pDeviceKeyboard->m_sName    = "Keyboard";
 			m_pDeviceKeyboard->m_nType    = RIM_TYPEKEYBOARD;
-			m_pDeviceKeyboard->m_hDevice  = NULL;
+			m_pDeviceKeyboard->m_hDevice  = nullptr;
 			m_pDeviceKeyboard->m_bVirtual = true;
 			m_lstDevices.Add(m_pDeviceKeyboard);
 
@@ -111,7 +111,7 @@ void RawInput::DetectDevices()
 			m_pDeviceMouse = new RawInputDevice();
 			m_pDeviceMouse->m_sName    = "Mouse";
 			m_pDeviceMouse->m_nType    = RIM_TYPEMOUSE;
-			m_pDeviceMouse->m_hDevice  = NULL;
+			m_pDeviceMouse->m_hDevice  = nullptr;
 			m_pDeviceMouse->m_bVirtual = true;
 			m_lstDevices.Add(m_pDeviceMouse);
 		}
@@ -140,7 +140,7 @@ const List<RawInputDevice*> &RawInput::GetDevices() const
 *    Constructor
 */
 RawInput::RawInput() :
-	m_hWnd(NULL),
+	m_hWnd(nullptr),
 	m_cThread(&RawInput::RawInputThread, this),
 	m_bThreadFinished(false)
 {
@@ -148,17 +148,17 @@ RawInput::RawInput() :
 	m_cWndClass.lpszClassName	= L"PLInputWindows";
 	m_cWndClass.lpfnWndProc		= WndProc;
 	m_cWndClass.style			= CS_VREDRAW | CS_HREDRAW;
-	m_cWndClass.hInstance		= GetModuleHandle(NULL);
-	m_cWndClass.hIcon			= NULL;
-	m_cWndClass.hCursor			= LoadCursor(NULL, IDC_ARROW);
+	m_cWndClass.hInstance		= GetModuleHandle(nullptr);
+	m_cWndClass.hIcon			= nullptr;
+	m_cWndClass.hCursor			= LoadCursor(nullptr, IDC_ARROW);
 	m_cWndClass.hbrBackground	= (HBRUSH)(COLOR_WINDOW);
-	m_cWndClass.lpszMenuName	= NULL;
+	m_cWndClass.lpszMenuName	= nullptr;
 	m_cWndClass.cbClsExtra		= 0;
 	m_cWndClass.cbWndExtra		= 0;
 	RegisterClass(&m_cWndClass);
 
 	// Create window
-	m_hWnd = CreateWindow(L"PLInputWindows", L"PLInputWindows", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, NULL, NULL, GetModuleHandle(NULL), NULL);
+	m_hWnd = CreateWindow(L"PLInputWindows", L"PLInputWindows", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, nullptr, nullptr, GetModuleHandle(nullptr), nullptr);
 	SetWindowLongPtr(m_hWnd, GWLP_USERDATA, (LONG_PTR)this);
 
 	// Register Raw-Input devices
@@ -196,11 +196,11 @@ RawInput::~RawInput()
 	// Destroy window
 	if (m_hWnd) {
 		DestroyWindow(m_hWnd);
-		m_hWnd = NULL;
+		m_hWnd = nullptr;
 	}
 
 	// Delete window class
-	HMODULE hModuleHandle = GetModuleHandle(NULL);
+	HMODULE hModuleHandle = GetModuleHandle(nullptr);
 	if (hModuleHandle) {
 		UnregisterClass(L"PLInputWindows", hModuleHandle);
 	}
@@ -214,7 +214,7 @@ LRESULT RawInput::ProcessRawInput(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lP
 {
 	// Create buffer
 	UINT nSize;
-	GetRawInputData((HRAWINPUT)lParam, RID_INPUT, NULL, &nSize, sizeof(RAWINPUTHEADER));
+	GetRawInputData((HRAWINPUT)lParam, RID_INPUT, nullptr, &nSize, sizeof(RAWINPUTHEADER));
 	BYTE *pBuffer = new BYTE[nSize];
 	if (pBuffer) {
 		// Read Raw-Input data

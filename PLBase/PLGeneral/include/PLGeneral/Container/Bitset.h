@@ -253,7 +253,7 @@ class Bitset : public Container<bool> {
 		*    Returns the internal integers (32 bit) used to store the bits
 		*
 		*  @return
-		*    The internal integers used to store the bits, can be NULL, DON'T delete the memory!
+		*    The internal integers used to store the bits, can be a null pointer, DON'T delete the memory!
 		*/
 		inline const uint32 *GetIntegers() const;
 
@@ -275,7 +275,7 @@ class Bitset : public Container<bool> {
 		uint32  m_nMaxNumOfElements;	/**< Maximum number of elements */
 		uint32  m_nNumOfElements;		/**< Current number of elements */
 		uint32  m_nNumOfIntegers;		/**< Number of integers */
-		uint32 *m_pnIntegers;			/**< Bits data, can be NULL */
+		uint32 *m_pnIntegers;			/**< Bits data, can be a null pointer */
 		uint32  m_nResizeCount;			/**< Automatic resize count */
 		// Static data
 		PLGENERAL_API static bool m_bBit;	/**< Last returned bit */

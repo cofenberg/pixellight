@@ -166,7 +166,7 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

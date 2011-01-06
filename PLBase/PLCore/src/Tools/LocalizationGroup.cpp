@@ -124,7 +124,8 @@ LocalizationText *LocalizationGroup::AddText(const String &sName, const String &
 {
 	// Is there already a text with the given name?
 	LocalizationText *pText = m_mapTexts.Get(sName);
-	if (pText) return NULL; // Jap, error!
+	if (pText)
+		return nullptr; // Jap, error!
 
 	// Create the new text
 	pText = new LocalizationText(*this, sName, sTranslation);

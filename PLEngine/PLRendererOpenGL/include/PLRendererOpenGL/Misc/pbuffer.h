@@ -63,7 +63,7 @@ class PBuffer
         bool Initialize(int iWidth, int iHeight, bool bShareContexts, bool bShareObjects);
         void Destroy();
 
-        void Activate(PBuffer *current = NULL); // to switch between pbuffers, pass active pbuffer as argument
+        void Activate(PBuffer *current = nullptr); // to switch between pbuffers, pass active pbuffer as argument
         void Deactivate();
 
 #if defined(WIN32)

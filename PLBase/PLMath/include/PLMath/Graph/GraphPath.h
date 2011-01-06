@@ -69,22 +69,22 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*  @param[in] sName
 		*    Resource name to set
 		*  @param[in] pManager
-		*    Resource manager using this resource, can be NULL
+		*    Resource manager using this resource, can be a null pointer
 		*/
-		PLMATH_API GraphPath(const PLGeneral::String &sName, PLCore::ResourceManager<GraphPath> *pManager = NULL);
+		PLMATH_API GraphPath(const PLGeneral::String &sName, PLCore::ResourceManager<GraphPath> *pManager = nullptr);
 
 		/**
 		*  @brief
 		*    Constructor
 		*
 		*  @param[in] pOwnerGraph
-		*    Owner graph, if NULL the path has it's own private nodes
+		*    Owner graph, if a null pointer the path has it's own private nodes
 		*
 		*  @note
 		*    - A path is linking to graph nodes if it's created from for instance
 		*      Graph::FindShortestPath()
 		*/
-		PLMATH_API GraphPath(Graph *pOwnerGraph = NULL);
+		PLMATH_API GraphPath(Graph *pOwnerGraph = nullptr);
 
 		/**
 		*  @brief
@@ -97,7 +97,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*    Returns the owner graph of the path
 		*
 		*  @return
-		*    Owner graph of the path, NULL if the path is independent
+		*    Owner graph of the path, a null pointer if the path is independent
 		*/
 		PLMATH_API Graph *GetOwnerGraph() const;
 
@@ -146,7 +146,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*    ID of the node which should be returned
 		*
 		*  @return
-		*    The path node, NULL if there was an error
+		*    The path node, a null pointer if there was an error
 		*/
 		PLMATH_API const GraphNode *GetNode(PLGeneral::uint32 nID = 0) const;
 
@@ -158,7 +158,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*    ID of the node which should be returned
 		*
 		*  @return
-		*    The path node, NULL if there was an error
+		*    The path node, a null pointer if there was an error
 		*/
 		PLMATH_API GraphNode *GetNode(PLGeneral::uint32 nID = 0);
 
@@ -241,7 +241,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Graph						 *m_pOwnerGraph;	/**< Owner graph, can be NULL */
+		Graph						 *m_pOwnerGraph;	/**< Owner graph, can be a null pointer */
 		bool						  m_bClosed;		/**< Is the path closed? */
 		PLGeneral::Array<GraphNode*>  m_lstNodes;		/**< Node list */
 

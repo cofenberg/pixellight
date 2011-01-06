@@ -155,9 +155,9 @@ void WidgetPL::Destroy()
 			// Get the GUI implementation instance
 			GuiPL *pGuiPL = (GuiPL*)pGui->GetImpl();
 
-			// If the mouse was over this widget, set the current mouse over widget to NULL
+			// If the mouse was over this widget, set the current mouse over widget to a null pointer
 			if (pGuiPL && pGuiPL->m_pMouseOver == m_pWidget)
-				pGuiPL->m_pMouseOver = NULL;
+				pGuiPL->m_pMouseOver = nullptr;
 
 			// Send OnDestroy message
 			pGui->SendMessage(GuiMessage::OnDestroy(m_pWidget));
@@ -184,7 +184,7 @@ void WidgetPL::Destroy()
 handle WidgetPL::GetWindowHandle() const
 {
 	// The ingame GUI doesn't have such a native window handle
-	return NULL;
+	return NULL_HANDLE;
 }
 
 void WidgetPL::SetParent(WidgetImpl *pParent)

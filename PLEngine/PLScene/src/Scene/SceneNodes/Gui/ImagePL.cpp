@@ -52,7 +52,7 @@ namespace PLScene {
 */
 ImagePL::ImagePL(PLGui::Image &cImage) : ImageImpl(cImage),
 	m_pImage(&cImage),
-	m_pTextureBuffer(NULL)
+	m_pTextureBuffer(nullptr)
 {
 }
 
@@ -75,7 +75,7 @@ void ImagePL::Unload()
 	// Destroy the renderer texture buffer
 	if (m_pTextureBuffer) {
 		delete m_pTextureBuffer;
-		m_pTextureBuffer = NULL;
+		m_pTextureBuffer = nullptr;
 	}
 }
 

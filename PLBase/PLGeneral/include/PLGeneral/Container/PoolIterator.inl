@@ -47,11 +47,11 @@ PoolIterator<ValueType>::PoolIterator(const Pool<ValueType> &lstPool, uint32 nIn
 	// Start at first element?
 	if (!nIndex) {
 		m_pNextElement     = m_plstPool->m_pFirstElement;
-		m_pPreviousElement = NULL;
+		m_pPreviousElement = nullptr;
 
 	// Start at last element?
 	} else if (nIndex >= m_plstPool->m_nNumOfElements-1) {
-		m_pNextElement     = NULL;
+		m_pNextElement     = nullptr;
 		m_pPreviousElement = m_plstPool->m_pLastElement;
 
 	// Ok, we start somewhere between the start/end element... which search direction?
@@ -87,7 +87,7 @@ PoolIterator<ValueType>::PoolIterator(const Pool<ValueType> &lstPool, uint32 nIn
 template <class ValueType>
 PoolIterator<ValueType>::PoolIterator(const Pool<ValueType> &lstPool) :
 	m_plstPool(&lstPool),
-	m_pNextElement(NULL),
+	m_pNextElement(nullptr),
 	m_pPreviousElement(lstPool.m_pLastElement)
 {
 }
@@ -126,7 +126,7 @@ IteratorImpl<ValueType> *PoolIterator<ValueType>::Clone() const
 template <class ValueType>
 bool PoolIterator<ValueType>::HasNext() const
 {
-	return (m_pNextElement != NULL);
+	return (m_pNextElement != nullptr);
 }
 
 template <class ValueType>
@@ -142,7 +142,7 @@ ValueType &PoolIterator<ValueType>::Next()
 template <class ValueType>
 bool PoolIterator<ValueType>::HasPrevious() const
 {
-	return (m_pPreviousElement != NULL);
+	return (m_pPreviousElement != nullptr);
 }
 
 template <class ValueType>

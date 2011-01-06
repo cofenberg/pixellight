@@ -152,7 +152,7 @@ class Mutex {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		MutexImpl *m_pMutexImpl;	/**< Pointer to the system specific implementation (assumed to be never NULL!) */
+		MutexImpl *m_pMutexImpl;	/**< Pointer to the system specific implementation (assumed to be never a null pointer!) */
 
 
 };

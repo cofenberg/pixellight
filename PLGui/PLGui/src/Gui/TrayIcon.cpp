@@ -45,7 +45,7 @@ namespace PLGui {
 */
 TrayIcon::TrayIcon(Gui &cGui) :
 	m_pGui(&cGui),
-	m_pImpl(NULL),
+	m_pImpl(nullptr),
 	m_bVisible(false),
 	m_cIcon(*m_pGui)
 {
@@ -107,7 +107,7 @@ void TrayIcon::SetVisible(bool bVisible)
 	m_bVisible = bVisible;
 
 	// Create implementation?
-	if (m_pImpl == NULL) {
+	if (m_pImpl == nullptr) {
 		// We must have a valid GUI
 		if (m_pGui) {
 			// Create tray icon implementation

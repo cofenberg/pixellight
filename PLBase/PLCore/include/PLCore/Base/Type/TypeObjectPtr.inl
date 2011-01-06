@@ -67,13 +67,13 @@ class Type<Object*> {
 		// Convert pointer to bool
 		static bool ConvertToBool(Object *pValue)
 		{
-			return (bool)(pValue != NULL);
+			return (bool)(pValue != nullptr);
 		}
 
 		// Convert bool to pointer
 		static Object *ConvertFromBool(bool bValue)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		// Convert pointer to int
@@ -207,7 +207,7 @@ class Type<Object*> {
 		static Object *ConvertFromFloat(float fValue)
 		{
 			// No conversion from pointer types in non-integral types!
-			return NULL;
+			return nullptr;
 		}
 
 		// Convert pointer to double
@@ -221,7 +221,7 @@ class Type<Object*> {
 		static Object *ConvertFromDouble(double dValue)
 		{
 			// No conversion from pointer types in non-integral types!
-			return NULL;
+			return nullptr;
 		}
 
 		// Convert pointer to string

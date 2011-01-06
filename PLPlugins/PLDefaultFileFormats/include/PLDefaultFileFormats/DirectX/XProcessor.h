@@ -393,7 +393,7 @@ class XNode {
 		*    Returns the next node
 		*
 		*  @return
-		*    The next node, NULL if there's no next node
+		*    The next node, a null pointer if there's no next node
 		*/
 		XNode *GetNextNode() const;
 
@@ -423,7 +423,7 @@ class XNode {
 	//[-------------------------------------------------------]
 	protected:
 		EType  m_nType;			/**< Node type */
-		XNode *m_pcNextNode;	/**< Next node, can be NULL */
+		XNode *m_pcNextNode;	/**< Next node, can be a null pointer */
 
 
 };
@@ -467,7 +467,7 @@ class XRoot : public XNode {
 		*    Returns the first child node
 		*
 		*  @return
-		*    The first child node, NULL if there's no first child node
+		*    The first child node, a null pointer if there's no first child node
 		*/
 		XNode *GetFirstChildNode() const;
 
@@ -496,7 +496,7 @@ class XRoot : public XNode {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		XNode      *m_pcFirstNode;	/**< First node, can be NULL */
+		XNode      *m_pcFirstNode;	/**< First node, can be a null pointer */
 		Statistics  m_sStatistics;	/**< Statistics */
 
 
@@ -522,7 +522,7 @@ class XReference : public XNode {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		char *pszName;	/**< Name of the referenced data, can be NULL */
+		char *pszName;	/**< Name of the referenced data, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -608,12 +608,12 @@ class XMaterial : public XNode {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		char             *pszName;				/**< Material name, can be NULL */
+		char             *pszName;				/**< Material name, can be a null pointer */
 		XColorRGBA        sFaceColor;			/**< Face color */
 		float             fPower;				/**< Power (specular exponent) */
 		XColorRGB         sSpecularColor;		/**< Specular color */
 		XColorRGB         sEmissiveColor;		/**< Emissive color */
-		XTextureFilename *psTextureFilename;	/**< Texture filename, can be NULL */
+		XTextureFilename *psTextureFilename;	/**< Texture filename, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -665,17 +665,17 @@ class XMesh : public XNode {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		char               *pszName;			/**< Mesh name, can be NULL */
+		char               *pszName;			/**< Mesh name, can be a null pointer */
 		PLGeneral::uint32   nVertices;			/**< Number of vertices */
 		XVector            *psVertices;			/**< Vertices */
 		PLGeneral::uint32   nFaces;				/**< Number of faces */
 		XMeshFace          *psFaces;			/**< Faces */
 		// Optional data elements
-		XMeshFaceWraps     *psFaceWraps;		/**< Can be NULL */
-		XMeshTextureCoords *psTextureCoords;	/**< Can be NULL */
-		XMeshNormals       *psNormals;			/**< Can be NULL */
-		XMeshVertexColors  *psVertexColors;		/**< Can be NULL */
-		XMeshMaterialList  *psMaterialList;		/**< Can be NULL */
+		XMeshFaceWraps     *psFaceWraps;		/**< Can be a null pointer */
+		XMeshTextureCoords *psTextureCoords;	/**< Can be a null pointer */
+		XMeshNormals       *psNormals;			/**< Can be a null pointer */
+		XMeshVertexColors  *psVertexColors;		/**< Can be a null pointer */
+		XMeshMaterialList  *psMaterialList;		/**< Can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -722,8 +722,8 @@ class XFrame : public XNode {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		char				  *pszName;				/**< Frame name, can be NULL */
-		XFrameTransformMatrix *psTransformMatrix;	/**< Can be NULL */
+		char				  *pszName;				/**< Frame name, can be a null pointer */
+		XFrameTransformMatrix *psTransformMatrix;	/**< Can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -735,7 +735,7 @@ class XFrame : public XNode {
 		*    Returns the first child node
 		*
 		*  @return
-		*    The first child node, NULL if there's no first child node
+		*    The first child node, a null pointer if there's no first child node
 		*/
 		XNode *GetFirstChildNode() const;
 
@@ -761,7 +761,7 @@ class XFrame : public XNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		XNode *m_pcFirstNode;	/**< First node, can be NULL */
+		XNode *m_pcFirstNode;	/**< First node, can be a null pointer */
 
 
 };

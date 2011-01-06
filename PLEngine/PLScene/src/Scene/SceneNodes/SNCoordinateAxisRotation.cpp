@@ -118,7 +118,7 @@ void SNCoordinateAxisRotation::DrawPost(Renderer &cRenderer, const VisNode *pVis
 		cDrawHelpers.DrawLine(ZColor.Get(), Vector3::Zero, Vector3(0.0f,     0.0f,     vScale.z), mWorldViewProjection, Width);
 
 		// Draw texts
-		Font *pFont = NULL;
+		Font *pFont = nullptr;
 		if (!(GetFlags() & NoXText) || !(GetFlags() & NoYText) || !(GetFlags() & NoZText)) {
 			pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
 			if (GetFlags() & DepthTest) {

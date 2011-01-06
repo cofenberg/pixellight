@@ -91,7 +91,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed header, NULL on error
+		*    The processed header, a null pointer on error
 		*/
 		XHeader *ProcessHeader(XTokenName &cTokenName);
 
@@ -103,7 +103,7 @@ class XRootBinary : public XRoot {
 		*    Current processed token (MUST be valid!)
 		*
 		*  @return
-		*    The processed material, NULL on error
+		*    The processed material, a null pointer on error
 		*/
 		XMaterial *ProcessMaterial(XToken **ppToken);
 
@@ -115,7 +115,7 @@ class XRootBinary : public XRoot {
 		*    Current processed token (MUST be valid!)
 		*
 		*  @return
-		*    The processed frame, NULL on error
+		*    The processed frame, a null pointer on error
 		*/
 		XFrame *ProcessFrame(XToken **pToken);
 
@@ -127,7 +127,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed frame transform matrix, NULL on error
+		*    The processed frame transform matrix, a null pointer on error
 		*/
 		XFrameTransformMatrix *ProcessFrameTransformMatrix(XTokenName &cTokenName);
 
@@ -139,7 +139,7 @@ class XRootBinary : public XRoot {
 		*    Current processed token (MUST be valid!)
 		*
 		*  @return
-		*    The processed mesh, NULL on error
+		*    The processed mesh, a null pointer on error
 		*/
 		XMesh *ProcessMesh(XToken **ppToken);
 
@@ -151,7 +151,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed mesh face wraps, NULL on error
+		*    The processed mesh face wraps, a null pointer on error
 		*/
 		XMeshFaceWraps *ProcessMeshFaceWraps(XTokenName &cTokenName);
 
@@ -163,7 +163,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed mesh texture coordinates, NULL on error
+		*    The processed mesh texture coordinates, a null pointer on error
 		*/
 		XMeshTextureCoords *ProcessMeshTextureCoords(XTokenName &cTokenName);
 
@@ -175,7 +175,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed mesh normals, NULL on error
+		*    The processed mesh normals, a null pointer on error
 		*/
 		XMeshNormals *ProcessMeshNormals(XTokenName &cTokenName);
 
@@ -187,7 +187,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed mesh vertex colors, NULL on error
+		*    The processed mesh vertex colors, a null pointer on error
 		*/
 		XMeshVertexColors *ProcessMeshVertexColors(XTokenName &cTokenName);
 
@@ -199,7 +199,7 @@ class XRootBinary : public XRoot {
 		*    Current processed name token
 		*
 		*  @return
-		*    The processed mesh material list, NULL on error
+		*    The processed mesh material list, a null pointer on error
 		*/
 		XMeshMaterialList *ProcessMeshMaterialList(XTokenName &cTokenName);
 

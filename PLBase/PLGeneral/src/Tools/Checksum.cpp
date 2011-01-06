@@ -121,7 +121,7 @@ String Checksum::GetFile(const String &sFilename)
 		File cFile(sFilename);
 		if (cFile.Exists() && cFile.IsFile() && cFile.Open(File::FileRead)) {
 			// Get the checksum
-			String sChecksum = Get(cFile);
+			const String sChecksum = Get(cFile);
 
 			// Close the file
 			cFile.Close();

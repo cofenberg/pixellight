@@ -174,7 +174,7 @@ class Buffer : public Resource {
 		*    lock enumeration type.
 		*
 		*  @return
-		*    The data of the locked buffer, NULL on error
+		*    The data of the locked buffer, a null pointer on error
 		*    (Maybe the buffer isn't allocated?)
 		*
 		*  @note
@@ -192,7 +192,7 @@ class Buffer : public Resource {
 		*    Returns the buffer data
 		*
 		*  @return
-		*    The data of the locked buffer, NULL on error
+		*    The data of the locked buffer, a null pointer on error
 		*    (Maybe the buffer isn't locked?)
 		*
 		*  @note

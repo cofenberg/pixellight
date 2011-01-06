@@ -59,9 +59,9 @@ class AniInfo : public PLGeneral::Element<AniInfo>, public AnimationInfo {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
-		PLRENDERER_API AniInfo(const PLGeneral::String &sName = "", PLGeneral::ElementManager<AniInfo> *pManager = NULL);
+		PLRENDERER_API AniInfo(const PLGeneral::String &sName = "", PLGeneral::ElementManager<AniInfo> *pManager = nullptr);
 
 		/**
 		*  @brief

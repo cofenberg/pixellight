@@ -184,7 +184,7 @@ Mouse *InputManager::GetMouse() const
 *    Constructor
 */
 InputManager::InputManager() :
-	m_pMutex(NULL)
+	m_pMutex(nullptr)
 {
 	// Create thread
 	m_pMutex = new Mutex();
@@ -195,7 +195,7 @@ InputManager::InputManager() :
 *    Copy constructor
 */
 InputManager::InputManager(const InputManager &cSource) :
-	m_pMutex(NULL)
+	m_pMutex(nullptr)
 {
 	// No implementation because the copy operator is never used
 }

@@ -77,8 +77,8 @@ void XmlTest::Test()
 	cDocument.Save(File::StandardOutput);
 
 	// An example of changing existing attributes, and removing an element from the document
-	XmlElement *pTodoElement = NULL;
-	XmlElement *pItemElement = NULL;
+	XmlElement *pTodoElement = nullptr;
+	XmlElement *pItemElement = nullptr;
 
 	// Get the "ToDo" element
 	XmlNode *pNode = (XmlNode*)cDocument.GetFirstChild("ToDo");
@@ -103,7 +103,7 @@ void XmlTest::Test()
 		pItemElement = (XmlElement*)pItemElement->GetNextSiblingElement();
 		pTodoElement->RemoveChild(*pItemElement);
 
-		pItemElement = NULL;
+		pItemElement = nullptr;
 	}
 
 	// What follows is an example of created elements and text

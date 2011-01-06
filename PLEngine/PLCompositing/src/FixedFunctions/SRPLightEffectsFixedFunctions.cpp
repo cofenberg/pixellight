@@ -62,8 +62,8 @@ pl_implement_class(SRPLightEffectsFixedFunctions)
 *    Default constructor
 */
 SRPLightEffectsFixedFunctions::SRPLightEffectsFixedFunctions() :
-	m_pBillboardVB(NULL),
-	m_pBillboardColorVB(NULL)
+	m_pBillboardVB(nullptr),
+	m_pBillboardColorVB(nullptr)
 {
 }
 
@@ -464,7 +464,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 				// Optimized for all 'standard' lights
 					bool bEffectLights = false; // Are there any 'effect lights'?
 					bool bFlareBlend   = false; // Are there any lights with flares/blend?
-					Material *pMaterial = NULL;
+					Material *pMaterial = nullptr;
 					const float fWidth  = cRenderer.GetViewport().GetWidth();
 					const float fHeight = cRenderer.GetViewport().GetHeight();
 					const uint32 nTotalFragments = uint32(fWidth*fHeight);
@@ -537,7 +537,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 						SamplerStates cSamplerStates;
 
 						// Draw flares
-						pMaterial = NULL;
+						pMaterial = nullptr;
 						while (cIterator.HasPrevious()) {
 							// Get
 							LightEffect *pLightEffect = cIterator.Previous();
@@ -580,7 +580,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 						}
 
 						// Draw blend
-						pMaterial = NULL;
+						pMaterial = nullptr;
 						while (cIterator.HasNext()) {
 							// Get
 							const LightEffect *pLightEffect = cIterator.Next();

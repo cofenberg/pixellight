@@ -76,7 +76,7 @@ class SensorAABoundingBox : public PLPhysics::SensorAABoundingBox {
 		*  @param[in] pPhysicsBody
 		*    Newton body (always valid!)
 		*  @param[in] pUserData
-		*    User data, can be NULL
+		*    User data, can be a null pointer
 		*/
 		PLPHYSICSNEWTON_API static void AABoundingBoxIteratorCallback(const Newton::NewtonBody *pPhysicsBody, void *pUserData);
 

@@ -120,7 +120,7 @@ class SpaceMouse : public Device {
 		*  @param[in] sName
 		*    Device name
 		*  @param[in] pImpl
-		*    System specific device implementation, can, but shouldn't be NULL
+		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
 		PLINPUT_API SpaceMouse(const PLGeneral::String &sName, DeviceImpl *pImpl);
 

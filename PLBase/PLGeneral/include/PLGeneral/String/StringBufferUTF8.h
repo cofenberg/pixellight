@@ -96,7 +96,7 @@ class StringBufferUTF8 : public StringBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		char   *m_pszString;	/**< The string itself (NEVER NULL!) */
+		char   *m_pszString;	/**< The string itself (NEVER a null pointer!) */
 		uint32  m_nNumOfBytes;	/**< Number of bytes of the string */
 
 

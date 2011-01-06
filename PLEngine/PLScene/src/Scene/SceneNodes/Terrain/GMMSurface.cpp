@@ -166,7 +166,7 @@ void GMMSurface::Destroy()
 	if (m_pVertex) {
 		if (m_pVertexBuffer) {
 			delete m_pVertexBuffer;
-			m_pVertexBuffer = NULL;
+			m_pVertexBuffer = nullptr;
 		}
 		delete [] m_pVertex;
 	}
@@ -230,7 +230,7 @@ uint32 GMMSurface::GetVertices() const
 GMMSurface::Vertex *GMMSurface::GetVertex(uint32 nID) const
 {
 	// Check ID
-	return (nID < m_nVertices) ? &m_pVertex[nID] : NULL;
+	return (nID < m_nVertices) ? &m_pVertex[nID] : nullptr;
 }
 
 /**
@@ -298,7 +298,7 @@ uint32 GMMSurface::GetPatches() const
 GMMSurfacePatch *GMMSurface::GetPatch(uint32 nID) const
 {
 	// Check if there are patches if so, check the given ID
-	return (m_ppPatches && nID < m_nPatches) ? m_ppPatches[nID] : NULL;
+	return (m_ppPatches && nID < m_nPatches) ? m_ppPatches[nID] : nullptr;
 }
 
 /**
@@ -334,7 +334,7 @@ void GMMSurface::SetNeighbours(GMMSurface *pLeft, GMMSurface *pTop, GMMSurface *
 			else if (m_pNeighbour[Left])
 				pPatch->m_pNeighbour[Left] = m_pNeighbour[Left]->m_ppPatches[nY*m_nXYPatches+m_nXYPatches-1];
 			else
-				pPatch->m_pNeighbour[Left] = NULL;
+				pPatch->m_pNeighbour[Left] = nullptr;
 
 			// Top
 			if (nY)
@@ -342,7 +342,7 @@ void GMMSurface::SetNeighbours(GMMSurface *pLeft, GMMSurface *pTop, GMMSurface *
 			else if (m_pNeighbour[Top])
 				pPatch->m_pNeighbour[Top] = m_pNeighbour[Top]->m_ppPatches[(m_nXYPatches-1)*m_nXYPatches+nX];
 			else
-				pPatch->m_pNeighbour[Top] = NULL;
+				pPatch->m_pNeighbour[Top] = nullptr;
 
 			// Right
 			if (nX < m_nXYPatches-1)
@@ -350,7 +350,7 @@ void GMMSurface::SetNeighbours(GMMSurface *pLeft, GMMSurface *pTop, GMMSurface *
 			else if (m_pNeighbour[Right])
 				pPatch->m_pNeighbour[Right] = m_pNeighbour[Right]->m_ppPatches[nY*m_nXYPatches];
 			else
-				pPatch->m_pNeighbour[Right] = NULL;
+				pPatch->m_pNeighbour[Right] = nullptr;
 
 			// Bottom
 			if (nY < m_nXYPatches-1)
@@ -358,7 +358,7 @@ void GMMSurface::SetNeighbours(GMMSurface *pLeft, GMMSurface *pTop, GMMSurface *
 			else if (m_pNeighbour[Bottom])
 				pPatch->m_pNeighbour[Bottom] = m_pNeighbour[Bottom]->m_ppPatches[nX];
 			else
-				pPatch->m_pNeighbour[Bottom] = NULL;
+				pPatch->m_pNeighbour[Bottom] = nullptr;
 		}
 	}
 }
@@ -486,27 +486,27 @@ void GMMSurface::DrawPatch(GMMSurfacePatch &cPatch) const
 void GMMSurface::Init()
 {
 	// General
-	m_pNeighbour[0] = NULL;
-	m_pNeighbour[1] = NULL;
-	m_pNeighbour[2] = NULL;
-	m_pNeighbour[3] = NULL;
+	m_pNeighbour[0] = nullptr;
+	m_pNeighbour[1] = nullptr;
+	m_pNeighbour[2] = nullptr;
+	m_pNeighbour[3] = nullptr;
 	m_nVertices     = 0;
-	m_pVertexBuffer = NULL;
-	m_pVertex       = NULL;
+	m_pVertexBuffer = nullptr;
+	m_pVertex       = nullptr;
 
 	// Height map
 	m_nHeightMapSize = 0;
-	m_pfHeightMap    = NULL;
+	m_pfHeightMap    = nullptr;
 
 	// Patches
 	m_nPatchSize = 0;
 	m_nXYPatches = 0;
 	m_nPatches   = 0;
-	m_ppPatches  = NULL;
+	m_ppPatches  = nullptr;
 
 	// Levels
 	m_nGeoMipMaps = 0;
-	m_ppLevels    = NULL;
+	m_ppLevels    = nullptr;
 }
 
 

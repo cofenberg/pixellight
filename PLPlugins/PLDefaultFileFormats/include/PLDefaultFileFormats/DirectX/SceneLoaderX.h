@@ -138,7 +138,7 @@ class SceneLoaderX : public PLScene::SceneLoader {
 		*  @param[out] cContainer
 		*    Scene container to load into
 		*  @param[in]  pXNode
-		*    Current X node, can be NULL
+		*    Current X node, can be a null pointer
 		*  @param[in]  sResourceName
 		*    Desired resource name
 		*/

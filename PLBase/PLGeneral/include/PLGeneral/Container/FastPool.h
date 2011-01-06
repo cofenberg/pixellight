@@ -95,8 +95,8 @@ class FastPoolElement {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ValueType *m_pNextElement;		/**< Pointer to the next element in the pool, can be NULL */
-		ValueType *m_pPreviousElement;	/**< Pointer to the previous element in the pool, can be NULL */
+		ValueType *m_pNextElement;		/**< Pointer to the next element in the pool, can be a null pointer */
+		ValueType *m_pPreviousElement;	/**< Pointer to the previous element in the pool, can be a null pointer */
 
 
 };
@@ -257,11 +257,11 @@ class FastPool : public Container<ValueType> {
 	private:
 		// Standard list data
 		uint32     m_nNumOfElements;		/**< Current number of elements */
-		ValueType *m_pFirstElement;			/**< Pointer to first pool element, can be NULL */
-		ValueType *m_pLastElement;			/**< Pointer to last pool element, can be NULL */
+		ValueType *m_pFirstElement;			/**< Pointer to first pool element, can be a null pointer */
+		ValueType *m_pLastElement;			/**< Pointer to last pool element, can be a null pointer */
 		// Additional pool data
 		uint32     m_nNumOfFreeElements;	/**< Current number of free elements */
-		ValueType *m_pFirstFreeElement;		/**< Pointer to first free pool element, can be NULL */
+		ValueType *m_pFirstFreeElement;		/**< Pointer to first free pool element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

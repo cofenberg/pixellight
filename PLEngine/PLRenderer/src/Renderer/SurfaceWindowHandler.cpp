@@ -44,7 +44,7 @@ namespace PLRenderer {
 *    Constructor
 */
 SurfaceWindowHandler::SurfaceWindowHandler() :
-	m_pRenderer(NULL),
+	m_pRenderer(nullptr),
 	m_pSurfaceHandler(new SurfaceHandler())
 {
 }
@@ -101,8 +101,8 @@ void SurfaceWindowHandler::DeInit()
 {
 	Surface *pSurface = m_pSurfaceHandler->GetSurface();
 	if (pSurface) {
-		((SurfaceWindow*)pSurface)->m_pHandler = NULL;
-		m_pSurfaceHandler->SetSurface(NULL);
+		((SurfaceWindow*)pSurface)->m_pHandler = nullptr;
+		m_pSurfaceHandler->SetSurface(nullptr);
 		delete pSurface;
 	}
 }

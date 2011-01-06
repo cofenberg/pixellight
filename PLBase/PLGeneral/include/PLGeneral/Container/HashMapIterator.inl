@@ -43,8 +43,8 @@ namespace PLGeneral {
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HashMapIterator(const HashMap<KeyType, ValueType, Hasher, Comparer, Grower> &mapOwner, uint32 nIndex) :
 	m_pmapOwner(&mapOwner),
-	m_pNextSlot(NULL),
-	m_pPreviousSlot(NULL)
+	m_pNextSlot(nullptr),
+	m_pPreviousSlot(nullptr)
 {
 	// Is there at least one element within the hash map? (we do not need to check whether the slots are already created :)
 	if (m_pmapOwner->GetNumOfElements()) {
@@ -62,7 +62,7 @@ HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HashMapIterator(c
 
 			// Find the correct start slot
 			m_nPreviousSlots = m_nNextSlots;
-			m_pPreviousSlot  = NULL;
+			m_pPreviousSlot  = nullptr;
 			uint32 nCurrentIndex = 0;
 			while (HasNext() && nCurrentIndex < nIndex) {
 				m_nPreviousSlots = m_nNextSlots;
@@ -86,7 +86,7 @@ HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HashMapIterator(c
 
 			// Find the correct start slot
 			m_nNextSlots = m_nPreviousSlots;
-			m_pNextSlot  = NULL;
+			m_pNextSlot  = nullptr;
 			uint32 nCurrentIndex = m_pmapOwner->GetNumOfElements()-1;
 			while (HasPrevious() && nCurrentIndex > nIndex) {
 				m_nNextSlots = m_nPreviousSlots;
@@ -105,8 +105,8 @@ HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HashMapIterator(c
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HashMapIterator(const HashMap<KeyType, ValueType, Hasher, Comparer, Grower> &mapOwner) :
 	m_pmapOwner(&mapOwner),
-	m_pNextSlot(NULL),
-	m_pPreviousSlot(NULL)
+	m_pNextSlot(nullptr),
+	m_pPreviousSlot(nullptr)
 {
 	// Is there at least one element within the hash map? (we do not need to check whether the slots are already created :)
 	if (m_pmapOwner->GetNumOfElements()) {
@@ -125,7 +125,7 @@ HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HashMapIterator(c
 
 		// Find the correct start slot
 		m_nNextSlots = m_nPreviousSlots;
-		m_pNextSlot  = NULL;
+		m_pNextSlot  = nullptr;
 	}
 }
 
@@ -165,7 +165,7 @@ IteratorImpl<ValueType> *HashMapIterator<KeyType, ValueType, Hasher, Comparer, G
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 bool HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HasNext() const
 {
-	return (m_pNextSlot != NULL);
+	return (m_pNextSlot != nullptr);
 }
 
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
@@ -201,7 +201,7 @@ ValueType &HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::Next()
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 bool HashMapIterator<KeyType, ValueType, Hasher, Comparer, Grower>::HasPrevious() const
 {
-	return (m_pPreviousSlot != NULL);
+	return (m_pPreviousSlot != nullptr);
 }
 
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>

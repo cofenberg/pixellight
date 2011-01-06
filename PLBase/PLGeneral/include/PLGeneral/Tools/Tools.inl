@@ -75,7 +75,8 @@ inline String Tools::GetBase64(const String &sString)
 			else if (nBlock >= 52 && nBlock <= 61)	cChar = (char)('0' + (nBlock - 52));
 			else if (nBlock == 62)					cChar = '+';
 			else if (nBlock == 63)					cChar = '/';
-			if ((j >= 2 && i+1 >= nLength) || (j == 3 && i+2 >= nLength)) cChar = '=';
+			if ((j >= 2 && i+1 >= nLength) || (j == 3 && i+2 >= nLength))
+				cChar = '=';
 			sBase64 += cChar;
 		}
 	}

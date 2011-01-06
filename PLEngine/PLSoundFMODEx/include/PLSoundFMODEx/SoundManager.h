@@ -190,7 +190,7 @@ class SoundManager : public PLSound::SoundManager {
 		*    Returns the FMOD Ex system instance
 		*
 		*  @return
-		*    The FMOD Ex system instance, NULL on error
+		*    The FMOD Ex system instance, a null pointer on error
 		*/
 		FMOD::System *GetSystem() const;
 
@@ -199,7 +199,7 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FMOD::System					   *m_pSystem;								/**< FMOD Ex system instance, can be NULL */
+		FMOD::System					   *m_pSystem;								/**< FMOD Ex system instance, can be a null pointer */
 		float								m_fVolume;								/**< Master volume */
 		float								m_fPitch;								/**< Master pitch */
 		float								m_fDopplerFactor;						/**< Doppler factor */
@@ -224,7 +224,7 @@ class SoundManager : public PLSound::SoundManager {
 		//[ Create sound buffer/source                            ]
 		//[-------------------------------------------------------]
 		virtual PLSound::Buffer *CreateSoundBuffer(const PLGeneral::String &sFilename = "", bool bStream = false);
-		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = NULL);
+		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Listener                                              ]

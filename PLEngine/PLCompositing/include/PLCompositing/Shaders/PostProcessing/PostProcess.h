@@ -107,7 +107,7 @@ class PostProcess : public PLGeneral::Element<PostProcess> {
 		*    Returns the post process material
 		*
 		*  @return
-		*    Post process material, can be NULL
+		*    Post process material, can be a null pointer
 		*/
 		PLCOM_API PLRenderer::Material *GetMaterial() const;
 
@@ -116,7 +116,7 @@ class PostProcess : public PLGeneral::Element<PostProcess> {
 		*    Sets the post process material
 		*
 		*  @param[in] pMaterial
-		*    Post process material to set, can be NULL
+		*    Post process material to set, can be a null pointer
 		*/
 		PLCOM_API void SetMaterial(PLRenderer::Material *pMaterial);
 

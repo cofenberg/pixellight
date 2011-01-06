@@ -75,9 +75,9 @@ class XmlTextView : public PLGui::Widget {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*/
-		PLXMLTEXT_API XmlTextView(Widget *pParent = NULL);
+		PLXMLTEXT_API XmlTextView(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

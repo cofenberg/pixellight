@@ -116,7 +116,7 @@ class UTF8Tools {
 		*    Returns a character as wide character
 		*
 		*  @param[in] pnCharacter
-		*    Pointer to character to return, if NULL '\0' will be returned
+		*    Pointer to character to return, if a null pointer '\0' will be returned
 		*
 		*  @return
 		*    The character as wide character
@@ -167,7 +167,7 @@ class UTF8Tools {
 		*    Character index => byte offset were the character starts within the given UTF8 string
 		*
 		*  @param[in] pszString
-		*    Pointer to string to use, if NULL '0' will be returned
+		*    Pointer to string to use, if a null pointer '0' will be returned
 		*  @param[in] nCharacterIndex
 		*    Character index, MUST be valid!
 		*
@@ -181,7 +181,7 @@ class UTF8Tools {
 		*    Byte offset => character index were the character starts within the given UTF8 string
 		*
 		*  @param[in] pszString
-		*    Pointer to string to use, if NULL '0' will be returned
+		*    Pointer to string to use, if a null pointer '0' will be returned
 		*  @param[in] nOffset
 		*    Byte offset, MUST be valid!
 		*
@@ -195,7 +195,7 @@ class UTF8Tools {
 		*    Returns the number of bytes a given string requires
 		*
 		*  @param[in] pszString
-		*    Pointer to string to check, if NULL '0' will be returned
+		*    Pointer to string to check, if a null pointer '0' will be returned
 		*  @param[in] nCount
 		*    Number of string character to take into account, if 0, take all characters into account
 		*
@@ -209,7 +209,7 @@ class UTF8Tools {
 		*    Returns the number of characters within a given string
 		*
 		*  @param[in] pszString
-		*    Pointer to string to check, if NULL '0' will be returned
+		*    Pointer to string to check, if a null pointer '0' will be returned
 		*
 		*  @return
 		*    The number of characters within a given string
@@ -221,7 +221,7 @@ class UTF8Tools {
 		*    Returns the number of characters within a given string
 		*
 		*  @param[in] pszString
-		*    Pointer to string to check, if NULL '0' will be returned
+		*    Pointer to string to check, if a null pointer '0' will be returned
 		*  @param[in] nNumOfBytes
 		*    String size in bytes, MUST be valid!
 		*
@@ -235,7 +235,7 @@ class UTF8Tools {
 		*    Returns the number of characters and bytes within a given string
 		*
 		*  @param[in]  pszString
-		*    Pointer to string to check, if NULL '0' will be returned
+		*    Pointer to string to check, if a null pointer '0' will be returned
 		*  @param[out] nNumOfBytes
 		*    Receives the string size in bytes
 		*
@@ -246,35 +246,35 @@ class UTF8Tools {
 
 		/**
 		*  @brief
-		*    Returns a pointer to the first occurrence of the given wide character in the given string, or NULL if not found
+		*    Returns a pointer to the first occurrence of the given wide character in the given string, or a null pointer if not found
 		*
 		*  @param[in]  pszString
-		*    Pointer to string to use, if NULL 'NULL' will be returned
+		*    Pointer to string to use, if a null pointer 'a null pointer' will be returned
 		*  @param[in]  nWideCharacter
 		*    Wide character to find
 		*  @param[out] pnCharacterIndex
-		*    Receives the character index of found character returned, if not NULL
+		*    Receives the character index of found character returned, if not a null pointer
 		*
 		*  @return
-		*    Pointer to the first occurrence of the given wide character in the given string, or NULL if not found
+		*    Pointer to the first occurrence of the given wide character in the given string, or a null pointer if not found
 		*/
 		PLGENERAL_API static const char *FindCharacter(const char *pszString, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
 
 		/**
 		*  @brief
-		*    Same as the above, but searches a buffer of a given size instead of a NULL-terminated string
+		*    Same as the above, but searches a buffer of a given size instead of a zero-terminated string
 		*
 		*  @param[in]  pszString
-		*    Pointer to string to use, if NULL 'NULL' will be returned
+		*    Pointer to string to use, if a null pointer 'a null pointer' will be returned
 		*  @param[in]  nNumOfBytes
 		*    String size in bytes, MUST be valid!
 		*  @param[in]  nWideCharacter
 		*    Wide character to find
 		*  @param[out] pnCharacterIndex
-		*    Receives the character index of found character returned, if not NULL
+		*    Receives the character index of found character returned, if not a null pointer
 		*
 		*  @return
-		*    Pointer to the first occurrence of the given character in the given string, or NULL if not found
+		*    Pointer to the first occurrence of the given character in the given string, or a null pointer if not found
 		*/
 		PLGENERAL_API static const char *FindCharacter(const char *pszString, uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex);
 
@@ -283,7 +283,7 @@ class UTF8Tools {
 		*    Single wide character character to UTF8
 		*
 		*  @param[out] pszDestination
-		*    Receives the converted character, MUST be large enough to keep the result! If NULL '0' will be returned.
+		*    Receives the converted character, MUST be large enough to keep the result! If a null pointer '0' will be returned.
 		*  @param[in]  nWideCharacter
 		*    Wide character to convert
 		*
@@ -300,21 +300,21 @@ class UTF8Tools {
 		*    Wide character string to UTF8
 		*
 		*  @param[out] pszDestination
-		*    Receives the converted string, MUST be large enough to hold the result or NULL!
+		*    Receives the converted string, MUST be large enough to hold the result or a null pointer!
 		*  @param[in]  nNumOfBytes
-		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
-		*    (+1 if a terminating NULL should be added)
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not a null pointer!
+		*    (+1 if a terminating zero should be added)
 		*  @param[in]  pszSource
-		*    Pointer to wide character string to convert, if NULL '0' will be returned and 'destination' not manipulated
+		*    Pointer to wide character string to convert, if a null pointer '0' will be returned and 'destination' not manipulated
 		*  @param[in]  nSourceLength
-		*    Number of source characters, or '0' if NULL-terminated
+		*    Number of source characters, or '0' if zero-terminated
 		*
 		*  @return
-		*    The number of used destination bytes (excluding the terminating NULL)
+		*    The number of used destination bytes (excluding the terminating zero)
 		*
 		*  @note
-		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
-		*      (excluding the terminating NULL) is returned
+		*    - If 'pszDestination' is a null pointer, the the resulting length in bytes of the converted string
+		*      (excluding the terminating zero) is returned
 		*/
 		PLGENERAL_API static uint32 FromWideCharacterString(char *pszDestination, uint32 nNumOfBytes, const wchar_t *pszSource, uint32 nSourceLength);
 
@@ -323,13 +323,13 @@ class UTF8Tools {
 		*    UTF8 to wide character string
 		*
 		*  @param[out] pszDestination
-		*    Receives the converted string, MUST be large enough to hold the result! If NULL '0' will be returned.
+		*    Receives the converted string, MUST be large enough to hold the result! If a null pointer '0' will be returned.
 		*  @param[in]  nLength
-		*    Length of the destination buffer, MUST be valid! (including the terminating NULL)
+		*    Length of the destination buffer, MUST be valid! (including the terminating zero)
 		*  @param[in]  pszSource
-		*    Pointer to wide character string to convert, if NULL '0' will be returned and 'destination' not manipulated
+		*    Pointer to wide character string to convert, if a null pointer '0' will be returned and 'destination' not manipulated
 		*  @param[in]  nSourceNumOfBytes
-		*    Number of source bytes to process, or '0' if NULL-terminated
+		*    Number of source bytes to process, or '0' if zero-terminated
 		*
 		*  @return
 		*    Number of converted characters
@@ -344,18 +344,18 @@ class UTF8Tools {
 		*    Given a wide character, convert it to an ASCII escape sequence stored in the given destination buffer
 		*
 		*  @param[out] pszDestination
-		*    Will received the converted result, MUST be large enough to hold the result or NULL!
+		*    Will received the converted result, MUST be large enough to hold the result or a null pointer!
 		*  @param[in]  nNumOfBytes
-		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not a null pointer!
 		*  @param[in]  nWideCharacter
 		*    Wide character to convert
 		*
 		*  @return
-		*    Number of characters within the destination buffer (excluding the terminating NULL)
+		*    Number of characters within the destination buffer (excluding the terminating zero)
 		*
 		*  @note
-		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
-		*      (excluding the terminating NULL) is returned
+		*    - If 'pszDestination' is a null pointer, the the resulting length in bytes of the converted string
+		*      (excluding the terminating zero) is returned
 		*/
 		PLGENERAL_API static uint32 EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, wchar_t nWideCharacter);
 
@@ -364,20 +364,20 @@ class UTF8Tools {
 		*    Converts an UTF8 string to an ASCII string with escape sequences
 		*
 		*  @param[out] pszDestination
-		*    Will received the converted result, MUST be large enough to hold the result or NULL!
+		*    Will received the converted result, MUST be large enough to hold the result or a null pointer!
 		*  @param[in]  nNumOfBytes
-		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not a null pointer!
 		*  @param[in]  pszSource
-		*    Pointer to source to read from, if NULL '0' will be returned and 'destination' not manipulated
+		*    Pointer to source to read from, if a null pointer '0' will be returned and 'destination' not manipulated
 		*  @param[in]  bEscapeQuotes
 		*    If 'true', quote characters will be preceded by backslashes as well
 		*
 		*  @return
-		*    Number of characters within the destination buffer (excluding the terminating NULL)
+		*    Number of characters within the destination buffer (excluding the terminating zero)
 		*
 		*  @note
-		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
-		*      (excluding the terminating NULL) is returned
+		*    - If 'pszDestination' is a null pointer, the the resulting length in bytes of the converted string
+		*      (excluding the terminating zero) is returned
 		*/
 		PLGENERAL_API static uint32 Escape(char *pszDestination, uint32 nNumOfBytes, const char *pszSource, bool bEscapeQuotes);
 
@@ -389,10 +389,10 @@ class UTF8Tools {
 		*  @param[out] nDestination
 		*    Will receive the result
 		*  @param[in]  pszSource
-		*    Pointer to source to read from, if NULL '0' will be returned and 'destination' not manipulated
+		*    Pointer to source to read from, if a null pointer '0' will be returned and 'destination' not manipulated
 		*
 		*  @return
-		*    Number of read characters (excluding the terminating NULL)
+		*    Number of read characters (excluding the terminating zero)
 		*/
 		PLGENERAL_API static uint32 ReadEscapeSequence(wchar_t &nDestination, const char *pszSource);
 
@@ -401,19 +401,19 @@ class UTF8Tools {
 		*    Converts a string with literal \uxxxx or \Uxxxxxxxx characters to UTF8
 		*
 		*  @param[out] pszDestination
-		*    Will received the converted result, MUST be large enough to hold the result or NULL!
+		*    Will received the converted result, MUST be large enough to hold the result or a null pointer!
 		*  @param[in]  nNumOfBytes
-		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not NULL!
-		*    (+1 if a terminating NULL should be added)
+		*    Length in bytes of the destination buffer, MUST be valid if 'pszDestination' is not a null pointer!
+		*    (+1 if a terminating zero should be added)
 		*  @param[in]  pszSource
-		*    Pointer to source string to convert, if NULL '0' will be returned and 'destination' not manipulated
+		*    Pointer to source string to convert, if a null pointer '0' will be returned and 'destination' not manipulated
 		*
 		*  @return
-		*    The resulting length in bytes of the converted string (excluding the terminating NULL)
+		*    The resulting length in bytes of the converted string (excluding the terminating zero)
 		*
 		*  @note
-		*    - If 'pszDestination' is NULL, the the resulting length in bytes of the converted string
-		*      (excluding the terminating NULL) is returned
+		*    - If 'pszDestination' is a null pointer, the the resulting length in bytes of the converted string
+		*      (excluding the terminating zero) is returned
 		*/
 		PLGENERAL_API static uint32 Unescape(char *pszDestination, uint32 nNumOfBytes, const char *pszSource);
 
@@ -422,9 +422,9 @@ class UTF8Tools {
 		*    Compares two UTF8 strings (case sensitive)
 		*
 		*  @param[in] pszFirst
-		*    Pointer to first string for comparison, if NULL '0' will be returned
+		*    Pointer to first string for comparison, if a null pointer '0' will be returned
 		*  @param[in] pszSecond
-		*    Pointer to second string for comparison, if NULL '0' will be returned
+		*    Pointer to second string for comparison, if a null pointer '0' will be returned
 		*  @param[in] nCount
 		*    Amount of character to compare, can be 0 if the whole strings should be compared
 		*
@@ -440,12 +440,12 @@ class UTF8Tools {
 		*    Find a substring in a UTF8 string
 		*
 		*  @param[in] pszSource
-		*    Pointer to the string which should be searched through, if NULL 'NULL' will be returned
+		*    Pointer to the string which should be searched through, if a null pointer 'a null pointer' will be returned
 		*  @param[in] pszSubstring
-		*    Pointer to the substring to be searched for, if NULL 'NULL' will be returned
+		*    Pointer to the substring to be searched for, if a null pointer 'a null pointer' will be returned
 		*
 		*  @return
-		*    A pointer to the start position of the substring or NULL if the search fails
+		*    A pointer to the start position of the substring or a null pointer if the search fails
 		*/
 		PLGENERAL_API static char *FindSubstring(const char *pszSource, const char *pszSubstring);
 
@@ -454,9 +454,9 @@ class UTF8Tools {
 		*    Copies the given UTF8 source string into the destination string
 		*
 		*  @param[out] pszDestination
-		*    Will receive the copied string, if NULL 'NULL' will be returned
+		*    Will receive the copied string, if a null pointer 'a null pointer' will be returned
 		*  @param[in]  pszSource
-		*    Pointer to the source string, if NULL 'NULL' will be returned
+		*    Pointer to the source string, if a null pointer 'a null pointer' will be returned
 		*  @param[in]  nCount
 		*    Amount of character to copy, can be 0 if the whole strings should be copied
 		*

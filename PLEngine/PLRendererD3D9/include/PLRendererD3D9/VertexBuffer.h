@@ -113,7 +113,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*    Returns the vertex declaration
 		*
 		*  @return
-		*    Vertex declaration, can be NULL
+		*    Vertex declaration, can be a null pointer
 		*/
 		LPDIRECT3DVERTEXDECLARATION9 GetVertexDeclaration() const;
 
@@ -122,7 +122,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*    Returns the API vertex buffer
 		*
 		*  @return
-		*    The API vertex buffer, NULL on error
+		*    The API vertex buffer, a null pointer on error
 		*/
 		LPDIRECT3DVERTEXBUFFER9 GetAPIVertexBuffer() const;
 
@@ -147,10 +147,10 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3DVERTEXBUFFER9		  m_pVertexBuffer;		/**< Direct3D 9 vertex buffer, can be NULL (VBO) */
-		LPDIRECT3DVERTEXDECLARATION9  m_pVertexDeclaration;	/**< Vertex declaration, can be NULL (VBO) */
-		PLGeneral::uint8			 *m_pData;				/**< Dynamic buffer, can be NULL (none VBO) */
-		void						 *m_pLockedData;		/**< Locked data, can be NULL */
+		LPDIRECT3DVERTEXBUFFER9		  m_pVertexBuffer;		/**< Direct3D 9 vertex buffer, can be a null pointer (VBO) */
+		LPDIRECT3DVERTEXDECLARATION9  m_pVertexDeclaration;	/**< Vertex declaration, can be a null pointer (VBO) */
+		PLGeneral::uint8			 *m_pData;				/**< Dynamic buffer, can be a null pointer (none VBO) */
+		void						 *m_pLockedData;		/**< Locked data, can be a null pointer */
 		PLGeneral::uint32			  m_nUsageAPI;			/**< API usage setting */
 		/** Offsets */
 		int m_nOffset[NumOfSemantics][MaxPipelineChannels];

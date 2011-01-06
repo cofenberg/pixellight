@@ -81,7 +81,7 @@ PLSceneContainer *PLSceneNode::GetContainer() const
 */
 INode *PLSceneNode::GetMaxNode() const
 {
-	return m_pIGameNode ? m_pIGameNode->GetMaxNode() : NULL;
+	return m_pIGameNode ? m_pIGameNode->GetMaxNode() : nullptr;
 }
 
 /**
@@ -408,7 +408,7 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const std::string &s
 							{
 								IParamBlock2 *pIParamBlock2 = pPathController->GetParamBlock(path_params);
 								int nRefNum = pIParamBlock2 ? pIParamBlock2->GetControllerRefNum(path_percent) : -1;
-								RefTargetHandle cRefTargetHandle = (nRefNum >= 0) ? pIParamBlock2->GetReference(nRefNum) : NULL;
+								RefTargetHandle cRefTargetHandle = (nRefNum >= 0) ? pIParamBlock2->GetReference(nRefNum) : nullptr;
 								if (cRefTargetHandle)
 									fPercentageAlongPath = pIParamBlock2->GetFloat(path_percent, 0);
 							}

@@ -262,7 +262,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				/* Singleton */ \
 				static _Class *GetSingleton(bool bGet = true) {\
 					static bool    MyShutdown = false; \
-					static _Class *MyInstance = NULL; \
+					static _Class *MyInstance = nullptr; \
 					if (bGet) { \
 						/* Get or create instance */ \
 						if (!MyInstance && !MyShutdown) { \
@@ -274,7 +274,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 						MyShutdown = true; \
 						if (MyInstance) { \
 							delete MyInstance; \
-							MyInstance = NULL; \
+							MyInstance = nullptr; \
 						} \
 					} \
 					return MyInstance; \
@@ -700,7 +700,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 						ParamType cParams = (ConstParamType&)cConstParams; \
 						m_Constructor.Call(cParams); \
 						return ((ParamType&)cParams).Return; \
-					} else return NULL; \
+					} else return nullptr; \
 				} \
 				ConstType m_Constructor; \
 		}; \

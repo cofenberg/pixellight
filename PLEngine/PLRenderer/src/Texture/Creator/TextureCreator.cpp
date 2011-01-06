@@ -61,7 +61,7 @@ TextureCreator::~TextureCreator()
 
 /**
 *  @brief
-*    Creates the texture if a NULL pointer is given
+*    Creates the texture if a null pointer is given
 */
 Texture *TextureCreator::CreateTexture(TextureManager &cTextureManager, Texture *pTexture) const
 {

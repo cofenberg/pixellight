@@ -184,8 +184,8 @@ class Pool : public Container<ValueType> {
 		*    Internal linked pool element
 		*/
 		struct PoolElement {
-			PoolElement *pNextElement;		/**< Pointer to the next element in the pool, can be NULL */
-			PoolElement *pPreviousElement;	/**< Pointer to the previous element in the pool, can be NULL */
+			PoolElement *pNextElement;		/**< Pointer to the next element in the pool, can be a null pointer */
+			PoolElement *pPreviousElement;	/**< Pointer to the previous element in the pool, can be a null pointer */
 			ValueType	 Data;				/**< The stored data */
 		};
 
@@ -219,11 +219,11 @@ class Pool : public Container<ValueType> {
 	private:
 		// Standard list data
 		uint32		 m_nNumOfElements;		/**< Current number of elements */
-		PoolElement *m_pFirstElement;		/**< Pointer to first pool element, can be NULL */
-		PoolElement *m_pLastElement;		/**< Pointer to last pool element, can be NULL */
+		PoolElement *m_pFirstElement;		/**< Pointer to first pool element, can be a null pointer */
+		PoolElement *m_pLastElement;		/**< Pointer to last pool element, can be a null pointer */
 		// Additional pool data
 		uint32		 m_nNumOfFreeElements;	/**< Current number of free elements */
-		PoolElement *m_pFirstFreeElement;	/**< Pointer to first free pool element, can be NULL */
+		PoolElement *m_pFirstFreeElement;	/**< Pointer to first free pool element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

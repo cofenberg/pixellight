@@ -62,20 +62,20 @@ pl_implement_class(AbstractMenu)
 *    Constructor
 */
 AbstractMenu::AbstractMenu(Widget *pParent) : Widget(pParent),
-	m_pMenu(NULL),
+	m_pMenu(nullptr),
 	m_nOrientation(Vertical),
 	m_nOpenSideHorizontal(SideRight),
 	m_nOpenSideVertical(SideBottom),
 	m_nSelection(-1),
-	m_pItems(NULL),
+	m_pItems(nullptr),
 	m_nItems(0),
 	m_nSize(-1),
 	m_nMaxWidth(-1),
 	m_nMouseOver(-1),
-	m_pSelectedItem(NULL),
-	m_pPopupMenu(NULL),
+	m_pSelectedItem(nullptr),
+	m_pPopupMenu(nullptr),
 	m_nIgnoreMouse(0),
-	m_pParentMenu(NULL),
+	m_pParentMenu(nullptr),
 	m_pController(this),
 	m_pControlMenu(this),
 	m_bAllowButtonUp(false)
@@ -182,7 +182,7 @@ void AbstractMenu::SetSelection(int nItem)
 	if (m_nSelection != nItem && nItem >= -1 && nItem < nNumOfItems) {
 		// Get currently selected item
 		MenuItem *pItem = m_pMenu->GetItems().Get(nItem);
-		bool bOpenSubmenu = (m_pSelectedItem != NULL);
+		bool bOpenSubmenu = (m_pSelectedItem != nullptr);
 
 		// Close currently open item
 		if (m_pSelectedItem) {
@@ -192,7 +192,7 @@ void AbstractMenu::SetSelection(int nItem)
 			}
 
 			// Close submenu
-			m_pSelectedItem = NULL;
+			m_pSelectedItem = nullptr;
 		}
 
 		// Set selection
@@ -226,7 +226,7 @@ void AbstractMenu::ClickItem(int nItem)
 {
 	// Get currently selected item
 	MenuItem *pItem = m_pMenu->GetItems().Get(nItem);
-	bool bCloseOnly = (m_pSelectedItem != NULL && m_pSelectedItem == pItem);
+	bool bCloseOnly = (m_pSelectedItem != nullptr && m_pSelectedItem == pItem);
 
 	// Close currently open item
 	if (m_pSelectedItem) {
@@ -236,7 +236,7 @@ void AbstractMenu::ClickItem(int nItem)
 		}
 
 		// Close submenu
-		m_pSelectedItem = NULL;
+		m_pSelectedItem = nullptr;
 	}
 
 	// Check clicked item
@@ -347,7 +347,7 @@ void AbstractMenu::OnKeyDown(uint32 nKey, uint32 nModifiers)
 			if (nSelection < 0) nSelection = m_pControlMenu->m_nItems-1;
 
 			// Ignore separators
-			MenuItem *pItem = (m_pMenu ? m_pMenu->GetItems().Get(nSelection) : NULL);
+			MenuItem *pItem = (m_pMenu ? m_pMenu->GetItems().Get(nSelection) : nullptr);
 			if (pItem && pItem->GetType() == TypeSeparator) {
 				nSelection--;
 				if (nSelection < 0) nSelection = m_pControlMenu->m_nItems-1;
@@ -368,7 +368,7 @@ void AbstractMenu::OnKeyDown(uint32 nKey, uint32 nModifiers)
 			if (nSelection >= m_pControlMenu->m_nItems) nSelection = 0;
 
 			// Ignore separators
-			MenuItem *pItem = (m_pMenu ? m_pMenu->GetItems().Get(nSelection) : NULL);
+			MenuItem *pItem = (m_pMenu ? m_pMenu->GetItems().Get(nSelection) : nullptr);
 			if (pItem && pItem->GetType() == TypeSeparator) {
 				nSelection++;
 				if (nSelection >= m_pControlMenu->m_nItems) nSelection = 0;
@@ -390,7 +390,7 @@ void AbstractMenu::OnKeyDown(uint32 nKey, uint32 nModifiers)
 			  (m_pControlMenu->GetOrientation() == Vertical   && nKey == PLGUIKEY_RIGHT)) )
 		{
 			// Must be a sub-menu
-			MenuItem *pItem = (m_pControlMenu->m_pMenu ? m_pControlMenu->m_pMenu->GetItems().Get(m_pControlMenu->GetSelection()) : NULL);
+			MenuItem *pItem = (m_pControlMenu->m_pMenu ? m_pControlMenu->m_pMenu->GetItems().Get(m_pControlMenu->GetSelection()) : nullptr);
 			if (pItem && pItem->GetType() == TypeMenu) {
 				m_pControlMenu->ClickItem(m_pControlMenu->GetSelection());
 			}
@@ -515,9 +515,9 @@ void AbstractMenu::OpenSubmenu(MenuItem *pItem, int nItem)
 
 		// Set popup position and inherit open-side
 		m_pPopupMenu->SetVisible(true);
-		if (!m_pPopupMenu) return;	// If something is implemented poorly, the focus may got away causing m_pPopupMenu to be NULL
+		if (!m_pPopupMenu) return;	// If something is implemented poorly, the focus may got away causing m_pPopupMenu to be a null pointer
 		m_pPopupMenu->ShowPopupMenu(vPos);
-		if (!m_pPopupMenu) return;	// If something is implemented poorly, the focus may got away causing m_pPopupMenu to be NULL
+		if (!m_pPopupMenu) return;	// If something is implemented poorly, the focus may got away causing m_pPopupMenu to be a null pointer
 		m_pPopupMenu->SetOpenSide(Horizontal, m_nOpenSideHorizontal);
 		m_pPopupMenu->SetOpenSide(Vertical,   m_nOpenSideVertical);
 
@@ -544,7 +544,7 @@ void AbstractMenu::CloseSubmenu()
 		if (m_pPopupMenu) {
 			m_pPopupMenu->ClosePopupMenu();
 			m_pPopupMenu->Destroy();
-			m_pPopupMenu = NULL;
+			m_pPopupMenu = nullptr;
 		}
 
 		// Inform controller
@@ -622,7 +622,7 @@ void AbstractMenu::DeleteMenuData()
 	// Destroy data
 	if (m_pItems) {
 		delete [] m_pItems;
-		m_pItems	= NULL;
+		m_pItems	= nullptr;
 		m_nItems	= 0;
 		m_nSize		= -1;
 		m_nMaxWidth = -1;

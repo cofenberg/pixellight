@@ -204,7 +204,7 @@ class Resource {
 		*    Backups the resource device data
 		*
 		*  @param[in, out] ppBackup
-		*    Pointer to a pointer for the data backup (MUST be ALWAYS VALID or NULL!)
+		*    Pointer to a pointer for the data backup (MUST be ALWAYS VALID or a null pointer!)
 		*
 		*  @note
 		*    - Used for instance if the display mode is changed to backup/restore
@@ -218,7 +218,7 @@ class Resource {
 		*    Restores the resource device data
 		*
 		*  @param[in, out] ppBackup
-		*    Pointer to a pointer for the data backup (MUST be ALWAYS VALID or NULL!)
+		*    Pointer to a pointer for the data backup (MUST be ALWAYS VALID or a null pointer!)
 		*
 		*  @see
 		*    - BackupDeviceData()

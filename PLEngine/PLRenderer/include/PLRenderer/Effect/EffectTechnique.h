@@ -134,7 +134,7 @@ class EffectTechnique {
 		*    Pass index in the technique where to add the new pass, if < 0 add at the end
 		*
 		*  @return
-		*    The new pass, NULL on error
+		*    The new pass, a null pointer on error
 		*/
 		PLRENDERER_API EffectPass *AddPass(int nIndex = -1);
 
@@ -164,7 +164,7 @@ class EffectTechnique {
 		*    Pass index in the technique
 		*
 		*  @return
-		*    The requested pass, NULL on error
+		*    The requested pass, a null pointer on error
 		*/
 		PLRENDERER_API EffectPass *GetPass(PLGeneral::uint32 nIndex = 0) const;
 
@@ -175,12 +175,12 @@ class EffectTechnique {
 		*  @param[in] nIndex
 		*    Index of the path to setup
 		*  @param[in] pParameterManager
-		*    Parameters set instead of existing effect parameters, if NULL, use THIS parameter manager
+		*    Parameters set instead of existing effect parameters, if a null pointer, use THIS parameter manager
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool SetupPass(PLGeneral::uint32 nIndex = 0, ParameterManager *pParameterManager = NULL) const;
+		PLRENDERER_API bool SetupPass(PLGeneral::uint32 nIndex = 0, ParameterManager *pParameterManager = nullptr) const;
 
 
 	//[-------------------------------------------------------]

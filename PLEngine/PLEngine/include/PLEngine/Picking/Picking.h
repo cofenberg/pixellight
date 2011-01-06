@@ -114,13 +114,13 @@ class Picking {
 		*  @param[in]  vLineEndPos
 		*    Picking line end position within the given scene node
 		*  @param[in]  plstGeometries
-		*    List of mesh geometry indices to use, if NULL all mesh geometries are used
+		*    List of mesh geometry indices to use, if a null pointer all mesh geometries are used
 		*
 		*  @return
 		*    'true' if anything has been picked, else 'false'
 		*/
 		PL_API bool PerformPicking(PickingResult &cPickingResult, PLScene::SceneNode &cSceneNode, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos,
-								   PLGeneral::Array<PLGeneral::uint32> *plstGeometries = NULL);
+								   PLGeneral::Array<PLGeneral::uint32> *plstGeometries = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -149,10 +149,10 @@ class Picking {
 		*  @param[in]  vLineEndPos
 		*    Picking line end position within the given scene node
 		*  @param[in]  plstGeometries
-		*    List of mesh geometry indices to use, if NULL all mesh geometries are used
+		*    List of mesh geometry indices to use, if a null pointer all mesh geometries are used
 		*/
 		void MeshIntersection(PLScene::SceneNode &cSceneNode, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos,
-							  PLGeneral::Array<PLGeneral::uint32> *plstGeometries = NULL);
+							  PLGeneral::Array<PLGeneral::uint32> *plstGeometries = nullptr);
 
 
 	//[-------------------------------------------------------]

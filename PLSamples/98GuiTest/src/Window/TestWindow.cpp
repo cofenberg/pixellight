@@ -63,9 +63,9 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 	SlotOnToggleBorder(this),
 	SlotOnToggleTopmost(this),
 	SlotOnToggleTaskbar(this),
-	m_pButtonTitleBar(NULL),
-	m_pButtonBorder(NULL),
-	m_pButtonTopmost(NULL)
+	m_pButtonTitleBar(nullptr),
+	m_pButtonBorder(nullptr),
+	m_pButtonTopmost(nullptr)
 {
 	// Set name
 	SetName("TestWindow");

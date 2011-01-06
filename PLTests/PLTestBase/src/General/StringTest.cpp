@@ -87,7 +87,7 @@ void StringTest::Test()
 		if (sTest.GetLength()) bResult = false;
 	}
 	{
-		String sTest((const char*)NULL);
+		String sTest((const char*)nullptr);
 		if (sTest.GetLength()) bResult = false;
 	}
 	{
@@ -105,7 +105,7 @@ void StringTest::Test()
 		if (sTest.GetLength() != 3 || sTest != "123" || sTest.GetASCII() != pszTest) bResult = false;
 	}
 	{
-		String sTest((const wchar_t*)NULL);
+		String sTest((const wchar_t*)nullptr);
 		if (sTest.GetLength()) bResult = false;
 	}
 	{
@@ -137,9 +137,9 @@ void StringTest::Test()
 	if (sString.GetLength() != 1) bResult = false;
 	sString = "This 1_6";
 	if (sString.GetLength() != 8) bResult = false;
-	sString = (char*)NULL;
+	sString = (char*)nullptr;
 	if (sString.GetLength()) bResult = false;
-	sString = (const char*)NULL;
+	sString = (const char*)nullptr;
 	if (sString.GetLength()) bResult = false;
 	sString = L"\u65e5\u672c\u8a9e";
 	if (sString.GetLength() != 3) bResult = false;
@@ -150,23 +150,23 @@ void StringTest::Test()
 	// Format(const char *pszFormat, ...)
 	StartTask("Format(const char *pszFormat, ...)");
 	bResult = true;
-	if (String::Format((const char*)NULL).GetLength()) bResult = false;
+	if (String::Format((const char*)nullptr).GetLength()) bResult = false;
 	if (String::Format("").GetLength()) bResult = false;
 	if (String::Format("1") != "1") bResult = false;
 	if (String::Format("1%s5", "__") != "1__5") bResult = false;
 	if (String::Format("%g 1%s5", 5.12f, "__") != "5.12 1__5") bResult = false;
-	if (String::Format((const char*)NULL).GetLength()) bResult = false;
+	if (String::Format((const char*)nullptr).GetLength()) bResult = false;
 	EndTask(bResult);
 
 	// Format(const wchar_t *pszFormat, ...)
 	StartTask("Format(const wchar_t *pszFormat, ...)");
 	bResult = true;
-	if (String::Format((const wchar_t*)NULL).GetLength()) bResult = false;
+	if (String::Format((const wchar_t*)nullptr).GetLength()) bResult = false;
 	if (String::Format(L"").GetLength()) bResult = false;
 	if (String::Format(L"1") != L"1") bResult = false;
 	if (String::Format(L"1%s5", L"__") != L"1__5") bResult = false;
 	if (String::Format(L"%g 1%s5", 5.12f, L"__") != L"5.12 1__5") bResult = false;
-	if (String::Format((const wchar_t*)NULL).GetLength()) bResult = false;
+	if (String::Format((const wchar_t*)nullptr).GetLength()) bResult = false;
 	if (String::Format(L"1%s5", L"_\u65e5\u672c\u8a9e_") != L"1_\u65e5\u672c\u8a9e_5") bResult = false;
 	// Some special '-0' tests :)
 	if (String::Format(L"%d", -0) != L"0") bResult = false;
@@ -328,7 +328,7 @@ void StringTest::Test()
 	// =(const char *pszString)
 	StartTask("=(const char *pszString)");
 	bResult = true;
-	sString = (const char*)NULL;
+	sString = (const char*)nullptr;
 	if (sString.GetLength() != 0 || sString != "") bResult = false;
 	sString = "";
 	if (sString.GetLength() != 0 || sString != "") bResult = false;
@@ -339,7 +339,7 @@ void StringTest::Test()
 	// =(const wchar_t *pszString)
 	StartTask("=(const wchar_t *pszString)");
 	bResult = true;
-	sString = (const wchar_t*)NULL;
+	sString = (const wchar_t*)nullptr;
 	if (sString.GetLength() != 0 || sString != L"") bResult = false;
 	sString = L"";
 	if (sString.GetLength() != 0 || sString != L"") bResult = false;
@@ -398,19 +398,19 @@ void StringTest::Test()
 	StartTask("+(const char *pszString)");
 	bResult = true;
 	sString = "";
-	sString = sString + (const char*)NULL;
+	sString = sString + (const char*)nullptr;
 	if (sString != "") bResult = false;
 	sString = "";
 	sString = sString + "";
 	if (sString != "") bResult = false;
 	sString = "A";
-	sString = sString + (const char*)NULL;
+	sString = sString + (const char*)nullptr;
 	if (sString != "A") bResult = false;
 	sString = "A";
 	sString = sString + "";
 	if (sString != "A") bResult = false;
 	sString = "A12";
-	sString = sString + (const char*)NULL;
+	sString = sString + (const char*)nullptr;
 	if (sString != "A12") bResult = false;
 	sString = "A12";
 	sString = sString + "";
@@ -440,19 +440,19 @@ void StringTest::Test()
 	StartTask("+(const wchar_t *pszString)");
 	bResult = true;
 	sString = L"";
-	sString = sString + (const wchar_t*)NULL;
+	sString = sString + (const wchar_t*)nullptr;
 	if (sString != L"") bResult = false;
 	sString = L"";
 	sString = sString + L"";
 	if (sString != L"") bResult = false;
 	sString = L"A";
-	sString = sString + (const wchar_t*)NULL;
+	sString = sString + (const wchar_t*)nullptr;
 	if (sString != L"A") bResult = false;
 	sString = L"A";
 	sString = sString + L"";
 	if (sString != L"A") bResult = false;
 	sString = L"A12";
-	sString = sString + (const wchar_t*)NULL;
+	sString = sString + (const wchar_t*)nullptr;
 	if (sString != L"A12") bResult = false;
 	sString = L"A12";
 	sString = sString + L"";
@@ -485,7 +485,7 @@ void StringTest::Test()
 	StartTask("+(const char *pszString, const String &sString)");
 	bResult = true;
 	sString = "";
-	sString = (const char*)NULL + sString;
+	sString = (const char*)nullptr + sString;
 	if (sString != "") bResult = false;
 	sString = "";
 	sString = "" + sString;
@@ -497,13 +497,13 @@ void StringTest::Test()
 	sString = "A12" + sString;
 	if (sString != "A12") bResult = false;
 	sString = "B";
-	sString = (const char*)NULL + sString;
+	sString = (const char*)nullptr + sString;
 	if (sString != "B") bResult = false;
 	sString = "B";
 	sString = "" + sString;
 	if (sString != "B") bResult = false;
 	sString = "B34";
-	sString = (const char*)NULL + sString;
+	sString = (const char*)nullptr + sString;
 	if (sString != "B34") bResult = false;
 	sString = "B34";
 	sString = "" + sString;
@@ -527,7 +527,7 @@ void StringTest::Test()
 	StartTask("+(const wchar_t *pszString, const String &sString)");
 	bResult = true;
 	sString = L"";
-	sString = (const wchar_t*)NULL + sString;
+	sString = (const wchar_t*)nullptr + sString;
 	if (sString != L"") bResult = false;
 	sString = L"";
 	sString = L"" + sString;
@@ -539,13 +539,13 @@ void StringTest::Test()
 	sString = L"A12" + sString;
 	if (sString != L"A12") bResult = false;
 	sString = L"B";
-	sString = (const wchar_t*)NULL + sString;
+	sString = (const wchar_t*)nullptr + sString;
 	if (sString != L"B") bResult = false;
 	sString = L"B";
 	sString = L"" + sString;
 	if (sString != L"B") bResult = false;
 	sString = L"B34";
-	sString = (const wchar_t*)NULL + sString;
+	sString = (const wchar_t*)nullptr + sString;
 	if (sString != L"B34") bResult = false;
 	sString = L"B34";
 	sString = L"" + sString;
@@ -619,19 +619,19 @@ void StringTest::Test()
 	StartTask("+=(const char *pszString)");
 	bResult = true;
 	sString = "";
-	sString += (const char*)NULL;
+	sString += (const char*)nullptr;
 	if (sString != "") bResult = false;
 	sString = "";
 	sString += "";
 	if (sString != "") bResult = false;	
 	sString = "A";
-	sString += (const char*)NULL;
+	sString += (const char*)nullptr;
 	if (sString != "A") bResult = false;
 	sString = "A";
 	sString += "";
 	if (sString != "A") bResult = false;
 	sString = "A12";
-	sString += (const char*)NULL;
+	sString += (const char*)nullptr;
 	if (sString != "A12") bResult = false;
 	sString = "A12";
 	sString += "";
@@ -661,19 +661,19 @@ void StringTest::Test()
 	StartTask("+=(const wchar_t *pszString)");
 	bResult = true;
 	sString = L"";
-	sString += (const wchar_t*)NULL;
+	sString += (const wchar_t*)nullptr;
 	if (sString != L"") bResult = false;
 	sString = L"";
 	sString += L"";
 	if (sString != L"") bResult = false;	
 	sString = L"A";
-	sString += (const wchar_t*)NULL;
+	sString += (const wchar_t*)nullptr;
 	if (sString != L"A") bResult = false;
 	sString = L"A";
 	sString += L"";
 	if (sString != L"A") bResult = false;
 	sString = L"A12";
-	sString += (const wchar_t*)NULL;
+	sString += (const wchar_t*)nullptr;
 	if (sString != L"A12") bResult = false;
 	sString = L"A12";
 	sString += L"";
@@ -734,7 +734,7 @@ void StringTest::Test()
 	StartTask("<(const char *pszString)");
 	bResult = true;
 	sString = "";
-	if (sString < (const char*)NULL) bResult = false;
+	if (sString < (const char*)nullptr) bResult = false;
 	if (sString < "") bResult = false;
 	sString = "A";
 	if (sString < "") bResult = false;
@@ -753,7 +753,7 @@ void StringTest::Test()
 	StartTask("<(const wchar_t *pszString)");
 	bResult = true;
 	sString = L"";
-	if (sString < (const wchar_t*)NULL) bResult = false;
+	if (sString < (const wchar_t*)nullptr) bResult = false;
 	if (sString < L"") bResult = false;
 	sString = L"A";
 	if (sString < L"") bResult = false;
@@ -802,7 +802,7 @@ void StringTest::Test()
 	StartTask(">(const char *pszString)");
 	bResult = true;
 	sString = "";
-	if (sString > (const char*)NULL) bResult = false;
+	if (sString > (const char*)nullptr) bResult = false;
 	if (sString > "") bResult = false;
 	sString = "A";
 	if (!(sString > "")) bResult = false;
@@ -821,7 +821,7 @@ void StringTest::Test()
 	StartTask(">(const wchar_t *pszString)");
 	bResult = true;
 	sString = L"";
-	if (sString > (const wchar_t*)NULL) bResult = false;
+	if (sString > (const wchar_t*)nullptr) bResult = false;
 	if (sString > L"") bResult = false;
 	sString = L"A";
 	if (!(sString > L"")) bResult = false;
@@ -903,15 +903,15 @@ void StringTest::Test()
 	StartTask("==(const char *pszString)");
 	bResult = true;
 	sString = "";
-	if (!(sString == (const char*)NULL)) bResult = false;
+	if (!(sString == (const char*)nullptr)) bResult = false;
 	sString = "";
 	if (!(sString == "")) bResult = false;
 	sString = "A";
-	if (sString == (const char*)NULL) bResult = false;
+	if (sString == (const char*)nullptr) bResult = false;
 	sString = "A";
 	if (sString == "") bResult = false;
 	sString = "A12";
-	if (sString == (const char*)NULL) bResult = false;
+	if (sString == (const char*)nullptr) bResult = false;
 	sString = "A12";
 	if (sString == "") bResult = false;
 	sString = "";
@@ -943,15 +943,15 @@ void StringTest::Test()
 	StartTask("==(const wchar_t *pszString)");
 	bResult = true;
 	sString = L"";
-	if (!(sString == (const wchar_t*)NULL)) bResult = false;
+	if (!(sString == (const wchar_t*)nullptr)) bResult = false;
 	sString = L"";
 	if (!(sString == L"")) bResult = false;
 	sString = L"A";
-	if (sString == (const wchar_t*)NULL) bResult = false;
+	if (sString == (const wchar_t*)nullptr) bResult = false;
 	sString = L"A";
 	if (sString == L"") bResult = false;
 	sString = L"A12";
-	if (sString == (const wchar_t*)NULL) bResult = false;
+	if (sString == (const wchar_t*)nullptr) bResult = false;
 	sString = L"A12";
 	if (sString == L"") bResult = false;
 	sString = L"";
@@ -1048,15 +1048,15 @@ void StringTest::Test()
 	StartTask("!=(const char *pszString)");
 	bResult = true;
 	sString = "";
-	if (sString != (const char*)NULL) bResult = false;
+	if (sString != (const char*)nullptr) bResult = false;
 	sString = "";
 	if (sString != "") bResult = false;
 	sString = "A";
-	if (!(sString != (const char*)NULL)) bResult = false;
+	if (!(sString != (const char*)nullptr)) bResult = false;
 	sString = "A";
 	if (!(sString != "")) bResult = false;
 	sString = "A12";
-	if (!(sString != (const char*)NULL)) bResult = false;
+	if (!(sString != (const char*)nullptr)) bResult = false;
 	sString = "A12";
 	if (!(sString != "")) bResult = false;
 	sString = "";
@@ -1084,15 +1084,15 @@ void StringTest::Test()
 	StartTask("!=(const wchar_t *pszString)");
 	bResult = true;
 	sString = L"";
-	if (sString != (const wchar_t*)NULL) bResult = false;
+	if (sString != (const wchar_t*)nullptr) bResult = false;
 	sString = L"";
 	if (sString != L"") bResult = false;
 	sString = L"A";
-	if (!(sString != (const wchar_t*)NULL)) bResult = false;
+	if (!(sString != (const wchar_t*)nullptr)) bResult = false;
 	sString = L"A";
 	if (!(sString != L"")) bResult = false;
 	sString = L"A12";
-	if (!(sString != (const wchar_t*)NULL)) bResult = false;
+	if (!(sString != (const wchar_t*)nullptr)) bResult = false;
 	sString = L"A12";
 	if (!(sString != L"")) bResult = false;
 	sString = L"";
@@ -1181,11 +1181,11 @@ void StringTest::Test()
 	StartTask("Compare(const char *pszString, uint32 nPos, uint32 nCount)");
 	bResult = true;
 	sString = "";
-	if (!sString.Compare((const char*)NULL)) bResult = false;
+	if (!sString.Compare((const char*)nullptr)) bResult = false;
 	sString = "";
 	if (!sString.Compare("")) bResult = false;
 	sString = "Test";
-	if (sString.Compare((const char*)NULL)) bResult = false;
+	if (sString.Compare((const char*)nullptr)) bResult = false;
 	sString = "Test";
 	if (sString.Compare("")) bResult = false;
 	sString = "";
@@ -1221,11 +1221,11 @@ void StringTest::Test()
 	StartTask("Compare(const wchar_t *pszString, uint32 nPos, uint32 nCount)");
 	bResult = true;
 	sString = L"";
-	if (!sString.Compare((const wchar_t*)NULL)) bResult = false;
+	if (!sString.Compare((const wchar_t*)nullptr)) bResult = false;
 	sString = L"";
 	if (!sString.Compare(L"")) bResult = false;
 	sString = L"Test";
-	if (sString.Compare((const wchar_t*)NULL)) bResult = false;
+	if (sString.Compare((const wchar_t*)nullptr)) bResult = false;
 	sString = L"Test";
 	if (sString.Compare(L"")) bResult = false;
 	sString = L"";
@@ -1324,11 +1324,11 @@ void StringTest::Test()
 	StartTask("CompareNoCase(const char *pszString, uint32 nPos, uint32 nCount)");
 	bResult = true;
 	sString = "";
-	if (!sString.CompareNoCase((const char*)NULL)) bResult = false;
+	if (!sString.CompareNoCase((const char*)nullptr)) bResult = false;
 	sString = "";
 	if (!sString.CompareNoCase("")) bResult = false;
 	sString = "Test";
-	if (sString.CompareNoCase((const char*)NULL)) bResult = false;
+	if (sString.CompareNoCase((const char*)nullptr)) bResult = false;
 	sString = "Test";
 	if (sString.CompareNoCase("")) bResult = false;
 	sString = "";
@@ -1364,11 +1364,11 @@ void StringTest::Test()
 	StartTask("CompareNoCase(const wchar_t *pszString, uint32 nPos, uint32 nCount)");
 	bResult = true;
 	sString = L"";
-	if (!sString.CompareNoCase((const wchar_t*)NULL)) bResult = false;
+	if (!sString.CompareNoCase((const wchar_t*)nullptr)) bResult = false;
 	sString = L"";
 	if (!sString.CompareNoCase(L"")) bResult = false;
 	sString = L"Test";
-	if (sString.CompareNoCase((const wchar_t*)NULL)) bResult = false;
+	if (sString.CompareNoCase((const wchar_t*)nullptr)) bResult = false;
 	sString = L"Test";
 	if (sString.CompareNoCase(L"")) bResult = false;
 	sString = L"";
@@ -1717,7 +1717,7 @@ void StringTest::Test()
 		if (sString.IndexOf("34")    != 2) bResult = false;
 		if (sString.IndexOf("34", 4) != 6) bResult = false;
 		if (sString.IndexOf("34", 8) >= 0) bResult = false;
-		if (sString.IndexOf((const char*)NULL) >= 0) bResult = false;
+		if (sString.IndexOf((const char*)nullptr) >= 0) bResult = false;
 		if (sString.IndexOf("")      >= 0) bResult = false;
 		if (sString.IndexOf("A") >= 0 || sString.IndexOf("12346") >= 0) bResult = false;
 		// Index of Unicode with an ASCII string
@@ -1728,7 +1728,7 @@ void StringTest::Test()
 		if (sString.IndexOf("34")    != 2) bResult = false;
 		if (sString.IndexOf("34", 4) != 6) bResult = false;
 		if (sString.IndexOf("34", 8) >= 0) bResult = false;
-		if (sString.IndexOf((const char*)NULL) >= 0) bResult = false;
+		if (sString.IndexOf((const char*)nullptr) >= 0) bResult = false;
 		if (sString.IndexOf("")      >= 0) bResult = false;
 		EndTask(bResult);
 	}
@@ -1746,7 +1746,7 @@ void StringTest::Test()
 		if (sString.IndexOf(L"34")    != 2) bResult = false;
 		if (sString.IndexOf(L"34", 4) != 6) bResult = false;
 		if (sString.IndexOf(L"34", 8) >= 0) bResult = false;
-		if (sString.IndexOf((const wchar_t*)NULL) >= 0) bResult = false;
+		if (sString.IndexOf((const wchar_t*)nullptr) >= 0) bResult = false;
 		if (sString.IndexOf(L"")      >= 0) bResult = false;
 		if (sString.IndexOf(L"A") >= 0 || sString.IndexOf(L"12346") >= 0) bResult = false;
 		if (sString.IndexOf(L"\u65e5")    >= 0) bResult = false;
@@ -1762,7 +1762,7 @@ void StringTest::Test()
 		if (sString.IndexOf(L"34")    != 2) bResult = false;
 		if (sString.IndexOf(L"34", 4) != 6) bResult = false;
 		if (sString.IndexOf(L"34", 8) >= 0) bResult = false;
-		if (sString.IndexOf((const wchar_t*)NULL) >= 0) bResult = false;
+		if (sString.IndexOf((const wchar_t*)nullptr) >= 0) bResult = false;
 		if (sString.IndexOf(L"")      >= 0) bResult = false;
 		EndTask(bResult);
 	}
@@ -1816,7 +1816,7 @@ void StringTest::Test()
 		if (sString.LastIndexOf("34")    != 6) bResult = false;
 		if (sString.LastIndexOf("34", 4) != 2) bResult = false;
 		if (sString.LastIndexOf("34", 1) >= 0) bResult = false;
-		if (sString.LastIndexOf((const char*)NULL) >= 0) bResult = false;
+		if (sString.LastIndexOf((const char*)nullptr) >= 0) bResult = false;
 		if (sString.LastIndexOf("")      >= 0) bResult = false;
 		if (sString.LastIndexOf("A") >= 0 || sString.LastIndexOf("12346") >= 0) bResult = false;
 		// Index of Unicode with an ASCII string
@@ -1827,7 +1827,7 @@ void StringTest::Test()
 		if (sString.LastIndexOf("34")    != 6) bResult = false;
 		if (sString.LastIndexOf("34", 4) != 2) bResult = false;
 		if (sString.LastIndexOf("34", 1) >= 0) bResult = false;
-		if (sString.LastIndexOf((const char*)NULL) >= 0) bResult = false;
+		if (sString.LastIndexOf((const char*)nullptr) >= 0) bResult = false;
 		if (sString.LastIndexOf("")      >= 0) bResult = false;
 		EndTask(bResult);
 	}
@@ -1845,7 +1845,7 @@ void StringTest::Test()
 		if (sString.LastIndexOf(L"34")    != 6) bResult = false;
 		if (sString.LastIndexOf(L"34", 4) != 2) bResult = false;
 		if (sString.LastIndexOf(L"34", 1) >= 0) bResult = false;
-		if (sString.LastIndexOf((const wchar_t*)NULL) >= 0) bResult = false;
+		if (sString.LastIndexOf((const wchar_t*)nullptr) >= 0) bResult = false;
 		if (sString.LastIndexOf(L"")      >= 0) bResult = false;
 		if (sString.LastIndexOf(L"A") >= 0 || sString.LastIndexOf(L"12346") >= 0) bResult = false;
 		if (sString.LastIndexOf(L"\u65e5")    >= 0) bResult = false;
@@ -1861,7 +1861,7 @@ void StringTest::Test()
 		if (sString.LastIndexOf(L"34")    != 6) bResult = false;
 		if (sString.LastIndexOf(L"34", 4) != 2) bResult = false;
 		if (sString.LastIndexOf(L"34", 1) >= 0) bResult = false;
-		if (sString.LastIndexOf((const wchar_t*)NULL) >= 0) bResult = false;
+		if (sString.LastIndexOf((const wchar_t*)nullptr) >= 0) bResult = false;
 		if (sString.LastIndexOf(L"")      >= 0) bResult = false;
 		EndTask(bResult);
 	}
@@ -2061,7 +2061,7 @@ void StringTest::Test()
 	StartTask("Insert(const char *pszString, uint32 nPos, uint32 nCount)");
 	bResult = true;
 	sString = "";
-	if (sString.Insert((const char*)NULL).GetLength()) bResult = false;
+	if (sString.Insert((const char*)nullptr).GetLength()) bResult = false;
 	if (sString.Insert("").GetLength()) bResult = false;
 	if (sString.Insert("12", 5).GetLength()) bResult = false;
 	if (sString.Insert("12", 0, 5) != "12") bResult = false;
@@ -2071,7 +2071,7 @@ void StringTest::Test()
 	if (sString.Insert(" 2.5 ", 4) != "0 12 2.5 34") bResult = false;
 	// Insert ASCII into an Unicode string
 	sString = L"";
-	if (sString.Insert((const char*)NULL).GetLength()) bResult = false;
+	if (sString.Insert((const char*)nullptr).GetLength()) bResult = false;
 	if (sString.Insert("").GetLength()) bResult = false;
 	if (sString.Insert("12", 5).GetLength()) bResult = false;
 	if (sString.Insert("12", 0, 5) != "12") bResult = false;
@@ -2089,7 +2089,7 @@ void StringTest::Test()
 	StartTask("Insert(const wchar_t *pszString, uint32 nPos, uint32 nCount)");
 	bResult = true;
 	sString = L"";
-	if (sString.Insert((const wchar_t*)NULL).GetLength()) bResult = false;
+	if (sString.Insert((const wchar_t*)nullptr).GetLength()) bResult = false;
 	if (sString.Insert(L"").GetLength()) bResult = false;
 	if (sString.Insert(L"12", 5).GetLength()) bResult = false;
 	if (sString.Insert(L"12", 0, 5) != L"12") bResult = false;
@@ -2102,7 +2102,7 @@ void StringTest::Test()
 	if (sString.Insert(L"\u65e5\u672c\u8a9e") != L"\u65e5\u672c\u8a9e\u65e5\u672c\u8a9e") bResult = false;
 	// Insert Unicode into an ASCII string
 	sString = "";
-	if (sString.Insert((const wchar_t*)NULL).GetLength()) bResult = false;
+	if (sString.Insert((const wchar_t*)nullptr).GetLength()) bResult = false;
 	if (sString.Insert(L"").GetLength()) bResult = false;
 	if (sString.Insert(L"12", 5).GetLength()) bResult = false;
 	if (sString.Insert(L"12", 0, 5) != L"12") bResult = false;
@@ -2117,7 +2117,7 @@ void StringTest::Test()
 	StartTask("Copy(const char *pszString, uint32 nCount)");
 	bResult = true;
 	pszTemp = " Ab_1 2 ";
-	sString.Copy((const char*)NULL);
+	sString.Copy((const char*)nullptr);
 	if (sString.GetLength()) bResult = false;
 	sString.Copy(pszTemp);
 	if (sString != pszTemp) bResult = false;
@@ -2131,7 +2131,7 @@ void StringTest::Test()
 	StartTask("Copy(const wchar_t *pszString, uint32 nCount)");
 	bResult = true;
 	pszTempWide = L" Ab_1 2 ";
-	sString.Copy((const wchar_t*)NULL);
+	sString.Copy((const wchar_t*)nullptr);
 	if (sString.GetLength()) bResult = false;
 	sString.Copy(pszTempWide);
 	if (sString != pszTempWide) bResult = false;
@@ -2340,11 +2340,11 @@ void StringTest::Test()
 	StartTask("Replace(const char *pszOld, const char *pszNew)");
 	bResult = true;
 	sString = "";
-	if (sString.Replace((const char*)NULL, NULL) || sString != "") bResult = false;
+	if (sString.Replace((const char*)nullptr, nullptr) || sString != "") bResult = false;
 	sString = "";
-	if (sString.Replace(" ", (const char*)NULL) || sString != "") bResult = false;
+	if (sString.Replace(" ", (const char*)nullptr) || sString != "") bResult = false;
 	sString = "";
-	if (sString.Replace((const char*)NULL, " ") || sString != "") bResult = false;
+	if (sString.Replace((const char*)nullptr, " ") || sString != "") bResult = false;
 	sString = "";
 	if (sString.Replace(" ", " ") || sString != "") bResult = false;
 	sString = "1234";
@@ -2352,9 +2352,9 @@ void StringTest::Test()
 	sString = "123141";
 	if (sString.Replace("1", "1") != 0 || sString != "123141") bResult = false;
 	sString = "123141";
-	if (sString.Replace((const char*)NULL, "_") || sString != "123141") bResult = false;
+	if (sString.Replace((const char*)nullptr, "_") || sString != "123141") bResult = false;
 	sString = "123141";
-	if (sString.Replace("1", (const char*)NULL) != 3 || sString != "234") bResult = false;
+	if (sString.Replace("1", (const char*)nullptr) != 3 || sString != "234") bResult = false;
 	sString = "123141";
 	if (sString.Replace("1", "_") != 3 || sString != "_23_4_") bResult = false;
 	sString = "__123141";
@@ -2377,11 +2377,11 @@ void StringTest::Test()
 	if (sString.Replace("++", "+") != 2 || sString != "<++>") bResult = false;
 	// Replace ASCII within an Unicode string
 	sString = L"";
-	if (sString.Replace((const char*)NULL, NULL) || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
+	if (sString.Replace((const char*)nullptr, nullptr) || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
 	sString = L"";
-	if (sString.Replace(" ", (const char*)NULL) || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
+	if (sString.Replace(" ", (const char*)nullptr) || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
 	sString = L"";
-	if (sString.Replace((const char*)NULL, " ") || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
+	if (sString.Replace((const char*)nullptr, " ") || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
 	sString = L"";
 	if (sString.Replace(" ", " ") || sString.GetFormat() != String::ASCII || sString != "") bResult = false;
 	sString = L"1234";
@@ -2389,9 +2389,9 @@ void StringTest::Test()
 	sString = L"123141";
 	if (sString.Replace("1", "1") != 0 || sString.GetFormat() != String::Unicode || sString != "123141") bResult = false;
 	sString = L"123141";
-	if (sString.Replace((const char*)NULL, "_") || sString.GetFormat() != String::Unicode || sString != "123141") bResult = false;
+	if (sString.Replace((const char*)nullptr, "_") || sString.GetFormat() != String::Unicode || sString != "123141") bResult = false;
 	sString = L"123141";
-	if (sString.Replace("1", (const char*)NULL) != 3 || sString.GetFormat() != String::Unicode || sString != L"234") bResult = false;
+	if (sString.Replace("1", (const char*)nullptr) != 3 || sString.GetFormat() != String::Unicode || sString != L"234") bResult = false;
 	sString = L"123141";
 	if (sString.Replace("1", "_") != 3 || sString.GetFormat() != String::Unicode || sString != L"_23_4_") bResult = false;
 	sString = L"__123141";
@@ -2418,11 +2418,11 @@ void StringTest::Test()
 	StartTask("Replace(const wchar_t *pszOld, const wchar_t *pszNew)");
 	bResult = true;
 	sString = L"";
-	if (sString.Replace((const wchar_t*)NULL, NULL) || sString != L"") bResult = false;
+	if (sString.Replace((const wchar_t*)nullptr, nullptr) || sString != L"") bResult = false;
 	sString = L"";
-	if (sString.Replace(L" ", (const wchar_t*)NULL) || sString != L"") bResult = false;
+	if (sString.Replace(L" ", (const wchar_t*)nullptr) || sString != L"") bResult = false;
 	sString = L"";
-	if (sString.Replace((const wchar_t*)NULL, L" ") || sString != L"") bResult = false;
+	if (sString.Replace((const wchar_t*)nullptr, L" ") || sString != L"") bResult = false;
 	sString = L"";
 	if (sString.Replace(L" ", L" ") || sString != L"") bResult = false;
 	sString = L"1234";
@@ -2430,9 +2430,9 @@ void StringTest::Test()
 	sString = L"123141";
 	if (sString.Replace(L"1", L"1") != 0 || sString != L"123141") bResult = false;
 	sString = L"123141";
-	if (sString.Replace((const wchar_t*)NULL, L"_") || sString != L"123141") bResult = false;
+	if (sString.Replace((const wchar_t*)nullptr, L"_") || sString != L"123141") bResult = false;
 	sString = L"123141";
-	if (sString.Replace(L"1", (const wchar_t*)NULL) != 3 || sString != L"234") bResult = false;
+	if (sString.Replace(L"1", (const wchar_t*)nullptr) != 3 || sString != L"234") bResult = false;
 	sString = L"123141";
 	if (sString.Replace(L"1", L"_") != 3 || sString != L"_23_4_") bResult = false;
 	sString = L"__123141";
@@ -2457,11 +2457,11 @@ void StringTest::Test()
 	if (sString.Replace(L"++", L"\u672c") != 2 || sString != L"<\u672c\u672c>") bResult = false;
 	// Replace Unicode within an ASCII string
 	sString = "";
-	if (sString.Replace((const wchar_t*)NULL, NULL) || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
+	if (sString.Replace((const wchar_t*)nullptr, nullptr) || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
 	sString = "";
-	if (sString.Replace(L" ", (const wchar_t*)NULL) || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
+	if (sString.Replace(L" ", (const wchar_t*)nullptr) || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
 	sString = "";
-	if (sString.Replace((const wchar_t*)NULL, L" ") || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
+	if (sString.Replace((const wchar_t*)nullptr, L" ") || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
 	sString = "";
 	if (sString.Replace(L" ", L" ") || sString.GetFormat() != String::ASCII || sString != L"") bResult = false;
 	sString = "1234";
@@ -2469,9 +2469,9 @@ void StringTest::Test()
 	sString = "123141";
 	if (sString.Replace(L"1", L"1") != 0 || sString.GetFormat() != String::ASCII || sString != L"123141") bResult = false;
 	sString = "123141";
-	if (sString.Replace((const wchar_t*)NULL, L"_") || sString.GetFormat() != String::ASCII || sString != L"123141") bResult = false;
+	if (sString.Replace((const wchar_t*)nullptr, L"_") || sString.GetFormat() != String::ASCII || sString != L"123141") bResult = false;
 	sString = "123141";
-	if (sString.Replace(L"1", (const wchar_t*)NULL) != 3 || sString.GetFormat() != String::Unicode || sString != L"234") bResult = false;
+	if (sString.Replace(L"1", (const wchar_t*)nullptr) != 3 || sString.GetFormat() != String::Unicode || sString != L"234") bResult = false;
 	sString = "123141";
 	if (sString.Replace(L"1", L"_") != 3 || sString.GetFormat() != String::Unicode || sString != L"_23_4_") bResult = false;
 	sString = "__123141";
@@ -3369,7 +3369,7 @@ void StringTest::Test()
 	bResult = true;
 	if (String::Format("%g", 5.12f) != "5.12") bResult = false;
 	// Now, change the local...
-	char *pLocalSave = setlocale(LC_ALL, NULL);
+	char *pLocalSave = setlocale(LC_ALL, nullptr);
 	setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
 								 // is used by printf and so on... (but our string class ignores that :)
 	if (String::Format("%g", 5.12f) != "5.12") bResult = false;

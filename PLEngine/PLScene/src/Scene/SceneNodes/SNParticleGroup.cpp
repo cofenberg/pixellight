@@ -68,7 +68,7 @@ SNParticleGroup::Particle::Particle() :
 	nCustom2(0),
 	fCustom1(0.0f),
 	fCustom2(0.0f),
-	pRot(NULL),
+	pRot(nullptr),
 	bDistorted(false)
 {
 }
@@ -215,12 +215,12 @@ SNParticleGroup::Particle *SNParticleGroup::AddParticle()
 		if (m_lstParticles.GetNumOfElements() < m_nMaxNumOfParticles) {
 			// Add/get particle
 			Particle &cParticle = m_lstParticles.Add();
-			return (&cParticle != &FastPool<Particle>::Null) ? &cParticle : NULL;
+			return (&cParticle != &FastPool<Particle>::Null) ? &cParticle : nullptr;
 		}
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -356,8 +356,8 @@ SNParticleGroup::SNParticleGroup() :
 	m_nParticles(10),
 	m_nTextureAnimationColumns(1),
 	m_nTextureAnimationRows(1),
-	m_pIndexBuffer(NULL),
-	m_pVertexBuffer(NULL),
+	m_pIndexBuffer(nullptr),
+	m_pVertexBuffer(nullptr),
 	m_nUsedIndices(0),
 	m_nUsedVertices(0),
 	m_bRemoveAutomatically(false),
@@ -398,7 +398,7 @@ bool SNParticleGroup::InitParticles(uint32 nMaxNumOfParticles, const String &sMa
 		// Point sprites will need no index buffer!
 		if (m_pIndexBuffer) {
 			delete m_pIndexBuffer;
-			m_pIndexBuffer = NULL;
+			m_pIndexBuffer = nullptr;
 		}
 
 		// Setup the vertex buffer
@@ -812,13 +812,13 @@ void SNParticleGroup::DeInitFunction()
 	// Delete the index buffer
 	if (m_pIndexBuffer) {
 		delete m_pIndexBuffer;
-		m_pIndexBuffer = NULL;
+		m_pIndexBuffer = nullptr;
 	}
 
 	// Delete the vertex buffer
 	if (m_pVertexBuffer) {
 		delete m_pVertexBuffer;
-		m_pVertexBuffer = NULL;
+		m_pVertexBuffer = nullptr;
 	}
 
 	// Clear texture coordinate list

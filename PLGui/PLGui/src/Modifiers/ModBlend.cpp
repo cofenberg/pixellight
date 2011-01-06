@@ -64,7 +64,7 @@ ModBlend::ModBlend() :
 	m_nTimeout(20),
 	m_fTrans(1.0f),
 	m_fTransDest(1.0f),
-	m_pTimer(NULL)
+	m_pTimer(nullptr)
 {
 }
 

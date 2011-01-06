@@ -132,7 +132,8 @@ bool Timing::Update(uint32 *pnTimeToWait)
 		if (m_fFPSUpdateTimer > 1.0f) {
 			m_fFPSUpdateTimer = 0.0f;
 			m_fFramesPerSecond = (float)m_nFramesSinceCheck/((m_nTimeNow-m_nLastFPSUpdateTime)/1000.0f);
-			if (m_fFramesPerSecond < 0.0f) m_fFramesPerSecond = 0.0f;
+			if (m_fFramesPerSecond < 0.0f)
+				m_fFramesPerSecond = 0.0f;
 			m_nFramesSinceCheck   = 0;
 			m_nLastFPSUpdateTime = m_nTimeNow;
 		}
@@ -285,7 +286,7 @@ void Timing::Freeze(bool bFreeze)
 		}
 	} else {
 		if (m_bFreezed) { // Update timing
-			uint32 nTimeDifference = System::GetInstance()->GetMilliseconds() - m_nFreezeTime;
+			const uint32 nTimeDifference = System::GetInstance()->GetMilliseconds() - m_nFreezeTime;
 			m_nTimeLast			 += nTimeDifference;
 			m_nLastFPSUpdateTime += nTimeDifference;
 		}
@@ -332,7 +333,10 @@ bool Timing::SetTimeScaleFactor(float fFactor)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -374,7 +378,10 @@ bool Timing::SetSlowMotionFactor(float fSlowMotionFactor)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -398,7 +405,10 @@ bool Timing::SetCustomSlowMotionFactor(float fSlowMotionFactor)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 

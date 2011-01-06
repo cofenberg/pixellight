@@ -513,7 +513,7 @@ bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContain
 	while (cTokenizer.GetNextToken().GetLength()) {
 		// {
 		if (cTokenizer.GetToken() == sOpenBracket) {
-			pSceneNode = pLight = NULL;
+			pSceneNode = pLight = nullptr;
 
 			// Look for '}'
 			while (cTokenizer.GetNextToken().GetLength()) {
@@ -542,7 +542,7 @@ bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContain
 								pSceneNode->AddModifier("PLScene::SNMRotationFixRoll");
 								pSceneNode->AddModifier("PLScene::SNMMoveController", "Speed=\"0.2\"");
 							}
-						} else pSceneNode = pLight = NULL;
+						} else pSceneNode = pLight = nullptr;
 					}
 					continue;
 				}

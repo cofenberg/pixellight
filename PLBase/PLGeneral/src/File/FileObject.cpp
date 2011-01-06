@@ -48,7 +48,7 @@ namespace PLGeneral {
 *    Constructor
 */
 FileObject::FileObject() :
-	m_pFileImpl(NULL)
+	m_pFileImpl(nullptr)
 {
 }
 
@@ -57,7 +57,7 @@ FileObject::FileObject() :
 *    Constructor
 */
 FileObject::FileObject(const String &sUrl, const FileAccess *pAccess) :
-	m_pFileImpl(NULL)
+	m_pFileImpl(nullptr)
 {
 	Assign(sUrl, pAccess);
 }
@@ -67,7 +67,7 @@ FileObject::FileObject(const String &sUrl, const FileAccess *pAccess) :
 *    Constructor
 */
 FileObject::FileObject(const Url &cUrl, const FileAccess *pAccess) :
-	m_pFileImpl(NULL)
+	m_pFileImpl(nullptr)
 {
 	Assign(cUrl, pAccess);
 }
@@ -77,7 +77,7 @@ FileObject::FileObject(const Url &cUrl, const FileAccess *pAccess) :
 *    Constructor for a standard OS stream
 */
 FileObject::FileObject(FILE *pFile, uint32 nAccess) :
-	m_pFileImpl(NULL)
+	m_pFileImpl(nullptr)
 {
 	Assign(pFile, nAccess);
 }
@@ -87,7 +87,7 @@ FileObject::FileObject(FILE *pFile, uint32 nAccess) :
 *    Constructor for a OS file handle
 */
 FileObject::FileObject(handle hFile) :
-	m_pFileImpl(NULL)
+	m_pFileImpl(nullptr)
 {
 	Assign(hFile);
 }
@@ -99,9 +99,8 @@ FileObject::FileObject(handle hFile) :
 FileObject::~FileObject()
 {
 	// Delete file implementation
-	if (m_pFileImpl) {
+	if (m_pFileImpl)
 		delete m_pFileImpl;
-	}
 }
 
 /**
@@ -122,7 +121,7 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 	// Get URL
 	Url cFinalUrl;
 	if (cUrl.IsDirectory() && cUrl.GetPath() != "") {
-		String sUrl = cUrl.GetUrl();
+		const String sUrl = cUrl.GetUrl();
 		cFinalUrl = sUrl.GetSubstring(0, sUrl.GetLength() - 1);
 	} else {
 		cFinalUrl = cUrl;
@@ -132,17 +131,17 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 	// Delete existing file implementation
 	if (m_pFileImpl) {
 		delete m_pFileImpl;
-		m_pFileImpl = NULL;
+		m_pFileImpl = nullptr;
 	}
 
 	// Create file implementation
 
 	// ZIP
-	String sUrlLower = cFinalUrl.GetUrl().ToLower();
-	int nPos = sUrlLower.LastIndexOf(".zip/");
+	const String sUrlLower = cFinalUrl.GetUrl().ToLower();
+	const int nPos = sUrlLower.LastIndexOf(".zip/");
 	if (nPos > -1) {
-		String sZipFile   = cFinalUrl.GetUrl().GetSubstring(0, nPos+4);
-		String sPathInZip = cFinalUrl.GetUrl().GetSubstring(nPos+5);
+		const String sZipFile   = cFinalUrl.GetUrl().GetSubstring(0, nPos+4);
+		const String sPathInZip = cFinalUrl.GetUrl().GetSubstring(nPos+5);
 		m_pFileImpl = new FileZip(cFinalUrl, sZipFile, sPathInZip, pAccess);
 	}
 
@@ -172,7 +171,7 @@ void FileObject::Assign(FILE *pFile, uint32 nAccess)
 	// Delete existing file implementation
 	if (m_pFileImpl) {
 		delete m_pFileImpl;
-		m_pFileImpl = NULL;
+		m_pFileImpl = nullptr;
 	}
 
 	// Create file implementation
@@ -188,7 +187,7 @@ void FileObject::Assign(handle hFile)
 	// Delete existing file implementation
 	if (m_pFileImpl) {
 		delete m_pFileImpl;
-		m_pFileImpl = NULL;
+		m_pFileImpl = nullptr;
 	}
 
 	// Create file implementation
@@ -244,7 +243,9 @@ bool FileObject::Copy(const String &sDest, bool bOverwrite) const
 
 		// Fallback: Use generic function (e.g. if the files exist in different file-systems)
 		return GenericCopy(sDest, bOverwrite);
-	} else return false;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -260,7 +261,9 @@ bool FileObject::Move(const String &sDest)
 
 		// Fallback: Use generic function (e.g. if the files exist in different file-systems)
 		return GenericMove(sDest);
-	} else return false;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -278,9 +281,8 @@ bool FileObject::Rename(const String &sName)
 */
 void FileObject::Close()
 {
-	if (m_pFileImpl) {
+	if (m_pFileImpl)
 		m_pFileImpl->Close();
-	}
 }
 
 
@@ -306,7 +308,7 @@ bool FileObject::GenericCopy(const String &sDest, bool bOverwrite) const
 					// Copy file
 					char szBuffer[4096];
 					while (!cInput.IsEof()) {
-						uint32 nSize = cInput.Read(szBuffer, 1, 4096);
+						const uint32 nSize = cInput.Read(szBuffer, 1, 4096);
 						cOutput.Write(szBuffer, 1, nSize);
 					}
 
@@ -346,7 +348,7 @@ bool FileObject::GenericMove(const String &sDest)
 					// Copy file
 					char szBuffer[4096];
 					while (!cInput.IsEof()) {
-						uint32 nSize = cInput.Read(szBuffer, 1, 4096);
+						const uint32 nSize = cInput.Read(szBuffer, 1, 4096);
 						cOutput.Write(szBuffer, 1, nSize);
 					}
 
@@ -381,7 +383,7 @@ bool FileObject::GenericMove(const String &sDest)
 *    Copy constructor
 */
 FileObject::FileObject(const FileObject &cSource) :
-	m_pFileImpl(NULL)
+	m_pFileImpl(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

@@ -102,10 +102,11 @@ bool ResourceManager<AType>::Unload(AType &cResource)
 		const AType *pResource = m_mapResources.Get(cResource.GetName());
 		if (pResource && &cResource == pResource) {
 			// Remove the resource
-			if (m_pStandardResource == &cResource) m_pStandardResource = NULL;
+			if (m_pStandardResource == &cResource)
+				m_pStandardResource = nullptr;
 			m_mapResources.Remove(cResource.GetName());
 			m_lstResources.Remove(&cResource);
-			cResource.m_pManager = NULL;
+			cResource.m_pManager = nullptr;
 
 			// Destroy the resource
 			cResource.DeleteResource();
@@ -252,7 +253,8 @@ AType *ResourceManager<AType>::LoadResource(const PLGeneral::String &sFilename)
 {
 	// IS there already a resource with this name?
 	AType *pResource = Get(sFilename);
-	if (pResource) return pResource;
+	if (pResource)
+		return pResource;
 
 	// Create a new resource
 	pResource = Create(sFilename);
@@ -260,11 +262,12 @@ AType *ResourceManager<AType>::LoadResource(const PLGeneral::String &sFilename)
 		// Load the resource
 		if (pResource->Load(sFilename))
 			return pResource; // Return the new resource
-		else delete pResource;
+		else
+			delete pResource;
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -354,7 +357,7 @@ AType *ResourceManager<AType>::Get(const PLGeneral::String &sName) const
 */
 template <class AType>
 ResourceManager<AType>::ResourceManager() :
-	m_pStandardResource(NULL),
+	m_pStandardResource(nullptr),
 	m_bUnloadUnused(false)
 {
 }
@@ -464,10 +467,11 @@ bool ResourceManager<AType>::Remove(AType &cResource)
 	const AType *pResource = m_mapResources.Get(cResource.GetName());
 	if (pResource && &cResource == pResource) {
 		// Remove the resource
-		if (m_pStandardResource == &cResource) m_pStandardResource = NULL;
+		if (m_pStandardResource == &cResource)
+			m_pStandardResource = nullptr;
 		m_mapResources.Remove(cResource.GetName());
 		m_lstResources.Remove(&cResource);
-		cResource.m_pManager = NULL;
+		cResource.m_pManager = nullptr;
 
 		// Done
 		return true;

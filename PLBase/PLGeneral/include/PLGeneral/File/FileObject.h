@@ -80,9 +80,9 @@ class FileObject {
 		*  @param[in] sUrl
 		*    URL of the file or directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API FileObject(const String &sUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API FileObject(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -91,9 +91,9 @@ class FileObject {
 		*  @param[in] cUrl
 		*    URL of the file or directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API FileObject(const Url &cUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API FileObject(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -108,9 +108,9 @@ class FileObject {
 		*  @param[in] sUrl
 		*    URL of the file or directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API void Assign(const String &sUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API void Assign(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -119,9 +119,9 @@ class FileObject {
 		*  @param[in] cUrl
 		*    URL of the file or directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API void Assign(const Url &cUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API void Assign(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -318,7 +318,7 @@ class FileObject {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		FileImpl *m_pFileImpl;	/**< Platform implementation for file object (can be NULL) */
+		FileImpl *m_pFileImpl;	/**< Platform implementation for file object (can be a null pointer) */
 		Url		  m_cNullUrl;	/**< Empty URL */
 
 

@@ -49,7 +49,7 @@ namespace PLGeneral {
 ThreadLinux::ThreadLinux(Thread &cThread, bool bThreadID, uint32 nThreadID) :
 	ThreadImpl(cThread, bThreadID, nThreadID),
 	m_nThreadID(0),
-	m_pMutex(NULL),
+	m_pMutex(nullptr),
 	m_nPriorityClass(Thread::NormalPriorityClass),
 	m_nPriority(Thread::NormalPriority)
 {
@@ -71,7 +71,8 @@ ThreadLinux::ThreadLinux(Thread &cThread, bool bThreadID, uint32 nThreadID) :
 ThreadLinux::~ThreadLinux()
 {
 	// Delete mutex
-	if (m_pMutex) delete m_pMutex;
+	if (m_pMutex)
+		delete m_pMutex;
 }
 
 
@@ -95,7 +96,7 @@ bool ThreadLinux::Start()
 	// Check if the thread has already been started
 	if (!m_nThreadID) {
 		// Create thread
-		int nStatus = pthread_create(&m_nThreadID, NULL, &RunThread, (void*)&GetThread());
+		const int nStatus = pthread_create(&m_nThreadID, nullptr, &RunThread, (void*)&GetThread());
 		if (!nStatus) {
 			// Success
 			return true;
@@ -119,7 +120,8 @@ bool ThreadLinux::Terminate()
 
 		// Unlock the execution mutex because the thread was terminated
 		// -> the thread didn't unlock the mutex itself on exiting
-		if (m_pMutex) m_pMutex->Unlock();
+		if (m_pMutex)
+			m_pMutex->Unlock();
 
 		// Done
 		return true;
@@ -134,7 +136,7 @@ bool ThreadLinux::Join()
 	// Check if the thread has been started
 	if (m_nThreadID) {
 		// Wait for thread to stop
-		if (!pthread_join(m_nThreadID, NULL)) {
+		if (!pthread_join(m_nThreadID, nullptr)) {
 			// Release thread
 			m_nThreadID = 0;
 
@@ -161,7 +163,7 @@ bool ThreadLinux::Join(uint32 nTimeout)
 			m_pMutex->Unlock();
 
 			// Wait for thread to stop
-			if (!pthread_join(m_nThreadID, NULL)) {
+			if (!pthread_join(m_nThreadID, nullptr)) {
 				// Release thread
 				m_nThreadID = 0;
 
@@ -236,7 +238,7 @@ void *ThreadLinux::RunThread(void *pParameter)
 		return (void*)nRetVal;
 	} else {
 		// No return value
-		return NULL;
+		return nullptr;
 	}
 }
 

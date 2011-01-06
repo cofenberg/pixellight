@@ -287,10 +287,10 @@ class Parameter {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ParameterManager	  *m_pManager;	/**< The parameter manager this parameter is in (NEVER NULL!) */
+		ParameterManager	  *m_pManager;	/**< The parameter manager this parameter is in (NEVER a null pointer!) */
 		Parameters::EDataType  m_nType;		/**< Parameter type */
 		PLGeneral::String	   m_sName;		/**< Parameter name */
-		void				  *m_pValue;	/**< Parameter value, can be NULL*/
+		void				  *m_pValue;	/**< Parameter value, can be a null pointer */
 
 
 };

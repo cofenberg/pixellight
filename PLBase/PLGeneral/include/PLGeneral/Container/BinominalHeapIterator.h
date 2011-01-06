@@ -108,10 +108,10 @@ class BinominalHeapIterator : public IteratorImpl<ValueType> {
 		*    Returns the previous sibling of the given tree
 		*
 		*  @param[in] pTree
-		*    Tree to return the previous sibling from, can be NULL
+		*    Tree to return the previous sibling from, can be a null pointer
 		*
 		*  @return
-		*    Previous sibling tree of the given one, NULL of there's no previous sibling tree
+		*    Previous sibling tree of the given one, a null pointer of there's no previous sibling tree
 		*
 		*  @note
 		*    - Because the binominal heap provides no information about the previous sibling tree, we
@@ -126,8 +126,8 @@ class BinominalHeapIterator : public IteratorImpl<ValueType> {
 	private:
 		const BinominalHeap<KeyType, ValueType, Comparer>					*m_pHeapOwner;		/**< Binominal heap to operate on (always valid!) */
 		Stack<typename BinominalHeap<KeyType, ValueType, Comparer>::Tree*>   m_lstParent;		/**< Parent stack */
-		typename BinominalHeap<KeyType, ValueType, Comparer>::Tree			*m_pNextTree;		/**< Next tree, can be NULL */
-		typename BinominalHeap<KeyType, ValueType, Comparer>::Tree			*m_pPreviousTree;	/**< Previous tree, can be NULL */
+		typename BinominalHeap<KeyType, ValueType, Comparer>::Tree			*m_pNextTree;		/**< Next tree, can be a null pointer */
+		typename BinominalHeap<KeyType, ValueType, Comparer>::Tree			*m_pPreviousTree;	/**< Previous tree, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -54,8 +54,8 @@ namespace PLGeneral {
 */
 StringBufferUnicode::StringBufferUnicode(wchar_t szString[], uint32 nLength, uint32 nMaxLength) : StringBuffer(nLength, nMaxLength, String::Unicode),
 	m_pszString(szString),
-	m_pASCII(NULL),
-	m_pUTF8(NULL)
+	m_pASCII(nullptr),
+	m_pUTF8(nullptr)
 {
 }
 
@@ -65,8 +65,8 @@ StringBufferUnicode::StringBufferUnicode(wchar_t szString[], uint32 nLength, uin
 */
 StringBufferUnicode::StringBufferUnicode(const char szString[], uint32 nLength, uint32 nMaxLength) : StringBuffer(nLength, nMaxLength, String::Unicode),
 	m_pszString(new wchar_t[nLength + 1]),
-	m_pASCII(NULL),
-	m_pUTF8(NULL)
+	m_pASCII(nullptr),
+	m_pUTF8(nullptr)
 {
 	// We need to convert the given ASCII string into an Unicode one
 	mbstowcs(m_pszString, szString, nLength + 1);
@@ -94,13 +94,13 @@ void StringBufferUnicode::SetString(wchar_t szString[], uint32 nLength)
 	// The ASCII version is now dirty
 	if (m_pASCII) {
 		Manager.ReleaseStringBuffer(*m_pASCII);
-		m_pASCII = NULL;
+		m_pASCII = nullptr;
 	}
 
 	// The UTF8 version is now dirty
 	if (m_pUTF8) {
 		Manager.ReleaseStringBuffer(*m_pUTF8);
-		m_pUTF8 = NULL;
+		m_pUTF8 = nullptr;
 	}
 
 	// Kill the old string (there MUST by such a string :)
@@ -121,13 +121,13 @@ void StringBufferUnicode::SetNewStringLength(uint32 nLength)
 	// The ASCII version is now dirty
 	if (m_pASCII) {
 		Manager.ReleaseStringBuffer(*m_pASCII);
-		m_pASCII = NULL;
+		m_pASCII = nullptr;
 	}
 
 	// The UTF8 version is now dirty
 	if (m_pUTF8) {
 		Manager.ReleaseStringBuffer(*m_pUTF8);
-		m_pUTF8 = NULL;
+		m_pUTF8 = nullptr;
 	}
 
 	// Set new string length
@@ -225,13 +225,13 @@ StringBuffer *StringBufferUnicode::Duplicate()
 		// The ASCII version is now dirty
 		if (m_pASCII) {
 			Manager.ReleaseStringBuffer(*m_pASCII);
-			m_pASCII = NULL;
+			m_pASCII = nullptr;
 		}
 
 		// The UTF8 version is now dirty
 		if (m_pUTF8) {
 			Manager.ReleaseStringBuffer(*m_pUTF8);
-			m_pUTF8 = NULL;
+			m_pUTF8 = nullptr;
 		}
 
 		// Just return this string buffer
@@ -427,14 +427,14 @@ bool StringBufferUnicode::IsSubstring(const char szString[], uint32 nLength) con
 	// We need to convert the given ASCII string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[nLength + 1];
 	mbstowcs(pUnicode, szString, nLength + 1);
-	const bool bResult = wcsstr(m_pszString, pUnicode) != NULL;
+	const bool bResult = wcsstr(m_pszString, pUnicode) != nullptr;
 	delete [] pUnicode;
 	return bResult;
 }
 
 bool StringBufferUnicode::IsSubstring(const wchar_t szString[], uint32 nLength) const
 {
-	return (wcsstr(m_pszString, szString) != NULL);
+	return (wcsstr(m_pszString, szString) != nullptr);
 }
 
 int StringBufferUnicode::IndexOf(const char szString[], uint32 nPos, uint32 nLength) const
@@ -818,7 +818,7 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 	if (!nFinalLength) {
 		delete [] pszOldUnicode;
 		delete [] pszNewUnicode;
-		return NULL; // The string is now empty!
+		return nullptr; // The string is now empty!
 	}
 
 	// Create the new string
@@ -898,7 +898,7 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 	// Get and check the new length
 	const uint32 nFinalLength = m_nLength + (nNewLength - nOldLength)*nReplaced;
 	if (!nFinalLength)
-		return NULL; // The string is now empty!
+		return nullptr; // The string is now empty!
 
 	// Create the new string
 	wchar_t *pszNewString  = new wchar_t[nFinalLength + 1];
@@ -999,7 +999,7 @@ StringBuffer *StringBufferUnicode::TrimLeading()
 
 		// Is the string now empty?
 		if (nCount == m_nLength)
-			return NULL;				// The string is now empty
+			return nullptr;				// The string is now empty
 		else
 			return Delete(0, nCount);	// Return the new string buffer
 	}
@@ -1020,7 +1020,7 @@ StringBuffer *StringBufferUnicode::TrimTrailing()
 
 		// Is the string now empty?
 		if (nCount == m_nLength)
-			return NULL;													// The string is now empty
+			return nullptr;													// The string is now empty
 		else
 			return Delete(uint32(pszString - m_pszString) + 1, nCount);		// Return the new string buffer
 	}
@@ -1041,7 +1041,7 @@ StringBuffer *StringBufferUnicode::RemoveLineEndings()
 
 		// Is the string now empty?
 		if (nCount == m_nLength)
-			return NULL;													// The string is now empty
+			return nullptr;													// The string is now empty
 		else
 			return Delete(uint32(pszString - m_pszString) + 1, nCount);		// Return the new string buffer
 	}

@@ -121,7 +121,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    Loadable type index
 		*
 		*  @return
-		*    The requested loadable type, NULL on error
+		*    The requested loadable type, a null pointer on error
 		*/
 		PLCORE_API LoadableType *GetType(PLGeneral::uint32 nIndex);
 
@@ -133,7 +133,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    Loadable type name
 		*
 		*  @return
-		*    The requested loadable type, NULL on error
+		*    The requested loadable type, a null pointer on error
 		*/
 		PLCORE_API LoadableType *GetType(const PLGeneral::String &sName);
 
@@ -145,7 +145,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    Extension of loadable
 		*
 		*  @return
-		*    The requested loadable type, NULL on error
+		*    The requested loadable type, a null pointer on error
 		*/
 		PLCORE_API LoadableType *GetTypeByExtension(const PLGeneral::String &sExtension);
 
@@ -169,7 +169,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    Loader index
 		*
 		*  @return
-		*    The requested loader, NULL on error
+		*    The requested loader, a null pointer on error
 		*/
 		PLCORE_API Loader *GetLoader(PLGeneral::uint32 nIndex);
 
@@ -181,7 +181,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    Extension of loadable
 		*
 		*  @return
-		*    The requested loader, NULL on error
+		*    The requested loader, a null pointer on error
 		*/
 		PLCORE_API Loader *GetLoader(const PLGeneral::String &sExtension);
 

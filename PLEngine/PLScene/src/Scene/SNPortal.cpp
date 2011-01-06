@@ -260,7 +260,7 @@ void SNPortal::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		Array<Vector3> &lstVertices = m_cPolygon.GetVertexList();
 		if (lstVertices.GetNumOfElements() > 2) {
 			// Get cull query (if available) which enables us to cull 3D debug texts
-			const SQCull *pCullQuery = NULL;
+			const SQCull *pCullQuery = nullptr;
 			if (pVisNode) {
 				const VisNode *pParentVisNode = pVisNode->GetParent();
 				if (pParentVisNode && pParentVisNode->IsContainer())

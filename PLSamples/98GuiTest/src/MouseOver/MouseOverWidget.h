@@ -60,7 +60,7 @@ class MouseOverWidget : public PLGui::Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		MouseOverWidget(Widget *pParent = NULL);
+		MouseOverWidget(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

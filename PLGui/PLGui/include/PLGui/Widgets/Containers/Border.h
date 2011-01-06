@@ -71,7 +71,7 @@ class Border : public ContainerWidget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API Border(Widget *pParent = NULL);
+		PLGUI_API Border(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

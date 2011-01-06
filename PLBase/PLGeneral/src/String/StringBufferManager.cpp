@@ -43,8 +43,8 @@ namespace PLGeneral {
 *    Constructor
 */
 StringBufferManager::StringBufferManager() :
-	m_pStringBufferASCII(NULL),
-	m_pStringBufferUnicode(NULL)
+	m_pStringBufferASCII(nullptr),
+	m_pStringBufferUnicode(nullptr)
 {
 }
 
@@ -64,7 +64,7 @@ StringBufferManager::~StringBufferManager()
 			}
 		}
 		delete [] m_pStringBufferASCII;
-		m_pStringBufferASCII = NULL;
+		m_pStringBufferASCII = nullptr;
 	}
 
 	// Destroy all buffered unicode string buffers
@@ -77,7 +77,7 @@ StringBufferManager::~StringBufferManager()
 			}
 		}
 		delete [] m_pStringBufferUnicode;
-		m_pStringBufferUnicode = NULL;
+		m_pStringBufferUnicode = nullptr;
 	}
 }
 
@@ -87,7 +87,7 @@ StringBufferManager::~StringBufferManager()
 */
 StringBufferASCII *StringBufferManager::GetStringBufferASCII(uint32 nLength)
 {
-	StringBufferASCII *pStringBufferASCII = NULL;
+	StringBufferASCII *pStringBufferASCII = nullptr;
 
 	// Calculate the maximum available length of the string (excluding the terminating zero)
 	const uint32 nMaxLength = nLength + NumOfReservedCharacters;
@@ -101,7 +101,7 @@ StringBufferASCII *StringBufferManager::GetStringBufferASCII(uint32 nLength)
 			if (m_pStringBufferASCII[nIndex]) {
 				// Jap, revive this string buffer!
 				pStringBufferASCII = m_pStringBufferASCII[nIndex];
-				m_pStringBufferASCII[nIndex] = NULL;
+				m_pStringBufferASCII[nIndex] = nullptr;
 
 				// Get us out of the loop
 				j = -1;
@@ -129,7 +129,7 @@ StringBufferASCII *StringBufferManager::GetStringBufferASCII(uint32 nLength)
 */
 StringBufferUnicode *StringBufferManager::GetStringBufferUnicode(uint32 nLength)
 {
-	StringBufferUnicode *pStringBufferUnicode = NULL;
+	StringBufferUnicode *pStringBufferUnicode = nullptr;
 
 	// Calculate the maximum available length of the string (excluding the terminating zero)
 	const uint32 nMaxLength = nLength + NumOfReservedCharacters;
@@ -143,7 +143,7 @@ StringBufferUnicode *StringBufferManager::GetStringBufferUnicode(uint32 nLength)
 			if (m_pStringBufferUnicode[nIndex]) {
 				// Jap, revive this string buffer!
 				pStringBufferUnicode = m_pStringBufferUnicode[nIndex];
-				m_pStringBufferUnicode[nIndex] = NULL;
+				m_pStringBufferUnicode[nIndex] = nullptr;
 
 				// Get us out of the loop
 				j = -1;

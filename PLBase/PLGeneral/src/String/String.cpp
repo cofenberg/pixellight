@@ -68,11 +68,11 @@ String String::Format(const char *pszFormat, ...)
 	// Check format string
 	if (pszFormat && pszFormat[0] != '\0') {
 	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, NULL);
+		char *pSaveLocale = setlocale(LC_ALL, nullptr);
 		setlocale(LC_ALL, "C");
 	#endif
 
-		// Get the required buffer length, does not include the terminating null character
+		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
 		va_start(vaList, pszFormat);
 		const int nLength = _vscprintf(pszFormat, vaList);
@@ -114,11 +114,11 @@ String String::Format(const wchar_t *pszFormat, ...)
 	// Check format string
 	if (pszFormat && pszFormat[0] != L'\0') {
 	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, NULL);
+		char *pSaveLocale = setlocale(LC_ALL, nullptr);
 		setlocale(LC_ALL, "C");
 	#endif
 
-		// Get the required buffer length, does not include the terminating null character
+		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
 		va_start(vaList, pszFormat);
 		const int nLength = _vscwprintf(pszFormat, vaList);
@@ -194,7 +194,7 @@ String String::FromUTF8(const char *pszUTF8, int nLength, uint32 nNumOfBytes)
 *    Constructor
 */
 String::String() :
-	m_pStringBuffer(NULL)
+	m_pStringBuffer(nullptr)
 {
 }
 
@@ -214,7 +214,7 @@ String::String(char nValue)
 		}
 	} else {
 		// Empty string
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 	}
 }
 
@@ -230,7 +230,7 @@ String::String(wchar_t nValue)
 		}
 	} else {
 		// Empty string
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 	}
 }
 
@@ -240,7 +240,7 @@ String::String(wchar_t nValue)
 */
 String::String(const char *pszString, bool bCopy, int nLength)
 {
-	// Is pszString a NULL pointer?
+	// Is pszString a null pointer?
 	if (pszString) {
 		// Get the length of the given string?
 		if (nLength < 0) {
@@ -248,7 +248,7 @@ String::String(const char *pszString, bool bCopy, int nLength)
 			nLength = pszString ? (uint32)strlen(pszString) : 0;
 		}
 	} else {
-		// NULL pointer string = length of 0!
+		// A null pointer string = length of 0!
 		nLength = 0;
 	}
 
@@ -269,7 +269,7 @@ String::String(const char *pszString, bool bCopy, int nLength)
 		}
 	} else {
 		// Empty string
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 
 		// Lookout, the length may be 0, but it's still possible that the pszString pointer is valid -
 		// and now we really have to fullfill the duties described within the method documentation!
@@ -280,7 +280,7 @@ String::String(const char *pszString, bool bCopy, int nLength)
 
 String::String(const wchar_t *pszString, bool bCopy, int nLength)
 {
-	// Is pszString a NULL pointer?
+	// Is pszString a null pointer?
 	if (pszString) {
 		// Get the length of the given string?
 		if (nLength < 0) {
@@ -288,7 +288,7 @@ String::String(const wchar_t *pszString, bool bCopy, int nLength)
 			nLength = pszString ? (uint32)wcslen(pszString) : 0;
 		}
 	} else {
-		// NULL pointer string = length of 0!
+		// A null pointer string = length of 0!
 		nLength = 0;
 	}
 
@@ -309,7 +309,7 @@ String::String(const wchar_t *pszString, bool bCopy, int nLength)
 		}
 	} else {
 		// Empty string
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 
 		// Lookout, the length may be 0, but it's still possible that the pszString pointer is valid -
 		// and now we really have to fullfill the duties described within the method documentation!
@@ -330,7 +330,7 @@ String::String(const String &sString)
 		m_pStringBuffer->AddReference();
 	} else {
 		// Empty string
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 	}
 }
 
@@ -346,7 +346,7 @@ String::String(StringBuffer *pStringBuffer)
 		m_pStringBuffer->AddReference();
 	} else {
 		// Empty string
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 	}
 }
 
@@ -394,7 +394,7 @@ uint32 String::GetNumOfBytes() const
 */
 char String::operator [](uint32 nIndex) const
 {
-	// Terminating NULL by default...
+	// Terminating \0 by default...
 	return (nIndex < GetLength()) ? GetASCII()[nIndex] : '\0';
 }
 
@@ -2228,12 +2228,12 @@ uint32 String::GetUInt32() const
 			case ASCII:
 				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
 				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return strtoul(((StringBufferASCII*)m_pStringBuffer)->m_pszString, NULL, 10);
+				return strtoul(((StringBufferASCII*)m_pStringBuffer)->m_pszString, nullptr, 10);
 
 			case Unicode:
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return wcstoul(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, NULL, 10);
+				return wcstoul(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, nullptr, 10);
 		}
 	}
 
@@ -2250,7 +2250,7 @@ uint64 String::GetUInt64() const
 
 			case Unicode:
 				#ifdef LINUX
-					return wcstoumax(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, NULL, 10);
+					return wcstoumax(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, nullptr, 10);
 				#elif defined(WIN32)
 					return _wtoi64(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
 				#endif
@@ -2290,7 +2290,7 @@ float String::GetFloat() const
 {
 	if (m_pStringBuffer) {
 	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, NULL);
+		char *pSaveLocale = setlocale(LC_ALL, nullptr);
 		setlocale(LC_ALL, "C");
 	#endif
 		float fReturnValue;
@@ -2318,7 +2318,7 @@ double String::GetDouble() const
 {
 	if (m_pStringBuffer) {
 	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, NULL);
+		char *pSaveLocale = setlocale(LC_ALL, nullptr);
 		setlocale(LC_ALL, "C");
 	#endif
 		double fReturnValue;
@@ -2801,7 +2801,7 @@ void String::ReleaseStringBuffer()
 	// Check string buffer
 	if (m_pStringBuffer) {
 		StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);;
-		m_pStringBuffer = NULL;
+		m_pStringBuffer = nullptr;
 	}
 }
 

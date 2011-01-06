@@ -58,30 +58,30 @@ namespace PLCompositing {
 HDRAverageLuminance::HDRAverageLuminance(Renderer &cRenderer) :
 	EventHandlerDirty(&HDRAverageLuminance::OnDirty, this),
 	m_pRenderer(&cRenderer),
-	m_pFullscreenQuad(NULL),
-	m_pVertexShader(NULL),
-	m_pDownsampleLogFragmentShader(NULL),
-	m_pDownsampleLogProgram(NULL),
-	m_pDownsampleLogPositionProgramAttribute(NULL),
-	m_pDownsampleLogTextureSizeProgramUniform(NULL),
-	m_pDownsampleLogTextureProgramUniform(NULL),
-	m_pDownsampleLogLuminanceConvertProgramUniform(NULL),
-	m_pDownsampleLogEpsilonProgramUniform(NULL),
-	m_pDownsampleLogRenderTarget(NULL),
-	m_pDownsampleVertexShader(NULL),
-	m_pDownsampleFragmentShader(NULL),
-	m_pDownsampleProgram(NULL),
-	m_pDownsamplePositionProgramAttribute(NULL),
-	m_pDownsampleTextureSizeProgramUniform(NULL),
-	m_pDownsampleSizeProgramUniform(NULL),
-	m_pDownsampleTextureProgramUniform(NULL),
-	m_pDownsampleRenderTarget(NULL),
-	m_pDownsampleExpFragmentShader(NULL),
-	m_pDownsampleExpProgram(NULL),
-	m_pDownsampleExpPositionProgramAttribute(NULL),
-	m_pDownsampleExpTextureSizeProgramUniform(NULL),
-	m_pDownsampleExpTextureProgramUniform(NULL),
-	m_pAverageLuminanceTextureBuffer2D(NULL)
+	m_pFullscreenQuad(nullptr),
+	m_pVertexShader(nullptr),
+	m_pDownsampleLogFragmentShader(nullptr),
+	m_pDownsampleLogProgram(nullptr),
+	m_pDownsampleLogPositionProgramAttribute(nullptr),
+	m_pDownsampleLogTextureSizeProgramUniform(nullptr),
+	m_pDownsampleLogTextureProgramUniform(nullptr),
+	m_pDownsampleLogLuminanceConvertProgramUniform(nullptr),
+	m_pDownsampleLogEpsilonProgramUniform(nullptr),
+	m_pDownsampleLogRenderTarget(nullptr),
+	m_pDownsampleVertexShader(nullptr),
+	m_pDownsampleFragmentShader(nullptr),
+	m_pDownsampleProgram(nullptr),
+	m_pDownsamplePositionProgramAttribute(nullptr),
+	m_pDownsampleTextureSizeProgramUniform(nullptr),
+	m_pDownsampleSizeProgramUniform(nullptr),
+	m_pDownsampleTextureProgramUniform(nullptr),
+	m_pDownsampleRenderTarget(nullptr),
+	m_pDownsampleExpFragmentShader(nullptr),
+	m_pDownsampleExpProgram(nullptr),
+	m_pDownsampleExpPositionProgramAttribute(nullptr),
+	m_pDownsampleExpTextureSizeProgramUniform(nullptr),
+	m_pDownsampleExpTextureProgramUniform(nullptr),
+	m_pAverageLuminanceTextureBuffer2D(nullptr)
 {
 }
 
@@ -145,48 +145,48 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 		// If there's an previous instance of the program, destroy it first
 		if (m_pDownsampleLogProgram) {
 			delete m_pDownsampleLogProgram;
-			m_pDownsampleLogProgram = NULL;
+			m_pDownsampleLogProgram = nullptr;
 		}
 		if (m_pDownsampleLogFragmentShader) {
 			delete m_pDownsampleLogFragmentShader;
-			m_pDownsampleLogFragmentShader = NULL;
+			m_pDownsampleLogFragmentShader = nullptr;
 		}
 		if (m_pDownsampleProgram) {
 			delete m_pDownsampleProgram;
-			m_pDownsampleProgram = NULL;
+			m_pDownsampleProgram = nullptr;
 		}
 		if (m_pDownsampleFragmentShader) {
 			delete m_pDownsampleFragmentShader;
-			m_pDownsampleFragmentShader = NULL;
+			m_pDownsampleFragmentShader = nullptr;
 		}
 		if (m_pDownsampleVertexShader) {
 			delete m_pDownsampleVertexShader;
-			m_pDownsampleVertexShader = NULL;
+			m_pDownsampleVertexShader = nullptr;
 		}
 		if (m_pDownsampleExpProgram) {
 			delete m_pDownsampleExpProgram;
-			m_pDownsampleExpProgram = NULL;
+			m_pDownsampleExpProgram = nullptr;
 		}
 		if (m_pDownsampleExpFragmentShader) {
 			delete m_pDownsampleExpFragmentShader;
-			m_pDownsampleExpFragmentShader = NULL;
+			m_pDownsampleExpFragmentShader = nullptr;
 		}
 		if (m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
-		m_pDownsampleLogPositionProgramAttribute		= NULL;
-		m_pDownsampleLogTextureSizeProgramUniform		= NULL;
-		m_pDownsampleLogTextureProgramUniform			= NULL;
-		m_pDownsampleLogLuminanceConvertProgramUniform	= NULL;
-		m_pDownsampleLogEpsilonProgramUniform			= NULL;
-		m_pDownsamplePositionProgramAttribute			= NULL;
-		m_pDownsampleTextureSizeProgramUniform			= NULL;
-		m_pDownsampleSizeProgramUniform					= NULL;
-		m_pDownsampleTextureProgramUniform				= NULL;
-		m_pDownsampleExpPositionProgramAttribute		= NULL;
-		m_pDownsampleExpTextureSizeProgramUniform		= NULL;
-		m_pDownsampleExpTextureProgramUniform			= NULL;
+		m_pDownsampleLogPositionProgramAttribute		= nullptr;
+		m_pDownsampleLogTextureSizeProgramUniform		= nullptr;
+		m_pDownsampleLogTextureProgramUniform			= nullptr;
+		m_pDownsampleLogLuminanceConvertProgramUniform	= nullptr;
+		m_pDownsampleLogEpsilonProgramUniform			= nullptr;
+		m_pDownsamplePositionProgramAttribute			= nullptr;
+		m_pDownsampleTextureSizeProgramUniform			= nullptr;
+		m_pDownsampleSizeProgramUniform					= nullptr;
+		m_pDownsampleTextureProgramUniform				= nullptr;
+		m_pDownsampleExpPositionProgramAttribute		= nullptr;
+		m_pDownsampleExpTextureSizeProgramUniform		= nullptr;
+		m_pDownsampleExpTextureProgramUniform			= nullptr;
 
 		// Get the shader language instance
 		ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(sUsedShaderLanguage);
@@ -299,7 +299,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 					// Destroy the downsample 2x2 log render target
 					if (m_pDownsampleLogRenderTarget) {
 						delete m_pDownsampleLogRenderTarget;
-						m_pDownsampleLogRenderTarget = NULL;
+						m_pDownsampleLogRenderTarget = nullptr;
 					}
 				}
 
@@ -344,7 +344,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 		}
 
 		Vector2i vFinalTextureSize;
-		TextureBufferRectangle *pFinalTextureBufferRectangle = NULL;
+		TextureBufferRectangle *pFinalTextureBufferRectangle = nullptr;
 
 		// Second step: Reduce to <4>x<4>
 		if (m_pRenderer->SetProgram(m_pDownsampleProgram)) {
@@ -362,7 +362,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 					// Destroy the downsample 4x4 render target
 					if (m_pDownsampleRenderTarget) {
 						delete m_pDownsampleRenderTarget;
-						m_pDownsampleRenderTarget = NULL;
+						m_pDownsampleRenderTarget = nullptr;
 					}
 				}
 
@@ -423,7 +423,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				// Destroy the result render target
 				if (m_pAverageLuminanceTextureBuffer2D) {
 					delete m_pAverageLuminanceTextureBuffer2D;
-					m_pAverageLuminanceTextureBuffer2D = NULL;
+					m_pAverageLuminanceTextureBuffer2D = nullptr;
 				}
 			}
 
@@ -466,7 +466,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 */
 TextureBuffer *HDRAverageLuminance::GetTextureBuffer() const
 {
-	return m_pAverageLuminanceTextureBuffer2D ? m_pAverageLuminanceTextureBuffer2D->GetTextureBuffer() : NULL;
+	return m_pAverageLuminanceTextureBuffer2D ? m_pAverageLuminanceTextureBuffer2D->GetTextureBuffer() : nullptr;
 }
 
 

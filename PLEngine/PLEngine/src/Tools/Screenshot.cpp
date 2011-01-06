@@ -181,7 +181,7 @@ bool Screenshot::SaveScreenshot(const String &sFilename, uint16 nWidth, uint16 n
 				cRenderer.SetRenderTarget(pRenderTargetBackup);
 
 				// Unset surface painter of our new render target - else the shared surface painter is destroyed
-				pRenderTarget->SetPainter(NULL, false);
+				pRenderTarget->SetPainter(nullptr, false);
 
 				// Destroy the render target
 				delete pRenderTarget;

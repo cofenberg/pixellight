@@ -142,7 +142,7 @@ class Surface {
 		*    Returns the surface painter
 		*
 		*  @return
-		*    The surface painter, NULL if there's no surface painter
+		*    The surface painter, a null pointer if there's no surface painter
 		*/
 		PLRENDERER_API SurfacePainter *GetPainter() const;
 
@@ -151,7 +151,7 @@ class Surface {
 		*    Set a surface painter
 		*
 		*  @param[in] pPainter
-		*    Pointer to the surface painter, can be NULL
+		*    Pointer to the surface painter, can be a null pointer
 		*  @param[in] bDestroy
 		*    Destroy the current set surface painter? (if there's one)
 		*
@@ -340,7 +340,7 @@ class Surface {
 		EType			m_nType;		/**< Surface type */
 		bool			m_bActive;		/**< Is the surface active? */
 		bool			m_bSwapY;		/**< Is the surface flipped along the y axis? */
-		SurfacePainter *m_pPainter;		/**< The used surface painter, can be NULL */
+		SurfacePainter *m_pPainter;		/**< The used surface painter, can be a null pointer */
 		/** List of surface handlers */
 		PLGeneral::List<SurfaceHandler*> m_lstHandler;
 

@@ -71,7 +71,7 @@ void SRPDeferredHBAO::SetNumberOfDirections(uint32 nValue)
 		// Destroy the random normals texture because it is now out-of-date
 		if (m_pRandomNormalsTexture) {
 			delete m_pRandomNormalsTexture;
-			m_pRandomNormalsTexture = NULL;
+			m_pRandomNormalsTexture = nullptr;
 		}
 	}
 }
@@ -93,8 +93,8 @@ SRPDeferredHBAO::SRPDeferredHBAO() :
 	RandomUVScale(this),
 	Flags(this),
 	m_nNumberOfDirections(8),
-	m_pRandomNormalsTexture(NULL),
-	m_pProgramGenerator(NULL)
+	m_pRandomNormalsTexture(nullptr),
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -127,7 +127,7 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;
-			m_pProgramGenerator = NULL;
+			m_pProgramGenerator = nullptr;
 		}
 
 		// Choose the shader source codes depending on the requested shader language

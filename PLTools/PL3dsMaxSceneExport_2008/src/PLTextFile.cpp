@@ -42,11 +42,11 @@ const int PLTextFile::TabSize = 4;
 */
 PLTextFile::PLTextFile(const std::string &sFilename, bool bFlush) :
 	m_sFilename(sFilename),
-	m_pFile(sFilename.length() ? fopen(sFilename.c_str(), "wt") : NULL),
+	m_pFile(sFilename.length() ? fopen(sFilename.c_str(), "wt") : nullptr),
 	m_bFlush(bFlush),
 	m_nSpaces(0),
 	m_nBufferLength(0),
-	m_pszBuffer(NULL)
+	m_pszBuffer(nullptr)
 {
 }
 
@@ -67,11 +67,11 @@ void PLTextFile::Close()
 {
 	if (m_pFile) {
 		fclose(m_pFile);
-		m_pFile = NULL;
+		m_pFile = nullptr;
 	}
 	if (m_pszBuffer) {
 		delete [] m_pszBuffer;
-		m_pszBuffer = NULL;
+		m_pszBuffer = nullptr;
 	}
 }
 
@@ -90,7 +90,7 @@ const std::string &PLTextFile::GetFilename() const
 */
 bool PLTextFile::IsValid() const
 {
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 /**
@@ -176,7 +176,7 @@ bool PLTextFile::PrintF(const char szString[], ...)
 		// Get the required buffer length
 		unsigned int nLength = _vscprintf(szString, vaList);
 		if (nLength > 0) {
-			// Update our string buffer (+1 because we need to include the terminating null character!)
+			// Update our string buffer (+1 because we need to include the terminating zero character!)
 			UpdateStringBuffer(nLength + 1);
 			if (m_pszBuffer) {
 				// Print the formatted string
@@ -249,7 +249,7 @@ bool PLTextFile::PrintFLine(const char szString[], ...)
 		// Get the required buffer length
 		unsigned int nLength = _vscprintf(szString, vaList);
 		if (nLength > 0) {
-			// Update our string buffer (+1 because we need to include the terminating null character!)
+			// Update our string buffer (+1 because we need to include the terminating zero character!)
 			UpdateStringBuffer(nLength + 1);
 			if (m_pszBuffer) {
 				// Add spaces

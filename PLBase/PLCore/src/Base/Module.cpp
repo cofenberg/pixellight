@@ -43,7 +43,7 @@ namespace PLCore {
 Module::Module(uint32 nModuleID) :
 	m_nModuleID(nModuleID),
 	m_bPlugin(false),
-	m_pDynLib(NULL),
+	m_pDynLib(nullptr),
 	m_sName("Unknown"),
 	m_sVendor("Unknown"),
 	m_sLicense("Unknown"),

@@ -48,7 +48,7 @@ FibonacciHeapIterator<KeyType, ValueType, Comparer>::FibonacciHeapIterator(const
 	if (nIndex <= m_pHeapOwner->m_nNumOfElements/2) { // 0 -> (NumOfElements-1)
 		// Initialize data
 		m_pNextTree     = m_pHeapOwner->m_pFirst;
-		m_pPreviousTree = NULL;
+		m_pPreviousTree = nullptr;
 
 		// Go to the correct start index
 		uint32 nCurrentIndex = 0;
@@ -58,7 +58,7 @@ FibonacciHeapIterator<KeyType, ValueType, Comparer>::FibonacciHeapIterator(const
 		}
 	} else { // (NumOfElements-1) -> 0
 		// Initialize data
-		m_pNextTree     = NULL;
+		m_pNextTree     = nullptr;
 		m_pPreviousTree = m_pHeapOwner->m_pFirst;
 		do {
 			// Find last sibling
@@ -90,7 +90,7 @@ FibonacciHeapIterator<KeyType, ValueType, Comparer>::FibonacciHeapIterator(const
 template <class KeyType, class ValueType, class Comparer>
 FibonacciHeapIterator<KeyType, ValueType, Comparer>::FibonacciHeapIterator(const FibonacciHeap<KeyType, ValueType, Comparer> &cHeapOwner) :
 	m_pHeapOwner(&cHeapOwner),
-	m_pNextTree(NULL),
+	m_pNextTree(nullptr),
 	m_pPreviousTree(m_pHeapOwner->m_pFirst)
 {
 	// Initialize data
@@ -146,7 +146,7 @@ IteratorImpl<ValueType> *FibonacciHeapIterator<KeyType, ValueType, Comparer>::Cl
 template <class KeyType, class ValueType, class Comparer>
 bool FibonacciHeapIterator<KeyType, ValueType, Comparer>::HasNext() const
 {
-	return (m_pNextTree != NULL);
+	return (m_pNextTree != nullptr);
 }
 
 template <class KeyType, class ValueType, class Comparer>
@@ -187,7 +187,7 @@ ValueType &FibonacciHeapIterator<KeyType, ValueType, Comparer>::Next()
 template <class KeyType, class ValueType, class Comparer>
 bool FibonacciHeapIterator<KeyType, ValueType, Comparer>::HasPrevious() const
 {
-	return (m_pPreviousTree != NULL);
+	return (m_pPreviousTree != nullptr);
 }
 
 template <class KeyType, class ValueType, class Comparer>
@@ -209,7 +209,7 @@ ValueType &FibonacciHeapIterator<KeyType, ValueType, Comparer>::Previous()
 		// Go to parent...
 		if (!m_lstParent.GetNumOfElements()) {
 			// Ok, no parent, no previous sibling - this must be the beginning :)
-			m_pPreviousTree = NULL;
+			m_pPreviousTree = nullptr;
 
 			// Return the value
 			return pValue ? *pValue : FibonacciHeap<KeyType, ValueType, Comparer>::Null;

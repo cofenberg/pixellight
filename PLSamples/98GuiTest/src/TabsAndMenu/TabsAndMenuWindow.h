@@ -71,7 +71,7 @@ class TabsAndMenuWindow : public PLGui::Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		TabsAndMenuWindow(Widget *pParent = NULL);
+		TabsAndMenuWindow(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

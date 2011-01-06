@@ -48,7 +48,7 @@ Surface::~Surface()
 	{ // Inform all surface handler
 		Iterator<SurfaceHandler*> cIterator = m_lstHandler.GetIterator();
 		while (cIterator.HasNext())
-			cIterator.Next()->m_pSurface = NULL;
+			cIterator.Next()->m_pSurface = nullptr;
 	}
 
 	// Remove surface from the renderer
@@ -113,7 +113,7 @@ bool Surface::SetPainter(SurfacePainter *pPainter, bool bDestroy)
 	// Destroy current surface painter
 	if (bDestroy && m_pPainter) {
 		delete m_pPainter;
-		m_pPainter = NULL;
+		m_pPainter = nullptr;
 	}
 
 	// Set new painter
@@ -182,7 +182,7 @@ Surface::Surface(Renderer &cRenderer, EType nType) :
 	m_nType(nType),
 	m_bActive(true),
 	m_bSwapY(false),
-	m_pPainter(NULL)
+	m_pPainter(nullptr)
 {
 }
 
@@ -199,7 +199,7 @@ Surface::Surface(const Surface &cSource) :
 	m_nType(cSource.GetType()),
 	m_bActive(true),
 	m_bSwapY(false),
-	m_pPainter(NULL)
+	m_pPainter(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

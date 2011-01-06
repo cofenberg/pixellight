@@ -65,7 +65,7 @@ Source::~Source()
 */
 Source::Source(PLSound::SoundManager &cSoundManager) : PLSound::Source(cSoundManager),
 	m_nSource(0),
-	m_pStream(NULL),
+	m_pStream(nullptr),
 	m_b2D(false),
 	m_bLooping(false),
 	m_fPitch(1.0f),
@@ -134,7 +134,7 @@ void Source::Unload()
 		Stop();
 		if (m_pStream) {
 			delete m_pStream;
-			m_pStream = NULL;
+			m_pStream = nullptr;
 		} else {
 			alSourcei(m_nSource, AL_BUFFER, 0);
 		}

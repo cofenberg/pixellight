@@ -779,7 +779,7 @@ void Application::TestObjects()
 	// Call base constructor
 	System::GetInstance()->GetConsole().Print("Testing constructors:\n");
 	PLCore::Class *pClass = cObject.GetClass();
-	PLCore::Object *pObject = NULL;
+	PLCore::Object *pObject = nullptr;
 
 	pObject = pClass->Create();
 	if (pObject) delete pObject;

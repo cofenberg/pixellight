@@ -70,14 +70,14 @@ namespace PLMesh {
 */
 MeshHandler::MeshHandler() :
 	EventHandlerAnimationFrameChange(&MeshHandler::NotifyAnimationFrameChange, this),
-	m_pRenderer(NULL),
-	m_pMesh(NULL),
-	m_pVertexBuffer(NULL),
+	m_pRenderer(nullptr),
+	m_pMesh(nullptr),
+	m_pVertexBuffer(nullptr),
 	m_bMeshUpdateRequired(false),
 	m_nLOD(0),
-	m_pCurrentVertexBuffer(NULL),
-	m_pSkeletonHandler(NULL),
-	m_pMeshAnimationManager(NULL)
+	m_pCurrentVertexBuffer(nullptr),
+	m_pSkeletonHandler(nullptr),
+	m_pMeshAnimationManager(nullptr)
 {
 }
 
@@ -131,10 +131,10 @@ bool MeshHandler::SetMesh(Mesh *pMesh)
 	// Setup mesh
 	SetResource(pMesh);
 	m_pMesh				   = pMesh;
-	m_pCurrentVertexBuffer = NULL;
+	m_pCurrentVertexBuffer = nullptr;
 	if (m_pVertexBuffer) {
 		delete m_pVertexBuffer;
-		m_pVertexBuffer = NULL;
+		m_pVertexBuffer = nullptr;
 	}
 	if (pMesh) {
 		m_cGeometryVisibility.Resize(m_pMesh->GetMaxNumOfGeometries(), true, true);
@@ -157,7 +157,7 @@ bool MeshHandler::SetMesh(Mesh *pMesh)
 	} else {
 		if (m_pSkeletonHandler) {
 			delete m_pSkeletonHandler;
-			m_pSkeletonHandler = NULL;
+			m_pSkeletonHandler = nullptr;
 		}
 	}
 
@@ -171,7 +171,7 @@ bool MeshHandler::SetMesh(Mesh *pMesh)
 		m_pRenderer = m_pMesh->GetRenderer();
 	} else {
 		// Set renderer
-		m_pRenderer = NULL;
+		m_pRenderer = nullptr;
 	}
 
 	// Reset mesh animation manager
@@ -206,7 +206,7 @@ void MeshHandler::Update(float fTimeDifference, uint32 nLODLevel)
 		// Mesh update required?
 		if (m_bMeshUpdateRequired) {
 			// Use own vertex buffer?
-			bOwnVertexBuffer = (m_pMeshAnimationManager != NULL);
+			bOwnVertexBuffer = (m_pMeshAnimationManager != nullptr);
 		}
 
 		if (bOwnVertexBuffer) {
@@ -214,7 +214,7 @@ void MeshHandler::Update(float fTimeDifference, uint32 nLODLevel)
 			if (!m_pVertexBuffer) {
 				// Find the LOD level vertex buffer with the highest number of vertices
 				const MeshMorphTarget *pMorphTarget = m_pMesh->GetMorphTarget();
-				VertexBuffer *pVertexBuffer = NULL;
+				VertexBuffer *pVertexBuffer = nullptr;
 				if (pMorphTarget)
 					pVertexBuffer = pMorphTarget->GetVertexBuffer();
 
@@ -506,7 +506,7 @@ uint32 MeshHandler::GetNumOfMaterials() const
 Material *MeshHandler::GetMaterial(uint32 nMaterial) const
 {
 	MaterialHandler *pMH = m_lstMaterials[nMaterial];
-	return pMH ? pMH->GetResource() : NULL;
+	return pMH ? pMH->GetResource() : nullptr;
 }
 
 /**
@@ -598,7 +598,7 @@ MeshAnimationManager *MeshHandler::CreateMeshAnimationManager(const String &sNam
 	// Destroy mesh animation manager
 	if (m_pMeshAnimationManager) {
 		delete m_pMeshAnimationManager;
-		m_pMeshAnimationManager = NULL;
+		m_pMeshAnimationManager = nullptr;
 	}
 
 	// To keep things as fast as possible we store a pointer to the base class
@@ -623,7 +623,7 @@ MeshAnimationManager *MeshHandler::CreateMeshAnimationManager(const String &sNam
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -682,7 +682,7 @@ AnimationInfo *MeshHandler::GetAnimationInfo(const String &sName, int nLogMessag
 	}
 
 	// Done
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -701,13 +701,13 @@ JointHandler *MeshHandler::GetJointHandler(const String &sJointName) const
 			if (pJoint) {
 				// Get the base joint handler and return it
 				JointHandler &cJointHandler = pSkeletonHandler->GetJointHandlers()[pJoint->GetID()];
-				return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : NULL;
+				return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : nullptr;
 			}
 		}
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -726,13 +726,13 @@ JointHandler *MeshHandler::GetBaseJointHandler(const String &sJointName) const
 			if (pJoint) {
 				// Get the base joint handler and return it
 				JointHandler &cJointHandler = pSkeletonHandler->GetBaseJointHandlers()[pJoint->GetID()];
-				return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : NULL;
+				return (&cJointHandler != &Array<JointHandler>::Null) ? &cJointHandler : nullptr;
 			}
 		}
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 
@@ -800,7 +800,7 @@ uint32 MeshHandler::GetLODLevelIndex() const
 */
 MeshLODLevel *MeshHandler::GetLODLevel() const
 {
-	return m_pMesh ? m_pMesh->GetLODLevel(m_nLOD) : NULL;
+	return m_pMesh ? m_pMesh->GetLODLevel(m_nLOD) : nullptr;
 }
 
 
@@ -1381,7 +1381,7 @@ uint32 MeshHandler::FindGeometries(const PlaneSet &cPlaneSet, uint32 **ppnGeomet
 */
 Array<MeshTriangle> *MeshHandler::GetTriangleList()
 {
-	return m_pMesh ? &m_pMesh->GetLODLevel(m_nLOD)->GetTriangleList() : NULL;
+	return m_pMesh ? &m_pMesh->GetLODLevel(m_nLOD)->GetTriangleList() : nullptr;
 }
 
 /**
@@ -1390,7 +1390,7 @@ Array<MeshTriangle> *MeshHandler::GetTriangleList()
 */
 Array<MeshEdge> *MeshHandler::GetEdgeList()
 {
-	return m_pMesh ? &m_pMesh->GetLODLevel(m_nLOD)->GetEdgeList() : NULL;
+	return m_pMesh ? &m_pMesh->GetLODLevel(m_nLOD)->GetEdgeList() : nullptr;
 }
 
 /**
@@ -1527,7 +1527,7 @@ Material *MeshHandler::AddMaterial(Material *pMaterial)
 {
 	// Check parameter
 	if (!pMaterial)
-		return NULL;
+		return nullptr;
 
 	// Check whether the material is already added
 	for (uint32 i=0; i<m_lstMaterials.GetNumOfElements(); i++) {

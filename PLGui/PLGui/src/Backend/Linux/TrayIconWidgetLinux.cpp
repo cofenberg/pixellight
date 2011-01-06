@@ -62,7 +62,7 @@ pl_implement_class(TrayIconWidgetLinux)
 *    Constructor
 */
 TrayIconWidgetLinux::TrayIconWidgetLinux(Widget *pParent) : Widget(pParent, true),
-	m_pTrayIcon(NULL),
+	m_pTrayIcon(nullptr),
 	m_nEmbedderWindow(0)
 {
 	// Make sure that the window is not destroyed automatically by Gui, as it is managed by TrayIcon and will be deleted with it

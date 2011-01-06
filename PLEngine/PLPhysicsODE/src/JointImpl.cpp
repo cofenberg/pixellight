@@ -119,7 +119,7 @@ void JointImpl::SetBreakTorque(const Vector3 &vTorque)
 *    Constructor
 */
 JointImpl::JointImpl() :
-	m_pODEJoint(NULL)
+	m_pODEJoint(nullptr)
 {
 }
 

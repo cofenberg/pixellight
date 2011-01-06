@@ -180,7 +180,7 @@ class SCRenderToTexture : public SceneContainer {
 		*    Returns the texture buffer surface we render in
 		*
 		*  @return
-		*   The texture buffer surface we render in, NULL on error
+		*   The texture buffer surface we render in, a null pointer on error
 		*/
 		PLS_API PLRenderer::SurfaceTextureBuffer *GetSurfaceTextureBuffer() const;
 
@@ -189,7 +189,7 @@ class SCRenderToTexture : public SceneContainer {
 		*    Returns the resulting texture
 		*
 		*  @return
-		*   The resulting texture, NULL on error
+		*   The resulting texture, a null pointer on error
 		*/
 		PLS_API PLRenderer::Texture *GetTexture() const;
 
@@ -208,7 +208,7 @@ class SCRenderToTexture : public SceneContainer {
 		PLGeneral::String				  m_sSceneRenderer;			/**< Name of the used scene renderer, only used if the painter is derived of 'SPScene' */
 		PLGeneral::String				  m_sSceneName;				/**< Name of the scene to renderer, only used if the painter is derived of 'SPScene' */
 		PLGeneral::uint32				  m_nFPSLimitLastTime;		/**< Time when the last update was done */
-		PLRenderer::SurfaceTextureBuffer *m_pSurfaceTextureBuffer;	/**< Render to texture buffer, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pSurfaceTextureBuffer;	/**< Render to texture buffer, can be a null pointer */
 		PLRenderer::TextureHandler		 *m_pTextureHandler;		/**< The resulting texture (ALWAYS valid!) */
 
 
@@ -227,8 +227,8 @@ class SCRenderToTexture : public SceneContainer {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

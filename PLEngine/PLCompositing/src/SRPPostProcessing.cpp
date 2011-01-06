@@ -57,7 +57,7 @@ pl_implement_class(SRPPostProcessing)
 *    Default constructor
 */
 SRPPostProcessing::SRPPostProcessing() :
-	m_pPostProcessor(NULL)
+	m_pPostProcessor(nullptr)
 {
 }
 

@@ -47,7 +47,7 @@ namespace PLGui {
 */
 Image::Image(Gui &cGui, const String &sFilename) :
 	m_pGui(&cGui),
-	m_pImageImpl(NULL)
+	m_pImageImpl(nullptr)
 {
 	// Load image
 	if (sFilename.GetLength()) {
@@ -91,7 +91,7 @@ Image &Image::operator =(const Image &cImage)
 	// Release image
 	if (m_pImageImpl) {
 		m_pImageImpl->Release();
-		m_pImageImpl = NULL;
+		m_pImageImpl = nullptr;
 	}
 
 	// Copy image
@@ -132,7 +132,7 @@ ImageImpl *Image::GetImpl() const
 bool Image::IsEmpty() const
 {
 	// Check if an image implementation is present
-	return (m_pImageImpl == NULL);
+	return (m_pImageImpl == nullptr);
 }
 
 /**
@@ -144,7 +144,7 @@ bool Image::Load(const String &sFilename)
 	// Release image
 	if (m_pImageImpl) {
 		m_pImageImpl->Release();
-		m_pImageImpl = NULL;
+		m_pImageImpl = nullptr;
 	}
 
 	// Store filename
@@ -167,7 +167,7 @@ bool Image::LoadWithColorKey(const PLGeneral::String &sFilename, const PLGraphic
 	// Release image
 	if (m_pImageImpl) {
 		m_pImageImpl->Release();
-		m_pImageImpl = NULL;
+		m_pImageImpl = nullptr;
 	}
 
 	// Store filename

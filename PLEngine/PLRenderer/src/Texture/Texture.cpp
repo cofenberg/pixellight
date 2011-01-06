@@ -134,8 +134,8 @@ bool Texture::Bind(uint32 nStage) const
 		// Done
 		return true;
 	} else {
-		// Set NULL texture
-		GetTextureManager().GetRendererContext().GetRenderer().SetTextureBuffer(nStage, NULL);
+		// Set a null pointer texture
+		GetTextureManager().GetRendererContext().GetRenderer().SetTextureBuffer(nStage, nullptr);
 
 		// Error!
 		return false;
@@ -201,7 +201,7 @@ void Texture::DestroyTextureBuffer()
 				delete pTextureBuffer;
 		}
 	}
-	m_pTextureBufferHandler->SetResource(NULL);
+	m_pTextureBufferHandler->SetResource(nullptr);
 }
 
 

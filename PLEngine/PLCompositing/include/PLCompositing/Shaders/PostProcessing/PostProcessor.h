@@ -214,7 +214,7 @@ class PostProcessor {
 		*
 		*  @return
 		*    The current texture buffer surface with the result of the post process. This can be the
-		*    'original' texture buffer surface or one of the two internal texture buffer surfaces. Can be NULL.
+		*    'original' texture buffer surface or one of the two internal texture buffer surfaces. Can be a null pointer.
 		*/
 		PLCOM_API PLRenderer::SurfaceTextureBuffer *GetCurrentSurface() const;
 
@@ -224,15 +224,15 @@ class PostProcessor {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::TextureBuffer::EPixelFormat  m_nTextureFormat;
-		PLRenderer::SurfaceTextureBuffer		*m_pColorSurface;		/**< Can be NULL */
-		PLRenderer::VertexBuffer				*m_pVertexBuffer;		/**< Can be NULL */
+		PLRenderer::SurfaceTextureBuffer		*m_pColorSurface;		/**< Can be a null pointer */
+		PLRenderer::VertexBuffer				*m_pVertexBuffer;		/**< Can be a null pointer */
 		bool									 m_bProcessing;			/**< Processing active? */
 		bool									 m_bFirstPostProcess;	/**< Is this the first active post process? */
 		float									 m_fExtentX;			/**< Current x extension of the quad */
 		float									 m_fExtentY;			/**< Current y extension of the quad */
 		PLGeneral::uint32						 m_nFixedFillModeBackup;
 
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Can be a null pointer */
 		bool							  m_bClearRenderTarget[2];
 		bool							  m_bCurrentRenderTarget;
 		PLRenderer::TextureHandler		  m_cSourceColorTexture;		/**< The source texture for the given render pass */

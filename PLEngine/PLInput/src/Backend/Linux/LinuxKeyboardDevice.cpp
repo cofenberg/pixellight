@@ -62,7 +62,7 @@ namespace PLInput {
 */
 LinuxKeyboardDevice::LinuxKeyboardDevice(::Display *pDisplay) :
 	m_pDisplay(pDisplay),
-	m_pModifierMap(NULL)
+	m_pModifierMap(nullptr)
 {
 	// Destroy device implementation automatically
 	m_bDelete = true;
@@ -296,7 +296,7 @@ Button *LinuxKeyboardDevice::GetKeyboardKey(Keyboard *pKeyboard, int nKey)
 		case XK_Num_Lock:		return &pKeyboard->KeyNumLock;
 		case XK_Scroll_Lock:	return &pKeyboard->KeyScrollLock;
 		case XK_asciicircum:	return &pKeyboard->KeyCircumflex;
-		default:				return  NULL;
+		default:				return  nullptr;
 	}
 }
 

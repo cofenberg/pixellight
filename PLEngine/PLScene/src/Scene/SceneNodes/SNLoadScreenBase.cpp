@@ -51,7 +51,7 @@ SNLoadScreenBase::SNLoadScreenBase() :
 	Flags(this),
 	EventHandlerContainer   (&SNLoadScreenBase::NotifyContainer,	this),
 	EventHandlerLoadProgress(&SNLoadScreenBase::NotifyLoadProgress, this),
-	m_pContainer(NULL),
+	m_pContainer(nullptr),
 	m_fLoadProgress(0.0f)
 {
 	// Overwrite the default setting of the flags

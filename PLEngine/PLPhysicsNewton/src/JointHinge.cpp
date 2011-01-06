@@ -136,8 +136,8 @@ JointHinge::JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, P
 		((BodyImpl&)pChildBody ->GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent and child bodies
-	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : NULL;
-	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : NULL;
+	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
 
 	// Get body initial transform matrix
 	if (pParentBody) {

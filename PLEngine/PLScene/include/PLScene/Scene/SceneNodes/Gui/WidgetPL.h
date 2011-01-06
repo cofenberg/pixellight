@@ -139,7 +139,7 @@ class WidgetPL : public PLGui::WidgetImpl {
 		*  @param[in]      pWidget
 		*    Other widget used to align relative to (only matters for 'ZAbove' or 'ZBehind')
 		*/
-		void SetZPos(PLGeneral::Array<PLGui::Widget*> &lstChildren, PLGui::EZPos nZPos, PLGui::Widget *pWidget = NULL);
+		void SetZPos(PLGeneral::Array<PLGui::Widget*> &lstChildren, PLGui::EZPos nZPos, PLGui::Widget *pWidget = nullptr);
 
 
 	//[-------------------------------------------------------]

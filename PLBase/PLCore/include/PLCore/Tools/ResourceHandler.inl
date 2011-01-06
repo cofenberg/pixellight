@@ -42,7 +42,7 @@ namespace PLCore {
 */
 template <class AType>
 ResourceHandler<AType>::ResourceHandler() :
-	m_pResource(NULL)
+	m_pResource(nullptr)
 {
 }
 

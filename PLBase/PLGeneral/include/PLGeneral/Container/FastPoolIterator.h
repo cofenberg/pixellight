@@ -109,8 +109,8 @@ class FastPoolIterator : public IteratorImpl<ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		const FastPool<ValueType> *m_plstPool;			/**< Pool to operate on (always valid!) */
-		ValueType				  *m_pNextElement;		/**< Next pool element, can be NULL */
-		ValueType				  *m_pPreviousElement;	/**< Previous pool element, can be NULL */
+		ValueType				  *m_pNextElement;		/**< Next pool element, can be a null pointer */
+		ValueType				  *m_pPreviousElement;	/**< Previous pool element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

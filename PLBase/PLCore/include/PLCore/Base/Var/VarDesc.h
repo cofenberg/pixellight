@@ -123,7 +123,7 @@ class VarDesc : public MemberDesc {
 		*    Get attribute
 		*
 		*  @return
-		*    Pointer to var (can be NULL)
+		*    Pointer to var (can be a null pointer)
 		*/
 		PLCORE_API virtual DynVar *GetAttribute(const Object *pObject) const;
 
@@ -132,8 +132,8 @@ class VarDesc : public MemberDesc {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		int					m_nType;			/**< Type ID */
-		PLGeneral::String	m_sType;			/**< Type name */
+		int					m_nType;	/**< Type ID */
+		PLGeneral::String	m_sType;	/**< Type name */
 
 
 };

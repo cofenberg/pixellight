@@ -175,7 +175,7 @@ class ConsoleCommand {
 		*    Returns the owner console
 		*
 		*  @return
-		*    Owner console, can be NULL
+		*    Owner console, can be a null pointer
 		*/
 		PLS_API SNConsoleBase *GetConsole() const;
 
@@ -304,7 +304,7 @@ class ConsoleCommand {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SNConsoleBase							*m_pConsole;	/**< Owner console, can be NULL */
+		SNConsoleBase							*m_pConsole;	/**< Owner console, can be a null pointer */
 		bool									 m_bDebug;		/**< Is this a debug command? */
 		PLGeneral::String						 m_sCommand;	/**< For example "/fogcolor" */
 		PLGeneral::String						 m_sParameters;	/**< For example "III" in case you want R G B values (3 integers) */

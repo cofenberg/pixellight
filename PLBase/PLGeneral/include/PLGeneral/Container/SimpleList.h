@@ -108,7 +108,7 @@ class SimpleList {
 		*    Internal linked simple list element
 		*/
 		struct ListElement {
-			ListElement *pNextElement;	/**< Pointer to the next element in the list, can be NULL */
+			ListElement *pNextElement;	/**< Pointer to the next element in the list, can be a null pointer */
 			ValueType	 Data;			/**< The stored data */
 		};
 
@@ -117,7 +117,7 @@ class SimpleList {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		ListElement *pFirstElement;	/**< Pointer to first list element, can be NULL */
+		ListElement *pFirstElement;	/**< Pointer to first list element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

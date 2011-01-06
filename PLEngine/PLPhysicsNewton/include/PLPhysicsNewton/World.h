@@ -108,7 +108,7 @@ class World : public PLPhysics::World {
 		*    Returns the Newton physics world
 		*
 		*  @return
-		*    The Newton physics world, NULL on error (if that's the case, something went totally wrong :)
+		*    The Newton physics world, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICSNEWTON_API Newton::NewtonWorld *GetNewtonWorld() const;
 
@@ -186,7 +186,7 @@ class World : public PLPhysics::World {
 		*  @param[in]  nCollisionID
 		*    Collision ID
 		*  @param[in]  pContext
-		*    Content, can be NULL
+		*    Content, can be a null pointer
 		*  @param[in]  pGlobalSpaceMatrix
 		*    Global space matrix (always valid!)
 		*  @param[out] pGlobalSpacePlane
@@ -298,8 +298,8 @@ class World : public PLPhysics::World {
 		PLGeneral::uint32 m_nThreadPriority;
 
 		// Private data
-		Newton::NewtonWorld *m_pNewtonWorld;		/**< The Newton physics world, can be NULL */
-		WorldUpdate			*m_pWorldUpdate;		/**< Physics update object, can be NULL */
+		Newton::NewtonWorld *m_pNewtonWorld;		/**< The Newton physics world, can be a null pointer */
+		WorldUpdate			*m_pWorldUpdate;		/**< Physics update object, can be a null pointer */
 		PLMath::Vector3		 m_vWorldSizeMin;
 		PLMath::Vector3		 m_vWorldSizeMax;
 		float				 m_fFrameRate;

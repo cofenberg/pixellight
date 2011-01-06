@@ -61,7 +61,7 @@ pl_implement_class(SRPDeferredGBufferDebug)
 SRPDeferredGBufferDebug::SRPDeferredGBufferDebug() :
 	ShaderLanguage(this),
 	Mode(this),
-	m_pProgramGenerator(NULL)
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -101,7 +101,7 @@ void SRPDeferredGBufferDebug::Draw(Renderer &cRenderer, const SQCull &cCullQuery
 					// If there's an previous instance of the program generator, destroy it first
 					if (m_pProgramGenerator) {
 						delete m_pProgramGenerator;
-						m_pProgramGenerator = NULL;
+						m_pProgramGenerator = nullptr;
 					}
 
 					// Choose the shader source codes depending on the requested shader language
@@ -128,7 +128,7 @@ void SRPDeferredGBufferDebug::Draw(Renderer &cRenderer, const SQCull &cCullQuery
 					m_cProgramFlags.Reset();
 
 					// Get the texture buffer to use and the program flags
-					TextureBufferRectangle *pTextureBuffer = NULL;
+					TextureBufferRectangle *pTextureBuffer = nullptr;
 					switch (Mode) {
 						case ShowAlbedo:
 							// RGB components of RT0

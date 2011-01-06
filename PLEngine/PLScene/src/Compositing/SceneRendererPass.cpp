@@ -77,7 +77,7 @@ SceneContext *SceneRendererPass::GetSceneContext() const
 		return &pSceneRenderer->GetSceneRendererManager().GetSceneContext();
 	} else {
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -91,7 +91,7 @@ Renderer *SceneRendererPass::GetRenderer() const
 	SceneContext *pSceneContext = GetSceneContext();
 
 	// Return the used renderer
-	return pSceneContext ? &pSceneContext->GetRendererContext().GetRenderer() : NULL;
+	return pSceneContext ? &pSceneContext->GetRendererContext().GetRenderer() : nullptr;
 }
 
 /**
@@ -115,7 +115,7 @@ SceneRendererPass *SceneRendererPass::GetFirstInstanceOfSceneRendererPassClass(c
 	}
 
 	// Error, not found!
-	return NULL;
+	return nullptr;
 }
 
 /**

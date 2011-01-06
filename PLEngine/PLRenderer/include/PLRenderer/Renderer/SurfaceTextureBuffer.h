@@ -120,7 +120,7 @@ class SurfaceTextureBuffer : public Surface {
 		*    Returns the renderer texture buffer this surface will render in
 		*
 		*  @return
-		*    The renderer texture buffer this surface will render in, can be NULL
+		*    The renderer texture buffer this surface will render in, can be a null pointer
 		*
 		*  @note
 		*    - If you currently render into the texture buffer it can't be used for texturing!

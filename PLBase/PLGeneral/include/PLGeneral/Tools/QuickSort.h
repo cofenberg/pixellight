@@ -139,9 +139,9 @@ class QuickSort {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint8  *m_pData;		/**< Data to sort, can be NULL */
+		uint8  *m_pData;		/**< Data to sort, can be a null pointer */
 		uint32  m_nElementSize;	/**< Size of an element in bytes */
-		uint8  *m_pTemp;		/**< Temp buffer for swapping, can be NULL */
+		uint8  *m_pTemp;		/**< Temp buffer for swapping, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -43,7 +43,7 @@ namespace PLGeneral {
 *    Constructor
 */
 DynLibLinux::DynLibLinux() :
-	m_pLib(NULL)
+	m_pLib(nullptr)
 {
 }
 
@@ -62,7 +62,7 @@ DynLibLinux::~DynLibLinux()
 bool DynLibLinux::IsLoaded() const
 {
 	// Return whether the library has been loaded
-	return (m_pLib != NULL);
+	return (m_pLib != nullptr);
 }
 
 bool DynLibLinux::Load(const Url &cUrl)
@@ -95,7 +95,7 @@ bool DynLibLinux::Unload()
 	if (m_pLib) {
 		// Unload library
 		if (dlclose(m_pLib)) {
-			m_pLib = NULL;
+			m_pLib = nullptr;
 
 			// Done
 			return true;
@@ -109,7 +109,7 @@ bool DynLibLinux::Unload()
 void *DynLibLinux::GetSymbol(const String &sSymbol) const
 {
 	// Is the library loaded?
-	return m_pLib ? dlsym(m_pLib, (sSymbol.GetFormat() == String::ASCII) ? sSymbol.GetASCII() : (char*)sSymbol.GetUTF8()) : NULL;
+	return m_pLib ? dlsym(m_pLib, (sSymbol.GetFormat() == String::ASCII) ? sSymbol.GetASCII() : (char*)sSymbol.GetUTF8()) : nullptr;
 }
 
 

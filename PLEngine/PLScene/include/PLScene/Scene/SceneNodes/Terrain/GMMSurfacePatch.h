@@ -166,9 +166,9 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		PLGeneral::uint32	m_nOffset;			/**< Surface vertex offset */
 		PLGeneral::uint32	m_nXOffset;			/**< X offset in the height map */
 		PLGeneral::uint32	m_nYOffset;			/**< Y offset in the height map */
-		float			   *m_pVariance;		/**< Height variance for each level, can be NULL */
+		float			   *m_pVariance;		/**< Height variance for each level, can be a null pointer */
 		GMMSurface		   *m_pGMMSurface;		/**< Owner GMM surface of this patch (always valid!) */
-		GMMSurfacePatch	   *m_pNeighbour[4];	/**< Neighbour patches, can be NULL */
+		GMMSurfacePatch	   *m_pNeighbour[4];	/**< Neighbour patches, can be a null pointer */
 
 
 };

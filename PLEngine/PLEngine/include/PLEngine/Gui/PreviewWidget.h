@@ -69,9 +69,9 @@ class PreviewWidget : public RenderWidget {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*/
-		PL_API PreviewWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = NULL);
+		PL_API PreviewWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -125,7 +125,7 @@ class TestCase {
 		*    Returns the name of the test
 		*
 		*  @return
-		*    Name of the test, NULL on error
+		*    Name of the test, a null pointer on error
 		*/
 		virtual const char *GetName() const = 0;
 

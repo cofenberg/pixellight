@@ -45,7 +45,7 @@ template <class ValueType>
 Array<ValueType>::Array(uint32 nMaxNumOfElements, bool bAdded, bool bInit) :
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nResizeCount(10)
 {
 	// Resize
@@ -60,7 +60,7 @@ template <class ValueType>
 Array<ValueType>::Array(const Array<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nResizeCount(lstSource.m_nResizeCount)
 {
 	// Copy
@@ -75,7 +75,7 @@ template <class ValueType>
 Array<ValueType>::Array(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nResizeCount(10)
 {
 	// Copy
@@ -284,7 +284,7 @@ void Array<ValueType>::Clear()
 {
 	if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 	m_nMaxNumOfElements = 0;
 	m_nNumOfElements	= 0;
@@ -332,7 +332,7 @@ template <class ValueType>
 bool Array<ValueType>::Replace(const ValueType &Element1, const ValueType &Element2)
 {
 	// Get the index of the given element
-	int nIndex = GetIndex(Element1);
+	const int nIndex = GetIndex(Element1);
 	if (nIndex >= 0) {
 		// Replace the element through the new one
 		m_pData[nIndex] = Element2;
@@ -519,7 +519,7 @@ template <class ValueType>
 bool Array<ValueType>::Remove(const ValueType &Element)
 {
 	// Get the index of the given element
-	int nIndex = GetIndex(Element);
+	const int nIndex = GetIndex(Element);
 	return (nIndex >= 0 && RemoveAtIndex(nIndex));
 }
 

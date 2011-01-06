@@ -59,7 +59,7 @@ class LED : public Control {
 		*    LED
 		*
 		*  @param[in] pController
-		*    Owning controller, can, but shouldn't be NULL
+		*    Owning controller, can, but shouldn't be a null pointer
 		*  @param[in] sName
 		*    Control name
 		*  @param[in] sDescription

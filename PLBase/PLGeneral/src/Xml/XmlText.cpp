@@ -154,7 +154,7 @@ const char *XmlText::Parse(const char *pszData, XmlParsingData *pData, EEncoding
 				pDocument->SetError(ErrorParsingCData, pszData, pData, nEncoding);
 
 			// Error!
-			return NULL;
+			return nullptr;
 		}
 		pszData += nStartTagLength;
 
@@ -176,7 +176,7 @@ const char *XmlText::Parse(const char *pszData, XmlParsingData *pData, EEncoding
 			return pszData - 1;	// don't truncate the '<'
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 }
 

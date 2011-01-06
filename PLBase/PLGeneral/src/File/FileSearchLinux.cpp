@@ -50,7 +50,7 @@ FileSearchLinux::FileSearchLinux(const String &sPath, const FileAccess *pAccess)
 		m_bHasNext	= true;
 	} else {
 		// Error!
-		m_pDirEntry	= NULL;
+		m_pDirEntry	= nullptr;
 		m_bHasNext	= false;
 	}
 }
@@ -80,7 +80,7 @@ String FileSearchLinux::GetNextFile()
 	if (m_bHasNext) {
 		m_sFilename = m_pDirEntry->d_name;
 		m_pDirEntry = readdir(m_pDir);
-		m_bHasNext  = (m_pDirEntry != NULL);
+		m_bHasNext  = (m_pDirEntry != nullptr);
 		return m_sFilename;
 	} else {
 		return "";

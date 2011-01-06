@@ -58,9 +58,9 @@ static const float LINE_HEIGHT_FACTOR = 1.1f;
 */
 XmlTextRenderer::XmlTextRenderer(Gui &cGui) :
 	m_pGui(&cGui),
-	m_pGraphics(NULL),
+	m_pGraphics(nullptr),
 	m_nIndent(0),
-	m_pFont(NULL),
+	m_pFont(nullptr),
 	m_nHAlign(HAlignLeft),
 	m_nVAlign(VAlignBottom),
 	m_nLineWidth(0),
@@ -101,7 +101,7 @@ void XmlTextRenderer::Init(Graphics &cGraphics, const Vector2i &vSize)
 	// Destroy the previous font
 	if (m_pFont) {
 		delete m_pFont;
-		m_pFont = NULL;
+		m_pFont = nullptr;
 	}
 
 	// Initialize renderer state
@@ -130,7 +130,7 @@ void XmlTextRenderer::Init(Graphics &cGraphics, const Vector2i &vSize)
 void XmlTextRenderer::Finish()
 {
 	// Reset pointer to graphics object
-	m_pGraphics = NULL;
+	m_pGraphics = nullptr;
 }
 
 /**
@@ -231,7 +231,7 @@ void XmlTextRenderer::SetFont(Font *pFont)
 	// Destroy the previous font
 	if (m_pFont) {
 		delete m_pFont;
-		m_pFont = NULL;
+		m_pFont = nullptr;
 	}
 
 	// Set font
@@ -251,7 +251,7 @@ void XmlTextRenderer::SetFont(const String &sFont, int nFontSize)
 	// Destroy the previous font
 	if (m_pFont) {
 		delete m_pFont;
-		m_pFont = NULL;
+		m_pFont = nullptr;
 	}
 
 	// Load font

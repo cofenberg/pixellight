@@ -48,8 +48,8 @@ namespace PLGui {
 *    Constructor
 */
 ImageWindows::ImageWindows(Image &cImage) : ImageImpl(cImage),
-	m_hBitmap(NULL),
-	m_hIcon(NULL)
+	m_hBitmap(nullptr),
+	m_hIcon(nullptr)
 {
 }
 
@@ -80,7 +80,7 @@ HBITMAP ImageWindows::GetBitmapHandle() const
 HICON ImageWindows::GetIconHandle()
 {
 	// Has the icon already been created?
-	if (m_hBitmap != NULL && m_hIcon == NULL) {
+	if (m_hBitmap != nullptr && m_hIcon == nullptr) {
 		// Create icon
 		m_hIcon = ToolsWindows::CreateIconFromBitmap(m_hBitmap);
 	}
@@ -98,13 +98,13 @@ void ImageWindows::Unload()
 	// Delete icon
 	if (m_hIcon) {
 		DeleteObject(m_hIcon);
-		m_hIcon = NULL;
+		m_hIcon = nullptr;
 	}
 
 	// Delete bitmap
 	if (m_hBitmap) {
 		DeleteObject(m_hBitmap);
-		m_hBitmap = NULL;
+		m_hBitmap = nullptr;
 	}
 }
 
@@ -126,7 +126,7 @@ bool ImageWindows::Load(const String &sFilename)
 			const PLGraphics::ImageBuffer *pImageBuffer = cImage.GetBuffer();
 			if (pImageBuffer) {
 				// Convert to Windows bitmap
-				m_hBitmap = ImageToolsWindows::ConvertToHBitmap(cImage, GetDC(NULL));
+				m_hBitmap = ImageToolsWindows::ConvertToHBitmap(cImage, GetDC(nullptr));
 				if (m_hBitmap) {
 					// Save attributes
 					m_sFilename = sFilename;
@@ -150,7 +150,7 @@ bool ImageWindows::Load(const String &sFilename)
 	m_vSize.x		= 0;
 	m_vSize.y		= 0;
 	m_nColorDepth	= 0;
-	m_hBitmap		= NULL;
+	m_hBitmap		= nullptr;
 	return false;
 }
 
@@ -171,7 +171,7 @@ bool ImageWindows::LoadWithColorKey(const String &sFilename, const Color3 &cColo
 			const PLGraphics::ImageBuffer *pImageBuffer = cImage.GetBuffer();
 			if (pImageBuffer) {
 				// Convert to Windows bitmap
-				m_hBitmap = ImageToolsWindows::ConvertToHBitmap(cImage, GetDC(NULL));
+				m_hBitmap = ImageToolsWindows::ConvertToHBitmap(cImage, GetDC(nullptr));
 				if (m_hBitmap) {
 					// Save attributes
 					m_sFilename = sFilename;
@@ -195,7 +195,7 @@ bool ImageWindows::LoadWithColorKey(const String &sFilename, const Color3 &cColo
 	m_vSize.x		= 0;
 	m_vSize.y		= 0;
 	m_nColorDepth	= 0;
-	m_hBitmap		= NULL;
+	m_hBitmap		= nullptr;
 	return false;
 }
 

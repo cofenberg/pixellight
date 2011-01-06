@@ -126,7 +126,7 @@ void XmlTextText::OnDraw(XmlTextRenderer &cRenderer)
 	if (!m_cTextColor.IsTransparent()) cRenderer.SetTextColor(m_cTextColor);
 	Color4 cOldBgColor = cRenderer.GetBgColor();
 	if (!m_cBgColor.IsTransparent()) cRenderer.SetBgColor(m_cBgColor);
-	Font *pOldFont = cRenderer.GetFont() ? new Font(*cRenderer.GetFont()) : NULL;
+	Font *pOldFont = cRenderer.GetFont() ? new Font(*cRenderer.GetFont()) : nullptr;
 	if (m_sFont.GetLength() || m_nFontSize > -1) cRenderer.SetFont(m_sFont, m_nFontSize);
 	XmlTextRenderer::HAlign nOldHAlign = cRenderer.GetHAlign();
 	if (m_nHAlign != XmlTextRenderer::HAlignUnknown) cRenderer.SetHAlign(m_nHAlign);

@@ -98,7 +98,7 @@ class FullscreenQuad {
 		*    Returns the vertex buffer of this fullscreen quad
 		*
 		*  @return
-		*    The vertex buffer of this fullscreen quad, NULL on error
+		*    The vertex buffer of this fullscreen quad, a null pointer on error
 		*/
 		PLCOM_API PLRenderer::VertexBuffer *GetVertexBuffer();
 
@@ -127,7 +127,7 @@ class FullscreenQuad {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer	  *m_pRenderer;		/**< Renderer to use, always valid! */
-		PLRenderer::VertexBuffer  *m_pVertexBuffer;	/**< Vertex buffer, can be NULL */
+		PLRenderer::VertexBuffer  *m_pVertexBuffer;	/**< Vertex buffer, can be a null pointer */
 
 
 };

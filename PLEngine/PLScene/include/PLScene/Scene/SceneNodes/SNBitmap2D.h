@@ -115,7 +115,7 @@ class SNBitmap2D : public SNBitmap {
 		*  @param[in] cRenderer
 		*    The used renderer
 		*  @param[in] pVisNode
-		*    The current visibility node of this scene node, can be NULL
+		*    The current visibility node of this scene node, can be a null pointer
 		*/
 		void DrawBitmap(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 

@@ -78,7 +78,7 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 		*    Returns the Cg fragment program
 		*
 		*  @return
-		*    The Cg fragment program, can be NULL, do not destroy it!
+		*    The Cg fragment program, can be a null pointer, do not destroy it!
 		*/
 		CGprogram GetCgFragmentProgram() const;
 
@@ -103,7 +103,7 @@ class FragmentShaderCg : public PLRenderer::FragmentShader {
 	private:
 		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
 		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgFragmentProgram;	/**< Cg fragment program, can be NULL */
+		CGprogram		  m_pCgFragmentProgram;	/**< Cg fragment program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

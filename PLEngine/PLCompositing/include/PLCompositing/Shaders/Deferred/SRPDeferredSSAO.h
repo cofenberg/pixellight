@@ -176,20 +176,20 @@ class SRPDeferredSSAO : public SRPDeferred {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTargetAO;					/**< Render target catching the result of AO, can be NULL */
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTargetXBlur;					/**< Render target catching the result of x blur, can be NULL */
-		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be NULL */
-		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pTextureSizeProgramUniform;			/**< Texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pInputTextureSizeProgramUniform;	/**< Input texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pBlurRadiusProgramUniform;			/**< Blur radius program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pBlurFalloffProgramUniform;			/**< Blur falloff program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pSharpnessProgramUniform;			/**< Sharpness program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pUVScaleProgramUniform;				/**< UV scale program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pInputTextureProgramUniform;		/**< Input texture program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pNormalDepthTextureProgramUniform;	/**< Normal depth texture program uniform, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTargetAO;					/**< Render target catching the result of AO, can be a null pointer */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTargetXBlur;					/**< Render target catching the result of x blur, can be a null pointer */
+		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pTextureSizeProgramUniform;			/**< Texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pInputTextureSizeProgramUniform;	/**< Input texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pBlurRadiusProgramUniform;			/**< Blur radius program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pBlurFalloffProgramUniform;			/**< Blur falloff program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pSharpnessProgramUniform;			/**< Sharpness program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pUVScaleProgramUniform;				/**< UV scale program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pInputTextureProgramUniform;		/**< Input texture program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pNormalDepthTextureProgramUniform;	/**< Normal depth texture program uniform, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

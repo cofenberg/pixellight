@@ -145,7 +145,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		*    Makes a given EGL surface to the currently used one
 		*
 		*  @param[in] hEGLSurface
-		*    EGL surface to make to the current one, can be NULL, in this case an internal dummy surface is set
+		*    EGL surface to make to the current one, can be a null pointer, in this case an internal dummy surface is set
 		*
 		*  @return
 		*    'EGL_TRUE' if all went fine, else 'EGL_FALSE'
@@ -198,7 +198,7 @@ class Renderer : public PLRenderer::RendererBackend {
 															  PLRenderer::TextureBuffer::EPixelFormat &nImageFormat, bool &bUsePreCompressedData) const;
 
 		// [TODO] Clean this up!
-		bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
+		bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -213,7 +213,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		*    Multisample antialiasing samples per pixel
 		*
 		*  @return
-		*    The chosen EGL config, NULL on error
+		*    The chosen EGL config, a null pointer on error
 		*
 		*  @note
 		*    - Automatically tries to find fallback configs
@@ -286,7 +286,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const;
+		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const;
 		virtual PLGeneral::String GetVendor() const;
 		virtual PLGeneral::String GetDefaultShaderLanguage() const;
 		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
@@ -320,8 +320,8 @@ class Renderer : public PLRenderer::RendererBackend {
 		//[-------------------------------------------------------]
 		virtual bool BeginScene();
 		virtual bool EndScene();
-		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = NULL, float fMinZ = 0.0f, float fMaxZ = 1.0f);
-		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = NULL);
+		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
+		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr);
 		virtual bool GetDepthBounds(float &fZMin, float &fZMax) const;
 		virtual bool SetDepthBounds(float fZMin = 0.0f, float fZMax = 1.0f);
 		virtual void GetColorMask(bool &bRed, bool &bGreen, bool &bBlue, bool &bAlpha) const;
@@ -335,9 +335,9 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLGeneral::uint8 nFace = 0);
 		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLGeneral::uint8 nColorIndex = 0, PLGeneral::uint8 nFace = 0);
 		virtual bool MakeScreenshot(PLGraphics::Image &cImage);
-		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
-		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = NULL);
-		virtual bool SetProgram(PLRenderer::Program *pProgram = NULL);
+		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
+		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = nullptr);
+		virtual bool SetProgram(PLRenderer::Program *pProgram = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Draw                                                  ]

@@ -94,7 +94,7 @@ void Application::OnCreateMainWindow()
 	Widget *pWidget = GetMainWindow();
 
 	// Connect event handler
-	const DisplayMode *pDisplayMode = NULL;
+	const DisplayMode *pDisplayMode = nullptr;
 	if (pWidget) {
 		pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
 		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
@@ -116,7 +116,7 @@ void Application::OnCreateMainWindow()
 		const bool bShaders = (cRenderer.GetDefaultShaderLanguage().GetLength() != 0);
 
 		// Create the triangle demo window
-		RenderWindow *pFrame = new RenderWindow(cRenderer, NULL, pDisplayMode);
+		RenderWindow *pFrame = new RenderWindow(cRenderer, nullptr, pDisplayMode);
 		pFrame->SetPos(Vector2i(600, 0));
 		pFrame->SetSize(Vector2i(300, 300));
 		pFrame->SetTitle(PLT("PL triangle demo window"));
@@ -125,7 +125,7 @@ void Application::OnCreateMainWindow()
 		pFrame->SetVisible(true);
 
 		// Create the teapot demo window
-		pFrame = new RenderWindow(cRenderer, NULL, pDisplayMode);
+		pFrame = new RenderWindow(cRenderer, nullptr, pDisplayMode);
 		pFrame->SetPos(Vector2i(600, 300));
 		pFrame->SetSize(Vector2i(300, 300));
 		pFrame->SetTitle(PLT("PL teapot demo window"));

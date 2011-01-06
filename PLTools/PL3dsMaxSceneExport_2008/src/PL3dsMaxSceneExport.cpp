@@ -112,7 +112,7 @@ class PLSceneExport : public SceneExport {
 		{
 			if (name && i) {
 				// We really need to set the locale to a known setting... else we may get floats as "1,123" instead of "1.123"!
-				char *pSaveLocale = setlocale(LC_ALL, NULL);
+				char *pSaveLocale = setlocale(LC_ALL, nullptr);
 				setlocale(LC_ALL, "C");
 
 				// Export

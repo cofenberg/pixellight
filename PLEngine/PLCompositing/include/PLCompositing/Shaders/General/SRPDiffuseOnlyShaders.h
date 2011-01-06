@@ -175,7 +175,7 @@ class SRPDiffuseOnlyShaders : public SRPDiffuseOnly {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 		PLRenderer::RenderStates			*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
 

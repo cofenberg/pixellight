@@ -160,7 +160,7 @@ void BitmapToggleButton::OnDraw(Graphics &cGraphics)
 	AbstractToggleButton::OnDraw(cGraphics);
 
 	// Draw button
-	Image *pImage = NULL;
+	Image *pImage = nullptr;
 	if (!IsEnabled()) {
 		pImage = &m_cImageDisabled;
 	} else if (m_bMouseIn) {

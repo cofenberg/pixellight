@@ -258,7 +258,7 @@ class Gui {
 		*    Returns the root widget
 		*
 		*  @return
-		*    Root widget, NULL on error
+		*    Root widget, a null pointer on error
 		*/
 		PLGUI_API Widget *GetRootWidget() const;
 
@@ -282,7 +282,7 @@ class Gui {
 		*    Name of screen
 		*
 		*  @return
-		*    Pointer to the specific screen, or NULL if that screen doesn't exist
+		*    Pointer to the specific screen, or a null pointer if that screen doesn't exist
 		*/
 		PLGUI_API Screen *GetScreen(const PLGeneral::String &sName) const;
 
@@ -291,7 +291,7 @@ class Gui {
 		*    Get default screen
 		*
 		*  @return
-		*    Pointer to the default screen, never NULL
+		*    Pointer to the default screen, never a null pointer
 		*/
 		PLGUI_API Screen *GetDefaultScreen() const;
 
@@ -368,7 +368,7 @@ class Gui {
 		*    Get widget that the mouse is currently in
 		*
 		*  @return
-		*    Widget the mouse is currently in, or NULL
+		*    Widget the mouse is currently in, or a null pointer
 		*/
 		PLGUI_API Widget *GetMouseOverWidget() const;
 
@@ -377,7 +377,7 @@ class Gui {
 		*    Get widget that currently has the focus
 		*
 		*  @return
-		*    Widget that currently has the focus, or NULL
+		*    Widget that currently has the focus, or a null pointer
 		*/
 		PLGUI_API Widget *GetFocusWidget() const;
 

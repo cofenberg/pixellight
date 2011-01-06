@@ -118,7 +118,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Returns the scene root container
 		*
 		*  @return
-		*    Scene root container, NULL if there's no one
+		*    Scene root container, a null pointer if there's no one
 		*/
 		PLS_API SceneContainer *GetRootContainer() const;
 
@@ -127,7 +127,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Sets the scene root container
 		*
 		*  @param[in] pContainer
-		*    Scene root container, can be NULL
+		*    Scene root container, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -139,7 +139,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Returns the scene container
 		*
 		*  @return
-		*    Scene container, NULL if there's no one
+		*    Scene container, a null pointer if there's no one
 		*/
 		PLS_API SceneContainer *GetSceneContainer() const;
 
@@ -148,7 +148,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Sets the scene container
 		*
 		*  @param[in] pContainer
-		*    Scene container, can be NULL
+		*    Scene container, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -160,7 +160,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Returns the default camera scene node
 		*
 		*  @return
-		*    Default camera scene node, NULL if there's no one
+		*    Default camera scene node, a null pointer if there's no one
 		*/
 		PLS_API SNCamera *GetCamera() const;
 
@@ -169,7 +169,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Sets the default camera scene
 		*
 		*  @param[in] pCamera
-		*    New default camera scene node, can be NULL
+		*    New default camera scene node, can be a null pointer
 		*/
 		PLS_API void SetCamera(SNCamera *pCamera);
 
@@ -178,7 +178,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Returns the cull query
 		*
 		*  @return
-		*    The cull query, NULL on error
+		*    The cull query, a null pointer on error
 		*/
 		PLS_API SQCull *GetCullQuery() const;
 
@@ -187,7 +187,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Returns the default scene renderer
 		*
 		*  @return
-		*    The default scene renderer, can be NULL
+		*    The default scene renderer, can be a null pointer
 		*
 		*  @note
 		*    - The default scene renderer is used if the used camera has

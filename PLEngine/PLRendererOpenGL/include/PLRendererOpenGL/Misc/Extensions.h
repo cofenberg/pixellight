@@ -188,7 +188,7 @@ class OpenGLExtensions {
 		*    Checks whether an extension is supported by the given hardware or not
 		*
 		*  @param[in] pszExtension
-		*    Name of the extension, if NULL, nothing happens
+		*    Name of the extension, if a null pointer, nothing happens
 		*
 		*  @return
 		*    'true' if the extensions is supported, else 'false'
@@ -200,7 +200,7 @@ class OpenGLExtensions {
 		*    Checks whether an extension is supported by the given hardware or not
 		*
 		*  @param[in] pszExtension
-		*    Name of the extension, if NULL, nothing happens
+		*    Name of the extension, if a null pointer, nothing happens
 		*
 		*  @return
 		*    'true' if the extensions is supported, else 'false'
@@ -233,7 +233,7 @@ class OpenGLExtensions {
 		*    Writes the extensions within a given extension string into the log
 		*
 		*  @param[in] pszExtensions
-		*    Extension string, if NULL, nothing happens
+		*    Extension string, if a null pointer, nothing happens
 		*/
 		void WriteExtensionStringIntoLog(const char *pszExtensions) const;
 

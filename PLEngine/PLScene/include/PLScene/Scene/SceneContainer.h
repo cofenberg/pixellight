@@ -157,7 +157,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*    Optional parameter string
 		*
 		*  @return
-		*    Pointer to the new scene node or NULL if something went wrong
+		*    Pointer to the new scene node or a null pointer if something went wrong
 		*    (maybe unknown class or the class is not derived from SceneNode)
 		*
 		*  @note
@@ -202,7 +202,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*
 		*  @return
 		*    Pointer to the created scene hierarchy of this scene container. This is NEVER
-		*    NULL - if no special hierarchy is used the default hierarchy 'PLScene::SHList'
+		*    a null pointer - if no special hierarchy is used the default hierarchy 'PLScene::SHList'
 		*    is used instead which is in fact only a simple list which is using the container directly.
 		*
 		*  @note
@@ -218,7 +218,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*
 		*  @return
 		*    Pointer to the scene hierarchy of this scene container,
-		*    can NEVER be NULL!
+		*    can NEVER be a null pointer!
 		*
 		*  @remarks
 		*    Before the hierarchy is returned, scene nodes are refreshed if required. So, do NOT
@@ -247,7 +247,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*    sometimes they will need information from the previous frame!
 		*    Such queries should be created once and then be used all the time. Use
 		*    SceneQueryHandler to hold your pointer to the query. If the container is destroyed
-		*    your pointer is set to NULL automatically.
+		*    your pointer is set to a null pointer automatically.
 		*    If for instance the scene hierarchy was changed some queries like render queries have
 		*    to update some internal data. The internal scene query manager of the scene container
 		*    will inform it's queries in such a case.
@@ -257,7 +257,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*
 		*  @return
 		*    Pointer to the created scene query operating on this scene container,
-		*    NULL on error (maybe unknown class or the class is not derived from
+		*    a null pointer on error (maybe unknown class or the class is not derived from
 		*    'SceneQuery')
 		*/
 		PLS_API SceneQuery *CreateQuery(const PLGeneral::String &sClass);
@@ -326,8 +326,8 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		// Private data
 		PLGeneral::String  m_sHierarchy;	/**< Class name of the scene container hierarchy */
 		SceneContext	  *m_pSceneContext;	/**< The scene context this scene container is in (should be always valid!) */
-		SceneHierarchy	  *m_pHierarchy;	/**< Scene hierarchy, can be NULL */
-		SceneQueryManager *m_pQueryManager;	/**< Scene query manager, can be NULL */
+		SceneHierarchy	  *m_pHierarchy;	/**< Scene hierarchy, can be a null pointer */
+		SceneQueryManager *m_pQueryManager;	/**< Scene query manager, can be a null pointer */
 
 		/** List of scene nodes which need a scene hierarchy refresh */
 		PLGeneral::Pool<SceneNode*> m_lstHierarchyRefresh;

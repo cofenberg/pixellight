@@ -129,8 +129,8 @@ long SoundManager::tell_func_mem(void *datasource)
 */
 SoundManager::SoundManager() :
 	DeviceName(this),
-	m_pDevice(NULL),
-	m_pContext(NULL),
+	m_pDevice(nullptr),
+	m_pContext(nullptr),
 	m_nEAXLevel(0),
 	m_fPitch(1.0f)
 {
@@ -159,7 +159,7 @@ SoundManager::~SoundManager()
 */
 bool SoundManager::AddActiveSource(PLSound::Source &cSource)
 {
-	return (!m_lstActiveSources.IsElement(&cSource) && m_lstActiveSources.Add(&cSource) != NULL);
+	return (!m_lstActiveSources.IsElement(&cSource) && m_lstActiveSources.Add(&cSource) != nullptr);
 }
 
 /**
@@ -298,11 +298,11 @@ bool SoundManager::Init()
 		m_pDevice = alcOpenDevice((const ALchar*)DeviceName.GetString().GetASCII());
 	} else {
 		// This is supposed to select the "preferred device"
-		m_pDevice = alcOpenDevice(NULL);
+		m_pDevice = alcOpenDevice(nullptr);
 	}
 	if (m_pDevice) {
 		// Create context
-		m_pContext = alcCreateContext(m_pDevice, NULL);
+		m_pContext = alcCreateContext(m_pDevice, nullptr);
 		if (m_pContext) {
 			// Set active context
 			alcGetError(m_pDevice);
@@ -331,7 +331,7 @@ bool SoundManager::Init()
 					// Set EAX environment if EAX is available
 					if (m_nEAXLevel != 0) {
 						EAXSet pfPropSet = (EAXSet)alGetProcAddress((ALubyte*)"EAXSet");
-						if (pfPropSet != NULL) {
+						if (pfPropSet != nullptr) {
 							long nGlobalReverb = -10000;
 							pfPropSet(&DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_ROOM,		   0, &nGlobalReverb, sizeof(unsigned long));
 							unsigned long nEAXValue = EAX_ENVIRONMENT_GENERIC;
@@ -385,18 +385,18 @@ bool SoundManager::DeInit()
 	PLSound::SoundManager::DeInit();
 
 	// Disable context
-	alcMakeContextCurrent(NULL);
+	alcMakeContextCurrent(nullptr);
 
 	// Release context
 	if (m_pContext) {
 		alcDestroyContext(m_pContext);
-		m_pContext = NULL;
+		m_pContext = nullptr;
 	}
 
 	// Close device
 	if (m_pDevice) {
 		alcCloseDevice(m_pDevice);
-		m_pDevice = NULL;
+		m_pDevice = nullptr;
 	}
 
 	// Done

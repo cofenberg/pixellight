@@ -69,7 +69,7 @@ class JointImpl : public PLPhysics::JointImpl {
 		*    Returns the PhysX physics joint
 		*
 		*  @return
-		*    The PhysX physics joint, NULL on error (of that's the case, something went totally wrong :)
+		*    The PhysX physics joint, a null pointer on error (of that's the case, something went totally wrong :)
 		*
 		*  @note
 		*    - Do NOT change the user data of the PhysX physics joínt! (using dJointSetData())
@@ -123,7 +123,7 @@ class JointImpl : public PLPhysics::JointImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		NxJoint			*m_pPhysXJoint;		/**< PhysX physics joint, can be NULL */
+		NxJoint			*m_pPhysXJoint;		/**< PhysX physics joint, can be a null pointer */
 		bool			 m_bBreakable;		/**< Is this joint breakable? */
 		PLMath::Vector3	 m_vBreakForce;		/**< Break force */
 		PLMath::Vector3	 m_vBreakTorque;	/**< Break torque */

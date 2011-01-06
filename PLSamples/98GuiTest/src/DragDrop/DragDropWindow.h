@@ -60,7 +60,7 @@ class DragDropWindow : public PLGui::Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		DragDropWindow(Widget *pParent = NULL);
+		DragDropWindow(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

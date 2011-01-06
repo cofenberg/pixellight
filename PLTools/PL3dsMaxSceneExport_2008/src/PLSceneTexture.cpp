@@ -82,14 +82,14 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 	// Check options
 	if (g_SEOptions.bCopyTextures) {
 		// Can we use the given absolute filename?
-		HANDLE hFile = CreateFile(sAbsBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		HANDLE hFile = CreateFile(sAbsBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 		if (hFile == INVALID_HANDLE_VALUE) {
 			// Get the current path of the loaded 3ds Max scene
 			std::string sCurFilePath = Url(GetCOREInterface()->GetCurFilePath().data()).CutFilename();
 			if (sCurFilePath.length()) {
 				// Compose absolute filename by just concatenating the two filenames (for relative filenames)
 				std::string sBitmapFilename = sCurFilePath + sAbsBitmapFilename;
-				hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+				hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 				if (hFile == INVALID_HANDLE_VALUE) {
 					// Get the filename without any path information
 					std::string sFilenameOnly  = Url(sName.c_str()).GetFilename().GetASCII();
@@ -101,7 +101,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 							sBitmapFilename = sCurFilePath + sFilenameOnly;
 						else
 							sBitmapFilename = sCurFilePath + "\\" + sFilenameOnly;
-						hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+						hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 						if (hFile == INVALID_HANDLE_VALUE) {
 							// Check map directories
 							int nMapDirCount = TheManager->GetMapDirCount();
@@ -114,7 +114,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 										sBitmapFilename = pMapDir + sFilenameOnly;
 									else
 										sBitmapFilename = pMapDir + std::string("\\") + sFilenameOnly;
-									hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+									hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 									if (hFile != INVALID_HANDLE_VALUE)
 										break;
 									else
@@ -147,7 +147,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 				sFilename = sFilename + m_sName;
 
 				// Is there already such a file? If yes, check the file times...
-				hFile = CreateFile(sFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+				hFile = CreateFile(sFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 				if (hFile != INVALID_HANDLE_VALUE) {
 					// Get target file time and close it
 					FILETIME sTargetCreationTime;

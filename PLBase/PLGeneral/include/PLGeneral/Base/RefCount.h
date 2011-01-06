@@ -72,7 +72,7 @@ class RefCount {
 		*    Get a pointer to the object
 		*
 		*  @return
-		*    Pointer to the reference counter's object, NEVER NULL!
+		*    Pointer to the reference counter's object, NEVER a null pointer!
 		*/
 		virtual AType *GetPointer() const;
 

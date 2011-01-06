@@ -90,7 +90,7 @@ class FontManager {
 		*    Returns the default texture font
 		*
 		*  @return
-		*    The default texture font, NULL on error
+		*    The default texture font, a null pointer on error
 		*/
 		PLRENDERER_API FontTexture *GetDefaultFontTexture() const;
 
@@ -99,7 +99,7 @@ class FontManager {
 		*    Sets the default texture font
 		*
 		*  @param[in] pFont
-		*    The texture font or NULL
+		*    The texture font or a null pointer
 		*/
 		PLRENDERER_API void SetDefaultFontTexture(FontTexture *pFont);
 
@@ -115,7 +115,7 @@ class FontManager {
 		*    The horizontal and vertical resolution in DPI, for example 96
 		*
 		*  @return
-		*    The texture font, NULL on error
+		*    The texture font, a null pointer on error
 		*/
 		PLRENDERER_API FontTexture *GetFontTexture(const PLGeneral::String &sFilename, PLGeneral::uint32 nSize = 12, PLGeneral::uint32 nResolution = 96);
 

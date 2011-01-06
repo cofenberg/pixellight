@@ -90,15 +90,18 @@ DatabaseQuery &DatabaseQuery::operator =(const DatabaseQuery &cSource)
 PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 {
 	MYSQL *pMySQL = ((Database&)GetDatabase()).GetMySQL();
-	int nError = mysql_query(pMySQL, sSQL);
+	const int nError = mysql_query(pMySQL, sSQL);
 	if (!nError) {
 		// Get the result
 		MYSQL_RES *pResult = mysql_store_result(pMySQL);
-		if (pResult) return new DatabaseQueryResult(*this, *pResult);
-	} else PL_LOG(Error, String("MySQL can't execute the given SQL statement! Error: ") + mysql_error(pMySQL))
+		if (pResult)
+			return new DatabaseQueryResult(*this, *pResult);
+	} else {
+		PL_LOG(Error, String("MySQL can't execute the given SQL statement! Error: ") + mysql_error(pMySQL))
+	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

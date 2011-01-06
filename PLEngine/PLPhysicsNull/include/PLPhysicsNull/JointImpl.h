@@ -103,7 +103,7 @@ class JointImpl : public PLPhysics::JointImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLPhysics::Joint *m_pJoint;			/**< PL physics joint this is the implementation from, can be NULL */
+		PLPhysics::Joint *m_pJoint;			/**< PL physics joint this is the implementation from, can be a null pointer */
 		bool			  m_bBreakable;		/**< Is this joint breakable? */
 		PLMath::Vector3	  m_vBreakForce;	/**< Break force */
 		PLMath::Vector3	  m_vBreakTorque;	/**< Break torque */

@@ -82,8 +82,8 @@ SceneHierarchyNode &SHKdTree::CreateNode()
 *    Constructor
 */
 SHKdTreeNode::SHKdTreeNode(SceneHierarchy &cHierarchy) : SceneHierarchyNode(cHierarchy),
-	m_pLeftNode(NULL),
-	m_pRightNode(NULL),
+	m_pLeftNode(nullptr),
+	m_pRightNode(nullptr),
 	m_nSplitAxis(Leaf),
 	m_fSplitValue(0.0f)
 {
@@ -155,9 +155,9 @@ void SHKdTreeNode::Merge()
 
 			// This node now becomes a leaf...
 			FreeNode(*m_pLeftNode);
-			m_pLeftNode = NULL;
+			m_pLeftNode = nullptr;
 			FreeNode(*m_pRightNode);
-			m_pRightNode = NULL;
+			m_pRightNode = nullptr;
 			m_nSplitAxis = Leaf;
 		}
 	}
@@ -261,7 +261,7 @@ SceneHierarchyNode *SHKdTreeNode::GetNode(uint32 nIndex) const
 {
 	// Check the given index
 	if (nIndex > 1)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Return the requested child node
 	return nIndex ? m_pRightNode : m_pLeftNode;
@@ -277,8 +277,8 @@ void SHKdTreeNode::Init()
 	SceneHierarchyNode::Init();
 
 	// Initialize the data
-	m_pLeftNode   = NULL;
-	m_pRightNode  = NULL;
+	m_pLeftNode   = nullptr;
+	m_pRightNode  = nullptr;
 	m_nSplitAxis  = Leaf;
 	m_fSplitValue = 0.0f;
 }

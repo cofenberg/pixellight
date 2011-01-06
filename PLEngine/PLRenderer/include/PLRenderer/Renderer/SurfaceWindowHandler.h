@@ -87,7 +87,7 @@ class SurfaceWindowHandler {
 		*    Returns the owner renderer
 		*
 		*  @return
-		*    The owner renderer, can be NULL
+		*    The owner renderer, can be a null pointer
 		*/
 		PLRENDERER_API Renderer *GetRenderer() const;
 
@@ -96,7 +96,7 @@ class SurfaceWindowHandler {
 		*    Returns the renderer surface of this handler
 		*
 		*  @return
-		*    The renderer surface of this handler, can be NULL
+		*    The renderer surface of this handler, can be a null pointer
 		*/
 		PLRENDERER_API Surface *GetSurface() const;
 
@@ -131,8 +131,8 @@ class SurfaceWindowHandler {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Renderer	   *m_pRenderer;		/**< Owner renderer (can be NULL) */
-		SurfaceHandler *m_pSurfaceHandler;	/**< The renderer surface handler (NEVER NULL!) */
+		Renderer	   *m_pRenderer;		/**< Owner renderer (can be a null pointer) */
+		SurfaceHandler *m_pSurfaceHandler;	/**< The renderer surface handler (NEVER a null pointer!) */
 
 
 	//[-------------------------------------------------------]

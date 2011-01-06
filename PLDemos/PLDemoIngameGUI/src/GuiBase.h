@@ -57,7 +57,7 @@ class GuiBase : public PLGui::Widget {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*/
 		GuiBase(PLGui::Widget *pParent);
 

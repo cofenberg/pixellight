@@ -83,7 +83,7 @@ class EffectPassLayer {
 		*  @param[in] nStage
 		*    Which texture stage?
 		*  @param[in] pParameterManager
-		*    Parameters set instead of existing effect parameters, can be NULL
+		*    Parameters set instead of existing effect parameters, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -92,7 +92,7 @@ class EffectPassLayer {
 		*    - The texture handlers texture transformation matrix is also set!
 		*    - If there's no texture parameter name or an invalid one no texture is bound
 		*/
-		PLRENDERER_API bool Bind(PLGeneral::uint32 nStage, ParameterManager *pParameterManager = NULL) const;
+		PLRENDERER_API bool Bind(PLGeneral::uint32 nStage, ParameterManager *pParameterManager = nullptr) const;
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class EffectPassLayer {
 		*    Binds a texture
 		*
 		*  @param[in] pParameter
-		*    Texture parameter to bind, if NULL, nothing happens...
+		*    Texture parameter to bind, if a null pointer, nothing happens...
 		*  @param[in] nStage
 		*    Stage to bind at, if a shader is used, this information is ignored
 		*
@@ -183,7 +183,7 @@ class EffectPassLayer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		EffectPass						 *m_pFXPass;							/**< Layer owner (NEVER NULL!) */
+		EffectPass						 *m_pFXPass;							/**< Layer owner (NEVER a null pointer!) */
 		PLGeneral::String				  m_sTexture;							/**< The name of the used texture parameter */
 		SamplerStates					  m_cSamplerStates;						/**< Sampler states */
 		FixedFunctionsTextureStageStates  m_cFixedFunctionsTextureStageStates;	/**< Fixed functions texture stage states */

@@ -169,7 +169,7 @@ void SNMPhysicsCorrectDistance::NotifyUpdate()
 							const Body *pTargetBody = pModifier->GetBody();
 
 							// Get the closest hit physics body that is not the physics body of the target scene node
-							const Sensor::BodyInfo *pClosestBodyInfo = NULL;
+							const Sensor::BodyInfo *pClosestBodyInfo = nullptr;
 							for (uint32 i=0; i<pSensor->GetNumOfHitBodies(); i++) {
 								// Ignore the physics body of the target scene node
 								const Sensor::BodyInfo *pBodyInfo = pSensor->GetHitBody(i);

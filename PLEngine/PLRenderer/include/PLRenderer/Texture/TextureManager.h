@@ -210,7 +210,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    Texture buffer to use
 		*
 		*  @return
-		*    Pointer to the new texture, NULL on error
+		*    Pointer to the new texture, a null pointer on error
 		*
 		*  @note
 		*    - The texture will only 'share' the texture buffer, it will NOT delete by itself!
@@ -228,7 +228,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    This parameters depend on the used texture creator.
 		*
 		*  @return
-		*    Pointer to the created resource, NULL if there was an error
+		*    Pointer to the created resource, a null pointer if there was an error
 		*    (maybe unknown class or the class is not derived from 'PLRenderer::TextureCreator')
 		*/
 		PLRENDERER_API Texture *CreateTexture(const PLGeneral::String &sName, const PLGeneral::String &sParameters);

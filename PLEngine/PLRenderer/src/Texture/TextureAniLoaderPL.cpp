@@ -329,7 +329,7 @@ bool TextureAniLoaderPL::LoadV1(TextureAni &cTextureAni, const XmlElement &cText
 	float fValue;
 	const XmlElement *pAnimationElement = cTextureAniElement.GetFirstChildElement("Animation");
 	while (pAnimationElement) {
-		AniInfo *pAnimation = NULL;
+		AniInfo *pAnimation = nullptr;
 		uint32 nFrames = 0;
 
 		// Type

@@ -143,14 +143,14 @@ void NPN_Status(NPP instance, const char *message)
 
 const char* NPN_UserAgent(NPP instance)
 {
-  const char * rv = NULL;
+  const char * rv = nullptr;
   rv = CallNPN_UserAgentProc(NPNFuncs.uagent, instance);
   return rv;
 }
 
 void* NPN_MemAlloc(uint32 size)
 {
-  void * rv = NULL;
+  void * rv = nullptr;
   rv = CallNPN_MemAllocProc(NPNFuncs.memalloc, size);
   return rv;
 }
@@ -174,7 +174,7 @@ void NPN_ReloadPlugins(NPBool reloadPages)
 #ifdef OJI
 JRIEnv* NPN_GetJavaEnv(void)
 {
-  JRIEnv * rv = NULL;
+  JRIEnv * rv = nullptr;
 	rv = CallNPN_GetJavaEnvProc(NPNFuncs.getJavaEnv);
   return rv;
 }

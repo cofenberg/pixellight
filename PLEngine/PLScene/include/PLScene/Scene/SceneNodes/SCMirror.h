@@ -136,7 +136,7 @@ class SCMirror : public SCRenderToTexture {
 		float				 m_fWidth;			/**< Mirror width */
 		float				 m_fHeight;			/**< Mirror height */
 		PLMath::Polygon		 m_cPolygon;		/**< Mirror polygon */
-		PLMesh::MeshHandler *m_pMeshHandler;	/**< Mirror mesh handler, can be NULL */
+		PLMesh::MeshHandler *m_pMeshHandler;	/**< Mirror mesh handler, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -144,9 +144,9 @@ class SCMirror : public SCRenderToTexture {
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler();
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

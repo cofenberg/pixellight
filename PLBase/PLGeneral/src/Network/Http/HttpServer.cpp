@@ -92,12 +92,12 @@ void HttpServer::OnRequest(HttpServerConnection *pConnection, const HttpHeader *
 void HttpServer::OnGet(HttpServerConnection *pConnection, const HttpHeader *pHeader)
 {
 	// Get what?
-	String sUrl = pHeader->GetRequestUrl();
+	const String sUrl = pHeader->GetRequestUrl();
 
 	// Send page
 	if (sUrl == "/") {
 		// Create a default page
-		String sPage = "<html><head><title>PixelLight Webserver</title></head><body><h1>Welcome</h1>Welcome to PixelLight webserver</body></html>";
+		const String sPage = "<html><head><title>PixelLight Webserver</title></head><body><h1>Welcome</h1>Welcome to PixelLight webserver</body></html>";
 
 		// Send default page
 		pConnection->SendData(Http_200_OK, "text/html", sPage);
@@ -114,10 +114,10 @@ void HttpServer::OnGet(HttpServerConnection *pConnection, const HttpHeader *pHea
 void HttpServer::OnError(HttpServerConnection *pConnection, EHttpStatus nStatus)
 {
 	// Get error code
-	String sError = Http::GetStatusString(nStatus);
+	const String sError = Http::GetStatusString(nStatus);
 
 	// Create a dynamic page containing the error code
-	String sPage = "<html><head><title>" + sError + "</title></head><body><h1>" + sError + "</h1></body></html>";
+	const String sPage = "<html><head><title>" + sError + "</title></head><body><h1>" + sError + "</h1></body></html>";
 
 	// Send error page
 	pConnection->SendData(nStatus, "text/html", sPage);

@@ -105,7 +105,7 @@ bool FontPL::LoadFont(const String &sFilename, uint32 nHeight)
 	// Do not destroy the renderer font, we might need it again...
 
 	// Just set the font pointer to null, the font manager will do the rest
-	m_cRendererFont.SetResource(NULL);
+	m_cRendererFont.SetResource(nullptr);
 
 	// Done
 	return true;

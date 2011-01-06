@@ -119,7 +119,7 @@ bool Pipe::Create()
 		SECURITY_ATTRIBUTES sSecAttr;
 		sSecAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
 		sSecAttr.bInheritHandle = TRUE;
-		sSecAttr.lpSecurityDescriptor = NULL;
+		sSecAttr.lpSecurityDescriptor = nullptr;
 
 		// Create pipe
 		return (CreatePipe((HANDLE*)&m_hPipe[0], (HANDLE*)&m_hPipe[1], &sSecAttr, 0) != 0);
@@ -148,7 +148,7 @@ bool Pipe::Create(const String &sName)
 		SECURITY_ATTRIBUTES sSecAttr;
 		sSecAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
 		sSecAttr.bInheritHandle = TRUE;
-		sSecAttr.lpSecurityDescriptor = NULL;
+		sSecAttr.lpSecurityDescriptor = nullptr;
 
 		// Create write end of the pipe
 		if (sName.GetFormat() == String::ASCII)
@@ -158,9 +158,9 @@ bool Pipe::Create(const String &sName)
 
 		// Create read end of the pipe
 		if (sName.GetFormat() == String::ASCII)
-			m_hPipe[0] = (handle)CreateFileA(sName.GetASCII(), GENERIC_READ, 0, &sSecAttr, OPEN_EXISTING, 0, NULL);
+			m_hPipe[0] = (handle)CreateFileA(sName.GetASCII(), GENERIC_READ, 0, &sSecAttr, OPEN_EXISTING, 0, nullptr);
 		else
-			m_hPipe[0] = (handle)CreateFileW(sName.GetUnicode(), GENERIC_READ, 0, &sSecAttr, OPEN_EXISTING, 0, NULL);
+			m_hPipe[0] = (handle)CreateFileW(sName.GetUnicode(), GENERIC_READ, 0, &sSecAttr, OPEN_EXISTING, 0, nullptr);
 
 		// Return result
 		return ((HANDLE)m_hPipe[0] != INVALID_HANDLE_VALUE && (HANDLE)m_hPipe[1] != INVALID_HANDLE_VALUE);

@@ -106,7 +106,7 @@ void PopupMenu::ShowPopupMenu(const PLMath::Vector2i &vPos)
 	SetZPos(ZAbove);
 
 	// Make first item selected
-	m_pSelectedItem = m_pMenu ? m_pMenu->GetItems()[0] : NULL;
+	m_pSelectedItem = m_pMenu ? m_pMenu->GetItems()[0] : nullptr;
 	SetSelection(0);
 
 	// Make visible

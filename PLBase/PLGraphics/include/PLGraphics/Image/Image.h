@@ -145,7 +145,7 @@ class Image : public PLCore::Loadable {
 		*    Index of image part
 		*
 		*  @return
-		*    Image part, or NULL if it doesn't exist
+		*    Image part, or a null pointer if it doesn't exist
 		*/
 		PLGRAPHICS_API ImagePart *GetPart(PLGeneral::uint32 nIndex) const;
 
@@ -157,7 +157,7 @@ class Image : public PLCore::Loadable {
 		*    ID of image part
 		*
 		*  @return
-		*    Image part, or NULL if it doesn't exist
+		*    Image part, or a null pointer if it doesn't exist
 		*/
 		PLGRAPHICS_API ImagePart *GetPartBySemantics(PLGeneral::uint32 nSemantics) const;
 
@@ -178,7 +178,7 @@ class Image : public PLCore::Loadable {
 		*    ID of image part
 		*
 		*  @return
-		*    Image part, or NULL on error
+		*    Image part, or a null pointer on error
 		*
 		*  @remarks
 		*    Chose a semantics ID that describes the role of the new image part (@see EImagePart).
@@ -209,7 +209,7 @@ class Image : public PLCore::Loadable {
 		*    Index of mipmap
 		*
 		*  @return
-		*    Pointer to image buffer, NULL if the specified image buffer does not exist
+		*    Pointer to image buffer, a null pointer if the specified image buffer does not exist
 		*
 		*  @remarks
 		*    If GetBuffer() is called with default parameters, it will return the image buffer

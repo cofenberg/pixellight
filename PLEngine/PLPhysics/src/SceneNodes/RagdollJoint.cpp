@@ -137,7 +137,7 @@ void RagdollJoint::CreatePhysicsJoint()
 					switch (nJointType) {
 						case Hinge:
 						{
-							JointHinge *pJoint = (JointHinge*)pWorld->CreateJointHinge(bAttachToWorldT ? NULL : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1);
+							JointHinge *pJoint = (JointHinge*)pWorld->CreateJointHinge(bAttachToWorldT ? nullptr : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1);
 							if (pJoint) {
 								pJoint->SetLowRange(fLowJointRange1);
 								pJoint->SetHighRange(fHighJointRange1);
@@ -148,7 +148,7 @@ void RagdollJoint::CreatePhysicsJoint()
 
 						case Universal:
 						{
-							JointUniversal *pJoint = (JointUniversal*)pWorld->CreateJointUniversal(bAttachToWorldT ? NULL : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1, qNodeRotation*vRotAxis2);
+							JointUniversal *pJoint = (JointUniversal*)pWorld->CreateJointUniversal(bAttachToWorldT ? nullptr : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1, qNodeRotation*vRotAxis2);
 							if (pJoint) {
 								pJoint->SetLowRange1(fLowJointRange1);
 								pJoint->SetHighRange1(fHighJointRange1);

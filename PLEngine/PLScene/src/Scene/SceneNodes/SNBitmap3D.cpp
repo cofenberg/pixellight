@@ -106,7 +106,7 @@ void SNBitmap3D::SetFlags(uint32 nValue)
 		// Destroy the old vertex buffer because the 'IgnoreColor'-flag may have changed
 		if (m_pVertexBuffer) {
 			delete m_pVertexBuffer;
-			m_pVertexBuffer = NULL;
+			m_pVertexBuffer = nullptr;
 		}
 		m_bUpdatePositionOffset		= true;
 		m_bUpdateTextureCoordinates	= true;
@@ -124,8 +124,8 @@ void SNBitmap3D::SetFlags(uint32 nValue)
 */
 SNBitmap3D::SNBitmap3D() :
 	PositionOffset(this),
-	m_pIndexBuffer(NULL),
-	m_pVertexBuffer(NULL),
+	m_pIndexBuffer(nullptr),
+	m_pVertexBuffer(nullptr),
 	m_bUpdatePositionOffset(true),
 	m_bUpdateTextureCoordinates(true),
 	m_bUpdateColor(true)

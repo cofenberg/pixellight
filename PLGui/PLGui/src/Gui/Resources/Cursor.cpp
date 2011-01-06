@@ -45,7 +45,7 @@ namespace PLGui {
 */
 Cursor::Cursor(Gui &cGui) :
 	m_pGui(&cGui),
-	m_pCursorImpl(NULL),
+	m_pCursorImpl(nullptr),
 	m_nMouseCursor(CursorArrow)
 {
 	// Load cursor
@@ -58,7 +58,7 @@ Cursor::Cursor(Gui &cGui) :
 */
 Cursor::Cursor(Gui &cGui, EMouseCursor nCursor) :
 	m_pGui(&cGui),
-	m_pCursorImpl(NULL),
+	m_pCursorImpl(nullptr),
 	m_nMouseCursor(nCursor)
 {
 	// Load cursor
@@ -71,7 +71,7 @@ Cursor::Cursor(Gui &cGui, EMouseCursor nCursor) :
 */
 Cursor::Cursor(Gui &cGui, const String &sFilename, const Vector2i &vHotspot) :
 	m_pGui(&cGui),
-	m_pCursorImpl(NULL),
+	m_pCursorImpl(nullptr),
 	m_nMouseCursor(CursorCustom),
 	m_sFilename(sFilename)
 {
@@ -112,7 +112,7 @@ Cursor &Cursor::operator =(const Cursor &cCursor)
 	// Release cursor
 	if (m_pCursorImpl) {
 		m_pCursorImpl->Release();
-		m_pCursorImpl = NULL;
+		m_pCursorImpl = nullptr;
 	}
 
 	// Copy cursor
@@ -156,7 +156,7 @@ void Cursor::Load(EMouseCursor nCursor)
 	// Release cursor
 	if (m_pCursorImpl) {
 		m_pCursorImpl->Release();
-		m_pCursorImpl = NULL;
+		m_pCursorImpl = nullptr;
 	}
 
 	// Store cursor data
@@ -180,7 +180,7 @@ void Cursor::Load(const PLGeneral::String &sFilename, const Vector2i &vHotspot)
 	// Release cursor
 	if (m_pCursorImpl) {
 		m_pCursorImpl->Release();
-		m_pCursorImpl = NULL;
+		m_pCursorImpl = nullptr;
 	}
 
 	// Store cursor data

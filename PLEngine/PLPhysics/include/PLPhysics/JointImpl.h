@@ -74,7 +74,7 @@ class JointImpl {
 		*    Returns the PL physics joint this is the implementation from
 		*
 		*  @return
-		*    The PL physics joint this is the implementation from, NULL on error
+		*    The PL physics joint this is the implementation from, a null pointer on error
 		*/
 		virtual Joint *GetJoint() const = 0;
 

@@ -266,7 +266,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*    Index of the render target texture to return
 		*
 		*  @return
-		*    A render target texture buffer of the GBuffer, can be NULL
+		*    A render target texture buffer of the GBuffer, can be a null pointer
 		*/
 		PLCOM_API PLRenderer::TextureBufferRectangle *GetRenderTargetTextureBuffer(PLGeneral::uint32 nIndex) const;
 
@@ -304,7 +304,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*    Returns a shared fullscreen quad instance
 		*
 		*  @return
-		*    Fullscreen quad instance, NULL on error
+		*    Fullscreen quad instance, a null pointer on error
 		*/
 		PLCOM_API FullscreenQuad *GetFullscreenQuad() const;
 
@@ -486,18 +486,18 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer			 *m_pRenderTarget;			/**< Render target of the GBuffer, can be NULL */
-		PLRenderer::TextureBufferRectangle			 *m_pColorTarget1;			/**< Color target 1, can be NULL */
-		PLRenderer::TextureBufferRectangle			 *m_pColorTarget2;			/**< Color target 2, can be NULL */
-		PLRenderer::TextureBufferRectangle			 *m_pColorTarget3;			/**< Color target 3, can be NULL */
+		PLRenderer::SurfaceTextureBuffer			 *m_pRenderTarget;			/**< Render target of the GBuffer, can be a null pointer */
+		PLRenderer::TextureBufferRectangle			 *m_pColorTarget1;			/**< Color target 1, can be a null pointer */
+		PLRenderer::TextureBufferRectangle			 *m_pColorTarget2;			/**< Color target 2, can be a null pointer */
+		PLRenderer::TextureBufferRectangle			 *m_pColorTarget3;			/**< Color target 3, can be a null pointer */
 		bool										  m_bColorTarget3Used;		/**< Was the RGB color target 3 actually used when filling the current GBuffer content? */
 		bool										  m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
-		PLRenderer::Surface							 *m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be NULL */
-		FullscreenQuad								 *m_pFullscreenQuad;		/**< Fullscreen quad instance, can be NULL */
+		PLRenderer::Surface							 *m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be a null pointer */
+		FullscreenQuad								 *m_pFullscreenQuad;		/**< Fullscreen quad instance, can be a null pointer */
 		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
 		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
 		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */
-		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags			  m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 

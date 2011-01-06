@@ -102,13 +102,13 @@ class JointHandler : public PLGeneral::ElementHandler<Joint>, public JointState 
 		*    transform joint matrix
 		*
 		*  @param[in] pJointHandler
-		*    Parent joint of this joint, if NULL there's no parent joint
+		*    Parent joint of this joint, if a null pointer there's no parent joint
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe the handler has no joint or
 		*    the given parent joint is invalid)
 		*/
-		PLMESH_API bool CalculateStates(const JointHandler *pJointHandler = NULL);
+		PLMESH_API bool CalculateStates(const JointHandler *pJointHandler = nullptr);
 
 		/**
 		*  @brief

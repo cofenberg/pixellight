@@ -64,7 +64,7 @@ SurfaceTextureBuffer::~SurfaceTextureBuffer()
 */
 bool SurfaceTextureBuffer::IsFBOUsed() const
 {
-	return m_pFrameBufferObject != NULL;
+	return (m_pFrameBufferObject != nullptr);
 }
 
 /**
@@ -73,7 +73,7 @@ bool SurfaceTextureBuffer::IsFBOUsed() const
 */
 bool SurfaceTextureBuffer::IsPBufferUsed() const
 {
-	return (m_pPBuffer != NULL);
+	return (m_pPBuffer != nullptr);
 }
 
 /**
@@ -131,8 +131,8 @@ void SurfaceTextureBuffer::Finish()
 */
 SurfaceTextureBuffer::SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRenderer::TextureBuffer &cTextureBuffer, uint32 nFlags, uint8 nMaxColorTargets) :
 	PLRenderer::SurfaceTextureBuffer(cRenderer, nFlags, nMaxColorTargets),
-	m_pFrameBufferObject(NULL),
-	m_pPBuffer(NULL),
+	m_pFrameBufferObject(nullptr),
+	m_pPBuffer(nullptr),
 	m_nFace(0)
 {
 	// Init data
@@ -200,7 +200,7 @@ bool SurfaceTextureBuffer::CreateFBO()
 				} else {
 					// DAMN!
 					delete m_pFrameBufferObject;
-					m_pFrameBufferObject = NULL;
+					m_pFrameBufferObject = nullptr;
 				}
 			}
 		}
@@ -349,7 +349,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 
 								// Cleanup
 								delete m_pPBuffer;
-								m_pPBuffer = NULL;
+								m_pPBuffer = nullptr;
 							}
 						}
 					}
@@ -440,12 +440,12 @@ void SurfaceTextureBuffer::DeInit()
 	// If this is the current render target, make the main window to the new current one
 	Renderer &cRenderer = (Renderer&)GetRenderer();
 	if (cRenderer.GetRenderTarget() == this)
-		cRenderer.SetRenderTarget(NULL);
+		cRenderer.SetRenderTarget(nullptr);
 
 	// Destroy frame buffer object
 	if (m_pFrameBufferObject) {
 		delete m_pFrameBufferObject;
-		m_pFrameBufferObject = NULL;
+		m_pFrameBufferObject = nullptr;
 	}
 
 	// Destroy PBuffer
@@ -467,7 +467,7 @@ void SurfaceTextureBuffer::DeInit()
 
 		// Destroy
 		delete m_pPBuffer;
-		m_pPBuffer = NULL;
+		m_pPBuffer = nullptr;
 	}
 
 	// Cleanup texture buffer handlers

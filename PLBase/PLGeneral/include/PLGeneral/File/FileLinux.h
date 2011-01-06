@@ -65,7 +65,7 @@ class FileLinux : public FileImpl {
 		*  @param[in] cUrl
 		*    URL of the file or directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		FileLinux(const Url &cUrl, const FileAccess *pAccess);
 
@@ -115,7 +115,7 @@ class FileLinux : public FileImpl {
 	private:
 		String	 m_sFilename;	/**< File name (in Linux notation) */
 		uint32	 m_nAccess;		/**< File access modes (see EAccess) */
-		FILE	*m_pFile;		/**< Pointer to input stream, can be NULL */
+		FILE	*m_pFile;		/**< Pointer to input stream, can be a null pointer */
 
 
 };

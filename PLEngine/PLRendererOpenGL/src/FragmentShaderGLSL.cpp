@@ -88,7 +88,7 @@ String FragmentShaderGLSL::GetSourceCode() const
 	if (nShaderSourceLength > 1) {
 		// The string class takes over the control of the string memory and also deletes it
 		char *pszSourceCode = new char[nShaderSourceLength];
-		glGetShaderSourceARB(m_nOpenGLFragmentShader, nShaderSourceLength, NULL, pszSourceCode);
+		glGetShaderSourceARB(m_nOpenGLFragmentShader, nShaderSourceLength, nullptr, pszSourceCode);
 		return String(pszSourceCode, false, nShaderSourceLength-1);	// -1 = excluding the null termination character
 	}
 
@@ -126,11 +126,11 @@ void FragmentShaderGLSL::BackupDeviceData(uint8 **ppBackup)
 	glGetObjectParameterivARB(m_nOpenGLFragmentShader, GL_OBJECT_SHADER_SOURCE_LENGTH_ARB, &nShaderSourceLength);
 	if (nShaderSourceLength > 1) {
 		*ppBackup = new uint8[nShaderSourceLength];
-		glGetShaderSourceARB(m_nOpenGLFragmentShader, nShaderSourceLength, NULL, (GLcharARB*)*ppBackup);
+		glGetShaderSourceARB(m_nOpenGLFragmentShader, nShaderSourceLength, nullptr, (GLcharARB*)*ppBackup);
 		glDeleteObjectARB(m_nOpenGLFragmentShader);
-		m_nOpenGLFragmentShader = NULL;
+		m_nOpenGLFragmentShader = 0;
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 }
 

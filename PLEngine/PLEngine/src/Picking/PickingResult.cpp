@@ -50,10 +50,10 @@ namespace PLEngine {
 *    Constructor
 */
 PickingResult::PickingResult() :
-	m_pSceneNode(NULL),
+	m_pSceneNode(nullptr),
 	m_nGeometry(0),
 	m_nTriangle(0),
-	m_pSceneContainer(NULL),
+	m_pSceneContainer(nullptr),
 	m_fNearestSquaredDistance(-1.0f)
 {
 }

@@ -124,7 +124,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 		*    Returns the scene context the scene renderer pass is in
 		*
 		*  @return
-		*    The scene context the scene renderer pass is in, can but shouldn't be NULL
+		*    The scene context the scene renderer pass is in, can but shouldn't be a null pointer
 		*/
 		PLS_API SceneContext *GetSceneContext() const;
 
@@ -133,7 +133,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 		*    Returns the used renderer
 		*
 		*  @return
-		*    The used renderer, can but shouldn't be NULL
+		*    The used renderer, can but shouldn't be a null pointer
 		*/
 		PLS_API PLRenderer::Renderer *GetRenderer() const;
 
@@ -145,7 +145,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 		*    Class name of the scene renderer pass instance
 		*
 		*  @return
-		*    The first found instance of a scene renderer pass instance within the scene renderer, can be NULL
+		*    The first found instance of a scene renderer pass instance within the scene renderer, can be a null pointer
 		*/
 		PLS_API SceneRendererPass *GetFirstInstanceOfSceneRendererPassClass(const PLGeneral::String &sClassName) const;
 

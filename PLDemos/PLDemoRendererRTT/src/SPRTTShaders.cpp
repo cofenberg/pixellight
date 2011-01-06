@@ -68,16 +68,16 @@ pl_implement_class(SPRTTShaders)
 *    Constructor
 */
 SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
-	m_pRenderTarget(NULL),
-	m_pColorTarget1(NULL),
-	m_pColorTarget2(NULL),
-	m_pColorTarget3(NULL),
-	m_pSceneVertexShader(NULL),
-	m_pSceneFragmentShader(NULL),
-	m_pSceneProgram(NULL),
-	m_pVertexShader(NULL),
-	m_pFragmentShader(NULL),
-	m_pProgram(NULL)
+	m_pRenderTarget(nullptr),
+	m_pColorTarget1(nullptr),
+	m_pColorTarget2(nullptr),
+	m_pColorTarget3(nullptr),
+	m_pSceneVertexShader(nullptr),
+	m_pSceneFragmentShader(nullptr),
+	m_pSceneProgram(nullptr),
+	m_pVertexShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr)
 {
 	// Check/get number of supported color render targets
 	uint8 nMaxColorTargets = 4;

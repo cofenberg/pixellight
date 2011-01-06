@@ -55,7 +55,7 @@ bool LoadOGG(File *pFile, Array<uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFr
 		ovc.seek_func  = &SoundManager::seek_func;
 		ovc.close_func = &SoundManager::close_func;
 		ovc.tell_func  = &SoundManager::tell_func;
-		if (ov_open_callbacks(pFile, &oggFile, NULL, 0, ovc) == 0) {
+		if (ov_open_callbacks(pFile, &oggFile, nullptr, 0, ovc) == 0) {
 			// Get some information about the OGG file
 			vorbis_info *pInfo = ov_info(&oggFile, -1);
 
@@ -117,7 +117,7 @@ bool LoadOGG(const uint8 nData[], uint32 nSize, Array<uint8> &lstBuffer, ALenum 
 	ovc.seek_func  = &SoundManager::seek_func_mem;
 	ovc.close_func = &SoundManager::close_func_mem;
 	ovc.tell_func  = &SoundManager::tell_func_mem;
-	if (!ov_open_callbacks(&sMemData, &oggFile, NULL, 0, ovc)) {
+	if (!ov_open_callbacks(&sMemData, &oggFile, nullptr, 0, ovc)) {
 		// Get some information about the OGG file
 		vorbis_info *pInfo = ov_info(&oggFile, -1);
 

@@ -46,7 +46,7 @@ namespace PLGeneral {
 *    Constructor
 */
 DynLib::DynLib() :
-	m_pDynLibImpl(NULL)
+	m_pDynLibImpl(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -68,7 +68,8 @@ DynLib::DynLib() :
 DynLib::~DynLib()
 {
 	// Destroy system specific implementation
-	if (m_pDynLibImpl) delete m_pDynLibImpl;
+	if (m_pDynLibImpl)
+		delete m_pDynLibImpl;
 }
 
 /**
@@ -142,7 +143,7 @@ bool DynLib::Unload()
 *    Copy constructor
 */
 DynLib::DynLib(const DynLib &cSource) :
-	m_pDynLibImpl(NULL)
+	m_pDynLibImpl(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

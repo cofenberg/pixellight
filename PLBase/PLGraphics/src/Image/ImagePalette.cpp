@@ -41,7 +41,7 @@ namespace PLGraphics {
 *    Constructor
 */
 ImagePalette::ImagePalette() :
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nSize(0),
 	m_nColors(0)
 {
@@ -52,7 +52,7 @@ ImagePalette::ImagePalette() :
 *    Copy constructor
 */
 ImagePalette::ImagePalette(const ImagePalette &cSource) :
-	m_pData(NULL),
+	m_pData(nullptr),
 	m_nSize(0),
 	m_nColors(0)
 {
@@ -109,12 +109,11 @@ ImagePalette &ImagePalette::operator =(const ImagePalette &cSource)
 void ImagePalette::Clear()
 {
 	// Delete palette
-	if (m_pData) {
+	if (m_pData)
 		delete [] m_pData;
-	}
 
 	// Reset data
-	m_pData   = NULL;
+	m_pData   = nullptr;
 	m_nSize   = 0;
 	m_nColors = 0;
 	m_mapColors.Clear();
@@ -283,7 +282,7 @@ void ImagePalette::Resize(uint32 nColors)
 			MemoryManager::Set(pData, 0, nSize*3);
 
 			// Copy old palette
-			if (m_pData != NULL) {
+			if (m_pData != nullptr) {
 				// Copy old palette data
 				if (m_nSize > 0)
 					MemoryManager::Copy(pData, m_pData, m_nSize*3);

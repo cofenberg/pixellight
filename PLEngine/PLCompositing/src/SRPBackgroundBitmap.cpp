@@ -122,7 +122,7 @@ void SRPBackgroundBitmap::LoadMaterial()
 	Renderer *pRenderer = GetRenderer();
 	if (pRenderer) {
 		// Load material
-		PLRenderer::Material *pMaterial = m_sMaterial.GetLength() ? pRenderer->GetRendererContext().GetMaterialManager().LoadResource(m_sMaterial) : NULL;
+		PLRenderer::Material *pMaterial = m_sMaterial.GetLength() ? pRenderer->GetRendererContext().GetMaterialManager().LoadResource(m_sMaterial) : nullptr;
 		m_cMaterial.SetResource(pMaterial);
 
 		// Check whether this is a material or an effect, if not, we need to set a default effect

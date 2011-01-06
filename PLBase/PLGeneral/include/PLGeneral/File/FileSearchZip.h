@@ -68,7 +68,7 @@ class FileSearchZip : public FileSearchImpl {
 		*  @param[in] sPathInZip
 		*    Path inside the ZIP-file
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*
 		*  @note
 		*    - sPathInZip *must* end with '/'!

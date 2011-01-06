@@ -175,7 +175,7 @@ void AnimationInfo::SetFlags(uint32 nFlags)
 AnimationFrameInfo *AnimationInfo::GetFrameInfo(uint32 nIndex) const
 {
 	AnimationFrameInfo &cAnimationFrameInfo = m_lstFrameInfos[nIndex];
-	return (&cAnimationFrameInfo != &Array<AnimationFrameInfo>::Null) ? &cAnimationFrameInfo : NULL;
+	return (&cAnimationFrameInfo != &Array<AnimationFrameInfo>::Null) ? &cAnimationFrameInfo : nullptr;
 }
 
 /**

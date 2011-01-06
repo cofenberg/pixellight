@@ -48,7 +48,7 @@ VisContainer *VisPortal::GetTargetVisContainer() const
 	if (!pSceneNode || !(pSceneNode->GetFlags() & SNCellPortal::NoSeeThrough))
 		return m_pTargetCell;
 	else
-		return NULL;
+		return nullptr;
 }
 
 
@@ -61,7 +61,7 @@ VisContainer *VisPortal::GetTargetVisContainer() const
 */
 VisPortal::VisPortal() :
 	EventHandlerDestroy(&VisPortal::NotifyDestroy, this),
-	m_pTargetCell(NULL)
+	m_pTargetCell(nullptr)
 {
 }
 

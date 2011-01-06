@@ -50,7 +50,7 @@ pl_implement_class(Database)
 *    Default constructor
 */
 Database::Database() :
-	m_pSQLite(NULL)
+	m_pSQLite(nullptr)
 {
 }
 
@@ -81,7 +81,7 @@ sqlite3 *Database::GetSQLite() const
 *    Copy constructor
 */
 Database::Database(const Database &cSource) :
-	m_pSQLite(NULL)
+	m_pSQLite(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -106,15 +106,15 @@ String Database::GetVersion() const
 	return sString;
 }
 
-bool Database::Connect(const String &sServer, const String &sUserName,
-					   const String &sUserPassword, const String &sDatabase)
+bool Database::Connect(const String &sServer, const String &sUserName, const String &sUserPassword, const String &sDatabase)
 {
 	// Already connected?
 	if (!m_pSQLite) {
 		// Try to connect to our SQLite server
 		if (sqlite3_open(sDatabase, &m_pSQLite) == SQLITE_OK)
 			return true; // Done
-		else PL_LOG(Error, String("SQLite could not connect to specified server! Error: ") + sqlite3_errmsg(m_pSQLite))
+		else
+			PL_LOG(Error, String("SQLite could not connect to specified server! Error: ") + sqlite3_errmsg(m_pSQLite))
 	}
 
 	// Error!
@@ -123,24 +123,27 @@ bool Database::Connect(const String &sServer, const String &sUserName,
 
 bool Database::IsConnected() const
 {
-	return (m_pSQLite != NULL);
+	return (m_pSQLite != nullptr);
 }
 
 bool Database::IsConnectionActive() const
 {
 	// There's no special 'connection active' check within SQLite...
-	return (m_pSQLite != NULL);
+	return (m_pSQLite != nullptr);
 }
 
 bool Database::Disconnect()
 {
 	if (m_pSQLite) {
 		sqlite3_close(m_pSQLite);
-		m_pSQLite = NULL;
+		m_pSQLite = nullptr;
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 PLDatabase::DatabaseQuery *Database::CreateQuery() const

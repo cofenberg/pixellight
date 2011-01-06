@@ -103,7 +103,7 @@ class Program : public Resource {
 		*    Returns the vertex shader the program is using
 		*
 		*  @return
-		*    Vertex shader the program is using, can be NULL
+		*    Vertex shader the program is using, can be a null pointer
 		*/
 		virtual PLRenderer::VertexShader *GetVertexShader() const = 0;
 
@@ -112,7 +112,7 @@ class Program : public Resource {
 		*    Sets the vertex shader the program is using
 		*
 		*  @param[in] pVertexShader
-		*    Vertex shader the program is using, can be NULL, vertex shader and program language must match!
+		*    Vertex shader the program is using, can be a null pointer, vertex shader and program language must match!
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
@@ -124,7 +124,7 @@ class Program : public Resource {
 		*    Returns the geometry shader the program is using
 		*
 		*  @return
-		*    Geometry shader the program is using, can be NULL
+		*    Geometry shader the program is using, can be a null pointer
 		*/
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const = 0;
 
@@ -133,7 +133,7 @@ class Program : public Resource {
 		*    Sets the geometry shader the program is using
 		*
 		*  @param[in] pGeometryShader
-		*    Geometry shader the program is using, can be NULL, geometry shader and program language must match!
+		*    Geometry shader the program is using, can be a null pointer, geometry shader and program language must match!
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
@@ -145,7 +145,7 @@ class Program : public Resource {
 		*    Returns the fragment shader the program is using
 		*
 		*  @return
-		*    Fragment shader the program is using, can be NULL
+		*    Fragment shader the program is using, can be a null pointer
 		*/
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const = 0;
 
@@ -154,7 +154,7 @@ class Program : public Resource {
 		*    Sets the fragment shader the program is using
 		*
 		*  @param[in] pFragmentShader
-		*    Fragment shader the program is using, can be NULL, fragment shader and program language must match!
+		*    Fragment shader the program is using, can be a null pointer, fragment shader and program language must match!
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
@@ -178,7 +178,7 @@ class Program : public Resource {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute (can be NULL, if no attribute with that name could be found)
+		*    Attribute (can be a null pointer, if no attribute with that name could be found)
 		*/
 		virtual ProgramAttribute *GetAttribute(const PLGeneral::String &sName) = 0;
 
@@ -199,7 +199,7 @@ class Program : public Resource {
 		*    Uniform name
 		*
 		*  @return
-		*    Uniform (can be NULL, if no uniform with that name could be found)
+		*    Uniform (can be a null pointer, if no uniform with that name could be found)
 		*/
 		virtual ProgramUniform *GetUniform(const PLGeneral::String &sName) = 0;
 

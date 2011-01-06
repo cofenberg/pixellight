@@ -59,7 +59,7 @@ int ConsoleLinux::IsKeyHit() const
 		tcgetattr(STDIN, &term);
 		term.c_lflag &= ~ICANON;
 		tcsetattr(STDIN, TCSANOW, &term);
-		setbuf(stdin, NULL);
+		setbuf(stdin, nullptr);
 		initialized = true;
 	}
 
@@ -95,7 +95,7 @@ int ConsoleLinux::GetCharacter(bool bEcho) const
 void ConsoleLinux::ClearScreen() const
 {
 	// Use curses lib
-	setupterm(NULL, 1, NULL);
+	setupterm(nullptr, 1, nullptr);
 	putp(clear_screen); 
 
 	// Another solution: Use ANSI-sequences to achieve the job
@@ -109,7 +109,7 @@ void ConsoleLinux::GetCursorPosition(uint16 &nX, uint16 &nY) const
 	// Use curses lib
 	/*
 	int x, y;
-	setupterm(NULL, 1, NULL);
+	setupterm(nullptr, 1, nullptr);
 	getyx(stdscr, y, x);
 	nX = x;
 	nY = y;
@@ -121,7 +121,7 @@ void ConsoleLinux::GetCursorPosition(uint16 &nX, uint16 &nY) const
 void ConsoleLinux::SetCursorPosition(uint16 nX, uint16 nY) const
 {
 	// Use curses lib
-	setupterm(NULL, 1, NULL);
+	setupterm(nullptr, 1, nullptr);
 	putp(tparm(cursor_address, nY, nX));
 
 	// Another solution: Use ANSI-sequences to achieve the job

@@ -137,7 +137,7 @@ bool SurfaceWindow::Init()
 			uint32 nDisplayMode = 0;
 			bool bFound = false;
 			DEVMODE DevMode;
-			while (EnumDisplaySettings(NULL, nDisplayMode++, &DevMode)) {
+			while (EnumDisplaySettings(nullptr, nDisplayMode++, &DevMode)) {
 				// Get required information
 				if (m_sDisplayMode.vSize.x	  == (int)DevMode.dmPelsWidth  &&
 					m_sDisplayMode.vSize.y	  == (int)DevMode.dmPelsHeight &&
@@ -169,9 +169,9 @@ bool SurfaceWindow::Init()
 
 		// Get desktop color depth
 		if (!m_bIsFullscreen) {
-			HDC hDeskTopDC = GetDC(NULL);
+			HDC hDeskTopDC = GetDC(nullptr);
 			nBitsPerPixel = GetDeviceCaps(hDeskTopDC, BITSPIXEL);
-			ReleaseDC(NULL, hDeskTopDC);
+			ReleaseDC(nullptr, hDeskTopDC);
 		}
 
 		// Setup pixel format
@@ -228,7 +228,7 @@ bool SurfaceWindow::Init()
 			if (wglChoosePixelFormatARB) {
 				// Test through multiple color bits in case the desired value is not available
 				int nCurrentBitsPerPixel = nBitsPerPixel;
-				while (nCurrentBitsPerPixel && (!wglChoosePixelFormatARB(m_hDC, nAttribs, NULL, sizeof(nPixelFormats)/sizeof(int), nPixelFormats, &nPFormats) || !nPFormats)) {
+				while (nCurrentBitsPerPixel && (!wglChoosePixelFormatARB(m_hDC, nAttribs, nullptr, sizeof(nPixelFormats)/sizeof(int), nPixelFormats, &nPFormats) || !nPFormats)) {
 					switch (nCurrentBitsPerPixel) {
 						case 32:
 							nCurrentBitsPerPixel = 24;
@@ -314,7 +314,7 @@ void SurfaceWindow::DeInit()
 		// If this is the current render target, make the main window to the new current one
 		Renderer &cRenderer = (Renderer&)GetRenderer();
 		if (cRenderer.GetRenderTarget() == this)
-			cRenderer.SetRenderTarget(NULL);
+			cRenderer.SetRenderTarget(nullptr);
 
 		// Reset gamma - but only when the gamma was changed by using "SetGamma()"
 		if (m_bGammaChanged) {
@@ -325,14 +325,14 @@ void SurfaceWindow::DeInit()
 		// Release the Windows DC
 		if (m_hDC && !ReleaseDC((HWND)nWindow, m_hDC))
 			PL_LOG(Error, "Release OpenGL device context failed")
-		m_hDC = NULL;
+		m_hDC = nullptr;
 
 		// Is fullscreen?
 		if (m_bIsFullscreen) {
 			// Reset display settings
 			PL_LOG(Info, "Set display mode to default")
 			GetRenderer().BackupDeviceObjects();
-			ChangeDisplaySettings(NULL, CDS_RESET);
+			ChangeDisplaySettings(nullptr, CDS_RESET);
 			GetRenderer().RestoreDeviceObjects();
 		}
 	}

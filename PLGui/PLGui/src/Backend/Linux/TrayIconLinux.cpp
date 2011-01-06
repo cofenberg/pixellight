@@ -55,7 +55,7 @@ namespace PLGui {
 */
 TrayIconLinux::TrayIconLinux(TrayIcon &cTrayIcon) : TrayIconImpl(cTrayIcon),
 	m_pDisplay(((GuiLinux*)cTrayIcon.GetGui()->GetImpl())->GetDisplay()),
-	m_pWidget(NULL)
+	m_pWidget(nullptr)
 {
 }
 
@@ -85,7 +85,7 @@ void TrayIconLinux::DestroyTrayIcon()
 	// Destroy window
 	if (m_pWidget) {
 		m_pWidget->Destroy();
-		m_pWidget = NULL;
+		m_pWidget = nullptr;
 	}
 }
 

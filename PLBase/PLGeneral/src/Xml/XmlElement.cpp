@@ -96,7 +96,7 @@ XmlElement &XmlElement::operator =(const XmlElement &cSource)
 /**
 *  @brief
 *    Given an attribute name, 'GetAttribute()' returns the value
-*    for the attribute of that name, or NULL if none exists
+*    for the attribute of that name, or a null pointer if none exists
 */
 String XmlElement::GetAttribute(const String &sName) const
 {
@@ -107,7 +107,7 @@ String XmlElement::GetAttribute(const String &sName) const
 /**
 *  @brief
 *    Given an attribute name, 'GetAttribute()' returns the value
-*    for the attribute of that name, or NULL if none exists
+*    for the attribute of that name, or a null pointer if none exists
 */
 String XmlElement::GetAttribute(const String &sName, int *pnValue) const
 {
@@ -124,7 +124,7 @@ String XmlElement::GetAttribute(const String &sName, int *pnValue) const
 /**
 *  @brief
 *    Given an attribute name, 'GetAttribute()' returns the value
-*    for the attribute of that name, or NULL if none exists
+*    for the attribute of that name, or a null pointer if none exists
 */
 String XmlElement::GetAttribute(const String &sName, double *pdValue) const
 {
@@ -388,7 +388,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 			pDocument->SetError(ErrorParsingElement, 0, 0, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	if (pData) {
@@ -403,7 +403,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 			pDocument->SetError(ErrorParsingElement, pszData, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 	pszData = SkipWhiteSpace(pszData + 1, nEncoding);
 
@@ -417,7 +417,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 			pDocument->SetError(ErrorFailedToReadElementName, pszError, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 
 	String sEndTag = "</";
@@ -434,7 +434,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 				pDocument->SetError(ErrorReadingAttributes, pszError, pData, nEncoding);
 
 			// Error!
-			return NULL;
+			return nullptr;
 		}
 		if (*pszData == '/') {
 			++pszData;
@@ -447,7 +447,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 					pDocument->SetError(ErrorParsingEmpty, pszData, pData, nEncoding);
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 			return (pszData + 1);
 		} else if (*pszData == '>') {
@@ -462,7 +462,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 					pDocument->SetError(ErrorReadingEndTag, pszData, pData, nEncoding);
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 
 			// We should find the end tag now
@@ -484,7 +484,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 					pDocument->SetError(ErrorReadingEndTag, pszData, pData, nEncoding);
 
 				// Error!
-				return NULL;
+				return nullptr;
 			} else {
 				// Set error code
 				XmlDocument *pDocument = GetDocument();
@@ -492,7 +492,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 					pDocument->SetError(ErrorReadingEndTag, pszData, pData, nEncoding);
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 		} else {
 			// Try to read an attribute
@@ -510,7 +510,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 				delete pAttribute;
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 
 			// Handle the strange case of double attributes
@@ -525,7 +525,7 @@ const char *XmlElement::Parse(const char *pszData, XmlParsingData *pData, EEncod
 				delete pAttribute;
 
 				// Error!
-				return NULL;
+				return nullptr;
 			}
 
 			// Register the created attribute
@@ -612,7 +612,7 @@ const char *XmlElement::ReadValue(const char *pszData, XmlParsingData *pData, EE
 					pszData = pNode->Parse(pszData, pData, nEncoding);
 					LinkEndChild(*pNode);
 				} else {
-					return NULL;
+					return nullptr;
 				}
 			}
 		}
@@ -661,8 +661,8 @@ void XmlElement::XmlAttributeSet::Remove(XmlAttribute &cAttribute)
 		if (pAttribute == &cAttribute) {
 			pAttribute->m_pPreviousAttribute->m_pNextAttribute = pAttribute->m_pNextAttribute;
 			pAttribute->m_pNextAttribute->m_pPreviousAttribute = pAttribute->m_pPreviousAttribute;
-			pAttribute->m_pNextAttribute					   = NULL;
-			pAttribute->m_pPreviousAttribute				   = NULL;
+			pAttribute->m_pNextAttribute					   = nullptr;
+			pAttribute->m_pPreviousAttribute				   = nullptr;
 
 			// Get us out of here right now!
 			return;
@@ -676,7 +676,7 @@ XmlAttribute *XmlElement::XmlAttributeSet::Find(const String &sName) const
 		if (pAttribute->m_sName == sName)
 			return pAttribute;
 	}
-	return NULL;
+	return nullptr;
 }
 
 XmlAttribute *XmlElement::XmlAttributeSet::FindOrCreate(const String &sName)

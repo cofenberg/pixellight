@@ -45,7 +45,7 @@ namespace PLXmlText {
 *    Constructor
 */
 XmlTextImage::XmlTextImage(XmlTextElement *pParent) : XmlTextElement(pParent),
-	m_pImage(NULL)
+	m_pImage(nullptr)
 {
 }
 
@@ -71,7 +71,7 @@ void XmlTextImage::OnParse(XmlNode &cXmlNode)
 		// Destroy the previous image
 		if (m_pImage) {
 			delete m_pImage;
-			m_pImage = NULL;
+			m_pImage = nullptr;
 		}
 
 		// Get XML element

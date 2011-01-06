@@ -91,12 +91,12 @@ bool DatabaseQueryResult::EndOfRow() const
 
 const char *DatabaseQueryResult::GetCurrentValue(uint32 nColumn) const
 {
-	return NULL;
+	return nullptr;
 }
 
 const char *DatabaseQueryResult::GetFieldName(uint32 nColumn) const
 {
-	return NULL;
+	return nullptr;
 }
 
 
@@ -122,7 +122,7 @@ const Array<String> &DatabaseQueryResult::FetchFieldList()
 const HashMap<String, String> *DatabaseQueryResult::FetchRow()
 {
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

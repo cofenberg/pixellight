@@ -85,7 +85,7 @@ String FuncDesc::GetSignature() const
 DynFunc *FuncDesc::GetMethod(const Object *pObject) const
 {
 	// To be implemented in derived classes
-	return NULL;
+	return nullptr;
 }
 
 

@@ -207,7 +207,7 @@ const VertexBuffer::Attribute *VertexBuffer::GetVertexAttribute(ESemantic nSeman
 	}
 
 	// Error, no vertex attribute with the requested semantic found!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -579,7 +579,7 @@ VertexBuffer::VertexBuffer(const VertexBuffer &cSource) : Buffer(cSource.GetRend
 void *VertexBuffer::GetData()
 {
 	// We need this dummy default implementation because this function is used within this file!
-	return NULL;
+	return nullptr;
 }
 
 

@@ -64,7 +64,7 @@ void JointImpl::InitializePhysXJoint(PLPhysics::Joint &cJoint, NxJoint &cPhysXJo
 //[-------------------------------------------------------]
 PLPhysics::Joint *JointImpl::GetJoint() const
 {
-	return m_pPhysXJoint ? (PLPhysics::Joint*)m_pPhysXJoint->userData : NULL;
+	return m_pPhysXJoint ? (PLPhysics::Joint*)m_pPhysXJoint->userData : nullptr;
 }
 
 bool JointImpl::IsBreakable() const
@@ -122,7 +122,7 @@ void JointImpl::SetBreakTorque(const Vector3 &vTorque)
 *    Constructor
 */
 JointImpl::JointImpl() :
-	m_pPhysXJoint(NULL),
+	m_pPhysXJoint(nullptr),
 	m_bBreakable(false)
 {
 }

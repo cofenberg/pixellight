@@ -77,8 +77,8 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode),
-	m_pD3D(NULL),
-	m_pFixedFunctions(NULL),
+	m_pD3D(nullptr),
+	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
 	// This renderer implementation has just support for Cg as shader language, so ignore sDefaultShaderLanguage
@@ -91,7 +91,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_sCapabilities.nStencilBits = nStencilBits;
 
 	// Init data
-	m_pFirstSwapChainUserSurface = NULL;
+	m_pFirstSwapChainUserSurface = nullptr;
 
 	// Create the D3D object and create a list of all available display modes
 	m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
@@ -161,14 +161,14 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 			// Register the window class
 			WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
-				NULL, NULL, NULL, NULL, NULL,
-				TEXT("PLDirect3D9"), NULL };
+				nullptr, nullptr, nullptr, nullptr, nullptr,
+				TEXT("PLDirect3D9"), nullptr };
 			RegisterClassEx(&wc);
 
 			// Create the application's window
 			m_hWnd = CreateWindowA("PLDirect3D9", "PLDirect3D9 renderer device",
 				0, 0, mode.Width, mode.Height, 0,
-				GetDesktopWindow(), NULL, NULL, NULL);
+				GetDesktopWindow(), nullptr, nullptr, nullptr);
 
 			// Create renderer device
 		//	HRESULT nError = m_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, m_hWnd,
@@ -205,7 +205,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 				// Allocate current stuff
 				m_ppCurrentTextureBuffer = new PLRenderer::TextureBuffer*[m_sCapabilities.nMaxTextureUnits];
-				MemoryManager::Set(m_ppCurrentTextureBuffer, NULL, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
+				MemoryManager::Set(m_ppCurrentTextureBuffer, 0, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
 
 				// Setup current render states
 				for (uint32 i=0; i<PLRenderer::RenderState::Number; i++) {
@@ -228,7 +228,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 			}
 		} else {
 			m_pD3D->Release();
-			m_pD3D = NULL;
+			m_pD3D = nullptr;
 		}
 	}
 }
@@ -247,7 +247,7 @@ Renderer::~Renderer()
 		// Destroy the fixed functions implementation
 		if (m_pFixedFunctions) {
 			delete m_pFixedFunctions;
-			m_pFixedFunctions = NULL;
+			m_pFixedFunctions = nullptr;
 		}
 
 		// Destroy all renderer surfaces of this renderer
@@ -261,11 +261,11 @@ Renderer::~Renderer()
 
 		// Destroy the D3D9 font manager while there's still an active D9D9 context (... font textures...)
 		delete m_pFontManager;
-		m_pFontManager = NULL;
+		m_pFontManager = nullptr;
 
 		// Destroy the draw helpers instance
 		delete m_pDrawHelpers;
-		m_pDrawHelpers = NULL;
+		m_pDrawHelpers = nullptr;
 
 		// Destroy all renderer resources of this renderer
 		while (m_lstResources.GetNumOfElements())
@@ -274,18 +274,18 @@ Renderer::~Renderer()
 		// Release the renderer device
 		if (m_pDevice) {
 			m_pDevice->Release();
-			m_pDevice = NULL;
+			m_pDevice = nullptr;
 		}
 
 		// Release the D3D object
 		m_pD3D->Release();
-		m_pD3D = NULL;
+		m_pD3D = nullptr;
 
 		// Destroy the top level window
 		DestroyWindow(m_hWnd);
-		m_hWnd						 = NULL;
-		m_pFirstSwapChainUserSurface = NULL;
-		HMODULE hModuleHandle = GetModuleHandle(NULL);
+		m_hWnd						 = nullptr;
+		m_pFirstSwapChainUserSurface = nullptr;
+		HMODULE hModuleHandle = GetModuleHandle(nullptr);
 		if (hModuleHandle)
 			UnregisterClassA("PLDirect3D9", hModuleHandle);
 
@@ -294,7 +294,7 @@ Renderer::~Renderer()
 			for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 				delete [] m_ppnSamplerState[i];
 			delete [] m_ppnSamplerState;
-			m_ppnSamplerState = NULL;
+			m_ppnSamplerState = nullptr;
 		}
 
 		// Free internal sampler states
@@ -302,13 +302,13 @@ Renderer::~Renderer()
 			for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 				delete [] m_ppnInternalSamplerState[i];
 			delete [] m_ppnInternalSamplerState;
-			m_ppnInternalSamplerState = NULL;
+			m_ppnInternalSamplerState = nullptr;
 		}
 
 		// Free current stuff
 		if (m_ppCurrentTextureBuffer) {
 			delete [] m_ppCurrentTextureBuffer;
-			m_ppCurrentTextureBuffer = NULL;
+			m_ppCurrentTextureBuffer = nullptr;
 		}
 	}
 }
@@ -741,7 +741,7 @@ String Renderer::GetDefaultShaderLanguage() const
 PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
 {
 	// [TODO] Implement me
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
@@ -774,7 +774,7 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 {
 	// Is the surface window handler valid?
 	if (cHandler.GetRenderer() != this)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nWindow, bFullscreen);
@@ -798,7 +798,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 		// Return created renderer surface
 		return pRendererSurface;
 	} else {
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -815,7 +815,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 		// Return created renderer surface
 		return pRendererSurface;
 	} else {
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -823,7 +823,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint1
 {
 	// Valid dimension?
 	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize))
-		return NULL;
+		return nullptr;
 
 	// Create and register renderer surface
 	PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferCube(*this, nSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
@@ -838,7 +838,7 @@ PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer1D(cImage, nInternalFormat))
-		return NULL;
+		return nullptr;
 
 	// Create the Direct3D 9 1D texture buffer
 	return new TextureBuffer1D(*this, cImage, nInternalFormat, nFlags);
@@ -848,7 +848,7 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer2D(cImage, nInternalFormat))
-		return NULL;
+		return nullptr;
 
 	// Create the Direct3D 9 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
@@ -858,7 +858,7 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage,
 {
 	// Check texture buffer
 	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat))
-		return NULL;
+		return nullptr;
 
 	// Create the Direct3D 9 rectangle texture buffer
 	return new TextureBufferRectangle(*this, cImage, nInternalFormat, nFlags);
@@ -868,7 +868,7 @@ PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer3D(cImage, nInternalFormat))
-		return NULL;
+		return nullptr;
 
 	// Create the Direct3D 9 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
@@ -878,7 +878,7 @@ PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(Image &cImage, 
 {
 	// Check texture buffer
 	if (!CheckTextureBufferCube(cImage, nInternalFormat))
-		return NULL;
+		return nullptr;
 
 	// Create the Direct3D 9 cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
@@ -1580,7 +1580,7 @@ bool Renderer::Clear(uint32 nFlags, const Color4 &cColor, float fZ, uint32 nSten
 		// Are API flags set?
 		if (nFlagsAPI) {
 			// Clear
-			return (m_pDevice->Clear(0, NULL, nFlagsAPI, cColor.ToUInt32(), fZ, nStencil) == D3D_OK);
+			return (m_pDevice->Clear(0, nullptr, nFlagsAPI, cColor.ToUInt32(), fZ, nStencil) == D3D_OK);
 		}
 	}
 
@@ -1625,7 +1625,7 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 
 	// Disable all color render targets
 	for (uint32 i=1; i<m_sCapabilities.nMaxColorRenderTargets; i++)
-		m_pDevice->SetRenderTarget(i, NULL);
+		m_pDevice->SetRenderTarget(i, nullptr);
 
 	// Make the surface to the current render target
 	bool bError = MakeSurfaceCurrent(*pSurface, nFace);
@@ -1694,7 +1694,7 @@ bool Renderer::MakeScreenshot(Image &cImage)
 	// Create the front buffer surface
 	IDirect3DSurface9 *pSurface;
 	HRESULT hr = m_pDevice->CreateOffscreenPlainSurface(dm.Width, dm.Height, D3DFMT_A8R8G8B8,
-														D3DPOOL_DEFAULT, &pSurface, NULL);
+														D3DPOOL_DEFAULT, &pSurface, nullptr);
 	if (FAILED(hr))
 		return false; // Error!
 
@@ -1712,7 +1712,7 @@ bool Renderer::MakeScreenshot(Image &cImage)
 
 	// Save the front buffer
 	D3DLOCKED_RECT cLockedRect;
-	if (pSurface->LockRect(&cLockedRect, NULL, 0) == D3D_OK) {
+	if (pSurface->LockRect(&cLockedRect, nullptr, 0) == D3D_OK) {
 		// Create image buffer
 		cImage.Clear();
 		ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
@@ -1766,7 +1766,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 				SetSamplerState(nStage, (PLRenderer::Sampler::Enum)PLRenderer::Sampler::MipFilter, m_ppnSamplerState[nStage][PLRenderer::Sampler::MipFilter]);
 		} else {
 			// No, deactivate texture buffer
-			m_pDevice->SetTexture(nStage, NULL);
+			m_pDevice->SetTexture(nStage, nullptr);
 		}
 	}
 
@@ -1795,7 +1795,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		}
 	} else {
 		// No, deactivate index buffer
-		m_pDevice->SetIndices(NULL);
+		m_pDevice->SetIndices(nullptr);
 	}
 
 	// Done

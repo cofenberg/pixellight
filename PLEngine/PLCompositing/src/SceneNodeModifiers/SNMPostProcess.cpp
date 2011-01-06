@@ -91,7 +91,7 @@ Parameter *SNMPostProcess::GetParameter(const String &sName, uint32 nIndex, bool
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**

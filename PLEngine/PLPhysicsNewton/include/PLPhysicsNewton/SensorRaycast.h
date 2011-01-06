@@ -80,7 +80,7 @@ class SensorRaycast : public PLPhysics::SensorRaycast {
 		*  @param[in] nCollisionID
 		*    Collision ID
 		*  @param[in] pUserData
-		*    User data, can be NULL
+		*    User data, can be a null pointer
 		*  @param[in] fIntersectParam
 		*    Intersection parameter
 		*

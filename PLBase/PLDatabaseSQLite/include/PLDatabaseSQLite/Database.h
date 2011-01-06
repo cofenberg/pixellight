@@ -86,7 +86,7 @@ class Database : public PLDatabase::Database {
 		*    Returns the SQLite socket object
 		*
 		*  @return
-		*    The SQLite socket object, can be NULL
+		*    The SQLite socket object, can be a null pointer
 		*/
 		PLDATABASESQLITE_API sqlite3 *GetSQLite() const;
 
@@ -134,7 +134,7 @@ class Database : public PLDatabase::Database {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		sqlite3 *m_pSQLite;	/**< SQLite socket object, can be NULL */
+		sqlite3 *m_pSQLite;	/**< SQLite socket object, can be a null pointer */
 
 
 };

@@ -43,8 +43,8 @@ template <class ValueType> ValueType Queue<ValueType>::temp;
 template <class ValueType>
 Queue<ValueType>::Queue() :
 	m_nNumOfElements(0),
-	m_pTop(NULL),
-	m_pBottom(NULL)
+	m_pTop(nullptr),
+	m_pBottom(nullptr)
 {
 }
 
@@ -55,8 +55,8 @@ Queue<ValueType>::Queue() :
 template <class ValueType>
 Queue<ValueType>::Queue(const Queue<ValueType> &cSource) :
 	m_nNumOfElements(0),
-	m_pTop(NULL),
-	m_pBottom(NULL)
+	m_pTop(nullptr),
+	m_pBottom(nullptr)
 {
 	// Copy queue
 	*this = cSource;
@@ -89,12 +89,12 @@ bool Queue<ValueType>::Push(const ValueType &Element)
 		// Push onto queue
 		m_pTop->pNext = pElement;
 		m_pTop		  = pElement;
-		m_pTop->pNext = NULL;
+		m_pTop->pNext = nullptr;
 	} else {
 		// This is the first element
 		m_pBottom	  = pElement;
 		m_pTop		  = pElement;
-		m_pTop->pNext = NULL;
+		m_pTop->pNext = nullptr;
 	}
 	m_nNumOfElements++;
 
@@ -121,7 +121,7 @@ bool Queue<ValueType>::Pop(ValueType *pElement)
 	QueueElement *pBottomElement = m_pBottom;
 	m_pBottom = m_pBottom->pNext;
 	if (!m_pBottom)
-		m_pTop = NULL;
+		m_pTop = nullptr;
 	delete pBottomElement;
 	m_nNumOfElements--;
 

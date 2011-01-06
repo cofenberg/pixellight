@@ -102,7 +102,7 @@ void PngFree(png_structp pPng, png_voidp pBuffer)
 bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 {
 	// Initialize libpng
-	png_structp pPng = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, PngError, PngWarning);
+	png_structp pPng = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, PngError, PngWarning);
 	if (pPng) {
 		// Create PNG info struct
 		png_infop pPngInfo = png_create_info_struct(pPng);
@@ -232,8 +232,8 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 					}
 
 					// Clean up
-					png_read_end(pPng, NULL);
-					png_destroy_read_struct(&pPng, &pPngInfo, NULL);
+					png_read_end(pPng, nullptr);
+					png_destroy_read_struct(&pPng, &pPngInfo, nullptr);
 					delete [] ppRowPointers;
 
 					// Done
@@ -245,7 +245,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 			return false;
 		} else {
 			// Error: Could not create png_info structure
-			png_destroy_read_struct(&pPng, (png_infopp)NULL, (png_infopp)NULL);
+			png_destroy_read_struct(&pPng, (png_infopp)nullptr, (png_infopp)nullptr);
 			return false;
 		}
 	} else {
@@ -298,7 +298,7 @@ bool ImageLoaderPNG::Save(const Image &cImage, File &cFile)
 		// Type found?
 		if (nType != -1) {
 			// Initialize libpng
-			png_structp pPng = png_create_write_struct_2(PNG_LIBPNG_VER_STRING, NULL, PngError, PngWarning, NULL, PngMalloc, PngFree);
+			png_structp pPng = png_create_write_struct_2(PNG_LIBPNG_VER_STRING, nullptr, PngError, PngWarning, nullptr, PngMalloc, PngFree);
 			if (pPng) {
 				// Create PNG info struct
 				png_infop pPngInfo = png_create_info_struct(pPng);

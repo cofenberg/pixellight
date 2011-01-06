@@ -52,8 +52,8 @@ namespace PLEngine {
 */
 SceneApplication::SceneApplication(const String &sSceneFilename) : RenderApplication("PLScene::SPScene"),
 	EventHandlerInputControllerFound(&SceneApplication::OnInputControllerFound, this),
-	m_pSceneContext(NULL),
-	m_pRootScene(NULL),
+	m_pSceneContext(nullptr),
+	m_pRootScene(nullptr),
 	m_bEditModeEnabled(false)
 {
 	// By default, edit mode is enabled
@@ -305,7 +305,7 @@ void SceneApplication::OnCreateRootScene()
 	// Is there a scene context?
 	if (m_pSceneContext) {
 		// First, create the scene root container which holds the scene container with our 'concrete' scene within it
-		SceneContainer *pRootContainer = m_pSceneContext->GetRoot() ? (SceneContainer*)m_pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene") : NULL;
+		SceneContainer *pRootContainer = m_pSceneContext->GetRoot() ? (SceneContainer*)m_pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene") : nullptr;
 		if (pRootContainer) {
 			// Protect this important container!
 			pRootContainer->SetProtected(true);

@@ -247,7 +247,7 @@ IndexBuffer::IndexBuffer(const IndexBuffer &cSource) : Buffer(cSource.GetRendere
 void *IndexBuffer::GetData()
 {
 	// We need this dummy default implementation because this function is used within this file!
-	return NULL;
+	return nullptr;
 }
 
 

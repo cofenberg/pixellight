@@ -66,7 +66,7 @@ class FileSearchWindows : public FileSearchImpl {
 		*  @param[in] sPath
 		*    Search path
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		FileSearchWindows(const String &sPath, const FileAccess *pAccess);
 

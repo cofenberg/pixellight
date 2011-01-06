@@ -109,7 +109,7 @@ class HDRLightAdaptation {
 		*    Returns the 1x1 2D texture buffer storing the light adaptation
 		*
 		*  @return
-		*    The 1x1 2D texture buffer storing the light adaptation, NULL on error
+		*    The 1x1 2D texture buffer storing the light adaptation, a null pointer on error
 		*
 		*  @note
 		*    - The texture buffer is only valid after CalculateLightAdaptation() was called
@@ -143,15 +143,15 @@ class HDRLightAdaptation {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer			 *m_pRenderer;							/**< Renderer to use, always valid! */
-		FullscreenQuad					 *m_pFullscreenQuad;					/**< Fullscreen quad instance, can be NULL */
-		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be NULL */
-		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pFactorProgramUniform;				/**< Factor program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pPreviousTextureProgramUniform;		/**< Previous texture program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pCurrentTextureProgramUniform;		/**< Current texture program uniform, can be NULL */
-		PLRenderer::SurfaceTextureBuffer *m_pLightAdaptationTextureBuffer2D[2];	/**< 1x1 2D texture buffer storing the previous and current light adaptation, can be NULL */
+		FullscreenQuad					 *m_pFullscreenQuad;					/**< Fullscreen quad instance, can be a null pointer */
+		PLRenderer::VertexShader		 *m_pVertexShader;						/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		 *m_pFragmentShader;					/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pProgram;							/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pPositionProgramAttribute;			/**< Position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pFactorProgramUniform;				/**< Factor program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pPreviousTextureProgramUniform;		/**< Previous texture program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pCurrentTextureProgramUniform;		/**< Current texture program uniform, can be a null pointer */
+		PLRenderer::SurfaceTextureBuffer *m_pLightAdaptationTextureBuffer2D[2];	/**< 1x1 2D texture buffer storing the previous and current light adaptation, can be a null pointer */
 		bool							  m_bPreviousIndex;						/**< Index of the previous 2D light adaptation texture buffer */
 
 

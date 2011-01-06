@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Global variables                                      ]
 //[-------------------------------------------------------]
-PLLog *g_pLog = NULL;
+PLLog *g_pLog = nullptr;
 
 
 //[-------------------------------------------------------]
@@ -127,7 +127,7 @@ bool PLLog::LogF(EFlags nType, const char szString[], ...)
 		// Get the required buffer length
 		unsigned int nLength = _vscprintf(szString, vaList);
 		if (nLength > 0) {
-			// Update our string buffer (+1 because we need to include the terminating null character!)
+			// Update our string buffer (+1 because we need to include the terminating zero character!)
 			UpdateStringBuffer(nLength + 1);
 			if (m_pszBuffer) {
 				// Print the formatted string
@@ -223,7 +223,7 @@ bool PLLog::LogFLine(EFlags nType, const char szString[], ...)
 		// Get the required buffer length
 		unsigned int nLength = _vscprintf(szString, vaList);
 		if (nLength > 0) {
-			// Update our string buffer (+1 because we need to include the terminating null character!)
+			// Update our string buffer (+1 because we need to include the terminating zero character!)
 			UpdateStringBuffer(nLength + 1);
 			if (m_pszBuffer) {
 				// Add spaces

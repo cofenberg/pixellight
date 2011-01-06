@@ -91,7 +91,7 @@ class DynFunc {
 		*    Get function descriptor
 		*
 		*  @return
-		*    Descriptor (can be NULL)
+		*    Descriptor (can be a null pointer)
 		*/
 		PLCORE_API virtual const FuncDesc *GetDesc() const;
 
@@ -145,7 +145,7 @@ class DynFunc {
 		*    Clone function object
 		*
 		*  @return
-		*    Copy of this functoid (can be NULL!)
+		*    Copy of this functoid (can be a null pointer!)
 		*/
 		PLCORE_API virtual DynFunc *Clone() const;
 

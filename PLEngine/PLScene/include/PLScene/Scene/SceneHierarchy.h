@@ -97,7 +97,7 @@ class SceneHierarchy : public PLCore::Object {
 		*    Returns the scene context the scene hierarchy is in
 		*
 		*  @return
-		*    The scene context the scene hierarchy is in, can but shouldn't be NULL
+		*    The scene context the scene hierarchy is in, can but shouldn't be a null pointer
 		*/
 		PLS_API SceneContext *GetSceneContext() const;
 
@@ -285,8 +285,8 @@ class SceneHierarchy : public PLCore::Object {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		SceneContainer	   *m_pSceneContainer;		/**< Scene container this scene hierarchy node operates on (NEVER NULL!) */
-		SceneHierarchyNode *m_pRootNode;			/**< Scene hierarchy root node (NEVER NULL!) */
+		SceneContainer	   *m_pSceneContainer;		/**< Scene container this scene hierarchy node operates on (NEVER a null pointer!) */
+		SceneHierarchyNode *m_pRootNode;			/**< Scene hierarchy root node (NEVER a null pointer!) */
 		PLGeneral::uint32   m_nTotalNumOfNodes;		/**< Total number of scene hierarchy nodes */
 		PLGeneral::uint32   m_nNumOfSceneNodes;		/**< The number of scene nodes within this hierarchy */
 		PLGeneral::uint32	m_nMaxLevel;			/**< Maximum allowed level (tree depth) */

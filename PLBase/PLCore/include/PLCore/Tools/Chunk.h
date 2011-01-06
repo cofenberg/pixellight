@@ -139,7 +139,7 @@ class Chunk : public Loadable {
 		*    Returns the chunk data
 		*
 		*  @return
-		*    The chunk data, can be NULL - do NOT delete this memory!
+		*    The chunk data, can be a null pointer - do NOT delete this memory!
 		*/
 		PLCORE_API PLGeneral::uint8 *GetData();
 
@@ -148,7 +148,7 @@ class Chunk : public Loadable {
 		*    Returns the chunk data
 		*
 		*  @return
-		*    The chunk data, can be NULL - do NOT delete this memory!
+		*    The chunk data, can be a null pointer - do NOT delete this memory!
 		*/
 		PLCORE_API const PLGeneral::uint8 *GetData() const;
 
@@ -162,7 +162,7 @@ class Chunk : public Loadable {
 		*    Index of the element component to data from (0 - GetNumOfComponentsPerElement()-1), must be valid!
 		*
 		*  @return
-		*    The chunk element component data, can be NULL - do NOT delete this memory!
+		*    The chunk element component data, can be a null pointer - do NOT delete this memory!
 		*/
 		PLCORE_API PLGeneral::uint8 *GetElementComponentData(PLGeneral::uint32 nElement, PLGeneral::uint32 nComponent);
 
@@ -176,7 +176,7 @@ class Chunk : public Loadable {
 		*    Index of the element component to data from (0 - GetNumOfComponentsPerElement()-1), must be valid!
 		*
 		*  @return
-		*    The chunk element component data, can be NULL - do NOT delete this memory!
+		*    The chunk element component data, can be a null pointer - do NOT delete this memory!
 		*/
 		PLCORE_API const PLGeneral::uint8 *GetElementComponentData(PLGeneral::uint32 nElement, PLGeneral::uint32 nComponent) const;
 
@@ -284,7 +284,7 @@ class Chunk : public Loadable {
 		EElementType	   m_nElementType;					/**< Element typ */
 		PLGeneral::uint32  m_nNumOfComponentsPerElement;	/**< Number of components per element */
 		PLGeneral::uint32  m_nNumOfElements;				/**< Number of elements */
-		PLGeneral::uint8  *m_pData;							/**< The data, can be NULL */
+		PLGeneral::uint8  *m_pData;							/**< The data, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

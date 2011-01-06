@@ -82,9 +82,9 @@ class SPTexturing : public PLRenderer::SurfacePainter {
 	//[-------------------------------------------------------]
 	protected:
 		PLRenderer::VertexBuffer  *m_pVertexBuffer;		/**< Our renderer vertex buffer holding the data
-															 of the textured quad, can be NULL */
+															 of the textured quad, can be a null pointer */
 		PLRenderer::TextureBuffer *m_pTextureBuffer;	/**< Our renderer texture buffer holding the 2D texel data
-															 of the textured quad, can be NULL */
+															 of the textured quad, can be a null pointer */
 		float					   m_fRotation;			/**< Current rotation of the textured quad */
 
 

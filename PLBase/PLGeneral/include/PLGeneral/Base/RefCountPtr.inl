@@ -48,7 +48,8 @@ template <class AType>
 RefCountPtr<AType>::~RefCountPtr()
 {
 	// Delete the referenced object
-	if (m_pPointer) delete m_pPointer;
+	if (m_pPointer)
+		delete m_pPointer;
 }
 
 /**

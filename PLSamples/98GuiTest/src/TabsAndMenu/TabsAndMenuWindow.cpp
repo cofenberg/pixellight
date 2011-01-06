@@ -70,8 +70,8 @@ pl_implement_class(TabsAndMenuWindow)
 TabsAndMenuWindow::TabsAndMenuWindow(Widget *pParent) : Window(pParent),
 	EventHandlerCreateWindow(&TabsAndMenuWindow::OnTabContainerCreateWindow, this),
 	EventHandlerMenuItemClicked(&TabsAndMenuWindow::OnMenuItemClicked, this),
-	m_pMenuBar(NULL),
-	m_pTabContainer(NULL),
+	m_pMenuBar(nullptr),
+	m_pTabContainer(nullptr),
 	m_nNextWindow(0),
 	m_cMenu(*GetGui())
 {

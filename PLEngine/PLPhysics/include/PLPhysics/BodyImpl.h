@@ -77,7 +77,7 @@ class BodyImpl {
 		*    Returns the PL physics body this is the implementation from
 		*
 		*  @return
-		*    The PL physics body this is the implementation from, NULL on error
+		*    The PL physics body this is the implementation from, a null pointer on error
 		*/
 		virtual Body *GetBody() const = 0;
 

@@ -57,7 +57,7 @@ OcclusionQuery::~OcclusionQuery()
 *    Constructor
 */
 OcclusionQuery::OcclusionQuery(PLRenderer::Renderer &cRenderer) : PLRenderer::OcclusionQuery(cRenderer),
-	m_pQuery(NULL),
+	m_pQuery(nullptr),
 	m_nSkipRate(0),
 	m_nSkipCounter(0),
 	m_nMinFragments(0),
@@ -161,12 +161,12 @@ void OcclusionQuery::SetMinFragments(uint32 nMinFragments)
 void OcclusionQuery::BackupDeviceData(uint8 **ppBackup)
 {
 	// Not used :)
-	*ppBackup = NULL;
+	*ppBackup = nullptr;
 
 	// Cleanup
 	if (m_pQuery) {
 		m_pQuery->Release();
-		m_pQuery = NULL;
+		m_pQuery = nullptr;
 	}
 }
 

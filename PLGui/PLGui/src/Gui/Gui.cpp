@@ -140,24 +140,24 @@ Gui *Gui::GetSystemGui()
 *    Constructor
 */
 Gui::Gui(const String &sGui) :
-	m_pGuiImpl(NULL),
+	m_pGuiImpl(nullptr),
 	m_bShutdown(false),
-	m_pTheme(NULL),
+	m_pTheme(nullptr),
 	m_nHoverTime(2000),
 	m_cFontManager(*this),
 	m_cCursorManager(*this),
 	m_cClipBoard(*this),
 	m_bActive(true),
 	m_nNextWidgetID(1),
-	m_pDefaultScreen(NULL),
+	m_pDefaultScreen(nullptr),
 	m_bMouseVisible(true),
-	m_pRootWidget(NULL),
-	m_pMouseOverWidget(NULL),
-	m_pMouseOverWidgetNew(NULL),
-	m_pHoverTimer(NULL),
-	m_pFocusWidget(NULL),
-	m_pFocusWidgetNew(NULL),
-	m_pTooltip(NULL),
+	m_pRootWidget(nullptr),
+	m_pMouseOverWidget(nullptr),
+	m_pMouseOverWidgetNew(nullptr),
+	m_pHoverTimer(nullptr),
+	m_pFocusWidget(nullptr),
+	m_pFocusWidgetNew(nullptr),
+	m_pTooltip(nullptr),
 	EventHandlerOnHoverTimer(&Gui::OnHoverTimer, this)
 {
 	// Check name of GUI backend
@@ -251,13 +251,13 @@ void Gui::Shutdown()
 		// Destroy hover timer
 		if (m_pHoverTimer) {
 			delete m_pHoverTimer;
-			m_pHoverTimer = NULL;
+			m_pHoverTimer = nullptr;
 		}
 
 		// Destroy theme
 		if (m_pTheme) {
 			delete m_pTheme;
-			m_pTheme = NULL;
+			m_pTheme = nullptr;
 		}
 
 		// Destroy screens
@@ -419,7 +419,7 @@ void Gui::SendMessage(const GuiMessage &cMessage)
 			// Reset mouse-over widget
 			if (m_pMouseOverWidget == pWidget) {
 				// Update mouse-over widget
-				m_pMouseOverWidgetNew = NULL;
+				m_pMouseOverWidgetNew = nullptr;
 				UpdateMouseOverWidget();
 			}
 			break;
@@ -439,7 +439,7 @@ void Gui::SendMessage(const GuiMessage &cMessage)
 			// Set focus widget
 			if (m_pFocusWidget == pWidget) {
 				// Update focus widget
-				m_pFocusWidgetNew = NULL;
+				m_pFocusWidgetNew = nullptr;
 				UpdateFocusWidget();
 			}
 			break;
@@ -535,7 +535,7 @@ Screen *Gui::GetScreen(const String &sName) const
 	}
 
 	// Not found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -677,7 +677,7 @@ void Gui::SetTheme(Theme *pTheme)
 		// Destroy old theme
 		if (m_pTheme) {
 			delete m_pTheme;
-			m_pTheme = NULL;
+			m_pTheme = nullptr;
 		}
 
 		// Set new theme
@@ -743,7 +743,7 @@ void Gui::SetHoverTime(uint32 nTimeout)
 	if (m_nHoverTime == 0 && m_pHoverTimer) {
 		// Destroy hover timer
 		delete m_pHoverTimer;
-		m_pHoverTimer = NULL;
+		m_pHoverTimer = nullptr;
 	}
 }
 
@@ -775,10 +775,10 @@ void Gui::DeleteDestroyedWidgets()
 		// Remove widget from any list or reference
 		if (m_lstTopLevelWidgets.IsElement(pWidget)) m_lstTopLevelWidgets.Remove(pWidget);
 		if (m_lstWrapperWidgets.IsElement(pWidget))	 m_lstTopLevelWidgets.Remove(pWidget);
-		if (m_pMouseOverWidget    == pWidget)		 m_pMouseOverWidget    = NULL;
-		if (m_pMouseOverWidgetNew == pWidget)		 m_pMouseOverWidgetNew = NULL;
-		if (m_pFocusWidget		  == pWidget)		 m_pFocusWidget		   = NULL;
-		if (m_pFocusWidgetNew	  == pWidget)		 m_pFocusWidgetNew	   = NULL;
+		if (m_pMouseOverWidget    == pWidget)		 m_pMouseOverWidget    = nullptr;
+		if (m_pMouseOverWidgetNew == pWidget)		 m_pMouseOverWidgetNew = nullptr;
+		if (m_pFocusWidget		  == pWidget)		 m_pFocusWidget		   = nullptr;
+		if (m_pFocusWidgetNew	  == pWidget)		 m_pFocusWidgetNew	   = nullptr;
 
 		// Delete widget
 		delete pWidget;
@@ -855,12 +855,12 @@ void Gui::UpdateMouseOverWidget()
 		m_pMouseOverWidget = m_pMouseOverWidgetNew;
 
 		// Get common parent of old mouse-over widget and the new one
-		Widget *pParent = (m_pMouseOverWidgetOld && m_pMouseOverWidgetNew) ? m_pMouseOverWidgetNew->GetCommonParent(*m_pMouseOverWidgetOld) : NULL;
+		Widget *pParent = (m_pMouseOverWidgetOld && m_pMouseOverWidgetNew) ? m_pMouseOverWidgetNew->GetCommonParent(*m_pMouseOverWidgetOld) : nullptr;
 
 		// Choose where to stop (include parent itself only when necessary)
 		Widget *pStop = pParent;
 		if (m_pMouseOverWidgetOld == pParent || m_pMouseOverWidgetNew == pParent) {
-			pStop = (pParent ? pParent->GetParent() : NULL);
+			pStop = (pParent ? pParent->GetParent() : nullptr);
 		}
 
 		// Inform old widgets, that they are no longer mouse-over widgets
@@ -913,12 +913,12 @@ void Gui::UpdateFocusWidget()
 		m_pFocusWidget = m_pFocusWidgetNew;
 
 		// Get common parent of old focus widget and the new one
-		Widget *pParent = (m_pFocusWidgetOld && m_pFocusWidgetNew) ? m_pFocusWidgetNew->GetCommonParent(*m_pFocusWidgetOld) : NULL;
+		Widget *pParent = (m_pFocusWidgetOld && m_pFocusWidgetNew) ? m_pFocusWidgetNew->GetCommonParent(*m_pFocusWidgetOld) : nullptr;
 
 		// Choose where to stop (include parent itself only when necessary)
 		Widget *pStop = pParent;
 		if (m_pFocusWidgetOld == pParent || m_pFocusWidgetNew == pParent) {
-			pStop = (pParent ? pParent->GetParent() : NULL);
+			pStop = (pParent ? pParent->GetParent() : nullptr);
 		}
 
 		// Inform old widgets, that they are no longer activated

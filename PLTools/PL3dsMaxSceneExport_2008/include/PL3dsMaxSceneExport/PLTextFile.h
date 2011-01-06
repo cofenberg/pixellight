@@ -204,11 +204,11 @@ class PLTextFile {
 	//[-------------------------------------------------------]
 	protected:
 		std::string   m_sFilename;		/**< Name of the file we write in */
-		FILE		 *m_pFile;			/**< File we write in, can be NULL */
+		FILE		 *m_pFile;			/**< File we write in, can be a null pointer */
 		bool		  m_bFlush;			/**< Flush file every time something is written in? */
 		unsigned int  m_nSpaces;		/**< Number of spaces added in front of each row */
 		unsigned int  m_nBufferLength;	/**< Current length of the string buffer (including '\0') */
-		char		 *m_pszBuffer;		/**< String buffer, can be NULL */
+		char		 *m_pszBuffer;		/**< String buffer, can be a null pointer */
 
 
 };

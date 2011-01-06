@@ -135,7 +135,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 		*    Returns the sky this sky layer is in
 		*
 		*  @return
-		*    The sky this sky layer is in, NEVER NULL
+		*    The sky this sky layer is in, NEVER a null pointer
 		*/
 		PLS_API SNSky *GetSky() const;
 
@@ -144,7 +144,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 		*    Returns the sky layer mesh handler
 		*
 		*  @return
-		*    The mesh of the sky layer handler, NULL on error
+		*    The mesh of the sky layer handler, a null pointer on error
 		*/
 		PLS_API PLMesh::MeshHandler *GetMeshHandler() const;
 
@@ -187,7 +187,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Element manager using this element, can be NULL
+		*    Element manager using this element, can be a null pointer
 		*/
 		SkyLayer(const PLGeneral::String &sName, PLGeneral::ElementManager<SkyLayer> *pManager);
 
@@ -257,7 +257,7 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

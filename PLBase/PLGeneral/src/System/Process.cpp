@@ -47,17 +47,9 @@ namespace PLGeneral {
 *  @brief
 *    Constructor
 */
-Process::Process()
+Process::Process() :
+	m_hProcess(NULL_HANDLE)
 {
-	// Windows implementation
-	#ifdef WIN32
-		m_hProcess = NULL;
-	#endif
-
-	// Linux implementation
-	#ifdef LINUX
-		m_hProcess = 0;
-	#endif
 }
 
 /**
@@ -68,7 +60,8 @@ Process::~Process()
 {
 	// Windows implementation
 	#ifdef WIN32
-		if (m_hProcess) CloseHandle((HANDLE)m_hProcess);
+		if (m_hProcess)
+			CloseHandle((HANDLE)m_hProcess);
 	#endif
 
 	// Linux implementation
@@ -92,14 +85,14 @@ void Process::Execute(const String &sCommand, const String &sArguments)
 		siStartInfo.cb = sizeof(STARTUPINFO);
 		String sCmdLine = sCommand + " " + sArguments;
 		BOOL bResult = CreateProcess(
-							NULL,
+							nullptr,
 							(LPWSTR)sCmdLine.GetUnicode(),	// Command line
-							NULL,							// Process security attributes
-							NULL,							// Primary thread security attributes
+							nullptr,						// Process security attributes
+							nullptr,						// Primary thread security attributes
 							TRUE,							// Handles are inherited
 							0,								// Creation flags
-							NULL,							// Use parent's environment
-							NULL,							// Use parent's current directory
+							nullptr,						// Use parent's environment
+							nullptr,						// Use parent's current directory
 							&siStartInfo,					// STARTUPINFO pointer
 							&piProcInfo						// Receives PROCESS_INFORMATION
 						);
@@ -140,7 +133,7 @@ void Process::Execute(const String &sCommand, const String &sArguments)
 					for (int i=0; i<nSize; i++)
 						ppszParams[i] = (char*)lstArgs[i].GetUTF8();
 				}
-				ppszParams[nSize] = NULL;
+				ppszParams[nSize] = nullptr;
 
 				// Execute application
 				execv((lstArgs[0].GetFormat() == String::ASCII) ? lstArgs[0].GetASCII() : (char*)lstArgs[0].GetUTF8(), ppszParams);
@@ -240,7 +233,7 @@ bool Process::IsRunning() const
 	// Windows implementation
 	#ifdef WIN32
 		// Check process handle
-		return (m_hProcess != NULL);
+		return (m_hProcess != NULL_HANDLE);
 	#endif
 
 	// Linux implementation
@@ -259,13 +252,13 @@ void Process::Terminate()
 	#ifdef WIN32
 		TerminateProcess((HANDLE)m_hProcess, 0);
 		CloseHandle((HANDLE)m_hProcess);
-		m_hProcess = NULL;
+		m_hProcess = NULL_HANDLE;
 	#endif
 
 	// Linux implementation
 	#ifdef LINUX
 		kill(m_hProcess, SIGKILL);
-		m_hProcess = 0;
+		m_hProcess = NULL_HANDLE;
 	#endif
 
 	// Reset streams and files
@@ -357,17 +350,9 @@ const Pipe &Process::GetPipeError() const
 *  @brief
 *    Copy constructor
 */
-Process::Process(const Process &cSource)
+Process::Process(const Process &cSource) :
+	m_hProcess(NULL_HANDLE)
 {
-	// Windows implementation
-	#ifdef WIN32
-		m_hProcess = NULL;
-	#endif
-
-	// Linux implementation
-	#ifdef LINUX
-		m_hProcess = 0;
-	#endif
 }
 
 /**
@@ -402,14 +387,14 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
 			siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 			bResult = CreateProcessA(
-							NULL,
+							nullptr,
 							(LPSTR)sCmdLine.GetASCII(),	// Command line
-							NULL,						// Process security attributes
-							NULL,						// Primary thread security attributes
+							nullptr,					// Process security attributes
+							nullptr,					// Primary thread security attributes
 							TRUE,						// Handles are inherited
 							0,							// Creation flags
-							NULL,						// Use parent's environment
-							NULL,						// Use parent's current directory
+							nullptr,					// Use parent's environment
+							nullptr,					// Use parent's current directory
 							&siStartInfo,				// STARTUPINFO pointer
 							&piProcInfo					// Receives PROCESS_INFORMATION
 						);
@@ -422,14 +407,14 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
 			siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 			bResult = CreateProcessW(
-							NULL,
+							nullptr,
 							(LPWSTR)sCmdLine.GetUnicode(),	// Command line
-							NULL,							// Process security attributes
-							NULL,							// Primary thread security attributes
+							nullptr,						// Process security attributes
+							nullptr,						// Primary thread security attributes
 							TRUE,							// Handles are inherited
 							0,								// Creation flags
-							NULL,							// Use parent's environment
-							NULL,							// Use parent's current directory
+							nullptr,						// Use parent's environment
+							nullptr,						// Use parent's current directory
 							&siStartInfo,					// STARTUPINFO pointer
 							&piProcInfo						// Receives PROCESS_INFORMATION
 						);
@@ -458,9 +443,12 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			dup2(hPipeInRd, 0);		// stdin
 			dup2(hPipeOutWr, 1);	// stdout
 			dup2(hPipeErrWr, 2);	// stderr
-			if (hPipeInWr  != INVALID_HANDLE) close(hPipeInWr);
-			if (hPipeOutRd != INVALID_HANDLE) close(hPipeOutRd);
-			if (hPipeErrRd != INVALID_HANDLE) close(hPipeErrRd);
+			if (hPipeInWr  != INVALID_HANDLE)
+				close(hPipeInWr);
+			if (hPipeOutRd != INVALID_HANDLE)
+				close(hPipeOutRd);
+			if (hPipeErrRd != INVALID_HANDLE)
+				close(hPipeErrRd);
 
 			// Get arguments
 			List<String> lstArgs;
@@ -476,13 +464,12 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			}
 
 			// Make array for arguments
-			int nSize = lstArgs.GetNumOfElements();
+			const int nSize = lstArgs.GetNumOfElements();
 			if (nSize > 0) {
 				char **ppszParams = new char*[nSize+1];
-				for (int i=0; i<nSize; i++) {
+				for (int i=0; i<nSize; i++)
 					ppszParams[i] = (char*)lstArgs[i].GetASCII();
-				}
-				ppszParams[nSize] = NULL;
+				ppszParams[nSize] = nullptr;
 
 				// Execute application
 				execv(lstArgs[0].GetASCII(), ppszParams);

@@ -80,7 +80,7 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 		*    Returns the dynamic data (none VBO)
 		*
 		*  @return
-		*    Dynamic data, can be NULL (if no VBO if used!)
+		*    Dynamic data, can be a null pointer (if no VBO if used!)
 		*/
 		void *GetDynamicData() const;
 
@@ -104,8 +104,8 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::uint32  m_nIndexBuffer;	/**< OpenGL ES index buffer (VBO) */
-		void			  *m_pData;			/**< Dynamic buffer, can be NULL (none VBO) */
-		void			  *m_pLockedData;	/**< Locked data, can be NULL */
+		void			  *m_pData;			/**< Dynamic buffer, can be a null pointer (none VBO) */
+		void			  *m_pLockedData;	/**< Locked data, can be a null pointer */
 		bool			   m_bLockReadOnly;	/**< Read only lock? */
 		bool			   m_bUpdateVBO;	/**< Do we need to update the VBO? */
 		PLGeneral::uint32  m_nUsageAPI;		/**< API usage setting */

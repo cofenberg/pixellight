@@ -97,7 +97,7 @@ class RendererContext {
 		*    is empty, the default is chosen by the renderer implementation, this information is just a hint
 		*
 		*  @return
-		*    Creates a renderer context instance, NULL on error
+		*    Creates a renderer context instance, a null pointer on error
 		*/
 		PLRENDERER_API static RendererContext *CreateInstance(const PLGeneral::String &sBackend, Renderer::EMode nMode = Renderer::ModeBoth, PLGeneral::uint32 nZBufferBits = 24, PLGeneral::uint32 nStencilBits = 8, PLGeneral::uint32 nMultisampleAntialiasingSamples = 0, const PLGeneral::String &sDefaultShaderLanguage = "");
 
@@ -193,9 +193,9 @@ class RendererContext {
 	//[-------------------------------------------------------]
 	private:
 		Renderer		*m_pRenderer;			/**< Used renderer, always valid! */
-		TextureManager  *m_pTextureManager;		/**< The texture manager of this renderer context, NULL if not yet initialised */
-		EffectManager   *m_pEffectManager;		/**< The effect manager of this renderer context, NULL if not yet initialised */
-		MaterialManager *m_pMaterialManager;	/**< The material manager of this renderer context, NULL if not yet initialised */
+		TextureManager  *m_pTextureManager;		/**< The texture manager of this renderer context, a null pointer if not yet initialised */
+		EffectManager   *m_pEffectManager;		/**< The effect manager of this renderer context, a null pointer if not yet initialised */
+		MaterialManager *m_pMaterialManager;	/**< The material manager of this renderer context, a null pointer if not yet initialised */
 
 
 };

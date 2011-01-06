@@ -94,7 +94,7 @@ Joystick::Joystick(const String &sName, DeviceImpl *pImpl) : Device(sName, "Joys
 	Rumble3 (this, "Rumble3",	"Rumble motor #3"),
 	Rumble4 (this, "Rumble4",	"Rumble motor #4"),
 	EventHandlerOnDeviceRead(&Joystick::OnDeviceRead, this),
-	m_pHIDDevice(NULL),
+	m_pHIDDevice(nullptr),
 	m_nThreshold(12000)
 {
 	// Check if we have a HID backend
@@ -119,7 +119,7 @@ Joystick::~Joystick()
 	// Check if we have a HID backend
 	if (m_pHIDDevice) {
 		// We use m_pImpl here to check, because if the device backend has been deleted before, m_pImpl has
-		// been reset to NULL, but not m_pHIDDevice as this is unknown in the base class
+		// been reset to a null pointer, but not m_pHIDDevice as this is unknown in the base class
 		if (m_pImpl)
 			// Disconnect
 			m_pHIDDevice->Close();
@@ -166,7 +166,7 @@ void Joystick::UpdateOutputControl(Control *pControl)
 		for (uint32 i=0; i<lstOutputValues.GetNumOfElements(); i++) {
 			// Get capability
 			HIDCapability *pCapability = &lstOutputValues[i];
-			Effect *pEffect = NULL;
+			Effect *pEffect = nullptr;
 
 			// Rumble
 			if (pCapability->m_nUsagePage == UsagePageLED) {

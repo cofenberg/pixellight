@@ -52,7 +52,7 @@ TestManager::TestManager(const char *pszName) :
 	if (pszName) {
 		m_pszName = new char[strlen(pszName) + 1];
 		strcpy(m_pszName, pszName);
-	} else m_pszName = NULL;
+	} else m_pszName = nullptr;
 
 	// Log test start
 	printf("************************************************************\n");

@@ -75,7 +75,7 @@ class Box : public Widget {
 		*  @param[in] nOrientation
 		*    Orientation
 		*/
-		PLGUI_API Box(Widget *pParent = NULL, EOrientation nOrientation = Horizontal);
+		PLGUI_API Box(Widget *pParent = nullptr, EOrientation nOrientation = Horizontal);
 
 		/**
 		*  @brief

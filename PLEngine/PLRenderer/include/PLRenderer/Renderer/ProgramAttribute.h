@@ -59,7 +59,7 @@ class ProgramAttribute {
 		*    Sets a attribute by using an index to reference the vertex buffer attribute to use
 		*
 		*  @param[in] pVertexBuffer
-		*    Vertex buffer to use, can be NULL
+		*    Vertex buffer to use, can be a null pointer
 		*  @param[in] nIndex
 		*    Index of the vertex buffer attribute to connect with the vertex shader attribute
 		*
@@ -73,7 +73,7 @@ class ProgramAttribute {
 		*    Sets a attribute by using a semantic to reference the vertex buffer attribute to use
 		*
 		*  @param[in] pVertexBuffer
-		*    Vertex buffer to use, can be NULL
+		*    Vertex buffer to use, can be a null pointer
 		*  @param[in] nSemantic
 		*    Semantic of the vertex buffer attribute to connect with the vertex shader attribute
 		*  @param[in] nChannel

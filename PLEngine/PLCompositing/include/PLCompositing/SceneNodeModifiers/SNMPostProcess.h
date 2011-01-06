@@ -108,7 +108,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 		*    Do only take active post processes into account?
 		*
 		*  @return
-		*    The requested post process parameter, NULL if no such parameter was found or 'bActiveOnly' is used
+		*    The requested post process parameter, a null pointer if no such parameter was found or 'bActiveOnly' is used
 		*/
 		PLCOM_API PLRenderer::Parameter *GetParameter(const PLGeneral::String &sName, PLGeneral::uint32 nIndex = 0, bool bActiveOnly = false);
 

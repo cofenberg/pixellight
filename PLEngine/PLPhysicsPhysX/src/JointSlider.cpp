@@ -65,8 +65,8 @@ JointSlider::JointSlider(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody,
 	if (pPhysXScene) {
 		// Create the PhysX physics joint
 		NxCylindricalJointDesc sJointDesc;
-		sJointDesc.actor[0] = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetPhysXActor() : NULL;
-		sJointDesc.actor[1] = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetPhysXActor() : NULL;
+		sJointDesc.actor[0] = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetPhysXActor() : nullptr;
+		sJointDesc.actor[1] = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetPhysXActor() : nullptr;
 		sJointDesc.setGlobalAnchor(NxVec3(m_vPivotPoint.x, m_vPivotPoint.y, m_vPivotPoint.z));
 		sJointDesc.setGlobalAxis(NxVec3(m_vPinDir.x, m_vPinDir.y, m_vPinDir.z));
 		NxJoint *pPhysXJoint = pPhysXScene->createJoint(sJointDesc);

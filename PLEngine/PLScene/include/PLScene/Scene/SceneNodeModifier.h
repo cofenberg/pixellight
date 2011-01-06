@@ -132,7 +132,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*    Returns the scene context the owner scene node is in
 		*
 		*  @return
-		*    The scene context the owner scene node is in, can but shouldn't be NULL
+		*    The scene context the owner scene node is in, can but shouldn't be a null pointer
 		*/
 		PLS_API SceneContext *GetSceneContext() const;
 
@@ -182,7 +182,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*    Get input controller
 		*
 		*  @return
-		*    Input controller (can be NULL)
+		*    Input controller (can be a null pointer)
 		*
 		*  @note
 		*    - The default implementation is empty

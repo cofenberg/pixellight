@@ -81,7 +81,7 @@ GraphPath *Graph::FindShortestPath(uint32 nStartNode, uint32 nEndNode)
 			m_mapToProcess.Reset();
 			m_mapToProcess.Add(0.0, pStartNode);
 			m_lstNodeDistance[nStartNode] = 0.0f;
-			m_lstPreviousNode[nStartNode] = NULL;
+			m_lstPreviousNode[nStartNode] = nullptr;
 			m_lstTouched.Set(nStartNode);
 
 			// Loop until the priority queue is empty
@@ -148,7 +148,7 @@ GraphPath *Graph::FindShortestPath(uint32 nStartNode, uint32 nEndNode)
 	}
 
 	// Error, there's no path from 'start' to 'end'!
-	return NULL;
+	return nullptr;
 }
 
 

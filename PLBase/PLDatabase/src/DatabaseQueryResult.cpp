@@ -74,7 +74,7 @@ DatabaseQueryResult::DatabaseQueryResult(DatabaseQuery &cParentQuery) :
 *    Copy constructor
 */
 DatabaseQueryResult::DatabaseQueryResult(const DatabaseQueryResult &cSource) :
-	m_pParentQuery(NULL)
+	m_pParentQuery(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

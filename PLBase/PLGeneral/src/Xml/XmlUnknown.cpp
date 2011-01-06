@@ -129,7 +129,7 @@ const char *XmlUnknown::Parse(const char *pszData, XmlParsingData *pData, EEncod
 			pDocument->SetError(ErrorParsingUnknown, pszData, pData, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 	++pszData;
 	m_sValue = "";

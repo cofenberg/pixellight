@@ -65,7 +65,7 @@ SurfaceTextureBuffer::~SurfaceTextureBuffer()
 */
 SurfaceTextureBuffer::SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRenderer::TextureBuffer &cTextureBuffer, uint32 nFlags, uint8 nMaxColorTargets) :
 	PLRenderer::SurfaceTextureBuffer(cRenderer, nFlags, nMaxColorTargets),
-	m_pTextureSurface(NULL),
+	m_pTextureSurface(nullptr),
 	m_nFace(0)
 {
 	// Init data
@@ -189,7 +189,7 @@ void SurfaceTextureBuffer::DeInit()
 {
 	if (m_pTextureSurface) {
 		m_pTextureSurface->Release();
-		m_pTextureSurface = NULL;
+		m_pTextureSurface = nullptr;
 	}
 }
 
@@ -210,7 +210,7 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 				// Release the previous cube map surface
 				if (m_pTextureSurface) {
 					m_pTextureSurface->Release();
-					m_pTextureSurface = NULL;
+					m_pTextureSurface = nullptr;
 				}
 
 				// Get the cube map surface to render in

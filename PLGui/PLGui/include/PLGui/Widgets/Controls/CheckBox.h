@@ -66,7 +66,7 @@ class CheckBox : public AbstractToggleButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API CheckBox(Widget *pParent = NULL);
+		PLGUI_API CheckBox(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

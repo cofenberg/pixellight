@@ -353,9 +353,9 @@ class SRPLighting : public PLScene::SceneRendererPass {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
-		PLScene::SNLight					*m_pIgnoredLight;		/**< Do not render this light, it may have already been rendered by for instance "PLCompositing::SRPDirectionalLightingShaders", can be NULL */
+		PLScene::SNLight					*m_pIgnoredLight;		/**< Do not render this light, it may have already been rendered by for instance "PLCompositing::SRPDirectionalLightingShaders", can be a null pointer */
 		PLRenderer::TextureHandler			 m_cSpotMapHandler;		/**< Texture handler for the default spot map */
 		PLRenderer::TextureHandler			 m_cCubeMapHandler;		/**< Texture handler for the default cube map */
 
@@ -423,7 +423,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*  @param[in] cLightVisNode
 		*    The light visibility node
 		*  @param[in] pSRPShadowMapping
-		*    Shadow mapping scene renderer pass to use, can be NULL
+		*    Shadow mapping scene renderer pass to use, can be a null pointer
 		*/
 		void RenderLightRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping);
 
@@ -452,7 +452,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*  @param[in] cLightVisNode
 		*    The light visibility node
 		*  @param[in] pSRPShadowMapping
-		*    Shadow mapping scene renderer pass to use, can be NULL
+		*    Shadow mapping scene renderer pass to use, can be a null pointer
 		*/
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler,
 					  const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping);

@@ -106,7 +106,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*    Returns the OpenGL render context
 		*
 		*  @return
-		*    The OpenGL render context, NULL on error
+		*    The OpenGL render context, a null pointer on error
 		*/
 		Context *GetContext() const;
 
@@ -174,7 +174,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*    Creates a OpenGL render context instance
 		*
 		*  @return
-		*    The created a OpenGL render context instance, NULL on error
+		*    The created a OpenGL render context instance, a null pointer on error
 		*
 		*  @note
 		*    - The new render context will be automatically set as the current active one
@@ -231,8 +231,8 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Context														*m_pContext;						/**< OpenGL render context, can be NULL (= renderer not initialized) */
-		FixedFunctions												*m_pFixedFunctions;					/**< Fixed functions interface implementation, can be NULL */
+		Context														*m_pContext;						/**< OpenGL render context, can be a null pointer (= renderer not initialized) */
+		FixedFunctions												*m_pFixedFunctions;					/**< Fixed functions interface implementation, can be a null pointer */
 		FontManager													*m_pFontManager;					/**< OpenGL renderer font manager, always valid! */
 		bool														 m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
 		bool														 m_bCurrentSwapInterval;			/**< Is swap interval currently enabled? */
@@ -246,14 +246,14 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		/** OpenGL texture type at the certain texture stages */
 		PLGeneral::uint32 *m_nTextureBufferTypes;
 
-		PLRenderer::TextureBuffer **m_ppPrevTextureBuffer;	/**< The previous non NULL texture buffer */
+		PLRenderer::TextureBuffer **m_ppPrevTextureBuffer;	/**< The previous non a null pointer texture buffer */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const;
+		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const;
 		virtual PLGeneral::String GetVendor() const;
 		virtual PLGeneral::String GetDefaultShaderLanguage() const;
 		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
@@ -290,8 +290,8 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		//[-------------------------------------------------------]
 		virtual bool BeginScene();
 		virtual bool EndScene();
-		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = NULL, float fMinZ = 0.0f, float fMaxZ = 1.0f);
-		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = NULL);
+		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
+		virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr);
 		virtual bool GetDepthBounds(float &fZMin, float &fZMax) const;
 		virtual bool SetDepthBounds(float fZMin = 0.0f, float fZMax = 1.0f);
 		virtual void GetColorMask(bool &bRed, bool &bGreen, bool &bBlue, bool &bAlpha) const;
@@ -305,13 +305,13 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLGeneral::uint8 nFace = 0);
 		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLGeneral::uint8 nColorIndex = 0, PLGeneral::uint8 nFace = 0);
 		virtual bool MakeScreenshot(PLGraphics::Image &cImage);
-		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
+		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
 
 		// [TODO] Clean this up!
-		PLRENDEREROPENGL_API bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
+		PLRENDEREROPENGL_API bool SetShaderProgramTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
 
-		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = NULL);
-		virtual bool SetProgram(PLRenderer::Program *pProgram = NULL);
+		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = nullptr);
+		virtual bool SetProgram(PLRenderer::Program *pProgram = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Draw                                                  ]

@@ -45,7 +45,7 @@ BinaryHeap<KeyType, ValueType, Comparer>::BinaryHeap(uint32 nResizeCount) :
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
 	m_nResizeCount(nResizeCount),
-	m_pData(NULL)
+	m_pData(nullptr)
 {
 }
 
@@ -109,7 +109,7 @@ BinaryHeap<KeyType, ValueType, Comparer>::BinaryHeap(const BinaryHeap<KeyType, V
 	m_nMaxNumOfElements(0),
 	m_nNumOfElements(0),
 	m_nResizeCount(0),
-	m_pData(NULL)
+	m_pData(nullptr)
 {
 	// Not implemented
 }
@@ -247,7 +247,7 @@ void BinaryHeap<KeyType, ValueType, Comparer>::Clear()
 	// Destroy the data
 	if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 
 	// Update the number of elements counter
@@ -280,7 +280,7 @@ bool BinaryHeap<KeyType, ValueType, Comparer>::Add(const KeyType &Key, const Val
 		// If there is old data
 		if (m_pData) {
 			// Copy old data content
-			uint32 nNumOfElements = (m_nNumOfElements > m_nMaxNumOfElements) ? m_nMaxNumOfElements : m_nNumOfElements;
+			const uint32 nNumOfElements = (m_nNumOfElements > m_nMaxNumOfElements) ? m_nMaxNumOfElements : m_nNumOfElements;
 			for (uint32 i=0; i<nNumOfElements; i++)
 				pNewData[i] = m_pData[i];
 
@@ -293,7 +293,7 @@ bool BinaryHeap<KeyType, ValueType, Comparer>::Add(const KeyType &Key, const Val
 	}
 
 	// Add element at the end...
-	int nElement = m_nNumOfElements;
+	const int nElement = m_nNumOfElements;
 	m_pData[nElement].Key   = Key;
 	m_pData[nElement].Value = Value;
 	m_nNumOfElements++;

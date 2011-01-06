@@ -81,7 +81,7 @@ class AbstractToggleButton : public AbstractButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API AbstractToggleButton(Widget *pParent = NULL);
+		PLGUI_API AbstractToggleButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class AbstractToggleButton : public AbstractButton {
 		*    Get group that the toggle button belongs to
 		*
 		*  @return
-		*    Pointer to button group (can be NULL)
+		*    Pointer to button group (can be a null pointer)
 		*/
 		PLGUI_API ButtonGroup *GetGroup() const;
 
@@ -192,7 +192,7 @@ class AbstractToggleButton : public AbstractButton {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		ButtonGroup	*m_pGroup;				/**< Pointer to button group, can be NULL */
+		ButtonGroup	*m_pGroup;				/**< Pointer to button group, can be a null pointer */
 		bool		 m_bPartiallyAllowed;	/**< Is the third state (PartiallyChecked) allowed? */
 		ECheckState  m_nState;				/**< Current check state */
 

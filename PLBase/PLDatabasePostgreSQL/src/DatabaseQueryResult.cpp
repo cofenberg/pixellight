@@ -67,7 +67,7 @@ DatabaseQueryResult::DatabaseQueryResult(PLDatabase::DatabaseQuery &cParentQuery
 */
 DatabaseQueryResult::DatabaseQueryResult(const DatabaseQueryResult &cSource) :
 	PLDatabase::DatabaseQueryResult(cSource.GetQuery()),
-	m_pPostgreSQLResult(NULL),
+	m_pPostgreSQLResult(nullptr),
 	m_nCurrentRow(0)
 {
 	// No implementation because the copy constructor is never used
@@ -101,7 +101,7 @@ const Array<String> &DatabaseQueryResult::FetchFieldList()
 {
 	// Are there any fields within the current list?
 	if (!m_lstFields.GetNumOfElements()) {
-		uint32 nNumOfFields = PQnfields(m_pPostgreSQLResult);
+		const uint32 nNumOfFields = PQnfields(m_pPostgreSQLResult);
 		for (uint32 i=0; i<nNumOfFields; i++)
 			m_lstFields.Add(PQfname(m_pPostgreSQLResult, i));
 	}
@@ -112,9 +112,10 @@ const Array<String> &DatabaseQueryResult::FetchFieldList()
 
 const HashMap<String, String> *DatabaseQueryResult::FetchRow()
 {
-	uint32 nRow = PQntuples(m_pPostgreSQLResult);
-	if (m_nCurrentRow >= nRow) return NULL; // Error!
-	uint32 nColumn = PQnfields(m_pPostgreSQLResult);
+	const uint32 nRow = PQntuples(m_pPostgreSQLResult);
+	if (m_nCurrentRow >= nRow)
+		return nullptr; // Error!
+	const uint32 nColumn = PQnfields(m_pPostgreSQLResult);
 
 	m_mapRow.Clear();
 	for (uint32 i=0; i<nColumn; i++)

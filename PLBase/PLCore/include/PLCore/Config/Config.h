@@ -161,7 +161,7 @@ class Config : public Loadable {
 		*
 		*  @return
 		*    Configuration variable value, empty string on error so
-		*    this pointer is never NULL!
+		*    this pointer is never a null pointer!
 		*/
 		PLCORE_API PLGeneral::String GetVar(const PLGeneral::String &sClass, const PLGeneral::String &sVariable);
 
@@ -231,7 +231,7 @@ class Config : public Loadable {
 		*    Index of the configuration class instance to return
 		*
 		*  @return
-		*    The requested configuration class instance, NULL on error
+		*    The requested configuration class instance, a null pointer on error
 		*/
 		PLCORE_API ConfigGroup *GetClassByIndex(PLGeneral::uint32 nIndex) const;
 
@@ -243,7 +243,7 @@ class Config : public Loadable {
 		*    Configuration class name
 		*
 		*  @return
-		*    The requested configuration class instance, NULL if the class wasn't found
+		*    The requested configuration class instance, a null pointer if the class wasn't found
 		*
 		*  @remarks
 		*    You can use\n

@@ -302,7 +302,7 @@ class System : public Singleton<System> {
 		*    Returns a pointer to the main thread
 		*
 		*  @return
-		*    Main thread (assumed to be never NULL!)
+		*    Main thread (assumed to be never a null pointer!)
 		*/
 		PLGENERAL_API Thread *GetMainThread() const;
 
@@ -311,7 +311,7 @@ class System : public Singleton<System> {
 		*    Returns a pointer to the current thread
 		*
 		*  @return
-		*    Current thread (assumed to be never NULL!)
+		*    Current thread (assumed to be never a null pointer!)
 		*/
 		PLGENERAL_API Thread *GetCurrentThread() const;
 
@@ -475,8 +475,8 @@ class System : public Singleton<System> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SystemImpl	*m_pSystemImpl;	/**< Pointer to the system specific implementation (assumed to be never NULL!) */
-		Thread		*m_pMainThread;	/**< Pointer to the main thread (assumed to be never NULL!) */
+		SystemImpl	*m_pSystemImpl;	/**< Pointer to the system specific implementation (assumed to be never a null pointer!) */
+		Thread		*m_pMainThread;	/**< Pointer to the main thread (assumed to be never a null pointer!) */
 
 
 };

@@ -43,15 +43,18 @@ namespace PLCore {
 */
 template <class AType>
 Resource<AType>::Resource(const PLGeneral::String &sName, ResourceManager<AType> *pManager) :
-	m_pManager(NULL),
+	m_pManager(nullptr),
 	m_bProtected(false)
 {
 	// Set unique resource name
-	if (pManager) pManager->SetResourceName((AType&)*this, sName);
-	else		  m_sName = sName;
+	if (pManager)
+		pManager->SetResourceName((AType&)*this, sName);
+	else
+		m_sName = sName;
 
 	// Add this resource to the manager
-	if (pManager) pManager->Add((AType&)*this);
+	if (pManager)
+		pManager->Add((AType&)*this);
 }
 
 /**
@@ -201,13 +204,14 @@ Resource<AType>::~Resource()
 {
 	// Inform the handlers
 	for (PLGeneral::uint32 i=0; i<m_lstHandlers.GetNumOfElements(); i++)
-		m_lstHandlers[i]->m_pResource = NULL;
+		m_lstHandlers[i]->m_pResource = nullptr;
 
 	// Clear the list
 	m_lstHandlers.Clear();
 
 	// Remove from resource manager
-	if (m_pManager) m_pManager->Remove((AType&)*this);
+	if (m_pManager)
+		m_pManager->Remove((AType&)*this);
 }
 
 

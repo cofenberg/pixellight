@@ -192,7 +192,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*    Returns the PL physics body of the scene node
 		*
 		*  @return
-		*    The PL physics body of the scene node, NULL if there's no such body
+		*    The PL physics body of the scene node, a null pointer if there's no such body
 		*/
 		PLPHYSICS_API Body *GetPhysicsBody() const;
 

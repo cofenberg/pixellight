@@ -92,7 +92,7 @@ Stream *Buffer::CreateStream(ALuint nSource)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -158,7 +158,7 @@ File *Buffer::OpenFile() const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -191,7 +191,7 @@ Buffer::Buffer(PLSound::SoundManager &cSoundManager, const String &sName,  bool 
 	PLSound::Buffer(cSoundManager, sName),
 	m_bStream(false),
 	m_nBuffer(0),
-	m_pnData(NULL),
+	m_pnData(nullptr),
 	m_nDataSize(0)
 {
 	// Load the sound buffer
@@ -361,7 +361,7 @@ bool Buffer::Unload()
 		// Unload buffer
 		m_bStream   = false;
 		m_sFilename = "";
-		m_pnData    = NULL;
+		m_pnData    = nullptr;
 		m_nDataSize = 0;
 		if (m_nBuffer) {
 			alDeleteBuffers(1, &m_nBuffer);

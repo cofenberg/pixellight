@@ -88,7 +88,7 @@ PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 	PGconn   *pPostgreSQL = ((Database&)GetDatabase()).GetPostgreSQL();
 	PGresult *pResult     = PQexec(pPostgreSQL, sSQL);
 	if (pResult) {
-		int nStatus = PQresultStatus(pResult);
+		const int nStatus = PQresultStatus(pResult);
 		if (PQresultStatus(pResult) == PGRES_TUPLES_OK) {
 			// Return the result
 			return new DatabaseQueryResult(*this, *pResult);
@@ -103,12 +103,16 @@ PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 		PQclear(pResult);
 
 		// Print the error message
-		if (sMessage.GetLength()) PL_LOG(Error, "PostgreSQL can't execute the given SQL statement! Error: " + sMessage)
-		else 					  PL_LOG(Error, "PostgreSQL can't execute the given SQL statement!")
-	} else PL_LOG(Error, String("PostgreSQL can't execute the given SQL statement! Error: ") + PQerrorMessage(pPostgreSQL))
+		if (sMessage.GetLength())
+			PL_LOG(Error, "PostgreSQL can't execute the given SQL statement! Error: " + sMessage)
+		else
+			PL_LOG(Error, "PostgreSQL can't execute the given SQL statement!")
+	} else {
+		PL_LOG(Error, String("PostgreSQL can't execute the given SQL statement! Error: ") + PQerrorMessage(pPostgreSQL))
+	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

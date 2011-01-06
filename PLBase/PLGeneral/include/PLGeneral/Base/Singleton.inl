@@ -37,7 +37,7 @@ namespace PLGeneral {
 //[ Static data                                           ]
 //[-------------------------------------------------------]
 template <class AType> typename Singleton<AType>::__Destruction_Guard Singleton<AType>::__Guard;
-template <class AType> AType *Singleton<AType>::__Instance  = NULL;
+template <class AType> AType *Singleton<AType>::__Instance  = nullptr;
 template <class AType> bool   Singleton<AType>::__Destroyed = false;
 
 
@@ -69,7 +69,7 @@ template <class AType> AType *Singleton<AType>::GetInstance()
 */
 template <class AType> bool Singleton<AType>::HasInstance()
 {
-	return (__Instance != NULL);
+	return (__Instance != nullptr);
 }
 
 
@@ -94,7 +94,7 @@ template <class AType> Singleton<AType>::~Singleton()
 {
 	// Unregister instance
 	if (__Instance == this) {
-		__Instance  = NULL;
+		__Instance  = nullptr;
 		__Destroyed = true;
 	}
 }

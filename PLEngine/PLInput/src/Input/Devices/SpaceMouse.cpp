@@ -63,7 +63,7 @@ SpaceMouse::SpaceMouse(const String &sName, DeviceImpl *pImpl) : Device(sName, "
 	Button6(this, "Button6", "Button #6"),
 	Button7(this, "Button7", "Button #7"),
 	EventHandlerOnDeviceRead(&SpaceMouse::OnDeviceRead, this),
-	m_pHIDDevice(NULL)
+	m_pHIDDevice(nullptr)
 {
 	// Check if we have a HID backend
 	if (pImpl && pImpl->GetBackendType() == BackendHID) {
@@ -87,7 +87,7 @@ SpaceMouse::~SpaceMouse()
 	// Check if we have a HID backend
 	if (m_pHIDDevice) {
 		// We use m_pImpl here to check, because if the device backend has been deleted before, m_pImpl has
-		// been reset to NULL, but not m_pHIDDevice as this is unknown in the base class
+		// been reset to a null pointer, but not m_pHIDDevice as this is unknown in the base class
 		if (m_pImpl)
 			// Disconnect
 			m_pHIDDevice->Close();

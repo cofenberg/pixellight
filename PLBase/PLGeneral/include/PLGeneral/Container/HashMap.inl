@@ -46,8 +46,8 @@ namespace PLGeneral {
 */
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::SlotsList() :
-	m_pFirstSlot(NULL),
-	m_pLastSlot(NULL)
+	m_pFirstSlot(nullptr),
+	m_pLastSlot(nullptr)
 {
 }
 
@@ -93,7 +93,7 @@ void HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::Clear()
 		delete pSlot;
 		pSlot = pSlotNext;
 	}
-	m_pFirstSlot = m_pLastSlot = NULL;
+	m_pFirstSlot = m_pLastSlot = nullptr;
 }
 
 /**
@@ -110,12 +110,12 @@ void HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::Add(const
 
 	// Add hash slot to the list
 	if (m_pFirstSlot) {
-		pSlot->pNextSlot       = NULL;
+		pSlot->pNextSlot       = nullptr;
 		pSlot->pPreviousSlot   = m_pLastSlot;
 		m_pLastSlot->pNextSlot = pSlot;
 	} else {
-		pSlot->pNextSlot     = NULL;
-		pSlot->pPreviousSlot = NULL;
+		pSlot->pNextSlot     = nullptr;
+		pSlot->pPreviousSlot = nullptr;
 		m_pFirstSlot         = pSlot;
 	}
 	m_pLastSlot = pSlot;
@@ -178,12 +178,12 @@ bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::Set(const
 
 	// Add hash slot to the list
 	if (m_pFirstSlot) {
-		pSlot->pNextSlot       = NULL;
+		pSlot->pNextSlot       = nullptr;
 		pSlot->pPreviousSlot   = m_pLastSlot;
 		m_pLastSlot->pNextSlot = pSlot;
 	} else {
-		pSlot->pNextSlot     = NULL;
-		pSlot->pPreviousSlot = NULL;
+		pSlot->pNextSlot     = nullptr;
+		pSlot->pPreviousSlot = nullptr;
 		m_pFirstSlot         = pSlot;
 	}
 	m_pLastSlot = pSlot;
@@ -200,7 +200,7 @@ template <class KeyType, class ValueType, class Hasher, class Comparer, class Gr
 bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::Remove(const KeyType &Key)
 {
 	// Find the element
-	Slot *pSlot = m_pFirstSlot, *pSlotPrev = NULL;
+	Slot *pSlot = m_pFirstSlot, *pSlotPrev = nullptr;
 	while (pSlot) {
 		// Compare keys
 		if (Comparer::AreEqual(pSlot->Key, Key)) {
@@ -208,10 +208,10 @@ bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::Remove(co
 			if (pSlot == m_pFirstSlot) {
 				// Is this also the last internal slot?
 				if (pSlot == m_pLastSlot) {
-					m_pFirstSlot = m_pLastSlot = NULL;
+					m_pFirstSlot = m_pLastSlot = nullptr;
 				} else {
 					m_pFirstSlot = pSlot->pNextSlot;
-					m_pFirstSlot->pPreviousSlot = NULL;
+					m_pFirstSlot->pPreviousSlot = nullptr;
 				}
 
 			// Else...
@@ -251,7 +251,7 @@ uint32 HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::RemoveV
 {
 	// Find the element
 	uint32 nRemoved = 0;
-	Slot *pSlot = m_pFirstSlot, *pSlotPrev = NULL;
+	Slot *pSlot = m_pFirstSlot, *pSlotPrev = nullptr;
 	while (pSlot) {
 		// Compare values
 		if (pSlot->Value == Value) {
@@ -259,10 +259,10 @@ uint32 HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::RemoveV
 			if (pSlot == m_pFirstSlot) {
 				// Is this also the last internal slot?
 				if (pSlot == m_pLastSlot) {
-					m_pFirstSlot = m_pLastSlot = NULL;
+					m_pFirstSlot = m_pLastSlot = nullptr;
 				} else {
 					m_pFirstSlot = pSlot->pNextSlot;
-					m_pFirstSlot->pPreviousSlot = NULL;
+					m_pFirstSlot->pPreviousSlot = nullptr;
 				}
 
 			// Else...
@@ -350,8 +350,8 @@ ValueType &HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::Get
 */
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::SlotsList(const SlotsList &cSource) :
-	m_pFirstSlot(NULL),
-	m_pLastSlot(NULL)
+	m_pFirstSlot(nullptr),
+	m_pLastSlot(nullptr)
 {
 	// Not implemented
 }
@@ -372,7 +372,7 @@ HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::SlotsList::SlotsList(cons
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::HashMap(uint32 nNumOfSlots) :
 	m_nNumOfSlots((nNumOfSlots > 0) ? nNumOfSlots : 1),
-	m_plstSlots(NULL),
+	m_plstSlots(nullptr),
 	m_nNumOfElements(0)
 {
 }
@@ -384,7 +384,7 @@ HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::HashMap(uint32 nNumOfSlot
 template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower>
 HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::HashMap(const HashMap<KeyType, ValueType, Hasher, Comparer, Grower> &cSource) :
 	m_nNumOfSlots(cSource.m_nNumOfSlots),
-	m_plstSlots(cSource.m_nNumOfElements ? new SlotsList[m_nNumOfSlots] : NULL),
+	m_plstSlots(cSource.m_nNumOfElements ? new SlotsList[m_nNumOfSlots] : nullptr),
 	m_nNumOfElements(cSource.m_nNumOfElements)
 {
 	// Copy slots
@@ -418,7 +418,7 @@ Map<KeyType, ValueType> &HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::
 
 	// Copy data
 	m_nNumOfSlots    = cSource.m_nNumOfSlots;
-	m_plstSlots      = cSource.m_nNumOfElements ? new SlotsList[m_nNumOfSlots] : NULL;
+	m_plstSlots      = cSource.m_nNumOfElements ? new SlotsList[m_nNumOfSlots] : nullptr;
 	m_nNumOfElements = cSource.m_nNumOfElements;
 
 	// Copy slots
@@ -592,7 +592,7 @@ bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Replace(const KeyTyp
 	// Slots already created?
 	if (m_plstSlots) {
 		// Hash the key
-		uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
+		const uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
 
 		// Replace the value (or at least try it ;-)
 		return m_plstSlots[nIndex].Replace(Key, NewValue);
@@ -608,7 +608,7 @@ bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Set(const KeyType &K
 	// Slots already created?
 	if (m_plstSlots) {
 		// Hash the key
-		uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
+		const uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
 
 		// Set the value
 		if (m_plstSlots[nIndex].Set(Key, Value))
@@ -635,7 +635,7 @@ bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Remove(const KeyType
 	// Slots already created?
 	if (m_plstSlots) {
 		// Hash the key
-		uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
+		const uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
 
 		// Remove the element from the hash map (or at least try it ;-)
 		if (m_plstSlots[nIndex].Remove(Key)) {
@@ -677,7 +677,7 @@ const ValueType &HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Get(cons
 	// Slots already created?
 	if (m_plstSlots) {
 		// Hash the key
-		uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
+		const uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
 
 		// Return the object (or at least try it ;-)
 		return m_plstSlots[nIndex].Get(Key);
@@ -692,7 +692,7 @@ ValueType &HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Get(const KeyT
 	// Slots already created?
 	if (m_plstSlots) {
 		// Hash the key
-		uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
+		const uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
 
 		// Return the object (or at least try it ;-)
 		return m_plstSlots[nIndex].Get(Key);

@@ -125,7 +125,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 				int i = 0;
 			} else {
 				// Add the multimaterial to get no name conflicts
-				PLSceneMaterial *pMaterial = GetScene().AddMaterial(NULL, *pIGameMaterial);
+				PLSceneMaterial *pMaterial = GetScene().AddMaterial(nullptr, *pIGameMaterial);
 				if (pMaterial && pMaterial->GetIGameMaterial() && pMaterial->GetIGameMaterial()->GetMaterialName()) {
 					// Create XML document
 					XmlDocument cDocument;
@@ -153,7 +153,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 								IGameMaterial *pIGameNodeMaterial = GetScene().GetIGameInterface().GetIGameMaterial(pMaxNodeSubMaterial);
 								if (pIGameNodeMaterial) {
 									// Add the material
-									PLSceneMaterial *pSubMaterial = GetScene().AddMaterial(NULL, *pIGameNodeMaterial);
+									PLSceneMaterial *pSubMaterial = GetScene().AddMaterial(nullptr, *pIGameNodeMaterial);
 									if (pSubMaterial) {
 										// Add material
 										XmlElement *pSubMaterialElement = new XmlElement("Material");
@@ -191,11 +191,11 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					std::string sAbsSkinFilename = sApplicationDrive + sApplicationDir + std::string("Data\\Misc\\");
 					if (g_SEOptions.bPLDirectories) {
 						// Misc
-						CreateDirectory(sAbsSkinFilename.c_str(), NULL);
+						CreateDirectory(sAbsSkinFilename.c_str(), nullptr);
 						if (g_SEOptions.bSubDirectories) {
 							sAbsSkinFilename.append(g_SEOptions.sFilenameOnly);
 							sAbsSkinFilename.append("\\");
-							CreateDirectory(sAbsSkinFilename.c_str(), NULL);
+							CreateDirectory(sAbsSkinFilename.c_str(), nullptr);
 						}
 					}
 					sAbsSkinFilename.append(sSkinFilename);
@@ -221,7 +221,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 			}
 		} else {
 			// Yeah, no multimaterial - that's quite primitive... just add the material and set it as 'skin'-file :D
-			PLSceneMaterial *pMaterial = GetScene().AddMaterial(NULL, *pIGameMaterial);
+			PLSceneMaterial *pMaterial = GetScene().AddMaterial(nullptr, *pIGameMaterial);
 			if (pMaterial) {
 				// Add a 'skin'
 				std::string sMaterialFilename(pMaterial->GetName());
@@ -233,12 +233,12 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	}
 
 	// Get a list of all morph channels of the mesh
-	const Array<morphChannel*> *plstMorphChannels = NULL;
+	const Array<morphChannel*> *plstMorphChannels = nullptr;
 	if (m_pMesh)
 		plstMorphChannels = &m_pMesh->GetMorphChannels();
 
 	// Get the animation list of the mesh
-	const Array<PLSceneMesh::Animation*> *plstAnimations = m_pMesh ? &m_pMesh->GetAnimations() : NULL;
+	const Array<PLSceneMesh::Animation*> *plstAnimations = m_pMesh ? &m_pMesh->GetAnimations() : nullptr;
 
 	// Write modifiers
 	WriteModifiers(*pNodeElement, sApplicationDrive, sApplicationDir);

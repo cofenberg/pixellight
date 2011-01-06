@@ -112,7 +112,7 @@ class FuncDesc : public MemberDesc {
 		*    Get method
 		*
 		*  @return
-		*    Pointer to method (can be NULL)
+		*    Pointer to method (can be a null pointer)
 		*/
 		PLCORE_API virtual DynFunc *GetMethod(const Object *pObject) const;
 

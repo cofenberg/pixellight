@@ -77,7 +77,7 @@ class ShaderToolsCg {
 		*    Returns the Cg context
 		*
 		*  @return
-		*    The Cg context, can be NULL
+		*    The Cg context, can be a null pointer
 		*/
 		static CGcontext GetCgContext();
 
@@ -93,7 +93,7 @@ class ShaderToolsCg {
 		*    Entry point, if empty string, "main" is used as default
 		*
 		*  @return
-		*    The creates Cg program, NULL on error
+		*    The creates Cg program, a null pointer on error
 		*
 		*  @note
 		*    - There must be at least one reference to the Cg context
@@ -116,7 +116,7 @@ class ShaderToolsCg {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static CGcontext		 m_pCgContext;			/**< Cg shader program context, can be NULL */
+		static CGcontext		 m_pCgContext;			/**< Cg shader program context, can be a null pointer */
 		static PLGeneral::uint32 m_nCgContexCounter;	/**< Cg context counter */
 
 

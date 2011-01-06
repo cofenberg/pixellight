@@ -84,7 +84,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*    Returns the texture handlers texture
 				*
 				*  @return
-				*    Pointer to the texture handlers texture, can be NULL
+				*    Pointer to the texture handlers texture, can be a null pointer
 				*/
 				PLRENDERER_API Texture *GetTexture() const;
 
@@ -99,7 +99,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*
 				*  @return
 				*    Pointer to the requested texture animation frame texture handlers,
-				*    NULL if there was an error or if nIndex = < 0 and the animation
+				*    a null pointer if there was an error or if nIndex = < 0 and the animation
 				*    is disabled
 				*/
 				PLRENDERER_API TextureHandler *GetFrameTextureHandler(int nIndex = -1) const;
@@ -214,12 +214,12 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 			//[ Private data                                          ]
 			//[-------------------------------------------------------]
 			private:
-				TextureHandler		*m_pTextureHandler;		/**< Owner texture handler (NEVER NULL!) */
-				Animation			*m_pTextureAnimation;	/**< Texture animation (NEVER NULL!) */
+				TextureHandler		*m_pTextureHandler;		/**< Owner texture handler (NEVER a null pointer!) */
+				Animation			*m_pTextureAnimation;	/**< Texture animation (NEVER a null pointer!) */
 				PLMath::Matrix4x4	 m_mTrans;				/**< Current texture transformation matrix */
-				Animation			*m_pMatrixAnimation;	/**< Matrix animation (NEVER NULL!) */
+				Animation			*m_pMatrixAnimation;	/**< Matrix animation (NEVER a null pointer!) */
 				PLGraphics::Color4   m_cColor;				/**< Current color */
-				Animation			*m_pColorAnimation;		/**< Color animation (NEVER NULL!) */
+				Animation			*m_pColorAnimation;		/**< Color animation (NEVER a null pointer!) */
 
 
 		};
@@ -289,7 +289,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 		*    Returns the texture handlers texture
 		*
 		*  @return
-		*    Pointer to the texture handlers texture, can be NULL
+		*    Pointer to the texture handlers texture, can be a null pointer
 		*/
 		PLRENDERER_API Texture *GetTexture() const;
 
@@ -310,7 +310,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 		*    Returns the texture animation state object (if there's one :)
 		*
 		*  @return
-		*    The texture animation state object, NULL if there's no such object
+		*    The texture animation state object, a null pointer if there's no such object
 		*/
 		PLRENDERER_API AnimationState *GetAnimationState() const;
 
@@ -319,7 +319,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		AnimationState *m_pAnimationState;	/**< Texture animation state, can be NULL */
+		AnimationState *m_pAnimationState;	/**< Texture animation state, can be a null pointer */
 
 
 };

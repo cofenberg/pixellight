@@ -110,7 +110,7 @@ uint32 DynEvent::GetNumOfConnects() const
 const EventDesc *DynEvent::GetDesc() const
 {
 	// No descriptor by default
-	return NULL;
+	return nullptr;
 }
 
 /**

@@ -66,7 +66,7 @@ XNode *XNode::GetNextNode() const
 */
 XNode::XNode(EType nType) :
 	m_nType(nType),
-	m_pcNextNode(NULL)
+	m_pcNextNode(nullptr)
 {
 }
 
@@ -91,7 +91,7 @@ XNode::~XNode()
 *    Constructor
 */
 XRoot::XRoot() : XNode(Root),
-	m_pcFirstNode(NULL)
+	m_pcFirstNode(nullptr)
 {
 	// Initialize the statistics
 	m_sStatistics.nNumOfMeshes		 = 0;
@@ -140,7 +140,7 @@ const XRoot::Statistics &XRoot::GetStatistics() const
 *    Constructor
 */
 XReference::XReference() : XNode(Reference),
-	pszName(NULL)
+	pszName(nullptr)
 {
 }
 
@@ -188,8 +188,8 @@ XHeader::~XHeader()
 *    Constructor
 */
 XMaterial::XMaterial() : XNode(Material),
-	pszName(NULL),
-	psTextureFilename(NULL)
+	pszName(nullptr),
+	psTextureFilename(nullptr)
 {
 }
 
@@ -215,16 +215,16 @@ XMaterial::~XMaterial()
 *    Constructor
 */
 XMesh::XMesh() : XNode(Mesh),
-	pszName(NULL),
+	pszName(nullptr),
 	nVertices(0),
-	psVertices(NULL),
+	psVertices(nullptr),
 	nFaces(0),
-	psFaces(NULL),
-	psFaceWraps(NULL),
-	psTextureCoords(NULL),
-	psNormals(NULL),
-	psVertexColors(NULL),
-	psMaterialList(NULL)
+	psFaces(nullptr),
+	psFaceWraps(nullptr),
+	psTextureCoords(nullptr),
+	psNormals(nullptr),
+	psVertexColors(nullptr),
+	psMaterialList(nullptr)
 {
 }
 
@@ -290,9 +290,9 @@ XNode *XFrame::GetFirstChildNode() const
 *    Constructor
 */
 XFrame::XFrame() : XNode(Frame),
-	pszName(NULL),
-	psTransformMatrix(NULL),
-	m_pcFirstNode(NULL)
+	pszName(nullptr),
+	psTransformMatrix(nullptr),
+	m_pcFirstNode(nullptr)
 {
 }
 

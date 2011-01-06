@@ -51,7 +51,7 @@ pl_implement_class(SPTexturing)
 */
 SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 	m_pVertexBuffer(GetRenderer().CreateVertexBuffer()),
-	m_pTextureBuffer(NULL),
+	m_pTextureBuffer(nullptr),
 	m_fRotation(0.0f)
 {
 	// Setup the renderer vertex buffer for our quad
@@ -76,7 +76,7 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 			// with our data. If possible, you should always use the provided GetData(<VertexID>, <SEMANTIC>, <CHANNEL>)
 			// and SetColor() functions to ensure that you put the data at the correct position into the buffer. For
 			// instance the color value can have a different size on different renderer implementations! For
-			// security we check the pointer given by GetData() for NULL, but normally that's not required.
+			// security we check the pointer given by GetData() for a null pointer, but normally that's not required.
 
 			// Setup vertex 0
 			float *pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::Position);

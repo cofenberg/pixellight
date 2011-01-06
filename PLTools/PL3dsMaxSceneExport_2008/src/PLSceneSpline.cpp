@@ -69,11 +69,11 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	std::string sFilename = std::string("Data\\Misc\\") + sApplicationDrive + sApplicationDir;
 	if (g_SEOptions.bPLDirectories) {
 		// Misc
-		CreateDirectory(sFilename.c_str(), NULL);
+		CreateDirectory(sFilename.c_str(), nullptr);
 		if (g_SEOptions.bSubDirectories) {
 			sFilename.append(g_SEOptions.sFilenameOnly);
 			sFilename.append("\\");
-			CreateDirectory(sFilename.c_str(), NULL);
+			CreateDirectory(sFilename.c_str(), nullptr);
 		}
 	}
 
@@ -97,7 +97,7 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					// Get the 3ds Max shape object
 					ShapeObject *pMaxShapeObject = (ShapeObject*)pIGameObject->GetMaxObject()->
 						ConvertToType(TIME_PosInfinity, Class_ID(GENERIC_SHAPE_CLASS_ID, 0));
-					if (pMaxShapeObject != NULL && pMaxShapeObject->NumberOfCurves() == cIGameSpline.GetNumberOfSplines()) {
+					if (pMaxShapeObject != nullptr && pMaxShapeObject->NumberOfCurves() == cIGameSpline.GetNumberOfSplines()) {
 						// Create XML document
 						XmlDocument cDocument;
 

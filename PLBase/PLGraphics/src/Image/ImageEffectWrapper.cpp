@@ -47,7 +47,7 @@ pl_implement_class(ImageEffectWrapper)
 *    Constructor
 */
 ImageEffectWrapper::ImageEffectWrapper(const String &sEffect, const String &sParameters) :
-	m_pImageEffect(NULL)
+	m_pImageEffect(nullptr)
 {
 }
 
@@ -58,7 +58,8 @@ ImageEffectWrapper::ImageEffectWrapper(const String &sEffect, const String &sPar
 ImageEffectWrapper::~ImageEffectWrapper()
 {
 	// Destroy wrapper image effect
-	if (m_pImageEffect) delete m_pImageEffect;
+	if (m_pImageEffect)
+		delete m_pImageEffect;
 }
 
 /**

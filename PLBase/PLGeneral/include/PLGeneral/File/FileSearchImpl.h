@@ -69,7 +69,7 @@ class FileSearchImpl {
 		*    Constructor
 		*
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		PLGENERAL_API FileSearchImpl(const FileAccess *pAccess);
 
@@ -111,7 +111,7 @@ class FileSearchImpl {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		const FileAccess *m_pAccess;	/**< File access information, can be NULL */
+		const FileAccess *m_pAccess;	/**< File access information, can be a null pointer */
 
 
 };

@@ -213,7 +213,7 @@ class SQCull : public SceneQuery {
 		*    Returns the container the camera is in
 		*
 		*  @return
-		*    Container the camera is in, NULL on error
+		*    Container the camera is in, a null pointer on error
 		*/
 		PLS_API SceneContainer *GetCameraContainer() const;
 
@@ -222,7 +222,7 @@ class SQCull : public SceneQuery {
 		*    Sets the container the camera is in
 		*
 		*  @param[in] pCameraContainer
-		*    Container the camera is in, can be NULL
+		*    Container the camera is in, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -278,7 +278,7 @@ class SQCull : public SceneQuery {
 		*    Returns the visibility root container
 		*
 		*  @return
-		*    The visibility root container, NULL on error
+		*    The visibility root container, a null pointer on error
 		*
 		*  @see
 		*    - GetVisContainer()
@@ -367,7 +367,7 @@ class SQCull : public SceneQuery {
 		*    Visibility is pulled up from visibility of children
 		*
 		*  @param[in] pHierarchyNode
-		*    Hierarchy node we currently work on, can be NULL
+		*    Hierarchy node we currently work on, can be a null pointer
 		*/
 		void PullUpVisibility(const SceneHierarchyNode *pHierarchyNode);
 

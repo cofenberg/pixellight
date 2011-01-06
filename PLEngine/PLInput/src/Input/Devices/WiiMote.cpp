@@ -176,8 +176,8 @@ WiiMote::WiiMote(const String &sName, DeviceImpl *pImpl) : Device(sName, "WiiMot
 	EventHandlerOnDeviceDisconnect(&WiiMote::OnDeviceDisconnect, this),
 	EventHandlerOnDeviceRead	  (&WiiMote::OnDeviceRead,		 this),
 	m_pConnectionDevice((ConnectionDevice*)pImpl),
-	m_pInputBuffer(NULL),
-	m_pOutputBuffer(NULL),
+	m_pInputBuffer(nullptr),
+	m_pOutputBuffer(nullptr),
 	m_nReportMode(ReportButtons),
 	m_nIRMode(IROff),
 	m_nExtension(ExtNone),
@@ -213,7 +213,7 @@ WiiMote::WiiMote(const String &sName, DeviceImpl *pImpl) : Device(sName, "WiiMot
 WiiMote::~WiiMote()
 {
 	// We use m_pImpl here to check, because if the device backend has been deleted before, m_pImpl has
-	// been reset to NULL, but not m_pConnectionDevice as this is unknown in the base class
+	// been reset to a null pointer, but not m_pConnectionDevice as this is unknown in the base class
 	if (m_pImpl)
 		// Disconnect
 		m_pConnectionDevice->Close();

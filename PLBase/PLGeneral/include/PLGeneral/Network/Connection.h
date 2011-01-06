@@ -203,7 +203,7 @@ class Connection : protected Thread {
 		*    Send data
 		*
 		*  @param[in] pBuffer
-		*    Data to send, if NULL nothing happens
+		*    Data to send, if a null pointer nothing happens
 		*  @param[in] nSize
 		*    Size in bytes of the buffer to send, MUST be valid!
 		*
@@ -308,7 +308,7 @@ class Connection : protected Thread {
 		*    Called when the connection receives data
 		*
 		*  @param[in] pBuffer
-		*    Buffer with the received data, NULL on terrible error
+		*    Buffer with the received data, a null pointer on terrible error
 		*  @param[in] nSize
 		*    Size in bytes of the buffer with the received data (always valid!)
 		*
@@ -358,7 +358,7 @@ class Connection : protected Thread {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Host			*m_pHost;			/**< Pointer to host, NEVER NULL! */
+		Host			*m_pHost;			/**< Pointer to host, NEVER a null pointer! */
 		volatile bool	 m_bConnected;		/**< Connection status */
 		String			 m_sHostname;		/**< Name of host */
 		uint32			 m_nPort;			/**< Port number */

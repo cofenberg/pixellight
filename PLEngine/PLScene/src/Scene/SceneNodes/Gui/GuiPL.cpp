@@ -79,10 +79,10 @@ GuiPL::GuiPL(Gui *pGui) : GuiImpl(pGui),
 	InputSemantic(this),
 	m_pGui(pGui),
 	m_vScreenSize(1024, 768),
-	m_pRenderer(NULL),
+	m_pRenderer(nullptr),
 	m_pMessageQueueMutex(new Mutex()),
-	m_pMouseOver(NULL),
-	m_pInputController(NULL),
+	m_pMouseOver(nullptr),
+	m_pInputController(nullptr),
 	m_pKeyTimer(new Timer(*pGui)),
 	m_vSystemMousePos(Vector2i::NegativeOne)
 {
@@ -300,7 +300,7 @@ WidgetImpl *GuiPL::CreateWidgetImpl(Widget &cWidget) const
 GraphicsImpl *GuiPL::CreateGraphicsImpl(Graphics &cGraphics) const
 {
 	// Create a PixelLight ingame GUI graphics object
-	return m_pRenderer ? new GraphicsPL(cGraphics, *m_pRenderer, Vector2i::Zero, NoTransparency, PLGraphics::Color4::White) : NULL;
+	return m_pRenderer ? new GraphicsPL(cGraphics, *m_pRenderer, Vector2i::Zero, NoTransparency, PLGraphics::Color4::White) : nullptr;
 }
 
 ImageImpl *GuiPL::CreateImageImpl(Image &cImage) const
@@ -324,7 +324,7 @@ CursorImpl *GuiPL::CreateCursorImpl(Cursor &cCursor) const
 TrayIconImpl *GuiPL::CreateTrayIconImpl(TrayIcon &cTrayIcon) const
 {
 	// Tray icon not required for an ingame GUI
-	return NULL;
+	return nullptr;
 }
 
 ClipBoardImpl *GuiPL::CreateClipBoardImpl(ClipBoard &cClipBoard) const
@@ -544,7 +544,7 @@ void GuiPL::UpdateMouse()
 					}
 
 					// Get the widget implementation
-					const WidgetPL *pMouseOverPL = m_pMouseOver ? (WidgetPL*)m_pMouseOver->GetImpl() : NULL;
+					const WidgetPL *pMouseOverPL = m_pMouseOver ? (WidgetPL*)m_pMouseOver->GetImpl() : nullptr;
 
 					// Currently over a widget that captures the mouse?
 					if (pMouseOverPL && pMouseOverPL->m_bCaptureMouse) {
@@ -584,7 +584,7 @@ void GuiPL::UpdateMouse()
 								m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
 
 								// Reset mouse-enter widget
-								m_pMouseOver = NULL;
+								m_pMouseOver = nullptr;
 							}
 						}
 					}
@@ -596,7 +596,7 @@ void GuiPL::UpdateMouse()
 					m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
 
 					// Reset mouse-enter widget
-					m_pMouseOver = NULL;
+					m_pMouseOver = nullptr;
 				}
 			}
 		}
@@ -625,7 +625,7 @@ void GuiPL::UpdateMouse()
 				if (!m_bMouseButtonPressed[nButton] && bMouseButtonPressed[nButton]) {
 					// If this is the left mouse button, bring the widget to the foreground
 					if (nMouseButton == LeftButton)
-						pMouseOverWidget->SetZPos(ZTop, NULL);
+						pMouseOverWidget->SetZPos(ZTop, nullptr);
 
 					// Send OnMouseButtonDown message
 					m_pGui->SendMessage(GuiMessage::OnMouseButtonDown(pMouseOverWidget, nMouseButton, vRelativeMousePos));
@@ -662,7 +662,7 @@ void GuiPL::UpdateMouse()
 Widget *GuiPL::FindWidgetAtPos(const Vector2i &vMousePos) const
 {
 	// By default, no widget was found
-	Widget *pMouseAtPos = NULL;
+	Widget *pMouseAtPos = nullptr;
 
 	// Iterate through the top-level widgets
 	Iterator<Widget*> cIterator = m_lstTopLevelWidgets.GetIterator();
@@ -700,7 +700,7 @@ Widget *GuiPL::FindWidgetAtPos(const Vector2i &vMousePos) const
 Widget *GuiPL::FindWidgetAtPos(const Vector2i &vMousePos, Widget &cParentWidget) const
 {
 	// By default, no widget was found
-	Widget *pMouseAtPos = NULL;
+	Widget *pMouseAtPos = nullptr;
 
 	// Get list of widget children
 	const List<Widget*> &cChildren = ((WidgetPL*)cParentWidget.GetImpl())->m_lstChildren;

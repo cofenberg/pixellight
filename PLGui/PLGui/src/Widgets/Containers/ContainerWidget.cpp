@@ -55,7 +55,7 @@ pl_implement_class(ContainerWidget)
 *    Constructor
 */
 ContainerWidget::ContainerWidget(Widget *pParent) : Widget(pParent),
-	m_pContentWidget(NULL)
+	m_pContentWidget(nullptr)
 {
 	// Create content widget
 	m_pContentWidget = new Widget(this);

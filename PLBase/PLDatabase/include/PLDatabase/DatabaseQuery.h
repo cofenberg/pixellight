@@ -108,7 +108,7 @@ class DatabaseQuery {
 		*    SQL statement to execute
 		*
 		*  @return
-		*    A pointer to a newly created query result you have to delete by own or NULL
+		*    A pointer to a newly created query result you have to delete by own or a null pointer
 		*    if the SQL statement is not a select (ie: INSERT, UPDATE, etc.)
 		*/
 		virtual DatabaseQueryResult *Execute(const PLGeneral::String &sSQL) = 0;

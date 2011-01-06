@@ -135,7 +135,7 @@ class FileStdStream : public FileImpl {
 	//[-------------------------------------------------------]
 	private:
 		bool	m_bStream;	/**< If 'true', m_pFile is used, otherwise m_hFile */
-		FILE   *m_pFile;	/**< Pointer to file stream, can be NULL */
+		FILE   *m_pFile;	/**< Pointer to file stream, can be a null pointer */
 		handle	m_hFile;	/**< System file handle */
 		uint32  m_nAccess;	/**< File access modes (see EAccess) */
 

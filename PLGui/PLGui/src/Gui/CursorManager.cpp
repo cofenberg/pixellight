@@ -47,7 +47,7 @@ CursorManager::CursorManager(Gui &cGui) :
 {
 	// Create array for standard cursors
 	for (int i=0; i<Cursor_Count; i++) {
-		m_pCursors[i] = NULL;
+		m_pCursors[i] = nullptr;
 	}
 }
 

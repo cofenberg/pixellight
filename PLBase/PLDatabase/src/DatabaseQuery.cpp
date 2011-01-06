@@ -89,7 +89,7 @@ DatabaseQuery::DatabaseQuery(Database &cParentDd) :
 *    Copy constructor
 */
 DatabaseQuery::DatabaseQuery(const DatabaseQuery &cSource) :
-	m_pParentDb(NULL)
+	m_pParentDb(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

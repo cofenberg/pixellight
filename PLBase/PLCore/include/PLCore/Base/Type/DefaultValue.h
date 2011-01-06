@@ -170,7 +170,7 @@ template <typename T>
 class DefaultValue<T*> {
 	public:
 		static T* Default() {
-			return NULL;
+			return nullptr;
 		}
 };
 
@@ -178,7 +178,7 @@ template <typename T>
 class DefaultValue<T&> {
 	public:
 		static T& Default() {
-			return *(T*)(NULL);
+			return *(T*)(nullptr);
 		}
 };
 

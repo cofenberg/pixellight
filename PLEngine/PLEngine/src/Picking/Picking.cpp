@@ -51,7 +51,7 @@ namespace PLEngine {
 */
 Picking::Picking() :
 	EventSceneNode(&Picking::NotifySceneNode, this),
-	m_pPickingResult(NULL)
+	m_pPickingResult(nullptr)
 {
 }
 
@@ -71,7 +71,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 {
 	// Initialize the picking result
 	m_pPickingResult = &cPickingResult;
-	cPickingResult.m_pSceneNode				 = NULL;
+	cPickingResult.m_pSceneNode				 = nullptr;
 	cPickingResult.m_nGeometry				 = 0;
 	cPickingResult.m_nTriangle				 = 0;
 	cPickingResult.m_vPoint					 = Vector3::Zero;
@@ -92,11 +92,11 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 	if (cPickingResult.m_pSceneNode) {
 		// Ensure that the picking distance is not greater than the possible maximum
 		if ((vLineEndPos-vLineStartPos).GetSquaredLength() >= cPickingResult.m_fNearestSquaredDistance)
-			return (cPickingResult.m_pSceneNode != NULL);
+			return (cPickingResult.m_pSceneNode != nullptr);
 	}
 
 	// Nothing (in range) was picked
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -108,11 +108,11 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNod
 {
 	// Initialize the picking result
 	m_pPickingResult = &cPickingResult;
-	cPickingResult.m_pSceneNode				 = NULL;
+	cPickingResult.m_pSceneNode				 = nullptr;
 	cPickingResult.m_nGeometry				 = 0;
 	cPickingResult.m_nTriangle				 = 0;
 	cPickingResult.m_vPoint					 = Vector3::Zero;
-	cPickingResult.m_pSceneContainer		 = NULL;
+	cPickingResult.m_pSceneContainer		 = nullptr;
 	cPickingResult.m_vLineStartPos			 = vLineStartPos;
 	cPickingResult.m_fNearestSquaredDistance = -1.0f;
 
@@ -121,10 +121,10 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNod
 
 	// Ensure that the picking distance is not greater than the possible maximum
 	if ((vLineEndPos-vLineStartPos).GetSquaredLength() >= cPickingResult.m_fNearestSquaredDistance)
-		return (cPickingResult.m_pSceneNode != NULL);
+		return (cPickingResult.m_pSceneNode != nullptr);
 
 	// Nothing (in range) was picked
-	return NULL;
+	return nullptr;
 }
 
 
@@ -147,7 +147,7 @@ void Picking::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 		const Vector3 vLineEndPos   = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vEnd;
 
 		// Perform mesh intersection
-		MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, NULL);
+		MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, nullptr);
 	}
 }
 

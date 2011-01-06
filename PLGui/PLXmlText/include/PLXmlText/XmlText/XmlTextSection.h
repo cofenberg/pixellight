@@ -66,9 +66,9 @@ class XmlTextSection : public XmlTextElement {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    Parent object, can be NULL
+		*    Parent object, can be a null pointer
 		*/
-		PLXMLTEXT_API XmlTextSection(XmlTextElement *pParent = NULL);
+		PLXMLTEXT_API XmlTextSection(XmlTextElement *pParent = nullptr);
 
 		/**
 		*  @brief

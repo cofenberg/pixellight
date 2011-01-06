@@ -64,7 +64,7 @@ DynFunc::~DynFunc()
 const FuncDesc *DynFunc::GetDesc() const
 {
 	// No descriptor by default
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -120,7 +120,7 @@ void DynFunc::Call(const XmlElement &cElement)
 DynFunc *DynFunc::Clone() const
 {
 	// No function
-	return NULL;
+	return nullptr;
 }
 
 

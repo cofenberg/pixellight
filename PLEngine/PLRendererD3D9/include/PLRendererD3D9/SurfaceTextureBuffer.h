@@ -91,7 +91,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3DSURFACE9			m_pTextureSurface;			/**< Texture surface to render in, can be NULL */
+		LPDIRECT3DSURFACE9			m_pTextureSurface;			/**< Texture surface to render in, can be a null pointer */
 		PLRenderer::ResourceHandler m_cTextureBufferHandler;	/**< Texture buffer to render in */
 		PLGeneral::uint8			m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
 

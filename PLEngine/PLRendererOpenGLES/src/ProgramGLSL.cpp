@@ -350,7 +350,7 @@ bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 PLRenderer::GeometryShader *ProgramGLSL::GetGeometryShader() const
 {
 	// OpenGL ES 2.0 has no support for geometry shaders
-	return NULL;
+	return nullptr;
 }
 
 bool ProgramGLSL::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)

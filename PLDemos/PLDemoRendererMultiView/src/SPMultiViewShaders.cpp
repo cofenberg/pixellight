@@ -63,9 +63,9 @@ pl_implement_class(SPMultiViewShaders)
 *    Constructor
 */
 SPMultiViewShaders::SPMultiViewShaders(Renderer &cRenderer) : SPMultiView(cRenderer),
-	m_pVertexShader(NULL),
-	m_pFragmentShader(NULL),
-	m_pProgram(NULL)
+	m_pVertexShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr)
 {
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
@@ -175,7 +175,7 @@ void SPMultiViewShaders::DrawScene(uint32 nScene)
 			pProgramUniform->Set(Vector3::UnitZ);
 
 		// Get the mesh handler representing the scene to draw
-		const MeshHandler *pMeshHandler = NULL;
+		const MeshHandler *pMeshHandler = nullptr;
 		switch (nScene) {
 			case 0:
 				pMeshHandler = m_pMeshHandlerSphere;
@@ -191,7 +191,7 @@ void SPMultiViewShaders::DrawScene(uint32 nScene)
 		}
 
 		// Get the used mesh
-		const Mesh *pMesh = pMeshHandler ? pMeshHandler->GetMesh() : NULL;
+		const Mesh *pMesh = pMeshHandler ? pMeshHandler->GetMesh() : nullptr;
 		if (pMesh) {
 			// Get the mesh LOD level to use
 			const MeshLODLevel *pLODLevel = pMesh->GetLODLevel(0);

@@ -148,7 +148,7 @@ class SNCamera : public SceneNode {
 		*    Returns the current set camera
 		*
 		*  @return
-		*    The current set camera, NULL if no camera is currently set
+		*    The current set camera, a null pointer if no camera is currently set
 		*/
 		PLS_API static SNCamera *GetCamera();
 
@@ -157,9 +157,9 @@ class SNCamera : public SceneNode {
 		*    Sets the current set camera
 		*
 		*  @param[in] pCamera
-		*    The current set camera, NULL if no camera is currently set
+		*    The current set camera, a null pointer if no camera is currently set
 		*  @param[in] pRenderer
-		*    Renderer to use, if NULL nothing happens
+		*    Renderer to use, if a null pointer nothing happens
 		*/
 		PLS_API static void SetCamera(SNCamera *pCamera, PLRenderer::Renderer *pRenderer);
 
@@ -185,7 +185,7 @@ class SNCamera : public SceneNode {
 		*    Returns the used scene renderer
 		*
 		*  @return
-		*    The used scene renderer, can be NULL
+		*    The used scene renderer, can be a null pointer
 		*/
 		PLS_API SceneRenderer *GetSceneRenderer() const;
 
@@ -366,7 +366,7 @@ class SNCamera : public SceneNode {
 	//[-------------------------------------------------------]
 	private:
 		// [TODO] Remove this
-		static SNCamera *m_pCamera;	/**< Current set camera, can be NULL */
+		static SNCamera *m_pCamera;	/**< Current set camera, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -421,7 +421,7 @@ class SNCamera : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

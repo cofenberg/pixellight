@@ -51,7 +51,7 @@ HttpClient::HttpClient() :
 	m_nConnection(ConnectionClose),
 	m_nHttpAuth(NoAuth),
 	m_nPort(80),
-	m_pConnection(NULL),
+	m_pConnection(nullptr),
 	m_nChunkSize(-1),
 	m_nChunkLeft(0)
 {
@@ -164,7 +164,7 @@ void HttpClient::SetAuthentication(EHttpAuth nAuth, const String &sUsername, con
 bool HttpClient::IsConnected() const
 {
 	// Return if a connection is active
-	return (m_pConnection != NULL);
+	return (m_pConnection != nullptr);
 }
 
 /**
@@ -203,7 +203,7 @@ void HttpClient::Disconnect()
 	// Close connection
 	if (m_pConnection) {
 		m_pConnection->Disconnect();
-		m_pConnection = NULL;
+		m_pConnection = nullptr;
 		m_cHttpHeader.Clear();
 	}
 }
@@ -284,7 +284,8 @@ bool HttpClient::GetPartial(const String &sURL, uint32 nPos, int32 nSize)
 
 		// Get partial data
 		String sPartial = String("Range: bytes=") + (int)nPos + "-";
-		if (nSize > 0) sPartial += (int)(nPos+nSize-1);
+		if (nSize > 0)
+			sPartial += (int)(nPos+nSize-1);
 		sPartial += "\r\n";
 		m_pConnection->Send(sPartial);
 
@@ -415,8 +416,9 @@ int HttpClient::Read(char *pBuffer, uint32 nSize)
 		if (m_nChunkSize == -1) {
 			// Read chunk header
 			String sHeader = m_pConnection->ReadLine().RemoveLineEndings();
-			int nSpace = sHeader.IndexOf(" ");
-			if (nSpace > -1) sHeader = sHeader.GetSubstring(0, nSpace);
+			const int nSpace = sHeader.IndexOf(" ");
+			if (nSpace > -1)
+				sHeader = sHeader.GetSubstring(0, nSpace);
 
 			// Set chunk data
 			m_nChunkSize = ParseTools::ParseHexValue(sHeader);
@@ -425,11 +427,13 @@ int HttpClient::Read(char *pBuffer, uint32 nSize)
 
 		// Check maximum size that can be read
 		int nRead = nSize;
-		if (nRead > m_nChunkLeft) nRead = m_nChunkLeft;
+		if (nRead > m_nChunkLeft)
+			nRead = m_nChunkLeft;
 
 		// Read data
-		int nResult = m_pConnection->Receive(pBuffer, nRead);
-		if (nResult > -1) m_nChunkLeft -= nResult;
+		const int nResult = m_pConnection->Receive(pBuffer, nRead);
+		if (nResult > -1)
+			m_nChunkLeft -= nResult;
 
 		// Read end of chunk
 		if (m_nChunkLeft <= 0) {
@@ -468,7 +472,7 @@ Connection *HttpClient::CreateOutgoingConnection()
 void HttpClient::OnDisconnect(Connection &cConnection)
 {
 	// Reset connection
-	m_pConnection = NULL;
+	m_pConnection = nullptr;
 }
 
 

@@ -269,7 +269,7 @@ class SNMesh : public SceneNode {
 	private:
 		PLGeneral::String    m_sMesh;			/**< Mesh to use */
 		PLGeneral::String    m_sSkin;			/**< Skin file overwriting the default materials of the used mesh */
-		PLMesh::MeshHandler *m_pMeshHandler;	/**< The mesh handler, can be NULL */
+		PLMesh::MeshHandler *m_pMeshHandler;	/**< The mesh handler, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -277,7 +277,7 @@ class SNMesh : public SceneNode {
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler();
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

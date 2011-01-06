@@ -51,7 +51,7 @@ pl_implement_class(Database)
 *    Default constructor
 */
 Database::Database() :
-	m_pPostgreSQL(NULL)
+	m_pPostgreSQL(nullptr)
 {
 }
 
@@ -82,7 +82,7 @@ PGconn *Database::GetPostgreSQL() const
 *    Copy constructor
 */
 Database::Database(const Database &cSource) :
-	m_pPostgreSQL(NULL)
+	m_pPostgreSQL(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -107,12 +107,12 @@ String Database::GetVersion() const
 	return sString;
 }
 
-bool Database::Connect(const String &sServer, const String &sUserName,
-					   const String &sUserPassword, const String &sDatabase)
+bool Database::Connect(const String &sServer, const String &sUserName, const String &sUserPassword, const String &sDatabase)
 {
-	String sFinal = "host=" + sServer + " user=" + sUserName + " password=" + sUserPassword + " dbname=" + sDatabase;
+	const String sFinal = "host=" + sServer + " user=" + sUserName + " password=" + sUserPassword + " dbname=" + sDatabase;
 	m_pPostgreSQL = PQconnectdb(sFinal);
-	if (m_pPostgreSQL) return true; // Done
+	if (m_pPostgreSQL)
+		return true; // Done
 	else {
 		PL_LOG(Error, String("PostgreSQL could not connect to specified server! Error: ") + PQerrorMessage(m_pPostgreSQL))
 
@@ -123,7 +123,7 @@ bool Database::Connect(const String &sServer, const String &sUserName,
 
 bool Database::IsConnected() const
 {
-	return (m_pPostgreSQL != NULL);
+	return (m_pPostgreSQL != nullptr);
 }
 
 bool Database::IsConnectionActive() const
@@ -135,11 +135,14 @@ bool Database::Disconnect()
 {
 	if (m_pPostgreSQL) {
 		PQfinish(m_pPostgreSQL);
-		m_pPostgreSQL = NULL;
+		m_pPostgreSQL = nullptr;
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 PLDatabase::DatabaseQuery *Database::CreateQuery() const

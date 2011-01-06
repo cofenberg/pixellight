@@ -96,7 +96,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    Returns the scene container (the 'concrete scene')
 		*
 		*  @return
-		*    Scene container, can be NULL
+		*    Scene container, can be a null pointer
 		*/
 		PL_API PLScene::SceneContainer *GetScene() const;
 
@@ -105,7 +105,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    Sets the scene container (the 'concrete scene')
 		*
 		*  @param[in] pContainer
-		*    New scene container, can be NULL
+		*    New scene container, can be a null pointer
 		*/
 		PL_API void SetScene(PLScene::SceneContainer *pContainer);
 
@@ -140,7 +140,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    Get scene camera
 		*
 		*  @return
-		*    Scene camera, can be NULL
+		*    Scene camera, can be a null pointer
 		*/
 		PL_API PLScene::SNCamera *GetCamera() const;
 
@@ -189,7 +189,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    Sets the scene camera
 		*
 		*  @param[in] pCamera
-		*    New scene camera, can be NULL
+		*    New scene camera, can be a null pointer
 		*
 		*  @note
 		*    - Deactivates automatically the current set camera and activates the new camera
@@ -283,7 +283,7 @@ class BasicSceneApplication : public SceneApplication {
 		PLScene::SceneNodeHandler					   m_cCameraHandler;			/**< Scene node handler for the camera */
 		PLGeneral::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
 		PLGeneral::String							   m_sStartCamera;				/**< Name of the given start camera */
-		PLScene::SceneNode							  *m_pFirstFoundCamera;			/**< First found camera, can be NULL */
+		PLScene::SceneNode							  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
 		PLGeneral::Array<const PLScene::SNKeyValue*>   m_lstPostKeys;				/**< Keys to process AFTER all other */
 		bool										   m_bHasLoadScreen;			/**< Is there a load screen? */
 		SceneRendererTool							   m_cSceneRendererTool;		/**< Scene renderer tool */

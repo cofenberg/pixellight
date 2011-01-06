@@ -125,7 +125,7 @@ bool SurfaceWindow::Init()
 					int nDisplayMode = 0;
 					bool bFound = false;
 					int nNumOfModes = 0;
-					XF86VidModeModeInfo **ppModes = NULL;
+					XF86VidModeModeInfo **ppModes = nullptr;
 					if (!XF86VidModeGetAllModeLines(pDisplay, nScreen, &nNumOfModes, &ppModes)) {
 						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't get mode lines")
 
@@ -180,7 +180,7 @@ void SurfaceWindow::DeInit()
 
 		// If this is the current render target, make the main window to the new current one
 		if (cRenderer.GetRenderTarget() == this)
-			cRenderer.SetRenderTarget(NULL);
+			cRenderer.SetRenderTarget(nullptr);
 
 		// Reset gamma - but only when the gamma was changed by using "SetGamma()"
 		if (m_bGammaChanged) {

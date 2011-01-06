@@ -67,9 +67,9 @@ class FileSearch {
 		*  @param[in] cDirectory
 		*    Directory to search in
 		*  @param[in] pFilter
-		*    Search filter to use (can be NULL)
+		*    Search filter to use (can be a null pointer)
 		*/
-		PLGENERAL_API FileSearch(const Directory &cDirectory, SearchFilter *pFilter = NULL);
+		PLGENERAL_API FileSearch(const Directory &cDirectory, SearchFilter *pFilter = nullptr);
 
 		/**
 		*  @brief
@@ -147,9 +147,9 @@ class FileSearch {
 	//[-------------------------------------------------------]
 	private:
 		const Directory		 *m_pDirectory;			/**< The owning directory (always valid!) */
-		FileSearchImpl		 *m_pFileSearchImpl;	/**< File searcher implementation, can be NULL */
-		SearchFilterWildcard *m_pFilterWildcard;	/**< Automatically created wildcard filter, can be NULL */
-		SearchFilter		 *m_pFilter;			/**< Search filter, can be NULL */
+		FileSearchImpl		 *m_pFileSearchImpl;	/**< File searcher implementation, can be a null pointer */
+		SearchFilterWildcard *m_pFilterWildcard;	/**< Automatically created wildcard filter, can be a null pointer */
+		SearchFilter		 *m_pFilter;			/**< Search filter, can be a null pointer */
 		String				  m_sNextFilename;		/**< Filename of next file */
 
 

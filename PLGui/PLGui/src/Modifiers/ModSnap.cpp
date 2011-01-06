@@ -79,8 +79,8 @@ bool IsInside(int nX1, int nX2, int nLeft, int nRight)
 */
 bool IsAllowed(Widget *pOldSnap, Widget *pSnapWidget)
 {
-//	return (pOldSnap == NULL);
-	return (pOldSnap == NULL || pOldSnap == pSnapWidget);
+//	return (pOldSnap == nullptr);
+	return (pOldSnap == nullptr || pOldSnap == pSnapWidget);
 }
 
 
@@ -92,10 +92,10 @@ bool IsAllowed(Widget *pOldSnap, Widget *pSnapWidget)
 *    Constructor
 */
 ModSnap::ModSnap() : Modifier(),
-	m_pSnappedLeft(NULL),
-	m_pSnappedRight(NULL),
-	m_pSnappedTop(NULL),
-	m_pSnappedBottom(NULL),
+	m_pSnappedLeft(nullptr),
+	m_pSnappedRight(nullptr),
+	m_pSnappedTop(nullptr),
+	m_pSnappedBottom(nullptr),
 	m_bPerformedSnap(false)
 {
 }
@@ -115,10 +115,10 @@ ModSnap::~ModSnap()
 void ModSnap::OnAttach(Widget &cWidget)
 {
 	// Reset state
-	m_pSnappedLeft	 = NULL;
-	m_pSnappedRight  = NULL;
-	m_pSnappedTop	 = NULL;
-	m_pSnappedBottom = NULL;
+	m_pSnappedLeft	 = nullptr;
+	m_pSnappedRight  = nullptr;
+	m_pSnappedTop	 = nullptr;
+	m_pSnappedBottom = nullptr;
 	m_bPerformedSnap = false;
 
 	// Save current position
@@ -128,10 +128,10 @@ void ModSnap::OnAttach(Widget &cWidget)
 void ModSnap::OnDetach(Widget &cWidget)
 {
 	// Reset state
-	m_pSnappedLeft	 = NULL;
-	m_pSnappedRight  = NULL;
-	m_pSnappedTop	 = NULL;
-	m_pSnappedBottom = NULL;
+	m_pSnappedLeft	 = nullptr;
+	m_pSnappedRight  = nullptr;
+	m_pSnappedTop	 = nullptr;
+	m_pSnappedBottom = nullptr;
 	m_bPerformedSnap = false;
 }
 
@@ -188,7 +188,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		if (vRel.x > UNSNAP_GAP) {
 			// Unsnap
 			vNewPos.x = vPos.x + (int)Math::Sign((float)vRel.x) * UNSNAP;
-			m_pSnappedLeft = NULL;
+			m_pSnappedLeft = nullptr;
 		} else {
 			// Stay snapped
 			vNewPos.x = m_vPos.x;
@@ -201,7 +201,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		if (vRel.x < -UNSNAP_GAP) {
 			// Unsnap
 			vNewPos.x = vPos.x + (int)Math::Sign((float)vRel.x) * UNSNAP;
-			m_pSnappedRight = NULL;
+			m_pSnappedRight = nullptr;
 		} else {
 			// Stay snapped
 			vNewPos.x = m_vPos.x;
@@ -214,7 +214,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		if (vRel.y > UNSNAP_GAP) {
 			// Unsnap
 			vNewPos.y = vPos.y + (int)Math::Sign((float)vRel.y) * UNSNAP;
-			m_pSnappedTop = NULL;
+			m_pSnappedTop = nullptr;
 		} else {
 			// Stay snapped
 			vNewPos.y = m_vPos.y;
@@ -227,7 +227,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		if (vRel.y < -UNSNAP_GAP) {
 			// Unsnap
 			vNewPos.y = vPos.y + (int)Math::Sign((float)vRel.y) * UNSNAP;
-			m_pSnappedBottom = NULL;
+			m_pSnappedBottom = nullptr;
 		} else {
 			// Stay snapped
 			vNewPos.y = m_vPos.y;
@@ -320,10 +320,10 @@ void ModSnap::TrySnap(const Vector2i &vPos, Widget *pSnapWidget, bool bParent)
 	}
 
 	// Check for unnoticed unsnaps
-	if (m_pSnappedLeft	 == pSnapWidget && !bSnappedLeft)	m_pSnappedLeft	 = NULL;
-	if (m_pSnappedRight  == pSnapWidget && !bSnappedRight)	m_pSnappedRight  = NULL;
-	if (m_pSnappedTop	 == pSnapWidget && !bSnappedTop)	m_pSnappedTop	 = NULL;
-	if (m_pSnappedBottom == pSnapWidget && !bSnappedBottom)	m_pSnappedBottom = NULL;
+	if (m_pSnappedLeft	 == pSnapWidget && !bSnappedLeft)	m_pSnappedLeft	 = nullptr;
+	if (m_pSnappedRight  == pSnapWidget && !bSnappedRight)	m_pSnappedRight  = nullptr;
+	if (m_pSnappedTop	 == pSnapWidget && !bSnappedTop)	m_pSnappedTop	 = nullptr;
+	if (m_pSnappedBottom == pSnapWidget && !bSnappedBottom)	m_pSnappedBottom = nullptr;
 }
 
 

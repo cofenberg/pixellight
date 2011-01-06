@@ -75,7 +75,7 @@ GuiLinux::GuiLinux(Gui *pGui) : GuiImpl(pGui),
 	XSetErrorHandler(&GuiLinux::ErrorHandler);
 
 	// Get display
-	m_pDisplay = XOpenDisplay(NULL);
+	m_pDisplay = XOpenDisplay(nullptr);
 
 	// Create custom protocol extensions
 	m_sClientProtocols.Close				= XInternAtom(m_pDisplay, "WM_DELETE_WINDOW",				False);
@@ -190,7 +190,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	::Window nWindow = (pWidget ? (::Window)pWidget->GetWindowHandle() : NULL);
+	::Window nWindow = (pWidget ? (::Window)pWidget->GetWindowHandle() : nullptr);
 
 	// Post message
 	switch (cMessage.GetType()) {
@@ -593,12 +593,12 @@ int GuiLinux::ErrorHandler(Display *pDisplay, XErrorEvent *pError)
 void GuiLinux::ProcessXEvent(XEvent *pEvent)
 {
 	// Get pointers to widget and GUI
-	WidgetLinux *pWidgetLinux = NULL;
-	XPointer pData = NULL;
+	WidgetLinux *pWidgetLinux = nullptr;
+	XPointer pData = nullptr;
 	if (XFindContext(m_pDisplay, pEvent->xany.window, 0, &pData) == 0 && pData) {
 		pWidgetLinux = (WidgetLinux*)pData;
 	}
-	Widget	 *pWidget	= (pWidgetLinux	? pWidgetLinux->m_pWidget : NULL);
+	Widget	 *pWidget	= (pWidgetLinux	? pWidgetLinux->m_pWidget : nullptr);
 	Gui		 *pGui		= m_pGui;
 	GuiLinux *pGuiLinux	= this;
 

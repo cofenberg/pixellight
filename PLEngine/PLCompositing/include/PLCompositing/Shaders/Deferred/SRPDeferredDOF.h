@@ -193,7 +193,7 @@ class SRPDeferredDOF : public SRPDeferred {
 		*    Returns the rectangle texture buffer storing the blur
 		*
 		*  @return
-		*    The rectangle texture buffer storing the blur, NULL on error
+		*    The rectangle texture buffer storing the blur, a null pointer on error
 		*
 		*  @note
 		*    - The texture buffer is only valid after CalculateBlur() was called
@@ -221,45 +221,45 @@ class SRPDeferredDOF : public SRPDeferred {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];							/**< Render targets, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];							/**< Render targets, can be a null pointer */
 		bool							  m_bResultIndex;								/**< Index of the result texture buffer */
-		PLRenderer::VertexShader		 *m_pVertexShader;								/**< Vertex shader, can be NULL */
+		PLRenderer::VertexShader		 *m_pVertexShader;								/**< Vertex shader, can be a null pointer */
 		// Depth blur
-		PLRenderer::FragmentShader		 *m_pDepthBlurFragmentShader;					/**< Depth blur fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pDepthBlurProgram;							/**< Depth blur GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pDepthBlurPositionProgramAttribute;			/**< Depth blur position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDepthBlurTextureSizeProgramUniform;		/**< Depth blur texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDepthBlurDOFParamsProgramUniform;			/**< Depth blur DOF params program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDepthBlurRGBTextureProgramUniform;			/**< Depth blur RGB texture program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDepthBlurNormalDepthTextureProgramUniform;	/**< Depth blur normal depth texture program uniform, can be NULL */
+		PLRenderer::FragmentShader		 *m_pDepthBlurFragmentShader;					/**< Depth blur fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pDepthBlurProgram;							/**< Depth blur GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pDepthBlurPositionProgramAttribute;			/**< Depth blur position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDepthBlurTextureSizeProgramUniform;		/**< Depth blur texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDepthBlurDOFParamsProgramUniform;			/**< Depth blur DOF params program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDepthBlurRGBTextureProgramUniform;			/**< Depth blur RGB texture program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDepthBlurNormalDepthTextureProgramUniform;	/**< Depth blur normal depth texture program uniform, can be a null pointer */
 		// Downscale
-		PLRenderer::FragmentShader		 *m_pDownscaleFragmentShader;					/**< Downscale fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pDownscaleProgram;							/**< Downscale GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pDownscalePositionProgramAttribute;			/**< Downscale position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDownscaleTextureSizeProgramUniform;		/**< Downscale texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDownscaleTextureProgramUniform;			/**< Downscale texture program uniform, can be NULL */
+		PLRenderer::FragmentShader		 *m_pDownscaleFragmentShader;					/**< Downscale fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pDownscaleProgram;							/**< Downscale GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pDownscalePositionProgramAttribute;			/**< Downscale position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDownscaleTextureSizeProgramUniform;		/**< Downscale texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDownscaleTextureProgramUniform;			/**< Downscale texture program uniform, can be a null pointer */
 		// Blur
-		PLRenderer::FragmentShader		 *m_pBlurFragmentShader;						/**< Blur fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pBlurProgram;								/**< Blur GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pBlurPositionProgramAttribute;				/**< Blur position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pBlurTextureSizeProgramUniform;				/**< Blur texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pBlurUVScaleProgramUniform;					/**< Blur uv scale program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pBlurTextureProgramUniform;					/**< Blur texture program uniform, can be NULL */
+		PLRenderer::FragmentShader		 *m_pBlurFragmentShader;						/**< Blur fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pBlurProgram;								/**< Blur GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pBlurPositionProgramAttribute;				/**< Blur position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pBlurTextureSizeProgramUniform;				/**< Blur texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pBlurUVScaleProgramUniform;					/**< Blur uv scale program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pBlurTextureProgramUniform;					/**< Blur texture program uniform, can be a null pointer */
 		// Result
-		PLRenderer::FragmentShader		 *m_pResultFragmentShader;						/**< Result fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pResultProgram;								/**< Result GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pResultPositionProgramAttribute;			/**< Result position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pResultTextureSizeProgramUniform;			/**< Result texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pResultEffectWeightProgramUniform;			/**< Result effect weight program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pResultBlurDownscaleProgramUniform;			/**< Result blur downscale program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pResultBlurTextureProgramUniform;			/**< Result blur texture program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pResultTextureProgramUniform;				/**< Result texture program uniform, can be NULL */
+		PLRenderer::FragmentShader		 *m_pResultFragmentShader;						/**< Result fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pResultProgram;								/**< Result GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pResultPositionProgramAttribute;			/**< Result position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pResultTextureSizeProgramUniform;			/**< Result texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pResultEffectWeightProgramUniform;			/**< Result effect weight program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pResultBlurDownscaleProgramUniform;			/**< Result blur downscale program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pResultBlurTextureProgramUniform;			/**< Result blur texture program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pResultTextureProgramUniform;				/**< Result texture program uniform, can be a null pointer */
 		// Debug
-		PLRenderer::FragmentShader		 *m_pDebugFragmentShader;						/**< Debug fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pDebugProgram;								/**< Debug GPU program, can be NULL */
-		PLRenderer::ProgramAttribute	 *m_pDebugPositionProgramAttribute;				/**< Debug position program attribute, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDebugTextureSizeProgramUniform;			/**< Debug texture size program uniform, can be NULL */
-		PLRenderer::ProgramUniform		 *m_pDebugTextureProgramUniform;				/**< Debug texture program uniform, can be NULL */
+		PLRenderer::FragmentShader		 *m_pDebugFragmentShader;						/**< Debug fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pDebugProgram;								/**< Debug GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	 *m_pDebugPositionProgramAttribute;				/**< Debug position program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDebugTextureSizeProgramUniform;			/**< Debug texture size program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		 *m_pDebugTextureProgramUniform;				/**< Debug texture program uniform, can be a null pointer */
 		PLGeneral::uint32				  m_nDebugType;									/**< Current debug type we have a generated GPU program for */
 
 

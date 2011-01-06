@@ -214,7 +214,7 @@ Body *SNMPhysicsCharacter::GetPhysicsBody() const
 	const SNMPhysicsBody *pModifier = (SNMPhysicsBody*)GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody");
 
 	// Return the PL physics body this modifier is using
-	return pModifier ? pModifier->GetBody() : NULL;
+	return pModifier ? pModifier->GetBody() : nullptr;
 }
 
 

@@ -161,8 +161,8 @@ class BinominalHeap : public Heap<KeyType, ValueType> {
 			//[-------------------------------------------------------]
 			private:
 				uint32	   m_nDegree;		/**< Degree of this tree node */
-				Tree	  *m_pNextSibling;	/**< Next sibling tree, can be NULL */
-				Tree	  *m_pChild;		/**< Child tree, can be NULL */
+				Tree	  *m_pNextSibling;	/**< Next sibling tree, can be a null pointer */
+				Tree	  *m_pChild;		/**< Child tree, can be a null pointer */
 				KeyType	   m_Key;			/**< Key of this tree node */
 				ValueType  m_Value;			/**< Value of this tree node */
 
@@ -175,7 +175,7 @@ class BinominalHeap : public Heap<KeyType, ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		uint32	m_nNumOfElements;	/**< Current number of elements */
-		Tree   *m_pRoot;			/**< Root binominal tree, can be NULL */
+		Tree   *m_pRoot;			/**< Root binominal tree, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -196,8 +196,8 @@ class BinominalHeap : public Heap<KeyType, ValueType> {
 		virtual bool IsEmpty() const;
 		virtual uint32 GetNumOfElements() const;
 		virtual bool Add(const KeyType &Key, const ValueType &Value);
-		virtual bool GetTop(ValueType *pValue = NULL, KeyType *pKey = NULL) const;
-		virtual bool ExtractTop(ValueType *pValue = NULL, KeyType *pKey = NULL);
+		virtual bool GetTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr) const;
+		virtual bool ExtractTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr);
 
 
 	//[-------------------------------------------------------]

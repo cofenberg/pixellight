@@ -149,7 +149,10 @@ bool SocketAddress::SetHostByName(const String &sHostName)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**

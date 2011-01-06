@@ -92,7 +92,7 @@ SceneRenderer *SceneRendererTool::GetSceneRenderer() const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -109,7 +109,7 @@ SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -126,7 +126,7 @@ DynVar *SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**

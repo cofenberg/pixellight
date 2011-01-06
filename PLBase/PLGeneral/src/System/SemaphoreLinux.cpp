@@ -74,7 +74,8 @@ SemaphoreLinux::SemaphoreLinux(uint32 nValue, uint32 nMaxValue) :
 SemaphoreLinux::~SemaphoreLinux()
 {
 	// Destroy system semaphore
-	if (m_hSemaphore > 0) semctl(m_hSemaphore, 0, IPC_RMID, 0);
+	if (m_hSemaphore > 0)
+		semctl(m_hSemaphore, 0, IPC_RMID, 0);
 }
 
 

@@ -137,7 +137,7 @@ class Sensor : public Element {
 		*    Index of the hit physics body
 		*
 		*  @return
-		*    The hit physics body information, NULL on error (do NOT store a pointer on it!)
+		*    The hit physics body information, a null pointer on error (do NOT store a pointer on it!)
 		*/
 		PLPHYSICS_API const BodyInfo *GetHitBody(PLGeneral::uint32 nIndex) const;
 
@@ -146,7 +146,7 @@ class Sensor : public Element {
 		*    Returns the closest hit physics body
 		*
 		*  @return
-		*    The closest hit physics body information, NULL on error (do NOT store a pointer on it!)
+		*    The closest hit physics body information, a null pointer on error (do NOT store a pointer on it!)
 		*/
 		PLPHYSICS_API const BodyInfo *GetClosestBody() const;
 
@@ -242,7 +242,7 @@ class Sensor : public Element {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::Array<BodyInfo*>  m_lstBodyInfo;		/**< List of detected body information */
-		BodyInfo					*m_pClosedBodyInfo;	/**< Closest body information, can be NULL */
+		BodyInfo					*m_pClosedBodyInfo;	/**< Closest body information, can be a null pointer */
 		PLGeneral::uint32			 m_nFlags;			/**< Flags (see EFlags) */
 
 

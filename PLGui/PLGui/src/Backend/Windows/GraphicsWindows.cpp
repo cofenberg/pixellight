@@ -50,13 +50,13 @@ namespace PLGui {
 *    Constructor
 */
 GraphicsWindows::GraphicsWindows(HDC hDC) : GraphicsImpl(),
-	m_hDC(NULL),
-	m_hMemDC(NULL)
+	m_hDC(nullptr),
+	m_hMemDC(nullptr)
 {
 	// Create memory DC for drawing bitmaps
-	HDC hDesktopDC = GetDC(NULL);
+	HDC hDesktopDC = GetDC(nullptr);
 	m_hMemDC = CreateCompatibleDC(hDesktopDC);
-	ReleaseDC(NULL, hDesktopDC);
+	ReleaseDC(nullptr, hDesktopDC);
 
 	// Save HDC to draw in
 	m_hDC = hDC;
@@ -67,13 +67,13 @@ GraphicsWindows::GraphicsWindows(HDC hDC) : GraphicsImpl(),
 *    Constructor
 */
 GraphicsWindows::GraphicsWindows(Graphics &cGraphics) : GraphicsImpl(cGraphics),
-	m_hDC(NULL),
-	m_hMemDC(NULL)
+	m_hDC(nullptr),
+	m_hMemDC(nullptr)
 {
 	// Create memory DC for drawing bitmaps
-	HDC hDesktopDC = GetDC(NULL);
+	HDC hDesktopDC = GetDC(nullptr);
 	m_hMemDC = CreateCompatibleDC(hDesktopDC);
-	ReleaseDC(NULL, hDesktopDC);
+	ReleaseDC(nullptr, hDesktopDC);
 
 	// Save HDC to draw in
 	m_hDC = m_hMemDC;

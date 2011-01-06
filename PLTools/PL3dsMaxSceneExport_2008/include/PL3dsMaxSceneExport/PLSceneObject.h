@@ -69,7 +69,7 @@ class PLSceneObject : public PLSceneNode {
 		*  @param[in] sName
 		*    Name of this scene node
 		*  @param[in] pMesh
-		*    Mesh this object is using, can be NULL
+		*    Mesh this object is using, can be a null pointer
 		*/
 		PLSceneObject(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, PLSceneMesh *pMesh);
 
@@ -84,7 +84,7 @@ class PLSceneObject : public PLSceneNode {
 		*    Returns the mesh this object is using
 		*
 		*  @return
-		*    The mesh this object is using, can be NULL
+		*    The mesh this object is using, can be a null pointer
 		*/
 		PLSceneMesh *GetMesh() const;
 
@@ -93,7 +93,7 @@ class PLSceneObject : public PLSceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLSceneMesh *m_pMesh;	/**< The mesh this object is using, can be NULL (managed by the scene!) */
+		PLSceneMesh *m_pMesh;	/**< The mesh this object is using, can be a null pointer (managed by the scene!) */
 
 
 	//[-------------------------------------------------------]

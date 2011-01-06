@@ -126,7 +126,7 @@ class InputStream {
 	private:
 		JabberConnection		*m_pJabberConnection;	/**< Jabber connection (always valid!) */
 		PLGeneral::XmlDocument   m_cXml;				/**< The XML document that is streamed */
-		PLGeneral::XmlElement	*m_pStream;				/**< Root node of XML stream, can be NULL */
+		PLGeneral::XmlElement	*m_pStream;				/**< Root node of XML stream, can be a null pointer */
 
 
 };

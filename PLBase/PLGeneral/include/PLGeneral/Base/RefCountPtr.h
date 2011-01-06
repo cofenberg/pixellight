@@ -62,7 +62,7 @@ class RefCountPtr : public RefCount<AType> {
 		*    Constructor
 		*
 		*  @param[in] pPointer
-		*    Pointer to the referenced object, can be NULL
+		*    Pointer to the referenced object, can be a null pointer
 		*/
 		RefCountPtr(AType *pPointer);
 
@@ -77,7 +77,7 @@ class RefCountPtr : public RefCount<AType> {
 		*    Get a pointer to the object
 		*
 		*  @return
-		*    Pointer to the reference counter's object, can be NULL
+		*    Pointer to the reference counter's object, can be a null pointer
 		*/
 		virtual AType *GetPointer() const;
 
@@ -86,7 +86,7 @@ class RefCountPtr : public RefCount<AType> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		AType *m_pPointer; /**< Pointer to the referenced object, can be NULL */
+		AType *m_pPointer; /**< Pointer to the referenced object, can be a null pointer */
 
 
 };

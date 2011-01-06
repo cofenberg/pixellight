@@ -109,7 +109,7 @@ class DrawHelpersBackend : public DrawHelpers {
 	//[-------------------------------------------------------]
 	protected:
 		Renderer	 *m_pRenderer;			/**< Renderer instance to use, always valid! */
-		VertexBuffer *m_pTempVertexBuffer;	/**< Vertex buffer for drawing, can be NULL */
+		VertexBuffer *m_pTempVertexBuffer;	/**< Vertex buffer for drawing, can be a null pointer */
 		// 2D mode variables
 		bool			  m_b2DMode;			/**< Are we currently in the 2D mode? */
 		float			  m_fVirtualScreen[4];	/**< The virtual screen size */

@@ -106,7 +106,7 @@ class LogFormater {
 		*    The log's filename
 		*
 		*  @return
-		*    A pointer to the file object if all went fine, NULL on error
+		*    A pointer to the file object if all went fine, a null pointer on error
 		*/
 		PLGENERAL_API File *OpenFile(const String &sFilename);
 
@@ -164,7 +164,7 @@ class LogFormater {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		File *m_pFile;					/**< Pointer to the log file, can be NULL */
+		File *m_pFile;					/**< Pointer to the log file, can be a null pointer */
 		bool  m_bShowLogLevelPrefix;	/**< Indicates if the [LogLevel] prefix should be shown */
 
 

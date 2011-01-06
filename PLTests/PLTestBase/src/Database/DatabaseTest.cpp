@@ -45,12 +45,12 @@ using namespace PLDatabase;
 */
 void DatabaseTest::TestImplementation(const String &sClass, const String &sServer, const String &sUserName, const String &sUserPassword, const String &sDatabase)
 {
-	Database *pDatabase = NULL;
+	Database *pDatabase = nullptr;
 
 	// Create(const String &sClass)
 	StartTask("Create(const String &sClass)");
 	pDatabase = Database::Create(sClass);
-	EndTask(pDatabase != NULL);
+	EndTask(pDatabase != nullptr);
 	if (!pDatabase) return; // Error!
 
 	// Print version
@@ -148,14 +148,14 @@ void DatabaseTest::PrintRows(DatabaseQueryResult *pQResult)
 */
 void DatabaseTest::TestQuery(Database *pDatabase)
 {
-	DatabaseQueryResult *pDbQResult = NULL;
-	DatabaseQuery *pDbQuery = NULL;
+	DatabaseQueryResult *pDbQResult = nullptr;
+	DatabaseQuery *pDbQuery = nullptr;
 	bool bResult = true;
 
 	// CreateQuery()
 	StartTask("CreateQuery()");
 		pDbQuery = pDatabase->CreateQuery();
-	EndTask(pDbQuery != NULL);
+	EndTask(pDbQuery != nullptr);
 	if (!pDbQuery) return; // Error!
 
 	// DatabaseQuery::IsSelect(const String &sSQL)
@@ -170,7 +170,7 @@ void DatabaseTest::TestQuery(Database *pDatabase)
 	// Query: Execute("")
 	StartTask("Query: Execute(\"\")");
 		pDbQResult = pDbQuery->Execute("");
-	EndTask(pDbQResult == NULL);
+	EndTask(pDbQResult == nullptr);
 
 	// Query: Execute("SELECT * from TestTable")
 	StartTask("Query: Execute(\"SELECT * from TestTable\")");
@@ -179,7 +179,7 @@ void DatabaseTest::TestQuery(Database *pDatabase)
 			PrintRows(pDbQResult);
 			delete pDbQResult;
 		}
-	EndTask(pDbQResult != NULL);
+	EndTask(pDbQResult != nullptr);
 
 	// Query: Execute("SELECT * from TestTable WHERE id=1")
 	StartTask("Query: Execute(\"SELECT * from TestTable WHERE id=1\")");
@@ -188,7 +188,7 @@ void DatabaseTest::TestQuery(Database *pDatabase)
 			PrintRows(pDbQResult);
 			delete pDbQResult;
 		}
-	EndTask(pDbQResult != NULL);
+	EndTask(pDbQResult != nullptr);
 
 	// Cleanup
 	delete pDbQuery;

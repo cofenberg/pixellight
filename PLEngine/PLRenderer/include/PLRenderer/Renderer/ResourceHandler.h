@@ -96,7 +96,7 @@ class ResourceHandler {
 		*    Returns the resource handlers resource
 		*
 		*  @return
-		*    The resource handlers resource, can be NULL
+		*    The resource handlers resource, can be a null pointer
 		*/
 		PLRENDERER_API Resource *GetResource() const;
 
@@ -105,9 +105,9 @@ class ResourceHandler {
 		*    Sets the resource handlers resource
 		*
 		*  @param[in] pResource
-		*    Resource to set, can be NULL
+		*    Resource to set, can be a null pointer
 		*/
-		PLRENDERER_API void SetResource(Resource *pResource = NULL);
+		PLRENDERER_API void SetResource(Resource *pResource = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -125,7 +125,7 @@ class ResourceHandler {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Resource *m_pResource;	/**< Resource of the handler, can be NULL */
+		Resource *m_pResource;	/**< Resource of the handler, can be a null pointer */
 
 
 };

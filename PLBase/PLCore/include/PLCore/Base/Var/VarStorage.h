@@ -259,7 +259,7 @@ class VarStorage<T, STORAGE, StorageGetSet> {
 		*/
 		VarStorage(const _Type &DefaultValue) :
 			m_DefaultValue(DefaultValue),
-			m_pObject(NULL)
+			m_pObject(nullptr)
 		{
 			// We do NOT set the default value here, because this constructor is called inside
 			// the constructor of the object holding the attribute. If we set a value here, it
@@ -374,7 +374,7 @@ class VarStorage<T, STORAGE, StorageModifyAttr> {
 		*/
 		VarStorage(const _Type &DefaultValue) :
 			m_DefaultValue(DefaultValue),
-			m_pObject(NULL)
+			m_pObject(nullptr)
 		{
 			// Set default value only, if the base storage is not GetSet (see above for explanation)
 			bool bInitDefault = (CheckStorage<typename STORAGE::BaseStorageType>::InitDefault == 1);

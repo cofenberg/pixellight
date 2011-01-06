@@ -71,7 +71,7 @@ class DragDropWidget : public PLGui::ContainerWidget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		DragDropWidget(Widget *pParent = NULL);
+		DragDropWidget(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

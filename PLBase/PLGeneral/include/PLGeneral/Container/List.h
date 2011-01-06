@@ -142,8 +142,8 @@ class List : public Container<ValueType> {
 		*    Internal linked list element
 		*/
 		struct ListElement {
-			ListElement *pNextElement;		/**< Pointer to the next element in the list, can be NULL */
-			ListElement *pPreviousElement;	/**< Pointer to the previous element in the list, can be NULL */
+			ListElement *pNextElement;		/**< Pointer to the next element in the list, can be a null pointer */
+			ListElement *pPreviousElement;	/**< Pointer to the previous element in the list, can be a null pointer */
 			ValueType	 Data;				/**< The stored data */
 		};
 
@@ -153,8 +153,8 @@ class List : public Container<ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		uint32		 m_nNumOfElements;	/**< Current number of elements */
-		ListElement *m_pFirstElement;	/**< Pointer to first list element, can be NULL */
-		ListElement *m_pLastElement;	/**< Pointer to last list element, can be NULL */
+		ListElement *m_pFirstElement;	/**< Pointer to first list element, can be a null pointer */
+		ListElement *m_pLastElement;	/**< Pointer to last list element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

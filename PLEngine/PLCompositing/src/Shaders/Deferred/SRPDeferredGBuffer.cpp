@@ -82,15 +82,15 @@ SRPDeferredGBuffer::SRPDeferredGBuffer() :
 	ShaderLanguage(this),
 	TextureFiltering(this),
 	Flags(this),
-	m_pRenderTarget(NULL),
-	m_pColorTarget1(NULL),
-	m_pColorTarget2(NULL),
-	m_pColorTarget3(NULL),
+	m_pRenderTarget(nullptr),
+	m_pColorTarget1(nullptr),
+	m_pColorTarget2(nullptr),
+	m_pColorTarget3(nullptr),
 	m_bColorTarget3Used(false),
 	m_bColorTarget3AlphaUsed(false),
-	m_pSurfaceBackup(NULL),
-	m_pFullscreenQuad(NULL),
-	m_pProgramGenerator(NULL)
+	m_pSurfaceBackup(nullptr),
+	m_pFullscreenQuad(nullptr),
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -141,7 +141,7 @@ TextureBufferRectangle *SRPDeferredGBuffer::GetRenderTargetTextureBuffer(uint32 
 {
 	switch (nIndex)  {
 		case 0:
-			return m_pRenderTarget ? (TextureBufferRectangle*)m_pRenderTarget->GetTextureBuffer() : NULL;
+			return m_pRenderTarget ? (TextureBufferRectangle*)m_pRenderTarget->GetTextureBuffer() : nullptr;
 
 		case 1:
 			return m_pColorTarget1;
@@ -153,7 +153,7 @@ TextureBufferRectangle *SRPDeferredGBuffer::GetRenderTargetTextureBuffer(uint32 
 			return m_pColorTarget3;
 
 		default:
-			return NULL;
+			return nullptr;
 	}
 }
 
@@ -282,7 +282,7 @@ void SRPDeferredGBuffer::CollectMeshBatchesRec(const SQCull &cCullQuery)
 */
 SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCurrent(Renderer &cRenderer, const Material &cMaterial)
 {
-	const Parameter *pParameter = NULL;
+	const Parameter *pParameter = nullptr;
 
 	// Two sided?
 	bool bTwoSided = false;
@@ -295,7 +295,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	// Get displacement mapping settings
 	float fDisplacementScale = 0.1f;
 	float fDisplacementBias  = 0.0f;
-	TextureBuffer *pDisplacementMap = NULL;
+	TextureBuffer *pDisplacementMap = nullptr;
 	static const String sDisplacementMap = "DisplacementMap";
 	if (!(GetFlags() & NoDisplacementMapping)) {
 		// Get displacement scale
@@ -314,7 +314,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 		if (fDisplacementScale != 0.0f) {
 			pDisplacementMap = cMaterial.GetParameterTextureBuffer(sDisplacementMap);
 			if (pDisplacementMap && pDisplacementMap->GetType() != TextureBuffer::TypeTextureBuffer2D)
-				pDisplacementMap = NULL;
+				pDisplacementMap = nullptr;
 		}
 	}
 
@@ -342,7 +342,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	}
 
 	// Get (2D/cube) reflection map
-	TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? NULL : cMaterial.GetParameterTextureBuffer(Material::ReflectionMap);
+	TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? nullptr : cMaterial.GetParameterTextureBuffer(Material::ReflectionMap);
 	bool b2DReflectionMap = true;
 	if (pReflectionMap) {
 		if (pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D)
@@ -350,14 +350,14 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 		else if (pReflectionMap->GetType() == TextureBuffer::TypeTextureBufferCube)
 			b2DReflectionMap = false;
 		else
-			pReflectionMap   = NULL; // NOT supported!
+			pReflectionMap   = nullptr; // NOT supported!
 	}
 
 	// Figure out whether or not there's reflection on this material
 	const bool bReflection = (fIndexOfRefraction > 0.0f) || pReflectionMap;
 
 	// Get reflection parameters
-	TextureBuffer *pReflectivityMap = NULL;
+	TextureBuffer *pReflectivityMap = nullptr;
 	float fReflectivity = 1.0f;
 	Color3 cReflectionColor = Color3::White;
 	static const String sReflectionColor = "ReflectionColor";
@@ -380,7 +380,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 
 	// Get parallax mapping settings
 	float fParallax = 0.04f;
-	TextureBuffer *pHeightMap = NULL;
+	TextureBuffer *pHeightMap = nullptr;
 	if (!(GetFlags() & NoParallaxMapping)) {
 		// Get parallax
 		static const String sParallax = "Parallax";
@@ -398,7 +398,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 
 	// Get glow
 	float		   fGlowFactor = 0.0f;
-	TextureBuffer *pGlowMap    = NULL;
+	TextureBuffer *pGlowMap    = nullptr;
 	if (!(GetFlags() & NoGlow)) {
 		static const String sGlow = "Glow";
 		pParameter = cMaterial.GetParameter(sGlow);
@@ -408,17 +408,17 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 			// Get glow map
 			if (fGlowFactor != 0.0f) {
 				static const String sGlowMap = "GlowMap";
-				pGlowMap = (GetFlags() & NoGlowMap) ? NULL : cMaterial.GetParameterTextureBuffer(sGlowMap);
+				pGlowMap = (GetFlags() & NoGlowMap) ? nullptr : cMaterial.GetParameterTextureBuffer(sGlowMap);
 			}
 		}
 	}
 
 	// Get ambient occlusion map
-	TextureBuffer *pAmbientOcclusionMap = (GetFlags() & NoAmbientOcclusionMap) ? NULL : cMaterial.GetParameterTextureBuffer(Material::AmbientOcclusionMap);
+	TextureBuffer *pAmbientOcclusionMap = (GetFlags() & NoAmbientOcclusionMap) ? nullptr : cMaterial.GetParameterTextureBuffer(Material::AmbientOcclusionMap);
 
 	// Get diffuse map and alpha reference
 	float fAlphaReference = 0.0f;
-	TextureBuffer *pDiffuseMap = (GetFlags() & NoDiffuseMap) ? NULL : cMaterial.GetParameterTextureBuffer(Material::DiffuseMap);
+	TextureBuffer *pDiffuseMap = (GetFlags() & NoDiffuseMap) ? nullptr : cMaterial.GetParameterTextureBuffer(Material::DiffuseMap);
 
 	// Enable/disable alpha test (fragments are thrown away inside the fragment shader using the 'discard' keyword)
 	if (pDiffuseMap && pDiffuseMap->GetComponentsPerPixel() == 4) {
@@ -440,7 +440,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 		bSpecular = (cSpecularColor != 0.0f);
 	}
 	static const String sSpecularExponent = "SpecularExponent";
-	TextureBuffer *pSpecularMap = NULL;
+	TextureBuffer *pSpecularMap = nullptr;
 	float fSpecularExponent = 45.0f;
 	if (bSpecular) {
 		// Get the specular map
@@ -454,7 +454,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	}
 
 	// Get normal map
-	TextureBuffer *pNormalMap = (GetFlags() & NoNormalMap) ? NULL : cMaterial.GetParameterTextureBuffer(Material::NormalMap);
+	TextureBuffer *pNormalMap = (GetFlags() & NoNormalMap) ? nullptr : cMaterial.GetParameterTextureBuffer(Material::NormalMap);
 	float fNormalMapBumpiness = 1.0f;
 	bool bNormalMap_DXT5_xGxR = false;
 	bool bNormalMap_LATC2     = false;
@@ -478,13 +478,13 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 			}
 		} else {
 			// The normal map has no longer an influence!
-			pNormalMap = NULL;
+			pNormalMap = nullptr;
 		}
 	}
 
 	// Get detail normal map
 	static const String sDetailNormalMap = "DetailNormalMap";
-	TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? NULL : cMaterial.GetParameterTextureBuffer(sDetailNormalMap);
+	TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? nullptr : cMaterial.GetParameterTextureBuffer(sDetailNormalMap);
 	float fDetailNormalMapBumpiness = 1.0f;
 	Vector2 vDetailNormalMapUVScale(4.0f, 4.0f);
 	bool bDetailNormalMap_DXT5_xGxR = false;
@@ -515,15 +515,15 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 			}
 		} else {
 			// The detail normal map has no longer an influence!
-			pDetailNormalMap = NULL;
+			pDetailNormalMap = nullptr;
 		}
 	}
 
 	// Get light map
-	TextureBuffer *pLightMap = (GetFlags() & NoLightMap) ? NULL : cMaterial.GetParameterTextureBuffer(Material::LightMap);
+	TextureBuffer *pLightMap = (GetFlags() & NoLightMap) ? nullptr : cMaterial.GetParameterTextureBuffer(Material::LightMap);
 
 	// Get emissive map
-	TextureBuffer *pEmissiveMap = (GetFlags() & NoEmissiveMap) ? NULL : cMaterial.GetParameterTextureBuffer(Material::EmissiveMap);
+	TextureBuffer *pEmissiveMap = (GetFlags() & NoEmissiveMap) ? nullptr : cMaterial.GetParameterTextureBuffer(Material::EmissiveMap);
 
 	// Reset the program flags
 	m_cProgramFlags.Reset();
@@ -531,33 +531,33 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	// Set vertex program flags
 	if (bTwoSided)
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_TWOSIDED)
-	if ( pDisplacementMap != NULL)
+	if ( pDisplacementMap != nullptr)
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_DISPLACEMENTMAP)
-	if (pAmbientOcclusionMap != NULL || pLightMap != NULL)
+	if (pAmbientOcclusionMap != nullptr || pLightMap != nullptr)
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_SECONDTEXTURECOORDINATE)
-	if (pNormalMap != NULL || fParallax != 0.0f)
+	if (pNormalMap != nullptr || fParallax != 0.0f)
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_TANGENT_BINORMAL)
 	if (bReflection)
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_VIEWSPACEPOSITION)
 	
 	// Set fragment program flags
-	if (pDiffuseMap != NULL) {
+	if (pDiffuseMap != nullptr) {
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
 		if (fAlphaReference != 0.0f)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_ALPHATEST)
 	}
 	if (bSpecular) {
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULAR)
-		if (pSpecularMap != NULL)
+		if (pSpecularMap != nullptr)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARMAP)
 	}
-	if (pNormalMap != NULL) {
+	if (pNormalMap != nullptr) {
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP)
 		if (bNormalMap_DXT5_xGxR)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)
 		else if (bNormalMap_LATC2)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_LATC2)
-		if (pDetailNormalMap != NULL) {
+		if (pDetailNormalMap != nullptr) {
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP)
 			if (bDetailNormalMap_DXT5_xGxR)
 				PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)
@@ -567,22 +567,22 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	}
 	if (fParallax != 0.0f)
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_PARALLAXMAPPING)
-	if (pAmbientOcclusionMap != NULL)
+	if (pAmbientOcclusionMap != nullptr)
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_AMBIENTOCCLUSIONMAP)
-	if (pLightMap != NULL)
+	if (pLightMap != nullptr)
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_LIGHTMAP)
-	if (pEmissiveMap != NULL)
+	if (pEmissiveMap != nullptr)
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_EMISSIVEMAP)
 	if (fGlowFactor != 0.0f) {
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOW)
-		if (pGlowMap != NULL)
+		if (pGlowMap != nullptr)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOWMAP)
 	}
 	if ((fIndexOfRefraction > 0.0f || (b2DReflectionMap && pReflectionMap) || (!b2DReflectionMap && pReflectionMap))) {
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTION)
 		if (fIndexOfRefraction > 0.0f)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_FRESNELREFLECTION)
-		if (pReflectivityMap != NULL)
+		if (pReflectivityMap != nullptr)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTIVITYMAP)
 		if (b2DReflectionMap && pReflectionMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_2DREFLECTIONMAP)
@@ -597,7 +597,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
 
 	// Make our program to the current one
-	GeneratedProgramUserData *pGeneratedProgramUserData = NULL;
+	GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 	if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 		// Set pointers to uniforms & attributes of a generated program if they are not set yet
 		pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
@@ -1084,7 +1084,7 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;
-			m_pProgramGenerator = NULL;
+			m_pProgramGenerator = nullptr;
 		}
 
 		// Choose the shader source codes depending on the requested shader language
@@ -1122,19 +1122,19 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// Destroy the render target of the GBuffer
 				if (m_pRenderTarget) {
 					delete m_pRenderTarget;
-					m_pRenderTarget = NULL;
+					m_pRenderTarget = nullptr;
 				}
 				if (m_pColorTarget1) {
 					delete m_pColorTarget1;
-					m_pColorTarget1 = NULL;
+					m_pColorTarget1 = nullptr;
 				}
 				if (m_pColorTarget2) {
 					delete m_pColorTarget2;
-					m_pColorTarget2 = NULL;
+					m_pColorTarget2 = nullptr;
 				}
 				if (m_pColorTarget3) {
 					delete m_pColorTarget3;
-					m_pColorTarget3 = NULL;
+					m_pColorTarget3 = nullptr;
 				}
 			}
 

@@ -56,7 +56,7 @@ namespace PLRenderer {
 *    Constructor
 */
 DrawHelpersBackendShaders::DrawHelpersBackendShaders(Renderer &cRenderer) : DrawHelpersBackend(cRenderer),
-	m_pProgramGenerator(NULL)
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -504,7 +504,7 @@ ProgramGenerator *DrawHelpersBackendShaders::GetProgramGenerator()
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;
-			m_pProgramGenerator = NULL;
+			m_pProgramGenerator = nullptr;
 		}
 
 		// Choose the shader source codes depending on the requested shader language
@@ -576,7 +576,7 @@ ProgramGenerator::GeneratedProgram *DrawHelpersBackendShaders::GetAndSetGenerate
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**

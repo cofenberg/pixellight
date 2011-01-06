@@ -129,7 +129,7 @@ class RendererBackend : public Renderer {
 		*    PixelLight pixel format to return the API pixel format from
 		*
 		*  @return
-		*    The API pixel format of the given PixelLight pixel format, NULL on error
+		*    The API pixel format of the given PixelLight pixel format, a null pointer on error
 		*/
 		PLRENDERER_API PLGeneral::uint32 *GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const;
 
@@ -340,20 +340,20 @@ class RendererBackend : public Renderer {
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = NULL, float *pfMaxZ = NULL) const;
-		PLRENDERER_API virtual bool SetViewport(const PLMath::Rectangle *pRectangle = NULL, float fMinZ = 0.0f, float fMaxZ = 1.0f);
+		PLRENDERER_API virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = nullptr, float *pfMaxZ = nullptr) const;
+		PLRENDERER_API virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
 		PLRENDERER_API virtual const PLMath::Rectangle &GetScissorRect() const;
-		PLRENDERER_API virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = NULL);
+		PLRENDERER_API virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr);
 	
 		//[-------------------------------------------------------]
 		//[ Get/set current resources                             ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual Surface *GetRenderTarget(PLGeneral::uint8 *pnFace = NULL) const;
+		PLRENDERER_API virtual Surface *GetRenderTarget(PLGeneral::uint8 *pnFace = nullptr) const;
 		PLRENDERER_API virtual TextureBuffer *GetColorRenderTarget(PLGeneral::uint8 nColorIndex = 0) const;
 		PLRENDERER_API virtual TextureBuffer *GetTextureBuffer(PLGeneral::uint32 nStage) const;
 		PLRENDERER_API virtual IndexBuffer *GetIndexBuffer() const;
 		PLRENDERER_API virtual Program *GetProgram() const;
-		PLRENDERER_API virtual bool SetProgram(Program *pProgram = NULL);
+		PLRENDERER_API virtual bool SetProgram(Program *pProgram = nullptr);
 
 
 };

@@ -145,7 +145,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Returns the owner mesh manager
 		*
 		*  @return
-		*    Pointer to the owner mesh manager, NULL on error
+		*    Pointer to the owner mesh manager, a null pointer on error
 		*/
 		PLMESH_API MeshManager *GetMeshManager() const;
 
@@ -154,7 +154,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Returns the used renderer
 		*
 		*  @return
-		*    Pointer to the renderer the mesh uses, can be NULL
+		*    Pointer to the renderer the mesh uses, can be a null pointer
 		*/
 		PLMESH_API PLRenderer::Renderer *GetRenderer() const;
 
@@ -262,7 +262,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Adds a new morph target
 		*
 		*  @return
-		*    Pointer to the new morph target, NULL on error
+		*    Pointer to the new morph target, a null pointer on error
 		*/
 		PLMESH_API MeshMorphTarget *AddMorphTarget();
 
@@ -274,7 +274,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Number of the morph target to get
 		*
 		*  @return
-		*    Pointer to the morph target, or NULL
+		*    Pointer to the morph target, or a null pointer
 		*/
 		PLMESH_API MeshMorphTarget *GetMorphTarget(PLGeneral::uint32 nMorphTarget = 0) const;
 
@@ -286,7 +286,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Name of the morph target to get
 		*
 		*  @return
-		*    Pointer to the morph target, or NULL
+		*    Pointer to the morph target, or a null pointer
 		*/
 		PLMESH_API MeshMorphTarget *GetMorphTarget(const PLGeneral::String &sName) const;
 
@@ -350,7 +350,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Adds a new LOD level
 		*
 		*  @return
-		*    Pointer to the new LOD level, NULL on error
+		*    Pointer to the new LOD level, a null pointer on error
 		*/
 		PLMESH_API MeshLODLevel *AddLODLevel();
 
@@ -362,7 +362,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Number of the LOD level to get
 		*
 		*  @return
-		*    Pointer to the LOD level, or NULL
+		*    Pointer to the LOD level, or a null pointer
 		*/
 		PLMESH_API MeshLODLevel *GetLODLevel(PLGeneral::uint32 nLODLevel = 0) const;
 
@@ -389,10 +389,10 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Adds a new material
 		*
 		*  @param[in] pMaterial
-		*    Material to add, if NULL, nothing happens
+		*    Material to add, if a null pointer, nothing happens
 		*
 		*  @return
-		*    Pointer to the added material, NULL on error
+		*    Pointer to the added material, a null pointer on error
 		*/
 		PLMESH_API PLRenderer::Material *AddMaterial(PLRenderer::Material *pMaterial);
 
@@ -438,7 +438,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Number of the material to get
 		*
 		*  @return
-		*    Pointer to the material, or NULL
+		*    Pointer to the material, or a null pointer
 		*/
 		PLMESH_API PLRenderer::Material *GetMaterial(PLGeneral::uint32 nMaterial = 0) const;
 
@@ -449,7 +449,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @param[in] nMaterial
 		*    Number of the material to set
 		*  @param[in] pMaterial
-		*    Pointer to the material to set, can be NULL
+		*    Pointer to the material to set, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -658,7 +658,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Constructor
 		*
 		*  @param[in] pRenderer
-		*    Pointer to the renderer to use can be NULL
+		*    Pointer to the renderer to use can be a null pointer
 		*  @param[in] cManager
 		*    Mesh manager using this resource
 		*  @param[in] sName
@@ -675,7 +675,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 	//[-------------------------------------------------------]
 	private:
 		// Data
-		PLRenderer::Renderer *m_pRenderer;	/**< Renderer the mesh is using, can be NULL */
+		PLRenderer::Renderer *m_pRenderer;	/**< Renderer the mesh is using, can be a null pointer */
 		bool				  m_bStatic;	/**< Static mesh? (better performance!) */
 		PLMath::Vector3		  m_vBBMin;		/**< Minimum bounding box position */
 		PLMath::Vector3		  m_vBBMax;		/**< Maximum bounding box position */

@@ -63,14 +63,14 @@ ScrollWidget::ScrollWidget(Widget *pParent) : ContainerWidget(pParent),
 	SlotOnScrollBarYChanged(this),
 	m_nScrollBarStyleX(ScrollBarStyleDynamic),
 	m_nScrollBarStyleY(ScrollBarStyleDynamic),
-	m_pInnerWidget(NULL),
-	m_pScrollBarX(NULL),
-	m_pScrollBarY(NULL),
+	m_pInnerWidget(nullptr),
+	m_pScrollBarX(nullptr),
+	m_pScrollBarY(nullptr),
 	m_bScrollBarX(false),
 	m_bScrollBarY(false)
 {
 	// Remove layout of content widget, otherwise the inner widget would never be bigger than the content widget itself
-	m_pContentWidget->SetLayout(NULL);
+	m_pContentWidget->SetLayout(nullptr);
 
 	// Create scrollbars
 	m_pScrollBarX = new ScrollBar(this);

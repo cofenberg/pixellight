@@ -174,7 +174,7 @@ bool HttpHeader::IsComplete() const
 	// Is there at least one header line?
 	if (m_lstEntries.GetNumOfElements() > 0) {
 		// Get last line
-		String sLine = m_lstEntries.Get(m_lstEntries.GetNumOfElements()-1);
+		const String sLine = m_lstEntries.Get(m_lstEntries.GetNumOfElements()-1);
 
 		// Check if this line is the separator
 		if (sLine == "") {
@@ -218,7 +218,7 @@ void HttpHeader::Parse()
 	// Loop through header entries
 	for (uint32 i=0; i<m_lstEntries.GetNumOfElements(); i++) {
 		// Get line
-		String sLine = m_lstEntries.Get(i);
+		const String sLine = m_lstEntries.Get(i);
 
 		// HTTP request
 		if (sLine.IndexOf("HTTP/") > 0) {
@@ -226,13 +226,13 @@ void HttpHeader::Parse()
 			m_nMessageType = HttpRequest;
 
 			// Get string parts
-			int nSpace1 = sLine.IndexOf(" ");
-			int nSpace2 = sLine.IndexOf(" ", nSpace1+1);
+			const int nSpace1 = sLine.IndexOf(" ");
+			const int nSpace2 = sLine.IndexOf(" ", nSpace1+1);
 			if (nSpace1 > 0 || nSpace2 > nSpace2) {
 				// Get request arguments
-				String sRequest  = sLine.GetSubstring(0, nSpace1);
-				String sUrl		 = sLine.GetSubstring(nSpace1+1, nSpace2-nSpace1-1);
-				String sProtocol = sLine.GetSubstring(nSpace2+1);
+				const String sRequest  = sLine.GetSubstring(0, nSpace1);
+				const String sUrl		 = sLine.GetSubstring(nSpace1+1, nSpace2-nSpace1-1);
+				const String sProtocol = sLine.GetSubstring(nSpace2+1);
 
 				// Request
 					 if (sRequest == "GET")		m_nRequest = HttpGet;
@@ -248,8 +248,10 @@ void HttpHeader::Parse()
 				m_sRequestUrl = sUrl;
 
 				// Protocol version
-				if (sProtocol == "HTTP/1.1") m_nProtocol = Http11;
-				else						 m_nProtocol = Http10;
+				if (sProtocol == "HTTP/1.1")
+					m_nProtocol = Http11;
+				else
+					m_nProtocol = Http10;
 			}
 		}
 
@@ -259,8 +261,10 @@ void HttpHeader::Parse()
 			m_nMessageType = HttpResponse;
 
 			// Protocol version
-			if (sLine.GetSubstring(0, 8) == "HTTP/1.1")	m_nProtocol = Http11;
-			else										m_nProtocol = Http10;
+			if (sLine.GetSubstring(0, 8) == "HTTP/1.1")
+				m_nProtocol = Http11;
+			else
+				m_nProtocol = Http10;
 
 			// Status code
 			m_nStatusCode = (EHttpStatus)sLine.GetSubstring(9, 3).GetInt();
@@ -271,43 +275,40 @@ void HttpHeader::Parse()
 
 		// Connection type
 		if (sLine.GetSubstring(0, 11) == "Connection:") {
-			String sConnection = sLine.GetSubstring(12);
-			if (sConnection == "close") m_nConnection = ConnectionClose;
-			else						m_nConnection = ConnectionKeepAlive;
+			const String sConnection = sLine.GetSubstring(12);
+			if (sConnection == "close")
+				m_nConnection = ConnectionClose;
+			else
+				m_nConnection = ConnectionKeepAlive;
 		}
 
 		// Location
-		if (sLine.GetSubstring(0, 9) == "Location:") {
+		if (sLine.GetSubstring(0, 9) == "Location:")
 			m_sLocation = sLine.GetSubstring(10);
-		}
 
 		// Date
-		if (sLine.GetSubstring(0, 5) == "Date:") {
+		if (sLine.GetSubstring(0, 5) == "Date:")
 			m_sDate = sLine.GetSubstring(6);
-		}
 
 		// Server signature
-		if (sLine.GetSubstring(0, 7) == "Server:") {
+		if (sLine.GetSubstring(0, 7) == "Server:")
 			m_sServer = sLine.GetSubstring(8);
-		}
 
 		// Client signature
-		if (sLine.GetSubstring(0, 11) == "User-Agent:") {
+		if (sLine.GetSubstring(0, 11) == "User-Agent:")
 			m_sUserAgent = sLine.GetSubstring(12);
-		}
 
 		// Authentication
 		if (sLine.GetSubstring(0, 17) == "WWW-Authenticate:") {
-			String sAuth = sLine.GetSubstring(18);
+			const String sAuth = sLine.GetSubstring(18);
 			if (sAuth.GetSubstring(0, 5) == "Basic") {
-				m_nAuthType  = BasicAuth;
-				int nFirst = sAuth.IndexOf("\"");
-				int nLast  = sAuth.LastIndexOf("\"");
-				if (nFirst > -1 && nLast > -1) {
+				m_nAuthType = BasicAuth;
+				const int nFirst = sAuth.IndexOf("\"");
+				const int nLast  = sAuth.LastIndexOf("\"");
+				if (nFirst > -1 && nLast > -1)
 					m_sAuthRealm = sAuth.GetSubstring(nFirst+1, nLast-nFirst-1);
-				} else {
+				else
 					m_sAuthRealm = "";
-				}
 			} else {
 				m_nAuthType  = NoAuth;
 				m_sAuthRealm = "";
@@ -316,7 +317,7 @@ void HttpHeader::Parse()
 
 		// Authorization
 		if (sLine.GetSubstring(0, 14) == "Authorization:") {
-			String sAuth = sLine.GetSubstring(15);
+			const String sAuth = sLine.GetSubstring(15);
 			if (sAuth.GetSubstring(0, 5) == "Basic") {
 				m_nAuthType		 = BasicAuth;
 				m_sAuthorization = sAuth.GetSubstring(6);
@@ -327,24 +328,20 @@ void HttpHeader::Parse()
 		}
 
 		// Transfer-Encoding
-		if (sLine.GetSubstring(0, 18) == "Transfer-Encoding:") {
+		if (sLine.GetSubstring(0, 18) == "Transfer-Encoding:")
 			m_sTransferEncoding = sLine.GetSubstring(19);
-		}
 
 		// Content length
-		if (sLine.GetSubstring(0, 15) == "Content-Length:") {
+		if (sLine.GetSubstring(0, 15) == "Content-Length:")
 			m_nContentLength = (uint32)sLine.GetSubstring(16).GetInt();
-		}
 
 		// Content language
-		if (sLine.GetSubstring(0, 17) == "Content-Language:") {
+		if (sLine.GetSubstring(0, 17) == "Content-Language:")
 			m_sContentLanguage = sLine.GetSubstring(18);
-		}
 
 		// Content type
-		if (sLine.GetSubstring(0, 13) == "Content-Type:") {
+		if (sLine.GetSubstring(0, 13) == "Content-Type:")
 			m_sContentType = sLine.GetSubstring(14);
-		}
 
 		// Content range
 		if (sLine.GetSubstring(0, 14) == "Content-Range:") {
@@ -352,17 +349,17 @@ void HttpHeader::Parse()
 			m_bPartial	= false;
 
 			// Get range unit
-			String m_sByte = sLine.GetSubstring(15, 5);
-			if (m_sByte == "bytes") {
+			const String sByte = sLine.GetSubstring(15, 5);
+			if (sByte == "bytes") {
 				// Get range (e.g. "21010-47021/47022")
-				String sRange = sLine.GetSubstring(21);
-				int nPosMinus = sRange.IndexOf("-");
-				int nPosSlash = sRange.IndexOf("/");
+				const String sRange = sLine.GetSubstring(21);
+				const int nPosMinus = sRange.IndexOf("-");
+				const int nPosSlash = sRange.IndexOf("/");
 				if (nPosMinus > -1 && nPosSlash > -1) {
 					// Get parts
-					String sRangeMin   = sRange.GetSubstring(0, nPosMinus);
-					String sRangeMax   = sRange.GetSubstring(nPosMinus+1, nPosSlash-nPosMinus-1);
-					String sRangeTotal = sRange.GetSubstring(nPosSlash+1);
+					const String sRangeMin   = sRange.GetSubstring(0, nPosMinus);
+					const String sRangeMax   = sRange.GetSubstring(nPosMinus+1, nPosSlash-nPosMinus-1);
+					const String sRangeTotal = sRange.GetSubstring(nPosSlash+1);
 
 					// Set range
 					m_bPartial	  = true;
@@ -375,7 +372,7 @@ void HttpHeader::Parse()
 
 		// ETag
 		if (sLine.GetSubstring(0, 5) == "ETag:") {
-			String sETag = sLine.GetSubstring(6);
+			const String sETag = sLine.GetSubstring(6);
 			m_sETag = sETag.GetSubstring(1, sETag.GetLength()-2);
 		}
 	}
@@ -391,9 +388,8 @@ void HttpHeader::Print(bool bRaw) const
 	if (bRaw) {
 		// Raw printout of all header lines
 		System::GetInstance()->GetConsole().Print("HTTP message arrived:\n");
-		for (uint32 i=0; i<GetEntries().GetNumOfElements()-1; i++) {
+		for (uint32 i=0; i<GetEntries().GetNumOfElements()-1; i++)
 			System::GetInstance()->GetConsole().Print("- " + GetEntries().Get(i) + "\n");
-		}
 		System::GetInstance()->GetConsole().Print("\n");
 	} else {
 		// Print out all header information that we have parsed and understood

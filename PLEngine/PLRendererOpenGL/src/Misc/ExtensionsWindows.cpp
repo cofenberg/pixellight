@@ -62,7 +62,7 @@ bool OpenGLExtensions::Init()
 
 		// WGL_ARB_extensions_string
 		wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC) wglGetProcAddress("wglGetExtensionsStringARB");
-		m_bWGL_ARB_extensions_string = wglGetExtensionsStringARB != NULL;
+		m_bWGL_ARB_extensions_string = wglGetExtensionsStringARB != nullptr;
 
 		if (m_bWGL_ARB_extensions_string)
 			WriteExtensionStringIntoLog((const char*)wglGetExtensionsStringARB(wglGetCurrentDC()));

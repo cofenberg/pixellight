@@ -104,7 +104,7 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 		*    Returns the GMM surface
 		*
 		*  @return
-		*    The terrain GMM surface, can be NULL
+		*    The terrain GMM surface, can be a null pointer
 		*/
 		PLS_API GMMSurface *GetGMMSurface() const;
 
@@ -133,15 +133,15 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::String  m_sFilename;		/**< Terrain filename */
-		float			  *m_pfHeightMap;	/**< Heightmap, can be NULL */
-		GMMSurface		  *m_pGMMSurface;	/**< Terrain GMM surface, can be NULL */
+		float			  *m_pfHeightMap;	/**< Heightmap, can be a null pointer */
+		GMMSurface		  *m_pGMMSurface;	/**< Terrain GMM surface, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]

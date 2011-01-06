@@ -62,7 +62,7 @@ void BufferedReaderFile::Close()
 {
 	// Close stream
 	if (m_pFile) {
-		m_pFile   = NULL;
+		m_pFile   = nullptr;
 		m_sBuffer = "";
 	}
 }
@@ -70,9 +70,12 @@ void BufferedReaderFile::Close()
 bool BufferedReaderFile::IsEof() const
 {
 	// Return if the stream is valid and there is more data to read
-		 if (m_sBuffer.GetLength())	return false;
-	else if (m_pFile)				return m_pFile->IsEof();
-	else							return true;
+	if (m_sBuffer.GetLength())
+		return false;
+	else if (m_pFile)
+		return m_pFile->IsEof();
+	else
+		return true;
 }
 
 char BufferedReaderFile::GetChar()
@@ -80,7 +83,8 @@ char BufferedReaderFile::GetChar()
 	// Does the buffer contain at least one char?
 	if (!m_sBuffer.GetLength()) {
 		// No, try to read it from the stream
-		if (!ReadFromStream(1)) return 0;
+		if (!ReadFromStream(1))
+			return 0;
 	}
 
 	// Return the current char
@@ -103,12 +107,13 @@ String BufferedReaderFile::GetString(uint32 nSize)
 char BufferedReaderFile::ReadChar()
 {
 	if (m_sBuffer.GetLength()) {
-		char c = m_sBuffer[(uint32)0];
+		const char c = m_sBuffer[(uint32)0];
 		m_sBuffer = m_sBuffer.GetSubstring(1);
 		return c;
 	} else if (m_pFile) {
-		int nChar = m_pFile->GetC();
-		if (nChar >= 0) return (char)nChar;
+		const int nChar = m_pFile->GetC();
+		if (nChar >= 0)
+			return (char)nChar;
 	}
 	return 0;
 }
@@ -168,7 +173,10 @@ bool BufferedReaderFile::Seek(uint32 nPos)
 	if (m_pFile) {
 		m_sBuffer = "";
 		return m_pFile->Seek(nPos);
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 
@@ -180,7 +188,7 @@ bool BufferedReaderFile::Seek(uint32 nPos)
 *    Copy constructor
 */
 BufferedReaderFile::BufferedReaderFile(const BufferedReaderFile &cSource) :
-	m_pFile(NULL)
+	m_pFile(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -206,7 +214,7 @@ bool BufferedReaderFile::ReadFromStream(uint32 nSize)
 	if (nSize > 0 && m_pFile && !m_pFile->IsEof()) {
 		if (nSize == 1) {
 			// Read one char
-			int nChar = m_pFile->GetC();
+			const int nChar = m_pFile->GetC();
 			if (nChar > -1) {
 				m_sBuffer += (char)nChar;
 

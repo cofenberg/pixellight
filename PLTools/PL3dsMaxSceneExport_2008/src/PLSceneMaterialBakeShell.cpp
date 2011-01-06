@@ -69,7 +69,7 @@ void PLSceneMaterialBakeShell::SaveParameters(XmlElement &cMaterialElement)
 		Mtl *pMaxMaterial = pBackedIGameMaterial->GetMaxMaterial();
 		if (pMaxMaterial) {
 			// See if it's a standard material
-			StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMaterial : NULL;
+			StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMaterial : nullptr;
 
 			// Textures, do only take "Self-Illumination" into account...
 			for (int nSlot=0; nSlot<pMaxMaterial->NumSubTexmaps(); nSlot++) {

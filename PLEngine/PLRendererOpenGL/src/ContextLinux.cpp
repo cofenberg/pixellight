@@ -44,13 +44,13 @@ namespace PLRendererOpenGL {
 *    Constructor
 */
 ContextLinux::ContextLinux() :
-	m_pDisplay(NULL),
-	m_hDummyNativeWindow(NULL),
-	m_pDummyVisualInfo(NULL),
-	m_hDummyWindowRenderContext(NULL)
+	m_pDisplay(nullptr),
+	m_hDummyNativeWindow(nullptr),
+	m_pDummyVisualInfo(nullptr),
+	m_hDummyWindowRenderContext(nullptr)
 {
 	// Get X server display connection
-	m_pDisplay = XOpenDisplay(NULL);
+	m_pDisplay = XOpenDisplay(nullptr);
 	if (m_pDisplay) {
 		// Get an appropriate visual
 		int nAttributeList[] = {
@@ -104,10 +104,10 @@ ContextLinux::~ContextLinux()
 	if (m_pDisplay) {
 		// Is the render context of the OpenGL dummy window is the currently active OpenGL render context?
 		if (glXGetCurrentContext() == m_hDummyWindowRenderContext)
-			glXMakeCurrent(m_pDisplay, 0L, NULL);
+			glXMakeCurrent(m_pDisplay, 0L, nullptr);
 
 		// Destroy the GLX context of the OpenGL dummy window
-		if (m_hDummyWindowRenderContext != NULL)
+		if (m_hDummyWindowRenderContext != nullptr)
 			glXDestroyContext(m_pDisplay, m_hDummyWindowRenderContext);
 
 		// Destroy the dummy native window
@@ -145,7 +145,7 @@ GLXContext ContextLinux::GetRenderContext() const
 //[-------------------------------------------------------]
 bool ContextLinux::IsValid() const
 {
-	return (m_pDisplay != NULL && m_hDummyNativeWindow != NULL && m_pDummyVisualInfo != NULL && m_hDummyWindowRenderContext != NULL);
+	return (m_pDisplay != nullptr && m_hDummyNativeWindow != nullptr && m_pDummyVisualInfo != nullptr && m_hDummyWindowRenderContext != nullptr);
 }
 
 void ContextLinux::MakeDummyCurrent() const
@@ -157,7 +157,7 @@ void ContextLinux::MakeDummyCurrent() const
 bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstDisplayModeList)
 {
 	uint32 nScreen = XDefaultScreen(m_pDisplay);
-	XF86VidModeModeInfo **ppModes = NULL;
+	XF86VidModeModeInfo **ppModes = nullptr;
 	int nNumOfModes = 0;
 	String sTemp;
 

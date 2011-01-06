@@ -73,7 +73,7 @@ class Database : public PLCore::Object {
 		*    Class name of the database implementation
 		*
 		*  @return
-		*    The database instance, NULL on error
+		*    The database instance, a null pointer on error
 		*/
 		PLDATABASE_API static Database *Create(const PLGeneral::String &sClass);
 
@@ -153,7 +153,7 @@ class Database : public PLCore::Object {
 		*    Creates a database query
 		*
 		*  @return
-		*    The database query, NULL on error
+		*    The database query, a null pointer on error
 		*/
 		virtual DatabaseQuery *CreateQuery() const = 0;
 

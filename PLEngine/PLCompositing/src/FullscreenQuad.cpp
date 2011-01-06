@@ -47,7 +47,7 @@ namespace PLCompositing {
 */
 FullscreenQuad::FullscreenQuad(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
-	m_pVertexBuffer(NULL)
+	m_pVertexBuffer(nullptr)
 {
 }
 

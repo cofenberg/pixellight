@@ -43,10 +43,10 @@ namespace PLGeneral {
 template <class ValueType>
 Pool<ValueType>::Pool() :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL),
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr),
 	m_nNumOfFreeElements(0),
-	m_pFirstFreeElement(NULL)
+	m_pFirstFreeElement(nullptr)
 {
 }
 
@@ -57,10 +57,10 @@ Pool<ValueType>::Pool() :
 template <class ValueType>
 Pool<ValueType>::Pool(const Pool<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL),
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr),
 	m_nNumOfFreeElements(0),
-	m_pFirstFreeElement(NULL)
+	m_pFirstFreeElement(nullptr)
 {
 	// Copy
 	Copy((Container<ValueType>&)lstSource, nStart, nCount);
@@ -73,10 +73,10 @@ Pool<ValueType>::Pool(const Pool<ValueType> &lstSource, uint32 nStart, uint32 nC
 template <class ValueType>
 Pool<ValueType>::Pool(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount) :
 	m_nNumOfElements(0),
-	m_pFirstElement(NULL),
-	m_pLastElement(NULL),
+	m_pFirstElement(nullptr),
+	m_pLastElement(nullptr),
 	m_nNumOfFreeElements(0),
-	m_pFirstFreeElement(NULL)
+	m_pFirstFreeElement(nullptr)
 {
 	// Copy
 	Copy(lstSource, nStart, nCount);
@@ -142,8 +142,8 @@ void Pool<ValueType>::FreeElements()
 
 		// Clear the list of current used elements
 		m_nNumOfElements = 0;
-		m_pFirstElement  = NULL;
-		m_pLastElement   = NULL;
+		m_pFirstElement  = nullptr;
+		m_pLastElement   = nullptr;
 	}
 }
 
@@ -164,7 +164,7 @@ void Pool<ValueType>::RemoveAllFreeElements()
 
 	// Init data
 	m_nNumOfFreeElements = 0;
-	m_pFirstFreeElement  = NULL;
+	m_pFirstFreeElement  = nullptr;
 }
 
 
@@ -188,7 +188,7 @@ typename Pool<ValueType>::PoolElement &Pool<ValueType>::AddElement()
 		m_pFirstFreeElement = m_pFirstFreeElement->pNextElement;
 
 		// Setting the previous element is not really required here :)
-		// if (m_pFirstFreeElement) m_pFirstFreeElement->pPreviousElement = NULL;
+		// if (m_pFirstFreeElement) m_pFirstFreeElement->pPreviousElement = nullptr;
 
 		// Decrease the number of free elements
 		m_nNumOfFreeElements--;
@@ -300,8 +300,8 @@ void Pool<ValueType>::Clear()
 
 	// Init data
 	m_nNumOfElements = 0;
-	m_pFirstElement  = NULL;
-	m_pLastElement   = NULL;
+	m_pFirstElement  = nullptr;
+	m_pLastElement   = nullptr;
 
 	// Same for the free elements
 	RemoveAllFreeElements();
@@ -452,7 +452,7 @@ ValueType &Pool<ValueType>::Add()
 {
 	// Create the new pool element
 	PoolElement &cNewElement = AddElement();
-	cNewElement.pNextElement	 = NULL;
+	cNewElement.pNextElement	 = nullptr;
 	cNewElement.pPreviousElement = m_pLastElement;
 
 	// Add the new pool element to the pool
@@ -474,7 +474,7 @@ ValueType &Pool<ValueType>::Add(const ValueType &Element)
 	// Create the new pool element
 	PoolElement &cNewElement = AddElement();
 	cNewElement.Data			 = Element;
-	cNewElement.pNextElement	 = NULL;
+	cNewElement.pNextElement	 = nullptr;
 	cNewElement.pPreviousElement = m_pLastElement;
 
 	// Add the new pool element to the pool

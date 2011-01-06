@@ -39,7 +39,7 @@ namespace PLPhysicsNewton {
 //[-------------------------------------------------------]
 //[ Private static Newton callback variable               ]
 //[-------------------------------------------------------]
-SensorAABoundingBox *SensorAABoundingBox::m_pCurrentSensor = NULL;
+SensorAABoundingBox *SensorAABoundingBox::m_pCurrentSensor = nullptr;
 
 
 //[-------------------------------------------------------]
@@ -101,7 +101,7 @@ uint32 SensorAABoundingBox::Check()
 
 	// Perform Newton physics axis aligned bounding box check
 	m_pCurrentSensor = this;
-	NewtonWorldForEachBodyInAABBDo(pNewtonWorld, m_vMin, m_vMax, AABoundingBoxIteratorCallback, NULL);
+	NewtonWorldForEachBodyInAABBDo(pNewtonWorld, m_vMin, m_vMax, AABoundingBoxIteratorCallback, nullptr);
 
 	// Done
 	return GetNumOfHitBodies();

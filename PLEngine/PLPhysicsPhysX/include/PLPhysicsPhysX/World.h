@@ -92,7 +92,7 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		*    Returns the PhysX physics SDK
 		*
 		*  @return
-		*    The PhysX physics SDK, NULL on error (if that's the case, something went totally wrong :)
+		*    The PhysX physics SDK, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICSPHYSX_API NxPhysicsSDK *GetPhysXPhysicsSDK() const;
 
@@ -101,7 +101,7 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		*    Returns the PhysX physics scene
 		*
 		*  @return
-		*    The PhysX physics scene, NULL on error (if that's the case, something went totally wrong :)
+		*    The PhysX physics scene, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICSPHYSX_API NxScene *GetPhysXScene() const;
 
@@ -128,7 +128,7 @@ class World : public PLPhysics::World, public NxUserContactModify {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static NxPhysicsSDK		 *m_pPhysXPhysicsSDK;		/**< PhysX physics SDK instance, can be NULL */
+		static NxPhysicsSDK		 *m_pPhysXPhysicsSDK;		/**< PhysX physics SDK instance, can be a null pointer */
 		static PLGeneral::uint32  m_nPhysXInstanceCounter;	/**< PhysX instance counter */
 
 
@@ -146,7 +146,7 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		float			m_fBuoyancyPlaneY;		// [TODO] Implement buoyancy within the PhysX backend
 
 		PLGeneral::Pool<PLPhysics::Body*> m_lstChangedByUser;
-		NxScene *m_pPhysXScene;	/**< PhysX physics scene, can be NULL */
+		NxScene *m_pPhysXScene;	/**< PhysX physics scene, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

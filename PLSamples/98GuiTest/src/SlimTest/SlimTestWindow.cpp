@@ -62,8 +62,8 @@ pl_implement_class(SlimTestWindow)
 SlimTestWindow::SlimTestWindow(Widget *pParent) : Window(pParent),
 	SlotOnLeft(this),
 	SlotOnRight(this),
-	m_pButtonLeft(NULL),
-	m_pButtonRight(NULL)
+	m_pButtonLeft(nullptr),
+	m_pButtonRight(nullptr)
 {
 	// Set title
 	SetTitle("Slim Widgets Test");

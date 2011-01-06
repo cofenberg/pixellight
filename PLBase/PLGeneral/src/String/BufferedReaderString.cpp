@@ -68,7 +68,7 @@ void BufferedReaderString::Close()
 bool BufferedReaderString::IsEof() const
 {
 	// Return if the stream is valid and there is more data to read
-	return m_nCurrent >= m_sBuffer.GetLength();
+	return (m_nCurrent >= m_sBuffer.GetLength());
 }
 
 char BufferedReaderString::GetChar()
@@ -83,7 +83,10 @@ String BufferedReaderString::GetString(uint32 nSize)
 	if (m_nCurrent+nSize <= m_sBuffer.GetLength()) {
 		// Get the requested substring
 		return m_sBuffer.GetSubstring(m_nCurrent, nSize);
-	} else return ""; // Error!
+	} else {
+		// Error!
+		return "";
+	}
 }
 
 char BufferedReaderString::ReadChar()
@@ -92,7 +95,10 @@ char BufferedReaderString::ReadChar()
 	if (m_nCurrent+1 <= m_sBuffer.GetLength()) {
 		// Get the requested character and update the current character index
 		return m_sBuffer[m_nCurrent++];
-	} else return '\0'; // Error!
+	} else {
+		// Error!
+		return '\0';
+	}
 }
 
 String BufferedReaderString::ReadString(uint32 nSize)
@@ -104,7 +110,10 @@ String BufferedReaderString::ReadString(uint32 nSize)
 
 		// Get the requested substring
 		return m_sBuffer.GetSubstring(m_nCurrent - nSize, nSize);
-	} else return ""; // Error!
+	} else {
+		// Error!
+		return "";
+	}
 }
 
 bool BufferedReaderString::IsString(const String &sString)
@@ -131,7 +140,10 @@ bool BufferedReaderString::Seek(uint32 nPos)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 

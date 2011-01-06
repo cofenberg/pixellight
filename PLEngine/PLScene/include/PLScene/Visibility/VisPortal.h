@@ -70,7 +70,7 @@ class VisPortal : public VisNode {
 		*    Returns the target visibility cell the portal links to
 		*
 		*  @return
-		*    The target visibility cell the portal links to, NULL if it's not possible to
+		*    The target visibility cell the portal links to, a null pointer if it's not possible to
 		*    'see through' the portal (SNCellPortal::NoSeeThrough flag) or on error.
 		*/
 		PLS_API VisContainer *GetTargetVisContainer() const;

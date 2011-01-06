@@ -67,7 +67,7 @@ BodyCylinder::BodyCylinder(PLPhysics::World &cWorld, float fRadius, float fHeigh
 	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
 
 	// Create collision primitive
-	Newton::NewtonCollision *pCollision = NewtonCreateCylinder(pNewtonWorld, m_fRadius, m_fHeight, 0, NULL);
+	Newton::NewtonCollision *pCollision = NewtonCreateCylinder(pNewtonWorld, m_fRadius, m_fHeight, 0, nullptr);
 
 	// Create the rigid body
 	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!

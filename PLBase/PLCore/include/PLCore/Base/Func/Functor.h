@@ -123,7 +123,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 		*    Constructor for an empty functor
 		*/
 		Functor() :
-			m_pFunc(NULL)
+			m_pFunc(nullptr)
 		{
 		}
 
@@ -183,7 +183,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 		*    Source functor
 		*/
 		Functor(const Functor &cFunctor) :
-			m_pFunc(NULL)
+			m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -215,7 +215,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -278,7 +278,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		typedef typename Type<T14>::_Type _T14;
 		typedef typename Type<T15>::_Type _T15;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -297,7 +297,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -318,7 +318,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -369,7 +369,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -388,7 +388,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -409,7 +409,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -460,7 +460,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -479,7 +479,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -500,7 +500,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -550,7 +550,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -569,7 +569,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -590,7 +590,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -640,7 +640,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -659,7 +659,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -680,7 +680,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -729,7 +729,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -748,7 +748,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -769,7 +769,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -819,7 +819,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -838,7 +838,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -859,7 +859,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -907,7 +907,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -926,7 +926,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -947,7 +947,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -996,7 +996,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1015,7 +1015,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1036,7 +1036,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1083,7 +1083,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1102,7 +1102,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1123,7 +1123,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1171,7 +1171,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1190,7 +1190,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1211,7 +1211,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1257,7 +1257,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1276,7 +1276,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1297,7 +1297,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1343,7 +1343,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1362,7 +1362,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1383,7 +1383,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1428,7 +1428,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1447,7 +1447,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1468,7 +1468,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1513,7 +1513,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1532,7 +1532,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1553,7 +1553,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1597,7 +1597,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1616,7 +1616,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1637,7 +1637,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1681,7 +1681,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1700,7 +1700,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1721,7 +1721,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1764,7 +1764,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1783,7 +1783,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1804,7 +1804,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1847,7 +1847,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1866,7 +1866,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1887,7 +1887,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -1929,7 +1929,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -1948,7 +1948,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -1969,7 +1969,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2011,7 +2011,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2030,7 +2030,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2051,7 +2051,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2092,7 +2092,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2111,7 +2111,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2132,7 +2132,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2173,7 +2173,7 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2192,7 +2192,7 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2213,7 +2213,7 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2253,7 +2253,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2272,7 +2272,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2293,7 +2293,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2333,7 +2333,7 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2352,7 +2352,7 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2373,7 +2373,7 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2412,7 +2412,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2431,7 +2431,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2452,7 +2452,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2491,7 +2491,7 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2510,7 +2510,7 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2531,7 +2531,7 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2569,7 +2569,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2588,7 +2588,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2609,7 +2609,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2647,7 +2647,7 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2666,7 +2666,7 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2687,7 +2687,7 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2724,7 +2724,7 @@ class Functor<R, T0> : public Func<R, T0> {
 		typedef typename Type<R>  ::_Type _R;
 		typedef typename Type<T0> ::_Type _T0;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2743,7 +2743,7 @@ class Functor<R, T0> : public Func<R, T0> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2764,7 +2764,7 @@ class Functor<R, T0> : public Func<R, T0> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2802,7 +2802,7 @@ class Functor<void, T0> : public Func<void, T0> {
 		typedef typename Type<T0>::_Type _T0;
 
 	public:
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2821,7 +2821,7 @@ class Functor<void, T0> : public Func<void, T0> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2842,7 +2842,7 @@ class Functor<void, T0> : public Func<void, T0> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2878,7 +2878,7 @@ class Functor<R> : public Func<R> {
 	public:
 		typedef typename Type<R>  ::_Type _R;
 
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2897,7 +2897,7 @@ class Functor<R> : public Func<R> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2918,7 +2918,7 @@ class Functor<R> : public Func<R> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object
@@ -2953,7 +2953,7 @@ class Functor<R> : public Func<R> {
 template <>
 class Functor<void> : public Func<void> {
 	public:
-		Functor() : m_pFunc(NULL)
+		Functor() : m_pFunc(nullptr)
 		{
 		}
 
@@ -2972,7 +2972,7 @@ class Functor<void> : public Func<void> {
 		{
 		}
 
-		Functor(const Functor &cFunctor) : m_pFunc(NULL)
+		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
 			if (cFunctor.m_pFunc) {
@@ -2993,7 +2993,7 @@ class Functor<void> : public Func<void> {
 			if (m_pFunc) {
 				// Destroy old implementation
 				delete m_pFunc;
-				m_pFunc = NULL;
+				m_pFunc = nullptr;
 			}
 
 			// Check function object

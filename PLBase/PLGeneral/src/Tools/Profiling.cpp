@@ -228,7 +228,10 @@ bool Profiling::SelectGroup(const String &sName)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -241,12 +244,13 @@ String Profiling::SelectNextGroup()
 	const ProfileGroup *pGroup = Get(m_sGroupName);
 	if (pGroup) {
 		// Select the next group
-		uint32 i = pGroup->GetID()+1;
+		const uint32 i = pGroup->GetID()+1;
 		m_sGroupName = i < GetNumOfElements() ? Get(i)->GetName() : "";
 	} else {
 		// Select first group
 		pGroup = Get((uint32)0);
-		if (pGroup) m_sGroupName = pGroup->GetName();
+		if (pGroup)
+			m_sGroupName = pGroup->GetName();
 	}
 
 	// Return the group name
@@ -263,12 +267,13 @@ String Profiling::SelectPreviousGroup()
 	const ProfileGroup *pGroup = Get(m_sGroupName);
 	if (pGroup) {
 		// Select the previous group
-		uint32 i = pGroup->GetID();
+		const uint32 i = pGroup->GetID();
 		m_sGroupName = i ? Get(i-1)->GetName() : "";
 	} else {
 		// Select first group
 		pGroup = Get(GetNumOfElements()-1);
-		if (pGroup) m_sGroupName = pGroup->GetName();
+		if (pGroup)
+			m_sGroupName = pGroup->GetName();
 	}
 
 	// Return the group name
@@ -285,11 +290,13 @@ bool Profiling::Set(const String &sGroup, const String &sElement, const String &
 	if (m_bActive && sGroup.GetLength() && sElement.GetLength()) {
 		// Check if there's a group with this name
 		ProfileGroup *pGroup = Get(sGroup);
-		if (!pGroup) pGroup = Create(sGroup);
+		if (!pGroup)
+			pGroup = Create(sGroup);
 		if (pGroup) {
 			// Check if there's an element with this name
 			ProfileGroupElement *pGroupElement = pGroup->Get(sElement);
-			if (!pGroupElement) pGroupElement = pGroup->Create(sElement);
+			if (!pGroupElement)
+				pGroupElement = pGroup->Create(sElement);
 			if (pGroupElement) {
 				// Set element text
 				pGroupElement->SetText(sText);
@@ -315,7 +322,8 @@ String Profiling::GetText(const String &sGroup, const String &sElement) const
 	if (pGroup) {
 		// Get element
 		const ProfileGroupElement *pGroupElement = pGroup->Get(sElement);
-		if (pGroupElement) return pGroupElement->GetText(); // Return text
+		if (pGroupElement)
+			return pGroupElement->GetText(); // Return text
 	}
 
 	// Error!

@@ -43,7 +43,7 @@ namespace PLMath {
 *    Constructor
 */
 GraphPath::GraphPath(const String &sName, ResourceManager<GraphPath> *pManager) : Resource<GraphPath>(sName, pManager),
-	m_pOwnerGraph(NULL),
+	m_pOwnerGraph(nullptr),
 	m_bClosed(false)
 {
 }
@@ -94,7 +94,7 @@ uint32 GraphPath::GetNumOfNodes() const
 */
 bool GraphPath::AddNode(GraphNode &cNode)
 {
-	return m_lstNodes.Add(&cNode) != NULL;
+	return (m_lstNodes.Add(&cNode) != nullptr);
 }
 
 /**
@@ -106,7 +106,8 @@ bool GraphPath::RemoveNode(uint32 nNode)
 	// Remove node itself?
 	if (!m_pOwnerGraph) {
 		GraphNode *pNode = m_lstNodes[nNode];
-		if (pNode) delete pNode;
+		if (pNode)
+			delete pNode;
 	}
 
 	// Remove node from list
@@ -144,7 +145,7 @@ float GraphPath::GetLength() const
 	float fLength = 0.0f;
 
 	{ // Get path length
-		const GraphNode *pLastNode = NULL;
+		const GraphNode *pLastNode = nullptr;
 		Iterator<GraphNode*> cIterator = m_lstNodes.GetIterator();
 		while (cIterator.HasNext()) {
 			const GraphNode *pNode = cIterator.Next();
@@ -273,7 +274,7 @@ Vector3 GraphPath::GetPosByPercentageAlongPath(float fPercentageAlongPath, bool 
 		float fDistanceBetweenNodes = 0.0f;
 		float fPreviousDistanceBetweenNodes = 0.0f;
 		{ // Get path length
-			const GraphNode *pLastNode = NULL;
+			const GraphNode *pLastNode = nullptr;
 			Iterator<GraphNode*> cIterator = m_lstNodes.GetIterator();
 			while (cIterator.HasNext() && fLength < fLengthOnPath) {
 				// Backup the current length on path
@@ -376,7 +377,7 @@ bool GraphPath::Unload()
 	m_lstNodes.Clear();
 
 	// Reset data
-	m_pOwnerGraph = NULL;
+	m_pOwnerGraph = nullptr;
 	m_bClosed     = false;
 
 	// Call base implementation

@@ -74,7 +74,7 @@ SceneNode &SceneNodeModifier::GetSceneNode() const
 */
 SceneContext *SceneNodeModifier::GetSceneContext() const
 {
-	// There's always a valid owner scene node, so we don't need to check for NULL!
+	// There's always a valid owner scene node, so we don't need to check for a null pointer!
 	return m_pSceneNode->GetSceneContext();
 }
 
@@ -85,7 +85,7 @@ SceneContext *SceneNodeModifier::GetSceneContext() const
 String SceneNodeModifier::GetSceneNodeClass() const
 {
 	const Class *pClass = GetClass();
-	return (pClass != NULL) ? pClass->GetProperties().Get("SceneNodeClass") : "PLScene::SceneNode";
+	return (pClass != nullptr) ? pClass->GetProperties().Get("SceneNodeClass") : "PLScene::SceneNode";
 }
 
 /**
@@ -128,7 +128,7 @@ void SceneNodeModifier::SetActive(bool bActive)
 Controller *SceneNodeModifier::GetInputController() const
 {
 	// The default implementation is empty
-	return NULL;
+	return nullptr;
 }
 
 

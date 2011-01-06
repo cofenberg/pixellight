@@ -61,13 +61,13 @@ class Type<T*> {
 		// Convert pointer to bool
 		static bool ConvertToBool(T *pValue)
 		{
-			return (bool)(pValue != NULL);
+			return (bool)(pValue != nullptr);
 		}
 
 		// Convert bool to pointer
 		static T *ConvertFromBool(bool bValue)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		// Convert pointer to int
@@ -201,7 +201,7 @@ class Type<T*> {
 		static T *ConvertFromFloat(float fValue)
 		{
 			// No conversion from pointer types in non-integral types!
-			return NULL;
+			return nullptr;
 		}
 
 		// Convert pointer to double
@@ -215,7 +215,7 @@ class Type<T*> {
 		static T *ConvertFromDouble(double dValue)
 		{
 			// No conversion from pointer types in non-integral types!
-			return NULL;
+			return nullptr;
 		}
 
 		// Convert pointer to string

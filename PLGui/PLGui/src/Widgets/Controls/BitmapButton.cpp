@@ -172,7 +172,7 @@ void BitmapButton::OnDraw(Graphics &cGraphics)
 	AbstractButton::OnDraw(cGraphics);
 
 	// Draw button
-	Image *pImage = NULL;
+	Image *pImage = nullptr;
 		 if (!IsEnabled())	pImage = &m_cImageDisabled;
 	else if (m_bPressed)	pImage = &m_cImagePressed;
 	else if (m_bMouseIn)	pImage = &m_cImageSelected;

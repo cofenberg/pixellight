@@ -75,7 +75,7 @@ class SceneHierarchyNodeItem {
 		*    Returns the scene node this scene hierarchy node item is linked to
 		*
 		*  @return
-		*    The scene node this scene hierarchy node item is linked to, NULL on error
+		*    The scene node this scene hierarchy node item is linked to, a null pointer on error
 		*    (currently not linked to a scene node?)
 		*/
 		PLS_API SceneNode *GetSceneNode() const;
@@ -85,7 +85,7 @@ class SceneHierarchyNodeItem {
 		*    Returns the scene hierarchy node this scene hierarchy node item is attached to
 		*
 		*  @return
-		*    The scene hierarchy node this scene hierarchy node item is attached to, NULL on error
+		*    The scene hierarchy node this scene hierarchy node item is attached to, a null pointer on error
 		*    (currently not attached to a scene hierarchy node?)
 		*/
 		PLS_API SceneHierarchyNode *GetHierarchyNode() const;
@@ -95,7 +95,7 @@ class SceneHierarchyNodeItem {
 		*    Returns the previous scene hierarchy node item
 		*
 		*  @return
-		*    The previous scene hierarchy node item, NULL if there's no previous item
+		*    The previous scene hierarchy node item, a null pointer if there's no previous item
 		*/
 		PLS_API SceneHierarchyNodeItem *GetPreviousItem() const;
 
@@ -104,7 +104,7 @@ class SceneHierarchyNodeItem {
 		*    Returns the next scene hierarchy node item
 		*
 		*  @return
-		*    The next scene hierarchy node item, NULL if there's no next item
+		*    The next scene hierarchy node item, a null pointer if there's no next item
 		*/
 		PLS_API SceneHierarchyNodeItem *GetNextItem() const;
 
@@ -188,13 +188,13 @@ class SceneHierarchyNodeItem {
 	//[-------------------------------------------------------]
 	private:
 		// Scene node
-		SceneNode			   *m_pSceneNode;						/**< Scene node this scene hierarchy node item is linked with, can be NULL */
-		SceneHierarchyNodeItem *m_pPreviousSceneNodeItem;			/**< Next scene node item, can be NULL */
-		SceneHierarchyNodeItem *m_pNextSceneNodeItem;				/**< Previous scene node item, can be NULL */
+		SceneNode			   *m_pSceneNode;						/**< Scene node this scene hierarchy node item is linked with, can be a null pointer */
+		SceneHierarchyNodeItem *m_pPreviousSceneNodeItem;			/**< Next scene node item, can be a null pointer */
+		SceneHierarchyNodeItem *m_pNextSceneNodeItem;				/**< Previous scene node item, can be a null pointer */
 		// Scene hierarchy node
-		SceneHierarchyNode	   *m_pSceneHierarchyNode;				/**< Scene hierarchy node this scene hierarchy node item is attached to, can be NULL */
-		SceneHierarchyNodeItem *m_pPreviousSceneHierarchyNodeItem;	/**< Next scene hierarchy node item, can be NULL */
-		SceneHierarchyNodeItem *m_pNextSceneHierarchyNodeItem;		/**< Previous scene hierarchy node item, can be NULL */
+		SceneHierarchyNode	   *m_pSceneHierarchyNode;				/**< Scene hierarchy node this scene hierarchy node item is attached to, can be a null pointer */
+		SceneHierarchyNodeItem *m_pPreviousSceneHierarchyNodeItem;	/**< Next scene hierarchy node item, can be a null pointer */
+		SceneHierarchyNodeItem *m_pNextSceneHierarchyNodeItem;		/**< Previous scene hierarchy node item, can be a null pointer */
 
 
 };

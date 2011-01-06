@@ -59,7 +59,7 @@ Client::~Client()
 Connection *Client::CreateIncomingConnection()
 {
 	// Not used for clients
-	return NULL;
+	return nullptr;
 }
 
 Connection *Client::CreateOutgoingConnection()

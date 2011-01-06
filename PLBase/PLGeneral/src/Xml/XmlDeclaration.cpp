@@ -165,7 +165,7 @@ const char *XmlDeclaration::Parse(const char *pszData, XmlParsingData *pData, EE
 			pDocument->SetError(ErrorParsingDeclaration, 0, 0, nEncoding);
 
 		// Error!
-		return NULL;
+		return nullptr;
 	}
 	if (pData) {
 		pData->Stamp(pszData, nEncoding);
@@ -213,7 +213,7 @@ const char *XmlDeclaration::Parse(const char *pszData, XmlParsingData *pData, EE
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

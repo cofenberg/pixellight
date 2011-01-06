@@ -64,7 +64,7 @@ class JointImpl : public PLPhysics::JointImpl {
 		*    Returns the Newton physics joint
 		*
 		*  @return
-		*    The Newton physics joint, NULL on error (of that's the case, something went totally wrong :)
+		*    The Newton physics joint, a null pointer on error (of that's the case, something went totally wrong :)
 		*
 		*  @note
 		*    - Do NOT change the user data of the Newton physics joínt! (using NewtonJointSetUserData())
@@ -118,7 +118,7 @@ class JointImpl : public PLPhysics::JointImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Newton::NewtonJoint *m_pNewtonJoint;	/**< Newton physics joint, can be NULL */
+		Newton::NewtonJoint *m_pNewtonJoint;	/**< Newton physics joint, can be a null pointer */
 		bool				 m_bBreakable;		/**< Is this joint breakable? */
 		PLMath::Vector3		 m_vBreakForce;		/**< Break force */
 		PLMath::Vector3		 m_vBreakTorque;	/**< Break torque */

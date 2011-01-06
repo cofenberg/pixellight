@@ -57,9 +57,9 @@ class XmlTextListElement : public XmlTextElement {
 		*    Constructor
 		*
 		*  @param[in] pParent
-		*    Parent object, can be NULL
+		*    Parent object, can be a null pointer
 		*/
-		PLXMLTEXT_API XmlTextListElement(XmlTextElement *pParent = NULL);
+		PLXMLTEXT_API XmlTextListElement(XmlTextElement *pParent = nullptr);
 
 		/**
 		*  @brief

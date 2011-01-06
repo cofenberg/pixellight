@@ -172,8 +172,8 @@ class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 		*/
 		struct LightEffect {
 			const PLScene::VisNode	   *pVisNode;			/**< ALWAYS valid! */
-			PLRenderer::OcclusionQuery *pOcclusionQueryAll;	/**< Can be NULL */
-			PLRenderer::OcclusionQuery *pOcclusionQuery;	/**< Can be NULL */
+			PLRenderer::OcclusionQuery *pOcclusionQueryAll;	/**< Can be a null pointer */
+			PLRenderer::OcclusionQuery *pOcclusionQuery;	/**< Can be a null pointer */
 			float						fFactor;			/**< Factor */
 			float						fFlareBlendFactor;	/**< Factor for flares & blend */
 			PLMath::Vector3				v2DPos;				/**< 2D screen position (-1 to 1) */
@@ -184,8 +184,8 @@ class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::VertexBuffer	  *m_pBillboardVB;			/**< Billbord vertex buffer, can be NULL */
-		PLRenderer::VertexBuffer	  *m_pBillboardColorVB;		/**< Billbord vertex buffer with color support, can be NULL */
+		PLRenderer::VertexBuffer	  *m_pBillboardVB;			/**< Billbord vertex buffer, can be a null pointer */
+		PLRenderer::VertexBuffer	  *m_pBillboardColorVB;		/**< Billbord vertex buffer with color support, can be a null pointer */
 		PLGeneral::Pool<LightEffect*>  m_lstLightEffects;		/**< List of used light effects */
 		PLGeneral::Pool<LightEffect*>  m_lstFreeLightEffects;	/**< List of free light effects */
 

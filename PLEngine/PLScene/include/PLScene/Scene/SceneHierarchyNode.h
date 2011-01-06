@@ -86,7 +86,7 @@ class SceneHierarchyNode {
 		*    Returns the scene context the scene hierarchy node is in
 		*
 		*  @return
-		*    The scene context the scene hierarchy node is in, can but shouldn't be NULL
+		*    The scene context the scene hierarchy node is in, can but shouldn't be a null pointer
 		*/
 		PLS_API SceneContext *GetSceneContext() const;
 
@@ -95,7 +95,7 @@ class SceneHierarchyNode {
 		*    Returns the owner scene hierarchy
 		*
 		*  @return
-		*    The owner scene hierarchy (NEVER NULL!)
+		*    The owner scene hierarchy (NEVER a null pointer!)
 		*/
 		PLS_API SceneHierarchy *GetHierarchy() const;
 
@@ -104,7 +104,7 @@ class SceneHierarchyNode {
 		*    Returns the parent scene hierarchy node
 		*
 		*  @return
-		*    The parent scene hierarchy node, if NULL, this is the root
+		*    The parent scene hierarchy node, if a null pointer, this is the root
 		*/
 		PLS_API SceneHierarchyNode *GetParentNode() const;
 
@@ -163,13 +163,13 @@ class SceneHierarchyNode {
 		*  @param[in]  cPlaneSet
 		*    Plane set to check against
 		*  @param[out] pnOutClipMask
-		*    If not NULL, this clip mask will receive the intersection state of a
+		*    If not a null pointer, this clip mask will receive the intersection state of a
 		*    maximum number of 32 planes if the box intersects the plane set.
 		*
 		*  @return
 		*    'false' if the scene hierarchy node volume is not within the given plane set, else 'true'
 		*/
-		PLS_API bool CheckPlaneSet(const PLMath::PlaneSet &cPlaneSet, PLGeneral::uint32 *pnOutClipMask = NULL) const;
+		PLS_API bool CheckPlaneSet(const PLMath::PlaneSet &cPlaneSet, PLGeneral::uint32 *pnOutClipMask = nullptr) const;
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class SceneHierarchyNode {
 		*    Returns the first scene hierarchy node item
 		*
 		*  @return
-		*    The first scene hierarchy node item, NULL if there are no items
+		*    The first scene hierarchy node item, a null pointer if there are no items
 		*
 		*  @note
 		*    - Use SceneHierarchyNodeItem::GetPreviousItem()/SceneHierarchyNodeItem::GetNextItem()
@@ -260,7 +260,7 @@ class SceneHierarchyNode {
 		*    Index of the requested child scene hierarchy node
 		*
 		*  @return
-		*    The requested child scene hierarchy node, NULL on error
+		*    The requested child scene hierarchy node, a null pointer on error
 		*/
 		virtual SceneHierarchyNode *GetNode(PLGeneral::uint32 nIndex) const = 0;
 
@@ -364,12 +364,12 @@ class SceneHierarchyNode {
 	//[-------------------------------------------------------]
 	protected:
 		SceneHierarchy		   *m_pHierarchy;		/**< Owner hierarchy (always valid!) */
-		SceneHierarchyNode	   *m_pParentNode;		/**< Parent scene hierarchy node, can be NULL */
+		SceneHierarchyNode	   *m_pParentNode;		/**< Parent scene hierarchy node, can be a null pointer */
 		PLGeneral::uint32		m_nID;				/**< The unique ID of the scene hierarchy node */
 		PLGeneral::uint8		m_nLevel;			/**< Scene hierarchy node level */
 		PLMath::AABoundingBox   m_cAABoundingBox;	/**< Axis aligned bounding box of this scene hierarchy node */
 		PLGeneral::uint32	    m_nNumOfItems;		/**< The number of scene hierarchy node items attached to this scene hierarchy node */
-		SceneHierarchyNodeItem *m_pFirstItem;		/**< The first scene hierarchy node item, can be NULL */
+		SceneHierarchyNodeItem *m_pFirstItem;		/**< The first scene hierarchy node item, can be a null pointer */
 
 
 };

@@ -54,16 +54,16 @@ FileZip::FileZip(const Url &cUrl, const String &sZipFile, const String &sPathInZ
 		const FileAccess::Entry &cZipAccess = m_pAccess->GetEntry(sZipFile);
 		sPassword = cZipAccess.GetPassword();
 		bCaseSensitive = cZipAccess.GetCaseSensitive();
-		if (cZipAccess.GetFlagsMask() & File::FileMemBuf) bMemBuf = ((cZipAccess.GetFlagsValue() & File::FileMemBuf) != 0);
+		if (cZipAccess.GetFlagsMask() & File::FileMemBuf)
+			bMemBuf = ((cZipAccess.GetFlagsValue() & File::FileMemBuf) != 0);
 	}
 
 	// Open ZIP-file
 	m_cZipFile.Open(sZipFile, sPassword, bCaseSensitive, bMemBuf, pAccess);
 
 	// Locate entry
-	if (sPathInZip.GetLength()) {
+	if (sPathInZip.GetLength())
 		m_cZipFile.LocateFile(sPathInZip);
-	}
 }
 
 /**
@@ -222,7 +222,8 @@ int FileZip::GetC()
 		if (m_cZipFile.Read(&c, 1, 1) == 1) {
 			// Text mode: \r\n -> \n
 			if ((m_nAccess & File::FileText) && c == 13) {
-				if (m_cZipFile.Read(&c, 1, 1) != 1) return -1;
+				if (m_cZipFile.Read(&c, 1, 1) != 1)
+					return -1;
 			}
 			return (int)c;
 		}
@@ -263,7 +264,8 @@ String FileZip::GetS()
 		*pszPos = 0;
 
 		// Return string
-		if (pszPos > szString || nChar != -1) return szString;
+		if (pszPos > szString || nChar != -1)
+			return szString;
 	}
 
 	// Error!

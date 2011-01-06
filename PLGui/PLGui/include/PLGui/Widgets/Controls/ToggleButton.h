@@ -66,7 +66,7 @@ class ToggleButton : public AbstractToggleButton {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API ToggleButton(Widget *pParent = NULL);
+		PLGUI_API ToggleButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -180,7 +180,7 @@ class ImagePalette {
 		*    Get color palette data
 		*
 		*  @return
-		*    Pointer to color palette, NULL on error
+		*    Pointer to color palette, a null pointer on error
 		*
 		*  @remarks
 		*    If you use this function to change the palette data by yourself, be sure to call
@@ -207,7 +207,7 @@ class ImagePalette {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint8									*m_pData;		/**< Palette data, can be NULL */
+		PLGeneral::uint8									*m_pData;		/**< Palette data, can be a null pointer */
 		PLGeneral::uint32									 m_nSize;		/**< Actual size of color array (Number of colors, not bytes!) */
 		PLGeneral::uint32									 m_nColors;		/**< Number of colors (<= m_nSize) */
 		mutable PLGeneral::HashMap<PLGeneral::uint32, int>	 m_mapColors;	/**< Hash map: Color -> Index */

@@ -138,7 +138,7 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

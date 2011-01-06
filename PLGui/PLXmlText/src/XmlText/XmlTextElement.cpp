@@ -58,7 +58,7 @@ namespace PLXmlText {
 *    Constructor
 */
 XmlTextElement::XmlTextElement(XmlTextElement *pParent) :
-	m_pXmlText(pParent ? pParent->m_pXmlText : NULL),
+	m_pXmlText(pParent ? pParent->m_pXmlText : nullptr),
 	m_pParent(pParent)
 {
 }
@@ -145,7 +145,7 @@ void XmlTextElement::Parse(XmlNode &cXmlNode)
 	XmlNode *pChildNode = cXmlNode.GetFirstChild();
 	while (pChildNode) {
 		// Create child element
-		XmlTextElement *pChild = NULL;
+		XmlTextElement *pChild = nullptr;
 		if (pChildNode->GetType() == XmlNode::Element) {
 			// We found a XML element
 			XmlElement *pElement = (XmlElement*)pChildNode;

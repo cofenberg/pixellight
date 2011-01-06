@@ -120,7 +120,7 @@ class DynLib {
 		*    Name of the symbol to retrieve
 		*
 		*  @return
-		*    Pointer to the symbol, or NULL on error
+		*    Pointer to the symbol, or a null pointer on error
 		*/
 		PLGENERAL_API void *GetSymbol(const String &sSymbol) const;
 
@@ -164,7 +164,7 @@ class DynLib {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DynLibImpl *m_pDynLibImpl;	/**< Pointer to the system specific implementation (assumed to be never NULL!) */
+		DynLibImpl *m_pDynLibImpl;	/**< Pointer to the system specific implementation (assumed to be never a null pointer!) */
 		Url			m_cUrl;			/**< Url to the dynamic library */
 
 

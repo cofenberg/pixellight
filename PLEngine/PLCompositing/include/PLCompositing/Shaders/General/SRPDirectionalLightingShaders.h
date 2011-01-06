@@ -229,7 +229,7 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 		*    Returns the directional light scene node used for rendering the scene the last time
 		*
 		*  @note
-		*    The directional light scene node used for rendering the scene the last time, NULL if no light was used
+		*    The directional light scene node used for rendering the scene the last time, a null pointer if no light was used
 		*
 		*  @note
 		*    - This information can for example be used to skip the light rendering for the already rendered light
@@ -353,7 +353,7 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 		PLRenderer::RenderStates			*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
 		PLMath::Vector3						 m_vLightDirection;		/**< Normalized view space light direction vector */

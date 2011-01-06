@@ -115,7 +115,7 @@ class Module {
 		*    Get dynamic library that contains the plugin
 		*
 		*  @return
-		*    Pointer to dynamic library (can be NULL, if the module is not a plugin)
+		*    Pointer to dynamic library (can be a null pointer, if the module is not a plugin)
 		*
 		*  @remarks
 		*    This function will only return a dynamic library, if the module is a plugin
@@ -230,7 +230,7 @@ class Module {
 		// Module information
 		PLGeneral::uint32			  m_nModuleID;		/**< Module ID */
 		bool						  m_bPlugin;		/**< Is module a plugin? */
-		PLGeneral::DynLib			 *m_pDynLib;		/**< Plugin library (can be NULL) */
+		PLGeneral::DynLib			 *m_pDynLib;		/**< Plugin library (can be a null pointer) */
 		PLGeneral::String			  m_sFilename;		/**< Absolute plugin filename (can be empty) */
 		PLGeneral::String			  m_sName;			/**< Name of module */
 		PLGeneral::String			  m_sVendor;		/**< Vendor of module */

@@ -143,8 +143,8 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		virtual bool GetClipPlane(PLGeneral::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const;
 		virtual bool SetClipPlane(char nIndex = -1, float fA = 0.0f, float fB = 0.0f, float fC = 0.0f, float fD = 0.0f);
 		// Vertex buffer states
-		virtual PLRenderer::VertexBuffer *GetVertexBuffer(PLGeneral::uint32 nStreamNumber = 0, PLGeneral::uint32 *pnOffset = NULL) const;
-		virtual bool SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer = NULL, PLGeneral::uint32 nOffset = 0, PLGeneral::uint32 nStreamNumber = 0);
+		virtual PLRenderer::VertexBuffer *GetVertexBuffer(PLGeneral::uint32 nStreamNumber = 0, PLGeneral::uint32 *pnOffset = nullptr) const;
+		virtual bool SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer = nullptr, PLGeneral::uint32 nOffset = 0, PLGeneral::uint32 nStreamNumber = 0);
 
 
 };

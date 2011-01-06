@@ -363,7 +363,7 @@ int _vsnwprintf(wchar_t *buf, size_t lenMax,
 
                     case _T('s'):
                         {
-                            const wchar_t *val = NULL;
+                            const wchar_t *val = nullptr;
 #if wxUSE_UNICODE
                             wxString s;
 
@@ -464,7 +464,7 @@ int _vsnwprintf(wchar_t *buf, size_t lenMax,
             APPEND_CH(chCur);
         }
 
-        // terminating NUL?
+        // terminating zero?
         if ( !chCur )
             break;
     }
@@ -830,7 +830,7 @@ int _vscwprintf(const wchar_t *format, va_list argptr)
 
                     case _T('s'):
                         {
-                            const wchar_t *val = NULL;
+                            const wchar_t *val = nullptr;
 #if wxUSE_UNICODE
                             wxString s;
 
@@ -902,7 +902,7 @@ int _vscwprintf(const wchar_t *format, va_list argptr)
             lenCur++;
         }
 
-        // terminating NUL?
+        // terminating zero?
         if ( !chCur )
             break;
     }
@@ -917,13 +917,13 @@ int _vscwprintf(const wchar_t *format, va_list argptr)
 
 int _vscprintf(const char *fmt,va_list ap)
 {
-    return vsnprintf( NULL,(size_t)0, fmt, ap);
+    return vsnprintf( nullptr,(size_t)0, fmt, ap);
 }
 
 /*// wchar functions
 int _vscwprintf(const wchar_t *fmt,va_list ap)
 {
-	int ret = _vsnwprintf( NULL,(size_t)0, fmt, ap);
+	int ret = _vsnwprintf( nullptr,(size_t)0, fmt, ap);
 	if (ret == -1)
 		printf("error vscwprintf: %s\n", strerror(errno));
     return ret;

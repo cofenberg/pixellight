@@ -55,7 +55,8 @@ LogFormaterHtml::LogFormaterHtml() :
 */
 LogFormaterHtml::~LogFormaterHtml()
 {
-	if (m_mapTextFormats) delete m_mapTextFormats;
+	if (m_mapTextFormats)
+		delete m_mapTextFormats;
 }
 
 /**
@@ -67,7 +68,8 @@ void LogFormaterHtml::SetTextFormat(uint8 nLogLevel, const String &sFormat)
 	if (sFormat.GetLength() > 0) {
 		if (&m_mapTextFormats->Get(nLogLevel) != &HashMap<uint8, String>::Null)
 			m_mapTextFormats->Replace(nLogLevel, sFormat);
-		else m_mapTextFormats->Add(nLogLevel, sFormat);
+		else
+			m_mapTextFormats->Add(nLogLevel, sFormat);
 	}
 }
 
@@ -192,7 +194,8 @@ bool LogFormaterHtml::Open(const String &sFilename)
 				String sTitle = "<head><title>";
 				sTitle += m_sTitle;
 				sTitle += "</title></head>";
-				if (!m_pFile->PrintLn(sTitle)) return false; // Error!
+				if (!m_pFile->PrintLn(sTitle))
+					return false; // Error!
 			}
 
 			// Write the <body> tag
@@ -211,7 +214,8 @@ bool LogFormaterHtml::Open(const String &sFilename)
 			if (m_pFile->PrintLn(sBody)) {
 				// Write header text if given
 				if (m_sHeader.GetLength() > 0) {
-					if (!m_pFile->PrintLn(m_sHeader)) return false; // Error!
+					if (!m_pFile->PrintLn(m_sHeader))
+						return false; // Error!
 				}
 
 				// Done
@@ -240,7 +244,7 @@ bool LogFormaterHtml::Close()
 
 		// Reset data
 		delete m_pFile;
-		m_pFile = NULL;
+		m_pFile = nullptr;
 
 		// Done
 		return true;

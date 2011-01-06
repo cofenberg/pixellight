@@ -96,7 +96,7 @@ class Source : public PLSound::Source {
 	//[ Public virtual PLSound::Source functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(PLSound::Buffer *pBuffer = NULL);
+		virtual bool Load(PLSound::Buffer *pBuffer = nullptr);
 		virtual bool Play(bool bRestart = false);
 		virtual bool IsPlaying() const;
 		virtual void Pause();

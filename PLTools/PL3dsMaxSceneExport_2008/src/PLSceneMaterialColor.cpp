@@ -41,7 +41,7 @@ using namespace PLGeneral;
 *    Constructor
 */
 PLSceneMaterialColor::PLSceneMaterialColor(PLScene &cScene, const Color &cColor, const std::string &sName) :
-	PLSceneMaterial(cScene, NULL, NULL, sName),
+	PLSceneMaterial(cScene, nullptr, nullptr, sName),
 	m_cColor(cColor)
 {
 }

@@ -68,7 +68,7 @@ class ThemeTestWidget : public PLGui::Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		ThemeTestWidget(Widget *pParent = NULL);
+		ThemeTestWidget(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

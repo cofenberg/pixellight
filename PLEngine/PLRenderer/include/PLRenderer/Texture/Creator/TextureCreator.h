@@ -86,15 +86,15 @@ class TextureCreator : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Creates the texture if a NULL pointer is given
+		*    Creates the texture if a null pointer is given
 		*
 		*  @param[in] cTextureManager
 		*    Texture manager to use
 		*  @param[in] pTexture
-		*    Pointer to the texture, if NULL a new texture is created
+		*    Pointer to the texture, if a null pointer a new texture is created
 		*
 		*  @return
-		*   The created texture, NULL on error
+		*   The created texture, a null pointer on error
 		*/
 		PLRENDERER_API Texture *CreateTexture(TextureManager &cTextureManager, Texture *pTexture) const;
 
@@ -110,12 +110,12 @@ class TextureCreator : public PLCore::Object {
 		*  @param[in] cTextureManager
 		*    Texture manager to use
 		*  @param[in] pTexture
-		*    Texture to manipulate, if NULL a new texture is created
+		*    Texture to manipulate, if a null pointer a new texture is created
 		*
 		*  @return
-		*   The created/manipulated texture, NULL on error
+		*   The created/manipulated texture, a null pointer on error
 		*/
-		virtual Texture *Create(TextureManager &cTextureManager, Texture *pTexture = NULL) const = 0;
+		virtual Texture *Create(TextureManager &cTextureManager, Texture *pTexture = nullptr) const = 0;
 
 
 };

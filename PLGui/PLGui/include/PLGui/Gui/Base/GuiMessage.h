@@ -121,7 +121,7 @@ class GuiMessage {
 		*  @param[in] nType
 		*    Message type
 		*/
-		PLGUI_API GuiMessage(Widget *pWidget = NULL, EMessageType nType = MessageOnUnknown);
+		PLGUI_API GuiMessage(Widget *pWidget = nullptr, EMessageType nType = MessageOnUnknown);
 
 		/**
 		*  @brief

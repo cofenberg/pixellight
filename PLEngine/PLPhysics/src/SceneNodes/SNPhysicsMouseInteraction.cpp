@@ -89,7 +89,7 @@ SNPhysicsMouseInteraction::SNPhysicsMouseInteraction() :
 	EventHandlerUpdate(&SNPhysicsMouseInteraction::NotifyUpdate, this),
 	m_sForceLineName("PhysicsForceLine"),
 	m_bPicking(false),
-	m_pPickedPhysicsBody(NULL),
+	m_pPickedPhysicsBody(nullptr),
 	m_fPickedDistance(0.0f),
 	m_pController(new PhysicsMouseInteraction())
 {
@@ -190,7 +190,7 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// Reset picking data
 					if (!m_pController->Pickup.IsPressed()) {
 						m_bPicking			 = false;
-						m_pPickedPhysicsBody = NULL;
+						m_pPickedPhysicsBody = nullptr;
 						m_fPickedDistance	 = 0.0f;
 						m_vAttachmentPoint	 = Vector3::Zero;
 					}
@@ -241,7 +241,7 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 								if (pSensor->Check()) {
 									// Get the closest hit physics body
 									const Sensor::BodyInfo *pBodyInfo = pSensor->GetClosestBody();
-									m_pPickedPhysicsBody = pBodyInfo ? pBodyInfo->pBody : NULL;
+									m_pPickedPhysicsBody = pBodyInfo ? pBodyInfo->pBody : nullptr;
 									if (m_pPickedPhysicsBody && m_pPickedPhysicsBody->GetMass()) {
 										// Calculate the attachment point in world space
 										m_fPickedDistance = pBodyInfo->fDistance*fDistance;
@@ -263,7 +263,7 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 									}
 								} else {
 									// We do not allow picking of static physics bodies
-									m_pPickedPhysicsBody = NULL;
+									m_pPickedPhysicsBody = nullptr;
 								}
 
 								// Cleanup

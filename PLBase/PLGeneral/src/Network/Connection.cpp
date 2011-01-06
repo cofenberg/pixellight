@@ -173,9 +173,8 @@ int Connection::Receive(char *pBuffer, uint32 nSize)
 {
 	// Read data from socket
 	int nBytes = m_cSocket.Receive(pBuffer, nSize);
-	if (nBytes > 0) {
+	if (nBytes > 0)
 		OnReceive(pBuffer, nSize);
-	}
 	return nBytes;
 }
 
@@ -224,7 +223,10 @@ int Connection::Send(const String &sString) const
 		// Send string
 		// [TODO] What's with Unicode strings?? Check \0 at the end...
 		return Send(sString.GetASCII(), sString.GetLength());
-	} else return -1; // Error, invalid string
+	} else {
+		// Error, invalid string
+		return -1;
+	}
 }
 
 
@@ -248,7 +250,8 @@ Connection::~Connection()
 bool Connection::Connect(const String &sHost, uint32 nPort)
 {
 	// Disconnect first
-	if (IsConnected()) Disconnect();
+	if (IsConnected())
+		Disconnect();
 
 	// Create socket
 	if (m_cSocket.IsValid()) {
@@ -286,13 +289,17 @@ bool Connection::Connect(const String &sHost, uint32 nPort)
 bool Connection::Connect(Socket &cSocket)
 {
 	// Disconnect first
-	if (IsConnected()) Disconnect();
+	if (IsConnected())
+		Disconnect();
 
 	// Get connection socket
 	if (cSocket.IsValid()) {
 		// Save socket
 		m_cSocket = cSocket;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 
 	// Connection established
 	m_bConnected = true;
@@ -377,7 +384,10 @@ bool Connection::ReceiveData()
 			if (Receive(pBuffer, 4096) > 0) {
 				// Done
 				return true;
-			} else Disconnect(); // Error!
+			} else {
+				// Error!
+				Disconnect();
+			}
 		} else {
 			// No, wait a second
 			System::GetInstance()->Sleep(1000);
@@ -395,7 +405,8 @@ bool Connection::ReceiveData()
 int Connection::Run()
 {
 	// Receive new data from connection
-	while (ReceiveData());
+	while (ReceiveData())
+		;	// Nothing to do in here
 
 	// Leave thread
 	return 0;

@@ -69,7 +69,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		*    Returns the PhysX physics actor
 		*
 		*  @return
-		*    The PhysX physics actor, NEVER NULL
+		*    The PhysX physics actor, NEVER a null pointer
 		*
 		*  @note
 		*    - Do NOT change the user data of the PhysX physics actor! (using NxActor::userData)
@@ -155,7 +155,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		NxActor			*m_pPhysXActor;			/**< PhysX physics actor, can be NULL */
+		NxActor			*m_pPhysXActor;			/**< PhysX physics actor, can be a null pointer */
 		bool			 m_bActive;				/**< Currently active? */
 		float			 m_fCollisionVolume;	/**< Collision volume */
 		PLMath::Vector3	 m_vForce;				/**< Force applied to the body at the next simulation update */

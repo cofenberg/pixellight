@@ -70,7 +70,7 @@ class PLSceneContainer : public PLSceneNode {
 		*    Name of the scene node to return
 		*
 		*  @return
-		*    The scene node with the given name, NULL if there's no scene node with the given name
+		*    The scene node with the given name, a null pointer if there's no scene node with the given name
 		*
 		*  @remarks
 		*    Within Get(<Name>) you can also use 'absolute names' instead of 'relative' names. 'Root.MyScene.MyNode'
@@ -104,7 +104,7 @@ class PLSceneContainer : public PLSceneNode {
 		*    Constructor
 		*
 		*  @param[in] pContainer
-		*    Container this container is in, NULL if this is the root container of the scene
+		*    Container this container is in, a null pointer if this is the root container of the scene
 		*  @param[in] sName
 		*    Name of this scene node
 		*  @param[in] nType
@@ -128,7 +128,7 @@ class PLSceneContainer : public PLSceneNode {
 		*    IGame node the cell name comes from
 		*
 		*  @return
-		*    Cell with the given name, NULL on error
+		*    Cell with the given name, a null pointer on error
 		*
 		*  @note
 		*    - If there's no cell with this name, a new one is created

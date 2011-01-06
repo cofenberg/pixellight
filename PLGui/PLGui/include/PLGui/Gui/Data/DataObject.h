@@ -213,7 +213,7 @@ class DataObject {
 		*    Get binary data
 		*
 		*  @return
-		*    Data pointer, NULL if data type is other than DataBinary
+		*    Data pointer, a null pointer if data type is other than DataBinary
 		*/
 		PLGUI_API PLGeneral::uint8 *GetBinaryData() const;
 

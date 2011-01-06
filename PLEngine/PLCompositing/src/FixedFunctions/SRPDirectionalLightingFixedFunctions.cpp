@@ -68,7 +68,7 @@ SRPDirectionalLightingFixedFunctions::SRPDirectionalLightingFixedFunctions() :
 	Flags(this),
 	m_pRenderStates(new RenderStates()),
 	m_nMaterialChanges(0),
-	m_pCurrentMaterial(NULL)
+	m_pCurrentMaterial(nullptr)
 {
 }
 
@@ -190,9 +190,9 @@ void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const S
 
 							// Bind textures
 							// Diffuse map (stage 0)
-							const Texture *pTexture = NULL;
+							const Texture *pTexture = nullptr;
 							if (GetFlags() & NoDiffuseMap)
-								cRenderer.SetTextureBuffer(0, NULL);
+								cRenderer.SetTextureBuffer(0, nullptr);
 							else {
 								pParameter = pMaterial->GetParameter(Material::DiffuseMap);
 								if (pParameter)
@@ -219,7 +219,7 @@ void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const S
 										pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
 									}
 								} else {
-									cRenderer.SetTextureBuffer(0, NULL);
+									cRenderer.SetTextureBuffer(0, nullptr);
 
 									// Disable alpha test
 									pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
@@ -229,9 +229,9 @@ void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const S
 							// Light map (stage 1)
 							bool bLightMapUsed = false;
 							if (GetFlags() & NoLightMap)
-								cRenderer.SetTextureBuffer(1, NULL);
+								cRenderer.SetTextureBuffer(1, nullptr);
 							else {
-								pTexture = NULL;
+								pTexture = nullptr;
 								pParameter = pMaterial->GetParameter(Material::LightMap);
 								if (pParameter)
 									pTexture = pParameter->GetValueTexture();
@@ -240,16 +240,16 @@ void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const S
 									SetupTextureFiltering(cRenderer, 1);
 									bLightMapUsed = true;
 								} else {
-									cRenderer.SetTextureBuffer(1, NULL);
+									cRenderer.SetTextureBuffer(1, nullptr);
 								}
 							}
 
 							// Ambient occlusion map (stage 1)
 							if (!bLightMapUsed) {
 								if (GetFlags() & NoAmbientOcclusionMap)
-									cRenderer.SetTextureBuffer(1, NULL);
+									cRenderer.SetTextureBuffer(1, nullptr);
 								else {
-									pTexture = NULL;
+									pTexture = nullptr;
 									pParameter = pMaterial->GetParameter(Material::AmbientOcclusionMap);
 									if (pParameter)
 										pTexture = pParameter->GetValueTexture();
@@ -257,16 +257,16 @@ void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const S
 										pTexture->Bind(1);
 										SetupTextureFiltering(cRenderer, 1);
 									} else {
-										cRenderer.SetTextureBuffer(1, NULL);
+										cRenderer.SetTextureBuffer(1, nullptr);
 									}
 								}
 							}
 
 							// Reflection map (stage 2)
 							if (GetFlags() & NoReflectionMap)
-								cRenderer.SetTextureBuffer(2, NULL);
+								cRenderer.SetTextureBuffer(2, nullptr);
 							else {
-								pTexture = NULL;
+								pTexture = nullptr;
 								pParameter = pMaterial->GetParameter(Material::ReflectionMap);
 								if (pParameter)
 									pTexture = pParameter->GetValueTexture();
@@ -290,7 +290,7 @@ void SRPDirectionalLightingFixedFunctions::DrawMesh(Renderer &cRenderer, const S
 										}
 									}
 								} else {
-									cRenderer.SetTextureBuffer(2, NULL);
+									cRenderer.SetTextureBuffer(2, nullptr);
 								}
 							}
 						}
@@ -338,7 +338,7 @@ void SRPDirectionalLightingFixedFunctions::Draw(Renderer &cRenderer, const SQCul
 		}
 
 		// Search for the first (= nearest) visible directional light scene node - but only if lighting is enabled
-		const VisNode *pVisNode = (GetFlags() & NoLighting) ? NULL : GetFirstDirectionalLight(cCullQuery);
+		const VisNode *pVisNode = (GetFlags() & NoLighting) ? nullptr : GetFirstDirectionalLight(cCullQuery);
 		if (pVisNode && pVisNode->GetSceneNode() && pVisNode->GetSceneNode()->IsLight()) {
 			pFixedFunctions->SetRenderState(FixedFunctions::RenderState::Lighting, true);
 
@@ -359,7 +359,7 @@ void SRPDirectionalLightingFixedFunctions::Draw(Renderer &cRenderer, const SQCul
 
 		// Reset current material
 		m_nMaterialChanges = 0;
-		m_pCurrentMaterial = NULL;
+		m_pCurrentMaterial = nullptr;
 
 		// Draw recursive from back to front
 		DrawRec(cRenderer, cCullQuery);

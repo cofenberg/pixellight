@@ -93,8 +93,8 @@ JointBall::JointBall(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLP
 		((BodyImpl&)pChildBody ->GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent and child bodies
-	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : NULL;
-	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : NULL;
+	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
 
 	// Create the Newton physics joint
 	Newton::NewtonJoint *pNewtonJoint = NewtonConstraintCreateBall(pNewtonWorld, m_vPivotPoint,

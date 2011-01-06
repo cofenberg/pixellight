@@ -166,7 +166,7 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 		// Destroy the old heigh field
 		if (cSNTerrain.m_pfHeightMap) {
 			delete [] cSNTerrain.m_pfHeightMap;
-			cSNTerrain.m_pfHeightMap = NULL;
+			cSNTerrain.m_pfHeightMap = nullptr;
 		}
 
 		// Get the image buffer

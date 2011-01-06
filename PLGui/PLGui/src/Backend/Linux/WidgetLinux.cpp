@@ -119,9 +119,9 @@ void WidgetLinux::CreateWidget()
 			"",				// Window name
 			"",				// Icon name
 			XLib::None,		// Icon pixmap
-			NULL,			// argv
+			nullptr,		// argv
 			0,				// argc
-			NULL			// Hints
+			nullptr			// Hints
 		);
 
 		// Set positioning hints

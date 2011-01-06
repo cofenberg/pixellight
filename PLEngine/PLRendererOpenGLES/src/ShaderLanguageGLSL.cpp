@@ -58,7 +58,7 @@ PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
 PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
 {
 	// OpenGL ES 2.0 has no support for geometry shaders
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::FragmentShader *ShaderLanguageGLSL::CreateFragmentShader()

@@ -82,7 +82,7 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld, uint32 nWidth, uint32 nHeight
 	NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
 
 	// Create collision primitive
-	NewtonCollision *pCollision = NewtonCreateUserMeshCollision(pNewtonWorld, m_vBoxMin, m_vBoxMax, this, MeshCollisionCollideCallback, UserMeshCollisionRayHitCallback, NULL, NULL, NULL, 0);
+	NewtonCollision *pCollision = NewtonCreateUserMeshCollision(pNewtonWorld, m_vBoxMin, m_vBoxMax, this, MeshCollisionCollideCallback, UserMeshCollisionRayHitCallback, nullptr, nullptr, nullptr, 0);
 
 	// Create the rigid body
 	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!

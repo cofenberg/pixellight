@@ -131,7 +131,7 @@ class BufferedReaderFile : public BufferedReader {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		File   *m_pFile;	/**< File to read from, can be NULL */
+		File   *m_pFile;	/**< File to read from, can be a null pointer */
 		String  m_sBuffer;	/**< Buffer that is used to store characters read from the file */
 
 

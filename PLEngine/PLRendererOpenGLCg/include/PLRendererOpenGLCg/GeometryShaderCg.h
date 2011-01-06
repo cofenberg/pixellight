@@ -78,7 +78,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 		*    Returns the Cg geometry program
 		*
 		*  @return
-		*    The Cg geometry program, can be NULL, do not destroy it!
+		*    The Cg geometry program, can be a null pointer, do not destroy it!
 		*/
 		CGprogram GetCgGeometryProgram() const;
 
@@ -103,7 +103,7 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 	private:
 		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
 		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgGeometryProgram;	/**< Cg geometry program, can be NULL */
+		CGprogram		  m_pCgGeometryProgram;	/**< Cg geometry program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

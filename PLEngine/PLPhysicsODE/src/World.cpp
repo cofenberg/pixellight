@@ -158,15 +158,15 @@ World::~World()
 	// Destroy the ODE world
 	if (m_pODEWorld) {
 		dWorldDestroy(m_pODEWorld);
-		m_pODEWorld = NULL;
+		m_pODEWorld = nullptr;
 	}
 	if (m_pODESpaceID) {
 		dSpaceDestroy(m_pODESpaceID);
-		m_pODESpaceID = NULL;
+		m_pODESpaceID = nullptr;
 	}
 	if (m_pODEContactGroup) {
 		dJointGroupDestroy(m_pODEContactGroup);
-		m_pODEContactGroup = NULL;
+		m_pODEContactGroup = nullptr;
 	}
 	PL_LOG(Info, "Destroyed ODE world")
 
@@ -429,13 +429,13 @@ PLPhysics::Body *World::CreateBodySphere(float fRadius, bool bStatic)
 PLPhysics::Body *World::CreateBodyEllipsoid(const Vector3 &vRadius, bool bStatic)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Body *World::CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const Vector3 &vMeshScale, bool bStatic)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Body *World::CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const Vector3 &vMeshScale, bool bOptimize)
@@ -447,31 +447,31 @@ PLPhysics::Body *World::CreateBodyTerrain(PLGeneral::uint32 nWidth, PLGeneral::u
 										  const Vector3 &vBoxMin, const Vector3 &vBoxMax, const Vector3 &vScale)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Body *World::CreateBodyCylinder(float fRadius, float fHeight, bool bStatic)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Body *World::CreateBodyCone(float fRadius, float fHeight, bool bStatic)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Body *World::CreateBodyCapsule(float fRadius, float fHeight, bool bStatic)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Body *World::CreateBodyChamferCylinder(float fRadius, float fHeight, bool bStatic)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 
@@ -482,7 +482,7 @@ PLPhysics::Joint *World::CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointBall(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -492,7 +492,7 @@ PLPhysics::Joint *World::CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysi
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointSlider(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -502,7 +502,7 @@ PLPhysics::Joint *World::CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysic
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointHinge(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -513,7 +513,7 @@ PLPhysics::Joint *World::CreateJointUniversal(PLPhysics::Body *pParentBody, PLPh
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointUniversal(*this, pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2);
@@ -522,13 +522,13 @@ PLPhysics::Joint *World::CreateJointUniversal(PLPhysics::Body *pParentBody, PLPh
 PLPhysics::Joint *World::CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const Vector3 &vPivotPoint, const Vector3 &vPinDir)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Joint *World::CreateJointUpVector(PLPhysics::Body &cParentBody, const Vector3 &vPinDir)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 
@@ -538,13 +538,13 @@ PLPhysics::Joint *World::CreateJointUpVector(PLPhysics::Body &cParentBody, const
 PLPhysics::Sensor *World::CreateSensorRaycast(const Vector3 &vStart, const Vector3 &vEnd, PLGeneral::uint32 nFlags)
 {
 	// [TODO] Not implemented
-	return NULL;
+	return nullptr;
 }
 
 PLPhysics::Sensor *World::CreateSensorAABoundingBox(const Vector3 &vMin, const Vector3 &vMax, PLGeneral::uint32 nFlags)
 {
 	// [TODO] Not implemented
-	return NULL;
+	return nullptr;
 }
 
 
@@ -773,7 +773,7 @@ bool World::IsAlwaysStatic() const
 PLPhysics::Element *World::CreateElement(const PLGeneral::String &sName)
 {
 	// Nothing to do here
-	return NULL;
+	return nullptr;
 }
 
 

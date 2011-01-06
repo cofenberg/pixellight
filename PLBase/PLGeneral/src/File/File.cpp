@@ -51,7 +51,7 @@ File File::StandardError (stderr, File::FileWrite);
 *    Constructor
 */
 File::File() :
-	m_pMemBuf(NULL),
+	m_pMemBuf(nullptr),
 	m_nMemBufSize(0),
 	m_nMemBufPos(0),
 	m_nMemBufAccess(0)
@@ -63,7 +63,7 @@ File::File() :
 *    Constructor
 */
 File::File(const String &sUrl, const FileAccess *pAccess) : FileObject(sUrl, pAccess),
-	m_pMemBuf(NULL),
+	m_pMemBuf(nullptr),
 	m_nMemBufSize(0),
 	m_nMemBufPos(0),
 	m_nMemBufAccess(0)
@@ -75,7 +75,7 @@ File::File(const String &sUrl, const FileAccess *pAccess) : FileObject(sUrl, pAc
 *    Constructor
 */
 File::File(const Url &cUrl, const FileAccess *pAccess) : FileObject(cUrl, pAccess),
-	m_pMemBuf(NULL),
+	m_pMemBuf(nullptr),
 	m_nMemBufSize(0),
 	m_nMemBufPos(0),
 	m_nMemBufAccess(0)
@@ -87,7 +87,7 @@ File::File(const Url &cUrl, const FileAccess *pAccess) : FileObject(cUrl, pAcces
 *    Constructor for a standard OS stream
 */
 File::File(FILE *pFile, uint32 nAccess) : FileObject(pFile, nAccess),
-	m_pMemBuf(NULL),
+	m_pMemBuf(nullptr),
 	m_nMemBufSize(0),
 	m_nMemBufPos(0),
 	m_nMemBufAccess(0)
@@ -99,7 +99,7 @@ File::File(FILE *pFile, uint32 nAccess) : FileObject(pFile, nAccess),
 *    Constructor
 */
 File::File(handle hFile) : FileObject(hFile),
-	m_pMemBuf(NULL),
+	m_pMemBuf(nullptr),
 	m_nMemBufSize(0),
 	m_nMemBufPos(0),
 	m_nMemBufAccess(0)
@@ -111,7 +111,7 @@ File::File(handle hFile) : FileObject(hFile),
 *    Constructor
 */
 File::File(uint8 *pnData, uint32 nNumOfBytes, bool bCopy, const String &sUrl) :
-	m_pMemBuf(NULL),
+	m_pMemBuf(nullptr),
 	m_nMemBufSize(0),
 	m_nMemBufPos(0),
 	m_nMemBufAccess(FileRead)
@@ -152,7 +152,8 @@ File::~File()
 bool File::Create(bool bAlways)
 {
 	// Memory buffered file?
-	if (m_pMemBuf) MemBufClose();
+	if (m_pMemBuf)
+		MemBufClose();
 
 	// Create file
 	return m_pFileImpl ? m_pFileImpl->CreateNewFile(bAlways) : false;
@@ -165,7 +166,8 @@ bool File::Create(bool bAlways)
 bool File::Delete()
 {
 	// Memory buffered file?
-	if (m_pMemBuf) MemBufClose();
+	if (m_pMemBuf)
+		MemBufClose();
 
 	// Delete file
 	return m_pFileImpl ? m_pFileImpl->Delete() : false;
@@ -178,12 +180,16 @@ bool File::Delete()
 bool File::Open(uint32 nAccess)
 {
 	// Memory buffered file?
-	if (m_pMemBuf) MemBufClose();
+	if (m_pMemBuf)
+		MemBufClose();
 
 	// Open file
-	if (nAccess & File::FileMemBuf)	return MemBufOpen(nAccess);
-	else if (m_pFileImpl)			return m_pFileImpl->Open(nAccess);
-	else							return false; // Error!
+	if (nAccess & File::FileMemBuf)
+		return MemBufOpen(nAccess);
+	else if (m_pFileImpl)
+		return m_pFileImpl->Open(nAccess);
+	else
+		return false; // Error!
 }
 
 /**
@@ -193,10 +199,12 @@ bool File::Open(uint32 nAccess)
 void File::Close()
 {
 	// Memory buffered file?
-	if (m_pMemBuf) MemBufClose();
+	if (m_pMemBuf)
+		MemBufClose();
 
 	// Close file
-	if (m_pFileImpl) m_pFileImpl->Close();
+	if (m_pFileImpl)
+		m_pFileImpl->Close();
 }
 
 /**
@@ -205,7 +213,7 @@ void File::Close()
 */
 bool File::IsMemoryBuffered() const
 {
-	return (m_pMemBuf != NULL);
+	return (m_pMemBuf != nullptr);
 }
 
 /**
@@ -215,9 +223,12 @@ bool File::IsMemoryBuffered() const
 bool File::IsOpen() const
 {
 	// Check if file is open
-	if (m_pMemBuf)			return true;
-	else if (m_pFileImpl)	return m_pFileImpl->IsOpen();
-	else					return false;
+	if (m_pMemBuf)
+		return true;
+	else if (m_pFileImpl)
+		return m_pFileImpl->IsOpen();
+	else
+		return false;
 }
 
 /**
@@ -227,9 +238,12 @@ bool File::IsOpen() const
 bool File::IsReadable() const
 {
 	// Check readable
-	if (m_pMemBuf)			return true;
-	else if (m_pFileImpl)	return m_pFileImpl->IsReadable();
-	else					return false;
+	if (m_pMemBuf)
+		return true;
+	else if (m_pFileImpl)
+		return m_pFileImpl->IsReadable();
+	else
+		return false;
 }
 
 /**
@@ -239,9 +253,12 @@ bool File::IsReadable() const
 bool File::IsWritable() const
 {
 	// Check writable
-	if (m_pMemBuf)			return false;
-	else if (m_pFileImpl)	return m_pFileImpl->IsWritable();
-	else					return false;
+	if (m_pMemBuf)
+		return false;
+	else if (m_pFileImpl)
+		return m_pFileImpl->IsWritable();
+	else
+		return false;
 }
 
 /**
@@ -251,9 +268,12 @@ bool File::IsWritable() const
 bool File::IsEof() const
 {
 	// Check EOF
-	if (m_pMemBuf)			return m_nMemBufPos >= m_nMemBufSize;
-	else if (m_pFileImpl)	return m_pFileImpl->IsEof();
-	else					return false;
+	if (m_pMemBuf)
+		return m_nMemBufPos >= m_nMemBufSize;
+	else if (m_pFileImpl)
+		return m_pFileImpl->IsEof();
+	else
+		return false;
 }
 
 /**
@@ -263,9 +283,12 @@ bool File::IsEof() const
 int File::GetC()
 {
 	// Read character
-	if (m_pMemBuf)			return MemBufGetC();
-	else if (m_pFileImpl)	return m_pFileImpl->GetC();
-	else					return 0;
+	if (m_pMemBuf)
+		return MemBufGetC();
+	else if (m_pFileImpl)
+		return m_pFileImpl->GetC();
+	else
+		return 0;
 }
 
 /**
@@ -275,9 +298,12 @@ int File::GetC()
 bool File::PutC(int nChar)
 {
 	// Open file
-	if (m_pMemBuf)			return false;
-	else if (m_pFileImpl)	return m_pFileImpl->PutC(nChar);
-	else					return false;
+	if (m_pMemBuf)
+		return false;
+	else if (m_pFileImpl)
+		return m_pFileImpl->PutC(nChar);
+	else
+		return false;
 }
 
 /**
@@ -287,9 +313,12 @@ bool File::PutC(int nChar)
 String File::GetS()
 {
 	// Read string
-	if (m_pMemBuf)			return MemBufGetS();
-	else if (m_pFileImpl)	return m_pFileImpl->GetS();
-	else					return "";
+	if (m_pMemBuf)
+		return MemBufGetS();
+	else if (m_pFileImpl)
+		return m_pFileImpl->GetS();
+	else
+		return "";
 }
 
 /**
@@ -299,9 +328,12 @@ String File::GetS()
 int File::PutS(const String &sString)
 {
 	// Write string
-	if (m_pMemBuf)			return false;
-	else if (m_pFileImpl)	return m_pFileImpl->PutS(sString);
-	else					return 0;
+	if (m_pMemBuf)
+		return false;
+	else if (m_pFileImpl)
+		return m_pFileImpl->PutS(sString);
+	else
+		return 0;
 }
 
 /**
@@ -311,9 +343,12 @@ int File::PutS(const String &sString)
 uint32 File::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Read data
-	if (m_pMemBuf)			return MemBufRead(pBuffer, nSize, nCount);
-	else if (m_pFileImpl)	return m_pFileImpl->Read(pBuffer, nSize, nCount);
-	else					return 0;
+	if (m_pMemBuf)
+		return MemBufRead(pBuffer, nSize, nCount);
+	else if (m_pFileImpl)
+		return m_pFileImpl->Read(pBuffer, nSize, nCount);
+	else
+		return 0;
 }
 
 /**
@@ -323,9 +358,12 @@ uint32 File::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 uint32 File::Write(const void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Write data
-	if (m_pMemBuf)			return false;
-	else if (m_pFileImpl)	return m_pFileImpl->Write(pBuffer, nSize, nCount);
-	else					return 0;
+	if (m_pMemBuf)
+		return false;
+	else if (m_pFileImpl)
+		return m_pFileImpl->Write(pBuffer, nSize, nCount);
+	else
+		return 0;
 }
 
 /**
@@ -335,9 +373,12 @@ uint32 File::Write(const void *pBuffer, uint32 nSize, uint32 nCount)
 bool File::Flush()
 {
 	// Flush buffer
-	if (m_pMemBuf)			return false;
-	else if (m_pFileImpl)	return m_pFileImpl->Flush();
-	else					return false;
+	if (m_pMemBuf)
+		return false;
+	else if (m_pFileImpl)
+		return m_pFileImpl->Flush();
+	else
+		return false;
 }
 
 /**
@@ -347,9 +388,12 @@ bool File::Flush()
 bool File::Seek(int32 nOffset, ESeek nLocation)
 {
 	// Seek
-	if (m_pMemBuf)			return MemBufSeek(nOffset, nLocation);
-	else if (m_pFileImpl)	return m_pFileImpl->Seek(nOffset, nLocation);
-	else					return false;
+	if (m_pMemBuf)
+		return MemBufSeek(nOffset, nLocation);
+	else if (m_pFileImpl)
+		return m_pFileImpl->Seek(nOffset, nLocation);
+	else
+		return false;
 }
 
 /**
@@ -359,9 +403,12 @@ bool File::Seek(int32 nOffset, ESeek nLocation)
 int32 File::Tell() const
 {
 	// Get seek position
-	if (m_pMemBuf)			return m_nMemBufPos;
-	else if (m_pFileImpl)	return m_pFileImpl->Tell();
-	else					return 0;
+	if (m_pMemBuf)
+		return m_nMemBufPos;
+	else if (m_pFileImpl)
+		return m_pFileImpl->Tell();
+	else
+		return 0;
 }
 
 /**
@@ -371,9 +418,12 @@ int32 File::Tell() const
 uint32 File::GetSize() const
 {
 	// Get file size
-	if (m_pMemBuf)			return m_nMemBufSize;
-	else if (m_pFileImpl)	return m_pFileImpl->GetSize();
-	else					return 0;
+	if (m_pMemBuf)
+		return m_nMemBufSize;
+	else if (m_pFileImpl)
+		return m_pFileImpl->GetSize();
+	else
+		return 0;
 }
 
 /**
@@ -438,7 +488,8 @@ bool File::MemBufOpen(uint32 nAccess)
 	// Check flags
 	if ((nAccess & FileRead) && !(nAccess & FileWrite) && !(nAccess & FileAppend) && !(nAccess & FileCreate)) {
 		// Just to be sure ...
-		if (m_pMemBuf) MemBufClose();
+		if (m_pMemBuf)
+			MemBufClose();
 
 		// Open file
 		if (m_pFileImpl->Open(nAccess & ~(uint32)FileMemBuf)) {
@@ -481,7 +532,7 @@ void File::MemBufClose()
 	if (m_pMemBuf) {
 		if (!(m_nMemBufAccess & FileMemBufShared))
 			delete [] m_pMemBuf;
-		m_pMemBuf		= NULL;
+		m_pMemBuf		= nullptr;
 		m_nMemBufSize	= 0;
 		m_nMemBufPos	= 0;
 		m_nMemBufAccess	= 0;
@@ -506,7 +557,9 @@ int File::MemBufGetC()
 				if (m_nMemBufPos < m_nMemBufSize) {
 					c = m_pMemBuf[m_nMemBufPos];
 					m_nMemBufPos++;
-				} else return -1;
+				} else {
+					return -1;
+				}
 			}
 			return (int)c;
 		}
@@ -545,7 +598,8 @@ String File::MemBufGetS()
 		*pszPos = 0;
 
 		// Return string
-		if (pszPos > szString || nChar != -1) return szString;
+		if (pszPos > szString || nChar != -1)
+			return szString;
 	}
 
 	// Error!
@@ -560,7 +614,7 @@ uint32 File::MemBufRead(void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Check parameters
 	if (m_pMemBuf && pBuffer && nSize && nCount) {
-		uint32 nRead = ((nSize*nCount < m_nMemBufSize-m_nMemBufPos) ? nSize*nCount : m_nMemBufSize-m_nMemBufPos);
+		const uint32 nRead = ((nSize*nCount < m_nMemBufSize-m_nMemBufPos) ? nSize*nCount : m_nMemBufSize-m_nMemBufPos);
 		if (nRead > 0) {
 			MemoryManager::Copy(pBuffer, &m_pMemBuf[m_nMemBufPos], nRead);
 			m_nMemBufPos += nRead;
@@ -582,10 +636,14 @@ bool File::MemBufSeek(int32 nOffset, ESeek nLocation)
 	if (m_pMemBuf) {
 		// Calculate offset
 		int nOfs;
-		if (nLocation == File::SeekCurrent)	nOfs = m_nMemBufPos + nOffset;
-		else if (nLocation == File::SeekEnd)	nOfs = m_nMemBufSize + nOffset;
-		else if (nLocation == File::SeekSet)	nOfs = nOffset;
-		else									return false; // Error!
+		if (nLocation == File::SeekCurrent)
+			nOfs = m_nMemBufPos + nOffset;
+		else if (nLocation == File::SeekEnd)
+			nOfs = m_nMemBufSize + nOffset;
+		else if (nLocation == File::SeekSet)
+			nOfs = nOffset;
+		else
+			return false; // Error!
 
 		// Set new position
 		if (nOfs >= 0 && (unsigned int)nOfs < m_nMemBufSize) {

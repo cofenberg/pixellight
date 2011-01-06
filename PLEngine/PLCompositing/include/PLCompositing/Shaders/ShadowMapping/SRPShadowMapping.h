@@ -132,7 +132,7 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 		*    Returns the render target for the cube shadow map
 		*
 		*  @return
-		*    The render target for the cube shadow map, NULL on error
+		*    The render target for the cube shadow map, a null pointer on error
 		*
 		*  @note
 		*    - Data of the previous "UpdateShadowMap()"-call
@@ -144,7 +144,7 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 		*    Returns the render target for the spot shadow map
 		*
 		*  @return
-		*    The render target for the spot shadow map, NULL on error
+		*    The render target for the spot shadow map, a null pointer on error
 		*
 		*  @note
 		*    - Data of the previous "UpdateShadowMap()"-call
@@ -303,7 +303,7 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ShadowMapping				*m_pShadowMapping;			/**< The shadow mapping algorithm to use, can be NULL */
+		ShadowMapping				*m_pShadowMapping;			/**< The shadow mapping algorithm to use, can be a null pointer */
 		PLMath::Matrix4x4			 m_mLightProjection;		/**< View space to clip space [-1...1] */
 		PLMath::Matrix4x4			 m_mLightView;				/**< Scene node space to view space */
 		PLMath::Matrix4x4			 m_mLightViewProjection;	/**< Scene node space to view space and then view space to clip space [-1...1] combined within one matrix (m_mLightViewProjection = m_mLightProjection * m_mLightView) */
@@ -311,19 +311,19 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 
 		// Cube shadow map
 		static const PLGeneral::uint32 CubeShadowRenderTargets = 5;
-		PLRenderer::SurfaceTextureBuffer *m_pCubeShadowRenderTarget[CubeShadowRenderTargets];	/**< 256, 128, 64, 32, 16, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pCubeShadowRenderTarget[CubeShadowRenderTargets];	/**< 256, 128, 64, 32, 16, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer **m_pCurrentCubeShadowRenderTarget;
 
 		// Spot shadow map
 		static const PLGeneral::uint32 SpotShadowRenderTargets = 5;
-		PLRenderer::SurfaceTextureBuffer *m_pSpotShadowRenderTarget[SpotShadowRenderTargets];	/**< 512, 256, 128, 64, 32, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pSpotShadowRenderTarget[SpotShadowRenderTargets];	/**< 512, 256, 128, 64, 32, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer **m_pCurrentSpotShadowRenderTarget;
 
 		// Material & shader
 		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
 		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
 		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */
-		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be NULL */
+		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags			  m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 

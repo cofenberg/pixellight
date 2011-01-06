@@ -204,7 +204,7 @@ PLPhysics::Joint *World::CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointBall(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -214,7 +214,7 @@ PLPhysics::Joint *World::CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysi
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointSlider(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -224,7 +224,7 @@ PLPhysics::Joint *World::CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysic
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointHinge(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -235,7 +235,7 @@ PLPhysics::Joint *World::CreateJointUniversal(PLPhysics::Body *pParentBody, PLPh
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointUniversal(*this, pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2);
@@ -245,7 +245,7 @@ PLPhysics::Joint *World::CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPh
 {
 	// Check parameters
 	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the physics joint
 	return new JointCorkscrew(*this, pParentBody, pChildBody, vPivotPoint, vPinDir);
@@ -478,7 +478,7 @@ bool World::IsAlwaysStatic() const
 PLPhysics::Element *World::CreateElement(const String &sName)
 {
 	// Nothing to do here
-	return NULL;
+	return nullptr;
 }
 
 

@@ -69,7 +69,7 @@ class TextureBufferCube : public PLRenderer::TextureBufferCube {
 		*    Returns the Direct3D 9 texture
 		*
 		*  @return
-		*    The Direct3D 9 texture, can be NULL
+		*    The Direct3D 9 texture, can be a null pointer
 		*/
 		LPDIRECT3DCUBETEXTURE9 GetD3D9Texture() const;
 
@@ -119,7 +119,7 @@ class TextureBufferCube : public PLRenderer::TextureBufferCube {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3DCUBETEXTURE9 m_pD3D9Texture;	/**< Direct3D 9 texture, can be NULL */
+		LPDIRECT3DCUBETEXTURE9 m_pD3D9Texture;	/**< Direct3D 9 texture, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

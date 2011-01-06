@@ -45,8 +45,8 @@ namespace PLGeneral {
 */
 FileSearch::FileSearch(const Directory &cDirectory, SearchFilter *pFilter) :
 	m_pDirectory(&cDirectory),
-	m_pFileSearchImpl(NULL),
-	m_pFilterWildcard(NULL),
+	m_pFileSearchImpl(nullptr),
+	m_pFilterWildcard(nullptr),
 	m_pFilter(pFilter)
 {
 	// Valid file implementation?
@@ -65,7 +65,7 @@ FileSearch::FileSearch(const Directory &cDirectory, SearchFilter *pFilter) :
 */
 FileSearch::FileSearch(const Directory &cDirectory, const String &sFilter) :
 	m_pDirectory(&cDirectory),
-	m_pFileSearchImpl(NULL),
+	m_pFileSearchImpl(nullptr),
 	m_pFilterWildcard(new SearchFilterWildcard(sFilter)),
 	m_pFilter(m_pFilterWildcard)
 {
@@ -85,9 +85,9 @@ FileSearch::FileSearch(const Directory &cDirectory, const String &sFilter) :
 */
 FileSearch::FileSearch(const FileSearch &cFileSearch) :
 	m_pDirectory(cFileSearch.m_pDirectory),
-	m_pFileSearchImpl(NULL),
-	m_pFilterWildcard(NULL),
-	m_pFilter(NULL)
+	m_pFileSearchImpl(nullptr),
+	m_pFilterWildcard(nullptr),
+	m_pFilter(nullptr)
 {
 	// Copy wildcard filter
 	if (cFileSearch.m_pFilterWildcard) {
@@ -132,17 +132,17 @@ FileSearch &FileSearch::operator =(const FileSearch &cFileSearch)
 	// Delete wildcard filter
 	if (m_pFilterWildcard) {
 		delete m_pFilterWildcard;
-		m_pFilterWildcard = NULL;
+		m_pFilterWildcard = nullptr;
 	}
 
 	// Delete file searcher implementation
 	if (m_pFileSearchImpl) {
 		delete m_pFileSearchImpl;
-		m_pFileSearchImpl = NULL;
+		m_pFileSearchImpl = nullptr;
 	}
 
 	// Reset the filter and the next filename
-	m_pFilter       = NULL;
+	m_pFilter       = nullptr;
 	m_sNextFilename = "";
 
 	// Copy wildcard filter
@@ -179,7 +179,7 @@ bool FileSearch::HasNextFile()
 */
 String FileSearch::GetNextFile()
 {
-	String sFilename = m_sNextFilename;
+	const String sFilename = m_sNextFilename;
 	FindNextFile();
 	return sFilename;
 }

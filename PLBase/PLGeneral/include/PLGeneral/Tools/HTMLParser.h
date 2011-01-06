@@ -97,7 +97,7 @@ class HTMLParser {
 		*    Get parsed HTML as an XML document
 		*
 		*  @return
-		*    Pointer to XML document, NULL if there's currently no document
+		*    Pointer to XML document, a null pointer if there's currently no document
 		*/
 		PLGENERAL_API XmlDocument *GetXML() const;
 
@@ -164,7 +164,7 @@ class HTMLParser {
 		String		 m_sTextLower;	/**< Text version in lower case */
 		uint32		 m_nPos;		/**< Parsing position */
 		String		 m_sToken;		/**< Currently parsed token */
-		XmlDocument	*m_pXML;		/**< Parsed HTML, can be NULL */
+		XmlDocument	*m_pXML;		/**< Parsed HTML, can be a null pointer */
 		uint32		 m_nErrors;		/**< Number of errors */
 
 

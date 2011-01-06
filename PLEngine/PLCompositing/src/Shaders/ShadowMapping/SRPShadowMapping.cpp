@@ -78,15 +78,15 @@ SRPShadowMapping::SRPShadowMapping() :
 	ShaderLanguage(this),
 	m_pShadowMapping(new ShadowMappingUSM()),
 	m_pLightCullQuery(new SceneQueryHandler()),
-	m_pCurrentCubeShadowRenderTarget(NULL),
-	m_pCurrentSpotShadowRenderTarget(NULL),
-	m_pProgramGenerator(NULL)
+	m_pCurrentCubeShadowRenderTarget(nullptr),
+	m_pCurrentSpotShadowRenderTarget(nullptr),
+	m_pProgramGenerator(nullptr)
 {
 	// Init shadow maps
 	for (int i=0; i<CubeShadowRenderTargets; i++)
-		m_pCubeShadowRenderTarget[i] = NULL;
+		m_pCubeShadowRenderTarget[i] = nullptr;
 	for (int i=0; i<SpotShadowRenderTargets; i++)
-		m_pSpotShadowRenderTarget[i] = NULL;
+		m_pSpotShadowRenderTarget[i] = nullptr;
 }
 
 /**
@@ -99,19 +99,19 @@ SRPShadowMapping::~SRPShadowMapping()
 	for (int i=0; i<CubeShadowRenderTargets; i++) {
 		if (m_pCubeShadowRenderTarget[i]) {
 			delete m_pCubeShadowRenderTarget[i];
-			m_pCubeShadowRenderTarget[i] = NULL;
+			m_pCubeShadowRenderTarget[i] = nullptr;
 		}
 	}
-	m_pCurrentCubeShadowRenderTarget = NULL;
+	m_pCurrentCubeShadowRenderTarget = nullptr;
 
 	// Spot shadow maps
 	for (int i=0; i<SpotShadowRenderTargets; i++) {
 		if (m_pSpotShadowRenderTarget[i]) {
 			delete m_pSpotShadowRenderTarget[i];
-			m_pSpotShadowRenderTarget[i] = NULL;
+			m_pSpotShadowRenderTarget[i] = nullptr;
 		}
 	}
-	m_pCurrentSpotShadowRenderTarget = NULL;
+	m_pCurrentSpotShadowRenderTarget = nullptr;
 
 	// Destroy the cull query
 	SceneQuery *pSceneQuery = m_pLightCullQuery->GetElement();
@@ -208,7 +208,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 			cRenderer.GetRendererContext().GetEffectManager().Use();
 
 			// Create cull query if required
-			const SQCull *pRootQuery = cCullQuery.GetVisRootContainer() ? cCullQuery.GetVisRootContainer()->GetCullQuery() : NULL;
+			const SQCull *pRootQuery = cCullQuery.GetVisRootContainer() ? cCullQuery.GetVisRootContainer()->GetCullQuery() : nullptr;
 			if (pRootQuery) {
 				SQCull *pLightCullQuery = (SQCull*)m_pLightCullQuery->GetElement();
 				if (!pLightCullQuery) {
@@ -234,7 +234,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						// If there's an previous instance of the program generator, destroy it first
 						if (m_pProgramGenerator) {
 							delete m_pProgramGenerator;
-							m_pProgramGenerator = NULL;
+							m_pProgramGenerator = nullptr;
 						}
 
 						// Choose the shader source codes depending on the requested shader language
@@ -288,7 +288,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 								cLightFrustum.CreateViewPlanes(m_mLightViewProjection, true);
 
 								// Setup render query
-								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
+								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : nullptr);
 								pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
 								pLightCullQuery->SetViewFrustum(cLightFrustum);
 								pLightCullQuery->SetProjectionMatrix(m_mLightProjection);
@@ -401,7 +401,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 								cLightFrustum.CreateViewPlanes(m_mLightViewProjection);
 
 								// Setup render query
-								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : NULL);
+								pLightCullQuery->SetCameraContainer(cLight.GetContainer()->IsCell() ? cLight.GetContainer() : nullptr);
 								pLightCullQuery->SetCameraPosition(cLight.GetTransform().GetPosition());
 								pLightCullQuery->SetViewFrustum(cLightFrustum);
 								pLightCullQuery->SetProjectionMatrix(m_mLightProjection);
@@ -472,7 +472,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 */
 SurfaceTextureBuffer *SRPShadowMapping::GetCubeShadowRenderTarget() const
 {
-	return m_pCurrentCubeShadowRenderTarget ? *m_pCurrentCubeShadowRenderTarget : NULL;
+	return m_pCurrentCubeShadowRenderTarget ? *m_pCurrentCubeShadowRenderTarget : nullptr;
 }
 
 /**
@@ -481,7 +481,7 @@ SurfaceTextureBuffer *SRPShadowMapping::GetCubeShadowRenderTarget() const
 */
 SurfaceTextureBuffer *SRPShadowMapping::GetSpotShadowRenderTarget() const
 {
-	return m_pCurrentSpotShadowRenderTarget ? *m_pCurrentSpotShadowRenderTarget : NULL;
+	return m_pCurrentSpotShadowRenderTarget ? *m_pCurrentSpotShadowRenderTarget : nullptr;
 }
 
 /**
@@ -606,7 +606,7 @@ void SRPShadowMapping::CollectMeshBatchesRec(const SQCull &cCullQuery)
 */
 SRPShadowMapping::GeneratedProgramUserData *SRPShadowMapping::MakeMaterialCurrent(Renderer &cRenderer, const Material &cMaterial, float fInvRadius)
 {
-	const Parameter *pParameter = NULL;
+	const Parameter *pParameter = nullptr;
 
 	{ // Two sided? Setup cull mode...
 		static const String sTwoSided = "TwoSided";
@@ -639,7 +639,7 @@ SRPShadowMapping::GeneratedProgramUserData *SRPShadowMapping::MakeMaterialCurren
 	ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
 
 	// Make our program to the current one
-	GeneratedProgramUserData *pGeneratedProgramUserData = NULL;
+	GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 	if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 		// Set pointers to uniforms & attributes of a generated program if they are not set yet
 		pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;

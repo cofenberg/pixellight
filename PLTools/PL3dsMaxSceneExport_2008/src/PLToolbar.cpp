@@ -160,7 +160,7 @@ int TooltipMessageHandler::ProcessMessage(UINT nMessage, WPARAM wParam, LPARAM l
 					Interface *pMaxInterface = m_pToolbar->GetMaxInterface();
 					TSTR sFilename = pMaxInterface->GetDir(APP_EXPORT_DIR);
 					sFilename += "\\PixelLight";
-					CreateDirectory(sFilename, NULL);
+					CreateDirectory(sFilename, nullptr);
 					if (LOWORD(wParam) == ID_TOOLBAR_2) {
 						ShellExecute(0, "open", sFilename, 0, 0, SW_SHOW);
 					} else {
@@ -184,8 +184,8 @@ int TooltipMessageHandler::ProcessMessage(UINT nMessage, WPARAM wParam, LPARAM l
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 PLToolbar::PLToolbar() :
-	m_pMaxInterface(NULL),
-	m_hToolbarWnd(NULL)
+	m_pMaxInterface(nullptr),
+	m_hToolbarWnd(nullptr)
 {
 }
 
@@ -229,18 +229,18 @@ void PLToolbar::BeginEditParams(Interface *ip, IUtil *iu)
 		// Create the toolbar window
 		HWND hToolbar = CreateWindow(
 				CUSTTOOLBARWINDOWCLASS,
-				NULL,
+				nullptr,
 				WS_CHILD | WS_VISIBLE,
 				0, 0, 250, 100,
 				hWnd,
-				NULL,
+				nullptr,
 				g_hInstance,
-				NULL);
+				nullptr);
 		m_hToolbarWnd = hToolbar;
 
 		// Link the toolbar to the CUI frame
 		ICustToolbar *pToolBar = GetICustToolbar(hToolbar);
-		pToolBar->LinkToCUIFrame(hWnd, NULL);
+		pToolBar->LinkToCUIFrame(hWnd, nullptr);
 		pToolBar->SetBottomBorder(FALSE);
 		pToolBar->SetTopBorder(FALSE);
 
@@ -270,14 +270,14 @@ void PLToolbar::BeginEditParams(Interface *ip, IUtil *iu)
 
 		// Finally we're done, release the toolbar and frame handles
 		ReleaseICustToolbar(pToolBar);
-		pToolBar = NULL;
+		pToolBar = nullptr;
 		ReleaseICUIFrame(pFrame);
 	}
 }
 
 void PLToolbar::EndEditParams(Interface *ip, IUtil *iu)
 {
-	m_pMaxInterface = NULL;
+	m_pMaxInterface = nullptr;
 
 	ICUIFrame *pFrame = GetICUIFrame();
 	if (pFrame) {

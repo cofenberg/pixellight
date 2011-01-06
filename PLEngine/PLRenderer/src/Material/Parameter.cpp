@@ -596,7 +596,7 @@ bool Parameter::GetValue2i(int &nX, int &nY) const
 
 const int *Parameter::GetValue2iv() const
 {
-	return (m_nType == Parameters::Integer2) ? (const int*)m_pValue : NULL;
+	return (m_nType == Parameters::Integer2) ? (const int*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue2i(int nX, int nY)
@@ -630,7 +630,7 @@ bool Parameter::GetValue3i(int &nX, int &nY, int &nZ) const
 
 const int *Parameter::GetValue3iv() const
 {
-	return (m_nType == Parameters::Integer3) ? (const int*)m_pValue : NULL;
+	return (m_nType == Parameters::Integer3) ? (const int*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue3i(int nX, int nY, int nZ)
@@ -667,7 +667,7 @@ bool Parameter::GetValue4i(int &nX, int &nY, int &nZ, int &nW) const
 
 const int *Parameter::GetValue4iv() const
 {
-	return (m_nType == Parameters::Integer4) ? (const int*)m_pValue : NULL;
+	return (m_nType == Parameters::Integer4) ? (const int*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue4i(int nX, int nY, int nZ, int nW)
@@ -727,7 +727,7 @@ bool Parameter::GetValue2f(float &fX, float &fY) const
 
 const float *Parameter::GetValue2fv() const
 {
-	return (m_nType == Parameters::Float2) ? (const float*)m_pValue : NULL;
+	return (m_nType == Parameters::Float2) ? (const float*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue2f(float fX, float fY)
@@ -761,7 +761,7 @@ bool Parameter::GetValue3f(float &fX, float &fY, float &fZ) const
 
 const float *Parameter::GetValue3fv() const
 {
-	return (m_nType == Parameters::Float3) ? (const float*)m_pValue : NULL;
+	return (m_nType == Parameters::Float3) ? (const float*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue3f(float fX, float fY, float fZ)
@@ -798,7 +798,7 @@ bool Parameter::GetValue4f(float &fX, float &fY, float &fZ, float &fW) const
 
 const float *Parameter::GetValue4fv() const
 {
-	return (m_nType == Parameters::Float4) ? (const float*)m_pValue : NULL;
+	return (m_nType == Parameters::Float4) ? (const float*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue4f(float fX, float fY, float fZ, float fW)
@@ -853,7 +853,7 @@ bool Parameter::GetValue2d(double &fX, double &fY) const
 
 const double *Parameter::GetValue2dv() const
 {
-	return (m_nType == Parameters::Double2) ? (const double*)m_pValue : NULL;
+	return (m_nType == Parameters::Double2) ? (const double*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue2d(double fX, double fY)
@@ -887,7 +887,7 @@ bool Parameter::GetValue3d(double &fX, double &fY, double &fZ) const
 
 const double *Parameter::GetValue3dv() const
 {
-	return (m_nType == Parameters::Double3) ? (const double*)m_pValue : NULL;
+	return (m_nType == Parameters::Double3) ? (const double*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue3d(double fX, double fY, double fZ)
@@ -924,7 +924,7 @@ bool Parameter::GetValue4d(double &fX, double &fY, double &fZ, double &fW) const
 
 const double *Parameter::GetValue4dv() const
 {
-	return (m_nType == Parameters::Double4) ? (const double*)m_pValue : NULL;
+	return (m_nType == Parameters::Double4) ? (const double*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValue4d(double fX, double fY, double fZ, double fW)
@@ -953,7 +953,7 @@ bool Parameter::SetValue4dv(const double fValue[])
 // Float3x3
 const float *Parameter::GetValueFloat3x3() const
 {
-	return (m_nType == Parameters::Float3x3) ? (const float*)m_pValue : NULL;
+	return (m_nType == Parameters::Float3x3) ? (const float*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValueFloat3x3(const float fValue[])
@@ -968,7 +968,7 @@ bool Parameter::SetValueFloat3x3(const float fValue[])
 // Float3x4
 const float *Parameter::GetValueFloat3x4() const
 {
-	return (m_nType == Parameters::Float3x4) ? (const float*)m_pValue : NULL;
+	return (m_nType == Parameters::Float3x4) ? (const float*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValueFloat3x4(const float fValue[])
@@ -983,7 +983,7 @@ bool Parameter::SetValueFloat3x4(const float fValue[])
 // Float4x4
 const float *Parameter::GetValueMatrixfv() const
 {
-	return (m_nType == Parameters::Float4x4) ? (const float*)m_pValue : NULL;
+	return (m_nType == Parameters::Float4x4) ? (const float*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValueMatrixfv(const float fValue[])
@@ -998,7 +998,7 @@ bool Parameter::SetValueMatrixfv(const float fValue[])
 // Double4x4
 const double *Parameter::GetValueMatrixdv() const
 {
-	return (m_nType == Parameters::Double4x4) ? (const double*)m_pValue : NULL;
+	return (m_nType == Parameters::Double4x4) ? (const double*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValueMatrixdv(const double fValue[])
@@ -1013,12 +1013,12 @@ bool Parameter::SetValueMatrixdv(const double fValue[])
 // Texture
 Texture *Parameter::GetValueTexture() const
 {
-	return (m_nType == Parameters::TextureBuffer) ? ((const TextureHandler*)m_pValue)->GetTexture() : NULL;
+	return (m_nType == Parameters::TextureBuffer) ? ((const TextureHandler*)m_pValue)->GetTexture() : nullptr;
 }
 
 TextureHandler *Parameter::GetValueTextureHandler() const
 {
-	return (m_nType == Parameters::TextureBuffer) ? (TextureHandler*)m_pValue : NULL;
+	return (m_nType == Parameters::TextureBuffer) ? (TextureHandler*)m_pValue : nullptr;
 }
 
 bool Parameter::SetValueTexture(Texture *pTexture)
@@ -1036,7 +1036,7 @@ bool Parameter::SetValueTexture(const PLGeneral::String &sFilename)
 	TextureHandler *pTextureHandler = (TextureHandler*)m_pValue;
 	if (!pTextureHandler->GetResource() || pTextureHandler->GetResource()->GetFilename() != sFilename) {
 		pTextureHandler->Load(m_pManager->GetRendererContext().GetTextureManager(), sFilename);
-		return pTextureHandler->GetResource() != NULL; // Done
+		return pTextureHandler->GetResource() != nullptr; // Done
 	} else {
 		// Done
 		return true;
@@ -1130,7 +1130,7 @@ Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, co
 			break;
 
 		default:
-			m_pValue = NULL;
+			m_pValue = nullptr;
 			break;
 	}
 }

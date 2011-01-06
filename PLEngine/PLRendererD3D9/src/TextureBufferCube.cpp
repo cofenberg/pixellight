@@ -77,7 +77,7 @@ LPDIRECT3DCUBETEXTURE9 TextureBufferCube::GetD3D9Texture() const
 */
 TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cImage, EPixelFormat nInternalFormat, uint32 nFlags) :
 	PLRenderer::TextureBufferCube(cRenderer, nFlags),
-	m_pD3D9Texture(NULL)
+	m_pD3D9Texture(nullptr)
 {
 	// Get the concrete renderer implementation
 	Renderer &cRendererD3D9 = (Renderer&)cRenderer;
@@ -129,14 +129,14 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 						}
 
 						// Create Direct3D 9 texture
-						if (pDevice->CreateCubeTexture(m_nSize, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, NULL) != D3D_OK) {
+						if (pDevice->CreateCubeTexture(m_nSize, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, nullptr) != D3D_OK) {
 							// There was an error and compression was used, use no compression and try again
 							bUsePreCompressedData = false;
 							m_nFormat			  = nImageFormat;
 							pAPIPixelFormat		  = cRendererD3D9.GetAPIPixelFormat(m_nFormat);
 							if (pAPIPixelFormat) {
 								nAPIFormat = (D3DFORMAT)*pAPIPixelFormat;
-								if (pDevice->CreateCubeTexture(m_nSize, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, NULL) != D3D_OK) {
+								if (pDevice->CreateCubeTexture(m_nSize, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, nullptr) != D3D_OK) {
 									// Error!
 									m_nFormat		= Unknown;
 									m_nNumOfMipmaps	= 0;
@@ -165,7 +165,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 											nSize = pMipmapImageBuffer->GetSize().x;
 
 											// Get the surface
-											LPDIRECT3DSURFACE9 pDestSurface = NULL;
+											LPDIRECT3DSURFACE9 pDestSurface = nullptr;
 											m_pD3D9Texture->GetCubeMapSurface((D3DCUBEMAP_FACES)nFace, nLevel, &pDestSurface);
 											if (pDestSurface) {
 												// Is the source data compressed?
@@ -210,8 +210,8 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 													}
 													if (nSourceFormat != D3DFMT_UNKNOWN) {
 														RECT sSourceRect[] = { 0, 0, nSize, nSize };
-														D3DXLoadSurfaceFromMemory(pDestSurface, NULL, NULL, (uint8*)pMipmapImageBuffer->GetCompressedData(), nSourceFormat,
-																				  pMipmapImageBuffer->GetCompressedDataSize()/((nSize+3)/4), NULL,
+														D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, (uint8*)pMipmapImageBuffer->GetCompressedData(), nSourceFormat,
+																				  pMipmapImageBuffer->GetCompressedDataSize()/((nSize+3)/4), nullptr,
 																				  sSourceRect, D3DX_FILTER_NONE, 0);
 													}
 												} else {
@@ -260,8 +260,8 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 													}
 													if (nSourceFormat != D3DFMT_UNKNOWN) {
 														RECT sSourceRect[] = { 0, 0, nSize, nSize };
-														D3DXLoadSurfaceFromMemory(pDestSurface, NULL, NULL, pTempData, nSourceFormat,
-																				  nSize*nNumOfComponents, NULL, sSourceRect, D3DX_FILTER_NONE, 0);
+														D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, pTempData, nSourceFormat,
+																				  nSize*nNumOfComponents, nullptr, sSourceRect, D3DX_FILTER_NONE, 0);
 													}
 													if (pTempData != (uint8*)pMipmapImageBuffer->GetData())
 														delete [] pTempData;
@@ -280,7 +280,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 									if (bMipmaps && !nNumOfImageMipmaps) {
 										// [TODO] Do this somewhere else...
 										// Let the API create the mipmaps for us
-										if (D3DXFilterCubeTexture(m_pD3D9Texture, NULL, D3DX_DEFAULT, D3DX_FILTER_LINEAR) != D3D_OK)
+										if (D3DXFilterCubeTexture(m_pD3D9Texture, nullptr, D3DX_DEFAULT, D3DX_FILTER_LINEAR) != D3D_OK)
 											return; // Error!
 
 										// Calculate the total number of bytes this texture buffer requires (note that we already have the base level!)
@@ -312,7 +312,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 */
 TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSize, EPixelFormat nInternalFormat, uint32 nFlags) :
 	PLRenderer::TextureBufferCube(cRenderer, nFlags),
-	m_pD3D9Texture(NULL)
+	m_pD3D9Texture(nullptr)
 {
 	// Get the concrete renderer implementation
 	Renderer &cRendererD3D9 = (Renderer&)cRenderer;
@@ -343,10 +343,10 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 				}
 			} else {
 				bool bMipmaps = m_nFlags & Mipmaps;
-				if (D3DXCreateCubeTextureFromFileInMemoryEx(pDevice, NULL, m_nSize*m_nSize*GetComponentsPerPixel(), m_nSize,
+				if (D3DXCreateCubeTextureFromFileInMemoryEx(pDevice, nullptr, m_nSize*m_nSize*GetComponentsPerPixel(), m_nSize,
 															bMipmaps ? D3DX_DEFAULT : 1, 0, (D3DFORMAT)*pAPIPixelFormat,
-															D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL,
-															NULL, &m_pD3D9Texture) == D3D_OK) {
+															D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, nullptr,
+															nullptr, &m_pD3D9Texture) == D3D_OK) {
 					// Calculate the number of mipmaps
 					m_nNumOfMipmaps = bMipmaps ? (uint32)Math::Log2(float(m_nSize)) : 0;
 				} else {
@@ -381,13 +381,13 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 			uint32 nSize = GetSize(nMipmap);
 
 			// Get the surface
-			LPDIRECT3DSURFACE9 pDestSurface = NULL;
+			LPDIRECT3DSURFACE9 pDestSurface = nullptr;
 			if (m_pD3D9Texture->GetCubeMapSurface((D3DCUBEMAP_FACES)nFace, nMipmap, &pDestSurface) == D3D_OK) {
 				// Upload
 				RECT sSourceRect[]  = { 0, 0, nSize, nSize };
-				D3DXLoadSurfaceFromMemory(pDestSurface, NULL, NULL, pData, (D3DFORMAT)*pAPIPixelFormat,
+				D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, pData, (D3DFORMAT)*pAPIPixelFormat,
 										  IsCompressedFormat() ? GetNumOfBytes(nMipmap)/((nSize+3)/4) : nSize*GetComponentsPerPixel(),
-										  NULL, sSourceRect, D3DX_FILTER_NONE, 0);
+										  nullptr, sSourceRect, D3DX_FILTER_NONE, 0);
 
 				// Release the surface
 				pDestSurface->Release();

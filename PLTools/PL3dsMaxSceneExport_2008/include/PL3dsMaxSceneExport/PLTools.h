@@ -145,7 +145,7 @@ class PLTools {
 		*    Try to find the PixelLight runtime directory by reading the registry
 		*
 		*  @return
-		*    The found directory, NULL on error, you have to free the memory
+		*    The found directory, a null pointer on error, you have to free the memory
 		*/
 		static char *GetPixelLightRuntimeDirectory();
 

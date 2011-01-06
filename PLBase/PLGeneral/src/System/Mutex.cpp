@@ -45,7 +45,7 @@ namespace PLGeneral {
 *    Constructor
 */
 Mutex::Mutex() :
-	m_pMutexImpl(NULL)
+	m_pMutexImpl(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -67,7 +67,8 @@ Mutex::Mutex() :
 Mutex::~Mutex()
 {
 	// Destroy system specific implementation
-	if (m_pMutexImpl) delete m_pMutexImpl;
+	if (m_pMutexImpl)
+		delete m_pMutexImpl;
 }
 
 /**
@@ -109,7 +110,7 @@ bool Mutex::Unlock()
 *    Copy constructor
 */
 Mutex::Mutex(const Mutex &cSource) :
-	m_pMutexImpl(NULL)
+	m_pMutexImpl(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

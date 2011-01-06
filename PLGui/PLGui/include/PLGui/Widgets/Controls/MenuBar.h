@@ -66,7 +66,7 @@ class MenuBar : public AbstractMenu {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API MenuBar(Widget *pParent = NULL);
+		PLGUI_API MenuBar(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

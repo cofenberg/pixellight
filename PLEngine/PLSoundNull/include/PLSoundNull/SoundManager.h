@@ -99,7 +99,7 @@ class SoundManager : public PLSound::SoundManager {
 		//[ Create sound buffer/source                            ]
 		//[-------------------------------------------------------]
 		virtual PLSound::Buffer *CreateSoundBuffer(const PLGeneral::String &sFilename = "", bool bStream = false);
-		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = NULL);
+		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Listener                                              ]

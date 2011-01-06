@@ -72,7 +72,7 @@ class FontWindows : public FontImpl {
 		*    Returns the font handle
 		*
 		*  @return
-		*    Font handle, can be NULL
+		*    Font handle, can be a null pointer
 		*/
 		PLGUI_API HFONT GetHandle() const;
 
@@ -89,7 +89,7 @@ class FontWindows : public FontImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		HFONT m_hFont;	/**< Font handle, can be NULL */
+		HFONT m_hFont;	/**< Font handle, can be a null pointer */
 
 
 };

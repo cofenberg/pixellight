@@ -184,7 +184,7 @@ class PLGENERAL_TMPL Array : public Container<ValueType> {
 		*    Returns the array data
 		*
 		*  @return
-		*    The array data, can be NULL
+		*    The array data, can be a null pointer
 		*
 		*  @note
 		*    - Do NOT delete this data by yourself!
@@ -209,7 +209,7 @@ class PLGENERAL_TMPL Array : public Container<ValueType> {
 	private:
 		uint32     m_nMaxNumOfElements;	/**< Maximum number of elements */
 		uint32     m_nNumOfElements;	/**< Current number of elements */
-		ValueType *m_pData;				/**< Elements, can be NULL */
+		ValueType *m_pData;				/**< Elements, can be a null pointer */
 		uint32     m_nResizeCount;		/**< Automatic resize count */
 
 

@@ -96,7 +96,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Returns the renderer context
 		*
 		*  @return
-		*    The renderer context, NULL on error
+		*    The renderer context, a null pointer on error
 		*/
 		PL_API PLRenderer::RendererContext *GetRendererContext() const;
 
@@ -105,7 +105,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Get surface painter of the main window
 		*
 		*  @return
-		*    Pointer to surface painter of the main window, can be NULL
+		*    Pointer to surface painter of the main window, can be a null pointer
 		*/
 		PL_API PLRenderer::SurfacePainter *GetPainter() const;
 
@@ -114,7 +114,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Set surface painter of the main window
 		*
 		*  @param[in] pPainter
-		*    Pointer to surface painter of the main window, can be NULL
+		*    Pointer to surface painter of the main window, can be a null pointer
 		*/
 		PL_API void SetPainter(PLRenderer::SurfacePainter *pPainter);
 
@@ -123,7 +123,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Get virtual input controller
 		*
 		*  @return
-		*    Virtual input controller (can be NULL)
+		*    Virtual input controller (can be a null pointer)
 		*/
 		PL_API PLInput::VirtualController *GetInputController() const;
 
@@ -132,7 +132,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Set virtual input controller
 		*
 		*  @param[in] pInputController
-		*    Virtual input controller (can be NULL)
+		*    Virtual input controller (can be a null pointer)
 		*/
 		PL_API void SetInputController(PLInput::VirtualController *pInputController);
 
@@ -185,7 +185,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*  @param[in] pWidget
 		*    Widget from which we want to get the attached render surface
 		*  @return
-		*    Pointer to surface, or NULL if widget is not a valid rendering widget
+		*    Pointer to surface, or a null pointer if widget is not a valid rendering widget
 		*/
 		PL_API PLRenderer::Surface *GetSurface(const PLGui::Widget *pWidget) const;
 
@@ -328,8 +328,8 @@ class RenderApplication : public PLGui::GuiApplication {
 	//[-------------------------------------------------------]
 	protected:
 		PLGeneral::String			 m_sSurfacePainter;		/**< Surface painter class to use */
-		PLRenderer::RendererContext *m_pRendererContext;	/**< The renderer context, can be NULL */
-		PLInput::VirtualController	*m_pInputController;	/**< Virtual input controller, can be NULL */
+		PLRenderer::RendererContext *m_pRendererContext;	/**< The renderer context, can be a null pointer */
+		PLInput::VirtualController	*m_pInputController;	/**< Virtual input controller, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

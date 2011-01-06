@@ -112,7 +112,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FixedFunctions	   *m_pFixedFunctions;	/**< Fixed functions interface implementation, can be NULL */
+		FixedFunctions	   *m_pFixedFunctions;	/**< Fixed functions interface implementation, can be a null pointer */
 		FontManager		   *m_pFontManager;		/**< Null renderer font manager, always valid! */
 		PLGeneral::uint32	m_nViewPortX;
 		PLGeneral::uint32	m_nViewPortY;
@@ -132,7 +132,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = NULL) const;
+		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const;
 		virtual PLGeneral::String GetVendor() const;
 		virtual PLGeneral::String GetDefaultShaderLanguage() const;
 		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
@@ -181,8 +181,8 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLGeneral::uint8 nFace = 0);
 		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLGeneral::uint8 nColorIndex = 0, PLGeneral::uint8 nFace = 0);
 		virtual bool MakeScreenshot(PLGraphics::Image &cImage);
-		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = NULL);
-		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = NULL);
+		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
+		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Draw                                                  ]

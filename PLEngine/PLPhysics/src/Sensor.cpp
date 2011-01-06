@@ -74,7 +74,7 @@ void Sensor::ClearHitList()
 	for (uint32 i=0; i<m_lstBodyInfo.GetNumOfElements(); i++)
 		FreeBodyInfo(*m_lstBodyInfo[i]);
 	m_lstBodyInfo.Clear();
-	m_pClosedBodyInfo = NULL;
+	m_pClosedBodyInfo = nullptr;
 }
 
 /**
@@ -148,7 +148,7 @@ bool Sensor::IsSensor() const
 *    Constructor
 */
 Sensor::Sensor(World &cWorld, uint32 nFlags) : Element(cWorld),
-	m_pClosedBodyInfo(NULL),
+	m_pClosedBodyInfo(nullptr),
 	m_nFlags(nFlags)
 {
 }

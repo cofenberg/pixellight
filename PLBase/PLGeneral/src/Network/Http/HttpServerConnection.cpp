@@ -28,8 +28,7 @@
 #include "PLGeneral/Network/Http/HttpServer.h"
 #include "PLGeneral/Network/Http/HttpServerConnection.h"
 #include "PLGeneral/Network/Http/MimeTypeManager.h"
-//#include "PLGeneral/Network/Http/HttpServerConnection.h"
-//#include "PLGeneral/Network/Http/HttpServer.h"
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -73,10 +72,11 @@ void HttpServerConnection::SendFile(EHttpStatus nStatus, const String &sFilename
 		char szBuffer[256];
 		while (!cFile.IsEof()) {
 			// Read from file
-			uint32 nSize = cFile.Read(szBuffer, 1, 255);
+			const uint32 nSize = cFile.Read(szBuffer, 1, 255);
 
 			// Send
-			if (nSize > 0) Send((const char *)szBuffer, (uint32)nSize);
+			if (nSize > 0)
+				Send((const char *)szBuffer, (uint32)nSize);
 		}
 
 		// Close file
@@ -163,14 +163,12 @@ void HttpServerConnection::SendHeader(EHttpStatus nStatus, const String &sMimeTy
 	Send("Date: " + System::GetInstance()->GetTime().ToString() + "\r\n");
 
 	// Content type
-	if (sMimeType != "") {
+	if (sMimeType != "")
 		Send("Content-Type: " + sMimeType + "; charset=ISO-8859-1\r\n");
-	}
 
 	// Content length
-	if (nLength > 0) {
+	if (nLength > 0)
 		Send("Content-Length: " + String() + (int)nLength + "\r\n");
-	}
 
 	// Server identification
 	Send("Server: PixelLight HTTP Server\r\n");
@@ -196,9 +194,8 @@ void HttpServerConnection::OnHttpRequest(const HttpHeader &cHttpHeader)
 //	cHttpHeader.Print();
 
 	// Perform HTTP request
-	if (cHttpHeader.GetMessageType() == HttpRequest) {
+	if (cHttpHeader.GetMessageType() == HttpRequest)
 		m_pServer->OnRequest(this, &cHttpHeader);
-	}
 }
 
 

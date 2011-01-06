@@ -74,7 +74,7 @@ class FileImpl {
 		*  @param[in] cUrl
 		*    URL of the file or directory
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
 		PLGENERAL_API FileImpl(const Url &cUrl, const FileAccess *pAccess);
 
@@ -367,7 +367,7 @@ class FileImpl {
 		*    Create a file searcher for the directory
 		*
 		*  @return
-		*    Pointer to a file searcher, or NULL on error
+		*    Pointer to a file searcher, or a null pointer on error
 		*/
 		virtual FileSearchImpl *CreateSearch() = 0;
 
@@ -377,7 +377,7 @@ class FileImpl {
 	//[-------------------------------------------------------]
 	protected:
 		Url				  m_cUrl;		/**< URL of the file or directory */
-		const FileAccess *m_pAccess;	/**< File access information, can be NULL */
+		const FileAccess *m_pAccess;	/**< File access information, can be a null pointer */
 
 
 };

@@ -82,10 +82,10 @@ class XmlTextPrimitive {
 			m_nType(PrimitiveText),
 			m_cTextColor(PLGraphics::Color4::Transparent),
 			m_cBgColor(PLGraphics::Color4::Transparent),
-			m_pImage(NULL),
+			m_pImage(nullptr),
 			m_nIndent(0),
 			m_nHGap(0),
-			m_pFont(NULL)
+			m_pFont(nullptr)
 		{
 		}
 
@@ -105,7 +105,7 @@ class XmlTextPrimitive {
 			m_pImage(cPrimitive.m_pImage),
 			m_nIndent(cPrimitive.m_nIndent),
 			m_nHGap(cPrimitive.m_nHGap),
-			m_pFont(cPrimitive.m_pFont ? new PLGui::Font(*cPrimitive.m_pFont) : NULL)
+			m_pFont(cPrimitive.m_pFont ? new PLGui::Font(*cPrimitive.m_pFont) : nullptr)
 		{
 		}
 
@@ -132,7 +132,7 @@ class XmlTextPrimitive {
 			// Destroy the previous font
 			if (m_pFont) {
 				delete m_pFont;
-				m_pFont = NULL;
+				m_pFont = nullptr;
 			}
 
 			// Copy data
@@ -144,7 +144,7 @@ class XmlTextPrimitive {
 			m_pImage	 = cPrimitive.m_pImage;
 			m_nIndent	 = cPrimitive.m_nIndent;
 			m_nHGap		 = cPrimitive.m_nHGap;
-			m_pFont		 = cPrimitive.m_pFont ? new PLGui::Font(*cPrimitive.m_pFont) : NULL;
+			m_pFont		 = cPrimitive.m_pFont ? new PLGui::Font(*cPrimitive.m_pFont) : nullptr;
 
 			// Done
 			return *this;
@@ -163,8 +163,8 @@ class XmlTextPrimitive {
 		inline bool operator ==(const XmlTextPrimitive &cPrimitive) const
 		{
 			// Get the font implementations
-			PLGui::FontImpl *pFontImpl			= m_pFont			 ? m_pFont->GetImpl()			 : NULL;
-			PLGui::FontImpl *pPrimitiveFontImpl = cPrimitive.m_pFont ? cPrimitive.m_pFont->GetImpl() : NULL;
+			PLGui::FontImpl *pFontImpl			= m_pFont			 ? m_pFont->GetImpl()			 : nullptr;
+			PLGui::FontImpl *pPrimitiveFontImpl = cPrimitive.m_pFont ? cPrimitive.m_pFont->GetImpl() : nullptr;
 
 			// Compare
 			return (m_nType		 == cPrimitive.m_nType &&
@@ -183,7 +183,7 @@ class XmlTextPrimitive {
 		*    Return the font
 		*
 		*  @return
-		*    The font, can be NULL
+		*    The font, can be a null pointer
 		*/
 		PLGui::Font *GetFont() const
 		{
@@ -195,18 +195,18 @@ class XmlTextPrimitive {
 		*    Set the font
 		*
 		*  @param[in] pFont
-		*    Font to set, can be NULL
+		*    Font to set, can be a null pointer
 		*/
 		void SetFont(PLGui::Font *pFont)
 		{
 			// Destroy the previous font
 			if (m_pFont) {
 				delete m_pFont;
-				m_pFont = NULL;
+				m_pFont = nullptr;
 			}
 
 			// Set the new font
-			m_pFont = pFont ? new PLGui::Font(*pFont) : NULL;
+			m_pFont = pFont ? new PLGui::Font(*pFont) : nullptr;
 		}
 
 
@@ -235,7 +235,7 @@ class XmlTextPrimitive {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Font *m_pFont;	/**< Current font, can be NULL */
+		PLGui::Font *m_pFont;	/**< Current font, can be a null pointer */
 
 
 };

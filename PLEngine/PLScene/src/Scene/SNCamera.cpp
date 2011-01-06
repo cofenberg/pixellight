@@ -54,7 +54,7 @@ pl_implement_class(SNCamera)
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-SNCamera *SNCamera::m_pCamera = NULL;
+SNCamera *SNCamera::m_pCamera = nullptr;
 
 
 //[-------------------------------------------------------]
@@ -150,7 +150,7 @@ void SNCamera::SetSceneRendererFilename(const String &sValue)
 	// Set new scene renderer
 	if (m_sSceneRendererFilename != sValue) {
 		m_sSceneRendererFilename = sValue;
-		m_pSceneRendererHandler->SetResource(NULL);
+		m_pSceneRendererHandler->SetResource(nullptr);
 	}
 }
 
@@ -237,7 +237,7 @@ SNCamera::~SNCamera()
 {
 	// Is this the current camera?
 	if (m_pCamera == this)
-		m_pCamera = NULL;
+		m_pCamera = nullptr;
 
 	delete m_pSceneRendererHandler;
 }

@@ -59,8 +59,8 @@ IndexBuffer::~IndexBuffer()
 *    Constructor
 */
 IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuffer(cRenderer),
-	m_pData(NULL),
-	m_pLockedData(NULL)
+	m_pData(nullptr),
+	m_pLockedData(nullptr)
 {
 	// Update renderer statistics
 	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nIndexBufferNum++;
@@ -73,7 +73,7 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 bool IndexBuffer::MakeCurrent()
 {
 	// Check if there's an index buffer
-	return m_pData != NULL;
+	return (m_pData != nullptr);
 }
 
 
@@ -82,7 +82,7 @@ bool IndexBuffer::MakeCurrent()
 //[-------------------------------------------------------]
 bool IndexBuffer::IsAllocated() const
 {
-	return m_pData != NULL;
+	return (m_pData != nullptr);
 }
 
 bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
@@ -106,7 +106,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 	// Init data
-	uint8 *pDataBackup = NULL;
+	uint8 *pDataBackup = nullptr;
 	uint32 nSizeBackup = m_nSize;
 	if (m_pData && m_nSize != nElementSizeAPI*nElements) {
 		// Backup the current data
@@ -122,7 +122,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 			delete [] (uint16*)m_pData;
 		else
 			delete [] (uint8*)m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 	ForceUnlock();
 	m_nElements = nElements;
@@ -169,7 +169,7 @@ bool IndexBuffer::Clear()
 			delete [] (uint16*)m_pData;
 		else
 			delete [] (uint8*)m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	} else return false; // Error!
 
 	// Update renderer statistics
@@ -187,7 +187,7 @@ bool IndexBuffer::Clear()
 void *IndexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's an index buffer
-	if (!m_pData) return NULL; // Error!
+	if (!m_pData) return nullptr; // Error!
 
 	// Check whether the index buffer is already locked
 	m_nLockCount++;
@@ -217,7 +217,7 @@ bool IndexBuffer::Unlock()
 	if (m_nLockCount) return true; // Nope, it's still used somewhere else...
 
 	// Unlock the index buffer
-	m_pLockedData = NULL;
+	m_pLockedData = nullptr;
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 
 	// Done

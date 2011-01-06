@@ -1479,7 +1479,7 @@ bool PLScenePLMesh::WritePointCacheAnimation(FILE &cFile, ChunkStack &cChunkStac
 		m_lstAnimations.Add(&cAnimation);
 
 		// [TODO]
-//		m_pPointCacheAnimation = NULL;
+//		m_pPointCacheAnimation = nullptr;
 
 		// End chunk
 		return EndChunk(cFile, cChunkStack);

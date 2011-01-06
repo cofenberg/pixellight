@@ -63,7 +63,7 @@ const String Application::DefaultScene = "";
 Application::Application() :
 	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
 	EventHandlerDrop   (&Application::NotifyDrop,    this),
-	m_pFileDialog(NULL)
+	m_pFileDialog(nullptr)
 {
 	// Set no multiuser if standalone application
 	#ifdef STANDALONE

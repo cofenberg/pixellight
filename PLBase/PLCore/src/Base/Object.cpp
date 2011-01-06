@@ -163,7 +163,7 @@ DynVar *Object::GetAttribute(const String &sName) const
 	}
 
 	// Could not find attribute
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -209,7 +209,7 @@ DynFunc *Object::GetMethod(const String &sName) const
 	}
 
 	// Could not find method
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -255,7 +255,7 @@ DynEvent *Object::GetSignal(const String &sName) const
 	}
 
 	// Could not find signal
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -301,7 +301,7 @@ DynEventHandler *Object::GetSlot(const String &sName) const
 	}
 
 	// Could not find slot
-	return NULL;
+	return nullptr;
 }
 
 /**

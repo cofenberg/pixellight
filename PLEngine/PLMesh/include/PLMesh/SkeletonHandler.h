@@ -155,7 +155,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*    Name of the joint to return the handler from
 		*
 		*  @return
-		*    Joint handler, NULL on error
+		*    Joint handler, a null pointer on error
 		*/
 		PLMESH_API JointHandler *GetJointHandler(const PLGeneral::String &sJointName) const;
 
@@ -176,7 +176,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*    Name of the base joint to return the handler from
 		*
 		*  @return
-		*    Base joint handler, NULL on error
+		*    Base joint handler, a null pointer on error
 		*/
 		PLMESH_API JointHandler *GetBaseJointHandler(const PLGeneral::String &sJointName) const;
 
@@ -288,9 +288,9 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @param[in] cJointHandler
 		*    Current joint handler to process
 		*  @param[in] pParentJointHandler
-		*    Current parent joint handler to process, can be NULL
+		*    Current parent joint handler to process, can be a null pointer
 		*/
-		void RecCalculateStates(JointHandler &cJointHandler, JointHandler *pParentJointHandler = NULL);
+		void RecCalculateStates(JointHandler &cJointHandler, JointHandler *pParentJointHandler = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -305,7 +305,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 	//[ Public virtual PLCore::ResourceHandler functions      ]
 	//[-------------------------------------------------------]
 	public:
-		PLMESH_API virtual bool SetResource(Skeleton *pResource = NULL);
+		PLMESH_API virtual bool SetResource(Skeleton *pResource = nullptr);
 
 
 };

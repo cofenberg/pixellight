@@ -78,7 +78,7 @@ class PluginPixelLight : public Plugin {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLEngine::RenderApplication *m_pApplication;	/**< Applet application, can be NULL */
+		PLEngine::RenderApplication *m_pApplication;	/**< Applet application, can be a null pointer */
 
 
 };

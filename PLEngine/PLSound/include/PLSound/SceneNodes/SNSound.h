@@ -138,7 +138,7 @@ class SNSound : public PLScene::SceneNode {
 		*    Returns the sound source
 		*
 		*  @return
-		*    The sound source, can be NULL
+		*    The sound source, can be a null pointer
 		*/
 		PLSOUND_API Source *GetSoundSource() const;
 
@@ -164,7 +164,7 @@ class SNSound : public PLScene::SceneNode {
 		*    Returns the sound container this sound is in
 		*
 		*  @return
-		*    The sound container this sound is in, NULL on error
+		*    The sound container this sound is in, a null pointer on error
 		*/
 		SCSound *GetSoundContainer() const;
 

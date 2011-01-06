@@ -32,15 +32,15 @@
 //[-------------------------------------------------------]
 //[ Global HID function pointers (HIDWindows.cpp)         ]
 //[-------------------------------------------------------]
-PFNHIDDGETPREPARSEDDATA		HidD_GetPreparsedData	= NULL;
-PFNHIDDFREEPREPARSEDDATA	HidD_FreePreparsedData	= NULL;
-PFNHIDPGETDATA				HidP_GetData			= NULL;
-PFNHIDPSETDATA				HidP_SetData			= NULL;
-PFNHIDPGETHIDGUID			HidD_GetHidGuid			= NULL;
-PFNHIDPGETATTRIBUTES		HidD_GetAttributes		= NULL;
-PFNHIDPGETCAPS				HidP_GetCaps			= NULL;
-PFNHIDPGETBUTTONCAPS		HidP_GetButtonCaps		= NULL;
-PFNHIDPGETVALUECAPS			HidP_GetValueCaps		= NULL;
+PFNHIDDGETPREPARSEDDATA		HidD_GetPreparsedData	= nullptr;
+PFNHIDDFREEPREPARSEDDATA	HidD_FreePreparsedData	= nullptr;
+PFNHIDPGETDATA				HidP_GetData			= nullptr;
+PFNHIDPSETDATA				HidP_SetData			= nullptr;
+PFNHIDPGETHIDGUID			HidD_GetHidGuid			= nullptr;
+PFNHIDPGETATTRIBUTES		HidD_GetAttributes		= nullptr;
+PFNHIDPGETCAPS				HidP_GetCaps			= nullptr;
+PFNHIDPGETBUTTONCAPS		HidP_GetButtonCaps		= nullptr;
+PFNHIDPGETVALUECAPS			HidP_GetValueCaps		= nullptr;
 
 
 //[-------------------------------------------------------]
@@ -122,30 +122,30 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 	}
 
 	// Create handle
-	HDEVINFO hDevInfo = SetupDiGetClassDevs(&m_sGUID, NULL, NULL, DIGCF_DEVICEINTERFACE);
+	HDEVINFO hDevInfo = SetupDiGetClassDevs(&m_sGUID, nullptr, nullptr, DIGCF_DEVICEINTERFACE);
 	if (!hDevInfo) return;
 
 	// Get device interface
 	SP_DEVICE_INTERFACE_DATA sDevice;
 	sDevice.cbSize = sizeof(sDevice);
 	uint32 nDevice = 0;
-	while (SetupDiEnumDeviceInterfaces(hDevInfo, NULL, &m_sGUID, nDevice, &sDevice)) {
+	while (SetupDiEnumDeviceInterfaces(hDevInfo, nullptr, &m_sGUID, nDevice, &sDevice)) {
 		// Allocate buffer for device interface details
 		DWORD nDetailsSize = 0;
-		SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, NULL, 0, &nDetailsSize, NULL);
+		SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, nullptr, 0, &nDetailsSize, nullptr);
 		BYTE *pBuffer = new BYTE[nDetailsSize];
 		SP_DEVICE_INTERFACE_DETAIL_DATA *sDeviceDetail = (SP_DEVICE_INTERFACE_DETAIL_DATA*)pBuffer;
 		sDeviceDetail->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
 
 		// Get device interface details
-		if (SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, sDeviceDetail, nDetailsSize, &nDetailsSize, NULL)) {
+		if (SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, sDeviceDetail, nDetailsSize, &nDetailsSize, nullptr)) {
 			// Create device
 			HIDDeviceWindows *pDevice = new HIDDeviceWindows();
 			pDevice->m_sName = sDeviceDetail->DevicePath;
 
 			// Open device to get detailed information
 			HANDLE hDevice = CreateFile(sDeviceDetail->DevicePath, GENERIC_READ | GENERIC_WRITE,
-										FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+										FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, nullptr);
 			if (hDevice != INVALID_HANDLE_VALUE) {
 				// Get device attributes
 				HIDD_ATTRIBUTES sAttrib;
@@ -289,7 +289,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 				DWORD nError = GetLastError();
 				LPTSTR s;
 				::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-								NULL, nError, 0, (LPTSTR)&s, 0, NULL);
+								nullptr, nError, 0, (LPTSTR)&s, 0, nullptr);
 				::LocalFree(s);
 				*/
 

@@ -210,7 +210,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 							nDepth,
 							ZPixmap,
 							0,
-							NULL,
+							nullptr,
 							nWidth,
 							nHeight,
 							(nDepth > 16) ? 32 : (nDepth > 8) ? 16 : 8,
@@ -221,7 +221,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 
 		// Create pixmap
 		pPixmap = XCreatePixmap(pDisplay, XDefaultRootWindow(pDisplay), nWidth, nHeight, nDepth);
-		GC sGC  = XCreateGC(pDisplay, pPixmap, 0, NULL);
+		GC sGC  = XCreateGC(pDisplay, pPixmap, 0, nullptr);
 		XPutImage(pDisplay, pPixmap, sGC, pXImage, 0, 0, 0, 0, nWidth, nHeight);
 		XFreeGC(pDisplay, sGC);
 
@@ -235,7 +235,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 								1,
 								ZPixmap,
 								0,
-								NULL,
+								nullptr,
 								nWidth,
 								nHeight,
 								8,
@@ -250,7 +250,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 
 		// Create mask pixmap
 		pMaskPixmap = XCreatePixmap(pDisplay, XDefaultRootWindow(pDisplay), nWidth, nHeight, 1);
-		sGC = XCreateGC(pDisplay, pMaskPixmap, 0, NULL);
+		sGC = XCreateGC(pDisplay, pMaskPixmap, 0, nullptr);
 		XPutImage(pDisplay, pMaskPixmap, sGC, pXMaskImage, 0, 0, 0, 0, nWidth, nHeight);
 		XFreeGC(pDisplay, sGC);
 

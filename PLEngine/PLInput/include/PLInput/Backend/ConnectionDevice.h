@@ -152,7 +152,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Get input buffer
 		*
 		*  @return
-		*    Input buffer (can be NULL if the device is not open), do not destroy the returned buffer!
+		*    Input buffer (can be a null pointer if the device is not open), do not destroy the returned buffer!
 		*/
 		PLINPUT_API PLGeneral::uint8 *GetInputBuffer() const;
 
@@ -161,7 +161,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Get output buffer
 		*
 		*  @return
-		*    Output buffer (can be NULL if the device is not open), do not destroy the returned buffer!
+		*    Output buffer (can be a null pointer if the device is not open), do not destroy the returned buffer!
 		*/
 		PLINPUT_API PLGeneral::uint8 *GetOutputBuffer() const;
 
@@ -310,14 +310,14 @@ class ConnectionDevice : public DeviceImpl {
 		EDeviceType			 m_nDeviceType;			/**< Device type */
 
 		// Input and output buffers
-		PLGeneral::uint8	*m_pInputBuffer;		/**< Input report buffer, can be NULL */
-		PLGeneral::uint8	*m_pOutputBuffer;		/**< Output report buffer, can be NULL */
+		PLGeneral::uint8	*m_pInputBuffer;		/**< Input report buffer, can be a null pointer */
+		PLGeneral::uint8	*m_pOutputBuffer;		/**< Output report buffer, can be a null pointer */
 		PLGeneral::uint16	 m_nInputReportSize;	/**< Size of input report in bytes */
 		PLGeneral::uint16	 m_nOutputReportSize;	/**< Size of output report in bytes */
 
 		// Read thread
-		PLGeneral::Thread	*m_pThread;				/**< Update thread, can be NULL */
-		PLGeneral::Mutex	*m_pMutex;				/**< Update mutex, can be NULL */
+		PLGeneral::Thread	*m_pThread;				/**< Update thread, can be a null pointer */
+		PLGeneral::Mutex	*m_pMutex;				/**< Update mutex, can be a null pointer */
 		bool				 m_bThreadExit;			/**< Flag to exit the thread */
 
 

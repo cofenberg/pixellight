@@ -147,7 +147,7 @@ class ZipHandle {
 				uint32  m_nExternalAttr;		/**< External file attributes        4 bytes */
 				uint32  m_nOffsetCurFile;		/**< Relative offset of local header 4 bytes */
 				Time    m_cTime;				/**< Time of the current file */
-				uint8  *m_pExtraField;			/**< Extra data, can be NULL */
+				uint8  *m_pExtraField;			/**< Extra data, can be a null pointer */
 
 
 		};
@@ -194,12 +194,12 @@ class ZipHandle {
 		*  @param[in] bMemBuf
 		*    Shall the ZIP-file be read into a memory-buffer?
 		*  @param[in] pAccess
-		*    Access information to pass through (can be NULL)
+		*    Access information to pass through (can be a null pointer)
 		*
 		*  @return
 		*    'true', if the file could be opened, 'false' on error
 		*/
-		PLGENERAL_API bool Open(const String &sFilename, const String &sPassword, bool bCaseSensitive = true, bool bMemBuf = true, const FileAccess *pAccess = NULL);
+		PLGENERAL_API bool Open(const String &sFilename, const String &sPassword, bool bCaseSensitive = true, bool bMemBuf = true, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -498,7 +498,7 @@ class ZipHandle {
 
 		// Stream data
 		uint8      *m_pReadBuffer;			/**< Internal buffer for compressed data (always valid!) */
-		z_stream   *m_pStream;				/**< ZLib stream structure for inflate, can be NULL */
+		z_stream   *m_pStream;				/**< ZLib stream structure for inflate, can be a null pointer */
 		uint32		m_nPosInZip;			/**< Position in byte on the ZIP-file, for fseek */
 		uint32		m_nPosLocalExtra;		/**< Offset of the local extra field */
 		uint32		m_nSizeLocalExtra;		/**< Size of the local extra field */

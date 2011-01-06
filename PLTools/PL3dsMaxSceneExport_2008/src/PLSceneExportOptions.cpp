@@ -183,14 +183,14 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 
 		// Get version
 		int nVersion = 0; // 'Initial version'
-		if (GetPrivateProfileString("Version", "Version", NULL, szTemp, 256, pszAbsFilename))
+		if (GetPrivateProfileString("Version", "Version", nullptr, szTemp, 256, pszAbsFilename))
 			nVersion = atoi(szTemp);
 
 		// Unkown
 		if (nVersion > 2) {
 			// Show an error message box
 			std::string sError = std::string(pszAbsFilename) + ":\nFormat version is unknown (too new), you may need to update your PixelLight 3ds Max scene exporter version\n... default settings are used...";
-			MessageBox(NULL, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
 
 			// Set default settings
 			SetDefaultSettings();
@@ -203,14 +203,14 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 		} else if (nVersion == 0 || nVersion == 1) {
 			// [DEPRECATED] Show an warning message box
 			std::string sWarning = std::string(pszAbsFilename) + ":\nDeprecated format version";
-			MessageBox(NULL, sWarning.c_str(), "PixelLight scene export warning", MB_OK);
+			MessageBox(nullptr, sWarning.c_str(), "PixelLight scene export warning", MB_OK);
 			LoadV0orV1(sFilename);
 
 		// No longer supported format version
 		} else if (nVersion >= 0) {
 			// Show an error message box
 			std::string sError = std::string(pszAbsFilename) + ":\nFormat version is no longer supported\n... default settings are used...";
-			MessageBox(NULL, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
 
 			// Set default settings
 			SetDefaultSettings();
@@ -219,7 +219,7 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 		} else {
 			// Show an error message box
 			std::string sError = std::string(pszAbsFilename) + ":\nInvalid format version\n... default settings are used...";
-			MessageBox(NULL, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
 
 			// Set default settings
 			SetDefaultSettings();
@@ -340,7 +340,7 @@ void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std
 {
 	// Is this already an absolute filename?
 	char szApplicationDrive[_MAX_DRIVE], szApplicationDir[_MAX_DIR];
-	_splitpath(sFilename.c_str(), szApplicationDrive, szApplicationDir, NULL, NULL);
+	_splitpath(sFilename.c_str(), szApplicationDrive, szApplicationDir, nullptr, nullptr);
 	if (!strlen(szApplicationDrive)) {
 		// Must be a relativ filename
 		const TCHAR *pDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
@@ -417,81 +417,81 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 
 	// General
 	bool bCanRead = false;
-	if (GetPrivateProfileString("General", "RemoveSpaces", NULL, szTemp, 256, pszAbsFilename)) {
+	if (GetPrivateProfileString("General", "RemoveSpaces", nullptr, szTemp, 256, pszAbsFilename)) {
 		bRemoveSpaces = atoi(szTemp) != 0;
 		bCanRead = true;
 	}
-	if (GetPrivateProfileString("General", "CorrectPortals", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "CorrectPortals", nullptr, szTemp, 256, pszAbsFilename))
 		bCorrectPortals = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("General", "AnimationPlayback", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "AnimationPlayback", nullptr, szTemp, 256, pszAbsFilename))
 		bAnimationPlayback = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("General", "ShowExportedScene", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "ShowExportedScene", nullptr, szTemp, 256, pszAbsFilename))
 		bShowExportedScene = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("General", "Publish", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "Publish", nullptr, szTemp, 256, pszAbsFilename))
 		bPublish = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("General", "OverwriteAmbientColor", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "OverwriteAmbientColor", nullptr, szTemp, 256, pszAbsFilename))
 		bOverwriteAmbientColor = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("General", "OverwrittenAmbientColorR", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "OverwrittenAmbientColorR", nullptr, szTemp, 256, pszAbsFilename))
 		fOverwrittenAmbientColor[0] = (float)atof(szTemp);
-	if (GetPrivateProfileString("General", "OverwrittenAmbientColorG", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "OverwrittenAmbientColorG", nullptr, szTemp, 256, pszAbsFilename))
 		fOverwrittenAmbientColor[1] = (float)atof(szTemp);
-	if (GetPrivateProfileString("General", "OverwrittenAmbientColorB", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "OverwrittenAmbientColorB", nullptr, szTemp, 256, pszAbsFilename))
 		fOverwrittenAmbientColor[2] = (float)atof(szTemp);
-	if (GetPrivateProfileString("General", "SceneContainer", bCanRead ? "" : NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "SceneContainer", bCanRead ? "" : nullptr, szTemp, 256, pszAbsFilename))
 		sSceneContainer = szTemp;
-	if (GetPrivateProfileString("General", "SceneRenderer", bCanRead ? "" : NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "SceneRenderer", bCanRead ? "" : nullptr, szTemp, 256, pszAbsFilename))
 		sSceneRenderer = szTemp;
-	if (GetPrivateProfileString("General", "Viewer", bCanRead ? "" : NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("General", "Viewer", bCanRead ? "" : nullptr, szTemp, 256, pszAbsFilename))
 		sViewer = szTemp;
 
 	// Log
-	if (GetPrivateProfileString("Log", "Log", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Log", "Log", nullptr, szTemp, 256, pszAbsFilename))
 		bLog = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Log", "LogOpen", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Log", "LogOpen", nullptr, szTemp, 256, pszAbsFilename))
 		bLogOpen = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Log", "LogFlags", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Log", "LogFlags", nullptr, szTemp, 256, pszAbsFilename))
 		nLogFlags = atoi(szTemp);
 
 	// User properties
-	if (GetPrivateProfileString("UserProperties", "UserPropVariables", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("UserProperties", "UserPropVariables", nullptr, szTemp, 256, pszAbsFilename))
 		bUserPropVariables = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("UserProperties", "UserPropModifiers", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("UserProperties", "UserPropModifiers", nullptr, szTemp, 256, pszAbsFilename))
 		bUserPropModifiers = atoi(szTemp) != 0;
 
 	// Materials
-	if (GetPrivateProfileString("Materials", "ExportMaterials", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Materials", "ExportMaterials", nullptr, szTemp, 256, pszAbsFilename))
 		bExportMaterials = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "CreateMaterials", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Materials", "CreateMaterials", nullptr, szTemp, 256, pszAbsFilename))
 		bCreateMaterials = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "SmartMaterialParameters", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Materials", "SmartMaterialParameters", nullptr, szTemp, 256, pszAbsFilename))
 		bSmartMaterialParameters = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "CopyTextures", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Materials", "CopyTextures", nullptr, szTemp, 256, pszAbsFilename))
 		bCopyTextures = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "PLDirectories", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Materials", "PLDirectories", nullptr, szTemp, 256, pszAbsFilename))
 		bPLDirectories = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "SubDirectories", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Materials", "SubDirectories", nullptr, szTemp, 256, pszAbsFilename))
 		bSubDirectories = atoi(szTemp) != 0;
 
 	// Meshes
-	if (GetPrivateProfileString("Meshes", "ExportMeshes", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Meshes", "ExportMeshes", nullptr, szTemp, 256, pszAbsFilename))
 		bExportMeshes = atoi(szTemp) != 0;
 	for (int i=0; i<MaxTexCoords; i++) {
 		sprintf(szTemp2, "TexCoordComponents%d", i);
-		if (GetPrivateProfileString("Meshes", szTemp2, NULL, szTemp, 256, pszAbsFilename))
+		if (GetPrivateProfileString("Meshes", szTemp2, nullptr, szTemp, 256, pszAbsFilename))
 			nTexCoordComponents[i] = atoi(szTemp);
 	}
-	if (GetPrivateProfileString("Meshes", "Normals", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Meshes", "Normals", nullptr, szTemp, 256, pszAbsFilename))
 		bNormals = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Meshes", "Tangents", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Meshes", "Tangents", nullptr, szTemp, 256, pszAbsFilename))
 		bTangents = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Meshes", "Binormals", NULL, szTemp, 256, pszAbsFilename))
+	if (GetPrivateProfileString("Meshes", "Binormals", nullptr, szTemp, 256, pszAbsFilename))
 		bBinormals = atoi(szTemp) != 0;
 
 	// Scene containers
 	ClearSceneContainers();
 	for (int i=0;; i++) {
 		sprintf(szTemp2, "%d", i);
-		if (GetPrivateProfileString("SceneContainers", szTemp2, NULL, szTemp, 256, pszAbsFilename))
+		if (GetPrivateProfileString("SceneContainers", szTemp2, nullptr, szTemp, 256, pszAbsFilename))
 			m_lstSceneContainers.push_back(new std::string(szTemp));
 		else
 			break; // No more scene containers
@@ -501,7 +501,7 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 	ClearSceneRenderers();
 	for (int i=0;; i++) {
 		sprintf(szTemp2, "%d", i);
-		if (GetPrivateProfileString("SceneRenderers", szTemp2, NULL, szTemp, 256, pszAbsFilename))
+		if (GetPrivateProfileString("SceneRenderers", szTemp2, nullptr, szTemp, 256, pszAbsFilename))
 			m_lstSceneRenderers.push_back(new std::string(szTemp));
 		else
 			break; // No more scene renderers

@@ -59,7 +59,7 @@ FontManager::~FontManager()
 PLRenderer::Font *FontManager::CreateFontTexture(File &cFile, uint32 nSize, uint32 nResolution)
 {
 	// [TODO] Implement me
-	return NULL;
+	return nullptr;
 }
 
 

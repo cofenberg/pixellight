@@ -126,7 +126,7 @@ class Buffer {
 		*    Add data to the buffer
 		*
 		*  @param[in] pData
-		*    Data to add, if NULL nothing happens
+		*    Data to add, if a null pointer nothing happens
 		*  @param[in] nSize
 		*    Size of the data to add in bytes (MUST be correct!)
 		*/
@@ -180,7 +180,7 @@ class Buffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		char	*m_pBuffer;				/**< Data buffer, can be NULL */
+		char	*m_pBuffer;				/**< Data buffer, can be a null pointer */
 		uint32   m_nSize;				/**< Size of buffer */
 		uint32   m_nUsed;				/**< Currenty used size */
 		bool	m_bRemoveDelimiters;	/**< Remove line delimiters (CR/LF)? */

@@ -207,7 +207,7 @@ class Container : public Iterable<ValueType> {
 		*    Adds elements from a given C-array
 		*
 		*  @param[in] pElements
-		*    Pointer to C-array with the elements to add, if NULL nothing is done
+		*    Pointer to C-array with the elements to add, if a null pointer, nothing is done
 		*  @param[in] nCount
 		*    Number of elements to add, the given C-array MUST have at least nCount elements!
 		*

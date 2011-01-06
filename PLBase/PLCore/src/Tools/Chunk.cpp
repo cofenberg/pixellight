@@ -46,7 +46,7 @@ Chunk::Chunk() :
 	m_nElementType(Float),
 	m_nNumOfComponentsPerElement(0),
 	m_nNumOfElements(0),
-	m_pData(NULL)
+	m_pData(nullptr)
 {
 }
 
@@ -147,7 +147,7 @@ void Chunk::Clear()
 	// Destroy the chunk data
 	if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 
 	// Reset

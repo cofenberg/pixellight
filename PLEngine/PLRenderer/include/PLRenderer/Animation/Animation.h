@@ -91,9 +91,9 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @param[in] sName
 		*    Element name to set
 		*  @param[in] pManager
-		*    Animation manager using this element, can be NULL
+		*    Animation manager using this element, can be a null pointer
 		*/
-		PLRENDERER_API Animation(const PLGeneral::String &sName = "", AnimationManager *pManager = NULL);
+		PLRENDERER_API Animation(const PLGeneral::String &sName = "", AnimationManager *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -204,7 +204,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*    Returns the animation information
 		*
 		*  @return
-		*    Animation information, NULL if there's no one
+		*    Animation information, a null pointer if there's no one
 		*/
 		PLRENDERER_API AnimationInfo *GetAnimation() const;
 
@@ -424,7 +424,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		PLGeneral::uint32  m_nEnd;				/**< End frame of the animation */
 		float			   m_fSpeed;			/**< Playback speed */
 		bool			   m_bEvents;			/**< Are animation events enabled? */
-		AnimationInfo	  *m_pAnimationInfo;	/**< Pointer to the animation information, can be NULL */
+		AnimationInfo	  *m_pAnimationInfo;	/**< Pointer to the animation information, can be a null pointer */
 		float			   m_fWeight;			/**< Animation weight */
 		bool			   m_bBounced;			/**< If ping pong playback, was there already a 'bounce'? */
 

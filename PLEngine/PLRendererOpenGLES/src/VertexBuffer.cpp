@@ -90,8 +90,8 @@ bool VertexBuffer::BindAndUpdate()
 */
 VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::VertexBuffer(cRenderer),
 	m_nVertexBuffer(0),
-	m_pData(NULL),
-	m_pLockedData(NULL),
+	m_pData(nullptr),
+	m_pLockedData(nullptr),
 	m_bLockReadOnly(false),
 	m_bUpdateVBO(false),
 	m_nUsageAPI(0)
@@ -123,7 +123,7 @@ void *VertexBuffer::GetData(uint32 nIndex, uint32 nSemantic, uint32 nChannel)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 Color4 VertexBuffer::GetColor(uint32 nIndex, uint32 nChannel)
@@ -225,7 +225,7 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 //[-------------------------------------------------------]
 bool VertexBuffer::IsAllocated() const
 {
-	return (m_nVertexBuffer != 0 || m_pData != NULL);
+	return (m_nVertexBuffer != 0 || m_pData != nullptr);
 }
 
 bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
@@ -253,7 +253,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// If the buffer is already allocated...
-		uint8 *pDataBackup = NULL;
+		uint8 *pDataBackup = nullptr;
 		uint32 nSizeBackup = m_nSize;
 		if (m_pData && ((m_nSize != m_nVertexSize*nElements) || (m_bManaged && !bManaged))) {
 			// Backup the current data
@@ -264,7 +264,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 			// Delete data
 			delete [] m_pData;
-			m_pData = NULL;
+			m_pData = nullptr;
 		}
 		if (m_nVertexBuffer && nUsage == PLRenderer::Usage::Software) {
 			if (bKeepData && !m_pData && !pDataBackup && Lock(PLRenderer::Lock::ReadOnly)) {
@@ -299,7 +299,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 			GLint nArrayBufferBackup;
 			glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &nArrayBufferBackup);
 			glBindBuffer(GL_ARRAY_BUFFER, m_nVertexBuffer);
-			glBufferData(GL_ARRAY_BUFFER, m_nSize, NULL, m_nUsageAPI);
+			glBufferData(GL_ARRAY_BUFFER, m_nSize, nullptr, m_nUsageAPI);
 
 			// Error checking
 			int nArrayObjectSize = 0;
@@ -365,7 +365,7 @@ bool VertexBuffer::Clear()
 	}
 	if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	}
 
 	// Update renderer statistics
@@ -387,7 +387,7 @@ void *VertexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's a vertex buffer
 	if (!m_nVertexBuffer && !m_pData)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Check whether the vertex buffer is already locked
 	m_nLockCount++;
@@ -402,7 +402,7 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	} else if (nFlag == PLRenderer::Lock::ReadWrite) {
 		m_bLockReadOnly = false;
 	} else {
-		return NULL; // Error!
+		return nullptr; // Error!
 	}
 
 	// Map the vertex buffer
@@ -419,7 +419,7 @@ void *VertexBuffer::Lock(uint32 nFlag)
 		if (nFlag == PLRenderer::Lock::WriteOnly)
 			nFlagAPI = GL_WRITE_ONLY_OES;
 		else
-			return NULL; // Error!
+			return nullptr; // Error!
 
 		// [TODO] GL_OES_mapbuffer
 		// Map
@@ -465,7 +465,7 @@ bool VertexBuffer::Unlock()
 		}
 	}
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
-	m_pLockedData   = NULL;
+	m_pLockedData   = nullptr;
 	m_bLockReadOnly = false;
 
 	// Done
@@ -484,7 +484,7 @@ void VertexBuffer::BackupDeviceData(uint8 **ppBackup)
 		MemoryManager::Copy(*ppBackup, GetData(), m_nSize);
 		ForceUnlock();
 	} else {
-		*ppBackup = NULL;
+		*ppBackup = nullptr;
 	}
 
 	// Destroy the vertex buffer
@@ -501,7 +501,7 @@ void VertexBuffer::RestoreDeviceData(uint8 **ppBackup)
 		glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &nArrayBufferBackup);
 		glGenBuffers(1, &m_nVertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_nVertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_nSize, NULL, m_nUsageAPI);
+		glBufferData(GL_ARRAY_BUFFER, m_nSize, nullptr, m_nUsageAPI);
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);
 			Unlock();
@@ -516,7 +516,7 @@ void VertexBuffer::RestoreDeviceData(uint8 **ppBackup)
 			glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &nArrayBufferBackup);
 			glGenBuffers(1, &m_nVertexBuffer);
 			glBindBuffer(GL_ARRAY_BUFFER, m_nVertexBuffer);
-			glBufferData(GL_ARRAY_BUFFER, m_nSize, NULL, m_nUsageAPI);
+			glBufferData(GL_ARRAY_BUFFER, m_nSize, nullptr, m_nUsageAPI);
 			glBindBuffer(GL_ARRAY_BUFFER, nArrayBufferBackup);
 			m_bUpdateVBO = true;
 		}

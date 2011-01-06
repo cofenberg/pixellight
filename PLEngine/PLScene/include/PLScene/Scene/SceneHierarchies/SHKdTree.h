@@ -145,8 +145,8 @@ class SHKdTreeNode : public SceneHierarchyNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SHKdTreeNode *m_pLeftNode;		/**< Left scene hierarchy node, can be NULL */
-		SHKdTreeNode *m_pRightNode;		/**< Right scene hierarchy node, can be NULL */
+		SHKdTreeNode *m_pLeftNode;		/**< Left scene hierarchy node, can be a null pointer */
+		SHKdTreeNode *m_pRightNode;		/**< Right scene hierarchy node, can be a null pointer */
 		EAxis		  m_nSplitAxis;		/**< Split axis */
 		float		  m_fSplitValue;	/**< Split value */
 

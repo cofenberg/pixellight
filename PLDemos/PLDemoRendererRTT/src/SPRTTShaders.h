@@ -99,16 +99,16 @@ class SPRTTShaders : public SPRTT {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget;			/**< The render target the teapot is rendered in, can be NULL */
-		PLRenderer::TextureBuffer2D		 *m_pColorTarget1;			/**< Color target 1, can be NULL */
-		PLRenderer::TextureBuffer2D		 *m_pColorTarget2;			/**< Color target 2, can be NULL */
-		PLRenderer::TextureBuffer2D		 *m_pColorTarget3;			/**< Color target 3, can be NULL */
-		PLRenderer::VertexShader		 *m_pSceneVertexShader;		/**< Scene vertex shader, can be NULL */
-		PLRenderer::FragmentShader		 *m_pSceneFragmentShader;	/**< Scene fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pSceneProgram;			/**< Scene GPU program, can be NULL */
-		PLRenderer::VertexShader		 *m_pVertexShader;			/**< Vertex shader, can be NULL */
-		PLRenderer::FragmentShader		 *m_pFragmentShader;		/**< Fragment shader, can be NULL */
-		PLRenderer::Program				 *m_pProgram;				/**< GPU program, can be NULL */
+		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget;			/**< The render target the teapot is rendered in, can be a null pointer */
+		PLRenderer::TextureBuffer2D		 *m_pColorTarget1;			/**< Color target 1, can be a null pointer */
+		PLRenderer::TextureBuffer2D		 *m_pColorTarget2;			/**< Color target 2, can be a null pointer */
+		PLRenderer::TextureBuffer2D		 *m_pColorTarget3;			/**< Color target 3, can be a null pointer */
+		PLRenderer::VertexShader		 *m_pSceneVertexShader;		/**< Scene vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		 *m_pSceneFragmentShader;	/**< Scene fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pSceneProgram;			/**< Scene GPU program, can be a null pointer */
+		PLRenderer::VertexShader		 *m_pVertexShader;			/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		 *m_pFragmentShader;		/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program				 *m_pProgram;				/**< GPU program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -63,10 +63,10 @@ DragDropWidget::DragDropWidget(Widget *pParent) : ContainerWidget(pParent),
 	EventHandlerClear(&DragDropWidget::OnClear, this),
 	EventHandlerCopy (&DragDropWidget::OnCopy,  this),
 	EventHandlerPaste(&DragDropWidget::OnPaste, this),
-	m_pLabel(NULL),
-	m_pButtonClear(NULL),
-	m_pButtonCopy(NULL),
-	m_pButtonPaste(NULL)
+	m_pLabel(nullptr),
+	m_pButtonClear(nullptr),
+	m_pButtonCopy(nullptr),
+	m_pButtonPaste(nullptr)
 {
 	// Set background color
 	SetBackgroundColor(Color4::Gray);

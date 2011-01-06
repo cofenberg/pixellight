@@ -170,7 +170,9 @@ void ChecksumSHA1::Update(const uint8 nInput[], uint32 nInputLen)
 			Transform(m_nState, &nInput[i]);
 
 		j = 0;
-	} else i = 0;
+	} else {
+		i = 0;
+	}
 
 	if ((nInputLen - i) != 0)
 		MemoryManager::Copy(&m_nBuffer[j], &nInput[i], nInputLen - i);

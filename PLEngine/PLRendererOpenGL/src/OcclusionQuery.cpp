@@ -178,7 +178,7 @@ void OcclusionQuery::SetMinFragments(uint32 nMinFragments)
 void OcclusionQuery::BackupDeviceData(uint8 **ppBackup)
 {
 	// Not used :)
-	*ppBackup = NULL;
+	*ppBackup = nullptr;
 
 	// Destroy OpenGL occlusion query
 	if (m_nQuery) {

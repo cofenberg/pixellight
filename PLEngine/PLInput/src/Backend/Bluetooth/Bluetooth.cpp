@@ -75,7 +75,7 @@ const List<BTDevice*> &Bluetooth::GetDevices() const
 *    Constructor
 */
 Bluetooth::Bluetooth() :
-	m_pBTImpl(NULL)
+	m_pBTImpl(nullptr)
 {
 	// Create Bluetooth implementation
 	#if defined(LINUX)

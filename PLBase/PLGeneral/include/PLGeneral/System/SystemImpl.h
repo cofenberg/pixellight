@@ -251,7 +251,7 @@ class SystemImpl {
 		*    Returns a pointer to the current thread
 		*
 		*  @return
-		*    Current thread, NULL on main thread or error
+		*    Current thread, a null pointer on main thread or error
 		*/
 		virtual Thread *GetCurrentThread() const = 0;
 

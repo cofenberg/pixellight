@@ -107,7 +107,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    Module ID
 		*
 		*  @return
-		*    Pointer to module (can be NULL)
+		*    Pointer to module (can be a null pointer)
 		*/
 		PLCORE_API const Module *GetModule(PLGeneral::uint32 nModuleID) const;
 
@@ -204,7 +204,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    Class name
 		*
 		*  @return
-		*    Pointer to the class, or NULL on error
+		*    Pointer to the class, or a null pointer on error
 		*/
 		PLCORE_API const Class *GetClass(const PLGeneral::String &sClass) const;
 

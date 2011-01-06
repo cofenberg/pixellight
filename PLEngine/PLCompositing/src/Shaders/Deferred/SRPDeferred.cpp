@@ -150,7 +150,7 @@ VertexBuffer *SRPDeferred::GetVertexBuffer()
 *    Constructor
 */
 SRPDeferred::SRPDeferred() :
-	m_pVertexBuffer(NULL)
+	m_pVertexBuffer(nullptr)
 {
 }
 

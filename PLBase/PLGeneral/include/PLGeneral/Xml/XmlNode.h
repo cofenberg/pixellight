@@ -133,7 +133,7 @@ class XmlNode : public XmlBase {
 		*    One step up the DOM
 		*
 		*  @return
-		*    The parent node, NULL on error
+		*    The parent node, a null pointer on error
 		*/
 		PLGENERAL_API XmlNode *GetParent();
 		PLGENERAL_API const XmlNode *GetParent() const;
@@ -143,7 +143,7 @@ class XmlNode : public XmlBase {
 		*    Returns the first child of this node
 		*
 		*  @return
-		*    The first child of this node, NULL if there are no children
+		*    The first child of this node, a null pointer if there are no children
 		*/
 		PLGENERAL_API XmlNode *GetFirstChild();
 		PLGENERAL_API const XmlNode *GetFirstChild() const;
@@ -156,7 +156,7 @@ class XmlNode : public XmlBase {
 		*    Value to look for
 		*
 		*  @return
-		*    The first child of this node with the matching 'value', NULL if none found
+		*    The first child of this node with the matching 'value', a null pointer if none found
 		*/
 		PLGENERAL_API XmlNode *GetFirstChild(const String &sValue);
 		PLGENERAL_API const XmlNode *GetFirstChild(const String &sValue) const;
@@ -166,7 +166,7 @@ class XmlNode : public XmlBase {
 		*    Returns the last child of this node
 		*
 		*  @return
-		*    The last child of this node, NULL if there are no children
+		*    The last child of this node, a null pointer if there are no children
 		*/
 		PLGENERAL_API XmlNode *GetLastChild();
 		PLGENERAL_API const XmlNode *GetLastChild() const;
@@ -179,7 +179,7 @@ class XmlNode : public XmlBase {
 		*    Value to look for
 		*
 		*  @return
-		*    The last child of this node with the matching 'value', NULL if none found
+		*    The last child of this node with the matching 'value', a null pointer if none found
 		*/
 		PLGENERAL_API XmlNode *GetLastChild(const String &sValue);
 		PLGENERAL_API const XmlNode *GetLastChild(const String &sValue) const;
@@ -189,10 +189,10 @@ class XmlNode : public XmlBase {
 		*    An alternate way to walk the children of a node
 		*
 		*  @param[in] pPrevious
-		*    Previous node, if NULL the first child node is returned
+		*    Previous node, if a null pointer the first child node is returned
 		*
 		*  @return
-		*    Next node, NULL if there's no next node
+		*    Next node, a null pointer if there's no next node
 		*
 		*  @remarks
 		*    One way to iterate over nodes is:
@@ -207,8 +207,8 @@ class XmlNode : public XmlBase {
 		*    @endverbatim
 		*
 		*    'IterateChildren()' takes the previous child as input and finds
-		*    the next one. If the previous child is NULL, it returns the
-		*    first. 'IterateChildren()' will return NULL when done.
+		*    the next one. If the previous child is a null pointer, it returns the
+		*    first. 'IterateChildren()' will return a null pointer when done.
 		*/
 		PLGENERAL_API XmlNode *IterateChildren(XmlNode *pPrevious);
 		PLGENERAL_API const XmlNode *IterateChildren(const XmlNode *pPrevious) const;
@@ -220,10 +220,10 @@ class XmlNode : public XmlBase {
 		*  @param[in] sValue
 		*    Value to look for
 		*  @param[in] pPrevious
-		*    Previous node, if NULL the first child node is returned
+		*    Previous node, if a null pointer the first child node is returned
 		*
 		*  @return
-		*    Next node, NULL if there's no next node
+		*    Next node, a null pointer if there's no next node
 		*/
 		PLGENERAL_API XmlNode *IterateChildren(const String &sValue, XmlNode *pPrevious);
 		PLGENERAL_API const XmlNode *IterateChildren(const String &sValue, const XmlNode *pPrevious) const;
@@ -236,7 +236,7 @@ class XmlNode : public XmlBase {
 		*    Node to insert
 		*
 		*  @return
-		*    Returns a pointer to the new object or NULL if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occured
 		*/
 		PLGENERAL_API XmlNode *InsertEndChild(const XmlNode &cAddThis);
 
@@ -248,7 +248,7 @@ class XmlNode : public XmlBase {
 		*    Node to add
 		*
 		*  @return
-		*    Pointer to the given 'cAddThis', NULL on error (on error, 'cAddThis' will be deleted)
+		*    Pointer to the given 'cAddThis', a null pointer on error (on error, 'cAddThis' will be deleted)
 		*
 		*  @remarks
 		*    The node to be added is passed by reference, and will be henceforth owned
@@ -268,7 +268,7 @@ class XmlNode : public XmlBase {
 		*    Node to insert
 		*
 		*  @return
-		*    Returns a pointer to the new object or NULL if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occured
 		*/
 		PLGENERAL_API XmlNode *InsertBeforeChild(XmlNode &cBeforeThis, const XmlNode &cAddThis);
 
@@ -282,7 +282,7 @@ class XmlNode : public XmlBase {
 		*    Node to insert
 		*
 		*  @return
-		*    Returns a pointer to the new object or NULL if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occured
 		*/
 		PLGENERAL_API XmlNode *InsertAfterChild(XmlNode &cAfterThis, const XmlNode &cAddThis);
 
@@ -296,7 +296,7 @@ class XmlNode : public XmlBase {
 		*    New node replacing the old
 		*
 		*  @return
-		*    Returns a pointer to the new object or NULL if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occured
 		*/
 		PLGENERAL_API XmlNode *ReplaceChild(XmlNode &cReplaceThis, const XmlNode &cWithThis);
 
@@ -317,7 +317,7 @@ class XmlNode : public XmlBase {
 		*    Navigate to a sibling node
 		*
 		*  @return
-		*    The sibling node, NULL if there's no sibling node
+		*    The sibling node, a null pointer if there's no sibling node
 		*/
 		PLGENERAL_API XmlNode *GetPreviousSibling();
 		PLGENERAL_API const XmlNode *GetPreviousSibling() const;
@@ -330,7 +330,7 @@ class XmlNode : public XmlBase {
 		*    Value to look for
 		*
 		*  @return
-		*    The sibling node, NULL if there's no sibling node
+		*    The sibling node, a null pointer if there's no sibling node
 		*/
 		PLGENERAL_API XmlNode *GetPreviousSibling(const String &sValue);
 		PLGENERAL_API const XmlNode *GetPreviousSibling(const String &sValue) const;
@@ -340,7 +340,7 @@ class XmlNode : public XmlBase {
 		*    Navigate to a sibling node
 		*
 		*  @return
-		*    The sibling node, NULL if there's no sibling node
+		*    The sibling node, a null pointer if there's no sibling node
 		*/
 		PLGENERAL_API XmlNode *GetNextSibling();
 		PLGENERAL_API const XmlNode *GetNextSibling() const;
@@ -353,7 +353,7 @@ class XmlNode : public XmlBase {
 		*    Value to look for
 		*
 		*  @return
-		*    The sibling node, NULL if there's no sibling node
+		*    The sibling node, a null pointer if there's no sibling node
 		*/
 		PLGENERAL_API XmlNode *GetNextSibling(const String &sValue);
 		PLGENERAL_API const XmlNode *GetNextSibling(const String &sValue) const;
@@ -366,7 +366,7 @@ class XmlNode : public XmlBase {
 		*    Calls 'NextSibling()' and 'ToElement()'. Will skip all non-element nodes.
 		*
 		*  @return
-		*    Returns NULL if there is not another element
+		*    Returns a null pointer if there is not another element
 		*/
 		PLGENERAL_API XmlElement *GetNextSiblingElement();
 		PLGENERAL_API const XmlElement *GetNextSiblingElement() const;
@@ -382,7 +382,7 @@ class XmlNode : public XmlBase {
 		*    Calls 'NextSibling()' and 'ToElement()'. Will skip all non-element nodes.
 		*
 		*  @return
-		*    Returns NULL if there is not another element
+		*    Returns a null pointer if there is not another element
 		*/
 		PLGENERAL_API XmlElement *GetNextSiblingElement(const String &sValue);
 		PLGENERAL_API const XmlElement *GetNextSiblingElement(const String &sValue) const;
@@ -392,7 +392,7 @@ class XmlNode : public XmlBase {
 		*    Convenience function to get through elements
 		*
 		*  @return
-		*    Returns NULL if there is not another element
+		*    Returns a null pointer if there is not another element
 		*/
 		PLGENERAL_API XmlElement *GetFirstChildElement();
 		PLGENERAL_API const XmlElement *GetFirstChildElement() const;
@@ -405,7 +405,7 @@ class XmlNode : public XmlBase {
 		*    Value to look for
 		*
 		*  @return
-		*    Returns NULL if there is not another element
+		*    Returns a null pointer if there is not another element
 		*/
 		PLGENERAL_API XmlElement *GetFirstChildElement(const String &sValue);
 		PLGENERAL_API const XmlElement *GetFirstChildElement(const String &sValue) const;
@@ -424,7 +424,7 @@ class XmlNode : public XmlBase {
 		*    Return a pointer to the document this node lives in
 		*
 		*  @return
-		*    Pointer to the document this node lives in, NULL if not in a document
+		*    Pointer to the document this node lives in, a null pointer if not in a document
 		*/
 		PLGENERAL_API XmlDocument *GetDocument();
 		PLGENERAL_API const XmlDocument *GetDocument() const;
@@ -440,7 +440,7 @@ class XmlNode : public XmlBase {
 
 		/**
 		*  @brief
-		*    Cast functions, will return NULL if the given node is not from the requested type
+		*    Cast functions, will return a null pointer if the given node is not from the requested type
 		*/
 		PLGENERAL_API XmlDocument *ToDocument();
 		PLGENERAL_API const XmlDocument *ToDocument() const;
@@ -465,7 +465,7 @@ class XmlNode : public XmlBase {
 		*    Create an exact duplicate of this node and return it
 		*
 		*  @return
-		*    The clone, NULL on error
+		*    The clone, a null pointer on error
 		*
 		*  @note
 		*    - The memory must be deleted by the caller
@@ -496,7 +496,7 @@ class XmlNode : public XmlBase {
 		*    Encoding
 		*
 		*  @return
-		*    Returns NULL if it is not an XML node, else it returns a created node instance (you're responsible for it's destruction)
+		*    Returns a null pointer if it is not an XML node, else it returns a created node instance (you're responsible for it's destruction)
 		*/
 		XmlNode *Identify(const char *pszData, EEncoding nEncoding);
 
@@ -505,13 +505,13 @@ class XmlNode : public XmlBase {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		XmlNode   *m_pParent;			/**< Parent node, can be NULL */
+		XmlNode   *m_pParent;			/**< Parent node, can be a null pointer */
 		ENodeType  m_nType;				/**< Type of the node */
-		XmlNode   *m_pFirstChild;		/**< First child, can be NULL */
-		XmlNode   *m_pLastChild;		/**< Last child, can be NULL */
+		XmlNode   *m_pFirstChild;		/**< First child, can be a null pointer */
+		XmlNode   *m_pLastChild;		/**< Last child, can be a null pointer */
 		String	   m_sValue;			/**< Value */
-		XmlNode   *m_pPreviousSibling;	/**< Previous sibling, can be NULL */
-		XmlNode   *m_pNextSibling;		/**< Previous sibling, can be NULL */
+		XmlNode   *m_pPreviousSibling;	/**< Previous sibling, can be a null pointer */
+		XmlNode   *m_pNextSibling;		/**< Previous sibling, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

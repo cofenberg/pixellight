@@ -115,28 +115,28 @@ class Heap : public Iterable<ValueType> {
 		*    Returns the value of the top element
 		*
 		*  @param[out] pValue
-		*    If not NULL, this will receive the value of the top element
+		*    If not a null pointer, this will receive the value of the top element
 		*  @param[out] pKey
-		*    If not NULL, this will receive the key of the top element
+		*    If not a null pointer, this will receive the key of the top element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool GetTop(ValueType *pValue = NULL, KeyType *pKey = NULL) const = 0;
+		virtual bool GetTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr) const = 0;
 
 		/**
 		*  @brief
 		*    Returns the value of the top element and removes it from the heap
 		*
 		*  @param[out] pValue
-		*    If not NULL, this will receive the value of the top element
+		*    If not a null pointer, this will receive the value of the top element
 		*  @param[out] pKey
-		*    If not NULL, this will receive the key of the top element
+		*    If not a null pointer, this will receive the key of the top element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool ExtractTop(ValueType *pValue = NULL, KeyType *pKey = NULL) = 0;
+		virtual bool ExtractTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr) = 0;
 
 
 	//[-------------------------------------------------------]

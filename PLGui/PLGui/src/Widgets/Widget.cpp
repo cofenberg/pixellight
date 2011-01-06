@@ -82,9 +82,9 @@ Widget::Widget(Widget *pParent, bool bManaged) :
 	m_nID(m_pGui->GetUniqueWidgetID()),
 	m_sName(""),
 	m_pParent(pParent),
-	m_pWidgetImpl(NULL),
-	m_pTheme(NULL),
-	m_pLayout(NULL),
+	m_pWidgetImpl(nullptr),
+	m_pTheme(nullptr),
+	m_pLayout(nullptr),
 	m_nWindowState(StateNormal),
 	m_cIcon(*m_pGui),
 	m_cCursor(*m_pGui, CursorArrow),
@@ -95,11 +95,11 @@ Widget::Widget(Widget *pParent, bool bManaged) :
 	m_bCaptureMouse(false),
 	m_cBackgroundColor(Color4::White),
 	m_vPreferredSize(-1, -1),
-	m_pUserData(NULL)
+	m_pUserData(nullptr)
 {
 	// The root widget is only there to get the Gui pointer, to discard it as a parent now
 	if (m_pParent && m_pParent->m_bRootWidget)
-		m_pParent = NULL;
+		m_pParent = nullptr;
 
 	// Create widget implementation
 	m_pWidgetImpl = m_pGui->CreateWidgetImpl(*this);
@@ -144,10 +144,10 @@ Widget::Widget(handle nWindowHandle) :
 	m_bManaged(false),
 	m_nID(0),
 	m_sName(""),
-	m_pParent(NULL),
-	m_pWidgetImpl(NULL),
-	m_pTheme(NULL),
-	m_pLayout(NULL),
+	m_pParent(nullptr),
+	m_pWidgetImpl(nullptr),
+	m_pTheme(nullptr),
+	m_pLayout(nullptr),
 	m_nWindowState(StateNormal),
 	m_cIcon(*m_pGui),
 	m_cCursor(*m_pGui, CursorArrow),
@@ -157,7 +157,7 @@ Widget::Widget(handle nWindowHandle) :
 	m_bCaptureMouse(false),
 	m_cBackgroundColor(Color4::White),
 	m_vPreferredSize(-1, -1),
-	m_pUserData(NULL)
+	m_pUserData(nullptr)
 {
 	// Create implementation
 	m_pWidgetImpl = m_pGui->CreateWidgetImpl(*this);
@@ -416,9 +416,9 @@ Widget *Widget::GetCommonParent(const Widget &cWidget) const
 		return (Widget*)&cWidget;
 	} else {
 		// Go down the parents of this widget
-		for (const Widget *pThisWidget=this; pThisWidget!=NULL; pThisWidget=pThisWidget->GetParent()) {
+		for (const Widget *pThisWidget=this; pThisWidget!=nullptr; pThisWidget=pThisWidget->GetParent()) {
 			// Find the first common parent - go down the parents of the other widget
-			for (Widget *pOtherWidget=(Widget*)&cWidget; pOtherWidget!=NULL; pOtherWidget=pOtherWidget->GetParent()) {
+			for (Widget *pOtherWidget=(Widget*)&cWidget; pOtherWidget!=nullptr; pOtherWidget=pOtherWidget->GetParent()) {
 				// Common parent found?
 				if (pThisWidget == pOtherWidget)
 					return pOtherWidget;
@@ -426,7 +426,7 @@ Widget *Widget::GetCommonParent(const Widget &cWidget) const
 		}
 
 		// No common parent found
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -504,7 +504,7 @@ Widget *Widget::GetPreviousSibling() const
 	}
 
 	// Could not find a sibling
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -524,7 +524,7 @@ Widget *Widget::GetNextSibling() const
 	}
 
 	// Could not find a sibling
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -534,7 +534,7 @@ Widget *Widget::GetNextSibling() const
 bool Widget::IsTopLevel() const
 {
 	// Check if the widget has no parent
-	return (m_pParent == NULL);
+	return (m_pParent == nullptr);
 }
 
 //[-------------------------------------------------------]
@@ -595,7 +595,7 @@ Screen *Widget::GetScreen() const
 	}
 
 	// ERROR, no screen found
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -679,7 +679,7 @@ Vector2i Widget::GetAbsPos() const
 {
 	// Get position and add all parent positions
 	Vector2i vPos = GetPos();
-	for (const Widget *pParent = GetParent(); pParent != NULL; pParent = pParent->GetParent())
+	for (const Widget *pParent = GetParent(); pParent != nullptr; pParent = pParent->GetParent())
 		vPos += pParent->GetPos();
 
 	// Return absolute position
@@ -1462,7 +1462,7 @@ void Widget::SetLayout(Layout *pLayout)
 void Widget::SetLayout(const String &sClass, const String &sOptions)
 {
 	// Layout
-	Layout *pLayout = NULL;
+	Layout *pLayout = nullptr;
 
 	// Find layout class
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
@@ -1537,10 +1537,10 @@ Widget::Widget(Gui *pGui) :
 	m_bRootWidget(true),
 	m_nID(m_pGui->GetUniqueWidgetID()),
 	m_sName(""),
-	m_pParent(NULL),
-	m_pWidgetImpl(NULL),
-	m_pTheme(NULL),
-	m_pLayout(NULL),
+	m_pParent(nullptr),
+	m_pWidgetImpl(nullptr),
+	m_pTheme(nullptr),
+	m_pLayout(nullptr),
 	m_nWindowState(StateNormal),
 	m_cIcon(*m_pGui),
 	m_cCursor(*m_pGui, CursorArrow),
@@ -1551,7 +1551,7 @@ Widget::Widget(Gui *pGui) :
 	m_bCaptureMouse(false),
 	m_cBackgroundColor(Color4::White),
 	m_vPreferredSize(-1, -1),
-	m_pUserData(NULL)
+	m_pUserData(nullptr)
 {
 	// This is a dummy for the root widget, nothing to do
 }

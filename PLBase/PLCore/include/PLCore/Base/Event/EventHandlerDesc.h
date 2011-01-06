@@ -112,7 +112,7 @@ class EventHandlerDesc : public MemberDesc {
 		*    Get slot
 		*
 		*  @return
-		*    Pointer to slot (can be NULL)
+		*    Pointer to slot (can be a null pointer)
 		*/
 		PLCORE_API virtual DynEventHandler *GetSlot(const Object *pObject) const;
 

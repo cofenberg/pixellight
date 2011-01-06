@@ -43,15 +43,18 @@ namespace PLGeneral {
 */
 template <class AType>
 Element<AType>::Element(const String &sName, ElementManager<AType> *pManager) :
-	m_pManager(NULL),
+	m_pManager(nullptr),
 	m_bProtected(false)
 {
 	// Set unique element name
-	if (pManager) pManager->SetElementName((AType&)*this, sName);
-	else		  m_sName = sName;
+	if (pManager)
+		pManager->SetElementName((AType&)*this, sName);
+	else
+		m_sName = sName;
 
 	// Add this element to the manager
-	if (pManager) pManager->Add((AType&)*this);
+	if (pManager)
+		pManager->Add((AType&)*this);
 }
 
 /**
@@ -155,7 +158,10 @@ bool Element<AType>::Delete(bool bProtectedToo)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -165,7 +171,8 @@ bool Element<AType>::Delete(bool bProtectedToo)
 template <class AType>
 bool Element<AType>::SetName(const String &sName)
 {
-	if (m_pManager) return m_pManager->SetElementName((AType&)*this, sName);
+	if (m_pManager)
+		return m_pManager->SetElementName((AType&)*this, sName);
 	else {
 		m_sName = sName;
 
@@ -201,13 +208,14 @@ Element<AType>::~Element()
 {
 	// Inform the handlers
 	for (uint32 i=0; i<m_lstHandlers.GetNumOfElements(); i++)
-		m_lstHandlers[i]->m_pElement = NULL;
+		m_lstHandlers[i]->m_pElement = nullptr;
 
 	// Clear the list
 	m_lstHandlers.Clear();
 
 	// Remove from element manager
-	if (m_pManager) m_pManager->Remove((AType&)*this);
+	if (m_pManager)
+		m_pManager->Remove((AType&)*this);
 }
 
 

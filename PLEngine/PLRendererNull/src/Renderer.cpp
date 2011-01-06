@@ -65,7 +65,7 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeFixedFunctions),	// Only fixed functions mode is supported... a kind of *g*
-	m_pFixedFunctions(NULL),
+	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
 	// This renderer implementation has no shader support at all, so ignore sDefaultShaderLanguage
@@ -96,7 +96,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 	// Allocate current stuff
 	m_ppCurrentTextureBuffer = new PLRenderer::TextureBuffer*[m_sCapabilities.nMaxTextureUnits];
-	MemoryManager::Set(m_ppCurrentTextureBuffer, NULL, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
+	MemoryManager::Set(m_ppCurrentTextureBuffer, 0, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
 
 	// Reset render
 	Reset();
@@ -125,11 +125,11 @@ Renderer::~Renderer()
 
 	// Destroy the Null font manager
 	delete m_pFontManager;
-	m_pFontManager = NULL;
+	m_pFontManager = nullptr;
 
 	// Destroy the draw helpers instance
 	delete m_pDrawHelpers;
-	m_pDrawHelpers = NULL;
+	m_pDrawHelpers = nullptr;
 
 	// Destroy all renderer resources of this renderer
 	while (m_lstResources.GetNumOfElements())
@@ -140,13 +140,13 @@ Renderer::~Renderer()
 		for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 			delete [] m_ppnSamplerState[i];
 		delete [] m_ppnSamplerState;
-		m_ppnSamplerState = NULL;
+		m_ppnSamplerState = nullptr;
 	}
 
 	// Free current stuff
 	if (m_ppCurrentTextureBuffer) {
 		delete [] m_ppCurrentTextureBuffer;
-		m_ppCurrentTextureBuffer = NULL;
+		m_ppCurrentTextureBuffer = nullptr;
 	}
 }
 
@@ -251,7 +251,7 @@ String Renderer::GetDefaultShaderLanguage() const
 PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
 {
 	// No support for shader languages
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
@@ -284,7 +284,7 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 {
 	// Is the surface window handler valid?
 	if (cHandler.GetRenderer() != this)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nWindow, bFullscreen);
@@ -307,7 +307,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return NULL; // Error!
+	} else return nullptr; // Error!
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
@@ -322,13 +322,13 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return NULL; // Error!
+	} else return nullptr; // Error!
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
 {
 	// Valid dimension?
-	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize)) return NULL; // Error!
+	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize)) return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferCube(*this, nSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
@@ -343,7 +343,7 @@ PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer1D(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null 1D texture buffer
 	return new TextureBuffer1D(*this, cImage, nInternalFormat, nFlags);
@@ -353,7 +353,7 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer2D(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
@@ -363,7 +363,7 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage,
 {
 	// Check texture buffer
 	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null rectangle texture buffer
 	return new TextureBufferRectangle(*this, cImage, nInternalFormat, nFlags);
@@ -373,7 +373,7 @@ PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(Image &cImage, PLRe
 {
 	// Check texture buffer
 	if (!CheckTextureBuffer3D(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
@@ -383,7 +383,7 @@ PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(Image &cImage, 
 {
 	// Check texture buffer
 	if (!CheckTextureBufferCube(cImage, nInternalFormat))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create the null cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);

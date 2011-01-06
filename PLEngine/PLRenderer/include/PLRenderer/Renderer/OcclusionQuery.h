@@ -106,7 +106,7 @@ class OcclusionQuery : public Resource {
 		*    Pulls the hardware occlusion query too see if there is a result
 		*
 		*  @param[out] pnNumOfFragments
-		*    If not NULL it will receive the number of visible fragments
+		*    If not a null pointer it will receive the number of visible fragments
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (the queried data isn't available yet)
@@ -124,7 +124,7 @@ class OcclusionQuery : public Resource {
 		*  @see
 		*    - GetMinFragments()
 		*/
-		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = NULL) = 0;
+		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = nullptr) = 0;
 
 		/**
 		*  @brief

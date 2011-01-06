@@ -61,7 +61,7 @@ SceneQueryManager::~SceneQueryManager()
 SceneQuery *SceneQueryManager::CreateElement(const String &sName)
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 

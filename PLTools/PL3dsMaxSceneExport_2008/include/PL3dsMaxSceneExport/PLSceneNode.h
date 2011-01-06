@@ -110,7 +110,7 @@ class PLSceneNode {
 		*    Returns the container this node is in
 		*
 		*  @return
-		*    The container this node is in, NULL if this is the root container of the scene
+		*    The container this node is in, a null pointer if this is the root container of the scene
 		*/
 		PLSceneContainer *GetContainer() const;
 
@@ -119,7 +119,7 @@ class PLSceneNode {
 		*    Returns the 3ds Max node this scene node represents
 		*
 		*  @return
-		*    The 3ds Max node this scene node represents, NULL if there's no such 3ds Max node
+		*    The 3ds Max node this scene node represents, a null pointer if there's no such 3ds Max node
 		*    (true for this types: TypeScene, TypeContainer, TypeCell)
 		*/
 		INode *GetMaxNode() const;
@@ -129,7 +129,7 @@ class PLSceneNode {
 		*    Returns the IGame node this scene node represents
 		*
 		*  @return
-		*    The IGame node this scene node represents, NULL if there's no such IGame node
+		*    The IGame node this scene node represents, a null pointer if there's no such IGame node
 		*    (true for this types: TypeScene, TypeContainer, TypeCell)
 		*/
 		IGameNode *GetIGameNode() const;
@@ -201,9 +201,9 @@ class PLSceneNode {
 		*    Constructor
 		*
 		*  @param[in] pContainer
-		*    Container this node is in, NULL if this is the root container of the scene
+		*    Container this node is in, a null pointer if this is the root container of the scene
 		*  @param[in] pIGameNode
-		*    IGame node this scene node represents, can be NULL
+		*    IGame node this scene node represents, can be a null pointer
 		*  @param[in] sName
 		*    Name of this scene node
 		*  @param[in] nType
@@ -339,8 +339,8 @@ class PLSceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLSceneContainer *m_pContainer;			/**< Container this node is in, NULL if this is the root container of the scene */
-		IGameNode		 *m_pIGameNode;			/**< IGame node this scene node represents, can be NULL */
+		PLSceneContainer *m_pContainer;			/**< Container this node is in, a null pointer if this is the root container of the scene */
+		IGameNode		 *m_pIGameNode;			/**< IGame node this scene node represents, can be a null pointer */
 		std::string		  m_sName;				/**< Name of this scene node */
 		EType			  m_nType;				/**< Scene node type */
 		std::string		  m_sClassName;			/**< PixelLight class name of this scene node */

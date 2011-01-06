@@ -69,7 +69,7 @@ DynEventHandler::~DynEventHandler()
 const EventHandlerDesc *DynEventHandler::GetDesc() const
 {
 	// No descriptor by default
-	return NULL;
+	return nullptr;
 }
 
 /**

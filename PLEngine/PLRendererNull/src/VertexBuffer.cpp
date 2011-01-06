@@ -60,8 +60,8 @@ VertexBuffer::~VertexBuffer()
 *    Constructor
 */
 VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::VertexBuffer(cRenderer),
-	m_pData(NULL),
-	m_pLockedData(NULL),
+	m_pData(nullptr),
+	m_pLockedData(nullptr),
 	m_nVertexOffset(0)
 {
 	// Init data
@@ -87,7 +87,7 @@ bool VertexBuffer::MakeCurrent()
 bool VertexBuffer::MakeCurrent(uint32 nOffset)
 {
 	// Check if there's an vertex buffer and declaration
-	return m_pData != NULL;
+	return (m_pData != nullptr);
 }
 
 /**
@@ -119,7 +119,7 @@ void *VertexBuffer::GetData(uint32 nIndex, uint32 nSemantic, uint32 nChannel)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 Color4 VertexBuffer::GetColor(uint32 nIndex, uint32 nChannel)
@@ -221,7 +221,7 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 //[-------------------------------------------------------]
 bool VertexBuffer::IsAllocated() const
 {
-	return (m_pData != NULL);
+	return (m_pData != nullptr);
 }
 
 bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
@@ -232,7 +232,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		if (m_nVertexSize*nElements <= 0) return false; // Error!
 
 		// If the buffer is already allocated...
-		uint8 *pDataBackup = NULL;
+		uint8 *pDataBackup = nullptr;
 		uint32 nSizeBackup = m_nSize;
 		if (m_pData && m_nSize != m_nVertexSize*nElements) {
 			// Backup the current data
@@ -243,7 +243,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 			// Delete data
 			delete [] m_pData;
-			m_pData = NULL;
+			m_pData = nullptr;
 		}
 		ForceUnlock();
 
@@ -293,7 +293,7 @@ bool VertexBuffer::Clear()
 	ForceUnlock();
 	if (m_pData) {
 		delete [] m_pData;
-		m_pData = NULL;
+		m_pData = nullptr;
 	} else return false; // Error!
 
 	// Update renderer statistics
@@ -312,14 +312,14 @@ bool VertexBuffer::Clear()
 void *VertexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's a vertex buffer
-	if (!m_pData) return NULL; // Error!
+	if (!m_pData) return nullptr; // Error!
 
 	// Check whether the vertex buffer is already locked
 	m_nLockCount++;
 	if (m_pLockedData) return m_pLockedData; // Return the locked data
 
 	// Check if there's an vertex buffer or the data is already locked
-	if (m_pLockedData || !m_pData) return NULL; // Error!
+	if (m_pLockedData || !m_pData) return nullptr; // Error!
 
 	// Lock the vertex buffer
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
@@ -345,7 +345,7 @@ bool VertexBuffer::Unlock()
 	if (m_nLockCount) return true; // Nope, it's still used somewhere else...
 
 	// Unlock the vertex buffer
-	m_pLockedData = NULL;
+	m_pLockedData = nullptr;
 	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 
 	// Done

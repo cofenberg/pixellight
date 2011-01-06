@@ -78,14 +78,14 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), OpenGLExtensions(*this),
-	m_pContext(NULL),
-	m_pFixedFunctions(NULL),
+	m_pContext(nullptr),
+	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this)),
 	m_bSceneRendering(false),
 	m_bCurrentSwapInterval(false),
 	m_nMultisampleAntialiasingSamples(nMultisampleAntialiasingSamples),
-	m_nTextureBufferTypes(NULL),
-	m_ppPrevTextureBuffer(NULL)
+	m_nTextureBufferTypes(nullptr),
+	m_ppPrevTextureBuffer(nullptr)
 {
 	// Output log information
 	PL_LOG(Info, "Initialize OpenGL renderer")
@@ -192,8 +192,8 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 			m_ppPrevTextureBuffer    = new PLRenderer::TextureBuffer*[m_sCapabilities.nMaxTextureUnits];
 			m_nTextureBufferTypes    = new uint32[m_sCapabilities.nMaxTextureUnits];
 			MemoryManager::Set(m_nTextureBufferTypes, 0, sizeof(uint32)*m_sCapabilities.nMaxTextureUnits);
-			MemoryManager::Set(m_ppCurrentTextureBuffer, NULL, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
-			MemoryManager::Set(m_ppPrevTextureBuffer, NULL, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
+			MemoryManager::Set(m_ppCurrentTextureBuffer, 0, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
+			MemoryManager::Set(m_ppPrevTextureBuffer, 0, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
 
 			// Init color mask
 			m_bColorMask[0] = true;
@@ -213,13 +213,13 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 		} else {
 			PL_LOG(Error, "Can't create OpenGL render context")
 			delete m_pContext;
-			m_pContext = NULL;
+			m_pContext = nullptr;
 		}
 	} else {
 		// Error!
 		PL_LOG(Error, "Can't create OpenGL render context")
 		delete m_pContext;
-		m_pContext = NULL;
+		m_pContext = nullptr;
 	}
 }
 
@@ -237,7 +237,7 @@ Renderer::~Renderer()
 		// Destroy the fixed functions implementation
 		if (m_pFixedFunctions) {
 			delete m_pFixedFunctions;
-			m_pFixedFunctions = NULL;
+			m_pFixedFunctions = nullptr;
 		}
 
 		// Destroy all renderer surfaces of this renderer
@@ -251,11 +251,11 @@ Renderer::~Renderer()
 
 		// Destroy the OpenGL renderer font manager while there's still an active OpenGL context (... font textures...)
 		delete m_pFontManager;
-		m_pFontManager = NULL;
+		m_pFontManager = nullptr;
 
 		// Destroy the draw helpers instance
 		delete m_pDrawHelpers;
-		m_pDrawHelpers = NULL;
+		m_pDrawHelpers = nullptr;
 
 		// Destroy all renderer resources of this renderer
 		while (m_lstResources.GetNumOfElements())
@@ -266,7 +266,7 @@ Renderer::~Renderer()
 			for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 				delete [] m_ppnSamplerState[i];
 			delete [] m_ppnSamplerState;
-			m_ppnSamplerState = NULL;
+			m_ppnSamplerState = nullptr;
 		}
 
 		// Free internal sampler states
@@ -274,21 +274,21 @@ Renderer::~Renderer()
 			for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++)
 				delete [] m_ppnInternalSamplerState[i];
 			delete [] m_ppnInternalSamplerState;
-			m_ppnInternalSamplerState = NULL;
+			m_ppnInternalSamplerState = nullptr;
 		}
 
 		// Free current stuff
 		if (m_ppCurrentTextureBuffer) {
 			delete [] m_ppCurrentTextureBuffer;
-			m_ppCurrentTextureBuffer = NULL;
+			m_ppCurrentTextureBuffer = nullptr;
 		}
 		if (m_ppPrevTextureBuffer) {
 			delete [] m_ppPrevTextureBuffer;
-			m_ppPrevTextureBuffer = NULL;
+			m_ppPrevTextureBuffer = nullptr;
 		}
 		if (m_nTextureBufferTypes) {
 			delete [] m_nTextureBufferTypes;
-			m_nTextureBufferTypes = NULL;
+			m_nTextureBufferTypes = nullptr;
 		}
 
 		// Destroy the shader language instances
@@ -299,7 +299,7 @@ Renderer::~Renderer()
 
 		// Destroy the OpenGL render context
 		delete m_pContext;
-		m_pContext = NULL;
+		m_pContext = nullptr;
 	}
 }
 
@@ -899,8 +899,8 @@ void Renderer::RestoreDeviceStates()
 	}
 	for (uint32 nStage=0; nStage<m_sCapabilities.nMaxTextureUnits; nStage++) {
 		PLRenderer::TextureBuffer *pTextureBuffer = GetTextureBuffer(nStage);
-		SetTextureBuffer(nStage, NULL);
-		m_ppPrevTextureBuffer[nStage] = NULL;
+		SetTextureBuffer(nStage, nullptr);
+		m_ppPrevTextureBuffer[nStage] = nullptr;
 		SetTextureBuffer(nStage, pTextureBuffer);
 	}
 
@@ -956,13 +956,13 @@ void Renderer::RestoreDeviceStates()
 
 	{ // Reset index buffer
 		PLRenderer::IndexBuffer *pBuffer = m_pCurrentIndexBuffer;
-		m_pCurrentIndexBuffer = NULL;
+		m_pCurrentIndexBuffer = nullptr;
 		SetIndexBuffer(pBuffer);
 	}
 
 	{ // Reset program
 		PLRenderer::Program *pProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
-		m_cProgramHandler.SetResource(NULL);
+		m_cProgramHandler.SetResource(nullptr);
 		SetProgram(pProgram);
 	}
 
@@ -1051,7 +1051,7 @@ PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLan
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
@@ -1072,7 +1072,7 @@ void Renderer::BackupDeviceObjects()
 
 		// Destroy the context
 		delete m_pContext;
-		m_pContext = NULL;
+		m_pContext = nullptr;
 	}
 }
 
@@ -1109,7 +1109,7 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 {
 	// Is the surface window handler valid?
 	if (cHandler.GetRenderer() != this)
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nWindow, sDisplayMode, bFullscreen);
@@ -1134,7 +1134,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return NULL; // Error!
+	} else return nullptr; // Error!
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
@@ -1152,14 +1152,14 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return NULL; // Error!
+	} else return nullptr; // Error!
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
 {
 	// Valid dimension?
 	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize))
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
@@ -1176,7 +1176,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint1
 PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!CheckTextureBuffer1D(cImage, nInternalFormat)) return NULL; // Error!
+	if (!CheckTextureBuffer1D(cImage, nInternalFormat)) return nullptr; // Error!
 
 	// Create the OpenGL 1D texture buffer
 	return new TextureBuffer1D(*this, cImage, nInternalFormat, nFlags);
@@ -1185,7 +1185,7 @@ PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(PLGraphics::Image &
 PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!CheckTextureBuffer2D(cImage, nInternalFormat)) return NULL; // Error!
+	if (!CheckTextureBuffer2D(cImage, nInternalFormat)) return nullptr; // Error!
 
 	// Create the OpenGL 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
@@ -1194,7 +1194,7 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(PLGraphics::Image &
 PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat)) return NULL; // Error!
+	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat)) return nullptr; // Error!
 
 	// Create the OpenGL rectangle texture buffer
 	return new TextureBufferRectangle(*this, cImage, nInternalFormat, nFlags);
@@ -1203,7 +1203,7 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(PLGraphics::Im
 PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer3D(cImage, nInternalFormat)) return NULL; // Error!
+	if (!m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer3D(cImage, nInternalFormat)) return nullptr; // Error!
 
 	// Create the OpenGL 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
@@ -1212,7 +1212,7 @@ PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(PLGraphics::Image &
 PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!m_sCapabilities.bTextureBufferCube || !CheckTextureBufferCube(cImage, nInternalFormat)) return NULL; // Error!
+	if (!m_sCapabilities.bTextureBufferCube || !CheckTextureBufferCube(cImage, nInternalFormat)) return nullptr; // Error!
 
 	// Create the OpenGL cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
@@ -2303,7 +2303,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 
 		// The previous texture buffer needs a backup of the current sampler states
 		if (pPreviousTextureBuffer) {
-			uint32 *pnSamplerState = NULL;
+			uint32 *pnSamplerState = nullptr;
 			switch (pPreviousTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
 					pnSamplerState = &((TextureBuffer1D*)pPreviousTextureBuffer)->m_nSamplerState[0];
@@ -2383,7 +2383,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 				}
 
 				// Set correct texture buffer type at this stage
-				uint32 *pnSamplerState = NULL;
+				uint32 *pnSamplerState = nullptr;
 				switch (pTextureBuffer->GetType()) {
 					case PLRenderer::Resource::TypeTextureBuffer1D:
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_1D;
@@ -2505,7 +2505,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 
 		// The previous texture buffer needs a backup of the current sampler states
 		if (pPreviousTextureBuffer) {
-			uint32 *pnSamplerState = NULL;
+			uint32 *pnSamplerState = nullptr;
 			switch (pPreviousTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
 					pnSamplerState = &((TextureBuffer1D*)pPreviousTextureBuffer)->m_nSamplerState[0];
@@ -2546,7 +2546,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 			m_sStatistics.nTextureBufferBinds++;
 
 			// Set correct texture buffer type at this stage
-			uint32 *pnSamplerState = NULL;
+			uint32 *pnSamplerState = nullptr;
 			switch (pTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
 					m_nTextureBufferTypes[nStage] = GL_TEXTURE_1D;
@@ -2651,7 +2651,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		// Yes, make it current
 		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
 			// Now, no index buffer is set...
-			m_pCurrentIndexBuffer = NULL;
+			m_pCurrentIndexBuffer = nullptr;
 			if (IsGL_ARB_vertex_buffer_object())
 				glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
 

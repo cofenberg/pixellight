@@ -62,10 +62,10 @@ pl_implement_class(SPTriangleShaders)
 *    Constructor
 */
 SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer),
-	m_pVertexShader(NULL),
-	m_pGeometryShader(NULL),
-	m_pFragmentShader(NULL),
-	m_pProgram(NULL)
+	m_pVertexShader(nullptr),
+	m_pGeometryShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr)
 {
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());

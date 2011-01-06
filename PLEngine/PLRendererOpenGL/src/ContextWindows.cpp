@@ -48,36 +48,36 @@ namespace PLRendererOpenGL {
 */
 ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) :
 	m_pRenderer(&cRenderer),
-	m_hDummyWindow(NULL),
-	m_hDummyWindowDeviceContext(NULL),
-	m_hDummyWindowRenderContext(NULL)
+	m_hDummyWindow(nullptr),
+	m_hDummyWindowDeviceContext(nullptr),
+	m_hDummyWindowRenderContext(nullptr)
 {
 	// Setup and register the window class for the OpenGL dummy window
 	WNDCLASS sWindowDummyClass;
-	sWindowDummyClass.hInstance		= GetModuleHandle(NULL);
+	sWindowDummyClass.hInstance		= GetModuleHandle(nullptr);
 	sWindowDummyClass.lpszClassName	= TEXT("PLOpenGLDummyNativeWindow");
 	sWindowDummyClass.lpfnWndProc	= DefWindowProc;
 	sWindowDummyClass.style			= 0;
-	sWindowDummyClass.hIcon			= NULL;
-	sWindowDummyClass.hCursor		= NULL;
-	sWindowDummyClass.lpszMenuName	= NULL;
+	sWindowDummyClass.hIcon			= nullptr;
+	sWindowDummyClass.hCursor		= nullptr;
+	sWindowDummyClass.lpszMenuName	= nullptr;
 	sWindowDummyClass.cbClsExtra	= 0;
 	sWindowDummyClass.cbWndExtra	= 0;
-	sWindowDummyClass.hbrBackground	= NULL;
+	sWindowDummyClass.hbrBackground	= nullptr;
 	RegisterClass(&sWindowDummyClass);
 
 	// Create the OpenGL dummy window
-	m_hDummyWindow = CreateWindow(TEXT("PLOpenGLDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, NULL, GetModuleHandle(NULL), NULL);
-	if (m_hDummyWindow != NULL) {
+	m_hDummyWindow = CreateWindow(TEXT("PLOpenGLDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, GetModuleHandle(nullptr), nullptr);
+	if (m_hDummyWindow != nullptr) {
 		// Get the device context of the OpenGL dummy window
 		m_hDummyWindowDeviceContext = GetDC(m_hDummyWindow);
-		if (m_hDummyWindowDeviceContext != NULL) {
+		if (m_hDummyWindowDeviceContext != nullptr) {
 			// Get the color depth of the deskop
 			int nBits = 0;
 			{
-				HDC hDeskTopDC = GetDC(NULL);
+				HDC hDeskTopDC = GetDC(nullptr);
 				nBits = GetDeviceCaps(hDeskTopDC, BITSPIXEL);
-				ReleaseDC(NULL, hDeskTopDC);
+				ReleaseDC(nullptr, hDeskTopDC);
 			}
 
 			// Get the first best pixel format
@@ -108,7 +108,7 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 
 				// Create a OpenGL render context
 				m_hDummyWindowRenderContext = wglCreateContext(m_hDummyWindowDeviceContext);
-				if (m_hDummyWindowRenderContext != NULL) {
+				if (m_hDummyWindowRenderContext != nullptr) {
 					// Make the OpenGL render context to the current one
 					wglMakeCurrent(m_hDummyWindowDeviceContext, m_hDummyWindowRenderContext);
 
@@ -139,7 +139,7 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 
 							// Test through multiple color bits in case the desired value is not available
 							int nCurrentBits = nBits;
-							while (nCurrentBits && (!wglChoosePixelFormatARB(m_hDummyWindowDeviceContext, nAttribs, NULL, sizeof(nPixelFormats)/sizeof(int), nPixelFormats, &nPFormats) || !nPFormats)) {
+							while (nCurrentBits && (!wglChoosePixelFormatARB(m_hDummyWindowDeviceContext, nAttribs, nullptr, sizeof(nPixelFormats)/sizeof(int), nPixelFormats, &nPFormats) || !nPFormats)) {
 								switch (nCurrentBits) {
 									case 32:
 										nCurrentBits = 24;
@@ -185,17 +185,17 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 								glEnable(GL_MULTISAMPLE_ARB);
 
 							// Set the pixel format... we can't set a pixel format if a pixel format was already set, so start all over again...
-							wglMakeCurrent(NULL, NULL);
+							wglMakeCurrent(nullptr, nullptr);
 							wglDeleteContext(m_hDummyWindowRenderContext);
 							ReleaseDC(m_hDummyWindow, m_hDummyWindowDeviceContext);
 							DestroyWindow(m_hDummyWindow);
-							m_hDummyWindow = CreateWindow(TEXT("PLOpenGLDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, NULL, GetModuleHandle(NULL), NULL);
-							if (m_hDummyWindow != NULL) {
+							m_hDummyWindow = CreateWindow(TEXT("PLOpenGLDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, GetModuleHandle(nullptr), nullptr);
+							if (m_hDummyWindow != nullptr) {
 								m_hDummyWindowDeviceContext = GetDC(m_hDummyWindow);
-								if (m_hDummyWindowDeviceContext != NULL) {
+								if (m_hDummyWindowDeviceContext != nullptr) {
 									SetPixelFormat(m_hDummyWindowDeviceContext, nPixelFormats[nBestFormat], &sPixelFormatDescriptor);
 									m_hDummyWindowRenderContext = wglCreateContext(m_hDummyWindowDeviceContext);
-									if (m_hDummyWindowRenderContext != NULL) {
+									if (m_hDummyWindowRenderContext != nullptr) {
 										// Make the OpenGL render context to the current one
 										wglMakeCurrent(m_hDummyWindowDeviceContext, m_hDummyWindowRenderContext);
 									}
@@ -224,15 +224,15 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 ContextWindows::~ContextWindows()
 {
 	// Destroy the OpenGL dummy window
-	if (m_hDummyWindow != NULL) {
+	if (m_hDummyWindow != nullptr) {
 		// Release the device context of the OpenGL dummy window
-		if (m_hDummyWindowDeviceContext != NULL) {
+		if (m_hDummyWindowDeviceContext != nullptr) {
 			// Is the device context of the OpenGL dummy window is the currently active OpenGL device context?
 			if (wglGetCurrentDC() == m_hDummyWindowDeviceContext)
-				wglMakeCurrent(NULL, NULL);
+				wglMakeCurrent(nullptr, nullptr);
 
 			// Destroy the render context of the OpenGL dummy window
-			if (m_hDummyWindowRenderContext != NULL)
+			if (m_hDummyWindowRenderContext != nullptr)
 				wglDeleteContext(m_hDummyWindowRenderContext);
 
 			// Release the device context of the OpenGL dummy window
@@ -244,7 +244,7 @@ ContextWindows::~ContextWindows()
 	}
 
 	// Unregister the window class for the OpenGL dummy window
-	UnregisterClass(TEXT("PLOpenGLDummyNativeWindow"), GetModuleHandle(NULL));
+	UnregisterClass(TEXT("PLOpenGLDummyNativeWindow"), GetModuleHandle(nullptr));
 }
 
 /**
@@ -271,7 +271,7 @@ HGLRC ContextWindows::GetRenderContext() const
 //[-------------------------------------------------------]
 bool ContextWindows::IsValid() const
 {
-	return (m_hDummyWindow != NULL && m_hDummyWindowDeviceContext != NULL && m_hDummyWindowRenderContext != NULL);
+	return (m_hDummyWindow != nullptr && m_hDummyWindowDeviceContext != nullptr && m_hDummyWindowRenderContext != nullptr);
 }
 
 void ContextWindows::MakeDummyCurrent() const
@@ -292,7 +292,7 @@ bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &ls
 
 	// Get list of display modes
 	PL_LOG(Info, "Query available display modes")
-	while (EnumDisplaySettings(NULL, nDisplayMode++, &DevMode)) {
+	while (EnumDisplaySettings(nullptr, nDisplayMode++, &DevMode)) {
 		// First at all, we're only interested in some of the settings - as a result, we really should check if there's
 		// already a display mode within our list with the interesting settings of the current found display mode
 		bool bNewMode = true;

@@ -318,7 +318,7 @@ class Log : public Singleton<Log> {
 		*    Get log formater
 		*
 		*  @return
-		*    The current log formater object, can be NULL, do NOT delete the returned instance!
+		*    The current log formater object, can be a null pointer, do NOT delete the returned instance!
 		*/
 		PLGENERAL_API LogFormater *GetLogFormater() const;
 
@@ -387,7 +387,7 @@ class Log : public Singleton<Log> {
 		uint32		   m_nFlushMessages;			/**< Holds the number of messages since the last flush */
 		Queue<String>  m_qLastMessages;				/**< Holds the last log messages */
 		uint32		   m_nBufferedMessages;			/**< How much messages should be buffered */
-		LogFormater	  *m_pLogFormater;				/**< Holds an instance of a log formater class, can be NULL */
+		LogFormater	  *m_pLogFormater;				/**< Holds an instance of a log formater class, can be a null pointer */
 
 
 };

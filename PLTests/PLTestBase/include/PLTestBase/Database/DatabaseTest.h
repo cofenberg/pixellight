@@ -102,7 +102,7 @@ class DatabaseTest : public TestCase {
 		*    Tests a database query implementation
 		*
 		*  @param[in] pDatabase
-		*    Database to use, NEVER NULL!
+		*    Database to use, NEVER a null pointer!
 		*/
 		void TestQuery(PLDatabase::Database *pDatabase);
 

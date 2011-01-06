@@ -148,7 +148,7 @@ void jpeg_read_init(j_decompress_ptr cinfo, File *pFile)
 	pJpgReadStruct->sPublic.resync_to_restart	= jpeg_resync_to_restart; // Use default method
 	pJpgReadStruct->sPublic.term_source			= term_source;
 	pJpgReadStruct->sPublic.bytes_in_buffer		= 0;					  // Forces fill_input_buffer on first read
-	pJpgReadStruct->sPublic.next_input_byte		= NULL;					  // Until buffer loaded
+	pJpgReadStruct->sPublic.next_input_byte		= nullptr;				  // Until buffer loaded
 }
 
 

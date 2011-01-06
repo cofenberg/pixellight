@@ -94,7 +94,7 @@ class Host {
 		*    Port number
 		*
 		*  @return
-		*    Connection, NULL on error
+		*    Connection, a null pointer on error
 		*/
 		PLGENERAL_API Connection *Connect(const String &sServerName, uint32 nPort);
 

@@ -76,7 +76,7 @@ class SurfaceWindow : public Surface {
 		*    Returns the renderer surface handler this surface is assigned with
 		*
 		*  @return
-		*    The renderer surface handler this surface is assigned with, can be NULL
+		*    The renderer surface handler this surface is assigned with, can be a null pointer
 		*/
 		PLRENDERER_API SurfaceWindowHandler *GetHandler() const;
 
@@ -85,7 +85,7 @@ class SurfaceWindow : public Surface {
 		*    Returns the native window the surface is assigned with
 		*
 		*  @return
-		*    The native window the surface is assigned with, can be NULL
+		*    The native window the surface is assigned with, can be a null pointer
 		*/
 		PLRENDERER_API PLGeneral::handle GetWindow() const;
 
@@ -194,8 +194,8 @@ class SurfaceWindow : public Surface {
 	//[-------------------------------------------------------]
 	private:
 		SurfaceWindowHandler *m_pHandler;	/**< Renderer surface handler this surface
-												 is assigned with, can be NULL */
-		PLGeneral::handle	  m_nWindow;	/**< Window the surface is assigned with, can be NULL */
+												 is assigned with, can be a null pointer */
+		PLGeneral::handle	  m_nWindow;	/**< Window the surface is assigned with, can be a null pointer */
 
 
 };

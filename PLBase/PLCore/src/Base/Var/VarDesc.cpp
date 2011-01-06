@@ -97,7 +97,7 @@ String VarDesc::GetTypeName() const
 DynVar *VarDesc::GetAttribute(const Object *pObject) const
 {
 	// To be implemented in derived classes
-	return NULL;
+	return nullptr;
 }
 
 

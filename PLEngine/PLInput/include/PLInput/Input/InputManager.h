@@ -151,7 +151,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Name of provider
 		*
 		*  @return
-		*    Provider, or NULL if it doesn't exist, do not destroy the returned instance!
+		*    Provider, or a null pointer if it doesn't exist, do not destroy the returned instance!
 		*/
 		PLINPUT_API Provider *GetProvider(const PLGeneral::String &sProvider);
 
@@ -172,7 +172,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Name of device
 		*
 		*  @return
-		*    Device, or NULL if it doesn't exist, do not destroy the returned instance!
+		*    Device, or a null pointer if it doesn't exist, do not destroy the returned instance!
 		*/
 		PLINPUT_API Device *GetDevice(const PLGeneral::String &sDevice) const;
 
@@ -181,7 +181,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get default keyboard device
 		*
 		*  @return
-		*    Default keyboard, can be NULL, do not destroy the returned instance!
+		*    Default keyboard, can be a null pointer, do not destroy the returned instance!
 		*/
 		PLINPUT_API Keyboard *GetKeyboard() const;
 
@@ -190,7 +190,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Get default mouse device
 		*
 		*  @return
-		*    Default mouse, can be NULL, do not destroy the returned instance!
+		*    Default mouse, can be a null pointer, do not destroy the returned instance!
 		*/
 		PLINPUT_API Mouse *GetMouse() const;
 
@@ -247,7 +247,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Add a new input device
 		*
 		*  @param[in] pDevice
-		*    Input device, shouldn't be NULL (but NULL is catched internally)
+		*    Input device, shouldn't be a null pointer (but a null pointer is catched internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -259,7 +259,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Remove device
 		*
 		*  @param[in] pDevice
-		*    Input device, shouldn't be NULL (but NULL is catched internally)
+		*    Input device, shouldn't be a null pointer (but a null pointer is catched internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -271,7 +271,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Remove control
 		*
 		*  @param[in] pControl
-		*    Input control to remove, shouldn't be NULL (but NULL is catched internally)
+		*    Input control to remove, shouldn't be a null pointer (but a null pointer is catched internally)
 		*/
 		void RemoveControl(Control *pControl);
 
@@ -280,7 +280,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    Update control
 		*
 		*  @param[in] pControl
-		*    Input control, shouldn't be NULL (but NULL is catched internally)
+		*    Input control, shouldn't be a null pointer (but a null pointer is catched internally)
 		*
 		*  @remarks
 		*    This marks the control as being updated recently, which will fire a message

@@ -65,20 +65,34 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    The 'NULL'-definition is for instance used to null a pointer
-*
-*  @note
-*    - Do NOT use this for 'virtual void Test() = NULL', use 'virtual void Test() = 0' instead!
-*/
-#ifndef NULL
-	#define NULL 0
-#endif
-
-/**
-*  @brief
 *    Invalid handle value (for data type PLGeneral::handle)
 */
+#define NULL_HANDLE     0
 #define INVALID_HANDLE -1
+
+
+//[-------------------------------------------------------]
+//[ C++0x definitions                                     ]
+//[-------------------------------------------------------]
+// GCC: Have a look at http://gcc.gnu.org/projects/cxx0x.html see which C++0x features are supported
+
+// "nullptr"-definition
+#if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 6))
+	/**
+	*  @brief
+	*    nullptr definition for compilers don't supporting this C++0x feature
+	*
+	*  @note
+	*    - The implementation comes from the "A name for the null pointer: nullptr"-document (http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2431.pdf)
+	*/
+	const class {
+		public:
+			template<class T> operator T*() const  { return 0; }
+			template<class C, class T> operator T C::*() const  { return 0; }
+		private:
+			void operator&() const;
+	} nullptr = {}; 
+#endif
 
 
 //[-------------------------------------------------------]

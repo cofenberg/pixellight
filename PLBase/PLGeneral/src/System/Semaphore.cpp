@@ -45,7 +45,7 @@ namespace PLGeneral {
 *    Constructor
 */
 Semaphore::Semaphore(uint32 nValue, uint32 nMaxValue) :
-	m_pSemaphoreImpl(NULL),
+	m_pSemaphoreImpl(nullptr),
 	m_nValue(0)
 {
 	// Create system implementation for the right platform
@@ -68,7 +68,8 @@ Semaphore::Semaphore(uint32 nValue, uint32 nMaxValue) :
 Semaphore::~Semaphore()
 {
 	// Destroy system specific implementation
-	if (m_pSemaphoreImpl) delete m_pSemaphoreImpl;
+	if (m_pSemaphoreImpl)
+		delete m_pSemaphoreImpl;
 }
 
 /**
@@ -82,7 +83,10 @@ bool Semaphore::Lock()
 		// Success
 		m_nValue--;
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -96,7 +100,10 @@ bool Semaphore::TryLock(uint32 nTimeout)
 		// Success
 		m_nValue--;
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -136,7 +143,7 @@ uint32 Semaphore::GetValue() const
 *    Copy constructor
 */
 Semaphore::Semaphore(const Semaphore &cSource) :
-	m_pSemaphoreImpl(NULL),
+	m_pSemaphoreImpl(nullptr),
 	m_nValue(0)
 {
 	// No implementation because the copy constructor is never used

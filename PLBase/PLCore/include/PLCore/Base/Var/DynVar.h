@@ -86,7 +86,7 @@ class DynVar {
 		*    Get variable descriptor
 		*
 		*  @return
-		*    Descriptor (can be NULL)
+		*    Descriptor (can be a null pointer)
 		*/
 		PLCORE_API virtual const VarDesc *GetDesc() const;
 

@@ -109,8 +109,8 @@ class PoolIterator : public IteratorImpl<ValueType> {
 	//[-------------------------------------------------------]
 	private:
 		const Pool<ValueType>				  *m_plstPool;			/**< Pool to operate on (always valid!) */
-		typename Pool<ValueType>::PoolElement *m_pNextElement;		/**< Next pool element, can be NULL */
-		typename Pool<ValueType>::PoolElement *m_pPreviousElement;	/**< Previous pool element, can be NULL */
+		typename Pool<ValueType>::PoolElement *m_pNextElement;		/**< Next pool element, can be a null pointer */
+		typename Pool<ValueType>::PoolElement *m_pPreviousElement;	/**< Previous pool element, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

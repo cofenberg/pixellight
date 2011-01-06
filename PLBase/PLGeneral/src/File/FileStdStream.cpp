@@ -47,7 +47,7 @@ namespace PLGeneral {
 *  @brief
 *    Constructor
 */
-FileStdStream::FileStdStream(FILE *pFile, uint32 nAccess) : FileImpl(Url(), NULL),
+FileStdStream::FileStdStream(FILE *pFile, uint32 nAccess) : FileImpl(Url(), nullptr),
 	m_bStream(true),
 	m_pFile(pFile),
 	m_hFile(0),
@@ -59,9 +59,9 @@ FileStdStream::FileStdStream(FILE *pFile, uint32 nAccess) : FileImpl(Url(), NULL
 *  @brief
 *    Constructor
 */
-FileStdStream::FileStdStream(handle hFile) : FileImpl(Url(), NULL),
+FileStdStream::FileStdStream(handle hFile) : FileImpl(Url(), nullptr),
 	m_bStream(false),
-	m_pFile(NULL),
+	m_pFile(nullptr),
 	m_hFile(hFile),
 	m_nAccess(0)
 {
@@ -142,7 +142,7 @@ void FileStdStream::Close()
 	// Close stream handle
 	if (m_pFile) {
 		fclose(m_pFile);
-		m_pFile = NULL;
+		m_pFile = nullptr;
 	}
 }
 
@@ -202,7 +202,7 @@ bool FileStdStream::Open(uint32 nAccess)
 	#if defined(WIN32)
 		const int nFile = _open_osfhandle(m_hFile, 0);
 	#elif defined(LINUX)
-		int nFile = m_hFile;
+		const int nFile = m_hFile;
 	#endif
 
 	// Open file
@@ -210,13 +210,13 @@ bool FileStdStream::Open(uint32 nAccess)
 		m_pFile = _fdopen(nFile, szMode);
 
 	// Done
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 bool FileStdStream::IsOpen() const
 {
 	// Check whether the file is opened
-	return (m_pFile != NULL);
+	return (m_pFile != nullptr);
 }
 
 bool FileStdStream::IsReadable() const
@@ -304,10 +304,20 @@ bool FileStdStream::Seek(int32 nOffset, File::ESeek nLocation)
 		// Convert seek position to Windows value
 		int nSeek;
 		switch (nLocation) {
-			case File::SeekCurrent:	nSeek = SEEK_CUR; break;
-			case File::SeekEnd:		nSeek = SEEK_END; break;
-			case File::SeekSet:		nSeek = SEEK_SET; break;
-			default:				return false; // Error!
+			case File::SeekCurrent:
+				nSeek = SEEK_CUR;
+				break;
+
+			case File::SeekEnd:
+				nSeek = SEEK_END;
+				break;
+
+			case File::SeekSet:
+				nSeek = SEEK_SET;
+				break;
+
+			default:
+				return false; // Error!
 		}
 
 		// Seek file
@@ -343,7 +353,7 @@ uint32 FileStdStream::GetSize() const
 FileSearchImpl *FileStdStream::CreateSearch()
 {
 	// Not implemented
-	return NULL;
+	return nullptr;
 }
 
 

@@ -97,7 +97,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*    Returns a PL physics body of the ragdoll
 		*
 		*  @return
-		*    A PL physics body of the ragdoll, NULL if there's no such body
+		*    A PL physics body of the ragdoll, a null pointer if there's no such body
 		*/
 		PLPhysics::Body *GetPhysicsBody() const;
 
@@ -159,8 +159,8 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::String	  m_sPhysicsAPI;	/**< Name of the used physics API */
-		PLScene::SceneNode	 *m_pLine;			/**< Pointer to the line scene node, can be NULL */
-		PLPhysics::SNRagdoll *m_pRagdoll;		/**< Pointer to the ragdoll scene node, can be NULL */
+		PLScene::SceneNode	 *m_pLine;			/**< Pointer to the line scene node, can be a null pointer */
+		PLPhysics::SNRagdoll *m_pRagdoll;		/**< Pointer to the ragdoll scene node, can be a null pointer */
 		bool				  m_bApplyForce;	/**< Apply force to the ragdoll scene node? */
 		bool				  m_bTorqueForce;	/**< Apply torque to the ragdoll scene node? */
 

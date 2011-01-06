@@ -66,16 +66,19 @@ String SystemWindows::ErrorCodeToString(DWORD nErrorCode)
 
 	// Try to format the error code
 	if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-					  NULL, nErrorCode, 0, (LPTSTR)&pszError, 0, NULL)) {
+					  nullptr, nErrorCode, 0, (LPTSTR)&pszError, 0, nullptr)) {
 		// All went fine, now build the PL string
 		LPTSTR pszErrorEnd = _tcschr(pszError, _T('\r'));
-		if (pszErrorEnd) *pszErrorEnd = _T('\0');
-		String sError = pszError;
+		if (pszErrorEnd)
+			*pszErrorEnd = _T('\0');
+		const String sError = pszError;
 		LocalFree(pszError);
 
 		// Done
 		return sError;
-	} else return String::Format("Unknown error code '%d'", nErrorCode);
+	} else {
+		return String::Format("Unknown error code '%d'", nErrorCode);
+	}
 }
 
 
@@ -270,7 +273,7 @@ String SystemWindows::GetOS() const
 
 				TCHAR szProductType[80];
 				DWORD dwBufLen = 80*sizeof(TCHAR);
-				lRet = RegQueryValueEx(hKey, TEXT("ProductType"), NULL, NULL,
+				lRet = RegQueryValueEx(hKey, TEXT("ProductType"), nullptr, nullptr,
 									   (LPBYTE) szProductType, &dwBufLen);
 				RegCloseKey(hKey);
 
@@ -399,7 +402,7 @@ String SystemWindows::GetComputerName() const
 {
 	// First of all, get the length of the computer name (including the terminating zero)
 	DWORD nTempLength = 0;
-	GetComputerNameW(NULL, &nTempLength);
+	GetComputerNameW(nullptr, &nTempLength);
 	if (nTempLength) {
 		// Get computer name
 		wchar_t *pszTemp = new wchar_t[nTempLength];
@@ -419,7 +422,7 @@ String SystemWindows::GetUserName() const
 {
 	// First of all, get the length of the user name (including the terminating zero)
 	DWORD nTempLength = 0;
-	GetUserNameW(NULL, &nTempLength);
+	GetUserNameW(nullptr, &nTempLength);
 	if (nTempLength) {
 		// Get user name
 		wchar_t *pszTemp = new wchar_t[nTempLength];
@@ -442,7 +445,7 @@ String SystemWindows::GetUserHomeDir() const
 	if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken) != 0) {
 		// First of all, get the length of the user home directory (including the terminating zero)
 		DWORD nTempLength = 0;
-		GetUserProfileDirectoryW(hToken, NULL, &nTempLength);
+		GetUserProfileDirectoryW(hToken, nullptr, &nTempLength);
 		if (nTempLength) {
 			// Get user home directory
 			wchar_t *pszTemp = new wchar_t[nTempLength];
@@ -470,7 +473,7 @@ String SystemWindows::GetUserDataDir() const
 {
 	// Get application data path
 	wchar_t szPath[MAX_PATH];
-	SHGetSpecialFolderPathW(NULL, szPath, CSIDL_APPDATA, FALSE);
+	SHGetSpecialFolderPathW(nullptr, szPath, CSIDL_APPDATA, FALSE);
 
 	// Return path (copy string)
 	return szPath;
@@ -488,7 +491,7 @@ String SystemWindows::GetExecutableFilename() const
 	wchar_t *pszBuffer = new wchar_t[MAX_PATH];
 
 	// Get user name as Unicode
-	if (GetModuleFileNameW(NULL, pszBuffer, MAX_PATH)) {
+	if (GetModuleFileNameW(nullptr, pszBuffer, MAX_PATH)) {
 		return String(pszBuffer, false); // Do not copy, please
 	} else {
 		// We no longer need the data, so free it
@@ -506,7 +509,7 @@ String SystemWindows::GetEnvironmentVariable(const String &sName) const
 	// Perhaps skip this completely?" - we could skip it, right... but then 'sName' MUST be converted internally ALWAYS to
 	// Unicode even if in the most cases ASCII is given and in the case that no such environment variable was found, this additional work
 	// was quite useless. (yeah, not really performance critical - but if there's a chance to skip some work, we should take it)
-	DWORD nSize = (sName.GetFormat() == String::ASCII) ? GetEnvironmentVariableA(sName.GetASCII(), NULL, 0) : GetEnvironmentVariableW(sName.GetUnicode(), NULL, 0);
+	DWORD nSize = (sName.GetFormat() == String::ASCII) ? GetEnvironmentVariableA(sName.GetASCII(), nullptr, 0) : GetEnvironmentVariableW(sName.GetUnicode(), nullptr, 0);
 	if (nSize > 0) {
 		// Get variable as Unicode
 		wchar_t *pszBuffer = new wchar_t[nSize];
@@ -533,9 +536,9 @@ bool SystemWindows::SetEnvironmentVariable(const String &sName, const String &sV
 void SystemWindows::DeleteEnvironmentVariable(const String &sName) const
 {
 	if (sName.GetFormat() == String::ASCII)
-		SetEnvironmentVariableA(sName.GetASCII(),   NULL);
+		SetEnvironmentVariableA(sName.GetASCII(),   nullptr);
 	else
-		SetEnvironmentVariableW(sName.GetUnicode(), NULL);
+		SetEnvironmentVariableW(sName.GetUnicode(), nullptr);
 }
 
 bool SystemWindows::Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir) const
@@ -548,20 +551,20 @@ bool SystemWindows::Execute(const String &sCommand, const String &sParameters, c
 	size_t nResult;
 	if (sCommand.GetFormat() == String::ASCII && sParameters.GetFormat() == String::ASCII && sWorkingDir.GetFormat() == String::ASCII) {
 		nResult = (size_t)ShellExecuteA(
-			NULL,
+			nullptr,
 			"open",
 			sCommand.GetASCII(),
-			sParameters.GetLength() ? sParameters.GetASCII() : NULL,
-			sWorkingDir.GetLength() ? sWorkingDir.GetASCII() : NULL,
+			sParameters.GetLength() ? sParameters.GetASCII() : nullptr,
+			sWorkingDir.GetLength() ? sWorkingDir.GetASCII() : nullptr,
 			SW_SHOWDEFAULT
 		);
 	} else {
 		nResult = (size_t)ShellExecuteW(
-			NULL,
+			nullptr,
 			L"open",
 			sCommand.GetUnicode(),
-			sParameters.GetLength() ? sParameters.GetUnicode() : NULL,
-			sWorkingDir.GetLength() ? sWorkingDir.GetUnicode() : NULL,
+			sParameters.GetLength() ? sParameters.GetUnicode() : nullptr,
+			sWorkingDir.GetLength() ? sWorkingDir.GetUnicode() : nullptr,
 			SW_SHOWDEFAULT
 		);
 	}
@@ -573,29 +576,32 @@ bool SystemWindows::Execute(const String &sCommand, const String &sParameters, c
 String SystemWindows::GetLocaleLanguage() const
 {
 	// Get the locale
-	const char *pszSaveLocale = setlocale(LC_ALL, NULL);
+	const char *pszSaveLocale = setlocale(LC_ALL, nullptr);
 	setlocale(LC_ALL, "");
-	String sLocal = setlocale(LC_ALL, NULL);
+	String sLocal = setlocale(LC_ALL, nullptr);
 	setlocale(LC_ALL, pszSaveLocale);
 
 	// Find the '_'
-	int nIndex = sLocal.IndexOf("_");
+	const int nIndex = sLocal.IndexOf("_");
 	return (nIndex >= 0) ? sLocal.GetSubstring(0, nIndex) : "";
 }
 
 String SystemWindows::GetCurrentDir() const
 {
 	// First of all, get the length of the current directory (including the terminating zero)
-	uint32 nTempLength = GetCurrentDirectoryW(0, NULL);
+	const uint32 nTempLength = GetCurrentDirectoryW(0, nullptr);
 	if (nTempLength) {
 		// Get current directory
 		wchar_t *pszTemp = new wchar_t[nTempLength];
 		GetCurrentDirectoryW(nTempLength, pszTemp);
-		String sDir = String(pszTemp, false, nTempLength-1); // Do not copy, please
+		const String sDir = String(pszTemp, false, nTempLength-1); // Do not copy, please
 
 		// Return the URL
 		return Url(sDir).GetNativePath();
-	} else return ""; // Done
+	} else {
+		// Done
+		return "";
+	}
 }
 
 bool SystemWindows::SetCurrentDir(const String &sPath)
@@ -614,9 +620,12 @@ Thread *SystemWindows::GetCurrentThread() const
 {
 	// Valid TLS?
 	if (g_nTlsIndex != TLS_OUT_OF_INDEXES) {
-		// Get the dynamic memory of the current thread, if NULL, this must be the main thread
+		// Get the dynamic memory of the current thread, if a null pointer, this must be the main thread
 		return (Thread*)TlsGetValue(g_nTlsIndex);
-	} else return NULL; // Error!
+	} else {
+		// Error!
+		return nullptr;
+	}
 }
 
 void SystemWindows::Exit(int nReturn)

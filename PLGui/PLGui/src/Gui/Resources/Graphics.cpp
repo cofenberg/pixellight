@@ -47,7 +47,7 @@ namespace PLGui {
 */
 Graphics::Graphics(Gui &cGui) :
 	m_pGui(&cGui),
-	m_pGraphicsImpl(NULL),
+	m_pGraphicsImpl(nullptr),
 	m_bManageImpl(true)					// Delete implementation later
 {
 	// Create implementation

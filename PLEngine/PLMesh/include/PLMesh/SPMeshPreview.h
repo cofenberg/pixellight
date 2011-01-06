@@ -87,7 +87,7 @@ class SPMeshPreview : public PLRenderer::SPPreview {
 		*    Returns the used mesh
 		*
 		*  @return
-		*    The used mesh, NULL if there's no mesh
+		*    The used mesh, a null pointer if there's no mesh
 		*/
 		PLMESH_API Mesh *GetMesh() const;
 
@@ -96,9 +96,9 @@ class SPMeshPreview : public PLRenderer::SPPreview {
 		*    Sets the used mesh
 		*
 		*  @param[in] pMesh
-		*    Mesh to use, can be NULL
+		*    Mesh to use, can be a null pointer
 		*/
-		PLMESH_API void SetMesh(Mesh *pMesh = NULL);
+		PLMESH_API void SetMesh(Mesh *pMesh = nullptr);
 
 
 	//[-------------------------------------------------------]

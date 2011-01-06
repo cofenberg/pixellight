@@ -60,11 +60,11 @@ SRPBegin::SRPBegin() :
 	ColorClear(this),
 	FillMode(this),
 	Flags(this),
-	m_pOriginalRenderTarget(NULL),
+	m_pOriginalRenderTarget(nullptr),
 	m_bCurrentFrontRenderTarget(0)
 {
 	// Initialize the pointers to the render targets
-	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
+	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
 }
 
 /**
@@ -180,8 +180,8 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					(i == 0 && (bRequestedStencilSetting != bCurrentStencilSetting || bRequestedMultisampleAntialiasingSetting != bCurrentMultisampleAntialiasingSetting))) {
 					// Dam'n we have to recreate this render target :(
 					delete pRenderTarget;
-					pRenderTarget = NULL;
-					m_pRenderTarget[i] = NULL;
+					pRenderTarget = nullptr;
+					m_pRenderTarget[i] = nullptr;
 				}
 			}
 

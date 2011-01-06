@@ -59,11 +59,11 @@ PLSceneNode *PLSceneContainer::Get(const std::string &sName)
 {
 	// Name not empty?
 	if (!sName.length() || sName.c_str()[0] == '\0')
-		return NULL;
+		return nullptr;
 
 	// Is '.' the first character?
 	if (sName.c_str()[0] == '.')
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// Is the name 'This' at the beginning?
 	if (!sName.compare(0, 4, "This")) {
@@ -96,7 +96,7 @@ PLSceneNode *PLSceneContainer::Get(const std::string &sName)
 		// Did a '.' follow?
 		if (sName.c_str()[6] == '.') {
 			// Is there a parent container?
-			return GetContainer() ? GetContainer()->Get(sName.substr(7)) : NULL;
+			return GetContainer() ? GetContainer()->Get(sName.substr(7)) : nullptr;
 		}
 	}
 
@@ -110,7 +110,7 @@ PLSceneNode *PLSceneContainer::Get(const std::string &sName)
 			// Get the scene node and check whether it is a scene container
 			PLSceneNode *pSceneNode = Get(sContainerName);
 			if (!pSceneNode || (pSceneNode->GetType() != TypeContainer && pSceneNode->GetType() != TypeCell))
-				return NULL; // Error!
+				return nullptr; // Error!
 
 			// Change 'into' this scene container
 			return ((PLSceneContainer*)pSceneNode)->Get(sName.substr(i+1));
@@ -121,7 +121,7 @@ PLSceneNode *PLSceneContainer::Get(const std::string &sName)
 	// Search for a scene node with this name
 	std::string sNameLower = PLTools::ToLower(sName); // Do ONLY use lower case, else the hashing will NOT return the same values!
 	std::map<std::string, PLSceneNode*>::iterator pIterator = m_mapNodes.find(sNameLower);
-	return (pIterator == m_mapNodes.end()) ? NULL : pIterator->second;
+	return (pIterator == m_mapNodes.end()) ? nullptr : pIterator->second;
 }
 
 /**
@@ -142,7 +142,7 @@ const Point3 &PLSceneContainer::GetWorldSpaceCenter() const
 *    Constructor
 */
 PLSceneContainer::PLSceneContainer(PLSceneContainer *pContainer, const std::string &sName, EType nType) :
-	PLSceneNode(pContainer, NULL, sName, nType, ""),
+	PLSceneNode(pContainer, nullptr, sName, nType, ""),
 	m_bFixedCenter(false),
 	m_vCenter(0.0f, 0.0f, 0.0f)
 {
@@ -175,7 +175,7 @@ PLSceneCell *PLSceneContainer::GetCell(const std::string &sName, IGameNode &cIGa
 {
 	// Check the given name
 	if (!sName.size())
-		return NULL; // Error!
+		return nullptr; // Error!
 
 	// First at all, IS there already a cell with this name?
 	std::string sNameLower = PLTools::ToLower(sName); // Do ONLY use lower case, else the hashing will NOT return the same values!
@@ -527,7 +527,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	}
 
 	// Create the scene node...
-	PLSceneNode *pSceneNode = NULL;
+	PLSceneNode *pSceneNode = nullptr;
 	INode *pMaxNode = cIGameNode.GetMaxNode();
 	if (pMaxNode) {
 		Object *pMaxObject = pMaxNode->GetObjectRef();

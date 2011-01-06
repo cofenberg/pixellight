@@ -118,7 +118,7 @@ class SNLoadScreenBase : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SceneContainer *m_pContainer;		/**< Current parent container, can be NULL */
+		SceneContainer *m_pContainer;		/**< Current parent container, can be a null pointer */
 		float			m_fLoadProgress;	/**< Current load progress (0.0-1.0) */
 
 
@@ -126,7 +126,7 @@ class SNLoadScreenBase : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = NULL);
+		PLS_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
 
 
 };

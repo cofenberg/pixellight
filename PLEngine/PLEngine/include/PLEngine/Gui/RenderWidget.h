@@ -70,11 +70,11 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*  @param[in] pParent
-		*    Parent widget, can be NULL
+		*    Parent widget, can be a null pointer
 		*  @param[in] pDisplayMode
-		*    Display mode information, can be NULL
+		*    Display mode information, can be a null pointer
 		*/
-		PL_API RenderWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = NULL, const PLRenderer::DisplayMode *pDisplayMode = NULL);
+		PL_API RenderWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr, const PLRenderer::DisplayMode *pDisplayMode = nullptr);
 
 		/**
 		*  @brief

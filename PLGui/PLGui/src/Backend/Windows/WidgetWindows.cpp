@@ -52,7 +52,7 @@ namespace PLGui
 *    Constructor
 */
 WidgetWindows::WidgetWindows(Widget &cWidget) : WidgetImpl(cWidget),
-	m_hWnd(NULL),
+	m_hWnd(nullptr),
 	m_bWrapper(false),
 	m_bDestroyed(false),
 	m_nWindowState(StateNormal),
@@ -83,7 +83,7 @@ WidgetWindows::~WidgetWindows()
 void WidgetWindows::CreateWidget()
 {
 	// Get parent widget
-	HWND hParent = m_pWidget->GetParent() ? (HWND)m_pWidget->GetParent()->GetWindowHandle() : NULL;
+	HWND hParent = m_pWidget->GetParent() ? (HWND)m_pWidget->GetParent()->GetWindowHandle() : nullptr;
 
 	// Set window style
 	uint32 nWinStyle, nExtStyle;
@@ -97,11 +97,11 @@ void WidgetWindows::CreateWidget()
 							 CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 							 hParent,
 							 0,
-							 GetModuleHandle(NULL),
+							 GetModuleHandle(nullptr),
 							 this);
-	if (m_hWnd == NULL) {
+	if (m_hWnd == nullptr) {
 		// Could not create widget
-		m_hWnd = NULL;
+		m_hWnd = nullptr;
 		m_bDestroyed = true;
 		return;
 	}
@@ -142,7 +142,7 @@ void WidgetWindows::SetParent(WidgetImpl *pParent)
 	// [TODO] Implement SetParent functionality
 	/*
 	// Get parent widget
-	HWND hParent = NULL;
+	HWND hParent = nullptr;
 	if (m_pWidget->GetParentWidget()) {
 		hParent = m_pWidget->GetParentWidget()->GetWindowHandle();
 	}
@@ -224,7 +224,7 @@ void WidgetWindows::SetSize(const Vector2i &vSize)
 void WidgetWindows::SetZPos(EZPos nZPos, Widget *pWidget)
 {
 	// Get handle to widget that will be on top of our widget
-	HWND hWndAfter = NULL;
+	HWND hWndAfter = nullptr;
 	if (nZPos == ZBehind && pWidget) {
 		// This widget will be in front of our widget
 		hWndAfter = (HWND)pWidget->GetWindowHandle();
@@ -314,7 +314,7 @@ void WidgetWindows::SetTransparency(ETransparency nTransparency, const Color4 &c
 		SetLayeredWindowAttributes(m_hWnd, 0, cColor.GetAInt(), LWA_ALPHA);
 	} else {
 		// Redraw widget
-		InvalidateRect(m_hWnd, NULL, true);
+		InvalidateRect(m_hWnd, nullptr, true);
 		UpdateWindow(m_hWnd);
 	}
 }
@@ -357,7 +357,7 @@ void WidgetWindows::SetFocus()
 void WidgetWindows::Redraw()
 {
 	// Redraw widget
-	InvalidateRect(m_hWnd, NULL, true);
+	InvalidateRect(m_hWnd, nullptr, true);
 	UpdateWindow(m_hWnd);
 }
 
@@ -379,7 +379,7 @@ void WidgetWindows::SetTrapMouse(bool bTrap)
 		ClipCursor(&sRect); 
 	} else {
 		// Untrap mouse
-		ClipCursor(NULL);
+		ClipCursor(nullptr);
 	}
 
 	// Backup the state
@@ -414,7 +414,7 @@ void WidgetWindows::SetIcon(const Image &cIcon)
 {
 	// Get icon handle
 	ImageWindows *pImageWindows = (ImageWindows*)cIcon.GetImpl();
-	HICON hIcon = pImageWindows ? pImageWindows->GetIconHandle() : NULL;
+	HICON hIcon = pImageWindows ? pImageWindows->GetIconHandle() : nullptr;
 
 	// Set icon
 	::SendMessageA(m_hWnd, WM_SETICON, (WPARAM)ICON_SMALL, (LPARAM)hIcon);
@@ -501,7 +501,7 @@ void WidgetWindows::UpdateWindowStyle(bool bExtOnly)
 	if (!bExtOnly)
 		::SetWindowLongPtr(m_hWnd, GWL_STYLE,	nWinStyle);
 	::SetWindowLongPtr(m_hWnd, GWL_EXSTYLE, nExtStyle);
-	::SetWindowPos(m_hWnd, NULL, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+	::SetWindowPos(m_hWnd, nullptr, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 /**

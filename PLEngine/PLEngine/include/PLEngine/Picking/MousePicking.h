@@ -70,11 +70,11 @@ class MousePicking : public Picking {
 		*    Constructor
 		*
 		*  @param[in] pWidget
-		*    Widget to perform the picking in, if NULL no picking is possible
+		*    Widget to perform the picking in, if a null pointer no picking is possible
 		*  @param[in] pCamera
-		*    Camera to perform the picking with, if NULL no picking is possible
+		*    Camera to perform the picking with, if a null pointer no picking is possible
 		*/
-		PL_API MousePicking(PLGui::Widget *pWidget = NULL, PLScene::SNCamera *pCamera = NULL);
+		PL_API MousePicking(PLGui::Widget *pWidget = nullptr, PLScene::SNCamera *pCamera = nullptr);
 
 		/**
 		*  @brief
@@ -87,7 +87,7 @@ class MousePicking : public Picking {
 		*    Returns the widget to perform the picking in
 		*
 		*  @return
-		*    The widget to perform the picking in, NULL if there's no widget (= no picking is possible)
+		*    The widget to perform the picking in, a null pointer if there's no widget (= no picking is possible)
 		*/
 		PL_API PLGui::Widget *GetWidget() const;
 
@@ -96,7 +96,7 @@ class MousePicking : public Picking {
 		*    Sets the widget to perform the picking in
 		*
 		*  @param[in] pWidget
-		*    The widget to perform the picking in, NULL if there's no widget (= no picking is possible)
+		*    The widget to perform the picking in, a null pointer if there's no widget (= no picking is possible)
 		*/
 		PL_API void SetWidget(PLGui::Widget *pWidget);
 
@@ -105,7 +105,7 @@ class MousePicking : public Picking {
 		*    Returns the camera to perform the picking with
 		*
 		*  @return
-		*    The camera to perform the picking with, if NULL no picking is possible
+		*    The camera to perform the picking with, if a null pointer no picking is possible
 		*/
 		PL_API PLScene::SNCamera *GetCamera() const;
 
@@ -114,7 +114,7 @@ class MousePicking : public Picking {
 		*    Sets the camera to perform the picking with
 		*
 		*  @param[in] pCamera
-		*    The camera to perform the picking with, if NULL no picking is possible
+		*    The camera to perform the picking with, if a null pointer no picking is possible
 		*/
 		PL_API void SetCamera(PLScene::SNCamera *pCamera);
 
@@ -186,8 +186,8 @@ class MousePicking : public Picking {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Widget	  *m_pWidget;	/**< Widget to perform the picking in, can be NULL */
-		PLScene::SNCamera *m_pCamera;	/**< Camera to perform the picking with, can be NULL */
+		PLGui::Widget	  *m_pWidget;	/**< Widget to perform the picking in, can be a null pointer */
+		PLScene::SNCamera *m_pCamera;	/**< Camera to perform the picking with, can be a null pointer */
 
 
 };

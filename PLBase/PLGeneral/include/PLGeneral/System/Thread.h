@@ -114,7 +114,7 @@ class Thread : public ThreadFunction {
 		*    Constructor
 		*
 		*  @param[in] pThreadFunction
-		*    Pointer to the thread function, can be NULL
+		*    Pointer to the thread function, can be a null pointer
 		*/
 		PLGENERAL_API Thread(ThreadFunction *pThreadFunction);
 
@@ -123,9 +123,9 @@ class Thread : public ThreadFunction {
 		*    Constructor
 		*
 		*  @param[in] pThreadFunction
-		*    Pointer to a static thread function, can be NULL
+		*    Pointer to a static thread function, can be a null pointer
 		*  @param[in] pData
-		*    Data to be passed to the thread function, can be NULL
+		*    Data to be passed to the thread function, can be a null pointer
 		*/
 		PLGENERAL_API Thread(THREADFUNCTION pThreadFunction, void *pData);
 
@@ -328,10 +328,10 @@ class Thread : public ThreadFunction {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ThreadImpl	   *m_pThreadImpl;		/**< Pointer to the system specific implementation (assumed to be never NULL!) */
-		ThreadFunction *m_pThreadFunction;	/**< Pointer to a thread function to execute, can be NULL */
-		THREADFUNCTION  m_pStaticFunction;	/**< Pointer to a static function to execute, can be NULL */
-		void		   *m_pStaticData;		/**< Additional data to pass to the static function, can be NULL */
+		ThreadImpl	   *m_pThreadImpl;		/**< Pointer to the system specific implementation (assumed to be never a null pointer!) */
+		ThreadFunction *m_pThreadFunction;	/**< Pointer to a thread function to execute, can be a null pointer */
+		THREADFUNCTION  m_pStaticFunction;	/**< Pointer to a static function to execute, can be a null pointer */
+		void		   *m_pStaticData;		/**< Additional data to pass to the static function, can be a null pointer */
 		String			m_sName;			/**< Thread name */
 
 

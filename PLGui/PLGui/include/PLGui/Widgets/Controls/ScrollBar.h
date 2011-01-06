@@ -70,7 +70,7 @@ class ScrollBar : public AbstractSlider {
 		*  @param[in] pParent
 		*    Pointer to the parent widget
 		*/
-		PLGUI_API ScrollBar(Widget *pParent = NULL);
+		PLGUI_API ScrollBar(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -102,7 +102,7 @@ void MathClassTest::Test()
 {
 	// Test class with math stuff
 	const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass("MathTestClass1");
-	PLCore::Object *pTest = NULL;
+	PLCore::Object *pTest = nullptr;
 	if (pClass) pTest = pClass->Create();
 	if (pTest) {
 		Print("cTest = '%s'\n",											pTest->GetValues(PLCore::WithDefault).GetASCII());

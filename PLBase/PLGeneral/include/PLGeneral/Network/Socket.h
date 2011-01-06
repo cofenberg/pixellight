@@ -219,7 +219,7 @@ class Socket {
 		*    Sends data
 		*
 		*  @param[in] pBuffer
-		*    Data to send, if NULL, nothing is send
+		*    Data to send, if a null pointer, nothing is send
 		*  @param[in] nSize
 		*    Size in bytes of the buffer to send, MUST be valid!
 		*
@@ -234,7 +234,7 @@ class Socket {
 		*    Receives data
 		*
 		*  @param[out] pBuffer
-		*    Buffer that receives the data, if NULL, nothing can be received
+		*    Buffer that receives the data, if a null pointer, nothing can be received
 		*  @param[in]  nSize
 		*    Size in bytes of the buffer that receives the data, MUST be valid!
 		*

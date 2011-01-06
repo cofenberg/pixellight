@@ -73,7 +73,7 @@ FMOD::Sound *Buffer::GetSound() const
 *    Constructor
 */
 Buffer::Buffer(PLSound::SoundManager &cSoundManager, const String &sName, bool bStream) : PLSound::Buffer(cSoundManager, sName),
-	m_pSound(NULL),
+	m_pSound(nullptr),
 	m_bStreamed(false)
 {
 	// Load the sound buffer
@@ -145,7 +145,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 
 bool Buffer::IsLoaded() const
 {
-	return (m_pSound != NULL);
+	return (m_pSound != nullptr);
 }
 
 bool Buffer::IsStreamed() const
@@ -171,7 +171,7 @@ bool Buffer::Unload()
 	// Release the FMOD Ex sound
 	if (m_pSound) {
 		m_pSound->release();
-		m_pSound = NULL;
+		m_pSound = nullptr;
 	}
 
 	// Done

@@ -2,6 +2,7 @@ Changes in PixelLight 0.9.5-R1 (not yet released)
 - Change (Windows): Migrated from Microsoft Visual Studio 2008 to Microsoft Visual Studio 2010 as the main development IDE
 - Change (Windows): OpenAL: Updated "OpenAL32.dll" from "6.14.357.22" to version "6.14.357.24", updated "wrap_oal.dll" from "2.1.8.1" to version "2.2.0.5"
 - Change (Windows): Updated "Newton Game Dynamics" from "2.24" to "2.28"
+- Change: Migrated from "NULL"-definition for a null pointer to "nullptr" introduced by C++0x and already supported by multiple modern compilers
 - Change: "PLGeneral::String": Refactoring of the UTF8 support
 - Change: Updated libogg from "1.2.0" to "1.2.2"
 - Change: Updated libvorbis from "1.3.1" to "1.3.2"

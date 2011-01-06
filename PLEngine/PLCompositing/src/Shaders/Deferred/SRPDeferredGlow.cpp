@@ -68,28 +68,28 @@ SRPDeferredGlow::SRPDeferredGlow() :
 	GlowDownscale(this),
 	Flags(this),
 	m_bResultIndex(0),
-	m_pVertexShader(NULL),
-	m_pDownscaleFragmentShader(NULL),
-	m_pDownscaleProgram(NULL),
-	m_pDownscalePositionProgramAttribute(NULL),
-	m_pDownscaleTextureSizeProgramUniform(NULL),
-	m_pDownscaleTextureProgramUniform(NULL),
-	m_pBlurFragmentShader(NULL),
-	m_pBlurProgram(NULL),
-	m_pBlurPositionProgramAttribute(NULL),
-	m_pBlurTextureSizeProgramUniform(NULL),
-	m_pBlurUVScaleProgramUniform(NULL),
-	m_pBlurTextureProgramUniform(NULL),
-	m_pResultFragmentShader(NULL),
-	m_pResultProgram(NULL),
-	m_pResultPositionProgramAttribute(NULL),
-	m_pResultTextureSizeProgramUniform(NULL),
-	m_pResultGlowFactorProgramUniform(NULL),
-	m_pResultTextureProgramUniform(NULL),
+	m_pVertexShader(nullptr),
+	m_pDownscaleFragmentShader(nullptr),
+	m_pDownscaleProgram(nullptr),
+	m_pDownscalePositionProgramAttribute(nullptr),
+	m_pDownscaleTextureSizeProgramUniform(nullptr),
+	m_pDownscaleTextureProgramUniform(nullptr),
+	m_pBlurFragmentShader(nullptr),
+	m_pBlurProgram(nullptr),
+	m_pBlurPositionProgramAttribute(nullptr),
+	m_pBlurTextureSizeProgramUniform(nullptr),
+	m_pBlurUVScaleProgramUniform(nullptr),
+	m_pBlurTextureProgramUniform(nullptr),
+	m_pResultFragmentShader(nullptr),
+	m_pResultProgram(nullptr),
+	m_pResultPositionProgramAttribute(nullptr),
+	m_pResultTextureSizeProgramUniform(nullptr),
+	m_pResultGlowFactorProgramUniform(nullptr),
+	m_pResultTextureProgramUniform(nullptr),
 	m_bResultDiscard(true)
 {
 	// Init data
-	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
+	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
 }
 
 /**
@@ -156,7 +156,7 @@ void SRPDeferredGlow::CalculateGlow(const String &sShaderLanguage, VertexBuffer 
 					// Destroy the downscale render target
 					if (m_pRenderTarget[i]) {
 						delete m_pRenderTarget[i];
-						m_pRenderTarget[i] = NULL;
+						m_pRenderTarget[i] = nullptr;
 					}
 				}
 
@@ -172,31 +172,31 @@ void SRPDeferredGlow::CalculateGlow(const String &sShaderLanguage, VertexBuffer 
 		// If there's an previous instance of the program, destroy it first
 		if (m_pDownscaleProgram) {
 			delete m_pDownscaleProgram;
-			m_pDownscaleProgram = NULL;
+			m_pDownscaleProgram = nullptr;
 		}
 		if (m_pDownscaleFragmentShader) {
 			delete m_pDownscaleFragmentShader;
-			m_pDownscaleFragmentShader = NULL;
+			m_pDownscaleFragmentShader = nullptr;
 		}
 		if (m_pBlurProgram) {
 			delete m_pBlurProgram;
-			m_pBlurProgram = NULL;
+			m_pBlurProgram = nullptr;
 		}
 		if (m_pBlurFragmentShader) {
 			delete m_pBlurFragmentShader;
-			m_pBlurFragmentShader = NULL;
+			m_pBlurFragmentShader = nullptr;
 		}
 		if (m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
-		m_pDownscalePositionProgramAttribute	= NULL;
-		m_pDownscaleTextureSizeProgramUniform	= NULL;
-		m_pDownscaleTextureProgramUniform		= NULL;
-		m_pBlurPositionProgramAttribute			= NULL;
-		m_pBlurTextureSizeProgramUniform		= NULL;
-		m_pBlurUVScaleProgramUniform			= NULL;
-		m_pBlurTextureProgramUniform			= NULL;
+		m_pDownscalePositionProgramAttribute	= nullptr;
+		m_pDownscaleTextureSizeProgramUniform	= nullptr;
+		m_pDownscaleTextureProgramUniform		= nullptr;
+		m_pBlurPositionProgramAttribute			= nullptr;
+		m_pBlurTextureSizeProgramUniform		= nullptr;
+		m_pBlurUVScaleProgramUniform			= nullptr;
+		m_pBlurTextureProgramUniform			= nullptr;
 
 		// Shader source code
 		String sVertexShaderSourceCode;
@@ -347,7 +347,7 @@ void SRPDeferredGlow::CalculateGlow(const String &sShaderLanguage, VertexBuffer 
 */
 TextureBuffer *SRPDeferredGlow::GetTextureBuffer() const
 {
-	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : NULL;
+	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : nullptr;
 }
 
 /**
@@ -422,16 +422,16 @@ void SRPDeferredGlow::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							// If there's an previous instance of the program, destroy it first
 							if (m_pResultProgram) {
 								delete m_pResultProgram;
-								m_pResultProgram = NULL;
+								m_pResultProgram = nullptr;
 							}
 							if (m_pResultFragmentShader) {
 								delete m_pResultFragmentShader;
-								m_pResultFragmentShader = NULL;
+								m_pResultFragmentShader = nullptr;
 							}
-							m_pResultPositionProgramAttribute	= NULL;
-							m_pResultTextureSizeProgramUniform	= NULL;
-							m_pResultGlowFactorProgramUniform	= NULL;
-							m_pResultTextureProgramUniform		= NULL;
+							m_pResultPositionProgramAttribute	= nullptr;
+							m_pResultTextureSizeProgramUniform	= nullptr;
+							m_pResultGlowFactorProgramUniform	= nullptr;
+							m_pResultTextureProgramUniform		= nullptr;
 							m_bResultDiscard					= true;
 
 							// Get the shader language instance

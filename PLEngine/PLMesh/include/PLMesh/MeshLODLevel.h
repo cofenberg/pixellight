@@ -78,9 +78,9 @@ class MeshLODLevel {
 		*    Constructor
 		*
 		*  @param[in] pMesh
-		*    Pointer to the owner mesh, can be NULL
+		*    Pointer to the owner mesh, can be a null pointer
 		*/
-		PLMESH_API MeshLODLevel(Mesh *pMesh = NULL);
+		PLMESH_API MeshLODLevel(Mesh *pMesh = nullptr);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class MeshLODLevel {
 		*    Returns the mesh the LOD level belongs to
 		*
 		*  @return
-		*    Pointer to the owner mesh, can be NULL
+		*    Pointer to the owner mesh, can be a null pointer
 		*/
 		PLMESH_API Mesh *GetMesh() const;
 
@@ -102,9 +102,9 @@ class MeshLODLevel {
 		*    Sets the mesh the LOD level belongs to
 		*
 		*  @param[in] pMesh
-		*    Pointer to the owner mesh, can be NULL
+		*    Pointer to the owner mesh, can be a null pointer
 		*/
-		PLMESH_API void SetMesh(Mesh *pMesh = NULL);
+		PLMESH_API void SetMesh(Mesh *pMesh = nullptr);
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class MeshLODLevel {
 		*    Returns the index buffer for this LOD level
 		*
 		*  @return
-		*    The LOD level's index buffer, can be NULL
+		*    The LOD level's index buffer, can be a null pointer
 		*/
 		PLMESH_API PLRenderer::IndexBuffer *GetIndexBuffer() const;
 
@@ -201,7 +201,7 @@ class MeshLODLevel {
 		*    Gets the geometries of this LOD level
 		*
 		*  @return
-		*    List of geometries, can be NULL
+		*    List of geometries, can be a null pointer
 		*/
 		PLMESH_API PLGeneral::Array<Geometry> *GetGeometries() const;
 
@@ -217,7 +217,7 @@ class MeshLODLevel {
 		*  @param[in]  nMinGeometries
 		*    Minimum number of geometries per octree
 		*  @param[out] plstOctreeIDList
-		*    Will optionally store a list of octrees each geometry is on, can be NULL
+		*    Will optionally store a list of octrees each geometry is on, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -230,7 +230,7 @@ class MeshLODLevel {
 		*      in octree friendly parts
 		*/
 		PLMESH_API bool CreateOctree(PLGeneral::uint32 nSubdivide = 1, PLGeneral::uint32 nMinGeometries = 10,
-									 PLGeneral::Array<PLGeneral::Array<PLGeneral::uint32>*> *plstOctreeIDList = NULL);
+									 PLGeneral::Array<PLGeneral::Array<PLGeneral::uint32>*> *plstOctreeIDList = nullptr);
 
 		/**
 		*  @brief
@@ -243,7 +243,7 @@ class MeshLODLevel {
 		*    Returns the LOD level octree
 		*
 		*  @return
-		*    LOD level octree, NULL if there's no octree
+		*    LOD level octree, a null pointer if there's no octree
 		*
 		*  @note
 		*    - The octree is used for fast visibility and collision determination
@@ -341,9 +341,9 @@ class MeshLODLevel {
 		*    One geometry per triangle? Recommended if octrees should be build but
 		*    not good when preparing the mesh for optimize!
 		*  @param[in] pSplit
-		*    Optional index list of the geometries to split, if NULL all geometries will be split
+		*    Optional index list of the geometries to split, if a null pointer all geometries will be split
 		*  @param[in] nSplitNumber
-		*    If pSplit ist't NULL this indicates the number of geometries to split
+		*    If pSplit isn't a null pointer this indicates the number of geometries to split
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -351,16 +351,16 @@ class MeshLODLevel {
 		*  @note
 		*    - If there was an octree it will be destroyed!
 		*/
-		PLMESH_API bool SplitGeometries(bool bSingleGeometries = false, PLGeneral::uint32 *pSplit = NULL, PLGeneral::uint32 nSplitNumber = 0);
+		PLMESH_API bool SplitGeometries(bool bSingleGeometries = false, PLGeneral::uint32 *pSplit = nullptr, PLGeneral::uint32 nSplitNumber = 0);
 
 		/**
 		*  @brief
 		*    Joins geometries with the same properties to one single geometry
 		*
 		*  @param[in] pJoin
-		*    Optional index list of the geometries to join, if NULL all geometries will be joined
+		*    Optional index list of the geometries to join, if a null pointer all geometries will be joined
 		*  @param[in] nJoinNumber
-		*    If pJoin ist't NULL, this indicates the number of geometries to join
+		*    If pJoin isn't a null pointer, this indicates the number of geometries to join
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -370,7 +370,7 @@ class MeshLODLevel {
 		*    - Geometries of the primitive type PLRenderer::Primitive::LineStrip,
 		*      PLRenderer::Primitive::TriangleStrip and PLRenderer::Primitive::TriangleFan can't be joined!
 		*/
-		PLMESH_API bool JoinGeometries(PLGeneral::uint32 *pJoin = NULL, PLGeneral::uint32 nJoinNumber = 0);
+		PLMESH_API bool JoinGeometries(PLGeneral::uint32 *pJoin = nullptr, PLGeneral::uint32 nJoinNumber = 0);
 
 		/**
 		*  @brief
@@ -460,17 +460,17 @@ class MeshLODLevel {
 	//[-------------------------------------------------------]
 	private:
 		// Internal data
-		Mesh *m_pMesh;	/**< Owner mesh, can be NULL */
+		Mesh *m_pMesh;	/**< Owner mesh, can be a null pointer */
 
 		// LOD data
 		float m_fDistance;	/**< LOD distance */
 
 		// Overwritten data
-		PLRenderer::IndexBuffer    *m_pIndexBuffer;		/**< Index buffer, can be NULL */
-		PLGeneral::Array<Geometry> *m_plstGeometries;	/**< Geometries, can be NULL */
+		PLRenderer::IndexBuffer    *m_pIndexBuffer;		/**< Index buffer, can be a null pointer */
+		PLGeneral::Array<Geometry> *m_plstGeometries;	/**< Geometries, can be a null pointer */
 
 		// Visibility
-		MeshOctree *m_pOctree;	/**< Octree for geometry visibility determination, can be NULL */
+		MeshOctree *m_pOctree;	/**< Octree for geometry visibility determination, can be a null pointer */
 
 		// Precalculated data
 		PLGeneral::Array<MeshTriangle> m_lstTriangles;	/**< List of triangles */

@@ -99,7 +99,7 @@ class RagdollJoint {
 		*    Returns the PL physics joint
 		*
 		*  @return
-		*    The PL physics joint, NULL on error (if that's the case, something went totally wrong :)
+		*    The PL physics joint, a null pointer on error (if that's the case, something went totally wrong :)
 		*/
 		PLPHYSICS_API Joint *GetJoint() const;
 

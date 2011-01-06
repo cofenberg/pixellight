@@ -88,7 +88,7 @@ String VertexShaderGLSL::GetSourceCode() const
 	if (nShaderSourceLength > 1) {
 		// The string class takes over the control of the string memory and also deletes it
 		char *pszSourceCode = new char[nShaderSourceLength];
-		glGetShaderSource(m_nOpenGLESVertexShader, nShaderSourceLength, NULL, pszSourceCode);
+		glGetShaderSource(m_nOpenGLESVertexShader, nShaderSourceLength, nullptr, pszSourceCode);
 		return String(pszSourceCode, false, nShaderSourceLength-1);	// -1 = excluding the null termination character
 	}
 

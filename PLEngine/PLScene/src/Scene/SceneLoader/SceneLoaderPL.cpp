@@ -365,7 +365,7 @@ SceneNode *SceneLoaderPL::LoadNode(SInstance &sInstance, SceneContainer &cContai
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -412,7 +412,7 @@ SceneNodeModifier *SceneLoaderPL::LoadModifier(SInstance &sInstance, const XmlEl
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 /**

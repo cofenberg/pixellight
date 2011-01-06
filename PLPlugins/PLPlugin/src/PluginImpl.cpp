@@ -25,8 +25,8 @@ namespace PLPlugin {
 *    Constructor
 */
 PluginImpl::PluginImpl() :
-	m_hPluginWnd(NULL),
-	m_hPluginDC(NULL),
+	m_hPluginWnd(nullptr),
+	m_hPluginDC(nullptr),
 	m_nWidth(0),
 	m_nHeight(0)
 {

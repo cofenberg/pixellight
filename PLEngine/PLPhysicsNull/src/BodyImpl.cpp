@@ -283,7 +283,7 @@ PLPhysics::Body *BodyImpl::GetPartner(uint32 nIndex) const
 *    Constructor
 */
 BodyImpl::BodyImpl() :
-	m_pBody(NULL),
+	m_pBody(nullptr),
 	m_bActive(true),
 	m_fCollisionVolume(0.0f),
 	m_fMass(0.0f),

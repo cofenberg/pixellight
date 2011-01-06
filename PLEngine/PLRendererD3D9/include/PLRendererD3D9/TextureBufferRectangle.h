@@ -69,7 +69,7 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 		*    Returns the Direct3D 9 texture
 		*
 		*  @return
-		*    The Direct3D 9 texture, can be NULL
+		*    The Direct3D 9 texture, can be a null pointer
 		*/
 		LPDIRECT3DTEXTURE9 GetD3D9Texture() const;
 
@@ -118,7 +118,7 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3DTEXTURE9 m_pD3D9Texture;	/**< Direct3D 9 texture, can be NULL */
+		LPDIRECT3DTEXTURE9 m_pD3D9Texture;	/**< Direct3D 9 texture, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

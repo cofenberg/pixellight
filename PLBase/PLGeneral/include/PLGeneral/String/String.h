@@ -59,7 +59,7 @@ class StringBuffer;
 *    extension Ansi. (characters: 128-256) But with an UTF8 format, this may cause serious problems
 *    and you should use Unicode instead ASCII for characters above 128 to avoid encoding troubles!
 *    For best compatibility with other string techniques, this class is using pointers instead of
-*    [] references, so NULL is a valid parameter.
+*    [] references, so a null pointer is a valid parameter.
 *
 *  @verbatim
 *    Usage example:
@@ -105,7 +105,7 @@ class String {
 		*    Creates a new formatted string (like sprintf)
 		*
 		*  @param[in] pszFormat
-		*    The format string ... -> The variable arguments (can be NULL)
+		*    The format string ... -> The variable arguments (can be a null pointer)
 		*
 		*  @return
 		*    New string
@@ -118,7 +118,7 @@ class String {
 		*    Sets the character string as UTF8
 		*
 		*  @param[in] pszUTF8
-		*    Pointer to the character string as UTF8, can be NULL
+		*    Pointer to the character string as UTF8, can be a null pointer
 		*  @param[in] nLength
 		*    Length of the given string, (excluding the terminating zero) if negative, the length is
 		*    calculated automatically
@@ -156,7 +156,7 @@ class String {
 		*    Constructor
 		*
 		*  @param[in] pszString
-		*    String to save, can be NULL
+		*    String to save, can be a null pointer
 		*  @param[in] bCopy
 		*    Copy the given string or use this one directly? Do ONLY set bCopy to 'false'
 		*    if you are sure there can't go anything wrong - the string class will take over
@@ -182,7 +182,7 @@ class String {
 		*    Internal copy constructor
 		*
 		*  @param[in] pStringBuffer
-		*    String buffer to use, can be NULL
+		*    String buffer to use, can be a null pointer
 		*
 		*  @note
 		*    - This constructor is ONLY used inside PLGeneral and therefore it's not exported
@@ -235,7 +235,7 @@ class String {
 		*    Position of the ASCII character to retrieve
 		*
 		*  @return
-		*    ASCII character at the given position within the string, terminating NULL (\0) on error
+		*    ASCII character at the given position within the string, terminating zero (\0) on error
 		*/
 		PLGENERAL_API char operator [](uint32 nIndex) const;
 
@@ -244,7 +244,7 @@ class String {
 		*    Returns the character string as ASCII
 		*
 		*  @return
-		*    Pointer to the character string as ASCII, never NULL
+		*    Pointer to the character string as ASCII, never a null pointer
 		*
 		*  @remarks
 		*    If the internal format of this string doesn't match the requested format, an internal temp
@@ -261,7 +261,7 @@ class String {
 		*    Returns the character string as ASCII
 		*
 		*  @return
-		*    Pointer to the character string as ASCII, never NULL
+		*    Pointer to the character string as ASCII, never a null pointer
 		*
 		*  @see
 		*    - GetASCII()
@@ -273,7 +273,7 @@ class String {
 		*    Returns the character string as Unicode
 		*
 		*  @return
-		*    Pointer to the character string as Unicode, never NULL
+		*    Pointer to the character string as Unicode, never a null pointer
 		*
 		*  @see
 		*    - GetASCII()
@@ -285,7 +285,7 @@ class String {
 		*    Returns the character string as Unicode
 		*
 		*  @return
-		*    Pointer to the character string as Unicode, never NULL
+		*    Pointer to the character string as Unicode, never a null pointer
 		*
 		*  @see
 		*    - GetASCII()
@@ -309,7 +309,7 @@ class String {
 		*    Copy operator
 		*
 		*  @param[in] pszString
-		*    String to copy, can be NULL
+		*    String to copy, can be a null pointer
 		*
 		*  @return
 		*    Reference to this string
@@ -334,7 +334,7 @@ class String {
 		*    Concatenate strings
 		*
 		*  @param[in] pszString
-		*    String to add, can be NULL
+		*    String to add, can be a null pointer
 		*
 		*  @return
 		*    Reference to the new string
@@ -347,7 +347,7 @@ class String {
 		*    Concatenate strings
 		*
 		*  @param[in] pszString
-		*    String to add, can be NULL
+		*    String to add, can be a null pointer
 		*  @param[in] sString
 		*    String to add
 		*
@@ -374,7 +374,7 @@ class String {
 		*    Concatenate strings
 		*
 		*  @param[in] pszString
-		*    String to add, can be NULL
+		*    String to add, can be a null pointer
 		*
 		*  @return
 		*    Reference to this string
@@ -399,7 +399,7 @@ class String {
 		*    Compares this string and the given one lexicographically
 		*
 		*  @param[in] pszString
-		*    String to compare with, can be NULL
+		*    String to compare with, can be a null pointer
 		*
 		*  @return
 		*    'true' if this string is less than the given one
@@ -424,7 +424,7 @@ class String {
 		*    Compares this string and the given one lexicographically
 		*
 		*  @param[in] pszString
-		*    String to compare with, can be NULL
+		*    String to compare with, can be a null pointer
 		*
 		*  @return
 		*    'true' if this string is greater than the given one
@@ -449,7 +449,7 @@ class String {
 		*    Compare operator (case sensitive)
 		*
 		*  @param[in] pszString
-		*    String to compare with, can be NULL
+		*    String to compare with, can be a null pointer
 		*
 		*  @return
 		*    'true' if the two strings are identical, else 'false'
@@ -474,7 +474,7 @@ class String {
 		*    Compare operator (case sensitive)
 		*
 		*  @param[in] pszString
-		*    String to compare with, can be NULL
+		*    String to compare with, can be a null pointer
 		*
 		*  @return
 		*    'true' if the two strings are different, else 'false'
@@ -503,7 +503,7 @@ class String {
 		*    Compare function (case sensitive)
 		*
 		*  @param[in] pszString
-		*    String to compare with, can be NULL
+		*    String to compare with, can be a null pointer
 		*  @param[in] nPos
 		*    Start position within this string
 		*  @param[in] nCount
@@ -536,7 +536,7 @@ class String {
 		*    Compare function (case insensitive)
 		*
 		*  @param[in] pszString
-		*    String to compare with, can be NULL
+		*    String to compare with, can be a null pointer
 		*  @param[in] nPos
 		*    Start position within this string
 		*  @param[in] nCount
@@ -602,7 +602,7 @@ class String {
 		*    Checks whether the given string is a substring of this string or not
 		*
 		*  @param[in] pszString
-		*    String to check, if NULL or empty, 'true' will be returned
+		*    String to check, if a null pointer or empty, 'true' will be returned
 		*
 		*  @return
 		*    'true', if the given string is a substring of this string, (or both are empty) else 'false' else 'false'
@@ -630,7 +630,7 @@ class String {
 		*    Returns the index of the substring if contained in this string
 		*
 		*  @param[in] pszString
-		*    String to check, if NULL or empty, < 0 will be returned
+		*    String to check, if a null pointer or empty, < 0 will be returned
 		*  @param[in] nPos
 		*    Start position within this string
 		*
@@ -661,7 +661,7 @@ class String {
 		*    Searches from backwards for the index of the substring within this string
 		*
 		*  @param[in] pszString
-		*    String to check, if NULL or empty, < 0 will be returned
+		*    String to check, if a null pointer or empty, < 0 will be returned
 		*  @param[in] nPos
 		*    Start position within this string, if < 0 start at the last character
 		*
@@ -739,7 +739,7 @@ class String {
 		*    Insert a string at a given location
 		*
 		*  @param[in] pszString
-		*    String to insert, can be NULL
+		*    String to insert, can be a null pointer
 		*  @param[in] nPos
 		*    Position at which to insert the string
 		*  @param[in] nCount
@@ -756,7 +756,7 @@ class String {
 		*    Copies a string
 		*
 		*  @param[in] pszString
-		*    String to copy, can be NULL
+		*    String to copy, can be a null pointer
 		*  @param[in] nCount
 		*    Number of characters to copy, if negative copy the whole string
 		*
@@ -800,12 +800,12 @@ class String {
 		*    Replaces all occurences of a substring by another string
 		*
 		*  @param[in] pszOld
-		*    Substring to be replaced, can be NULL
+		*    Substring to be replaced, can be a null pointer
 		*  @param[in] pszNew
-		*    String to replace with, can be NULL
+		*    String to replace with, can be a null pointer
 		*
 		*  @return
-		*    Number of replaced substrings (0 if pszNew = pszOld or pszOld is NULL or empty)
+		*    Number of replaced substrings (0 if pszNew = pszOld or pszOld is a null pointer or empty)
 		*/
 		PLGENERAL_API uint32 Replace(const char *pszOld, const char *pszNew);
 		PLGENERAL_API uint32 Replace(const wchar_t *pszOld, const wchar_t *pszNew);
@@ -871,7 +871,7 @@ class String {
 		*    Returns the character string as UTF8
 		*
 		*  @return
-		*    Pointer to the character string as UTF8, never NULL - do NOT destroy the returned memory, it's owned by this string instance!
+		*    Pointer to the character string as UTF8, never a null pointer - do NOT destroy the returned memory, it's owned by this string instance!
 		*
 		*  @see
 		*    - GetASCII()
@@ -940,7 +940,7 @@ class String {
 		*    Use a new string buffer
 		*
 		*  @param[in] pStringBuffer
-		*    New string buffer to use, can be NULL
+		*    New string buffer to use, can be a null pointer
 		*/
 		void SetStringBuffer(StringBuffer *pStringBuffer);
 
@@ -955,7 +955,7 @@ class String {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		StringBuffer *m_pStringBuffer;	/**< Pointer to the string buffer, if NULL, string is empty */
+		StringBuffer *m_pStringBuffer;	/**< Pointer to the string buffer, if a null pointer, string is empty */
 
 
 };

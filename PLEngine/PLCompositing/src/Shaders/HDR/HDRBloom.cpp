@@ -57,19 +57,19 @@ namespace PLCompositing {
 HDRBloom::HDRBloom(Renderer &cRenderer) :
 	EventHandlerDirty(&HDRBloom::OnDirty, this),
 	m_pRenderer(&cRenderer),
-	m_pFullscreenQuad(NULL),
+	m_pFullscreenQuad(nullptr),
 	m_bResultIndex(0),
-	m_pDownscaleProgramGenerator(NULL),
-	m_pBloomVertexShader(NULL),
-	m_pBloomFragmentShader(NULL),
-	m_pBloomProgram(NULL),
-	m_pBloomPositionProgramAttribute(NULL),
-	m_pBloomTextureSizeProgramUniform(NULL),
-	m_pBloomUVScaleProgramUniform(NULL),
-	m_pBloomHDRTextureProgramUniform(NULL)
+	m_pDownscaleProgramGenerator(nullptr),
+	m_pBloomVertexShader(nullptr),
+	m_pBloomFragmentShader(nullptr),
+	m_pBloomProgram(nullptr),
+	m_pBloomPositionProgramAttribute(nullptr),
+	m_pBloomTextureSizeProgramUniform(nullptr),
+	m_pBloomUVScaleProgramUniform(nullptr),
+	m_pBloomHDRTextureProgramUniform(nullptr)
 {
 	// Init data
-	m_pRenderTarget[0] = m_pRenderTarget[1] = NULL;
+	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
 }
 
 /**
@@ -121,7 +121,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					// Destroy the downscale render target
 					if (m_pRenderTarget[i]) {
 						delete m_pRenderTarget[i];
-						m_pRenderTarget[i] = NULL;
+						m_pRenderTarget[i] = nullptr;
 					}
 				}
 
@@ -150,7 +150,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				// If there's an previous instance of the downscale program generator, destroy it first
 				if (m_pDownscaleProgramGenerator) {
 					delete m_pDownscaleProgramGenerator;
-					m_pDownscaleProgramGenerator = NULL;
+					m_pDownscaleProgramGenerator = nullptr;
 				}
 
 				// Choose the shader source codes depending on the requested shader language
@@ -290,20 +290,20 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				// If there's an previous instance of the program, destroy it first
 				if (m_pBloomProgram) {
 					delete m_pBloomProgram;
-					m_pBloomProgram = NULL;
+					m_pBloomProgram = nullptr;
 				}
 				if (m_pBloomVertexShader) {
 					delete m_pBloomVertexShader;
-					m_pBloomVertexShader = NULL;
+					m_pBloomVertexShader = nullptr;
 				}
 				if (m_pBloomFragmentShader) {
 					delete m_pBloomFragmentShader;
-					m_pBloomFragmentShader = NULL;
+					m_pBloomFragmentShader = nullptr;
 				}
-				m_pBloomPositionProgramAttribute	= NULL;
-				m_pBloomTextureSizeProgramUniform	= NULL;
-				m_pBloomUVScaleProgramUniform		= NULL;
-				m_pBloomHDRTextureProgramUniform	= NULL;
+				m_pBloomPositionProgramAttribute	= nullptr;
+				m_pBloomTextureSizeProgramUniform	= nullptr;
+				m_pBloomUVScaleProgramUniform		= nullptr;
+				m_pBloomHDRTextureProgramUniform	= nullptr;
 
 				// Get the shader language instance
 				ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(sUsedShaderLanguage);
@@ -403,7 +403,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 */
 TextureBuffer *HDRBloom::GetTextureBuffer() const
 {
-	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : NULL;
+	return m_pRenderTarget[m_bResultIndex] ? m_pRenderTarget[m_bResultIndex]->GetTextureBuffer() : nullptr;
 }
 
 

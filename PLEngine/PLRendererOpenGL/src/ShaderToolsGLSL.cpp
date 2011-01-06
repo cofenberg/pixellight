@@ -46,7 +46,7 @@ bool ShaderToolsGLSL::SetSourceCode(GLuint nOpenGLShader, const String &sSourceC
 {
 	// Load the shader source
 	const char *pszSourceCode = sSourceCode.GetASCII();
-	glShaderSourceARB(nOpenGLShader, 1, &pszSourceCode, NULL);
+	glShaderSourceARB(nOpenGLShader, 1, &pszSourceCode, nullptr);
 
 	// Compile the shader
 	glCompileShaderARB(nOpenGLShader);
@@ -80,7 +80,7 @@ void ShaderToolsGLSL::WriteInformationIntoLog(GLuint nOpenGLObject)
 		char *pszInformationLog = new char[nInformationLength];
 
 		// Get the information
-		glGetInfoLogARB(nOpenGLObject, nInformationLength, NULL, pszInformationLog);
+		glGetInfoLogARB(nOpenGLObject, nInformationLength, nullptr, pszInformationLog);
 
 		// Write the error into the log - the PixelLight string class takes over the control of the allocated string buffer
 		String sInformationLog(pszInformationLog, false, nInformationLength-1);	// -1 = excluding the terminating zero

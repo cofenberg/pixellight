@@ -116,7 +116,7 @@ class SNCellPortal : public SNPortal {
 		*    Returns the cell the cell-portal links to
 		*
 		*  @return
-		*    The cell the cell-portal links to, NULL on error
+		*    The cell the cell-portal links to, a null pointer on error
 		*    (maybe there's no node with the cell name or this node is no cell)
 		*/
 		PLS_API SCCell *GetTargetCellInstance();

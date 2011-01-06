@@ -54,13 +54,13 @@ namespace PLScene {
 */
 SceneContext::SceneContext(RendererContext &cRendererContext) :
 	m_pRendererContext(&cRendererContext),
-	m_pMeshManager(NULL),
+	m_pMeshManager(nullptr),
 	m_pRoot(new SceneNodeHandler()),
-	m_pSceneRendererManager(NULL),
-	m_pVisManager(NULL),
+	m_pSceneRendererManager(nullptr),
+	m_pVisManager(nullptr),
 	m_bProcessActive(false),
 	m_nProcessCounter(0),
-	m_pDefaultInputController(NULL)
+	m_pDefaultInputController(nullptr)
 {
 }
 
@@ -137,7 +137,7 @@ SceneContainer *SceneContext::GetRoot()
 			return pContainer;
 		} else {
 			// WOW, something went TOTALLY wrong
-			return NULL;
+			return nullptr;
 		}
 	}
 

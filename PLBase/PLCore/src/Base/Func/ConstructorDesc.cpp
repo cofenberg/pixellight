@@ -95,7 +95,7 @@ bool ConstructorDesc::IsDefaultConstructor() const
 DynFunc *ConstructorDesc::GetConstructor() const
 {
 	// To be implemented in derived classes
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -105,7 +105,7 @@ DynFunc *ConstructorDesc::GetConstructor() const
 Object *ConstructorDesc::Create(const DynParams &cParams)
 {
 	// To be implemented in derived classes
-	return NULL;
+	return nullptr;
 }
 
 

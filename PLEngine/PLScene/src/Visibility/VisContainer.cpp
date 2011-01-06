@@ -201,7 +201,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			pNode->m_pParent = this;
 		} else {
 			// Error!
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -272,7 +272,7 @@ VisManager *VisContainer::GetVisManager() const
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 

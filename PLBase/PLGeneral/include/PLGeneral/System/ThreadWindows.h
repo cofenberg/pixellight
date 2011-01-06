@@ -108,7 +108,7 @@ class ThreadWindows : public ThreadImpl {
 		*    Static thread callback function
 		*
 		*  @param[in] lpParameter
-		*    Parameter, can be NULL
+		*    Parameter, can be a null pointer
 		*
 		*  @return
 		*    Return value

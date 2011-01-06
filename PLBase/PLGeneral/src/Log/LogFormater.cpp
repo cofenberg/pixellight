@@ -56,7 +56,7 @@ void LogFormater::ShowLogLevelPrefix(bool bShow)
 *    Default constructor
 */
 LogFormater::LogFormater() :
-	m_pFile(NULL),
+	m_pFile(nullptr),
 	m_bShowLogLevelPrefix(true)
 {
 }
@@ -81,7 +81,7 @@ File *LogFormater::OpenFile(const String &sFilename)
 		File *pFile = new File(sFilename);
 		if (!pFile->Open(File::FileWrite | File::FileCreate)) {
 			delete pFile;
-			pFile = NULL;
+			pFile = nullptr;
 		}
 
 		// Done
@@ -89,7 +89,7 @@ File *LogFormater::OpenFile(const String &sFilename)
 	}
 
 	// Error!
-	return NULL;
+	return nullptr;
 }
 
 
@@ -101,7 +101,7 @@ File *LogFormater::OpenFile(const String &sFilename)
 *    Copy constructor
 */
 LogFormater::LogFormater(const LogFormater &cSource) :
-	m_pFile(NULL),
+	m_pFile(nullptr),
 	m_bShowLogLevelPrefix(true)
 {
 	// No implementation because the copy constructor is never used

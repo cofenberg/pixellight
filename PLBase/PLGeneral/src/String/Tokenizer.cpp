@@ -62,7 +62,7 @@ Tokenizer::Tokenizer() :
 	m_sCommentEndTag("*/"),
 	m_sSingleLineComment("//"),
 	m_bCaseSensitive(false),
-	m_pStream(NULL),
+	m_pStream(nullptr),
 	m_nPosition(0),
 	m_nLine(0),
 	m_nParseMode(eEatGarbage)
@@ -236,7 +236,7 @@ void Tokenizer::Stop()
 	// Stop tokenizer
 	if (m_pStream) {
 		delete m_pStream;
-		m_pStream = NULL;
+		m_pStream = nullptr;
 	}
 	m_sToken     = "";
 	m_nPosition  = 0;
@@ -794,7 +794,7 @@ Tokenizer::Tokenizer(const Tokenizer &cSource) :
 	m_sCommentEndTag("*/"),
 	m_sSingleLineComment("//"),
 	m_bCaseSensitive(false),
-	m_pStream(NULL),
+	m_pStream(nullptr),
 	m_nPosition(0),
 	m_nLine(0),
 	m_nParseMode(eEatGarbage)

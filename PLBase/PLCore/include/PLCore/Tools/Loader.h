@@ -118,7 +118,7 @@ class Loader : public Object {
 		*    Returns the loadable type
 		*
 		*  @return
-		*    The loadable type, NULL on (terrible) error
+		*    The loadable type, a null pointer on (terrible) error
 		*/
 		PLCORE_API LoadableType *GetType() const;
 
@@ -252,7 +252,7 @@ class Loader : public Object {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LoadableType						*m_pLoadableType;	/**< Loadable type, can be NULL */
+		LoadableType						*m_pLoadableType;	/**< Loadable type, can be a null pointer */
 		PLGeneral::Array<PLGeneral::String>  m_lstFormats;		/**< List of parsed formats */
 
 

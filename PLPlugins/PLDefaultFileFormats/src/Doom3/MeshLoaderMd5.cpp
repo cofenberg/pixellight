@@ -248,7 +248,7 @@ bool MeshLoaderMd5::LoadV6(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) con
 			if (cTokenizer.CompareToken("bone")) {
 				cTokenizer.SetDelimiters(" \t\r\n()[]=,;\"");
 				cTokenizer.SetSingleChars("{}");
-				Joint *pJoint = NULL;
+				Joint *pJoint = nullptr;
 
 				// Read joint ID
 				uint32 nID = cTokenizer.GetNextToken().GetInt();

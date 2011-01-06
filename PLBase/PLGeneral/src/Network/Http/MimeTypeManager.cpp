@@ -43,7 +43,7 @@ namespace PLGeneral {
 String MimeTypeManager::GetMimeType(const String &sFilename)
 {
 	// Get filename extension
-	String sExtension = Url(sFilename).GetExtension();
+	const String sExtension = Url(sFilename).GetExtension();
 
 	// Check known MIME types
 	if (sExtension == "css")	return "text/css";

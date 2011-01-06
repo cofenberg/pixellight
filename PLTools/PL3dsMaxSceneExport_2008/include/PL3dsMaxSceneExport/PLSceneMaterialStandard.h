@@ -58,7 +58,7 @@ class PLSceneMaterialStandard : public PLSceneMaterial {
 		*  @param[in] cScene
 		*    Scene this material is in
 		*  @param[in] pParentIGameMaterial
-		*    Parent of the IGame material, can be NULL
+		*    Parent of the IGame material, can be a null pointer
 		*  @param[in] cIGameMaterial
 		*    IGame material this material comes from
 		*  @param[in] sName

@@ -69,20 +69,20 @@ SRPDeferredSSAO::SRPDeferredSSAO() :
 	ResolutionScale(this),
 	SceneScale(this),
 	Flags(this),
-	m_pRenderTargetAO(NULL),
-	m_pRenderTargetXBlur(NULL),
-	m_pVertexShader(NULL),
-	m_pFragmentShader(NULL),
-	m_pProgram(NULL),
-	m_pPositionProgramAttribute(NULL),
-	m_pTextureSizeProgramUniform(NULL),
-	m_pInputTextureSizeProgramUniform(NULL),
-	m_pBlurRadiusProgramUniform(NULL),
-	m_pBlurFalloffProgramUniform(NULL),
-	m_pSharpnessProgramUniform(NULL),
-	m_pUVScaleProgramUniform(NULL),
-	m_pInputTextureProgramUniform(NULL),
-	m_pNormalDepthTextureProgramUniform(NULL)
+	m_pRenderTargetAO(nullptr),
+	m_pRenderTargetXBlur(nullptr),
+	m_pVertexShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr),
+	m_pPositionProgramAttribute(nullptr),
+	m_pTextureSizeProgramUniform(nullptr),
+	m_pInputTextureSizeProgramUniform(nullptr),
+	m_pBlurRadiusProgramUniform(nullptr),
+	m_pBlurFalloffProgramUniform(nullptr),
+	m_pSharpnessProgramUniform(nullptr),
+	m_pUVScaleProgramUniform(nullptr),
+	m_pInputTextureProgramUniform(nullptr),
+	m_pNormalDepthTextureProgramUniform(nullptr)
 {
 }
 
@@ -125,24 +125,24 @@ void SRPDeferredSSAO::DrawBlur(const String &sShaderLanguage, VertexBuffer &cVer
 		// If there's an previous instance of the program, destroy it first
 		if (m_pProgram) {
 			delete m_pProgram;
-			m_pProgram = NULL;
+			m_pProgram = nullptr;
 		}
 		if (m_pFragmentShader) {
 			delete m_pFragmentShader;
-			m_pFragmentShader = NULL;
+			m_pFragmentShader = nullptr;
 		}
 		if (m_pVertexShader) {
 			delete m_pVertexShader;
-			m_pVertexShader = NULL;
+			m_pVertexShader = nullptr;
 		}
-		m_pTextureSizeProgramUniform		= NULL;
-		m_pInputTextureSizeProgramUniform	= NULL;
-		m_pBlurRadiusProgramUniform			= NULL;
-		m_pBlurFalloffProgramUniform		= NULL;
-		m_pSharpnessProgramUniform			= NULL;
-		m_pUVScaleProgramUniform			= NULL;
-		m_pInputTextureProgramUniform		= NULL;
-		m_pNormalDepthTextureProgramUniform	= NULL;
+		m_pTextureSizeProgramUniform		= nullptr;
+		m_pInputTextureSizeProgramUniform	= nullptr;
+		m_pBlurRadiusProgramUniform			= nullptr;
+		m_pBlurFalloffProgramUniform		= nullptr;
+		m_pSharpnessProgramUniform			= nullptr;
+		m_pUVScaleProgramUniform			= nullptr;
+		m_pInputTextureProgramUniform		= nullptr;
+		m_pNormalDepthTextureProgramUniform	= nullptr;
 
 		// Get the shader language instance
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
@@ -365,11 +365,11 @@ void SRPDeferredSSAO::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								// Render target size or internal format change?
 								if (m_pRenderTargetAO && (m_pRenderTargetAO->GetSize() != vAOSize || m_pRenderTargetAO->GetFormat() != nInternalFormat)) {
 									delete m_pRenderTargetAO;
-									m_pRenderTargetAO = NULL;
+									m_pRenderTargetAO = nullptr;
 								}
 								if (m_pRenderTargetXBlur && (m_pRenderTargetXBlur->GetSize() != vRTSize || m_pRenderTargetXBlur->GetFormat() != nInternalFormat)) {
 									delete m_pRenderTargetXBlur;
-									m_pRenderTargetXBlur = NULL;
+									m_pRenderTargetXBlur = nullptr;
 								}
 
 								// Create/update the render targets required for AO blur - if necessary

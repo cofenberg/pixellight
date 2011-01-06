@@ -83,7 +83,7 @@ class TestObject : public PLCore::Object {
 					/* Destroy instance */
 					if (Instance) {
 						delete Instance;
-						Instance = NULL;
+						Instance = nullptr;
 					}
 				}
 
@@ -143,7 +143,7 @@ class TestObject : public PLCore::Object {
 					if (cParams.GetSignature() == m_Constructor.GetSignature()) {
 						m_Constructor.Call(cParams);
 						return ((ParamType&)cParams).Return;
-					} else return NULL;
+					} else return nullptr;
 				}
 				ConstType m_Constructor;
 		};

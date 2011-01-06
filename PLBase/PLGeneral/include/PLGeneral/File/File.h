@@ -101,9 +101,9 @@ class File : public FileObject {
 		*  @param[in] sUrl
 		*    URL of a file
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API File(const String &sUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API File(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -112,9 +112,9 @@ class File : public FileObject {
 		*  @param[in] cUrl
 		*    URL of a file
 		*  @param[in] pAccess
-		*    Additional file access information (can be NULL)
+		*    Additional file access information (can be a null pointer)
 		*/
-		PLGENERAL_API File(const Url &cUrl, const FileAccess *pAccess = NULL);
+		PLGENERAL_API File(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class File : public FileObject {
 		*    Constructor
 		*
 		*  @param[in] pnData
-		*    The file data, if NULL same as the standard constructor
+		*    The file data, if a null pointer same as the standard constructor
 		*  @param[in] nNumOfBytes
 		*    Number of file data bytes, MUST be valid!
 		*  @param[in] bCopy
@@ -403,7 +403,7 @@ class File : public FileObject {
 		*    Returns a pointer to the buffer for memory buffered file
 		*
 		*  @return
-		*    Pointer to the buffer for memory buffered file, NULL if there's no such buffer
+		*    Pointer to the buffer for memory buffered file, a null pointer if there's no such buffer
 		*
 		*  @see
 		*    - IsMemoryBuffered()
@@ -520,7 +520,7 @@ class File : public FileObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint8  *m_pMemBuf;			/**< Buffer for memory buffered file, can be NULL */
+		uint8  *m_pMemBuf;			/**< Buffer for memory buffered file, can be a null pointer */
 		uint32  m_nMemBufSize;		/**< Size of memory buffered file */
 		uint32  m_nMemBufPos;		/**< Seek position for memory buffered file */
 		uint32  m_nMemBufAccess;	/**< Access flags for memory buffered file */

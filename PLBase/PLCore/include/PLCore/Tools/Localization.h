@@ -163,7 +163,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*    Index of the group
 		*
 		*  @return
-		*    The requested group, NULL on error
+		*    The requested group, a null pointer on error
 		*/
 		PLCORE_API LocalizationGroup *GetGroup(PLGeneral::uint32 nIndex) const;
 
@@ -175,7 +175,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*    Name of the group
 		*
 		*  @return
-		*    The requested group, NULL on error
+		*    The requested group, a null pointer on error
 		*/
 		PLCORE_API LocalizationGroup *GetGroup(const PLGeneral::String &sName) const;
 
@@ -187,7 +187,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*    Name of the new group
 		*
 		*  @return
-		*    The new group, NULL on error (maybe there's already a group with the given name?)
+		*    The new group, a null pointer on error (maybe there's already a group with the given name?)
 		*/
 		PLCORE_API LocalizationGroup *AddGroup(const PLGeneral::String &sName);
 

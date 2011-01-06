@@ -470,7 +470,7 @@ PLPhysics::Body *BodyImpl::GetPartner(uint32 nIndex) const
 *    Constructor
 */
 BodyImpl::BodyImpl() :
-	m_pNewtonBody(NULL),
+	m_pNewtonBody(nullptr),
 	m_bActive(true),
 	m_fCollisionVolume(0.0f),
 	m_fMass(0.0f),
@@ -523,7 +523,7 @@ BodyImpl::~BodyImpl()
 		}
 
 		// Reset the pointer to the PL physics body
-		NewtonBodySetUserData(m_pNewtonBody, NULL);
+		NewtonBodySetUserData(m_pNewtonBody, nullptr);
 
 		// Destroy the Newton physics body
 		NewtonDestroyBody(NewtonBodyGetWorld(m_pNewtonBody), m_pNewtonBody);

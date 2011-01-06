@@ -87,7 +87,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*    Index of the resource to return
 		*
 		*  @return
-		*    The source at the given index, NULL on error
+		*    The source at the given index, a null pointer on error
 		*/
 		PLSOUND_API const Source *GetSource(PLGeneral::uint32 nIndex = 0) const;
 
@@ -99,7 +99,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*    Index of the resource to return
 		*
 		*  @return
-		*    The source at the given index, NULL on error
+		*    The source at the given index, a null pointer on error
 		*/
 		PLSOUND_API Source *GetSource(PLGeneral::uint32 nIndex = 0);
 

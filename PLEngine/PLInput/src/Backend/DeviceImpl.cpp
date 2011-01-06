@@ -42,7 +42,7 @@ namespace PLInput {
 */
 DeviceImpl::DeviceImpl() :
 	m_nBackendType(BackendUnknown),
-	m_pDevice(NULL),
+	m_pDevice(nullptr),
 	m_bDelete(true)
 {
 }
@@ -55,7 +55,7 @@ DeviceImpl::~DeviceImpl()
 {
 	// Remove from device
 	if (m_pDevice) {
-		m_pDevice->m_pImpl = NULL;
+		m_pDevice->m_pImpl = nullptr;
 	}
 }
 

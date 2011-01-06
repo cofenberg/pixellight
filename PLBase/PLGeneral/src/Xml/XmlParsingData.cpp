@@ -53,7 +53,7 @@ void XmlParsingData::Stamp(const char *pszNow, XmlBase::EEncoding nEncoding)
 		switch (*pU) {
 			case 0:
 				// We *should* never get here, but in case we do, don't
-				// advance past the terminating null character, ever
+				// advance past the terminating zero character, ever
 				return;
 
 			case '\r':

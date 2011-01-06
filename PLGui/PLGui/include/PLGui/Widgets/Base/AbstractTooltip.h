@@ -77,7 +77,7 @@ class AbstractTooltip : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API AbstractTooltip(Widget *pParent = NULL);
+		PLGUI_API AbstractTooltip(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

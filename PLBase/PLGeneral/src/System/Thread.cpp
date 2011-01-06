@@ -45,10 +45,10 @@ namespace PLGeneral {
 *    Constructor
 */
 Thread::Thread() :
-	m_pThreadImpl(NULL),
-	m_pThreadFunction(NULL),
-	m_pStaticFunction(NULL),
-	m_pStaticData(NULL)
+	m_pThreadImpl(nullptr),
+	m_pThreadFunction(nullptr),
+	m_pStaticFunction(nullptr),
+	m_pStaticData(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -68,10 +68,10 @@ Thread::Thread() :
 *    Constructor
 */
 Thread::Thread(ThreadFunction *pThreadFunction) :
-	m_pThreadImpl(NULL),
+	m_pThreadImpl(nullptr),
 	m_pThreadFunction(pThreadFunction),
-	m_pStaticFunction(NULL),
-	m_pStaticData(NULL)
+	m_pStaticFunction(nullptr),
+	m_pStaticData(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -91,8 +91,8 @@ Thread::Thread(ThreadFunction *pThreadFunction) :
 *    Constructor
 */
 Thread::Thread(THREADFUNCTION pStaticFunction, void *pData) :
-	m_pThreadImpl(NULL),
-	m_pThreadFunction(NULL),
+	m_pThreadImpl(nullptr),
+	m_pThreadFunction(nullptr),
 	m_pStaticFunction(pStaticFunction),
 	m_pStaticData(pData)
 {
@@ -114,10 +114,10 @@ Thread::Thread(THREADFUNCTION pStaticFunction, void *pData) :
 *    Constructor
 */
 Thread::Thread(uint32 nThreadID) :
-	m_pThreadImpl(NULL),
-	m_pThreadFunction(NULL),
-	m_pStaticFunction(NULL),
-	m_pStaticData(NULL)
+	m_pThreadImpl(nullptr),
+	m_pThreadFunction(nullptr),
+	m_pStaticFunction(nullptr),
+	m_pStaticData(nullptr)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -139,7 +139,8 @@ Thread::Thread(uint32 nThreadID) :
 Thread::~Thread()
 {
 	// Destroy system specific implementation
-	if (m_pThreadImpl) delete m_pThreadImpl;
+	if (m_pThreadImpl)
+		delete m_pThreadImpl;
 }
 
 /**
@@ -288,10 +289,10 @@ int Thread::Run()
 *    Copy constructor
 */
 Thread::Thread(const Thread &cSource) :
-	m_pThreadImpl(NULL),
-	m_pThreadFunction(NULL),
-	m_pStaticFunction(NULL),
-	m_pStaticData(NULL)
+	m_pThreadImpl(nullptr),
+	m_pThreadFunction(nullptr),
+	m_pStaticFunction(nullptr),
+	m_pStaticData(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

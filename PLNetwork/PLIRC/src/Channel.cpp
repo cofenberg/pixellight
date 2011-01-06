@@ -98,7 +98,7 @@ const User *Channel::GetUser(const String &sNick) const
 	}
 
 	// No user found
-	return NULL;
+	return nullptr;
 }
 
 User *Channel::GetUser(const String &sNick)
@@ -114,7 +114,7 @@ User *Channel::GetUser(const String &sNick)
 	}
 
 	// No user found
-	return NULL;
+	return nullptr;
 }
 
 bool Channel::AddUser(const String &sNick, bool bOp, bool bVoice)

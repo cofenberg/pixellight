@@ -56,7 +56,7 @@ pl_implement_class(Box)
 */
 Box::Box(Widget *pParent, EOrientation nOrientation) : Widget(pParent),
 	Orientation(this),
-	m_pBoxLayout(NULL)
+	m_pBoxLayout(nullptr)
 {
 	// Create layout
 	m_pBoxLayout = new LayoutBox();

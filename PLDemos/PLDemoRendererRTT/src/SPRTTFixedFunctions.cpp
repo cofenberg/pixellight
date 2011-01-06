@@ -60,7 +60,7 @@ pl_implement_class(SPRTTFixedFunctions)
 *    Constructor
 */
 SPRTTFixedFunctions::SPRTTFixedFunctions(Renderer &cRenderer) : SPRTT(cRenderer),
-	m_pRenderTarget(NULL)
+	m_pRenderTarget(nullptr)
 {
 	// Get the renderer context
 	RendererContext &cRendererContext = GetRenderer().GetRendererContext();

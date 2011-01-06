@@ -132,9 +132,9 @@ class StringBufferASCII : public StringBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		char				*m_pszString;	/**< The string itself (NEVER NULL!) */
-		StringBufferUnicode *m_pUnicode;	/**< Unicode string buffer version of the current string (can be NULL) */
-		StringBufferUTF8	*m_pUTF8;		/**< UTF8 string buffer version of the current string (can be NULL) */
+		char				*m_pszString;	/**< The string itself (NEVER a null pointer!) */
+		StringBufferUnicode *m_pUnicode;	/**< Unicode string buffer version of the current string (can be a null pointer) */
+		StringBufferUTF8	*m_pUTF8;		/**< UTF8 string buffer version of the current string (can be a null pointer) */
 
 
 	//[-------------------------------------------------------]

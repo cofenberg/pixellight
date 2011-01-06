@@ -122,7 +122,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		IngameGui *m_pIngameGui;	/**< Ingame GUI container, can be NULL */
+		IngameGui *m_pIngameGui;	/**< Ingame GUI container, can be a null pointer */
 
 
 };

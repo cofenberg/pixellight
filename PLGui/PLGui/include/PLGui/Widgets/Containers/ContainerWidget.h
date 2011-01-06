@@ -66,7 +66,7 @@ class ContainerWidget : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API ContainerWidget(Widget *pParent = NULL);
+		PLGUI_API ContainerWidget(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

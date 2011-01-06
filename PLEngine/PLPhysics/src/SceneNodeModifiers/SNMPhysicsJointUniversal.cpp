@@ -125,8 +125,8 @@ void SNMPhysicsJointUniversal::CreatePhysicsJoint()
 
 		// Create the joint
 		const Matrix3x4 &mTrans = GetSceneNode().GetTransform().GetMatrix();
-		m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointUniversal(pParentBody ? pParentBody->GetBody() : NULL,
-																						pChildBody  ? pChildBody->GetBody()  : NULL,
+		m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointUniversal(pParentBody ? pParentBody->GetBody() : nullptr,
+																						pChildBody  ? pChildBody->GetBody()  : nullptr,
 																						mTrans*m_vPivotPoint,
 																						mTrans.RotateVector(m_vPinDir1).Normalize(),
 																						mTrans.RotateVector(m_vPinDir2).Normalize()));

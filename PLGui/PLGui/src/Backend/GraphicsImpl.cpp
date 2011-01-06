@@ -41,7 +41,7 @@ namespace PLGui {
 *    Constructor
 */
 GraphicsImpl::GraphicsImpl() :
-	m_pGraphics(NULL)
+	m_pGraphics(nullptr)
 {
 }
 

@@ -82,7 +82,7 @@ class SceneRendererTool {
 		*  @param[in] pPainter
 		*    Surface painter
 		*/
-		PL_API SceneRendererTool(PLRenderer::SurfacePainter *pPainter = NULL);
+		PL_API SceneRendererTool(PLRenderer::SurfacePainter *pPainter = nullptr);
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class SceneRendererTool {
 		*    Get surface painter
 		*
 		*  @return
-		*    Surface painter used to access scene renderer functionality, can be NULL
+		*    Surface painter used to access scene renderer functionality, can be a null pointer
 		*/
 		PL_API PLRenderer::SurfacePainter *GetPainter() const;
 
@@ -104,7 +104,7 @@ class SceneRendererTool {
 		*    Set surface painter
 		*
 		*  @param[in] pSurfacePainter
-		*    Surface painter used to access scene renderer functionality, can be NULL
+		*    Surface painter used to access scene renderer functionality, can be a null pointer
 		*/
 		PL_API void SetPainter(PLRenderer::SurfacePainter *pSurfacePainter);
 
@@ -113,7 +113,7 @@ class SceneRendererTool {
 		*    Returns the used scene renderer instance
 		*
 		*  @return
-		*    The used scene renderer instance, can be NULL
+		*    The used scene renderer instance, can be a null pointer
 		*
 		*  @note
 		*    - Same as "SceneRenderer *pSceneRenderer = ((SPScene*)GetPainter())->GetDefaultSceneRenderer()" (with security checks!)
@@ -128,7 +128,7 @@ class SceneRendererTool {
 		*    Name of the scene renderer pass to return
 		*
 		*  @return
-		*    The requested scene renderer pass, NULL on error
+		*    The requested scene renderer pass, a null pointer on error
 		*/
 		PL_API PLScene::SceneRendererPass *GetPass(const PLGeneral::String &sName) const;
 
@@ -142,7 +142,7 @@ class SceneRendererTool {
 		*    Name of the scene renderer pass attribute
 		*
 		*  @return
-		*    The requested scene renderer pass attribute, NULL on error
+		*    The requested scene renderer pass attribute, a null pointer on error
 		*/
 		PL_API PLCore::DynVar *GetPassAttribute(const PLGeneral::String &sSceneRendererPassName, const PLGeneral::String &sAttributeName) const;
 
@@ -204,7 +204,7 @@ class SceneRendererTool {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfacePainter	*m_pSurfacePainter;	/**< Used surface painter, can be NULL */
+		PLRenderer::SurfacePainter	*m_pSurfacePainter;	/**< Used surface painter, can be a null pointer */
 
 
 };

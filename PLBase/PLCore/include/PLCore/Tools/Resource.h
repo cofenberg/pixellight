@@ -73,16 +73,16 @@ template <class AType> class Resource : public Loadable {
 		*  @param[in] sName
 		*    Resource name to set
 		*  @param[in] pManager
-		*    Resource manager using this resource, can be NULL
+		*    Resource manager using this resource, can be a null pointer
 		*/
-		Resource(const PLGeneral::String &sName = "", ResourceManager<AType> *pManager = NULL);
+		Resource(const PLGeneral::String &sName = "", ResourceManager<AType> *pManager = nullptr);
 
 		/**
 		*  @brief
 		*    Returns the resource manager using this resource
 		*
 		*  @return
-		*    Resource manager using this resource or NULL
+		*    Resource manager using this resource or a null pointer
 		*/
 		ResourceManager<AType> *GetManager() const;
 
@@ -160,7 +160,7 @@ template <class AType> class Resource : public Loadable {
 		*    Index of the resource handler to return
 		*
 		*  @return
-		*    The requested resource handler, NULL on error
+		*    The requested resource handler, a null pointer on error
 		*/
 		ResourceHandler<AType> *GetHandler(PLGeneral::uint32 nIndex) const;
 
@@ -245,7 +245,7 @@ template <class AType> class Resource : public Loadable {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		ResourceManager<AType>						*m_pManager;		/**< Resource manager, can be NULL */
+		ResourceManager<AType>						*m_pManager;		/**< Resource manager, can be a null pointer */
 		PLGeneral::String							 m_sName;			/**< Resouce name */
 		bool										 m_bProtected;		/**< Is the resource protected? */
 		PLGeneral::Array<ResourceHandler<AType>*>	 m_lstHandlers;		/**< Resource handler list */

@@ -157,20 +157,20 @@ class MemoryManager {
 		*    Reallocates memory
 		*
 		*  @param[in] pAddress
-		*    Previous memory, can be NULL (if not NULL, it MUST be valid!)
+		*    Previous memory, can be a null pointer (if not a null pointer, it MUST be valid!)
 		*  @param[in] nNumOfBytes
 		*    Number of bytes to allocate
 		*  @param[in] nType
 		*    Allocator type
 		*  @param[in] pszSourceFile
-		*    Source file, can be NULL
+		*    Source file, can be a null pointer
 		*  @param[in] nSourceLine
 		*    Source line
 		*
 		*  @return
-		*    The new allocated memory, NULL on error
+		*    The new allocated memory, a null pointer on error
 		*/
-		PLGENERAL_API static void *Reallocator(void *pAddress, size_t nNumOfBytes, EType nType = NewArray, const char *pszSourceFile = NULL, int nSourceLine = -1);
+		PLGENERAL_API static void *Reallocator(void *pAddress, size_t nNumOfBytes, EType nType = NewArray, const char *pszSourceFile = nullptr, int nSourceLine = -1);
 
 		/**
 		*  @brief
@@ -181,17 +181,17 @@ class MemoryManager {
 		*  @param[in] nNumOfBytes
 		*    Number of bytes to allocate
 		*  @param[in] pszSourceFile
-		*    Source file, can be NULL
+		*    Source file, can be a null pointer
 		*  @param[in] nSourceLine
 		*    Source line
 		*
 		*  @return
-		*    The new allocated memory, NULL on error
+		*    The new allocated memory, a null pointer on error
 		*
 		*  @note
 		*    - Normally there's no reason using this function directly, use the 'new' keyword instead
 		*/
-		PLGENERAL_API static void *Allocator(EType nType, size_t nNumOfBytes, const char *pszSourceFile = NULL, int nSourceLine = -1);
+		PLGENERAL_API static void *Allocator(EType nType, size_t nNumOfBytes, const char *pszSourceFile = nullptr, int nSourceLine = -1);
 
 		/**
 		*  @brief
@@ -202,14 +202,14 @@ class MemoryManager {
 		*  @param[in] pAddress
 		*    Memory to free (MUST be valid!)
 		*  @param[in] pszSourceFile
-		*    Source file, can be NULL
+		*    Source file, can be a null pointer
 		*  @param[in] nSourceLine
 		*    Source line
 		*
 		*  @note
 		*    - Normally there's no reason using this function directly, use the 'delete' keyword instead
 		*/
-		PLGENERAL_API static void Deallocator(EType nType, void *pAddress, const char *pszSourceFile = NULL, int nSourceLine = -1);
+		PLGENERAL_API static void Deallocator(EType nType, void *pAddress, const char *pszSourceFile = nullptr, int nSourceLine = -1);
 
 
 };

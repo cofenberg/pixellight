@@ -110,7 +110,7 @@ SCSound::SCSound() :
 	EventHandlerUpdate(&SCSound::NotifyUpdate, this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
-	m_pSoundManager(NULL)
+	m_pSoundManager(nullptr)
 {
 }
 

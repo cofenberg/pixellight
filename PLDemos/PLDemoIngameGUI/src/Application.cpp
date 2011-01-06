@@ -48,7 +48,7 @@ using namespace PLScene;
 //[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
-PLGui::Font *Application::GuiFont = NULL;
+PLGui::Font *Application::GuiFont = nullptr;
 
 
 //[-------------------------------------------------------]
@@ -60,7 +60,7 @@ PLGui::Font *Application::GuiFont = NULL;
 */
 Application::Application() :
 	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	m_pIngameGui(NULL)
+	m_pIngameGui(nullptr)
 {
 	// Set application name and title
 	SetName("PLDemoIngameGUI");
@@ -101,7 +101,7 @@ void Application::OnDeInit()
 	// Destroy the GUI font
 	if (GuiFont) {
 		delete GuiFont;
-		GuiFont = NULL;
+		GuiFont = nullptr;
 	}
 
 	// Call base implementation

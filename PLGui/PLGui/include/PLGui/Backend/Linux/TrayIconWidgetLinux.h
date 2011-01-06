@@ -77,9 +77,9 @@ class TrayIconWidgetLinux : public Widget {
 		*    Pointer to the parent widget
 		*
 		*  @remarks
-		*    If pParent == NULL, the root widget of the system GUI is used as parent widget
+		*    If pParent == nullptr, the root widget of the system GUI is used as parent widget
 		*/
-		PLGUI_API TrayIconWidgetLinux(Widget *pParent = NULL);
+		PLGUI_API TrayIconWidgetLinux(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

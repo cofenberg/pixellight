@@ -69,7 +69,7 @@ DatabaseQueryResult::DatabaseQueryResult(PLDatabase::DatabaseQuery &cParentQuery
 */
 DatabaseQueryResult::DatabaseQueryResult(const DatabaseQueryResult &cSource) :
 	PLDatabase::DatabaseQueryResult(cSource.GetQuery()),
-	m_pMySQLResult(NULL)
+	m_pMySQLResult(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -102,8 +102,8 @@ const Array<String> &DatabaseQueryResult::FetchFieldList()
 {
 	// Are there any fields within the current list?
 	if (!m_lstFields.GetNumOfElements()) {
-		uint32 nNumOfFields = mysql_num_fields(m_pMySQLResult);
-		MYSQL_FIELD *pFields = mysql_fetch_fields(m_pMySQLResult);
+		const uint32 nNumOfFields = mysql_num_fields(m_pMySQLResult);
+		const MYSQL_FIELD *pFields = mysql_fetch_fields(m_pMySQLResult);
 
 		for (uint32 i=0; i<nNumOfFields; i++)
 			m_lstFields.Add(pFields[i].name);
@@ -115,11 +115,12 @@ const Array<String> &DatabaseQueryResult::FetchFieldList()
 
 const HashMap<String, String> *DatabaseQueryResult::FetchRow()
 {
-	MYSQL_ROW pRow = mysql_fetch_row(m_pMySQLResult);
-	if (!pRow) return NULL; // Error!
+	const MYSQL_ROW pRow = mysql_fetch_row(m_pMySQLResult);
+	if (!pRow)
+		return nullptr; // Error!
 
-	MYSQL_FIELD *pField = mysql_fetch_fields(m_pMySQLResult);
-	uint32 nNumOfFields = mysql_num_fields(m_pMySQLResult);
+	const MYSQL_FIELD *pField = mysql_fetch_fields(m_pMySQLResult);
+	const uint32 nNumOfFields = mysql_num_fields(m_pMySQLResult);
 
 	m_mapRow.Clear();
 	for (uint32 i=0; i<nNumOfFields; i++)

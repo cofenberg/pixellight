@@ -56,7 +56,7 @@ pl_implement_class(Layout)
 *    Constructor
 */
 Layout::Layout() :
-	m_pWidget(NULL)
+	m_pWidget(nullptr)
 {
 }
 

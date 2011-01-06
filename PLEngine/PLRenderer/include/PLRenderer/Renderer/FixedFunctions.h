@@ -778,10 +778,10 @@ class FixedFunctions {
 		*  @param[in]  nStreamNumber
 		*    Specifies the data stream number (0 - Capabilities::nMaxVertexBufferStreams()-1)
 		*  @param[out] pnOffset
-		*    If not NULL, this variable will receive the vertex offset in bytes
+		*    If not a null pointer, this variable will receive the vertex offset in bytes
 		*
 		*  @return
-		*    The current vertex buffer, NULL if there's no one
+		*    The current vertex buffer, a null pointer if there's no one
 		*
 		*  @note
 		*    - By assigning different vertex buffers to different stream numbers its for instance possible
@@ -792,14 +792,14 @@ class FixedFunctions {
 		*    - For better performance, try to avoid using more than one vertex buffer at the same time
 		*      whenever possible.
 		*/
-		virtual VertexBuffer *GetVertexBuffer(PLGeneral::uint32 nStreamNumber = 0, PLGeneral::uint32 *pnOffset = NULL) const = 0;
+		virtual VertexBuffer *GetVertexBuffer(PLGeneral::uint32 nStreamNumber = 0, PLGeneral::uint32 *pnOffset = nullptr) const = 0;
 
 		/**
 		*  @brief
 		*   Sets the current vertex buffer
 		*
 		*  @param[in] pVertexBuffer
-		*    The vertex buffer which should be set, NULL if no vertex buffer should be set
+		*    The vertex buffer which should be set, a null pointer if no vertex buffer should be set
 		*  @param[in] nOffset
 		*    Vertex offset (vertex index, NOT in bytes!)
 		*  @param[in] nStreamNumber
@@ -809,11 +809,11 @@ class FixedFunctions {
 		*    'true' if all went fine, else 'false' (maybe this is already the current vertex buffer)
 		*
 		*  @note
-		*    - If nStreamNumber is 0 and pVertexBuffer is NULL no vertex buffer at any stream number is set
+		*    - If nStreamNumber is 0 and pVertexBuffer is a null pointer no vertex buffer at any stream number is set
 		*    - If the first stream (the base stream) is set all other stream settings are cleared
 		*    - See GetVertexBuffer()
 		*/
-		virtual bool SetVertexBuffer(VertexBuffer *pVertexBuffer = NULL, PLGeneral::uint32 nOffset = 0, PLGeneral::uint32 nStreamNumber = 0) = 0;
+		virtual bool SetVertexBuffer(VertexBuffer *pVertexBuffer = nullptr, PLGeneral::uint32 nOffset = 0, PLGeneral::uint32 nStreamNumber = 0) = 0;
 
 
 	//[-------------------------------------------------------]

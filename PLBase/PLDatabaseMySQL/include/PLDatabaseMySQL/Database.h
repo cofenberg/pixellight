@@ -86,7 +86,7 @@ class Database : public PLDatabase::Database {
 		*    Returns the MySQL socket object
 		*
 		*  @return
-		*    The MySQL socket object, can be NULL
+		*    The MySQL socket object, can be a null pointer
 		*/
 		PLDATABASEMYSQL_API MYSQL *GetMySQL() const;
 
@@ -134,7 +134,7 @@ class Database : public PLDatabase::Database {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		MYSQL *m_pSQL;	/**< MySQL socket object, can be NULL */
+		MYSQL *m_pSQL;	/**< MySQL socket object, can be a null pointer */
 
 
 };

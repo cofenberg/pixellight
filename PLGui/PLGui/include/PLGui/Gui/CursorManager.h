@@ -78,7 +78,7 @@ class CursorManager {
 		*    Get owner GUI
 		*
 		*  @return
-		*    Pointer to GUI object (never NULL)
+		*    Pointer to GUI object (never a null pointer)
 		*/
 		PLGUI_API Gui *GetGui() const;
 
@@ -90,7 +90,7 @@ class CursorManager {
 		*    Cursor ID
 		*
 		*  @return
-		*    Mouse cursor, can be NULL if the backend doesn't support it
+		*    Mouse cursor, can be a null pointer if the backend doesn't support it
 		*/
 		PLGUI_API Cursor *GetCursor(EMouseCursor nCursor);
 

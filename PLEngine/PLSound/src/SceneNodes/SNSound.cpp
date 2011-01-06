@@ -215,7 +215,7 @@ SCSound *SNSound::GetSoundContainer() const
 		pContainer = pContainer->GetContainer();
 
 	// Done
-	return (pContainer && pContainer->IsInstanceOf("PLSound::SCSound")) ? (SCSound*)pContainer : NULL;
+	return (pContainer && pContainer->IsInstanceOf("PLSound::SCSound")) ? (SCSound*)pContainer : nullptr;
 }
 
 /**

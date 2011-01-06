@@ -115,7 +115,7 @@ bool Resource::AddResourceHandler(ResourceHandler &cHandler)
 bool Resource::RemoveResourceHandler(ResourceHandler &cHandler)
 {
 	if (m_lstSoundHandlers.Remove(&cHandler)) {
-		cHandler.SetResource(NULL);
+		cHandler.SetResource(nullptr);
 
 		// Done
 		return true;

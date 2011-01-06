@@ -121,7 +121,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Returns the used renderer
 		*
 		*  @return
-		*    Pointer to the renderer that is used, can be NULL
+		*    Pointer to the renderer that is used, can be a null pointer
 		*/
 		PLMESH_API PLRenderer::Renderer *GetRenderer() const;
 
@@ -136,7 +136,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Returns the used mesh
 		*
 		*  @return
-		*    Pointer to the used mesh, can be NULL
+		*    Pointer to the used mesh, can be a null pointer
 		*
 		*  @note
 		*    - Call "MeshUpdateRequired()" to set a "dirty"-flag if you manipulated the mesh
@@ -148,7 +148,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Sets the used mesh
 		*
 		*  @param[in] pMesh
-		*    Pointer to the mesh which should be used, can be NULL
+		*    Pointer to the mesh which should be used, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -159,7 +159,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    - After a mesh itself was manipulated, for instance the material list was
 		*      changed you should reset the mesh in your mesh handler!
 		*/
-		PLMESH_API bool SetMesh(Mesh *pMesh = NULL);
+		PLMESH_API bool SetMesh(Mesh *pMesh = nullptr);
 
 		/**
 		*  @brief
@@ -312,7 +312,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Number of the material to get
 		*
 		*  @return
-		*    Pointer to the material, or NULL
+		*    Pointer to the material, or a null pointer
 		*/
 		PLMESH_API PLRenderer::Material *GetMaterial(PLGeneral::uint32 nMaterial = 0) const;
 
@@ -323,7 +323,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @param[in] nMaterial
 		*    Number of the material to set
 		*  @param[in] pMaterial
-		*    Pointer to the material to set, can be NULL
+		*    Pointer to the material to set, can be a null pointer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -379,7 +379,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Returns the skeleton handler
 		*
 		*  @return
-		*    The mesh handlers skeleton handler, NULL if there's no such handler
+		*    The mesh handlers skeleton handler, a null pointer if there's no such handler
 		*
 		*  @note
 		*    - Call "MeshUpdateRequired()" to set a "dirty"-flag if you manipulated the skeleton
@@ -391,7 +391,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Returns the mesh animation manager
 		*
 		*  @return
-		*    The mesh handlers animation manager, NULL if there's no such manager
+		*    The mesh handlers animation manager, a null pointer if there's no such manager
 		*
 		*  @note
 		*    - By default the mesh handler has no animation manager, you have
@@ -408,7 +408,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    destroy the actual manager without creating a new one
 		*
 		*  @return
-		*    The created mesh handlers animation manager, NULL on error
+		*    The created mesh handlers animation manager, a null pointer on error
 		*    (maybe unknown class or the class is not derived from 'PLMesh::MeshAnimationManager')
 		*/
 		PLMESH_API MeshAnimationManager *CreateMeshAnimationManager(const PLGeneral::String &sName = "PLMesh::MeshAnimationManagerSoftware");
@@ -437,7 +437,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    else the integer indicades the debug mode where the message should be written.
 		*
 		*  @return
-		*    Pointer to the requested animation information, NULL if there was an error
+		*    Pointer to the requested animation information, a null pointer if there was an error
 		*
 		*  @remarks
 		*    Using this function you are e.g. able to backup pointers to the animation information\n
@@ -458,7 +458,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Name of the joint
 		*
 		*  @return
-		*    The requested current joint handler, NULL on error
+		*    The requested current joint handler, a null pointer on error
 		*
 		*  @note
 		*    - Call "MeshUpdateRequired()" to set a "dirty"-flag if you manipulated the skeleton
@@ -473,7 +473,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Name of the joint
 		*
 		*  @return
-		*    The requested base joint handler, NULL on error
+		*    The requested base joint handler, a null pointer on error
 		*
 		*  @note
 		*    - Using this base joint handler you can for instance change the ininitial joint
@@ -544,7 +544,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Returns the current used mesh LOD level
 		*
 		*  @return
-		*    The current used LOD level, NULL on error
+		*    The current used LOD level, a null pointer on error
 		*
 		*  @note
 		*    - Don't manipulate the LOD level!
@@ -574,7 +574,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Returns the current used vertex buffer of the mesh
 		*
 		*  @return
-		*    Current used vertex buffer of the mesh, can be NULL
+		*    Current used vertex buffer of the mesh, can be a null pointer
 		*
 		*  @note
 		*    - You shouldn't manipulate this vertex buffer - use it for read only!
@@ -607,11 +607,11 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @param[out] nTriangle
 		*    Will receive the ID of the found triangle
 		*  @param[out] pnGeometry
-		*    Receives the owner geometry ID of the found triangle if not NULL
+		*    Receives the owner geometry ID of the found triangle if not a null pointer
 		*  @param[out] pvCollisionPoint
-		*    Will receive the collision point if not NULL
+		*    Will receive the collision point if not a null pointer
 		*  @param[in]  plstGeometries
-		*    List of geometry indices to use, if NULL all geometries are used
+		*    List of geometry indices to use, if a null pointer all geometries are used
 		*
 		*  @return
 		*    'true' if a triangle was found, else 'false'
@@ -621,8 +621,8 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*/
 		PLMESH_API bool FindTriangle(const PLMath::Vector3 &vLineStartPos,
 									 const PLMath::Vector3 &vLineEndPos,
-									 PLGeneral::uint32 &nTriangle, PLGeneral::uint32 *pnGeometry = NULL,
-									 PLMath::Vector3 *pvCollisionPoint = NULL, PLGeneral::Array<PLGeneral::uint32> *plstGeometries = NULL) const;
+									 PLGeneral::uint32 &nTriangle, PLGeneral::uint32 *pnGeometry = nullptr,
+									 PLMath::Vector3 *pvCollisionPoint = nullptr, PLGeneral::Array<PLGeneral::uint32> *plstGeometries = nullptr) const;
 
 		/**
 		*  @brief
@@ -631,7 +631,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @param[in]  cPlaneSet
 		*    Plane set we want to check against
 		*  @param[out] ppnGeometries
-		*    If not NULL, receives the geometries intersecting the plane set.
+		*    If not a null pointer, receives the geometries intersecting the plane set.
 		*    You have to delete this list by self after usage! (delete [] ...)
 		*  @param[in]  pvCamDir
 		*    Camera direction vector, if not null faces where the normal is
@@ -643,15 +643,14 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @note
 		*    - The the planes must be in the object space
 		*/
-		PLMESH_API PLGeneral::uint32 FindGeometries(const PLMath::PlaneSet &cPlaneSet, PLGeneral::uint32 **ppnGeometries = NULL,
-													PLMath::Vector3 *pvCamDir = NULL) const;
+		PLMESH_API PLGeneral::uint32 FindGeometries(const PLMath::PlaneSet &cPlaneSet, PLGeneral::uint32 **ppnGeometries = nullptr, PLMath::Vector3 *pvCamDir = nullptr) const;
 
 		/**
 		*  @brief
 		*    Gets the triangle list
 		*
 		*  @return
-		*    Triangle list, NULL on error
+		*    Triangle list, a null pointer on error
 		*
 		*  @see
 		*    - MeshLODLevel::BuildTriangleList()
@@ -663,7 +662,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Gets the edge list
 		*
 		*  @return
-		*    Edge list, NULL on error
+		*    Edge list, a null pointer on error
 		*
 		*  @see
 		*    - MeshLODLevel::BuildEdgeList()
@@ -688,7 +687,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Gets the triangle plane list
 		*
 		*  @return
-		*    Triangle plane list, NULL on error
+		*    Triangle plane list, a null pointer on error
 		*
 		*  @note
 		*    - If the mesh handler currently is using the original morph target vertex
@@ -717,10 +716,10 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Adds a new material
 		*
 		*  @param[in] pMaterial
-		*    Material to add, can be NULL
+		*    Material to add, can be a null pointer
 		*
 		*  @return
-		*    Pointer to the added material, NULL on error
+		*    Pointer to the added material, a null pointer on error
 		*/
 		PLRenderer::Material *AddMaterial(PLRenderer::Material *pMaterial);
 
@@ -742,20 +741,20 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer						   *m_pRenderer;		/**< Used renderer, can be NULL */
-		Mesh										   *m_pMesh;			/**< Used mesh, can be NULL */
+		PLRenderer::Renderer						   *m_pRenderer;		/**< Used renderer, can be a null pointer */
+		Mesh										   *m_pMesh;			/**< Used mesh, can be a null pointer */
 		PLGeneral::Array<PLRenderer::MaterialHandler*>  m_lstMaterials;		/**< Materials */
-		PLRenderer::VertexBuffer					   *m_pVertexBuffer;	/**< Mesh handler own vertex buffer (optional, can be NULL) */
+		PLRenderer::VertexBuffer					   *m_pVertexBuffer;	/**< Mesh handler own vertex buffer (optional, can be a null pointer) */
 
 		// Current stuff
 		bool					  m_bMeshUpdateRequired;		/**< Mesh update required */
 		PLGeneral::uint32		  m_nLOD;						/**< Current LOD level */
-		PLRenderer::VertexBuffer *m_pCurrentVertexBuffer;		/**< Current vertex buffer to use, can be NULL */
+		PLRenderer::VertexBuffer *m_pCurrentVertexBuffer;		/**< Current vertex buffer to use, can be a null pointer */
 		PLGeneral::Bitset		  m_cGeometryVisibility;		/**< Holds which geometry is visible and which not */
 		PLGeneral::Array<float>	  m_lstBaseMorphTargetWeights;	/**< Morph target base weights */
 		PLGeneral::Array<float>	  m_lstMorphTargetWeights;		/**< Current morph target weights */
-		SkeletonHandler			 *m_pSkeletonHandler;			/**< Skeleton handler, can be NULL */
-		MeshAnimationManager	 *m_pMeshAnimationManager;		/**< Mesh animation manager, can be NULL */
+		SkeletonHandler			 *m_pSkeletonHandler;			/**< Skeleton handler, can be a null pointer */
+		MeshAnimationManager	 *m_pMeshAnimationManager;		/**< Mesh animation manager, can be a null pointer */
 
 		// Precalculated data
 		bool							m_bRecalculateTrianglePlanes;	/**< Do we need to recalculate the triangle planes? */
