@@ -190,7 +190,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	::Window nWindow = (pWidget ? (::Window)pWidget->GetWindowHandle() : nullptr);
+	::Window nWindow = (pWidget ? (::Window)pWidget->GetWindowHandle() : NULL_HANDLE);
 
 	// Post message
 	switch (cMessage.GetType()) {

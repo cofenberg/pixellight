@@ -50,7 +50,7 @@ namespace PLGui {
 */
 CursorLinux::CursorLinux(Cursor &cCursor) : CursorImpl(cCursor),
 	m_pDisplay(((GuiLinux*)cCursor.GetGui()->GetImpl())->GetDisplay()),
-	m_pXCursor(nullptr)
+	m_pXCursor(NULL_HANDLE)
 {
 }
 
@@ -83,7 +83,7 @@ void CursorLinux::Load(EMouseCursor nCursor)
 	// Release cursor
 	if (m_pXCursor) {
 		XFreeCursor(m_pDisplay, m_pXCursor);
-		m_pXCursor = nullptr;
+		m_pXCursor = NULL_HANDLE;
 	}
 
 	// Store data
@@ -134,7 +134,7 @@ void CursorLinux::Load(const String &sFilename, const Vector2i &vHotspot)
 	// Release cursor
 	if (m_pXCursor) {
 		XFreeCursor(m_pDisplay, m_pXCursor);
-		m_pXCursor = nullptr;
+		m_pXCursor = NULL_HANDLE;
 	}
 
 	// Store data

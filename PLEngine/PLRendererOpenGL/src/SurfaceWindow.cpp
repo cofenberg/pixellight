@@ -68,7 +68,7 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 		m_hDC(nullptr),
 	#endif
 	#ifdef LINUX
-		m_nWindow(nullptr),
+		m_nWindow(NULL_HANDLE),
 	#endif
 		m_bGammaChanged(false)
 {

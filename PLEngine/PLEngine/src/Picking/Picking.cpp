@@ -96,7 +96,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 	}
 
 	// Nothing (in range) was picked
-	return nullptr;
+	return false;
 }
 
 /**
@@ -124,7 +124,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNod
 		return (cPickingResult.m_pSceneNode != nullptr);
 
 	// Nothing (in range) was picked
-	return nullptr;
+	return false;
 }
 
 

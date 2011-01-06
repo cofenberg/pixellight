@@ -45,7 +45,7 @@ namespace PLRendererOpenGL {
 */
 ContextLinux::ContextLinux() :
 	m_pDisplay(nullptr),
-	m_hDummyNativeWindow(nullptr),
+	m_hDummyNativeWindow(NULL_HANDLE),
 	m_pDummyVisualInfo(nullptr),
 	m_hDummyWindowRenderContext(nullptr)
 {
@@ -145,7 +145,7 @@ GLXContext ContextLinux::GetRenderContext() const
 //[-------------------------------------------------------]
 bool ContextLinux::IsValid() const
 {
-	return (m_pDisplay != nullptr && m_hDummyNativeWindow != nullptr && m_pDummyVisualInfo != nullptr && m_hDummyWindowRenderContext != nullptr);
+	return (m_pDisplay != nullptr && m_hDummyNativeWindow != NULL_HANDLE && m_pDummyVisualInfo != nullptr && m_hDummyWindowRenderContext != nullptr);
 }
 
 void ContextLinux::MakeDummyCurrent() const

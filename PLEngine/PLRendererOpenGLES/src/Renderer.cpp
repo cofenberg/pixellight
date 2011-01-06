@@ -73,7 +73,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_hDisplay(nullptr),
 	m_hConfig(nullptr),
 	m_hContext(nullptr),
-	m_nDummyNativeWindow(nullptr),
+	m_nDummyNativeWindow(NULL_HANDLE),
 	m_hDummySurface(nullptr)
 	#ifdef LINUX
 		, m_pDisplay(nullptr)
@@ -342,7 +342,7 @@ Renderer::~Renderer()
 		if (m_nDummyNativeWindow) {
 			DestroyWindow(m_nDummyNativeWindow);
 			UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(nullptr));
-			m_nDummyNativeWindow = nullptr;
+			m_nDummyNativeWindow = NULL_HANDLE;
 		}
 	#endif
 	#ifdef LINUX
