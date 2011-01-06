@@ -180,3 +180,13 @@ void MyFunction(const String &sVariable);
 \end{lstlisting}
 
 because the user should be able to see whether or not a function is going to manipulate the parameter variable!
+
+
+
+
+\section{Null pointer}
+For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer 0.
+
+\begin{lstlisting}[caption=Null pointer]
+char *pszMyString = nullptr;
+\end{lstlisting}
