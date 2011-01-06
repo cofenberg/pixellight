@@ -54,9 +54,9 @@ pl_implement_class(WindowContainer)
 *    Constructor
 */
 WindowContainer::WindowContainer(Widget *pParent) : Widget(pParent),
-	m_pContentWidget(NULL),
+	m_pContentWidget(nullptr),
 	m_nSelection(-1),
-	m_pSelection(NULL)
+	m_pSelection(nullptr)
 {
 	// Create content widget
 	m_pContentWidget = new Widget(this);
@@ -102,7 +102,7 @@ void WindowContainer::Clear()
 
 	// Reset selection
 	m_nSelection = -1;
-	m_pSelection = NULL;
+	m_pSelection = nullptr;
 }
 
 /**
@@ -148,12 +148,12 @@ void WindowContainer::RemoveWindow(Widget *pWindow)
 	// Check parameter
 	if (pWindow && m_lstWindows.IsElement(pWindow)) {
 		// Save currently selected window
-		Widget *pSelection = (m_pSelection != pWindow ? m_pSelection : NULL);
+		Widget *pSelection = (m_pSelection != pWindow ? m_pSelection : nullptr);
 		int nSelection = m_lstWindows.GetIndex(m_pSelection);
 
 		// Is the currently selected window being removed?
 		if (m_pSelection == pWindow) {
-			m_pSelection = NULL;
+			m_pSelection = nullptr;
 			m_nSelection = -1;
 		}
 

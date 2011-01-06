@@ -75,14 +75,14 @@ Multiple inheritance for RTTI classes is not supported. This would increase the 
 
 
 \paragraph{Creating An Instance Of A RTTI Class}
-In order to create an instance of a RTTI class, you first need to request the class description. This can be done using the method \emph{PLCore::ClassManager::GetClass} and a given class name including the namespace the class is in. If the requested class can't be found, for example because the class is within a currently not loaded plugin, a NULL pointer is returned. So, it's strongly recommended to always check for \emph{NULL} in here. After you've received the RTTI class description, you're able to use the method \emph{PLCore::Class::Create} to create an instance of this class. This instantiation may fail if there's no, or no proper constructor within the class, so, you may want to check for \emph{NULL}, too. Within the source~code~\ref{Code:RTTICreateClassInstance}, you can see the described process.
+In order to create an instance of a RTTI class, you first need to request the class description. This can be done using the method \emph{PLCore::ClassManager::GetClass} and a given class name including the namespace the class is in. If the requested class can't be found, for example because the class is within a currently not loaded plugin, a null pointer is returned. So, it's strongly recommended to always check for a null pointer in here. After you've received the RTTI class description, you're able to use the method \emph{PLCore::Class::Create} to create an instance of this class. This instantiation may fail if there's no, or no proper constructor within the class, so, you may want to check for a null pointer, too. Within the source~code~\ref{Code:RTTICreateClassInstance}, you can see the described process.
 \begin{lstlisting}[float=htb,label=Code:RTTICreateClassInstance,caption={Creating an instance of a RTTI class}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyNamespace::MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	PLCore::Object *pMyObject = pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// Cast the pointer to MyNamespace::MyClass
 		MyNamespace::MyClass *pMyClassInstance = (MyNamespace::MyClass*)pMyObject;
 	}
@@ -94,7 +94,7 @@ Sometimes it's important to ensure that a class is derived from a certain base c
 \begin{lstlisting}[float=htb,label=Code:RTTIIsDerivedFrom,caption={Ensure that a class is derived from a certain base class}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyNamespace::MyClass");
-if (pMyClass != NULL && pMyClass->IsDerivedFrom("MyBaseClass")) {
+if (pMyClass != nullptr && pMyClass->IsDerivedFrom("MyBaseClass")) {
 	// ... create an instance of the RTTI class and so on...
 }
 \end{lstlisting}
@@ -208,7 +208,7 @@ const PLGeneral::uint32 nModuleID = pl_current_module_id();
 
 // Get RTTI module instance
 const PLCore::Module *pModule = PLCore::ClassManager::GetInstance()->GetModule(nModuleID);
-if (pModule != NULL) {
+if (pModule != nullptr) {
 	// Get the absolute filename of the module [TODO] Currently an empty string is returned
 	const PLGeneral::String sAbsModuleFilename = pModule->GetFilename();
 
@@ -261,10 +261,10 @@ Now that you have a RTTI class with attributes, you're able to instantiate the c
 \begin{lstlisting}[label=Code:RTTIUsingClassAttributes,caption={Using RTTI class attributes}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// Get the current attribute value, nCurrentValue has now the value 10
 		int nCurrentValue = pMyObject->MyInt;
 
@@ -303,10 +303,10 @@ The previous paragraph already showed how attributes of a RTTI class can be used
 \begin{lstlisting}[float=htb,label=Code:RTTIUsingClassAttributesWithGetAttribute,caption={Using RTTI class attributes with the PLCore::Object::SetAttribute method}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// Set MyInt to 42
 		pMyObject->SetAttribute("MyInt", "42");
 
@@ -360,10 +360,10 @@ The usage of getter and setter methods has no real benefits in here, but it's go
 \begin{lstlisting}[label=Code:RTTIGetSetAttributeUsage,caption={Accessing an RTTI class attribute using getter and setter methods}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// Get the current attribute value, nCurrentValue has now the value 10
 		int nCurrentValue = pMyObject->MyInt;
 
@@ -433,10 +433,10 @@ The defined classes can then be used as seen within source~code~\ref{Code:RTTIAt
 \begin{lstlisting}[label=Code:RTTIAttributeOverwriteUsage,caption={Using overwritten RTTI attributes}]
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
 const PLCore::Class *pMyDerivedClass = PLCore::ClassManager::GetInstance()->GetClass("MyDerivedClass");
-if (pMyClass != NULL && pMyDerivedClass != NULL) {
+if (pMyClass != nullptr && pMyDerivedClass != nullptr) {
 	// Create an instance of the RTTI class MyClass
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// fValue has now the value 3.1415
 		float fValue = pMyObject->MyFloat;
 		// Cleanup
@@ -444,7 +444,7 @@ if (pMyClass != NULL && pMyDerivedClass != NULL) {
 	}
 	// Create an instance of the RTTI class MyDerivedClass
 	MyDerivedClass *pMyDerivedObject = (MyDerivedClass*)pMyDerivedClass->Create();
-	if (pMyDerivedObject != NULL) {
+	if (pMyDerivedObject != nullptr) {
 		// fValue has now the value 2.71828
 		float fValue = pMyDerivedObject->MyFloat;
 		// Value from base class: fValue has still the value 2.71828
@@ -479,10 +479,10 @@ How the RTTI object attributes serialization by using strings works in practice 
 \begin{lstlisting}[label=Code:RTTIAttributeSerializationString,caption={RTTI object attributes serialization by using strings}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		PLGeneral::String sValues;
 
 		// Get the values of all attributes as string, but only
@@ -513,10 +513,10 @@ As mentioned before, \emph{PLCore::Object} comes with XML support. The methods \
 \begin{lstlisting}[label=Code:RTTIAttributeSerializationXML,caption={RTTI object attributes serialization by using XML}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// Get the values of all attributes as XML
 		PLGeneral::XmlElement cXmlElement("MyElement");
 		pMyObject->GetValuesXml(cXmlElement, PLCore::WithDefault);
@@ -590,10 +590,10 @@ As demonstrated within source~code~\ref{Code:RTTIClassWithEnumAttributeUsage}, w
 \begin{lstlisting}[label=Code:RTTIClassWithEnumAttributeUsage,caption={Using a RTTI class with an enumeration attribute}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// nValue has now the value 1
 		int nValue = pMyObject->MyEnumNumber;
 
@@ -780,10 +780,10 @@ When adding an RTTI class attribute by using the \emph{pl\_attribute} macro, you
 \begin{lstlisting}[label=Code:DefineRTTIFlagsClassUsage,caption={Using a RTTI class with an flag attribute}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// bFirstFlagSet has now the value true
 		bool bFirstFlagSet = (pMyObject->MyFlagsNumber & MyFirstFlag) != 0;
 		// bSecondFlagSet has now the value true
@@ -830,14 +830,14 @@ By using for example \emph{PLCore::Object::GetAttribute} is possible to get an i
 \begin{lstlisting}[label=Code:RTTIDynamicUsageOfDynTypeInfoForEnumerationInformation,caption={Dynamic usage of \emph{PLCore::DynTypeInfo} for enumeration information}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-	if (pMyObject != NULL) {
+	if (pMyObject != nullptr) {
 		// Get the DynVar instance of MyEnumNumber and check
 		// whether or not it's really an enumation
 		PLCore::DynVar *pDynVar = pMyObject->GetAttribute("MyEnumNumber");
-		if (pDynVar != NULL && pDynVar->GetType().IsEnumType()) {
+		if (pDynVar != nullptr && pDynVar->GetType().IsEnumType()) {
 			// Get the list of all enumeration values
 			const PLGeneral::List<PLGeneral::String> &lstEnums = pDynVar->GetType().GetEnumValues();
 			for (PLGeneral::uint32 i=0; i<lstEnums.GetNumOfElements(); i++) {
@@ -897,7 +897,7 @@ The following source~code~\ref{Code:CppLikeRTTIClassMethodUsage} shows how this 
 \begin{lstlisting}[label=Code:CppLikeRTTIClassMethodUsage,caption={Accessing RTTI class method objects as if they were just usual C++ methods}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 
@@ -914,17 +914,17 @@ if (pMyClass != NULL) {
 	delete pMyObject;
 }
 \end{lstlisting}
-If the shown usage would be the only possible usage of the RTTI class methods, this all would be much effort without any benefits. As already exposed, RTTI class methods can also be accessed by using the generic \emph{PLCore::Class::GetMethod} method and the RTTI class method name as string parameter. If all went fine and there's a RTTI class method with the given name, you now have a pointer to an \emph{PLCore::DynFunc} instance. If there's no RTTI class method with the given name, a \emph{NULL} pointer will be returned - therefore it's recommended to check whether or not the returned pointer is valid. After you received a valid generic dynamic function pointer, use \emph{PLCore::DynFunc::Call} to call the method as seen within source~code~\ref{Code:DynamicRTTIClassMethodUsage}.
+If the shown usage would be the only possible usage of the RTTI class methods, this all would be much effort without any benefits. As already exposed, RTTI class methods can also be accessed by using the generic \emph{PLCore::Class::GetMethod} method and the RTTI class method name as string parameter. If all went fine and there's a RTTI class method with the given name, you now have a pointer to an \emph{PLCore::DynFunc} instance. If there's no RTTI class method with the given name, a null pointer will be returned - therefore it's recommended to check whether or not the returned pointer is valid. After you received a valid generic dynamic function pointer, use \emph{PLCore::DynFunc::Call} to call the method as seen within source~code~\ref{Code:DynamicRTTIClassMethodUsage}.
 \begin{lstlisting}[label=Code:DynamicRTTIClassMethodUsage,caption={Dynamically calling RTTI class methods}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	PLCore::Object *pMyObject = pMyClass->Create();
 
 	// Get a pointer to a RTTI class method
 	PLCore::DynFunc *pDynFunc = pMyObject->GetMethod("MyMethodParameter");
-	if (pDynFunc != NULL) {
+	if (pDynFunc != nullptr) {
 		// Dynamic RTTI class method call
 		pDynFunc->Call("Param0=42");
 
@@ -934,7 +934,7 @@ if (pMyClass != NULL) {
 
 	// Get a pointer to a RTTI class method with a return value
 	pDynFunc = pMyObject->GetMethod("MyMethodParameters");
-	if (pDynFunc != NULL) {
+	if (pDynFunc != nullptr) {
 		// Dynamic typed RTTI class method call with a return value
 		PLCore::Params<bool, int, float> cParams(42, 3.1415f);
 		pDynFunc->Call(cParams);
@@ -984,7 +984,7 @@ You may have noticed that the RTTI class constructors doesn't need to be initial
 \begin{lstlisting}[label=Code:RTTIClassInstantiationWithParameters,caption={RTTI class instantiation with parameters}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class by using the default constructor
 	MyClass *pMyObject0 = (MyClass*)pMyClass->Create();
 
@@ -1042,7 +1042,7 @@ void MyFunctionParameter(int nValue) {
 
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 
@@ -1078,7 +1078,7 @@ void MyFunctionParameter(int nValue) {
 
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	PLCore::Object *pMyObject = pMyClass->Create();
 
@@ -1088,18 +1088,18 @@ if (pMyClass != NULL) {
 
 	// Connect one of the event handler with the MySignal signal, the other with MySignalParameter
 	PLCore::DynEvent *pMySignal = pMyObject->GetSignal("MySignal");
-	if (pMySignal != NULL)
+	if (pMySignal != nullptr)
 		pMySignal->Connect(&cMyEventHandler);
 	PLCore::DynEvent *pMySignalParameter = pMyObject->GetSignal("MySignalParameter");
-	if (pMySignalParameter != NULL)
+	if (pMySignalParameter != nullptr)
 		pMySignalParameter->Connect(&cMyEventHandlerParameter);
 
 	// Emit the MySignal signal, MyFunction will be called
-	if (pMySignal != NULL)
+	if (pMySignal != nullptr)
 		pMySignal->Emit(PLCore::Params<void>());
 
 	// Emit the MySignalParameter signal, MyFunctionParameter will be called
-	if (pMySignalParameter != NULL)
+	if (pMySignalParameter != nullptr)
 		pMySignalParameter->Emit(PLCore::Params<void, int>(42));
 
 	// Cleanup
@@ -1144,7 +1144,7 @@ The following source~code~\ref{Code:RTTISlotsUsage} shows how this RTTI class sl
 \begin{lstlisting}[label=Code:RTTISlotsUsage,caption={RTTI class slots usage}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 
@@ -1166,11 +1166,11 @@ if (pMyClass != NULL) {
 	delete pMyObject;
 }
 \end{lstlisting}
-If the shown usage would be the only possible usage of the RTTI class slots, this all would be much effort without any benefits. As already exposed, RTTI class slots can also be accessed by using the generic \emph{PLCore::Class::GetSlot} method and the RTTI class slot name as string parameter. If all went fine and there's a RTTI class slot with the given name, you now have a pointer to an generic \emph{PLCore::EventHandlerDesc} instance. If there's no RTTI class slot with the given name, a \emph{NULL} pointer will be returned - therefore in certain situations, you may want to check whether or not the returned pointer is valid. After you received a slot pointer, you're able to use it as shown within source~code~\ref{Code:DynamicRTTISlotsUsage}.
+If the shown usage would be the only possible usage of the RTTI class slots, this all would be much effort without any benefits. As already exposed, RTTI class slots can also be accessed by using the generic \emph{PLCore::Class::GetSlot} method and the RTTI class slot name as string parameter. If all went fine and there's a RTTI class slot with the given name, you now have a pointer to an generic \emph{PLCore::EventHandlerDesc} instance. If there's no RTTI class slot with the given name, a null pointer will be returned - therefore in certain situations, you may want to check whether or not the returned pointer is valid. After you received a slot pointer, you're able to use it as shown within source~code~\ref{Code:DynamicRTTISlotsUsage}.
 \begin{lstlisting}[label=Code:DynamicRTTISlotsUsage,caption={Dynamic RTTI class slots usage}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	PLCore::Object *pMyObject = pMyClass->Create();
 
@@ -1219,7 +1219,7 @@ As shown within source~code~\ref{Code:RTTIClassPropertiesUsage}, the usage of RT
 \begin{lstlisting}[float=htb,label=Code:RTTIClassPropertiesUsage,caption={Accessing RTTI class properties}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Query the value of the "MyFirstProperty" property, "sFirst" has now the value "FirstValue"
 	PLGeneral::String sFirst = pMyClass->GetProperties().Get("MyFirstProperty");
 
@@ -1231,7 +1231,7 @@ A RTTI class can overwrite inherited properties from it's base classes. In this 
 \begin{lstlisting}[float=htb,label=Code:RTTIClassPropertiesIteration,caption={Iterating over all RTTI class properties}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Iterate over all RTTI class properties
 	PLGeneral::Iterator<PLGeneral::String> cIterator = pMyClass->GetProperties().GetKeyIterator();
 	while (cIterator.HasNext()) {

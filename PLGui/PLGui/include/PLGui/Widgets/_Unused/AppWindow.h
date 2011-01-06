@@ -66,7 +66,7 @@ class AppWindow : public Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API AppWindow(Widget *pParent = NULL);
+		PLGUI_API AppWindow(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

@@ -59,7 +59,7 @@ TabContainer::TabContainer(Widget *pParent) : WindowContainer(pParent),
 	EventHandlerCloseTab (&TabContainer::OnTabBarCloseTab,  this),
 	EventHandlerSelectTab(&TabContainer::OnTabBarSelectTab, this),
 	EventHandlerCreateTab(&TabContainer::OnTabBarCreateTab, this),
-	m_pTabBar(NULL)
+	m_pTabBar(nullptr)
 {
 	// Create tab-bar
 	m_pTabBar = new TabBar(this);
@@ -326,7 +326,7 @@ TabBarEntry *TabContainer::FindTab(Widget *pWindow) const
 	}
 
 	// Tab could not be found
-	return NULL;
+	return nullptr;
 }
 
 

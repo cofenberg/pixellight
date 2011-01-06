@@ -75,7 +75,7 @@ class Dialog : public Window {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API Dialog(Widget *pParent = NULL);
+		PLGUI_API Dialog(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

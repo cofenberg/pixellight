@@ -87,7 +87,7 @@ class TabBar : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API TabBar(Widget *pParent = NULL);
+		PLGUI_API TabBar(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

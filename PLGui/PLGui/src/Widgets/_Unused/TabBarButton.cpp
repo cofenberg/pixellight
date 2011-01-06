@@ -56,8 +56,8 @@ pl_implement_class(TabBarButton)
 *    Constructor
 */
 TabBarButton::TabBarButton(Widget *pParent) : AbstractButton(pParent),
-	m_pTabBar(NULL),
-	m_pTabBarEntry(NULL),
+	m_pTabBar(nullptr),
+	m_pTabBarEntry(nullptr),
 	m_nFunction(TabFunctionCreateTab)
 {
 }

@@ -80,7 +80,7 @@ class TabContainer : public WindowContainer {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API TabContainer(Widget *pParent = NULL);
+		PLGUI_API TabContainer(Widget *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class TabContainer : public WindowContainer {
 		*    Window
 		*
 		*  @return
-		*    Tab entry belonging to the window (or NULL)
+		*    Tab entry belonging to the window (or a null pointer)
 		*/
 		TabBarEntry *FindTab(Widget *pWindow) const;
 

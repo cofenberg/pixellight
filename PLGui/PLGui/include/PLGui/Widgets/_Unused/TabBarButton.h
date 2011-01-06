@@ -73,7 +73,7 @@ class TabBarButton : public AbstractButton {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API TabBarButton(Widget *pParent = NULL);
+		PLGUI_API TabBarButton(Widget *pParent = nullptr);
 
 		/**
 		*  @brief

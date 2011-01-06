@@ -40,7 +40,7 @@ Looks intuitive, isn't it? The next source~code~\ref{Code:ProblematicRTTIMethodS
 \begin{lstlisting}[label=Code:ProblematicRTTIMethodStringReferenceUsage,caption={Problematic RTTI method and string reference parameter usage}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 
@@ -55,7 +55,7 @@ Still looks fine, isn't it? But probably, the programmer indented another behavi
 \begin{lstlisting}[label=Code:CorrectRTTIMethodStringReferenceUsage,caption={Correct RTTI method and string reference parameter usage}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != NULL) {
+if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 

@@ -80,7 +80,7 @@ class TabBarEntry : public Widget {
 		*  @param[in] pParent
 		*    Pointer to parent widget
 		*/
-		PLGUI_API TabBarEntry(Widget *pParent = NULL);
+		PLGUI_API TabBarEntry(Widget *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -138,7 +138,7 @@ class TabBarEntry : public Widget {
 		*    Get associated widget
 		*
 		*  @return
-		*    Widget (can be NULL)
+		*    Widget (can be a null pointer)
 		*
 		*  @remarks
 		*    see SetWidget()
@@ -150,7 +150,7 @@ class TabBarEntry : public Widget {
 		*    Set associated widget
 		*
 		*  @param[in] pWidget
-		*    Widget (can be NULL)
+		*    Widget (can be a null pointer)
 		*
 		*  @remarks
 		*    You can use this function to associate a widget with a tab entry.

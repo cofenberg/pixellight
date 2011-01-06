@@ -63,9 +63,9 @@ TabBar::TabBar(Widget *pParent) : Widget(pParent),
 	m_nSelection(-1),
 	m_nMouseSelection(-1),
 	m_nScrollingPos(0),
-	m_pButtonCreate(NULL),
-	m_pButtonNext(NULL),
-	m_pButtonPrev(NULL)
+	m_pButtonCreate(nullptr),
+	m_pButtonNext(nullptr),
+	m_pButtonPrev(nullptr)
 {
 	// Give focus to child windows
 	SetFocusStyle(ChildFocus);
@@ -305,7 +305,7 @@ bool TabBar::RemoveTab(TabBarEntry *pTab)
 	if (pTab && m_lstTabs.IsElement(pTab)) {
 		// Get currently selected tab
 		int			 nSelectionIndex = pTab->GetIndex();
-		TabBarEntry *pSelection		 = (m_nSelection != nSelectionIndex) ? m_lstTabs.Get(m_nSelection) : NULL;
+		TabBarEntry *pSelection		 = (m_nSelection != nSelectionIndex) ? m_lstTabs.Get(m_nSelection) : nullptr;
 
 		// Call virtual function
 		OnRemoveTab(pTab);

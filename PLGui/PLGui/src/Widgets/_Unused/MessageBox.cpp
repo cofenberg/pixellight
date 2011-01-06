@@ -63,12 +63,12 @@ MessageBox::MessageBox(Widget *pParent, EMessageBox nType, const String &sTitle,
 	EventHandlerYes	  (&MessageBox::OnButtonYes, this),
 	EventHandlerNo	  (&MessageBox::OnButtonNo, this),
 	m_nType(MessageBoxOk),
-	m_pLabel(NULL),
-	m_pBox(NULL),
-	m_pButtonOk(NULL),
-	m_pButtonCancel(NULL),
-	m_pButtonYes(NULL),
-	m_pButtonNo(NULL)
+	m_pLabel(nullptr),
+	m_pBox(nullptr),
+	m_pButtonOk(nullptr),
+	m_pButtonCancel(nullptr),
+	m_pButtonYes(nullptr),
+	m_pButtonNo(nullptr)
 {
 	// Create message box
 	CreateMessageBox(nType, sTitle, sText);
@@ -78,18 +78,18 @@ MessageBox::MessageBox(Widget *pParent, EMessageBox nType, const String &sTitle,
 *  @brief
 *    Constructor
 */
-MessageBox::MessageBox(EMessageBox nType, const String &sTitle, const String &sText) : Dialog(NULL),
+MessageBox::MessageBox(EMessageBox nType, const String &sTitle, const String &sText) : Dialog(nullptr),
 	EventHandlerOk	  (&MessageBox::OnButtonOk, this),
 	EventHandlerCancel(&MessageBox::OnButtonCancel, this),
 	EventHandlerYes	  (&MessageBox::OnButtonYes, this),
 	EventHandlerNo	  (&MessageBox::OnButtonNo, this),
 	m_nType(MessageBoxOk),
-	m_pLabel(NULL),
-	m_pBox(NULL),
-	m_pButtonOk(NULL),
-	m_pButtonCancel(NULL),
-	m_pButtonYes(NULL),
-	m_pButtonNo(NULL)
+	m_pLabel(nullptr),
+	m_pBox(nullptr),
+	m_pButtonOk(nullptr),
+	m_pButtonCancel(nullptr),
+	m_pButtonYes(nullptr),
+	m_pButtonNo(nullptr)
 {
 	// Create message box
 	CreateMessageBox(nType, sTitle, sText);

@@ -81,7 +81,7 @@ class MessageBox : public Dialog {
 		*  @param[in] sText
 		*    Message box text
 		*/
-		PLGUI_API MessageBox(Widget *pParent = NULL, EMessageBox nType = MessageBoxOk, const PLGeneral::String &sTitle = "Message Box", const PLGeneral::String &sText = "Message");
+		PLGUI_API MessageBox(Widget *pParent = nullptr, EMessageBox nType = MessageBoxOk, const PLGeneral::String &sTitle = "Message Box", const PLGeneral::String &sText = "Message");
 
 		/**
 		*  @brief

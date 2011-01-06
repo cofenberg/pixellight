@@ -60,12 +60,12 @@ pl_implement_class(TabBarEntry)
 */
 TabBarEntry::TabBarEntry(Widget *pParent) : Widget(pParent),
 	m_cIcon(*GetGui()),
-	m_pWidget(NULL),
-	m_pData(NULL),
-	m_pTabBar(NULL),
+	m_pWidget(nullptr),
+	m_pData(nullptr),
+	m_pTabBar(nullptr),
 	m_nIndex(0),
 	m_bClosable(false),
-	m_pButtonClose(NULL)
+	m_pButtonClose(nullptr)
 {
 }
 
@@ -221,7 +221,7 @@ void TabBarEntry::SetClosable(bool bClosable)
 	m_bClosable = bClosable;
 
 	// Create close-button
-	if (m_pButtonClose == NULL && bClosable) {
+	if (m_pButtonClose == nullptr && bClosable) {
 		m_pButtonClose = new TabBarButton(this);
 		m_pButtonClose->SetTabBar(m_pTabBar);
 		m_pButtonClose->SetTabBarEntry(this);
