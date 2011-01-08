@@ -107,6 +107,13 @@ if(WIN32)
 			/NODEFAULTLIB:MSVCRT					# Ignore libraries
 		)
     endif()
+elseif(LINUX)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_linker_flags(
+		${LINUX_LINKER_FLAGS}
+	)
 endif()
 
 ##################################################

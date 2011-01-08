@@ -94,6 +94,13 @@ if(WIN32)
 		${WIN32_LINKER_FLAGS}
 		/DEF:${CMAKE_CURRENT_SOURCE_DIR}/PLPluginMozilla.def	# Use export definitions file
 	)
+elseif(LINUX)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_linker_flags(
+		${LINUX_LINKER_FLAGS}
+	)
 endif()
 
 ##################################################
