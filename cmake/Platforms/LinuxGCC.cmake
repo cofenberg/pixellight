@@ -56,16 +56,11 @@ endif()
 ## Compiler flags 
 ##################################################
 
-# Check if an 32Bit build should be made on an 64Bit host (CMAKE_SIZEOF_VOID_P has the value 8 on 64Bit Systems at least on x86 systems )
+# Check if an 32Bit build should be made on an 64Bit host (CMAKE_SIZEOF_VOID_P has the value 8 on 64Bit Systems at least on x86 systems)
 if ((CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
-	message(STATUS "Add compiler and linker flags for 32Bit on 64Bit host")
+	message(STATUS "Add compiler flags for 32Bit on 64Bit host")
 	set(LINUX_COMPILE_FLAGS
 		${LINUX_COMPILE_FLAGS}
-		-m32
-	)
-	
-	set(LINUX_LINKER_FLAGS
-		${LINUX_LINKER_FLAGS}
 		-m32
 	)
 endif()
@@ -95,13 +90,26 @@ else()
 	##################################################
 	set(LINUX_COMPILE_FLAGS
 		${LINUX_COMPILE_FLAGS}
-		-O3														# Very aggressive transformations (long compile times, but usally best runtime performance!)
+		-O3													# Very aggressive transformations (long compile times, but usally best runtime performance!)
 		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
-		-fomit-frame-pointer									# Don't keep the frame pointer in a register for functions that don't need one
-		-funroll-all-loops										# Perform the optimization of loop unrolling
-		-fpeel-loops											# Peels the loops for that there is enough information that they do not roll much (from profile feedback)
-		-ftree-vectorize										# Enable the vectorizer
+		-fomit-frame-pointer								# Don't keep the frame pointer in a register for functions that don't need one
+		-funroll-all-loops									# Perform the optimization of loop unrolling
+		-fpeel-loops										# Peels the loops for that there is enough information that they do not roll much (from profile feedback)
+		-ftree-vectorize									# Enable the vectorizer
 		# The following flag usage is basing on information from http://software.intel.com/en-us/forums/showthread.php?t=66902
 		--param max-unroll-times=4
+	)
+endif()
+
+
+##################################################
+## Linker flags 
+##################################################
+# Check if an 32Bit build should be made on an 64Bit host (CMAKE_SIZEOF_VOID_P has the value 8 on 64Bit Systems at least on x86 systems)
+if ((CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+	message(STATUS "Add linker flags for 32Bit on 64Bit host")
+	set(LINUX_LINKER_FLAGS
+		${LINUX_LINKER_FLAGS}
+		-m32
 	)
 endif()
