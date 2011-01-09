@@ -221,6 +221,12 @@ bool IEColorKey::Apply(ImageBuffer &cImageBuffer) const
 				break;
 			}
 
+			case DataHalf:
+			{
+				// [TODO] DataHalf - Implement me
+				break;
+			}
+
 			case DataFloat:
 			{
 				ProcessData<float> cProcessData(cImageBuffer, m_cColor.GetR(), m_cColor.GetG(), m_cColor.GetB(), m_fTolerance, 0.0f, 1.0f);

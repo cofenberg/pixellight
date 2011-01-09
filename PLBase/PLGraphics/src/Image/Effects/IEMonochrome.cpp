@@ -147,6 +147,12 @@ bool IEMonochrome::Apply(ImageBuffer &cImageBuffer) const
 				break;
 			}
 
+			case DataHalf:
+			{
+				// [TODO] DataHalf - Implement me
+				break;
+			}
+
 			case DataFloat:
 			{
 				ProcessData<float> cProcessData(cImageBuffer);

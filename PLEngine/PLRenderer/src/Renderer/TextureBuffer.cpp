@@ -52,8 +52,26 @@ TextureBuffer::EPixelFormat TextureBuffer::GetFormatFromImage(const Image &cImag
 	// Get the first image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
 	if (pImageBuffer) {
+		// Check for half format
+		if (pImageBuffer->GetDataFormat() == DataHalf) {
+			switch (pImageBuffer->GetComponentsPerPixel()) {
+				// Luminance
+				case 1:
+					return L16F;
+
+				// Luminance & alpha
+				//   -> Not supported
+
+				// RGB
+				//   -> Not supported
+
+				// RGBA
+				case 4:
+					return R16G16B16A16F;
+			}
+
 		// Check for float format
-		if (pImageBuffer->GetDataFormat() == DataFloat) {
+		} else if (pImageBuffer->GetDataFormat() == DataFloat) {
 			switch (pImageBuffer->GetComponentsPerPixel()) {
 				// Luminance
 				case 1:
@@ -69,6 +87,8 @@ TextureBuffer::EPixelFormat TextureBuffer::GetFormatFromImage(const Image &cImag
 				case 4:
 					return R32G32B32A32F;
 			}
+
+		// Another format...
 		} else {
 			// Check for supported compressed/uncompressed
 			ECompression nCompression = pImageBuffer->GetCompression();

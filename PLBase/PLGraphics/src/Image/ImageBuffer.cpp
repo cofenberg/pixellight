@@ -69,6 +69,7 @@ uint32 ImageBuffer::GetBytesPerPixelComponent(EDataFormat nDataFormat)
 	switch (nDataFormat) {
 		case DataByte:			return 1;
 		case DataWord:			return 2;
+		case DataHalf:			return 2;
 		case DataFloat:			return 4;
 		case DataDouble:		return 8;
 		default:				return 0;

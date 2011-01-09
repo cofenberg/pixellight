@@ -1,3 +1,12 @@
+>> 09.01.2011
+[CO]
+- Added support for "DataHalf" image data format and implemented at least the most important functions to be able to load in images stored as
+  half and pass them on as texture to the GPU. Currently I have to spend a lot of time in preparing for the coming exams at university, therefore
+  I currently just don't have the time to complete many open PLGraphics tasks. :/ (but I really wanted basic half-support, so, now here it is :)
+- ImageLoaderDDS: Added support for half/float images
+
+
+
 >> 27.12.2010
 [CO]
 - Bugfix: "PLGraphics::IEConvert" e.g. RGB to RGBA is now working for floating point image formats

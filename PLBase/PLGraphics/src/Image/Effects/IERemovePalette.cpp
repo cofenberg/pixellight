@@ -138,6 +138,10 @@ bool IERemovePalette::Apply(ImageBuffer &cImageBuffer) const
 					break;
 				}
 
+				case DataHalf:
+					// [TODO] Is this possible within a palette?
+					break;
+
 				case DataFloat:
 					// [TODO] Is this possible within a palette?
 					break;

@@ -117,7 +117,8 @@ enum EImagePart {
 enum EDataFormat {
 	DataByte = 0,			/**< Byte (8 bit) */
 	DataWord,				/**< Word (16 bit) */
-	DataFloat,				/**< Float (32 bit) */
+	DataHalf,				/**< Half (16 bit float) */
+	DataFloat,				/**< IEEE float (32 bit) */
 	DataDouble				/**< Double (64 bit) */
 };
 

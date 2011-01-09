@@ -618,6 +618,13 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					}
 
 					//   DataByte      Source (old data format)
+					case DataHalf: // Destination (new data format)
+					{
+						// [TODO] DataHalf - Implement me
+						break;
+					}
+
+					//   DataByte      Source (old data format)
 					case DataFloat: // Destination (new data format)
 					{
 						ConvertData<uint8, float> cConvertData(cOldImageBuffer, cImageBuffer, 1.0f);
@@ -652,6 +659,13 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					}
 
 					//   DataWord      Source (old data format)
+					case DataHalf: // Destination (new data format)
+					{
+						// [TODO] DataHalf - Implement me
+						break;
+					}
+
+					//   DataWord      Source (old data format)
 					case DataFloat: // Destination (new data format)
 					{
 						ConvertData<uint16, float> cConvertData(cOldImageBuffer, cImageBuffer, 1.0f);
@@ -665,6 +679,11 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 						break;
 					}
 				}
+				break;
+
+			// Source
+			case DataHalf:
+				// [TODO] DataHalf - Implement me
 				break;
 
 			// Source
@@ -682,6 +701,13 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					case DataWord: // Destination (new data format)
 					{
 						ConvertData<float, uint16> cConvertData(cOldImageBuffer, cImageBuffer, 255);
+						break;
+					}
+
+					//   DataFloat     Source (old data format)
+					case DataHalf: // Destination (new data format)
+					{
+						// [TODO] DataHalf - Implement me
 						break;
 					}
 
@@ -716,6 +742,13 @@ bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 					case DataWord: // Destination (new data format)
 					{
 						ConvertData<double, uint16> cConvertData(cOldImageBuffer, cImageBuffer, 255);
+						break;
+					}
+
+					//   DataDouble    Source (old data format)
+					case DataHalf: // Destination (new data format)
+					{
+						// [TODO] DataHalf - Implement me
 						break;
 					}
 

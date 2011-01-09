@@ -86,7 +86,7 @@ struct DDSHeader {
 };
 
 struct DDSHeaderDX10 {
-	uint32 nDXGIFormat;
+	uint32 nDXGIFormat;	// See http://msdn.microsoft.com/en-us/library/bb173059.aspx
 	uint32 nResourceDimension;
 	uint32 nMiscFlag;
 	uint32 nArraySize;
@@ -117,6 +117,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 		sHeader.nSize == 124 || sHeader.nSize != MCHAR4('D', 'D', 'S', ' ')) {
 
 		// Get the color format and compression
+		EDataFormat  nDataFormat = DataByte;
 		EColorFormat nColorFormat;
 		EColorFormat nInternalColorFormat;
 		ECompression nCompression = CompressionNone;
@@ -134,40 +135,94 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 
 				// Get the color format and compression
 				switch (sDX10Header.nDXGIFormat) {
+				// Integer
+					// R8 UNORM
 					case 61:
 						nInternalColorFormat = nColorFormat = ColorGrayscale;
 						break;
 
+					// RG8 UNORM
 					case 49:
 						nInternalColorFormat = (sHeader.ddpfPixelFormat.nBBitMask == 0xFF) ? ColorBGR : ColorRGB;
-						nColorFormat = ColorRGB;
+						nColorFormat = ColorRGB;	// Store it as RGB
 						break;
 
+					// RGBA8 UNORM
 					case 28:
 						nInternalColorFormat = (sHeader.ddpfPixelFormat.nBBitMask == 0xFF) ? ColorBGRA : ColorRGBA;
 						nColorFormat = ColorRGBA;
 						break;
 
+				// 16 bit float
+					// R16F
+					case 54:
+						nInternalColorFormat = nColorFormat = ColorGrayscale;
+						nDataFormat = DataHalf;
+						break;
+
+					// RG16F
+					case 34:
+						nInternalColorFormat = nColorFormat = ColorGrayscaleA;
+						nDataFormat = DataHalf;
+						break;
+
+					// RGBA16F
+					case 10:
+						nInternalColorFormat = nColorFormat = ColorRGBA;
+						nDataFormat = DataHalf;
+						break;
+
+				// IEEE 32 bit float
+					// R32F
+					case 41:
+						nInternalColorFormat = nColorFormat = ColorGrayscale;
+						nDataFormat = DataFloat;
+						break;
+
+					// RG32F
+					case 16:
+						nInternalColorFormat = nColorFormat = ColorGrayscaleA;
+						nDataFormat = DataFloat;
+						break;
+
+					// RGB32F
+					case 6:
+						nInternalColorFormat = nColorFormat = ColorRGB;
+						nDataFormat = DataFloat;
+						break;
+
+					// RGBA32F
+					case 2:
+						nInternalColorFormat = nColorFormat = ColorRGBA;
+						nDataFormat = DataFloat;
+						break;
+
+				// Compressed
+					// DXT1 (BC1 UNORM)
 					case 71:
 						nInternalColorFormat = nColorFormat = ColorRGB;
 						nCompression = CompressionDXT1;
 						break;
 
+					// DXT3 (BC2 UNORM)
 					case 74:
 						nInternalColorFormat = nColorFormat = ColorRGBA;
 						nCompression = CompressionDXT3;
 						break;
 
+					// DXT5 (BC3 UNORM)
 					case 77:
 						nInternalColorFormat = nColorFormat = ColorRGBA;
 						nCompression = CompressionDXT5;
 						break;
 
+					// LATC1 (BC4 UNORM, previously known as ATI1N)
 					case 80:
 						nInternalColorFormat = nColorFormat = ColorGrayscale;
 						nCompression = CompressionLATC1;
 						break;
 
+					// LATC2 (BC5 UNORM, previously known as ATI2N)
 					case 83:
 						nInternalColorFormat = nColorFormat = ColorGrayscaleA;
 						nCompression = CompressionLATC2;
@@ -179,37 +234,84 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 				}
 			} else {
 				switch (sHeader.ddpfPixelFormat.nFourCC) {
+				// 16 bit float
+					// R16F
+					case 111:
+						nInternalColorFormat = nColorFormat = ColorGrayscale;
+						nDataFormat = DataHalf;
+						break;
+
+					// RG16F
+					case 112:
+						nInternalColorFormat = nColorFormat = ColorGrayscaleA;
+						nDataFormat = DataHalf;
+						break;
+
+					// RGBA16F
+					case 113:
+						nInternalColorFormat = nColorFormat = ColorRGBA;
+						nDataFormat = DataHalf;
+						break;
+
+				// IEEE 32 bit float
+					// R32F
+					case 114:
+						nInternalColorFormat = nColorFormat = ColorGrayscale;
+						nDataFormat = DataFloat;
+						break;
+
+					// RG32F
+					case 115:
+						nInternalColorFormat = nColorFormat = ColorGrayscaleA;
+						nDataFormat = DataFloat;
+						break;
+
+					// RGBA32F
+					case 116:
+						nInternalColorFormat = nColorFormat = ColorRGBA;
+						nDataFormat = DataFloat;
+						break;
+
+				// Compressed
+					// DXT1 (BC1 UNORM)
 					case MCHAR4('D', 'X', 'T', '1'):
 						nInternalColorFormat = nColorFormat = ColorRGB;
 						nCompression = CompressionDXT1;
 						break;
 
+					// DXT3 (BC2 UNORM)
 					case MCHAR4('D', 'X', 'T', '3'):
 						nInternalColorFormat = nColorFormat = ColorRGBA;
 						nCompression = CompressionDXT3;
 						break;
 
+					// DXT5 (BC3 UNORM)
 					case MCHAR4('D', 'X', 'T', '5'):
 						nInternalColorFormat = nColorFormat = ColorRGBA;
 						nCompression = CompressionDXT5;
 						break;
 
+					// LATC1 (BC4 UNORM, previously known as ATI1N)
 					case MCHAR4('A', 'T', 'I', '1'):
 						nInternalColorFormat = nColorFormat = ColorGrayscale;
 						nCompression = CompressionLATC1;
 						break;
 
+					// LATC2 (BC5 UNORM, previously known as ATI2N)
 					case MCHAR4('A', 'T', 'I', '2'):
 						nInternalColorFormat = nColorFormat = ColorGrayscaleA;
 						nCompression = CompressionLATC2;
 						break;
 
+				// Uncompressed
 					default:
 						switch (sHeader.ddpfPixelFormat.nRGBBitCount) {
+							// R8
 							case 8:
 								nInternalColorFormat = nColorFormat = ColorGrayscale;
 								break;
 
+							// LA8
 							case 16:
 								if (sHeader.ddpfPixelFormat.nRGBAlphaBitMask == 0xFF00)
 									nInternalColorFormat = nColorFormat = ColorGrayscaleA;
@@ -219,11 +321,13 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 								}
 								break;
 
+							// RGB8
 							case 24:
 								nInternalColorFormat = (sHeader.ddpfPixelFormat.nBBitMask == 0xFF) ? ColorBGR : ColorRGB;
 								nColorFormat         = ColorRGB;
 								break;
 
+							// RGBA8
 							case 32:
 								if (sHeader.ddpfPixelFormat.nRBitMask != 0x3FF00000) {
 									nInternalColorFormat = (sHeader.ddpfPixelFormat.nBBitMask == 0xFF) ? ColorBGRA : ColorRGBA;
@@ -283,7 +387,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 				for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
 					// Create image buffer
 					ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
-					pImageBuffer->CreateImage(DataByte,
+					pImageBuffer->CreateImage(nDataFormat,
 											  nColorFormat,
 											  Vector3i(ImageBuffer::GetMipmapSize(sHeader.nWidth,  nMipmap),
 													   ImageBuffer::GetMipmapSize(sHeader.nHeight, nMipmap),
@@ -357,6 +461,8 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 	} else {
 		// Error: Invalid magic number
 	}
+
+	#undef MCHAR4
 
 	// Error!
 	return false;
