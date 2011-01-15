@@ -43,12 +43,12 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-#define DDSCAPS2_CUBEMAP 0x00000200L
-#define DDS_FOURCC		 0x00000004L
-#define DDS_LUMINANCE	 0x00020000L
-#define DDS_ALPHAPIXELS	 0x00000001L
-#define DDS_LINEARSIZE	 0x00080000L
-#define DDS_PITCH		 0x00000008L
+static const uint32 DDSCAPS2_CUBEMAP	= 0x00000200;
+static const uint32 DDS_FOURCC			= 0x00000004;
+static const uint32 DDS_LUMINANCE		= 0x00020000;
+static const uint32 DDS_ALPHAPIXELS		= 0x00000001;
+static const uint32 DDS_LINEARSIZE		= 0x00080000;
+static const uint32 DDS_PITCH			= 0x00000008;
 
 
 //[-------------------------------------------------------]
