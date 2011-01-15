@@ -116,6 +116,9 @@ void LinuxProvider::QueryDevices()
 			// Read next entry
 			pEntry = readdir(pDir);
 		}
+
+		// Be polite and close the directory after we're done...
+		closedir(pDir);
 	}
 }
 
