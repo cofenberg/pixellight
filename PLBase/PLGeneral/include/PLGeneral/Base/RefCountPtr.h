@@ -79,7 +79,8 @@ class RefCountPtr : public RefCount<AType> {
 		*  @return
 		*    Pointer to the reference counter's object, can be a null pointer
 		*/
-		virtual AType *GetPointer() const;
+		virtual const AType *GetPointer() const;
+		virtual AType *GetPointer();
 
 
 	//[-------------------------------------------------------]

@@ -57,7 +57,13 @@ RefCountPtr<AType>::~RefCountPtr()
 *    Get a pointer to the object
 */
 template <class AType>
-AType *RefCountPtr<AType>::GetPointer() const
+const AType *RefCountPtr<AType>::GetPointer() const
+{
+	return m_pPointer;
+}
+
+template <class AType>
+AType *RefCountPtr<AType>::GetPointer()
 {
 	return m_pPointer;
 }
