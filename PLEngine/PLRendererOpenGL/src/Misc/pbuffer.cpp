@@ -210,7 +210,6 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
     bool bIsFloatBuffer = false; 
     bool bIsATIFloatBuffer = false;
     bool bIsTexture = false;
-    bool bNeedAlpha = false;
 
     char *mode = _strdup(modeString);
 
@@ -225,9 +224,6 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
 
         if (strstr(buf, "texture") != nullptr)
             bIsTexture = true;
-
-        if (strstr(buf, "alpha") != nullptr)
-            bNeedAlpha = true;
 
         tokens.push_back(buf);
         buf = strtok(nullptr, " ");
@@ -767,7 +763,6 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
     m_iBitsPerComponent = 8;
 	m_iNComponents = 0;
     bool bIsFloatBuffer = false; 
-    bool bNeedAlpha = false;
     
     char *mode = strdup(modeString);
 
@@ -777,9 +772,6 @@ void PBuffer::parseModeString(const char *modeString, vector<int> *pfAttribList,
     {
         if (strstr(buf, "float") != nullptr)
             bIsFloatBuffer = true;
-
-        if (strstr(buf, "alpha") != nullptr)
-            bNeedAlpha = true;
         
         tokens.push_back(buf);
         buf = strtok(nullptr, " ");

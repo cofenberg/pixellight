@@ -420,7 +420,7 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const std::string &s
 								pModifierElement->SetAttribute("Progress", String::Format("%f", fPercentageAlongPath));
 
 								// [TODO] Any change to setup speed inside 3ds Max?
-								float fSpeed = 0.03f;
+								static const float fSpeed = 0.03f;
 								// Automatic animation playback?
 								if (g_SEOptions.bAnimationPlayback)
 									pModifierElement->SetAttribute("Speed", String::Format("%f", (pPathController->GetFlip() ? -fSpeed : fSpeed)));

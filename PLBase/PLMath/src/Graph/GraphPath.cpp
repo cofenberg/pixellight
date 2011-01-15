@@ -272,14 +272,12 @@ Vector3 GraphPath::GetPosByPercentageAlongPath(float fPercentageAlongPath, bool 
 		float fLength = 0.0f;
 		float fPreviousLength = 0.0f;
 		float fDistanceBetweenNodes = 0.0f;
-		float fPreviousDistanceBetweenNodes = 0.0f;
 		{ // Get path length
 			const GraphNode *pLastNode = nullptr;
 			Iterator<GraphNode*> cIterator = m_lstNodes.GetIterator();
 			while (cIterator.HasNext() && fLength < fLengthOnPath) {
 				// Backup the current length on path
 				fPreviousLength = fLength;
-				fPreviousDistanceBetweenNodes = fDistanceBetweenNodes;
 
 				const GraphNode *pNode = cIterator.Next();
 				if (pLastNode) {

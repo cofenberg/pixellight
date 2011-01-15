@@ -441,7 +441,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*    Material to use
 		*
 		*  @return
-		*    Generated program user data
+		*    Generated program user data, do NOT delete the memory the pointer points to
 		*/
 		GeneratedProgramUserData *MakeMaterialCurrent(PLRenderer::Renderer &cRenderer, const PLRenderer::Material &cMaterial);
 

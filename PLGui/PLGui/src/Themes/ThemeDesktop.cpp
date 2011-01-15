@@ -616,8 +616,6 @@ void ThemeDesktop::DrawPopupMenu(Graphics &cGraphics, const Vector2i &vPos1, con
 	// Get button state
 	bool bEnabled  = ((nWidgetState & WidgetEnabled)	!= 0);
 	bool bSelected = ((nWidgetState & WidgetMouseOver)	!= 0);
-	bool bFocus    = ((nWidgetState & WidgetFocus)		!= 0);
-	bool bPressed  = ((nWidgetState & WidgetPressed)	!= 0);
 
 	// Select colors
 	Color4 cColorBack		= (bSelected ? m_cColorControlBack			: (bEnabled ? m_cColorControlBack		: m_cColorControlBackDisabled));
@@ -638,7 +636,6 @@ void ThemeDesktop::DrawMenuItem(Graphics &cGraphics, const Vector2i &vPos1, cons
 	// Get state
 	bool bEnabled  = ((nWidgetState & WidgetEnabled)	!= 0);
 	bool bSelected = ((nWidgetState & WidgetMouseOver)	!= 0);
-	bool bFocus    = ((nWidgetState & WidgetFocus)		!= 0);
 	bool bPressed  = ((nWidgetState & WidgetPressed)	!= 0);
 
 	// Select colors

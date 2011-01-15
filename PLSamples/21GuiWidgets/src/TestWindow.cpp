@@ -104,7 +104,6 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 		m_pToggleButton->SetSize(Vector2i(120, 32));
 		m_pToggleButton->SetVisible(true);
 	m_cCheckGroup.SetExclusive(false);
-Widget *pLast = m_pToggleButton;
 	for (int i=0; i<4; i++) {
 		m_pCheckBoxes[i] = new CheckBox(GetContentWidget());
 			m_pCheckBoxes[i]->SetGroup(&m_cCheckGroup);
@@ -121,7 +120,6 @@ Widget *pLast = m_pToggleButton;
 			m_pRadioButtons[i]->SetPos(Vector2i(150, 150 + i*20));
 			m_pRadioButtons[i]->SetSize(Vector2i(100, 20));
 			m_pRadioButtons[i]->SetVisible(true);
-pLast = m_pRadioButtons[i];
 	}
 
 	m_pClickTest = new Widget(GetContentWidget());

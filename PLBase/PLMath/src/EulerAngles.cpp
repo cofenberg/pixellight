@@ -43,8 +43,12 @@ static const float FloatEpsilon = 1.192092896e-07f; // Smallest such that 1.0f+F
  // EulGetOrd unpacks all useful information about order simultaneously
 #define EulSafe "\000\001\002\000"
 #define EulNext "\001\002\000\001"
-#define EulGetOrd(ord,i,j,k,h,n,s,f) {unsigned o=ord;f=o&1;o>>=1;s=o&1;o>>=1;\
-    n=o&1;o>>=1;i=EulSafe[o&3];j=EulNext[i+n];k=EulNext[i+1-n];h=s?k:i;}
+#define EulGetOrd(ord,i,j,k,n,s,f) {unsigned o=ord;f=o&1;o>>=1;s=o&1;o>>=1;\
+    n=o&1;o>>=1;i=EulSafe[o&3];j=EulNext[i+n];k=EulNext[i+1-n];}
+// Original code was
+// #define EulGetOrd(ord,i,j,k,h,n,s,f) {unsigned o=ord;f=o&1;o>>=1;s=o&1;o>>=1;\
+//    n=o&1;o>>=1;i=EulSafe[o&3];j=EulNext[i+n];k=EulNext[i+1-n];h=s?k:i;}
+// but we don't need "h", so it was removed to spare the compiler the work *g*
 
 
 //[-------------------------------------------------------]
@@ -56,8 +60,8 @@ static const float FloatEpsilon = 1.192092896e-07f; // Smallest such that 1.0f+F
 */
 void EulerAngles::ToQuaternion(float fAngleX, float fAngleY, float fAngleZ, Quaternion &qRotation, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
 		float t = fAngleX;
 		fAngleX = fAngleZ;
@@ -122,8 +126,8 @@ void EulerAngles::FromQuaternion(const Quaternion &q, float &fAngleX, float &fAn
 	}
 
 	// Convert 3x3 matrix to Euler angles (in radians)
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (s == 1) {
 		double sy = Math::Sqrt(M[i][j]*M[i][j] + M[i][k]*M[i][k]);
 		if (sy > 16*FloatEpsilon) {
@@ -165,8 +169,8 @@ void EulerAngles::FromQuaternion(const Quaternion &q, float &fAngleX, float &fAn
 */
 void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x3 &mRot, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
 		float t = fAngleX;
 		fAngleX = fAngleZ;
@@ -205,8 +209,8 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x
 
 void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x4 &mRot, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
 		float t = fAngleX;
 		fAngleX = fAngleZ;
@@ -245,8 +249,8 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x
 
 void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix4x4 &mRot, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
 		float t = fAngleX;
 		fAngleX = fAngleZ;
@@ -291,8 +295,8 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix4x
 */
 void EulerAngles::FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 
 	if (s == 1) {
 		double sy = Math::Sqrt(mRot.fM33[i][j]*mRot.fM33[i][j] + mRot.fM33[i][k]*mRot.fM33[i][k]);
@@ -332,8 +336,8 @@ void EulerAngles::FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngl
 
 void EulerAngles::FromMatrix(const Matrix3x4 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 
 	if (s == 1) {
 		double sy = Math::Sqrt(mRot.fM43[i][j]*mRot.fM43[i][j] + mRot.fM43[i][k]*mRot.fM43[i][k]);
@@ -373,8 +377,8 @@ void EulerAngles::FromMatrix(const Matrix3x4 &mRot, float &fAngleX, float &fAngl
 
 void EulerAngles::FromMatrix(const Matrix4x4 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder)
 {
-	int i, j, k, h, n, s, f;
-	EulGetOrd(nOrder, i, j, k, h, n, s, f);
+	int i, j, k, n, s, f;
+	EulGetOrd(nOrder, i, j, k, n, s, f);
 
 	if (s == 1) {
 		double sy = Math::Sqrt(mRot.fM44[i][j]*mRot.fM44[i][j] + mRot.fM44[i][k]*mRot.fM44[i][k]);

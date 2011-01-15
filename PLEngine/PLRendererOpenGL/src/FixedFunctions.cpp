@@ -1245,7 +1245,7 @@ bool FixedFunctions::SetClipPlaneEnabled(char nIndex, bool bEnable)
 			glEnable(GL_CLIP_PLANE0 + nIndex);
 		else
 			glDisable(GL_CLIP_PLANE0 + nIndex);
-		m_pbClipPlane[nIndex] = bEnable;
+		m_pbClipPlane[(uint32)nIndex] = bEnable;
 	}
 
 	// Done
@@ -1280,11 +1280,11 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 			return false; // Error!
 
 		// Set the clip plane
-		m_ppdClipPlane[nIndex][0] = fA;
-		m_ppdClipPlane[nIndex][1] = fB;
-		m_ppdClipPlane[nIndex][2] = fC;
-		m_ppdClipPlane[nIndex][3] = fD;
-		glClipPlane(GL_CLIP_PLANE0 + nIndex, m_ppdClipPlane[nIndex]);
+		m_ppdClipPlane[(uint32)nIndex][0] = fA;
+		m_ppdClipPlane[(uint32)nIndex][1] = fB;
+		m_ppdClipPlane[(uint32)nIndex][2] = fC;
+		m_ppdClipPlane[(uint32)nIndex][3] = fD;
+		glClipPlane(GL_CLIP_PLANE0 + nIndex, m_ppdClipPlane[(uint32)nIndex]);
 	}
 
 	// Done

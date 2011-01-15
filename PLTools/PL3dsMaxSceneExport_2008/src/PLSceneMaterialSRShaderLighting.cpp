@@ -168,8 +168,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 		if (!pFXMaterial && m_pParentIGameMaterial)
 			pFXMaterial = (IDxMaterial2*)m_pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE);
 		if (pFXMaterial) { // Get information from the DirectX Shader material
-			bool bSkipDefaultValues = g_SEOptions.bSmartMaterialParameters;
-			bool bReflectionMap     = false;
+			bool bReflectionMap = false;
 
 			// Get the parameter block containing the other data
 			IParamBlock2 *pParamBlock = pMaxMaterial->GetParamBlock(0);

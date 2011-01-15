@@ -452,17 +452,15 @@ void WidgetLinux::SetCaptureMouse(bool bCapture)
 		// Set or release mouse capture?
 		if (bCapture) {
 			// Grab mouse
-			int nResult = XGrabPointer(
-							m_pDisplay,
-							m_nWindow,
-							False,
-							ButtonPressMask | ButtonReleaseMask | PointerMotionMask,
-							GrabModeAsync,
-							GrabModeAsync,
-							XLib::None,
-							XLib::None,
-							CurrentTime);
-
+			XGrabPointer(m_pDisplay,
+						 m_nWindow,
+						 False,
+						 ButtonPressMask | ButtonReleaseMask | PointerMotionMask,
+						 GrabModeAsync,
+						 GrabModeAsync,
+						 XLib::None,
+						 XLib::None,
+						 CurrentTime);
 		} else {
 			// Release mouse grab
 			XUngrabPointer(m_pDisplay, CurrentTime);

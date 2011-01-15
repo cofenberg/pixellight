@@ -529,11 +529,10 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		String sLName = sFilenameT + "_L" + pMaterial->nLightmapID;
 		Texture *pTex = cRendererContext.GetTextureManager().Get(sLName);
 		if (!pTex) {
-			float max, temp, r, g, b;
+			float max, r, g, b;
 			uint8 *pImageData = &pLightmap->imageBits[0][0][0];
 			for (int nElement=0; nElement<128*128; nElement+=3) {
 				max  = 1.0f;
-				temp = 0.0f;
 				r    = ((float)pImageData[nElement]*3.1f)/255.0f;
 				g    = ((float)pImageData[nElement+1]*3.1f)/255.0f;
 				b    = ((float)pImageData[nElement+2]*3.1f)/255.0f;

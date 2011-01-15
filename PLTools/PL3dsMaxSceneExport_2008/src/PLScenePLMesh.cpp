@@ -232,13 +232,6 @@ bool PLScenePLMesh::WriteMesh(FILE &cFile, ChunkStack &cChunkStack)
 							nNumOfPointCacheFrames += nNumOfFrames;
 
 							{ // Add point cache animation
-								// Get all animation information
-								Interval cInterval	= m_pScene->GetMaxInterface().GetAnimRange();
-								int nStartTime		= cInterval.Start();
-								int nEndTime		= cInterval.End();
-								int nTicksPerFrame	= GetTicksPerFrame();
-								int nFrames			= (nEndTime-nStartTime)/nTicksPerFrame;
-
 								// Get animation
 								Animation *pAnimation = new Animation;
 								MeshFile::Animation &sAnimation = pAnimation->sAnimation;
@@ -256,9 +249,10 @@ bool PLScenePLMesh::WriteMesh(FILE &cFile, ChunkStack &cChunkStack)
 								// [TEST]
 								pAnimation->nStartTime	   = 0;
 								pAnimation->nEndTime	   = nNumOfFrames;
-//								pAnimation->nStartTime	   = nStartTime;
-//								pAnimation->nEndTime	   = nEndTime;
-								pAnimation->nTicksPerFrame = nTicksPerFrame;
+//								Interval cInterval	= m_pScene->GetMaxInterface().GetAnimRange();
+//								pAnimation->nStartTime	   = cInterval.Start();
+//								pAnimation->nEndTime	   = cInterval.End();
+								pAnimation->nTicksPerFrame = GetTicksPerFrame();
 								m_lstPointCacheAnimations.Add(pAnimation);
 							}
 						}

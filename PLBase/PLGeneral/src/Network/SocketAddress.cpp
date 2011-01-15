@@ -98,6 +98,7 @@ SocketAddress::SocketAddress(const String &sHost, uint32 nPort) :
 	if (sHost.GetLength()) {
 		m_pSockAddress->sin_addr.s_addr = inet_addr(sHost);
 		if (m_pSockAddress->sin_addr.s_addr == INADDR_NONE) {
+			// [TODO] Obsolete function 'gethostbyname', use the 'getnameinfo' function
 			// Try to resolve host
 			hostent *pHost = gethostbyname(sHost);
 			if (pHost)
@@ -141,6 +142,7 @@ void SocketAddress::SetHost(const String &sHost)
 */
 bool SocketAddress::SetHostByName(const String &sHostName)
 {
+	// [TODO] Obsolete function 'gethostbyname', use the 'getnameinfo' function
 	// Get host address
 	hostent *pHost = gethostbyname(sHostName);
 	if (pHost) {

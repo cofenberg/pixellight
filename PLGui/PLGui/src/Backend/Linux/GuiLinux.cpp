@@ -436,14 +436,14 @@ void GuiLinux::EnumerateScreens(PLGeneral::List<Screen*> &lstScreens)
 	// Initialize display components
 	String sServer = "";
 	int    nNumber = 0;
-	int    nScreen = 0;
+//	int    nScreen = 0;	// Currently not used
 
 	// Get display components (e.g.: ":0.0")
 	RegEx cDisplayRegEx("^(\\w*):(\\d+)\\.(\\d+)$");
 	if (cDisplayRegEx.Match(sDisplay)) {
 		sServer = cDisplayRegEx.GetResult(0);
 		nNumber = cDisplayRegEx.GetResult(1).GetInt();
-		nScreen = cDisplayRegEx.GetResult(2).GetInt();
+//		nScreen = cDisplayRegEx.GetResult(2).GetInt();	// Currently not used
 	}
 
 	// Get screens of display

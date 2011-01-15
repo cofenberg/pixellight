@@ -350,6 +350,7 @@ uint32 SystemLinux::GetMicroseconds() const
 
 void SystemLinux::Sleep(uint32 nMilliseconds) const
 {
+	// [TODO] Obsolete function 'usleep'. POSIX.1-2001 declares usleep() function obsolete and POSIX.1-2008 removes it. Use the 'nanosleep' or 'setitimer' function.
 	usleep(nMilliseconds*1000);
 }
 

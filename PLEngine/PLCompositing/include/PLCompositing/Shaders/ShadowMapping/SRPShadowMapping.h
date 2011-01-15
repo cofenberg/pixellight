@@ -269,7 +269,7 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 		*    Set world space inverse light radius
 		*
 		*  @return
-		*    Generated program user data
+		*    Generated program user data, do NOT delete the memory the pointer points to
 		*/
 		GeneratedProgramUserData *MakeMaterialCurrent(PLRenderer::Renderer &cRenderer, const PLRenderer::Material &cMaterial, float fInvRadius);
 
