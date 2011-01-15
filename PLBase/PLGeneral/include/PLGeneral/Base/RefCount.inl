@@ -54,9 +54,15 @@ RefCount<AType>::~RefCount()
 *    Get a pointer to the object
 */
 template <class AType>
-AType *RefCount<AType>::GetPointer() const
+const AType *RefCount<AType>::GetPointer() const
 {
-	return (AType*)this;
+	return reinterpret_cast<const AType*>(this);
+}
+
+template <class AType>
+AType *RefCount<AType>::GetPointer()
+{
+	return reinterpret_cast<AType*>(this);
 }
 
 /**

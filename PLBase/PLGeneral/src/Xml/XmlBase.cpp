@@ -156,7 +156,7 @@ const char *XmlBase::SkipWhiteSpace(const char *pszData, EEncoding nEncoding)
 		return nullptr;	// Error!
 	if (nEncoding == EncodingUTF8) {
 		while (*pszData) {
-			const unsigned char *pU = (const unsigned char*)pszData;
+			const unsigned char *pU = reinterpret_cast<const unsigned char*>(pszData);
 
 			// Skip the stupid Microsoft UTF-8 Byte order marks
 			if (	*(pU+0)==UTF_LEAD_0
@@ -192,12 +192,12 @@ const char *XmlBase::SkipWhiteSpace(const char *pszData, EEncoding nEncoding)
 
 bool XmlBase::IsWhiteSpace(char c)
 {
-	return (isspace((unsigned char)c) || c == '\n' || c == '\r');
+	return (isspace(c) || c == '\n' || c == '\r');
 }
 
 bool XmlBase::IsWhiteSpace(int c)
 {
-	return (c < 256) ? IsWhiteSpace((char)c) : false;	// Again, only truly correct for English/Latin... but usually works
+	return (c < 256) ? IsWhiteSpace(c) : false;	// Again, only truly correct for English/Latin... but usually works
 }
 
 /**
@@ -214,9 +214,9 @@ const char *XmlBase::ReadName(const char *pszData, String &sName, EEncoding nEnc
 	// After that, they can be letters, underscores, numbers,
 	// hyphens, or colons. (Colons are valid ony for namespaces,
 	// but the parser can't tell namespaces from names.)
-	if (pszData && *pszData && (IsAlpha((unsigned char)*pszData) || *pszData == '_')) {
+	if (pszData && *pszData && (IsAlpha(*pszData) || *pszData == '_')) {
 		const char *pszStart = pszData;
-		while (pszData && *pszData && (IsAlphaNum((unsigned char)*pszData) || *pszData == '_' || *pszData == '-' || *pszData == '.' || *pszData == ':'))
+		while (pszData && *pszData && (IsAlphaNum(*pszData) || *pszData == '_' || *pszData == '-' || *pszData == '.' || *pszData == ':'))
 			++pszData;
 		if (pszData-pszStart > 0)
 			sName.Copy(pszStart, pszData-pszStart);
@@ -339,7 +339,7 @@ const char *XmlBase::GetEntity(const char *pszData, char *pszValue, int &nLength
 			// Convert the UCS to UTF-8
 			ConvertUTF32ToUTF8(ucs, pszValue, nLength);
 		} else {
-			*pszValue = (char)ucs;
+			*pszValue = static_cast<char>(ucs);
 			nLength = 1;
 		}
 		return pszData + pDeltaAddress + 1;
@@ -363,7 +363,7 @@ const char *XmlBase::GetEntity(const char *pszData, char *pszValue, int &nLength
 
 const char *XmlBase::GetChar(const char *pszData, char *pszValue, int &nLength, EEncoding nEncoding)
 {
-	nLength = (nEncoding == EncodingUTF8) ? utf8ByteTable[*((const unsigned char*)pszData)] : 1;
+	nLength = (nEncoding == EncodingUTF8) ? utf8ByteTable[*(reinterpret_cast<const unsigned char*>(pszData))] : 1;
 	if (nLength == 1) {
 		if (*pszData == '&')
 			return GetEntity(pszData, pszValue, nLength, nEncoding);
@@ -454,32 +454,32 @@ void XmlBase::ConvertUTF32ToUTF8(unsigned long nInput, char *pszOutput, int &nLe
 	switch (nLength) {
 		case 4:
 			--pszOutput;
-			*pszOutput = (char)((nInput | BYTE_MARK) & BYTE_MASK);
+			*pszOutput = static_cast<char>((nInput | BYTE_MARK) & BYTE_MASK);
 			nInput >>= 6;
 
 		case 3:
 			--pszOutput;
-			*pszOutput = (char)((nInput | BYTE_MARK) & BYTE_MASK);
+			*pszOutput = static_cast<char>((nInput | BYTE_MARK) & BYTE_MASK);
 			nInput >>= 6;
 
 		case 2:
 			--pszOutput;
-			*pszOutput = (char)((nInput | BYTE_MARK) & BYTE_MASK);
+			*pszOutput = static_cast<char>((nInput | BYTE_MARK) & BYTE_MASK);
 			nInput >>= 6;
 
 		case 1:
 			--pszOutput;
-			*pszOutput = (char)(nInput | FIRST_BYTE_MARK[nLength]);
+			*pszOutput = static_cast<char>(nInput | FIRST_BYTE_MARK[nLength]);
 	}
 }
 
 void XmlBase::EncodeString(const String &sInString, String &sOutString)
 {
 	uint32 i = 0;
-	while (i<(int)sInString.GetLength()) {
-		unsigned char c = (unsigned char)sInString[i];
+	while (i<static_cast<int>(sInString.GetLength())) {
+		unsigned char c = static_cast<unsigned char>(sInString[i]);
 
-		if (c == '&'  && (int)i < ((int)sInString.GetLength() - 2) && sInString[i+1] == '#' && sInString[i+2] == 'x') {
+		if (c == '&'  && static_cast<int>(i) < (static_cast<int>(sInString.GetLength()) - 2) && sInString[i+1] == '#' && sInString[i+2] == 'x') {
 			// Hexadecimal character reference.
 			// Pass through unchanged.
 			// &#xA9;	-- copyright symbol, for example.
@@ -489,7 +489,7 @@ void XmlBase::EncodeString(const String &sInString, String &sOutString)
 			// while fails (error case) and break (semicolon found).
 			// However, there is no mechanism (currently) for
 			// this function to return an error.
-			while ((int)i<(int)sInString.GetLength()-1) {
+			while (static_cast<int>(i)<static_cast<int>(sInString.GetLength())-1) {
 				sOutString += sInString[i];
 				++i;
 				if (sInString[i] == ';')
@@ -513,10 +513,10 @@ void XmlBase::EncodeString(const String &sInString, String &sOutString)
 		} else if (c < 32) {
 			// Easy pass at non-alpha/numeric/symbol
 			// Below 32 is symbolic
-			sOutString += String::Format("&#x%02X;", (unsigned)(c & 0xff));
+			sOutString += String::Format("&#x%02X;", static_cast<unsigned>(c & 0xff));
 			++i;
 		} else {
-			sOutString += (char)c;
+			sOutString += static_cast<char>(c);
 			++i;
 		}
 	}

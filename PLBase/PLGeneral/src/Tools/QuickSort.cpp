@@ -68,7 +68,7 @@ bool QuickSort::Sort(void *pData, uint32 nNumOfElements, uint32 nElementSize)
 	// Already 'sorted'? (no elements are sorted *g*)
 	if (nNumOfElements) {
 		// Init data
-		m_pData		   = (uint8*)pData;
+		m_pData		   = static_cast<uint8*>(pData);
 		m_nElementSize = nElementSize;
 		m_pTemp		   = new uint8[nElementSize];
 

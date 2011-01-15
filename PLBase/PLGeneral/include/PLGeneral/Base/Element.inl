@@ -48,13 +48,13 @@ Element<AType>::Element(const String &sName, ElementManager<AType> *pManager) :
 {
 	// Set unique element name
 	if (pManager)
-		pManager->SetElementName((AType&)*this, sName);
+		pManager->SetElementName(static_cast<AType&>(*this), sName);
 	else
 		m_sName = sName;
 
 	// Add this element to the manager
 	if (pManager)
-		pManager->Add((AType&)*this);
+		pManager->Add(static_cast<AType&>(*this));
 }
 
 /**
@@ -172,7 +172,7 @@ template <class AType>
 bool Element<AType>::SetName(const String &sName)
 {
 	if (m_pManager)
-		return m_pManager->SetElementName((AType&)*this, sName);
+		return m_pManager->SetElementName(static_cast<AType&>(*this), sName);
 	else {
 		m_sName = sName;
 
@@ -215,7 +215,7 @@ Element<AType>::~Element()
 
 	// Remove from element manager
 	if (m_pManager)
-		m_pManager->Remove((AType&)*this);
+		m_pManager->Remove(static_cast<AType&>(*this));
 }
 
 

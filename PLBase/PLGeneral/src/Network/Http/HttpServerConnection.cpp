@@ -43,7 +43,7 @@ namespace PLGeneral {
 *  @brief
 *    Constructor
 */
-HttpServerConnection::HttpServerConnection(HttpServer &cServer) : Connection((Host&)cServer),
+HttpServerConnection::HttpServerConnection(HttpServer &cServer) : Connection(static_cast<Host&>(cServer)),
 	m_pServer(&cServer)
 {
 }
@@ -76,7 +76,7 @@ void HttpServerConnection::SendFile(EHttpStatus nStatus, const String &sFilename
 
 			// Send
 			if (nSize > 0)
-				Send((const char *)szBuffer, (uint32)nSize);
+				Send(szBuffer, nSize);
 		}
 
 		// Close file
@@ -168,7 +168,7 @@ void HttpServerConnection::SendHeader(EHttpStatus nStatus, const String &sMimeTy
 
 	// Content length
 	if (nLength > 0)
-		Send("Content-Length: " + String() + (int)nLength + "\r\n");
+		Send("Content-Length: " + String() + nLength + "\r\n");
 
 	// Server identification
 	Send("Server: PixelLight HTTP Server\r\n");

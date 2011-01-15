@@ -188,7 +188,7 @@ int FileHttp::GetC()
 				if (m_cHttp.Read(&c, 1, 1) != 1)
 					return -1; // Error!
 			}
-			return (int)c;
+			return static_cast<int>(c);
 		}
 	}
 
@@ -212,7 +212,7 @@ String FileHttp::GetS()
 		int   nChar = GetC();
 		while (nChar >= 0 && nChar != 10) {
 			// Concatenate char to string
-			*pszPos = (char)nChar;
+			*pszPos = static_cast<char>(nChar);
 			pszPos++;
 
 			// Read next character

@@ -72,14 +72,14 @@ bool FileLinux::Exists() const
 {
 	// Get file status
 	struct stat sStat;
-	return (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), &sStat) == 0);
+	return (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), &sStat) == 0);
 }
 
 bool FileLinux::IsFile() const
 {
 	// Get file status
 	struct stat sStat;
-	if (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), &sStat) == 0)
+	if (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), &sStat) == 0)
 		return ((sStat.st_mode & S_IFREG) != 0);
 
 	// Error!
@@ -90,7 +90,7 @@ bool FileLinux::IsDirectory() const
 {
 	// Get file status
 	struct stat sStat;
-	if (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), &sStat) == 0)
+	if (stat((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), &sStat) == 0)
 		return ((sStat.st_mode & S_IFDIR) != 0);
 
 	// Error!
@@ -116,7 +116,7 @@ bool FileLinux::CopyTo(const String &sDest, bool bOverwrite) const
 		// Copy file (-d same as --no-dereference --preserve=links)
 		// [TODO] Linux copy file: There must be another way to copy a file using c functions...
 		const String sTarget = "cp -d \"" + m_sFilename + "\" \"" + sNewFilename + '\"';
-		system((sTarget.GetFormat() == String::ASCII) ? sTarget.GetASCII() : (char*)sTarget.GetUTF8());
+		system((sTarget.GetFormat() == String::ASCII) ? sTarget.GetASCII() : sTarget.GetUTF8());
 //		if (??) {
 			// Done
 			return true;
@@ -147,8 +147,8 @@ bool FileLinux::MoveTo(const String &sDest)
 		// in 90% of all cases both the URLs are on the local file system anyway.
 
 		// Move file
-		if (rename((m_sFilename .GetFormat() == String::ASCII) ? m_sFilename .GetASCII() : (char*)m_sFilename .GetUTF8(),
-				   (sNewFilename.GetFormat() == String::ASCII) ? sNewFilename.GetASCII() : (char*)sNewFilename.GetUTF8()) == 0) {
+		if (rename((m_sFilename .GetFormat() == String::ASCII) ? m_sFilename .GetASCII() : m_sFilename .GetUTF8(),
+				   (sNewFilename.GetFormat() == String::ASCII) ? sNewFilename.GetASCII() : sNewFilename.GetUTF8()) == 0) {
 			// Set new file name
 			m_cUrl = sNewFilename;
 
@@ -174,8 +174,8 @@ bool FileLinux::Rename(const String &sName)
 	const String sNewFilename = Url(m_cUrl.CutFilename() + sName).GetUnixPath();
 
 	// Rename file
-	if (rename((m_sFilename .GetFormat() == String::ASCII) ? m_sFilename .GetASCII() : (char*)m_sFilename .GetUTF8(),
-			   (sNewFilename.GetFormat() == String::ASCII) ? sNewFilename.GetASCII() : (char*)sNewFilename.GetUTF8()) == 0) {
+	if (rename((m_sFilename .GetFormat() == String::ASCII) ? m_sFilename .GetASCII() : m_sFilename .GetUTF8(),
+			   (sNewFilename.GetFormat() == String::ASCII) ? sNewFilename.GetASCII() : sNewFilename.GetUTF8()) == 0) {
 		// Set new file name
 		m_cUrl = sNewFilename;
 
@@ -193,7 +193,7 @@ bool FileLinux::CreateNewFile(bool bAlways)
 	Close();
 
 	// Create file
-	const int nFile = open((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	const int nFile = open((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (nFile != -1) {
 		// Success
 		close(nFile);
@@ -210,7 +210,7 @@ bool FileLinux::CreateNewDirectory()
 	Close();
 
 	// Create directory
-	return (mkdir((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), 0711) != -1);
+	return (mkdir((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), 0711) != -1);
 }
 
 bool FileLinux::Delete()
@@ -219,7 +219,7 @@ bool FileLinux::Delete()
 	Close();
 
 	// Delete file
-	return (unlink((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8()) == 0);
+	return (unlink((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8()) == 0);
 }
 
 bool FileLinux::DeleteDirectory()
@@ -228,7 +228,7 @@ bool FileLinux::DeleteDirectory()
 	Close();
 
 	// Delete directory
-	return (rmdir((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8()) == 0);
+	return (rmdir((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8()) == 0);
 }
 
 void FileLinux::Close()
@@ -290,7 +290,7 @@ bool FileLinux::Open(uint32 nAccess)
 	m_nAccess = nAccess;
 
 	// Open file
-	m_pFile = fopen((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : (char*)m_sFilename.GetUTF8(), szMode);
+	m_pFile = fopen((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), szMode);
 
 	// Done
 	return (m_pFile != nullptr);
@@ -361,13 +361,13 @@ int FileLinux::PutS(const String &sString)
 uint32 FileLinux::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Read buffer
-	return IsReadable() ? (uint32)fread(pBuffer, nSize, nCount, m_pFile) : 0;
+	return IsReadable() ? static_cast<uint32>(fread(pBuffer, nSize, nCount, m_pFile)) : 0;
 }
 
 uint32 FileLinux::Write(const void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Write buffer
-	return IsWritable() ? (uint32)fwrite(pBuffer, nSize, nCount, m_pFile) : 0;
+	return IsWritable() ? static_cast<uint32>(fwrite(pBuffer, nSize, nCount, m_pFile)) : 0;
 }
 
 bool FileLinux::Flush()

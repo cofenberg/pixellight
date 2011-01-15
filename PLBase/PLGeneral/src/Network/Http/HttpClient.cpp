@@ -177,7 +177,7 @@ bool HttpClient::Open(const String &sAddress, uint32 nPort)
 	Disconnect();
 
 	// Open connection
-	m_pConnection = (HttpClientConnection*)Connect(sAddress, nPort);
+	m_pConnection = static_cast<HttpClientConnection*>(Connect(sAddress, nPort));
 	if (m_pConnection) {
 		// Save address
 		m_sAddress = sAddress;
@@ -224,7 +224,7 @@ bool HttpClient::Get(const String &sURL)
 		else													m_pConnection->Send("GET " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + (int)m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -268,7 +268,7 @@ bool HttpClient::GetPartial(const String &sURL, uint32 nPos, int32 nSize)
 		else													m_pConnection->Send("GET " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + (int)m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -283,9 +283,9 @@ bool HttpClient::GetPartial(const String &sURL, uint32 nPos, int32 nSize)
 		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\r\n");
 
 		// Get partial data
-		String sPartial = String("Range: bytes=") + (int)nPos + "-";
+		String sPartial = String("Range: bytes=") + nPos + "-";
 		if (nSize > 0)
-			sPartial += (int)(nPos+nSize-1);
+			sPartial += nPos+nSize-1;
 		sPartial += "\r\n";
 		m_pConnection->Send(sPartial);
 
@@ -319,7 +319,7 @@ bool HttpClient::Post(const String &sURL, const String &sPostData)
 		else													m_pConnection->Send("POST " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + (int)m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -366,7 +366,7 @@ bool HttpClient::Delete(const String &sURL)
 		else													m_pConnection->Send("DELETE " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + (int)m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent

@@ -88,7 +88,7 @@ char BufferedReaderFile::GetChar()
 	}
 
 	// Return the current char
-	return m_sBuffer[(uint32)0];
+	return m_sBuffer[static_cast<uint32>(0)];
 }
 
 String BufferedReaderFile::GetString(uint32 nSize)
@@ -107,13 +107,13 @@ String BufferedReaderFile::GetString(uint32 nSize)
 char BufferedReaderFile::ReadChar()
 {
 	if (m_sBuffer.GetLength()) {
-		const char c = m_sBuffer[(uint32)0];
+		const char c = m_sBuffer[static_cast<uint32>(0)];
 		m_sBuffer = m_sBuffer.GetSubstring(1);
 		return c;
 	} else if (m_pFile) {
 		const int nChar = m_pFile->GetC();
 		if (nChar >= 0)
-			return (char)nChar;
+			return static_cast<char>(nChar);
 	}
 	return 0;
 }
@@ -216,7 +216,7 @@ bool BufferedReaderFile::ReadFromStream(uint32 nSize)
 			// Read one char
 			const int nChar = m_pFile->GetC();
 			if (nChar > -1) {
-				m_sBuffer += (char)nChar;
+				m_sBuffer += static_cast<char>(nChar);
 
 				// Done
 				return true;

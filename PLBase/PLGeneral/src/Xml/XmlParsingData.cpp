@@ -48,7 +48,7 @@ void XmlParsingData::Stamp(const char *pszNow, XmlBase::EEncoding nEncoding)
 
 	while (pszData < pszNow) {
 		// Treat pszData as unsigned, so we have a happy compiler
-		const unsigned char *pU = (const unsigned char*)pszData;
+		const unsigned char *pU = reinterpret_cast<const unsigned char*>(pszData);
 
 		switch (*pU) {
 			case 0:
@@ -114,7 +114,7 @@ void XmlParsingData::Stamp(const char *pszNow, XmlBase::EEncoding nEncoding)
 			default:
 				if (nEncoding == XmlBase::EncodingUTF8) {
 					// Eat the 1 to 4 byte utf8 character
-					int nStep = XmlBase::utf8ByteTable[(unsigned char)*pszData];
+					int nStep = XmlBase::utf8ByteTable[static_cast<unsigned char>(*pszData)];
 					if (nStep == 0)
 						nStep = 1;	// Error case from bad encoding, but handle gracefully
 					pszData += nStep;

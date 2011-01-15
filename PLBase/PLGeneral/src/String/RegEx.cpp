@@ -306,14 +306,14 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 			// Match pattern
 			int nMatches[VecSize];
 			int nMatchCount = pcre_exec(
-								m_pPCRE,							// PCRE expression
-								m_pExtra,							// Extra data
-								(const char*)sSubject.GetUTF8(),	// Subject string
-								sSubject.GetNumOfBytes(),			// Subject length in bytes
-								nPosition,							// Start at byte position
-								0,									// Default options
-								nMatches,							// Output vector with offsets in bytes
-								VecSize								// Size of output vector
+								m_pPCRE,					// PCRE expression
+								m_pExtra,					// Extra data
+								sSubject.GetUTF8(),			// Subject string
+								sSubject.GetNumOfBytes(),	// Subject length in bytes
+								nPosition,					// Start at byte position
+								0,							// Default options
+								nMatches,					// Output vector with offsets in bytes
+								VecSize						// Size of output vector
 							  );
 
 			// Output vector too small?
@@ -524,7 +524,7 @@ void RegEx::CompilePCRE()
 		int nErrorOffset;
 
 		// Compile regular expression
-		m_pPCRE = pcre_compile((const char*)m_sExpression.GetUTF8(), nOptions | PCRE_UTF8, &pszError, &nErrorOffset, nullptr);
+		m_pPCRE = pcre_compile(m_sExpression.GetUTF8(), nOptions | PCRE_UTF8, &pszError, &nErrorOffset, nullptr);
 	} else {
 		const char *pszError;
 		int nErrorOffset;

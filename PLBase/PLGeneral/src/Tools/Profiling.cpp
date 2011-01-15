@@ -248,7 +248,7 @@ String Profiling::SelectNextGroup()
 		m_sGroupName = i < GetNumOfElements() ? Get(i)->GetName() : "";
 	} else {
 		// Select first group
-		pGroup = Get((uint32)0);
+		pGroup = Get(static_cast<uint32>(0));
 		if (pGroup)
 			m_sGroupName = pGroup->GetName();
 	}

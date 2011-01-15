@@ -71,7 +71,7 @@ Bitset::Bitset(const Bitset &lstSource, uint32 nStart, uint32 nCount) :
 	m_nResizeCount(lstSource.m_nResizeCount)
 {
 	// Copy
-	Copy((Container<bool>&)lstSource, nStart, nCount);
+	Copy(static_cast<const Container<bool>&>(lstSource), nStart, nCount);
 }
 
 /**
@@ -126,11 +126,11 @@ bool Bitset::Resize(uint32 nMaxNumOfElements, bool bAdded, bool bInit)
 			// Allocate the bits and initialize them
 			uint32 nOldSize = m_nNumOfIntegers;
 			m_nMaxNumOfElements = nMaxNumOfElements;
-			m_nNumOfIntegers	= (uint32)Wrapper::Ceil(float(m_nMaxNumOfElements)/(sizeof(uint32)*8));
+			m_nNumOfIntegers	= static_cast<uint32>(Wrapper::Ceil(static_cast<float>(m_nMaxNumOfElements)/(sizeof(uint32)*8)));
 			if (!m_nNumOfIntegers)
 				m_nNumOfIntegers = 1; // We need at least ONE integer!
 			if (m_nNumOfIntegers != nOldSize)
-				m_pnIntegers = (uint32*)MemoryManager::Reallocator(m_pnIntegers, m_nNumOfIntegers*sizeof(uint32));
+				m_pnIntegers = static_cast<uint32*>(MemoryManager::Reallocator(m_pnIntegers, m_nNumOfIntegers*sizeof(uint32)));
 			if (m_nNumOfElements > m_nMaxNumOfElements)
 				m_nNumOfElements = m_nMaxNumOfElements-1;
 			else {
@@ -343,7 +343,7 @@ bool &Bitset::AddAtIndex(int nIndex)
 		return Add();
 
 	// Check index
-	if (nIndex > (signed)m_nNumOfElements)
+	if (nIndex > static_cast<int>(m_nNumOfElements))
 		return Bitset::Null; // Error!
 
 	// Check whether the bit set is full and we have to resize it
@@ -356,7 +356,7 @@ bool &Bitset::AddAtIndex(int nIndex)
 	m_nNumOfElements++;
 
 	// Shift element behind index
-	for (uint32 i=m_nNumOfElements-1; i>(unsigned)nIndex; i--) {
+	for (uint32 i=m_nNumOfElements-1; i>static_cast<uint32>(nIndex); i--) {
 		if (IsSet(i-1))
 			Set(i);
 		else
@@ -374,7 +374,7 @@ bool Bitset::AddAtIndex(const bool &Element, int nIndex)
 		return (&Add(Element) != &Bitset::Null);
 
 	// Check index
-	if (nIndex > (signed)m_nNumOfElements)
+	if (nIndex > static_cast<int>(m_nNumOfElements))
 		return false; // Error!
 
 	// Check whether the bit set is full and we have to resize it
@@ -387,7 +387,7 @@ bool Bitset::AddAtIndex(const bool &Element, int nIndex)
 	m_nNumOfElements++;
 
 	// Shift element behind index
-	for (uint32 i=m_nNumOfElements-1; i>(unsigned)nIndex; i--) {
+	for (uint32 i=m_nNumOfElements-1; i>static_cast<uint32>(nIndex); i--) {
 		if (IsSet(i-1))
 			Set(i);
 		else

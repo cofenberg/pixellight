@@ -154,7 +154,7 @@ class Process {
 		*  @return
 		*    Input file for the process
 		*/
-		PLGENERAL_API File &GetInput() const;
+		PLGENERAL_API File &GetInput();
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class Process {
 		*  @return
 		*    Output file for the process
 		*/
-		PLGENERAL_API File &GetOutput() const;
+		PLGENERAL_API File &GetOutput();
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class Process {
 		*  @return
 		*    Error file for the process
 		*/
-		PLGENERAL_API File &GetError() const;
+		PLGENERAL_API File &GetError();
 
 		/**
 		*  @brief

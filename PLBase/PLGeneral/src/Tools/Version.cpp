@@ -190,7 +190,7 @@ String Version::ToString() const
 		sVersion = m_sName + " ";
 
 	// "Major.Minor.Patch"
-	sVersion += String() + (int)m_nMajor + "." + (int)m_nMinor + "." + (int)m_nPatch;
+	sVersion += String() + m_nMajor + "." + m_nMinor + "." + m_nPatch;
 
 	// "-release"
 	if (m_sRelease.GetLength())

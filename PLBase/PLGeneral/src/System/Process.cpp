@@ -128,15 +128,15 @@ void Process::Execute(const String &sCommand, const String &sArguments)
 				char **ppszParams = new char*[nSize+1];
 				if (sCommand.GetFormat() == String::ASCII) {
 					for (int i=0; i<nSize; i++)
-						ppszParams[i] = (char*)lstArgs[i].GetASCII();
+						ppszParams[i] = const_cast<char*>(lstArgs[i].GetASCII());
 				} else {
 					for (int i=0; i<nSize; i++)
-						ppszParams[i] = (char*)lstArgs[i].GetUTF8();
+						ppszParams[i] = const_cast<char*>(lstArgs[i].GetUTF8());
 				}
 				ppszParams[nSize] = nullptr;
 
 				// Execute application
-				execv((lstArgs[0].GetFormat() == String::ASCII) ? lstArgs[0].GetASCII() : (char*)lstArgs[0].GetUTF8(), ppszParams);
+				execv((lstArgs[0].GetFormat() == String::ASCII) ? lstArgs[0].GetASCII() : lstArgs[0].GetUTF8(), ppszParams);
 			}
 		}
 	#endif
@@ -274,42 +274,42 @@ void Process::Terminate()
 *  @brief
 *    Get input stream
 */
-File &Process::GetInput() const
+File &Process::GetInput()
 {
 	// Open file if not already done
 	if (!m_cFileInput.IsOpen())
-		((File&)m_cFileInput).Open(File::FileWrite | File::FileText);
+		m_cFileInput.Open(File::FileWrite | File::FileText);
 
 	// Return file
-	return (File&)m_cFileInput;
+	return m_cFileInput;
 }
 
 /**
 *  @brief
 *    Get output stream
 */
-File &Process::GetOutput() const
+File &Process::GetOutput()
 {
 	// Open file if not already done
 	if (!m_cFileOutput.IsOpen())
-		((File&)m_cFileOutput).Open(File::FileRead | File::FileText);
+		m_cFileOutput.Open(File::FileRead | File::FileText);
 
 	// Return file
-	return (File&)m_cFileOutput;
+	return m_cFileOutput;
 }
 
 /**
 *  @brief
 *    Get error stream
 */
-File &Process::GetError() const
+File &Process::GetError()
 {
 	// Open file if not already done
 	if (!m_cFileError.IsOpen())
-		((File&)m_cFileError).Open(File::FileRead | File::FileText);
+		m_cFileError.Open(File::FileRead | File::FileText);
 
 	// Return file
-	return (File&)m_cFileError;
+	return m_cFileError;
 }
 
 /**
@@ -468,7 +468,7 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			if (nSize > 0) {
 				char **ppszParams = new char*[nSize+1];
 				for (int i=0; i<nSize; i++)
-					ppszParams[i] = (char*)lstArgs[i].GetASCII();
+					ppszParams[i] = const_cast<char*>(lstArgs[i].GetASCII());
 				ppszParams[nSize] = nullptr;
 
 				// Execute application

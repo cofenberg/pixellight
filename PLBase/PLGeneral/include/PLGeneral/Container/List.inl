@@ -59,7 +59,7 @@ List<ValueType>::List(const List<ValueType> &lstSource, uint32 nStart, uint32 nC
 	m_pLastElement(nullptr)
 {
 	// Copy
-	Copy((Container<ValueType>&)lstSource, nStart, nCount);
+	Copy(static_cast<const Container<ValueType>&>(lstSource), nStart, nCount);
 }
 
 /**
@@ -93,7 +93,7 @@ List<ValueType>::~List()
 template <class ValueType>
 Container<ValueType> &List<ValueType>::operator =(const List<ValueType> &lstSource)
 {
-	return *this = (Container<ValueType>&)lstSource;
+	return *this = static_cast<const Container<ValueType>&>(lstSource);
 }
 
 
@@ -418,21 +418,21 @@ template <class ValueType>
 ValueType &List<ValueType>::AddAtIndex(int nIndex)
 {
 	// Add the new element at the end?
-	if (nIndex < 0 || (uint32)nIndex == m_nNumOfElements)
+	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
 		return Add();
 
 	// Valid index?
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return List<ValueType>::Null; // There's no such index within the list :(
 
 	// Which search direction?
-	if ((uint32)nIndex < m_nNumOfElements/2) {
+	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
 		// Start with the first element
 		ListElement *pElement  = m_pFirstElement;
 		uint32		 nCurIndex = 0;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new list element
 				ListElement *pNewElement = new ListElement;
 				pNewElement->pNextElement	  = pElement;
@@ -460,7 +460,7 @@ ValueType &List<ValueType>::AddAtIndex(int nIndex)
 		uint32		 nCurIndex = m_nNumOfElements-1;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new list element
 				ListElement *pNewElement = new ListElement;
 				pNewElement->pNextElement	  = pElement;
@@ -492,21 +492,21 @@ template <class ValueType>
 bool List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
-	if (nIndex < 0 || (uint32)nIndex == m_nNumOfElements)
+	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
 		return (&Add(Element) != &List<ValueType>::Null);
 
 	// Valid index?
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return false; // Error, there's no such index within the list :(
 
 	// Which search direction?
-	if ((uint32)nIndex < m_nNumOfElements/2) {
+	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
 		// Start with the first element
 		ListElement *pElement  = m_pFirstElement;
 		uint32		 nCurIndex = 0;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new list element
 				ListElement *pNewElement = new ListElement;
 				pNewElement->Data			  = Element;
@@ -535,7 +535,7 @@ bool List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 		uint32		 nCurIndex = m_nNumOfElements-1;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new list element
 				ListElement *pNewElement = new ListElement;
 				pNewElement->Data			  = Element;

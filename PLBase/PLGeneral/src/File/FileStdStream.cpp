@@ -269,7 +269,7 @@ int FileStdStream::PutS(const String &sString)
 		#ifdef WIN32
 			const int nSize = (sString.GetFormat() == String::ASCII) ? fputs(sString.GetASCII(), m_pFile) : fputws(sString.GetUnicode(), m_pFile);
 		#else
-			const int nSize = fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : (char*)sString.GetUTF8(), m_pFile);
+			const int nSize = fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : sString.GetUTF8(), m_pFile);
 		#endif
 		if (nSize >= 0)
 			return sString.GetLength();
@@ -282,13 +282,13 @@ int FileStdStream::PutS(const String &sString)
 uint32 FileStdStream::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Read buffer
-	return m_pFile ? (uint32)fread(pBuffer, nSize, nCount, m_pFile) : 0;
+	return m_pFile ? static_cast<uint32>(fread(pBuffer, nSize, nCount, m_pFile)) : 0;
 }
 
 uint32 FileStdStream::Write(const void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Write buffer
-	return m_pFile && IsWritable() ? (uint32)fwrite(pBuffer, nSize, nCount, m_pFile) : 0;
+	return m_pFile && IsWritable() ? static_cast<uint32>(fwrite(pBuffer, nSize, nCount, m_pFile)) : 0;
 }
 
 bool FileStdStream::Flush()

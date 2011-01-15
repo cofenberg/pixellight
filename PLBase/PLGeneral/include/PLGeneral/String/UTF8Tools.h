@@ -447,7 +447,7 @@ class UTF8Tools {
 		*  @return
 		*    A pointer to the start position of the substring or a null pointer if the search fails
 		*/
-		PLGENERAL_API static char *FindSubstring(const char *pszSource, const char *pszSubstring);
+		PLGENERAL_API static const char *FindSubstring(const char *pszSource, const char *pszSubstring);
 
 		/**
 		*  @brief

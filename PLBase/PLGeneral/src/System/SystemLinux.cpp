@@ -52,7 +52,7 @@ SystemLinux::SystemLinux() :
 	m_bSysInfoInit(!uname(&m_sName))
 {
 	// Initalize the random generator
-	srand((unsigned)GetMicroseconds());
+	srand(GetMicroseconds());
 }
 
 /**
@@ -210,14 +210,14 @@ String SystemLinux::GetEnvironmentVariable(const String &sName) const
 
 bool SystemLinux::SetEnvironmentVariable(const String &sName, const String &sValue) const
 {
-	return (setenv((sName .GetFormat() == String::ASCII) ? sName .GetASCII() : (char*)sName .GetUTF8(),
-				   (sValue.GetFormat() == String::ASCII) ? sValue.GetASCII() : (char*)sValue.GetUTF8(),
+	return (setenv((sName .GetFormat() == String::ASCII) ? sName .GetASCII() : sName .GetUTF8(),
+				   (sValue.GetFormat() == String::ASCII) ? sValue.GetASCII() : sValue.GetUTF8(),
 				   1) > -1);
 }
 
 void SystemLinux::DeleteEnvironmentVariable(const String &sName) const
 {
-	unsetenv((sName.GetFormat() == String::ASCII) ? sName.GetASCII() : (char*)sName.GetUTF8());
+	unsetenv((sName.GetFormat() == String::ASCII) ? sName.GetASCII() : sName.GetUTF8());
 }
 
 bool SystemLinux::Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir) const
@@ -233,7 +233,7 @@ bool SystemLinux::Execute(const String &sCommand, const String &sParameters, con
 			pszOldWorkingDir = getcwd(nullptr, 0);
 
 			// Change directory
-			if (chdir((sWorkingDir.GetFormat() == String::ASCII) ? sWorkingDir.GetASCII() : (char*)sWorkingDir.GetUTF8()) != 0) {
+			if (chdir((sWorkingDir.GetFormat() == String::ASCII) ? sWorkingDir.GetASCII() : sWorkingDir.GetUTF8()) != 0) {
 				// Cleanup
 				free(pszOldWorkingDir);
 
@@ -244,7 +244,7 @@ bool SystemLinux::Execute(const String &sCommand, const String &sParameters, con
 
 		// Execute command
 		const String sCommandAndParameters = sCommand + ' ' + sParameters;
-		const size_t nResult = (size_t)system((sCommandAndParameters.GetFormat() == String::ASCII) ? sCommandAndParameters.GetASCII() : (char*)sCommandAndParameters.GetUTF8());
+		const int nResult = system((sCommandAndParameters.GetFormat() == String::ASCII) ? sCommandAndParameters.GetASCII() : sCommandAndParameters.GetUTF8());
 
 		// Restore the old working directory
 		if (pszOldWorkingDir) {
@@ -296,7 +296,7 @@ bool SystemLinux::SetCurrentDir(const String &sPath)
 	const String sUnixPath = Url(sPath).GetUnixPath();
 
 	// Set current directory
-	return (chdir((sUnixPath.GetFormat() == String::ASCII) ? sUnixPath.GetASCII() : (char*)sUnixPath.GetUTF8()) == 0);
+	return (chdir((sUnixPath.GetFormat() == String::ASCII) ? sUnixPath.GetASCII() : sUnixPath.GetUTF8()) == 0);
 }
 
 Thread *SystemLinux::GetCurrentThread() const
@@ -325,13 +325,13 @@ Time SystemLinux::GetTime() const
 	localtime_r(&now.tv_sec, &sTime);
 
 	return Time(sTime.tm_year,
-				(Time::EMonth)(sTime.tm_mon+1),
+				static_cast<Time::EMonth>(sTime.tm_mon+1),
 				sTime.tm_mday,
-				(Time::EDay)sTime.tm_wday,
+				static_cast<Time::EDay>(sTime.tm_wday),
 				sTime.tm_hour,
 				sTime.tm_min,
 				sTime.tm_sec,
-				(uint32)(now.tv_sec*1000+now.tv_usec/1000));
+				static_cast<uint32>(now.tv_sec*1000+now.tv_usec/1000));
 }
 
 uint32 SystemLinux::GetMilliseconds() const
@@ -364,7 +364,7 @@ float SystemLinux::GetPercentageOfUsedPhysicalMemory() const
 {
 	MemoryInformation sMemoryInformation;
 	if (GetMemoryInformation(sMemoryInformation))
-		return ((float)(sMemoryInformation.nTotalPhysicalMemory-sMemoryInformation.nFreePhysicalMemory)/sMemoryInformation.nTotalPhysicalMemory)*100.0f;
+		return (static_cast<float>(sMemoryInformation.nTotalPhysicalMemory-sMemoryInformation.nFreePhysicalMemory)/sMemoryInformation.nTotalPhysicalMemory)*100.0f;
 	else
 		return 0.0f;
 }

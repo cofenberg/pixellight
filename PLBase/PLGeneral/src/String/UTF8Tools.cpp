@@ -67,7 +67,7 @@ static const uint8 g_nTrailingBytesForUTF8[256] = {
 */
 uint8 UTF8Tools::GetNumOfCharacterBytes(char nCharacter)
 {
-	return g_nTrailingBytesForUTF8[(uint32)(unsigned char)nCharacter] + 1;
+	return g_nTrailingBytesForUTF8[static_cast<uint32>(nCharacter)] + 1;
 }
 
 /**
@@ -98,14 +98,14 @@ wchar_t UTF8Tools::GetWideCharacter(const char *pnCharacter)
 		const char *pnCurrentCharacter = pnCharacter;
 		do {
 			nWideCharacter <<= 6;
-			nWideCharacter += (unsigned char)*pnCurrentCharacter;
+			nWideCharacter += static_cast<unsigned char>(*pnCurrentCharacter);
 			pnCurrentCharacter++;
 			nNumOfCharacters++;
 		} while (*pnCurrentCharacter != '\0' && !IsSequenceStart(*pnCurrentCharacter));
 		nWideCharacter -= g_nOffsetsFromUTF8[nNumOfCharacters - 1];
 
 		// Return the wide character
-		return (wchar_t)nWideCharacter;
+		return static_cast<wchar_t>(nWideCharacter);
 	} else {
 		// Error!
 		return L'\0';
@@ -127,14 +127,14 @@ wchar_t UTF8Tools::GetNextWideCharacter(const char **ppszString)
 	uint32 nNumOfCharacters = 0;
 	do {
 		nWideCharacter <<= 6;
-		nWideCharacter += (unsigned char)**ppszString;
+		nWideCharacter += static_cast<unsigned char>(**ppszString);
 		(*ppszString)++;
 		nNumOfCharacters++;
 	} while (**ppszString != '\0' && !IsSequenceStart(**ppszString));
 	nWideCharacter -= g_nOffsetsFromUTF8[nNumOfCharacters - 1];
 
 	// Return the wide character
-	return (wchar_t)nWideCharacter;
+	return static_cast<wchar_t>(nWideCharacter);
 }
 
 /**
@@ -416,13 +416,13 @@ const char *UTF8Tools::FindCharacter(const char *pszString, uint32 nNumOfBytes, 
 				c = csz = 0;
 				do {
 					c <<= 6;
-					c += (unsigned char)*pszStringCurrent;
+					c += static_cast<unsigned char>(*pszStringCurrent);
 					pszStringCurrent++;
 					csz++;
 				} while (pszStringCurrent < pszStringEnd && !IsSequenceStart(*pszStringCurrent));
 				c -= g_nOffsetsFromUTF8[csz - 1];
 
-				if ((wchar_t)c == nWideCharacter)
+				if (static_cast<wchar_t>(c) == nWideCharacter)
 					return pszStringLast; // Character found
 				pszStringLast = pszStringCurrent;
 				(*pnCharacterIndex)++;
@@ -435,13 +435,13 @@ const char *UTF8Tools::FindCharacter(const char *pszString, uint32 nNumOfBytes, 
 				c = csz = 0;
 				do {
 					c <<= 6;
-					c += (unsigned char)*pszStringCurrent;
+					c += static_cast<unsigned char>(*pszStringCurrent);
 					pszStringCurrent++;
 					csz++;
 				} while (pszStringCurrent < pszStringEnd && !IsSequenceStart(*pszStringCurrent));
 				c -= g_nOffsetsFromUTF8[csz - 1];
 
-				if ((wchar_t)c == nWideCharacter)
+				if (static_cast<wchar_t>(c) == nWideCharacter)
 					return pszStringLast; // Character found
 				pszStringLast = pszStringCurrent;
 			}
@@ -462,22 +462,22 @@ uint8 UTF8Tools::FromWideCharacter(char *pszDestination, wchar_t nWideCharacter)
 	if (pszDestination) {
 		const uint32 nWideCharacter32 = nWideCharacter; // wchar_t may be just 2 bytes long, so use uint32 during the conversion to be on the safe side...
 		if (nWideCharacter32 < 0x80) {
-			pszDestination[0] = (char)nWideCharacter32;
+			pszDestination[0] = static_cast<char>(nWideCharacter32);
 			pszDestination[1] = '\0';
 			return 1;
 		} else if (nWideCharacter32 < 0x800) {
-			pszDestination[0] = char((nWideCharacter32 >> 6) | 0xC0);
+			pszDestination[0] = static_cast<char>((nWideCharacter32 >> 6) | 0xC0);
 			pszDestination[1] = (nWideCharacter32 & 0x3F) | 0x80;
 			pszDestination[2] = '\0';
 			return 2;
 		} else if (nWideCharacter32 < 0x10000) {
-			pszDestination[0] = char((nWideCharacter32 >> 12) | 0xE0);
+			pszDestination[0] = static_cast<char>((nWideCharacter32 >> 12) | 0xE0);
 			pszDestination[1] = ((nWideCharacter32 >> 6) & 0x3F) | 0x80;
 			pszDestination[2] = (nWideCharacter32 & 0x3F) | 0x80;
 			pszDestination[3] = '\0';
 			return 3;
 		} else if (nWideCharacter32 < 0x110000) {
-			pszDestination[0] = char((nWideCharacter32 >> 18) | 0xF0);
+			pszDestination[0] = static_cast<char>((nWideCharacter32 >> 18) | 0xF0);
 			pszDestination[1] = ((nWideCharacter32 >> 12) & 0x3F) | 0x80;
 			pszDestination[2] = ((nWideCharacter32 >> 6) & 0x3F) | 0x80;
 			pszDestination[3] = (nWideCharacter32 & 0x3F) | 0x80;
@@ -508,12 +508,12 @@ uint32 UTF8Tools::FromWideCharacterString(char *pszDestination, uint32 nNumOfByt
 				if (*pszCurrentSource < 0x80) {
 					if (pszDestination >= pnDestinationEnd)
 						return nNumOfBytes;
-					*pszDestination++ = (char)*pszCurrentSource;
+					*pszDestination++ = static_cast<char>(*pszCurrentSource);
 					nNumOfUsedBytes += 1;
 				} else if (*pszCurrentSource < 0x800) {
 					if (pszDestination >= pnDestinationEnd-1)
 						return nNumOfBytes;
-					*pszDestination++ = char((*pszCurrentSource>>6) | 0xC0);
+					*pszDestination++ = static_cast<char>((*pszCurrentSource>>6) | 0xC0);
 					*pszDestination++ = (*pszCurrentSource & 0x3F) | 0x80;
 					nNumOfUsedBytes += 2;
 				} else if (*pszCurrentSource < 0x10000) {
@@ -575,7 +575,7 @@ uint32 UTF8Tools::ToWideCharacterString(wchar_t *pszDestination, uint32 nLength,
 		uint32 nNumOfCharacters = 0;
 
 		while (nNumOfCharacters < nLength-1) {
-			const uint8 nTrailingBytes = g_nTrailingBytesForUTF8[(unsigned char)*pszCurrentSource];
+			const uint8 nTrailingBytes = g_nTrailingBytesForUTF8[static_cast<unsigned char>(*pszCurrentSource)];
 			if (nSourceNumOfBytes) {
 				if (pszCurrentSource + nTrailingBytes >= pszSourceEnd)
 					break;
@@ -586,13 +586,13 @@ uint32 UTF8Tools::ToWideCharacterString(wchar_t *pszDestination, uint32 nLength,
 			uint32 nWideCharacter = 0;	// wchar_t may be just 2 bytes long, so use uint32 during the conversion to be on the safe side...
 			switch (nTrailingBytes) {
 				// These fall through deliberately
-				case 3: nWideCharacter += (unsigned char)*pszCurrentSource++; nWideCharacter <<= 6;
-				case 2: nWideCharacter += (unsigned char)*pszCurrentSource++; nWideCharacter <<= 6;
-				case 1: nWideCharacter += (unsigned char)*pszCurrentSource++; nWideCharacter <<= 6;
-				case 0: nWideCharacter += (unsigned char)*pszCurrentSource++;
+				case 3: nWideCharacter += static_cast<unsigned char>(*pszCurrentSource++); nWideCharacter <<= 6;
+				case 2: nWideCharacter += static_cast<unsigned char>(*pszCurrentSource++); nWideCharacter <<= 6;
+				case 1: nWideCharacter += static_cast<unsigned char>(*pszCurrentSource++); nWideCharacter <<= 6;
+				case 0: nWideCharacter += static_cast<unsigned char>(*pszCurrentSource++);
 			}
 			nWideCharacter -= g_nOffsetsFromUTF8[nTrailingBytes];
-			pszDestination[nNumOfCharacters++] = (wchar_t)nWideCharacter;
+			pszDestination[nNumOfCharacters++] = static_cast<wchar_t>(nWideCharacter);
 		}
 
 		// Set terminating zero
@@ -622,10 +622,10 @@ uint32 UTF8Tools::EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, 
 		else if (nWideCharacter == L'\v')							 return _snprintf(pszDestination, nNumOfBytes, "\\v");
 		else if (nWideCharacter == L'\a')							 return _snprintf(pszDestination, nNumOfBytes, "\\a");
 		else if (nWideCharacter == L'\\')							 return _snprintf(pszDestination, nNumOfBytes, "\\\\");
-		else if (nWideCharacter < 32 || nWideCharacter == 0x7f)		 return _snprintf(pszDestination, nNumOfBytes, "\\x%hhX", (unsigned char)nWideCharacter);
-		else if (nWideCharacter > 0xFFFF)							 return _snprintf(pszDestination, nNumOfBytes, "\\U%.8X", (wchar_t)nWideCharacter);
-		else if (nWideCharacter >= 0x80 && nWideCharacter <= 0xFFFF) return _snprintf(pszDestination, nNumOfBytes, "\\u%.4hX", (unsigned short)nWideCharacter);
-		else														 return _snprintf(pszDestination, nNumOfBytes, "%c", (char)nWideCharacter);
+		else if (nWideCharacter < 32 || nWideCharacter == 0x7f)		 return _snprintf(pszDestination, nNumOfBytes, "\\x%hhX", static_cast<unsigned char>(nWideCharacter));
+		else if (nWideCharacter > 0xFFFF)							 return _snprintf(pszDestination, nNumOfBytes, "\\U%.8X", static_cast<wchar_t>(nWideCharacter));
+		else if (nWideCharacter >= 0x80 && nWideCharacter <= 0xFFFF) return _snprintf(pszDestination, nNumOfBytes, "\\u%.4hX", static_cast<unsigned short>(nWideCharacter));
+		else														 return _snprintf(pszDestination, nNumOfBytes, "%c", static_cast<char>(nWideCharacter));
 	} else {
 			 if (nWideCharacter == L'\n')							 return 2;
 		else if (nWideCharacter == L'\t')							 return 2;
@@ -699,7 +699,7 @@ uint32 UTF8Tools::ReadEscapeSequence(wchar_t &nDestination, const char *pszSourc
 		char nDigs[10] = "\0\0\0\0\0\0\0\0\0";
 		uint32 nNumOfCharacters = 1;
 
-		wchar_t nWideCharacter = (wchar_t)pszSource[0]; // Take literal character
+		wchar_t nWideCharacter = static_cast<wchar_t>(pszSource[0]); // Take literal character
 			 if (pszSource[0] == 'n') nWideCharacter = L'\n';
 		else if (pszSource[0] == 't') nWideCharacter = L'\t';
 		else if (pszSource[0] == 'r') nWideCharacter = L'\r';
@@ -713,28 +713,28 @@ uint32 UTF8Tools::ReadEscapeSequence(wchar_t &nDestination, const char *pszSourc
 			do {
 				nDigs[nDigNumber++] = pszSource[nNumOfCharacters++];
 			} while (IsOctalDigit(pszSource[nNumOfCharacters]) && nDigNumber < 3);
-			nWideCharacter = (wchar_t)strtol(nDigs, nullptr, 8);
+			nWideCharacter = static_cast<wchar_t>(strtol(nDigs, nullptr, 8));
 		} else if (pszSource[0] == 'x') {
 			uint32 nDigNumber = 0;
 			while (IsHexDigit(pszSource[nNumOfCharacters]) && nDigNumber < 2) {
 				nDigs[nDigNumber++] = pszSource[nNumOfCharacters++];
 			}
 			if (nDigNumber > 0)
-				nWideCharacter = (wchar_t)strtol(nDigs, nullptr, 16);
+				nWideCharacter = static_cast<wchar_t>(strtol(nDigs, nullptr, 16));
 		} else if (pszSource[0] == 'u') {
 			uint32 nDigNumber = 0;
 			while (IsHexDigit(pszSource[nNumOfCharacters]) && nDigNumber < 4) {
 				nDigs[nDigNumber++] = pszSource[nNumOfCharacters++];
 			}
 			if (nDigNumber > 0)
-				nWideCharacter = (wchar_t)strtol(nDigs, nullptr, 16);
+				nWideCharacter = static_cast<wchar_t>(strtol(nDigs, nullptr, 16));
 		} else if (pszSource[0] == 'U') {
 			uint32 nDigNumber = 0;
 			while (IsHexDigit(pszSource[nNumOfCharacters]) && nDigNumber < 8) {
 				nDigs[nDigNumber++] = pszSource[nNumOfCharacters++];
 			}
 			if (nDigNumber > 0)
-				nWideCharacter = (wchar_t)strtol(nDigs, nullptr, 16);
+				nWideCharacter = static_cast<wchar_t>(strtol(nDigs, nullptr, 16));
 		}
 		nDestination = nWideCharacter;
 
@@ -766,7 +766,7 @@ uint32 UTF8Tools::Unescape(char *pszDestination, uint32 nNumOfBytes, const char 
 					pszCurrentSource++; // Skip the backslash
 					nCount = ReadEscapeSequence(nWideCharacter, pszCurrentSource);
 				} else {
-					nWideCharacter = (wchar_t)*pszCurrentSource;
+					nWideCharacter = static_cast<wchar_t>(*pszCurrentSource);
 					nCount = 1;
 				}
 				pszCurrentSource += nCount;
@@ -784,7 +784,7 @@ uint32 UTF8Tools::Unescape(char *pszDestination, uint32 nNumOfBytes, const char 
 					pszCurrentSource++; // Skip the backslash
 					nCount = ReadEscapeSequence(nWideCharacter, pszCurrentSource);
 				} else {
-					nWideCharacter = (wchar_t)*pszCurrentSource;
+					nWideCharacter = static_cast<wchar_t>(*pszCurrentSource);
 					nCount = 1;
 				}
 				pszCurrentSource += nCount;
@@ -880,7 +880,7 @@ int UTF8Tools::Compare(const char *pszFirst, const char *pszSecond, uint32 nCoun
 *  @brief
 *    Find a substring in a UTF8 string
 */
-char *UTF8Tools::FindSubstring(const char *pszSource, const char *pszSubstring)
+const char *UTF8Tools::FindSubstring(const char *pszSource, const char *pszSubstring)
 {
 	// Check the given pointers
 	if (pszSource && pszSubstring) {
@@ -890,7 +890,7 @@ char *UTF8Tools::FindSubstring(const char *pszSource, const char *pszSubstring)
 		uint32 nSourceLength    = GetNumOfCharactersAndBytes(pszSource,    nSourceNumOfBytes);
 		uint32 nSubstringLength = GetNumOfCharactersAndBytes(pszSubstring, nSubstringNumOfBytes);
 
-		char *pszSubStart = nullptr;
+		const char *pszSubStart = nullptr;
 		uint32 nNextSubChar = 0;
 		const char *pszSourceTemp    = pszSource;
 		const char *pszSubstringTemp = pszSubstring;
@@ -919,7 +919,7 @@ char *UTF8Tools::FindSubstring(const char *pszSource, const char *pszSubstring)
 			if (bSame) {
 				// Both characters are the same
 				if (!pszSubStart)
-					pszSubStart = (char*)pszSourceTemp;
+					pszSubStart = pszSourceTemp;
 
 				nNextSubChar++;
 				MoveToNextCharacter(&pszSubstringTemp);

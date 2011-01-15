@@ -162,7 +162,7 @@ XmlBase::EQueryResult XmlElement::QueryFloatAttribute(const String &sName, float
 		if (pfValue) {
 			double d = 0.0f;
 			EQueryResult nResult = pAttribute->QueryDoubleValue(d);
-			*pfValue = (float)d;
+			*pfValue = static_cast<float>(d);
 			return nResult;
 		} else {
 			return Success;

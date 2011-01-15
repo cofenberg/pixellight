@@ -116,7 +116,7 @@ bool SemaphoreLinux::Unlock()
 	// Is the value -1 or greater or equal to the maximum value?
 	// Note: If the value is greater or equal to the maximum value, then no unlock is needed because
 	// the semaphore is already unlocked.
-	if (sem_val >= 0 && m_nMaxValue > (uint32)sem_val) {
+	if (sem_val >= 0 && m_nMaxValue > static_cast<uint32>(sem_val)) {
 		// Release semaphore
 		if (m_hSemaphore > 0 && semop(m_hSemaphore, &op_semunlock, 1) > 0)
 			return true; // Success

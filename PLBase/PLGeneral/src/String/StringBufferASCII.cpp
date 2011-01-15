@@ -385,7 +385,7 @@ bool StringBufferASCII::IsAlphabetic() const
 	const char *pszString    = m_pszString;
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
-		if (!isalpha((unsigned char)*pszString))
+		if (!isalpha(*pszString))
 			return false; // The string is not alphabetic
 	}
 
@@ -398,7 +398,7 @@ bool StringBufferASCII::IsAlphaNumeric() const
 	const char *pszString    = m_pszString;
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
-		if (!isalpha((unsigned char)*pszString) && !isdigit((unsigned char)*pszString))
+		if (!isalpha(*pszString) && !isdigit(*pszString))
 			return false; // The string is not alpha-numeric
 	}
 
@@ -411,7 +411,7 @@ bool StringBufferASCII::IsNumeric() const
 	const char *pszString    = m_pszString;
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
-		if (!isdigit((unsigned char)*pszString))
+		if (!isdigit(*pszString))
 			return false; // The string is not numeric
 	}
 
@@ -505,9 +505,9 @@ StringBuffer *StringBufferASCII::ToLower()
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
 		// Is this already a lower character?
-		if (!islower((unsigned char)*pszString)) {
+		if (!islower(*pszString)) {
 			// Nope, now we have to clone the string buffer :(
-			StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
+			StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 
 			// Start with an offset - we KNOW the characters before will not be changed!
 			_strlwr(pStringBufferASCIIClone->m_pszString + (pszString - m_pszString));
@@ -528,9 +528,9 @@ StringBuffer *StringBufferASCII::ToUpper()
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
 		// Is this already a upper character?
-		if (!isupper((unsigned char)*pszString)) {
+		if (!isupper(*pszString)) {
 			// Nope, now we have to clone the string buffer :(
-			StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
+			StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 
 			// Start with an offset - we KNOW the characters before will not be changed!
 			_strupr(pStringBufferASCIIClone->m_pszString + (pszString - m_pszString));
@@ -547,7 +547,7 @@ StringBuffer *StringBufferASCII::ToUpper()
 StringBuffer *StringBufferASCII::Delete(uint32 nPos, uint32 nCount)
 {
 	// We have to clone the string buffer
-	StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
+	StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 
 	// Characters are deleted by moving up the data following the region to delete (FAST!)
 	const uint32 nNewLength = m_nLength - nCount;
@@ -689,7 +689,7 @@ StringBuffer *StringBufferASCII::Replace(char nOld, char nNew, uint32 &nReplaced
 	for (; pszString<pszStringEnd; pszString++) {
 		if (*pszString == nOld) {
 			// Fork string buffer when the first character has been found
-			StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
+			StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 
 			// Set pointers to new location
 			pszString    = pStringBufferASCIIClone->m_pszString + (pszString - m_pszString);
@@ -914,7 +914,7 @@ StringBuffer *StringBufferASCII::SetCharacter(uint32 nIndex, char nCharacter)
 		return this;
 	} else {
 		// We have to clone the string buffer :(
-		StringBufferASCII *pStringBufferASCIIClone = (StringBufferASCII*)Duplicate();
+		StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 
 		// Set the new character
 		pStringBufferASCIIClone->m_pszString[nIndex] = nCharacter;

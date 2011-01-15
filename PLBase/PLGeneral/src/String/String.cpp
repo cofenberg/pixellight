@@ -86,7 +86,7 @@ String String::Format(const char *pszFormat, ...)
 				sString.m_pStringBuffer->AddReference();
 
 				// In here, because we KNOW what we're doing, we access the internal string buffer data directly
-				StringBufferASCII *pStringBufferASCII = (StringBufferASCII*)sString.m_pStringBuffer;
+				StringBufferASCII *pStringBufferASCII = static_cast<StringBufferASCII*>(sString.m_pStringBuffer);
 
 				// Print the formatted string
 				va_start(vaList, pszFormat);
@@ -132,7 +132,7 @@ String String::Format(const wchar_t *pszFormat, ...)
 				sString.m_pStringBuffer->AddReference();
 
 				// In here, because we KNOW what we're doing, we access the internal string buffer data directly
-				StringBufferUnicode *pStringBufferUnicode = (StringBufferUnicode*)sString.m_pStringBuffer;
+				StringBufferUnicode *pStringBufferUnicode = static_cast<StringBufferUnicode*>(sString.m_pStringBuffer);
 
 				// Print the formatted string
 				va_start(vaList, pszFormat);
@@ -245,7 +245,7 @@ String::String(const char *pszString, bool bCopy, int nLength)
 		// Get the length of the given string?
 		if (nLength < 0) {
 			// Get the length of the given string (excluding the terminating zero)
-			nLength = pszString ? (uint32)strlen(pszString) : 0;
+			nLength = pszString ? static_cast<uint32>(strlen(pszString)) : 0;
 		}
 	} else {
 		// A null pointer string = length of 0!
@@ -264,7 +264,7 @@ String::String(const char *pszString, bool bCopy, int nLength)
 			}
 		} else {
 			// Create a new string buffer and take over the control of the given memory
-			m_pStringBuffer = new StringBufferASCII((char*)pszString, nLength, nLength);
+			m_pStringBuffer = new StringBufferASCII(const_cast<char*>(pszString), nLength, nLength);
 			m_pStringBuffer->AddReference();
 		}
 	} else {
@@ -285,7 +285,7 @@ String::String(const wchar_t *pszString, bool bCopy, int nLength)
 		// Get the length of the given string?
 		if (nLength < 0) {
 			// Get the length of the given string (excluding the terminating zero)
-			nLength = pszString ? (uint32)wcslen(pszString) : 0;
+			nLength = pszString ? static_cast<uint32>(wcslen(pszString)) : 0;
 		}
 	} else {
 		// A null pointer string = length of 0!
@@ -304,7 +304,7 @@ String::String(const wchar_t *pszString, bool bCopy, int nLength)
 			}
 		} else {
 			// Create a new string buffer and take over the control of the given memory
-			m_pStringBuffer = new StringBufferUnicode((wchar_t*)pszString, nLength, nLength);
+			m_pStringBuffer = new StringBufferUnicode(const_cast<wchar_t*>(pszString), nLength, nLength);
 			m_pStringBuffer->AddReference();
 		}
 	} else {
@@ -454,7 +454,7 @@ String &String::operator =(const String &sString)
 String &String::operator =(const char *pszString)
 {
 	// Get the length of the given string (excluding the terminating zero)
-	const uint32 nLength = pszString ? (uint32)strlen(pszString) : 0;
+	const uint32 nLength = pszString ? static_cast<uint32>(strlen(pszString)) : 0;
 
 	// Set new string
 	if (nLength) {
@@ -481,7 +481,7 @@ String &String::operator =(const char *pszString)
 String &String::operator =(const wchar_t *pszString)
 {
 	// Get the length of the given string (excluding the terminating zero)
-	const uint32 nLength = pszString ? (uint32)wcslen(pszString) : 0;
+	const uint32 nLength = pszString ? static_cast<uint32>(wcslen(pszString)) : 0;
 
 	// Set new string
 	if (nLength) {
@@ -538,7 +538,7 @@ String String::operator +(const char *pszString) const
 	// Check whether the other string is empty
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)strlen(pszString);
+		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 		if (nLength) {
 			// Compose new string
 			String sResult = *this;
@@ -560,7 +560,7 @@ String String::operator +(const wchar_t *pszString) const
 	// Check whether the other string is empty
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)wcslen(pszString);
+		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 		if (nLength) {
 			// Compose new string
 			String sResult = *this;
@@ -586,7 +586,7 @@ String operator +(const char *pszString, const String &sString)
 	// Check whether the first string is empty
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)strlen(pszString);
+		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 		if (nLength) {
 			// Compose new string
 			String sResult = pszString;
@@ -608,7 +608,7 @@ String operator +(const wchar_t *pszString, const String &sString)
 	// Check whether the first string is empty
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)wcslen(pszString);
+		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 		if (nLength) {
 			// Compose new string
 			String sResult = pszString;
@@ -655,7 +655,7 @@ String &String::operator +=(const char *pszString)
 	// Get the length of the given string
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)strlen(pszString);
+		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 		if (nLength) {
 			// Check whether this string is empty
 			if (m_pStringBuffer) {
@@ -681,7 +681,7 @@ String &String::operator +=(const wchar_t *pszString)
 	// Get the length of the given string
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)wcslen(pszString);
+		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 		if (nLength) {
 			// Check whether this string is empty
 			if (m_pStringBuffer) {
@@ -719,20 +719,20 @@ bool String::operator <(const String &sString) const
 			case ASCII:
 				switch (sString.GetFormat()) {
 					case ASCII:
-						return ((StringBufferASCII*)m_pStringBuffer)->IsLessThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+						return m_pStringBuffer->IsLessThan(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 
 					case Unicode:
-						return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsGreaterThan(GetUnicode(), m_pStringBuffer->GetLength());
+						return sString.m_pStringBuffer->IsGreaterThan(GetUnicode(), m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
 
 			case Unicode:
 				switch (sString.GetFormat()) {
 					case ASCII:
-						return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
+						return m_pStringBuffer->IsLessThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
 
 					case Unicode:
-						return ((StringBufferUnicode*)m_pStringBuffer)->IsLessThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+						return m_pStringBuffer->IsLessThan(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
@@ -759,7 +759,7 @@ bool String::operator <(const char *pszString) const
 		// Check whether the other string is valid
 		if (pszString) {
 			// Get the length of the given string (excluding the terminating zero)
-			const uint32 nLength = (uint32)strlen(pszString);
+			const uint32 nLength = static_cast<uint32>(strlen(pszString));
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsLessThan(pszString, nLength);
@@ -784,7 +784,7 @@ bool String::operator <(const wchar_t *pszString) const
 		// Check whether the other string is valid
 		if (pszString) {
 			// Get the length of the given string (excluding the terminating zero)
-			const uint32 nLength = (uint32)wcslen(pszString);
+			const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsLessThan(pszString, nLength);
@@ -819,20 +819,20 @@ bool String::operator >(const String &sString) const
 			case ASCII:
 				switch (sString.GetFormat()) {
 					case ASCII:
-						return ((StringBufferASCII*)m_pStringBuffer)->IsGreaterThan(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+						return m_pStringBuffer->IsGreaterThan(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 
 					case Unicode:
-						return ((StringBufferUnicode*)sString.m_pStringBuffer)->IsLessThan(GetUnicode(), m_pStringBuffer->GetLength());
+						return sString.m_pStringBuffer->IsLessThan(GetUnicode(), m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
 
 			case Unicode:
 				switch (sString.GetFormat()) {
 					case ASCII:
-						return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
+						return m_pStringBuffer->IsGreaterThan(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
 
 					case Unicode:
-						return ((StringBufferUnicode*)m_pStringBuffer)->IsGreaterThan(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+						return m_pStringBuffer->IsGreaterThan(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
@@ -856,7 +856,7 @@ bool String::operator >(const char *pszString) const
 		// Check whether the other string is valid
 		if (pszString) {
 			// Get the length of the given string (excluding the terminating zero)
-			const uint32 nLength = (uint32)strlen(pszString);
+			const uint32 nLength = static_cast<uint32>(strlen(pszString));
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsGreaterThan(pszString, nLength);
@@ -878,7 +878,7 @@ bool String::operator >(const wchar_t *pszString) const
 		// Check whether the other string is valid
 		if (pszString) {
 			// Get the length of the given string (excluding the terminating zero)
-			const uint32 nLength = (uint32)wcslen(pszString);
+			const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 			if (nLength) {
 				// Compare
 				return m_pStringBuffer->IsGreaterThan(pszString, nLength);
@@ -962,20 +962,20 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 				case ASCII:
 					switch (sString.GetFormat()) {
 						case ASCII:
-							return m_pStringBuffer->Compare(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->Compare(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 
 						case Unicode:
-							return m_pStringBuffer->Compare(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->Compare(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 					}
 					break; // We should NEVER get in here!
 
 				case Unicode:
 					switch (sString.GetFormat()) {
 						case ASCII:
-							return m_pStringBuffer->Compare(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->Compare(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 
 						case Unicode:
-							return m_pStringBuffer->Compare(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->Compare(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 					}
 					break; // We should NEVER get in here!
 			}
@@ -1008,9 +1008,9 @@ bool String::Compare(const char *pszString, uint32 nPos, int nCount) const
 			// Check whether the other string is valid
 			if (pszString) {
 				// Get the length of the given string (excluding the terminating zero)
-				const uint32 nLength = (uint32)strlen(pszString);
+				const uint32 nLength = static_cast<uint32>(strlen(pszString));
 				if (nLength)
-					return m_pStringBuffer->Compare(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
+					return m_pStringBuffer->Compare(pszString, nLength, nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 			}
 
 			// Strings are not equal
@@ -1037,9 +1037,9 @@ bool String::Compare(const wchar_t *pszString, uint32 nPos, int nCount) const
 			// Check whether the other string is valid
 			if (pszString) {
 				// Get the length of the given string (excluding the terminating zero)
-				const uint32 nLength = (uint32)wcslen(pszString);
+				const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 				if (nLength)
-					return m_pStringBuffer->Compare(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
+					return m_pStringBuffer->Compare(pszString, nLength, nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 			}
 
 			// Strings are not equal
@@ -1080,20 +1080,20 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 				case ASCII:
 					switch (sString.GetFormat()) {
 						case ASCII:
-							return m_pStringBuffer->CompareNoCase(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->CompareNoCase(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 
 						case Unicode:
-							return m_pStringBuffer->CompareNoCase(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->CompareNoCase(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 					}
 					break; // We should NEVER get in here!
 
 				case Unicode:
 					switch (sString.GetFormat()) {
 						case ASCII:
-							return m_pStringBuffer->CompareNoCase(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->CompareNoCase(sString.GetUnicode(), sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 
 						case Unicode:
-							return m_pStringBuffer->CompareNoCase(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : (uint32)nCount);
+							return m_pStringBuffer->CompareNoCase(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 					}
 					break; // We should NEVER get in here!
 			}
@@ -1126,9 +1126,9 @@ bool String::CompareNoCase(const char *pszString, uint32 nPos, int nCount) const
 			// Check whether the other string is valid
 			if (pszString) {
 				// Get the length of the given string (excluding the terminating zero)
-				const uint32 nLength = (uint32)strlen(pszString);
+				const uint32 nLength = static_cast<uint32>(strlen(pszString));
 				if (nLength)
-					return m_pStringBuffer->CompareNoCase(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
+					return m_pStringBuffer->CompareNoCase(pszString, nLength, nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 			}
 
 			// Strings are not equal
@@ -1155,9 +1155,9 @@ bool String::CompareNoCase(const wchar_t *pszString, uint32 nPos, int nCount) co
 			// Check whether the other string is valid
 			if (pszString) {
 				// Get the length of the given string (excluding the terminating zero)
-				const uint32 nLength = (uint32)wcslen(pszString);
+				const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 				if (nLength)
-					return m_pStringBuffer->CompareNoCase(pszString, nLength, nPos, (nCount < 0) ? 0 : (uint32)nCount);
+					return m_pStringBuffer->CompareNoCase(pszString, nLength, nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
 			}
 
 			// Strings are not equal
@@ -1222,10 +1222,10 @@ bool String::IsSubstring(const String &sString) const
 		case ASCII:
 			switch (sString.GetFormat()) {
 				case ASCII:
-					return m_pStringBuffer->IsSubstring(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+					return m_pStringBuffer->IsSubstring(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, 0); // Same format
 
 				case Unicode:
-					return m_pStringBuffer->IsSubstring(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength());
+					return m_pStringBuffer->IsSubstring(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength());
 			}
 			break; // We should NEVER get in here!
 
@@ -1235,7 +1235,7 @@ bool String::IsSubstring(const String &sString) const
 					return m_pStringBuffer->IsSubstring(sString.GetUnicode(), sString.m_pStringBuffer->GetLength());
 
 				case Unicode:
-					return m_pStringBuffer->IsSubstring(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, 0); // Same format
+					return m_pStringBuffer->IsSubstring(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, 0); // Same format
 			}
 			break; // We should NEVER get in here!
 	}
@@ -1253,7 +1253,7 @@ bool String::IsSubstring(const char *pszString) const
 	// Is the given string empty
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)strlen(pszString);
+		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 		if (nLength) {
 			// Is this string emtpy?
 			if (m_pStringBuffer)
@@ -1272,7 +1272,7 @@ bool String::IsSubstring(const wchar_t *pszString) const
 	// Is the given string empty
 	if (pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)wcslen(pszString);
+		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 		if (nLength) {
 			// Is this string emtpy?
 			if (m_pStringBuffer)
@@ -1299,10 +1299,10 @@ int String::IndexOf(const String &sString, uint32 nPos) const
 			case ASCII:
 				switch (sString.GetFormat()) {
 					case ASCII:
-						return m_pStringBuffer->IndexOf(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
+						return m_pStringBuffer->IndexOf(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
 
 					case Unicode:
-						return m_pStringBuffer->IndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.m_pStringBuffer->GetLength());
+						return m_pStringBuffer->IndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.m_pStringBuffer->GetLength());
 				}
 				break; // We should NEVER get in here!
 
@@ -1312,7 +1312,7 @@ int String::IndexOf(const String &sString, uint32 nPos) const
 						return m_pStringBuffer->IndexOf(sString.GetUnicode(), nPos, sString.m_pStringBuffer->GetLength());
 
 					case Unicode:
-						return m_pStringBuffer->IndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
+						return m_pStringBuffer->IndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
 				}
 				break; // We should NEVER get in here!
 		}
@@ -1331,7 +1331,7 @@ int String::IndexOf(const char *pszString, uint32 nPos) const
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < m_pStringBuffer->GetLength() && pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)strlen(pszString);
+		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 
 		// Is the given string empty?
 		if (nLength) {
@@ -1349,7 +1349,7 @@ int String::IndexOf(const wchar_t *pszString, uint32 nPos) const
 	// Is this string not empty and is the given position valid and is the given string not empty?
 	if (m_pStringBuffer && nPos < m_pStringBuffer->GetLength() && pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)wcslen(pszString);
+		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 
 		// Is the given string empty?
 		if (nLength) {
@@ -1369,7 +1369,7 @@ int String::IndexOf(const wchar_t *pszString, uint32 nPos) const
 int String::LastIndexOf(const String &sString, int nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
-	if (m_pStringBuffer && nPos < (int)m_pStringBuffer->GetLength() && sString.GetLength()) {
+	if (m_pStringBuffer && nPos < static_cast<int>(m_pStringBuffer->GetLength()) && sString.GetLength()) {
 		// Start at the last character?
 		if (nPos < 0)
 			nPos = m_pStringBuffer->GetLength() - 1;
@@ -1379,10 +1379,10 @@ int String::LastIndexOf(const String &sString, int nPos) const
 			case ASCII:
 				switch (sString.GetFormat()) {
 					case ASCII:
-						return m_pStringBuffer->LastIndexOf(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+						return m_pStringBuffer->LastIndexOf(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
 
 					case Unicode:
-						return m_pStringBuffer->LastIndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+						return m_pStringBuffer->LastIndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
 				}
 				break; // We should NEVER get in here!
 
@@ -1392,7 +1392,7 @@ int String::LastIndexOf(const String &sString, int nPos) const
 						return m_pStringBuffer->LastIndexOf(sString.GetUnicode(), nPos, sString.GetLength());
 
 					case Unicode:
-						return m_pStringBuffer->LastIndexOf(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+						return m_pStringBuffer->LastIndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
 				}
 				break; // We should NEVER get in here!
 		}
@@ -1409,9 +1409,9 @@ int String::LastIndexOf(const String &sString, int nPos) const
 int String::LastIndexOf(const char *pszString, int nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
-	if (m_pStringBuffer && nPos < (int)m_pStringBuffer->GetLength() && pszString) {
+	if (m_pStringBuffer && nPos < static_cast<int>(m_pStringBuffer->GetLength()) && pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)strlen(pszString);
+		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 
 		// Is the given string empty?
 		if (nLength) {
@@ -1431,9 +1431,9 @@ int String::LastIndexOf(const char *pszString, int nPos) const
 int String::LastIndexOf(const wchar_t *pszString, int nPos) const
 {
 	// Is this string not empty and is the given position valid and is the given string not empty?
-	if (m_pStringBuffer && nPos < (int)m_pStringBuffer->GetLength() && pszString) {
+	if (m_pStringBuffer && nPos < static_cast<int>(m_pStringBuffer->GetLength()) && pszString) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nLength = (uint32)wcslen(pszString);
+		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 
 		// Is the given string empty?
 		if (nLength) {
@@ -1462,11 +1462,11 @@ String String::GetSubstring(uint32 nPos, int nCount) const
 		const uint32 nLength = GetLength();
 		if (nPos < nLength) {
 			// Check count
-			if (nCount < 0 || (uint32)nCount > nLength - nPos)
+			if (nCount < 0 || static_cast<uint32>(nCount) > nLength - nPos)
 				nCount = nLength - nPos;
 
 			// Get the substring
-			return m_pStringBuffer->GetSubstring(nPos, (uint32)nCount);
+			return m_pStringBuffer->GetSubstring(nPos, static_cast<uint32>(nCount));
 		}
 	}
 
@@ -1518,13 +1518,13 @@ String &String::Delete(uint32 nPos, int nCount)
 		const uint32 nLength = GetLength();
 		if (nLength && nPos < nLength) {
 			// Check count
-			if (nCount < 0 || (uint32)nCount > nLength - nPos)
+			if (nCount < 0 || static_cast<uint32>(nCount) > nLength - nPos)
 				nCount = nLength - nPos;
 
 			// Is the string empty now?
 			if (nLength - nCount) {
 				// If not, delete the given part
-				SetStringBuffer(m_pStringBuffer->Delete(nPos, (uint32)nCount));
+				SetStringBuffer(m_pStringBuffer->Delete(nPos, static_cast<uint32>(nCount)));
 			} else {
 				// The string is now empty!
 				ReleaseStringBuffer();
@@ -1548,7 +1548,7 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 		const uint32 nStringLength = sString.GetLength();
 		if (nStringLength) {
 			// Check count
-			if (nCount < 0 || (uint32)nCount > nStringLength)
+			if (nCount < 0 || static_cast<uint32>(nCount) > nStringLength)
 				nCount = nStringLength;
 
 			// Check if the string is empty
@@ -1559,11 +1559,11 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 						case ASCII:
 							switch (sString.GetFormat()) {
 								case ASCII:
-									SetStringBuffer(m_pStringBuffer->Append(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Append(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount)));
 									break;
 
 								case Unicode:
-									SetStringBuffer(m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Append(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount)));
 									break;
 							}
 							break;
@@ -1571,11 +1571,11 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 						case Unicode:
 							switch (sString.GetFormat()) {
 								case ASCII:
-									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Append(sString.GetUnicode(), static_cast<uint32>(nCount)));
 									break;
 
 								case Unicode:
-									SetStringBuffer(m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Append(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount)));
 									break;
 							}
 							break;
@@ -1585,11 +1585,11 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 						case ASCII:
 							switch (sString.GetFormat()) {
 								case ASCII:
-									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Insert(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, nPos, static_cast<uint32>(nCount)));
 									break;
 
 								case Unicode:
-									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Insert(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, static_cast<uint32>(nCount)));
 									break;
 							}
 							break;
@@ -1597,11 +1597,11 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 						case Unicode:
 							switch (sString.GetFormat()) {
 								case ASCII:
-									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Insert(sString.GetUnicode(), nPos, static_cast<uint32>(nCount)));
 									break;
 
 								case Unicode:
-									SetStringBuffer(m_pStringBuffer->Insert(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, nPos, (uint32)nCount));
+									SetStringBuffer(m_pStringBuffer->Insert(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, static_cast<uint32>(nCount)));
 									break;
 							}
 							break;
@@ -1610,23 +1610,23 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 
 			// No string to insert into, create new string
 			} else {
-				if ((uint32)nCount == nStringLength) {
+				if (static_cast<uint32>(nCount) == nStringLength) {
 					m_pStringBuffer = sString.m_pStringBuffer;
 					m_pStringBuffer->AddReference();
 				} else {
 					if (sString.GetFormat() == Unicode) {
 						// Request an unicode string buffer from the string buffer manager
-						m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+						m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(static_cast<uint32>(nCount));
 						if (m_pStringBuffer) {
 							m_pStringBuffer->AddReference();
-							m_pStringBuffer->Append(((StringBufferUnicode*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount);
+							m_pStringBuffer->Append(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount));
 						}
 					} else {
 						// Request an ASCII string buffer from the string buffer manager
-						m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII((uint32)nCount);
+						m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(static_cast<uint32>(nCount));
 						if (m_pStringBuffer) {
 							m_pStringBuffer->AddReference();
-							m_pStringBuffer->Append(((StringBufferASCII*)sString.m_pStringBuffer)->m_pszString, (uint32)nCount);
+							m_pStringBuffer->Append(static_cast<StringBufferASCII*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount));
 						}
 					}
 				}
@@ -1647,25 +1647,25 @@ String &String::Insert(const char *pszString, uint32 nPos, int nCount)
 	// Check if the string to insert and the position are valid
 	if (pszString && nCount && nPos <= GetLength()) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nStringLength = (uint32)strlen(pszString);
+		const uint32 nStringLength = static_cast<uint32>(strlen(pszString));
 		if (nStringLength) {
 			// Check count
-			if (nCount < 0 || (uint32)nCount > nStringLength)
+			if (nCount < 0 || static_cast<uint32>(nCount) > nStringLength)
 				nCount = nStringLength;
 
 			// Check if the string is empty
 			if (m_pStringBuffer) {
 				// Compose new string by appending?
 				if (nPos == GetLength())
-					SetStringBuffer(m_pStringBuffer->Append(pszString, (uint32)nCount));
+					SetStringBuffer(m_pStringBuffer->Append(pszString, static_cast<uint32>(nCount)));
 				else
-					SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, (uint32)nCount));
+					SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, static_cast<uint32>(nCount)));
 			} else {
 				// Request an ASCII string buffer from the string buffer manager
-				m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII((uint32)nCount);
+				m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(static_cast<uint32>(nCount));
 				if (m_pStringBuffer) {
 					m_pStringBuffer->AddReference();
-					m_pStringBuffer->Append(pszString, (uint32)nCount);
+					m_pStringBuffer->Append(pszString, static_cast<uint32>(nCount));
 				}
 			}
 		}
@@ -1680,24 +1680,24 @@ String &String::Insert(const wchar_t *pszString, uint32 nPos, int nCount)
 	// Check if the string to insert and the position are valid
 	if (pszString && nCount && nPos <= GetLength()) {
 		// Get the length of the given string (excluding the terminating zero)
-		const uint32 nStringLength = (uint32)wcslen(pszString);
+		const uint32 nStringLength = static_cast<uint32>(wcslen(pszString));
 		if (nStringLength) {
-			if (nCount < 0 || (uint32)nCount > nStringLength)
+			if (nCount < 0 || static_cast<uint32>(nCount) > nStringLength)
 				nCount = nStringLength;
 
 			// Check if the string is empty
 			if (m_pStringBuffer) {
 				// Compose new string by appending?
 				if (nPos == GetLength())
-					SetStringBuffer(m_pStringBuffer->Append(pszString, (uint32)nCount));
+					SetStringBuffer(m_pStringBuffer->Append(pszString, static_cast<uint32>(nCount)));
 				else
-					SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, (uint32)nCount));
+					SetStringBuffer(m_pStringBuffer->Insert(pszString, nPos, static_cast<uint32>(nCount)));
 			} else {
 				// Request an unicode string buffer from the string buffer manager
-				m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+				m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(static_cast<uint32>(nCount));
 				if (m_pStringBuffer) {
 					m_pStringBuffer->AddReference();
-					m_pStringBuffer->Append(pszString, (uint32)nCount);
+					m_pStringBuffer->Append(pszString, static_cast<uint32>(nCount));
 				}
 			}
 		}
@@ -1714,13 +1714,13 @@ String &String::Insert(const wchar_t *pszString, uint32 nPos, int nCount)
 String &String::Copy(const char *pszString, int nCount)
 {
 	// Get the length of the given string (excluding the terminating zero)
-	const uint32 nLength = (pszString && nCount) ? (uint32)strlen(pszString) : 0;
+	const uint32 nLength = (pszString && nCount) ? static_cast<uint32>(strlen(pszString)) : 0;
 
 	// Set new string
 	if (nLength) {
 		// Check count
 		if (nCount > 0) {
-			if ((uint32)nCount > nLength)
+			if (static_cast<uint32>(nCount) > nLength)
 				nCount = nLength;
 		} else {
 			nCount = nLength;
@@ -1731,10 +1731,10 @@ String &String::Copy(const char *pszString, int nCount)
 			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
 
 		// Request an ASCII string buffer from the string buffer manager
-		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII((uint32)nCount);
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(static_cast<uint32>(nCount));
 		if (m_pStringBuffer) {
 			m_pStringBuffer->AddReference();
-			m_pStringBuffer->Append(pszString, (uint32)nCount);
+			m_pStringBuffer->Append(pszString, static_cast<uint32>(nCount));
 		}
 	} else {
 		// Empty string
@@ -1748,13 +1748,13 @@ String &String::Copy(const char *pszString, int nCount)
 String &String::Copy(const wchar_t *pszString, int nCount)
 {
 	// Get the length of the given string (excluding the terminating zero)
-	const uint32 nLength = (pszString && nCount) ? (uint32)wcslen(pszString) : 0;
+	const uint32 nLength = (pszString && nCount) ? static_cast<uint32>(wcslen(pszString)) : 0;
 
 	// Set new string
 	if (nLength) {
 		// Check count
 		if (nCount) {
-			if ((uint32)nCount > nLength)
+			if (static_cast<uint32>(nCount) > nLength)
 				nCount = nLength;
 		} else {
 			nCount = nLength;
@@ -1765,10 +1765,10 @@ String &String::Copy(const wchar_t *pszString, int nCount)
 			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
 
 		// Request an unicode string buffer from the string buffer manager
-		m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode((uint32)nCount);
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferUnicode(static_cast<uint32>(nCount));
 		if (m_pStringBuffer) {
 			m_pStringBuffer->AddReference();
-			m_pStringBuffer->Append(pszString, (uint32)nCount);
+			m_pStringBuffer->Append(pszString, static_cast<uint32>(nCount));
 		}
 	} else {
 		// Empty string
@@ -1843,13 +1843,13 @@ uint32 String::Replace(const char *pszOld, const char *pszNew)
 	// Is this string or the old string empty?
 	if (m_pStringBuffer && pszOld) {
 		// Get the length of the given old string (excluding the terminating zero)
-		const uint32 nOldLength = (uint32)strlen(pszOld);
+		const uint32 nOldLength = static_cast<uint32>(strlen(pszOld));
 
 		// Is the old string empty?
 		if (nOldLength) {
 			// Check the two given strings
 			const uint32 nLength    = m_pStringBuffer->GetLength();
-			const uint32 nNewLength = pszNew ? (uint32)strlen(pszNew) : 0;
+			const uint32 nNewLength = pszNew ? static_cast<uint32>(strlen(pszNew)) : 0;
 			if (nOldLength <= nLength && !(nNewLength && nOldLength == nNewLength && !strcmp(pszOld, pszNew))) {
 				// Replace
 				uint32 nReplaced;
@@ -1870,13 +1870,13 @@ uint32 String::Replace(const wchar_t *pszOld, const wchar_t *pszNew)
 	// Is this string or the old string empty?
 	if (m_pStringBuffer && pszOld) {
 		// Get the length of the given old string (excluding the terminating zero)
-		const uint32 nOldLength = (uint32)wcslen(pszOld);
+		const uint32 nOldLength = static_cast<uint32>(wcslen(pszOld));
 
 		// Is the old string empty?
 		if (nOldLength) {
 			// Check the two given strings
 			const uint32 nLength    = m_pStringBuffer->GetLength();
-			const uint32 nNewLength = pszNew ? (uint32)wcslen(pszNew) : 0;
+			const uint32 nNewLength = pszNew ? static_cast<uint32>(wcslen(pszNew)) : 0;
 			if (nOldLength <= nLength && !(nNewLength && nOldLength == nNewLength && !wcscmp(pszOld, pszNew))) {
 				// Replace
 				uint32 nReplaced;
@@ -2041,7 +2041,7 @@ bool String::IsValidInteger() const
 			// Check length
 			if (nLength) {
 				// Digits
-				while (nLength > 0 && isdigit((unsigned char)*pszASCII)) {
+				while (nLength > 0 && isdigit(*pszASCII)) {
 					// Next character
 					pszASCII++;
 					nLength--;
@@ -2093,7 +2093,7 @@ bool String::IsValidFloat() const
 			if (nLength) {
 				// Digits
 				bool bGotDot = false;
-				while (nLength > 0 && (isdigit((unsigned char)*pszASCII) || (!bGotDot && *pszASCII == '.'))) {
+				while (nLength > 0 && (isdigit(*pszASCII) || (!bGotDot && *pszASCII == '.'))) {
 					if (*pszASCII == '.')
 						bGotDot = true;
 
@@ -2124,7 +2124,7 @@ bool String::IsValidFloat() const
 					// Check length
 					if (nLength) {
 						// Digits
-						while (nLength > 0 && isdigit((unsigned char)*pszASCII)) {
+						while (nLength > 0 && isdigit(*pszASCII)) {
 							// Next character
 							pszASCII++;
 							nLength--;
@@ -2178,10 +2178,10 @@ char String::GetChar() const
 	if (m_pStringBuffer) {
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return (char)atoi(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return static_cast<char>(atoi(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
 
 			case Unicode:
-				return (char)_wtoi(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+				return static_cast<char>(_wtoi(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
 		}
 	}
 
@@ -2194,10 +2194,10 @@ wchar_t String::GetWideChar() const
 	if (m_pStringBuffer) {
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return (wchar_t)atoi(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return static_cast<wchar_t>(atoi(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
 
 			case Unicode:
-				return (wchar_t)_wtoi(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+				return static_cast<wchar_t>(_wtoi(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
 		}
 	}
 
@@ -2210,10 +2210,10 @@ int String::GetInt() const
 	if (m_pStringBuffer) {
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return atoi(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return atoi(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
 
 			case Unicode:
-				return _wtoi(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+				return _wtoi(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 		}
 	}
 
@@ -2228,12 +2228,12 @@ uint32 String::GetUInt32() const
 			case ASCII:
 				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
 				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return strtoul(((StringBufferASCII*)m_pStringBuffer)->m_pszString, nullptr, 10);
+				return strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10);
 
 			case Unicode:
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return wcstoul(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, nullptr, 10);
+				return wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10);
 		}
 	}
 
@@ -2246,13 +2246,13 @@ uint64 String::GetUInt64() const
 	if (m_pStringBuffer) {
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return _atoi64(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return _atoi64(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
 
 			case Unicode:
 				#ifdef LINUX
-					return wcstoumax(((StringBufferUnicode*)m_pStringBuffer)->m_pszString, nullptr, 10);
+					return wcstoumax(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10);
 				#elif defined(WIN32)
-					return _wtoi64(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+					return _wtoi64(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 				#endif
 		}
 	}
@@ -2275,10 +2275,10 @@ long String::GetLong() const
 	if (m_pStringBuffer) {
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return atol(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
 
 			case Unicode:
-				return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+				return _wtol(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 		}
 	}
 
@@ -2296,10 +2296,10 @@ float String::GetFloat() const
 		float fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return (float)atof(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return static_cast<float>(atof(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
 
 			case Unicode:
-				return (float)_wtof(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+				return static_cast<float>(_wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
 
 			default:
 				fReturnValue = 0.0f;
@@ -2324,10 +2324,10 @@ double String::GetDouble() const
 		double fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return atof(((StringBufferASCII*)m_pStringBuffer)->m_pszString);
+				return atof(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
 
 			case Unicode:
-				return _wtof(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);
+				return _wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 
 			default:
 				fReturnValue = 0.0;
@@ -2362,7 +2362,7 @@ String &String::operator =(char nValue)
 		// cut it down to use a single character
 		if (m_pStringBuffer && m_pStringBuffer->GetRefCount() == 1 && m_pStringBuffer->GetFormat() == ASCII) {
 			// Just set a character
-			((StringBufferASCII*)m_pStringBuffer)->SetCharacter(nValue);
+			static_cast<StringBufferASCII*>(m_pStringBuffer)->SetCharacter(nValue);
 		} else {
 			// Release old string buffer
 			if (m_pStringBuffer)
@@ -2391,7 +2391,7 @@ String &String::operator =(wchar_t nValue)
 		// cut it down to use a single character
 		if (m_pStringBuffer && m_pStringBuffer->GetRefCount() == 1 && m_pStringBuffer->GetFormat() == Unicode) {
 			// Just set a character
-			((StringBufferUnicode*)m_pStringBuffer)->SetCharacter(nValue);
+			static_cast<StringBufferUnicode*>(m_pStringBuffer)->SetCharacter(nValue);
 		} else {
 			// Release old string buffer
 			if (m_pStringBuffer)

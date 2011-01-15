@@ -80,7 +80,7 @@ namespace PLGeneral {
 *    Default constructor
 */
 ChecksumSHA1::ChecksumSHA1() :
-	m_pBlock((WorkspaceBlock*)m_nWorkspace)
+	m_pBlock(reinterpret_cast<WorkspaceBlock*>(m_nWorkspace))
 {
 	// SHA1 initialization constants
 	m_nState[0] = 0x67452301;
@@ -183,20 +183,20 @@ String ChecksumSHA1::Final()
 	uint8 nFinalCount[8];
 
 	for (int i=0; i<8; i++)
-		nFinalCount[i] = (uint8)((m_nCount[((i >= 4) ? 0 : 1)]
+		nFinalCount[i] = static_cast<uint8>((m_nCount[((i >= 4) ? 0 : 1)]
 			>> ((3 - (i & 3)) * 8) ) & 255); // Endian independent
 
-	Update((uint8*)"\200", 1);
+	Update(reinterpret_cast<const uint8*>("\200"), 1);
 
 	while ((m_nCount[0] & 504) != 448)
-		Update((uint8*)"\0", 1);
+		Update(reinterpret_cast<const uint8*>("\0"), 1);
 
 	Update(nFinalCount, 8); // Cause a SHA1Transform()
 
 	// Convert the hexadecimal checksum to a string
 	String sSHA1;
 	for (int i=0; i<20; i++)
-		sSHA1 += String::Format("%02x", (uint8)((m_nState[i >> 2] >> ((3 - (i & 3)) * 8)) & 255));
+		sSHA1 += String::Format("%02x", static_cast<uint8>((m_nState[i >> 2] >> ((3 - (i & 3)) * 8)) & 255));
 	return sSHA1;
 }
 

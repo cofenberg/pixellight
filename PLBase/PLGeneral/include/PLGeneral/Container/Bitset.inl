@@ -36,7 +36,7 @@ namespace PLGeneral {
 */
 inline Container<bool> &Bitset::operator =(const Bitset &lstSource)
 {
-	return *this = (Container<bool>&)lstSource;
+	return *this = static_cast<const Container<bool>&>(lstSource);
 }
 
 /**

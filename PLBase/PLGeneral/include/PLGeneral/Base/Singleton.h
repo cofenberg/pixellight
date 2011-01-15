@@ -133,7 +133,7 @@ template <class AType> class PLGENERAL_TMPL Singleton {
 				~__Destruction_Guard()
 				{
 					if (Singleton<AType>::__Instance) {
-						delete (Singleton<AType>*)Singleton<AType>::__Instance;
+						delete static_cast<Singleton<AType>*>(Singleton<AType>::__Instance);
 					}
 				}
 				inline void init() {}

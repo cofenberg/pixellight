@@ -269,7 +269,7 @@ int _vsnwprintf(wchar_t *buf, size_t lenMax,
                             // NB: 'short int' value passed through '...'
                             //      is promoted to 'int', so we have to get
                             //      an int from stack even if we need a short
-                            short int val = (short int) va_arg(argptr, int);
+                            short int val = static_cast<short int>(va_arg(argptr, int));
                             lenCur +=::swprintf(&buf[lenCur],lenMax - lenCur, s_szFlags, val);
                         }
                         else if (ilen == 1)
@@ -735,7 +735,7 @@ int _vscwprintf(const wchar_t *format, va_list argptr)
                             // NB: 'short int' value passed through '...'
                             //      is promoted to 'int', so we have to get
                             //      an int from stack even if we need a short
-                            short int val = (short int) va_arg(argptr, int);
+                            short int val = static_cast<short int>(va_arg(argptr, int));
                             lenCur +=numlen(val);
                         }
                         else if (ilen == 1)
@@ -917,7 +917,7 @@ int _vscwprintf(const wchar_t *format, va_list argptr)
 
 int _vscprintf(const char *fmt,va_list ap)
 {
-    return vsnprintf( nullptr,(size_t)0, fmt, ap);
+    return vsnprintf( nullptr, static_cast<size_t>(0), fmt, ap);
 }
 
 /*// wchar functions
@@ -931,12 +931,12 @@ int _vscwprintf(const wchar_t *fmt,va_list ap)
 
 int _wtoi( const wchar_t *str )
 {
-	return (int)wcstol(str, 0, 10);
+	return static_cast<int>(wcstol(str, 0, 10));
 }
 
 long _wtol( const wchar_t *str )
 {
-	return (int)wcstol(str, 0, 10);
+	return static_cast<int>(wcstol(str, 0, 10));
 }
 
 float _wtof( const wchar_t *str )

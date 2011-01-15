@@ -131,10 +131,10 @@ inline void ChecksumMD5::ByteToDWord(uint32 nOutput[], const uint8 nInput[], uin
 {
 	// Transfer the data by shifting and copying
 	for (uint32 i=0, j=0; j<nLength; i++, j+=4) {
-		nOutput[i] = (uint32)nInput[j]		   |
-					 (uint32)nInput[j+1] << 8  |
-					 (uint32)nInput[j+2] << 16 |
-					 (uint32)nInput[j+3] << 24;
+		nOutput[i] = static_cast<uint32>(nInput[j])		    |
+					 static_cast<uint32>(nInput[j+1]) << 8  |
+					 static_cast<uint32>(nInput[j+2]) << 16 |
+					 static_cast<uint32>(nInput[j+3]) << 24;
 	}
 }
 
@@ -146,10 +146,10 @@ inline void ChecksumMD5::DWordToByte(uint8 nOutput[], uint32 nInput[], uint32 nL
 {
 	// Transfer the data by shifting and copying
 	for (uint32 i=0, j=0; j<nLength; i++, j+=4) {
-		nOutput[j]   = (uint8)( nInput[i]        & 0xff);
-		nOutput[j+1] = (uint8)((nInput[i] >> 8)  & 0xff);
-		nOutput[j+2] = (uint8)((nInput[i] >> 16) & 0xff);
-		nOutput[j+3] = (uint8)((nInput[i] >> 24) & 0xff);
+		nOutput[j]   = static_cast<uint8>( nInput[i]        & 0xff);
+		nOutput[j+1] = static_cast<uint8>((nInput[i] >> 8)  & 0xff);
+		nOutput[j+2] = static_cast<uint8>((nInput[i] >> 16) & 0xff);
+		nOutput[j+3] = static_cast<uint8>((nInput[i] >> 24) & 0xff);
 	}
 }
 
@@ -341,7 +341,7 @@ void ChecksumMD5::Transform(const uint8 nBlock[64])
 void ChecksumMD5::Update(const uint8 nInput[], uint32 nInputLen)
 {
 	// Compute number of bytes mod 64
-	uint32 nIndex = (uint32)((m_nCount[0] >> 3) & 0x3F);
+	uint32 nIndex = static_cast<uint32>((m_nCount[0] >> 3) & 0x3F);
 
 	// Update number of bits
 	if ((m_nCount[0] += nInputLen << 3 ) < (nInputLen << 3))
@@ -377,7 +377,7 @@ String ChecksumMD5::Final()
 	DWordToByte(nBits, m_nCount, 8);
 
 	// Pad out to 56 mod 64
-	uint32 nIndex = (uint32)((m_nCount[0] >> 3) & 0x3f);
+	uint32 nIndex = static_cast<uint32>((m_nCount[0] >> 3) & 0x3f);
 	uint32 nPadLen = (nIndex < 56) ? (56 - nIndex) : (120 - nIndex);
 	Update(PADDING, nPadLen);
 

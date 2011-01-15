@@ -96,7 +96,7 @@ bool ThreadLinux::Start()
 	// Check if the thread has already been started
 	if (!m_nThreadID) {
 		// Create thread
-		const int nStatus = pthread_create(&m_nThreadID, nullptr, &RunThread, (void*)&GetThread());
+		const int nStatus = pthread_create(&m_nThreadID, nullptr, &RunThread, static_cast<void*>(&GetThread()));
 		if (!nStatus) {
 			// Success
 			return true;
@@ -222,10 +222,10 @@ void *ThreadLinux::RunThread(void *pParameter)
 {
 	if (pParameter) {
 		// Get thread object
-		Thread *pThread = (Thread*)pParameter;
+		Thread *pThread = static_cast<Thread*>(pParameter);
 
 		// Lock the thread's execution mutex
-		Mutex *pMutex = ((ThreadLinux*)pThread->m_pThreadImpl)->m_pMutex;
+		Mutex *pMutex = static_cast<ThreadLinux*>(pThread->m_pThreadImpl)->m_pMutex;
 		pMutex->Lock();
 
 		// Run thread
@@ -235,7 +235,7 @@ void *ThreadLinux::RunThread(void *pParameter)
 		pMutex->Unlock();
 
 		// Done
-		return (void*)nRetVal;
+		return reinterpret_cast<void*>(nRetVal);
 	} else {
 		// No return value
 		return nullptr;

@@ -508,7 +508,7 @@ StringBuffer *StringBufferUnicode::ToLower()
 		// Is this already a lower character?
 		if (!iswlower(*pszString)) {
 			// Nope, now we have to clone the string buffer :(
-			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 			// Start with an offset - we KNOW the characters before will not be changed!
 			_wcslwr(pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString));
@@ -531,7 +531,7 @@ StringBuffer *StringBufferUnicode::ToUpper()
 		// Is this already a upper character?
 		if (!iswupper(*pszString)) {
 			// Nope, now we have to clone the string buffer :(
-			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 			// Start with an offset - we KNOW the characters before will not be changed!
 			_wcsupr(pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString));
@@ -548,7 +548,7 @@ StringBuffer *StringBufferUnicode::ToUpper()
 StringBuffer *StringBufferUnicode::Delete(uint32 nPos, uint32 nCount)
 {
 	// We have to clone the string buffer
-	StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+	StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 	// Characters are deleted by moving up the data following the region to delete (FAST!)
 	const uint32 nNewLength = m_nLength - nCount;
@@ -723,7 +723,7 @@ StringBuffer *StringBufferUnicode::Replace(char nOld, char nNew, uint32 &nReplac
 	for (; pszString<pszStringEnd; pszString++) {
 		if (*pszString == nOldUnicode) {
 			// Fork string buffer when the first character has been found
-			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 			// Set pointers to new location
 			pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
@@ -756,7 +756,7 @@ StringBuffer *StringBufferUnicode::Replace(wchar_t nOld, wchar_t nNew, uint32 &n
 	for (; pszString<pszStringEnd; pszString++) {
 		if (*pszString == nOld) {
 			// Fork string buffer when the first character has been found
-			StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+			StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 			// Set pointers to new location
 			pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
@@ -957,7 +957,7 @@ StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, char nCharacter)
 		return this;
 	} else {
 		// We have to clone the string buffer :(
-		StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+		StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 		// Set the new character
 		pStringBufferUnicodeClone->m_pszString[nIndex] = nCharacterUnicode;
@@ -975,7 +975,7 @@ StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, wchar_t nCharacte
 		return this;
 	} else {
 		// We have to clone the string buffer :(
-		StringBufferUnicode *pStringBufferUnicodeClone = (StringBufferUnicode*)Duplicate();
+		StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
 		// Set the new character
 		pStringBufferUnicodeClone->m_pszString[nIndex] = nCharacter;

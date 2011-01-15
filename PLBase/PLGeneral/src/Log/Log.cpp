@@ -391,7 +391,7 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 			#ifdef WIN32
 				(sLogMessage.GetFormat() == String::ASCII) ? fputs(sLogMessage.GetASCII(), stdout) : fputws(sLogMessage.GetUnicode(), stdout);
 			#else
-				fputs((sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : (char*)sLogMessage.GetUTF8(), stdout);
+				fputs((sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : sLogMessage.GetUTF8(), stdout);
 			#endif
 		}
 

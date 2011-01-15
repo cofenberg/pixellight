@@ -433,7 +433,7 @@ uint32 File::GetSize() const
 bool File::Print(const String &sString)
 {
 	// Write string
-	return (PutS(sString) == (int)sString.GetLength());
+	return (PutS(sString) == static_cast<int>(sString.GetLength()));
 }
 
 /**
@@ -492,7 +492,7 @@ bool File::MemBufOpen(uint32 nAccess)
 			MemBufClose();
 
 		// Open file
-		if (m_pFileImpl->Open(nAccess & ~(uint32)FileMemBuf)) {
+		if (m_pFileImpl->Open(nAccess & ~static_cast<uint32>(FileMemBuf))) {
 			// Get file size
 			bool bSuccess = false;
 			m_nMemBufSize = m_pFileImpl->GetSize();
@@ -561,7 +561,7 @@ int File::MemBufGetC()
 					return -1;
 				}
 			}
-			return (int)c;
+			return static_cast<int>(c);
 		}
 	}
 
@@ -583,7 +583,7 @@ String File::MemBufGetS()
 		int   nChar = MemBufGetC();
 		while (nChar >= 0 && nChar != 10) {
 			// Concatenate char to string
-			*pszPos = (char)nChar;
+			*pszPos = static_cast<char>(nChar);
 			pszPos++;
 
 			// Read next character
@@ -646,7 +646,7 @@ bool File::MemBufSeek(int32 nOffset, ESeek nLocation)
 			return false; // Error!
 
 		// Set new position
-		if (nOfs >= 0 && (unsigned int)nOfs < m_nMemBufSize) {
+		if (nOfs >= 0 && static_cast<uint32>(nOfs) < m_nMemBufSize) {
 			m_nMemBufPos = nOfs;
 
 			// Done

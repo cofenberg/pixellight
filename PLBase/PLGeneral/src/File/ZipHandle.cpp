@@ -45,11 +45,11 @@ static const int CentralDirItemSize = 0x2e;		/**< Size of the central directory 
 //[-------------------------------------------------------]
 //[ Encryption functions                                  ]
 //[-------------------------------------------------------]
-#define CRC_DO1(buf) nCRC = get_crc_table()[((int)nCRC ^ (*buf++)) & 0xff] ^ (nCRC >> 8);
+#define CRC_DO1(buf) nCRC = get_crc_table()[(static_cast<int>(nCRC) ^ (*buf++)) & 0xff] ^ (nCRC >> 8);
 #define CRC_DO2(buf) CRC_DO1(buf); CRC_DO1(buf);
 #define CRC_DO4(buf) CRC_DO2(buf); CRC_DO2(buf);
 #define CRC_DO8(buf) CRC_DO4(buf); CRC_DO4(buf);
-#define CRC32(c, b) (get_crc_table()[((int)(c)^(b))&0xff]^((c)>>8))
+#define CRC32(c, b) (get_crc_table()[(static_cast<int>(c)^(b))&0xff]^((c)>>8))
 
 uLong __ucrc32(uLong nCRC, const Byte *pBuf, uInt nLen)
 {
@@ -77,8 +77,8 @@ void __Uupdate_keys(uint32 *pnKeys, char c)
 }
 char __Udecrypt_byte(uint32 *pnKeys)
 {
-	const unsigned temp = ((unsigned)pnKeys[2] & 0xffff) | 2;
-	return (char)(((temp * (temp ^ 1)) >> 8) & 0xff);
+	const unsigned temp = (static_cast<unsigned>(pnKeys[2]) & 0xffff) | 2;
+	return static_cast<char>(((temp * (temp ^ 1)) >> 8) & 0xff);
 }
 char __zdecode(uint32 *pnKeys, char c)
 {
@@ -500,9 +500,9 @@ bool ZipHandle::OpenFile()
 			// Encryption data
 			bool bExtlochead = ((nFlags&8) != 0);
 			if (bExtlochead)
-				m_nCRCEncTest = (char)((m_cCurFile.m_nDOSDate>>8) & 0xff);
+				m_nCRCEncTest = static_cast<char>((m_cCurFile.m_nDOSDate>>8) & 0xff);
 			else
-				m_nCRCEncTest = (char)(m_cCurFile.m_nCRC >> 24);
+				m_nCRCEncTest = static_cast<char>(m_cCurFile.m_nCRC >> 24);
 
 			// Close stream first
 			CloseFile();
@@ -511,9 +511,9 @@ bool ZipHandle::OpenFile()
 			m_pStream = new z_stream;
 			m_pStream->total_out = 0;
 			m_pStream->avail_in  = 0;
-			m_pStream->zalloc    = (alloc_func)nullptr;
-			m_pStream->zfree     = (free_func)nullptr;
-			m_pStream->opaque    = (voidpf)nullptr;
+			m_pStream->zalloc    = static_cast<alloc_func>(nullptr);
+			m_pStream->zfree     = static_cast<free_func>(nullptr);
+			m_pStream->opaque    = static_cast<voidpf>(nullptr);
 
 			// Init zlib decompression
 			if (inflateInit2(m_pStream, -MAX_WBITS) != Z_OK) {
@@ -560,8 +560,8 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 	// Check parameters
 	if (m_pStream && pBuffer && nSize && nCount) {
 		// Init stream
-		m_pStream->next_out  = (Bytef*)pBuffer;
-		m_pStream->avail_out = ((uInt)nSize*nCount < (uInt)m_nReadUncompressed) ? (uInt)nSize*nCount : (uInt)m_nReadUncompressed;
+		m_pStream->next_out  = static_cast<Bytef*>(pBuffer);
+		m_pStream->avail_out = (static_cast<uInt>(nSize*nCount) < static_cast<uInt>(m_nReadUncompressed)) ? static_cast<uInt>(nSize*nCount) : static_cast<uInt>(m_nReadUncompressed);
 
 		// Read from stream
 		int nErr = Z_OK;
@@ -583,12 +583,12 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 				// Adjust data
 				m_nPosInZip		   += nRead;
 				m_nReadCompressed  -= nRead;
-				m_pStream->next_in  = (Bytef*)m_pReadBuffer;
-				m_pStream->avail_in = (uInt)nRead;
+				m_pStream->next_in  = static_cast<Bytef*>(m_pReadBuffer);
+				m_pStream->avail_in = static_cast<uInt>(nRead);
 
 				// Encryption
 				if (m_bEncrypted) {
-					char *pszBuffer = (char*)m_pStream->next_in;
+					char *pszBuffer = reinterpret_cast<char*>(m_pStream->next_in);
 					for (uint32 i=0; i<nRead; i++)
 						pszBuffer[i] = __zdecode(m_nKeys, pszBuffer[i]);
 				}
@@ -703,7 +703,7 @@ bool ZipHandle::Seek(int32 nOffset, File::ESeek nLocation)
 int32 ZipHandle::Tell() const
 {
 	// Return current position in the stream
-	return (z_off_t)m_pStream->total_out;
+	return static_cast<z_off_t>(m_pStream->total_out);
 }
 
 /**
@@ -901,7 +901,7 @@ uint32 ZipHandle::SearchCentralDir()
 		const uint32 nReadSize = (CommentBufferSize+4 < nFileSize-nReadPos) ? CommentBufferSize+4 : nFileSize-nReadPos;
 		if (m_cZipFile.Seek(nReadPos) && m_cZipFile.Read(nBuffer, 1, nReadSize) >= nReadSize) {
 			// Check central directory ID
-			for (int i=(int)nReadSize-3; (i--)>0;) {
+			for (int i=static_cast<int>(nReadSize)-3; (i--)>0;) {
 				if (nBuffer[i]   == 0x50 && nBuffer[i+1] == 0x4b &&
 					nBuffer[i+2] == 0x05 && nBuffer[i+3] == 0x06) {
 					// Central directory has been found!
@@ -1111,7 +1111,7 @@ bool ZipHandle::ReadByte(uint8 &nByte)
 	const int c = m_cZipFile.GetC();
 	if (c != -1) {
 		// Return byte
-		nByte = (uint8)c;
+		nByte = static_cast<uint8>(c);
 
 		// Done
 		return true;
@@ -1134,7 +1134,7 @@ bool ZipHandle::ReadShort(uint16 &nShort)
 		const int c2 = m_cZipFile.GetC();
 		if (c2 != -1) {
 			// Return short
-			nShort = (uint16)((((uint32)c2) << 8) + c1);
+			nShort = static_cast<uint16>(((static_cast<uint32>(c2) << 8) + c1));
 
 			// Done
 			return true;
@@ -1162,7 +1162,7 @@ bool ZipHandle::ReadLong(uint32 &nLong)
 				const int c4 = m_cZipFile.GetC();
 				if (c4 != -1) {
 					// Return short
-					nLong = (((uint32)c4) << 24) + (((uint32)c3) << 16) + (((uint32)c2) << 8) + c1;
+					nLong = ((static_cast<uint32>(c4)) << 24) + ((static_cast<uint32>(c3)) << 16) + ((static_cast<uint32>(c2)) << 8) + c1;
 
 					// Done
 					return true;

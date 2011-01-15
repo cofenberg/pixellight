@@ -64,7 +64,7 @@ Array<ValueType>::Array(const Array<ValueType> &lstSource, uint32 nStart, uint32
 	m_nResizeCount(lstSource.m_nResizeCount)
 {
 	// Copy
-	Copy((Container<ValueType>&)lstSource, nStart, nCount);
+	Copy(static_cast<const Container<ValueType>&>(lstSource), nStart, nCount);
 }
 
 /**
@@ -99,7 +99,7 @@ Array<ValueType>::~Array()
 template <class ValueType>
 Container<ValueType> &Array<ValueType>::operator =(const Array<ValueType> &lstSource)
 {
-	return *this = (Container<ValueType>&)lstSource;
+	return *this = static_cast<const Container<ValueType>&>(lstSource);
 }
 
 /**
@@ -466,7 +466,7 @@ ValueType &Array<ValueType>::AddAtIndex(int nIndex)
 		return Add();
 
 	// Check index
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return Array<ValueType>::Null; // Error!
 
 	// Check whether the array is full and we have to resize it
@@ -476,7 +476,7 @@ ValueType &Array<ValueType>::AddAtIndex(int nIndex)
 	}
 
 	// Shift element behind index
-	for (uint32 i=m_nNumOfElements; i>(uint32)nIndex; i--)
+	for (uint32 i=m_nNumOfElements; i>static_cast<uint32>(nIndex); i--)
 		m_pData[i] = m_pData[i-1];
 
 	// Add element
@@ -494,7 +494,7 @@ bool Array<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 		return (&Add(Element) != &Array<ValueType>::Null);
 
 	// Check index
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return false; // Error!
 
 	// Check whether the array is full and we have to resize it
@@ -504,7 +504,7 @@ bool Array<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	}
 
 	// Shift element behind index
-	for (uint32 i=m_nNumOfElements; i>(uint32)nIndex; i--)
+	for (uint32 i=m_nNumOfElements; i>static_cast<uint32>(nIndex); i--)
 		m_pData[i] = m_pData[i-1];
 
 	// Add element

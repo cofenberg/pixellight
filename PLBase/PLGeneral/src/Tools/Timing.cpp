@@ -131,7 +131,7 @@ bool Timing::Update(uint32 *pnTimeToWait)
 		m_fFPSUpdateTimer += m_fTimeDifference;
 		if (m_fFPSUpdateTimer > 1.0f) {
 			m_fFPSUpdateTimer = 0.0f;
-			m_fFramesPerSecond = (float)m_nFramesSinceCheck/((m_nTimeNow-m_nLastFPSUpdateTime)/1000.0f);
+			m_fFramesPerSecond = static_cast<float>(m_nFramesSinceCheck/((m_nTimeNow-m_nLastFPSUpdateTime)/1000.0f));
 			if (m_fFramesPerSecond < 0.0f)
 				m_fFramesPerSecond = 0.0f;
 			m_nFramesSinceCheck   = 0;

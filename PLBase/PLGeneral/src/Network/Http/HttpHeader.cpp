@@ -267,7 +267,7 @@ void HttpHeader::Parse()
 				m_nProtocol = Http10;
 
 			// Status code
-			m_nStatusCode = (EHttpStatus)sLine.GetSubstring(9, 3).GetInt();
+			m_nStatusCode = static_cast<EHttpStatus>(sLine.GetSubstring(9, 3).GetInt());
 
 			// Status string
 			m_sStatusString = sLine.GetSubstring(13);
@@ -333,7 +333,7 @@ void HttpHeader::Parse()
 
 		// Content length
 		if (sLine.GetSubstring(0, 15) == "Content-Length:")
-			m_nContentLength = (uint32)sLine.GetSubstring(16).GetInt();
+			m_nContentLength = sLine.GetSubstring(16).GetUInt32();
 
 		// Content language
 		if (sLine.GetSubstring(0, 17) == "Content-Language:")
@@ -399,7 +399,7 @@ void HttpHeader::Print(bool bRaw) const
 		System::GetInstance()->GetConsole().Print("- Request-Type       " + GetRequestString() + "\n");
 		System::GetInstance()->GetConsole().Print("- Request-URL        " + GetRequestUrl() + "\n");
 		System::GetInstance()->GetConsole().Print("- Connection:        " + String() + (GetConnectionType() == ConnectionKeepAlive ? "Keep Alive\n" : "Close\n"));
-		System::GetInstance()->GetConsole().Print("- Status-Code:       " + String() + (int)GetStatusCode() + "\n");
+		System::GetInstance()->GetConsole().Print("- Status-Code:       " + String() + GetStatusCode() + "\n");
 		System::GetInstance()->GetConsole().Print("- Status:            " + GetStatusString() + "\n");
 		System::GetInstance()->GetConsole().Print("- Location:          " + GetLocation() + "\n");
 		System::GetInstance()->GetConsole().Print("- Date:              " + GetDate() + "\n");
@@ -410,14 +410,14 @@ void HttpHeader::Print(bool bRaw) const
 		System::GetInstance()->GetConsole().Print("- Authorization:     " + GetAuthorization() + "\n");
 		System::GetInstance()->GetConsole().Print("- Transfer-Encoding: " + GetTransferEncoding() + "\n");
 		System::GetInstance()->GetConsole().Print("- Chunked:           " + String() + (IsChunked() ? "Yes\n" : "No\n"));
-		System::GetInstance()->GetConsole().Print("- Content-Length:    " + String() + (int)GetContentLength() + "\n");
+		System::GetInstance()->GetConsole().Print("- Content-Length:    " + String() + GetContentLength() + "\n");
 		System::GetInstance()->GetConsole().Print("- Content-Language:  " + GetContentLanguage() + "\n");
 		System::GetInstance()->GetConsole().Print("- Content-Type:      " + GetContentType() + "\n");
 		System::GetInstance()->GetConsole().Print("- ETag:              " + GetETag() + "\n");
 		System::GetInstance()->GetConsole().Print("- Partial:           " + String() + (IsPartial() ? "Yes\n" : "No\n"));
-		System::GetInstance()->GetConsole().Print("- Range-Min:         " + String() + (int)GetRangeMin() + "\n");
-		System::GetInstance()->GetConsole().Print("- Range-Max:         " + String() + (int)GetRangeMax() + "\n");
-		System::GetInstance()->GetConsole().Print("- Range-Total:       " + String() + (int)GetRangeTotal() + "\n");
+		System::GetInstance()->GetConsole().Print("- Range-Min:         " + String() + GetRangeMin() + "\n");
+		System::GetInstance()->GetConsole().Print("- Range-Max:         " + String() + GetRangeMax() + "\n");
+		System::GetInstance()->GetConsole().Print("- Range-Total:       " + String() + GetRangeTotal() + "\n");
 		System::GetInstance()->GetConsole().Print("\n");
 	}
 

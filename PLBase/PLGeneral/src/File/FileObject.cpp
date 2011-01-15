@@ -175,7 +175,7 @@ void FileObject::Assign(FILE *pFile, uint32 nAccess)
 	}
 
 	// Create file implementation
-	m_pFileImpl = new FileStdStream((FILE*)pFile, nAccess);
+	m_pFileImpl = new FileStdStream(pFile, nAccess);
 }
 
 /**

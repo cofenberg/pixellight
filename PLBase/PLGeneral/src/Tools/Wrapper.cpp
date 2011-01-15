@@ -43,7 +43,7 @@ namespace PLGeneral {
 */
 uint32 Wrapper::GetStringLength(const char szString[])
 {
-	return (uint32)strlen(szString);
+	return static_cast<uint32>(strlen(szString));
 }
 
 /**

@@ -608,62 +608,62 @@ bool XmlNode::NoChildren() const
 */
 XmlDocument *XmlNode::ToDocument()
 {
-	return (m_nType == Document) ? (XmlDocument*)this : nullptr;
+	return (m_nType == Document) ? static_cast<XmlDocument*>(this) : nullptr;
 }
 
 const XmlDocument *XmlNode::ToDocument() const
 {
-	return (m_nType == Document) ? (const XmlDocument*)this : nullptr;
+	return (m_nType == Document) ? static_cast<const XmlDocument*>(this) : nullptr;
 }
 
 XmlElement *XmlNode::ToElement()
 {
-	return (m_nType == Element) ? (XmlElement*)this : nullptr;
+	return (m_nType == Element) ? static_cast<XmlElement*>(this) : nullptr;
 }
 
 const XmlElement *XmlNode::ToElement() const
 {
-	return (m_nType == Element) ? (const XmlElement*)this : nullptr;
+	return (m_nType == Element) ? static_cast<const XmlElement*>(this) : nullptr;
 }
 
 XmlComment *XmlNode::ToComment()
 {
-	return (m_nType == Comment) ? (XmlComment*)this : nullptr;
+	return (m_nType == Comment) ? static_cast<XmlComment*>(this) : nullptr;
 }
 
 const XmlComment *XmlNode::ToComment() const
 {
-	return (m_nType == Comment) ? (const XmlComment*)this : nullptr;
+	return (m_nType == Comment) ? static_cast<const XmlComment*>(this) : nullptr;
 }
 
 XmlUnknown *XmlNode::ToUnknown()
 {
-	return (m_nType == Unknown) ? (XmlUnknown*)this : nullptr;
+	return (m_nType == Unknown) ? static_cast<XmlUnknown*>(this) : nullptr;
 }
 
 const XmlUnknown *XmlNode::ToUnknown() const
 {
-	return (m_nType == Unknown) ? (const XmlUnknown*)this : nullptr;
+	return (m_nType == Unknown) ? static_cast<const XmlUnknown*>(this) : nullptr;
 }
 
 XmlText *XmlNode::ToText()
 {
-	return (m_nType == Text) ? (XmlText*)this : nullptr;
+	return (m_nType == Text) ? static_cast<XmlText*>(this) : nullptr;
 }
 
 const XmlText *XmlNode::ToText() const
 {
-	return (m_nType == Text) ? (const XmlText*)this : nullptr;
+	return (m_nType == Text) ? static_cast<const XmlText*>(this) : nullptr;
 }
 
 XmlDeclaration *XmlNode::ToDeclaration()
 {
-	return (m_nType == Declaration) ? (XmlDeclaration*)this : nullptr;
+	return (m_nType == Declaration) ? static_cast<XmlDeclaration*>(this) : nullptr;
 }
 
 const XmlDeclaration *XmlNode::ToDeclaration() const
 {
-	return (m_nType == Declaration) ? (const XmlDeclaration*)this : nullptr;
+	return (m_nType == Declaration) ? static_cast<const XmlDeclaration*>(this) : nullptr;
 }
 
 

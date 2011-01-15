@@ -365,7 +365,7 @@ ElementManager<AType> &ElementManager<AType>::operator =(const ElementManager<AT
 	// Copy elements
 	for (uint32 i=0; i<cSource.GetNumOfElements(); i++) {
 		const AType *pSourceElement = cSource.Get(i);
-		AType *pElement = Create(((Element<AType>*)pSourceElement)->GetName());
+		AType *pElement = Create(static_cast<const Element<AType>*>(pSourceElement)->GetName());
 		*pElement = *pSourceElement;
 	}
 

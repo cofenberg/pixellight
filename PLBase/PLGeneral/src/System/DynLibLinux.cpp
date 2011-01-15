@@ -76,7 +76,7 @@ bool DynLibLinux::Load(const Url &cUrl)
 	// will be searched within the same directory as this one. If not, we must change the current directory
 	// in here...
 	const String sPath = cUrl.GetUnixPath();
-	m_pLib = dlopen((sPath.GetFormat() == String::ASCII) ? sPath.GetASCII() : (char*)sPath.GetUTF8(), RTLD_NOW);
+	m_pLib = dlopen((sPath.GetFormat() == String::ASCII) ? sPath.GetASCII() : sPath.GetUTF8(), RTLD_NOW);
 	if (!m_pLib)
 		printf("[PLGeneral] error while loading %s \n %s\n", sPath.GetASCII(), dlerror());
 
@@ -109,7 +109,7 @@ bool DynLibLinux::Unload()
 void *DynLibLinux::GetSymbol(const String &sSymbol) const
 {
 	// Is the library loaded?
-	return m_pLib ? dlsym(m_pLib, (sSymbol.GetFormat() == String::ASCII) ? sSymbol.GetASCII() : (char*)sSymbol.GetUTF8()) : nullptr;
+	return m_pLib ? dlsym(m_pLib, (sSymbol.GetFormat() == String::ASCII) ? sSymbol.GetASCII() : sSymbol.GetUTF8()) : nullptr;
 }
 
 

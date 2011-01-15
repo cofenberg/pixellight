@@ -36,7 +36,7 @@ namespace PLGeneral {
 */
 inline uint32 Tools::FloatToUInt32(float f)
 {
-	return *((uint32*)&f);
+	return *(reinterpret_cast<uint32*>(&f));
 }
 
 /**
@@ -45,7 +45,7 @@ inline uint32 Tools::FloatToUInt32(float f)
 */
 inline float Tools::UInt32ToFloat(uint32 n)
 {
-	return *((float*)&n);
+	return *(reinterpret_cast<float*>(&n));
 }
 
 /**
@@ -70,9 +70,9 @@ inline String Tools::GetBase64(const String &sString)
 				case 3: nBlock = ((nByte2 &  63)); break;
 			}
 			char cChar = 0;
-			if (nBlock <= 25)						cChar = (char)('A' + nBlock);
-			else if (nBlock >= 26 && nBlock <= 51)	cChar = (char)('a' + (nBlock - 26));
-			else if (nBlock >= 52 && nBlock <= 61)	cChar = (char)('0' + (nBlock - 52));
+			if (nBlock <= 25)						cChar = static_cast<char>('A' + nBlock);
+			else if (nBlock >= 26 && nBlock <= 51)	cChar = static_cast<char>('a' + (nBlock - 26));
+			else if (nBlock >= 52 && nBlock <= 61)	cChar = static_cast<char>('0' + (nBlock - 52));
 			else if (nBlock == 62)					cChar = '+';
 			else if (nBlock == 63)					cChar = '/';
 			if ((j >= 2 && i+1 >= nLength) || (j == 3 && i+2 >= nLength))

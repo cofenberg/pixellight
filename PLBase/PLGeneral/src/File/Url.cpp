@@ -524,14 +524,14 @@ void Url::SetValue(const String &sUrl)
 
 		// Check for file root ('/')
 		String sRoot;
-		if (sTemp[(uint32)0] == '/' || sTemp[(uint32)0] == '\\') {
+		if (sTemp[static_cast<uint32>(0)] == '/' || sTemp[static_cast<uint32>(0)] == '\\') {
 			// Root sign found
-			sRoot = sTemp[(uint32)0];
+			sRoot = sTemp[static_cast<uint32>(0)];
 			sTemp = sTemp.GetSubstring(1);
 		}
 
 		// Check for a drive letter, like C:\ or C:/
-		if (IsLetter(sTemp[(uint32)0]) && sTemp[(uint32)1] == ':' && (sTemp[(uint32)2] == '/' || sTemp[(uint32)2] == '\\')) {
+		if (IsLetter(sTemp[static_cast<uint32>(0)]) && sTemp[static_cast<uint32>(1)] == ':' && (sTemp[static_cast<uint32>(2)] == '/' || sTemp[static_cast<uint32>(2)] == '\\')) {
 			// Drive letter found, validate ('c:' -> 'C:')
 			sRoot = sTemp.GetSubstring(0, 1).ToUpper() + ":/";
 			sTemp = sTemp.GetSubstring(3);

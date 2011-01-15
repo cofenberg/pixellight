@@ -43,7 +43,7 @@ FileSearchLinux::FileSearchLinux(const String &sPath, const FileAccess *pAccess)
 	m_sPath(sPath)
 {
 	// Start search
-	m_pDir = opendir((m_sPath.GetFormat() == String::ASCII) ? m_sPath.GetASCII() : (char*)m_sPath.GetUTF8());
+	m_pDir = opendir((m_sPath.GetFormat() == String::ASCII) ? m_sPath.GetASCII() : m_sPath.GetUTF8());
 	if (m_pDir) {
 		// Something has been found
 		m_pDirEntry	= readdir(m_pDir);

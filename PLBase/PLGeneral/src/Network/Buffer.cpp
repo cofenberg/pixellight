@@ -153,7 +153,7 @@ void Buffer::Add(const char *pData, uint32 nSize)
 		if (m_nUsed+nSize+1 > m_nSize) {
 			// +32 = give some more memory to reduce too frequently allocation
 			m_nSize   = m_nUsed + nSize + 32;
-			m_pBuffer = (char*)MemoryManager::Reallocator(m_pBuffer, m_nSize);
+			m_pBuffer = static_cast<char*>(MemoryManager::Reallocator(m_pBuffer, m_nSize));
 		}
 
 		// Add data to buffer
@@ -175,7 +175,7 @@ String Buffer::GetLine()
 		const char *pszEOL = strstr(m_pBuffer, "\n");
 		if (pszEOL) {
 			// Allocate new string
-			const int nSize = (int)(pszEOL - m_pBuffer);
+			const int nSize = static_cast<int>(pszEOL - m_pBuffer);
 			char *pszString = new char[nSize+1];
 			MemoryManager::Copy(pszString, m_pBuffer, nSize);
 			pszString[nSize] = '\0';

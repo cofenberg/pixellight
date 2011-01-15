@@ -401,7 +401,7 @@ const char *XmlDocument::Parse(const char *pszData, XmlParsingData *pData, EEnco
 
 	if (nEncoding == EncodingUnknown) {
 		// Check for the Microsoft UTF-8 lead bytes
-		const unsigned char *pU = (const unsigned char*)pszData;
+		const unsigned char *pU = reinterpret_cast<const unsigned char*>(pszData);
 		if (	*(pU+0) && *(pU+0) == UTF_LEAD_0
 			 && *(pU+1) && *(pU+1) == UTF_LEAD_1
 			 && *(pU+2) && *(pU+2) == UTF_LEAD_2 ) {

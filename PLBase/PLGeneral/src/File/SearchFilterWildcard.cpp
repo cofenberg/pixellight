@@ -107,7 +107,7 @@ bool SearchFilterWildcard::CheckFile(const String &sFilename)
 
 			// Find the first appearance of '?' and update 'nEnd' if something was found
 			nIndex = m_sFilter.IndexOf('?', nPostfix);
-			if (nIndex >= 0 && nIndex < (int)nEnd)
+			if (nIndex >= 0 && static_cast<uint32>(nIndex) < nEnd)
 				nEnd = nIndex; // Set the new '\0'
 
 			// Search for postfix in name

@@ -41,7 +41,7 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 void ConsoleLinux::Print(const String &sString) const
 {
-	fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : (char*)sString.GetUTF8(), stdout);
+	fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : sString.GetUTF8(), stdout);
 	fflush(stdout);
 }
 

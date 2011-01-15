@@ -68,7 +68,7 @@ SocketAddress::SocketAddress(uint32 nPort) :
 {
 	// Set up socket address
 	m_pSockAddress->sin_family		= AF_INET;
-	m_pSockAddress->sin_port		= htons((u_short)nPort);
+	m_pSockAddress->sin_port		= htons(static_cast<u_short>(nPort));
 	m_pSockAddress->sin_addr.s_addr = INADDR_ANY;
 }
 
@@ -91,7 +91,7 @@ SocketAddress::SocketAddress(const String &sHost, uint32 nPort) :
 {
 	// Set up socket address
 	m_pSockAddress->sin_family      = AF_INET;
-	m_pSockAddress->sin_port        = htons((u_short)nPort);
+	m_pSockAddress->sin_port        = htons(static_cast<u_short>(nPort));
 	m_pSockAddress->sin_addr.s_addr = INADDR_ANY;
 
 	// Get host address
@@ -102,7 +102,7 @@ SocketAddress::SocketAddress(const String &sHost, uint32 nPort) :
 			// Try to resolve host
 			hostent *pHost = gethostbyname(sHost);
 			if (pHost)
-				MemoryManager::Copy((char*)&m_pSockAddress->sin_addr.s_addr, pHost->h_addr, 4);
+				MemoryManager::Copy(reinterpret_cast<char*>(&m_pSockAddress->sin_addr.s_addr), pHost->h_addr, 4);
 		}
 	}
 }
@@ -147,7 +147,7 @@ bool SocketAddress::SetHostByName(const String &sHostName)
 	hostent *pHost = gethostbyname(sHostName);
 	if (pHost) {
 		// Host found
-		m_pSockAddress->sin_addr.s_addr = *(unsigned long*)pHost->h_addr;
+		m_pSockAddress->sin_addr.s_addr = *reinterpret_cast<unsigned long*>(pHost->h_addr);
 
 		// Done
 		return true;
@@ -174,7 +174,7 @@ uint32 SocketAddress::GetPort() const
 bool SocketAddress::SetPort(uint32 nPort)
 {
 	// Set port number
-	m_pSockAddress->sin_port = htons((u_short)nPort);
+	m_pSockAddress->sin_port = htons(static_cast<u_short>(nPort));
 
 	// Done
 	return true;

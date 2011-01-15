@@ -39,7 +39,7 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 uint32 HashFunction::Hash(const int32 &nKey)
 {
-	return (uint32)nKey;
+	return static_cast<uint32>(nKey);
 }
 
 uint32 HashFunction::Hash(const uint32 &nKey)
@@ -49,12 +49,12 @@ uint32 HashFunction::Hash(const uint32 &nKey)
 
 uint32 HashFunction::Hash(const int64 &nKey)
 {
-	return (uint32)nKey;
+	return static_cast<uint32>(nKey);
 }
 
 uint32 HashFunction::Hash(const uint64 &nKey)
 {
-	return (uint32)nKey;
+	return static_cast<uint32>(nKey);
 }
 
 uint32 HashFunction::Hash(const char *pszKey)

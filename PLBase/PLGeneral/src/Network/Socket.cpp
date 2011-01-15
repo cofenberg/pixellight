@@ -154,7 +154,7 @@ bool Socket::Connect(const String &sAddress, uint32 nPort)
 */
 bool Socket::Connect(const SocketAddress &cSocketAddress)
 {
-	return (m_nSocket != INVALID_SOCKET && connect(m_nSocket, (sockaddr*)cSocketAddress.m_pSockAddress, sizeof(*cSocketAddress.m_pSockAddress)) != SOCKET_ERROR);
+	return (m_nSocket != INVALID_SOCKET && connect(m_nSocket, reinterpret_cast<sockaddr*>(cSocketAddress.m_pSockAddress), sizeof(*cSocketAddress.m_pSockAddress)) != SOCKET_ERROR);
 }
 
 /**
@@ -187,7 +187,7 @@ bool Socket::Bind(const SocketAddress &cSocketAddress)
 	if (m_nSocket != INVALID_SOCKET) {
 		// Bind socket to a socket address
 		m_cSocketAddress = cSocketAddress;
-		return (bind(m_nSocket, (sockaddr*)m_cSocketAddress.m_pSockAddress, sizeof(*m_cSocketAddress.m_pSockAddress)) != SOCKET_ERROR);
+		return (bind(m_nSocket, reinterpret_cast<sockaddr*>(m_cSocketAddress.m_pSockAddress), sizeof(*m_cSocketAddress.m_pSockAddress)) != SOCKET_ERROR);
 	} else {
 		// Error!
 		return false;
@@ -216,7 +216,7 @@ Socket Socket::Accept() const
 	if (m_nSocket != INVALID_SOCKET) {
 		// Accept a new connection
 		socklen_t nSize = sizeof(*cSocket.m_cSocketAddress.m_pSockAddress);
-		cSocket.m_nSocket = accept(m_nSocket, (sockaddr*)cSocket.m_cSocketAddress.m_pSockAddress, &nSize);
+		cSocket.m_nSocket = accept(m_nSocket, reinterpret_cast<sockaddr*>(cSocket.m_cSocketAddress.m_pSockAddress), &nSize);
 	}
 
 	// Return new socket

@@ -171,7 +171,7 @@ uint32 HttpHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 	// Check parameters
 	if (m_cSocket.IsValid() && pBuffer && nSize && nCount) {
 		// Read from socket, until nCount bytes have been processed
-		char *pszBuffer = (char*)pBuffer;
+		char *pszBuffer = static_cast<char*>(pBuffer);
 		uint32 nTotalSize = nSize*nCount, nTotalRead = 0, nRead = 0, nRetry = 0;
 		while (nTotalRead < nTotalSize && (nRead > 0 || nRetry < 3)) {
 			nRead = m_cSocket.Receive(pszBuffer, nTotalSize - nTotalRead);
@@ -274,7 +274,7 @@ bool HttpHandle::Connect()
 		sRequest += "\n";
 
 		// Send HTTP request
-		if ((unsigned int)m_cSocket.Send(sRequest.GetASCII(), sRequest.GetLength()) == sRequest.GetLength()) {
+		if (m_cSocket.Send(sRequest.GetASCII(), sRequest.GetLength()) == static_cast<int>(sRequest.GetLength())) {
 			// Read HTTP header
 			String sLine = ReadLine();
 			while (sLine.GetLength()) {
