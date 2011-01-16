@@ -187,14 +187,14 @@ String Version::ToString() const
 
 	// "Name "
 	if (m_sName.GetLength())
-		sVersion = m_sName + " ";
+		sVersion = m_sName + ' ';
 
 	// "Major.Minor.Patch"
-	sVersion += String() + m_nMajor + "." + m_nMinor + "." + m_nPatch;
+	sVersion += String() + m_nMajor + '.' + m_nMinor + '.' + m_nPatch;
 
 	// "-release"
 	if (m_sRelease.GetLength())
-		sVersion += "-" + m_sRelease;
+		sVersion += '-' + m_sRelease;
 
 	// " - Codename"
 	if (m_sCodename.GetLength())

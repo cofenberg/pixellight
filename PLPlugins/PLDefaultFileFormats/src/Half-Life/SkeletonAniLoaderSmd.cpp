@@ -61,7 +61,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 	Tokenizer cTokenizer;
 	cTokenizer.Start(cFile);
 	cTokenizer.SetDelimiters(" \t\r\n()[]=,;{}\"");
-	cTokenizer.SetSingleChars(":");
+	cTokenizer.SetSingleChars(':');
 	cTokenizer.SetCaseSensitive(true);
 
 	// First at all, check the version number

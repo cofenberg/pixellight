@@ -89,12 +89,12 @@ String FileSearchZip::GetNextFile()
 	// Check if the current file is valid
 	if (m_cZipFile.GetCurrentFile().m_bValid) {
 		// Get name of file without the path prefix
-		String sName = (m_sPathInZip.Compare("/") ?
+		String sName = (m_sPathInZip.Compare('/') ?
 							m_cZipFile.GetCurrentFile().m_sFilename :
 							m_cZipFile.GetCurrentFile().m_sFilename.GetSubstring(m_sPathInZip.GetLength()));
 
 		// Remove "/" at the end
-		if (sName.GetSubstring(sName.GetLength()-1) == "/")
+		if (sName.GetSubstring(sName.GetLength()-1) == '/')
 			sName = sName.GetSubstring(0, sName.GetLength()-1);
 
 		// Go to next file
@@ -139,14 +139,14 @@ bool FileSearchZip::FindNextFile()
 bool FileSearchZip::CheckFile(const String &sFilename)
 {
 	// Check if m_sPathInZip is a prefix of the filename or "/"
-	if (m_sPathInZip.Compare("/") ||
+	if (m_sPathInZip.Compare('/') ||
 		(m_sPathInZip.GetLength() < sFilename.GetLength() &&
 		(m_cZipFile.IsCaseSensitive() ? sFilename.Compare(m_sPathInZip, 0, m_sPathInZip.GetLength()) :
 										sFilename.CompareNoCase(m_sPathInZip, 0, m_sPathInZip.GetLength()))))
 	{
 		// After that prefix, '/' must only appear at the end of the string or not at all
-		const int nStart = m_sPathInZip.Compare("/") ? 0 : m_sPathInZip.GetLength();
-		const int nSlash = sFilename.IndexOf("/", nStart);
+		const int nStart = m_sPathInZip.Compare('/') ? 0 : m_sPathInZip.GetLength();
+		const int nSlash = sFilename.IndexOf('/', nStart);
 		return (nSlash < 0 || nSlash == static_cast<int>(sFilename.GetLength())-1);
 	}
 

@@ -329,7 +329,7 @@ bool BasicSceneApplication::Init()
 
 		// Set screenshot directory
 		if (m_bMultiUser)
-			m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir);
+			m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
 		else
 			m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetCurrentDir());
 

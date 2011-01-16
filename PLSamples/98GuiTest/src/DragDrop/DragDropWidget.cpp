@@ -129,7 +129,7 @@ void DragDropWidget::OnDrop(const DataObject &cData)
 			String sFile = lstFiles[i].GetASCII();
 
 			// Add filename
-			m_sText += sFile + "\n";
+			m_sText += sFile + '\n';
 		}
 	}
 

@@ -213,7 +213,7 @@ void TabsAndMenuWindow::OnTabContainerCreateWindow()
 void TabsAndMenuWindow::OnMenuItemClicked(MenuItem *pItem)
 {
 	// [DEBUG]
-	System::GetInstance()->GetConsole().Print(pItem->GetText() + "\n");
+	System::GetInstance()->GetConsole().Print(pItem->GetText() + '\n');
 }
 
 

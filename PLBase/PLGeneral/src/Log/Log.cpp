@@ -379,7 +379,7 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 			// Prepare log message
 			String sLogMessage;
 			if (nLogLevel >= Quiet && m_bVerboseLogLevelPrefix) {
-				sLogMessage  = "[";
+				sLogMessage  = '[';
 				sLogMessage += LogLevelToString(nLogLevel);
 				sLogMessage += "]: ";
 			}
@@ -412,7 +412,7 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 
 				// Write the message in the queue
 				if (m_nBufferedMessages && nLogLevel > Quiet)
-					m_qLastMessages.Push("(" + LogLevelToString(nLogLevel) + ") " + sText);
+					m_qLastMessages.Push('(' + LogLevelToString(nLogLevel) + ") " + sText);
 
 				// Should be the output buffer written to the file?
 				m_nFlushMessages++;

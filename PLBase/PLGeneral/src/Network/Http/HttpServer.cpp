@@ -95,7 +95,7 @@ void HttpServer::OnGet(HttpServerConnection *pConnection, const HttpHeader *pHea
 	const String sUrl = pHeader->GetRequestUrl();
 
 	// Send page
-	if (sUrl == "/") {
+	if (sUrl == '/') {
 		// Create a default page
 		const String sPage = "<html><head><title>PixelLight Webserver</title></head><body><h1>Welcome</h1>Welcome to PixelLight webserver</body></html>";
 

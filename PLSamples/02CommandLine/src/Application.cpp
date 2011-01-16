@@ -75,8 +75,8 @@ void Application::Main()
 	String sText    = m_cCommandLine.GetValue("Text");
 	String sPrefix  = m_cCommandLine.GetValue("Prefix");
 	String sPostfix = m_cCommandLine.GetValue("Postfix");
-	if (sPrefix .GetLength() > 0) sText = sPrefix + " " + sText;
-	if (sPostfix.GetLength() > 0) sText = sText   + " " + sPostfix;
+	if (sPrefix .GetLength() > 0) sText = sPrefix + ' ' + sText;
+	if (sPostfix.GetLength() > 0) sText = sText   + ' ' + sPostfix;
 
 	// Get uppercase option
 	if (m_cCommandLine.IsValueSet("-u")) sText.ToUpper();

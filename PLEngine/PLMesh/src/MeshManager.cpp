@@ -205,7 +205,7 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 							sName = cTokenizer.GetNextToken();
 							// Read "
 							if (!cTokenizer.GetNextToken().GetLength() == 1 && cTokenizer.GetQuotes().IsSubstring(cTokenizer.GetToken()))
-								PL_LOG(Error, "Name var closing \" is missed! (" + sFilename + ")")
+								PL_LOG(Error, "Name var closing \" is missed! (" + sFilename + ')')
 						} else {
 							sName = cTokenizer.GetToken();
 						}

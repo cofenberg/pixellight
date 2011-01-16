@@ -38,7 +38,7 @@ sS = L"\u65e5\u672c\u8a9e";
 sS = String::FromUTF8("Mini");
 \end{lstlisting}
 
-As you can see the well known \emph{char*} and \emph{wchar\_t} are used for ASCII and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode for you, so you can even mix strings with different internal formats!
+As you can see the well known \emph{char*} and \emph{wchar\_t*} are used for ASCII and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode for you, so you can even mix strings with different internal formats!
 
 We strongly recommend to use only this class when working with strings and not using for instance \emph{c}-functions like \emph{strcmp()}. Do also avoid to use the string data you can get from the \emph{String::GetASCII()} directly to search for substrings and so on - use the provided string functions instead. By doing so, the string class will automatically take care of tricky stuff mentioned above.
 
@@ -59,6 +59,10 @@ In contrast to UTF8, \emph{wchar\_t} is quite comfortable to use in practice bec
 To make it even more interesting, there's a compiler flag called "wchar\_t is treated as built-in type" you may set by using \emph{Zc:wchar\_t}, or not by using \emph{-Zc:wchar\_t-}. While the one libraries, like PixelLight, are using "wchar\_t is treated as built-in type", other libraries are using the other way - resulting in incompatible libraries!
 
 So, be carefully when using \emph{wchar\_t} to serialize data or to pass strings to other libraries, or better, don't do it and use UTF8 instead!
+
+
+\paragraph{Single characters}
+If you care about best possible performance (even if nearly not measurable), use character string methods when dealing with characters - for example, write \begin{quote}String sS = 'A';\end{quote} instead of \begin{quote}String sS = "A";\end{quote}. This way, the string method already knows that you provided just a single character and don't need to count characters internally.
 
 
 \paragraph{Strings and dynamic variable parameters}

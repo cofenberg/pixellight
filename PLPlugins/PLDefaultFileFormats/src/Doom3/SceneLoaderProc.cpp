@@ -415,7 +415,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 	cStopwatch.Stop();
 
 	// Output the statistics
-	PL_LOG(Debug, "\n")
+	PL_LOG(Debug, '\n')
 	PL_LOG(Debug, "Scene statistics of '" + cFile.GetUrl().GetNativePath() + '\'')
 	PL_LOG(Debug, "Loading time: " + String::Format("%g", cStopwatch.GetSeconds()) + " sec");
 	PL_LOG(Debug, String::Format("  Total number of scene nodes: %d",  sInstance.nTotalNumOfCells+sInstance.nTotalNumOfMeshes+sInstance.nTotalNumOfPortals+sInstance.nTotalNumOfLights))
@@ -426,7 +426,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 	PL_LOG(Debug, String::Format("    Total number of triangles: %d",  sInstance.nTotalNumOfIndices/3))
 	PL_LOG(Debug, String::Format("  Total number of portals: %d",      sInstance.nTotalNumOfPortals))
 	PL_LOG(Debug, String::Format("  Total number of lights: %d",       sInstance.nTotalNumOfLights))
-	PL_LOG(Debug, "\n")
+	PL_LOG(Debug, '\n')
 
 	// Done
 	return true;

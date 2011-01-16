@@ -388,11 +388,11 @@ bool LoadableManager::ScanPackages(const String &sPath, const String &sExtension
 			while (cSearch.HasNextFile()) {
 				// Get next file
 				String sNextFilename = cSearch.GetNextFile();
-				String sNextPath     = cDir.GetUrl().GetUrl() + "/" + sNextFilename;
+				String sNextPath     = cDir.GetUrl().GetUrl() + '/' + sNextFilename;
 
 				// Add all found files to the base-directories (meaning these must be packages ...)
 				if (File(sNextPath).IsFile())
-					AddBaseDir(sNextPath + "/");
+					AddBaseDir(sNextPath + '/');
 			}
 
 			// Done

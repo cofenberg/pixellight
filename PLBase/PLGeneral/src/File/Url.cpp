@@ -246,7 +246,7 @@ bool Url::IsValidWindowsPath() const
 */
 bool Url::IsValidUnixPath() const
 {
-	return ((m_sProtocol.CompareNoCase("file://") || m_sProtocol == "") && (m_sRoot == "/" || m_sRoot == ""));
+	return ((m_sProtocol.CompareNoCase("file://") || m_sProtocol == "") && (m_sRoot == '/' || m_sRoot == ""));
 }
 
 /**
@@ -445,7 +445,7 @@ Url &Url::Collapse()
 		// Put path together
 		m_sPath = "";
 		while (cNameStack.GetNumOfElements() > 0) {
-			m_sPath = cNameStack.Top() + "/" + m_sPath;
+			m_sPath = cNameStack.Top() + '/' + m_sPath;
 			cNameStack.Pop();
 		}
 
@@ -468,8 +468,8 @@ Url &Url::Collapse()
 String Url::GetNextPath(uint32 &nPathPos) const
 {
 	const String sTemp = m_sPath.GetSubstring(nPathPos);
-	const int nBacks = sTemp.IndexOf("\\");
-	int nSlash = sTemp.IndexOf("/");
+	const int nBacks = sTemp.IndexOf('\\');
+	int nSlash = sTemp.IndexOf('/');
 	if (nSlash < 0 || (nBacks >= 0 && nBacks < nSlash))
 		nSlash = nBacks;
 	if (nSlash >= 0) {
@@ -560,7 +560,7 @@ void Url::SetValue(const String &sUrl)
 			// Compose path
 			if (nSlash >= 0) {
 				// Add to path
-				sPath += sName + "/";
+				sPath += sName + '/';
 			} else {
 				// Get filename
 				sFilename = sTemp;
@@ -574,7 +574,7 @@ void Url::SetValue(const String &sUrl)
 		}
 
 		// Last checks (Unix path with backslashes)
-		if (sRoot != "/" || m_sUrl.IndexOf('\\') < 0) {
+		if (sRoot != '/' || m_sUrl.IndexOf('\\') < 0) {
 			// No errors, save result
 			m_bValid	= true;
 			m_sProtocol	= sProtocol;
@@ -603,7 +603,7 @@ bool Url::IsLetter(char nChar) const
 bool Url::IsName(const String &sString) const
 {
 	// The string is not a valid name, if it is empty or if it contains ':', '/' or '\'
-	return (sString.GetLength() && !sString.IsSubstring(":") && !sString.IsSubstring("/") && !sString.IsSubstring("\\"));
+	return (sString.GetLength() && !sString.IsSubstring(':') && !sString.IsSubstring('/') && !sString.IsSubstring('\\'));
 }
 
 

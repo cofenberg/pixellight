@@ -427,11 +427,11 @@ String Object::GetValues(EDefaultValue nDefaultValue) const
 				// Ignore variables with default values?
 				if (nDefaultValue == WithDefault || !pVar->IsDefault()) {
 					// Add attribute to string
-					if (sVars.GetLength() > 0) sVars += " ";
+					if (sVars.GetLength() > 0) sVars += ' ';
 					sVars += pVarDesc->GetName();
 					sVars += "=\"";
 					sVars += pVar->GetString();
-					sVars += "\"";
+					sVars += '\"';
 				}
 			}
 		}

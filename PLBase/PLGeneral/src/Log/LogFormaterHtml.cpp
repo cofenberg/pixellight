@@ -201,15 +201,15 @@ bool LogFormaterHtml::Open(const String &sFilename)
 			// Write the <body> tag
 			String sBody = "<body";
 			if (m_sBackground.GetLength() > 0) {
-				sBody += " ";
+				sBody += ' ';
 				sBody += m_sBackground;
 			}
 			if (m_sDefaultTextColor.GetLength() > 0) {
 				sBody += " Text=\"";
 				sBody += m_sDefaultTextColor;
-				sBody += "\"";
+				sBody += '\"';
 			}
-			sBody += ">";
+			sBody += '>';
 
 			if (m_pFile->PrintLn(sBody)) {
 				// Write header text if given

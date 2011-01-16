@@ -307,11 +307,11 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		SceneNode *pInfoText = pContainer->Create("PLScene::SceneContainer", "InfoText", "Flags=\"NoCulling\"");
 		if (pInfoText && pInfoText->IsInstanceOf("PLScene::SceneContainer")) {
 			SceneContainer *pInfoTextContainer = (SceneContainer*)pInfoText;
-			pInfoTextContainer->Create("PLScene::SNText2D", "0", "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'F1'        = Show/hide this help text")       + "\"");
-			pInfoTextContainer->Create("PLScene::SNText2D", "1", "Position=\"0.01 0.03\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Space'     = Enable/disable post processing") + "\"");
-			pInfoTextContainer->Create("PLScene::SNText2D", "2", "Position=\"0.01 0.05\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'1-7'       = Custom post process effects")    + "\"");
-			pInfoTextContainer->Create("PLScene::SNText2D", "3", "Position=\"0.01 0.07\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Page up'   = Next post process effect")       + "\"");
-			pInfoTextContainer->Create("PLScene::SNText2D", "4", "Position=\"0.01 0.09\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Page down' = Previous post process effect")   + "\"");
+			pInfoTextContainer->Create("PLScene::SNText2D", '0', "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'F1'        = Show/hide this help text")       + '\"');
+			pInfoTextContainer->Create("PLScene::SNText2D", '1', "Position=\"0.01 0.03\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Space'     = Enable/disable post processing") + '\"');
+			pInfoTextContainer->Create("PLScene::SNText2D", '2', "Position=\"0.01 0.05\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'1-7'       = Custom post process effects")    + '\"');
+			pInfoTextContainer->Create("PLScene::SNText2D", '3', "Position=\"0.01 0.07\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Page up'   = Next post process effect")       + '\"');
+			pInfoTextContainer->Create("PLScene::SNText2D", '4', "Position=\"0.01 0.09\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Page down' = Previous post process effect")   + '\"');
 		}
 	}
 

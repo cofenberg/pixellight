@@ -226,8 +226,8 @@ void HttpHeader::Parse()
 			m_nMessageType = HttpRequest;
 
 			// Get string parts
-			const int nSpace1 = sLine.IndexOf(" ");
-			const int nSpace2 = sLine.IndexOf(" ", nSpace1+1);
+			const int nSpace1 = sLine.IndexOf(' ');
+			const int nSpace2 = sLine.IndexOf(' ', nSpace1+1);
 			if (nSpace1 > 0 || nSpace2 > nSpace2) {
 				// Get request arguments
 				const String sRequest  = sLine.GetSubstring(0, nSpace1);
@@ -303,8 +303,8 @@ void HttpHeader::Parse()
 			const String sAuth = sLine.GetSubstring(18);
 			if (sAuth.GetSubstring(0, 5) == "Basic") {
 				m_nAuthType = BasicAuth;
-				const int nFirst = sAuth.IndexOf("\"");
-				const int nLast  = sAuth.LastIndexOf("\"");
+				const int nFirst = sAuth.IndexOf('\"');
+				const int nLast  = sAuth.LastIndexOf('\"');
 				if (nFirst > -1 && nLast > -1)
 					m_sAuthRealm = sAuth.GetSubstring(nFirst+1, nLast-nFirst-1);
 				else
@@ -353,8 +353,8 @@ void HttpHeader::Parse()
 			if (sByte == "bytes") {
 				// Get range (e.g. "21010-47021/47022")
 				const String sRange = sLine.GetSubstring(21);
-				const int nPosMinus = sRange.IndexOf("-");
-				const int nPosSlash = sRange.IndexOf("/");
+				const int nPosMinus = sRange.IndexOf('-');
+				const int nPosSlash = sRange.IndexOf('/');
 				if (nPosMinus > -1 && nPosSlash > -1) {
 					// Get parts
 					const String sRangeMin   = sRange.GetSubstring(0, nPosMinus);
@@ -389,36 +389,36 @@ void HttpHeader::Print(bool bRaw) const
 		// Raw printout of all header lines
 		System::GetInstance()->GetConsole().Print("HTTP message arrived:\n");
 		for (uint32 i=0; i<GetEntries().GetNumOfElements()-1; i++)
-			System::GetInstance()->GetConsole().Print("- " + GetEntries().Get(i) + "\n");
-		System::GetInstance()->GetConsole().Print("\n");
+			System::GetInstance()->GetConsole().Print("- " + GetEntries().Get(i) + '\n');
+		System::GetInstance()->GetConsole().Print('\n');
 	} else {
 		// Print out all header information that we have parsed and understood
 		System::GetInstance()->GetConsole().Print("HTTP message arrived:\n");
 		System::GetInstance()->GetConsole().Print("- Protocol:          " + String() + (GetProtocol() == Http11 ? "HTTP 1.1\n" : "HTTP 1.0\n"));
 		System::GetInstance()->GetConsole().Print("- Message:           " + String() + (GetMessageType() == HttpRequest ? "REQUEST\n" : "RESPONSE\n"));
-		System::GetInstance()->GetConsole().Print("- Request-Type       " + GetRequestString() + "\n");
-		System::GetInstance()->GetConsole().Print("- Request-URL        " + GetRequestUrl() + "\n");
+		System::GetInstance()->GetConsole().Print("- Request-Type       " + GetRequestString() + '\n');
+		System::GetInstance()->GetConsole().Print("- Request-URL        " + GetRequestUrl() + '\n');
 		System::GetInstance()->GetConsole().Print("- Connection:        " + String() + (GetConnectionType() == ConnectionKeepAlive ? "Keep Alive\n" : "Close\n"));
-		System::GetInstance()->GetConsole().Print("- Status-Code:       " + String() + GetStatusCode() + "\n");
-		System::GetInstance()->GetConsole().Print("- Status:            " + GetStatusString() + "\n");
-		System::GetInstance()->GetConsole().Print("- Location:          " + GetLocation() + "\n");
-		System::GetInstance()->GetConsole().Print("- Date:              " + GetDate() + "\n");
-		System::GetInstance()->GetConsole().Print("- Server:            " + GetServer() + "\n");
-		System::GetInstance()->GetConsole().Print("- Client:            " + GetUserAgent() + "\n");
+		System::GetInstance()->GetConsole().Print("- Status-Code:       " + String() + GetStatusCode() + '\n');
+		System::GetInstance()->GetConsole().Print("- Status:            " + GetStatusString() + '\n');
+		System::GetInstance()->GetConsole().Print("- Location:          " + GetLocation() + '\n');
+		System::GetInstance()->GetConsole().Print("- Date:              " + GetDate() + '\n');
+		System::GetInstance()->GetConsole().Print("- Server:            " + GetServer() + '\n');
+		System::GetInstance()->GetConsole().Print("- Client:            " + GetUserAgent() + '\n');
 		System::GetInstance()->GetConsole().Print("- Authentication:    " + String() + (GetAuthenticationType() == BasicAuth ? "Basic\n" : "No Authentication\n"));
-		System::GetInstance()->GetConsole().Print("- Realm:             " + GetAuthenticationRealm() + "\n");
-		System::GetInstance()->GetConsole().Print("- Authorization:     " + GetAuthorization() + "\n");
-		System::GetInstance()->GetConsole().Print("- Transfer-Encoding: " + GetTransferEncoding() + "\n");
+		System::GetInstance()->GetConsole().Print("- Realm:             " + GetAuthenticationRealm() + '\n');
+		System::GetInstance()->GetConsole().Print("- Authorization:     " + GetAuthorization() + '\n');
+		System::GetInstance()->GetConsole().Print("- Transfer-Encoding: " + GetTransferEncoding() + '\n');
 		System::GetInstance()->GetConsole().Print("- Chunked:           " + String() + (IsChunked() ? "Yes\n" : "No\n"));
-		System::GetInstance()->GetConsole().Print("- Content-Length:    " + String() + GetContentLength() + "\n");
-		System::GetInstance()->GetConsole().Print("- Content-Language:  " + GetContentLanguage() + "\n");
-		System::GetInstance()->GetConsole().Print("- Content-Type:      " + GetContentType() + "\n");
-		System::GetInstance()->GetConsole().Print("- ETag:              " + GetETag() + "\n");
+		System::GetInstance()->GetConsole().Print("- Content-Length:    " + String() + GetContentLength() + '\n');
+		System::GetInstance()->GetConsole().Print("- Content-Language:  " + GetContentLanguage() + '\n');
+		System::GetInstance()->GetConsole().Print("- Content-Type:      " + GetContentType() + '\n');
+		System::GetInstance()->GetConsole().Print("- ETag:              " + GetETag() + '\n');
 		System::GetInstance()->GetConsole().Print("- Partial:           " + String() + (IsPartial() ? "Yes\n" : "No\n"));
-		System::GetInstance()->GetConsole().Print("- Range-Min:         " + String() + GetRangeMin() + "\n");
-		System::GetInstance()->GetConsole().Print("- Range-Max:         " + String() + GetRangeMax() + "\n");
-		System::GetInstance()->GetConsole().Print("- Range-Total:       " + String() + GetRangeTotal() + "\n");
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print("- Range-Min:         " + String() + GetRangeMin() + '\n');
+		System::GetInstance()->GetConsole().Print("- Range-Max:         " + String() + GetRangeMax() + '\n');
+		System::GetInstance()->GetConsole().Print("- Range-Total:       " + String() + GetRangeTotal() + '\n');
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 
 }

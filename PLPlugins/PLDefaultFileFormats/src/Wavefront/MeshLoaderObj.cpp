@@ -316,11 +316,11 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			int nIndices[2][3];
 			int nVertex, nTexCoord, nNormal, nVertices = 0;
 			cTokenizer.GetNextToken();
-			while (cTokenizer.GetToken().GetLength() && !cTokenizer.CompareToken("\n")) {
+			while (cTokenizer.GetToken().GetLength() && !cTokenizer.CompareToken('\n')) {
 				// Get the indices
 				nVertex = cTokenizer.GetToken().GetInt()-1; // We start at index 0...
 				cTokenizer.GetNextToken();
-				if (cTokenizer.CompareToken("/")) {
+				if (cTokenizer.CompareToken('/')) {
 					nTexCoord = cTokenizer.GetNextToken().GetInt();
 
 					// Check for negative texture coordinate
@@ -330,7 +330,7 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					} else nTexCoord--; // We start at index 0...
 
 					cTokenizer.GetNextToken();
-					if (cTokenizer.CompareToken("/")) {
+					if (cTokenizer.CompareToken('/')) {
 						nNormal = cTokenizer.GetNextToken().GetInt()-1; // We start at index 0...
 						cTokenizer.GetNextToken();
 					} else {

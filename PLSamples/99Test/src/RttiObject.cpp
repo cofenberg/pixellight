@@ -116,7 +116,7 @@ RttiObject::RttiObject(int nValue, float fValue) :
 	SlotOnSomeEvent0(this)
 {
 	// [DEBUG]
-//	System::GetInstance()->GetConsole().Print(String("-- CONSTRUCTOR(int, float): ") + nValue + ", " + fValue + "\n");
+//	System::GetInstance()->GetConsole().Print(String("-- CONSTRUCTOR(int, float): ") + nValue + ", " + fValue + '\n');
 }
 
 /**

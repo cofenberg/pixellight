@@ -365,9 +365,9 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					pInfoTextContainer->Create("PLScene::SNText2D", "SoundAPI", "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Sound API: ") + GetSoundAPI() + '\"');
 
 					// Draw keys information
-					pInfoTextContainer->Create("PLScene::SNText2D", "Keys",      "Position=\"0.01 0.04\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Keys:")                      + "\"");
+					pInfoTextContainer->Create("PLScene::SNText2D", "Keys",      "Position=\"0.01 0.04\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Keys:")                      + '\"');
 					// [TODO] PLGui: Selection dialog
-			//		pInfoTextContainer->Create("PLScene::SNText2D", "Choose",    "Position=\"0.06 0.06\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("c=Choose another sound API") + "\"");
+			//		pInfoTextContainer->Create("PLScene::SNText2D", "Choose",    "Position=\"0.06 0.06\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("c=Choose another sound API") + '\"');
 					pInfoTextContainer->Create("PLScene::SNText2D", "TimeScale", "Position=\"0.06 0.08\" Flags=\"No3DPosition|NoCenter\"");
 					UpdateTimeScaleTextNode();
 				}

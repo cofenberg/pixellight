@@ -434,7 +434,7 @@ bool ZipHandle::LocateFile(const String &sFilename)
 	while (m_cCurFile.m_bValid) {
 		// Get current filename (without '/')
 		String sCurFile = m_cCurFile.m_sFilename;
-		if (sCurFile.GetSubstring(sCurFile.GetLength()-1) == "/")
+		if (sCurFile.GetSubstring(sCurFile.GetLength()-1) == '/')
 			sCurFile = sCurFile.GetSubstring(0, sCurFile.GetLength()-1);
 
 		// Check filename

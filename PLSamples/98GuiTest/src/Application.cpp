@@ -139,7 +139,7 @@ void Application::TestScreens()
 
 		// Print screen info
 		String sScreen = pScreen->GetName();
-		System::GetInstance()->GetConsole().Print("- " + sScreen + "\n");
+		System::GetInstance()->GetConsole().Print("- " + sScreen + '\n');
 	}
 }
 
@@ -171,7 +171,7 @@ void Application::TestFonts()
 		// Print font info
 		System::GetInstance()->GetConsole().Print("- Family: '" + sFamily + "' Height: '" + sHeight + "' Weight: '" + sWeight + "' Style: '" + sStyle + "'\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 

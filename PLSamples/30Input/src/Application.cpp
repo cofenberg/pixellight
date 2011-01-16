@@ -90,11 +90,11 @@ void Application::TestDevices()
 		String  sDesc = pDevice->GetDescription();
 
 		// Print device info
-		System::GetInstance()->GetConsole().Print("- " + sName + ": " + sDesc + "\n");
+		System::GetInstance()->GetConsole().Print("- " + sName + ": " + sDesc + '\n');
 	}
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 /**
@@ -105,7 +105,7 @@ void Application::TestController()
 {
 	// Start
 	System::GetInstance()->GetConsole().Print("Controller 'GameBoy'\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Create test controller
 	GameBoyController cController;
@@ -122,7 +122,7 @@ void Application::TestController()
 			System::GetInstance()->GetConsole().Print("- Axis   '" + pControl->GetName() + "' [" + pControl->GetDescription() + "]\n");
 		}
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// List buttons
 	System::GetInstance()->GetConsole().Print("Buttons:\n");
@@ -131,7 +131,7 @@ void Application::TestController()
 		Button *pButton = lstButtons[i];
 		System::GetInstance()->GetConsole().Print("- Button   '" + pButton->GetName() + "' [" + pButton->GetDescription() + "]\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// List axes
 	System::GetInstance()->GetConsole().Print("Axes:\n");
@@ -140,10 +140,10 @@ void Application::TestController()
 		Axis *pAxis = lstAxes[i];
 		System::GetInstance()->GetConsole().Print("- Axis '" + pAxis->GetName() + "' [" + pAxis->GetDescription() + "]\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 /**
@@ -235,7 +235,7 @@ void Application::TestGetChar(const String &sDevice)
 				// Enter
 				else if (nChar == 0x0D) {
 					// Next word
-					System::GetInstance()->GetConsole().Print("\n");
+					System::GetInstance()->GetConsole().Print('\n');
 					sInput = "";
 				}
 
@@ -245,7 +245,7 @@ void Application::TestGetChar(const String &sDevice)
 					sInput = sInput.GetSubstring(0, sInput.GetLength()-1);
 
 					// Print on next line
-					System::GetInstance()->GetConsole().Print("\n");
+					System::GetInstance()->GetConsole().Print('\n');
 					System::GetInstance()->GetConsole().Print(sInput);
 				}
 
@@ -342,7 +342,7 @@ void Application::OnControl(Control *pControl)
 	} else if (pControl->GetType() == ControlAxis) {
 		sValue = String::Format("%5.2f", ((Axis*)pControl)->GetValue());
 	}
-	System::GetInstance()->GetConsole().Print("- '" + sControl + "': " + sValue + "\n");
+	System::GetInstance()->GetConsole().Print("- '" + sControl + "': " + sValue + '\n');
 
 	// LED test
 	if ((pControl->GetName() == "Plus" || pControl->GetName() == "Minus") && ((Button*)pControl)->IsPressed()) {

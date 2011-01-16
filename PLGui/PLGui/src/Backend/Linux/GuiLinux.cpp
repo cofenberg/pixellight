@@ -454,7 +454,7 @@ void GuiLinux::EnumerateScreens(PLGeneral::List<Screen*> &lstScreens)
 
 		// Add screen
 		Screen *pScreen = new Screen(m_pGui);
-		pScreen->SetName   (sServer + ":" + nNumber + "." + (int)i);
+		pScreen->SetName   (sServer + ':' + nNumber + "." + i);
 		pScreen->SetPos	   (Vector2i(0, 0));
 		pScreen->SetSize   (Vector2i(XWidthOfScreen(pScreenInfo), XHeightOfScreen(pScreenInfo)));
 		pScreen->SetDefault(i == XDefaultScreen(m_pDisplay));

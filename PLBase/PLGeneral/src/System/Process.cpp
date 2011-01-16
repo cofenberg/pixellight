@@ -83,7 +83,7 @@ void Process::Execute(const String &sCommand, const String &sArguments)
 		STARTUPINFO siStartInfo;
 		ZeroMemory(&siStartInfo, sizeof(STARTUPINFO));
 		siStartInfo.cb = sizeof(STARTUPINFO);
-		String sCmdLine = sCommand + " " + sArguments;
+		String sCmdLine = sCommand + ' ' + sArguments;
 		BOOL bResult = CreateProcess(
 							nullptr,
 							(LPWSTR)sCmdLine.GetUnicode(),	// Command line

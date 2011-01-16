@@ -139,23 +139,23 @@ void Application::TestModules()
 		const PLCore::Module *pModule = lstModules[i];
 
 		// Print module info
-		System::GetInstance()->GetConsole().Print("- " + pModule->GetName() + "\n");
-		System::GetInstance()->GetConsole().Print("  - Description: " + pModule->GetDescription() + "\n");
-		System::GetInstance()->GetConsole().Print("  - Vendor:      " + pModule->GetVendor() + "\n");
-		System::GetInstance()->GetConsole().Print("  - License:     " + pModule->GetLicense() + "\n");
+		System::GetInstance()->GetConsole().Print("- " + pModule->GetName() + '\n');
+		System::GetInstance()->GetConsole().Print("  - Description: " + pModule->GetDescription() + '\n');
+		System::GetInstance()->GetConsole().Print("  - Vendor:      " + pModule->GetVendor() + '\n');
+		System::GetInstance()->GetConsole().Print("  - License:     " + pModule->GetLicense() + '\n');
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Get current module
 	System::GetInstance()->GetConsole().Print("Current module:\n");
 	const PLCore::Module *pModule = PLCore::ClassManager::GetInstance()->GetModule(pl_current_module_id());
-	System::GetInstance()->GetConsole().Print("- " + pModule->GetName() + "\n");
-	System::GetInstance()->GetConsole().Print("  - Description: " + pModule->GetDescription() + "\n");
-	System::GetInstance()->GetConsole().Print("  - Vendor:      " + pModule->GetVendor() + "\n");
-	System::GetInstance()->GetConsole().Print("  - License:     " + pModule->GetLicense() + "\n");
+	System::GetInstance()->GetConsole().Print("- " + pModule->GetName() + '\n');
+	System::GetInstance()->GetConsole().Print("  - Description: " + pModule->GetDescription() + '\n');
+	System::GetInstance()->GetConsole().Print("  - Vendor:      " + pModule->GetVendor() + '\n');
+	System::GetInstance()->GetConsole().Print("  - License:     " + pModule->GetLicense() + '\n');
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestClasses()
@@ -173,9 +173,9 @@ void Application::TestClasses()
 			const PLCore::Class *pClass = lstClasses[i];
 
 			// Print class info
-			System::GetInstance()->GetConsole().Print("- " + pClass->GetClassName() + " -> " + pClass->GetBaseClassName() + "\n");
+			System::GetInstance()->GetConsole().Print("- " + pClass->GetClassName() + " -> " + pClass->GetBaseClassName() + '\n');
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 
 	// List classes derived from PLCore::Loader
@@ -188,13 +188,13 @@ void Application::TestClasses()
 			const PLCore::Class *pClass = lstClasses[i];
 
 			// Print class info
-			System::GetInstance()->GetConsole().Print("- " + pClass->GetClassName() + " -> " + pClass->GetBaseClassName() + "\n");
+			System::GetInstance()->GetConsole().Print("- " + pClass->GetClassName() + " -> " + pClass->GetBaseClassName() + '\n');
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestProperties()
@@ -219,11 +219,11 @@ void Application::TestProperties()
 			String sValue = pClass->GetProperties().Get(sName);
 			System::GetInstance()->GetConsole().Print("- '" + sName + "' = '" + sValue + "'\n");
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestParameters()
@@ -241,7 +241,7 @@ void Application::TestParameters()
 		System::GetInstance()->GetConsole().Print("- " + cParams.GetName() + " = '" + cParams.GetValue() + "'\n");
 		cParams.Next();
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// XML
 	sInput = "<?xml version=\"1.0\" ?><Call Param0=\"1\" Param1=\"2.5\"/>";
@@ -254,10 +254,10 @@ void Application::TestParameters()
 		System::GetInstance()->GetConsole().Print("- " + cParams2.GetName() + " = '" + cParams2.GetValue() + "'\n");
 		cParams2.Next();
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestVars()
@@ -271,85 +271,85 @@ void Application::TestVars()
 	PLCore::Var<int> AttrInt(0);
 	AttrInt.SetInt(10);
 	System::GetInstance()->GetConsole().Print("- Type = '" + AttrInt.GetTypeName() + "'\n");
-	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrInt.GetBool()   + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrInt.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrInt.GetFloat()  + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrInt.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrInt.GetBool()   + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrInt.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrInt.GetFloat()  + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrInt.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Int Value = 12.5f
 	System::GetInstance()->GetConsole().Print("int Value = 12.5f\n");
 	AttrInt.SetFloat(12.5f);
 	System::GetInstance()->GetConsole().Print("- Type = '" + AttrInt.GetTypeName() + "'\n");
-	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrInt.GetBool()   + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrInt.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrInt.GetFloat()  + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrInt.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrInt.GetBool()   + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrInt.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrInt.GetFloat()  + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrInt.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Int Value = "101"
 	System::GetInstance()->GetConsole().Print("int Value = \"101\"\n");
 	AttrInt.SetString("101");
 	System::GetInstance()->GetConsole().Print("- Type = '" + AttrInt.GetTypeName() + "'\n");
-	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrInt.GetBool()   + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrInt.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrInt.GetFloat()  + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrInt.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrInt.GetBool()   + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrInt.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrInt.GetFloat()  + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrInt.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// troll Value = 101
 	System::GetInstance()->GetConsole().Print("troll Value = \"101\"\n");
 	PLCore::Var<TrollType> AttrTroll = TrollType();
 	AttrTroll.SetString("101");
 	System::GetInstance()->GetConsole().Print("- Type = '" + AttrTroll.GetTypeName() + "'\n");
-	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrTroll.GetBool()   + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrTroll.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrTroll.GetFloat()  + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrTroll.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[bool]   = " + String() + AttrTroll.GetBool()   + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrTroll.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[float]  = " + String() + AttrTroll.GetFloat()  + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrTroll.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// TestEnum Value = 0
 	System::GetInstance()->GetConsole().Print("TestEnum Value = 0\n");
 	PLCore::Var< pl_enum_type(TestEnum) > AttrEnum(Zero);
 	System::GetInstance()->GetConsole().Print("- Type = '" + AttrEnum.GetTypeName() + "'\n");
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// TestEnum Value = 1
 	System::GetInstance()->GetConsole().Print("TestEnum Value = 1\n");
 	AttrEnum = (TestEnum)1;
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// TestEnum Value = 2
 	System::GetInstance()->GetConsole().Print("TestEnum Value = 2\n");
 	AttrEnum = (TestEnum)2;
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// TestEnum Value = 3
 	System::GetInstance()->GetConsole().Print("TestEnum Value = 3\n");
 	AttrEnum = (TestEnum)3;
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// TestEnum Value = 4
 	System::GetInstance()->GetConsole().Print("TestEnum Value = 4\n");
 	AttrEnum = (TestEnum)4;
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// TestEnum Value = 'Two'
 	System::GetInstance()->GetConsole().Print("TestEnum Value = \"Two\"\n");
 	AttrEnum.SetString("Two");
-	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + "\n");
-	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Value[int]    = " + String() + AttrEnum.GetInt()    + '\n');
+	System::GetInstance()->GetConsole().Print("- Value[string] = " + String() + AttrEnum.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Default values
 	PLCore::Var<int> cVar(12);
@@ -361,10 +361,10 @@ void Application::TestVars()
 	System::GetInstance()->GetConsole().Print("- cVar = 1: '" + cVar.GetString() + "'\n");
 	cVar.SetDefault();
 	System::GetInstance()->GetConsole().Print("- cVar.SetDefault(): '" + cVar.GetString() + "'\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestFuncs()
@@ -382,14 +382,14 @@ void Application::TestFuncs()
 	// List signatures
 	System::GetInstance()->GetConsole().Print("Signatures:\n");
 	PLCore::DynFunc *pFunc = &MyFunc;
-	System::GetInstance()->GetConsole().Print("- MyFunc    [int(int)]:     " + pFunc->GetSignature() + "\n");
+	System::GetInstance()->GetConsole().Print("- MyFunc    [int(int)]:     " + pFunc->GetSignature() + '\n');
 	pFunc = &MyFunc2;
-	System::GetInstance()->GetConsole().Print("- MyFunc2   [void(int)]:    " + pFunc->GetSignature() + "\n");
+	System::GetInstance()->GetConsole().Print("- MyFunc2   [void(int)]:    " + pFunc->GetSignature() + '\n');
 	pFunc = &MyCreate;
-	System::GetInstance()->GetConsole().Print("- MyCreate  [Object*()]:    " + pFunc->GetSignature() + "\n");
+	System::GetInstance()->GetConsole().Print("- MyCreate  [Object*()]:    " + pFunc->GetSignature() + '\n');
 	pFunc = &MyCreate2;
-	System::GetInstance()->GetConsole().Print("- MyCreate2 [Object*(int)]: " + pFunc->GetSignature() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- MyCreate2 [Object*(int)]: " + pFunc->GetSignature() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Calling functions
 	System::GetInstance()->GetConsole().Print("Calling functions:\n");
@@ -406,21 +406,21 @@ void Application::TestFuncs()
 	pFunc = &MyFunc2;
 	pFunc->Call(PLCore::Params<int, int>(10));	// Wrong parameter types!
 
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Clone constructor
 	System::GetInstance()->GetConsole().Print("Cloning MyCreate2:\n");
 	PLCore::FuncConstructor<RttiObject, int> *pMyCreate3 = (PLCore::FuncConstructor<RttiObject, int>*)MyCreate2.Clone();
 	if (pMyCreate3) {
 		// Display signature of cloned constructor
-		System::GetInstance()->GetConsole().Print("- MyCreate3 [Object*(int)]: " + pMyCreate3->GetSignature() + "\n");
+		System::GetInstance()->GetConsole().Print("- MyCreate3 [Object*(int)]: " + pMyCreate3->GetSignature() + '\n');
 
 		// Delete cloned constructor
 		delete pMyCreate3;
 	} else {
 		System::GetInstance()->GetConsole().Print("- ERROR: Could not create clone!\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Test functors
 	System::GetInstance()->GetConsole().Print("Testing functors:\n");
@@ -436,14 +436,14 @@ void Application::TestFuncs()
 	System::GetInstance()->GetConsole().Print("- cFunc(42, 3.1415): ");
 	cFunc2.Call("MyFirstParameter='42' MySecondParameter='3.1415'");
 
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Test constructors
 	System::GetInstance()->GetConsole().Print("Testing constructors:\n");
 
 	System::GetInstance()->GetConsole().Print("- MyCreate: ");
 	RttiObject *pObject = (RttiObject*)MyCreate();
-	if (pObject) System::GetInstance()->GetConsole().Print("\n");
+	if (pObject) System::GetInstance()->GetConsole().Print('\n');
 	else		 System::GetInstance()->GetConsole().Print("ERROR: Could not create object!\n");
 
 	System::GetInstance()->GetConsole().Print("- MyCreate2: ");
@@ -451,18 +451,18 @@ void Application::TestFuncs()
 	PLCore::Params<PLCore::Object*, int> cParams2(10);
 	pFunc->Call(cParams2);
 	PLCore::Object *pObject2 = cParams2.Return;
-	if (pObject2) System::GetInstance()->GetConsole().Print("\n");
+	if (pObject2) System::GetInstance()->GetConsole().Print('\n');
 	else		  System::GetInstance()->GetConsole().Print("ERROR: Could not create object!\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Delete objects
 	System::GetInstance()->GetConsole().Print("Deleting objects:\n");
 	delete pObject;
 	delete pObject2;
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestEvents()
@@ -496,15 +496,15 @@ void Application::TestEvents()
 
 	System::GetInstance()->GetConsole().Print("- MyEvent(100, 101.0f): ");
 	MyEvent.Emit(PLCore::Params<void, int, float>(100, 101.0f));
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("- MyEvent2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1): ");
 	MyEvent2.Emit(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestAttributes()
@@ -514,7 +514,7 @@ void Application::TestAttributes()
 	System::GetInstance()->GetConsole().Print("----------------------------------------\n");
 
 	// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 void Application::TestObjects()
@@ -527,8 +527,8 @@ void Application::TestObjects()
 	System::GetInstance()->GetConsole().Print("Creating cObject:\n");
 	System::GetInstance()->GetConsole().Print("- ");
 	RttiObject cObject;
-	System::GetInstance()->GetConsole().Print("\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject
 	System::GetInstance()->GetConsole().Print("cObject attributes:\n");
@@ -541,10 +541,10 @@ void Application::TestObjects()
 		String sDesc = pDesc->GetDescription();
 		String sAnnt = pDesc->GetAnnotation();
 		System::GetInstance()->GetConsole().Print(
-			"- Var " + sName + "(" + sType + "): " + sDesc + "\n"
+			"- Var " + sName + '(' + sType + "): " + sDesc + '\n'
 		);
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 	System::GetInstance()->GetConsole().Print("cObject methods:\n");
 	const Container<PLCore::FuncDesc*> &lstMethods = cObject.GetClass()->GetMethods();
 	for (uint32 i=0; i<lstMethods.GetNumOfElements(); i++) {
@@ -554,10 +554,10 @@ void Application::TestObjects()
 		String sDesc = pDesc->GetDescription();
 		String sAnnt = pDesc->GetAnnotation();
 		System::GetInstance()->GetConsole().Print(
-			"- Method " + sName + "(" + sSig + "): " + sDesc + "\n"
+			"- Method " + sName + '(' + sSig + "): " + sDesc + '\n'
 		);
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 	System::GetInstance()->GetConsole().Print("cObject signals:\n");
 	const Container<PLCore::EventDesc*> &lstSignals = cObject.GetClass()->GetSignals();
 	for (uint32 i=0; i<lstSignals.GetNumOfElements(); i++) {
@@ -567,10 +567,10 @@ void Application::TestObjects()
 		String sDesc = pDesc->GetDescription();
 		String sAnnt = pDesc->GetAnnotation();
 		System::GetInstance()->GetConsole().Print(
-			"- Signal " + sName + "(" + sSig + "): " + sDesc + "\n"
+			"- Signal " + sName + '(' + sSig + "): " + sDesc + '\n'
 		);
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 	System::GetInstance()->GetConsole().Print("cObject slots:\n");
 	const Container<PLCore::EventHandlerDesc*> &lstSlots = cObject.GetClass()->GetSlots();
 	for (uint32 i=0; i<lstSlots.GetNumOfElements(); i++) {
@@ -580,10 +580,10 @@ void Application::TestObjects()
 		String sDesc = pDesc->GetDescription();
 		String sAnnt = pDesc->GetAnnotation();
 		System::GetInstance()->GetConsole().Print(
-			"- Slot " + sName + "(" + sSig + "): " + sDesc + "\n"
+			"- Slot " + sName + '(' + sSig + "): " + sDesc + '\n'
 		);
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 	System::GetInstance()->GetConsole().Print("cObject constructors:\n");
 	const Container<PLCore::ConstructorDesc*> &lstConstructors = cObject.GetClass()->GetConstructors();
 	for (uint32 i=0; i<lstConstructors.GetNumOfElements(); i++) {
@@ -593,94 +593,94 @@ void Application::TestObjects()
 		String sDesc = pDesc->GetDescription();
 		String sAnnt = pDesc->GetAnnotation();
 		System::GetInstance()->GetConsole().Print(
-			"- Constructor " + sName + "(" + sSig + "): " + sDesc + "\n"
+			"- Constructor " + sName + '(' + sSig + "): " + sDesc + '\n'
 		);
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Sizes
 	System::GetInstance()->GetConsole().Print("Sizes:\n");
 	int nSize = sizeof(int);
-	System::GetInstance()->GetConsole().Print("- sizeof(int):      " + String() + (int)nSize + "\n");
+	System::GetInstance()->GetConsole().Print("- sizeof(int):      " + String() + (int)nSize + '\n');
 	int nSizeValue = sizeof(cObject.IntValue);
-	System::GetInstance()->GetConsole().Print("- sizeof(IntValue): " + String() + (int)nSizeValue + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- sizeof(IntValue): " + String() + (int)nSizeValue + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject values
 	System::GetInstance()->GetConsole().Print("Values:\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject.BoolValue = false
 	cObject.BoolValue = false;
 	System::GetInstance()->GetConsole().Print("BoolValue = false:\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject.IntValue = 100
 	cObject.IntValue.Set(100);
 	System::GetInstance()->GetConsole().Print("IntValue = 100:\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject.IntValue2 = 100
 	cObject.IntValue2 = 100;
 	System::GetInstance()->GetConsole().Print("IntValue2 = 100:\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject.IntValue = 99, cObject.Number = 1
 	cObject.SetAttribute("IntValue", "99");
 	cObject.Number = RttiObject::Inside1;
 	System::GetInstance()->GetConsole().Print("IntValue = 99, cObject.Number = 1:\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject.BoolValue = true, cObject.IntValue = 5
 	XmlDocument cXmlValues;
 	cXmlValues.Parse("<?xml version=\"1.0\" ?><Object BoolValue=\"true\" IntValue=\"5\" Number=\"Three\"/>");
 	cObject.SetValuesXml(*(XmlElement*)cXmlValues.GetFirstChildElement());
 	System::GetInstance()->GetConsole().Print("BoolValue = true, IntValue = 5, Number = 'Three':\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// cObject.BoolValue = false, cObject.IntValue = 7
 	cObject.SetValues("BoolValue='false' IntValue='7'");
 	System::GetInstance()->GetConsole().Print("BoolValue = true, IntValue = 5:\n");
-	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + "\n");
-	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + "\n");
-	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- BoolValue: " + String() + cObject.BoolValue.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue:  " + String() + cObject.IntValue.GetString()  + '\n');
+	System::GetInstance()->GetConsole().Print("- IntValue2: " + String() + cObject.IntValue2.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("- Number:    " + String() + cObject.Number.GetString() + '\n');
+	System::GetInstance()->GetConsole().Print("* " + cObject.GetValues(PLCore::WithDefault) + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Test flags
 	System::GetInstance()->GetConsole().Print("Testing flags:\n");
-	System::GetInstance()->GetConsole().Print("- State: " + cObject.State.GetString() + "\n");
+	System::GetInstance()->GetConsole().Print("- State: " + cObject.State.GetString() + '\n');
 	cObject.State = 1;
 	System::GetInstance()->GetConsole().Print("->  State = 1\n");
 	System::GetInstance()->GetConsole().Print("- State: " + cObject.State.GetString() + " [" + cObject.State.GetInt() + "]\n");
@@ -723,15 +723,15 @@ void Application::TestObjects()
 	cObject.State.SetString("Ugly|10");
 	System::GetInstance()->GetConsole().Print("->  State = 'Ugly|10'\n");
 	System::GetInstance()->GetConsole().Print("- State: " + cObject.State.GetString() + " [" + cObject.State.GetInt() + "]\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Get object attributes as XML
 	XmlElement cXmlElement("Object");
 	cObject.GetValuesXml(cXmlElement, PLCore::WithDefault);
 	System::GetInstance()->GetConsole().Print("Object as XML:\n");
-	System::GetInstance()->GetConsole().Print(cXmlElement.ToString() + "\n");
-	System::GetInstance()->GetConsole().Print(cObject.ToXml().ToString() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print(cXmlElement.ToString() + '\n');
+	System::GetInstance()->GetConsole().Print(cObject.ToXml().ToString() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Method: Test()
 	System::GetInstance()->GetConsole().Print("Calling MethodTest (7 times):\n");
@@ -744,7 +744,7 @@ void Application::TestObjects()
 	cObject.MethodTest.Call(PLCore::Params<void, int, float>::FromXml(*(XmlElement*)cXmlParams.GetFirstChildElement()));
 	cObject.MethodTest.Call(*(XmlElement*)cXmlParams.GetFirstChildElement());
 	cObject.CallMethod("Test", "Param0=200 Param1='0.753'");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Events
 		// Connect event handlers
@@ -755,26 +755,26 @@ void Application::TestObjects()
 
 		// Get signature
 	System::GetInstance()->GetConsole().Print("Checking signature of cObject.Event1 (void(int, int)):\n");
-	System::GetInstance()->GetConsole().Print("- " + cObject.GetSignal("Event1")->GetSignature() + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- " + cObject.GetSignal("Event1")->GetSignature() + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 		// Emit directly (accessing the actual Signal)
 	System::GetInstance()->GetConsole().Print("Emitting cObject.Event1(100, 200): ");
 	cObject.Event1.Emit(100, 200);
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 		// Emit dynamically (accessing the signal only indirectly by DynSignal)
 	System::GetInstance()->GetConsole().Print("Emitting cObject.Event1(1, 2): ");
 	cObject.GetSignal("Event1")->Emit( PLCore::Params<void, int, int>(1, 2) );
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 		// Emit dynamically (accessing the signal only indirectly by DynSignal)
 	System::GetInstance()->GetConsole().Print("Emitting cObject.Event0(): ");
 	cObject.GetSignal("Event0")->Emit( PLCore::Params<void>() );
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 		// Done
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Call base constructor
 	System::GetInstance()->GetConsole().Print("Testing constructors:\n");
@@ -815,7 +815,7 @@ void Application::TestEnums()
 		int    nValue = pl_enum_type(TestEnum)::GetEnumValue(sName);
 		System::GetInstance()->GetConsole().Print("- '" + sName + "' = " + nValue + " [" + sDesc + "]\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show enum values of TestFlags by directly accessing the enum-type
 	nValues = pl_enum_type(Hallo::TestFlags)::GetNumOfEnumValues();
@@ -826,7 +826,7 @@ void Application::TestEnums()
 		int    nValue = pl_enum_type(Hallo::TestFlags)::GetEnumValue(sName);
 		System::GetInstance()->GetConsole().Print("- '" + sName + "' = " + nValue + " [" + sDesc + "]\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show enum values of TestFlags2 by directly accessing the enum-type
 	nValues = pl_enum_type(TestFlags2)::GetNumOfEnumValues();
@@ -837,7 +837,7 @@ void Application::TestEnums()
 		int    nValue = pl_enum_type(TestFlags2)::GetEnumValue(sName);
 		System::GetInstance()->GetConsole().Print("- '" + sName + "' = " + nValue + " [" + sDesc + "]\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show enum values of FamousNumbers by directly accessing the enum-type
 	nValues = pl_enum_type(FamousNumbers)::GetNumOfEnumValues();
@@ -848,7 +848,7 @@ void Application::TestEnums()
 		float  fValue = pl_enum_type(FamousNumbers)::GetEnumValue(sName);
 		System::GetInstance()->GetConsole().Print("- '" + sName + "' = " + fValue + " [" + sDesc + "]\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show enum values of TestFlags2 by accessing it's dynamic type info
 	PLCore::Var< pl_enum_type(TestFlags2) > cVar;
@@ -862,10 +862,10 @@ void Application::TestEnums()
 			System::GetInstance()->GetConsole().Print("- '" + sEnum + "' = '" + sValue + "'\n");
 		}
 	} else {
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 		System::GetInstance()->GetConsole().Print("  - ERROR: This is not a enum type!\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show enum values of FamousNumbers by accessing it's dynamic type info
 	PLCore::Var< pl_enum_type(FamousNumbers) > cVar2;
@@ -879,10 +879,10 @@ void Application::TestEnums()
 			System::GetInstance()->GetConsole().Print("- '" + sEnum + "' = '" + sValue + "'\n");
 		}
 	} else {
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 		System::GetInstance()->GetConsole().Print("  - ERROR: This is not a enum type!\n");
 	}
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Set overwritten variables
 	/*
@@ -916,16 +916,16 @@ void Application::TestOverwrite()
 			String sDesc = pDesc->GetDescription();
 			String sAnnt = pDesc->GetAnnotation();
 			System::GetInstance()->GetConsole().Print(
-				"- Var " + sName + "(" + sType + "): " + sDesc + "\n"
+				"- Var " + sName + '(' + sType + "): " + sDesc + '\n'
 			);
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 
 	// Show value of pObject1->Float
 	System::GetInstance()->GetConsole().Print("TestClass1.Float:\n");
 	pObject1->CallMethod("PrintFloat", PLCore::Params<void>());
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Create object of type "TestClass2"
 	PLCore::Object *pObject2 = PLCore::ClassManager::GetInstance()->GetClass("TestPlugin::TestClass2")->Create();
@@ -940,22 +940,22 @@ void Application::TestOverwrite()
 			String sDesc = pDesc->GetDescription();
 			String sAnnt = pDesc->GetAnnotation();
 			System::GetInstance()->GetConsole().Print(
-				"- Var " + sName + "(" + sType + "): " + sDesc + "\n"
+				"- Var " + sName + '(' + sType + "): " + sDesc + '\n'
 			);
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 
 	// Show value of pObject1->Float
 	System::GetInstance()->GetConsole().Print("TestClass1.Float:\n");
 	pObject2->CallMethod("PrintFloat", PLCore::Params<void>());
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show value of pObject2->Float
 	System::GetInstance()->GetConsole().Print("TestClass2.Float:\n");
 	String sValue = pObject2->GetAttribute("Float")->GetString();
-	System::GetInstance()->GetConsole().Print("- Float = " + sValue + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("- Float = " + sValue + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Show value of pObject2->Float
 	System::GetInstance()->GetConsole().Print("TestClass2.Flags:\n");
@@ -977,7 +977,7 @@ void Application::TestOverwrite()
 	System::GetInstance()->GetConsole().Print("- Flags = 129: '" + pObject2->GetAttribute("Flags")->GetString() + "'\n");
 	pObject2->GetAttribute("Flags")->SetInt(255);
 	System::GetInstance()->GetConsole().Print("- Flags = 255: '" + pObject2->GetAttribute("Flags")->GetString() + "'\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
 	System::GetInstance()->GetConsole().Print("Done.\n\n");
@@ -993,20 +993,20 @@ void Application::TestConvertible()
 	bool bIsConvertible;
 	System::GetInstance()->GetConsole().Print("Checking if types are convertible:\n");
 	bIsConvertible = PLCore::IsConvertible<int, int>::Value;
-	System::GetInstance()->GetConsole().Print("- int -> int:   " + String() + bIsConvertible + "\n");
+	System::GetInstance()->GetConsole().Print("- int -> int:   " + String() + bIsConvertible + '\n');
 	bIsConvertible = PLCore::IsConvertible<int, A>::Value;
-	System::GetInstance()->GetConsole().Print("- int -> A:     " + String() + bIsConvertible + "\n");
+	System::GetInstance()->GetConsole().Print("- int -> A:     " + String() + bIsConvertible + '\n');
 	bIsConvertible = PLCore::IsConvertible<B, float>::Value;
-	System::GetInstance()->GetConsole().Print("-   B -> float: " + String() + bIsConvertible + "\n");
+	System::GetInstance()->GetConsole().Print("-   B -> float: " + String() + bIsConvertible + '\n');
 	bIsConvertible = PLCore::IsConvertible<A, A>::Value;
-	System::GetInstance()->GetConsole().Print("-   A -> A:     " + String() + bIsConvertible + "\n");
+	System::GetInstance()->GetConsole().Print("-   A -> A:     " + String() + bIsConvertible + '\n');
 	bIsConvertible = PLCore::IsConvertible<A, B>::Value;
-	System::GetInstance()->GetConsole().Print("-   A -> B:     " + String() + bIsConvertible + "\n");
+	System::GetInstance()->GetConsole().Print("-   A -> B:     " + String() + bIsConvertible + '\n');
 	bIsConvertible = PLCore::IsConvertible<B, A>::Value;
-	System::GetInstance()->GetConsole().Print("-   B -> A:     " + String() + bIsConvertible + "\n");
+	System::GetInstance()->GetConsole().Print("-   B -> A:     " + String() + bIsConvertible + '\n');
 	bIsConvertible = PLCore::IsConvertible<B, B>::Value;
-	System::GetInstance()->GetConsole().Print("-   B -> B:     " + String() + bIsConvertible + "\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print("-   B -> B:     " + String() + bIsConvertible + '\n');
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Check convertible types
 	bool bIsBaseClass;
@@ -1029,13 +1029,13 @@ void Application::TestConvertible()
 	System::GetInstance()->GetConsole().Print("-   RttiObject <- RttiObject: " + String() + bIsBaseClass + " (false)\n");
 	bIsBaseClass = PLCore::IsBaseClass<PLCore::Object, PLCore::ObjectBase>::Value;
 	System::GetInstance()->GetConsole().Print("-   ObjectBase <- Object    : " + String() + bIsBaseClass + " (true)\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Check enum types
 	PLCore::Var<EEnum> cVar;
 	System::GetInstance()->GetConsole().Print("Checking enum types:\n");
 	System::GetInstance()->GetConsole().Print("- Var<EEnum>::Type = '" + cVar.GetType().GetTypeName() + "' (int)\n");
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Check events with enums
 	PLCore::Event< pl_enum_type(EEnum) > cEvent;
@@ -1064,10 +1064,10 @@ void Application::TestStringRef()
 
 		// This works:
 		String sString = "Alice";
-		pObject->CallMethod("MyMethod", "Param0=\"" + PLCore::Type<String&>::ConvertToString(sString) + "\"");
+		pObject->CallMethod("MyMethod", "Param0=\"" + PLCore::Type<String&>::ConvertToString(sString) + '\"');
 
 		// And this:
-		pObject->CallMethod("MyMethod", String("Param0=\"") + (uint32)&sString + "\"");
+		pObject->CallMethod("MyMethod", String("Param0=\"") + (uint32)&sString + '\"');
 
 	    // Cleanup
 		delete pObject;

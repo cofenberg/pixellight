@@ -55,7 +55,8 @@ namespace PLGeneral {
 String SetStringLength(const String &sString, uint32 nLength)
 {
 	String sAdd;
-	for (uint32 i=sString.GetLength(); i<nLength; i++) sAdd = sAdd + " ";
+	for (uint32 i=sString.GetLength(); i<nLength; i++)
+		sAdd = sAdd + ' ';
 	return sString + sAdd;
 }
 
@@ -107,7 +108,7 @@ void PrintDescription(uint32 nIndent, const String &sText)
 	// Print description
 	if (nIndent + sText.GetLength() < 79) {
 		// Description still fits on the line, just print it out
-		System::GetInstance()->GetConsole().Print(sText + "\n");
+		System::GetInstance()->GetConsole().Print(sText + '\n');
 	} else {
 		// Description is too long to fit on the line
 			  uint32 nPos   = nIndent;
@@ -121,14 +122,14 @@ void PrintDescription(uint32 nIndent, const String &sText)
 						 nParsePos = cRegEx.GetPosition();
 			const String sWord     = cRegEx.GetResult(0);
 			if (nPos > nIndent) {
-				System::GetInstance()->GetConsole().Print(" ");
+				System::GetInstance()->GetConsole().Print(' ');
 				nPos++;
 			}
 
 			// Break line when necessary
 			nPos += sWord.GetLength();
 			if (nPos >= 79) {
-				System::GetInstance()->GetConsole().Print("\n");
+				System::GetInstance()->GetConsole().Print('\n');
 				System::GetInstance()->GetConsole().Print(sEmpty);
 				nPos = nIndent + sWord.GetLength();
 			}
@@ -156,11 +157,11 @@ String CommandLine::ArgumentsToString(const Array<String> &lstArray)
 		// Loop through all elements of the given array
 		for (uint32 i=0; i<lstArray.GetNumOfElements(); i++) {
 			if (i > 0)
-				sString += " ";
+				sString += ' ';
 			if (sString.IndexOf(' ') >= 0) {
-				sString += "\"";
+				sString += '\"';
 				sString += lstArray[i];
-				sString += "\"";
+				sString += '\"';
 			} else {
 				sString += lstArray[i];
 			}
@@ -408,7 +409,7 @@ bool CommandLine::ParseCommandLine(const Array<String> &lstArgs)
 			sOptions = ""; 
 			sOption  = sArg;
 			sValue   = "";
-		} else if (sArg.GetSubstring(0, 1) == "-") {
+		} else if (sArg.GetSubstring(0, 1) == '-') {
 			// Short option(s) found
 			sOptions = sArg.GetSubstring(2);
 			sOption  = sArg.GetSubstring(0, 2);
@@ -597,7 +598,7 @@ void CommandLine::PrintHelp(const String &sProgramName) const
 				PrintDescription(sInfo.GetLength(), pOption->GetDescription());
 			}
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 
 		// Print options
 		System::GetInstance()->GetConsole().Print("Available options:\n");
@@ -620,7 +621,7 @@ void CommandLine::PrintHelp(const String &sProgramName) const
 				PrintDescription(sInfo.GetLength(), pOption->GetDescription());
 			}
 		}
-		System::GetInstance()->GetConsole().Print("\n");
+		System::GetInstance()->GetConsole().Print('\n');
 	}
 }
 

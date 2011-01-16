@@ -44,7 +44,7 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-const String Tokenizer::EndOfLine = "\n";
+const String Tokenizer::EndOfLine = '\n';
 
 
 //[-------------------------------------------------------]

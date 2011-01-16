@@ -52,7 +52,7 @@ String System::GetInfo() const
 								  "\nEndian: "			+ (IsLittleEndian() ? "'Little Endian First'" : "'Big Endian First'") +
 								  "\nPlatform: "		+ GetPlatform() +
 								  "\nOS: "				+ GetOS() +
-								  "\n";
+								  '\n';
 	return sString;
 }
 

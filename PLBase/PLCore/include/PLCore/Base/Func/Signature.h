@@ -65,7 +65,7 @@ class SignatureString {
 			PLGeneral::String sType;
 
 			// Return type
-			sSignature = Type<R>::GetTypeName() + "(";
+			sSignature = Type<R>::GetTypeName() + '(';
 
 			// Type 0
 			sType = Type<T0>::GetTypeName();
@@ -132,7 +132,7 @@ class SignatureString {
 			if (sType != "") sSignature += "," + sType;
 
 			// Done
-			sSignature = sSignature + ")";
+			sSignature = sSignature + ')';
 			return sSignature;
 		}
 };

@@ -89,10 +89,10 @@ void Application::OnCreateMainWindow()
 		bool bDefault	= pScreen->IsDefault();
 		System::GetInstance()->GetConsole().Print(
 			String("- ") + sName +
-			" [" + vSize.x + "x" + vSize.y + "]" +
-			" (" + vPos .x + "," + vPos .y + ")" +
+			" [" + vSize.x + 'x' + vSize.y +']' +
+			" (" + vPos .x + ',' + vPos .y + ')' +
 			(bDefault ? " (*)" : "") +
-			"\n");
+			'\n');
 	}
 
 	// Create window

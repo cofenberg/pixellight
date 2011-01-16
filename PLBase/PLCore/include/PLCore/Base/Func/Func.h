@@ -110,7 +110,7 @@ class Func : public DynFunc {
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
 									cP.Param15);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -126,7 +126,7 @@ class Func : public DynFunc {
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
 									cP.Param15);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -197,7 +197,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
 						cP.Param15);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -213,7 +213,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
 						cP.Param15);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -284,7 +284,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -299,7 +299,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -368,7 +368,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -383,7 +383,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -454,7 +454,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12, cP.Param13);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -469,7 +469,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12, cP.Param13);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -537,7 +537,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -552,7 +552,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -621,7 +621,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -636,7 +636,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11, cP.Param12);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -703,7 +703,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -718,7 +718,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11, cP.Param12);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -786,7 +786,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -801,7 +801,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10, cP.Param11);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -867,7 +867,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -882,7 +882,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10, cP.Param11);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -949,7 +949,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -964,7 +964,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 									cP.Param10);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1029,7 +1029,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1044,7 +1044,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 						cP.Param10);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1109,7 +1109,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1123,7 +1123,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1186,7 +1186,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1200,7 +1200,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1264,7 +1264,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1278,7 +1278,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1340,7 +1340,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1354,7 +1354,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1417,7 +1417,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1431,7 +1431,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6,  cP.Param7);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1492,7 +1492,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1506,7 +1506,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6,  cP.Param7);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1568,7 +1568,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1582,7 +1582,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5,  cP.Param6);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1642,7 +1642,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1656,7 +1656,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5,  cP.Param6);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1717,7 +1717,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1731,7 +1731,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 									cP.Param5);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1790,7 +1790,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1804,7 +1804,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 						cP.Param5);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1862,7 +1862,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1874,7 +1874,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1930,7 +1930,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1942,7 +1942,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1999,7 +1999,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2011,7 +2011,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2066,7 +2066,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2078,7 +2078,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2134,7 +2134,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2146,7 +2146,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2200,7 +2200,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2212,7 +2212,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2267,7 +2267,7 @@ class Func<R, T0, T1> : public DynFunc {
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2279,7 +2279,7 @@ class Func<R, T0, T1> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2332,7 +2332,7 @@ class Func<void, T0, T1> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2344,7 +2344,7 @@ class Func<void, T0, T1> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2398,7 +2398,7 @@ class Func<R, T0> : public DynFunc {
 
 				// Call function
 				cP.Return = (*this)(cP.Param0);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2410,7 +2410,7 @@ class Func<R, T0> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2463,7 +2463,7 @@ class Func<void, T0> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2475,7 +2475,7 @@ class Func<void, T0> : public DynFunc {
 
 				// Call function
 				(*this)(cP.Param0);
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2528,7 +2528,7 @@ class Func<R> : public DynFunc {
 
 				// Call function
 				cP.Return = (*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2537,7 +2537,7 @@ class Func<R> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function
 				(*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2584,7 +2584,7 @@ class Func<void> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function
 				(*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2593,7 +2593,7 @@ class Func<void> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function
 				(*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + "\n");
+			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)

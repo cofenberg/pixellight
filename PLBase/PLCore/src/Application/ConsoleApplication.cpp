@@ -439,14 +439,14 @@ void ConsoleApplication::OnInitLog()
 			// Could not open log, try standard locations
 			if (m_sLogName.GetLength()) {
 				// Create user data directory, if it does not yet exist
-				Directory cDir(System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir);
+				Directory cDir(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
 				if (!cDir.Exists()) cDir.Create();
 
 				// Try user directory first, then use current directory
-				sLog = System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir + "/" + m_sLogName;
+				sLog = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sLogName;
 				if (!(m_bMultiUser && pLog->Open(sLog))) {
 					// Not successfull, so try current directory instead
-					sLog = System::GetInstance()->GetCurrentDir() + "/" + m_sLogName;
+					sLog = System::GetInstance()->GetCurrentDir() + '/' + m_sLogName;
 					if (!pLog->Open(sLog)) {
 						// Error: Could not open log
 						sLog = "";
@@ -500,14 +500,14 @@ void ConsoleApplication::OnInitConfig()
 		// Could not open config file, try standard locations
 		if (m_sConfigName.GetLength()) {
 			// Create user data directory, if it does not yet exist
-			Directory cDir(System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir);
+			Directory cDir(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
 			if (!cDir.Exists()) cDir.Create();
 
 			// Try user directory first, then use application (!) directory
-			sConfig = System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir + "/" + m_sConfigName;
+			sConfig = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
 			if (!(m_bMultiUser && m_cConfig.Load(sConfig))) {
 				// Not successfull, so try application directory instead
-				sConfig = m_cApplicationContext.GetAppDirectory() + "/" + m_sConfigName;
+				sConfig = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
 				if (!m_cConfig.Load(sConfig)) {
 					// Error: Could not open config file
 					sConfig = "";
@@ -521,11 +521,11 @@ void ConsoleApplication::OnInitConfig()
 		// Only if we want a config at all
 		if (m_sConfigName.GetLength()) {
 			// Try user directory first, then use application directory
-			Directory cDir(System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir);
+			Directory cDir(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
 			if (m_bMultiUser && cDir.Exists())
-				sConfig = System::GetInstance()->GetUserDataDir() + "/" + m_sAppDataSubdir + "/" + m_sConfigName;
+				sConfig = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
 			else
-				sConfig = m_cApplicationContext.GetAppDirectory() + "/" + m_sConfigName;
+				sConfig = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
 		}
 	}
 
@@ -633,10 +633,10 @@ void ConsoleApplication::OnInit()
 
 	// Create the log header:
 	PL_LOG(Info, "Log-system started")
-	PL_LOG(Quiet, "\n")
+	PL_LOG(Quiet, '\n')
 	PL_LOG(Info, "< " + Core::GetVersion().ToString() + " >")
 	PL_LOG(Info, "Build: "__DATE__" "__TIME__"")
-	PL_LOG(Quiet, "\n")
+	PL_LOG(Quiet, '\n')
 
 	// Print out the general system info:
 	PL_LOG(Info, String::Format("CPU: %d Mhz", System::GetInstance()->GetCPUMhz()))
@@ -652,7 +652,7 @@ void ConsoleApplication::OnInit()
 	PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
 
 	// PLGeneral infomation
-	PL_LOG(Info, "\nPLGeneral infomation:\n" + System::GetInstance()->GetInfo() + "\n")
+	PL_LOG(Info, "\nPLGeneral infomation:\n" + System::GetInstance()->GetInfo() + '\n')
 
 	// Reset timing class
 	Timing::GetInstance()->Reset();
@@ -697,7 +697,7 @@ void ConsoleApplication::OnPrintHelp()
 void ConsoleApplication::OnPrintVersion()
 {
 	// Print application title and version
-	System::GetInstance()->GetConsole().Print(m_sTitle + " - V" + m_cVersion.ToString() + "\n");
+	System::GetInstance()->GetConsole().Print(m_sTitle + " - V" + m_cVersion.ToString() + '\n');
 }
 
 /**

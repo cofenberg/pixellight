@@ -78,6 +78,9 @@ class StringBuffer;
 *    - Don't forget that wchar_t does not have the same number of bytes on every OS, so DO NOT use wchar_t for serialization, use UTF8 for that!
 *    - PixelLight is using the compiler option "wchar_t is treated as built-in type", while other libraries like Qt are not - so you may want to
 *      use UTF8 for string exchange between different libraries...
+*    - If you care about best possible performance (even if nearly not measurable), use character string methods when dealing with characters - for
+*      example, write "String sS = 'A';" instead of "String sS = "A";", this way, the string method already knows that you provided just a single
+*      character and don't need to count characters internally
 */
 class String {
 

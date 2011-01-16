@@ -109,7 +109,7 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 
 					// Find all files belonging to this shared library
 					Array<String> lstFiles;
-					Find(lstFiles, sRealSourceDirectory, sFile + "*", false);
+					Find(lstFiles, sRealSourceDirectory, sFile + '*', false);
 
 					// Loop through files
 					Iterator<String> cIterator = lstFiles.GetIterator();

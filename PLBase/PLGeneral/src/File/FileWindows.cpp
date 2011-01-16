@@ -162,7 +162,7 @@ bool FileWindows::Rename(const String &sName)
 	Close();
 
 	// Check parameter: No path is allowed ('/' or '\')
-	if (sName.IsSubstring("\\") || sName.IsSubstring("/"))
+	if (sName.IsSubstring('\\') || sName.IsSubstring('/'))
 		return false; // Error!
 
 	// Get absolute path of old and new name (in Windows notation)

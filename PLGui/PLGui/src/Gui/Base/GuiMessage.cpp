@@ -481,13 +481,13 @@ String GuiMessage::ToString() const
 		// Internal message
 		case MessageOnInternalMessage:
 			sMessage += "OnInternalMessage";
-			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ")";
+			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ')';
 			break;
 
 		// User message
 		case MessageOnUserMessage:
 			sMessage += "OnUserMessage";
-			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ")";
+			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ')';
 			break;
 
 		// Theme has been changed
@@ -503,19 +503,19 @@ String GuiMessage::ToString() const
 		// Child widget has been changed
 		case MessageOnUpdateChildWidget:
 			sMessage += "OnUpdateChildWidget";
-			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ")";
+			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ')';
 			break;
 
 		// Child widget has been added
 		case MessageOnAddChildWidget:
 			sMessage += "OnAddChildWidget";
-			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ")";
+			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ')';
 			break;
 
 		// Child widget has been removed
 		case MessageOnRemoveChildWidget:
 			sMessage += "OnRemoveChildWidget";
-			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ")";
+			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ')';
 			break;
 
 		// Widget shall be closed (ALT+F4 or X-Button pressed)
@@ -566,7 +566,7 @@ String GuiMessage::ToString() const
 		// Widget has been activated or deactivated (focus-widget has changed)
 		case MessageOnActivate:
 			sMessage += "OnActivate";
-			sMessage += String() + " (State=" + (m_bState ? "true" : "false") + ")";
+			sMessage += String() + " (State=" + (m_bState ? "true" : "false") + ')';
 			break;
 
 		// Widget background gets drawn, graphics object used for painting as parameter
@@ -582,13 +582,13 @@ String GuiMessage::ToString() const
 		// Widget gets moved, new widget position as parameter
 		case MessageOnMove:
 			sMessage += "OnMove";
-			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Widget gets resized, new widget size as parameter
 		case MessageOnSize:
 			sMessage += "OnSize";
-			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Window state has changed, new window state as parameter
@@ -600,7 +600,7 @@ String GuiMessage::ToString() const
 			if (m_nWindowState == StateMinimized)	sWindowState = "Minimized";
 			if (m_nWindowState == StateMaximized)	sWindowState = "Maximized";
 			if (m_nWindowState == StateFullscreen)	sWindowState = "Fullscreen";
-			sMessage += String() + " (WindowState=" + sWindowState + ")";
+			sMessage += String() + " (WindowState=" + sWindowState + ')';
 			break;
 		}
 
@@ -617,7 +617,7 @@ String GuiMessage::ToString() const
 		// Widget has calculated it's preferred size
 		case MessageOnPreferredSize:
 			sMessage += "OnPreferredSize";
-			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Widget content has to be adjusted
@@ -638,13 +638,13 @@ String GuiMessage::ToString() const
 		// Mouse-over widget has changed
 		case MessageOnMouseOver:
 			sMessage += "OnMouseOver";
-			sMessage += String() + " (State=" + (m_bState ? "true" : "false") + ")";
+			sMessage += String() + " (State=" + (m_bState ? "true" : "false") + ')';
 			break;
 
 		// Mouse moves inside the widget, mouse position within the widget as parameter
 		case MessageOnMouseMove:
 			sMessage += "OnMouseMove";
-			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse hovers over the widget
@@ -655,61 +655,61 @@ String GuiMessage::ToString() const
 		// Mouse position inside the widget has changed due to the movement of widget
 		case MessageOnMousePosUpdate:
 			sMessage += "OnMousePosUpdate";
-			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button is pressed, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonDown:
 			sMessage += "OnMouseButtonDown";
-			sMessage += String() + " Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button is released, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonUp:
 			sMessage += "OnMouseButtonUp";
-			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button has been clicked, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonClick:
 			sMessage += "OnMouseButtonClick";
-			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonDoubleClick:
 			sMessage += "OnMouseButtonDoubleClick";
-			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ")";
+			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse wheel moved, mouse wheel movement as parameter
 		case MessageOnMouseWheel:
 			sMessage += "OnMouseWheel";
-			sMessage += String() + " (Delta=" + m_nDelta + ")";
+			sMessage += String() + " (Delta=" + m_nDelta + ')';
 			break;
 
 		// Key gets pressed, pressed key and modifier keys pressed as parameters
 		case MessageOnKeyDown:
 			sMessage += "OnKeyDown";
-			sMessage += String() + " (Key=" + (int)m_nKey + ", Modifier=" + (int)m_nModifiers + ")";
+			sMessage += String() + " (Key=" + (int)m_nKey + ", Modifier=" + (int)m_nModifiers + ')';
 			break;
 
 		// Key gets released, released key and modifier keys pressed as parameters
 		case MessageOnKeyUp:
 			sMessage += "OnKeyUp";
-			sMessage += String() + " (Key=" + (int)m_nKey + ", Modifier=" + (int)m_nModifiers + ")";
+			sMessage += String() + " (Key=" + (int)m_nKey + ", Modifier=" + (int)m_nModifiers + ')';
 			break;
 
 		// Hotkey pressed, hotkey ID as parameter
 		case MessageOnHotkey:
 			sMessage += "OnHotkey";
-			sMessage += String() + " (Hotkey=" + (int)m_nKey + ")";
+			sMessage += String() + " (Hotkey=" + (int)m_nKey + ')';
 			break;
 
 		// Data has been dropped onto the widget
 		case MessageOnDrop:
 			sMessage += "OnDrop";
-			sMessage += String() + " (Data=" + (m_pDataObject ? m_pDataObject->GetString() : "nullptr") + ")";
+			sMessage += String() + " (Data=" + (m_pDataObject ? m_pDataObject->GetString() : "nullptr") + ')';
 			break;
 	}
 

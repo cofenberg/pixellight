@@ -96,23 +96,23 @@ bool FontLinux::LoadFont(const String &sFamily, uint32 nHeight, uint32 nWeight, 
 	// Load font
 	if (sFamily.GetLength()) {
 		// Font options
-		String sFoundry		= "*";
+		String sFoundry		= '*';
 		String sWeight		= (nWeight >= WeightBold ? "bold" : "medium");
-		String sSlant		= (nStyle == StyleItalics ? "i" : "r");
+		String sSlant		= (nStyle == StyleItalics ? 'i' : 'r');
 		String sWidth		= "normal";
-		String sStyle		= "*";
+		String sStyle		= '*';
 		String sPixelSize	= String() + (int)nHeight;
-		String sPointSize	= "*";
+		String sPointSize	= '*';
 
 		// Compose font name
-		String sFontName =	"-" + sFoundry + 
-							"-" + sFamily +
-							"-" + sWeight +
-							"-" + sSlant +
-							"-" + sWidth +
-							"-" + sStyle +
-							"-" + sPixelSize +
-							"-" + sPointSize +
+		String sFontName =	'-' + sFoundry + 
+							'-' + sFamily +
+							'-' + sWeight +
+							'-' + sSlant +
+							'-' + sWidth +
+							'-' + sStyle +
+							'-' + sPixelSize +
+							'-' + sPointSize +
 							"-*-*-*-*-*-*";
 
 		// Load font

@@ -123,7 +123,7 @@ void Message(int nType, const String &sMessage)
 
 	// Print message
 	System::GetInstance()->GetConsole().Print(sMessage);
-	System::GetInstance()->GetConsole().Print("\n");
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 /**
@@ -133,7 +133,7 @@ void Message(int nType, const String &sMessage)
 void Write(File &cFile, const String &sString)
 {
 	// Write string to file
-	cFile.PutS(sString + "\n");
+	cFile.PutS(sString + '\n');
 
 	// Debug output
 	Message(DEBUG, sString);
@@ -165,7 +165,7 @@ void Find(Array<String> &lstNames, const String &sPath, const String &sPattern, 
 	FileSearch cSearch(cDir, sPattern);
 	while (cSearch.HasNextFile()) {
 		String sFilename =  cSearch.GetNextFile();
-		String sFile = sPath + "/" + sFilename;
+		String sFile = sPath + '/' + sFilename;
 		lstNames.Add(sFile);
 	}
 
@@ -174,7 +174,7 @@ void Find(Array<String> &lstNames, const String &sPath, const String &sPattern, 
 		FileSearch cSearch2(cDir);
 		while (cSearch2.HasNextFile()) {
 			String sFilename =  cSearch2.GetNextFile();
-			String sFile = sPath + "/" + sFilename;
+			String sFile = sPath + '/' + sFilename;
 			if (FileObject(sFile).IsDirectory() && bRecursive && sFilename != "." && sFilename != "..") {
 				Find(lstNames, sFile, sPattern, bRecursive);
 			}
@@ -204,7 +204,7 @@ void PrintList(int nType, const String &sPrefix, Array<String> &lstNames)
 String EscapeString(const String &sValue)
 {
 	String sResult = sValue;
-	sResult.Replace(":", "\\:");
+	sResult.Replace(':', "\\:");
 	return sResult;
 }
 
@@ -215,7 +215,7 @@ String EscapeString(const String &sValue)
 String GetQuotedString(const String &sValue)
 {
 	String sResult;
-	if (sValue.GetLength() > 2 && sValue.GetSubstring(0, 1) == "\"" && sValue.GetSubstring(sValue.GetLength()-1, 1) == "\"")
+	if (sValue.GetLength() > 2 && sValue.GetSubstring(0, 1) == '\"' && sValue.GetSubstring(sValue.GetLength()-1, 1) == '\"')
 		sResult = sValue.GetSubstring(1, sValue.GetLength()-2);
 	return sResult;
 }
@@ -570,7 +570,7 @@ bool ParseProject(Project &cProject)
 bool CreatePluginFile(Project &cProject)
 {
 	// Compose output filename
-	cProject.sOutputPlugin = cProject.sOutputPath + "/" + cProject.sName + cProject.sSuffix + ".plugin";
+	cProject.sOutputPlugin = cProject.sOutputPath + '/' + cProject.sName + cProject.sSuffix + ".plugin";
 	Message(STATUS, "Writing plugin file '" + cProject.sOutputPlugin + "'");
 
 	// Open plugin file

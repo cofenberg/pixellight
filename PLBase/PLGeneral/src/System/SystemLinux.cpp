@@ -118,9 +118,9 @@ String SystemLinux::GetOS() const
 	// Get system info
 	if (m_bSysInfoInit) {
 		String sVersion = m_sName.sysname;
-		sVersion += " ";
+		sVersion += ' ';
 		sVersion += m_sName.machine;
-		sVersion += " ";
+		sVersion += ' ';
 		sVersion += m_sName.release;
 		return sVersion;
 	} else {

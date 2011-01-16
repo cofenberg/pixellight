@@ -270,8 +270,8 @@ bool HttpHandle::Connect()
 		// Compose HTTP request
 		String sRequest = "GET " + m_cUrl.GetUrl() + " HTTP/1.0\nUser-Agent: PixelLight HTTP Client\n";
 		if (m_sUsername.GetLength())
-			sRequest += "Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\n";
-		sRequest += "\n";
+			sRequest += "Authorization: Basic " + Tools::GetBase64(m_sUsername + ':' + m_sPassword) + '\n';
+		sRequest += '\n';
 
 		// Send HTTP request
 		if (m_cSocket.Send(sRequest.GetASCII(), sRequest.GetLength()) == static_cast<int>(sRequest.GetLength())) {

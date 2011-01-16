@@ -77,7 +77,7 @@ String RegEx::WildcardToRegEx(const String &sWildcard)
 				case '(': case ')': case '[': case ']': case '$':
 				case '^': case '.': case '{': case '}': case '|':
 				case '\\':
-					sString += "\\";
+					sString += '\\';
 					sString += szCharacter;
 					break;
 
@@ -103,7 +103,7 @@ String RegEx::WildcardToRegEx(const String &sWildcard)
 				case L'(': case L')': case L'[': case L']': case L'$':
 				case L'^': case L'.': case L'{': case L'}': case L'|':
 				case L'\\':
-					sString += L"\\";
+					sString += L'\\';
 					sString += szCharacter;
 					break;
 

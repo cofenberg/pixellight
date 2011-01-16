@@ -82,12 +82,12 @@ bool SearchFilterWildcard::CheckFile(const String &sFilename)
 		const String sNameSymbol   = sFilename.GetSubstring(nNamePos,   1);
 
 		// Check filter symbol
-		if (sFilterSymbol == "?") {
+		if (sFilterSymbol == '?') {
 			// Any character must follow
 			if (sNameSymbol.GetLength() != 1)
 				return false; // No match
 			nNamePos++;
-		} else if (sFilterSymbol == "*") {
+		} else if (sFilterSymbol == '*') {
 			// *, check following *'s or ?'s
 			int nMinLength = 0;
 			while (m_sFilter.GetSubstring(nFilterPos+1, 1) == '*' || m_sFilter.GetSubstring(nFilterPos+1, 1) == '?') {

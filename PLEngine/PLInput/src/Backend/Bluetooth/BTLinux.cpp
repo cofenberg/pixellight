@@ -272,7 +272,7 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 					}
 				}
 			} else {
-				PL_LOG(Error, "BTLinux: DBUS match error (" + String(sError.message) + ")")
+				PL_LOG(Error, "BTLinux: DBUS match error (" + String(sError.message) + ')')
 			}
 		}
 

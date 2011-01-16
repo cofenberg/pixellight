@@ -434,13 +434,13 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					pInfoTextContainer->Create("PLScene::SNText2D", "PhysicsAPI", "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Physics API: ") + GetPhysicsAPI() + '\"');
 
 					// Draw keys information
-					pInfoTextContainer->Create("PLScene::SNText2D", "Keys",      "Position=\"0.01 0.04\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Keys:")                        + "\"");
+					pInfoTextContainer->Create("PLScene::SNText2D", "Keys",      "Position=\"0.01 0.04\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Keys:")                        + '\"');
 					// [TODO] PLGui: Selection dialog
-//					pInfoTextContainer->Create("PLScene::SNText2D", "Choose",    "Position=\"0.06 0.06\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("c=Choose another physics API") + "\"");
-					pInfoTextContainer->Create("PLScene::SNText2D", "Reset",     "Position=\"0.06 0.08\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("r=Reset ragdoll")              + "\"");
-					pInfoTextContainer->Create("PLScene::SNText2D", "AddForce",  "Position=\"0.06 0.10\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("f=Add force to the ragdoll")   + "\"");
-					pInfoTextContainer->Create("PLScene::SNText2D", "AddTorque", "Position=\"0.06 0.12\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("t=Add torque to the ragdoll")  + "\"");
-					pInfoTextContainer->Create("PLScene::SNText2D", "Gravity",   "Position=\"0.06 0.14\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("g=Toggle gravity")             + "\"");
+//					pInfoTextContainer->Create("PLScene::SNText2D", "Choose",    "Position=\"0.06 0.06\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("c=Choose another physics API") + '\"');
+					pInfoTextContainer->Create("PLScene::SNText2D", "Reset",     "Position=\"0.06 0.08\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("r=Reset ragdoll")              + '\"');
+					pInfoTextContainer->Create("PLScene::SNText2D", "AddForce",  "Position=\"0.06 0.10\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("f=Add force to the ragdoll")   + '\"');
+					pInfoTextContainer->Create("PLScene::SNText2D", "AddTorque", "Position=\"0.06 0.12\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("t=Add torque to the ragdoll")  + '\"');
+					pInfoTextContainer->Create("PLScene::SNText2D", "Gravity",   "Position=\"0.06 0.14\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("g=Toggle gravity")             + '\"');
 				}
 			}
 

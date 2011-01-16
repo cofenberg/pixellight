@@ -224,7 +224,7 @@ bool HttpClient::Get(const String &sURL)
 		else													m_pConnection->Send("GET " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ':' + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -236,7 +236,7 @@ bool HttpClient::Get(const String &sURL)
 		else													m_pConnection->Send("Connection: close\r\n");
 
 		// Authentication
-		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\r\n");
+		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ':' + m_sPassword) + "\r\n");
 
 		// Send Header
 		m_pConnection->Send("\r\n");
@@ -268,7 +268,7 @@ bool HttpClient::GetPartial(const String &sURL, uint32 nPos, int32 nSize)
 		else													m_pConnection->Send("GET " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ':' + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -280,10 +280,10 @@ bool HttpClient::GetPartial(const String &sURL, uint32 nPos, int32 nSize)
 		else													m_pConnection->Send("Connection: close\r\n");
 
 		// Authentication
-		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\r\n");
+		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ':' + m_sPassword) + "\r\n");
 
 		// Get partial data
-		String sPartial = String("Range: bytes=") + nPos + "-";
+		String sPartial = String("Range: bytes=") + nPos + '-';
 		if (nSize > 0)
 			sPartial += nPos+nSize-1;
 		sPartial += "\r\n";
@@ -319,7 +319,7 @@ bool HttpClient::Post(const String &sURL, const String &sPostData)
 		else													m_pConnection->Send("POST " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ':' + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -331,7 +331,7 @@ bool HttpClient::Post(const String &sURL, const String &sPostData)
 		else													m_pConnection->Send("Connection: close\r\n");
 
 		// Authentication
-		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\r\n");
+		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ':' + m_sPassword) + "\r\n");
 
 		// Send Header
 		m_pConnection->Send("\r\n");
@@ -366,7 +366,7 @@ bool HttpClient::Delete(const String &sURL)
 		else													m_pConnection->Send("DELETE " + sURL + " HTTP/1.0\r\n");
 
 		// Host
-		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ":" + m_nPort + "\r\n");
+		if (m_nPort != 80)										m_pConnection->Send("Host: " + m_sAddress + ':' + m_nPort + "\r\n");
 		else													m_pConnection->Send("Host: " + m_sAddress + "\r\n");
 
 		// User agent
@@ -378,7 +378,7 @@ bool HttpClient::Delete(const String &sURL)
 		else													m_pConnection->Send("Connection: close\r\n");
 
 		// Authentication
-		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ":" + m_sPassword) + "\r\n");
+		if (m_nHttpAuth == BasicAuth)							m_pConnection->Send("Authorization: Basic " + Tools::GetBase64(m_sUsername + ':' + m_sPassword) + "\r\n");
 
 		// Send Header
 		m_pConnection->Send("\r\n");
@@ -416,7 +416,7 @@ int HttpClient::Read(char *pBuffer, uint32 nSize)
 		if (m_nChunkSize == -1) {
 			// Read chunk header
 			String sHeader = m_pConnection->ReadLine().RemoveLineEndings();
-			const int nSpace = sHeader.IndexOf(" ");
+			const int nSpace = sHeader.IndexOf(' ');
 			if (nSpace > -1)
 				sHeader = sHeader.GetSubstring(0, nSpace);
 

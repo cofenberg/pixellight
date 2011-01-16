@@ -183,7 +183,7 @@ bool HTMLParser::Parse()
 
 			// Get name
 			const String sName = cRegExTag.GetNameResult("name");
-			const bool bSingleTag = (cRegExTag.GetNameResult("end") == "/");
+			const bool bSingleTag = (cRegExTag.GetNameResult("end") == '/');
 			if (sName == "script") {
 				// Ingore <script> tags
 				const int nIndex = m_sTextLower.IndexOf("</script>", m_nPos);
@@ -207,7 +207,7 @@ bool HTMLParser::Parse()
 					// Get option and value
 					const String sOption = cRegExOption.GetNameResult("option");
 					String sValue = cRegExOption.GetNameResult("value");
-					if (sValue.GetSubstring(0, 1) == "'" || sValue.GetSubstring(0, 1) == "\"")
+					if (sValue.GetSubstring(0, 1) == '\'' || sValue.GetSubstring(0, 1) == '\"')
 						sValue = sValue.GetSubstring(1, sValue.GetLength()-2);
 					nPosOption = cRegExOption.GetPosition();
 					pElement->SetAttribute(sOption, sValue);
@@ -251,7 +251,7 @@ bool HTMLParser::Parse()
 			}
 
 			// Add text to node
-			pText->SetValue(pText->GetValue() + " " + sToken);
+			pText->SetValue(pText->GetValue() + ' ' + sToken);
 		}
 	}
 

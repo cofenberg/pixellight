@@ -95,7 +95,7 @@ bool FileZip::IsFile() const
 			return false;
 		} else if (m_cZipFile.GetCurrentFile().m_bValid) {
 			// Valid entry, check "/" at the end
-			return (m_cZipFile.GetCurrentFile().m_sFilename.GetSubstring(m_cZipFile.GetCurrentFile().m_sFilename.GetLength()-1) != "/");
+			return (m_cZipFile.GetCurrentFile().m_sFilename.GetSubstring(m_cZipFile.GetCurrentFile().m_sFilename.GetLength()-1) != '/');
 		}
 	}
 
@@ -112,7 +112,7 @@ bool FileZip::IsDirectory() const
 			return true;
 		} else if (m_cZipFile.GetCurrentFile().m_bValid) {
 			// Valid entry, check "/" at the end
-			return (m_cZipFile.GetCurrentFile().m_sFilename.GetSubstring(m_cZipFile.GetCurrentFile().m_sFilename.GetLength()-1) == "/");
+			return (m_cZipFile.GetCurrentFile().m_sFilename.GetSubstring(m_cZipFile.GetCurrentFile().m_sFilename.GetLength()-1) == '/');
 		}
 	}
 
@@ -317,7 +317,7 @@ uint32 FileZip::GetSize() const
 FileSearchImpl *FileZip::CreateSearch()
 {
 	// Create a file searcher
-	return new FileSearchZip(m_sZipFile, m_sPathInZip + "/", m_pAccess);
+	return new FileSearchZip(m_sZipFile, m_sPathInZip + '/', m_pAccess);
 }
 
 

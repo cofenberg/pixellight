@@ -131,13 +131,13 @@ bool SceneLoaderPL::SaveParams(SceneContainer &cContainer, File &cFile, bool bNo
 	cStopwatch.Stop();
 
 	// Show statistics within the log
-	PL_LOG(Debug, "\n")
+	PL_LOG(Debug, '\n')
 	PL_LOG(Debug, "Scene statistics of '" + cFile.GetUrl().GetNativePath() + '\'')
 	PL_LOG(Debug, "Saving time: " + String::Format("%g", cStopwatch.GetSeconds()) + " sec");
 	PL_LOG(Debug, String("Total number of containers within the scene: (without the root container itself) ") + int(sInstance.nTotalNumOfContainers))
 	PL_LOG(Debug, String("Total number of nodes (without containers) within the scene: ") + int(sInstance.nTotalNumOfNodes))
 	PL_LOG(Debug, String("Total number of modifiers within the scene: ") + int(sInstance.nTotalNumOfModifiers))
-	PL_LOG(Debug, "\n")
+	PL_LOG(Debug, '\n')
 
 	// Done
 	return true;
@@ -240,13 +240,13 @@ bool SceneLoaderPL::LoadV1(SceneContainer &cContainer, const XmlElement &cSceneE
 	cStopwatch.Stop();
 
 	// Show statistics within the log
-	PL_LOG(Debug, "\n")
+	PL_LOG(Debug, '\n')
 	PL_LOG(Debug, "Scene statistics of '" + cFile.GetUrl().GetNativePath() + '\'')
 	PL_LOG(Debug, "Loading time: " + String::Format("%g", cStopwatch.GetSeconds()) + " sec");
 	PL_LOG(Debug, String("Total number of containers within the scene: (without the root container itself) ") + int(sInstance.nTotalNumOfContainers))
 	PL_LOG(Debug, String("Total number of nodes (without containers) within the scene: ") + int(sInstance.nTotalNumOfNodes))
 	PL_LOG(Debug, String("Total number of modifiers within the scene: ") + int(sInstance.nTotalNumOfModifiers))
-	PL_LOG(Debug, "\n")
+	PL_LOG(Debug, '\n')
 
 	// Done
 	return true;

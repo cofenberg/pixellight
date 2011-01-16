@@ -98,7 +98,7 @@ void MessageFilterDebug::OnGuiMessage(const GuiMessage &cMessage)
 		// Display this message?
 		if (bDisplay) {
 			// Print message
-			System::GetInstance()->GetConsole().Print(cMessage.ToString() + "\n");
+			System::GetInstance()->GetConsole().Print(cMessage.ToString() + '\n');
 		}
 	}
 }

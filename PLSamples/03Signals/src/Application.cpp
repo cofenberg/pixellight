@@ -68,7 +68,7 @@ void Application::Main()
 	int i = 1;
 	while (!m_bExit || i > 1) {
 		System::GetInstance()->Sleep(500);
-		System::GetInstance()->GetConsole().Print(String("Counting ") + i + "\n");
+		System::GetInstance()->GetConsole().Print(String("Counting ") + i + '\n');
 		i++; if (i > 10) i = 1;
 	}
 }

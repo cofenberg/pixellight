@@ -239,7 +239,7 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	Tokenizer cTokenizer;
 	cTokenizer.Start(cFile);
 	cTokenizer.SetDelimiters(" \t\r\n()[]=,;{}\"");
-	cTokenizer.SetSingleChars(":");
+	cTokenizer.SetSingleChars(':');
 	cTokenizer.SetCaseSensitive(true);
 
 	// First at all, check the version number
@@ -269,7 +269,7 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				// Ignore the node index
 
 				// Get name
-				if (cTokenizer.GetNextToken() == "\"") {
+				if (cTokenizer.GetNextToken() == '\"') {
 					pNode->sName = cTokenizer.GetNextToken();
 					cTokenizer.GetNextToken();
 				} else pNode->sName = cTokenizer.GetToken();
