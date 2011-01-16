@@ -69,11 +69,11 @@ void ConsoleWindows::ClearScreen() const
 	GetConsoleScreenBufferInfo(h, &csbi);
 
 	// Find the number of characters to overwrite
-	DWORD nSize = csbi.dwSize.X * csbi.dwSize.Y;
+	const DWORD nSize = csbi.dwSize.X * csbi.dwSize.Y;
 
 	// Overwrite the screen buffer with whitespace
 	COORD sCoord = { 0, 0 };	// Top left screen position
-	DWORD n;					// Number of characters written
+	DWORD n		 = 0;			// Number of characters written
 	FillConsoleOutputCharacter(h, TEXT (' '), nSize, sCoord, &n);
 	GetConsoleScreenBufferInfo(h, &csbi);
 	FillConsoleOutputAttribute(h, csbi.wAttributes, nSize, sCoord, &n);
@@ -98,7 +98,7 @@ void ConsoleWindows::SetCursorPosition(uint16 nX, uint16 nY) const
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	// Set the cursor position
-	COORD sCoord = { nX, nY };
+	const COORD sCoord = { nX, nY };
 	::SetConsoleCursorPosition(h, sCoord);
 }
 
