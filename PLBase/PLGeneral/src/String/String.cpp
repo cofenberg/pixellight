@@ -2475,9 +2475,15 @@ String String::operator +(bool bValue) const
 {
 	if (m_pStringBuffer) {
 		if (m_pStringBuffer->GetFormat() == Unicode) {
-			return *this + (bValue ? L'1' : L'0');
+			// Compose new string
+			String sResult = *this;
+			sResult.SetStringBuffer(sResult.m_pStringBuffer->Append(bValue ? L"1" : L"0", 1));
+			return sResult;
 		} else {
-			return *this + (bValue ? '1' : '0');
+			// Compose new string
+			String sResult = *this;
+			sResult.SetStringBuffer(sResult.m_pStringBuffer->Append(bValue ? "1" : "0", 1));
+			return sResult;
 		}
 	} else {
 		return bValue ? '1' : '0';
@@ -2491,10 +2497,15 @@ String String::operator +(char nValue) const
 		return *this; // Ingore this, please!
 
 	// Check if the string is empty
-	if (m_pStringBuffer)
-		return *this + String(nValue);	// Compose new string
-	else
-		return nValue;					// Set just this character
+	if (m_pStringBuffer) {
+		// Compose new string
+		String sResult = *this;
+		sResult.SetStringBuffer(sResult.m_pStringBuffer->Append(&nValue, 1));
+		return sResult;
+	} else {
+		// Set just this character
+		return nValue;
+	}
 }
 
 String String::operator +(wchar_t nValue) const
@@ -2504,10 +2515,15 @@ String String::operator +(wchar_t nValue) const
 		return *this; // Ingore this, please!
 
 	// Check if the string is empty
-	if (m_pStringBuffer)
-		return *this + String(nValue);	// Compose new string
-	else
-		return nValue;					// Set just this character
+	if (m_pStringBuffer) {
+		// Compose new string
+		String sResult = *this;
+		sResult.SetStringBuffer(sResult.m_pStringBuffer->Append(&nValue, 1));
+		return sResult;
+	} else {
+		// Set just this character
+		return nValue;
+	}
 }
 
 String String::operator +(int nValue) const
