@@ -715,30 +715,33 @@ StringBuffer *StringBufferUnicode::Replace(char nOld, char nNew, uint32 &nReplac
 	wchar_t nOldUnicode, nNewUnicode;
 
 	// Get new and old as Unicode
-	mbtowc(&nOldUnicode, &nOld, 1);
-	mbtowc(&nNewUnicode, &nNew, 1);
-
-	// Search for the first character which should be replaced
-	nReplaced = 0;
-	for (; pszString<pszStringEnd; pszString++) {
-		if (*pszString == nOldUnicode) {
-			// Fork string buffer when the first character has been found
-			StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
-
-			// Set pointers to new location
-			pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
-			pszStringEnd = pStringBufferUnicodeClone->m_pszString + m_nLength;
-
-			// Replace characters
+	int nResult = mbtowc(&nOldUnicode, &nOld, 1);
+	if (nResult >= 0) {
+		nResult = mbtowc(&nNewUnicode, &nNew, 1);
+		if (nResult >= 0) {
+			// Search for the first character which should be replaced
+			nReplaced = 0;
 			for (; pszString<pszStringEnd; pszString++) {
 				if (*pszString == nOldUnicode) {
-					*pszString = nNewUnicode;
-					nReplaced++;
+					// Fork string buffer when the first character has been found
+					StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
+
+					// Set pointers to new location
+					pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
+					pszStringEnd = pStringBufferUnicodeClone->m_pszString + m_nLength;
+
+					// Replace characters
+					for (; pszString<pszStringEnd; pszString++) {
+						if (*pszString == nOldUnicode) {
+							*pszString = nNewUnicode;
+							nReplaced++;
+						}
+					}
+
+					// Return the new string buffer
+					return pStringBufferUnicodeClone;
 				}
 			}
-
-			// Return the new string buffer
-			return pStringBufferUnicodeClone;
 		}
 	}
 
@@ -947,15 +950,9 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 
 StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, char nCharacter)
 {
-	// Get character as Unicode
+	// Get this character as Unicode and check whether or not we need to clone this string buffer
 	wchar_t nCharacterUnicode;
-	mbtowc(&nCharacterUnicode, &nCharacter, 1);
-
-	// Do we need to clone this string buffer?
-	if (m_pszString[nIndex] == nCharacterUnicode) {
-		// Nothing was changed
-		return this;
-	} else {
+	if (mbtowc(&nCharacterUnicode, &nCharacter, 1) >= 0 && m_pszString[nIndex] != nCharacterUnicode) {
 		// We have to clone the string buffer :(
 		StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
@@ -965,6 +962,9 @@ StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, char nCharacter)
 		// Return the new string buffer
 		return pStringBufferUnicodeClone;
 	}
+
+	// Nothing was changed
+	return this;
 }
 
 StringBuffer *StringBufferUnicode::SetCharacter(uint32 nIndex, wchar_t nCharacter)

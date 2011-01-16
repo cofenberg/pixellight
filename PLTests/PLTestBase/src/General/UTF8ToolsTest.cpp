@@ -54,14 +54,14 @@ const char *UTF8ToolsTest::GetName() const
 void UTF8ToolsTest::Test()
 {
 	// Some test data
-	char       *pszASCIIString1    = "\\u65e5\\u672c\\u8a9e";
-	wchar_t    *pszWCharString1    = L"\u65e5\u672c\u8a9e";
-	const char *pszUTF8String1     = (const char*)"日本語";
-	wchar_t     nWideCharacter1    = 26085; // 3 characters => 日
-	wchar_t     nWideCharacter2    = 26412; // 3 characters => 本
-	wchar_t     nWideCharacter3    = 35486; // 3 characters => 語
-	char       *pszASCIICharacter1 = "\\u65e5";
-	const char *pszUTF8Character1  = (const char*)"日";
+	const char    *pszASCIIString1    = "\\u65e5\\u672c\\u8a9e";
+	const wchar_t *pszWCharString1    = L"\u65e5\u672c\u8a9e";
+	const char    *pszUTF8String1     = (const char*)"日本語";
+	wchar_t        nWideCharacter1    = 26085; // 3 characters => 日
+	wchar_t        nWideCharacter2    = 26412; // 3 characters => 本
+	wchar_t        nWideCharacter3    = 35486; // 3 characters => 語
+	const char    *pszASCIICharacter1 = "\\u65e5";
+	const char    *pszUTF8Character1  = (const char*)"日";
 
 	// Variables
 	wchar_t szWCharTemp[256];

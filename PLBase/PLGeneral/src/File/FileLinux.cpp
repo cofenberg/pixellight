@@ -116,11 +116,7 @@ bool FileLinux::CopyTo(const String &sDest, bool bOverwrite) const
 		// Copy file (-d same as --no-dereference --preserve=links)
 		// [TODO] Linux copy file: There must be another way to copy a file using c functions...
 		const String sTarget = "cp -d \"" + m_sFilename + "\" \"" + sNewFilename + '\"';
-		system((sTarget.GetFormat() == String::ASCII) ? sTarget.GetASCII() : sTarget.GetUTF8());
-//		if (??) {
-			// Done
-			return true;
-//		}
+		return (system((sTarget.GetFormat() == String::ASCII) ? sTarget.GetASCII() : sTarget.GetUTF8()) >= 0);
 	}
 
 	// Error!

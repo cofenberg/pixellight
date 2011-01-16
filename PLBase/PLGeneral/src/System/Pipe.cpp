@@ -128,8 +128,7 @@ bool Pipe::Create()
 	// Linux implementation
 	#ifdef LINUX
 		// Create a pipe
-		pipe(m_hPipe);
-		return true;
+		return (pipe(m_hPipe) == 0);
 	#endif
 }
 

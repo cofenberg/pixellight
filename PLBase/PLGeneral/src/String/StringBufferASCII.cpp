@@ -721,8 +721,7 @@ StringBuffer *StringBufferASCII::Replace(wchar_t nOld, wchar_t nNew, uint32 &nRe
 	// Search for the first character which should be replaced
 	nReplaced = 0;
 	for (; pszString<pszStringEnd; pszString++) {
-		mbtowc(&nUnicode, pszString, 1);
-		if (nUnicode == nOld) {
+		if (mbtowc(&nUnicode, pszString, 1) >= 0 && nUnicode == nOld) {
 			// Request an Unicode string buffer from the string buffer manager when the first character has been found
 			StringBufferUnicode *pStringBufferUnicodeClone = Manager.GetStringBufferUnicode(m_nLength);
 			if (pStringBufferUnicodeClone) {
@@ -926,15 +925,9 @@ StringBuffer *StringBufferASCII::SetCharacter(uint32 nIndex, char nCharacter)
 
 StringBuffer *StringBufferASCII::SetCharacter(uint32 nIndex, wchar_t nCharacter)
 {
-	// Get this character as Unicode
+	// Get this character as Unicode and check whether or not we need to clone this string buffer
 	wchar_t nThisCharacterUnicode;
-	mbtowc(&nThisCharacterUnicode, &m_pszString[nIndex], 1);
-
-	// Do we need to clone this string buffer?
-	if (nThisCharacterUnicode == nCharacter) {
-		// Nothing was changed
-		return this;
-	} else {
+	if (mbtowc(&nThisCharacterUnicode, &m_pszString[nIndex], 1) >= 0 && nThisCharacterUnicode != nCharacter) {
 		// Request an Unicode string buffer from the string buffer manager when the first character has been found
 		StringBufferUnicode *pStringBufferUnicodeClone = Manager.GetStringBufferUnicode(m_nLength);
 		if (pStringBufferUnicodeClone) {
@@ -946,11 +939,11 @@ StringBuffer *StringBufferASCII::SetCharacter(uint32 nIndex, wchar_t nCharacter)
 
 			// Return the new string buffer
 			return pStringBufferUnicodeClone;
-		} else {
-			// Error... nothing was changed...
-			return this;
 		}
 	}
+
+	// Nothing was changed
+	return this;
 }
 
 StringBuffer *StringBufferASCII::TrimLeading()
