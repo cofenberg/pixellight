@@ -49,7 +49,8 @@ class Type< FlagType<ENUM> > {
 		static const int TypeID = Type<_BaseType>::TypeID;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return Type<_BaseType>::GetTypeName();
 		}
 
@@ -231,7 +232,8 @@ class Type< FlagType<ENUM> > {
 			for (int i=0; ENUM::GetEnumValue(i, nFlag, sName, sDesc); i++) {
 				// Check if flag is set
 				if (nValue & nFlag) {
-					if (sFlags.GetLength() > 0) sFlags += "|";
+					if (sFlags.GetLength() > 0)
+						sFlags += "|";
 					sFlags += sName;
 					nValue = (nValue & ~nFlag);
 				}
@@ -239,12 +241,14 @@ class Type< FlagType<ENUM> > {
 
 			// Add rest
 			if (nValue != 0) {
-				if (sFlags.GetLength() > 0) sFlags += "|";
+				if (sFlags.GetLength() > 0)
+					sFlags += "|";
 				sFlags += nValue;
 			}
 
 			// Return flags
-			if (sFlags.GetLength() == 0) sFlags = "0";
+			if (sFlags.GetLength() == 0)
+				sFlags = "0";
 			return sFlags;
 		}
 
@@ -265,8 +269,9 @@ class Type< FlagType<ENUM> > {
 					PLGeneral::String sDesc;
 
 					// Try to convert token to number, else look up name in enum
-					_EnumType nValue = (_EnumType)sToken.GetInt();
-					if ((_BaseType)nValue == 0) ENUM::GetEnumValue(-1, nValue, sToken, sDesc);
+					_EnumType nValue = static_cast<_EnumType>(sToken.GetInt());
+					if (static_cast<_BaseType>(nValue) == 0)
+						ENUM::GetEnumValue(-1, nValue, sToken, sDesc);
 					nFlags |= nValue;
 				}
 				cTokenizer.Stop();

@@ -47,7 +47,8 @@ class Type<bool> {
 		static const int TypeID = TypeBool;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return "bool";
 		}
 
@@ -60,157 +61,157 @@ class Type<bool> {
 		// Convert bool to bool
 		static bool ConvertToBool(bool bValue)
 		{
-			return (bool)(bValue);
+			return static_cast<bool>(bValue);
 		}
 
 		// Convert bool to bool
 		static bool ConvertFromBool(bool bValue)
 		{
-			return (bool)(bValue);
+			return static_cast<bool>(bValue);
 		}
 
 		// Convert bool to int
 		static int ConvertToInt(bool bValue)
 		{
-			return (int)(bValue);
+			return static_cast<int>(bValue);
 		}
 
 		// Convert int to bool
 		static bool ConvertFromInt(int nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int8
 		static PLGeneral::int8 ConvertToInt8(bool bValue)
 		{
-			return (PLGeneral::int8)(bValue);
+			return static_cast<PLGeneral::int8>(bValue);
 		}
 
 		// Convert int8 to bool
 		static bool ConvertFromInt8(PLGeneral::int8 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int16
 		static PLGeneral::int16 ConvertToInt16(bool bValue)
 		{
-			return (PLGeneral::int16)(bValue);
+			return static_cast<PLGeneral::int16>(bValue);
 		}
 
 		// Convert int16 to bool
 		static bool ConvertFromInt16(PLGeneral::int16 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int32
 		static PLGeneral::int32 ConvertToInt32(bool bValue)
 		{
-			return (PLGeneral::int32)(bValue);
+			return static_cast<PLGeneral::int32>(bValue);
 		}
 
 		// Convert int32 to bool
 		static bool ConvertFromInt32(PLGeneral::int32 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int64
 		static PLGeneral::int64 ConvertToInt64(bool bValue)
 		{
-			return (PLGeneral::int64)(bValue);
+			return static_cast<PLGeneral::int64>(bValue);
 		}
 
 		// Convert int64 to bool
 		static bool ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint8
 		static PLGeneral::uint8 ConvertToUInt8(bool bValue)
 		{
-			return (PLGeneral::uint8)(bValue);
+			return static_cast<PLGeneral::uint8>(bValue);
 		}
 
 		// Convert uint8 to bool
 		static bool ConvertFromUInt8(PLGeneral::uint8 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint16
 		static PLGeneral::uint16 ConvertToUInt16(bool bValue)
 		{
-			return (PLGeneral::uint16)(bValue);
+			return static_cast<PLGeneral::uint16>(bValue);
 		}
 
 		// Convert uint16 to bool
 		static bool ConvertFromUInt16(PLGeneral::uint16 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint32
 		static PLGeneral::uint32 ConvertToUInt32(bool bValue)
 		{
-			return (PLGeneral::uint32)(bValue);
+			return static_cast<PLGeneral::uint32>(bValue);
 		}
 
 		// Convert uint32 to bool
 		static bool ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint64
 		static PLGeneral::uint64 ConvertToUInt64(bool bValue)
 		{
-			return (PLGeneral::uint64)(bValue);
+			return static_cast<PLGeneral::uint64>(bValue);
 		}
 
 		// Convert uint64 to bool
 		static bool ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(bool bValue)
 		{
-			return (PLGeneral::uint_ptr)(bValue);
+			return static_cast<PLGeneral::uint_ptr>(bValue);
 		}
 
 		// Convert uint_ptr to bool
 		static bool ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to float
 		static float ConvertToFloat(bool bValue)
 		{
-			return (float)(bValue);
+			return static_cast<float>(bValue);
 		}
 
 		// Convert float to bool
 		static bool ConvertFromFloat(float fValue)
 		{
-			return (bool)(fValue != 0.0f);
+			return static_cast<bool>(fValue != 0.0f);
 		}
 
 		// Convert bool to double
 		static double ConvertToDouble(bool bValue)
 		{
-			return (double)(bValue);
+			return static_cast<double>(bValue);
 		}
 
 		// Convert double to bool
 		static bool ConvertFromDouble(double dValue)
 		{
-			return (bool)(dValue != 0.0);
+			return static_cast<bool>(dValue != 0.0);
 		}
 
 		// Convert bool to string

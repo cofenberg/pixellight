@@ -79,8 +79,12 @@ bool LocalizationLoaderPL::Load(LocalizationGroup &cLocalizationGroup, File &cFi
 			} else {
 				PL_LOG(Error, cDocument.GetValue() + ": " + InvalidFormatVersion)
 			}
-		} else PL_LOG(Error, "Can't find 'Localization' element")
-	} else PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+		} else {
+			PL_LOG(Error, "Can't find 'Localization' element")
+		}
+	} else {
+		PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+	}
 
 	// Error!
 	return false;
@@ -186,7 +190,9 @@ bool LocalizationLoaderPL::LoadV1(LocalizationGroup &cLocalizationGroup, const X
 					if (cLocalizationGroup.GetText(sName)) {
 						// Write a warning into the log
 						PL_LOG(Warning, "Text '" + sName + "' of localization at row " + pTextElement->GetRow() + ", column " + pTextElement->GetColumn() + " is already used! (this text is ignored)")
-					} else cLocalizationGroup.AddText(sName, sValue);
+					} else {
+						cLocalizationGroup.AddText(sName, sValue);
+					}
 				}
 			}
 		}

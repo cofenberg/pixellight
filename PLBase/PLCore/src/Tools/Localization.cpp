@@ -74,7 +74,8 @@ String Localization::Get(const String &sText, const String &sGroup) const
 	if (pGroup) {
 		// Get the text
 		const LocalizationText *pText = pGroup->GetText(sText);
-		if (pText) return pText->GetTranslation();
+		if (pText)
+			return pText->GetTranslation();
 	}
 
 	// Error! Return the given text instead...
@@ -136,7 +137,8 @@ bool Localization::RemoveGroup(uint32 nIndex)
 {
 	// Get the group
 	LocalizationGroup *pGroup = m_lstGroups[nIndex];
-	if (!pGroup) return false; // Error!
+	if (!pGroup)
+		return false; // Error!
 
 	// Remove the group
 	m_mapGroups.Remove(pGroup->GetName());
@@ -155,7 +157,8 @@ bool Localization::RemoveGroup(const String &sName)
 {
 	// Get the group
 	LocalizationGroup *pGroup = m_mapGroups.Get(sName);
-	if (!pGroup) return false; // Error!
+	if (!pGroup)
+		return false; // Error!
 
 	// Remove the group
 	m_mapGroups.Remove(pGroup->GetName());

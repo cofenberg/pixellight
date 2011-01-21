@@ -89,7 +89,7 @@ class Attribute : public Var<T, ACCESS, STORAGE> {
 		*  @brief
 		*    Destructor
 		*/
-		~Attribute()
+		virtual ~Attribute()
 		{
 		}
 
@@ -108,7 +108,7 @@ class Attribute : public Var<T, ACCESS, STORAGE> {
 		Attribute &operator =(const _Type &Value)
 		{
 			// Call base implementation
-			return (Attribute&)Var<T, ACCESS, STORAGE>::operator =(Value);
+			return static_cast<Attribute&>(Var<T, ACCESS, STORAGE>::operator =(Value));
 		}
 
 
@@ -123,7 +123,8 @@ class Attribute : public Var<T, ACCESS, STORAGE> {
 		*  @return
 		*    Var descriptor
 		*/
-		virtual const VarDesc *GetDesc() const {
+		virtual const VarDesc *GetDesc() const
+		{
 			// Return descriptor
 			return &Desc;
 		}

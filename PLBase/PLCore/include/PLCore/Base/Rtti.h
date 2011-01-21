@@ -119,9 +119,8 @@ template <typename T> class ModuleID
 template <typename T> PLGeneral::uint32 ModuleID<T>::GetModuleID()
 {
 	// Request module ID from ClassManager
-	if (m_nModuleID == 0) {
+	if (m_nModuleID == 0)
 		m_nModuleID = ClassManager::GetInstance()->GetUniqueModuleID();
-	}
 
 	// Return module ID
 	return m_nModuleID;
@@ -183,9 +182,9 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define __pl_enum_base(ENUM) \
 				nCount = PLCore::EnumType<ENUM##__plcore_enum__>::GetNumOfEnumValues(); \
 				if (nIndex >= 0 && nIndex < nCount) { \
-					return ENUM##__plcore_enum__::GetEnumValue(nIndex, (ENUM&)nValue, sName, sDescription); \
+					return ENUM##__plcore_enum__::GetEnumValue(nIndex, reinterpret_cast<ENUM&>(nValue), sName, sDescription); \
 				} else if (nIndex == -1) { \
-					if (ENUM##__plcore_enum__::GetEnumValue(-1, (ENUM&)nValue, sName, sDescription)) \
+					if (ENUM##__plcore_enum__::GetEnumValue(-1, reinterpret_cast<ENUM&>(nValue), sName, sDescription)) \
 						return true; \
 				} \
 
@@ -365,7 +364,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 *    Property value
 */
 #define __pl_prop_prop(NAME, VALUE) \
-			((_Class*)pClass)->AddProperty(NAME, VALUE); \
+			static_cast<_Class*>(pClass)->AddProperty(NAME, VALUE); \
 
 /**
 *  @brief
@@ -391,10 +390,10 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				typedef PLCore::StorageGetSet StorageType; \
 				typedef PLCore::StorageGetSet BaseStorageType; \
 				static inline PLCore::Type<TYPE>::_Type Get(PLCore::Object *pObject) { \
-					return ((CLASS*)pObject)->Get##NAME(); \
+					return static_cast<CLASS*>(pObject)->Get##NAME(); \
 				} \
 				static inline void Set(PLCore::Object *pObject, const PLCore::Type<TYPE>::_Type &Value) { \
-					((CLASS*)pObject)->Set##NAME(Value); \
+					static_cast<CLASS*>(pObject)->Set##NAME(Value); \
 				} \
 		}; \
 		\
@@ -403,10 +402,10 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				typedef PLCore::StorageModifyAttr StorageType; \
 				typedef typename BASE::NAME##_Storage::BaseStorageType BaseStorageType; \
 				static inline PLCore::Type<TYPE>::_Type Get(PLCore::Object *pObject) { \
-					return ((BASE*)pObject)->NAME.Get(); \
+					return static_cast<BASE*>(pObject)->NAME.Get(); \
 				} \
 				static inline void Set(PLCore::Object *pObject, const PLCore::Type<TYPE>::_Type &Value) { \
-					((BASE*)pObject)->NAME.Set(Value); \
+					static_cast<BASE*>(pObject)->NAME.Set(Value); \
 				} \
 		}; \
 
@@ -427,16 +426,15 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 		class NAME##_Desc : public PLCore::VarDesc { \
 			public: \
 				NAME##_Desc() : PLCore::VarDesc(PLCore::Type<TYPE>::TypeID, PLCore::Type<TYPE>::GetTypeName(), #NAME, DESCRIPTION, ANNOTATION) { \
-					bool bRegister = (bool)_Self::_RttiExport; \
-					if (bRegister) { \
+					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
+					if (bRegister) \
 						Register(_Class::GetSingleton()); \
-					} \
 				} \
 				~NAME##_Desc() { \
 				} \
 			private: \
 				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const { \
-					return &((_Self*)pObject)->NAME; \
+					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->NAME; \
 				} \
 		}; \
 
@@ -467,7 +465,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				} \
 				\
 				NAME##_Attr &operator =(const _Type &Value) { \
-					return (NAME##_Attr&)PLCore::Attribute<TYPE, PLCore::Access##ACCESS, NAME##_Storage, NAME##_Desc>::operator =(Value); \
+					return static_cast<NAME##_Attr&>(PLCore::Attribute<TYPE, PLCore::Access##ACCESS, NAME##_Storage, NAME##_Desc>::operator =(Value)); \
 				} \
 		}; \
 
@@ -507,16 +505,15 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				typedef PLCore::ClassTypelist< _Self, PLCore::Typelist<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> >::TypeMethodSignature MethType; \
 			public: \
 				NAME##_Desc() : PLCore::FuncDesc(SigType::GetSignatureID(), #NAME, #DESCRIPTION, #ANNOTATION) { \
-					bool bRegister = (bool)_Self::_RttiExport; \
-					if (bRegister) { \
+					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
+					if (bRegister) \
 						Register(_Class::GetSingleton()); \
-					} \
 				} \
 				~NAME##_Desc() { \
 				} \
 			private: \
 				virtual PLCore::DynFunc *GetMethod(const Object *pObject) const { \
-					return &((_Self*)pObject)->Method##NAME; \
+					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->Method##NAME; \
 				} \
 		}; \
 
@@ -565,16 +562,15 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				typedef PLCore::Signature<void,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>	SigType; \
 			public: \
 				NAME##_Desc() : PLCore::EventDesc(SigType::GetSignatureID(), #NAME, #DESCRIPTION, #ANNOTATION) { \
-					bool bRegister = (bool)_Self::_RttiExport; \
-					if (bRegister) { \
+					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
+					if (bRegister) \
 						Register(_Class::GetSingleton()); \
-					} \
 				} \
 				~NAME##_Desc() { \
 				} \
 			private: \
 				virtual PLCore::DynEvent *GetSignal(const Object *pObject) const { \
-					return &((_Self*)pObject)->NAME; \
+					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->NAME; \
 				} \
 		}; \
 
@@ -624,16 +620,15 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				typedef PLCore::ClassTypelist< _Self, PLCore::Typelist<void,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> >::TypeMethodSignature MethType; \
 			public: \
 				NAME##_Desc() : PLCore::EventHandlerDesc(SigType::GetSignatureID(), #NAME, #DESCRIPTION, #ANNOTATION) { \
-					bool bRegister = (bool)_Self::_RttiExport; \
-					if (bRegister) { \
+					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
+					if (bRegister) \
 						Register(_Class::GetSingleton()); \
-					} \
 				} \
 				~NAME##_Desc() { \
 				} \
 			private: \
 				virtual PLCore::DynEventHandler *GetSlot(const Object *pObject) const { \
-					return &((_Self*)pObject)->Slot##NAME; \
+					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->Slot##NAME; \
 				} \
 		}; \
 
@@ -684,22 +679,21 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				typedef PLCore::Signature<Object*,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>		SigType; \
 			public: \
 				NAME##_Desc() : PLCore::ConstructorDesc(SigType::GetSignatureID(), #NAME, #DESCRIPTION, #ANNOTATION) { \
-					bool bRegister = (bool)_Self::_RttiExport; \
-					if (bRegister) { \
+					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
+					if (bRegister) \
 						Register(_Class::GetSingleton()); \
-					} \
 				} \
 				~NAME##_Desc() { \
 				} \
 			private: \
 				virtual PLCore::DynFunc *GetConstructor() const { \
-					return (PLCore::DynFunc*)&m_Constructor; \
+					return const_cast<PLCore::DynFunc*>(reinterpret_cast<const PLCore::DynFunc*>(&m_Constructor)); \
 				} \
 				virtual PLCore::Object *Create(const PLCore::DynParams &cConstParams) { \
 					if (cConstParams.GetSignature() == m_Constructor.GetSignature()) { \
-						ParamType cParams = (ConstParamType&)cConstParams; \
+						ParamType cParams = static_cast<ConstParamType&>(cConstParams); \
 						m_Constructor.Call(cParams); \
-						return ((ParamType&)cParams).Return; \
+						return static_cast<ParamType&>(cParams).Return; \
 					} else return nullptr; \
 				} \
 				ConstType m_Constructor; \

@@ -199,13 +199,14 @@ ConfigGroup *Config::GetClass(const String &sName)
 {
 	// Is the configuration class already created?
 	ConfigGroup *pConfig = m_mapConfig.Get(sName);
-	if (pConfig) return pConfig;
+	if (pConfig)
+		return pConfig;
 
 	// No, check if it is a valid class
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sName);
 	if (pClass && pClass->IsDerivedFrom("PLCore::ConfigGroup")) {
 		// Create configuration object
-		pConfig = (ConfigGroup*)pClass->Create();
+		pConfig = static_cast<ConfigGroup*>(pClass->Create());
 		if (pConfig) {
 			// Add configuration object
 			m_lstConfig.Add(pConfig);

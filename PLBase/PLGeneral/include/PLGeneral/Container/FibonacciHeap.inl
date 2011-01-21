@@ -270,7 +270,7 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 		return false; // Nothing to do here :)
 
 	// Get theoretical maximum degree
-	const uint32 nMaxDegree = (uint32)Wrapper::Ceil(Wrapper::Log(float(m_nNumOfElements))+1);
+	const uint32 nMaxDegree = static_cast<uint32>(Wrapper::Ceil(Wrapper::Log(static_cast<float>(m_nNumOfElements))+1));
 
 	// Increase marked array if required
 	if (m_nMaxNumOfMarks < nMaxDegree) {

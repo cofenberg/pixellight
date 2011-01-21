@@ -305,7 +305,7 @@ inline Container<bool> &Bitset::operator +=(const Container<bool> &lstContainer)
 inline bool Bitset::Remove(const bool &Element)
 {
 	// Get the index of the given element
-	int nIndex = GetIndex(Element);
+	const int nIndex = GetIndex(Element);
 	return (nIndex >= 0 && RemoveAtIndex(nIndex));
 }
 

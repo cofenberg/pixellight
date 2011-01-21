@@ -81,10 +81,12 @@ class Func : public DynFunc {
 		typedef typename Type<T14>::_Type _T14;
 		typedef typename Type<T15>::_Type _T15;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
@@ -103,7 +105,7 @@ class Func : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -119,7 +121,7 @@ class Func : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -169,10 +171,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		typedef typename Type<T14>::_Type _T14;
 		typedef typename Type<T15>::_Type _T15;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
@@ -190,7 +194,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -206,7 +210,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -256,10 +260,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
@@ -278,7 +284,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -293,7 +299,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -341,10 +347,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
@@ -362,7 +370,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -377,7 +385,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -426,10 +434,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
@@ -448,7 +458,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -463,7 +473,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -510,10 +520,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
@@ -531,7 +543,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -546,7 +558,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -593,10 +605,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
@@ -615,7 +629,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -630,7 +644,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -676,10 +690,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
@@ -697,7 +713,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -712,7 +728,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -758,10 +774,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
@@ -780,7 +798,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -795,7 +813,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -840,10 +858,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
@@ -861,7 +881,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -876,7 +896,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -921,10 +941,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
@@ -943,7 +965,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -958,7 +980,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1002,10 +1024,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
@@ -1023,7 +1047,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1038,7 +1062,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1082,10 +1106,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
@@ -1104,7 +1130,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1118,7 +1144,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1160,10 +1186,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
@@ -1181,7 +1209,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1195,7 +1223,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1237,10 +1265,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
@@ -1259,7 +1289,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1273,7 +1303,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1314,10 +1344,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
@@ -1335,7 +1367,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1349,7 +1381,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1390,10 +1422,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
@@ -1412,7 +1446,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6, T7>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1426,7 +1460,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6, T7> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6, T7>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1466,10 +1500,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
@@ -1487,7 +1523,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6, T7>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1501,7 +1537,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6, T7> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6, T7>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1541,10 +1577,12 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
@@ -1563,7 +1601,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5, T6>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1577,7 +1615,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5, T6> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5, T6>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1616,10 +1654,12 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
@@ -1637,7 +1677,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5, T6>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1651,7 +1691,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5, T6> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5, T6>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1690,10 +1730,12 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
@@ -1712,7 +1754,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5> &cP =
-					(Params<R, T0, T1, T2, T3, T4, T5>&)cParams;
+					static_cast<Params<R, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1726,7 +1768,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<R, T0, T1, T2, T3, T4, T5> &cP =
-					(const Params<R, T0, T1, T2, T3, T4, T5>&)cParams;
+					static_cast<const Params<R, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1764,10 +1806,12 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
@@ -1785,7 +1829,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5> &cP =
-					(Params<void, T0, T1, T2, T3, T4, T5>&)cParams;
+					static_cast<Params<void, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1799,7 +1843,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
 				const Params<void, T0, T1, T2, T3, T4, T5> &cP =
-					(const Params<void, T0, T1, T2, T3, T4, T5>&)cParams;
+					static_cast<const Params<void, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -1837,10 +1881,12 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
@@ -1858,7 +1904,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<R, T0, T1, T2, T3, T4> &cP = (Params<R, T0, T1, T2, T3, T4>&)cParams;
+				Params<R, T0, T1, T2, T3, T4> &cP = static_cast<Params<R, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
@@ -1870,7 +1916,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<R, T0, T1, T2, T3, T4> &cP = (const Params<R, T0, T1, T2, T3, T4>&)cParams;
+				const Params<R, T0, T1, T2, T3, T4> &cP = static_cast<const Params<R, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
@@ -1906,10 +1952,12 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
@@ -1926,7 +1974,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<void, T0, T1, T2, T3, T4> &cP = (Params<void, T0, T1, T2, T3, T4>&)cParams;
+				Params<void, T0, T1, T2, T3, T4> &cP = static_cast<Params<void, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
@@ -1938,7 +1986,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<void, T0, T1, T2, T3, T4> &cP = (const Params<void, T0, T1, T2, T3, T4>&)cParams;
+				const Params<void, T0, T1, T2, T3, T4> &cP = static_cast<const Params<void, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
@@ -1974,10 +2022,12 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
@@ -1995,7 +2045,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<R, T0, T1, T2, T3> &cP = (Params<R, T0, T1, T2, T3>&)cParams;
+				Params<R, T0, T1, T2, T3> &cP = static_cast<Params<R, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
@@ -2007,7 +2057,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<R, T0, T1, T2, T3> &cP = (const Params<R, T0, T1, T2, T3>&)cParams;
+				const Params<R, T0, T1, T2, T3> &cP = static_cast<const Params<R, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
@@ -2042,10 +2092,12 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
@@ -2062,7 +2114,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<void, T0, T1, T2, T3> &cP = (Params<void, T0, T1, T2, T3>&)cParams;
+				Params<void, T0, T1, T2, T3> &cP = static_cast<Params<void, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
@@ -2074,7 +2126,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<void, T0, T1, T2, T3> &cP = (const Params<void, T0, T1, T2, T3>&)cParams;
+				const Params<void, T0, T1, T2, T3> &cP = static_cast<const Params<void, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
@@ -2109,10 +2161,12 @@ class Func<R, T0, T1, T2> : public DynFunc {
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2)
@@ -2130,7 +2184,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<R, T0, T1, T2> &cP = (Params<R, T0, T1, T2>&)cParams;
+				Params<R, T0, T1, T2> &cP = static_cast<Params<R, T0, T1, T2>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2);
@@ -2142,7 +2196,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<R, T0, T1, T2> &cP = (const Params<R, T0, T1, T2>&)cParams;
+				const Params<R, T0, T1, T2> &cP = static_cast<const Params<R, T0, T1, T2>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
@@ -2176,10 +2230,12 @@ class Func<void, T0, T1, T2> : public DynFunc {
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2)
@@ -2196,7 +2252,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<void, T0, T1, T2> &cP = (Params<void, T0, T1, T2>&)cParams;
+				Params<void, T0, T1, T2> &cP = static_cast<Params<void, T0, T1, T2>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
@@ -2208,7 +2264,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<void, T0, T1, T2> &cP = (const Params<void, T0, T1, T2>&)cParams;
+				const Params<void, T0, T1, T2> &cP = static_cast<const Params<void, T0, T1, T2>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
@@ -2242,10 +2298,12 @@ class Func<R, T0, T1> : public DynFunc {
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1)
@@ -2263,7 +2321,7 @@ class Func<R, T0, T1> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<R, T0, T1> &cP = (Params<R, T0, T1>&)cParams;
+				Params<R, T0, T1> &cP = static_cast<Params<R, T0, T1>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0,  cP.Param1);
@@ -2275,7 +2333,7 @@ class Func<R, T0, T1> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<R, T0, T1> &cP = (const Params<R, T0, T1>&)cParams;
+				const Params<R, T0, T1> &cP = static_cast<const Params<R, T0, T1>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1);
@@ -2308,10 +2366,12 @@ class Func<void, T0, T1> : public DynFunc {
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1)
@@ -2328,7 +2388,7 @@ class Func<void, T0, T1> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<void, T0, T1> &cP = (Params<void, T0, T1>&)cParams;
+				Params<void, T0, T1> &cP = static_cast<Params<void, T0, T1>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1);
@@ -2340,7 +2400,7 @@ class Func<void, T0, T1> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<void, T0, T1> &cP = (const Params<void, T0, T1>&)cParams;
+				const Params<void, T0, T1> &cP = static_cast<const Params<void, T0, T1>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0,  cP.Param1);
@@ -2373,10 +2433,12 @@ class Func<R, T0> : public DynFunc {
 		typedef typename Type<R>  ::_Type _R;
 		typedef typename Type<T0> ::_Type _T0;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()(_T0 t0)
@@ -2394,7 +2456,7 @@ class Func<R, T0> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<R, T0> &cP = (Params<R, T0>&)cParams;
+				Params<R, T0> &cP = static_cast<Params<R, T0>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)(cP.Param0);
@@ -2406,7 +2468,7 @@ class Func<R, T0> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<R, T0> &cP = (const Params<R, T0>&)cParams;
+				const Params<R, T0> &cP = static_cast<const Params<R, T0>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0);
@@ -2439,10 +2501,12 @@ class Func<void, T0> : public DynFunc {
 		typedef typename Type<T0>::_Type _T0;
 
 	public:
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()(_T0 t0)
@@ -2459,7 +2523,7 @@ class Func<void, T0> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<void, T0> &cP = (Params<void, T0>&)cParams;
+				Params<void, T0> &cP = static_cast<Params<void, T0>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0);
@@ -2471,7 +2535,7 @@ class Func<void, T0> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				const Params<void, T0> &cP = (const Params<void, T0>&)cParams;
+				const Params<void, T0> &cP = static_cast<const Params<void, T0>&>(cParams);
 
 				// Call function
 				(*this)(cP.Param0);
@@ -2503,10 +2567,12 @@ class Func<R> : public DynFunc {
 	public:
 		typedef typename Type<R>  ::_Type _R;
 
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual _R operator ()()
@@ -2524,7 +2590,7 @@ class Func<R> : public DynFunc {
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				Params<R> &cP = (Params<R>&)cParams;
+				Params<R> &cP = static_cast<Params<R>&>(cParams);
 
 				// Call function
 				cP.Return = (*this)();
@@ -2563,10 +2629,12 @@ class Func<R> : public DynFunc {
 template <>
 class Func<void> : public DynFunc {
 	public:
-		Func() {
+		Func()
+		{
 		}
 
-		virtual ~Func() {
+		virtual ~Func()
+		{
 		}
 
 		virtual void operator ()()

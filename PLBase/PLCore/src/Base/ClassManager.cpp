@@ -72,7 +72,7 @@ const List<const Module*> &ClassManager::GetModules() const
 const Module *ClassManager::GetModule(uint32 nModuleID) const
 {
 	// Get module with given ID (can be a null pointer)
-	return (Module*)m_mapModules.Get(nModuleID);
+	return m_mapModules.Get(nModuleID);
 }
 
 /**
@@ -104,10 +104,9 @@ bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive)
 				if (sExtension == "plugin") {
 					// Try to load plugin
 					LoadPlugin(sFile);
-				}
 
 				// Scan recursively?
-				else if (nRecursive == Recursive) {
+				} else if (nRecursive == Recursive) {
 					// Check if this is a directory
 					File cFile(sFile);
 					if (cFile.Exists() && cFile.IsDirectory()) {
@@ -243,7 +242,7 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 
 																// Check build type match
 																if (bForceBuildTypeMatch) {
-																	PLIsPluginDebugBuildFunc pIsPluginDebugBuild = (PLIsPluginDebugBuildFunc)pDynLib->GetSymbol("PLIsPluginDebugBuild");
+																	PLIsPluginDebugBuildFunc pIsPluginDebugBuild = reinterpret_cast<PLIsPluginDebugBuildFunc>(pDynLib->GetSymbol("PLIsPluginDebugBuild"));
 																	if (pIsPluginDebugBuild) {
 																		if (bDebugMode != pIsPluginDebugBuild()) {
 																			// Error!
@@ -260,7 +259,7 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 																// Check if it is a valid PL plugin library
 																if (bUseLibrary) {
 																	bUseLibrary = false;
-																	PLGetPluginInfoFunc pGetPluginInfo = (PLGetPluginInfoFunc)pDynLib->GetSymbol("PLGetPluginInfo");
+																	PLGetPluginInfoFunc pGetPluginInfo = reinterpret_cast<PLGetPluginInfoFunc>(pDynLib->GetSymbol("PLGetPluginInfo"));
 																	if (pGetPluginInfo) {
 																		// Get plugin info
 																		const int nModuleID = pGetPluginInfo();
@@ -295,12 +294,12 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 																}
 															} else {
 																// Error!
-																PL_LOG(Error, cDocument.GetValue() + ": Can't load the plugin library '" + sAbsFilename + "'")
+																PL_LOG(Error, cDocument.GetValue() + ": Can't load the plugin library '" + sAbsFilename + '\'')
 																delete pDynLib;
 															}
 														} else {
 															// Error!
-															PL_LOG(Error, cDocument.GetValue() + ": Can't find the plugin library '" + sAbsFilename + "'")
+															PL_LOG(Error, cDocument.GetValue() + ": Can't find the plugin library '" + sAbsFilename + '\'')
 														}
 													}
 												}
@@ -329,8 +328,12 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 				} else {
 					PL_LOG(Error, cDocument.GetValue() + ": " + Loader::InvalidFormatVersion)
 				}
-			} else PL_LOG(Error, "Can't find 'Plugin' element")
-		} else PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+			} else {
+				PL_LOG(Error, "Can't find 'Plugin' element")
+			}
+		} else {
+			PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+		}
 	}
 
 	// Error!
@@ -366,7 +369,7 @@ bool ClassManager::UnloadAllPlugins()
 	bool bError = false;
 	for (uint32 i=0; i<m_lstModules.GetNumOfElements(); i++) {
 		// Is that module a plugin?
-		Module *pModule = (Module*)m_lstModules[i];
+		Module *pModule = const_cast<Module*>(m_lstModules[i]);
 		if (pModule->IsPlugin()) {
 			// Unload plugin
 			if (!UnloadPlugin(pModule))
@@ -408,8 +411,7 @@ void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sCla
 			 (pClass->GetClassName() == sClass && nIncludeBase == IncludeBase) ||	// Base class itself
 			 (pClass->GetBaseClassName() == sClass) ||								// Directly derived class
 			 (nRecursive == Recursive && pClass->IsDerivedFrom(sClass))				// Derived class (recursive)
-		   )
-		{
+		   ) {
 			// Only add classes of a specific module?
 			if (nModuleID == 0 || (pClass->GetModule()->GetModuleID() == nModuleID)) {
 				// Only add classes with a constructor?
@@ -472,7 +474,7 @@ uint32 ClassManager::GetUniqueModuleID()
 Module *ClassManager::CreateModule(uint32 nModuleID)
 {
 	// Check if module is already there
-	Module *pModule = (Module*)m_mapModules.Get(nModuleID);
+	Module *pModule = const_cast<Module*>(m_mapModules.Get(nModuleID));
 	if (!pModule) {
 		// No, create new module
 		pModule = new Module(nModuleID);
@@ -517,9 +519,8 @@ void ClassManager::UnregisterModule(Module *pModule)
 
 			// Remove all classes from that module
 			Iterator<const Class*> cIterator = lstClasses.GetIterator();
-			while (cIterator.HasNext()) {
-				UnregisterClass(pModule->GetModuleID(), (Class*)cIterator.Next());
-			}
+			while (cIterator.HasNext())
+				UnregisterClass(pModule->GetModuleID(), const_cast<Class*>(cIterator.Next()));
 		}
 
 		// Module has been unloaded (emit event)
@@ -555,9 +556,8 @@ void ClassManager::RegisterClass(uint32 nModuleID, Class *pClass)
 
 	// Add class to list
 	m_lstClasses.Add(pClass);
-	if (!pOldClass) {
+	if (!pOldClass)
 		m_mapClasses.Add(pClass->GetClassName(), pClass);
-	}
 
 	// Add class to module
 	pModule->AddClass(pClass);

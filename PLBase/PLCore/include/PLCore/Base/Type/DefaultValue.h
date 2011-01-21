@@ -178,7 +178,7 @@ template <typename T>
 class DefaultValue<T&> {
 	public:
 		static T& Default() {
-			return *(T*)(nullptr);
+			return *static_cast<T*>(nullptr);
 		}
 };
 
@@ -186,7 +186,7 @@ template <typename ENUM>
 class DefaultValue< EnumTypePlain<ENUM> > {
 	public:
 		static ENUM Default() {
-			return (ENUM)0;
+			return static_cast<ENUM>(0);
 		}
 };
 

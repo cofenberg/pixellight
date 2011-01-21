@@ -574,7 +574,7 @@ bool HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Add(const KeyType &K
 	}
 
 	// Hash the key
-	uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
+	const uint32 nIndex = Hasher::Hash(Key) % m_nNumOfSlots;
 
 	// Add the element to the hash map
 	m_plstSlots[nIndex].Add(Key, Value);

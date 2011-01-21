@@ -71,13 +71,16 @@ class Event : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>		TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -91,22 +94,24 @@ class Event : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -146,13 +151,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>		TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -166,22 +174,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -219,13 +229,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -239,22 +252,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -291,13 +306,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>		TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -311,22 +329,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -362,13 +382,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>		TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -382,22 +405,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -432,13 +457,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>		TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -452,22 +480,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -501,13 +531,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -521,22 +554,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -568,13 +603,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -588,22 +626,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -634,13 +674,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6, T7>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6, T7>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -654,22 +697,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -699,13 +744,16 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5, T6>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5, T6>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -719,22 +767,24 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -763,13 +813,16 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4, T5>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4, T5>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -783,22 +836,24 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
@@ -826,13 +881,16 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3, T4>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3, T4>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -846,22 +904,24 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
@@ -887,13 +947,16 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 		typedef Signature<void, T0, T1, T2, T3>	TypeSignature;
 		typedef Params<void, T0, T1, T2, T3>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -907,22 +970,24 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2, t3);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
@@ -947,13 +1012,16 @@ class Event<T0, T1, T2> : public DynEvent {
 		typedef Signature<void, T0, T1, T2>	TypeSignature;
 		typedef Params<void, T0, T1, T2>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2) const {
+		virtual void Emit(_T0 t0, _T1 t1, _T2 t2) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -967,22 +1035,24 @@ class Event<T0, T1, T2> : public DynEvent {
 				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1, t2);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2);
@@ -1006,13 +1076,16 @@ class Event<T0, T1> : public DynEvent {
 		typedef Signature<void, T0, T1>		TypeSignature;
 		typedef Params<void, T0, T1>		TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1) const {
+		virtual void Emit(_T0 t0, _T1 t1) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -1026,22 +1099,24 @@ class Event<T0, T1> : public DynEvent {
 				const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0, t1);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0,  cP.Param1);
@@ -1066,13 +1141,16 @@ class Event<T0> : public DynEvent {
 		typedef Signature<void, T0>	TypeSignature;
 		typedef Params<void, T0>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit(_T0 t0) const {
+		virtual void Emit(_T0 t0) const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -1086,22 +1164,24 @@ class Event<T0> : public DynEvent {
 				const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor(t0);
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0);
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Get typed params
-				TypeParams &cP = (TypeParams&)cParams;
+				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Call function
 				Emit(cP.Param0);
@@ -1123,13 +1203,16 @@ class Event<> : public DynEvent {
 		typedef Signature<void>	TypeSignature;
 		typedef Params<void>	TypeParams;
 
-		Event() {
+		Event()
+		{
 		}
 
-		~Event() {
+		virtual ~Event()
+		{
 		}
 
-		virtual void Emit() const {
+		virtual void Emit() const
+		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
 			#ifdef GCC
@@ -1143,18 +1226,20 @@ class Event<> : public DynEvent {
 				const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
-				((TypeHandler*)pElement->Data)->m_cFunctor();
+				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor();
 
 				// Next element, please
 				pElement = pNextElement;
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const {
+		virtual PLGeneral::String GetSignature() const
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual void Emit(const DynParams &cParams) const {
+		virtual void Emit(const DynParams &cParams) const
+		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function

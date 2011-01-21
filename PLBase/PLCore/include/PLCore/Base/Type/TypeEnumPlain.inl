@@ -47,182 +47,183 @@ class Type< EnumTypePlain<ENUM> > {
 		static const int TypeID = Type<int>::TypeID;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return Type<int>::GetTypeName();
 		}
 
 		// Convert var to type
 		static ENUM ConvertFromVar(const DynVar *pValue)
 		{
-			return (ENUM)Type<int>::ConvertFromVar(pValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromVar(pValue));
 		}
 
 		// Convert type to bool
 		static bool ConvertToBool(ENUM Value)
 		{
-			return Type<int>::ConvertToBool((int)Value);
+			return Type<int>::ConvertToBool(static_cast<int>(Value));
 		}
 
 		// Convert bool to type
 		static ENUM ConvertFromBool(bool bValue)
 		{
-			return (ENUM)Type<int>::ConvertFromBool(bValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromBool(bValue));
 		}
 
 		// Convert type to int
 		static int ConvertToInt(ENUM Value)
 		{
-			return Type<int>::ConvertToInt((int)Value);
+			return Type<int>::ConvertToInt(static_cast<int>(Value));
 		}
 
 		// Convert int to type
 		static ENUM ConvertFromInt(int nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromInt(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromInt(nValue));
 		}
 
 		// Convert type to int8
 		static PLGeneral::int8 ConvertToInt8(ENUM Value)
 		{
-			return Type<int>::ConvertToInt8((int)Value);
+			return Type<int>::ConvertToInt8(static_cast<int>(Value));
 		}
 
 		// Convert int8 to type
 		static ENUM ConvertFromInt8(PLGeneral::int8 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromInt8(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromInt8(nValue));
 		}
 
 		// Convert type to int16
 		static PLGeneral::int16 ConvertToInt16(ENUM Value)
 		{
-			return Type<int>::ConvertToInt16((int)Value);
+			return Type<int>::ConvertToInt16(static_cast<int>(Value));
 		}
 
 		// Convert int16 to type
 		static ENUM ConvertFromInt16(PLGeneral::int16 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromInt16(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromInt16(nValue));
 		}
 
 		// Convert type to int32
 		static PLGeneral::int32 ConvertToInt32(ENUM Value)
 		{
-			return Type<int>::ConvertToInt32((int)Value);
+			return Type<int>::ConvertToInt32(static_cast<int>(Value));
 		}
 
 		// Convert int32 to type
 		static ENUM ConvertFromInt32(PLGeneral::int32 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromInt32(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromInt32(nValue));
 		}
 
 		// Convert type to int64
 		static PLGeneral::int64 ConvertToInt64(ENUM Value)
 		{
-			return Type<int>::ConvertToInt64((int)Value);
+			return Type<int>::ConvertToInt64(static_cast<int>(Value));
 		}
 
 		// Convert int64 to type
 		static ENUM ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromInt64(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromInt64(nValue));
 		}
 
 		// Convert type to uint8
 		static PLGeneral::uint8 ConvertToUInt8(ENUM Value)
 		{
-			return Type<int>::ConvertToUInt8((int)Value);
+			return Type<int>::ConvertToUInt8(static_cast<int>(Value));
 		}
 
 		// Convert uint8 to type
 		static ENUM ConvertFromUInt8(PLGeneral::uint8 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromUInt8(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromUInt8(nValue));
 		}
 
 		// Convert type to uint16
 		static PLGeneral::uint16 ConvertToUInt16(ENUM Value)
 		{
-			return Type<int>::ConvertToUInt16((int)Value);
+			return Type<int>::ConvertToUInt16(static_cast<int>(Value));
 		}
 
 		// Convert uint16 to type
 		static ENUM ConvertFromUInt16(PLGeneral::uint16 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromUInt16(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromUInt16(nValue));
 		}
 
 		// Convert type to uint32
 		static PLGeneral::uint32 ConvertToUInt32(ENUM Value)
 		{
-			return Type<int>::ConvertToUInt32((int)Value);
+			return Type<int>::ConvertToUInt32(static_cast<int>(Value));
 		}
 
 		// Convert uint32 to type
 		static ENUM ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromUInt32(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromUInt32(nValue));
 		}
 
 		// Convert type to uint64
 		static PLGeneral::uint64 ConvertToUInt64(ENUM Value)
 		{
-			return Type<int>::ConvertToUInt64((int)Value);
+			return Type<int>::ConvertToUInt64(static_cast<int>(Value));
 		}
 
 		// Convert uint64 to type
 		static ENUM ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromUInt64(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromUInt64(nValue));
 		}
 
 		// Convert type to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(ENUM Value)
 		{
-			return Type<int>::ConvertToUIntPtr((int)Value);
+			return Type<int>::ConvertToUIntPtr(static_cast<int>(Value));
 		}
 
 		// Convert uint_ptr to type
 		static ENUM ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return (ENUM)Type<int>::ConvertFromUIntPtr(nValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromUIntPtr(nValue));
 		}
 
 		// Convert type to float
 		static float ConvertToFloat(ENUM Value)
 		{
-			return Type<int>::ConvertToFloat((int)Value);
+			return Type<int>::ConvertToFloat(static_cast<int>(Value));
 		}
 
 		// Convert float to type
 		static ENUM ConvertFromFloat(float fValue)
 		{
-			return (ENUM)Type<int>::ConvertFromFloat(fValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromFloat(fValue));
 		}
 
 		// Convert type to double
 		static double ConvertToDouble(ENUM Value)
 		{
-			return Type<int>::ConvertToDouble((int)Value);
+			return Type<int>::ConvertToDouble(static_cast<int>(Value));
 		}
 
 		// Convert double to type
 		static ENUM ConvertFromDouble(double dValue)
 		{
-			return (ENUM)Type<int>::ConvertFromDouble(dValue);
+			return static_cast<ENUM>(Type<int>::ConvertFromDouble(dValue));
 		}
 
 		// Convert type to string
 		static PLGeneral::String ConvertToString(ENUM Value)
 		{
-			return Type<int>::ConvertToString((int)Value);
+			return Type<int>::ConvertToString(static_cast<int>(Value));
 		}
 
 		// Convert string to type
 		static ENUM ConvertFromString(const PLGeneral::String &sString)
 		{
-			return (ENUM)Type<int>::ConvertFromString(sString);
+			return static_cast<ENUM>(Type<int>::ConvertFromString(sString));
 		}
 
 

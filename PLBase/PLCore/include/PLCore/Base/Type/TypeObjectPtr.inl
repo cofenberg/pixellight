@@ -53,7 +53,8 @@ class Type<Object*> {
 		static const int TypeID = TypeObjectPtr;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return "Object*";
 		}
 
@@ -61,13 +62,13 @@ class Type<Object*> {
 		static Object *ConvertFromVar(const DynVar *pValue)
 		{
 			// [TODO] Should be as big as possible (uint32/uint64)
-			return (Object*)pValue->GetInt();
+			return reinterpret_cast<Object*>(pValue->GetInt());
 		}
 
 		// Convert pointer to bool
 		static bool ConvertToBool(Object *pValue)
 		{
-			return (bool)(pValue != nullptr);
+			return static_cast<bool>(pValue != nullptr);
 		}
 
 		// Convert bool to pointer
@@ -79,121 +80,122 @@ class Type<Object*> {
 		// Convert pointer to int
 		static int ConvertToInt(Object *pValue)
 		{
-			return (int)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<int>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert int to pointer
 		static Object *ConvertFromInt(int nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to int8
 		static PLGeneral::int8 ConvertToInt8(Object *pValue)
 		{
-			return (PLGeneral::int8)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::int8>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert int8 to pointer
 		static Object *ConvertFromInt8(PLGeneral::int8 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to int16
 		static PLGeneral::int16 ConvertToInt16(Object *pValue)
 		{
-			return (PLGeneral::int16)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::int16>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert int16 to pointer
 		static Object *ConvertFromInt16(PLGeneral::int16 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to int32
 		static PLGeneral::int32 ConvertToInt32(Object *pValue)
 		{
-			return (PLGeneral::int32)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::int32>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert int32 to pointer
 		static Object *ConvertFromInt32(PLGeneral::int32 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to int64
 		static PLGeneral::int64 ConvertToInt64(Object *pValue)
 		{
-			return (PLGeneral::int64)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::int64>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert int64 to pointer
 		static Object *ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to uint8
 		static PLGeneral::uint8 ConvertToUInt8(Object *pValue)
 		{
-			return (PLGeneral::uint8)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::uint8>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert uint8 to pointer
 		static Object *ConvertFromUInt8(PLGeneral::uint8 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to uint16
 		static PLGeneral::uint16 ConvertToUInt16(Object *pValue)
 		{
-			return (PLGeneral::uint16)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::uint16>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert uint16 to pointer
 		static Object *ConvertFromUInt16(PLGeneral::uint16 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to uint32
 		static PLGeneral::uint32 ConvertToUInt32(Object *pValue)
 		{
-			return (PLGeneral::uint32)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::uint32>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert uint32 to pointer
 		static Object *ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to uint64
 		static PLGeneral::uint64 ConvertToUInt64(Object *pValue)
 		{
-			return (PLGeneral::uint64)(PLGeneral::uint_ptr)(pValue);
+			return static_cast<PLGeneral::uint64>(reinterpret_cast<PLGeneral::uint_ptr>(pValue));
 		}
 
 		// Convert uint64 to pointer
 		static Object *ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return (Object*)(nValue);
+
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(Object *pValue)
 		{
-			return (PLGeneral::uint_ptr)(pValue);
+			return reinterpret_cast<PLGeneral::uint_ptr>(pValue);
 		}
 
 		// Convert uint_ptr to pointer
 		static Object *ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return (Object*)(nValue);
+			return reinterpret_cast<Object*>(nValue);
 		}
 
 		// Convert pointer to float
@@ -227,13 +229,13 @@ class Type<Object*> {
 		// Convert pointer to string
 		static PLGeneral::String ConvertToString(Object *pValue)
 		{
-			return PLGeneral::String() + (PLGeneral::uint_ptr)pValue;
+			return PLGeneral::String() + reinterpret_cast<PLGeneral::uint_ptr>(pValue);
 		}
 
 		// Convert string to pointer
 		static Object *ConvertFromString(const PLGeneral::String &sString)
 		{
-			return (Object*)sString.GetUIntPtr();
+			return reinterpret_cast<Object*>(sString.GetUIntPtr());
 		}
 
 

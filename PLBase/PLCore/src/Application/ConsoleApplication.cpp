@@ -138,8 +138,10 @@ String ConsoleApplication::GetName() const
 void ConsoleApplication::SetName(const String &sName)
 {
 	// Semi-hack: Adjust config and log filenames, if they are set to their default values
-	if (m_sConfigName == m_sName + ".cfg") m_sConfigName = sName + ".cfg";
-	if (m_sLogName	  == m_sName + ".log") m_sLogName	 = sName + ".log";
+	if (m_sConfigName == m_sName + ".cfg")
+		m_sConfigName = sName + ".cfg";
+	if (m_sLogName == m_sName + ".log")
+		m_sLogName = sName + ".log";
 
 	// Set new name
 	m_sName = sName;
@@ -376,23 +378,28 @@ bool ConsoleApplication::Init()
 
 	// Create log
 	OnInitLog();
-	if (!m_bRunning) return false;
+	if (!m_bRunning)
+		return false;
 
 	// Check command line
 	OnInitCmdLine();
-	if (!m_bRunning) return false;
+	if (!m_bRunning)
+		return false;
 
 	// Load configuration
 	OnInitConfig();
-	if (!m_bRunning) return false;
+	if (!m_bRunning)
+		return false;
 
 	// Init plugins
 	OnInitPlugins();
-	if (!m_bRunning) return false;
+	if (!m_bRunning)
+		return false;
 
 	// Init data
 	OnInitData();
-	if (!m_bRunning) return false;
+	if (!m_bRunning)
+		return false;
 
 	// No error
 	return true;
@@ -440,7 +447,8 @@ void ConsoleApplication::OnInitLog()
 			if (m_sLogName.GetLength()) {
 				// Create user data directory, if it does not yet exist
 				Directory cDir(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
-				if (!cDir.Exists()) cDir.Create();
+				if (!cDir.Exists())
+					cDir.Create();
 
 				// Try user directory first, then use current directory
 				sLog = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sLogName;
@@ -501,7 +509,8 @@ void ConsoleApplication::OnInitConfig()
 		if (m_sConfigName.GetLength()) {
 			// Create user data directory, if it does not yet exist
 			Directory cDir(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
-			if (!cDir.Exists()) cDir.Create();
+			if (!cDir.Exists())
+				cDir.Create();
 
 			// Try user directory first, then use application (!) directory
 			sConfig = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;

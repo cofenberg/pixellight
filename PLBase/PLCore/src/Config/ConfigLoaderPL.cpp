@@ -78,8 +78,12 @@ bool ConfigLoaderPL::Load(Config &cConfig, File &cFile)
 			} else {
 				PL_LOG(Error, cDocument.GetValue() + ": " + InvalidFormatVersion)
 			}
-		} else PL_LOG(Error, "Can't find 'Config' element")
-	} else PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+		} else {
+			PL_LOG(Error, "Can't find 'Config' element")
+		}
+	} else {
+		PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+	}
 
 	// Error!
 	return false;

@@ -308,7 +308,7 @@ struct IsConvertible
 		static two_bytes test(ConversionHelper, ...);
 
 	public:
-		static const bool Value = sizeof(test(*((From*)nullptr), 0)) == 1;
+		static const bool Value = sizeof(test(*(static_cast<From*>(nullptr)), 0)) == 1;
 
 
 };

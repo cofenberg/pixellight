@@ -73,7 +73,7 @@ LoadableType *Loader::GetType() const
 String Loader::GetTypeName() const
 {
 	const Class *pClass = GetClass();
-	return (pClass != nullptr) ? pClass->GetProperties().Get("Type") : "";
+	return pClass ? pClass->GetProperties().Get("Type") : "";
 }
 
 /**
@@ -120,7 +120,7 @@ bool Loader::IsFormatSupported(const String &sExtension)
 String Loader::GetFormats() const
 {
 	const Class *pClass = GetClass();
-	return (pClass != nullptr) ? pClass->GetProperties().Get("Formats") : "";
+	return pClass ? pClass->GetProperties().Get("Formats") : "";
 }
 
 /**
@@ -130,7 +130,7 @@ String Loader::GetFormats() const
 String Loader::GetDescription() const
 {
 	const Class *pClass = GetClass();
-	return (pClass != nullptr) ? pClass->GetDescription() : "";
+	return pClass ? pClass->GetDescription() : "";
 }
 
 /**
@@ -140,7 +140,7 @@ String Loader::GetDescription() const
 bool Loader::CanLoad() const
 {
 	const Class *pClass = GetClass();
-	return (pClass != nullptr) ? pClass->GetProperties().Get("Load").GetBool() : false;
+	return pClass ? pClass->GetProperties().Get("Load").GetBool() : false;
 }
 
 /**
@@ -150,7 +150,7 @@ bool Loader::CanLoad() const
 bool Loader::CanSave() const
 {
 	const Class *pClass = GetClass();
-	return (pClass != nullptr) ? pClass->GetProperties().Get("Save").GetBool() : false;
+	return pClass ? pClass->GetProperties().Get("Save").GetBool() : false;
 }
 
 /**

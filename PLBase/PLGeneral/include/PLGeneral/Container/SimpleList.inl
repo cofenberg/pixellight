@@ -55,7 +55,7 @@ SimpleList<ValueType>::SimpleList(const SimpleList<ValueType> &lstSource, uint32
 	pFirstElement(nullptr)
 {
 	// Copy
-	Copy((SimpleList<ValueType>&)lstSource, nStart, nCount);
+	Copy(static_cast<const SimpleList<ValueType>&>(lstSource), nStart, nCount);
 }
 
 /**
@@ -418,7 +418,7 @@ ValueType &SimpleList<ValueType>::AddAtIndex(int nIndex)
 	uint32		 nCurIndex		  = 0;
 	while (pElement) {
 		// Index reached?
-		if (nCurIndex == (uint32)nIndex) {
+		if (nCurIndex == static_cast<uint32>(nIndex)) {
 			// Create the new list element
 			ListElement *pNewElement = new ListElement;
 			pNewElement->pNextElement = pElement;
@@ -440,7 +440,7 @@ ValueType &SimpleList<ValueType>::AddAtIndex(int nIndex)
 	}
 
 	// Add the new element at the end?
-	if ((uint32)nIndex == nCurIndex)
+	if (static_cast<uint32>(nIndex) == nCurIndex)
 		return Add();
 
 	// There's no such index within the list :(
@@ -460,7 +460,7 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	uint32		 nCurIndex		  = 0;
 	while (pElement) {
 		// Index reached?
-		if (nCurIndex == (uint32)nIndex) {
+		if (nCurIndex == static_cast<uint32>(nIndex)) {
 			// Create the new list element
 			ListElement *pNewElement = new ListElement;
 			pNewElement->Data		  = Element;
@@ -483,7 +483,7 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	}
 
 	// Add the new element at the end?
-	if ((uint32)nIndex == nCurIndex)
+	if (static_cast<uint32>(nIndex) == nCurIndex)
 		return (&Add(Element) != &SimpleList<ValueType>::Null);
 
 	// Error, there's no such index within the list :(

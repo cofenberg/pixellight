@@ -94,9 +94,8 @@ String Core::GetRuntimeDirectory()
 		// Let's first check if a local installation is present in '/usr/local/share/pixellight/Runtime'.
 		// If it is, we will use that
 		Directory cDirectory("/usr/local/share/pixellight/Runtime");
-		if (cDirectory.Exists() && cDirectory.IsDirectory()) {
+		if (cDirectory.Exists() && cDirectory.IsDirectory())
 			return "/usr/local/share/pixellight/Runtime";
-		}
 
 		// Otherwise, we will use a global installation in '/usr/share/pixellight/Runtime'
 		// For now, just return a static path

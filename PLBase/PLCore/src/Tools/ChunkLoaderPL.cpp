@@ -151,7 +151,7 @@ bool ChunkLoaderPL::LoadV1(Chunk &cChunk, File &cFile) const
 	// Read semantic
 	uint32 nSemantic = 0;
 	cFile.Read(&nSemantic, sizeof(uint32), 1);
-	cChunk.SetSemantic((Chunk::ESemantic)nSemantic);
+	cChunk.SetSemantic(static_cast<Chunk::ESemantic>(nSemantic));
 
 	// Read element type
 	uint32 nElementType = 0;
@@ -168,7 +168,7 @@ bool ChunkLoaderPL::LoadV1(Chunk &cChunk, File &cFile) const
 		cFile.Read(&nNumOfElements, sizeof(uint32), 1);
 
 		// Allocate the chunk data
-		if (cChunk.Allocate((Chunk::EElementType)nElementType, nNumOfComponentsPerElement, nNumOfElements)) {
+		if (cChunk.Allocate(static_cast<Chunk::EElementType>(nElementType), nNumOfComponentsPerElement, nNumOfElements)) {
 			// Get the header size
 			//                                Semantic         Data type        Components per element   Number of elements
 			static const uint32 nHeaderSize = sizeof(uint32) + sizeof(uint32) + sizeof(uint32) +         sizeof(uint32);

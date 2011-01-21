@@ -62,9 +62,8 @@ class TypeInfo< FlagType<ENUM> > : public DynTypeInfo {
 		TypeInfo()
 		{
 			// Fill enum values
-			for (int i=0; i<EnumType<ENUM>::GetNumOfEnumValues(); i++) {
+			for (int i=0; i<EnumType<ENUM>::GetNumOfEnumValues(); i++)
 				m_lstEnumValues.Add(EnumType<ENUM>::GetEnumName(i));
-			}
 		}
 
 		/**

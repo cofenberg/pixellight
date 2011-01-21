@@ -188,8 +188,8 @@ void BinaryHeap<KeyType, ValueType, Comparer>::DownHeap(uint32 nIndex)
 {
 	nIndex++;
 	int j = 2*nIndex;
-	if (j <= (int)m_nNumOfElements) { // m_pData[nIndex-1] has left child m_pData[j-1]
-		if (j+1 <= (int)m_nNumOfElements) { // m_pData[nIndex-1] has left child m_pData[j], too
+	if (j <= static_cast<int>(m_nNumOfElements)) { // m_pData[nIndex-1] has left child m_pData[j-1]
+		if (j+1 <= static_cast<int>(m_nNumOfElements)) { // m_pData[nIndex-1] has left child m_pData[j], too
 			if (Comparer::IsGreater(m_pData[j-1].Key, m_pData[j].Key))
 				j++; // m_pData[j] is less child of m_pData[nIndex-1]
 		}

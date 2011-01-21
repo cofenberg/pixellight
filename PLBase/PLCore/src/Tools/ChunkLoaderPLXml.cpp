@@ -73,8 +73,12 @@ bool ChunkLoaderPLXml::Load(Chunk &cChunk, File &cFile)
 			} else {
 				PL_LOG(Error, cDocument.GetValue() + ": " + InvalidFormatVersion)
 			}
-		} else PL_LOG(Error, "Can't find 'Chunk' element")
-	} else PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+		} else {
+			PL_LOG(Error, "Can't find 'Chunk' element")
+		}
+	} else {
+		PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+	}
 
 	// Error!
 	return false;
@@ -147,14 +151,14 @@ bool ChunkLoaderPLXml::Save(const Chunk &cChunk, File &cFile)
 			// Add value
 			XmlText *pValue = new XmlText("");
 			switch (cChunk.GetElementType()) {
-				case Chunk::Int8:	pValue->SetValue(String::Format("%d", *((int8*)pElementComponentData)));	break;
-				case Chunk::Int16:	pValue->SetValue(String::Format("%d", *((int16*)pElementComponentData)));	break;
-				case Chunk::Int32:	pValue->SetValue(String::Format("%d", *((int32*)pElementComponentData)));	break;
-				case Chunk::UInt8:	pValue->SetValue(String::Format("%u", *((uint8*)pElementComponentData)));	break;
-				case Chunk::UInt16:	pValue->SetValue(String::Format("%u", *((uint16*)pElementComponentData)));	break;
-				case Chunk::UInt32:	pValue->SetValue(String::Format("%u", *((uint32*)pElementComponentData)));	break;
-				case Chunk::Float:	pValue->SetValue(String::Format("%f", *((float*)pElementComponentData)));	break;
-				case Chunk::Double:	pValue->SetValue(String::Format("%f", *((double*)pElementComponentData)));	break;
+				case Chunk::Int8:	pValue->SetValue(String::Format("%d", *(reinterpret_cast<const int8*>(pElementComponentData))));	break;
+				case Chunk::Int16:	pValue->SetValue(String::Format("%d", *(reinterpret_cast<const int16*>(pElementComponentData))));	break;
+				case Chunk::Int32:	pValue->SetValue(String::Format("%d", *(reinterpret_cast<const int32*>(pElementComponentData))));	break;
+				case Chunk::UInt8:	pValue->SetValue(String::Format("%u", *(reinterpret_cast<const uint8*>(pElementComponentData))));	break;
+				case Chunk::UInt16:	pValue->SetValue(String::Format("%u", *(reinterpret_cast<const uint16*>(pElementComponentData))));	break;
+				case Chunk::UInt32:	pValue->SetValue(String::Format("%u", *(reinterpret_cast<const uint32*>(pElementComponentData))));	break;
+				case Chunk::Float:	pValue->SetValue(String::Format("%f", *(reinterpret_cast<const float*>(pElementComponentData))));	break;
+				case Chunk::Double:	pValue->SetValue(String::Format("%f", *(reinterpret_cast<const double*>(pElementComponentData))));	break;
 			}
 			pComponent->LinkEndChild(*pValue);
 
@@ -219,7 +223,7 @@ bool ChunkLoaderPLXml::LoadV1(Chunk &cChunk, const XmlElement &cChunkElement) co
 		else if (sSemantic == "Unknown")
 			cChunk.SetSemantic(Chunk::Unknown);
 		else
-			cChunk.SetSemantic((Chunk::ESemantic)sSemantic.GetInt());
+			cChunk.SetSemantic(static_cast<Chunk::ESemantic>(sSemantic.GetInt()));
 	}
 
 	// Read element type attribute
@@ -243,7 +247,7 @@ bool ChunkLoaderPLXml::LoadV1(Chunk &cChunk, const XmlElement &cChunkElement) co
 		else if (sElementType == "Double")
 			nElementType = Chunk::Double;
 		else
-			nElementType = (Chunk::EElementType)sElementType.GetInt();
+			nElementType = static_cast<Chunk::EElementType>(sElementType.GetInt());
 	}
 
 	// Read number of components per element
@@ -272,14 +276,14 @@ bool ChunkLoaderPLXml::LoadV1(Chunk &cChunk, const XmlElement &cChunkElement) co
 
 						// Get value
 						switch (cChunk.GetElementType()) {
-							case Chunk::Int8:	*((int8*)pElementComponentData)   = (int8)sValue.GetInt();		break;
-							case Chunk::Int16:	*((int16*)pElementComponentData)  = (int16)sValue.GetInt();		break;
-							case Chunk::Int32:	*((int32*)pElementComponentData)  = sValue.GetInt();			break;
-							case Chunk::UInt8:	*((uint8*)pElementComponentData)  = (uint8)sValue.GetInt();		break;
-							case Chunk::UInt16:	*((uint16*)pElementComponentData) = (uint16)sValue.GetInt();	break;
-							case Chunk::UInt32:	*((uint32*)pElementComponentData) = sValue.GetUInt32();			break;
-							case Chunk::Float:	*((float*)pElementComponentData)  = sValue.GetFloat();			break;
-							case Chunk::Double:	*((double*)pElementComponentData) = sValue.GetDouble();			break;
+							case Chunk::Int8:	*(reinterpret_cast<int8*>  (pElementComponentData)) = static_cast<int8>(sValue.GetInt());	break;
+							case Chunk::Int16:	*(reinterpret_cast<int16*> (pElementComponentData)) = static_cast<int16>(sValue.GetInt());	break;
+							case Chunk::Int32:	*(reinterpret_cast<int32*> (pElementComponentData)) = sValue.GetInt();						break;
+							case Chunk::UInt8:	*(reinterpret_cast<uint8*> (pElementComponentData)) = static_cast<uint8>(sValue.GetInt());	break;
+							case Chunk::UInt16:	*(reinterpret_cast<uint16*>(pElementComponentData)) = static_cast<uint16>(sValue.GetInt());	break;
+							case Chunk::UInt32:	*(reinterpret_cast<uint32*>(pElementComponentData)) = sValue.GetUInt32();					break;
+							case Chunk::Float:	*(reinterpret_cast<float*> (pElementComponentData)) = sValue.GetFloat();					break;
+							case Chunk::Double:	*(reinterpret_cast<double*>(pElementComponentData)) = sValue.GetDouble();					break;
 						}
 					}
 				}

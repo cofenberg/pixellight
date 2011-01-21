@@ -47,7 +47,8 @@ class Type<int> {
 		static const int TypeID = TypeInt;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return "int";
 		}
 
@@ -60,157 +61,157 @@ class Type<int> {
 		// Convert int to bool
 		static bool ConvertToBool(int nValue)
 		{
-			return (bool)(nValue != 0);
+			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int
 		static int ConvertFromBool(bool bValue)
 		{
-			return (int)(bValue);
+			return static_cast<int>(bValue);
 		}
 
 		// Convert int to int
 		static int ConvertToInt(int nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to int
 		static int ConvertFromInt(int nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to int8
 		static PLGeneral::int8 ConvertToInt8(int nValue)
 		{
-			return (PLGeneral::int8)(nValue);
+			return static_cast<PLGeneral::int8>(nValue);
 		}
 
 		// Convert int8 to int
 		static int ConvertFromInt8(PLGeneral::int8 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to int16
 		static PLGeneral::int16 ConvertToInt16(int nValue)
 		{
-			return (PLGeneral::int16)(nValue);
+			return static_cast<PLGeneral::int16>(nValue);
 		}
 
 		// Convert int16 to int
 		static int ConvertFromInt16(PLGeneral::int16 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to int32
 		static PLGeneral::int32 ConvertToInt32(int nValue)
 		{
-			return (PLGeneral::int32)(nValue);
+			return static_cast<PLGeneral::int32>(nValue);
 		}
 
 		// Convert int32 to int
 		static int ConvertFromInt32(PLGeneral::int32 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to int64
 		static PLGeneral::int64 ConvertToInt64(int nValue)
 		{
-			return (PLGeneral::int64)(nValue);
+			return static_cast<PLGeneral::int64>(nValue);
 		}
 
 		// Convert int64 to int
 		static int ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint8
 		static PLGeneral::uint8 ConvertToUInt8(int nValue)
 		{
-			return (PLGeneral::uint8)(nValue);
+			return static_cast<PLGeneral::uint8>(nValue);
 		}
 
 		// Convert uint8 to int
 		static int ConvertFromUInt8(PLGeneral::uint8 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint16
 		static PLGeneral::uint16 ConvertToUInt16(int nValue)
 		{
-			return (PLGeneral::uint16)(nValue);
+			return static_cast<PLGeneral::uint16>(nValue);
 		}
 
 		// Convert uint16 to int
 		static int ConvertFromUInt16(PLGeneral::uint16 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint32
 		static PLGeneral::uint32 ConvertToUInt32(int nValue)
 		{
-			return (PLGeneral::uint32)(nValue);
+			return static_cast<PLGeneral::uint32>(nValue);
 		}
 
 		// Convert uint32 to int
 		static int ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint64
 		static PLGeneral::uint64 ConvertToUInt64(int nValue)
 		{
-			return (PLGeneral::uint64)(nValue);
+			return static_cast<PLGeneral::uint64>(nValue);
 		}
 
 		// Convert uint64 to int
 		static int ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(int nValue)
 		{
-			return (PLGeneral::uint_ptr)(nValue);
+			return static_cast<PLGeneral::uint_ptr>(nValue);
 		}
 
 		// Convert uint_ptr to int
 		static int ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return (int)(nValue);
+			return static_cast<int>(nValue);
 		}
 
 		// Convert int to float
 		static float ConvertToFloat(int nValue)
 		{
-			return (float)(nValue);
+			return static_cast<float>(nValue);
 		}
 
 		// Convert float to int
 		static int ConvertFromFloat(float fValue)
 		{
-			return (int)(fValue);
+			return static_cast<int>(fValue);
 		}
 
 		// Convert int to double
 		static double ConvertToDouble(int nValue)
 		{
-			return (double)(nValue);
+			return static_cast<double>(nValue);
 		}
 
 		// Convert double to int
 		static int ConvertFromDouble(double dValue)
 		{
-			return (int)(dValue);
+			return static_cast<int>(dValue);
 		}
 
 		// Convert int to string

@@ -136,9 +136,8 @@ const List<DynVar*> Object::GetAttributes() const
 		const Container<VarDesc*> &lstDescriptors = pClass->GetAttributes();
 
 		// Get all attributes for this instance and add them to the list
-		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++) {
-			lstAttributes.Add( lstDescriptors[i]->GetAttribute(this) );
-		}
+		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
+			lstAttributes.Add(lstDescriptors[i]->GetAttribute(this));
 	}
 
 	// Return attribute list
@@ -182,9 +181,8 @@ const List<DynFunc*> Object::GetMethods() const
 		const Container<FuncDesc*> &lstDescriptors = pClass->GetMethods();
 
 		// Get all methods for this instance and add them to the list
-		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++) {
-			lstMethods.Add( lstDescriptors[i]->GetMethod(this) );
-		}
+		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
+			lstMethods.Add(lstDescriptors[i]->GetMethod(this));
 	}
 
 	// Return method list
@@ -228,9 +226,8 @@ const List<DynEvent*> Object::GetSignals() const
 		const Container<EventDesc*> &lstDescriptors = pClass->GetSignals();
 
 		// Get all signals for this instance and add them to the list
-		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++) {
-			lstSignals.Add( lstDescriptors[i]->GetSignal(this) );
-		}
+		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
+			lstSignals.Add(lstDescriptors[i]->GetSignal(this));
 	}
 
 	// Return signal list
@@ -274,9 +271,8 @@ const List<DynEventHandler*> Object::GetSlots() const
 		const Container<EventHandlerDesc*> &lstDescriptors = pClass->GetSlots();
 
 		// Get all slots for this instance and add them to the list
-		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++) {
-			lstSlots.Add( lstDescriptors[i]->GetSlot(this) );
-		}
+		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
+			lstSlots.Add(lstDescriptors[i]->GetSlot(this));
 	}
 
 	// Return slot list
@@ -427,7 +423,8 @@ String Object::GetValues(EDefaultValue nDefaultValue) const
 				// Ignore variables with default values?
 				if (nDefaultValue == WithDefault || !pVar->IsDefault()) {
 					// Add attribute to string
-					if (sVars.GetLength() > 0) sVars += ' ';
+					if (sVars.GetLength() > 0)
+						sVars += ' ';
 					sVars += pVarDesc->GetName();
 					sVars += "=\"";
 					sVars += pVar->GetString();

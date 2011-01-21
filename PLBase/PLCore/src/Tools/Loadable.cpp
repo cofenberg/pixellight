@@ -110,13 +110,27 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 
 								// Done
 								return bResult;
-							} else PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable '" + GetLoadableTypeName() + "'!")
-						} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because loading of this file format is not supported!")
-					} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
-				} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is not supported!")
-			} else PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
-		} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because there's no filename extension!")
-	} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
+							} else {
+								PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable '" + GetLoadableTypeName() + "'!")
+							}
+						} else {
+							PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because loading of this file format is not supported!")
+						}
+					} else {
+						PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
+					}
+				} else {
+					PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is not supported!")
+				}
+			} else {
+				PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+			}
+		} else {
+			PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because there's no filename extension!")
+		}
+	} else {
+		PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
+	}
 
 	// Error!
 	return false;
@@ -164,12 +178,24 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 
 							// Done
 							return bResult;
-						} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because loading of this file format is not supported!")
-					} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
-				} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because the file format is not supported!")
-			} else PL_LOG(Error, "Can't load '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
-		} else PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because there's no filename extension!")
-	} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because the given file is not readable!")
+						} else {
+							PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because loading of this file format is not supported!")
+						}
+					} else {
+						PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
+					}
+				} else {
+					PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because the file format is not supported!")
+				}
+			} else {
+				PL_LOG(Error, "Can't load '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+			}
+		} else {
+			PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because there's no filename extension!")
+		}
+	} else {
+		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because the given file is not readable!")
+	}
 
 	// Error!
 	return false;
@@ -207,13 +233,27 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 
 								// Save
 								return CallLoadable(cFile, *pLoader, sMethodName, sParams);
-							} else PL_LOG(Error, "Can't open the file '" + sFilename + "' to save the loadable '" + GetLoadableTypeName() + "'!")
-						} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because saving of this file format is not supported!")
-					} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
-				} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because the file format is not supported!")
-			} else PL_LOG(Error, "Can't save '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
-		} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because there's no filename extension!")
-	} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
+							} else {
+								PL_LOG(Error, "Can't open the file '" + sFilename + "' to save the loadable '" + GetLoadableTypeName() + "'!")
+							}
+						} else {
+							PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because saving of this file format is not supported!")
+						}
+					} else {
+						PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
+					}
+				} else {
+					PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because the file format is not supported!")
+				}
+			} else {
+				PL_LOG(Error, "Can't save '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+			}
+		} else {
+			PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because there's no filename extension!")
+		}
+	} else {
+		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
+	}
 
 	// Error!
 	return false;
@@ -252,13 +292,27 @@ bool Loadable::Save(File &cFile, const String &sParams, const String &sMethod)
 
 								// Save
 								return CallLoadable(cFile, *pLoader, sMethodName, sParams);
-							} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because saving of this file format is not supported!")
-						} else PL_LOG(Error, "Can't save the image to '" + cUrl.GetNativePath() + "' because the file format is no valid '" + GetLoadableTypeName() + "'  format!")
-					} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because the file format is not supported!")
-				} else PL_LOG(Error, "Can't save '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
-			} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because there's no filename extension!")
-		} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
-	} else PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because the given file is not writable!")
+							} else {
+								PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because saving of this file format is not supported!")
+							}
+						} else {
+							PL_LOG(Error, "Can't save the image to '" + cUrl.GetNativePath() + "' because the file format is no valid '" + GetLoadableTypeName() + "'  format!")
+						}
+					} else {
+						PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because the file format is not supported!")
+					}
+				} else {
+					PL_LOG(Error, "Can't save '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+				}
+			} else {
+				PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because there's no filename extension!")
+			}
+		} else {
+			PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
+		}
+	} else {
+		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because the given file is not writable!")
+	}
 
 	// Error!
 	return false;

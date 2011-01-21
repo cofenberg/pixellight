@@ -63,7 +63,7 @@ Pool<ValueType>::Pool(const Pool<ValueType> &lstSource, uint32 nStart, uint32 nC
 	m_pFirstFreeElement(nullptr)
 {
 	// Copy
-	Copy((Container<ValueType>&)lstSource, nStart, nCount);
+	Copy(static_cast<const Container<ValueType>&>(lstSource), nStart, nCount);
 }
 
 /**
@@ -99,7 +99,7 @@ Pool<ValueType>::~Pool()
 template <class ValueType>
 Container<ValueType> &Pool<ValueType>::operator =(const Pool<ValueType> &lstSource)
 {
-	return *this = (Container<ValueType>&)lstSource;
+	return *this = static_cast<const Container<ValueType>&>(lstSource);
 }
 
 /**
@@ -550,21 +550,21 @@ template <class ValueType>
 ValueType &Pool<ValueType>::AddAtIndex(int nIndex)
 {
 	// Add the new element at the end?
-	if (nIndex < 0 || (uint32)nIndex == m_nNumOfElements)
+	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
 		return Add();
 
 	// Valid index?
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return Pool<ValueType>::Null; // There's no such index within the pool :(
 
 	// Which search direction?
-	if ((uint32)nIndex < m_nNumOfElements/2) {
+	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
 		// Start with the first element
 		PoolElement *pElement  = m_pFirstElement;
 		uint32		 nCurIndex = 0;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				PoolElement &cNewElement = AddElement();
 				cNewElement.pNextElement	 = pElement;
@@ -591,7 +591,7 @@ ValueType &Pool<ValueType>::AddAtIndex(int nIndex)
 		uint32		 nCurIndex = m_nNumOfElements-1;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				PoolElement &cNewElement = AddElement();
 				cNewElement.pNextElement	 = pElement;
@@ -622,21 +622,21 @@ template <class ValueType>
 bool Pool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
-	if (nIndex < 0 || (uint32)nIndex == m_nNumOfElements)
+	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
 		return (&Add(Element) != &Pool<ValueType>::Null);
 
 	// Valid index?
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return false; // Error, there's no such index within the pool :(
 
 	// Which search direction?
-	if ((uint32)nIndex < m_nNumOfElements/2) {
+	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
 		// Start with the first element
 		PoolElement *pElement  = m_pFirstElement;
 		uint32		 nCurIndex = 0;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				PoolElement &cNewElement = AddElement();
 				cNewElement.Data			 = Element;
@@ -664,7 +664,7 @@ bool Pool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 		uint32		 nCurIndex = m_nNumOfElements-1;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				PoolElement &cNewElement = AddElement();
 				cNewElement.Data			 = Element;

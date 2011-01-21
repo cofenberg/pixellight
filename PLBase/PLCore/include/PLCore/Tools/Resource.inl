@@ -48,13 +48,13 @@ Resource<AType>::Resource(const PLGeneral::String &sName, ResourceManager<AType>
 {
 	// Set unique resource name
 	if (pManager)
-		pManager->SetResourceName((AType&)*this, sName);
+		pManager->SetResourceName(static_cast<AType&>(*this), sName);
 	else
 		m_sName = sName;
 
 	// Add this resource to the manager
 	if (pManager)
-		pManager->Add((AType&)*this);
+		pManager->Add(static_cast<AType&>(*this));
 }
 
 /**
@@ -158,7 +158,10 @@ bool Resource<AType>::Delete(bool bProtectedToo)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -168,7 +171,8 @@ bool Resource<AType>::Delete(bool bProtectedToo)
 template <class AType>
 bool Resource<AType>::SetName(const PLGeneral::String &sName)
 {
-	if (m_pManager) return m_pManager->SetResourceName((AType&)*this, sName);
+	if (m_pManager)
+		return m_pManager->SetResourceName(static_cast<AType&>(*this), sName);
 	else {
 		m_sName = sName;
 
@@ -211,7 +215,7 @@ Resource<AType>::~Resource()
 
 	// Remove from resource manager
 	if (m_pManager)
-		m_pManager->Remove((AType&)*this);
+		m_pManager->Remove(static_cast<AType&>(*this));
 }
 
 

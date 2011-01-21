@@ -144,7 +144,8 @@ bool LocalizationGroup::RemoveText(uint32 nIndex)
 {
 	// Get the text
 	LocalizationText *pText = m_lstTexts[nIndex];
-	if (!pText) return false; // Error!
+	if (!pText)
+		return false; // Error!
 
 	// Remove the text
 	m_mapTexts.Remove(pText->GetName());
@@ -163,7 +164,8 @@ bool LocalizationGroup::RemoveText(const String &sName)
 {
 	// Get the text
 	LocalizationText *pText = m_mapTexts.Get(sName);
-	if (!pText) return false; // Error!
+	if (!pText)
+		return false; // Error!
 
 	// Remove the text
 	m_mapTexts.Remove(pText->GetName());

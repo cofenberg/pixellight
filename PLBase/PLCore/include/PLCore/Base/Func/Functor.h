@@ -199,7 +199,8 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		/**
@@ -236,7 +237,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -309,7 +310,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -333,9 +335,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
 	private:
@@ -400,7 +401,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -425,7 +427,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -491,7 +493,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -515,9 +518,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
 		{
-			if (m_pFunc) {
-				return (*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
-			}
+			if (m_pFunc)
+				return (*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
 	private:
@@ -581,7 +583,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -606,7 +609,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -671,7 +674,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -695,9 +699,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
 	private:
@@ -760,7 +763,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -785,7 +789,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -850,7 +854,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -874,9 +879,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
 	private:
@@ -938,7 +942,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -963,7 +968,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -1027,7 +1032,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1051,9 +1057,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
 	private:
@@ -1114,7 +1119,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1139,7 +1145,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -1202,7 +1208,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1226,9 +1233,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
 	private:
@@ -1288,7 +1294,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1313,7 +1320,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -1374,7 +1381,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1398,9 +1406,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
 	private:
@@ -1459,7 +1466,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1484,7 +1492,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -1544,7 +1552,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1568,9 +1577,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
 	private:
@@ -1628,7 +1636,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1653,7 +1662,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6, T7>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -1712,7 +1721,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1736,9 +1746,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6, T7>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
 	private:
@@ -1795,7 +1804,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1820,7 +1830,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5, T6>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -1878,7 +1888,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1902,9 +1913,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5, T6>*)m_pFunc)(t0, t1, t2, t3, t4, t5, t6);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6);
 		}
 
 	private:
@@ -1960,7 +1970,8 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -1985,7 +1996,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4, T5>*)m_pFunc)(t0, t1, t2, t3, t4, t5);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5>* >(m_pFunc))(t0, t1, t2, t3, t4, t5);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2042,7 +2053,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2066,9 +2078,8 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4, T5>*)m_pFunc)(t0, t1, t2, t3, t4, t5);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5>* >(m_pFunc))(t0, t1, t2, t3, t4, t5);
 		}
 
 	private:
@@ -2123,7 +2134,8 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2148,7 +2160,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3, T4>*)m_pFunc)(t0, t1, t2, t3, t4);
+				return (*static_cast<Func<R, T0, T1, T2, T3, T4>* >(m_pFunc))(t0, t1, t2, t3, t4);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2204,7 +2216,8 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2228,9 +2241,8 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3, T4>*)m_pFunc)(t0, t1, t2, t3, t4);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3, T4>* >(m_pFunc))(t0, t1, t2, t3, t4);
 		}
 
 	private:
@@ -2284,7 +2296,8 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2309,7 +2322,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2, T3>*)m_pFunc)(t0, t1, t2, t3);
+				return (*static_cast<Func<R, T0, T1, T2, T3>* >(m_pFunc))(t0, t1, t2, t3);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2364,7 +2377,8 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2388,9 +2402,8 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2, T3>*)m_pFunc)(t0, t1, t2, t3);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2, T3>* >(m_pFunc))(t0, t1, t2, t3);
 		}
 
 	private:
@@ -2443,7 +2456,8 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2468,7 +2482,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1, T2>*)m_pFunc)(t0, t1, t2);
+				return (*static_cast<Func<R, T0, T1, T2>* >(m_pFunc))(t0, t1, t2);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2522,7 +2536,8 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2546,9 +2561,8 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1, T2>*)m_pFunc)(t0, t1, t2);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1, T2>* >(m_pFunc))(t0, t1, t2);
 		}
 
 	private:
@@ -2600,7 +2614,8 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2625,7 +2640,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 		virtual _R operator ()(_T0 t0, _T1 t1)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0, T1>*)m_pFunc)(t0, t1);
+				return (*static_cast<Func<R, T0, T1>* >(m_pFunc))(t0, t1);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2678,7 +2693,8 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2702,9 +2718,8 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 
 		virtual void operator ()(_T0 t0, _T1 t1)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0, T1>*)m_pFunc)(t0, t1);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0, T1>* >(m_pFunc))(t0, t1);
 		}
 
 	private:
@@ -2755,7 +2770,8 @@ class Functor<R, T0> : public Func<R, T0> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2780,7 +2796,7 @@ class Functor<R, T0> : public Func<R, T0> {
 		virtual _R operator ()(_T0 t0)
 		{
 			if (m_pFunc)
-				return (*(Func<R, T0>*)m_pFunc)(t0);
+				return (*static_cast<Func<R, T0>* >(m_pFunc))(t0);
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2833,7 +2849,8 @@ class Functor<void, T0> : public Func<void, T0> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2857,9 +2874,8 @@ class Functor<void, T0> : public Func<void, T0> {
 
 		virtual void operator ()(_T0 t0)
 		{
-			if (m_pFunc) {
-				(*(Func<void, T0>*)m_pFunc)(t0);
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void, T0>* >(m_pFunc))(t0);
 		}
 
 	private:
@@ -2909,7 +2925,8 @@ class Functor<R> : public Func<R> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -2934,7 +2951,7 @@ class Functor<R> : public Func<R> {
 		virtual _R operator ()()
 		{
 			if (m_pFunc)
-				return (*(Func<R>*)m_pFunc)();
+				return (*static_cast<Func<R>* >(m_pFunc))();
 			else
 				return DefaultValue<R>::Default();
 		}
@@ -2984,7 +3001,8 @@ class Functor<void> : public Func<void> {
 		virtual ~Functor()
 		{
 			// Destroy wrapped function object
-			if (m_pFunc) delete m_pFunc;
+			if (m_pFunc)
+				delete m_pFunc;
 		}
 
 		Functor &operator =(const Functor &cFunctor)
@@ -3008,9 +3026,8 @@ class Functor<void> : public Func<void> {
 
 		virtual void operator ()()
 		{
-			if (m_pFunc) {
-				(*(Func<void>*)m_pFunc)();
-			}
+			if (m_pFunc)
+				(*static_cast<Func<void>* >(m_pFunc))();
 		}
 
 	private:

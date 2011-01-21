@@ -471,7 +471,7 @@ void LoadableManager::RegisterClasses()
 				// Create loader instance
 				const String sType = pClass->GetProperties().Get("Type");
 				if (sType.GetLength()) {
-					Loader *pLoader = (Loader*)pClass->Create();
+					Loader *pLoader = static_cast<Loader*>(pClass->Create());
 					if (pLoader) {
 						// Try to get an instance of the loadable type
 						LoadableType *pLoadableType = m_mapTypes.Get(sType);

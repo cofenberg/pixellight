@@ -60,7 +60,10 @@ bool ResourceManager<AType>::SetManagerName(const PLGeneral::String &sName)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 /**
@@ -72,12 +75,13 @@ AType *ResourceManager<AType>::Create(const PLGeneral::String &sName)
 {
 	// Check whether this resource is already within the manager
 	AType *pResource = Get(sName);
-	if (pResource) return pResource;
+	if (pResource)
+		return pResource;
 
 	// Get name
 	if (!sName.GetLength()) {
 		// Find an unused resource name
-		PLGeneral::String sNewName = "0";
+		PLGeneral::String sNewName = '0';
 		for (int i=1; Get(sNewName); i++)
 			sNewName = i;
 
@@ -193,7 +197,10 @@ bool ResourceManager<AType>::SetStandard(AType *pResource)
 			// resource is now unused (if there's one :)
 			if (m_bUnloadUnused && m_pStandardResource && !m_pStandardResource->GetNumOfHandlers())
 				m_pStandardResource->DeleteResource(); // Kill this resource NOW
-		} else return false; // Error!
+		} else {
+			// Error!
+			return false;
+		}
 	}
 
 	// Set new standard resource
@@ -318,7 +325,7 @@ ResourceManager<AType> &ResourceManager<AType>::operator =(const ResourceManager
 	// Copy resources
 	for (PLGeneral::uint32 i=0; i<cSource.GetNumOfElements(); i++) {
 		const AType *pSourceResource = cSource.Get(i);
-		AType *pResource = Create(((Resource<AType>*)pSourceResource)->GetName());
+		AType *pResource = Create(static_cast<const Resource<AType>*>(pSourceResource)->GetName());
 		*pResource = *pSourceResource;
 	}
 
@@ -396,7 +403,7 @@ bool ResourceManager<AType>::SetResourceName(AType &cResource, const PLGeneral::
 			cResource.m_sName = sName;
 		else {
 			// Find an unused resource name
-			PLGeneral::String sNewName = "0";
+			PLGeneral::String sNewName = '0';
 			for (int i=1; Get(sNewName); i++)
 				sNewName = i;
 
@@ -433,10 +440,11 @@ bool ResourceManager<AType>::Add(AType &cResource)
 		// Check resource name, managed resources MUST have valid names
 		if (cResource.GetName().GetLength()) {
 			// Check whether there's already a resource with this name
-			if (m_mapResources.Get(cResource.GetName())) return false; // Error!
+			if (m_mapResources.Get(cResource.GetName()))
+				return false; // Error!
 		} else {
 			// Find an unused resource name
-			PLGeneral::String sNewName = "0";
+			PLGeneral::String sNewName = '0';
 			for (int i=1; Get(sNewName); i++)
 				sNewName = i;
 
@@ -445,7 +453,8 @@ bool ResourceManager<AType>::Add(AType &cResource)
 		}
 
 		// Add resource to list
-		if (!m_lstResources.Add(&cResource)) return false; // Error!
+		if (!m_lstResources.Add(&cResource))
+			return false; // Error!
 		cResource.m_pManager = this;
 
 		// Add resource to hash lists

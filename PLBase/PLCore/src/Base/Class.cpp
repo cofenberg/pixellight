@@ -238,7 +238,7 @@ const VarDesc *Class::GetAttribute(const String &sName) const
 	// Get attribute
 	MemberDesc *pMember = m_mapMembers.Get(sName);
 	if (pMember && pMember->GetMemberType() == MemberAttribute)
-		return (VarDesc*)pMember;
+		return static_cast<VarDesc*>(pMember);
 
 	// Attribute could not be found
 	return nullptr;
@@ -271,7 +271,7 @@ const FuncDesc *Class::GetMethod(const String &sName) const
 	// Get method
 	MemberDesc *pMember = m_mapMembers.Get(sName);
 	if (pMember && pMember->GetMemberType() == MemberMethod)
-		return (FuncDesc*)pMember;
+		return static_cast<FuncDesc*>(pMember);
 
 	// Method could not be found
 	return nullptr;
@@ -304,7 +304,7 @@ const EventDesc *Class::GetSignal(const String &sName) const
 	// Get signal
 	MemberDesc *pMember = m_mapMembers.Get(sName);
 	if (pMember && pMember->GetMemberType() == MemberEvent)
-		return (EventDesc*)pMember;
+		return static_cast<EventDesc*>(pMember);
 
 	// Signal could not be found
 	return nullptr;
@@ -337,7 +337,7 @@ const EventHandlerDesc *Class::GetSlot(const String &sName) const
 	// Get slot
 	MemberDesc *pMember = m_mapMembers.Get(sName);
 	if (pMember && pMember->GetMemberType() == MemberEventHandler)
-		return (EventHandlerDesc*)pMember;
+		return static_cast<EventHandlerDesc*>(pMember);
 
 	// Slot could not be found
 	return nullptr;
@@ -368,7 +368,7 @@ bool Class::HasDefaultConstructor() const
 		InitClass();
 
 	// Loop through list
-	Iterator<ConstructorDesc*>	cIterator = m_lstConstructors.GetIterator();
+	Iterator<ConstructorDesc*> cIterator = m_lstConstructors.GetIterator();
 	while (cIterator.HasNext()) {
 		// Get constructor
 		ConstructorDesc *pConstructor = cIterator.Next();
@@ -411,7 +411,7 @@ const ConstructorDesc *Class::GetConstructor(const String &sName) const
 	// Get constructor
 	MemberDesc *pMember = m_mapMembers.Get(sName);
 	if (pMember && pMember->GetMemberType() == MemberConstructor)
-		return (ConstructorDesc*)pMember;
+		return static_cast<ConstructorDesc*>(pMember);
 
 	// Constructor could not be found
 	return nullptr;
@@ -555,8 +555,8 @@ void Class::InitClass() const
 				// Add properties from base class
 				Iterator<PLGeneral::String> cIterator = m_pBaseClass->m_mapOwnProperties.GetKeyIterator();
 				while (cIterator.HasNext()) {
-					String sName  = cIterator.Next();
-					String sValue = m_pBaseClass->m_mapOwnProperties.Get(sName);
+					const String sName  = cIterator.Next();
+					const String sValue = m_pBaseClass->m_mapOwnProperties.Get(sName);
 					m_mapProperties.Set(sName, sValue);
 				}
 
@@ -594,8 +594,8 @@ void Class::InitClass() const
 			// Add own properties
 			Iterator<PLGeneral::String> cIterator = m_mapOwnProperties.GetKeyIterator();
 			while (cIterator.HasNext()) {
-				String sName  = cIterator.Next();
-				String sValue = m_mapOwnProperties.Get(sName);
+				const String sName  = cIterator.Next();
+				const String sValue = m_mapOwnProperties.Get(sName);
 				m_mapProperties.Set(sName, sValue);
 			}
 
@@ -617,23 +617,27 @@ void Class::InitClass() const
 				// Check type and add to respective list
 				if (pMember->GetMemberType() == MemberAttribute) {
 					// Attribute
-					if (pOverwriteMember) m_lstAttributes.Remove((VarDesc*)pOverwriteMember);
-					m_lstAttributes.Add((VarDesc*)pMember);
+					if (pOverwriteMember)
+						m_lstAttributes.Remove(static_cast<VarDesc*>(pOverwriteMember));
+					m_lstAttributes.Add(static_cast<VarDesc*>(pMember));
 				} else if (pMember->GetMemberType() == MemberMethod) {
 					// Method
-					if (pOverwriteMember) m_lstMethods.Remove((FuncDesc*)pOverwriteMember);
-					m_lstMethods.Add((FuncDesc*)pMember);
+					if (pOverwriteMember)
+						m_lstMethods.Remove(static_cast<FuncDesc*>(pOverwriteMember));
+					m_lstMethods.Add(static_cast<FuncDesc*>(pMember));
 				} else if (pMember->GetMemberType() == MemberEvent) {
 					// Event
-					if (pOverwriteMember) m_lstSignals.Remove((EventDesc*)pOverwriteMember);
-					m_lstSignals.Add((EventDesc*)pMember);
+					if (pOverwriteMember)
+						m_lstSignals.Remove(static_cast<EventDesc*>(pOverwriteMember));
+					m_lstSignals.Add(static_cast<EventDesc*>(pMember));
 				} else if (pMember->GetMemberType() == MemberEventHandler) {
 					// Event handler
-					if (pOverwriteMember) m_lstSlots.Remove((EventHandlerDesc*)pOverwriteMember);
-					m_lstSlots.Add((EventHandlerDesc*)pMember);
+					if (pOverwriteMember)
+						m_lstSlots.Remove(static_cast<EventHandlerDesc*>(pOverwriteMember));
+					m_lstSlots.Add(static_cast<EventHandlerDesc*>(pMember));
 				} else if (pMember->GetMemberType() == MemberConstructor) {
 					// Constructor
-					m_lstConstructors.Add((ConstructorDesc*)pMember);
+					m_lstConstructors.Add(static_cast<ConstructorDesc*>(pMember));
 				}
 			}
 

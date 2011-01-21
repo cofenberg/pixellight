@@ -75,7 +75,7 @@ String LoadableType::GetRelativeFilePath(const String &sPath) const
 
 	// Loop through all base directories
 	LoadableManager *pLoadableManager = LoadableManager::GetInstance();
-	for (int i=-1; i<(int)pLoadableManager->GetNumOfBaseDirs(); i++) {
+	for (int i=-1; i<static_cast<int>(pLoadableManager->GetNumOfBaseDirs()); i++) {
 		// Get base directory
 		const String sBaseDir = (i < 0) ? System::GetInstance()->GetCurrentDir() : pLoadableManager->GetBaseDir(i);
 

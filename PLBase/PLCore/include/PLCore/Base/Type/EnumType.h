@@ -73,7 +73,8 @@ class EnumType {
 			PLGeneral::String sEnum, sDesc;
 			_Type nValue;
 			int nIndex = 0;
-			for (nIndex=0; ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc); nIndex++);
+			for (nIndex=0; ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc); nIndex++)
+				;	// Nothing to do in here
 			return nIndex;
 		}
 
@@ -128,7 +129,8 @@ class FlagType {
 			PLGeneral::String sEnum, sDesc;
 			_Type nValue;
 			int nIndex = 0;
-			for (nIndex=0; ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc); nIndex++);
+			for (nIndex=0; ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc); nIndex++)
+				;	// Nothing to do in here
 			return nIndex;
 		}
 

@@ -98,7 +98,7 @@ FastPool<ValueType>::FastPool(const FastPool<ValueType> &lstSource, uint32 nStar
 	m_pFirstFreeElement(nullptr)
 {
 	// Copy
-	Copy((Container<ValueType>&)lstSource, nStart, nCount);
+	Copy(static_cast<const Container<ValueType>&>(lstSource), nStart, nCount);
 }
 
 /**
@@ -134,7 +134,7 @@ FastPool<ValueType>::~FastPool()
 template <class ValueType>
 Container<ValueType> &FastPool<ValueType>::operator =(const FastPool<ValueType> &lstSource)
 {
-	return *this = (Container<ValueType>&)lstSource;
+	return *this = static_cast<const Container<ValueType>&>(lstSource);
 }
 
 /**
@@ -629,15 +629,15 @@ template <class ValueType>
 ValueType &FastPool<ValueType>::AddAtIndex(int nIndex)
 {
 	// Add the new element at the end?
-	if (nIndex < 0 || (uint32)nIndex == m_nNumOfElements)
+	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
 		return Add();
 
 	// Valid index?
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return FastPool<ValueType>::Null; // There's no such index within the pool :(
 
 	// Which search direction?
-	if ((uint32)nIndex < m_nNumOfElements/2) {
+	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
 		// Start with the first element
 		ValueType *pElement  = m_pFirstElement;
 		uint32     nCurIndex = 0;
@@ -670,7 +670,7 @@ ValueType &FastPool<ValueType>::AddAtIndex(int nIndex)
 		uint32     nCurIndex = m_nNumOfElements-1;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				ValueType &cNewElement = AddElement();
 				cNewElement.m_pNextElement     = pElement;
@@ -701,15 +701,15 @@ template <class ValueType>
 bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
-	if (nIndex < 0 || (uint32)nIndex == m_nNumOfElements)
+	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
 		return (&Add(Element) != &FastPool<ValueType>::Null);
 
 	// Valid index?
-	if ((uint32)nIndex > m_nNumOfElements)
+	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
 		return false; // Error, there's no such index within the pool :(
 
 	// Which search direction?
-	if ((uint32)nIndex < m_nNumOfElements/2) {
+	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
 		// Start with the first element
 		ValueType *pElement  = m_pFirstElement;
 		uint32     nCurIndex = 0;
@@ -743,7 +743,7 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 		uint32     nCurIndex = m_nNumOfElements-1;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				ValueType &cNewElement = AddElement();
 				cNewElement					   = Element;

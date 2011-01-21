@@ -48,7 +48,8 @@ class Type< EnumType<ENUM> > {
 		static const int TypeID = Type<_BaseType>::TypeID;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return Type<_BaseType>::GetTypeName();
 		}
 
@@ -58,163 +59,163 @@ class Type< EnumType<ENUM> > {
 			if (pValue->GetTypeID() == TypeString)
 				return ConvertFromString(pValue->GetString());
 			else
-				return (_Type)Type<_BaseType>::ConvertFromVar(pValue);
+				return static_cast<_Type>(Type<_BaseType>::ConvertFromVar(pValue));
 		}
 
 		// Convert type to bool
 		static bool ConvertToBool(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToBool((_BaseType)Value);
+			return Type<_BaseType>::ConvertToBool(static_cast<_BaseType>(Value));
 		}
 
 		// Convert bool to type
 		static _Type ConvertFromBool(bool bValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromBool(bValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromBool(bValue));
 		}
 
 		// Convert type to int
 		static int ConvertToInt(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToInt((_BaseType)Value);
+			return Type<_BaseType>::ConvertToInt(static_cast<_BaseType>(Value));
 		}
 
 		// Convert int to type
 		static _Type ConvertFromInt(int nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromInt(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromInt(nValue));
 		}
 
 		// Convert type to int8
 		static PLGeneral::int8 ConvertToInt8(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToInt8((_BaseType)Value);
+			return Type<_BaseType>::ConvertToInt8(static_cast<_BaseType>(Value));
 		}
 
 		// Convert int8 to type
 		static _Type ConvertFromInt8(PLGeneral::int8 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromInt8(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromInt8(nValue));
 		}
 
 		// Convert type to int16
 		static PLGeneral::int16 ConvertToInt16(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToInt16((_BaseType)Value);
+			return Type<_BaseType>::ConvertToInt16(static_cast<_BaseType>(Value));
 		}
 
 		// Convert int16 to type
 		static _Type ConvertFromInt16(PLGeneral::int16 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromInt16(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromInt16(nValue));
 		}
 
 		// Convert type to int32
 		static PLGeneral::int32 ConvertToInt32(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToInt32((_BaseType)Value);
+			return Type<_BaseType>::ConvertToInt32(static_cast<_BaseType>(Value));
 		}
 
 		// Convert int32 to type
 		static _Type ConvertFromInt32(PLGeneral::int32 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromInt32(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromInt32(nValue));
 		}
 
 		// Convert type to int64
 		static PLGeneral::int64 ConvertToInt64(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToInt64((_BaseType)Value);
+			return Type<_BaseType>::ConvertToInt64(static_cast<_BaseType>(Value));
 		}
 
 		// Convert int64 to type
 		static _Type ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromInt64(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromInt64(nValue));
 		}
 
 		// Convert type to uint8
 		static PLGeneral::uint8 ConvertToUInt8(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToUInt8((_BaseType)Value);
+			return Type<_BaseType>::ConvertToUInt8(static_cast<_BaseType>(Value));
 		}
 
 		// Convert uint8 to type
 		static _Type ConvertFromUInt8(PLGeneral::uint8 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromUInt8(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromUInt8(nValue));
 		}
 
 		// Convert type to uint16
 		static PLGeneral::uint16 ConvertToUInt16(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToUInt16((_BaseType)Value);
+			return Type<_BaseType>::ConvertToUInt16(static_cast<_BaseType>(Value));
 		}
 
 		// Convert uint16 to type
 		static _Type ConvertFromUInt16(PLGeneral::uint16 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromUInt16(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromUInt16(nValue));
 		}
 
 		// Convert type to uint32
 		static PLGeneral::uint32 ConvertToUInt32(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToUInt32((_BaseType)Value);
+			return Type<_BaseType>::ConvertToUInt32(static_cast<_BaseType>(Value));
 		}
 
 		// Convert uint32 to type
 		static _Type ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromUInt32(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromUInt32(nValue));
 		}
 
 		// Convert type to uint64
 		static PLGeneral::uint64 ConvertToUInt64(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToUInt64((_BaseType)Value);
+			return Type<_BaseType>::ConvertToUInt64(static_cast<_BaseType>(Value));
 		}
 
 		// Convert uint64 to type
 		static _Type ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromUInt64(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromUInt64(nValue));
 		}
 
 		// Convert type to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToUIntPtr((_BaseType)Value);
+			return Type<_BaseType>::ConvertToUIntPtr(static_cast<_BaseType>(Value));
 		}
 
 		// Convert uint_ptr to type
 		static _Type ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromUIntPtr(nValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromUIntPtr(nValue));
 		}
 
 		// Convert type to float
 		static float ConvertToFloat(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToFloat((_BaseType)Value);
+			return Type<_BaseType>::ConvertToFloat(static_cast<_BaseType>(Value));
 		}
 
 		// Convert float to type
 		static _Type ConvertFromFloat(float fValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromFloat(fValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromFloat(fValue));
 		}
 
 		// Convert type to double
 		static double ConvertToDouble(_Type Value)
 		{
-			return Type<_BaseType>::ConvertToDouble((_BaseType)Value);
+			return Type<_BaseType>::ConvertToDouble(static_cast<_BaseType>(Value));
 		}
 
 		// Convert double to type
 		static _Type ConvertFromDouble(double dValue)
 		{
-			return (_Type)Type<_BaseType>::ConvertFromDouble(dValue);
+			return static_cast<_Type>(Type<_BaseType>::ConvertFromDouble(dValue));
 		}
 
 		// Convert type to string
@@ -224,7 +225,7 @@ class Type< EnumType<ENUM> > {
 			if (ENUM::GetEnumValue(-1, Value, sValue, sDesc))
 				return sValue;
 			else
-				return Type<_BaseType>::ConvertToString((_BaseType)Value);
+				return Type<_BaseType>::ConvertToString(static_cast<_BaseType>(Value));
 		}
 
 		// Convert string to type
@@ -236,7 +237,7 @@ class Type< EnumType<ENUM> > {
 			if (ENUM::GetEnumValue(-1, Value, sValue, sDesc))
 				return Value;
 			else
-				return (_Type)Type<_BaseType>::ConvertFromString(sString);
+				return static_cast<_Type>(Type<_BaseType>::ConvertFromString(sString));
 		}
 
 
