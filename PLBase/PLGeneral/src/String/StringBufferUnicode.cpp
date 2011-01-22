@@ -712,35 +712,31 @@ StringBuffer *StringBufferUnicode::Replace(char nOld, char nNew, uint32 &nReplac
 {
 	wchar_t *pszString    = m_pszString;
 	wchar_t *pszStringEnd = m_pszString + m_nLength;
-	wchar_t nOldUnicode, nNewUnicode;
 
 	// Get new and old as Unicode
-	int nResult = mbtowc(&nOldUnicode, &nOld, 1);
-	if (nResult >= 0) {
-		nResult = mbtowc(&nNewUnicode, &nNew, 1);
-		if (nResult >= 0) {
-			// Search for the first character which should be replaced
-			nReplaced = 0;
-			for (; pszString<pszStringEnd; pszString++) {
-				if (*pszString == nOldUnicode) {
-					// Fork string buffer when the first character has been found
-					StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
+	wchar_t nOldUnicode, nNewUnicode;
+	if (mbtowc(&nOldUnicode, &nOld, 1) >= 0 && mbtowc(&nNewUnicode, &nNew, 1) >= 0) {
+		// Search for the first character which should be replaced
+		nReplaced = 0;
+		for (; pszString<pszStringEnd; pszString++) {
+			if (*pszString == nOldUnicode) {
+				// Fork string buffer when the first character has been found
+				StringBufferUnicode *pStringBufferUnicodeClone = static_cast<StringBufferUnicode*>(Duplicate());
 
-					// Set pointers to new location
-					pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
-					pszStringEnd = pStringBufferUnicodeClone->m_pszString + m_nLength;
+				// Set pointers to new location
+				pszString    = pStringBufferUnicodeClone->m_pszString + (pszString - m_pszString);
+				pszStringEnd = pStringBufferUnicodeClone->m_pszString + m_nLength;
 
-					// Replace characters
-					for (; pszString<pszStringEnd; pszString++) {
-						if (*pszString == nOldUnicode) {
-							*pszString = nNewUnicode;
-							nReplaced++;
-						}
+				// Replace characters
+				for (; pszString<pszStringEnd; pszString++) {
+					if (*pszString == nOldUnicode) {
+						*pszString = nNewUnicode;
+						nReplaced++;
 					}
-
-					// Return the new string buffer
-					return pStringBufferUnicodeClone;
 				}
+
+				// Return the new string buffer
+				return pStringBufferUnicodeClone;
 			}
 		}
 	}
