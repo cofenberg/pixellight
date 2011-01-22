@@ -60,6 +60,9 @@ PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<System>;
 /**
 *  @brief
 *    Provides access to system and platform functions
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class System : public Singleton<System> {
 

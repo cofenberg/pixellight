@@ -49,6 +49,9 @@ class ClipBoard;
 /**
 *  @brief
 *    Clipboard implementation base class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'ClipBoard' abstraction
 */
 class ClipBoardImpl {
 

@@ -59,6 +59,9 @@ class FileAccess;
 *      FileObject("test.zip") .IsDirectory() -> false
 *      FileObject("test.zip/").IsFile()      -> false
 *      FileObject("test.zip/").IsDirectory() -> true
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class FileObject {
 

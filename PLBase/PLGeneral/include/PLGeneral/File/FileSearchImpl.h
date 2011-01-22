@@ -50,6 +50,9 @@ class FileAccess;
 /**
 *  @brief
 *    Abstract base class for platform specific file search implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'FileSearch' abstraction
 */
 class FileSearchImpl {
 

@@ -47,6 +47,9 @@ namespace PLCore {
 *
 *  @remarks
 *    This class template represents slots (event handlers that belong to objects).
+*
+*  @note
+*    - Implementation of the observer design pattern (this class is the observer, the destination)
 */
 template <typename DESC>
 class Slot : public DESC::EventHandlerType {

@@ -67,7 +67,7 @@ class MutexGuard {
 		*    Constructor
 		*
 		*  @param[in] cMutex
-		*    Mutex to use
+		*    Mutex to use, just referenced, must stay valid as long as this mutex guard exists!
 		*
 		*  @note
 		*    - Blocking if the mutex is already locked
@@ -80,7 +80,7 @@ class MutexGuard {
 		*    Constructor
 		*
 		*  @param[in] cMutex
-		*    Mutex to use
+		*    Mutex to use, just referenced, must stay valid as long as this mutex guard exists!
 		*  @param[in] nTimeout
 		*    Timeout in milliseconds
 		*

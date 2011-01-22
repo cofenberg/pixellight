@@ -50,7 +50,19 @@ template <class ValueType> class IteratorImpl;
 *    produce undefined behaviour! Is highly recommended to keep the iterator in the smallest possible
 *    local scope and to never keep an iterator as for instance pointer over a long time.
 *
+*  @verbatim
+*    Usage example:
+*    Array<String> lstNames;	// Iterable container
+*    lstNames.Add("Lenny");		// Add "Lenny" to the iterable container
+*    lstNames.Add("Barny");		// Add "Barny" to the iterable container
+*    lstNames.Add("Homer");		// Add "Homer" to the iterable container
+*    Iterator<String> cIterator = lstNames.GetIterator();	// Get an iterator instance
+*    while (cIterator.HasNext())	// Is there a next element?
+*        String sName = cIterator.Next();	// Return the next element, in this case, returns "Lenny", then "Barny" and then "Homer"
+*  @endverbatim
+*
 *  @note
+*    - As the class same indicates, this is an implementation of the iterator design pattern
 *    - An iterator is similar to a "for each loop"
 */
 template <class ValueType>

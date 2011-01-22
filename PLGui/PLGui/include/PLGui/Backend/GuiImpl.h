@@ -71,6 +71,9 @@ class ClipBoardImpl;
 *
 *  @remarks
 *    This class is the base class for platform specific GUI implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'Gui' abstraction
 */
 class GuiImpl : public PLCore::Object {
 

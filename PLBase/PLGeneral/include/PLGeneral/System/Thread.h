@@ -56,6 +56,9 @@ typedef int (*THREADFUNCTION)(void*);	/**< Static thread function */
 /**
 *  @brief
 *    Thread class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Thread : public ThreadFunction {
 

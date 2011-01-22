@@ -50,7 +50,10 @@ class ClipBoardImpl;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    ClipBoard
+*    Clipboard
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class ClipBoard {
 

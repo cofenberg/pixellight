@@ -76,6 +76,9 @@ namespace PLGui {
 *
 *  @remarks
 *    This class represents a basic widget
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Widget : public PLCore::Object, public WidgetFunctions {
 

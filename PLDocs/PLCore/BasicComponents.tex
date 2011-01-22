@@ -144,9 +144,9 @@ Only the attributes of the given XML element are used, the name of the element i
 
 \section{Events And Event Handlers}
 \label{Chapter:EventsAndEventHandlers}
-The event system, consisting of events an event handlers, is a quite universal and elegant way to send and receive messages within an application. Within the first years of PixelLight we've used a listener design pattern quite similar to the Java one. But we noticed that for PixelLight, this wasn't the right thing because it was to complicated and not as universal and flexible as the solution we're now using.
+The event system is an implementation of the \emph{observer design pattern} and consists of events (\emph{Subject}/\emph{Observable}, the source) an event handlers (\emph{Observer}, the destination). In general, this is a quite universal and elegant way to send and receive messages within an application. Within the first years of PixelLight we've used a listener approach quite similar to the Java one. But we noticed that for PixelLight, this wasn't the right thing because it was to complicated and not as universal and flexible as the solution we're now using.
 
-The two main templates of the event system are \emph{PLCore::Event} (the source) and \emph{PLCore::EventHandler} (the destination). An event is a message you can listening to by connecting one or multiple event handlers to it. One event handler can be connected to one or multiple events and has one functor that is called when a message arrives. Please note that it's important that the signature of event, event handler and functor must match.
+The two main templates of the event system are \emph{PLCore::Event} and \emph{PLCore::EventHandler}. An event is a message you can listening to by connecting one or multiple event handlers to it. One event handler can be connected to one or multiple events and has one functor that is called when a message arrives. Please note that it's important that the signature of event, event handler and functor must match.
 
 If you understand the following source~code~\ref{Code:UsingEventsAndEventHandlers}, you've understand how the event system works and are ready to use it.
 \begin{lstlisting}[label=Code:UsingEventsAndEventHandlers,caption={Using events and event handlers}]

@@ -68,6 +68,9 @@ namespace PLGui {
 *
 *  @remarks
 *    This class is the base class for platform specific graphics implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'Graphics' abstraction
 */
 class GraphicsImpl {
 

@@ -81,6 +81,7 @@ class StringBuffer;
 *    - If you care about best possible performance (even if nearly not measurable), use character string methods when dealing with characters - for
 *      example, write "String sS = 'A';" instead of "String sS = "A";", this way, the string method already knows that you provided just a single
 *      character and don't need to count characters internally
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class String {
 

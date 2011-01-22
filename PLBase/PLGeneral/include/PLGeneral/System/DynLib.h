@@ -49,6 +49,9 @@ class DynLibImpl;
 /**
 *  @brief
 *    Dynamic library class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class DynLib {
 

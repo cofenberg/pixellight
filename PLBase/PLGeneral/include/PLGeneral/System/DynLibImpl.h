@@ -49,6 +49,9 @@ class Url;
 /**
 *  @brief
 *    Abstract base class for platform specific 'DynLib' implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'DynLib' abstraction
 */
 class DynLibImpl {
 

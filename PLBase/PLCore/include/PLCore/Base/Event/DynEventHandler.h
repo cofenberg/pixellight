@@ -56,6 +56,9 @@ class EventHandlerDesc;
 *
 *  @remarks
 *    This is the virtual base class to access event handlers dynamically.
+*
+*  @note
+*    - Implementation of the observer design pattern (this class is the observer, the destination)
 */
 class DynEventHandler {
 

@@ -56,6 +56,9 @@ namespace PLGui {
 /**
 *  @brief
 *    Cursor class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Cursor {
 

@@ -63,6 +63,9 @@ namespace PLGui {
 /**
 *  @brief
 *    Graphics class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Graphics {
 

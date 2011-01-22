@@ -50,7 +50,10 @@ template <class ValueType> class Iterator;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract iterable class
+*    Abstract iterable (aggregate) class
+*
+*  @see
+*    - Iterator for further details and an usage example
 */
 template <class ValueType>
 class Iterable {

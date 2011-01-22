@@ -51,6 +51,7 @@ class MutexImpl;
 *    Mutex (Mutual Exclusion, binary semaphore) class
 *
 *  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 *    - The mutex is non-recursive, meaning that you have to be careful to avoid creating a "self-deadlock" by calling the lock method
 *      multiple times directly or indirectly by other method calls
 *    - It's a good idea to lock/unlock a mutex by using the MutexGuard helper class on the runtime stack so there's always an unlock for each lock!

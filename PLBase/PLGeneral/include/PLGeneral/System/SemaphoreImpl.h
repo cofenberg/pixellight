@@ -43,6 +43,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Abstract base class for platform specific 'Semaphore' implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'Semaphore' abstraction
 */
 class SemaphoreImpl {
 

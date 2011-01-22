@@ -47,6 +47,9 @@ namespace PLCore {
 *
 *  @remarks
 *    This class template represents signals (events that belong to objects).
+*
+*  @note
+*    - Implementation of the observer design pattern (this class is the subject/observable, the source)
 */
 template <typename DESC>
 class Signal : public DESC::EventType {

@@ -49,6 +49,9 @@ class SemaphoreImpl;
 /**
 *  @brief
 *    Counting semaphore class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Semaphore {
 

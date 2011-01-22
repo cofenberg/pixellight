@@ -83,6 +83,9 @@ namespace PLGui {
 *
 *  @remarks
 *    This class provides the main functions of a GUI system (desktop, widgets, ...)
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Gui {
 

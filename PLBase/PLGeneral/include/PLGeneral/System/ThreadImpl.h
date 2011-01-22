@@ -43,6 +43,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Abstract base class for platform specific 'Thread' implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'Thread' abstraction
 */
 class ThreadImpl {
 

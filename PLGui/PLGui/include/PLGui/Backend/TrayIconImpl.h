@@ -51,6 +51,9 @@ class TrayIcon;
 /**
 *  @brief
 *    Tray icon implementation base class
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'TrayIcon' abstraction
 */
 class TrayIconImpl {
 

@@ -54,6 +54,9 @@ class Font;
 *
 *  @remarks
 *    This class is the base class for platform specific font implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'Font' abstraction
 */
 class FontImpl : public PLGeneral::RefCount<FontImpl> {
 

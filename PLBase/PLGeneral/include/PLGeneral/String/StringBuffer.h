@@ -44,6 +44,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Abstract base class that contains the buffer for a string
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'String' abstraction
 */
 class StringBuffer {
 

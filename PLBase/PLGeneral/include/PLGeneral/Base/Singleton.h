@@ -65,6 +65,9 @@ namespace PLGeneral {
 *        class GraphManager;
 *      }
 *      PLMATHAPI_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphManager>;
+*
+*  @note
+*    - As the class same indicates, this is an implementation of the singleton design pattern
 */
 template <class AType> class PLGENERAL_TMPL Singleton {
 

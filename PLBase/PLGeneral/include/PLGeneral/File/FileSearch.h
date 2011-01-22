@@ -52,6 +52,9 @@ class SearchFilterWildcard;
 /**
 *  @brief
 *    Class for searching inside a directory
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class FileSearch {
 

@@ -43,6 +43,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Abstract base class for platform specific 'Mutex' implementations
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'Mutex' abstraction
 */
 class MutexImpl {
 

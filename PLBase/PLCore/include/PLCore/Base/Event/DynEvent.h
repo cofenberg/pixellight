@@ -56,6 +56,9 @@ class EventDesc;
 *
 *  @remarks
 *    This is the virtual base class to access events dynamically.
+*
+*  @note
+*    - Implementation of the observer design pattern (this class is the subject/observable, the source)
 */
 class DynEvent {
 
