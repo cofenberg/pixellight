@@ -67,12 +67,12 @@ uint32 ImageBuffer::GetBytesPerPixelComponent(EDataFormat nDataFormat)
 {
 	// Get number of bytes depending on data format
 	switch (nDataFormat) {
-		case DataByte:			return 1;
-		case DataWord:			return 2;
-		case DataHalf:			return 2;
-		case DataFloat:			return 4;
-		case DataDouble:		return 8;
-		default:				return 0;
+		case DataByte:		return 1;
+		case DataWord:		return 2;
+		case DataHalf:		return 2;
+		case DataFloat:		return 4;
+		case DataDouble:	return 8;
+		default:			return 0;
 	}
 }
 
@@ -180,7 +180,7 @@ ImageBuffer::ImageBuffer(const ImageBuffer &cSource) :
 	m_pImageData(cSource.m_pImageData)
 {
 	// Reference same image data as source
-	if (m_pImageData) m_pImageData->AddReference();
+	m_pImageData->AddReference();
 }
 
 /**
@@ -190,7 +190,7 @@ ImageBuffer::ImageBuffer(const ImageBuffer &cSource) :
 ImageBuffer::~ImageBuffer()
 {
 	// Release image data
-	if (m_pImageData) m_pImageData->Release();
+	m_pImageData->Release();
 }
 
 /**
@@ -200,11 +200,11 @@ ImageBuffer::~ImageBuffer()
 ImageBuffer &ImageBuffer::operator =(const ImageBuffer &cSource)
 {
 	// Release image data
-	if (m_pImageData) m_pImageData->Release();
+	m_pImageData->Release();
 
 	// Reference same image data as source
 	m_pImageData = cSource.m_pImageData;
-	if (m_pImageData) m_pImageData->AddReference();
+	m_pImageData->AddReference();
 
 	// Return this
 	return *this;

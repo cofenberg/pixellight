@@ -51,6 +51,9 @@ class ImagePalette;
 /**
 *  @brief
 *    Image data, contains the actual data of an image buffer
+*
+*  @note
+*    - Implementation of the proxy design pattern, this class is the real subject
 */
 class ImageData : protected PLGeneral::RefCount<ImageData> {
 
@@ -84,7 +87,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API ~ImageData();
+		PLGRAPHICS_API virtual ~ImageData();
 
 		/**
 		*  @brief

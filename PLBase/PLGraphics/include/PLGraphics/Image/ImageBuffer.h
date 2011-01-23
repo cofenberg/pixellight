@@ -53,10 +53,16 @@ class ImageEffect;
 *  @brief
 *    Image buffer class
 *
+*  @remarks
+*    The image buffer class uses a 'copy on change' technique - therefore copying one image
+*    buffer into another is quite performant because the internal image buffer data is shared
+*    as long as a image buffer doesn't change.
+*
 *  @note
 *    - The origin (0, 0) is on the upper-left ("top-down")
 *    - The image components are stored in a linear byte array. RGB example:\n
 *      R1G1B1R2G2B2R3G3B3...
+*    - Implementation of the proxy design pattern, this class is the proxy
 */
 class ImageBuffer {
 
@@ -453,7 +459,7 @@ class ImageBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ImageData *m_pImageData;	/**< Shared image data */
+		ImageData *m_pImageData;	/**< Shared image data, always valid! */
 
 
 };
