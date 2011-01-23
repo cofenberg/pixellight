@@ -14,7 +14,7 @@ We have several rules for our header files. See below. At the first look some or
 
 
 \section{\emph{Header guard} and \emph{\#pragma once}}
-Each header has to use definitions and \emph{\#pragma once} - the last one is enough and the preferred way to go, but not each compiler does support it.
+Each header has to use definitions and \emph{\#pragma once} - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
 
 \begin{lstlisting}[caption=Header guard]
 #ifndef __PLGENERAL_STRING_H__
