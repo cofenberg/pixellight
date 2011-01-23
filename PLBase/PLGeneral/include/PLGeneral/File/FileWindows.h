@@ -44,6 +44,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Windows implementation of 'FileImpl'
+*
+*  @note
+*    - Implementation of the state design pattern, this class is a concrete state of the 'FileImpl'-state of the 'FileObject'-context
 */
 class FileWindows : public FileImpl {
 

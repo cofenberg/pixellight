@@ -52,7 +52,7 @@ class FileSearchImpl;
 *    Abstract base class for platform specific file object implementations
 *
 *  @note
-*    - Implementation of the bridge design pattern, this class is the implementor of the 'FileObject' abstraction
+*    - Implementation of the state design pattern, this class is the state of the 'FileObject'-context
 */
 class FileImpl {
 

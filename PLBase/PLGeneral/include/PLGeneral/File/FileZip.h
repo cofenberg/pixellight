@@ -44,6 +44,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    ZIP implementation of 'FileImpl'
+*
+*  @note
+*    - Implementation of the state design pattern, this class is a concrete state of the 'FileImpl'-state of the 'FileObject'-context
 */
 class FileZip : public FileImpl {
 
