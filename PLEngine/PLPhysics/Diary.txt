@@ -1,3 +1,14 @@
+>> 23.01.2011
+[CO]
+- "SNMPhysicsCharacterController::NotifyUpdate()" was working directly on euler angles which shouldn't be done because euler angles are evil
+  (I really love such simple explanations!).
+  Since commit "Date: 17.12.2010 23:00:21" ("7f96838de0abc455695978442f5af545b2c25015"), there's no longer an additional euler angles representation
+  stored inside scene nodes and euler angles are always derived from the rotation quaternion. There are situations were this leads to some "problems",
+  so, just operate directly on rotation quaternions without switching the rotation representations (as already written in the "PLScene::SceneNode"
+  class documentation!).
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

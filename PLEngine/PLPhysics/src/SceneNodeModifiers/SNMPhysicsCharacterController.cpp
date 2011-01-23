@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLMath/EulerAngles.h>
 #include <PLRenderer/Animation/Animation.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshAnimationManager.h>
@@ -213,9 +214,14 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 				fYRotationChange -= fTimeDiff*YRotVelocity;
 			fYRotationChange += m_pController->RotY.GetValue()*fTimeDiff*YRotVelocity;
 			if (fYRotationChange) {
-				Vector3 vRot = cSceneNode.GetRotation();
-				vRot.y += fYRotationChange;
-				cSceneNode.SetRotation(vRot);
+				// Get a quaternion representation of the rotation delta
+				Quaternion qRotInc;
+				EulerAngles::ToQuaternion(0.0f, float(fYRotationChange*Math::DegToRad), 0.0f, qRotInc);
+
+				// Update rotation
+				GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
+
+				// We no longer idle
 				bIdle = false;
 			}
 		}

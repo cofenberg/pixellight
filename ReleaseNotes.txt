@@ -13,6 +13,7 @@ Changes in PixelLight 0.9.5-R1 (not yet released)
 - Bugfix: The PLImageLoaderEXR plugin was broken, loading exr (high dynamic range image file format) images is working again
 - Bugfix: "PLGraphics::IEConvert" e.g. RGB to RGBA is now working for floating point image formats
 - Bugfix: "PLGraphics::IEScale" was not always working correctly
+- Bugfix: "PLPhysics::SNMPhysicsCharacterController" rotation was broken in "PixelLight 0.9.4-R1"
 
 
 Changes in PixelLight 0.9.4-R1 (released on December 23, 2010)
