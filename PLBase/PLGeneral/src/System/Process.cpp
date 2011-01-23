@@ -61,7 +61,7 @@ Process::~Process()
 	// Windows implementation
 	#ifdef WIN32
 		if (m_hProcess)
-			CloseHandle((HANDLE)m_hProcess);
+			CloseHandle(reinterpret_cast<HANDLE>(m_hProcess));
 	#endif
 
 	// Linux implementation
@@ -86,20 +86,20 @@ void Process::Execute(const String &sCommand, const String &sArguments)
 		String sCmdLine = sCommand + ' ' + sArguments;
 		BOOL bResult = CreateProcess(
 							nullptr,
-							(LPWSTR)sCmdLine.GetUnicode(),	// Command line
-							nullptr,						// Process security attributes
-							nullptr,						// Primary thread security attributes
-							TRUE,							// Handles are inherited
-							0,								// Creation flags
-							nullptr,						// Use parent's environment
-							nullptr,						// Use parent's current directory
-							&siStartInfo,					// STARTUPINFO pointer
-							&piProcInfo						// Receives PROCESS_INFORMATION
+							const_cast<LPWSTR>(sCmdLine.GetUnicode()),	// Command line
+							nullptr,									// Process security attributes
+							nullptr,									// Primary thread security attributes
+							TRUE,										// Handles are inherited
+							0,											// Creation flags
+							nullptr,									// Use parent's environment
+							nullptr,									// Use parent's current directory
+							&siStartInfo,								// STARTUPINFO pointer
+							&piProcInfo									// Receives PROCESS_INFORMATION
 						);
 
 		// Check result
 		if (bResult) {
-			m_hProcess = (handle)piProcInfo.hProcess;
+			m_hProcess = reinterpret_cast<handle>(piProcInfo.hProcess);
 			CloseHandle(piProcInfo.hThread);
 		}
 	#endif
@@ -250,8 +250,8 @@ void Process::Terminate()
 {
 	// Windows implementation
 	#ifdef WIN32
-		TerminateProcess((HANDLE)m_hProcess, 0);
-		CloseHandle((HANDLE)m_hProcess);
+		TerminateProcess(reinterpret_cast<HANDLE>(m_hProcess), 0);
+		CloseHandle(reinterpret_cast<HANDLE>(m_hProcess));
 		m_hProcess = NULL_HANDLE;
 	#endif
 
@@ -382,47 +382,47 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			STARTUPINFOA siStartInfo;
 			ZeroMemory(&siStartInfo, sizeof(STARTUPINFO));
 			siStartInfo.cb = sizeof(STARTUPINFO);
-			siStartInfo.hStdInput  = (HANDLE)hPipeInRd;
-			siStartInfo.hStdOutput = (HANDLE)hPipeOutWr;
-			siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
+			siStartInfo.hStdInput  = reinterpret_cast<HANDLE>(hPipeInRd);
+			siStartInfo.hStdOutput = reinterpret_cast<HANDLE>(hPipeOutWr);
+			siStartInfo.hStdError  = reinterpret_cast<HANDLE>(hPipeErrWr);
 			siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 			bResult = CreateProcessA(
 							nullptr,
-							(LPSTR)sCmdLine.GetASCII(),	// Command line
-							nullptr,					// Process security attributes
-							nullptr,					// Primary thread security attributes
-							TRUE,						// Handles are inherited
-							0,							// Creation flags
-							nullptr,					// Use parent's environment
-							nullptr,					// Use parent's current directory
-							&siStartInfo,				// STARTUPINFO pointer
-							&piProcInfo					// Receives PROCESS_INFORMATION
+							const_cast<LPSTR>(sCmdLine.GetASCII()),	// Command line
+							nullptr,								// Process security attributes
+							nullptr,								// Primary thread security attributes
+							TRUE,									// Handles are inherited
+							0,										// Creation flags
+							nullptr,								// Use parent's environment
+							nullptr,								// Use parent's current directory
+							&siStartInfo,							// STARTUPINFO pointer
+							&piProcInfo								// Receives PROCESS_INFORMATION
 						);
 		} else {
 			STARTUPINFOW siStartInfo;
 			ZeroMemory(&siStartInfo, sizeof(STARTUPINFOW));
 			siStartInfo.cb = sizeof(STARTUPINFOW);
-			siStartInfo.hStdInput  = (HANDLE)hPipeInRd;
-			siStartInfo.hStdOutput = (HANDLE)hPipeOutWr;
-			siStartInfo.hStdError  = (HANDLE)hPipeErrWr;
+			siStartInfo.hStdInput  = reinterpret_cast<HANDLE>(hPipeInRd);
+			siStartInfo.hStdOutput = reinterpret_cast<HANDLE>(hPipeOutWr);
+			siStartInfo.hStdError  = reinterpret_cast<HANDLE>(hPipeErrWr);
 			siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 			bResult = CreateProcessW(
 							nullptr,
-							(LPWSTR)sCmdLine.GetUnicode(),	// Command line
-							nullptr,						// Process security attributes
-							nullptr,						// Primary thread security attributes
-							TRUE,							// Handles are inherited
-							0,								// Creation flags
-							nullptr,						// Use parent's environment
-							nullptr,						// Use parent's current directory
-							&siStartInfo,					// STARTUPINFO pointer
-							&piProcInfo						// Receives PROCESS_INFORMATION
+							const_cast<LPWSTR>(sCmdLine.GetUnicode()),	// Command line
+							nullptr,									// Process security attributes
+							nullptr,									// Primary thread security attributes
+							TRUE,										// Handles are inherited
+							0,											// Creation flags
+							nullptr,									// Use parent's environment
+							nullptr,									// Use parent's current directory
+							&siStartInfo,								// STARTUPINFO pointer
+							&piProcInfo									// Receives PROCESS_INFORMATION
 						);
 		}
 
 		// Check result
 		if (bResult) {
-			m_hProcess = (handle)piProcInfo.hProcess;
+			m_hProcess = reinterpret_cast<handle>(piProcInfo.hProcess);
 			CloseHandle(piProcInfo.hThread);
 		}
 

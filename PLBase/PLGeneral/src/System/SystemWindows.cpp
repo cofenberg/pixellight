@@ -66,7 +66,7 @@ String SystemWindows::ErrorCodeToString(DWORD nErrorCode)
 
 	// Try to format the error code
 	if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-					  nullptr, nErrorCode, 0, (LPTSTR)&pszError, 0, nullptr)) {
+					  nullptr, nErrorCode, 0, reinterpret_cast<LPTSTR>(&pszError), 0, nullptr)) {
 		// All went fine, now build the PL string
 		LPTSTR pszErrorEnd = _tcschr(pszError, _T('\r'));
 		if (pszErrorEnd)
@@ -102,7 +102,7 @@ SystemWindows::SystemWindows()
 	QueryPerformanceFrequency(&m_nPerformanceFrequency);
 
 	// Initalize the random generator
-	srand((unsigned)GetMicroseconds());
+	srand(GetMicroseconds());
 
 	// Allocate a global TLS index
 	g_nTlsIndex = TlsAlloc();
@@ -146,17 +146,17 @@ String SystemWindows::GetOS() const
 	// Try calling GetVersionEx using the OSVERSIONINFOEX structure.
 	// If that fails, try using the OSVERSIONINFO structure.
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	BOOL bOsVersionInfoEx = GetVersionEx((OSVERSIONINFO*)&osvi);
+	BOOL bOsVersionInfoEx = GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&osvi));
 	if (!bOsVersionInfoEx) {
 		osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-		if (!GetVersionEx((OSVERSIONINFO*)&osvi))
+		if (!GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&osvi)))
 			return "Windows";
 	}
 
 	{ // Call GetNativeSystemInfo if supported or GetSystemInfo otherwise
 		HMODULE hModule = GetModuleHandle(TEXT("kernel32.dll"));
 		if (hModule) {
-			PGNSI pGNSI = (PGNSI)GetProcAddress(hModule, "GetNativeSystemInfo");
+			PGNSI pGNSI = reinterpret_cast<PGNSI>(GetProcAddress(hModule, "GetNativeSystemInfo"));
 			if (pGNSI)
 				pGNSI(&si);
 			else
@@ -273,8 +273,7 @@ String SystemWindows::GetOS() const
 
 				TCHAR szProductType[80];
 				DWORD dwBufLen = 80*sizeof(TCHAR);
-				lRet = RegQueryValueEx(hKey, TEXT("ProductType"), nullptr, nullptr,
-									   (LPBYTE) szProductType, &dwBufLen);
+				lRet = RegQueryValueEx(hKey, TEXT("ProductType"), nullptr, nullptr, reinterpret_cast<LPBYTE>(szProductType), &dwBufLen);
 				RegCloseKey(hKey);
 
 				if (lRet != ERROR_SUCCESS || dwBufLen > 80*sizeof(TCHAR))
@@ -386,7 +385,7 @@ uint32 SystemWindows::GetCPUMhz() const
 	unsigned long nTotalTicks = nEndTicks - nStartTicks;
 
 	// CPU Speed
-	return uint32(nTotalTicks / 1000000);
+	return static_cast<uint32>(nTotalTicks / 1000000);
 #elif defined(WIN64) && !defined(NO_INLINE_ASM)
 	// 64 Bit assembler method
 	// [TODO] Implement 64 bit version
@@ -548,9 +547,9 @@ bool SystemWindows::Execute(const String &sCommand, const String &sParameters, c
 		return false; // Error!
 
 	// Execute command
-	size_t nResult;
+	HINSTANCE nResult;
 	if (sCommand.GetFormat() == String::ASCII && sParameters.GetFormat() == String::ASCII && sWorkingDir.GetFormat() == String::ASCII) {
-		nResult = (size_t)ShellExecuteA(
+		nResult = ShellExecuteA(
 			nullptr,
 			"open",
 			sCommand.GetASCII(),
@@ -559,7 +558,7 @@ bool SystemWindows::Execute(const String &sCommand, const String &sParameters, c
 			SW_SHOWDEFAULT
 		);
 	} else {
-		nResult = (size_t)ShellExecuteW(
+		nResult = ShellExecuteW(
 			nullptr,
 			L"open",
 			sCommand.GetUnicode(),
@@ -570,7 +569,7 @@ bool SystemWindows::Execute(const String &sCommand, const String &sParameters, c
 	}
 
 	// Has the execution been successful?
-	return (nResult > 32);
+	return (reinterpret_cast<int>(nResult) > 32);
 }
 
 String SystemWindows::GetLocaleLanguage() const
@@ -621,7 +620,7 @@ Thread *SystemWindows::GetCurrentThread() const
 	// Valid TLS?
 	if (g_nTlsIndex != TLS_OUT_OF_INDEXES) {
 		// Get the dynamic memory of the current thread, if a null pointer, this must be the main thread
-		return (Thread*)TlsGetValue(g_nTlsIndex);
+		return static_cast<Thread*>(TlsGetValue(g_nTlsIndex));
 	} else {
 		// Error!
 		return nullptr;
@@ -644,12 +643,12 @@ Time SystemWindows::GetTime() const
 	SYSTEMTIME sTime;
 	GetLocalTime(&sTime);
 	return Time(sTime.wYear,
-				(Time::EMonth)(sTime.wMonth),
-				(uint8)sTime.wDay,
-				(Time::EDay)sTime.wDayOfWeek,
-				(uint8)sTime.wHour,
-				(uint8)sTime.wMinute,
-				(uint8)sTime.wSecond,
+				static_cast<Time::EMonth>(sTime.wMonth),
+				static_cast<uint8>(sTime.wDay),
+				static_cast<Time::EDay>(sTime.wDayOfWeek),
+				static_cast<uint8>(sTime.wHour),
+				static_cast<uint8>(sTime.wMinute),
+				static_cast<uint8>(sTime.wSecond),
 				sTime.wMilliseconds);
 }
 
@@ -666,7 +665,7 @@ uint32 SystemWindows::GetMilliseconds() const
 		nNewTicks /= m_nPerformanceFrequency.QuadPart;
 
 	// Return past time
-	return (uint32)nNewTicks;
+	return static_cast<uint32>(nNewTicks);
 }
 
 uint32 SystemWindows::GetMicroseconds() const
@@ -674,13 +673,13 @@ uint32 SystemWindows::GetMicroseconds() const
 	// Get past time
 	LARGE_INTEGER nCurTime;
 	QueryPerformanceCounter(&nCurTime);
-	double dNewTicks = (double)nCurTime.QuadPart;
+	double dNewTicks = static_cast<double>(nCurTime.QuadPart);
 
 	// Scale by 1000000 in order to get microsecond precision
-	dNewTicks *= (double)1000000.0/(double)m_nPerformanceFrequency.QuadPart;
+	dNewTicks *= static_cast<double>(1000000.0)/static_cast<double>(m_nPerformanceFrequency.QuadPart);
 
 	// Return past time
-	return (uint32)dNewTicks;
+	return static_cast<uint32>(dNewTicks);
 }
 
 void SystemWindows::Sleep(uint32 nMilliseconds) const
@@ -698,7 +697,7 @@ float SystemWindows::GetPercentageOfUsedPhysicalMemory() const
 {
 	MEMORYSTATUSEX sMemoryInfo;
 	sMemoryInfo.dwLength = sizeof(MEMORYSTATUSEX);
-	return GlobalMemoryStatusEx(&sMemoryInfo) ? (float)sMemoryInfo.dwMemoryLoad : 0;
+	return GlobalMemoryStatusEx(&sMemoryInfo) ? static_cast<float>(sMemoryInfo.dwMemoryLoad) : 0.0f;
 }
 
 uint64 SystemWindows::GetTotalPhysicalMemory() const

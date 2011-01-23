@@ -334,7 +334,7 @@ String RegistryWindows::GetValueString(const String &sName) const
 			wchar_t *pszValue = new wchar_t[nSize];
 
 			// Get value
-			if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, (BYTE*)pszValue, &nSize) == ERROR_SUCCESS)
+			if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, reinterpret_cast<BYTE*>(pszValue), &nSize) == ERROR_SUCCESS)
 				return String(pszValue, false); // Do not copy, please
 			else
 				delete [] pszValue;
@@ -352,7 +352,7 @@ uint32 RegistryWindows::GetValueDWord(const String &sName) const
 		// Get value
 		DWORD nSize = sizeof(DWORD);
 		DWORD nValue;
-		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, (BYTE*)&nValue, &nSize) == ERROR_SUCCESS)
+		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, reinterpret_cast<BYTE*>(&nValue), &nSize) == ERROR_SUCCESS)
 			return nValue; // Done
 	}
 
@@ -366,7 +366,7 @@ uint32 RegistryWindows::GetValueBinary(const String &sName, uint8 *pBuffer, uint
 	if (m_hKey) {
 		// Get value
 		DWORD dwSize = nSize;
-		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, (BYTE*)pBuffer, &dwSize) == ERROR_SUCCESS) 
+		if (RegQueryValueExW(m_hKey, sName.GetUnicode(), 0, nullptr, static_cast<BYTE*>(pBuffer), &dwSize) == ERROR_SUCCESS) 
 			return dwSize; // Done
 	}
 
@@ -380,7 +380,7 @@ bool RegistryWindows::SetValueString(const String &sName, const String &sValue)
 	if (m_hKey) {
 		// Set value
 		const String sValueW = sValue.GetUnicode();
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_SZ, (BYTE*)sValueW.GetUnicode(), sValueW.GetNumOfBytes()) == ERROR_SUCCESS)
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_SZ, reinterpret_cast<const BYTE*>(sValueW.GetUnicode()), sValueW.GetNumOfBytes()) == ERROR_SUCCESS)
 			return true; // Done
 	}
 
@@ -393,7 +393,7 @@ bool RegistryWindows::SetValueDWord(const String &sName, uint32 nValue)
 	// Key opened?
 	if (m_hKey) {
 		// Set value
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_DWORD, (BYTE*)&nValue, sizeof(nValue)) == ERROR_SUCCESS)
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_DWORD, reinterpret_cast<BYTE*>(&nValue), sizeof(nValue)) == ERROR_SUCCESS)
 			return true; // Done
 	}
 
@@ -406,7 +406,7 @@ bool RegistryWindows::SetValueBinary(const String &sName, const uint8 *pBuffer, 
 	// Key opened?
 	if (m_hKey && pBuffer && nSize) {
 		// Set value
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_BINARY, (BYTE*)pBuffer, nSize) == ERROR_SUCCESS)
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_BINARY, static_cast<const BYTE*>(pBuffer), nSize) == ERROR_SUCCESS)
 			return true; // Done
 	}
 

@@ -102,7 +102,7 @@ bool ThreadWindows::Start()
 	// Check if the thread has already been started
 	if (!m_hThread) {
 		// Create thread
-		m_hThread = ::CreateThread(nullptr, 0, ThreadProc, (void*)&GetThread(), 0, &m_nThreadID);
+		m_hThread = ::CreateThread(nullptr, 0, ThreadProc, static_cast<void*>(&GetThread()), 0, &m_nThreadID);
 		if (m_hThread)
 			return true; // Done
 	}
@@ -248,7 +248,7 @@ bool ThreadWindows::SetPriority(Thread::EPriority nPriority)
 DWORD WINAPI ThreadWindows::ThreadProc(LPVOID lpParameter)
 {
 	// Get the PixelLight thread instance
-	Thread *pThread = (Thread*)lpParameter;
+	Thread *pThread = static_cast<Thread*>(lpParameter);
 	if (pThread) {
 		// Initialize the TLS index for this thread so we can find out the PixelLight
 		// thread instance within 'SystemWindows::GetCurrentThread()'
