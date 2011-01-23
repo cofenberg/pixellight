@@ -1,3 +1,9 @@
+>> 23.01.2011
+[CO]
+- PLGeneral documentation: Fixed a file example, must be "cFile.GetUrl().GetUrl()" instead of "cFile.GetFilename()"
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

@@ -48,8 +48,8 @@ if (cFile.Open(File::FileRead | File::FileText)) {
   const Console &cConsole = System::GetInstance()->GetConsole();
 
   // Write some start information into the OS console
-  cConsole.Print("Reading content of '" + cFile.GetFilename()
-                 + "' (text):\n");
+  cConsole.Print("Reading content of '" +
+      cFile.GetUrl().GetUrl() + "' (text):\n");
 
   // Read until the end of the file is reached
   while (!cFile.IsEof()) {
