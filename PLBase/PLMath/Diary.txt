@@ -1,4 +1,16 @@
-﻿>> 17.12.2010
+﻿>> 27.01.2011
+[CO]
+- Matrix4x4 (Matrix3x4 + Matrix3x3): "Invert()": A few years ago, I build in a kind of optimization - if the
+  determinant is one (or as one of my Profs would say "one enough"), I assumed that the matrix is orthogonal and
+  therefore just transposed it in order to get it's inverse. After another semester with mathematics, I don't think
+  that this assumption is correct. While the determinant of a orthogonal matrix is 1 or -1, as far as I know now, I
+  can't say "ah, determinant is 1, so it must be an orthogonal matrix!". Therefore I currently commented this
+  optimization out (safety first!) - if someone is able to confirm that this optimization of me was totally wrong,
+  please tell me (then I can remove this completely :).
+
+
+
+>> 17.12.2010
 [CO]
 - Added "Math::ClampToInterval()": Ensures that the given value is within the given interval [min, max] by clamping the value
 - Added "Math::WrapToInterval()": Ensures that the given value is within the given interval [min, max] by wrapping the value

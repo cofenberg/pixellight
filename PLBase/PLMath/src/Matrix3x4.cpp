@@ -173,7 +173,8 @@ bool Matrix3x4::Invert()
 	// First, calculate the determinant of the matrix
 	float fDet = GetDeterminant();
 
-	// If the determinant is one, we can use a faster technique
+	// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
+/*	// If the determinant is one, we can use a faster technique
 	if (Math::AreEqual(fDet, 1.0f)) {
 		// P = [R T] -> inv(P) = [R' -R'*T] (R' = transposed)
 		// First transpose the upper left 3x3
@@ -186,7 +187,7 @@ bool Matrix3x4::Invert()
 		xw = -fT1;
 		yw = -fT2;
 		zw = -fT3;
-	} else {
+	} else {*/
 		// Check for null to avoid division by null
 		if (fDet) {
 			// Calculate the inverse of the matrix using Cramers rule. Same as Matrix4x4,
@@ -202,7 +203,7 @@ bool Matrix3x4::Invert()
 			// Error!
 			return false;
 		}
-	}
+//	}
 
 	// Done
 	return true;
@@ -216,14 +217,15 @@ Matrix3x4 Matrix3x4::GetInverted() const
 	// First, calculate the determinant of the matrix
 	float fDet = GetDeterminant();
 
-	// If the determinant is one, we can use a faster technique
+	// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
+/*	// If the determinant is one, we can use a faster technique
 	if (Math::AreEqual(fDet, 1.0f)) {
 		// P = [R T] -> inv(P) = [R' -R'*T] (R' = transposed)
 		// Transpose the upper left 3x3 and rotate the inversed translation vector
 		return Matrix3x4(xx, yx, zx, -(xx*xw + yx*yw + zx*zw),
 						 xy, yy, zy, -(xy*xw + yy*yw + zy*zw),
 						 xz, yz, zz, -(xz*xw + yz*yw + zz*zw));
-	} else {
+	} else {*/
 		// Check for null to avoid division by null
 		if (fDet) {
 			// Calculate the inverse of the matrix using Cramers rule. Same as Matrix4x4,
@@ -233,7 +235,7 @@ Matrix3x4 Matrix3x4::GetInverted() const
 							 fDet*(yz*zx + zz*-yx), fDet*(zz*xx + xz*-zx), fDet*(xz*yx + yz*-xx), fDet*(xz*(zx*yw - yx*zw) + yz*(xx*zw - zx*xw) + zz*(yx*xw - xx*yw)),
 							 fDet*(yx*zy - zx* yy), fDet*(zx*xy - xx* zy), fDet*(xx*yy - yx* xy), fDet*(xw*(zx*yy - yx*zy) + yw*(xx*zy - zx*xy) + zw*(yx*xy - xx*yy)));
 		} else return Matrix3x4::Identity; // Error!
-	}
+//	}
 }
 
 /**

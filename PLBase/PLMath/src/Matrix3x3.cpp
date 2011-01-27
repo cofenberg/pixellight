@@ -153,11 +153,13 @@ bool Matrix3x3::Invert()
 	// First, calculate the determinant of the matrix
 	float fDet = GetDeterminant();
 
-	// If the determinant is one, we can use a faster technique
+	// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
+/*	// If the determinant is one, we can use a faster technique
 	if (Math::AreEqual(fDet, 1.0f)) {
 		// We just have to transpose the matrix :)
 		Transpose();
 	} else {
+	*/
 		// Check for null to avoid division by null
 		if (fDet) {
 			// Calculate the inverse of the matrix using Cramers rule. Same as matrix3x4,
@@ -173,7 +175,7 @@ bool Matrix3x3::Invert()
 			// Error!
 			return false;
 		}
-	}
+//	}
 
 	// Done
 	return true;
@@ -188,13 +190,14 @@ Matrix3x3 Matrix3x3::GetInverted() const
 	// First, calculate the determinant of the matrix
 	float fDet = GetDeterminant();
 
-	// If the determinant is one, we can use a faster technique
+	// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
+/*	// If the determinant is one, we can use a faster technique
 	if (Math::AreEqual(fDet, 1.0f)) {
 		// We just have to transpose the matrix :)
 		return Matrix3x3(xx, yx, zx,
 						 xy, yy, zy,
 						 xz, yz, zz);
-	} else {
+	} else {*/
 		// Check for null to avoid division by null
 		if (fDet) {
 			// Calculate the inverse of the matrix using Cramers rule. Same as matrix3x4,
@@ -204,7 +207,7 @@ Matrix3x3 Matrix3x3::GetInverted() const
 							 fDet*(yz*zx + zz*-yx), fDet*(zz*xx + xz*-zx), fDet*(xz*yx + yz*-xx),
 							 fDet*(yx*zy - zx* yy), fDet*(zx*xy - xx* zy), fDet*(xx*yy - yx* xy));
 		} else return Matrix3x3::Identity; // Error!
-	}
+//	}
 }
 
 /**

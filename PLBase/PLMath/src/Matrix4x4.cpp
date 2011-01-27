@@ -260,7 +260,8 @@ bool Matrix4x4::Invert()
 	// First, calculate the determinant of the matrix
 	float fDet = GetDeterminant();
 
-	// If the determinant is one, we can use a faster technique
+	// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
+/*	// If the determinant is one, we can use a faster technique
 	if (Math::AreEqual(fDet, 1.0f)) {
 		// P = [R T] -> inv(P) = [R' -R'*T] (R' = transposed)
 		// First transpose the upper left 3x3
@@ -286,7 +287,7 @@ bool Matrix4x4::Invert()
 		xw = -fT;
 		yw = -fT2;
 		zw = -fT3;
-	} else {
+	} else {*/
 		// Check for null to avoid division by null
 		if (fDet) {
 			// Calculate the inverse of the matrix using Cramers rule
@@ -302,7 +303,7 @@ bool Matrix4x4::Invert()
 			// Error!
 			return false;
 		}
-	}
+//	}
 
 	// Done
 	return true;
@@ -317,7 +318,8 @@ Matrix4x4 Matrix4x4::GetInverted() const
 	// First, calculate the determinant of the matrix
 	float fDet = GetDeterminant();
 
-	// If the determinant is one, we can use a faster technique
+	// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
+/*	// If the determinant is one, we can use a faster technique
 	if (Math::AreEqual(fDet, 1.0f)) {
 		// P = [R T] -> inv(P) = [R' -R'*T] (R' = transposed)
 		// Transpose the upper left 3x3 and rotate the inversed translation vector
@@ -325,7 +327,7 @@ Matrix4x4 Matrix4x4::GetInverted() const
 						 xy,   yy,   zy,   -(xy*xw + yy*yw + zy*zw),
 						 xz,   yz,   zz,   -(xz*xw + yz*yw + zz*zw),
 						 0.0f, 0.0f, 0.0f, 1.0f);
-	} else {
+	} else {*/
 		// Check for null to avoid division by null
 		if (fDet) {
 			// Calculate the inverse of the matrix using Cramers rule
@@ -335,7 +337,7 @@ Matrix4x4 Matrix4x4::GetInverted() const
 							 fDet*(yw*(zx*wy - wx*zy) + zw*(wx*yy - yx*wy) + ww*(yx*zy - zx*yy)), fDet*(zw*(xx*wy - wx*xy) + ww*(zx*xy - xx*zy) + xw*(wx*zy - zx*wy)), fDet*(ww*(xx*yy - yx*xy) + xw*(yx*wy - wx*yy) + yw*(wx*xy - xx*wy)), fDet*(xw*(zx*yy - yx*zy) + yw*(xx*zy - zx*xy) + zw*(yx*xy - xx*yy)),
 							 fDet*(yx*(wy*zz - zy*wz) + zx*(yy*wz - wy*yz) + wx*(zy*yz - yy*zz)), fDet*(zx*(wy*xz - xy*wz) + wx*(xy*zz - zy*xz) + xx*(zy*wz - wy*zz)), fDet*(wx*(yy*xz - xy*yz) + xx*(wy*yz - yy*wz) + yx*(xy*wz - wy*xz)), fDet*(xx*(yy*zz - zy*yz) + yx*(zy*xz - xy*zz) + zx*(xy*yz - yy*xz)));
 		} else return Matrix4x4::Identity; // Error!
-	}
+//	}
 }
 
 /**
