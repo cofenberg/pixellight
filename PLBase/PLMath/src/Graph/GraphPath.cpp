@@ -209,8 +209,8 @@ Vector3 GraphPath::GetPosByNodeIndex(float fNodeIndex, bool bLinear) const
 		fNodeIndex -= m_lstNodes.GetNumOfElements();
 
 	// Set valid nodes
-	uint32 nCurrentNode = (uint32)fNodeIndex;
-	uint32 nNextNode    = (uint32)fNodeIndex+1;
+	uint32 nCurrentNode = static_cast<uint32>(fNodeIndex);
+	uint32 nNextNode    = nCurrentNode+1;
 	if (nNextNode > m_lstNodes.GetNumOfElements()-1)
 		nNextNode = m_bClosed ? 0 : nNextNode-1;
 	float fProgress = fNodeIndex-nCurrentNode;
@@ -222,11 +222,11 @@ Vector3 GraphPath::GetPosByNodeIndex(float fNodeIndex, bool bLinear) const
 	} else { // Catmull rom curve
 		const Vector3 &vP1 = m_lstNodes[nCurrentNode]->GetPos();
 		const Vector3 &vP2 = m_lstNodes[nNextNode]->GetPos();
-		nNextNode = (uint32)nNextNode+1;
+		nNextNode = nNextNode+1;
 		if (nNextNode > m_lstNodes.GetNumOfElements()-1)
 			nNextNode = m_bClosed ? 0 : nNextNode-1;
 		const Vector3 &vP3 = m_lstNodes[nNextNode]->GetPos();
-		nNextNode = (uint32)nNextNode+1;
+		nNextNode = nNextNode+1;
 		if (nNextNode > m_lstNodes.GetNumOfElements()-1)
 			nNextNode = m_bClosed ? 0 : nNextNode-1;
 		const Vector3 &vP4 = m_lstNodes[nNextNode]->GetPos();
@@ -260,9 +260,9 @@ Vector3 GraphPath::GetPosByPercentageAlongPath(float fPercentageAlongPath, bool 
 	if (bLinear) {
 		// Clamp to 0-1
 		if (fPercentageAlongPath >= 0.0f)
-			fPercentageAlongPath = fPercentageAlongPath-int(fPercentageAlongPath);
+			fPercentageAlongPath = fPercentageAlongPath-static_cast<int>(fPercentageAlongPath);
 		else
-			fPercentageAlongPath = 1+fPercentageAlongPath-int(fPercentageAlongPath);
+			fPercentageAlongPath = 1+fPercentageAlongPath-static_cast<int>(fPercentageAlongPath);
 
 		// Get the total path length and current length on path
 		float fTotalPathLength = GetLength();
@@ -341,7 +341,7 @@ GraphPath &GraphPath::operator =(const GraphPath &cSource)
 	Unload();
 
 	// Call base implementation
-	*((Resource<GraphPath>*)this) = cSource;
+	*static_cast<Resource<GraphPath>*>(this) = cSource;
 
 	// Copy data
 	m_pOwnerGraph = cSource.m_pOwnerGraph;

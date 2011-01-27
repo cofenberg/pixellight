@@ -131,9 +131,9 @@ bool Database::Disconnect()
 	}
 }
 
-PLDatabase::DatabaseQuery *Database::CreateQuery() const
+PLDatabase::DatabaseQuery *Database::CreateQuery()
 {
-	return new DatabaseQuery(*(PLDatabase::Database*)this);
+	return new DatabaseQuery(*this);
 }
 
 

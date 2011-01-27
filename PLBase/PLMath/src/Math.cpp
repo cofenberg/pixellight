@@ -116,7 +116,7 @@ int Math::GetNearestPowerOfTwo(int nNumber, bool bLower)
 	if (!IsPowerOfTwo(nNumber)) {
 		int nLast = 1;
 		for (int i=1; i<15; i++) {
-			int nNumberT = (int)powf(2.0f, (float)i);
+			int nNumberT = static_cast<int>(powf(2.0f, static_cast<float>(i)));
 			if (nNumber < nNumberT)
 				return bLower ? nLast : nNumberT;
 			nLast = nNumberT;
@@ -146,7 +146,7 @@ uint32 Math::GetRand()
 */
 float Math::GetRandFloat()
 {
-	return rand()/float(RAND_MAX);
+	return rand()/static_cast<float>(RAND_MAX);
 }
 
 
@@ -211,7 +211,7 @@ float Math::Ceil(float fValue)
 */
 float Math::Round(float fValue, uint32 nPrecision)
 {
-	const float fMultiplier = powf(10.0f, (float)nPrecision);
+	const float fMultiplier = powf(10.0f, static_cast<float>(nPrecision));
 	return floor(fValue*fMultiplier + 0.5f)/fMultiplier;
 }
 
@@ -383,7 +383,7 @@ double Math::Pow(double x, double y)
 */
 double Math::Pow(int x, int y)
 {
-	return pow((float)x, y);
+	return pow(static_cast<float>(x), y);
 }
 
 /**
@@ -410,7 +410,7 @@ double Math::Log(double x)
 */
 float Math::Log2(float x)
 {
-	return float(log(x)/Log2Const);
+	return static_cast<float>(log(x)/Log2Const);
 }
 
 /**

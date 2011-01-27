@@ -365,12 +365,14 @@ Plane &Plane::ComputeND(const Vector3 &vV1, const Vector3 &vV2, const Vector3 &v
 Plane &Plane::ComputeTangentPlaneOfEllipsoid(const Vector3 &vPointPos, const Vector3 &vEllipsoidPos,
 											 const Vector3 &vEllipsoidRadius)
 {
-	Vector3 vP = vPointPos - vEllipsoidPos;
+	const Vector3 vP = vPointPos - vEllipsoidPos;
 
-	double dA2 = vEllipsoidRadius.x*vEllipsoidPos.x;
-	double dB2 = vEllipsoidRadius.y*vEllipsoidPos.y;
+	const double dA2 = vEllipsoidRadius.x*vEllipsoidPos.x;
+	const double dB2 = vEllipsoidRadius.y*vEllipsoidPos.y;
 
-	Vector3 vN((float)(vP.x/dA2), (float)(vP.y/dB2), (float)(vP.y/dB2));
+	Vector3 vN(static_cast<float>(vP.x/dA2),
+			   static_cast<float>(vP.y/dB2),
+			   static_cast<float>(vP.y/dB2));
 	vN.Normalize();
 
 	return ComputeND(vPointPos, vN);
@@ -382,7 +384,7 @@ Plane &Plane::ComputeTangentPlaneOfEllipsoid(const Vector3 &vPointPos, const Vec
 */
 Plane Plane::Lerp(const Plane &cP2, float fFactor)
 {
-	float fInvFactor = 1.0f-fFactor;
+	const float fInvFactor = 1.0f-fFactor;
 	Plane cRes(a*fInvFactor + cP2.a*fFactor,
 			   b*fInvFactor + cP2.b*fFactor,
 			   c*fInvFactor + cP2.c*fFactor,

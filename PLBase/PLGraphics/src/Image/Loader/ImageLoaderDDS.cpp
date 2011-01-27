@@ -555,7 +555,7 @@ void ImageLoaderDDS::DecompressRGBA(const DDSHeader &sHeader, ImageBuffer &cImag
 					| ((*(pnCompressedData + 1)) << 8)
 					| ((*(pnCompressedData + 2)) << 16);
 			} else if (nBpp == 1) {
-				nReadI = *((uint8*)pnCompressedData);
+				nReadI = *pnCompressedData;
 			} else if (nBpp == 2) {
 				nReadI = pnCompressedData[0] | (pnCompressedData[1] << 8);
 			}

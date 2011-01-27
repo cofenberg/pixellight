@@ -89,7 +89,7 @@ DatabaseQuery &DatabaseQuery::operator =(const DatabaseQuery &cSource)
 //[-------------------------------------------------------]
 PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 {
-	MYSQL *pMySQL = ((Database&)GetDatabase()).GetMySQL();
+	MYSQL *pMySQL = static_cast<Database&>(GetDatabase()).GetMySQL();
 	const int nError = mysql_query(pMySQL, sSQL);
 	if (!nError) {
 		// Get the result

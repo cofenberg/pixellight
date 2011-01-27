@@ -146,8 +146,10 @@ void Quadtree::Init(uint32 nXOffset, uint32 nYOffset, uint32 nXSize, uint32 nYSi
 bool Quadtree::Build()
 {
 	// Get number of children
-	if (m_nXSize > 1) m_nNumOfChildren += 2;
-	if (m_nYSize > 1) m_nNumOfChildren += 2;
+	if (m_nXSize > 1)
+		m_nNumOfChildren += 2;
+	if (m_nYSize > 1)
+		m_nNumOfChildren += 2;
 
 	// Setup children
 	if (m_nNumOfChildren) {
@@ -190,7 +192,8 @@ void Quadtree::Destroy()
 {
 	for (uint32 nChild=0; nChild<m_nNumOfChildren; nChild++)
 		m_pChild[nChild].Destroy();
-	if (m_pChild) delete [] m_pChild;
+	if (m_pChild)
+		delete [] m_pChild;
 	Init();
 }
 

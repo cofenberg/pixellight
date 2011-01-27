@@ -133,14 +133,14 @@ inline void Matrix3x3::operator *=(float fS)
 
 inline Vector2 Matrix3x3::operator *(const Vector2 &vV) const
 {
-	float x = vV.x, y = vV.y;
+	const float x = vV.x, y = vV.y;
 	return Vector2(xx*x + xy*y,
 				   yx*x + yy*y);
 }
 
 inline Vector3 Matrix3x3::operator *(const Vector3 &vV) const
 {
-	float x = vV.x, y = vV.y, z = vV.z;
+	const float x = vV.x, y = vV.y, z = vV.z;
 	return Vector3(xx*x + xy*y + xz*z,
 				   yx*x + yy*y + yz*z,
 				   zx*x + zy*y + zz*z);
@@ -185,14 +185,14 @@ inline float &Matrix3x3::operator ()(PLGeneral::uint32 nRow, PLGeneral::uint32 n
 	return fM[nRow+3*nColumn];
 }
 
-inline Matrix3x3::operator float *() const
+inline Matrix3x3::operator float *()
 {
-	return (float*)this->fM;
+	return this->fM;
 }
 
 inline Matrix3x3::operator const float *() const
 {
-	return (const float*)this->fM;
+	return this->fM;
 }
 
 

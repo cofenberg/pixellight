@@ -127,7 +127,7 @@ class Database : public PLDatabase::Database {
 		PLDATABASESQLITE_API virtual bool IsConnected() const;
 		PLDATABASESQLITE_API virtual bool IsConnectionActive() const;
 		PLDATABASESQLITE_API virtual bool Disconnect();
-		PLDATABASESQLITE_API virtual PLDatabase::DatabaseQuery *CreateQuery() const;
+		PLDATABASESQLITE_API virtual PLDatabase::DatabaseQuery *CreateQuery();
 
 
 	//[-------------------------------------------------------]

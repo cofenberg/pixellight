@@ -91,7 +91,8 @@ bool ImageEffect::Apply(Image &cImage) const
 			ImagePart *pPart = cImage.GetPart(i);
 			if (pPart) {
 				// Apply effect
-				if (!Apply(*pPart)) bResult = false;
+				if (!Apply(*pPart))
+					bResult = false;
 			}
 		}
 

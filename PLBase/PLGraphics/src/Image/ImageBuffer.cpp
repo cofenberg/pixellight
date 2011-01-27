@@ -48,14 +48,29 @@ uint32 ImageBuffer::GetComponentsPerPixel(EColorFormat nColorFormat)
 {
 	// Get number of components depending on color format
 	switch (nColorFormat) {
-		case ColorRGB:			return 3;
-		case ColorRGBA:			return 4;
-		case ColorBGR:			return 3;
-		case ColorBGRA:			return 4;
-		case ColorGrayscale:	return 1;
-		case ColorGrayscaleA:	return 2;
-		case ColorPalette:		return 1;
-		default:				return 0;
+		case ColorRGB:
+			return 3;
+
+		case ColorRGBA:
+			return 4;
+
+		case ColorBGR:
+			return 3;
+
+		case ColorBGRA:
+			return 4;
+
+		case ColorGrayscale:
+			return 1;
+
+		case ColorGrayscaleA:
+			return 2;
+
+		case ColorPalette:
+			return 1;
+
+		default:
+			return 0;
 	}
 }
 
@@ -67,12 +82,23 @@ uint32 ImageBuffer::GetBytesPerPixelComponent(EDataFormat nDataFormat)
 {
 	// Get number of bytes depending on data format
 	switch (nDataFormat) {
-		case DataByte:		return 1;
-		case DataWord:		return 2;
-		case DataHalf:		return 2;
-		case DataFloat:		return 4;
-		case DataDouble:	return 8;
-		default:			return 0;
+		case DataByte:
+			return 1;
+
+		case DataWord:
+			return 2;
+
+		case DataHalf:
+			return 2;
+
+		case DataFloat:
+			return 4;
+
+		case DataDouble:
+			return 8;
+
+		default:
+			return 0;
 	}
 }
 

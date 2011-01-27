@@ -330,7 +330,7 @@ class Vector2 {
 		//[-------------------------------------------------------]
 		//[ Get and set                                           ]
 		//[-------------------------------------------------------]
-		inline operator float *() const;
+		inline operator float *();
 		inline operator const float *() const;
 		inline float &operator [](int nIndex);
 		inline const float &operator [](int nIndex) const;

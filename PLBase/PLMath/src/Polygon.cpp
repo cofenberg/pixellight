@@ -231,15 +231,21 @@ Polygon::ESide Polygon::GetSide(const Plane &cPlane) const
 
 	for (uint32 i=0; i<m_lstVertices.GetNumOfElements(); i++) {
 		float fDistance = cPlane.GetDistance(m_lstVertices[i]);
-			 if (fDistance >  0.00001) nNumInFront++;
-		else if (fDistance < -0.00001) nNumBehind++;
+		if (fDistance >  0.00001)
+			nNumInFront++;
+		else if (fDistance < -0.00001)
+			nNumBehind++;
 	}
 
 	// Return plane side the polygon is on
-	if (nNumInFront && !nNumBehind)  return InFront;
-	if (!nNumInFront && nNumBehind)  return Behind;
-	if (!nNumInFront && !nNumBehind) return Coinciding;
-	else							 return Spanning;
+	if (nNumInFront && !nNumBehind)
+		return InFront;
+	if (!nNumInFront && nNumBehind)
+		return Behind;
+	if (!nNumInFront && !nNumBehind)
+		return Coinciding;
+	else
+		return Spanning;
 }
 
 /**
@@ -294,7 +300,8 @@ Polygon Polygon::Clip(const Plane &cPlane) const
 		// Clip
 		if (nSideA == Plane::InFront || nSideA == Plane::Coinciding) {
 			cClipped.AddVertex(vA);
-			if (nSideB == Plane::Behind) cClipped.AddVertex(cPlane.ClipEdge(vA, vB));
+			if (nSideB == Plane::Behind)
+				cClipped.AddVertex(cPlane.ClipEdge(vA, vB));
 		} else if (nSideB == Plane::InFront) {
 			cClipped.AddVertex(cPlane.ClipEdge(vA, vB));
 			cClipped.AddVertex(vB);

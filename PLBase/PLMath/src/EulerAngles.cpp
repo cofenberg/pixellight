@@ -63,45 +63,45 @@ void EulerAngles::ToQuaternion(float fAngleX, float fAngleY, float fAngleZ, Quat
 	int i, j, k, n, s, f;
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
 	if (n == 1)
 		fAngleY = -fAngleY;
 
-	double ti = fAngleX*0.5;
-	double tj = fAngleY*0.5;
-	double th = fAngleZ*0.5;
-	double ci = Math::Cos(ti);
-	double cj = Math::Cos(tj);
-	double ch = Math::Cos(th);
-	double si = Math::Sin(ti);
-	double sj = Math::Sin(tj);
-	double sh = Math::Sin(th);
-	double cc = ci*ch;
-	double cs = ci*sh;
-	double sc = si*ch;
-	double ss = si*sh;
+	const double ti = fAngleX*0.5;
+	const double tj = fAngleY*0.5;
+	const double th = fAngleZ*0.5;
+	const double ci = Math::Cos(ti);
+	const double cj = Math::Cos(tj);
+	const double ch = Math::Cos(th);
+	const double si = Math::Sin(ti);
+	const double sj = Math::Sin(tj);
+	const double sh = Math::Sin(th);
+	const double cc = ci*ch;
+	const double cs = ci*sh;
+	const double sc = si*ch;
+	const double ss = si*sh;
 
 	double a[3];
 	if (s == 1) {
 		a[i] = cj*(cs + sc);	// Could speed up with trig identities
 		a[j] = sj*(cc + ss);
 		a[k] = sj*(cs - sc);
-		qRotation.w = float(cj*(cc - ss));
+		qRotation.w = static_cast<float>(cj*(cc - ss));
 	} else {
 		a[i] = cj*sc - sj*cs;
 		a[j] = cj*ss + sj*cc;
 		a[k] = cj*cs - sj*sc;
-		qRotation.w = float(cj*cc + sj*ss);
+		qRotation.w = static_cast<float>(cj*cc + sj*ss);
 	}
 	if (n == 1)
 		a[j] = -a[j];
 
-	qRotation.x = float(a[0]);
-	qRotation.y = float(a[1]);
-	qRotation.z = float(a[2]);
+	qRotation.x = static_cast<float>(a[0]);
+	qRotation.y = static_cast<float>(a[1]);
+	qRotation.z = static_cast<float>(a[2]);
 }
 
 /**
@@ -114,40 +114,40 @@ void EulerAngles::FromQuaternion(const Quaternion &q, float &fAngleX, float &fAn
 	enum EComponent {X, Y, Z};
 	float M[3][3]; // Right-handed, for column vectors
 	{
-		double Nq = q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w;
-		double s  = (Nq > 0.0) ? (2.0 / Nq) : 0.0;
-		double xs = q.x*s,  ys = q.y*s,  zs = q.z*s;
-		double wx = q.w*xs, wy = q.w*ys, wz = q.w*zs;
-		double xx = q.x*xs, xy = q.x*ys, xz = q.x*zs;
-		double yy = q.y*ys, yz = q.y*zs, zz = q.z*zs;
-		M[X][X] = float(1.0-(yy+zz)); M[X][Y] = float(xy-wz);       M[X][Z] = float(xz+wy);
-		M[Y][X] = float(xy+wz);       M[Y][Y] = float(1.0-(xx+zz)); M[Y][Z] = float(yz-wx);
-		M[Z][X] = float(xz-wy);       M[Z][Y] = float(yz+wx);       M[Z][Z] = float(1.0-(xx+yy));
+		const double Nq = q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w;
+		const double s  = (Nq > 0.0) ? (2.0 / Nq) : 0.0;
+		const double xs = q.x*s,  ys = q.y*s,  zs = q.z*s;
+		const double wx = q.w*xs, wy = q.w*ys, wz = q.w*zs;
+		const double xx = q.x*xs, xy = q.x*ys, xz = q.x*zs;
+		const double yy = q.y*ys, yz = q.y*zs, zz = q.z*zs;
+		M[X][X] = static_cast<float>(1.0-(yy+zz)); M[X][Y] = static_cast<float>(xy-wz);       M[X][Z] = static_cast<float>(xz+wy);
+		M[Y][X] = static_cast<float>(xy+wz);       M[Y][Y] = static_cast<float>(1.0-(xx+zz)); M[Y][Z] = static_cast<float>(yz-wx);
+		M[Z][X] = static_cast<float>(xz-wy);       M[Z][Y] = static_cast<float>(yz+wx);       M[Z][Z] = static_cast<float>(1.0-(xx+yy));
 	}
 
 	// Convert 3x3 matrix to Euler angles (in radians)
 	int i, j, k, n, s, f;
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (s == 1) {
-		double sy = Math::Sqrt(M[i][j]*M[i][j] + M[i][k]*M[i][k]);
+		const double sy = Math::Sqrt(M[i][j]*M[i][j] + M[i][k]*M[i][k]);
 		if (sy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(M[i][j], M[i][k]));
-			fAngleY = float(Math::ATan2(sy, (double)M[i][i]));
-			fAngleZ = float(Math::ATan2(M[j][i], -M[k][i]));
+			fAngleX = static_cast<float>(Math::ATan2(M[i][j], M[i][k]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(M[i][i])));
+			fAngleZ = static_cast<float>(Math::ATan2(M[j][i], -M[k][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-M[j][k], M[j][j]));
-			fAngleY = float(Math::ATan2(sy, (double)M[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(-M[j][k], M[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(M[i][i])));
 			fAngleZ = 0.0f;
 		}
 	} else {
-		double cy = Math::Sqrt(M[i][i]*M[i][i] + M[j][i]*M[j][i]);
+		const double cy = Math::Sqrt(M[i][i]*M[i][i] + M[j][i]*M[j][i]);
 		if (cy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(M[k][j], M[k][k]));
-			fAngleY = float(Math::ATan2((double)-M[k][i], cy));
-			fAngleZ = float(Math::ATan2(M[j][i], M[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(M[k][j], M[k][k]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-M[k][i]), cy));
+			fAngleZ = static_cast<float>(Math::ATan2(M[j][i], M[i][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-M[j][k], M[j][j]));
-			fAngleY = float(Math::ATan2((double)-M[k][i], cy));
+			fAngleX = static_cast<float>(Math::ATan2(-M[j][k], M[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-M[k][i]), cy));
 			fAngleZ = 0.0f;
 		}
 	}
@@ -157,7 +157,7 @@ void EulerAngles::FromQuaternion(const Quaternion &q, float &fAngleX, float &fAn
 		fAngleZ = -fAngleZ;
 	}
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
@@ -172,7 +172,7 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x
 	int i, j, k, n, s, f;
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
@@ -182,28 +182,28 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x
 		fAngleZ = -fAngleZ;
 	}
 
-	double ti = fAngleX;
-	double tj = fAngleY;
-	double th = fAngleZ;
-	double ci = Math::Cos(ti);
-	double cj = Math::Cos(tj);
-	double ch = Math::Cos(th);
-	double si = Math::Sin(ti);
-	double sj = Math::Sin(tj);
-	double sh = Math::Sin(th);
-	double cc = ci*ch;
-	double cs = ci*sh;
-	double sc = si*ch;
-	double ss = si*sh;
+	const double ti = fAngleX;
+	const double tj = fAngleY;
+	const double th = fAngleZ;
+	const double ci = Math::Cos(ti);
+	const double cj = Math::Cos(tj);
+	const double ch = Math::Cos(th);
+	const double si = Math::Sin(ti);
+	const double sj = Math::Sin(tj);
+	const double sh = Math::Sin(th);
+	const double cc = ci*ch;
+	const double cs = ci*sh;
+	const double sc = si*ch;
+	const double ss = si*sh;
 
 	if (s == 1) {
-		mRot.fM33[i][i] = float(cj);     mRot.fM33[i][j] = float(sj*si);     mRot.fM33[i][k] = float(sj*ci);
-		mRot.fM33[j][i] = float(sj*sh);  mRot.fM33[j][j] = float(-cj*ss+cc); mRot.fM33[j][k] = float(-cj*cs-sc);
-		mRot.fM33[k][i] = float(-sj*ch); mRot.fM33[k][j] = float(cj*sc+cs);  mRot.fM33[k][k] = float(cj*cc-ss);
+		mRot.fM33[i][i] = static_cast<float>(cj);     mRot.fM33[i][j] = static_cast<float>(sj*si);     mRot.fM33[i][k] = static_cast<float>(sj*ci);
+		mRot.fM33[j][i] = static_cast<float>(sj*sh);  mRot.fM33[j][j] = static_cast<float>(-cj*ss+cc); mRot.fM33[j][k] = static_cast<float>(-cj*cs-sc);
+		mRot.fM33[k][i] = static_cast<float>(-sj*ch); mRot.fM33[k][j] = static_cast<float>(cj*sc+cs);  mRot.fM33[k][k] = static_cast<float>(cj*cc-ss);
 	} else {
-		mRot.fM33[i][i] = float(cj*ch);  mRot.fM33[i][j] = float(sj*sc-cs);  mRot.fM33[i][k] = float(sj*cc+ss);
-		mRot.fM33[j][i] = float(cj*sh);  mRot.fM33[j][j] = float(sj*ss+cc);  mRot.fM33[j][k] = float(sj*cs-sc);
-		mRot.fM33[k][i] = float(-sj);    mRot.fM33[k][j] = float(cj*si);     mRot.fM33[k][k] = float(cj*ci);
+		mRot.fM33[i][i] = static_cast<float>(cj*ch);  mRot.fM33[i][j] = static_cast<float>(sj*sc-cs);  mRot.fM33[i][k] = static_cast<float>(sj*cc+ss);
+		mRot.fM33[j][i] = static_cast<float>(cj*sh);  mRot.fM33[j][j] = static_cast<float>(sj*ss+cc);  mRot.fM33[j][k] = static_cast<float>(sj*cs-sc);
+		mRot.fM33[k][i] = static_cast<float>(-sj);    mRot.fM33[k][j] = static_cast<float>(cj*si);     mRot.fM33[k][k] = static_cast<float>(cj*ci);
 	}
 }
 
@@ -212,7 +212,7 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x
 	int i, j, k, n, s, f;
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
@@ -222,28 +222,28 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x
 		fAngleZ = -fAngleZ;
 	}
 
-	double ti = fAngleX;
-	double tj = fAngleY;
-	double th = fAngleZ;
-	double ci = Math::Cos(ti);
-	double cj = Math::Cos(tj);
-	double ch = Math::Cos(th);
-	double si = Math::Sin(ti);
-	double sj = Math::Sin(tj);
-	double sh = Math::Sin(th);
-	double cc = ci*ch;
-	double cs = ci*sh;
-	double sc = si*ch;
-	double ss = si*sh;
+	const double ti = fAngleX;
+	const double tj = fAngleY;
+	const double th = fAngleZ;
+	const double ci = Math::Cos(ti);
+	const double cj = Math::Cos(tj);
+	const double ch = Math::Cos(th);
+	const double si = Math::Sin(ti);
+	const double sj = Math::Sin(tj);
+	const double sh = Math::Sin(th);
+	const double cc = ci*ch;
+	const double cs = ci*sh;
+	const double sc = si*ch;
+	const double ss = si*sh;
 
 	if (s == 1) {
-		mRot.fM43[i][i] = float(cj);     mRot.fM43[i][j] = float(sj*si);     mRot.fM43[i][k] = float(sj*ci);     mRot.xw = 0.0f;
-		mRot.fM43[j][i] = float(sj*sh);  mRot.fM43[j][j] = float(-cj*ss+cc); mRot.fM43[j][k] = float(-cj*cs-sc); mRot.yw = 0.0f;
-		mRot.fM43[k][i] = float(-sj*ch); mRot.fM43[k][j] = float(cj*sc+cs);  mRot.fM43[k][k] = float(cj*cc-ss);  mRot.zw = 0.0f;
+		mRot.fM43[i][i] = static_cast<float>(cj);     mRot.fM43[i][j] = static_cast<float>(sj*si);     mRot.fM43[i][k] = static_cast<float>(sj*ci);     mRot.xw = 0.0f;
+		mRot.fM43[j][i] = static_cast<float>(sj*sh);  mRot.fM43[j][j] = static_cast<float>(-cj*ss+cc); mRot.fM43[j][k] = static_cast<float>(-cj*cs-sc); mRot.yw = 0.0f;
+		mRot.fM43[k][i] = static_cast<float>(-sj*ch); mRot.fM43[k][j] = static_cast<float>(cj*sc+cs);  mRot.fM43[k][k] = static_cast<float>(cj*cc-ss);  mRot.zw = 0.0f;
 	} else {
-		mRot.fM43[i][i] = float(cj*ch);  mRot.fM43[i][j] = float(sj*sc-cs);  mRot.fM43[i][k] = float(sj*cc+ss); mRot.xw = 0.0f;
-		mRot.fM43[j][i] = float(cj*sh);  mRot.fM43[j][j] = float(sj*ss+cc);  mRot.fM43[j][k] = float(sj*cs-sc); mRot.yw = 0.0f;
-		mRot.fM43[k][i] = float(-sj);    mRot.fM43[k][j] = float(cj*si);     mRot.fM43[k][k] = float(cj*ci);    mRot.zw = 0.0f;
+		mRot.fM43[i][i] = static_cast<float>(cj*ch);  mRot.fM43[i][j] = static_cast<float>(sj*sc-cs);  mRot.fM43[i][k] = static_cast<float>(sj*cc+ss); mRot.xw = 0.0f;
+		mRot.fM43[j][i] = static_cast<float>(cj*sh);  mRot.fM43[j][j] = static_cast<float>(sj*ss+cc);  mRot.fM43[j][k] = static_cast<float>(sj*cs-sc); mRot.yw = 0.0f;
+		mRot.fM43[k][i] = static_cast<float>(-sj);    mRot.fM43[k][j] = static_cast<float>(cj*si);     mRot.fM43[k][k] = static_cast<float>(cj*ci);    mRot.zw = 0.0f;
 	}
 }
 
@@ -252,7 +252,7 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix4x
 	int i, j, k, n, s, f;
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
@@ -262,30 +262,30 @@ void EulerAngles::ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix4x
 		fAngleZ = -fAngleZ;
 	}
 
-	double ti = fAngleX;
-	double tj = fAngleY;
-	double th = fAngleZ;
-	double ci = Math::Cos(ti);
-	double cj = Math::Cos(tj);
-	double ch = Math::Cos(th);
-	double si = Math::Sin(ti);
-	double sj = Math::Sin(tj);
-	double sh = Math::Sin(th);
-	double cc = ci*ch;
-	double cs = ci*sh;
-	double sc = si*ch;
-	double ss = si*sh;
+	const double ti = fAngleX;
+	const double tj = fAngleY;
+	const double th = fAngleZ;
+	const double ci = Math::Cos(ti);
+	const double cj = Math::Cos(tj);
+	const double ch = Math::Cos(th);
+	const double si = Math::Sin(ti);
+	const double sj = Math::Sin(tj);
+	const double sh = Math::Sin(th);
+	const double cc = ci*ch;
+	const double cs = ci*sh;
+	const double sc = si*ch;
+	const double ss = si*sh;
 
 	if (s == 1) {
-		mRot.fM44[i][i] = float(cj);     mRot.fM44[i][j] = float(sj*si);     mRot.fM44[i][k] = float(sj*ci);     mRot.xw = 0.0f;
-		mRot.fM44[j][i] = float(sj*sh);  mRot.fM44[j][j] = float(-cj*ss+cc); mRot.fM44[j][k] = float(-cj*cs-sc); mRot.yw = 0.0f;
-		mRot.fM44[k][i] = float(-sj*ch); mRot.fM44[k][j] = float(cj*sc+cs);  mRot.fM44[k][k] = float(cj*cc-ss);  mRot.zw = 0.0f;
-		mRot.wx         = 0.0f;          mRot.wy         = 0.0f;             mRot.wz         = 0.0f;             mRot.ww = 1.0f;
+		mRot.fM44[i][i] = static_cast<float>(cj);     mRot.fM44[i][j] = static_cast<float>(sj*si);     mRot.fM44[i][k] = static_cast<float>(sj*ci);     mRot.xw = 0.0f;
+		mRot.fM44[j][i] = static_cast<float>(sj*sh);  mRot.fM44[j][j] = static_cast<float>(-cj*ss+cc); mRot.fM44[j][k] = static_cast<float>(-cj*cs-sc); mRot.yw = 0.0f;
+		mRot.fM44[k][i] = static_cast<float>(-sj*ch); mRot.fM44[k][j] = static_cast<float>(cj*sc+cs);  mRot.fM44[k][k] = static_cast<float>(cj*cc-ss);  mRot.zw = 0.0f;
+		mRot.wx         = 0.0f;          			  mRot.wy         = 0.0f;            			   mRot.wz         = 0.0f;           				mRot.ww = 1.0f;
 	} else {
-		mRot.fM44[i][i] = float(cj*ch);  mRot.fM44[i][j] = float(sj*sc-cs);  mRot.fM44[i][k] = float(sj*cc+ss);  mRot.xw = 0.0f;
-		mRot.fM44[j][i] = float(cj*sh);  mRot.fM44[j][j] = float(sj*ss+cc);  mRot.fM44[j][k] = float(sj*cs-sc);  mRot.yw = 0.0f;
-		mRot.fM44[k][i] = float(-sj);    mRot.fM44[k][j] = float(cj*si);     mRot.fM44[k][k] = float(cj*ci);     mRot.zw = 0.0f;
-		mRot.wx         = 0.0f;          mRot.wy         = 0.0f;             mRot.wz         = 0.0f;             mRot.ww = 1.0f;
+		mRot.fM44[i][i] = static_cast<float>(cj*ch);  mRot.fM44[i][j] = static_cast<float>(sj*sc-cs);  mRot.fM44[i][k] = static_cast<float>(sj*cc+ss);  mRot.xw = 0.0f;
+		mRot.fM44[j][i] = static_cast<float>(cj*sh);  mRot.fM44[j][j] = static_cast<float>(sj*ss+cc);  mRot.fM44[j][k] = static_cast<float>(sj*cs-sc);  mRot.yw = 0.0f;
+		mRot.fM44[k][i] = static_cast<float>(-sj);    mRot.fM44[k][j] = static_cast<float>(cj*si);     mRot.fM44[k][k] = static_cast<float>(cj*ci);     mRot.zw = 0.0f;
+		mRot.wx         = 0.0f;       				  mRot.wy         = 0.0f;             			   mRot.wz         = 0.0f; 							mRot.ww = 1.0f;
 	}
 }
 
@@ -299,25 +299,25 @@ void EulerAngles::FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngl
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 
 	if (s == 1) {
-		double sy = Math::Sqrt(mRot.fM33[i][j]*mRot.fM33[i][j] + mRot.fM33[i][k]*mRot.fM33[i][k]);
+		const double sy = Math::Sqrt(mRot.fM33[i][j]*mRot.fM33[i][j] + mRot.fM33[i][k]*mRot.fM33[i][k]);
 		if (sy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(mRot.fM33[i][j], mRot.fM33[i][k]));
-			fAngleY = float(Math::ATan2(sy, (double)mRot.fM33[i][i]));
-			fAngleZ = float(Math::ATan2(mRot.fM33[j][i], -mRot.fM33[k][i]));
+			fAngleX = static_cast<float>(Math::ATan2(mRot.fM33[i][j], mRot.fM33[i][k]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(mRot.fM33[i][i])));
+			fAngleZ = static_cast<float>(Math::ATan2(mRot.fM33[j][i], -mRot.fM33[k][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-mRot.fM33[j][k], mRot.fM33[j][j]));
-			fAngleY = float(Math::ATan2(sy, (double)mRot.fM33[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(-mRot.fM33[j][k], mRot.fM33[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(mRot.fM33[i][i])));
 			fAngleZ = 0.0f;
 		}
 	} else {
-		double cy = Math::Sqrt(mRot.fM33[i][i]*mRot.fM33[i][i] + mRot.fM33[j][i]*mRot.fM33[j][i]);
+		const double cy = Math::Sqrt(mRot.fM33[i][i]*mRot.fM33[i][i] + mRot.fM33[j][i]*mRot.fM33[j][i]);
 		if (cy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(mRot.fM33[k][j], mRot.fM33[k][k]));
-			fAngleY = float(Math::ATan2((double)-mRot.fM33[k][i], cy));
-			fAngleZ = float(Math::ATan2(mRot.fM33[j][i], mRot.fM33[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(mRot.fM33[k][j], mRot.fM33[k][k]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-mRot.fM33[k][i]), cy));
+			fAngleZ = static_cast<float>(Math::ATan2(mRot.fM33[j][i], mRot.fM33[i][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-mRot.fM33[j][k], mRot.fM33[j][j]));
-			fAngleY = float(Math::ATan2((double)-mRot.fM33[k][i], cy));
+			fAngleX = static_cast<float>(Math::ATan2(-mRot.fM33[j][k], mRot.fM33[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-mRot.fM33[k][i]), cy));
 			fAngleZ = 0.0f;
 		}
 	}
@@ -328,7 +328,7 @@ void EulerAngles::FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngl
 		fAngleZ = -fAngleZ;
 	}
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
@@ -340,25 +340,25 @@ void EulerAngles::FromMatrix(const Matrix3x4 &mRot, float &fAngleX, float &fAngl
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 
 	if (s == 1) {
-		double sy = Math::Sqrt(mRot.fM43[i][j]*mRot.fM43[i][j] + mRot.fM43[i][k]*mRot.fM43[i][k]);
+		const double sy = Math::Sqrt(mRot.fM43[i][j]*mRot.fM43[i][j] + mRot.fM43[i][k]*mRot.fM43[i][k]);
 		if (sy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(mRot.fM43[i][j], mRot.fM43[i][k]));
-			fAngleY = float(Math::ATan2(sy, (double)mRot.fM43[i][i]));
-			fAngleZ = float(Math::ATan2(mRot.fM43[j][i], -mRot.fM43[k][i]));
+			fAngleX = static_cast<float>(Math::ATan2(mRot.fM43[i][j], mRot.fM43[i][k]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(mRot.fM43[i][i])));
+			fAngleZ = static_cast<float>(Math::ATan2(mRot.fM43[j][i], -mRot.fM43[k][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-mRot.fM43[j][k], mRot.fM43[j][j]));
-			fAngleY = float(Math::ATan2(sy, (double)mRot.fM43[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(-mRot.fM43[j][k], mRot.fM43[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(mRot.fM43[i][i])));
 			fAngleZ = 0.0f;
 		}
 	} else {
-		double cy = Math::Sqrt(mRot.fM43[i][i]*mRot.fM43[i][i] + mRot.fM43[j][i]*mRot.fM43[j][i]);
+		const double cy = Math::Sqrt(mRot.fM43[i][i]*mRot.fM43[i][i] + mRot.fM43[j][i]*mRot.fM43[j][i]);
 		if (cy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(mRot.fM43[k][j], mRot.fM43[k][k]));
-			fAngleY = float(Math::ATan2((double)-mRot.fM43[k][i], cy));
-			fAngleZ = float(Math::ATan2(mRot.fM43[j][i], mRot.fM43[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(mRot.fM43[k][j], mRot.fM43[k][k]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-mRot.fM43[k][i]), cy));
+			fAngleZ = static_cast<float>(Math::ATan2(mRot.fM43[j][i], mRot.fM43[i][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-mRot.fM43[j][k], mRot.fM43[j][j]));
-			fAngleY = float(Math::ATan2((double)-mRot.fM43[k][i], cy));
+			fAngleX = static_cast<float>(Math::ATan2(-mRot.fM43[j][k], mRot.fM43[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-mRot.fM43[k][i]), cy));
 			fAngleZ = 0.0f;
 		}
 	}
@@ -369,7 +369,7 @@ void EulerAngles::FromMatrix(const Matrix3x4 &mRot, float &fAngleX, float &fAngl
 		fAngleZ = -fAngleZ;
 	}
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}
@@ -381,25 +381,25 @@ void EulerAngles::FromMatrix(const Matrix4x4 &mRot, float &fAngleX, float &fAngl
 	EulGetOrd(nOrder, i, j, k, n, s, f);
 
 	if (s == 1) {
-		double sy = Math::Sqrt(mRot.fM44[i][j]*mRot.fM44[i][j] + mRot.fM44[i][k]*mRot.fM44[i][k]);
+		const double sy = Math::Sqrt(mRot.fM44[i][j]*mRot.fM44[i][j] + mRot.fM44[i][k]*mRot.fM44[i][k]);
 		if (sy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(mRot.fM44[i][j], mRot.fM44[i][k]));
-			fAngleY = float(Math::ATan2(sy, (double)mRot.fM44[i][i]));
-			fAngleZ = float(Math::ATan2(mRot.fM44[j][i], -mRot.fM44[k][i]));
+			fAngleX = static_cast<float>(Math::ATan2(mRot.fM44[i][j], mRot.fM44[i][k]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(mRot.fM44[i][i])));
+			fAngleZ = static_cast<float>(Math::ATan2(mRot.fM44[j][i], -mRot.fM44[k][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-mRot.fM44[j][k], mRot.fM44[j][j]));
-			fAngleY = float(Math::ATan2(sy, (double)mRot.fM44[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(-mRot.fM44[j][k], mRot.fM44[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(sy, static_cast<double>(mRot.fM44[i][i])));
 			fAngleZ = 0.0f;
 		}
 	} else {
-		double cy = Math::Sqrt(mRot.fM44[i][i]*mRot.fM44[i][i] + mRot.fM44[j][i]*mRot.fM44[j][i]);
+		const double cy = Math::Sqrt(mRot.fM44[i][i]*mRot.fM44[i][i] + mRot.fM44[j][i]*mRot.fM44[j][i]);
 		if (cy > 16*FloatEpsilon) {
-			fAngleX = float(Math::ATan2(mRot.fM44[k][j], mRot.fM44[k][k]));
-			fAngleY = float(Math::ATan2((double)-mRot.fM44[k][i], cy));
-			fAngleZ = float(Math::ATan2(mRot.fM44[j][i], mRot.fM44[i][i]));
+			fAngleX = static_cast<float>(Math::ATan2(mRot.fM44[k][j], mRot.fM44[k][k]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-mRot.fM44[k][i]), cy));
+			fAngleZ = static_cast<float>(Math::ATan2(mRot.fM44[j][i], mRot.fM44[i][i]));
 		} else {
-			fAngleX = float(Math::ATan2(-mRot.fM44[j][k], mRot.fM44[j][j]));
-			fAngleY = float(Math::ATan2((double)-mRot.fM44[k][i], cy));
+			fAngleX = static_cast<float>(Math::ATan2(-mRot.fM44[j][k], mRot.fM44[j][j]));
+			fAngleY = static_cast<float>(Math::ATan2(static_cast<double>(-mRot.fM44[k][i]), cy));
 			fAngleZ = 0.0f;
 		}
 	}
@@ -410,7 +410,7 @@ void EulerAngles::FromMatrix(const Matrix4x4 &mRot, float &fAngleX, float &fAngl
 		fAngleZ = -fAngleZ;
 	}
 	if (f == 1) {
-		float t = fAngleX;
+		const float t = fAngleX;
 		fAngleX = fAngleZ;
 		fAngleZ = t;
 	}

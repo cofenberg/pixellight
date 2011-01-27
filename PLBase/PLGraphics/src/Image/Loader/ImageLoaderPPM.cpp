@@ -83,7 +83,7 @@ bool ImageLoaderPPM::Load(Image &cImage, File &cFile)
 					// Loop through all integers (within error checks...)
 					uint8 *pImageData = pImageBuffer->GetData();
 					for (const uint8 *pImageDataEnd=pImageData+pImageBuffer->GetDataSize(); pImageData<pImageDataEnd; pImageData++)
-						*pImageData = (uint8)cTokenizer.GetNextToken().GetChar();
+						*pImageData = cTokenizer.GetNextToken().GetChar();
 
 					// Done
 					return true;

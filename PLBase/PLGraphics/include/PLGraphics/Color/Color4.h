@@ -631,7 +631,7 @@ class Color4 {
 		PLGRAPHICS_API Color4 &operator =(const Color3 &cC);
 		PLGRAPHICS_API Color4 &operator =(const float fC[]);
 		PLGRAPHICS_API Color4 &operator =(float fD);
-		PLGRAPHICS_API operator float *() const;
+		PLGRAPHICS_API operator float *();
 		PLGRAPHICS_API operator const float *() const;
 
 		//[-------------------------------------------------------]

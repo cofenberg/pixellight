@@ -51,23 +51,23 @@ pl_implement_class(IEScale)
 void ScaleDownHalfData(const ImageBuffer &cOldImageBuffer, ImageBuffer &cImageBuffer, uint32 nNewWidth, uint32 nNewHeight, uint32 nOldWidth, uint32 nOldHeight, const Matrix3x3 &mFilter)
 {
 	// Scale factors
-	const float fToOriginalWidthFactor  = float(nOldWidth) /nNewWidth;
-	const float fToOriginalHeightFactor = float(nOldHeight)/nNewHeight;
+	const float fToOriginalWidthFactor  = static_cast<float>(nOldWidth) /nNewWidth;
+	const float fToOriginalHeightFactor = static_cast<float>(nOldHeight)/nNewHeight;
 
 	// Get the number of components
 	const uint32 nNumOfComponents = cOldImageBuffer.GetComponentsPerPixel();
 
 	// Loop through all components
-		  short *pNewData = (short*)cImageBuffer   .GetData();
-	const short *pOldData = (short*)cOldImageBuffer.GetData();
+		  short *pNewData = reinterpret_cast<short*>(cImageBuffer.GetData());
+	const short *pOldData = reinterpret_cast<const short*>(cOldImageBuffer.GetData());
 	for (uint32 nComponent=0; nComponent<nNumOfComponents; nComponent++) {
 		// Loop through x
 		for (uint32 nX=0; nX<nNewWidth; nX++) {
 			// Loop through y
 			for (uint32 nY=0; nY<nNewHeight; nY++) {
 				// Get the orignal byte
-				const uint32 nOriginalX = uint32(nX*fToOriginalWidthFactor);
-				const uint32 nOriginalY = uint32(nY*fToOriginalHeightFactor);
+				const uint32 nOriginalX = static_cast<uint32>(nX*fToOriginalWidthFactor);
+				const uint32 nOriginalY = static_cast<uint32>(nY*fToOriginalHeightFactor);
 
 				// Get data
 				short nOriginalByte = 0;
@@ -78,7 +78,7 @@ void ScaleDownHalfData(const ImageBuffer &cOldImageBuffer, ImageBuffer &cImageBu
 
 					// Is this current position inside the original image?
 					if (nCurrentX >= 0 && nCurrentY >= 0 &&
-						nCurrentX < (int)nOldWidth && nCurrentY < (int)nOldHeight) {
+						nCurrentX < static_cast<int>(nOldWidth) && nCurrentY < static_cast<int>(nOldHeight)) {
 						// Get the component value of the original image
 						nOriginalByte = pOldData[(nCurrentY*nOldWidth + nCurrentX)*nNumOfComponents + nComponent];
 					}
@@ -131,23 +131,23 @@ class ScaleDownData {
 			// [TODO] Resize images in linear space instead of gamma space! Maybe we should add image space information to a image so we now in which space the image data is stored? (linear, gamma...)
 
 			// Scale factors
-			const float fToOriginalWidthFactor  = float(nOldWidth) /nNewWidth;
-			const float fToOriginalHeightFactor = float(nOldHeight)/nNewHeight;
+			const float fToOriginalWidthFactor  = static_cast<float>(nOldWidth) /nNewWidth;
+			const float fToOriginalHeightFactor = static_cast<float>(nOldHeight)/nNewHeight;
 
 			// Get the number of components
 			const uint32 nNumOfComponents = cOldImageBuffer.GetComponentsPerPixel();
 
 			// Loop through all components
-				  DataType *pNewData = (DataType*)cImageBuffer   .GetData();
-			const DataType *pOldData = (DataType*)cOldImageBuffer.GetData();
+				  DataType *pNewData = reinterpret_cast<DataType*>(cImageBuffer.GetData());
+			const DataType *pOldData = reinterpret_cast<const DataType*>(cOldImageBuffer.GetData());
 			for (uint32 nComponent=0; nComponent<nNumOfComponents; nComponent++) {
 				// Loop through x
 				for (uint32 nX=0; nX<nNewWidth; nX++) {
 					// Loop through y
 					for (uint32 nY=0; nY<nNewHeight; nY++) {
 						// Get the orignal byte
-						const uint32 nOriginalX = uint32(nX*fToOriginalWidthFactor);
-						const uint32 nOriginalY = uint32(nY*fToOriginalHeightFactor);
+						const uint32 nOriginalX = static_cast<uint32>(nX*fToOriginalWidthFactor);
+						const uint32 nOriginalY = static_cast<uint32>(nY*fToOriginalHeightFactor);
 
 						// Sum up
 						double fSum      = 0.0f;
@@ -160,7 +160,7 @@ class ScaleDownData {
 
 								// Is this current position inside the original image?
 								if (nCurrentX >= 0 && nCurrentY >= 0 &&
-									nCurrentX < (int)nOldWidth && nCurrentY < (int)nOldHeight) {
+									nCurrentX < static_cast<int>(nOldWidth) && nCurrentY < static_cast<int>(nOldHeight)) {
 									// Jap, get the factor to use this component with
 									const float fFactor = mFilter.fM33[nFilterX][nFilterY];
 

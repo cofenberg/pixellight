@@ -292,7 +292,7 @@ float GraphNode::GetDistance(const GraphNode &cNode) const
 GraphNode &GraphNode::operator =(const GraphNode &cSource)
 {
 	// Call base function
-	*((Element<GraphNode>*)this) = cSource;
+	*static_cast<Element<GraphNode>*>(this) = cSource;
 
 	// Copy data
 	m_vPos = cSource.m_vPos;

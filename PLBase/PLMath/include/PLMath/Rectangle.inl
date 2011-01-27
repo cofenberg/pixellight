@@ -157,8 +157,10 @@ inline void Rectangle::ClipByRectangle(const Rectangle &cEnclosed)
 		if (vMax.x < cEnclosed.vMin.x) {
 			vMin.x = vMax.x = cEnclosed.vMin.x;
 		} else {
-			if (vMin.x < cEnclosed.vMin.x) vMin.x = cEnclosed.vMin.x;
-			if (vMax.x > cEnclosed.vMax.x) vMax.x = cEnclosed.vMax.x;
+			if (vMin.x < cEnclosed.vMin.x)
+				vMin.x = cEnclosed.vMin.x;
+			if (vMax.x > cEnclosed.vMax.x)
+				vMax.x = cEnclosed.vMax.x;
 		}
 	}
 
@@ -169,8 +171,10 @@ inline void Rectangle::ClipByRectangle(const Rectangle &cEnclosed)
 		if (vMax.y < cEnclosed.vMin.y) {
 			vMin.y = vMax.y = cEnclosed.vMin.y;
 		} else {
-			if (vMin.y < cEnclosed.vMin.y) vMin.y = cEnclosed.vMin.y;
-			if (vMax.y > cEnclosed.vMax.y) vMax.y = cEnclosed.vMax.y;
+			if (vMin.y < cEnclosed.vMin.y)
+				vMin.y = cEnclosed.vMin.y;
+			if (vMax.y > cEnclosed.vMax.y)
+				vMax.y = cEnclosed.vMax.y;
 		}
 	}
 }
@@ -181,10 +185,14 @@ inline void Rectangle::ClipByRectangle(const Rectangle &cEnclosed)
 */
 inline void Rectangle::AppendToRectangle(const Vector2 &vV)
 {
-	if (vV.x < vMin.x) vMin.x = vV.x;
-	if (vV.y < vMin.y) vMin.y = vV.y;
-	if (vV.x > vMax.x) vMax.x = vV.x;
-	if (vV.y > vMax.y) vMax.y = vV.y;
+	if (vV.x < vMin.x)
+		vMin.x = vV.x;
+	if (vV.y < vMin.y)
+		vMin.y = vV.y;
+	if (vV.x > vMax.x)
+		vMax.x = vV.x;
+	if (vV.y > vMax.y)
+		vMax.y = vV.y;
 }
 
 /**

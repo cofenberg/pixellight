@@ -129,14 +129,17 @@ inline float AABoundingBox::GetDepth() const
 inline AABoundingBox::Axis AABoundingBox::GetLongestAxis() const
 {
 	// Get differences
-	float fDX = vMax.x - vMin.x;
-	float fDY = vMax.y - vMin.y;
-	float fDZ = vMax.z - vMin.z;
+	const float fDX = vMax.x - vMin.x;
+	const float fDY = vMax.y - vMin.y;
+	const float fDZ = vMax.z - vMin.z;
 
 	// Return the longest axis
-		 if (fDX > fDY && fDX > fDZ) return X;
-	else if (fDY > fDZ)				 return Y;
-	else							 return Z;
+	if (fDX > fDY && fDX > fDZ)
+		return X;
+	else if (fDY > fDZ)
+		return Y;
+	else
+		return Z;
 }
 
 /**
@@ -146,14 +149,17 @@ inline AABoundingBox::Axis AABoundingBox::GetLongestAxis() const
 inline float AABoundingBox::GetLongestAxisLength() const
 {
 	// Get differences
-	float fDX = vMax.x - vMin.x;
-	float fDY = vMax.y - vMin.y;
-	float fDZ = vMax.z - vMin.z;
+	const float fDX = vMax.x - vMin.x;
+	const float fDY = vMax.y - vMin.y;
+	const float fDZ = vMax.z - vMin.z;
 
 	// Return the longest axis
-		 if (fDX > fDY && fDX > fDZ) return fDX;
-	else if (fDY > fDZ)				 return fDY;
-	else							 return fDZ;
+	if (fDX > fDY && fDX > fDZ)
+		return fDX;
+	else if (fDY > fDZ)
+		return fDY;
+	else
+		return fDZ;
 }
 
 /**
@@ -163,8 +169,8 @@ inline float AABoundingBox::GetLongestAxisLength() const
 inline float AABoundingBox::GetEnclosingRadius() const
 {
 	// Get the minimum/maximum squared length
-	float fMinSquaredLength = vMin.GetSquaredLength();
-	float fMaxSquaredLength = vMax.GetSquaredLength();
+	const float fMinSquaredLength = vMin.GetSquaredLength();
+	const float fMaxSquaredLength = vMax.GetSquaredLength();
 
 	// The greater one has to be used for the radius
 	return (fMaxSquaredLength > fMinSquaredLength) ? Math::Sqrt(fMaxSquaredLength) : Math::Sqrt(fMinSquaredLength);
@@ -177,14 +183,17 @@ inline float AABoundingBox::GetEnclosingRadius() const
 inline float AABoundingBox::GetInsideRadius() const
 {
 	// Get differences
-	float fDX = vMax.x - vMin.x;
-	float fDY = vMax.y - vMin.y;
-	float fDZ = vMax.z - vMin.z;
+	const float fDX = vMax.x - vMin.x;
+	const float fDY = vMax.y - vMin.y;
+	const float fDZ = vMax.z - vMin.z;
 
 	// Return the longest axis
-		 if (fDX > fDY && fDX > fDZ) return fDX*0.5f;
-	else if (fDY > fDZ)				 return fDY*0.5f;
-	else							 return fDZ*0.5f;
+	if (fDX > fDY && fDX > fDZ)
+		return fDX*0.5f;
+	else if (fDY > fDZ)
+		return fDY*0.5f;
+	else
+		return fDZ*0.5f;
 }
 
 /**
@@ -194,9 +203,9 @@ inline float AABoundingBox::GetInsideRadius() const
 inline float AABoundingBox::CalculateSurface() const
 {
 	// Get differences
-	float fDX = vMax.x - vMin.x;
-	float fDY = vMax.y - vMin.y;
-	float fDZ = vMax.z - vMin.z;
+	const float fDX = vMax.x - vMin.x;
+	const float fDY = vMax.y - vMin.y;
+	const float fDZ = vMax.z - vMin.z;
 
 	// Calculate the surface
 	return (fDX*fDY + fDX*fDZ + fDY*fDZ)*2;
@@ -226,8 +235,10 @@ inline void AABoundingBox::ClipByAABox(const AABoundingBox &cEnclosed)
 		if (vMax.x < cEnclosed.vMin.x) {
 			vMin.x = vMax.x = cEnclosed.vMin.x;
 		} else {
-			if (vMin.x < cEnclosed.vMin.x) vMin.x = cEnclosed.vMin.x;
-			if (vMax.x > cEnclosed.vMax.x) vMax.x = cEnclosed.vMax.x;
+			if (vMin.x < cEnclosed.vMin.x)
+				vMin.x = cEnclosed.vMin.x;
+			if (vMax.x > cEnclosed.vMax.x)
+				vMax.x = cEnclosed.vMax.x;
 		}
 	}
 
@@ -238,8 +249,10 @@ inline void AABoundingBox::ClipByAABox(const AABoundingBox &cEnclosed)
 		if (vMax.y < cEnclosed.vMin.y) {
 			vMin.y = vMax.y = cEnclosed.vMin.y;
 		} else {
-			if (vMin.y < cEnclosed.vMin.y) vMin.y = cEnclosed.vMin.y;
-			if (vMax.y > cEnclosed.vMax.y) vMax.y = cEnclosed.vMax.y;
+			if (vMin.y < cEnclosed.vMin.y)
+				vMin.y = cEnclosed.vMin.y;
+			if (vMax.y > cEnclosed.vMax.y)
+				vMax.y = cEnclosed.vMax.y;
 		}
 	}
 
@@ -250,8 +263,10 @@ inline void AABoundingBox::ClipByAABox(const AABoundingBox &cEnclosed)
 		if (vMax.z < cEnclosed.vMin.z) {
 			vMin.z = vMax.z = cEnclosed.vMin.z;
 		} else {
-			if (vMin.z < cEnclosed.vMin.z) vMin.z = cEnclosed.vMin.z;
-			if (vMax.z > cEnclosed.vMax.z) vMax.z = cEnclosed.vMax.z;
+			if (vMin.z < cEnclosed.vMin.z)
+				vMin.z = cEnclosed.vMin.z;
+			if (vMax.z > cEnclosed.vMax.z)
+				vMax.z = cEnclosed.vMax.z;
 		}
 	}
 }
@@ -262,12 +277,18 @@ inline void AABoundingBox::ClipByAABox(const AABoundingBox &cEnclosed)
 */
 inline void AABoundingBox::AppendToCubicHull(const Vector3 &vV)
 {
-	if (vV.x < vMin.x) vMin.x = vV.x;
-	if (vV.y < vMin.y) vMin.y = vV.y;
-	if (vV.z < vMin.z) vMin.z = vV.z;
-	if (vV.x > vMax.x) vMax.x = vV.x;
-	if (vV.y > vMax.y) vMax.y = vV.y;
-	if (vV.z > vMax.z) vMax.z = vV.z;
+	if (vV.x < vMin.x)
+		vMin.x = vV.x;
+	if (vV.y < vMin.y)
+		vMin.y = vV.y;
+	if (vV.z < vMin.z)
+		vMin.z = vV.z;
+	if (vV.x > vMax.x)
+		vMax.x = vV.x;
+	if (vV.y > vMax.y)
+		vMax.y = vV.y;
+	if (vV.z > vMax.z)
+		vMax.z = vV.z;
 }
 
 /**

@@ -83,9 +83,8 @@ ImageData::ImageData(const ImageData &cSource) :
 	}
 
 	// Copy palette
-	if (cSource.m_pPalette) {
+	if (cSource.m_pPalette)
 		m_pPalette = new ImagePalette(*cSource.m_pPalette);
-	}
 }
 
 /**
@@ -131,9 +130,8 @@ ImageData &ImageData::operator =(const ImageData &cSource)
 	}
 
 	// Copy palette
-	if (cSource.m_pPalette) {
+	if (cSource.m_pPalette)
 		m_pPalette = new ImagePalette(*cSource.m_pPalette);
-	}
 
 	// Return this
 	return *this;
@@ -360,10 +358,11 @@ const uint8 *ImageData::GetData() const
 	// Make sure that buffer is created
 	if (!m_pData) {
 		// Create buffer
-		((ImageData*)this)->CreateBuffer();
+		const_cast<ImageData*>(this)->CreateBuffer();
 
 		// If we already have compressed image data, decompress it
-		if (m_pCompressedData) ((ImageData*)this)->Decompress();
+		if (m_pCompressedData)
+			const_cast<ImageData*>(this)->Decompress();
 	}
 
 	// Return image data
@@ -375,10 +374,11 @@ uint8 *ImageData::GetData()
 	// Make sure that buffer is created
 	if (!m_pData) {
 		// Create buffer
-		((ImageData*)this)->CreateBuffer();
+		CreateBuffer();
 
 		// If we already have compressed image data, decompress it
-		if (m_pCompressedData) Decompress();
+		if (m_pCompressedData)
+			Decompress();
 	}
 
 	// Invalidate compressed image buffer, because uncompressed data is going to be modified
@@ -417,10 +417,11 @@ const uint8 *ImageData::GetCompressedData() const
 	// Make sure that compressed buffer is created
 	if (!m_pCompressedData) {
 		// Create compressed buffer
-		((ImageData*)this)->CreateCompressedBuffer();
+		const_cast<ImageData*>(this)->CreateCompressedBuffer();
 
 		// If we already have uncompressed image data, compress it
-		if (m_pData) ((ImageData*)this)->Compress();
+		if (m_pData)
+			const_cast<ImageData*>(this)->Compress();
 	}
 
 	// Return compressed image data
@@ -432,10 +433,11 @@ uint8 *ImageData::GetCompressedData()
 	// Make sure that compressed buffer is created
 	if (!m_pCompressedData) {
 		// Create compressed buffer
-		((ImageData*)this)->CreateCompressedBuffer();
+		CreateCompressedBuffer();
 
 		// If we already have uncompressed image data, compress it
-		if (m_pData) Compress();
+		if (m_pData)
+			Compress();
 	}
 
 	// Invalidate uncompressed image buffer, because compressed data is going to be modified
@@ -701,8 +703,8 @@ void ImageData::DecodeDXTColorBlock(uint8 *pnDestination, const uint8 *pnSource,
 {
 	// This implementation is basing on code from Humus (http://www.humus.name)
 
-	const uint16 c0 = *(uint16*)pnSource;
-	const uint16 c1 = *(uint16*)(pnSource + 2);
+	const uint16 c0 = *reinterpret_cast<const uint16*>(pnSource);
+	const uint16 c1 = *reinterpret_cast<const uint16*>(pnSource + 2);
 
 	uint8 nColors[4][3];
 
@@ -752,7 +754,7 @@ void ImageData::DecodeDXT3AlphaBlock(uint8 *pnDestination, const uint8 *pnSource
 
 	for (int y=0; y<nHeight; y++) {
 		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
-		uint32 nAlpha = ((uint16*)pnSource)[y];
+		uint32 nAlpha = reinterpret_cast<const uint16*>(pnSource)[y];
 		for (int x=0; x<nWidth; x++) {
 			*pnCurrentDestination = (nAlpha & 0xF)*17;
 			nAlpha >>= 4;
@@ -771,12 +773,12 @@ void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource
 
 	const uint8 a0 = pnSource[0];
 	const uint8 a1 = pnSource[1];
-	uint64 nAlpha = (*(uint64 *) pnSource) >> 16;
+	uint64 nAlpha = *reinterpret_cast<const uint64*>(pnSource) >> 16;
 
 	for (int y=0; y<nHeight; y++) {
 		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
 		for (int x=0; x<nWidth; x++) {
-			const int k = ((uint32)nAlpha) & 0x7;
+			const int k = static_cast<uint32>(nAlpha) & 0x7;
 			if (k == 0){
 				*pnCurrentDestination = a0;
 			} else if (k == 1){

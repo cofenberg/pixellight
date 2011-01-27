@@ -50,9 +50,9 @@ namespace PLMath {
 #define lerp(t, a, b) (a + t*(b - a))
 #define setup(i, b0, b1, r0, r1)\
 	t  = i + N;\
-	b0 = ((int) t) & BM;\
+	b0 = static_cast<int>(t) & BM;\
 	b1 = (b0 + 1) & BM;\
-	r0 = t - (int) t;\
+	r0 = t - static_cast<int>(t);\
 	r1 = r0 - 1;
 #define at2(rx,ry) (rx*q[0] + ry*q[1])
 #define at3(rx, ry, rz) (rx*q[0] + ry*q[1] + rz*q[2])
@@ -77,12 +77,17 @@ float bias(float a, float b)
 
 float gain(float a, float b)
 {
-	if (a < 0.001f) return 0; else if (a > 0.999f) return 1.0f;
+	if (a < 0.001f)
+		return 0;
+	else if (a > 0.999f)
+		return 1.0f;
 
 	float p = Math::Log(1.0f - b)/Math::Log(0.5f);
 
-	if (a < 0.5f) return float(Math::Pow(2*a, p)/2);
-	else		  return 1 - float(Math::Pow(2*(1.0f - a), p) / 2);
+	if (a < 0.5f)
+		return static_cast<float>(Math::Pow(2*a, p)/2);
+	else
+		return 1 - static_cast<float>(Math::Pow(2*(1.0f - a), p) / 2);
 }
 
 void normalize2(float v[2])
@@ -111,14 +116,14 @@ void PLInitPerlin()
 	for (i=0; i<B; i++) {
 		p[i] = i;
 
-		g1[i] = (float)((Math::GetRand() % (B + B)) - B)/B;
+		g1[i] = static_cast<float>((Math::GetRand() % (B + B)) - B)/B;
 
 		for (j=0; j<2; j++)
-			g2[i][j] = (float) ((Math::GetRand() % (B + B)) - B)/B;
+			g2[i][j] = static_cast<float>((Math::GetRand() % (B + B)) - B)/B;
 		normalize2(g2[i]);
 
 		for (j=0; j<3; j++)
-			g3[i][j] = (float) ((Math::GetRand() % (B + B)) - B)/B;
+			g3[i][j] = static_cast<float>((Math::GetRand() % (B + B)) - B)/B;
 		normalize3(g3[i]);
 	}
 
@@ -207,22 +212,30 @@ float PLNoise3(float fX, float fY, float fZ)
 	sy = s_curve(ry0);
 	sz = s_curve(rz0);
 
-	q = g3[b00 + bz0]; u = at3(rx0, ry0, rz0);
-	q = g3[b10 + bz0]; v = at3(rx1, ry0, rz0);
+	q = g3[b00 + bz0];
+	u = at3(rx0, ry0, rz0);
+	q = g3[b10 + bz0];
+	v = at3(rx1, ry0, rz0);
 	a = lerp(t, u, v);
 
-	q = g3[b01 + bz0]; u = at3(rx0, ry1, rz0);
-	q = g3[b11 + bz0]; v = at3(rx1, ry1, rz0);
+	q = g3[b01 + bz0];
+	u = at3(rx0, ry1, rz0);
+	q = g3[b11 + bz0];
+	v = at3(rx1, ry1, rz0);
 	b = lerp(t, u, v);
 
 	c = lerp(sy, a, b);
 
-	q = g3[b00 + bz1]; u = at3(rx0, ry0, rz1);
-	q = g3[b10 + bz1]; v = at3(rx1, ry0, rz1);
+	q = g3[b00 + bz1];
+	u = at3(rx0, ry0, rz1);
+	q = g3[b10 + bz1];
+	v = at3(rx1, ry0, rz1);
 	a = lerp(t, u, v);
 
-	q = g3[b01 + bz1]; u = at3(rx0, ry1, rz1);
-	q = g3[b11 + bz1]; v = at3(rx1, ry1, rz1);
+	q = g3[b01 + bz1];
+	u = at3(rx0, ry1, rz1);
+	q = g3[b11 + bz1];
+	v = at3(rx1, ry1, rz1);
 	b = lerp(t, u, v);
 
 	d = lerp(sy, a, b);

@@ -111,11 +111,11 @@ bool IERemovePalette::Apply(ImageBuffer &cImageBuffer) const
 				case DataWord:
 				{
 					// Get the data pointers
-						  uint16 *pNewData = (uint16*)cImageBuffer   .GetData();
-					const uint16 *pOldData = (uint16*)cOldImageBuffer.GetData();
+						  uint16 *pNewData = reinterpret_cast<uint16*>(cImageBuffer.GetData());
+					const uint16 *pOldData = reinterpret_cast<const uint16*>(cOldImageBuffer.GetData());
 
 					// Fill the new buffer
-					for (const uint8 *pNewDataEnd=cImageBuffer.GetData()+cImageBuffer.GetDataSize(); (uint8*)pNewData<pNewDataEnd; ) {
+					for (const uint8 *pNewDataEnd=cImageBuffer.GetData()+cImageBuffer.GetDataSize(); reinterpret_cast<uint8*>(pNewData)<pNewDataEnd; ) {
 						// Get the color from the palette
 						const Color3 cColor = pImagePalette->GetColor(*pOldData);
 

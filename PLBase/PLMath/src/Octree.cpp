@@ -98,7 +98,8 @@ void Octree::Destroy()
 {
 	for (uint32 nChild=0; nChild<m_nNumOfChildren; nChild++)
 		delete m_ppChild[nChild];
-	if (m_ppChild) delete [] m_ppChild;
+	if (m_ppChild)
+		delete [] m_ppChild;
 	Init();
 }
 

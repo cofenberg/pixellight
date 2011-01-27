@@ -52,13 +52,13 @@ namespace PLMath {
 */
 bool Intersect::SpherePoint(const Sphere &cSphere, const Vector3 &cPoint)
 {
-	Vector3 vDifference = cSphere.GetPos() - cPoint;
+	const Vector3 vDifference = cSphere.GetPos() - cPoint;
 	return (vDifference.DotProduct(vDifference) <= cSphere.GetRadius()*cSphere.GetRadius());
 }
 
 bool Intersect::SpherePoint(const Sphere &cSphere, const Vector4 &cPoint)
 {
-	Vector3 vDifference = cSphere.GetPos() - cPoint;
+	const Vector3 vDifference = cSphere.GetPos() - cPoint;
 	return (vDifference.DotProduct(vDifference) <= cSphere.GetRadius()*cSphere.GetRadius());
 }
 
@@ -68,7 +68,7 @@ bool Intersect::SpherePoint(const Sphere &cSphere, const Vector4 &cPoint)
 */
 float Intersect::SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDir)
 {
-	Vector3 vDelta = cSphere.GetPos() - vRayOrigin;
+	const Vector3 vDelta = cSphere.GetPos() - vRayOrigin;
 
 	const float fC = vDelta.GetSquaredLength();
 	const float fV = vDelta.DotProduct(vRayDir);
@@ -90,31 +90,33 @@ bool Intersect::SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin,
 						  const Vector3 &vRayDirection, Vector3 *pvIntersect)
 {
 	const Vector3 &vPos    = cSphere.GetPos();
-	float		   fRadius = cSphere.GetRadius();
+	const float	   fRadius = cSphere.GetRadius();
 
 	// Notation:
 	// point E = ray origin
 	// point O = sphere center
 
-	Vector3 vEO = vPos - vRayOrigin;
-	Vector3 vV  = vRayDirection;
-	float fDist2 = vEO.x*vEO.x + vEO.y*vEO.y + vEO.z*vEO.z;
+	const Vector3 vEO = vPos - vRayOrigin;
+		  Vector3 vV  = vRayDirection;
+	const float fDist2 = vEO.x*vEO.x + vEO.y*vEO.y + vEO.z*vEO.z;
 
 	// Bug Fix For Gem, if origin is *inside* the sphere, invert the
 	// direction vector so that we get a valid intersection location
 	if (fDist2 < fRadius*fRadius)
 		vV.Invert();
 
-	float v = vEO.DotProduct(vV);
+	const float v = vEO.DotProduct(vV);
 
-	float fDisc = fRadius*fRadius - (vEO.GetSquaredLength() - v*v);
+	const float fDisc = fRadius*fRadius - (vEO.GetSquaredLength() - v*v);
 	if (fDisc > 0.0f) {
 		if (pvIntersect) {
-			float d = Math::Sqrt(fDisc);
+			const float d = Math::Sqrt(fDisc);
 			*pvIntersect = vRayOrigin + vV*(v-d);
 		}
 		return true;
-	} else return false;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -125,11 +127,12 @@ bool Intersect::SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, cons
 						  float fDistance, Vector3 *pvIntersect)
 {
 	Vector3 vSect;
-	bool bHit = SphereRayInFront(cSphere, vRayOrigin, vRayDirection, &vSect);
+	const bool bHit = SphereRayInFront(cSphere, vRayOrigin, vRayDirection, &vSect);
 	if (bHit) {
-		float d = vRayOrigin.GetSquaredDistance(vSect);
+		const float d = vRayOrigin.GetSquaredDistance(vSect);
 		if (d <= fDistance*fDistance) {
-			if (pvIntersect) *pvIntersect = vSect;
+			if (pvIntersect)
+				*pvIntersect = vSect;
 			return true;
 		}
 	}
@@ -145,12 +148,13 @@ bool Intersect::SphereRayInFront(const Sphere &cSphere, const Vector3 &vRayOrigi
 								 const Vector3 &vRayDirection, Vector3 *pvIntersect)
 {
 	Vector3 vSect;
-	bool bHit = SphereRay(cSphere, vRayOrigin, vRayDirection, &vSect);
+	const bool bHit = SphereRay(cSphere, vRayOrigin, vRayDirection, &vSect);
 	if (bHit) {
-		Vector3 vDir = vSect - vRayOrigin;
-		float fDot = vDir.DotProduct(vRayDirection);
+		const Vector3 vDir = vSect - vRayOrigin;
+		const float fDot = vDir.DotProduct(vRayDirection);
 		if (fDot >= 0) { // Then it's in front!
-			if (pvIntersect) *pvIntersect = vSect;
+			if (pvIntersect)
+				*pvIntersect = vSect;
 			return true;
 		}
 	}
@@ -164,9 +168,9 @@ bool Intersect::SphereRayInFront(const Sphere &cSphere, const Vector3 &vRayOrigi
 */
 bool Intersect::SphereLine(const Sphere &cSphere, const Vector3 &vStart, const Vector3 &vEnd)
 {
-	Vector3 vDelta			 = cSphere.GetPos() - vStart;
-	Vector3 vDir			 = vEnd - vStart;
-	float   fSquaredDistance = vDir.GetSquaredLength();
+	const Vector3 vDelta		   = cSphere.GetPos() - vStart;
+		  Vector3 vDir			   = vEnd - vStart;
+	const float   fSquaredDistance = vDir.GetSquaredLength();
 
 	vDir.Normalize();
 	const float fC = vDelta.GetSquaredLength();
@@ -205,21 +209,21 @@ bool Intersect::SphereSphere(const Sphere &cSphere, const Sphere &cSphere2)
 bool Intersect::SphereSphere(const Sphere &cSphere, const Sphere &cSphere2, const Vector3 &vMove1, const Vector3 &vMove2)
 {
 	// Note: A = this, B = the other
-	Vector3 vMoveVec = vMove2 - vMove1;
+	const Vector3 vMoveVec = vMove2 - vMove1;
 
 	// Early escape test: If the length of the move vector is less
 	// than distance between the centers of these spheres minus
 	// their radii, there's no way they can hit.
-	Vector3 vDelta = cSphere2.GetPos() - cSphere.GetPos();
-	float fSumRadii = cSphere2.GetRadius() + cSphere.GetRadius();
-	float fMoveDot  = vMoveVec.DotProduct(vMoveVec);
+	const Vector3 vDelta  = cSphere2.GetPos() - cSphere.GetPos();
+	const float fSumRadii = cSphere2.GetRadius() + cSphere.GetRadius();
+	const float fMoveDot  = vMoveVec.DotProduct(vMoveVec);
 
 	if (fMoveDot >= vDelta.DotProduct(vDelta) - fSumRadii*fSumRadii) {
 		// Another early escape: Make sure that A is moving
 		// towards B! If the dot product between the move vector and
 		// the delta position is less that or equal to 0,
 		// A isn't isn't moving towards B!
-		Vector3 vN = vDelta.GetNormalized();
+		const Vector3 vN = vDelta.GetNormalized();
 		float fD = vN.DotProduct(vDelta);
 		if (fD > 0) {
 			// Square 'fD', we will need it twice
@@ -228,13 +232,13 @@ bool Intersect::SphereSphere(const Sphere &cSphere, const Sphere &cSphere2, cons
 			// Escape test: If the closest that A will get to B
 			// is more than the sum of their radii, there's no
 			// way they are going collide
-			float fSquaredLength   = vDelta.GetSquaredLength();
-			float fF			   = fSquaredLength - fD;
-			float fSumRadiiSquared = fSumRadii*fSumRadii;
+			const float fSquaredLength   = vDelta.GetSquaredLength();
+			const float fF			     = fSquaredLength - fD;
+			const float fSumRadiiSquared = fSumRadii*fSumRadii;
 			if (fF < fSumRadiiSquared) {
 				// We now have fF and fSumRadii, two sides of a right triangle.
 				// Use these to find the third side, sqrt(fT)
-				float fT = fSumRadiiSquared - fF;
+				const float fT = fSumRadiiSquared - fF;
 
 				// If there is no such right triangle with sides length of
 				// fSumRadii and sqrt(fF), fT will probably be less than 0.
@@ -285,67 +289,67 @@ bool Intersect::SphereBox(const Vector3 &vSpherePos, float fSphereRadius, const 
 	// Check sphere radius
 	if (fSphereRadius > 0) {
 		// Transform first corner into world space coordinates
-		Vector3 vC1 = cBox.m_mFinalRot*cBox.m_vCorner1*cBox.m_vScale + cBox.m_vPos;
+		const Vector3 vC1 = cBox.m_mFinalRot*cBox.m_vCorner1*cBox.m_vScale + cBox.m_vPos;
 
 		float d = cBox.m_vX.DotProduct(vSpherePos - vC1);
 		if (Math::Abs(d) <= fSphereRadius) { // Possible collision
-			Vector3 a = vSpherePos - cBox.m_vX*d;
-			float   x =  cBox.m_vX.DotProduct(a - vC1);
-			float   y =  cBox.m_vY.DotProduct(a - vC1);
-			float   z = -cBox.m_vZ.DotProduct(a - vC1);
+			const Vector3 a = vSpherePos - cBox.m_vX*d;
+			const float   x =  cBox.m_vX.DotProduct(a - vC1);
+			const float   y =  cBox.m_vY.DotProduct(a - vC1);
+			const float   z = -cBox.m_vZ.DotProduct(a - vC1);
 			if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 				return true;
 		}
 
 		d = cBox.m_vY.DotProduct(vSpherePos - vC1);
 		if (Math::Abs(d) <= fSphereRadius) { // Possible collision
-			Vector3 a = vSpherePos - cBox.m_vY*d;
-			float   x =  cBox.m_vX.DotProduct(a - vC1);
-			float   y =  cBox.m_vY.DotProduct(a - vC1);
-			float   z = -cBox.m_vZ.DotProduct(a - vC1);
+			const Vector3 a = vSpherePos - cBox.m_vY*d;
+			const float   x =  cBox.m_vX.DotProduct(a - vC1);
+			const float   y =  cBox.m_vY.DotProduct(a - vC1);
+			const float   z = -cBox.m_vZ.DotProduct(a - vC1);
 			if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 				return true;
 		}
 
 		d = -cBox.m_vZ.DotProduct(vSpherePos - vC1);
 		if (Math::Abs(d) <= fSphereRadius) { // Possible collision
-			Vector3 a = vSpherePos + cBox.m_vZ*d;
-			float   x =  cBox.m_vX.DotProduct(a - vC1);
-			float   y =  cBox.m_vY.DotProduct(a - vC1);
-			float   z = -cBox.m_vZ.DotProduct(a - vC1);
+			const Vector3 a = vSpherePos + cBox.m_vZ*d;
+			const float   x =  cBox.m_vX.DotProduct(a - vC1);
+			const float   y =  cBox.m_vY.DotProduct(a - vC1);
+			const float   z = -cBox.m_vZ.DotProduct(a - vC1);
 			if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 				return true;
 		}
 
 		// Transform second corner into world space coordinates
-		Vector3 vC2 = cBox.m_mFinalRot*cBox.m_vCorner2*cBox.m_vScale + cBox.m_vPos;
+		const Vector3 vC2 = cBox.m_mFinalRot*cBox.m_vCorner2*cBox.m_vScale + cBox.m_vPos;
 
 		d = cBox.m_vX.DotProduct(vSpherePos - vC2);
 		if (Math::Abs(d) <= fSphereRadius) { // Possible collision
-			Vector3 a = vSpherePos - cBox.m_vX*d;
-			float   x =  cBox.m_vX.DotProduct(a - vC1);
-			float   y =  cBox.m_vY.DotProduct(a - vC1);
-			float   z = -cBox.m_vZ.DotProduct(a - vC1);
+			const Vector3 a = vSpherePos - cBox.m_vX*d;
+			const float   x =  cBox.m_vX.DotProduct(a - vC1);
+			const float   y =  cBox.m_vY.DotProduct(a - vC1);
+			const float   z = -cBox.m_vZ.DotProduct(a - vC1);
 			if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 				return true;
 		}
 
 		d = cBox.m_vY.DotProduct(vSpherePos - vC2);
 		if (Math::Abs(d) <= fSphereRadius) { // Possible collision
-			Vector3 a = vSpherePos - cBox.m_vY*d;
-			float   x =  cBox.m_vX.DotProduct(a - vC1);
-			float   y =  cBox.m_vY.DotProduct(a - vC1);
-			float   z = -cBox.m_vZ.DotProduct(a - vC1);
+			const Vector3 a = vSpherePos - cBox.m_vY*d;
+			const float   x =  cBox.m_vX.DotProduct(a - vC1);
+			const float   y =  cBox.m_vY.DotProduct(a - vC1);
+			const float   z = -cBox.m_vZ.DotProduct(a - vC1);
 			if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 				return true;
 		}
 
 		d = -cBox.m_vZ.DotProduct(vSpherePos - vC2);
 		if (Math::Abs(d) <= fSphereRadius) { // Possible collision
-			Vector3 a = vSpherePos + cBox.m_vZ*d;
-			float   x =  cBox.m_vX.DotProduct(a - vC1);
-			float   y =  cBox.m_vY.DotProduct(a - vC1);
-			float   z = -cBox.m_vZ.DotProduct(a - vC1);
+			const Vector3 a = vSpherePos + cBox.m_vZ*d;
+			const float   x =  cBox.m_vX.DotProduct(a - vC1);
+			const float   y =  cBox.m_vY.DotProduct(a - vC1);
+			const float   z = -cBox.m_vZ.DotProduct(a - vC1);
 			if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 				return true;
 		}
@@ -395,16 +399,16 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		return true;
 
 	// Check each face in turn, only check closest 3
-	Vector3 vRayDir = (vEnd - vStart).Normalize();
+	const Vector3 vRayDir = (vEnd - vStart).Normalize();
 	bool  bHit  = false;
 	float fLowt = 0.0f;
 
 	// Min x
 	if (vRayOrig.x < vAABoxMin.x && vRayDir.x > 0) {
-		float t = (vAABoxMin.x - vRayOrig.x)/vRayDir.x;
+		const float t = (vAABoxMin.x - vRayOrig.x)/vRayDir.x;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
 			if (vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -415,10 +419,10 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 	}
 	// Max x
 	if (vRayOrig.x > vAABoxMax.x && vRayDir.x < 0) {
-		float t = (vAABoxMax.x - vRayOrig.x)/vRayDir.x;
+		const float t = (vAABoxMax.x - vRayOrig.x)/vRayDir.x;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
 			if (vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -429,10 +433,10 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 	}
 	// Min y
 	if (vRayOrig.y < vAABoxMin.y && vRayDir.y > 0) {
-		float t = (vAABoxMin.y - vRayOrig.y)/vRayDir.y;
+		const float t = (vAABoxMin.y - vRayOrig.y)/vRayDir.y;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -443,10 +447,10 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 	}
 	// Max y
 	if (vRayOrig.y > vAABoxMax.y && vRayDir.y < 0) {
-		float t = (vAABoxMax.y - vRayOrig.y)/vRayDir.y;
+		const float t = (vAABoxMax.y - vRayOrig.y)/vRayDir.y;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -457,10 +461,10 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 	}
 	// Min z
 	if (vRayOrig.z < vAABoxMin.z && vRayDir.z > 0) {
-		float t = (vAABoxMin.z - vRayOrig.z)/vRayDir.z;
+		const float t = (vAABoxMin.z - vRayOrig.z)/vRayDir.z;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				(!bHit || t < fLowt)) {
@@ -471,10 +475,10 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 	}
 	// Max z
 	if (vRayOrig.z > vAABoxMax.z && vRayDir.z < 0) {
-		float t = (vAABoxMax.z - vRayOrig.z)/vRayDir.z;
+		const float t = (vAABoxMax.z - vRayOrig.z)/vRayDir.z;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				(!bHit || t < fLowt)) {
@@ -553,8 +557,8 @@ bool Intersect::AABoxAABox(const AABoundingBox &cBox1, const AABoundingBox &cBox
 bool Intersect::BoxPoint(const BoundingBox &cBox, const Vector3 &vPos)
 {
 	// Transform corners into world space coordinates
-	Vector3 vC1 = cBox.m_mFinalRot*cBox.m_vCorner1*cBox.m_vScale + cBox.m_vPos;
-	Vector3 vC2 = cBox.m_mFinalRot*cBox.m_vCorner2*cBox.m_vScale + cBox.m_vPos;
+	const Vector3 vC1 = cBox.m_mFinalRot*cBox.m_vCorner1*cBox.m_vScale + cBox.m_vPos;
+	const Vector3 vC2 = cBox.m_mFinalRot*cBox.m_vCorner2*cBox.m_vScale + cBox.m_vPos;
 
 	// Check plane pair #1, #2 and #3
 	return (Math::Sign(cBox.m_vX.DotProduct(vPos - vC1)) != Math::Sign(cBox.m_vX.DotProduct(vPos - vC2)) &&
@@ -569,20 +573,20 @@ bool Intersect::BoxPoint(const BoundingBox &cBox, const Vector3 &vPos)
 bool Intersect::BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector3 &vB)
 {
 	// Transform corners into world space coordinates
-	Vector3 vC1 = cBox.m_mFinalRot*cBox.m_vCorner1*cBox.m_vScale + cBox.m_vPos;
-	Vector3 vC2 = cBox.m_mFinalRot*cBox.m_vCorner2*cBox.m_vScale + cBox.m_vPos;
+	const Vector3 vC1 = cBox.m_mFinalRot*cBox.m_vCorner1*cBox.m_vScale + cBox.m_vPos;
+	const Vector3 vC2 = cBox.m_mFinalRot*cBox.m_vCorner2*cBox.m_vScale + cBox.m_vPos;
 
 	// Check with each plane
-	Vector3 r = vB - vA;
+	const Vector3 r = vB - vA;
 	Vector3 n = cBox.m_vX;
 	float   t = (n.DotProduct(vC1) - n.DotProduct(vA))/n.DotProduct(r);
 	if (t>=0 && t<=1) { // Point in plane, but where in plane?
-		Vector3 q = vA + r*t;
+		const Vector3 q = vA + r*t;
 
 		// Get position in local axis coordinates
-		float x =  cBox.m_vX.DotProduct(q - vC1);
-		float y =  cBox.m_vY.DotProduct(q - vC1);
-		float z = -cBox.m_vZ.DotProduct(q - vC1);
+		const float x =  cBox.m_vX.DotProduct(q - vC1);
+		const float y =  cBox.m_vY.DotProduct(q - vC1);
+		const float z = -cBox.m_vZ.DotProduct(q - vC1);
 		if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 			return true;
 	}
@@ -590,12 +594,12 @@ bool Intersect::BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector
 	n = cBox.m_vY;
 	t = (n.DotProduct(vC1) - n.DotProduct(vA))/n.DotProduct(r);
 	if (t>=0 && t<=1) { // Point in plane, but where in plane?
-		Vector3 q = vA + r*t;
+		const Vector3 q = vA + r*t;
 
 		// Get position in local axis coordinates
-		float x =  cBox.m_vX.DotProduct(q - vC1);
-		float y =  cBox.m_vY.DotProduct(q - vC1);
-		float z = -cBox.m_vZ.DotProduct(q - vC1);
+		const float x =  cBox.m_vX.DotProduct(q - vC1);
+		const float y =  cBox.m_vY.DotProduct(q - vC1);
+		const float z = -cBox.m_vZ.DotProduct(q - vC1);
 		if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 			return true;
 	}
@@ -603,12 +607,12 @@ bool Intersect::BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector
 	n = -cBox.m_vZ;
 	t = (n.DotProduct(vC1) - n.DotProduct(vA))/n.DotProduct(r);
 	if (t>=0 && t<=1) { // Point in plane, but where in plane?
-		Vector3 q = vA + r*t;
+		const Vector3 q = vA + r*t;
 
 		// Get position in local axis coordinates
-		float x =  cBox.m_vX.DotProduct(q - vC1);
-		float y =  cBox.m_vY.DotProduct(q - vC1);
-		float z = -cBox.m_vZ.DotProduct(q - vC1);
+		const float x =  cBox.m_vX.DotProduct(q - vC1);
+		const float y =  cBox.m_vY.DotProduct(q - vC1);
+		const float z = -cBox.m_vZ.DotProduct(q - vC1);
 		if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 			return true;
 	}
@@ -616,12 +620,12 @@ bool Intersect::BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector
 	n = cBox.m_vX;
 	t = (n.DotProduct(vC2) - n.DotProduct(vA))/n.DotProduct(r);
 	if (t>=0 && t<=1) { // Point in plane, but where in plane?
-		Vector3 q = vA + r*t;
+		const Vector3 q = vA + r*t;
 
 		// Get position in local axis coordinates
-		float x =  cBox.m_vX.DotProduct(q - vC1);
-		float y =  cBox.m_vY.DotProduct(q - vC1);
-		float z = -cBox.m_vZ.DotProduct(q - vC1);
+		const float x =  cBox.m_vX.DotProduct(q - vC1);
+		const float y =  cBox.m_vY.DotProduct(q - vC1);
+		const float z = -cBox.m_vZ.DotProduct(q - vC1);
 		if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 			return true;
 	}
@@ -629,12 +633,12 @@ bool Intersect::BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector
 	n = cBox.m_vY;
 	t = (n.DotProduct(vC2) - n.DotProduct(vA))/n.DotProduct(r);
 	if (t>=0 && t<=1) { // Point in plane, but where in plane?
-		Vector3 q = vA + r*t;
+		const Vector3 q = vA + r*t;
 
 		// Get position in local axis coordinates
-		float x =  cBox.m_vX.DotProduct(q - vC1);
-		float y =  cBox.m_vY.DotProduct(q - vC1);
-		float z = -cBox.m_vZ.DotProduct(q - vC1);
+		const float x =  cBox.m_vX.DotProduct(q - vC1);
+		const float y =  cBox.m_vY.DotProduct(q - vC1);
+		const float z = -cBox.m_vZ.DotProduct(q - vC1);
 		if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 			return true;
 	}
@@ -642,12 +646,12 @@ bool Intersect::BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector
 	n = -cBox.m_vZ;
 	t = (n.DotProduct(vC2) - n.DotProduct(vA))/n.DotProduct(r);
 	if (t>=0 && t<=1) { // Point in plane, but where in plane?
-		Vector3 q = vA + r*t;
+		const Vector3 q = vA + r*t;
 
 		// Get position in local axis coordinates
-		float x =  cBox.m_vX.DotProduct(q - vC1);
-		float y =  cBox.m_vY.DotProduct(q - vC1);
-		float z = -cBox.m_vZ.DotProduct(q - vC1);
+		const float x =  cBox.m_vX.DotProduct(q - vC1);
+		const float y =  cBox.m_vY.DotProduct(q - vC1);
+		const float z = -cBox.m_vZ.DotProduct(q - vC1);
 		if (x>=0 && x<=cBox.m_fW && y>=0 && y<=cBox.m_fH && z>=0 && z<=cBox.m_fD)
 			return true;
 	}
@@ -670,116 +674,141 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2)
 	// Compute dot products XX, XY, XZ
 	bool bParallelAxis = false;
 	float fDotXX = Math::Abs(cBox1.m_vX.DotProduct(cBox2.m_vX));
-	if (fDotXX > ParallelApprox) bParallelAxis = true;
+	if (fDotXX > ParallelApprox)
+		bParallelAxis = true;
 	float fDotXY = Math::Abs(cBox1.m_vX.DotProduct(cBox2.m_vY));
-	if (fDotXY > ParallelApprox) bParallelAxis = true;
+	if (fDotXY > ParallelApprox)
+		bParallelAxis = true;
 	float fDotXZ = Math::Abs(cBox1.m_vX.DotProduct(cBox2.m_vZ));
-	if (fDotXZ > ParallelApprox) bParallelAxis = true;
+	if (fDotXZ > ParallelApprox)
+		bParallelAxis = true;
 
 	// Test for m_vX
 	float fR1 = cBox2.m_fExtX*fDotXX + cBox2.m_fExtY*fDotXY + cBox2.m_fExtZ*fDotXZ;
 	float fR  = Math::Abs(cBox1.m_vX.DotProduct(vDist));
-	if (fR > cBox1.m_fExtX + fR1) return false;
+	if (fR > cBox1.m_fExtX + fR1)
+		return false;
 
 	// Compute dot products YX, YY, YZ
 	float fDotYX = Math::Abs(cBox1.m_vY.DotProduct(cBox2.m_vX));
-	if (fDotYX > ParallelApprox) bParallelAxis = true;
+	if (fDotYX > ParallelApprox)
+		bParallelAxis = true;
 	float fDotYY = Math::Abs(cBox1.m_vY.DotProduct(cBox2.m_vY));
-	if (fDotYY > ParallelApprox) bParallelAxis = true;
+	if (fDotYY > ParallelApprox)
+		bParallelAxis = true;
 	float fDotYZ = Math::Abs(cBox1.m_vY.DotProduct(cBox2.m_vZ));
-	if (fDotYZ > ParallelApprox) bParallelAxis = true;
+	if (fDotYZ > ParallelApprox)
+		bParallelAxis = true;
 
 	// Test for m_vY
 	fR1 = cBox2.m_fExtX*fDotYX + cBox2.m_fExtY*fDotYY + cBox2.m_fExtZ*fDotYZ;
 	fR  = Math::Abs(cBox1.m_vY.DotProduct(vDist));
-	if (fR > cBox1.m_fExtY + fR1) return false;
+	if (fR > cBox1.m_fExtY + fR1)
+		return false;
 
 	// Compute dot products ZX, ZY, ZZ
 	float fDotZX = Math::Abs(cBox1.m_vZ.DotProduct(cBox2.m_vX));
-	if (fDotZX > ParallelApprox) bParallelAxis = true;
+	if (fDotZX > ParallelApprox)
+		bParallelAxis = true;
 	float fDotZY = Math::Abs(cBox1.m_vZ.DotProduct(cBox2.m_vY));
-	if (fDotZY > ParallelApprox) bParallelAxis = true;
+	if (fDotZY > ParallelApprox)
+		bParallelAxis = true;
 	float fDotZZ = Math::Abs(cBox1.m_vZ.DotProduct(cBox2.m_vZ));
-	if (fDotZZ > ParallelApprox) bParallelAxis = true;
+	if (fDotZZ > ParallelApprox)
+		bParallelAxis = true;
 
 	// Test for m_vZ
 	fR1 = cBox2.m_fExtX*fDotZX + cBox2.m_fExtY*fDotZY + cBox2.m_fExtZ*fDotZZ;
 	fR  = Math::Abs(cBox1.m_vZ.DotProduct(vDist));
-	if (fR > cBox1.m_fExtZ + fR1) return false;
+	if (fR > cBox1.m_fExtZ + fR1)
+		return false;
 
 	// Test for cBox2.m_vX
 	float fR0 = cBox1.m_fExtX*fDotXX + cBox1.m_fExtY*fDotYX + cBox1.m_fExtZ*fDotZX;
 	fR = Math::Abs(cBox2.m_vX.DotProduct(vDist));
-	if (fR > fR0 + cBox2.m_fExtX) return false;
+	if (fR > fR0 + cBox2.m_fExtX)
+		return false;
 
 	// Test for cBox2.m_vY
 	fR0 = cBox1.m_fExtX*fDotXY + cBox1.m_fExtY*fDotYY + cBox1.m_fExtZ*fDotZY;
 	fR  = Math::Abs(cBox2.m_vY.DotProduct(vDist));
-	if (fR > fR0 + cBox2.m_fExtY) return false;
+	if (fR > fR0 + cBox2.m_fExtY)
+		return false;
 
 	// Test for cBox2.m_vZ
 	fR0 = cBox1.m_fExtX*fDotXZ + cBox1.m_fExtY*fDotYZ + cBox1.m_fExtZ*fDotZZ;
 	fR  = Math::Abs(cBox2.m_vZ.DotProduct(vDist));
-	if (fR > fR0 + cBox2.m_fExtZ) return false;
+	if (fR > fR0 + cBox2.m_fExtZ)
+		return false;
 
 	// If a pair of axis is parallel and none of the local axis seperates the boxes,
 	// we don't need to check the cross product axis, it's already sure that a
 	// collision has occured
-	if (bParallelAxis) return true;
+	if (bParallelAxis)
+		return true;
 
 	// Test for m_vX x cBox2.m_vX
 	fR0 = cBox1.m_fExtY*fDotZX + cBox1.m_fExtZ*fDotYX;
 	fR1 = cBox2.m_fExtY*fDotXZ + cBox2.m_fExtZ*fDotXY;
 	fR  = Math::Abs(fDotYX*cBox1.m_vZ.DotProduct(vDist) - fDotZX*cBox1.m_vY.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vX x cBox2.m_vY
 	fR0 = cBox1.m_fExtY*fDotZY + cBox1.m_fExtZ*fDotYY;
 	fR1 = cBox2.m_fExtX*fDotXZ + cBox2.m_fExtZ*fDotXX;
 	fR  = Math::Abs(fDotYY*cBox1.m_vZ.DotProduct(vDist) - fDotZY*cBox1.m_vY.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vX x cBox2.m_vZ
 	fR0 = cBox1.m_fExtY*fDotZZ + cBox1.m_fExtZ*fDotYZ;
 	fR1 = cBox2.m_fExtX*fDotXY + cBox2.m_fExtY*fDotXX;
 	fR  = Math::Abs(fDotYZ*cBox1.m_vZ.DotProduct(vDist) - fDotZZ*cBox1.m_vY.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vY x cBox2.m_vX
 	fR0 = cBox1.m_fExtX*fDotZX + cBox1.m_fExtZ*fDotXX;
 	fR1 = cBox2.m_fExtY*fDotYZ + cBox2.m_fExtZ*fDotYY;
 	fR  = Math::Abs(fDotZX*cBox1.m_vX.DotProduct(vDist) - fDotXX*cBox1.m_vZ.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vY x cBox2.m_vY
 	fR0 = cBox1.m_fExtX*fDotZY + cBox1.m_fExtZ*fDotXY;
 	fR1 = cBox2.m_fExtX*fDotYZ + cBox2.m_fExtZ*fDotYX;
 	fR  = Math::Abs(fDotZY*cBox1.m_vX.DotProduct(vDist) - fDotXY*cBox1.m_vZ.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vY x cBox2.m_vZ
 	fR0 = cBox1.m_fExtX*fDotZZ + cBox1.m_fExtZ*fDotXZ;
 	fR1 = cBox2.m_fExtX*fDotYY + cBox2.m_fExtY*fDotYX;
 	fR  = Math::Abs(fDotZZ*cBox1.m_vX.DotProduct(vDist) - fDotXZ*cBox1.m_vZ.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vZ x cBox2.m_vX
 	fR0 = cBox1.m_fExtX*fDotYX + cBox1.m_fExtY*fDotXX;
 	fR1 = cBox2.m_fExtY*fDotZZ + cBox2.m_fExtZ*fDotZY;
 	fR  = Math::Abs(fDotXX*cBox1.m_vY.DotProduct(vDist) - fDotYX*cBox1.m_vX.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vZ x cBox2.m_vY
 	fR0 = cBox1.m_fExtX*fDotYY + cBox1.m_fExtY*fDotXY;
 	fR1 = cBox2.m_fExtX*fDotZZ + cBox2.m_fExtZ*fDotZX;
 	fR  = Math::Abs(fDotXY*cBox1.m_vY.DotProduct(vDist) - fDotYY*cBox1.m_vX.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for m_vZ x cBox2.m_vZ
 	fR0 = cBox1.m_fExtX*fDotYZ + cBox1.m_fExtY*fDotXZ;
 	fR1 = cBox2.m_fExtX*fDotZY + cBox2.m_fExtY*fDotZX;
 	fR  = Math::Abs(fDotXZ*cBox1.m_vY.DotProduct(vDist) - fDotYZ*cBox1.m_vX.DotProduct(vDist));
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// None of the axis seperated the boxes, so there's a collision
 	return true;
@@ -835,10 +864,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + cBox2.m_fExtX;
 	if (fR > fR01) {
 		fR = cBox2.m_vX.DotProduct(vDist1);
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = cBox2.m_vX.DotProduct(vDist1);
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for cBox2.m_vY
@@ -847,10 +878,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + cBox2.m_fExtY;
 	if (fR > fR01) {
 		fR = cBox2.m_vY.DotProduct(vDist1);
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = cBox2.m_vY.DotProduct(vDist1);
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for cBox2.m_vZ
@@ -859,10 +892,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + cBox2.m_fExtZ;
 	if (fR > fR01) {
 		fR = cBox2.m_vZ.DotProduct(vDist1);
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = cBox2.m_vZ.DotProduct(vDist1);
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vX x cBox2.m_vX
@@ -872,10 +907,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotZDist1*fDotYX - fDotYDist1*fDotZX;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotZDist1*fDotYX - fDotYDist1*fDotZX;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vX x cBox2.m_vY
@@ -885,10 +922,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotZDist1*fDotYY - fDotYDist1*fDotZY;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotZDist1*fDotYY - fDotYDist1*fDotZY;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vX x cBox2.m_vZ
@@ -898,10 +937,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotZDist1*fDotYZ - fDotYDist1*fDotZZ;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotZDist1*fDotYZ - fDotYDist1*fDotZZ;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vY x cBox2.m_vX
@@ -911,10 +952,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotXDist1*fDotZX - fDotZDist1*fDotXX;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotXDist1*fDotZX - fDotZDist1*fDotXX;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vY x cBox2.m_vY
@@ -924,10 +967,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotXDist1*fDotZY - fDotZDist1*fDotXY;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotXDist1*fDotZY - fDotZDist1*fDotXY;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vY x cBox2.m_vZ
@@ -937,10 +982,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotXDist1*fDotZZ - fDotZDist1*fDotXZ;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotXDist1*fDotZZ - fDotZDist1*fDotXZ;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vZ x cBox2.m_vX
@@ -950,10 +997,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotYDist1*fDotXX - fDotXDist1*fDotYX;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotYDist1*fDotXX - fDotXDist1*fDotYX;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vZ x cBox2.m_vY
@@ -963,10 +1012,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotYDist1*fDotXY - fDotXDist1*fDotYY;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotYDist1*fDotXY - fDotXDist1*fDotYY;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// Test for m_vZ x cBox2.m_vZ
@@ -976,10 +1027,12 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR01 = fR0 + fR1;
 	if (fR > fR01) {
 		fR = fDotYDist1*fDotXZ - fDotXDist1*fDotYZ;
-		if (fR > fR01) return false;
+		if (fR > fR01)
+			return false;
 	} else if (fR < -fR01) {
 		fR = fDotYDist1*fDotXZ - fDotXDist1*fDotYZ;
-		if (fR < -fR01) return false;
+		if (fR < -fR01)
+			return false;
 	}
 
 	// In addition to these 15 axis, we have to test each box against the movement axis
@@ -993,7 +1046,8 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR1 = cBox2.m_fExtX*Math::Abs(fDotYX*fDotMoveZ - fDotZX*fDotMoveY) +
 		  cBox2.m_fExtY*Math::Abs(fDotYY*fDotMoveZ - fDotZY*fDotMoveY) +
 		  cBox2.m_fExtZ*Math::Abs(fDotYZ*fDotMoveZ - fDotZZ*fDotMoveY);
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for vMove x m_vY
 	float fDotMoveX = vMove.DotProduct(cBox1.m_vX);
@@ -1002,7 +1056,8 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR1 = cBox2.m_fExtX*Math::Abs(fDotZX*fDotMoveX - fDotXX*fDotMoveZ) +
 		  cBox2.m_fExtY*Math::Abs(fDotZY*fDotMoveX - fDotXY*fDotMoveZ) +
 		  cBox2.m_fExtZ*Math::Abs(fDotZZ*fDotMoveX - fDotXZ*fDotMoveZ);
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for vMove x m_vZ
 	fR  = Math::Abs(cBox1.m_vZ.DotProduct(vCrossMoveDist));
@@ -1010,7 +1065,8 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	fR1 = cBox2.m_fExtX*Math::Abs(fDotXX*fDotMoveY - fDotYX*fDotMoveX) +
 		  cBox2.m_fExtY*Math::Abs(fDotXY*fDotMoveY - fDotYY*fDotMoveX) +
 		  cBox2.m_fExtZ*Math::Abs(fDotXZ*fDotMoveY - fDotYZ*fDotMoveX);
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for vMove x cBox2.m_vX
 	float fDotMoveY2 = vMove.DotProduct(cBox2.m_vY);
@@ -1020,7 +1076,8 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 		  cBox1.m_fExtY*Math::Abs(fDotYY*fDotMoveZ2 - fDotYZ*fDotMoveY2) +
 		  cBox1.m_fExtZ*Math::Abs(fDotZY*fDotMoveZ2 - fDotZZ*fDotMoveY2);
 	fR1 = cBox2.m_fExtY*Math::Abs(fDotMoveZ2) + cBox2.m_fExtZ*Math::Abs(fDotMoveY2);
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for vMove x cBox2.m_vY
 	float fDotMoveX2 = vMove.DotProduct(cBox2.m_vX);
@@ -1029,7 +1086,8 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 		  cBox1.m_fExtY*Math::Abs(fDotYZ*fDotMoveX2 - fDotYX*fDotMoveZ2) +
 		  cBox1.m_fExtZ*Math::Abs(fDotZZ*fDotMoveX2 - fDotZX*fDotMoveZ2);
 	fR1 = cBox2.m_fExtZ*Math::Abs(fDotMoveX2) + cBox2.m_fExtX*Math::Abs(fDotMoveZ2);
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// Test for vMove x cBox2.m_vZ
 	fR  = Math::Abs(cBox2.m_vZ.DotProduct(vCrossMoveDist));
@@ -1037,7 +1095,8 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 		  cBox1.m_fExtY*Math::Abs(fDotYX*fDotMoveY2 - fDotYY*fDotMoveX2) +
 		  cBox1.m_fExtZ*Math::Abs(fDotZX*fDotMoveY2 - fDotZY*fDotMoveX2);
 	fR1 = cBox2.m_fExtX*Math::Abs(fDotMoveY2) + cBox2.m_fExtY*Math::Abs(fDotMoveX2);
-	if (fR > fR0 + fR1) return false;
+	if (fR > fR0 + fR1)
+		return false;
 
 	// None of the axis seperated the boxes, so there's a collision
 	return true;
@@ -1094,9 +1153,12 @@ float Intersect::PlaneLine(const Plane &cPlane, const Vector3 &vStartPos,
 	float f1 = fN[0]*-vM.x       + fN[1]*-vM.y       + fN[2]*-vM.z;
 	if ((f1 < -0.0001f) || (f1 > 0.0001f)) {
 		float t = f0/f1;
-		if (pvPos) *pvPos = vStartPos+vM*t;
+		if (pvPos)
+			*pvPos = vStartPos+vM*t;
 		return t;
-	} else return -1.0f;
+	} else {
+		return -1.0f;
+	}
 }
 
 /**
@@ -1113,7 +1175,8 @@ bool Intersect::PlanePlane(const Plane &cPlane, const Plane &cPlane2, Ray &cRay)
 	float fN11 = fPN[0]*fPN[0] + fPN[1]*fPN[1] + fPN[2]*fPN[2];	// Squared length of fPN
 	float fDet = fN00*fN11 - fN01*fN01;
 
-	if (!Math::Abs(fDet)) return false;
+	if (!Math::Abs(fDet))
+		return false;
 
 	float fInvDet = 1.0f/fDet;
 	float fC0	  = (fN11*fD - fN01*cPlane2.fD)*fInvDet;
@@ -1180,7 +1243,8 @@ bool Intersect::PlaneSetPoint(const PlaneSet &cPlaneSet, const Vector3 &vPoint)
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	// Go through all the sides of the plane set
 	for (uint32 i=0; i<lstPlane.GetNumOfElements(); i++) {
@@ -1203,7 +1267,8 @@ bool Intersect::PlaneSetPoint(const PlaneSet &cPlaneSet, const Vector4 &vPoint)
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	// Go through all the sides of the plane set
 	for (uint32 i=0; i<lstPlane.GetNumOfElements(); i++) {
@@ -1226,7 +1291,8 @@ bool Intersect::PlaneSetPoints(const PlaneSet &cPlaneSet, const Array<Vector3> &
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	// See if there is one plane for which all
 	// of the vertices are on the wrong side
@@ -1238,11 +1304,13 @@ bool Intersect::PlaneSetPoints(const PlaneSet &cPlaneSet, const Array<Vector3> &
 		uint32 nInside = 0;
 		for (uint32 i=0; i<lstPoints.GetNumOfElements(); i++) {
 			// Calculate the plane equation and check if the point is behind a side of the plane set
-			if (cPlane.GetDistance(lstPoints[i]) > 0) nInside++;
+			if (cPlane.GetDistance(lstPoints[i]) > 0)
+				nInside++;
 		}
 
 		// Are all points outside the plane set?
-		if (!nInside) return false;
+		if (!nInside)
+			return false;
 	}
 
 	// All points are inside the plane set
@@ -1259,7 +1327,8 @@ bool Intersect::PlaneSetPoints(const PlaneSet &cPlaneSet, const Array<Vector4> &
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	// See if there is one plane for which all
 	// of the vertices are on the wrong side
@@ -1271,11 +1340,13 @@ bool Intersect::PlaneSetPoints(const PlaneSet &cPlaneSet, const Array<Vector4> &
 		uint32 nInside = 0;
 		for (uint32 i=0; i<lstPoints.GetNumOfElements(); i++) {
 			// Calculate the plane equation and check if the point is behind a side of the plane set
-			if (cPlane.GetDistance(lstPoints[i]) > 0) nInside++;
+			if (cPlane.GetDistance(lstPoints[i]) > 0)
+				nInside++;
 		}
 
 		// Are all points outside the plane set?
-		if (!nInside) return false;
+		if (!nInside)
+			return false;
 	}
 
 	// All points are inside the plane set
@@ -1292,7 +1363,8 @@ bool Intersect::PlaneSetSphere(const PlaneSet &cPlaneSet, const Vector3 &vSphere
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	// Go through all the sides of the plane set
 	for (uint32 i=0; i<lstPlane.GetNumOfElements(); i++) {
@@ -1316,7 +1388,8 @@ bool Intersect::PlaneSetTriangle(const PlaneSet &cPlaneSet, const Vector3 &vV1,
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	// Go through all the sides of the plane set
 	for (uint32 i=0; i<lstPlane.GetNumOfElements(); i++) {
@@ -1338,14 +1411,14 @@ bool Intersect::PlaneSetTriangle(const PlaneSet &cPlaneSet, const Vector3 &vV1,
 *  @brief
 *    Tests whether a box is within the plane set or not
 */
-bool Intersect::PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin,
-							  const Vector3 &vMax, uint32 *pnOutClipMask)
+bool Intersect::PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, const Vector3 &vMax, uint32 *pnOutClipMask)
 {
 	// Get planes list
 	const Array<Plane> &lstPlane = cPlaneSet.GetList();
 
 	// Are there any planes?
-	if (!lstPlane.GetNumOfElements()) return false;
+	if (!lstPlane.GetNumOfElements())
+		return false;
 
 	Vector3  m = (vMin + vMax)*0.5f;	// Center of AABB
 	Vector3  d = vMax - m;				// Half-diagonal
@@ -1356,10 +1429,12 @@ bool Intersect::PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin,
 		for (uint32 i=0; i<lstPlane.GetNumOfElements(); i++) {
 			const Plane &cPlane = lstPlane[i];
 			const float &fN     = cPlane.fN[0];
-			float NP = (float)(d.x*Math::Abs((&fN)[Vector3::X])+d.y*Math::Abs((&fN)[Vector3::Y])+d.z*Math::Abs((&fN)[Vector3::Z]));
+			float NP = d.x*Math::Abs((&fN)[Vector3::X])+d.y*Math::Abs((&fN)[Vector3::Y])+d.z*Math::Abs((&fN)[Vector3::Z]);
 			float MP = m.x*(&fN)[Vector3::X]+m.y*(&fN)[Vector3::Y]+m.z*(&fN)[Vector3::Z]+cPlane.fD;
-			if ((MP+NP) < 0.0f) return false;	// Behind clip plane
-			if ((MP-NP) < 0.0f) *pnOutClipMask |= mk;
+			if ((MP+NP) < 0.0f)
+				return false;	// Behind clip plane
+			if ((MP-NP) < 0.0f)
+				*pnOutClipMask |= mk;
 			mk += mk;	// mk = (1<<iter)
 		}
 	} else {
@@ -1367,9 +1442,10 @@ bool Intersect::PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin,
 		for (uint32 i=0; i<lstPlane.GetNumOfElements(); i++) {
 			const Plane &cPlane = lstPlane[i];
 			const float &fN     = cPlane.fN[0];
-			float NP = (float)(d.x*Math::Abs((&fN)[Vector3::X])+d.y*Math::Abs((&fN)[Vector3::Y])+d.z*Math::Abs((&fN)[Vector3::Z]));
+			float NP = d.x*Math::Abs((&fN)[Vector3::X])+d.y*Math::Abs((&fN)[Vector3::Y])+d.z*Math::Abs((&fN)[Vector3::Z]);
 			float MP = m.x*(&fN)[Vector3::X]+m.y*(&fN)[Vector3::Y]+m.z*(&fN)[Vector3::Z]+cPlane.fD;
-			if ((MP+NP) < 0.0f) return false;	// Behind clip plane
+			if ((MP+NP) < 0.0f)
+				return false;	// Behind clip plane
 			mk += mk;	// mk = (1<<iter)
 		}
 	}

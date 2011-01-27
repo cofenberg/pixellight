@@ -132,19 +132,27 @@ inline float Math::Min(float a, float b, float c, float d)
 {
 	if (a < b) {
 		if (a < c) {
-			if (a < d) return a;
-			else	   return d;
+			if (a < d)
+				return a;
+			else
+				return d;
 		} else {
-			if (c < d) return c;
-			else	   return d;
+			if (c < d)
+				return c;
+			else
+				return d;
 		}
 	} else {
 		if (b < c) {
-			if (b < d) return b;
-			else	   return d;
+			if (b < d)
+				return b;
+			else
+				return d;
 		} else {
-			if (c < d) return c;
-			else	   return d;
+			if (c < d)
+				return c;
+			else
+				return d;
 		}
 	}
 }
@@ -153,19 +161,27 @@ inline int Math::Min(int a, int b, int c, int d)
 {
 	if (a < b) {
 		if (a < c) {
-			if (a < d) return a;
-			else	   return d;
+			if (a < d)
+				return a;
+			else
+				return d;
 		} else {
-			if (c < d) return c;
-			else	   return d;
+			if (c < d)
+				return c;
+			else
+				return d;
 		}
 	} else {
 		if (b < c) {
-			if (b < d) return b;
-			else	   return d;
+			if (b < d)
+				return b;
+			else
+				return d;
 		} else {
-			if (c < d) return c;
-			else	   return d;
+			if (c < d)
+				return c;
+			else
+				return d;
 		}
 	}
 }
@@ -174,19 +190,27 @@ inline PLGeneral::uint32 Math::Min(PLGeneral::uint32 a, PLGeneral::uint32 b, PLG
 {
 	if (a < b) {
 		if (a < c) {
-			if (a < d) return a;
-			else	   return d;
+			if (a < d)
+				return a;
+			else
+				return d;
 		} else {
-			if (c < d) return c;
-			else	   return d;
+			if (c < d)
+				return c;
+			else
+				return d;
 		}
 	} else {
 		if (b < c) {
-			if (b < d) return b;
-			else	   return d;
+			if (b < d)
+				return b;
+			else
+				return d;
 		} else {
-			if (c < d) return c;
-			else	   return d;
+			if (c < d)
+				return c;
+			else
+				return d;
 		}
 	}
 }
@@ -199,19 +223,27 @@ inline float Math::Max(float a, float b, float c, float d)
 {
 	if (a > b) {
 		if (a > c) {
-			if (a > d) return a;
-			else	   return d;
+			if (a > d)
+				return a;
+			else
+				return d;
 		} else {
-			if (c > d) return c;
-			else	   return d;
+			if (c > d)
+				return c;
+			else
+				return d;
 		}
 	} else {
 		if (b > c) {
-			if (b > d) return b;
-			else	   return d;
+			if (b > d)
+				return b;
+			else
+				return d;
 		} else {
-			if (c > d) return c;
-			else	   return d;
+			if (c > d)
+				return c;
+			else
+				return d;
 		}
 	}
 }
@@ -220,19 +252,27 @@ inline int Math::Max(int a, int b, int c, int d)
 {
 	if (a > b) {
 		if (a > c) {
-			if (a > d) return a;
-			else	   return d;
+			if (a > d)
+				return a;
+			else
+				return d;
 		} else {
-			if (c > d) return c;
-			else	   return d;
+			if (c > d)
+				return c;
+			else
+				return d;
 		}
 	} else {
 		if (b > c) {
-			if (b > d) return b;
-			else	   return d;
+			if (b > d)
+				return b;
+			else
+				return d;
 		} else {
-			if (c > d) return c;
-			else	   return d;
+			if (c > d)
+				return c;
+			else
+				return d;
 		}
 	}
 }
@@ -241,19 +281,27 @@ inline PLGeneral::uint32 Math::Max(PLGeneral::uint32 a, PLGeneral::uint32 b, PLG
 {
 	if (a > b) {
 		if (a > c) {
-			if (a > d) return a;
-			else	   return d;
+			if (a > d)
+				return a;
+			else
+				return d;
 		} else {
-			if (c > d) return c;
-			else	   return d;
+			if (c > d)
+				return c;
+			else
+				return d;
 		}
 	} else {
 		if (b > c) {
-			if (b > d) return b;
-			else	   return d;
+			if (b > d)
+				return b;
+			else
+				return d;
 		} else {
-			if (c > d) return c;
-			else	   return d;
+			if (c > d)
+				return c;
+			else
+				return d;
 		}
 	}
 }

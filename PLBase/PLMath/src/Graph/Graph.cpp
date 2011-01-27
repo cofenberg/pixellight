@@ -170,8 +170,8 @@ Graph &Graph::operator =(const Graph &cSource)
 	Unload();
 
 	// Call base function
-	*((Resource<Graph>*)this)           = cSource;
-	*((ElementManager<GraphNode>*)this) = cSource;
+	*static_cast<Resource<Graph>*>(this)           = cSource;
+	*static_cast<ElementManager<GraphNode>*>(this) = cSource;
 
 	// Done
 	return *this;

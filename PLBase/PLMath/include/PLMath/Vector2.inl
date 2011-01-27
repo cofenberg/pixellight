@@ -250,14 +250,14 @@ inline Vector2 &Vector2::operator /=(float fS)
 //[-------------------------------------------------------]
 //[ Get and set                                           ]
 //[-------------------------------------------------------]
-inline Vector2::operator float *() const
+inline Vector2::operator float *()
 {
-	return (float*)&x;
+	return &x;
 }
 
 inline Vector2::operator const float *() const
 {
-	return (const float*)&x;
+	return &x;
 }
 
 inline float &Vector2::operator [](int nIndex)
@@ -340,7 +340,7 @@ inline void Vector2::IncY(float fY)
 */
 inline bool Vector2::IsNull() const
 {
-	return !x && !y;
+	return (!x && !y);
 }
 
 /**
@@ -349,7 +349,7 @@ inline bool Vector2::IsNull() const
 */
 inline bool Vector2::IsPacked() const
 {
-	return x >= 0.0f && x <= 1.0f && y >= 0.0f && y <= 1.0f;
+	return (x >= 0.0f && x <= 1.0f && y >= 0.0f && y <= 1.0f);
 }
 
 /**
@@ -480,7 +480,7 @@ inline void Vector2::SetLength(float fLength)
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fScale = fLength/fU;
+			const float fScale = fLength/fU;
 			x *= fScale;
 			y *= fScale;
 		}
@@ -499,7 +499,7 @@ inline Vector2 &Vector2::Normalize()
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fScale = 1.0f/fU;
+			const float fScale = 1.0f/fU;
 			x *= fScale;
 			y *= fScale;
 		}
@@ -520,7 +520,7 @@ inline Vector2 Vector2::GetNormalized() const
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fScale = 1.0f/fU;
+			const float fScale = 1.0f/fU;
 			return Vector2(x*fScale, y*fScale);
 		}
 	}
@@ -535,9 +535,8 @@ inline Vector2 Vector2::GetNormalized() const
 */
 inline float Vector2::GetDistance(const Vector2 &vV) const
 {
-	float fDX = vV.x-x;
-	float fDY = vV.y-y;
-
+	const float fDX = vV.x-x;
+	const float fDY = vV.y-y;
 	return Math::Sqrt(fDX*fDX + fDY*fDY);
 }
 
@@ -547,9 +546,8 @@ inline float Vector2::GetDistance(const Vector2 &vV) const
 */
 inline float Vector2::GetSquaredDistance(const Vector2 &vV) const
 {
-	float fDX = vV.x-x;
-	float fDY = vV.y-y;
-
+	const float fDX = vV.x-x;
+	const float fDY = vV.y-y;
 	return fDX*fDX + fDY*fDY;
 }
 

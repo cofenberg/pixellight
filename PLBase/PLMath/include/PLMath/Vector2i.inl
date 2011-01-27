@@ -58,14 +58,14 @@ inline Vector2i::~Vector2i()
 {
 }
 
-inline Vector2i::operator int *() const
+inline Vector2i::operator int *()
 {
-	return (int*)&x;
+	return &x;
 }
 
 inline Vector2i::operator const int *() const
 {
-	return (const int*)&x;
+	return &x;
 }
 
 inline int &Vector2i::operator [](int nIndex)
@@ -217,7 +217,7 @@ inline Vector2i &Vector2i::operator -=(const Vector2i &vV)
 */
 inline Vector2i Vector2i::operator *(float fFactor) const
 {
-	return Vector2i((int)(x*fFactor), (int)(y*fFactor));
+	return Vector2i(static_cast<int>(x*fFactor), static_cast<int>(y*fFactor));
 }
 
 /**
@@ -226,8 +226,8 @@ inline Vector2i Vector2i::operator *(float fFactor) const
 */
 inline Vector2i &Vector2i::operator *=(float fFactor)
 {
-	x = (int)(x*fFactor);
-	y = (int)(y*fFactor);
+	x = static_cast<int>(x*fFactor);
+	y = static_cast<int>(y*fFactor);
 	return *this;
 }
 
@@ -237,7 +237,7 @@ inline Vector2i &Vector2i::operator *=(float fFactor)
 */
 inline Vector2i Vector2i::operator /(float fFactor) const
 {
-	return Vector2i((int)(x/fFactor), (int)(y/fFactor));
+	return Vector2i(static_cast<int>(x/fFactor), static_cast<int>(y/fFactor));
 }
 
 /**
@@ -246,8 +246,8 @@ inline Vector2i Vector2i::operator /(float fFactor) const
 */
 inline Vector2i &Vector2i::operator /=(float fFactor)
 {
-	x = (int)(x/fFactor);
-	y = (int)(y/fFactor);
+	x = static_cast<int>(x/fFactor);
+	y = static_cast<int>(y/fFactor);
 	return *this;
 }
 

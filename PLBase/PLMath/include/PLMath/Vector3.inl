@@ -264,14 +264,14 @@ inline Vector3 &Vector3::operator /=(float fS)
 //[-------------------------------------------------------]
 //[ Get and set                                           ]
 //[-------------------------------------------------------]
-inline Vector3::operator float *() const
+inline Vector3::operator float *()
 {
-	return (float*)&x;
+	return &x;
 }
 
 inline Vector3::operator const float *() const
 {
-	return (const float*)&x;
+	return &x;
 }
 
 inline float &Vector3::operator [](int nIndex)
@@ -439,11 +439,15 @@ inline Vector3 Vector3::GetUnpackedFrom01() const
 inline Vector3::Component Vector3::GetSmallestComponent() const
 {
 	if (x < y) {
-		if (x < z) return X;
-		else	   return Z;
+		if (x < z)
+			return X;
+		else
+			return Z;
 	} else {
-		if (y < z) return Y;
-		else	   return Z;
+		if (y < z)
+			return Y;
+		else
+			return Z;
 	}
 }
 
@@ -454,11 +458,15 @@ inline Vector3::Component Vector3::GetSmallestComponent() const
 inline float Vector3::GetSmallestValue() const
 {
 	if (x < y) {
-		if (x < z) return x;
-		else	   return z;
+		if (x < z)
+			return x;
+		else
+			return z;
 	} else {
-		if (y < z) return y;
-		else	   return z;
+		if (y < z)
+			return y;
+		else
+			return z;
 	}
 }
 
@@ -469,11 +477,15 @@ inline float Vector3::GetSmallestValue() const
 inline Vector3::Component Vector3::GetGreatestComponent() const
 {
 	if (x > y) {
-		if (x > z) return X;
-		else	   return Z;
+		if (x > z)
+			return X;
+		else
+			return Z;
 	} else {
-		if (y > z) return Y;
-		else	   return Z;
+		if (y > z)
+			return Y;
+		else
+			return Z;
 	}
 }
 
@@ -484,11 +496,15 @@ inline Vector3::Component Vector3::GetGreatestComponent() const
 inline float Vector3::GetGreatestValue() const
 {
 	if (x > y) {
-		if (x > z) return x;
-		else	   return z;
+		if (x > z)
+			return x;
+		else
+			return z;
 	} else {
-		if (y > z) return y;
-		else	   return z;
+		if (y > z)
+			return y;
+		else
+			return z;
 	}
 }
 
@@ -542,7 +558,7 @@ inline void Vector3::SetLength(float fLength)
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fScale = fLength/fU;
+			const float fScale = fLength/fU;
 			x *= fScale;
 			y *= fScale;
 			z *= fScale;
@@ -562,7 +578,7 @@ inline Vector3 &Vector3::Normalize()
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fScale = 1.0f/fU;
+			const float fScale = 1.0f/fU;
 			x *= fScale;
 			y *= fScale;
 			z *= fScale;
@@ -584,7 +600,7 @@ inline Vector3 Vector3::GetNormalized() const
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fScale = 1.0f/fU;
+			const float fScale = 1.0f/fU;
 			return Vector3(x*fScale, y*fScale, z*fScale);
 		}
 	}
@@ -599,9 +615,9 @@ inline Vector3 Vector3::GetNormalized() const
 */
 inline float Vector3::GetDistance(const Vector3 &vV) const
 {
-	float fDX = vV.x-x;
-	float fDY = vV.y-y;
-	float fDZ = vV.z-z;
+	const float fDX = vV.x-x;
+	const float fDY = vV.y-y;
+	const float fDZ = vV.z-z;
 	return Math::Sqrt(fDX*fDX + fDY*fDY + fDZ*fDZ);
 }
 
@@ -611,9 +627,9 @@ inline float Vector3::GetDistance(const Vector3 &vV) const
 */
 inline float Vector3::GetSquaredDistance(const Vector3 &vV) const
 {
-	float fDX = vV.x-x;
-	float fDY = vV.y-y;
-	float fDZ = vV.z-z;
+	const float fDX = vV.x-x;
+	const float fDY = vV.y-y;
+	const float fDZ = vV.z-z;
 	return fDX*fDX + fDY*fDY + fDZ*fDZ;
 }
 

@@ -55,7 +55,7 @@ Database *Database::Create(const String &sClass)
 		return nullptr; // Error!
 
 	// Create an instance of the database class and return it
-	return (Database*)pClass->Create();
+	return static_cast<Database*>(pClass->Create());
 }
 
 

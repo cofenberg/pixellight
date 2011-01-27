@@ -127,7 +127,7 @@ class Database : public PLDatabase::Database {
 		PLDATABASEPOSTGRESQL_API virtual bool IsConnected() const;
 		PLDATABASEPOSTGRESQL_API virtual bool IsConnectionActive() const;
 		PLDATABASEPOSTGRESQL_API virtual bool Disconnect();
-		PLDATABASEPOSTGRESQL_API virtual PLDatabase::DatabaseQuery *CreateQuery() const;
+		PLDATABASEPOSTGRESQL_API virtual PLDatabase::DatabaseQuery *CreateQuery();
 
 
 	//[-------------------------------------------------------]

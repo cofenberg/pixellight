@@ -60,14 +60,14 @@ inline Vector3i::~Vector3i()
 {
 }
 
-inline Vector3i::operator int *() const
+inline Vector3i::operator int *()
 {
-	return (int*)&x;
+	return &x;
 }
 
 inline Vector3i::operator const int *() const
 {
-	return (const int*)&x;
+	return &x;
 }
 
 inline int &Vector3i::operator [](int nIndex)
@@ -232,7 +232,7 @@ inline Vector3i &Vector3i::operator -=(const Vector3i &vV)
 */
 inline Vector3i Vector3i::operator *(float fFactor) const
 {
-	return Vector3i((int)(x*fFactor), (int)(y*fFactor), (int)(z*fFactor));
+	return Vector3i(static_cast<int>(x*fFactor), static_cast<int>(y*fFactor), static_cast<int>(z*fFactor));
 }
 
 /**
@@ -241,9 +241,9 @@ inline Vector3i Vector3i::operator *(float fFactor) const
 */
 inline Vector3i &Vector3i::operator *=(float fFactor)
 {
-	x = (int)(x*fFactor);
-	y = (int)(y*fFactor);
-	z = (int)(z*fFactor);
+	x = static_cast<int>(x*fFactor);
+	y = static_cast<int>(y*fFactor);
+	z = static_cast<int>(z*fFactor);
 	return *this;
 }
 
@@ -253,7 +253,7 @@ inline Vector3i &Vector3i::operator *=(float fFactor)
 */
 inline Vector3i Vector3i::operator /(float fFactor) const
 {
-	return Vector3i((int)(x/fFactor), (int)(y/fFactor), (int)(z/fFactor));
+	return Vector3i(static_cast<int>(x/fFactor), static_cast<int>(y/fFactor), static_cast<int>(z/fFactor));
 }
 
 /**
@@ -262,9 +262,9 @@ inline Vector3i Vector3i::operator /(float fFactor) const
 */
 inline Vector3i &Vector3i::operator /=(float fFactor)
 {
-	x = (int)(x/fFactor);
-	y = (int)(y/fFactor);
-	z = (int)(z/fFactor);
+	x = static_cast<int>(x/fFactor);
+	y = static_cast<int>(y/fFactor);
+	z = static_cast<int>(z/fFactor);
 	return *this;
 }
 

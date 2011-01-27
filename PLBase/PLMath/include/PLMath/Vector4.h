@@ -294,7 +294,7 @@ class Vector4 {
 		//[ Get and set                                           ]
 		//[-------------------------------------------------------]
 		PLMATH_API operator Vector3();
-		inline operator float *() const;
+		inline operator float *();
 		inline operator const float *() const;
 		inline float &operator [](int nIndex);
 		inline const float &operator [](int nIndex) const;

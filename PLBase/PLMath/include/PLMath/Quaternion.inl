@@ -102,11 +102,13 @@ inline Quaternion &Quaternion::operator +=(const Quaternion &qQ)
 
 inline Quaternion Quaternion::operator -() const
 {
-	float fNorm = w*w + x*x + y*y + z*z;
+	const float fNorm = w*w + x*x + y*y + z*z;
 	if (fNorm > 0.0f) {
-		float fInvNorm = 1.0f/fNorm;
+		const float fInvNorm = 1.0f/fNorm;
 		return Quaternion(w*fInvNorm, -x*fInvNorm, -y*fInvNorm, -z*fInvNorm);
-	} else return Zero; // Error!
+	} else {
+		return Zero; // Error!
+	}
 }
 
 inline Quaternion Quaternion::operator -(const Quaternion &qQ) const
@@ -147,7 +149,7 @@ inline Quaternion Quaternion::operator *(const Quaternion &qQ) const
 
 inline Quaternion &Quaternion::operator *=(const Quaternion &qQ)
 {
-	float qw = w, qx = x, qy = y, qz = z;
+	const float qw = w, qx = x, qy = y, qz = z;
 	w = qw*qQ.w - qx*qQ.x - qy*qQ.y - qz*qQ.z;
 	x = qw*qQ.x + qx*qQ.w + qy*qQ.z - qz*qQ.y;
 	y = qw*qQ.y + qy*qQ.w + qz*qQ.x - qx*qQ.z;
@@ -158,17 +160,17 @@ inline Quaternion &Quaternion::operator *=(const Quaternion &qQ)
 inline Vector3 Quaternion::operator *(const Vector3 &vV) const
 {
 // Classic
-//	Quaternion qRes = (*this)*Quaternion(0.0f, vV.x, vV.y, vV.z)*GetConjugated();
+//	const Quaternion qRes = (*this)*Quaternion(0.0f, vV.x, vV.y, vV.z)*GetConjugated();
 //	return Vector3(qRes.x, qRes.y, qRes.z);
 
 // Optimized
-	float x2 = x*x;
-	float y2 = y*y;
-	float z2 = z*z;
-	float w2 = w*w;
-	float xa = x*vV.x;
-	float yb = y*vV.y;
-	float zc = z*vV.z;
+	const float x2 = x*x;
+	const float y2 = y*y;
+	const float z2 = z*z;
+	const float w2 = w*w;
+	const float xa = x*vV.x;
+	const float yb = y*vV.y;
+	const float zc = z*vV.z;
 	return Vector3(vV.x*( x2 - y2 - z2 + w2) + 2*(w*(y*vV.z - z*vV.y) + x*(yb + zc)),
 				   vV.y*(-x2 + y2 - z2 + w2) + 2*(w*(z*vV.x - x*vV.z) + y*(xa + zc)),
 				   vV.z*(-x2 - y2 + z2 + w2) + 2*(w*(x*vV.y - y*vV.x) + z*(xa + yb)));
@@ -177,17 +179,17 @@ inline Vector3 Quaternion::operator *(const Vector3 &vV) const
 inline Vector4 Quaternion::operator *(const Vector4 &vV) const
 {
 // Classic
-//	Quaternion qRes = (*this)*Quaternion(0.0f, vV.x, vV.y, vV.z)*GetConjugated();
+//	const Quaternion qRes = (*this)*Quaternion(0.0f, vV.x, vV.y, vV.z)*GetConjugated();
 //	return Vector4(qRes.x, qRes.y, qRes.z, 1.0f);
 
 // Optimized
-	float x2 = x*x;
-	float y2 = y*y;
-	float z2 = z*z;
-	float w2 = w*w;
-	float xa = x*vV.x;
-	float yb = y*vV.y;
-	float zc = z*vV.z;
+	const float x2 = x*x;
+	const float y2 = y*y;
+	const float z2 = z*z;
+	const float w2 = w*w;
+	const float xa = x*vV.x;
+	const float yb = y*vV.y;
+	const float zc = z*vV.z;
 	return Vector4(vV.x*( x2 - y2 - z2 + w2) + 2*(w*(y*vV.z - z*vV.y) + x*(yb + zc)),
 				   vV.y*(-x2 + y2 - z2 + w2) + 2*(w*(z*vV.y - x*vV.z) + y*(xa + zc)),
 				   vV.z*(-x2 - y2 + z2 + w2) + 2*(w*(x*vV.y - y*vV.x) + z*(xa + yb)),
@@ -227,14 +229,14 @@ inline bool Quaternion::operator !=(const Quaternion &qQ) const
 	return (w != qQ.w || x != qQ.x || y != qQ.y || z != qQ.z);
 }
 
-inline Quaternion::operator float *() const
+inline Quaternion::operator float *()
 {
-	return (float*)fQ;
+	return fQ;
 }
 
 inline Quaternion::operator const float *() const
 {
-	return (const float*)fQ;
+	return fQ;
 }
 
 
@@ -322,7 +324,7 @@ inline Quaternion &Quaternion::Normalize()
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fFactor = 1.0f/fU;
+			const float fFactor = 1.0f/fU;
 			w *= fFactor;
 			x *= fFactor;
 			y *= fFactor;
@@ -345,7 +347,7 @@ inline Quaternion Quaternion::GetNormalized() const
 		fU = Math::Sqrt(fU);
 		if (fU) {
 			// Scale
-			float fFactor = 1.0f/fU;
+			const float fFactor = 1.0f/fU;
 			return Quaternion(w*fFactor, x*fFactor, y*fFactor, z*fFactor);
 		}
 	}
@@ -380,9 +382,9 @@ inline Quaternion Quaternion::GetConjugated() const
 */
 inline void Quaternion::Invert()
 {
-	float fNorm = w*w + x*x + y*y + z*z;
+	const float fNorm = w*w + x*x + y*y + z*z;
 	if (fNorm > 0.0f) {
-		float fInvNorm = 1.0f/fNorm;
+		const float fInvNorm = 1.0f/fNorm;
 		w =  w*fInvNorm;
 		x = -x*fInvNorm;
 		y = -y*fInvNorm;
@@ -398,11 +400,13 @@ inline void Quaternion::Invert()
 */
 inline Quaternion Quaternion::GetInverted() const
 {
-	float fNorm = w*w + x*x + y*y + z*z;
+	const float fNorm = w*w + x*x + y*y + z*z;
 	if (fNorm > 0.0f) {
-		float fInvNorm = 1.0f/fNorm;
+		const float fInvNorm = 1.0f/fNorm;
 		return Quaternion(w*fInvNorm, -x*fInvNorm, -y*fInvNorm, -z*fInvNorm);
-	} else return Zero; // Error!
+	} else {
+		return Zero; // Error!
+	}
 }
 
 /**
@@ -438,7 +442,7 @@ inline Quaternion &Quaternion::Exp()
 	if (fOm) {
 		fOm = Math::Sqrt(fOm);
 		if (fOm) {
-			float fSinom = Math::Sin(fOm)/fOm;
+			const float fSinom = Math::Sin(fOm)/fOm;
 			w = Math::Cos(fOm);
 			x *= fSinom;
 			y *= fSinom;
@@ -460,7 +464,7 @@ inline Quaternion Quaternion::GetExp() const
 	if (fOm) {
 		fOm = Math::Sqrt(fOm);
 		if (fOm) {
-			float fSinom = Math::Sin(fOm)/fOm;
+			const float fSinom = Math::Sin(fOm)/fOm;
 			return Quaternion(Math::Cos(fOm), x*fSinom, y*fSinom, z*fSinom);
 		}
 	}
@@ -475,8 +479,8 @@ inline Quaternion Quaternion::GetExp() const
 */
 inline Quaternion &Quaternion::Log()
 {
-	float fTheta    = Math::ACos(w);
-	float fSinTheta = Math::Sin(fTheta);
+	const float fTheta    = Math::ACos(w);
+	const float fSinTheta = Math::Sin(fTheta);
 	if (Math::Abs(fSinTheta) > 0.0f) {
 		w = 0.0f;
 		x = x/fSinTheta*fTheta;
@@ -493,10 +497,12 @@ inline Quaternion &Quaternion::Log()
 */
 inline Quaternion Quaternion::GetLog() const
 {
-	float fTheta    = Math::ACos(w);
-	float fSinTheta = Math::Sin(fTheta);
-	if (Math::Abs(fSinTheta) > 0.0f) return Quaternion(0.0f, x/fSinTheta*fTheta, y/fSinTheta*fTheta, z/fSinTheta*fTheta);
-	else							 return Quaternion(0.0f, x,                  y,                  z);
+	const float fTheta    = Math::ACos(w);
+	const float fSinTheta = Math::Sin(fTheta);
+	if (Math::Abs(fSinTheta) > 0.0f)
+		return Quaternion(0.0f, x/fSinTheta*fTheta, y/fSinTheta*fTheta, z/fSinTheta*fTheta);
+	else
+		return Quaternion(0.0f, x,                  y,                  z);
 }
 
 /**

@@ -155,7 +155,7 @@ class Database : public PLCore::Object {
 		*  @return
 		*    The database query, a null pointer on error
 		*/
-		virtual DatabaseQuery *CreateQuery() const = 0;
+		virtual DatabaseQuery *CreateQuery() = 0;
 
 
 	//[-------------------------------------------------------]

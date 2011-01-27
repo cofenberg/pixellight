@@ -69,10 +69,10 @@ class ProcessData {
 		*  @param[in]      nNoneTransparent
 		*    Alpha value for none transparent pixel
 		*/
-		ProcessData(const ImageBuffer &cImageBuffer, DataType nRedKey, DataType nGreenKey, DataType nBlueKey, DataType nTolerance, DataType nTransparent, DataType nNoneTransparent)
+		ProcessData(ImageBuffer &cImageBuffer, DataType nRedKey, DataType nGreenKey, DataType nBlueKey, DataType nTolerance, DataType nTransparent, DataType nNoneTransparent)
 		{
 			// Get the data pointer
-			DataType *pData = (DataType*)cImageBuffer.GetData();
+			DataType *pData = reinterpret_cast<DataType*>(cImageBuffer.GetData());
 
 			// Get the number of color components
 			const uint32 nNumOfColorComponents = cImageBuffer.GetComponentsPerPixel();

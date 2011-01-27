@@ -40,22 +40,22 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 const Color4 Color4::Null		(-1.0f, -1.0f, -1.0f, -1.0f);
 const Color4 Color4::Transparent( 0.0f,  0.0f,  0.0f,  0.0f);
-const Color4 Color4::Black		((uint8)  0,   0,   0, 255);
-const Color4 Color4::White		((uint8)255, 255, 255, 255);
-const Color4 Color4::Red		((uint8)255,   0,   0, 255);
-const Color4 Color4::Yellow		((uint8)255, 255,   0, 255);
-const Color4 Color4::Green		((uint8)  0, 128,   0, 255);
-const Color4 Color4::Aqua		((uint8)  0, 255, 255, 255);
-const Color4 Color4::Blue		((uint8)  0,   0, 255, 255);
-const Color4 Color4::Fuchsia	((uint8)255,   0, 255, 255);
-const Color4 Color4::Maroon		((uint8)128,   0,   0, 255);
-const Color4 Color4::Olive		((uint8)128, 128,   0, 255);
-const Color4 Color4::Navy		((uint8)  0,   0, 128, 255);
-const Color4 Color4::Purple		((uint8)128,   0, 128, 255);
-const Color4 Color4::Teal		((uint8)  0, 128, 128, 255);
-const Color4 Color4::Gray		((uint8)128, 128, 128, 255);
-const Color4 Color4::Silver		((uint8)192, 192, 192, 255);
-const Color4 Color4::Lime		((uint8)  0, 255,   0, 255);
+const Color4 Color4::Black		(static_cast<uint8>(  0),   0,   0, 255);
+const Color4 Color4::White		(static_cast<uint8>(255), 255, 255, 255);
+const Color4 Color4::Red		(static_cast<uint8>(255),   0,   0, 255);
+const Color4 Color4::Yellow		(static_cast<uint8>(255), 255,   0, 255);
+const Color4 Color4::Green		(static_cast<uint8>(  0), 128,   0, 255);
+const Color4 Color4::Aqua		(static_cast<uint8>(  0), 255, 255, 255);
+const Color4 Color4::Blue		(static_cast<uint8>(  0),   0, 255, 255);
+const Color4 Color4::Fuchsia	(static_cast<uint8>(255),   0, 255, 255);
+const Color4 Color4::Maroon		(static_cast<uint8>(128),   0,   0, 255);
+const Color4 Color4::Olive		(static_cast<uint8>(128), 128,   0, 255);
+const Color4 Color4::Navy		(static_cast<uint8>(  0),   0, 128, 255);
+const Color4 Color4::Purple		(static_cast<uint8>(128),   0, 128, 255);
+const Color4 Color4::Teal		(static_cast<uint8>(  0), 128, 128, 255);
+const Color4 Color4::Gray		(static_cast<uint8>(128), 128, 128, 255);
+const Color4 Color4::Silver		(static_cast<uint8>(192), 192, 192, 255);
+const Color4 Color4::Lime		(static_cast<uint8>(  0), 255,   0, 255);
 
 
 //[-------------------------------------------------------]
@@ -67,7 +67,7 @@ const Color4 Color4::Lime		((uint8)  0, 255,   0, 255);
 */
 uint32 Color4::ToUInt32(float fR, float fG, float fB, float fA)
 {
-	return ((uint32)(((uint8(fA*255.0f)&0xff)<<24)|((uint8(fR*255.0f)&0xff)<<16)|((uint8(fG*255.0f)&0xff)<<8)|(uint8(fB*255.0f)&0xff)));
+	return static_cast<uint32>(((static_cast<uint8>(fA*255.0f)&0xff)<<24) | ((static_cast<uint8>(fR*255.0f)&0xff)<<16) | ((static_cast<uint8>(fG*255.0f)&0xff)<<8) | (static_cast<uint8>(fB*255.0f)&0xff));
 }
 
 /**
@@ -76,7 +76,7 @@ uint32 Color4::ToUInt32(float fR, float fG, float fB, float fA)
 */
 float Color4::RedFromUInt32(uint32 nColor)
 {
-	return ((uint8)((nColor>>16)&0xff))/255.0f;
+	return (static_cast<uint8>((nColor>>16)&0xff))/255.0f;
 }
 
 /**
@@ -85,7 +85,7 @@ float Color4::RedFromUInt32(uint32 nColor)
 */
 float Color4::GreenFromUInt32(uint32 nColor)
 {
-	return ((uint8)((nColor>>8)&0xff))/255.0f;
+	return (static_cast<uint8>((nColor>>8)&0xff))/255.0f;
 }
 
 /**
@@ -94,7 +94,7 @@ float Color4::GreenFromUInt32(uint32 nColor)
 */
 float Color4::BlueFromUInt32(uint32 nColor)
 {
-	return ((uint8)(nColor&0xff))/255.0f;
+	return (static_cast<uint8>(nColor&0xff))/255.0f;
 }
 
 /**
@@ -103,7 +103,7 @@ float Color4::BlueFromUInt32(uint32 nColor)
 */
 float Color4::AlphaFromUInt32(uint32 nColor)
 {
-	return ((uint8)((nColor>>24)&0xff))/255.0f;
+	return (static_cast<uint8>((nColor>>24)&0xff))/255.0f;
 }
 
 /**
@@ -187,10 +187,10 @@ Color4::Color4(float fR, float fG, float fB, float fA) :
 *    Constructor
 */
 Color4::Color4(uint8 nR, uint8 nG, uint8 nB, uint8 nA) :
-	r((float)nR/255),
-	g((float)nG/255),
-	b((float)nB/255),
-	a((float)nA/255)
+	r(static_cast<float>(nR)/255.0f),
+	g(static_cast<float>(nG)/255.0f),
+	b(static_cast<float>(nB)/255.0f),
+	a(static_cast<float>(nA)/255.0f)
 {
 }
 
@@ -235,10 +235,10 @@ Color4::Color4(float fColor) :
 *    Constructor
 */
 Color4::Color4(uint8 nColor) :
-	r((float)nColor/255),
-	g((float)nColor/255),
-	b((float)nColor/255),
-	a((float)nColor/255)
+	r(static_cast<float>(nColor)/255.0f),
+	g(static_cast<float>(nColor)/255.0f),
+	b(static_cast<float>(nColor)/255.0f),
+	a(static_cast<float>(nColor)/255.0f)
 {
 }
 
@@ -280,7 +280,7 @@ Color4::~Color4()
 */
 uint32 Color4::ToUInt32() const
 {
-	return ((uint32)(((uint8(a*255.0f)&0xff)<<24)|((uint8(r*255.0f)&0xff)<<16)|((uint8(g*255.0f)&0xff)<<8)|(uint8(b*255.0f)&0xff)));
+	return static_cast<uint32>(((static_cast<uint8>(a*255.0f)&0xff)<<24) | ((static_cast<uint8>(r*255.0f)&0xff)<<16) | ((static_cast<uint8>(g*255.0f)&0xff)<<8) | (static_cast<uint8>(b*255.0f)&0xff));
 }
 
 /**
@@ -289,10 +289,10 @@ uint32 Color4::ToUInt32() const
 */
 void Color4::FromUInt32(uint32 nColor)
 {
-	r = ((uint8)((nColor>>16)&0xff))/255.0f;
-	g = ((uint8)((nColor>>8)&0xff))/255.0f;
-	b = ((uint8)(nColor&0xff))/255.0f;
-	a = ((uint8)((nColor>>24)&0xff))/255.0f;
+	r = (static_cast<uint8>((nColor>>16)&0xff))/255.0f;
+	g = (static_cast<uint8>((nColor>>8)&0xff))/255.0f;
+	b = (static_cast<uint8>(nColor&0xff))/255.0f;
+	a = (static_cast<uint8>((nColor>>24)&0xff))/255.0f;
 }
 
 /**
@@ -313,10 +313,10 @@ void Color4::GetRGBA(float &fR, float &fG, float &fB, float &fA) const
 */
 void Color4::GetRGBA(uint8 &nR, uint8 &nG, uint8 &nB, uint8 &nA) const
 {
-	nR = (uint8)r*255;
-	nG = (uint8)g*255;
-	nB = (uint8)b*255;
-	nA = (uint8)a*255;
+	nR = static_cast<uint8>(r*255);
+	nG = static_cast<uint8>(g*255);
+	nB = static_cast<uint8>(b*255);
+	nA = static_cast<uint8>(a*255);
 }
 
 /**
@@ -337,10 +337,10 @@ void Color4::SetRGBA(float fR, float fG, float fB, float fA)
 */
 void Color4::SetRGBA(uint8 nR, uint8 nG, uint8 nB, uint8 nA)
 {
-	r = (float)nR/255;
-	g = (float)nG/255;
-	b = (float)nB/255;
-	a = (float)nA/255;
+	r = static_cast<float>(nR)/255.0f;
+	g = static_cast<float>(nG)/255.0f;
+	b = static_cast<float>(nB)/255.0f;
+	a = static_cast<float>(nA)/255.0f;
 }
 
 /**
@@ -361,10 +361,10 @@ void Color4::GetRGBA(float fColor[]) const
 */
 void Color4::GetRGBA(uint8 nColor[]) const
 {
-	nColor[0] = (uint8)r*255;
-	nColor[1] = (uint8)g*255;
-	nColor[2] = (uint8)b*255;
-	nColor[3] = (uint8)a*255;
+	nColor[0] = static_cast<uint8>(r*255);
+	nColor[1] = static_cast<uint8>(g*255);
+	nColor[2] = static_cast<uint8>(b*255);
+	nColor[3] = static_cast<uint8>(a*255);
 }
 
 /**
@@ -385,10 +385,10 @@ void Color4::SetRGBA(const float fColor[])
 */
 void Color4::SetRGBA(const uint8 nColor[])
 {
-	r = (float)nColor[0]/255;
-	g = (float)nColor[1]/255;
-	b = (float)nColor[2]/255;
-	a = (float)nColor[3]/255;
+	r = static_cast<float>(nColor[0])/255.0f;
+	g = static_cast<float>(nColor[1])/255.0f;
+	b = static_cast<float>(nColor[2])/255.0f;
+	a = static_cast<float>(nColor[3])/255.0f;
 }
 
 /**
@@ -409,10 +409,10 @@ void Color4::SetRGBA(float fValue)
 */
 void Color4::SetRGBA(uint8 nColor)
 {
-	r = (float)nColor/255;
-	g = (float)nColor/255;
-	b = (float)nColor/255;
-	a = (float)nColor/255;
+	r = static_cast<float>(nColor)/255.0f;
+	g = static_cast<float>(nColor)/255.0f;
+	b = static_cast<float>(nColor)/255.0f;
+	a = static_cast<float>(nColor)/255.0f;
 }
 
 /**
@@ -430,7 +430,7 @@ float Color4::GetR() const
 */
 uint8 Color4::GetRInt() const
 {
-	return (uint8)(r*255);
+	return static_cast<uint8>(r*255);
 }
 
 /**
@@ -448,7 +448,7 @@ void Color4::SetR(float fR)
 */
 void Color4::SetR(uint8 nR)
 {
-	r = (float)nR/255;
+	r = static_cast<float>(nR)/255.0f;
 }
 
 /**
@@ -466,7 +466,7 @@ float Color4::GetG() const
 */
 uint8 Color4::GetGInt() const
 {
-	return (uint8)(g*255);
+	return static_cast<uint8>(g*255);
 }
 
 /**
@@ -484,7 +484,7 @@ void Color4::SetG(float fG)
 */
 void Color4::SetG(uint8 nG)
 {
-	g = (float)nG/255;
+	g = static_cast<float>(nG)/255.0f;
 }
 
 /**
@@ -502,7 +502,7 @@ float Color4::GetB() const
 */
 uint8 Color4::GetBInt() const
 {
-	return (uint8)(b*255);
+	return static_cast<uint8>(b*255);
 }
 
 /**
@@ -520,7 +520,7 @@ void Color4::SetB(float fB)
 */
 void Color4::SetB(uint8 nB)
 {
-	b = (float)nB/255;
+	b = static_cast<float>(nB)/255.0f;
 }
 
 /**
@@ -538,7 +538,7 @@ float Color4::GetA() const
 */
 uint8 Color4::GetAInt() const
 {
-	return (uint8)(a*255);
+	return static_cast<uint8>(a*255);
 }
 
 /**
@@ -556,7 +556,7 @@ void Color4::SetA(float fA)
 */
 void Color4::SetA(uint8 nA)
 {
-	a = (float)nA/255;
+	a = static_cast<float>(nA)/255.0f;
 }
 
 /**
@@ -565,7 +565,7 @@ void Color4::SetA(uint8 nA)
 */
 bool Color4::IsValid() const
 {
-	return r >= 0.0f && r <= 1.0f && g >= 0.0f && g <= 1.0f && b >= 0.0f && b <= 1.0f && a >= 0.0f && a <= 0.0f;
+	return (r >= 0.0f && r <= 1.0f && g >= 0.0f && g <= 1.0f && b >= 0.0f && b <= 1.0f && a >= 0.0f && a <= 0.0f);
 }
 
 /**
@@ -574,7 +574,7 @@ bool Color4::IsValid() const
 */
 bool Color4::IsTransparent() const
 {
-	return a <= 0.0f;
+	return (a <= 0.0f);
 }
 
 /**
@@ -592,14 +592,22 @@ void Color4::SetTransparent()
 */
 void Color4::Saturate()
 {
-	if (r < 0.0f) r = 0.0f;
-	if (r > 1.0f) r = 1.0f;
-	if (g < 0.0f) g = 0.0f;
-	if (g > 1.0f) g = 1.0f;
-	if (b < 0.0f) b = 0.0f;
-	if (b > 1.0f) b = 1.0f;
-	if (a < 0.0f) a = 0.0f;
-	if (a > 1.0f) a = 1.0f;
+	if (r < 0.0f)
+		r = 0.0f;
+	if (r > 1.0f)
+		r = 1.0f;
+	if (g < 0.0f)
+		g = 0.0f;
+	if (g > 1.0f)
+		g = 1.0f;
+	if (b < 0.0f)
+		b = 0.0f;
+	if (b > 1.0f)
+		b = 1.0f;
+	if (a < 0.0f)
+		a = 0.0f;
+	if (a > 1.0f)
+		a = 1.0f;
 }
 
 /**
@@ -675,14 +683,14 @@ Color4 &Color4::operator =(float fD)
 	return *this;
 }
 
-Color4::operator float *() const
+Color4::operator float *()
 {
-	return (float*)&r;
+	return &r;
 }
 
 Color4::operator const float *() const
 {
-	return (const float*)&r;
+	return &r;
 }
 
 
@@ -691,32 +699,32 @@ Color4::operator const float *() const
 //[-------------------------------------------------------]
 bool Color4::operator ==(const Color4 &cC) const
 {
-	return r == cC.r && g == cC.g && b == cC.b && a == cC.a;
+	return (r == cC.r && g == cC.g && b == cC.b && a == cC.a);
 }
 
 bool Color4::operator !=(const Color4 &cC) const
 {
-	return r != cC.r || g != cC.g || b != cC.b || a != cC.a;
+	return (r != cC.r || g != cC.g || b != cC.b || a != cC.a);
 }
 
 bool Color4::operator ==(const Color3 &cC) const
 {
-	return r == cC.r && g == cC.g && b == cC.b;
+	return (r == cC.r && g == cC.g && b == cC.b);
 }
 
 bool Color4::operator !=(const Color3 &cC) const
 {
-	return r != cC.r || g != cC.g || b != cC.b;
+	return (r != cC.r || g != cC.g || b != cC.b);
 }
 
 bool Color4::operator ==(float f) const
 {
-	return r == f && g == f && b == f && a == f;
+	return (r == f && g == f && b == f && a == f);
 }
 
 bool Color4::operator !=(float f) const
 {
-	return r != f || g != f || b != f || a != f;
+	return (r != f || g != f || b != f || a != f);
 }
 
 
@@ -735,14 +743,20 @@ Color4 Color4::operator +(float fN) const
 
 Color4 &Color4::operator +=(const Color4 &cC)
 {
-	r += cC.r, g += cC.g, b += cC.b, a += cC.a;
+	r += cC.r;
+	g += cC.g;
+	b += cC.b;
+	a += cC.a;
 
 	return *this;
 }
 
 Color4 &Color4::operator +=(float fN)
 {
-	r += fN, g += fN, b += fN, a += fN;
+	r += fN;
+	g += fN;
+	b += fN;
+	a += fN;
 
 	return *this;
 }
@@ -764,14 +778,20 @@ Color4 Color4::operator -(float fN) const
 
 Color4 &Color4::operator -=(const Color4 &cC)
 {
-	r -= cC.r, g -= cC.g, b -= cC.b, a -= cC.a;
+	r -= cC.r;
+	g -= cC.g;
+	b -= cC.b;
+	a -= cC.a;
 
 	return *this;
 }
 
 Color4 &Color4::operator -=(float fN)
 {
-	r -= fN, g -= fN, b -= fN, a -= fN;
+	r -= fN;
+	g -= fN;
+	b -= fN;
+	a -= fN;
 
 	return *this;
 }
@@ -788,14 +808,20 @@ Color4 Color4::operator *(float fS) const
 
 Color4 &Color4::operator *=(const Color4 &cC)
 {
-	r *= cC.r, g *= cC.g, b *= cC.b, a *= cC.a;
+	r *= cC.r;
+	g *= cC.g;
+	b *= cC.b;
+	a *= cC.a;
 
 	return *this;
 }
 
 Color4 &Color4::operator *=(float fS)
 {
-	r *= fS, g *= fS, b *= fS, a *= fS;
+	r *= fS;
+	g *= fS;
+	b *= fS;
+	a *= fS;
 
 	return *this;
 }
@@ -812,14 +838,20 @@ Color4 Color4::operator /(float fS) const
 
 Color4 &Color4::operator /=(const Color4 &cC)
 {
-	r /= cC.r, g /= cC.g, b /= cC.b, a /= cC.a;
+	r /= cC.r;
+	g /= cC.g;
+	b /= cC.b;
+	a /= cC.a;
 
 	return *this;
 }
 
 Color4 &Color4::operator /=(float fS)
 {
-	r /= fS, g /= fS, b /= fS, a /= fS;
+	r /= fS;
+	g /= fS;
+	b /= fS;
+	a /= fS;
 
 	return *this;
 }

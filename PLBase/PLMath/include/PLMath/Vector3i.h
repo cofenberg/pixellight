@@ -128,7 +128,7 @@ class Vector3i {
 		//[-------------------------------------------------------]
 		//[ Get and set                                           ]
 		//[-------------------------------------------------------]
-		inline operator int *() const;
+		inline operator int *();
 		inline operator const int *() const;
 		inline int &operator [](int nIndex);
 		inline const int &operator [](int nIndex) const;

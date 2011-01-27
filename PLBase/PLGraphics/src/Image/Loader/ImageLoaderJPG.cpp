@@ -71,7 +71,7 @@ void ExitErrorHandle (struct jpeg_common_struct *JpegInfo)
 void init_source(j_decompress_ptr cinfo)
 {
 	// Cast to JpgReadStruct
-	JpgReadStruct *pJpgReadStruct = (JpgReadStruct*)cinfo->src;
+	JpgReadStruct *pJpgReadStruct = reinterpret_cast<JpgReadStruct*>(cinfo->src);
 
 	// Initialize
 	pJpgReadStruct->bStartOfFile = true;
@@ -80,7 +80,7 @@ void init_source(j_decompress_ptr cinfo)
 boolean fill_input_buffer(j_decompress_ptr cinfo)
 {
 	// Cast to JpgReadStruct
-	JpgReadStruct *pJpgReadStruct = (JpgReadStruct*)cinfo->src;
+	JpgReadStruct *pJpgReadStruct = reinterpret_cast<JpgReadStruct*>(cinfo->src);
 
 	// Read bytes from file
 	uint32 nReadBytes = pJpgReadStruct->pFile->Read(pJpgReadStruct->pBuffer, 1, InputBufferSize);
@@ -91,8 +91,8 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
 		}
 
 		// Insert a fake EOI marker
-		pJpgReadStruct->pBuffer[0] = (JOCTET)0xFF;
-		pJpgReadStruct->pBuffer[1] = (JOCTET)JPEG_EOI;
+		pJpgReadStruct->pBuffer[0] = static_cast<JOCTET>(0xFF);
+		pJpgReadStruct->pBuffer[1] = static_cast<JOCTET>(JPEG_EOI);
 		nReadBytes = 2;
 
 		return false;
@@ -111,16 +111,16 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
 void skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
 	// Cast to JpgReadStruct
-	JpgReadStruct *pJpgReadStruct = (JpgReadStruct*)cinfo->src;
+	JpgReadStruct *pJpgReadStruct = reinterpret_cast<JpgReadStruct*>(cinfo->src);
 
 	// Skip
 	if (num_bytes > 0) {
-		while (num_bytes > (long)pJpgReadStruct->sPublic.bytes_in_buffer) {
-			num_bytes -= (long)pJpgReadStruct->sPublic.bytes_in_buffer;
+		while (num_bytes > static_cast<long>(pJpgReadStruct->sPublic.bytes_in_buffer)) {
+			num_bytes -= static_cast<long>(pJpgReadStruct->sPublic.bytes_in_buffer);
 			fill_input_buffer(cinfo);
 		}
-		pJpgReadStruct->sPublic.next_input_byte += (size_t)num_bytes;
-		pJpgReadStruct->sPublic.bytes_in_buffer -= (size_t)num_bytes;
+		pJpgReadStruct->sPublic.next_input_byte += static_cast<size_t>(num_bytes);
+		pJpgReadStruct->sPublic.bytes_in_buffer -= static_cast<size_t>(num_bytes);
 	}
 }
 
@@ -132,13 +132,13 @@ void term_source(j_decompress_ptr cinfo)
 void jpeg_read_init(j_decompress_ptr cinfo, File *pFile)
 {
 	// Get to JpgReadStruct
-	JpgReadStruct *pJpgReadStruct = (JpgReadStruct*)cinfo->src;
+	JpgReadStruct *pJpgReadStruct = reinterpret_cast<JpgReadStruct*>(cinfo->src);
 	if (!pJpgReadStruct) {
 		// First time for this JPEG object
-		cinfo->src = (struct jpeg_source_mgr*)(*cinfo->mem->alloc_small)((j_common_ptr)cinfo, JPOOL_PERMANENT, sizeof(JpgReadStruct));
-		pJpgReadStruct = (JpgReadStruct*)cinfo->src;
+		cinfo->src = static_cast<struct jpeg_source_mgr*>((*cinfo->mem->alloc_small)(reinterpret_cast<j_common_ptr>(cinfo), JPOOL_PERMANENT, sizeof(JpgReadStruct)));
+		pJpgReadStruct = reinterpret_cast<JpgReadStruct*>(cinfo->src);
 		pJpgReadStruct->pFile   = pFile;
-		pJpgReadStruct->pBuffer = (JOCTET*)(*cinfo->mem->alloc_small)((j_common_ptr)cinfo, JPOOL_PERMANENT, InputBufferSize*sizeof(JOCTET));
+		pJpgReadStruct->pBuffer = static_cast<JOCTET*>((*cinfo->mem->alloc_small)(reinterpret_cast<j_common_ptr>(cinfo), JPOOL_PERMANENT, InputBufferSize*sizeof(JOCTET)));
 	}
 
 	// Setup
@@ -166,10 +166,10 @@ const uint32 OutputBufferSize = 4096;
 void init_destination(j_compress_ptr cinfo)
 {
 	// Cast to JpgWriteStruct
-	JpgWriteStruct *pJpgWriteStruct = (JpgWriteStruct*)cinfo->dest;
+	JpgWriteStruct *pJpgWriteStruct = reinterpret_cast<JpgWriteStruct*>(cinfo->dest);
 
 	// Setup
-	pJpgWriteStruct->pBuffer				  = (JOCTET*)(*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_IMAGE, OutputBufferSize*sizeof(JOCTET));
+	pJpgWriteStruct->pBuffer				  = static_cast<JOCTET*>((*cinfo->mem->alloc_small)(reinterpret_cast<j_common_ptr>(cinfo), JPOOL_IMAGE, OutputBufferSize*sizeof(JOCTET)));
 	pJpgWriteStruct->sPublic.next_output_byte = pJpgWriteStruct->pBuffer;
 	pJpgWriteStruct->sPublic.free_in_buffer	  = OutputBufferSize;
 }
@@ -177,7 +177,7 @@ void init_destination(j_compress_ptr cinfo)
 boolean empty_output_buffer(j_compress_ptr cinfo)
 {
 	// Cast to JpgWriteStruct
-	JpgWriteStruct *pJpgWriteStruct = (JpgWriteStruct*)cinfo->dest;
+	JpgWriteStruct *pJpgWriteStruct = reinterpret_cast<JpgWriteStruct*>(cinfo->dest);
 
 	// Write
 	pJpgWriteStruct->pFile->Write(pJpgWriteStruct->pBuffer, 1, OutputBufferSize);
@@ -190,7 +190,7 @@ boolean empty_output_buffer(j_compress_ptr cinfo)
 void term_destination(j_compress_ptr cinfo)
 {
 	// Cast to JpgWriteStruct
-	JpgWriteStruct *pJpgWriteStruct = (JpgWriteStruct*)cinfo->dest;
+	JpgWriteStruct *pJpgWriteStruct = reinterpret_cast<JpgWriteStruct*>(cinfo->dest);
 
 	// Write
 	pJpgWriteStruct->pFile->Write(pJpgWriteStruct->pBuffer, 1, OutputBufferSize - pJpgWriteStruct->sPublic.free_in_buffer);
@@ -199,11 +199,11 @@ void term_destination(j_compress_ptr cinfo)
 void jpeg_write_init(j_compress_ptr cinfo, File *pFile)
 {
 	// Get to JpgWriteStruct
-	JpgWriteStruct *pJpgWriteStruct = (JpgWriteStruct*)cinfo->dest;
+	JpgWriteStruct *pJpgWriteStruct = reinterpret_cast<JpgWriteStruct*>(cinfo->dest);
 	if (!pJpgWriteStruct) {
 		// First time for this JPEG object
-		cinfo->dest = (struct jpeg_destination_mgr*) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(JpgWriteStruct));
-		pJpgWriteStruct = (JpgWriteStruct*)cinfo->dest;
+		cinfo->dest = static_cast<struct jpeg_destination_mgr*>((*cinfo->mem->alloc_small)(reinterpret_cast<j_common_ptr>(cinfo), JPOOL_PERMANENT, sizeof(JpgWriteStruct)));
+		pJpgWriteStruct = reinterpret_cast<JpgWriteStruct*>(cinfo->dest);
 		pJpgWriteStruct->pFile = pFile;
 	}
 

@@ -106,9 +106,8 @@ Image &Image::operator =(const Image &cSource)
 void Image::Clear()
 {
 	// Destroy parts
-	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++)
 		delete m_lstParts[i];
-	}
 
 	// Clear frame list
 	m_lstParts.Clear();
@@ -145,16 +144,48 @@ ECheckConsistency Image::CheckConsistency() const
 		// Check cubemap side
 		uint32 nSemantics = m_lstParts[i]->GetSemantics();
 		switch (nSemantics) {
-			case ImagePartCubeSidePosX:		if (bSide[0]) bSideDouble = true; bSide[0] = true; break;
-			case ImagePartCubeSideNegX:		if (bSide[1]) bSideDouble = true; bSide[1] = true; break;
-			case ImagePartCubeSidePosY:		if (bSide[2]) bSideDouble = true; bSide[2] = true; break;
-			case ImagePartCubeSideNegY:		if (bSide[3]) bSideDouble = true; bSide[3] = true; break;
-			case ImagePartCubeSidePosZ:		if (bSide[4]) bSideDouble = true; bSide[4] = true; break;
-			case ImagePartCubeSideNegZ:		if (bSide[5]) bSideDouble = true; bSide[5] = true; break;
-			default:						bSideOther = true; break;
+			case ImagePartCubeSidePosX:
+				if (bSide[0])
+					bSideDouble = true;
+				bSide[0] = true;
+				break;
+
+			case ImagePartCubeSideNegX:
+				if (bSide[1])
+					bSideDouble = true;
+				bSide[1] = true;
+				break;
+
+			case ImagePartCubeSidePosY:
+				if (bSide[2])
+					bSideDouble = true;
+				bSide[2] = true;
+				break;
+
+			case ImagePartCubeSideNegY:
+				if (bSide[3])
+					bSideDouble = true;
+				bSide[3] = true;
+				break;
+
+			case ImagePartCubeSidePosZ:
+				if (bSide[4])
+					bSideDouble = true;
+				bSide[4] = true;
+				break;
+
+			case ImagePartCubeSideNegZ:
+				if (bSide[5])
+					bSideDouble = true;
+				bSide[5] = true;
+				break;
+
+			default:
+				bSideOther = true;
+				break;
 		}
 	}
-	bCubemap = bSide[0] || bSide[1] || bSide[2] || bSide[3] || bSide[4] || bSide[5];
+	bCubemap = (bSide[0] || bSide[1] || bSide[2] || bSide[3] || bSide[4] || bSide[5]);
 
 	// Check cubemap consistency
 	// [TODO] Are all cubemap sides of the same size?
@@ -176,7 +207,8 @@ ECheckConsistency Image::CheckConsistency() const
 	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++) {
 		// Check consistency of ImageFrame
 		const ECheckConsistency nCheck = m_lstParts[i]->CheckConsistency();
-		if (nCheck != CheckOk) return nCheck;
+		if (nCheck != CheckOk)
+			return nCheck;
 	}
 
 	// No problem found

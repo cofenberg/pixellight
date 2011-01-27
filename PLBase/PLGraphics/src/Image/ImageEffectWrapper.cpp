@@ -79,22 +79,19 @@ ImageEffect *ImageEffectWrapper::GetImageEffect() const
 bool ImageEffectWrapper::Apply(Image &cImage) const
 {
 	// Call wrapped image effect
-	if (m_pImageEffect)	return m_pImageEffect->Apply(cImage);
-	else				return false;
+	return m_pImageEffect ? m_pImageEffect->Apply(cImage) : false;
 }
 
 bool ImageEffectWrapper::Apply(ImagePart &cPart) const
 {
 	// Call wrapped image effect
-	if (m_pImageEffect)	return m_pImageEffect->Apply(cPart);
-	else				return false;
+	return m_pImageEffect ? m_pImageEffect->Apply(cPart) : false;
 }
 
 bool ImageEffectWrapper::Apply(ImageBuffer &cBuffer) const
 {
 	// Call wrapped image effect
-	if (m_pImageEffect)	return m_pImageEffect->Apply(cBuffer);
-	else				return false;
+	return m_pImageEffect ? m_pImageEffect->Apply(cBuffer) : false;
 }
 
 

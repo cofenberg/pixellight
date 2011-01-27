@@ -85,7 +85,7 @@ DatabaseQuery &DatabaseQuery::operator =(const DatabaseQuery &cSource)
 //[-------------------------------------------------------]
 PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 {
-	PGconn   *pPostgreSQL = ((Database&)GetDatabase()).GetPostgreSQL();
+	PGconn   *pPostgreSQL = static_cast<Database&>(GetDatabase()).GetPostgreSQL();
 	PGresult *pResult     = PQexec(pPostgreSQL, sSQL);
 	if (pResult) {
 		const int nStatus = PQresultStatus(pResult);

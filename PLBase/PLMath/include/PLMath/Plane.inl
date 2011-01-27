@@ -123,7 +123,7 @@ inline bool Plane::operator !=(const Plane &cPlane) const
 */
 inline Plane &Plane::ComputeND(const Vector3 &vOrigin, const Vector3 &vNormal)
 {
-	Vector3 vN = vNormal.GetNormalized();
+	const Vector3 vN = vNormal.GetNormalized();
 	a = vN.x;
 	b = vN.y;
 	c = vN.z;
@@ -161,10 +161,13 @@ inline Plane &Plane::Normalize()
 */
 inline Plane::ESide Plane::GetSide(const Vector3 &vPoint) const
 {
-	float fDistance = a*vPoint.x + b*vPoint.y + c*vPoint.z + d;
-		 if (fDistance < -Math::Epsilon) return Behind;
-	else if (fDistance >  Math::Epsilon) return InFront;
-	else								 return Coinciding;
+	const float fDistance = a*vPoint.x + b*vPoint.y + c*vPoint.z + d;
+	if (fDistance < -Math::Epsilon)
+		return Behind;
+	else if (fDistance >  Math::Epsilon)
+		return InFront;
+	else
+		return Coinciding;
 }
 
 /**
@@ -191,7 +194,7 @@ inline float Plane::GetDistance(const Vector4 &vPoint) const
 */
 inline float Plane::GetDistance(const Vector3 &vRayPos, const Vector3 &vRayDir) const
 {
-	float fA = a*vRayDir.x + b*vRayDir.y + c*vRayDir.z;
+	const float fA = a*vRayDir.x + b*vRayDir.y + c*vRayDir.z;
 
 	// Ray parallel to plane?
 	return fA ? GetDistance(vRayPos)/fA : 0.0f;
@@ -213,7 +216,7 @@ inline Vector3 Plane::GetPointOnPlane() const
 */
 inline Vector3 Plane::ClipEdge(const Vector3 &vV1, const Vector3 &vV2) const
 {
-	Vector3 vDir = vV2 - vV1;
+	const Vector3 vDir = vV2 - vV1;
 	return vV1 + vDir*(-GetDistance(vV1)/(a*vDir.x + b*vDir.y + c*vDir.z));
 }
 

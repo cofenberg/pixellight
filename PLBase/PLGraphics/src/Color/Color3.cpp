@@ -39,22 +39,22 @@ namespace PLGraphics {
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
 const Color3 Color3::Null		(-1.0f, -1.0f, -1.0f);
-const Color3 Color3::Black		((uint8)  0,   0,   0);
-const Color3 Color3::White		((uint8)255, 255, 255);
-const Color3 Color3::Red		((uint8)255,   0,   0);
-const Color3 Color3::Yellow		((uint8)255, 255,   0);
-const Color3 Color3::Green		((uint8)  0, 128,   0);
-const Color3 Color3::Aqua		((uint8)  0, 255, 255);
-const Color3 Color3::Blue		((uint8)  0,   0, 255);
-const Color3 Color3::Fuchsia	((uint8)255,   0, 255);
-const Color3 Color3::Maroon		((uint8)128,   0,   0);
-const Color3 Color3::Olive		((uint8)128, 128,   0);
-const Color3 Color3::Navy		((uint8)  0,   0, 128);
-const Color3 Color3::Purple		((uint8)128,   0, 128);
-const Color3 Color3::Teal		((uint8)  0, 128, 128);
-const Color3 Color3::Gray		((uint8)128, 128, 128);
-const Color3 Color3::Silver		((uint8)192, 192, 192);
-const Color3 Color3::Lime		((uint8)  0, 255,   0);
+const Color3 Color3::Black		(static_cast<uint8>(  0),   0,   0);
+const Color3 Color3::White		(static_cast<uint8>(255), 255, 255);
+const Color3 Color3::Red		(static_cast<uint8>(255),   0,   0);
+const Color3 Color3::Yellow		(static_cast<uint8>(255), 255,   0);
+const Color3 Color3::Green		(static_cast<uint8>(  0), 128,   0);
+const Color3 Color3::Aqua		(static_cast<uint8>(  0), 255, 255);
+const Color3 Color3::Blue		(static_cast<uint8>(  0),   0, 255);
+const Color3 Color3::Fuchsia	(static_cast<uint8>(255),   0, 255);
+const Color3 Color3::Maroon		(static_cast<uint8>(128),   0,   0);
+const Color3 Color3::Olive		(static_cast<uint8>(128), 128,   0);
+const Color3 Color3::Navy		(static_cast<uint8>(  0),   0, 128);
+const Color3 Color3::Purple		(static_cast<uint8>(128),   0, 128);
+const Color3 Color3::Teal		(static_cast<uint8>(  0), 128, 128);
+const Color3 Color3::Gray		(static_cast<uint8>(128), 128, 128);
+const Color3 Color3::Silver		(static_cast<uint8>(192), 192, 192);
+const Color3 Color3::Lime		(static_cast<uint8>(  0), 255,   0);
 
 
 //[-------------------------------------------------------]
@@ -66,7 +66,7 @@ const Color3 Color3::Lime		((uint8)  0, 255,   0);
 */
 uint32 Color3::ToUInt32(float fR, float fG, float fB)
 {
-	return ((uint32)((uint8(fR*255.0f)|((uint16)(uint8(fG*255.0f))<<8))|(((uint32)uint8(fB*255.0f))<<16)));
+	return static_cast<uint32>(static_cast<uint8>(fR*255.0f) | static_cast<uint16>(static_cast<uint8>(fG*255.0f))<<8 | static_cast<uint32>(static_cast<uint8>(fB*255.0f))<<16);
 }
 
 /**
@@ -75,7 +75,7 @@ uint32 Color3::ToUInt32(float fR, float fG, float fB)
 */
 float Color3::RedFromUInt32(uint32 nColor)
 {
-	return ((uint8)(nColor))/255.0f;
+	return (static_cast<uint8>(nColor))/255.0f;
 }
 
 /**
@@ -84,7 +84,7 @@ float Color3::RedFromUInt32(uint32 nColor)
 */
 float Color3::GreenFromUInt32(uint32 nColor)
 {
-	return ((uint8)(((uint16)(nColor)) >> 8))/255.0f;
+	return (static_cast<uint8>((static_cast<uint16>(nColor)) >> 8))/255.0f;
 }
 
 /**
@@ -93,7 +93,7 @@ float Color3::GreenFromUInt32(uint32 nColor)
 */
 float Color3::BlueFromUInt32(uint32 nColor)
 {
-	return ((uint8)((nColor)>>16))/255.0f;
+	return (static_cast<uint8>((nColor)>>16))/255.0f;
 }
 
 /**
@@ -177,9 +177,9 @@ Color3::Color3(float fR, float fG, float fB) :
 *    Constructor
 */
 Color3::Color3(uint8 nR, uint8 nG, uint8 nB) :
-	r((float)nR/255),
-	g((float)nG/255),
-	b((float)nB/255)
+	r(static_cast<float>(nR)/255.0f),
+	g(static_cast<float>(nG)/255.0f),
+	b(static_cast<float>(nB)/255.0f)
 {
 }
 
@@ -221,9 +221,9 @@ Color3::Color3(float fColor) :
 *    Constructor
 */
 Color3::Color3(uint8 nColor) :
-	r((float)nColor/255),
-	g((float)nColor/255),
-	b((float)nColor/255)
+	r(static_cast<float>(nColor)/255.0f),
+	g(static_cast<float>(nColor)/255.0f),
+	b(static_cast<float>(nColor)/255.0f)
 {
 }
 
@@ -252,7 +252,7 @@ Color3::~Color3()
 */
 uint32 Color3::ToUInt32() const
 {
-	return ((uint32)((uint8(r*255.0f)|((uint16)(uint8(g*255.0f))<<8))|(((uint32)uint8(b*255.0f))<<16)));
+	return static_cast<uint32>(static_cast<uint8>(r*255.0f) | static_cast<uint16>(static_cast<uint8>(g*255.0f))<<8 | static_cast<uint32>(static_cast<uint8>(b*255.0f))<<16);
 }
 
 /**
@@ -261,9 +261,9 @@ uint32 Color3::ToUInt32() const
 */
 void Color3::FromUInt32(uint32 nColor)
 {
-	r = ((uint8)(nColor))/255.0f;
-	g = ((uint8)(((uint16)(nColor)) >> 8))/255.0f;
-	b = ((uint8)((nColor)>>16))/255.0f;
+	r = (static_cast<uint8>(nColor))/255.0f;
+	g = (static_cast<uint8>((static_cast<uint16>(nColor)) >> 8))/255.0f;
+	b = (static_cast<uint8>((nColor)>>16))/255.0f;
 }
 
 /**
@@ -283,9 +283,9 @@ void Color3::GetRGB(float &fR, float &fG, float &fB) const
 */
 void Color3::GetRGB(uint8 &nR, uint8 &nG, uint8 &nB) const
 {
-	nR = (uint8)r*255;
-	nG = (uint8)g*255;
-	nB = (uint8)b*255;
+	nR = static_cast<uint8>(r*255);
+	nG = static_cast<uint8>(g*255);
+	nB = static_cast<uint8>(b*255);
 }
 
 /**
@@ -305,9 +305,9 @@ void Color3::SetRGB(float fR, float fG, float fB)
 */
 void Color3::SetRGB(uint8 nR, uint8 nG, uint8 nB)
 {
-	r = (float)nR/255;
-	g = (float)nG/255;
-	b = (float)nB/255;
+	r = static_cast<float>(nR)/255.0f;
+	g = static_cast<float>(nG)/255.0f;
+	b = static_cast<float>(nB)/255.0f;
 }
 
 /**
@@ -327,9 +327,9 @@ void Color3::GetRGB(float fColor[]) const
 */
 void Color3::GetRGB(uint8 nColor[]) const
 {
-	nColor[0] = (uint8)r*255;
-	nColor[1] = (uint8)g*255;
-	nColor[2] = (uint8)b*255;
+	nColor[0] = static_cast<uint8>(r*255);
+	nColor[1] = static_cast<uint8>(g*255);
+	nColor[2] = static_cast<uint8>(b*255);
 }
 
 /**
@@ -349,9 +349,9 @@ void Color3::SetRGB(const float fColor[])
 */
 void Color3::SetRGB(const uint8 nColor[])
 {
-	r = (float)nColor[0]/255;
-	g = (float)nColor[1]/255;
-	b = (float)nColor[2]/255;
+	r = static_cast<float>(nColor[0])/255.0f;
+	g = static_cast<float>(nColor[1])/255.0f;
+	b = static_cast<float>(nColor[2])/255.0f;
 }
 
 /**
@@ -371,9 +371,9 @@ void Color3::SetRGB(float fValue)
 */
 void Color3::SetRGB(uint8 nColor)
 {
-	r = (float)nColor/255;
-	g = (float)nColor/255;
-	b = (float)nColor/255;
+	r = static_cast<float>(nColor)/255.0f;
+	g = static_cast<float>(nColor)/255.0f;
+	b = static_cast<float>(nColor)/255.0f;
 }
 
 /**
@@ -391,7 +391,7 @@ float Color3::GetR() const
 */
 uint8 Color3::GetRInt() const
 {
-	return (uint8)(r*255);
+	return static_cast<uint8>(r*255);
 }
 
 /**
@@ -409,7 +409,7 @@ void Color3::SetR(float fR)
 */
 void Color3::SetR(uint8 nR)
 {
-	r = (float)nR/255;
+	r = static_cast<float>(nR)/255.0f;
 }
 
 /**
@@ -427,7 +427,7 @@ float Color3::GetG() const
 */
 uint8 Color3::GetGInt() const
 {
-	return (uint8)(g*255);
+	return static_cast<uint8>(g*255);
 }
 
 /**
@@ -445,7 +445,7 @@ void Color3::SetG(float fG)
 */
 void Color3::SetG(uint8 nG)
 {
-	g = (float)nG/255;
+	g = static_cast<float>(nG)/255.0f;
 }
 
 /**
@@ -463,7 +463,7 @@ float Color3::GetB() const
 */
 uint8 Color3::GetBInt() const
 {
-	return (uint8)(b*255);
+	return static_cast<uint8>(b*255);
 }
 
 /**
@@ -481,7 +481,7 @@ void Color3::SetB(float fB)
 */
 void Color3::SetB(uint8 nB)
 {
-	b = (float)nB/255;
+	b = static_cast<float>(nB)/255.0f;
 }
 
 /**
@@ -490,7 +490,7 @@ void Color3::SetB(uint8 nB)
 */
 bool Color3::IsValid() const
 {
-	return r >= 0.0f && r <= 1.0f && g >= 0.0f && g <= 1.0f && b >= 0.0f && b <= 1.0f;
+	return (r >= 0.0f && r <= 1.0f && g >= 0.0f && g <= 1.0f && b >= 0.0f && b <= 1.0f);
 }
 
 /**
@@ -499,12 +499,18 @@ bool Color3::IsValid() const
 */
 void Color3::Saturate()
 {
-	if (r < 0.0f) r = 0.0f;
-	if (r > 1.0f) r = 1.0f;
-	if (g < 0.0f) g = 0.0f;
-	if (g > 1.0f) g = 1.0f;
-	if (b < 0.0f) b = 0.0f;
-	if (b > 1.0f) b = 1.0f;
+	if (r < 0.0f)
+		r = 0.0f;
+	if (r > 1.0f)
+		r = 1.0f;
+	if (g < 0.0f)
+		g = 0.0f;
+	if (g > 1.0f)
+		g = 1.0f;
+	if (b < 0.0f)
+		b = 0.0f;
+	if (b > 1.0f)
+		b = 1.0f;
 }
 
 /**
@@ -578,14 +584,14 @@ Color3 &Color3::operator =(float fD)
 	return *this;
 }
 
-Color3::operator float *() const
+Color3::operator float *()
 {
-	return (float*)&r;
+	return &r;
 }
 
 Color3::operator const float *() const
 {
-	return (const float*)&r;
+	return &r;
 }
 
 
@@ -594,32 +600,32 @@ Color3::operator const float *() const
 //[-------------------------------------------------------]
 bool Color3::operator ==(const Color3 &cC) const
 {
-	return r == cC.r && g == cC.g && b == cC.b;
+	return (r == cC.r && g == cC.g && b == cC.b);
 }
 
 bool Color3::operator !=(const Color3 &cC) const
 {
-	return r != cC.r || g != cC.g || b != cC.b;
+	return (r != cC.r || g != cC.g || b != cC.b);
 }
 
 bool Color3::operator ==(const Color4 &cC) const
 {
-	return r == cC.r && g == cC.g && b == cC.b;
+	return (r == cC.r && g == cC.g && b == cC.b);
 }
 
 bool Color3::operator !=(const Color4 &cC) const
 {
-	return r != cC.r || g != cC.g || b != cC.b;
+	return (r != cC.r || g != cC.g || b != cC.b);
 }
 
 bool Color3::operator ==(float f) const
 {
-	return r == f && g == f && b == f;
+	return (r == f && g == f && b == f);
 }
 
 bool Color3::operator !=(float f) const
 {
-	return r != f || g != f || b != f;
+	return (r != f || g != f || b != f);
 }
 
 
@@ -638,14 +644,18 @@ Color3 Color3::operator +(float fN) const
 
 Color3 &Color3::operator +=(const Color3 &cC)
 {
-	r += cC.r, g += cC.g, b += cC.b;
+	r += cC.r;
+	g += cC.g;
+	b += cC.b;
 
 	return *this;
 }
 
 Color3 &Color3::operator +=(float fN)
 {
-	r += fN, g += fN, b += fN;
+	r += fN;
+	g += fN;
+	b += fN;
 
 	return *this;
 }
@@ -667,14 +677,18 @@ Color3 Color3::operator -(float fN) const
 
 Color3 &Color3::operator -=(const Color3 &cC)
 {
-	r -= cC.r, g -= cC.g, b -= cC.b;
+	r -= cC.r;
+	g -= cC.g;
+	b -= cC.b;
 
 	return *this;
 }
 
 Color3 &Color3::operator -=(float fN)
 {
-	r -= fN, g -= fN, b -= fN;
+	r -= fN;
+	g -= fN;
+	b -= fN;
 
 	return *this;
 }
@@ -691,14 +705,18 @@ Color3 Color3::operator *(float fS) const
 
 Color3 &Color3::operator *=(const Color3 &cC)
 {
-	r *= cC.r, g *= cC.g, b *= cC.b;
+	r *= cC.r;
+	g *= cC.g;
+	b *= cC.b;
 
 	return *this;
 }
 
 Color3 &Color3::operator *=(float fS)
 {
-	r *= fS, g *= fS, b *= fS;
+	r *= fS;
+	g *= fS;
+	b *= fS;
 
 	return *this;
 }
@@ -715,14 +733,18 @@ Color3 Color3::operator /(float fS) const
 
 Color3 &Color3::operator /=(const Color3 &cC)
 {
-	r /= cC.r, g /= cC.g, b /= cC.b;
+	r /= cC.r;
+	g /= cC.g;
+	b /= cC.b;
 
 	return *this;
 }
 
 Color3 &Color3::operator /=(float fS)
 {
-	r /= fS, g /= fS, b /= fS;
+	r /= fS;
+	g /= fS;
+	b /= fS;
 
 	return *this;
 }

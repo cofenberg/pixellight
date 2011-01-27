@@ -112,13 +112,33 @@ HBITMAP ImageToolsWindows::PLConvertToHBitmap(Image &cImage, HDC hDC)
 	const BYTE *pPixel = pBitmap;
 	int nComponents;
 	switch (cImageBuffer.GetColorFormat()) {
-		case ColorRGB:			nComponents = 3; break;
-		case ColorRGBA:			nComponents = 4; break;
-		case ColorBGR:			nComponents = 3; break;
-		case ColorBGRA:			nComponents = 4; break;
-		case ColorGrayscale:	nComponents = 1; break;
-		case ColorPalette:		nComponents = 1; break;
-		default:				nComponents = 0; break;
+		case ColorRGB:
+			nComponents = 3;
+			break;
+
+		case ColorRGBA:
+			nComponents = 4;
+			break;
+
+		case ColorBGR:
+			nComponents = 3;
+			break;
+
+		case ColorBGRA:
+			nComponents = 4;
+			break;
+
+		case ColorGrayscale:
+			nComponents = 1;
+			break;
+
+		case ColorPalette:
+			nComponents = 1;
+			break;
+
+		default:
+			nComponents = 0;
+			break;
 	}
 
 	// Fill the buffer
@@ -129,11 +149,41 @@ HBITMAP ImageToolsWindows::PLConvertToHBitmap(Image &cImage, HDC hDC)
 		int b = 0;
 		int a = 0;
 		switch (cImageBuffer.GetColorFormat()) {
-			case ColorRGB:			r = pPixel[0]; g = pPixel[1]; b = pPixel[2]; a = 255;		break;
-			case ColorRGBA:			r = pPixel[0]; g = pPixel[1]; b = pPixel[2]; a = pPixel[3];	break;
-			case ColorBGR:			r = pPixel[2]; g = pPixel[1]; b = pPixel[0]; a = 255;		break;
-			case ColorBGRA:			r = pPixel[2]; g = pPixel[1]; b = pPixel[0]; a = pPixel[3];	break;
-			case ColorGrayscale:	r = pPixel[0]; g = pPixel[0]; b = pPixel[0]; a = 255;		break;
+			case ColorRGB:
+				r = pPixel[0];
+				g = pPixel[1];
+				b = pPixel[2];
+				a = 255;
+				break;
+
+			case ColorRGBA:
+				r = pPixel[0];
+				g = pPixel[1];
+				b = pPixel[2];
+				a = pPixel[3];
+				break;
+
+			case ColorBGR:
+				r = pPixel[2];
+				g = pPixel[1];
+				b = pPixel[0];
+				a = 255;
+				break;
+
+			case ColorBGRA:
+				r = pPixel[2];
+				g = pPixel[1];
+				b = pPixel[0];
+				a = pPixel[3];
+				break;
+
+			case ColorGrayscale:
+				r = pPixel[0];
+				g = pPixel[0];
+				b = pPixel[0];
+				a = 255;
+				break;
+
 			case ColorPalette:
 			{
 				const Color3 cColor = cImageBuffer.GetPalette()->GetColor(pPixel[0]);

@@ -180,22 +180,31 @@ Vector3 &Vector3::operator *=(const Quaternion &qQ)
 void Vector3::GetRightUp(Vector3 &vRight, Vector3 &vUp) const
 {
 	Vector3 vFN(Math::Abs(x), Math::Abs(y), Math::Abs(z));
-	if (vFN.x > 1.0f) vFN.z = 1.0f;
-	if (vFN.y > 1.0f) vFN.y = 1.0f;
-	if (vFN.z > 1.0f) vFN.z = 1.0f;
+	if (vFN.x > 1.0f)
+		vFN.z = 1.0f;
+	if (vFN.y > 1.0f)
+		vFN.y = 1.0f;
+	if (vFN.z > 1.0f)
+		vFN.z = 1.0f;
 	int nMajor = 0;
 
 	// Find the major axis:
-	if (vFN.y > vFN[nMajor]) nMajor = 1;
-	if (vFN.z > vFN[nMajor]) nMajor = 2;
+	if (vFN.y > vFN[nMajor])
+		nMajor = 1;
+	if (vFN.z > vFN[nMajor])
+		nMajor = 2;
 
 	// Build right vector by hand: (faster)
 	if (vFN.x >= 1.0f-0.00001 || vFN.y >= 1.0f-0.00001 || vFN.z >= 1.0f-0.00001) {
-			 if (!nMajor && x > 0.0f) vRight.SetXYZ(0.0f, 0.0f, -1.0f);
-		else if (!nMajor)			  vRight.SetXYZ(0.0f, 0.0f,  1.0f);
+		if (!nMajor && x > 0.0f)
+			vRight.SetXYZ(0.0f, 0.0f, -1.0f);
+		else if (!nMajor)
+			vRight.SetXYZ(0.0f, 0.0f,  1.0f);
 
-		if (nMajor == 1 || (nMajor == 2 && z > 0.0f)) vRight.SetXYZ( 1.0f, 0.0f, 0.0f);
-		if (nMajor == 2 && z < 0.0f)				  vRight.SetXYZ(-1.0f, 0.0f, 0.0f);
+		if (nMajor == 1 || (nMajor == 2 && z > 0.0f))
+			vRight.SetXYZ( 1.0f, 0.0f, 0.0f);
+		if (nMajor == 2 && z < 0.0f)
+			vRight.SetXYZ(-1.0f, 0.0f, 0.0f);
 	} else {
 		switch (nMajor) {
 			case 0: vRight.CrossProduct(Vector3::UnitX, *this); break;
@@ -215,24 +224,33 @@ void Vector3::GetRightUp(Vector3 &vRight, Vector3 &vUp) const
 void Vector3::GetRightUp(float fRight[], float fUp[]) const
 {
 	Vector3 vFN(Math::Abs(x), Math::Abs(y), Math::Abs(z));
-	if (vFN.x > 1.0f) vFN.z = 1.0f;
-	if (vFN.y > 1.0f) vFN.y = 1.0f;
-	if (vFN.z > 1.0f) vFN.z = 1.0f;
+	if (vFN.x > 1.0f)
+		vFN.z = 1.0f;
+	if (vFN.y > 1.0f)
+		vFN.y = 1.0f;
+	if (vFN.z > 1.0f)
+		vFN.z = 1.0f;
 	int nMajor = 0;
 
 	// Find the major axis:
-	if (vFN.y > vFN[nMajor]) nMajor = 1;
-	if (vFN.z > vFN[nMajor]) nMajor = 2;
+	if (vFN.y > vFN[nMajor])
+		nMajor = 1;
+	if (vFN.z > vFN[nMajor])
+		nMajor = 2;
 
 	// Build right vector by hand: (faster)
 	Vector3 vRight = fRight;
 	Vector3 vUp    = fUp;
 	if (vFN.x == 1.0f || vFN.y == 1.0f || vFN.z == 1.0f) {
-			 if (!nMajor && x > 0.0f) vRight.SetXYZ(0.0f, 0.0f, -1.0f);
-		else if (!nMajor)			  vRight.SetXYZ(0.0f, 0.0f,  1.0f);
+		if (!nMajor && x > 0.0f)
+			vRight.SetXYZ(0.0f, 0.0f, -1.0f);
+		else if (!nMajor)
+			vRight.SetXYZ(0.0f, 0.0f,  1.0f);
 
-		if (nMajor == 1 || (nMajor == 2 && z > 0.0f)) vRight.SetXYZ( 1.0f, 0.0f, 0.0f);
-		if (nMajor == 2 && z < 0.0f)				  vRight.SetXYZ(-1.0f, 0.0f, 0.0f);
+		if (nMajor == 1 || (nMajor == 2 && z > 0.0f))
+			vRight.SetXYZ( 1.0f, 0.0f, 0.0f);
+		if (nMajor == 2 && z < 0.0f)
+			vRight.SetXYZ(-1.0f, 0.0f, 0.0f);
 	} else {
 		switch (nMajor) {
 			case 0: vRight.CrossProduct(Vector3::UnitX, *this); break;
@@ -282,7 +300,8 @@ Quaternion Vector3::GetRotationTo(const Vector3 &vDest) const
 
 	// If dot == 1, vectors are the same
 	float d = v0.DotProduct(v1);
-	if (d >= 1.0f) return Quaternion::Identity;
+	if (d >= 1.0f)
+		return Quaternion::Identity;
 	float s = Math::Sqrt((1+d)*2);
 	if (s < 1e-6f) {
 		// Generate an axis
@@ -370,7 +389,7 @@ Vector3 &Vector3::Refract(const Vector3 &vIncidentNormal, const Vector3 &vNormal
 */
 Vector3 Vector3::ClosestPointOnLine(const Vector3 &vV1, const Vector3 &vV2) const
 {
-	// Determine dT (the length of the vector from ‘vV1’ to ‘vV2’)
+	// Determine dT (the length of the vector from 'vV1' to 'vV2')
 	Vector3 vV3 = *this - vV1;
 	Vector3 vV  = vV2 - vV1;
 
@@ -378,13 +397,15 @@ Vector3 Vector3::ClosestPointOnLine(const Vector3 &vV1, const Vector3 &vV2) cons
 	vV.Normalize();
 	double dT = vV.DotProduct(vV3);
 
-	// Check to see if ‘dT’ is beyond the extents of the line segment
-	if (dT < 0.0f) return vV1;
-	if (dT > dD)   return vV2;
+	// Check to see if 'dT' is beyond the extents of the line segment
+	if (dT < 0.0f)
+		return vV1;
+	if (dT > dD)
+		return vV2;
 
-	// Return the point between ‘vV1’ and ‘vV2’
+	// Return the point between 'vV1' and 'vV2'
 	// set length of vV to dT. vV is normalized so this is easy
-	vV *= (float) dT;
+	vV *= static_cast<float>(dT);
 
 	// Done
 	return vV1 + vV;
@@ -426,7 +447,7 @@ bool Vector3::IsPointInTriangle(const Vector3 &vV1, const Vector3 &vV2, const Ve
 	const float z = x + y - ac_bb;
 
 	// Check if z<0, x>=0 and y>=0
-	return (((((uint32&)z)& ~(((uint32&)x)|((uint32&)y))) & 0x80000000) != 0);
+	return ((((reinterpret_cast<const uint32&>(z))& ~((reinterpret_cast<const uint32&>(x))|(reinterpret_cast<const uint32&>(y)))) & 0x80000000) != 0);
 }
 
 /**
@@ -451,7 +472,8 @@ Vector3 Vector3::ClosestPointOnTriangle(const Vector3 &vV1, const Vector3 &vV2, 
 		vResult = vRbc;
 	}
 
-	if (dCA < dMin) vResult = vRca;
+	if (dCA < dMin)
+		vResult = vRca;
 
 	// Done
 	return vResult;
@@ -471,7 +493,8 @@ bool Vector3::ClosestPointOnTriangle(const Vector3 &vV1, const Vector3 &vV2, con
 
 	// Find how far away the plane is from point vPointPos along the planes normal
 	float fDistToPlaneIntersection = cPlane.GetDistance(*this, vN);
-	if (fDistToPlaneIntersection > fRadius) return false;
+	if (fDistToPlaneIntersection > fRadius)
+		return false;
 
 	// Find the nearest point on the plane to this point
 	vClosest = *this - vN*fDistToPlaneIntersection;

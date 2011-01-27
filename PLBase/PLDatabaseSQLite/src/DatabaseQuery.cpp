@@ -85,7 +85,7 @@ DatabaseQuery &DatabaseQuery::operator =(const DatabaseQuery &cSource)
 //[-------------------------------------------------------]
 PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 {
-	sqlite3 *pSQLite = ((Database&)GetDatabase()).GetSQLite();
+	sqlite3 *pSQLite = static_cast<Database&>(GetDatabase()).GetSQLite();
 	DatabaseQueryResult *pQueryResult = new DatabaseQueryResult(*this);
 	int nError = sqlite3_get_table(pSQLite,
 								   sSQL,

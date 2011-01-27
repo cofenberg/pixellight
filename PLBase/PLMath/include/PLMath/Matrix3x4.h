@@ -196,7 +196,7 @@ class Matrix3x4 {
 		inline float         &operator [](int nIndex);
 		inline float          operator ()(PLGeneral::uint32 nRow = 0, PLGeneral::uint32 nColumn = 0) const;
 		inline float         &operator ()(PLGeneral::uint32 nRow = 0, PLGeneral::uint32 nColumn = 0);
-		inline                operator float *() const;
+		inline                operator float *();
 		inline                operator const float *() const;
 
 		//[-------------------------------------------------------]

@@ -160,9 +160,8 @@ uint32 ImagePalette::GetNumOfColors() const
 Color3 ImagePalette::GetColor(uint32 nIndex) const
 {
 	// Is index valid?
-	if (nIndex < m_nColors) {
+	if (nIndex < m_nColors)
 		return Color3(m_pData[nIndex*3], m_pData[nIndex*3+1], m_pData[nIndex*3+2]);
-	}
 
 	// Invalid index
 	return Color3::Null;

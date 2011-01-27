@@ -64,8 +64,8 @@ class ConvertData {
 		ConvertData(const ImageBuffer &cSourceImageBuffer, ImageBuffer &cDestinationImageBuffer, DestinationType AlphaValue)
 		{
 			// Get the data pointers
-			const SourceType      *pSourceData      = (SourceType*)     cSourceImageBuffer     .GetData();
-				  DestinationType *pDestinationData = (DestinationType*)cDestinationImageBuffer.GetData();
+			const SourceType      *pSourceData      = reinterpret_cast<const SourceType*>(cSourceImageBuffer.GetData());
+				  DestinationType *pDestinationData = reinterpret_cast<DestinationType*>(cDestinationImageBuffer.GetData());
 
 			// Get the number of source and destination color components
 			const uint32 nNumOfSourceColorComponents      = cSourceImageBuffer.GetComponentsPerPixel();
@@ -85,9 +85,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
 							}
 							break;
 
@@ -96,9 +96,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[3] = AlphaValue;
@@ -110,9 +110,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 							}
 							break;
 
@@ -121,9 +121,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[3] = AlphaValue;
@@ -135,7 +135,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 							}
 							break;
 
@@ -144,7 +144,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
 								// Set alpha to AlphaValue
 								pDestinationData[1] = AlphaValue;
@@ -162,9 +162,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -175,10 +175,10 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
-								pDestinationData[3] = (DestinationType)pSourceData[3];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[3] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
 
@@ -187,9 +187,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -200,10 +200,10 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
-								pDestinationData[3] = (DestinationType)pSourceData[3];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[3] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
 
@@ -212,7 +212,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -223,10 +223,10 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert RGB to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]*0.299 + pSourceData[1]*0.587 + pSourceData[2]*0.114);
 
 								// Copy over alpha
-								pDestinationData[1] = (DestinationType)pSourceData[3];
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
 					}
@@ -241,9 +241,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 							}
 							break;
 
@@ -252,9 +252,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[3] = AlphaValue;
@@ -266,9 +266,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
 							}
 							break;
 
@@ -277,9 +277,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[3] = AlphaValue;
@@ -291,7 +291,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 							}
 							break;
 
@@ -300,7 +300,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
 								// Set alpha to AlphaValue
 								pDestinationData[1] = AlphaValue;
@@ -318,9 +318,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -331,10 +331,10 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA with R and B flipped
-								pDestinationData[0] = (DestinationType)pSourceData[2];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
-								pDestinationData[3] = (DestinationType)pSourceData[3];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[3] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
 
@@ -343,9 +343,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGB
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -356,10 +356,10 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over RGBA
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
-								pDestinationData[2] = (DestinationType)pSourceData[2];
-								pDestinationData[3] = (DestinationType)pSourceData[3];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[2]);
+								pDestinationData[3] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
 
@@ -368,7 +368,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -379,10 +379,10 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Convert BGR to grayscale using "Human formula"... our eyes recognize color components not uniformly
-								pDestinationData[0] = DestinationType(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[2]*0.299 + pSourceData[1]*0.587 + pSourceData[0]*0.114);
 
 								// Copy over alpha
-								pDestinationData[1] = (DestinationType)pSourceData[3];
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
 					}
@@ -397,9 +397,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 							}
 							break;
 
@@ -408,9 +408,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[3] = AlphaValue;
@@ -422,9 +422,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 							}
 							break;
 
@@ -433,9 +433,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[3] = AlphaValue;
@@ -447,7 +447,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale
-								pDestinationData[0] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
 							}
 							break;
 
@@ -456,7 +456,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale
-								pDestinationData[0] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Set alpha to AlphaValue
 								pDestinationData[1] = AlphaValue;
@@ -474,9 +474,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -487,12 +487,12 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all RGB components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Copy over grayscale
-								pDestinationData[3] = (DestinationType)pSourceData[1];
+								pDestinationData[3] = static_cast<DestinationType>(pSourceData[1]);
 							}
 							break;
 
@@ -501,9 +501,9 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -514,12 +514,12 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Set all BGR components to the same grayscale value
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[0];
-								pDestinationData[2] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[2] = static_cast<DestinationType>(pSourceData[0]);
 
 								// Copy over grayscale
-								pDestinationData[3] = (DestinationType)pSourceData[1];
+								pDestinationData[3] = static_cast<DestinationType>(pSourceData[1]);
 							}
 							break;
 
@@ -528,7 +528,7 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale
-								pDestinationData[0] = (DestinationType)pSourceData[0];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
 
 								// ... the alpha value of the source data get's lost...
 							}
@@ -539,8 +539,8 @@ class ConvertData {
 							// Loop through all pixels
 							for (const SourceType *pSourceDataEnd=pSourceData+nNumOfSourceElements; pSourceData<pSourceDataEnd; pSourceData+=nNumOfSourceColorComponents, pDestinationData+=nNumOfDestinationColorComponents) {
 								// Copy over grayscale and alpha
-								pDestinationData[0] = (DestinationType)pSourceData[0];
-								pDestinationData[1] = (DestinationType)pSourceData[1];
+								pDestinationData[0] = static_cast<DestinationType>(pSourceData[0]);
+								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
 							}
 							break;
 					}

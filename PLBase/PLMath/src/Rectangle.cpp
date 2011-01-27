@@ -63,8 +63,10 @@ bool Rectangle::ScreenRectangle(const Array<Vector3> &lstPoints, bool bZCull, co
 
 		// Perform z cull?
 		if (bZCull) {
-				 if (vPoint.z < -Math::Epsilon)    nZFar++;
-			else if (vPoint.z > (1+Math::Epsilon)) nZNear++;
+			if (vPoint.z < -Math::Epsilon)
+				nZFar++;
+			else if (vPoint.z > (1+Math::Epsilon))
+				nZNear++;
 		}
 
 		// Clamp x
@@ -77,10 +79,14 @@ bool Rectangle::ScreenRectangle(const Array<Vector3> &lstPoints, bool bZCull, co
 
 		// Update min/max
 		if (i) {
-			if (vMin.x > vPoint.x) vMin.x = vPoint.x;
-			if (vMin.y > vPoint.y) vMin.y = vPoint.y;
-			if (vMax.x < vPoint.x) vMax.x = vPoint.x;
-			if (vMax.y < vPoint.y) vMax.y = vPoint.y;
+			if (vMin.x > vPoint.x)
+				vMin.x = vPoint.x;
+			if (vMin.y > vPoint.y)
+				vMin.y = vPoint.y;
+			if (vMax.x < vPoint.x)
+				vMax.x = vPoint.x;
+			if (vMax.y < vPoint.y)
+				vMax.y = vPoint.y;
 		} else {
 			vMin.x = vMax.x = vPoint.x;
 			vMin.y = vMax.y = vPoint.y;
@@ -133,8 +139,10 @@ bool Rectangle::ScreenRectangle(const Array<Vector4> &lstPoints, bool bZCull, co
 
 		// Perform z cull?
 		if (bZCull) {
-				 if (vPoint.z < -Math::Epsilon)    nZFar++;
-			else if (vPoint.z > (1+Math::Epsilon)) nZNear++;
+			if (vPoint.z < -Math::Epsilon)
+				nZFar++;
+			else if (vPoint.z > (1+Math::Epsilon))
+				nZNear++;
 		}
 
 		// Clamp x
@@ -147,10 +155,14 @@ bool Rectangle::ScreenRectangle(const Array<Vector4> &lstPoints, bool bZCull, co
 
 		// Update min/max
 		if (i) {
-			if (vMin.x > vPoint.x) vMin.x = vPoint.x;
-			if (vMin.y > vPoint.y) vMin.y = vPoint.y;
-			if (vMax.x < vPoint.x) vMax.x = vPoint.x;
-			if (vMax.y < vPoint.y) vMax.y = vPoint.y;
+			if (vMin.x > vPoint.x)
+				vMin.x = vPoint.x;
+			if (vMin.y > vPoint.y)
+				vMin.y = vPoint.y;
+			if (vMax.x < vPoint.x)
+				vMax.x = vPoint.x;
+			if (vMax.y < vPoint.y)
+				vMax.y = vPoint.y;
 		} else {
 			vMin.x = vMax.x = vPoint.x;
 			vMin.y = vMax.y = vPoint.y;

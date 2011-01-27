@@ -244,7 +244,7 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 				// Go through the current row
 				for (uint32 nX=0; nX<sHeader.nWidth; nX++){
 					// Get 16 bit pixel
-					const uint16 nTempPixel = *((uint16*)pSourceData);
+					const uint16 nTempPixel = *reinterpret_cast<const uint16*>(pSourceData);
 
 					// Expand to 32 bit pixel and swap BGRA to RGBA
 					pnData[2] = (nTempPixel & 0x001F) << 3;			// Blue

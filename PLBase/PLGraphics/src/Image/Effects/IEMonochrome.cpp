@@ -56,10 +56,10 @@ class ProcessData {
 		*  @param[in, out] cImageBuffer
 		*    Image buffer (MUST have valid data!)
 		*/
-		ProcessData(const ImageBuffer &cImageBuffer)
+		ProcessData(ImageBuffer &cImageBuffer)
 		{
 			// Get the data pointer
-			DataType *pData = (DataType*)cImageBuffer.GetData();
+			DataType *pData = reinterpret_cast<DataType*>(cImageBuffer.GetData());
 
 			// Get the number of color components
 			const uint32 nNumOfColorComponents = cImageBuffer.GetComponentsPerPixel();

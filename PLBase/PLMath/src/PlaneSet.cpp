@@ -84,7 +84,8 @@ Plane *PlaneSet::Create()
 void PlaneSet::CreateBox(const Vector3 &vMin, const Vector3 &vMax)
 {
 	// Check whether there are enough planes
-	if (m_lstPlane.GetNumOfElements() < 6) m_lstPlane.Resize(6);
+	if (m_lstPlane.GetNumOfElements() < 6)
+		m_lstPlane.Resize(6);
 
 	// Check whether there are not to much planes
 	while (m_lstPlane.GetNumOfElements() > 6)
@@ -125,7 +126,8 @@ void PlaneSet::CreateViewPlanes(const Matrix4x4 &mViewProjection, bool bInfProj)
 {
 	// Check whether there are enough planes
 	uint32 nPlanes = bInfProj ? 5 : 6;
-	if (m_lstPlane.GetNumOfElements() < nPlanes) m_lstPlane.Resize(nPlanes);
+	if (m_lstPlane.GetNumOfElements() < nPlanes)
+		m_lstPlane.Resize(nPlanes);
 
 	// Check whether there are not to much planes
 	while (m_lstPlane.GetNumOfElements() > nPlanes)
@@ -328,7 +330,9 @@ bool PlaneSet::RemovePlane(uint32 nID)
 
 		// Done
 		return true;
-	} else return false; // Error!
+	} else {
+		return false; // Error!
+	}
 }
 
 /**
@@ -454,13 +458,14 @@ void PlaneSet::CalculateSphere(Sphere &cSphere) const
 
 	// Get sphere position and radius
 	if (lstPoints.GetNumOfElements()) {
-		vD /= (float)lstPoints.GetNumOfElements();
+		vD /= lstPoints.GetNumOfElements();
 		cSphere.SetPos(vD);
 		float fMaxLength = 0.0f;
 		for (uint32 i=0; i<lstPoints.GetNumOfElements(); i++) {
 			const Vector3 &vP = lstPoints[i];
-			float fLength = (vP-vD).GetLength();
-			if (fLength > fMaxLength) fMaxLength = fLength;
+			const float fLength = (vP-vD).GetLength();
+			if (fLength > fMaxLength)
+				fMaxLength = fLength;
 		}
 		cSphere.SetRadius(fMaxLength);
 	}
@@ -490,8 +495,10 @@ void PlaneSet::CalculateBox(Vector3 &vMin, Vector3 &vMax) const
 								bFirst = false;
 							} else {
 								for (int i=0; i<3; i++) {
-									if (vMin[i] > vRes[i]) vMin[i] = vRes[i];
-									if (vMax[i] < vRes[i]) vMax[i] = vRes[i];
+									if (vMin[i] > vRes[i])
+										vMin[i] = vRes[i];
+									if (vMax[i] < vRes[i])
+										vMax[i] = vRes[i];
 								}
 							}
 						}

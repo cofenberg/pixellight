@@ -144,7 +144,7 @@ class Quaternion {
 		inline Quaternion &operator =(const Quaternion &qQ);
 		inline bool        operator ==(const Quaternion &qQ) const;
 		inline bool        operator !=(const Quaternion &qQ) const;
-		inline             operator float *() const;
+		inline             operator float *();
 		inline             operator const float *() const;
 
 		//[-------------------------------------------------------]

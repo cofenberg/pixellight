@@ -61,7 +61,7 @@ void PngWarning(png_structp pPtr, png_const_charp pszWarning)
 void PngReadData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 {
 	// Get file pointer
-	File *pFile = (File*)png_get_io_ptr(pPng);
+	File *pFile = static_cast<File*>(png_get_io_ptr(pPng));
 
 	// Read data from file
 	pFile->Read(pBuffer, nSize, 1);
@@ -70,7 +70,7 @@ void PngReadData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 void PngWriteData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 {
 	// Get file pointer
-	File *pFile = (File*)png_get_io_ptr(pPng);
+	File *pFile = static_cast<File*>(png_get_io_ptr(pPng));
 
 	// Write data to file
 	pFile->Write(pBuffer, nSize, 1);
@@ -79,7 +79,7 @@ void PngWriteData(png_structp pPng, png_bytep pBuffer, png_size_t nSize)
 void PngFlushData(png_structp pPng)
 {
 	// Get file pointer
-	File *pFile = (File*)png_get_io_ptr(pPng);
+	File *pFile = static_cast<File*>(png_get_io_ptr(pPng));
 
 	// Flush the file buffer
 	pFile->Flush();
@@ -190,9 +190,8 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 				}
 				if (nComponents != 0) {
 					// Convert transparency info into RGBA, but only if we have RGB/RGBA, not indexed colors
-					if (nColorFormat == ColorRGB || nColorFormat == ColorRGBA) {
+					if (nColorFormat == ColorRGB || nColorFormat == ColorRGBA)
 						png_set_tRNS_to_alpha(pPng);
-					}
 
 					// Create image buffer
 					cImage.Clear();
@@ -206,9 +205,8 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 					uint32 nRowBytes = png_get_rowbytes(pPng, pPngInfo);
 					uint32		nRowSize		= nBytes * nComponents * nWidth;
 					png_bytepp	ppRowPointers	= new png_bytep[nHeight];
-					for (uint32 i=0; i<nHeight; i++) {
+					for (uint32 i=0; i<nHeight; i++)
 						ppRowPointers[i] = &pBuffer[i*nRowSize];
-					}
 
 					// Read image
 					png_read_image(pPng, ppRowPointers);
@@ -245,7 +243,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 			return false;
 		} else {
 			// Error: Could not create png_info structure
-			png_destroy_read_struct(&pPng, (png_infopp)nullptr, (png_infopp)nullptr);
+			png_destroy_read_struct(&pPng, nullptr, nullptr);
 			return false;
 		}
 	} else {
@@ -325,7 +323,7 @@ bool ImageLoaderPNG::Save(const Image &cImage, File &cFile)
 						// Write down all rows
 						const uint8 *pnCurrentData = pnData;
 						for (uint32 nY=0; nY<nHeight; nY++, pnCurrentData+=nBytesPerRow)
-							png_write_row(pPng, (png_bytep)pnCurrentData);
+							png_write_row(pPng, reinterpret_cast<png_bytep>(const_cast<png_bytep>(pnCurrentData)));
 					}
 				}
 
