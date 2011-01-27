@@ -378,7 +378,7 @@ inline float Matrix3x4::GetTrace() const
 */
 inline float Matrix3x4::GetDeterminant() const
 {
-	// 'Classic'
+	// 'Classic' (Rule of Sarrus)
 //	return xx*yy*zz + xy*yz*zx + xz*yx*zy - (zx*yy*xz + zy*yz*xx + zz*yx*xy);
 	// Faster :)
 	return xx*(yy*zz - yz*zy) - yx*(xy*zz - xz*zy) + zx*(xy*yz - xz*yy);
