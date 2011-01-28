@@ -221,64 +221,64 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 		// Load the image
 		Image cImage;
 		if (cImage.Load(sFilename, sParams, sMethod)) {
-			// Get texture quality
-			float fTextureQuality = GetTextureManager().GetTextureQuality();
-			if (fTextureQuality <= 0.0f) {
-				// If texture quality is 0 no textures at all are loaded beside the default one.
-				// All other textures will use this default texture...
-				if (sFilename != TextureManager::Default) {
-					// Log output
-					PL_LOG(Debug, "Texture quality is 0, using default texture instead of '" + sFilename + "'...")
-
-					// Use the default texture
-					const Texture *pTexture = GetTextureManager().Get(TextureManager::Default);
-					if (pTexture && pTexture->GetTextureBuffer()) {
-						m_bShareTextureBuffer = true;
-						pTexture->GetTextureBuffer()->AddHandler(*m_pTextureBufferHandler);
-
-						// Done
-						return true;
-					} else {
-						// Error!
-						return false;
-					}
-				} else {
-					fTextureQuality = 1.0f;
-				}
-			}
-
-			// Check renderer
-			Renderer &cRenderer = GetTextureManager().GetRendererContext().GetRenderer();
-
-			// Settings
-			// Take the next lower valid texture size? (0 = Texture manager settings, 1 = fit higher, 2 = fit lower)
-			char nTextureFitLower = 0;
-			// Rectangle texture (no power of 2 limitation)
-			bool bRectangleTexture = false;
-			// Are mipmaps allowed?
-			bool bMipmapsAllowed = GetTextureManager().AreTextureMipmapsAllowed();
-			// Is it allowed to resizing the texture?
-			bool bAllowResize = true;
-			// Force a given size? (-1 = no)
-			int nForceWidth = -1, nForceHeight = -1, nForceDepth = -1;
-			// The minimum allowed size for this texture (resizing)
-			int nMinTextureBufferSize[3];
-			int nTempMinTextureBufferSize[3];
-			nTempMinTextureBufferSize[Vector3::Y] = nTempMinTextureBufferSize[Vector3::X] = 4;
-			nTempMinTextureBufferSize[Vector3::Z] = 1;
-			int nMaxTextureBufferSize[3];
-			nMaxTextureBufferSize[Vector3::X] = cRenderer.GetCapabilities().nMaxTextureBufferSize;
-			nMaxTextureBufferSize[Vector3::Z] = nMaxTextureBufferSize[Vector3::Y] = nMaxTextureBufferSize[Vector3::X];
-			nMinTextureBufferSize[Vector3::X] = nTempMinTextureBufferSize[Vector3::X];
-			nMinTextureBufferSize[Vector3::Y] = nTempMinTextureBufferSize[Vector3::Y];
-			nMinTextureBufferSize[Vector3::Z] = nTempMinTextureBufferSize[Vector3::Z];
-			// Color key
-			int nCKR = 0, nCKG = 0, nCKB = 0, nCKTolerance = 0;
-			bool bColorKey = false;
-
 			// Get the image buffer
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
 			if (pImageBuffer) {
+				// Get texture quality
+				float fTextureQuality = GetTextureManager().GetTextureQuality();
+				if (fTextureQuality <= 0.0f) {
+					// If texture quality is 0 no textures at all are loaded beside the default one.
+					// All other textures will use this default texture...
+					if (sFilename != TextureManager::Default) {
+						// Log output
+						PL_LOG(Debug, "Texture quality is 0, using default texture instead of '" + sFilename + "'...")
+
+						// Use the default texture
+						const Texture *pTexture = GetTextureManager().Get(TextureManager::Default);
+						if (pTexture && pTexture->GetTextureBuffer()) {
+							m_bShareTextureBuffer = true;
+							pTexture->GetTextureBuffer()->AddHandler(*m_pTextureBufferHandler);
+
+							// Done
+							return true;
+						} else {
+							// Error!
+							return false;
+						}
+					} else {
+						fTextureQuality = 1.0f;
+					}
+				}
+
+				// Check renderer
+				Renderer &cRenderer = GetTextureManager().GetRendererContext().GetRenderer();
+
+				// Settings
+				// Take the next lower valid texture size? (0 = Texture manager settings, 1 = fit higher, 2 = fit lower)
+				char nTextureFitLower = 0;
+				// Rectangle texture (no power of 2 limitation)
+				bool bRectangleTexture = false;
+				// Are mipmaps allowed?
+				bool bMipmapsAllowed = GetTextureManager().AreTextureMipmapsAllowed();
+				// Is it allowed to resizing the texture?
+				bool bAllowResize = true;
+				// Force a given size? (-1 = no)
+				int nForceWidth = -1, nForceHeight = -1, nForceDepth = -1;
+				// The minimum allowed size for this texture (resizing)
+				int nMinTextureBufferSize[3];
+				int nTempMinTextureBufferSize[3];
+				nTempMinTextureBufferSize[Vector3::Y] = nTempMinTextureBufferSize[Vector3::X] = 4;
+				nTempMinTextureBufferSize[Vector3::Z] = 1;
+				int nMaxTextureBufferSize[3];
+				nMaxTextureBufferSize[Vector3::X] = cRenderer.GetCapabilities().nMaxTextureBufferSize;
+				nMaxTextureBufferSize[Vector3::Z] = nMaxTextureBufferSize[Vector3::Y] = nMaxTextureBufferSize[Vector3::X];
+				nMinTextureBufferSize[Vector3::X] = nTempMinTextureBufferSize[Vector3::X];
+				nMinTextureBufferSize[Vector3::Y] = nTempMinTextureBufferSize[Vector3::Y];
+				nMinTextureBufferSize[Vector3::Z] = nTempMinTextureBufferSize[Vector3::Z];
+				// Color key
+				int nCKR = 0, nCKG = 0, nCKB = 0, nCKTolerance = 0;
+				bool bColorKey = false;
+
 				// Backup the given filename
 				m_sUrl = cImage.GetUrl();
 
@@ -453,311 +453,313 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 				// Rectangle textures supported?
 				if (!cRenderer.GetCapabilities().bTextureBufferRectangle)
 					bRectangleTexture = false;	// Sorry, no rectangle textures supported!
-			}
 
-			// We do NOT support palettes within textures!
-			if (pImageBuffer->GetColorFormat() == ColorPalette) {
-				// Apply effect
-				cImage.ApplyEffect(ImageEffects::RemovePalette());
-
-				// Update the image buffer pointer
-				pImageBuffer = cImage.GetBuffer();
-			}
-
-			// Perform requested image manipulations
-			// Get width
-			uint32 nWidth = pImageBuffer->GetSize().x;
-			m_vOriginalSize.x = nWidth;
-			if (nWidth > 1) {
-				nWidth = (uint32)(nWidth*fTextureQuality);
-				if ((int)nWidth < nMinTextureBufferSize[Vector3::X])
-					nWidth = nMinTextureBufferSize[Vector3::X];
-			}
-			// Get height
-			uint32 nHeight = pImageBuffer->GetSize().y;
-			m_vOriginalSize.y = nHeight;
-			if (nHeight > 1) {
-				nHeight = (uint32)(nHeight*fTextureQuality);
-				if ((int)nHeight < nMinTextureBufferSize[Vector3::Y])
-					nHeight = nMinTextureBufferSize[Vector3::Y];
-			}
-			// Get depth
-			uint32 nDepth = pImageBuffer->GetSize().z;
-			m_vOriginalSize.z = nDepth;
-			if (nDepth > 1) {
-				nDepth = (uint32)(nDepth*fTextureQuality);
-				if ((int)nDepth < nMinTextureBufferSize[Vector3::Z])
-					nDepth = nMinTextureBufferSize[Vector3::Z];
-			}
-
-			// By default, allow resize if it's required (we MUST scale if the texture dimension is not supported)
-			bool bAllowResizeWidth  = true;
-			bool bAllowResizeHeight = true;
-			bool bAllowResizeDepth  = true;
-			if (nForceWidth > -1) {
-				nWidth			  = nForceWidth;
-				bAllowResizeWidth = false;
-			}
-			if (nForceHeight > -1) {
-				nHeight			   = nForceHeight;
-				bAllowResizeHeight = false;
-			}
-			if (nForceDepth > -1) {
-				nDepth			  = nForceDepth;
-				bAllowResizeDepth = false;
-			}
-
-			// Resize
-			bool bError = false;
-			if (bRectangleTexture) {
-				uint32 nMaxSize = cRenderer.GetCapabilities().nMaxRectangleTextureBufferSize;
-
-				// Check if the texture size is correct
-				if (nWidth > nMaxSize || nHeight > nMaxSize) {
-					PL_LOG(Warning, '\'' + sFilename + String::Format("': Rectangle texture size %dx%d isn't correct! (max: %dx%d)", nWidth, nHeight, nMaxSize, nMaxSize))
-
-					// Correct texture size
-					if (nWidth > nMaxSize) {
-						if (bAllowResizeWidth)
-							nWidth = nMaxSize;
-						else
-							bError = true;
-					}
-					if (nHeight > nMaxSize) {
-						if (bAllowResizeHeight)
-							nHeight = nMaxSize;
-						else
-							bError = true;
-					}
-					if (nDepth > nMaxSize) {
-						if (bAllowResizeDepth)
-							nDepth = nMaxSize;
-						else
-							bError = true;
-					}
-				}
-			} else {
-				// Get maximum size
-				uint32 nMaxSize;
-				if (cImage.GetNumOfParts() == 6)
-					nMaxSize = cRenderer.GetCapabilities().nMaxCubeTextureBufferSize;
-				else {
-					if (nDepth > 1)
-						nMaxSize = cRenderer.GetCapabilities().nMax3DTextureBufferSize;
-					else
-						nMaxSize = cRenderer.GetCapabilities().nMaxTextureBufferSize;
-				}
-
-				// Check if the texture size is correct
-				if (m_vOriginalSize.x > (int)nMaxSize || m_vOriginalSize.y > (int)nMaxSize || m_vOriginalSize.z > (int)nMaxSize ||
-					!Math::IsPowerOfTwo(m_vOriginalSize.x) || !Math::IsPowerOfTwo(m_vOriginalSize.y) || !Math::IsPowerOfTwo(m_vOriginalSize.z)) {
-					// Write a performance warning into the log if the original texture size is not optimal
-					if (m_vOriginalSize.z == 1)
-						PL_LOG(Warning, '\'' + sFilename + String::Format("': Texture size %dx%d isn't correct! (max: %dx%d)", m_vOriginalSize.x, m_vOriginalSize.y, nMaxSize, nMaxSize))
-					else
-						PL_LOG(Warning, '\'' + sFilename + String::Format("': Texture size %dx%dx%d isn't correct! (max: %dx%dx%d)", m_vOriginalSize.x, m_vOriginalSize.y, m_vOriginalSize.z, nMaxSize, nMaxSize, nMaxSize))
-				}
-				if (nWidth > nMaxSize || nHeight > nMaxSize || nDepth > nMaxSize ||
-					!Math::IsPowerOfTwo(nWidth) || !Math::IsPowerOfTwo(nHeight) || !Math::IsPowerOfTwo(nDepth)) {
-					// Correct texture size
-					bool bTextureFit;
-					if (nTextureFitLower == 2)
-						bTextureFit = 1;
-					else if (nTextureFitLower == 1)
-						bTextureFit = 0;
-					else
-						bTextureFit = ((TextureManager*)GetManager())->GetTextureFit();
-
-					// Check width
-					if (!Math::IsPowerOfTwo(nWidth)) {
-						if (bAllowResizeWidth)
-							nWidth = Math::GetNearestPowerOfTwo(nWidth, bTextureFit);
-						else
-							bError = true;
-					}
-					if (nWidth > nMaxSize) {
-						if (bAllowResizeWidth)
-							nWidth = nMaxSize;
-						else
-							bError = true;
-					}
-
-					// Check height
-					if (!Math::IsPowerOfTwo(nHeight)) {
-						if (bAllowResizeHeight)
-							nHeight = Math::GetNearestPowerOfTwo(nHeight, bTextureFit);
-						else
-							bError = true;
-					}
-					if (nHeight > nMaxSize) {
-						if (bAllowResizeHeight)
-							nHeight = nMaxSize;
-						else
-							bError = true;
-					}
-
-					// Check depth
-					if (!Math::IsPowerOfTwo(nDepth)) {
-						if (bAllowResizeDepth)
-							nDepth = Math::GetNearestPowerOfTwo(nDepth, bTextureFit);
-						else
-							bError = true;
-					}
-					if (nDepth > nMaxSize) {
-						if (bAllowResizeDepth)
-							nDepth = nMaxSize;
-						else
-							bError = true;
-					}
-				}
-			}
-
-			// Scale
-			if (!bError) {
-				// Scale the image if required
-				if (nWidth  != (uint32)pImageBuffer->GetSize().x ||
-					nHeight != (uint32)pImageBuffer->GetSize().y ||
-					nDepth  != (uint32)pImageBuffer->GetSize().z) {
-					if (nDepth == 1)
-						PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%d to %dx%d", m_vOriginalSize.x, m_vOriginalSize.y, nWidth, nHeight))
-					else
-						PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%dx%d to %dx%dx%d", m_vOriginalSize.x, m_vOriginalSize.y, m_vOriginalSize.z, nWidth, nHeight, nDepth))
-
-					// Apply scale - we can scale by using another mipmap as base map :D
-					cImage.ApplyEffect(ImageEffects::Scale(Vector3i(nWidth, nHeight, nDepth), true));
+				// We do NOT support palettes within textures!
+				if (pImageBuffer->GetColorFormat() == ColorPalette) {
+					// Apply effect
+					cImage.ApplyEffect(ImageEffects::RemovePalette());
 
 					// Update the image buffer pointer
 					pImageBuffer = cImage.GetBuffer();
 				}
 
-				// Check compression format
-				if (m_nCompressionHint == Default) {
-					switch (pImageBuffer->GetCompression()) {
-						case CompressionDXT1:
-							m_nCompressionHint = DXT1;
-							break;
+				// Perform requested image manipulations
+				// Get width
+				uint32 nWidth = pImageBuffer->GetSize().x;
+				m_vOriginalSize.x = nWidth;
+				if (nWidth > 1) {
+					nWidth = (uint32)(nWidth*fTextureQuality);
+					if ((int)nWidth < nMinTextureBufferSize[Vector3::X])
+						nWidth = nMinTextureBufferSize[Vector3::X];
+				}
+				// Get height
+				uint32 nHeight = pImageBuffer->GetSize().y;
+				m_vOriginalSize.y = nHeight;
+				if (nHeight > 1) {
+					nHeight = (uint32)(nHeight*fTextureQuality);
+					if ((int)nHeight < nMinTextureBufferSize[Vector3::Y])
+						nHeight = nMinTextureBufferSize[Vector3::Y];
+				}
+				// Get depth
+				uint32 nDepth = pImageBuffer->GetSize().z;
+				m_vOriginalSize.z = nDepth;
+				if (nDepth > 1) {
+					nDepth = (uint32)(nDepth*fTextureQuality);
+					if ((int)nDepth < nMinTextureBufferSize[Vector3::Z])
+						nDepth = nMinTextureBufferSize[Vector3::Z];
+				}
 
-						case CompressionDXT3:
-							m_nCompressionHint = DXT3;
-							break;
+				// By default, allow resize if it's required (we MUST scale if the texture dimension is not supported)
+				bool bAllowResizeWidth  = true;
+				bool bAllowResizeHeight = true;
+				bool bAllowResizeDepth  = true;
+				if (nForceWidth > -1) {
+					nWidth			  = nForceWidth;
+					bAllowResizeWidth = false;
+				}
+				if (nForceHeight > -1) {
+					nHeight			   = nForceHeight;
+					bAllowResizeHeight = false;
+				}
+				if (nForceDepth > -1) {
+					nDepth			  = nForceDepth;
+					bAllowResizeDepth = false;
+				}
 
-						case CompressionDXT5:
-							m_nCompressionHint = DXT5;
-							break;
+				// Resize
+				bool bError = false;
+				if (bRectangleTexture) {
+					uint32 nMaxSize = cRenderer.GetCapabilities().nMaxRectangleTextureBufferSize;
 
-						case CompressionLATC1:
-							m_nCompressionHint = LATC1;
-							break;
+					// Check if the texture size is correct
+					if (nWidth > nMaxSize || nHeight > nMaxSize) {
+						PL_LOG(Warning, '\'' + sFilename + String::Format("': Rectangle texture size %dx%d isn't correct! (max: %dx%d)", nWidth, nHeight, nMaxSize, nMaxSize))
 
-						case CompressionLATC2:
-							m_nCompressionHint = LATC2;
-							break;
+						// Correct texture size
+						if (nWidth > nMaxSize) {
+							if (bAllowResizeWidth)
+								nWidth = nMaxSize;
+							else
+								bError = true;
+						}
+						if (nHeight > nMaxSize) {
+							if (bAllowResizeHeight)
+								nHeight = nMaxSize;
+							else
+								bError = true;
+						}
+						if (nDepth > nMaxSize) {
+							if (bAllowResizeDepth)
+								nDepth = nMaxSize;
+							else
+								bError = true;
+						}
+					}
+				} else {
+					// Get maximum size
+					uint32 nMaxSize;
+					if (cImage.GetNumOfParts() == 6)
+						nMaxSize = cRenderer.GetCapabilities().nMaxCubeTextureBufferSize;
+					else {
+						if (nDepth > 1)
+							nMaxSize = cRenderer.GetCapabilities().nMax3DTextureBufferSize;
+						else
+							nMaxSize = cRenderer.GetCapabilities().nMaxTextureBufferSize;
+					}
 
-						default:
-							m_nCompressionHint = None;
-							break;
+					// Check if the texture size is correct
+					if (m_vOriginalSize.x > (int)nMaxSize || m_vOriginalSize.y > (int)nMaxSize || m_vOriginalSize.z > (int)nMaxSize ||
+						!Math::IsPowerOfTwo(m_vOriginalSize.x) || !Math::IsPowerOfTwo(m_vOriginalSize.y) || !Math::IsPowerOfTwo(m_vOriginalSize.z)) {
+						// Write a performance warning into the log if the original texture size is not optimal
+						if (m_vOriginalSize.z == 1)
+							PL_LOG(Warning, '\'' + sFilename + String::Format("': Texture size %dx%d isn't correct! (max: %dx%d)", m_vOriginalSize.x, m_vOriginalSize.y, nMaxSize, nMaxSize))
+						else
+							PL_LOG(Warning, '\'' + sFilename + String::Format("': Texture size %dx%dx%d isn't correct! (max: %dx%dx%d)", m_vOriginalSize.x, m_vOriginalSize.y, m_vOriginalSize.z, nMaxSize, nMaxSize, nMaxSize))
+					}
+					if (nWidth > nMaxSize || nHeight > nMaxSize || nDepth > nMaxSize ||
+						!Math::IsPowerOfTwo(nWidth) || !Math::IsPowerOfTwo(nHeight) || !Math::IsPowerOfTwo(nDepth)) {
+						// Correct texture size
+						bool bTextureFit;
+						if (nTextureFitLower == 2)
+							bTextureFit = 1;
+						else if (nTextureFitLower == 1)
+							bTextureFit = 0;
+						else
+							bTextureFit = ((TextureManager*)GetManager())->GetTextureFit();
+
+						// Check width
+						if (!Math::IsPowerOfTwo(nWidth)) {
+							if (bAllowResizeWidth)
+								nWidth = Math::GetNearestPowerOfTwo(nWidth, bTextureFit);
+							else
+								bError = true;
+						}
+						if (nWidth > nMaxSize) {
+							if (bAllowResizeWidth)
+								nWidth = nMaxSize;
+							else
+								bError = true;
+						}
+
+						// Check height
+						if (!Math::IsPowerOfTwo(nHeight)) {
+							if (bAllowResizeHeight)
+								nHeight = Math::GetNearestPowerOfTwo(nHeight, bTextureFit);
+							else
+								bError = true;
+						}
+						if (nHeight > nMaxSize) {
+							if (bAllowResizeHeight)
+								nHeight = nMaxSize;
+							else
+								bError = true;
+						}
+
+						// Check depth
+						if (!Math::IsPowerOfTwo(nDepth)) {
+							if (bAllowResizeDepth)
+								nDepth = Math::GetNearestPowerOfTwo(nDepth, bTextureFit);
+							else
+								bError = true;
+						}
+						if (nDepth > nMaxSize) {
+							if (bAllowResizeDepth)
+								nDepth = nMaxSize;
+							else
+								bError = true;
+						}
 					}
 				}
 
-				// Color key
-				if (bColorKey) {
-					// Apply color key
-					cImage.ApplyEffect(ImageEffects::ColorKey(Color3((uint8)nCKR, (uint8)nCKG, (uint8)nCKB), nCKTolerance/255.0f));
+				// Scale
+				if (!bError) {
+					// Scale the image if required
+					if (nWidth  != (uint32)pImageBuffer->GetSize().x ||
+						nHeight != (uint32)pImageBuffer->GetSize().y ||
+						nDepth  != (uint32)pImageBuffer->GetSize().z) {
+						if (nDepth == 1)
+							PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%d to %dx%d", m_vOriginalSize.x, m_vOriginalSize.y, nWidth, nHeight))
+						else
+							PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%dx%d to %dx%dx%d", m_vOriginalSize.x, m_vOriginalSize.y, m_vOriginalSize.z, nWidth, nHeight, nDepth))
 
-					// Update the image buffer pointer
-					pImageBuffer = cImage.GetBuffer();
-				}
+						// Apply scale - we can scale by using another mipmap as base map :D
+						cImage.ApplyEffect(ImageEffects::Scale(Vector3i(nWidth, nHeight, nDepth), true));
 
-				// Setup texture flags
-				uint32 nTextureFlags = bMipmapsAllowed ? TextureBuffer::Mipmaps : 0;
+						// Update the image buffer pointer
+						pImageBuffer = cImage.GetBuffer();
+					}
 
-				// Is texture compression allowed in general? (for none floating point formats only)
-				TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown;
-				if (pImageBuffer->GetDataFormat() != DataHalf && pImageBuffer->GetDataFormat() != DataFloat && GetTextureManager().IsTextureCompressionAllowed()) {
-					// Check if texture compression should be used internally and the image is currently not compressed
-					switch (m_nCompressionHint) {
-						case Default:
-							// This case is handled during texture loading above
-							break;
+					// Check compression format
+					if (m_nCompressionHint == Default) {
+						switch (pImageBuffer->GetCompression()) {
+							case CompressionDXT1:
+								m_nCompressionHint = DXT1;
+								break;
 
-						case DXT1:
-							nTextureFlags   |= TextureBuffer::Compression;
-							nInternalFormat  = TextureBuffer::DXT1;
-							break;
+							case CompressionDXT3:
+								m_nCompressionHint = DXT3;
+								break;
 
-						case DXT3:
-							nTextureFlags   |= TextureBuffer::Compression;
-							nInternalFormat  = TextureBuffer::DXT3;
-							break;
+							case CompressionDXT5:
+								m_nCompressionHint = DXT5;
+								break;
 
-						case DXT5:
-						case DXT5_xGxR:
-							nTextureFlags   |= TextureBuffer::Compression;
-							nInternalFormat  = TextureBuffer::DXT5;
-							break;
+							case CompressionLATC1:
+								m_nCompressionHint = LATC1;
+								break;
 
-						case LATC1:
-							nTextureFlags   |= TextureBuffer::Compression;
-							nInternalFormat  = TextureBuffer::LATC1;
-							break;
+							case CompressionLATC2:
+								m_nCompressionHint = LATC2;
+								break;
 
-						case LATC2:
-						case LATC2_XYSwizzle:
-							nTextureFlags   |= TextureBuffer::Compression;
-							nInternalFormat  = TextureBuffer::LATC2;
-							break;
+							default:
+								m_nCompressionHint = None;
+								break;
+						}
+					}
 
-						case None:
-						default:
-							// No texture compression is used
-							break;
+					// Color key
+					if (bColorKey) {
+						// Apply color key
+						cImage.ApplyEffect(ImageEffects::ColorKey(Color3((uint8)nCKR, (uint8)nCKG, (uint8)nCKB), nCKTolerance/255.0f));
+
+						// Update the image buffer pointer
+						pImageBuffer = cImage.GetBuffer();
+					}
+
+					// Setup texture flags
+					uint32 nTextureFlags = bMipmapsAllowed ? TextureBuffer::Mipmaps : 0;
+
+					// Is texture compression allowed in general? (for none floating point formats only)
+					TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown;
+					if (pImageBuffer->GetDataFormat() != DataHalf && pImageBuffer->GetDataFormat() != DataFloat && GetTextureManager().IsTextureCompressionAllowed()) {
+						// Check if texture compression should be used internally and the image is currently not compressed
+						switch (m_nCompressionHint) {
+							case Default:
+								// This case is handled during texture loading above
+								break;
+
+							case DXT1:
+								nTextureFlags   |= TextureBuffer::Compression;
+								nInternalFormat  = TextureBuffer::DXT1;
+								break;
+
+							case DXT3:
+								nTextureFlags   |= TextureBuffer::Compression;
+								nInternalFormat  = TextureBuffer::DXT3;
+								break;
+
+							case DXT5:
+							case DXT5_xGxR:
+								nTextureFlags   |= TextureBuffer::Compression;
+								nInternalFormat  = TextureBuffer::DXT5;
+								break;
+
+							case LATC1:
+								nTextureFlags   |= TextureBuffer::Compression;
+								nInternalFormat  = TextureBuffer::LATC1;
+								break;
+
+							case LATC2:
+							case LATC2_XYSwizzle:
+								nTextureFlags   |= TextureBuffer::Compression;
+								nInternalFormat  = TextureBuffer::LATC2;
+								break;
+
+							case None:
+							default:
+								// No texture compression is used
+								break;
+						}
+					} else {
+						// If 'DXT5 xGxR' or 'LATC2_XYSwizzle' is used, the data is also uncompressed... BUT the data is STILL swizzled!
+						if (m_nCompressionHint != Texture::DXT5_xGxR && m_nCompressionHint != Texture::LATC2_XYSwizzle)
+							m_nCompressionHint = None; // Do never ever use texture compression!
+					}
+
+					// Currently, GrayscaleA and RGB is not supported by half/float formats, so, just convert to RGBA so we're still able to use the image data as texture!
+					if ((pImageBuffer->GetDataFormat() == DataHalf || pImageBuffer->GetDataFormat() == DataFloat) && (pImageBuffer->GetColorFormat() != ColorGrayscale || pImageBuffer->GetColorFormat() != ColorRGB))
+						cImage.ApplyEffect(ImageEffects::Convert((pImageBuffer->GetDataFormat() == DataHalf) ? DataHalf : DataFloat, ColorRGBA));
+
+					// Create the renderer texture buffer resource
+					TextureBuffer *pTextureBuffer;
+					if (cImage.GetNumOfParts() == 6) {
+						// Cube texture buffer
+						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBufferCube(cImage, nInternalFormat, nTextureFlags);
+					} else if (nDepth != 1) {
+						// 3D texture buffer
+						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer3D(cImage, nInternalFormat, nTextureFlags);
+					} else if (nWidth == 1 || nHeight == 1) {
+						// 1D texture buffer
+						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer1D(cImage, nInternalFormat, nTextureFlags);
+					} else {
+						// 2D/rectancle texture buffer
+						if (bRectangleTexture)
+							pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, nTextureFlags);
+						else
+							pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer2D(cImage, nInternalFormat, nTextureFlags);
+					}
+
+					// Renderer texture created?
+					if (pTextureBuffer) {
+						pTextureBuffer->AddHandler(*m_pTextureBufferHandler);
+
+						// Backup the given filename
+						m_sFilename = sFilename;
+
+						// Done
+						return true;
+					} else {
+						PL_LOG(Error, '\'' + sFilename + "': Can't create texture buffer!")
 					}
 				} else {
-					// If 'DXT5 xGxR' or 'LATC2_XYSwizzle' is used, the data is also uncompressed... BUT the data is STILL swizzled!
-					if (m_nCompressionHint != Texture::DXT5_xGxR && m_nCompressionHint != Texture::LATC2_XYSwizzle)
-						m_nCompressionHint = None; // Do never ever use texture compression!
-				}
-
-				// Currently, GrayscaleA and RGB is not supported by half/float formats, so, just convert to RGBA so we're still able to use the image data as texture!
-				if ((pImageBuffer->GetDataFormat() == DataHalf || pImageBuffer->GetDataFormat() == DataFloat) && (pImageBuffer->GetColorFormat() != ColorGrayscale || pImageBuffer->GetColorFormat() != ColorRGB))
-					cImage.ApplyEffect(ImageEffects::Convert((pImageBuffer->GetDataFormat() == DataHalf) ? DataHalf : DataFloat, ColorRGBA));
-
-				// Create the renderer texture buffer resource
-				TextureBuffer *pTextureBuffer;
-				if (cImage.GetNumOfParts() == 6) {
-					// Cube texture buffer
-					pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBufferCube(cImage, nInternalFormat, nTextureFlags);
-				} else if (nDepth != 1) {
-					// 3D texture buffer
-					pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer3D(cImage, nInternalFormat, nTextureFlags);
-				} else if (nWidth == 1 || nHeight == 1) {
-					// 1D texture buffer
-					pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer1D(cImage, nInternalFormat, nTextureFlags);
-				} else {
-					// 2D/rectancle texture buffer
-					if (bRectangleTexture)
-						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, nTextureFlags);
-					else
-						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer2D(cImage, nInternalFormat, nTextureFlags);
-				}
-
-				// Renderer texture created?
-				if (pTextureBuffer) {
-					pTextureBuffer->AddHandler(*m_pTextureBufferHandler);
-
-					// Backup the given filename
-					m_sFilename = sFilename;
-
-					// Done
-					return true;
-				} else {
-					PL_LOG(Error, '\'' + sFilename + "': Can't create texture buffer!")
+					PL_LOG(Error, '\'' + sFilename + "': Error: Invalid texture dimension!")
 				}
 			} else {
-				PL_LOG(Error, '\'' + sFilename + "': Error: Invalid texture dimension!")
+				PL_LOG(Error, "Image '" + sFilename + "' was opened successfully, but there's no image data?! (unknown RTTI load method provided?)")
 			}
 		} else {
-			PL_LOG(Error, "Can't open " + sFilename)
+			PL_LOG(Error, "Can't open '" + sFilename + '\'')
 		}
 	}
 
