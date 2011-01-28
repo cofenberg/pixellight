@@ -306,7 +306,7 @@ bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQualit
 			jpeg_set_defaults(&sInfo);
 
 			sInfo.input_components	= nComponents;
-			sInfo.num_components	= nComponents;
+			sInfo.num_components	= (nComponents == 1) ? 1 : 3;
 			sInfo.image_width		= pImageBuffer->GetSize().x;
 			sInfo.image_height		= pImageBuffer->GetSize().y;
 			sInfo.data_precision	= 8;
@@ -318,11 +318,39 @@ bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQualit
 			jpeg_write_init(&sInfo, &cFile);
 			jpeg_start_compress(&sInfo, TRUE);
 
-			// Write the data
-			uint8 *pCurrentData = pImageBuffer->GetData();
-			for (int y=0; y<pImageBuffer->GetSize().y; y++) {
-				jpeg_write_scanlines(&sInfo, &pCurrentData, 1);
-				pCurrentData += pImageBuffer->GetRowSize();
+			// Is the input image RGBA? If so, we really need to throw away the alpha channel...
+			if (nComponents == 4) {
+				// Allocate memory for an converted output row
+				uint8 *pOutputRow = new uint8[sInfo.image_width*sInfo.num_components];
+
+				// Write the data
+				const uint8 *pCurrentImageData = pImageBuffer->GetData();
+				for (uint32 y=0; y<sInfo.image_height; y++) {
+					// Convert the current row
+					for (uint32 x=0; x<sInfo.image_width; x++) {
+						const uint8 *pnPixelIn = &pCurrentImageData[x*4];
+						uint8 *pnPixelOut = &pOutputRow[x*3];
+						pnPixelOut[0] = pnPixelIn[0];
+						pnPixelOut[1] = pnPixelIn[1];
+						pnPixelOut[2] = pnPixelIn[2];
+					}
+
+					// Write out the current row
+					jpeg_write_scanlines(&sInfo, &pOutputRow, 1);
+
+					// Next, please
+					pCurrentImageData += pImageBuffer->GetRowSize();
+				}
+
+				// Free the allocated output row memory
+				delete [] pOutputRow;
+			} else {
+				// Write the data
+				uint8 *pCurrentImageData = pImageBuffer->GetData();
+				for (uint32 y=0; y<sInfo.image_height; y++) {
+					jpeg_write_scanlines(&sInfo, &pCurrentImageData, 1);
+					pCurrentImageData += pImageBuffer->GetRowSize();
+				}
 			}
 
 			// Cleanup

@@ -2,6 +2,7 @@
 [CO]
 - ImageLoaderJPG: Added "fancy upsampling" and "interblock smoothing" as optional load parameters
 - ImageLoaderJPG: Added "quality" as optional save parameter
+- ImageLoaderJPG: Saving a given RGBA image was not working (we really need to throw away the alpha channel...)
 
 
 
