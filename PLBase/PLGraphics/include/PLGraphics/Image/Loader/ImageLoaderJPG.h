@@ -60,8 +60,10 @@ class ImageLoaderJPG : public ImageLoader {
 			pl_property("Save",		"1")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, Image&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, const Image&, PLGeneral::File&, "Save method", "")
+		pl_method_2(Load, bool, Image&, PLGeneral::File&, "Load method, no fancy upsampling and no interblock smoothing is applied", "")
+		pl_method_4(LoadParams, bool, Image&, PLGeneral::File&, bool, bool, "Load method. Parameters: First 'bool' parameter determines whether or not fancy upsampling is applied, second 'bool' parameter whether or not interblock smoothing is applied.", "")
+		pl_method_2(Save, bool, const Image&, PLGeneral::File&, "Save method, using 100% quality setting", "")
+		pl_method_3(SaveParams, bool, const Image&, PLGeneral::File&, PLGeneral::uint32, "Save method, quality (0...100) as first parameter", "")
 	pl_class_end
 
 
@@ -70,7 +72,9 @@ class ImageLoaderJPG : public ImageLoader {
 	//[-------------------------------------------------------]
 	public:
 		PLGRAPHICS_API bool Load(Image &cImage, PLGeneral::File &cFile);
+		PLGRAPHICS_API bool LoadParams(Image &cImage, PLGeneral::File &cFile, bool bBlockSmoothing, bool bFancyUpsampling);
 		PLGRAPHICS_API bool Save(const Image &cImage, PLGeneral::File &cFile);
+		PLGRAPHICS_API bool SaveParams(const Image &cImage, PLGeneral::File &cFile, PLGeneral::uint32 nQuality);
 
 
 	//[-------------------------------------------------------]

@@ -1,3 +1,10 @@
+>> 28.01.2011
+[CO]
+- ImageLoaderJPG: Added "fancy upsampling" and "interblock smoothing" as optional load parameters
+- ImageLoaderJPG: Added "quality" as optional save parameter
+
+
+
 >> 09.01.2011
 [CO]
 - Added support for "DataHalf" image data format and implemented at least the most important functions to be able to load in images stored as

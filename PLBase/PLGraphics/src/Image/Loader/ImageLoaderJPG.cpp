@@ -219,6 +219,11 @@ void jpeg_write_init(j_compress_ptr cinfo, File *pFile)
 //[-------------------------------------------------------]
 bool ImageLoaderJPG::Load(Image &cImage, File &cFile)
 {
+	return LoadParams(cImage, cFile, false, false);
+}
+
+bool ImageLoaderJPG::LoadParams(Image &cImage, File &cFile, bool bBlockSmoothing, bool bFancyUpsampling)
+{
 	jpeg_decompress_struct sInfo;
 	jpeg_error_mgr sError;
 
@@ -227,9 +232,9 @@ bool ImageLoaderJPG::Load(Image &cImage, File &cFile)
 
 	jpeg_create_decompress(&sInfo);
 
-	// [TODO] Use these?
-	// sInfo.do_block_smoothing = true;
-	// sInfo.do_fancy_upsampling = true;
+	// Set the user given parameters
+	sInfo.do_block_smoothing  = bBlockSmoothing;
+	sInfo.do_fancy_upsampling = bFancyUpsampling;
 
 	jpeg_read_init(&sInfo, &cFile);
 
@@ -278,6 +283,11 @@ bool ImageLoaderJPG::Load(Image &cImage, File &cFile)
 
 bool ImageLoaderJPG::Save(const Image &cImage, File &cFile)
 {
+	return SaveParams(cImage, cFile, 100);
+}
+
+bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQuality)
+{
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
 	if (pImageBuffer && pImageBuffer->GetRowSize()) {
@@ -302,8 +312,7 @@ bool ImageLoaderJPG::Save(const Image &cImage, File &cFile)
 			sInfo.data_precision	= 8;
 			sInfo.input_gamma		= 1.0;
 
-			// [TODO] Make parameter 'public'?
-			const int nQuality = 100;
+			// Set the user given parameter
 			jpeg_set_quality(&sInfo, nQuality, FALSE);
 
 			jpeg_write_init(&sInfo, &cFile);
@@ -343,7 +352,9 @@ bool ImageLoaderJPG::Save(const Image &cImage, File &cFile)
 */
 ImageLoaderJPG::ImageLoaderJPG() :
 	MethodLoad(this),
-	MethodSave(this)
+	MethodLoadParams(this),
+	MethodSave(this),
+	MethodSaveParams(this)
 {
 }
 
