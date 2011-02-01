@@ -88,47 +88,47 @@ Texture *TextureCreatorRandom2D::Create(TextureManager &cTextureManager, Texture
 	switch (Components) {
 		case 1:
 			for (uint32 i=0; i<nNumOfPixels; i++) {
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
 			}
 			break;
 
 		case 2:
 			for (uint32 i=0; i<nNumOfPixels; i++) {
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
 			}
 			break;
 
 		case 3:
 			for (uint32 i=0; i<nNumOfPixels; i++) {
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
 			}
 			break;
 
 		case 4:
 			for (uint32 i=0; i<nNumOfPixels; i++) {
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
-				*pData = uint8(Math::GetRand() % 255);
+				*pData = static_cast<uint8>(Math::GetRand() % 255);
 				pData++;
 			}
 			break;
 	}
 
 	// Create the 2D texture buffer
-	pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer2D(cImage));
+	pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer2D(cImage)));
 
 	// Return the created texture
 	return pTexture;

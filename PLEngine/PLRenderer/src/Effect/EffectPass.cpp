@@ -90,19 +90,19 @@ bool EffectPass::Bind(ParameterManager *pParameterManager)
 
 	// Set render states
 	for (uint32 i=0; i<RenderState::ScissorTestEnable; i++)
-		cRenderer.SetRenderState((RenderState::Enum)i, m_cRenderStates.Get((RenderState::Enum)i));
+		cRenderer.SetRenderState(static_cast<RenderState::Enum>(i), m_cRenderStates.Get(static_cast<RenderState::Enum>(i)));
 
 	// Fixed functions
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
 		// Set render states
 		for (uint32 i=0; i<FixedFunctions::RenderState::Number; i++)
-			pFixedFunctions->SetRenderState((FixedFunctions::RenderState::Enum)i, m_cFixedFunctionsRenderStates.Get((FixedFunctions::RenderState::Enum)i));
+			pFixedFunctions->SetRenderState(static_cast<FixedFunctions::RenderState::Enum>(i), m_cFixedFunctionsRenderStates.Get(static_cast<FixedFunctions::RenderState::Enum>(i)));
 		pFixedFunctions->SetColor(m_cColor);
 
 		// Set material states
 		for (uint32 i=0; i<FixedFunctions::MaterialState::Number; i++)
-			pFixedFunctions->SetMaterialState((FixedFunctions::MaterialState::Enum)i, m_nMaterialState[i]);
+			pFixedFunctions->SetMaterialState(static_cast<FixedFunctions::MaterialState::Enum>(i), m_nMaterialState[i]);
 	}
 
 	{ // Bind shaders
@@ -158,20 +158,20 @@ bool EffectPass::Bind(ParameterManager *pParameterManager)
 				pFixedFunctions->SetTransformState(FixedFunctions::Transform::Texture0, Matrix4x4::Identity);
 			i = 0;
 		}
-		for (; i<(signed)cRenderer.GetCapabilities().nMaxTextureUnits; i++) {
+		for (; i<static_cast<uint32>(cRenderer.GetCapabilities().nMaxTextureUnits); i++) {
 			cRenderer.SetTextureBuffer(i);
 
 			// Set sampler states
 			for (uint32 nState=0; nState<Sampler::Number; nState++)
-				cRenderer.SetSamplerState(i, (Sampler::Enum)nState, cRenderer.GetDefaultSamplerState((Sampler::Enum)nState));
+				cRenderer.SetSamplerState(i, static_cast<Sampler::Enum>(nState), cRenderer.GetDefaultSamplerState(static_cast<Sampler::Enum>(nState)));
 
 			// Fixed functions
 			if (pFixedFunctions) {
-				pFixedFunctions->SetTransformState(FixedFunctions::Transform::Enum(FixedFunctions::Transform::Texture0 + i), Matrix4x4::Identity);
+				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + i), Matrix4x4::Identity);
 
 				// Set texture stage states
 				for (uint32 nState=0; nState<FixedFunctions::TextureStage::Number; nState++)
-					pFixedFunctions->SetTextureStageState(i, (FixedFunctions::TextureStage::Enum)nState, pFixedFunctions->GetDefaultTextureStageState((FixedFunctions::TextureStage::Enum)nState));
+					pFixedFunctions->SetTextureStageState(i, static_cast<FixedFunctions::TextureStage::Enum>(nState), pFixedFunctions->GetDefaultTextureStageState(static_cast<FixedFunctions::TextureStage::Enum>(nState)));
 			}
 		}
 	}
@@ -197,7 +197,7 @@ EffectPass &EffectPass::operator =(const EffectPass &cSource)
 
 	// Copy material states
 	for (uint32 i=0; i<FixedFunctions::MaterialState::Number; i++)
-		m_nMaterialState[i] = cSource.GetMaterialState((FixedFunctions::MaterialState::Enum)i);
+		m_nMaterialState[i] = cSource.GetMaterialState(static_cast<FixedFunctions::MaterialState::Enum>(i));
 
 	// Layers
 	for (uint32 i=0; i<m_lstLayers.GetNumOfElements(); i++)
@@ -302,7 +302,7 @@ void EffectPass::ResetMaterialStates()
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
 		for (uint32 i=0; i<FixedFunctions::MaterialState::Number; i++)
-			m_nMaterialState[i] = pFixedFunctions->GetDefaultMaterialState((FixedFunctions::MaterialState::Enum)i);
+			m_nMaterialState[i] = pFixedFunctions->GetDefaultMaterialState(static_cast<FixedFunctions::MaterialState::Enum>(i));
 	} else {
 		for (uint32 i=0; i<FixedFunctions::MaterialState::Number; i++)
 			m_nMaterialState[i] = 0;

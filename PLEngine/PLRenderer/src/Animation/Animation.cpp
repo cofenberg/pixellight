@@ -133,7 +133,7 @@ void Animation::Start(uint32 nStart, uint32 nEnd, float fSpeed, uint32 nFlags)
 	m_bBounced		 = false;
 
 	// Set the current frame
-	SetCurrentFrame((float)nStart);
+	SetCurrentFrame(static_cast<float>(nStart));
 
 	// Emit start event
 	EventStart.Emit();
@@ -159,7 +159,7 @@ void Animation::Start(AnimationInfo &cAnimationInfo, bool bRestart)
 		m_bBounced		 = false;
 
 		// Set the current frame
-		SetCurrentFrame((float)cAnimationInfo.GetStartFrame());
+		SetCurrentFrame(static_cast<float>(cAnimationInfo.GetStartFrame()));
 
 		// Check if a event is caused
 		CheckEvent();
@@ -322,7 +322,7 @@ float Animation::GetFrame() const
 		// Use frame interpolation?
 		const AnimationFrameInfo *pFrameInfo = m_pAnimationInfo->GetFrameInfo(uint32(m_fFrame-nStart));
 		if (pFrameInfo && pFrameInfo->GetSpeed() < 0.0f)
-			return (float)((uint32)m_fFrame); // No interpolation, please
+			return static_cast<float>(static_cast<uint32>(m_fFrame)); // No interpolation, please
 	}
 
 	// Just return the current frame
@@ -345,13 +345,13 @@ float Animation::GetProgress() const
 uint32 Animation::GetCurrentFrame() const
 {
 	if (m_fSpeed >= 0.0f)
-		return uint32(m_fFrame);
+		return static_cast<uint32>(m_fFrame);
 	else {
 		// Get 'real' end frame
 		const uint32 nEnd = (m_nEnd > m_nStart) ? m_nEnd : m_nStart;
 
 		// Get the current frame
-		const uint32 nFrame = uint32(m_fFrame)+1;
+		const uint32 nFrame = static_cast<uint32>(m_fFrame)+1;
 		return (nFrame > nEnd) ? nEnd : nFrame;
 	}
 }
@@ -365,14 +365,14 @@ void Animation::SetCurrentFrame(float fFrame)
 	// Clamp the given frame if required
 	if (m_nEnd > m_nStart) {
 		if (fFrame < m_nStart)
-			fFrame = (float)m_nStart;
+			fFrame = static_cast<float>(m_nStart);
 		else if (fFrame > m_nEnd)
-			fFrame = (float)m_nEnd;
+			fFrame = static_cast<float>(m_nEnd);
 	} else {
 		if (fFrame < m_nEnd)
-			fFrame = (float)m_nEnd;
+			fFrame = static_cast<float>(m_nEnd);
 		else if (fFrame > m_nStart)
-			fFrame = (float)m_nStart;
+			fFrame = static_cast<float>(m_nStart);
 	}
 
 	// Frame change?
@@ -409,7 +409,7 @@ uint32 Animation::GetNextFrame() const
 	// Next frame please
 	int nNextFrame = nStart;
 	if (m_fSpeed >= 0.0f) {
-		nNextFrame = int(m_fFrame)+1;
+		nNextFrame = static_cast<int>(m_fFrame)+1;
 
 		// Ping pong (with or without loop)
 		if (m_nFlags & PingPong) {
@@ -438,7 +438,7 @@ uint32 Animation::GetNextFrame() const
 
 	// Reversed playback
 	} else {
-		nNextFrame = int(m_fFrame);
+		nNextFrame = static_cast<int>(m_fFrame);
 
 		// Ping pong (with or without loop)
 		if (m_nFlags & PingPong) {
@@ -467,7 +467,7 @@ uint32 Animation::GetNextFrame() const
 	}
 
 	// Return the next frame
-	return (uint32)nNextFrame;
+	return static_cast<uint32>(nNextFrame);
 }
 
 /**
@@ -495,7 +495,7 @@ void Animation::Update(float fTimeDifference)
 		float fStep = 0.0;
 		if (m_pAnimationInfo) {
 			// Is there an advanced frame information?
-			const AnimationFrameInfo *pFrameInfo = m_pAnimationInfo->GetFrameInfo(uint32(m_fFrame-nStart));
+			const AnimationFrameInfo *pFrameInfo = m_pAnimationInfo->GetFrameInfo(static_cast<uint32>(m_fFrame-nStart));
 			if (pFrameInfo) {
 				// Get frame speed
 				float fFrameSpeed = pFrameInfo->GetSpeed();
@@ -527,15 +527,15 @@ void Animation::Update(float fTimeDifference)
 			if (m_nFlags & PingPong) {
 				if (m_nFlags & Loop) {
 					// End reached?
-					if (m_fFrame >= (float)nEnd) {
-						m_fFrame   = (float)nEnd;
+					if (m_fFrame >= static_cast<float>(nEnd)) {
+						m_fFrame   = static_cast<float>(nEnd);
 						m_fSpeed   = -m_fSpeed;
 						m_bBounced = true;
 					}
 				} else {
 					// End reached?
-					if (m_fFrame >= (float)nEnd) {
-						m_fFrame = (float)nEnd;
+					if (m_fFrame >= static_cast<float>(nEnd)) {
+						m_fFrame = static_cast<float>(nEnd);
 						if (m_bBounced)
 							Stop();
 						else {
@@ -548,14 +548,14 @@ void Animation::Update(float fTimeDifference)
 			// Loop
 			} else if (m_nFlags & Loop) {
 				// End reached?
-				if (m_fFrame >= (float)nEnd)
+				if (m_fFrame >= static_cast<float>(nEnd))
 					m_fFrame = nStart+(m_fFrame-nEnd);
 
 			// Normal
 			} else {
 				// End reached?
-				if (m_fFrame >= (float)nEnd) {
-					m_fFrame = (float)nEnd;
+				if (m_fFrame >= static_cast<float>(nEnd)) {
+					m_fFrame = static_cast<float>(nEnd);
 					Stop();
 				}
 			}
@@ -566,15 +566,15 @@ void Animation::Update(float fTimeDifference)
 			if (m_nFlags & PingPong) {
 				if (m_nFlags & Loop) {
 					// Start reached?
-					if (m_fFrame <= (float)nStart) {
-						m_fFrame   = (float)nStart;
+					if (m_fFrame <= static_cast<float>(nStart)) {
+						m_fFrame   = static_cast<float>(nStart);
 						m_fSpeed   = -m_fSpeed;
 						m_bBounced = true;
 					}
 				} else {
 					// Start reached?
-					if (m_fFrame <= (float)nStart) {
-						m_fFrame = (float)nStart;
+					if (m_fFrame <= static_cast<float>(nStart)) {
+						m_fFrame = static_cast<float>(nStart);
 						if (m_bBounced)
 							Stop();
 						else {
@@ -587,14 +587,14 @@ void Animation::Update(float fTimeDifference)
 			// Loop
 			} else if (m_nFlags & Loop) {
 				// Start reached?
-				if (m_fFrame <= (float)nStart)
+				if (m_fFrame <= static_cast<float>(nStart))
 					m_fFrame = nEnd+(m_fFrame-nStart);
 
 			// Normal
 			} else {
 				// Start reached?
-				if (m_fFrame <= (float)nStart) {
-					m_fFrame = (float)nStart;
+				if (m_fFrame <= static_cast<float>(nStart)) {
+					m_fFrame = static_cast<float>(nStart);
 					Stop();
 				}
 			}
@@ -607,7 +607,7 @@ void Animation::Update(float fTimeDifference)
 		}
 
 		// Check if a event is caused
-		CheckEvent((int)fPreviousFrame);
+		CheckEvent(static_cast<int>(fPreviousFrame));
 	}
 }
 
@@ -670,10 +670,10 @@ Animation &Animation::operator =(const Animation &cSource)
 void Animation::CheckEvent(int nPreviousFrame) const
 {
 	// Are events enabled?
-	if (m_bEvents && m_pAnimationInfo && (int)m_fFrame != nPreviousFrame) {
+	if (m_bEvents && m_pAnimationInfo && static_cast<int>(m_fFrame) != nPreviousFrame) {
 		for (uint32 i=0; i<m_pAnimationInfo->GetEventManager().GetNumOfElements(); i++) {
 			const AnimationEvent *pAnimationEvent = m_pAnimationInfo->GetEventManager().Get(i);
-			if (pAnimationEvent->GetFrame() == (uint32)m_fFrame) {
+			if (pAnimationEvent->GetFrame() == static_cast<uint32>(m_fFrame)) {
 				// Emit event
 				EventSpecialFrame.Emit(pAnimationEvent->GetID());
 			}

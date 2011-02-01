@@ -134,13 +134,13 @@ void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, 
 		if (vImageSize.IsNull()) {
 			switch (cTextureBuffer.GetType()) {
 				case Resource::TypeTextureBuffer2D:
-					vImageSize.x = (float)((TextureBuffer2D&)cTextureBuffer).GetSize().x;
-					vImageSize.y = (float)((TextureBuffer2D&)cTextureBuffer).GetSize().y;
+					vImageSize.x = static_cast<float>(static_cast<TextureBuffer2D&>(cTextureBuffer).GetSize().x);
+					vImageSize.y = static_cast<float>(static_cast<TextureBuffer2D&>(cTextureBuffer).GetSize().y);
 					break;
 
 				case Resource::TypeTextureBufferRectangle:
-					vImageSize.x = (float)((TextureBufferRectangle&)cTextureBuffer).GetSize().x;
-					vImageSize.y = (float)((TextureBufferRectangle&)cTextureBuffer).GetSize().y;
+					vImageSize.x = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().x);
+					vImageSize.y = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().y);
 					break;
 
 				default:
@@ -151,42 +151,42 @@ void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, 
 		// Setup the vertex buffer
 		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Vertex 0
-			float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[0] = vPos.x;
 			pfVertex[1] = vPos.y + vImageSize.y;
 			pfVertex[2] = m_fZValue2D;
 			m_pTempVertexBuffer->SetColor(0, cColor);
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 			pfVertex[0] = vTextureCoordinate.x;
 			pfVertex[1] = vTextureCoordinate.y + vTextureCoordinateSize.y;
 
 			// Vertex 1
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
 			pfVertex[0] = vPos.x + vImageSize.x;
 			pfVertex[1] = vPos.y + vImageSize.y;
 			pfVertex[2] = m_fZValue2D;
 			m_pTempVertexBuffer->SetColor(1, cColor);
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::TexCoord));
 			pfVertex[0] = vTextureCoordinate.x + vTextureCoordinateSize.x;
 			pfVertex[1] = vTextureCoordinate.y + vTextureCoordinateSize.y;
 
 			// Vertex 2
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(2, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
 			pfVertex[0] = vPos.x;
 			pfVertex[1] = vPos.y;
 			pfVertex[2] = m_fZValue2D;
 			m_pTempVertexBuffer->SetColor(2, cColor);
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(2, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::TexCoord));
 			pfVertex[0] = vTextureCoordinate.x;
 			pfVertex[1] = vTextureCoordinate.y;
 
 			// Vertex 3
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(3, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
 			pfVertex[0] = vPos.x + vImageSize.x;
 			pfVertex[1] = vPos.y;
 			pfVertex[2] = m_fZValue2D;
 			m_pTempVertexBuffer->SetColor(3, cColor);
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(3, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::TexCoord));
 			pfVertex[0] = vTextureCoordinate.x + vTextureCoordinateSize.x;
 			pfVertex[1] = vTextureCoordinate.y;
 
@@ -226,7 +226,7 @@ void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, 
 
 			// Set sampler states
 			for (uint32 nState=0; nState<Sampler::Number; nState++)
-				m_pRenderer->SetSamplerState(TextureUnit, (Sampler::Enum)nState, cSamplerStates.Get((Sampler::Enum)nState));
+				m_pRenderer->SetSamplerState(TextureUnit, static_cast<Sampler::Enum>(nState), cSamplerStates.Get(static_cast<Sampler::Enum>(nState)));
 
 			// Draw image
 			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
@@ -244,7 +244,7 @@ void DrawHelpersBackendFixedFunctions::DrawPoint(const Color4 &cColor, const Vec
 		// Setup the vertex buffer
 		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Vertex 0
-			float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[0] = vPosition.x;
 			pfVertex[1] = vPosition.y;
 			pfVertex[2] = m_fZValue2D;
@@ -285,7 +285,7 @@ void DrawHelpersBackendFixedFunctions::DrawPoint(const Color4 &cColor, const Vec
 		// Setup the vertex buffer
 		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Vertex 0
-			float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[0] = vPosition.x;
 			pfVertex[1] = vPosition.y;
 			pfVertex[2] = vPosition.z;
@@ -332,14 +332,14 @@ void DrawHelpersBackendFixedFunctions::DrawLine(const Color4 &cColor, const Vect
 		// Setup the vertex buffer
 		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Vertex 0
-			float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[0] = vStartPosition.x;
 			pfVertex[1] = vStartPosition.y;
 			pfVertex[2] = m_fZValue2D;
 			m_pTempVertexBuffer->SetColor(0, cColor);
 
 			// Vertex 1
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
 			pfVertex[0] = vEndPosition.x;
 			pfVertex[1] = vEndPosition.y;
 			pfVertex[2] = m_fZValue2D;
@@ -380,14 +380,14 @@ void DrawHelpersBackendFixedFunctions::DrawLine(const Color4 &cColor, const Vect
 		// Setup the vertex buffer
 		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Vertex 0
-			float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[0] = vStartPosition.x;
 			pfVertex[1] = vStartPosition.y;
 			pfVertex[2] = vStartPosition.z;
 			m_pTempVertexBuffer->SetColor(0, cColor);
 
 			// Vertex 1
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
 			pfVertex[0] = vEndPosition.x;
 			pfVertex[1] = vEndPosition.y;
 			pfVertex[2] = vEndPosition.z;
@@ -434,21 +434,21 @@ void DrawHelpersBackendFixedFunctions::DrawTriangle(const Color4 &cColor, const 
 		// Setup the vertex buffer
 		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Vertex 0
-			float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[0] = vV1.x;
 			pfVertex[1] = vV1.y;
 			pfVertex[2] = vV1.z;
 			m_pTempVertexBuffer->SetColor(0, cColor);
 
 			// Vertex 1
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
 			pfVertex[0] = vV2.x;
 			pfVertex[1] = vV2.y;
 			pfVertex[2] = vV2.z;
 			m_pTempVertexBuffer->SetColor(1, cColor);
 
 			// Vertex 2
-			pfVertex	= (float*)m_pTempVertexBuffer->GetData(2, VertexBuffer::Position);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
 			pfVertex[0] = vV3.x;
 			pfVertex[1] = vV3.y;
 			pfVertex[2] = vV3.z;
@@ -511,28 +511,28 @@ void DrawHelpersBackendFixedFunctions::DrawQuad(const Color4 &cColor, const Vect
 			// Setup the vertex buffer
 			if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 				// Vertex 0
-				float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 				pfVertex[0] = vPos.x;
 				pfVertex[1] = vPos.y + vSize.y;
 				pfVertex[2] = m_fZValue2D;
 				m_pTempVertexBuffer->SetColor(0, cColor);
 
 				// Vertex 1
-				pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + vSize.x;
 				pfVertex[1] = vPos.y + vSize.y;
 				pfVertex[2] = m_fZValue2D;
 				m_pTempVertexBuffer->SetColor(1, cColor);
 
 				// Vertex 2
-				pfVertex	= (float*)m_pTempVertexBuffer->GetData(2, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
 				pfVertex[0] = vPos.x;
 				pfVertex[1] = vPos.y;
 				pfVertex[2] = m_fZValue2D;
 				m_pTempVertexBuffer->SetColor(2, cColor);
 
 				// Vertex 3
-				pfVertex	= (float*)m_pTempVertexBuffer->GetData(3, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + vSize.x;
 				pfVertex[1] = vPos.y;
 				pfVertex[2] = m_fZValue2D;
@@ -582,28 +582,28 @@ void DrawHelpersBackendFixedFunctions::DrawQuad(const Color4 &cColor, const Vect
 			// Setup the vertex buffer
 			if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
 				// Vertex 0
-				float *pfVertex = (float*)m_pTempVertexBuffer->GetData(0, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
 				pfVertex[0] = vV1.x;
 				pfVertex[1] = vV1.y;
 				pfVertex[2] = vV1.z;
 				m_pTempVertexBuffer->SetColor(0, cColor);
 
 				// Vertex 1
-				pfVertex	= (float*)m_pTempVertexBuffer->GetData(1, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
 				pfVertex[0] = vV2.x;
 				pfVertex[1] = vV2.y;
 				pfVertex[2] = vV2.z;
 				m_pTempVertexBuffer->SetColor(1, cColor);
 
 				// Vertex 2
-				pfVertex	= (float*)m_pTempVertexBuffer->GetData(2, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
 				pfVertex[0] = vV3.x;
 				pfVertex[1] = vV3.y;
 				pfVertex[2] = vV3.z;
 				m_pTempVertexBuffer->SetColor(2, cColor);
 
 				// Vertex 3
-				pfVertex	= (float*)m_pTempVertexBuffer->GetData(3, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
 				pfVertex[0] = vV4.x;
 				pfVertex[1] = vV4.y;
 				pfVertex[2] = vV4.z;

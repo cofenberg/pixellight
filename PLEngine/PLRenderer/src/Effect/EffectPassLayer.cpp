@@ -75,14 +75,14 @@ bool EffectPassLayer::Bind(uint32 nStage, ParameterManager *pParameterManager) c
 
 	// Set sampler states
 	for (uint32 i=0; i<Sampler::Number; i++)
-		cRenderer.SetSamplerState(nStage, (Sampler::Enum)i, m_cSamplerStates.Get((Sampler::Enum)i));
+		cRenderer.SetSamplerState(nStage, static_cast<Sampler::Enum>(i), m_cSamplerStates.Get(static_cast<Sampler::Enum>(i)));
 
 	// Fixed functions
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
 		// Set texture stage states
 		for (uint32 i=0; i<FixedFunctions::TextureStage::Number; i++)
-			pFixedFunctions->SetTextureStageState(nStage, (FixedFunctions::TextureStage::Enum)i, m_cFixedFunctionsTextureStageStates.Get((FixedFunctions::TextureStage::Enum)i));
+			pFixedFunctions->SetTextureStageState(nStage, static_cast<FixedFunctions::TextureStage::Enum>(i), m_cFixedFunctionsTextureStageStates.Get(static_cast<FixedFunctions::TextureStage::Enum>(i)));
 	}
 
 	// Done
@@ -217,7 +217,7 @@ bool EffectPassLayer::BindTexture(const Parameter *pParameter, uint32 nStage) co
 					FixedFunctions *pFixedFunctions = pTextureBuffer->GetRenderer().GetFixedFunctions();
 					if (pFixedFunctions) {
 						// Set identity texture matrix
-						pFixedFunctions->SetTransformState((FixedFunctions::Transform::Enum)(FixedFunctions::Transform::Texture0 + nStage), Matrix4x4::Identity);
+						pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + nStage), Matrix4x4::Identity);
 					}
 				}
 

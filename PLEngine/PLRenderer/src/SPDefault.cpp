@@ -104,7 +104,7 @@ void SPDefault::OnPaint(Surface &cSurface)
 		}
 
 		// Draw text
-		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 		if (pFont)
 			cDrawHelpers.DrawText(*pFont, PLT("Using surface painter PLRenderer::SPDefault, see PLRenderer::RenderApplication on how to use your own painter"), Color4::White, Vector2(0.5f, 0.9f), Font::CenterText);
 

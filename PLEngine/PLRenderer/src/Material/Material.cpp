@@ -84,7 +84,7 @@ Material::~Material()
 MaterialManager &Material::GetMaterialManager() const
 {
 	// There MUST always be a manager!
-	return (MaterialManager&)*m_pManager;
+	return static_cast<MaterialManager&>(*m_pManager);
 }
 
 /**
@@ -305,7 +305,7 @@ bool Material::RemoveAllMaterials()
 */
 Effect *Material::GetEffect() const
 {
-	return m_pFXHandler ? (Effect*)m_pFXHandler->GetResource() : nullptr;
+	return m_pFXHandler ? static_cast<Effect*>(m_pFXHandler->GetResource()) : nullptr;
 }
 
 /**

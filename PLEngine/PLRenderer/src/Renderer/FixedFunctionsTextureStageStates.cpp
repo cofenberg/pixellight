@@ -44,7 +44,7 @@ pl_implement_class(FixedFunctionsTextureStageStates)
 //[-------------------------------------------------------]
 FixedFunctions::TextureEnvironment::Enum FixedFunctionsTextureStageStates::GetColorTexEnv() const
 {
-	return (FixedFunctions::TextureEnvironment::Enum)m_nTSS[FixedFunctions::TextureStage::ColorTexEnv];
+	return static_cast<FixedFunctions::TextureEnvironment::Enum>(m_nTSS[FixedFunctions::TextureStage::ColorTexEnv]);
 }
 
 void FixedFunctionsTextureStageStates::SetColorTexEnv(FixedFunctions::TextureEnvironment::Enum nValue)
@@ -54,7 +54,7 @@ void FixedFunctionsTextureStageStates::SetColorTexEnv(FixedFunctions::TextureEnv
 
 FixedFunctions::TextureEnvironment::Enum FixedFunctionsTextureStageStates::GetAlphaTexEnv() const
 {
-	return (FixedFunctions::TextureEnvironment::Enum)m_nTSS[FixedFunctions::TextureStage::AlphaTexEnv];
+	return static_cast<FixedFunctions::TextureEnvironment::Enum>(m_nTSS[FixedFunctions::TextureStage::AlphaTexEnv]);
 }
 
 void FixedFunctionsTextureStageStates::SetAlphaTexEnv(FixedFunctions::TextureEnvironment::Enum nValue)
@@ -64,7 +64,7 @@ void FixedFunctionsTextureStageStates::SetAlphaTexEnv(FixedFunctions::TextureEnv
 
 FixedFunctions::TexCoordGen::Enum FixedFunctionsTextureStageStates::GetTexGen() const
 {
-	return (FixedFunctions::TexCoordGen::Enum)m_nTSS[FixedFunctions::TextureStage::TexGen];
+	return static_cast<FixedFunctions::TexCoordGen::Enum>(m_nTSS[FixedFunctions::TextureStage::TexGen]);
 }
 
 void FixedFunctionsTextureStageStates::SetTexGen(FixedFunctions::TexCoordGen::Enum nValue)

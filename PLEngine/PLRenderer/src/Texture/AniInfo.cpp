@@ -59,8 +59,8 @@ AniInfo::~AniInfo()
 AniInfo &AniInfo::operator =(const AniInfo &cSource)
 {
 	// Call base functions
-	*((Element<AniInfo>*)this) = cSource;
-	*(AnimationInfo*)this = cSource;
+	*static_cast<Element<AniInfo>*>(this) = cSource;
+	*static_cast<AnimationInfo*>(this) = cSource;
 
 	// Return a reference to this instance
 	return *this;

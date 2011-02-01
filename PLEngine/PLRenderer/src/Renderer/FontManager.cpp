@@ -57,7 +57,7 @@ Renderer &FontManager::GetRenderer() const
 */
 FontTexture *FontManager::GetDefaultFontTexture() const
 {
-	return (FontTexture*)m_pDefaultFontTextureHandler->GetResource();
+	return reinterpret_cast<FontTexture*>(m_pDefaultFontTextureHandler->GetResource());
 }
 
 /**
@@ -66,7 +66,7 @@ FontTexture *FontManager::GetDefaultFontTexture() const
 */
 void FontManager::SetDefaultFontTexture(FontTexture *pFont)
 {
-	m_pDefaultFontTextureHandler->SetResource((Resource*)pFont);
+	m_pDefaultFontTextureHandler->SetResource(pFont);
 }
 
 /**
@@ -85,7 +85,7 @@ FontTexture *FontManager::GetFontTexture(const String &sFilename, uint32 nSize, 
 		}
 
 		// Create a new font
-		FontTexture *pFont = (FontTexture*)CreateFontTexture(sFilename, nSize, nResolution);
+		FontTexture *pFont = reinterpret_cast<FontTexture*>(CreateFontTexture(sFilename, nSize, nResolution));
 		if (pFont)
 			m_lstFontTexture.Add(pFont);
 

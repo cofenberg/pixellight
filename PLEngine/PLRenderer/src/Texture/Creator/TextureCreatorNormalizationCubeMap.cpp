@@ -76,8 +76,8 @@ TextureCreatorNormalizationCubeMap::~TextureCreatorNormalizationCubeMap()
 */
 Vector3 TextureCreatorNormalizationCubeMap::GetCubeVector(uint8 i, uint32 x, uint32 y) const
 {
-	const float s = ((float)x + 0.5f)/(float)Size*2.0f - 1.0f;
-	const float t = ((float)y + 0.5f)/(float)Size*2.0f - 1.0f;
+	const float s = (static_cast<float>(x) + 0.5f)/static_cast<float>(Size)*2.0f - 1.0f;
+	const float t = (static_cast<float>(y) + 0.5f)/static_cast<float>(Size)*2.0f - 1.0f;
 	Vector3 v;
 	switch (i) {
 		case 0:
@@ -130,15 +130,15 @@ Texture *TextureCreatorNormalizationCubeMap::Create(TextureManager &cTextureMana
 			for (uint32 x=0; x<Size; x++) {
 				Vector3 vDir = GetCubeVector(i, x, y);
 				vDir = (vDir + Vector3::One)*0.5f;
-				*d++ = (uint8)(vDir.x*255.0f);
-				*d++ = (uint8)(vDir.y*255.0f);
-				*d++ = (uint8)(vDir.z*255.0f);
+				*d++ = static_cast<uint8>(vDir.x*255.0f);
+				*d++ = static_cast<uint8>(vDir.y*255.0f);
+				*d++ = static_cast<uint8>(vDir.z*255.0f);
 			}
 		}
 	}
 
 	// Create the cube texture buffer
-	pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBufferCube(cImage, TextureBuffer::Unknown, 0));
+	pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBufferCube(cImage, TextureBuffer::Unknown, 0)));
 
 	// Return the created texture
 	return pTexture;

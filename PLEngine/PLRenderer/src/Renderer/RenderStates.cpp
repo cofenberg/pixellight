@@ -46,7 +46,7 @@ pl_implement_class(RenderStates)
 // Modes
 Fill::Enum RenderStates::GetFillMode() const
 {
-	return (Fill::Enum)m_nRS[RenderState::FillMode];
+	return static_cast<Fill::Enum>(m_nRS[RenderState::FillMode]);
 }
 
 void RenderStates::SetFillMode(Fill::Enum nValue)
@@ -56,7 +56,7 @@ void RenderStates::SetFillMode(Fill::Enum nValue)
 
 Cull::Enum RenderStates::GetCullMode() const
 {
-	return (Cull::Enum)m_nRS[RenderState::CullMode];
+	return static_cast<Cull::Enum>(m_nRS[RenderState::CullMode]);
 }
 
 void RenderStates::SetCullMode(Cull::Enum nValue)
@@ -87,7 +87,7 @@ void RenderStates::SetZWriteEnable(bool bValue)
 
 Compare::Enum RenderStates::GetZFunc() const
 {
-	return (Compare::Enum)m_nRS[RenderState::ZFunc];
+	return static_cast<Compare::Enum>(m_nRS[RenderState::ZFunc]);
 }
 
 void RenderStates::SetZFunc(Compare::Enum nValue)
@@ -138,7 +138,7 @@ void RenderStates::SetBlendEnable(bool bValue)
 
 BlendFunc::Enum RenderStates::GetSrcBlendFunc() const
 {
-	return (BlendFunc::Enum)m_nRS[RenderState::SrcBlendFunc];
+	return static_cast<BlendFunc::Enum>(m_nRS[RenderState::SrcBlendFunc]);
 }
 
 void RenderStates::SetSrcBlendFunc(BlendFunc::Enum nValue)
@@ -148,7 +148,7 @@ void RenderStates::SetSrcBlendFunc(BlendFunc::Enum nValue)
 
 BlendFunc::Enum RenderStates::GetDstBlendFunc() const
 {
-	return (BlendFunc::Enum)m_nRS[RenderState::DstBlendFunc];
+	return static_cast<BlendFunc::Enum>(m_nRS[RenderState::DstBlendFunc]);
 }
 
 void RenderStates::SetDstBlendFunc(BlendFunc::Enum nValue)
@@ -169,7 +169,7 @@ void RenderStates::SetStencilEnable(bool bValue)
 
 Compare::Enum RenderStates::GetStencilFunc() const
 {
-	return (Compare::Enum)m_nRS[RenderState::StencilFunc];
+	return static_cast<Compare::Enum>(m_nRS[RenderState::StencilFunc]);
 }
 
 void RenderStates::SetStencilFunc(Compare::Enum nValue)
@@ -199,7 +199,7 @@ void RenderStates::SetStencilMask(uint32 nValue)
 
 StencilOp::Enum RenderStates::GetStencilFail() const
 {
-	return (StencilOp::Enum)m_nRS[RenderState::StencilFail];
+	return static_cast<StencilOp::Enum>(m_nRS[RenderState::StencilFail]);
 }
 
 void RenderStates::SetStencilFail(StencilOp::Enum nValue)
@@ -209,7 +209,7 @@ void RenderStates::SetStencilFail(StencilOp::Enum nValue)
 
 StencilOp::Enum RenderStates::GetStencilZFail() const
 {
-	return (StencilOp::Enum)m_nRS[RenderState::StencilZFail];
+	return static_cast<StencilOp::Enum>(m_nRS[RenderState::StencilZFail]);
 }
 
 void RenderStates::SetStencilZFail(StencilOp::Enum nValue)
@@ -219,7 +219,7 @@ void RenderStates::SetStencilZFail(StencilOp::Enum nValue)
 
 StencilOp::Enum RenderStates::GetStencilPass() const
 {
-	return (StencilOp::Enum)m_nRS[RenderState::StencilPass];
+	return static_cast<StencilOp::Enum>(m_nRS[RenderState::StencilPass]);
 }
 
 void RenderStates::SetStencilPass(StencilOp::Enum nValue)
@@ -239,7 +239,7 @@ void RenderStates::SetTwoSidedStencilMode(bool bValue)
 
 Compare::Enum RenderStates::GetCCWStencilFunc() const
 {
-	return (Compare::Enum)m_nRS[RenderState::CCWStencilFunc];
+	return static_cast<Compare::Enum>(m_nRS[RenderState::CCWStencilFunc]);
 }
 
 void RenderStates::SetCCWStencilFunc(Compare::Enum nValue)
@@ -249,7 +249,7 @@ void RenderStates::SetCCWStencilFunc(Compare::Enum nValue)
 
 StencilOp::Enum RenderStates::GetCCWStencilFail() const
 {
-	return (StencilOp::Enum)m_nRS[RenderState::CCWStencilFail];
+	return static_cast<StencilOp::Enum>(m_nRS[RenderState::CCWStencilFail]);
 }
 
 void RenderStates::SetCCWStencilFail(StencilOp::Enum nValue)
@@ -259,7 +259,7 @@ void RenderStates::SetCCWStencilFail(StencilOp::Enum nValue)
 
 StencilOp::Enum RenderStates::GetCCWStencilZFail() const
 {
-	return (StencilOp::Enum)m_nRS[RenderState::CCWStencilZFail];
+	return static_cast<StencilOp::Enum>(m_nRS[RenderState::CCWStencilZFail]);
 }
 
 void RenderStates::SetCCWStencilZFail(StencilOp::Enum nValue)
@@ -269,7 +269,7 @@ void RenderStates::SetCCWStencilZFail(StencilOp::Enum nValue)
 
 StencilOp::Enum RenderStates::GetCCWStencilPass() const
 {
-	return (StencilOp::Enum)m_nRS[RenderState::CCWStencilPass];
+	return static_cast<StencilOp::Enum>(m_nRS[RenderState::CCWStencilPass]);
 }
 
 void RenderStates::SetCCWStencilPass(StencilOp::Enum nValue)
@@ -433,7 +433,7 @@ void RenderStates::SetInvCullMode(bool bValue)
 
 Fill::Enum RenderStates::GetFixedFillMode() const
 {
-	return (Fill::Enum)m_nRS[RenderState::FixedFillMode];
+	return static_cast<Fill::Enum>(m_nRS[RenderState::FixedFillMode]);
 }
 
 void RenderStates::SetFixedFillMode(Fill::Enum nValue)

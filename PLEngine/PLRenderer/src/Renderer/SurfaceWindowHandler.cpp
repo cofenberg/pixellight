@@ -90,7 +90,7 @@ void SurfaceWindowHandler::Init(Renderer &cRenderer, handle nWindow, const Displ
 {
 	// Create the surface window
 	m_pRenderer = &cRenderer;
-	m_pSurfaceHandler->SetSurface((Surface*)m_pRenderer->CreateSurfaceWindow(*this, nWindow, sDisplayMode, bFullscreen));
+	m_pSurfaceHandler->SetSurface(m_pRenderer->CreateSurfaceWindow(*this, nWindow, sDisplayMode, bFullscreen));
 }
 
 /**
@@ -101,7 +101,7 @@ void SurfaceWindowHandler::DeInit()
 {
 	Surface *pSurface = m_pSurfaceHandler->GetSurface();
 	if (pSurface) {
-		((SurfaceWindow*)pSurface)->m_pHandler = nullptr;
+		static_cast<SurfaceWindow*>(pSurface)->m_pHandler = nullptr;
 		m_pSurfaceHandler->SetSurface(nullptr);
 		delete pSurface;
 	}

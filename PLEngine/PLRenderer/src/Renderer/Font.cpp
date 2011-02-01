@@ -90,7 +90,7 @@ uint32 Font::GetResolution() const
 */
 uint32 Font::GetSizeInPixels() const
 {
-	return uint32(m_nSize/72.0f*m_nResolution);
+	return static_cast<uint32>(m_nSize/72.0f*m_nResolution);
 }
 
 /**
@@ -99,7 +99,7 @@ uint32 Font::GetSizeInPixels() const
 */
 uint32 Font::GetHeightInPixels() const
 {
-	return uint32(GetHeight()/72.0f*m_nResolution);
+	return static_cast<uint32>(GetHeight()/72.0f*m_nResolution);
 }
 
 
@@ -135,7 +135,7 @@ float Font::GetTextWidth(const String &sText)
 		// Iterate through all characters of the text to 'draw'
 		for (uint32 i=0; i<sText.GetLength(); i++, pszText++) {
 			// Get the character code
-			const unsigned char nCharacterCode = (unsigned char)*pszText;
+			const unsigned char nCharacterCode = static_cast<unsigned char>(*pszText);
 
 			// Get the glyph instance of the character to 'draw'
 			FontGlyph *pFontGlyph = m_lstGlyphs[nCharacterCode];

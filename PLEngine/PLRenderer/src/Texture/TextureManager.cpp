@@ -187,7 +187,7 @@ Texture *TextureManager::CreateTexture(const String &sName, const String &sParam
 	if (pBaseClass) {
 		const Class *pClass = ClassManager::GetInstance()->GetClass(sName);
 		if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
-			TextureCreator *pTC = (TextureCreator*)pClass->Create();
+			TextureCreator *pTC = static_cast<TextureCreator*>(pClass->Create());
 			if (pTC) {
 				// Set parameters
 				if (sParameters.GetLength())

@@ -391,7 +391,7 @@ bool RendererBackend::CheckTextureBufferCube(Image &cImage, TextureBuffer::EPixe
 	const ImageBuffer *pImageBuffer = cImage.GetBuffer();
 	if (pImageBuffer) {
 		const uint32 nSize = pImageBuffer->GetSize().x;
-		if (nSize && (int)nSize == pImageBuffer->GetSize().y &&
+		if (nSize && static_cast<int>(nSize) == pImageBuffer->GetSize().y &&
 			nSize <= m_sCapabilities.nMaxCubeTextureBufferSize && Math::IsPowerOfTwo(nSize)) {
 
 			// Valid
@@ -515,16 +515,16 @@ void RendererBackend::Update()
 		pProfiling->Set(sAPI, "Current triangles",				String::Format("%d",					sS.nTriangles));
 		pProfiling->Set(sAPI, "Current vertices",				String::Format("%d",					sS.nVertices));
 		pProfiling->Set(sAPI, "Number of texture buffers",		String::Format("%d",					sS.nTextureBuffersNum));
-		float fTextureBuffersMemKB = float(sS.nTextureBuffersMem)/1024.0f;
+		float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
 		pProfiling->Set(sAPI, "Texture buffers memory",			String::Format("%g KB (%g MB)",			fTextureBuffersMemKB, fTextureBuffersMemKB/1024.0f));
 		pProfiling->Set(sAPI, "Texture buffer binds",			String::Format("%d",					sS.nTextureBufferBinds));
 		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				cStopwatch.GetMilliseconds()));
 		pProfiling->Set(sAPI, "Number of vertex buffers",		String::Format("%d",					sS.nVertexBufferNum));
-		float fVertexBufferMemKB = float(sS.nVertexBufferMem)/1024.0f;
+		float fVertexBufferMemKB = static_cast<float>(sS.nVertexBufferMem)/1024.0f;
 		pProfiling->Set(sAPI, "Vertex buffers memory",			String::Format("%g KB (%g MB)",			fVertexBufferMemKB, fVertexBufferMemKB/1024.0f));
 		pProfiling->Set(sAPI, "Vertex buffers update time",		String::Format("%.3f ms (%d locks)",	sS.nVertexBuffersSetupTime/1000.0f, sS.nVertexBufferLocks));
 		pProfiling->Set(sAPI, "Number of index buffers",		String::Format("%d",					sS.nIndexBufferNum));
-		float fIndexBufferMemKB = float(sS.nIndexBufferMem)/1024.0f;
+		float fIndexBufferMemKB = static_cast<float>(sS.nIndexBufferMem)/1024.0f;
 		pProfiling->Set(sAPI, "Index buffers memory",			String::Format("%g KB (%g MB)",			fIndexBufferMemKB, fIndexBufferMemKB/1024.0f));
 		pProfiling->Set(sAPI, "Index buffers update time",		String::Format("%.3f ms (%d locks)",	sS.nIndexBuffersSetupTime/1000.0f, sS.nIndexBufferLocks));
 	}
@@ -588,7 +588,7 @@ SurfacePainter *RendererBackend::CreateSurfacePainter(const String &sClass)
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
 	if (pClass && pClass->IsDerivedFrom("PLRenderer::SurfacePainter")) {
 		// Create the surface painter and return it
-		return (SurfacePainter*)pClass->Create(Params<Object*, Renderer&>(*this));
+		return reinterpret_cast<SurfacePainter*>(pClass->Create(Params<Object*, Renderer&>(*this)));
 	} else {
 		// Error!
 		return nullptr;
@@ -626,26 +626,26 @@ bool RendererBackend::RemoveResource(Resource &cResource)
 // Render states
 uint32 RendererBackend::GetDefaultRenderState(RenderState::Enum nState) const
 {
-	return nState < RenderState::Number ? m_nDefaultRenderState[nState] : 0;
+	return (nState < RenderState::Number) ? m_nDefaultRenderState[nState] : 0;
 }
 
 void RendererBackend::ResetRenderStates()
 {
 	// Set renderer states to this default settings
 	for (uint32 i=0; i<RenderState::Number; i++)
-		SetRenderState((RenderState::Enum)i, m_nDefaultRenderState[i]);
+		SetRenderState(static_cast<RenderState::Enum>(i), m_nDefaultRenderState[i]);
 }
 
 int RendererBackend::GetRenderState(RenderState::Enum nState) const
 {
 	// Check if the state is a valid render state member
-	return nState < RenderState::Number ? m_nRenderState[nState] : -1;
+	return (nState < RenderState::Number) ? m_nRenderState[nState] : -1;
 }
 
 // Sampler states
 uint32 RendererBackend::GetDefaultSamplerState(Sampler::Enum nState) const
 {
-	return nState < Sampler::Number ? m_nDefaultSamplerState[nState] : 0;
+	return (nState < Sampler::Number) ? m_nDefaultSamplerState[nState] : 0;
 }
 
 void RendererBackend::ResetSamplerStates()
@@ -653,14 +653,14 @@ void RendererBackend::ResetSamplerStates()
 	// Set sampler states to this default settings
 	for (uint32 nStage=0; nStage<m_sCapabilities.nMaxTextureUnits; nStage++) {
 		for (uint32 i=0; i<Sampler::Number; i++)
-			SetSamplerState(nStage, (Sampler::Enum)i, m_nDefaultSamplerState[i]);
+			SetSamplerState(nStage, static_cast<Sampler::Enum>(i), m_nDefaultSamplerState[i]);
 	}
 }
 
 int RendererBackend::GetSamplerState(uint32 nStage, Sampler::Enum nState) const
 {
 	// Check if the stage is correct and check if the state is a valid sampler member
-	return nStage < m_sCapabilities.nMaxTextureUnits && nState < Sampler::Number ? m_ppnSamplerState[nStage][nState] : -1;
+	return (nStage < m_sCapabilities.nMaxTextureUnits && nState < Sampler::Number) ? m_ppnSamplerState[nStage][nState] : -1;
 }
 
 
@@ -669,8 +669,10 @@ int RendererBackend::GetSamplerState(uint32 nStage, Sampler::Enum nState) const
 //[-------------------------------------------------------]
 const Rectangle &RendererBackend::GetViewport(float *pfMinZ, float *pfMaxZ) const
 {
-	if (pfMinZ) *pfMinZ = m_fViewPortMinZ;
-	if (pfMaxZ) *pfMaxZ = m_fViewPortMaxZ;
+	if (pfMinZ)
+		*pfMinZ = m_fViewPortMinZ;
+	if (pfMaxZ)
+		*pfMaxZ = m_fViewPortMaxZ;
 	return m_cViewportRect;
 }
 
@@ -678,29 +680,41 @@ bool RendererBackend::SetViewport(const Rectangle *pRectangle, float fMinZ, floa
 {
 	// Set data
 	if (pRectangle) {
-		if (pRectangle->vMin.x > 0.0f) m_cViewportRect.vMin.x = pRectangle->vMin.x;
-		else						   m_cViewportRect.vMin.x = 0.0f;
-		if (pRectangle->vMin.y > 0.0f) m_cViewportRect.vMin.y = pRectangle->vMin.y;
-		else						   m_cViewportRect.vMin.y = 0.0f;
+		if (pRectangle->vMin.x > 0.0f)
+			m_cViewportRect.vMin.x = pRectangle->vMin.x;
+		else
+			m_cViewportRect.vMin.x = 0.0f;
+		if (pRectangle->vMin.y > 0.0f)
+			m_cViewportRect.vMin.y = pRectangle->vMin.y;
+		else
+			m_cViewportRect.vMin.y = 0.0f;
 		Surface *pSurface = m_cCurrentSurface.GetSurface();
 		if (pSurface) {
-			if (pRectangle->vMax.x > 0.0f) m_cViewportRect.vMax.x = pRectangle->vMax.x;
-			else						   m_cViewportRect.vMax.x = m_cViewportRect.vMin.x+pSurface->GetSize().x;
-			if (pRectangle->vMax.y > 0.0f) m_cViewportRect.vMax.y = pRectangle->vMax.y;
-			else						   m_cViewportRect.vMax.y = m_cViewportRect.vMin.y+pSurface->GetSize().y;
+			if (pRectangle->vMax.x > 0.0f)
+				m_cViewportRect.vMax.x = pRectangle->vMax.x;
+			else
+				m_cViewportRect.vMax.x = m_cViewportRect.vMin.x+pSurface->GetSize().x;
+			if (pRectangle->vMax.y > 0.0f)
+				m_cViewportRect.vMax.y = pRectangle->vMax.y;
+			else
+				m_cViewportRect.vMax.y = m_cViewportRect.vMin.y+pSurface->GetSize().y;
 		} else {
-			if (pRectangle->vMax.x > 0.0f) m_cViewportRect.vMax.x = pRectangle->vMax.x;
-			else						   m_cViewportRect.vMax.x = m_cViewportRect.vMin.x;
-			if (pRectangle->vMax.y > 0.0f) m_cViewportRect.vMax.y = pRectangle->vMax.y;
-			else						   m_cViewportRect.vMax.y = m_cViewportRect.vMin.y;
+			if (pRectangle->vMax.x > 0.0f)
+				m_cViewportRect.vMax.x = pRectangle->vMax.x;
+			else
+				m_cViewportRect.vMax.x = m_cViewportRect.vMin.x;
+			if (pRectangle->vMax.y > 0.0f)
+				m_cViewportRect.vMax.y = pRectangle->vMax.y;
+			else
+				m_cViewportRect.vMax.y = m_cViewportRect.vMin.y;
 		}
 	} else {
 		m_cViewportRect.vMin.x = 0;
 		m_cViewportRect.vMin.y = 0;
 		Surface *pSurface = m_cCurrentSurface.GetSurface();
 		if (pSurface) {
-			m_cViewportRect.vMax.x = float(pSurface->GetSize().x);
-			m_cViewportRect.vMax.y = float(pSurface->GetSize().y);
+			m_cViewportRect.vMax.x = static_cast<float>(pSurface->GetSize().x);
+			m_cViewportRect.vMax.y = static_cast<float>(pSurface->GetSize().y);
 		} else {
 			m_cViewportRect.vMax.x = 0;
 			m_cViewportRect.vMax.y = 0;
@@ -722,15 +736,25 @@ bool RendererBackend::SetScissorRect(const Rectangle *pRectangle)
 {
 	// Set data
 	if (pRectangle) {
-		if (pRectangle->vMin.x > 0.0f) m_cScissorRect.vMin.x = pRectangle->vMin.x;
-		else						   m_cScissorRect.vMin.x = m_cViewportRect.vMin.x;
-		if (pRectangle->vMin.y > 0.0f) m_cScissorRect.vMin.y = pRectangle->vMin.y;
-		else						   m_cScissorRect.vMin.y = m_cViewportRect.vMin.y;
-		if (pRectangle->vMax.x > 0.0f) m_cScissorRect.vMax.x = pRectangle->vMax.x;
-		else						   m_cScissorRect.vMax.x = m_cViewportRect.vMax.x;
-		if (pRectangle->vMax.y > 0.0f) m_cScissorRect.vMax.y = pRectangle->vMax.y;
-		else						   m_cScissorRect.vMax.y = m_cViewportRect.vMax.y;
-	} else m_cScissorRect = m_cViewportRect;
+		if (pRectangle->vMin.x > 0.0f)
+			m_cScissorRect.vMin.x = pRectangle->vMin.x;
+		else
+			m_cScissorRect.vMin.x = m_cViewportRect.vMin.x;
+		if (pRectangle->vMin.y > 0.0f)
+			m_cScissorRect.vMin.y = pRectangle->vMin.y;
+		else
+			m_cScissorRect.vMin.y = m_cViewportRect.vMin.y;
+		if (pRectangle->vMax.x > 0.0f)
+			m_cScissorRect.vMax.x = pRectangle->vMax.x;
+		else
+			m_cScissorRect.vMax.x = m_cViewportRect.vMax.x;
+		if (pRectangle->vMax.y > 0.0f)
+			m_cScissorRect.vMax.y = pRectangle->vMax.y;
+		else
+			m_cScissorRect.vMax.y = m_cViewportRect.vMax.y;
+	} else {
+		m_cScissorRect = m_cViewportRect;
+	}
 
 	// Done
 	return true;
@@ -742,7 +766,8 @@ bool RendererBackend::SetScissorRect(const Rectangle *pRectangle)
 //[-------------------------------------------------------]
 Surface *RendererBackend::GetRenderTarget(uint8 *pnFace) const
 {
-	if (pnFace) *pnFace = m_nCurrentSurfaceFace;
+	if (pnFace)
+		*pnFace = m_nCurrentSurfaceFace;
 	return m_cCurrentSurface.GetSurface();
 }
 
@@ -753,13 +778,13 @@ TextureBuffer *RendererBackend::GetColorRenderTarget(uint8 nColorIndex) const
 		return nullptr; // Error!
 
 	// Return the color render target
-	return (TextureBuffer*)m_cCurrentSurface.GetSurface();
+	return reinterpret_cast<TextureBuffer*>(m_cCurrentSurface.GetSurface());
 }
 
 TextureBuffer *RendererBackend::GetTextureBuffer(uint32 nStage) const
 {
 	// Check if the stage is correct
-	return nStage < m_sCapabilities.nMaxTextureUnits ? m_ppCurrentTextureBuffer[nStage] : nullptr;
+	return (nStage < m_sCapabilities.nMaxTextureUnits) ? m_ppCurrentTextureBuffer[nStage] : nullptr;
 }
 
 IndexBuffer *RendererBackend::GetIndexBuffer() const
@@ -769,7 +794,7 @@ IndexBuffer *RendererBackend::GetIndexBuffer() const
 
 Program *RendererBackend::GetProgram() const
 {
-	return (Program*)m_cProgramHandler.GetResource();
+	return reinterpret_cast<Program*>(m_cProgramHandler.GetResource());
 }
 
 bool RendererBackend::SetProgram(Program *pProgram)

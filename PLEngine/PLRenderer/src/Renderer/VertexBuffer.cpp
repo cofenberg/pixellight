@@ -226,7 +226,7 @@ uint32 VertexBuffer::GetVertexSize() const
 VertexBuffer &VertexBuffer::operator =(const VertexBuffer &cSource)
 {
 	// Lock the source buffer
-	if (((VertexBuffer&)cSource).Lock(Lock::ReadOnly)) {
+	if (const_cast<VertexBuffer&>(cSource).Lock(Lock::ReadOnly)) {
 		// Clear old vertex buffer
 		Clear();
 		ClearVertexAttributes();
@@ -234,7 +234,8 @@ VertexBuffer &VertexBuffer::operator =(const VertexBuffer &cSource)
 		// Copy vertex attributes
 		for (uint32 i=0; i<cSource.GetNumOfVertexAttributes(); i++) {
 			const Attribute *pAttribute = cSource.GetVertexAttribute(i);
-			if (pAttribute) AddVertexAttribute(pAttribute->nSemantic, pAttribute->nChannel, pAttribute->nType);
+			if (pAttribute)
+				AddVertexAttribute(pAttribute->nSemantic, pAttribute->nChannel, pAttribute->nType);
 		}
 
 		// Allocate this buffer
@@ -243,14 +244,14 @@ VertexBuffer &VertexBuffer::operator =(const VertexBuffer &cSource)
 		// Lock this (target) buffer
 		if (Lock(Lock::WriteOnly)) {
 			// Copy the buffer data
-			MemoryManager::Copy(GetData(), ((VertexBuffer&)cSource).GetData(), cSource.GetSize());
+			MemoryManager::Copy(GetData(), const_cast<VertexBuffer&>(cSource).GetData(), cSource.GetSize());
 
 			// Unlock this (target) buffer
 			Unlock();
 		}
 
 		// Unlock the source buffer
-		((VertexBuffer&)cSource).Unlock();
+		const_cast<VertexBuffer&>(cSource).Unlock();
 	}
 
 	// Done
@@ -277,15 +278,15 @@ void VertexBuffer::CalculateBoundingBox(Vector3 &vMinPos, Vector3 &vMaxPos, PLRe
 				switch (pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{
-						const uint32 *pIndices = (const uint32*)pIndexBuffer->GetData();
+						const uint32 *pIndices = static_cast<const uint32*>(pIndexBuffer->GetData());
 						if (pIndexBuffer->GetNumOfElements()) {
-							const float *pfPos = (const float*)GetData(pIndices[0], Position);
+							const float *pfPos = static_cast<const float*>(GetData(pIndices[0], Position));
 							if (pfPos) {
 								vMinPos = vMaxPos = pfPos;
 
 								// Loop through all indices
 								for (uint32 i=1; i<pIndexBuffer->GetNumOfElements(); i++) {
-									pfPos = (const float*)GetData(pIndices[i], Position);
+									pfPos = static_cast<const float*>(GetData(pIndices[i], Position));
 									// Min
 									if (vMinPos.x > pfPos[0])
 										vMinPos.x = pfPos[0];
@@ -308,15 +309,15 @@ void VertexBuffer::CalculateBoundingBox(Vector3 &vMinPos, Vector3 &vMaxPos, PLRe
 
 					case IndexBuffer::UShort:
 					{
-						const uint16 *pIndices = (const uint16*)pIndexBuffer->GetData();
+						const uint16 *pIndices = static_cast<const uint16*>(pIndexBuffer->GetData());
 						if (pIndexBuffer->GetNumOfElements()) {
-							const float *pfPos = (const float*)GetData(pIndices[0], Position);
+							const float *pfPos = static_cast<const float*>(GetData(pIndices[0], Position));
 							if (pfPos) {
 								vMinPos = vMaxPos = pfPos;
 
 								// Loop through all indices
 								for (uint32 i=1; i<pIndexBuffer->GetNumOfElements(); i++) {
-									pfPos = (const float*)GetData(pIndices[i], Position);
+									pfPos = static_cast<const float*>(GetData(pIndices[i], Position));
 									// Min
 									if (vMinPos.x > pfPos[Vector3::X])
 										vMinPos.x = pfPos[Vector3::X];
@@ -339,15 +340,15 @@ void VertexBuffer::CalculateBoundingBox(Vector3 &vMinPos, Vector3 &vMaxPos, PLRe
 
 					case IndexBuffer::UByte:
 					{
-						const uint8 *pIndices = (const uint8*)pIndexBuffer->GetData();
+						const uint8 *pIndices = static_cast<const uint8*>(pIndexBuffer->GetData());
 						if (pIndexBuffer->GetNumOfElements()) {
-							const float *pfPos = (const float*)GetData(pIndices[0], Position);
+							const float *pfPos = static_cast<const float*>(GetData(pIndices[0], Position));
 							if (pfPos) {
 								vMinPos = vMaxPos = pfPos;
 
 								// Loop through all indices
 								for (uint32 i=1; i<pIndexBuffer->GetNumOfElements(); i++) {
-									pfPos = (const float*)GetData(pIndices[i], Position);
+									pfPos = static_cast<const float*>(GetData(pIndices[i], Position));
 									// Min
 									if (vMinPos.x > pfPos[Vector3::X])
 										vMinPos.x = pfPos[Vector3::X];
@@ -379,13 +380,13 @@ void VertexBuffer::CalculateBoundingBox(Vector3 &vMinPos, Vector3 &vMaxPos, PLRe
 	} else {
 		// Lock this vertex buffer
 		if (Lock(Lock::ReadOnly)) {
-			const float *pfPos = (const float*)GetData(0, Position);
+			const float *pfPos = static_cast<const float*>(GetData(0, Position));
 			if (pfPos) {
 				vMinPos = vMaxPos = pfPos;
 
 				// Loop through all indices
 				for (uint32 i=1; i<m_nElements; i++) {
-					pfPos = (const float*)GetData(i, Position);
+					pfPos = static_cast<const float*>(GetData(i, Position));
 					// Min
 					if (vMinPos.x > pfPos[Vector3::X])
 						vMinPos.x = pfPos[Vector3::X];
@@ -429,23 +430,23 @@ void VertexBuffer::CalculateBoundingSphere(Vector3 &vPos, float &fRadius, PLRend
 				switch (pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{
-						const uint32 *pIndices = (const uint32*)pIndexBuffer->GetData();
+						const uint32 *pIndices = static_cast<const uint32*>(pIndexBuffer->GetData());
 						if (pIndexBuffer->GetNumOfElements()) {
-							const float *pfPos = (const float*)GetData(pIndices[0], Position);
+							const float *pfPos = static_cast<const float*>(GetData(pIndices[0], Position));
 							if (pfPos) {
 								// Average points to get approximate center
 								for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
-									pfPos = (const float*)GetData(pIndices[i], Position);
+									pfPos = static_cast<const float*>(GetData(pIndices[i], Position));
 									vPos.x += pfPos[0];
 									vPos.y += pfPos[1];
 									vPos.z += pfPos[2];
 								}
-								vPos /= (float)pIndexBuffer->GetNumOfElements();
+								vPos /= static_cast<float>(pIndexBuffer->GetNumOfElements());
 
 								// Find maximum distance from center (sphere radius)
 								Vector3 vV;
 								for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
-									vV      = (float*)GetData(pIndices[i], Position);
+									vV      = static_cast<const float*>(GetData(pIndices[i], Position));
 									fRadius = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 								}
 								fRadius = Math::Sqrt(fRadius);
@@ -456,23 +457,23 @@ void VertexBuffer::CalculateBoundingSphere(Vector3 &vPos, float &fRadius, PLRend
 
 					case IndexBuffer::UShort:
 					{
-						const uint16 *pIndices = (const uint16*)pIndexBuffer->GetData();
+						const uint16 *pIndices = static_cast<const uint16*>(pIndexBuffer->GetData());
 						if (pIndexBuffer->GetNumOfElements()) {
-							const float *pfPos = (const float*)GetData(pIndices[0], Position);
+							const float *pfPos = static_cast<const float*>(GetData(pIndices[0], Position));
 							if (pfPos) {
 								// Average points to get approximate center
 								for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
-									pfPos = (const float*)GetData(pIndices[i], Position);
+									pfPos = static_cast<const float*>(GetData(pIndices[i], Position));
 									vPos.x += pfPos[0];
 									vPos.y += pfPos[1];
 									vPos.z += pfPos[2];
 								}
-								vPos /= (float)pIndexBuffer->GetNumOfElements();
+								vPos /= static_cast<float>(pIndexBuffer->GetNumOfElements());
 
 								// Find maximum distance from center (sphere radius)
 								Vector3 vV;
 								for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
-									vV      = (float*)GetData(pIndices[i], Position);
+									vV      = static_cast<const float*>(GetData(pIndices[i], Position));
 									fRadius = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 								}
 								fRadius = Math::Sqrt(fRadius);
@@ -483,23 +484,23 @@ void VertexBuffer::CalculateBoundingSphere(Vector3 &vPos, float &fRadius, PLRend
 
 					case IndexBuffer::UByte:
 					{
-						const uint8 *pIndices = (const uint8*)pIndexBuffer->GetData();
+						const uint8 *pIndices = static_cast<const uint8*>(pIndexBuffer->GetData());
 						if (pIndexBuffer->GetNumOfElements()) {
-							const float *pfPos = (const float*)GetData(pIndices[0], Position);
+							const float *pfPos = static_cast<const float*>(GetData(pIndices[0], Position));
 							if (pfPos) {
 								// Average points to get approximate center
 								for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
-									pfPos = (const float*)GetData(pIndices[i], Position);
+									pfPos = static_cast<const float*>(GetData(pIndices[i], Position));
 									vPos.x += pfPos[0];
 									vPos.y += pfPos[1];
 									vPos.z += pfPos[2];
 								}
-								vPos /= (float)pIndexBuffer->GetNumOfElements();
+								vPos /= static_cast<float>(pIndexBuffer->GetNumOfElements());
 
 								// Find maximum distance from center (sphere radius)
 								Vector3 vV;
 								for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
-									vV      = (float*)GetData(pIndices[i], Position);
+									vV      = static_cast<const float*>(GetData(pIndices[i], Position));
 									fRadius = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 								}
 								fRadius = Math::Sqrt(fRadius);
@@ -519,21 +520,21 @@ void VertexBuffer::CalculateBoundingSphere(Vector3 &vPos, float &fRadius, PLRend
 	} else {
 		// Lock this vertex buffer
 		if (Lock(Lock::ReadOnly)) {
-			const float *pfPos = (const float*)GetData(0, Position);
+			const float *pfPos = static_cast<const float*>(GetData(0, Position));
 			if (pfPos) {
 				// Average points to get approximate center
 				for (uint32 i=0; i<GetNumOfElements(); i++) {
-					pfPos = (const float*)GetData(i, Position);
+					pfPos = static_cast<const float*>(GetData(i, Position));
 					vPos.x += pfPos[0];
 					vPos.y += pfPos[1];
 					vPos.z += pfPos[2];
 				}
-				vPos /= (float)GetNumOfElements();
+				vPos /= static_cast<float>(GetNumOfElements());
 
 				// Find maximum distance from center (sphere radius)
 				Vector3 vV;
 				for (uint32 i=0; i<GetNumOfElements(); i++) {
-					vV      = (float*)GetData(i, Position);
+					vV      = static_cast<const float*>(GetData(i, Position));
 					fRadius = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 				}
 				fRadius = Math::Sqrt(fRadius);

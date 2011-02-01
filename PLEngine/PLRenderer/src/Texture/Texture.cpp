@@ -70,7 +70,7 @@ Texture::~Texture()
 TextureManager &Texture::GetTextureManager() const
 {
 	// There MUST always be a manager!
-	return (TextureManager&)*m_pManager;
+	return static_cast<TextureManager&>(*m_pManager);
 }
 
 /**
@@ -79,7 +79,7 @@ TextureManager &Texture::GetTextureManager() const
 */
 TextureBuffer *Texture::GetTextureBuffer() const
 {
-	return (TextureBuffer*)m_pTextureBufferHandler->GetResource();
+	return static_cast<TextureBuffer*>(m_pTextureBufferHandler->GetResource());
 }
 
 /**
@@ -128,7 +128,7 @@ const Vector3i &Texture::GetOriginalSize() const
 bool Texture::Bind(uint32 nStage) const
 {
 	if (m_pTextureBufferHandler->GetResource()) {
-		TextureBuffer *pTextureBuffer = (TextureBuffer*)m_pTextureBufferHandler->GetResource();
+		TextureBuffer *pTextureBuffer = static_cast<TextureBuffer*>(m_pTextureBufferHandler->GetResource());
 		pTextureBuffer->GetRenderer().SetTextureBuffer(nStage, pTextureBuffer);
 
 		// Done
@@ -195,7 +195,7 @@ void Texture::DestroyTextureBuffer()
 {
 	// If this is the last handler using this texture buffer, kill the texture buffer
 	if (!m_bShareTextureBuffer) {
-		TextureBuffer *pTextureBuffer = (TextureBuffer*)m_pTextureBufferHandler->GetResource();
+		TextureBuffer *pTextureBuffer = static_cast<TextureBuffer*>(m_pTextureBufferHandler->GetResource());
 		if (pTextureBuffer) {
 			if (pTextureBuffer->GetNumOfHandlers() <= 1)
 				delete pTextureBuffer;
@@ -319,7 +319,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 									static const String sFormat[] = {"Default", "DXT1", "DXT3", "DXT5", "DXT5_xGxR", "LATC1", "LATC2", "LATC2_XYSwizzle", "None"};
 									for (uint32 nFormat=0; nFormat<=None; nFormat++) {
 										if (sValue == sFormat[nFormat]) {
-											m_nCompressionHint = (ECompressionFormat)nFormat;
+											m_nCompressionHint = static_cast<ECompressionFormat>(nFormat);
 											break;
 										}
 									}
@@ -350,7 +350,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// MinWidth
 								if (pElement->QueryIntAttribute("MinWidth", &nMinTextureBufferSize[Vector3::X]) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nMinTextureBufferSize[Vector3::X], nTempMinTextureBufferSize[Vector3::X], nMaxTextureBufferSize[Vector3::X], bRectangleTexture);
-									if ((uint32)nMinTextureBufferSize[Vector3::X] != nValue) {
+									if (static_cast<uint32>(nMinTextureBufferSize[Vector3::X]) != nValue) {
 										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture width! %d will be used instead.", nMinTextureBufferSize[Vector3::X], nValue))
 										nMinTextureBufferSize[Vector3::X] = nValue;
 									}
@@ -359,7 +359,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// MinHeight
 								if (pElement->QueryIntAttribute("MinHeight", &nMinTextureBufferSize[Vector3::Y]) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nMinTextureBufferSize[Vector3::Y], nTempMinTextureBufferSize[Vector3::Y], nMaxTextureBufferSize[Vector3::Y], bRectangleTexture);
-									if ((uint32)nMinTextureBufferSize[Vector3::Y] != nValue) {
+									if (static_cast<uint32>(nMinTextureBufferSize[Vector3::Y]) != nValue) {
 										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture height! %d will be used instead.", nMinTextureBufferSize[Vector3::Y], nValue))
 										nMinTextureBufferSize[Vector3::Y] = nValue;
 									}
@@ -368,7 +368,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// MinDepth
 								if (pElement->QueryIntAttribute("MinDepth", &nMinTextureBufferSize[Vector3::Z]) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nMinTextureBufferSize[Vector3::Z], nTempMinTextureBufferSize[Vector3::Z], nMaxTextureBufferSize[Vector3::Z], bRectangleTexture);
-									if ((uint32)nMinTextureBufferSize[Vector3::Z] != nValue) {
+									if (static_cast<uint32>(nMinTextureBufferSize[Vector3::Z]) != nValue) {
 										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture depth! %d will be used instead.", nMinTextureBufferSize[Vector3::Z], nValue))
 										nMinTextureBufferSize[Vector3::Z] = nValue;
 									}
@@ -384,7 +384,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// Width
 								if (pElement->QueryIntAttribute("Width", &nForceWidth) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nForceWidth, nTempMinTextureBufferSize[Vector3::X], nMaxTextureBufferSize[Vector3::X], bRectangleTexture);
-									if (nForceWidth != (int)nValue) {
+									if (nForceWidth != static_cast<int>(nValue)) {
 										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture width! %d will be used instead.", nForceWidth, nValue))
 										nForceWidth = nValue;
 									}
@@ -393,7 +393,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// Height
 								if (pElement->QueryIntAttribute("Height", &nForceHeight) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nForceHeight, nTempMinTextureBufferSize[Vector3::Y], nMaxTextureBufferSize[Vector3::Y], bRectangleTexture);
-									if (nForceHeight != (int)nValue) {
+									if (nForceHeight != static_cast<int>(nValue)) {
 										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture height! %d will be used instead.", nForceHeight, nValue))
 										nForceHeight = nValue;
 									}
@@ -402,7 +402,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								// Depth
 								if (pElement->QueryIntAttribute("Depth", &nForceDepth) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nForceDepth, nTempMinTextureBufferSize[Vector3::Z], nMaxTextureBufferSize[Vector3::Z], bRectangleTexture);
-									if (nForceDepth != (int)nValue) {
+									if (nForceDepth != static_cast<int>(nValue)) {
 										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture depth! %d will be used instead.", nForceDepth, nValue))
 										nForceDepth = nValue;
 									}
@@ -468,24 +468,24 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 				uint32 nWidth = pImageBuffer->GetSize().x;
 				m_vOriginalSize.x = nWidth;
 				if (nWidth > 1) {
-					nWidth = (uint32)(nWidth*fTextureQuality);
-					if ((int)nWidth < nMinTextureBufferSize[Vector3::X])
+					nWidth = static_cast<uint32>(nWidth*fTextureQuality);
+					if (static_cast<int>(nWidth) < nMinTextureBufferSize[Vector3::X])
 						nWidth = nMinTextureBufferSize[Vector3::X];
 				}
 				// Get height
 				uint32 nHeight = pImageBuffer->GetSize().y;
 				m_vOriginalSize.y = nHeight;
 				if (nHeight > 1) {
-					nHeight = (uint32)(nHeight*fTextureQuality);
-					if ((int)nHeight < nMinTextureBufferSize[Vector3::Y])
+					nHeight = static_cast<uint32>(nHeight*fTextureQuality);
+					if (static_cast<int>(nHeight) < nMinTextureBufferSize[Vector3::Y])
 						nHeight = nMinTextureBufferSize[Vector3::Y];
 				}
 				// Get depth
 				uint32 nDepth = pImageBuffer->GetSize().z;
 				m_vOriginalSize.z = nDepth;
 				if (nDepth > 1) {
-					nDepth = (uint32)(nDepth*fTextureQuality);
-					if ((int)nDepth < nMinTextureBufferSize[Vector3::Z])
+					nDepth = static_cast<uint32>(nDepth*fTextureQuality);
+					if (static_cast<int>(nDepth) < nMinTextureBufferSize[Vector3::Z])
 						nDepth = nMinTextureBufferSize[Vector3::Z];
 				}
 
@@ -548,7 +548,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 					}
 
 					// Check if the texture size is correct
-					if (m_vOriginalSize.x > (int)nMaxSize || m_vOriginalSize.y > (int)nMaxSize || m_vOriginalSize.z > (int)nMaxSize ||
+					if (m_vOriginalSize.x > static_cast<int>(nMaxSize) || m_vOriginalSize.y > static_cast<int>(nMaxSize) || m_vOriginalSize.z > static_cast<int>(nMaxSize) ||
 						!Math::IsPowerOfTwo(m_vOriginalSize.x) || !Math::IsPowerOfTwo(m_vOriginalSize.y) || !Math::IsPowerOfTwo(m_vOriginalSize.z)) {
 						// Write a performance warning into the log if the original texture size is not optimal
 						if (m_vOriginalSize.z == 1)
@@ -565,7 +565,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						else if (nTextureFitLower == 1)
 							bTextureFit = 0;
 						else
-							bTextureFit = ((TextureManager*)GetManager())->GetTextureFit();
+							bTextureFit = static_cast<TextureManager*>(GetManager())->GetTextureFit();
 
 						// Check width
 						if (!Math::IsPowerOfTwo(nWidth)) {
@@ -614,9 +614,9 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 				// Scale
 				if (!bError) {
 					// Scale the image if required
-					if (nWidth  != (uint32)pImageBuffer->GetSize().x ||
-						nHeight != (uint32)pImageBuffer->GetSize().y ||
-						nDepth  != (uint32)pImageBuffer->GetSize().z) {
+					if (nWidth  != static_cast<uint32>(pImageBuffer->GetSize().x) ||
+						nHeight != static_cast<uint32>(pImageBuffer->GetSize().y) ||
+						nDepth  != static_cast<uint32>(pImageBuffer->GetSize().z)) {
 						if (nDepth == 1)
 							PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%d to %dx%d", m_vOriginalSize.x, m_vOriginalSize.y, nWidth, nHeight))
 						else
@@ -661,7 +661,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 					// Color key
 					if (bColorKey) {
 						// Apply color key
-						cImage.ApplyEffect(ImageEffects::ColorKey(Color3((uint8)nCKR, (uint8)nCKG, (uint8)nCKB), nCKTolerance/255.0f));
+						cImage.ApplyEffect(ImageEffects::ColorKey(Color3(static_cast<uint8>(nCKR), static_cast<uint8>(nCKG), static_cast<uint8>(nCKB)), static_cast<float>(nCKTolerance)/255.0f));
 
 						// Update the image buffer pointer
 						pImageBuffer = cImage.GetBuffer();
@@ -725,19 +725,19 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 					TextureBuffer *pTextureBuffer;
 					if (cImage.GetNumOfParts() == 6) {
 						// Cube texture buffer
-						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBufferCube(cImage, nInternalFormat, nTextureFlags);
+						pTextureBuffer = reinterpret_cast<TextureBuffer*>(cRenderer.CreateTextureBufferCube(cImage, nInternalFormat, nTextureFlags));
 					} else if (nDepth != 1) {
 						// 3D texture buffer
-						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer3D(cImage, nInternalFormat, nTextureFlags);
+						pTextureBuffer = reinterpret_cast<TextureBuffer*>(cRenderer.CreateTextureBuffer3D(cImage, nInternalFormat, nTextureFlags));
 					} else if (nWidth == 1 || nHeight == 1) {
 						// 1D texture buffer
-						pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer1D(cImage, nInternalFormat, nTextureFlags);
+						pTextureBuffer = reinterpret_cast<TextureBuffer*>(cRenderer.CreateTextureBuffer1D(cImage, nInternalFormat, nTextureFlags));
 					} else {
 						// 2D/rectancle texture buffer
 						if (bRectangleTexture)
-							pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, nTextureFlags);
+							pTextureBuffer = reinterpret_cast<TextureBuffer*>(cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, nTextureFlags));
 						else
-							pTextureBuffer = (TextureBuffer*)cRenderer.CreateTextureBuffer2D(cImage, nInternalFormat, nTextureFlags);
+							pTextureBuffer = reinterpret_cast<TextureBuffer*>(cRenderer.CreateTextureBuffer2D(cImage, nInternalFormat, nTextureFlags));
 					}
 
 					// Renderer texture created?

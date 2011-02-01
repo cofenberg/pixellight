@@ -375,7 +375,7 @@ bool TextureAniLoaderPL::LoadV1(TextureAni &cTextureAni, const XmlElement &cText
 
 			// Start
 			if (pAnimationElement->QueryIntAttribute("Start", &nValue) == XmlBase::Success) {
-				if (nValue >= (int)nFrames)
+				if (nValue >= static_cast<int>(nFrames))
 					pAnimation->SetStartFrame(nFrames-1);
 				else {
 					if (nValue < 0)
@@ -386,7 +386,7 @@ bool TextureAniLoaderPL::LoadV1(TextureAni &cTextureAni, const XmlElement &cText
 
 			// End
 			if (pAnimationElement->QueryIntAttribute("End", &nValue) == XmlBase::Success) {
-				if (nValue >= (int)nFrames)
+				if (nValue >= static_cast<int>(nFrames))
 					pAnimation->SetEndFrame(nFrames-1);
 				else {
 					if (nValue < 0)
@@ -422,12 +422,12 @@ bool TextureAniLoaderPL::LoadV1(TextureAni &cTextureAni, const XmlElement &cText
 			while (pFrameNode) {
 				// Is this an XML element?
 				if (pFrameNode->GetType() == XmlNode::Element) {
-					const XmlElement *pFrameElement = (const XmlElement*)pFrameNode;
+					const XmlElement *pFrameElement = static_cast<const XmlElement*>(pFrameNode);
 
 					// ID
 					nValue = -1;
 					if (pFrameElement->QueryIntAttribute("ID", &nValue) == XmlBase::Success &&
-						nValue >= 0 && nValue < (int)nFrames) {
+						nValue >= 0 && nValue < static_cast<int>(nFrames)) {
 						// Speed
 						float fSpeed = 1.0f;
 						sValue = pFrameElement->GetAttribute("Speed");
@@ -448,12 +448,12 @@ bool TextureAniLoaderPL::LoadV1(TextureAni &cTextureAni, const XmlElement &cText
 			while (pEventNode) {
 				// Is this an XML element?
 				if (pEventNode->GetType() == XmlNode::Element) {
-					const XmlElement *pEventElement = (const XmlElement*)pEventNode;
+					const XmlElement *pEventElement = static_cast<const XmlElement*>(pEventNode);
 
 					// FrameID
 					int nFrameID = -1;
 					if (pEventElement->QueryIntAttribute("FrameID", &nFrameID) == XmlBase::Success &&
-						nFrameID >= 0 && nFrameID < (int)nFrames) {
+						nFrameID >= 0 && nFrameID < static_cast<int>(nFrames)) {
 						// ID
 						int nID = 0;
 						if (pEventElement->QueryIntAttribute("ID", &nID) == XmlBase::Success) {

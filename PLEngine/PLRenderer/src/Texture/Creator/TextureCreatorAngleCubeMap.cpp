@@ -51,12 +51,12 @@ pl_implement_class(TextureCreatorAngleCubeMap)
 //[-------------------------------------------------------]
 inline uint8 Pack1(float x)
 {
-	return (uint8)(255.0f*Math::Abs(x));
+	return static_cast<uint8>(255.0f*Math::Abs(x));
 }
 
 inline uint8 Pack2(float x)
 {
-	return (uint8)(255.0f*x);
+	return static_cast<uint8>(255.0f*x);
 }
 
 
@@ -105,7 +105,7 @@ Texture *TextureCreatorAngleCubeMap::Create(TextureManager &cTextureManager, Tex
 			float vy = mid - y;
 			float vz = mid - z;
 
-			float ang0 = float(Math::ATan2(vy, vx)/Math::Pi);
+			float ang0 = static_cast<float>(Math::ATan2(vy, vx)/Math::Pi);
 			float ang1 = Vector3(vx, vz, vy).Normalize().DotProduct(Vector3(vx, 0.0f, vy).Normalize());
 			ang1 = Math::Sqrt(Math::Abs(1 - ang1*ang1));
 
@@ -127,7 +127,7 @@ Texture *TextureCreatorAngleCubeMap::Create(TextureManager &cTextureManager, Tex
 			float vy = mid;
 			float vz = z - mid;
 
-			float ang0 = float(Math::ATan2(vy, vx)/Math::Pi);
+			float ang0 = static_cast<float>(Math::ATan2(vy, vx)/Math::Pi);
 			float ang1 = Vector3(vx, vz, vy).Normalize().DotProduct(Vector3(vx, 0.0f, vy).Normalize());
 			ang1 = Math::Sqrt(Math::Abs(1 - ang1*ang1));
 
@@ -149,7 +149,7 @@ Texture *TextureCreatorAngleCubeMap::Create(TextureManager &cTextureManager, Tex
 			float vy = mid - y;
 			float vz = mid;
 
-			float ang0 = float(Math::ATan2(vy, vx)/Math::Pi);
+			float ang0 = static_cast<float>(Math::ATan2(vy, vx)/Math::Pi);
 			float ang1 = Vector3(vx, vz, vy).Normalize().DotProduct(Vector3(vx, 0.0f, vy).Normalize());
 			ang1 = Math::Sqrt(Math::Abs(1 - ang1*ang1));
 
@@ -164,7 +164,7 @@ Texture *TextureCreatorAngleCubeMap::Create(TextureManager &cTextureManager, Tex
 	}
 
 	// Create the cube texture buffer
-	pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBufferCube(cImage, TextureBuffer::Unknown, 0));
+	pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBufferCube(cImage, TextureBuffer::Unknown, 0)));
 
 	// Return the created texture
 	return pTexture;

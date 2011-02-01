@@ -357,7 +357,7 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 				while (pParameterNode) {
 					// Is this an XML element?
 					if (pParameterNode->GetType() == XmlNode::Element)
-						cFX.GetParameterManager().AddParameterFromXMLElement(*((const XmlElement*)pParameterNode));
+						cFX.GetParameterManager().AddParameterFromXMLElement(*static_cast<const XmlElement*>(pParameterNode));
 
 					// Next node, please
 					pParameterNode = pElement->IterateChildren(pParameterNode);

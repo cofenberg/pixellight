@@ -92,7 +92,7 @@ void AnimationEvent::SetFrame(uint32 nFrame)
 AnimationEvent &AnimationEvent::operator =(const AnimationEvent &cSource)
 {
 	// Call base function
-	*((Element<AnimationEvent>*)this) = cSource;
+	*static_cast<Element<AnimationEvent>*>(this) = cSource;
 
 	// Copy data
 	m_nID    = cSource.m_nID;

@@ -54,7 +54,7 @@ RendererContext *RendererContext::CreateInstance(const String &sBackend, Rendere
 	if (pClass && pClass->IsDerivedFrom("PLRenderer::Renderer")) {
 		const Object *pObject = pClass->Create(Params<Object*, pl_enum_type(Renderer::EMode), uint32, uint32, uint32, String>(nMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage));
 		if (pObject)
-			 return &((Renderer*)pObject)->GetRendererContext();
+			 return &static_cast<const Renderer*>(pObject)->GetRendererContext();
 	}
 
 	// Error!

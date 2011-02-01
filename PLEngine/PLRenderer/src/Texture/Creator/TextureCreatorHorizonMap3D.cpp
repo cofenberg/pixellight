@@ -50,10 +50,10 @@ pl_implement_class(TextureCreatorHorizonMap3D)
 //[-------------------------------------------------------]
 //[ Internal helper functions                             ]
 //[-------------------------------------------------------]
-#define ROUND(x) (int)(x + 0.5f)
+#define ROUND(x) static_cast<int>(x + 0.5f)
 inline uint8 Pack2(float x)
 {
-	return (uint8)(255.0f*x);
+	return static_cast<uint8>(255.0f*x);
 }
 
 
@@ -109,8 +109,8 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 			uint8 *pBuffer = pImageBuffer->GetData();
 			uint8 *pDest = pBuffer;
 			for (uint32 z=0; z<ZSize; z++) {
-				float xv = Math::Cos(float(z*Math::Pi2/ZSize));
-				float yv = Math::Sin(float(z*Math::Pi2/ZSize));
+				float xv = Math::Cos(static_cast<float>(z*Math::Pi2/ZSize));
+				float yv = Math::Sin(static_cast<float>(z*Math::Pi2/ZSize));
 
 				const float invMax = 1.0f/Math::Max(Math::Abs(xv), Math::Abs(yv));
 				xv *= invMax;
@@ -122,10 +122,10 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 					for (uint32 x=0; x<XSize; x++) {
 						float maxAng = 0;
 
-						float xp = float(x*w)/XSize;
-						float yp = float(y*h)/YSize;
+						float xp = static_cast<float>(x*w)/XSize;
+						float yp = static_cast<float>(y*h)/YSize;
 
-						const float bh = float(src[int(yp)*w + int(xp)]);
+						const float bh = static_cast<float>(src[static_cast<int>(yp)*w + static_cast<int>(xp)]);
 
 						float dist = 0;
 
@@ -145,7 +145,7 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 							xt %= w;
 							yt %= h;
 
-							const float ang = (float(src[yt*w + xt]) - bh)/dist;
+							const float ang = (static_cast<float>(src[yt*w + xt]) - bh)/dist;
 							if (ang > maxAng)
 								maxAng = ang;
 						}
@@ -156,7 +156,7 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 			}
 
 			// Create the 3D texture buffer
-			pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer3D(cImage));
+			pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer3D(cImage)));
 
 			// Return the created texture
 			return pTexture;

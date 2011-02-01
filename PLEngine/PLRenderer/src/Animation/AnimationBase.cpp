@@ -86,7 +86,7 @@ Array<AnimationBase::FrameKeys> &AnimationBase::GetFrameKeys()
 //[-------------------------------------------------------]
 AnimationBase &AnimationBase::operator =(const AnimationBase &cSource)
 {
-	*((AnimationInfo*)this) = *((const AnimationInfo*)&cSource);
+	*static_cast<AnimationInfo*>(this) = *static_cast<const AnimationInfo*>(&cSource);
 
 	// Copy data
 	m_fFrameRate   = cSource.m_fFrameRate;

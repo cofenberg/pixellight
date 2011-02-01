@@ -83,8 +83,8 @@ Texture *TextureCreatorSpot2D::Create(TextureManager &cTextureManager, Texture *
 	pImageBuffer->CreateImage(DataByte, ColorGrayscale, Vector3i(Width, Height, 1));
 
 	// Create the texture data
-	const float fWidthHalf  = float(Width/2)-0.5f;
-	const float fHeightHalf = float(Height/2)-0.5f;
+	const float fWidthHalf  = static_cast<float>(Width/2)-0.5f;
+	const float fHeightHalf = static_cast<float>(Height/2)-0.5f;
 	uint8 *pData = pImageBuffer->GetData();
 	for (uint32 j=0; j<Width; j++) {
 		for (uint32 i=0; i<Height; i++) {
@@ -92,12 +92,12 @@ Texture *TextureCreatorSpot2D::Create(TextureManager &cTextureManager, Texture *
 			const float y = (j - fHeightHalf)/fHeightHalf;
 
 			const float ls = Math::Max(1 - (x*x + y*y), 0.0f);
-			pData[j*Width+i] = (uint8)(Brightness*ls);
+			pData[j*Width+i] = static_cast<uint8>(Brightness*ls);
 		}
 	}
 
 	// Create the 2D texture buffer
-	pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer2D(cImage));
+	pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer2D(cImage)));
 
 	// Return the created texture
 	return pTexture;

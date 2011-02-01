@@ -66,7 +66,7 @@ Effect::~Effect()
 EffectManager &Effect::GetEffectManager() const
 {
 	// There MUST always be a manager!
-	return (EffectManager&)*m_pManager;
+	return static_cast<EffectManager&>(*m_pManager);
 }
 
 /**

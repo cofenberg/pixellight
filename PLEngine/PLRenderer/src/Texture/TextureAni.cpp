@@ -59,8 +59,8 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 
 	// Texture animation
 	for (uint32 i=0; i<cSource.m_cTextureAnimationManager.GetNumOfElements(); i++) {
-		const AnimationInfo *pAnimationInfo = (AnimationInfo*)cSource.m_cTextureAnimationManager.Get(i);
-		AnimationInfo *pNewInfo = (AnimationInfo*)m_cTextureAnimationManager.Create();
+		const AnimationInfo *pAnimationInfo = static_cast<AnimationInfo*>(cSource.m_cTextureAnimationManager.Get(i));
+		AnimationInfo *pNewInfo = static_cast<AnimationInfo*>(m_cTextureAnimationManager.Create());
 		*pNewInfo = *pAnimationInfo;
 	}
 	for (uint32 i=0; i<cSource.m_lstTextureFrames.GetNumOfElements(); i++) {
@@ -72,8 +72,8 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 
 	// Matrix animation
 	for (uint32 i=0; i<cSource.m_cMatrixAnimationManager.GetNumOfElements(); i++) {
-		const AnimationInfo *pAnimationInfo = (const AnimationInfo*)cSource.m_cMatrixAnimationManager.Get(i);
-		AnimationInfo *pNewInfo = (AnimationInfo*)m_cMatrixAnimationManager.Create();
+		const AnimationInfo *pAnimationInfo = static_cast<const AnimationInfo*>(cSource.m_cMatrixAnimationManager.Get(i));
+		AnimationInfo *pNewInfo = static_cast<AnimationInfo*>(m_cMatrixAnimationManager.Create());
 		*pNewInfo = *pAnimationInfo;
 	}
 	for (uint32 i=0; i<cSource.m_lstMatrixFrames.GetNumOfElements(); i++) {
@@ -87,8 +87,8 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 
 	// Color animation
 	for (uint32 i=0; i<cSource.m_cColorAnimationManager.GetNumOfElements(); i++) {
-		const AnimationInfo *pAnimationInfo = (const AnimationInfo*)cSource.m_cColorAnimationManager.Get(i);
-		AnimationInfo *pNewInfo = (AnimationInfo*)m_cColorAnimationManager.Create();
+		const AnimationInfo *pAnimationInfo = static_cast<const AnimationInfo*>(cSource.m_cColorAnimationManager.Get(i));
+		AnimationInfo *pNewInfo = static_cast<AnimationInfo*>(m_cColorAnimationManager.Create());
 		*pNewInfo = *pAnimationInfo;
 	}
 	for (uint32 i=0; i<cSource.m_lstColorFrames.GetNumOfElements(); i++) {
@@ -126,7 +126,7 @@ const AniInfoManager &TextureAni::GetTextureAnimationManager() const
 void TextureAni::CreateStandardTextureAnimation()
 {
 	if (!m_cTextureAnimationManager.GetNumOfElements()) {
-		AnimationInfo *pAnimation = (AnimationInfo*)m_cTextureAnimationManager.Create("Texture standard animation");
+		AnimationInfo *pAnimation = static_cast<AnimationInfo*>(m_cTextureAnimationManager.Create("Texture standard animation"));
 		pAnimation->SetType(0);
 		pAnimation->SetStartFrame(0);
 		pAnimation->SetEndFrame(m_lstTextureFrames.GetNumOfElements()-1);
@@ -174,7 +174,7 @@ const AniInfoManager &TextureAni::GetMatrixAnimationManager() const
 void TextureAni::CreateStandardMatrixAnimation()
 {
 	if (!m_cMatrixAnimationManager.GetNumOfElements()) {
-		AnimationInfo *pAnimation = (AnimationInfo*)m_cMatrixAnimationManager.Create("Matrix standard animation");
+		AnimationInfo *pAnimation = static_cast<AnimationInfo*>(m_cMatrixAnimationManager.Create("Matrix standard animation"));
 		pAnimation->SetType(1);
 		pAnimation->SetStartFrame(0);
 		pAnimation->SetEndFrame(m_lstMatrixFrames.GetNumOfElements()-1);
@@ -222,7 +222,7 @@ const AniInfoManager &TextureAni::GetColorAnimationManager() const
 void TextureAni::CreateStandardColorAnimation()
 {
 	if (!m_cColorAnimationManager.GetNumOfElements()) {
-		AnimationInfo *pAnimation = (AnimationInfo*)m_cColorAnimationManager.Create("Color standard animation");
+		AnimationInfo *pAnimation = static_cast<AnimationInfo*>(m_cColorAnimationManager.Create("Color standard animation"));
 		pAnimation->SetType(2);
 		pAnimation->SetStartFrame(0);
 		pAnimation->SetEndFrame(m_lstColorFrames.GetNumOfElements()-1);

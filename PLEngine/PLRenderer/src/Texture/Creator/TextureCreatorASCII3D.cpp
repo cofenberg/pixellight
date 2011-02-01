@@ -96,7 +96,7 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 					uint32 base = j*256*16 + i*16;
 					for (uint32 b=0; b<16; b++) {
 						for (uint32 a=0; a<16; a++)
-							avg[j*16 + i] += float(src[base + 256*b + a]);
+							avg[j*16 + i] += static_cast<float>(src[base + 256*b + a]);
 					}
 					avg[j*16 + i] *= 1.0f/(255.0f*16*16);
 				}
@@ -106,7 +106,7 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 			uint8 *dest = pixels;
 
 			for (uint32 j=0; j<256; j++) {
-				const float av = float(j)/255.0f;
+				const float av = static_cast<float>(j)/255.0f;
 
 				uint32 index = 0;
 				float minDiff = 1e10f;
@@ -128,7 +128,7 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 			}
 
 			// Create the 3D texture buffer
-			pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer3D(cImage));
+			pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer3D(cImage)));
 		}
 
 		// Return the created texture

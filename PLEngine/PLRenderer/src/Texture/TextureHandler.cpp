@@ -61,7 +61,7 @@ namespace PLRenderer {
 */
 Texture *TextureHandler::AnimationState::GetTexture() const
 {
-	const TextureAni *pTextureAni = (const TextureAni*)m_pTextureHandler->GetResource();
+	const TextureAni *pTextureAni = static_cast<const TextureAni*>(m_pTextureHandler->GetResource());
 	if (pTextureAni) {
 		const uint32 nFrame = m_pTextureAnimation->GetCurrentFrame();
 		if (nFrame < pTextureAni->GetTextureFrames().GetNumOfElements())
@@ -80,7 +80,7 @@ TextureHandler *TextureHandler::AnimationState::GetFrameTextureHandler(int nInde
 {
 	// Texture animation played?
 	if (nIndex >= 0 || m_pTextureAnimation->IsActive()) {
-		const TextureAni *pTextureAni = (const TextureAni*)m_pTextureHandler->GetResource();
+		const TextureAni *pTextureAni = static_cast<const TextureAni*>(m_pTextureHandler->GetResource());
 		if (pTextureAni) {
 			const uint32 nFrame = nIndex < 0 ? m_pTextureAnimation->GetCurrentFrame() : nIndex;
 			if (nFrame < pTextureAni->GetTextureFrames().GetNumOfElements())
@@ -100,14 +100,14 @@ Matrix4x4 TextureHandler::AnimationState::GetFrameMatrix(int nIndex) const
 {
 	// Matrix animation played?
 	if (nIndex >= 0 || m_pMatrixAnimation->IsActive()) {
-		const TextureAni *pTextureAni = (const TextureAni*)m_pTextureHandler->GetResource();
+		const TextureAni *pTextureAni = static_cast<const TextureAni*>(m_pTextureHandler->GetResource());
 		if (pTextureAni) {
 			const uint32 nFrame = nIndex < 0 ? m_pMatrixAnimation->GetCurrentFrame() : nIndex;
 			if (nFrame < pTextureAni->GetMatrixFrames().GetNumOfElements()) {
 				// Set rotation
 				Quaternion qRotation;
 				const Vector3 &vRot = pTextureAni->GetMatrixFrames()[nFrame]->vRotation;
-				EulerAngles::ToQuaternion(float(vRot.x*Math::DegToRad), float(vRot.y*Math::DegToRad), float(vRot.z*Math::DegToRad), qRotation);
+				EulerAngles::ToQuaternion(static_cast<float>(vRot.x*Math::DegToRad), static_cast<float>(vRot.y*Math::DegToRad), static_cast<float>(vRot.z*Math::DegToRad), qRotation);
 
 				// Set position and rotation
 				Matrix4x4 mTrans;
@@ -205,15 +205,15 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 	m_cColor(Color4::White),
 	m_pColorAnimation(new Animation())
 {
-	const TextureAni *pTextureAni = (TextureAni*)m_pTextureHandler->GetResource();
+	const TextureAni *pTextureAni = static_cast<TextureAni*>(m_pTextureHandler->GetResource());
 	if (pTextureAni) {
 		AnimationInfo *pAniInfo;
 
 		// Start texture animation
 		if (pTextureAni->GetTextureAnimationManager().GetNumOfElements() == 1)
-			pAniInfo = (AnimationInfo*)pTextureAni->GetTextureAnimationManager().Get((uint32)0); // Default animation
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetTextureAnimationManager().Get(static_cast<uint32>(0))); // Default animation
 		else
-			pAniInfo = (AnimationInfo*)pTextureAni->GetTextureAnimationManager().Get(1);
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetTextureAnimationManager().Get(1));
 		if (pAniInfo) {
 			m_pTextureAnimation->Start(*pAniInfo);
 			if (m_pTextureAnimation->GetCurrentFrame() == m_pTextureAnimation->GetNextFrame())
@@ -222,9 +222,9 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 
 		// Start matrix animation
 		if (pTextureAni->GetMatrixAnimationManager().GetNumOfElements() == 1)
-			pAniInfo = (AnimationInfo*)pTextureAni->GetMatrixAnimationManager().Get((uint32)0); // Default animation
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetMatrixAnimationManager().Get(static_cast<uint32>(0))); // Default animation
 		else
-			pAniInfo = (AnimationInfo*)pTextureAni->GetMatrixAnimationManager().Get(1);
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetMatrixAnimationManager().Get(1));
 		if (pAniInfo) {
 			m_pMatrixAnimation->Start(*pAniInfo);
 			if (m_pMatrixAnimation->GetCurrentFrame() == m_pMatrixAnimation->GetNextFrame())
@@ -233,9 +233,9 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 
 		// Start color animation
 		if (pTextureAni->GetColorAnimationManager().GetNumOfElements() == 1)
-			pAniInfo = (AnimationInfo*)pTextureAni->GetColorAnimationManager().Get((uint32)0); // Default animation
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetColorAnimationManager().Get(static_cast<uint32>(0))); // Default animation
 		else
-			pAniInfo = (AnimationInfo*)pTextureAni->GetColorAnimationManager().Get(1);
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetColorAnimationManager().Get(1));
 		if (pAniInfo) {
 			m_pColorAnimation->Start(*pAniInfo);
 			if (m_pColorAnimation->GetCurrentFrame() == m_pColorAnimation->GetNextFrame())
@@ -265,7 +265,7 @@ TextureHandler::AnimationState::~AnimationState()
 */
 void TextureHandler::AnimationState::NotifyUpdate()
 {
-	const TextureAni *pTextureAni = (const TextureAni*)m_pTextureHandler->GetResource();
+	const TextureAni *pTextureAni = static_cast<const TextureAni*>(m_pTextureHandler->GetResource());
 	if (pTextureAni) {
 		// Get time difference
 		const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -283,7 +283,7 @@ void TextureHandler::AnimationState::NotifyUpdate()
 				// Set rotation
 				Quaternion qRotation;
 				Vector3 vRot = pMatrixFrame1->vRotation+(pMatrixFrame2->vRotation-pMatrixFrame1->vRotation)*fFrame;
-				EulerAngles::ToQuaternion(float(vRot.x*Math::DegToRad), float(vRot.y*Math::DegToRad), float(vRot.z*Math::DegToRad), qRotation);
+				EulerAngles::ToQuaternion(static_cast<float>(vRot.x*Math::DegToRad), static_cast<float>(vRot.y*Math::DegToRad), static_cast<float>(vRot.z*Math::DegToRad), qRotation);
 
 				// Set position and rotation
 				m_mTrans.FromQuatTrans(qRotation, pMatrixFrame1->vTranslation+(pMatrixFrame2->vTranslation-pMatrixFrame1->vTranslation)*fFrame);
@@ -355,7 +355,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 		if (pTexture && !pTexture->IsAnimated()) {
 			SetResource(pTexture);
 		} else {
-			TextureAni *pTextureAni = (TextureAni*)pTexture;
+			TextureAni *pTextureAni = static_cast<TextureAni*>(pTexture);
 			if (!pTextureAni) {
 				pTextureAni = new TextureAni(cTextureManager, sFilename);
 				if (!pTextureAni->Load(sFilename)) {
@@ -380,7 +380,8 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 					SetResource(cTextureManager.LoadResource(sFilename));
 				else {
 					SetResource(cTextureManager.Create(sFilename));
-					if (GetTexture()) GetTexture()->Load(sFilename);
+					if (GetTexture())
+						GetTexture()->Load(sFilename);
 				}
 
 				// Done
@@ -491,7 +492,7 @@ bool TextureHandler::Bind(uint32 nStage) const
 			FixedFunctions *pFixedFunctions = pTexture->GetTextureManager().GetRendererContext().GetRenderer().GetFixedFunctions();
 			if (pFixedFunctions) {
 				// Set texture matrix
-				pFixedFunctions->SetTransformState((FixedFunctions::Transform::Enum)(FixedFunctions::Transform::Texture0 + nStage), m_pAnimationState->GetMatrix());
+				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + nStage), m_pAnimationState->GetMatrix());
 			}
 
 			// Done
@@ -505,7 +506,7 @@ bool TextureHandler::Bind(uint32 nStage) const
 			FixedFunctions *pFixedFunctions = pTexture->GetTextureManager().GetRendererContext().GetRenderer().GetFixedFunctions();
 			if (pFixedFunctions) {
 				// Set identity texture matrix
-				pFixedFunctions->SetTransformState((FixedFunctions::Transform::Enum)(FixedFunctions::Transform::Texture0 + nStage), Matrix4x4::Identity);
+				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + nStage), Matrix4x4::Identity);
 			}
 
 			// Done

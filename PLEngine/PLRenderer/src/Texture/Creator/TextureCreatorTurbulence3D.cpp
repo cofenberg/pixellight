@@ -97,7 +97,7 @@ Texture *TextureCreatorTurbulence3D::Create(TextureManager &cTextureManager, Tex
 	for (uint32 nZ=0; nZ<ZSize; nZ++) {
 		for (uint32 nY=0; nY<YSize; nY++) {
 			for (uint32 nX=0; nX<XSize; nX++) {
-				const uint8 nT = (uint8)(127.5f*(1 + PLTileableTurbulence3(vScale.x*nX, vScale.y*nY, vScale.z*nZ, XSize*vScale.x, YSize*vScale.y, ZSize*vScale.z, 16)));
+				const uint8 nT = static_cast<uint8>(127.5f*(1 + PLTileableTurbulence3(vScale.x*nX, vScale.y*nY, vScale.z*nZ, XSize*vScale.x, YSize*vScale.y, ZSize*vScale.z, 16)));
 				if (nT > nMax)
 					nMax = nT;
 				if (nT < nMin)
@@ -109,10 +109,10 @@ Texture *TextureCreatorTurbulence3D::Create(TextureManager &cTextureManager, Tex
 	const uint32 nNumOfPixels = XSize*YSize*ZSize;
 	pDest = pTurbBuffer;
 	for (uint32 i=0; i<nNumOfPixels; i++, pDest++)
-		*pDest = (uint8)((255*(*pDest - nMin))/(nMax - nMin));
+		*pDest = static_cast<uint8>((255*(*pDest - nMin))/(nMax - nMin));
 
 	// Create the 3D texture buffer
-	pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer3D(cImage));
+	pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer3D(cImage)));
 
 	// Return the created texture
 	return pTexture;

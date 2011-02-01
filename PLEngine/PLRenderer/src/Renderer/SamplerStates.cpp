@@ -46,7 +46,7 @@ pl_implement_class(SamplerStates)
 // Address modes
 TextureAddressing::Enum SamplerStates::GetAddressU() const
 {
-	return (TextureAddressing::Enum)m_nSS[Sampler::AddressU];
+	return static_cast<TextureAddressing::Enum>(m_nSS[Sampler::AddressU]);
 }
 
 void SamplerStates::SetAddressU(TextureAddressing::Enum nValue)
@@ -56,7 +56,7 @@ void SamplerStates::SetAddressU(TextureAddressing::Enum nValue)
 
 TextureAddressing::Enum SamplerStates::GetAddressV() const
 {
-	return (TextureAddressing::Enum)m_nSS[Sampler::AddressV];
+	return static_cast<TextureAddressing::Enum>(m_nSS[Sampler::AddressV]);
 }
 
 void SamplerStates::SetAddressV(TextureAddressing::Enum nValue)
@@ -66,7 +66,7 @@ void SamplerStates::SetAddressV(TextureAddressing::Enum nValue)
 
 TextureAddressing::Enum SamplerStates::GetAddressW() const
 {
-	return (TextureAddressing::Enum)m_nSS[Sampler::AddressW];
+	return static_cast<TextureAddressing::Enum>(m_nSS[Sampler::AddressW]);
 }
 
 void SamplerStates::SetAddressW(TextureAddressing::Enum nValue)
@@ -77,7 +77,7 @@ void SamplerStates::SetAddressW(TextureAddressing::Enum nValue)
 // Filter
 TextureFiltering::Enum SamplerStates::GetMagFilter() const
 {
-	return (TextureFiltering::Enum)m_nSS[Sampler::MagFilter];
+	return static_cast<TextureFiltering::Enum>(m_nSS[Sampler::MagFilter]);
 }
 
 void SamplerStates::SetMagFilter(TextureFiltering::Enum nValue)
@@ -87,7 +87,7 @@ void SamplerStates::SetMagFilter(TextureFiltering::Enum nValue)
 
 TextureFiltering::Enum SamplerStates::GetMinFilter() const
 {
-	return (TextureFiltering::Enum)m_nSS[Sampler::MinFilter];
+	return static_cast<TextureFiltering::Enum>(m_nSS[Sampler::MinFilter]);
 }
 
 void SamplerStates::SetMinFilter(TextureFiltering::Enum nValue)
@@ -97,7 +97,7 @@ void SamplerStates::SetMinFilter(TextureFiltering::Enum nValue)
 
 TextureFiltering::Enum SamplerStates::GetMipFilter() const
 {
-	return (TextureFiltering::Enum)m_nSS[Sampler::MipFilter];
+	return static_cast<TextureFiltering::Enum>(m_nSS[Sampler::MipFilter]);
 }
 
 void SamplerStates::SetMipFilter(TextureFiltering::Enum nValue)

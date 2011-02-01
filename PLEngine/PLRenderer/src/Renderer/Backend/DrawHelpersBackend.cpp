@@ -115,13 +115,13 @@ void DrawHelpersBackend::DrawText(Font &cFont, const String &sText, const Color4
 
 			// [HACK] 'Font size in pixel' => 'normalized window size' => NOT working!
 			if (fWidth == 1.0f)
-				fClipSpaceFontWidth = float(nFontHeightInPixels)/1024.0f;
+				fClipSpaceFontWidth = static_cast<float>(nFontHeightInPixels)/1024.0f;
 			else
-				fClipSpaceFontWidth = float(nFontHeightInPixels)/fWidth;
+				fClipSpaceFontWidth = static_cast<float>(nFontHeightInPixels)/fWidth;
 			if (fHeight == 1.0f)
-				fClipSpaceFontHeight = float(nFontHeightInPixels)/768.0f;
+				fClipSpaceFontHeight = static_cast<float>(nFontHeightInPixels)/768.0f;
 			else
-				fClipSpaceFontHeight = float(nFontHeightInPixels)/fHeight;
+				fClipSpaceFontHeight = static_cast<float>(nFontHeightInPixels)/fHeight;
 			fClipSpaceFontWidth *= 1.75f;
 			fClipSpaceFontHeight *= 1.75f;
 
@@ -130,8 +130,8 @@ void DrawHelpersBackend::DrawText(Font &cFont, const String &sText, const Color4
 			// Just use the renderer viewport
 			fWidth  = cViewport.GetWidth();
 			fHeight = cViewport.GetHeight();
-			fClipSpaceFontWidth  = float(nFontHeightInPixels)/fWidth;
-			fClipSpaceFontHeight = float(nFontHeightInPixels)/fHeight;
+			fClipSpaceFontWidth  = static_cast<float>(nFontHeightInPixels)/fWidth;
+			fClipSpaceFontHeight = static_cast<float>(nFontHeightInPixels)/fHeight;
 			fClipSpaceFontWidth *= 1.75f;
 			fClipSpaceFontHeight *= 1.75f;
 		}

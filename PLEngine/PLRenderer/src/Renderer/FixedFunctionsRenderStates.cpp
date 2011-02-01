@@ -99,7 +99,7 @@ void FixedFunctionsRenderStates::SetFogEnd(float fValue)
 
 FixedFunctions::Fog::Enum FixedFunctionsRenderStates::GetFogMode() const
 {
-	return (FixedFunctions::Fog::Enum)m_nRS[FixedFunctions::RenderState::FogMode];
+	return static_cast<FixedFunctions::Fog::Enum>(m_nRS[FixedFunctions::RenderState::FogMode]);
 }
 
 void FixedFunctionsRenderStates::SetFogMode(FixedFunctions::Fog::Enum nValue)
@@ -120,7 +120,7 @@ void FixedFunctionsRenderStates::SetAlphaTestEnable(bool bValue)
 
 Compare::Enum FixedFunctionsRenderStates::GetAlphaTestFunction() const
 {
-	return (Compare::Enum)m_nRS[FixedFunctions::RenderState::AlphaTestFunction];
+	return static_cast<Compare::Enum>(m_nRS[FixedFunctions::RenderState::AlphaTestFunction]);
 }
 
 void FixedFunctionsRenderStates::SetAlphaTestFunction(Compare::Enum nValue)
@@ -172,7 +172,7 @@ void FixedFunctionsRenderStates::SetNormalizeNormals(bool bValue)
 
 FixedFunctions::Shade::Enum FixedFunctionsRenderStates::GetShadeMode() const
 {
-	return (FixedFunctions::Shade::Enum)m_nRS[FixedFunctions::RenderState::ShadeMode];
+	return static_cast<FixedFunctions::Shade::Enum>(m_nRS[FixedFunctions::RenderState::ShadeMode]);
 }
 
 void FixedFunctionsRenderStates::SetShadeMode(FixedFunctions::Shade::Enum nValue)

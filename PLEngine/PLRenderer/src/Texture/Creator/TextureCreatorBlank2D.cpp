@@ -136,7 +136,7 @@ Texture *TextureCreatorBlank2D::Create(TextureManager &cTextureManager, Texture 
 	}
 
 	// Create the 2D texture buffer
-	pTexture->SetTextureBuffer((TextureBuffer*)cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer2D(cImage));
+	pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(cTextureManager.GetRendererContext().GetRenderer().CreateTextureBuffer2D(cImage)));
 
 	// Return the created texture
 	return pTexture;

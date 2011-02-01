@@ -101,7 +101,7 @@ bool IndexBuffer::SetElementTypeByMaximumIndex(PLGeneral::uint32 nMaximumIndex)
 IndexBuffer &IndexBuffer::operator =(const IndexBuffer &cSource)
 {
 	// Lock the source buffer
-	if (((IndexBuffer&)cSource).Lock(Lock::ReadOnly)) {
+	if (const_cast<IndexBuffer&>(cSource).Lock(Lock::ReadOnly)) {
 		// Clear old index buffer
 		Clear();
 
@@ -109,12 +109,12 @@ IndexBuffer &IndexBuffer::operator =(const IndexBuffer &cSource)
 		SetElementType(cSource.GetElementType());
 		Allocate(cSource.GetNumOfElements(), cSource.GetUsage(), cSource.IsManaged());
 		if (Lock(Lock::WriteOnly)) {
-			MemoryManager::Copy(GetData(), ((IndexBuffer&)cSource).GetData(), cSource.GetSize());
+			MemoryManager::Copy(GetData(), const_cast<IndexBuffer&>(cSource).GetData(), cSource.GetSize());
 			Unlock();
 		}
 
 		// Unlock the source buffer
-		((IndexBuffer&)cSource).Unlock();
+		const_cast<IndexBuffer&>(cSource).Unlock();
 	}
 
 	// Done
@@ -133,7 +133,7 @@ uint32 IndexBuffer::GetData(uint32 nIndex)
 		switch (m_nElementType) {
 			case UInt:
 			{
-				const uint32 *pData = (const uint32*)GetData();
+				const uint32 *pData = static_cast<const uint32*>(GetData());
 				if (pData)
 					return pData[nIndex];
 				break;
@@ -141,17 +141,17 @@ uint32 IndexBuffer::GetData(uint32 nIndex)
 
 			case UShort:
 			{
-				const uint16 *pData = (const uint16*)GetData();
+				const uint16 *pData = static_cast<const uint16*>(GetData());
 				if (pData)
-					return (uint32)pData[nIndex];
+					return static_cast<uint32>(pData[nIndex]);
 				break;
 			}
 
 			case UByte:
 			{
-				const uint8 *pData = (const uint8*)GetData();
+				const uint8 *pData = static_cast<const uint8*>(GetData());
 				if (pData)
-					return (uint8)pData[nIndex];
+					return static_cast<uint8>(pData[nIndex]);
 				break;
 			}
 		}
@@ -173,7 +173,7 @@ bool IndexBuffer::SetData(uint32 nIndex, uint32 nData)
 		switch (m_nElementType) {
 			case UInt:
 			{
-				uint32 *pData = (uint32*)GetData();
+				uint32 *pData = static_cast<uint32*>(GetData());
 				if (pData) {
 					pData[nIndex] = nData;
 
@@ -185,9 +185,9 @@ bool IndexBuffer::SetData(uint32 nIndex, uint32 nData)
 
 			case UShort:
 			{
-				uint16 *pData = (uint16*)GetData();
+				uint16 *pData = static_cast<uint16*>(GetData());
 				if (pData) {
-					pData[nIndex] = (uint16)nData;
+					pData[nIndex] = static_cast<uint16>(nData);
 
 					// Done
 					return true;
@@ -197,9 +197,9 @@ bool IndexBuffer::SetData(uint32 nIndex, uint32 nData)
 
 			case UByte:
 			{
-				uint8 *pData = (uint8*)GetData();
+				uint8 *pData = static_cast<uint8*>(GetData());
 				if (pData) {
-					pData[nIndex] = (uint8)nData;
+					pData[nIndex] = static_cast<uint8>(nData);
 
 					// Done
 					return true;
