@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGFOUNTAIN_H__
-#define __PLPG1_PGFOUNTAIN_H__
+#ifndef __PLPG_PGFOUNTAIN_H__
+#define __PLPG_PGFOUNTAIN_H__
 #pragma once
 
 
@@ -56,7 +56,7 @@ class PGFountain : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGFountain, "PLParticleGroups", PLScene::SNParticleGroup, "Fountain particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGFountain, "PLParticleGroups", PLScene::SNParticleGroup, "Fountain particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Steps,					PLGeneral::uint32,		8,								ReadWrite,	GetSet,	"Steps",					"")
 		pl_attribute(RaysPerStep,			PLGeneral::uint32,		6,								ReadWrite,	GetSet,	"Rays per step",			"")
@@ -75,20 +75,20 @@ class PGFountain : public PLScene::SNParticleGroup {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPG1_API PLGeneral::uint32 GetSteps() const;
-		PLPG1_API void SetSteps(PLGeneral::uint32 nValue);
-		PLPG1_API PLGeneral::uint32 GetRaysPerStep() const;
-		PLPG1_API void SetRaysPerStep(PLGeneral::uint32 nValue);
-		PLPG1_API PLGeneral::uint32 GetDropsPerRay() const;
-		PLPG1_API void SetDropsPerRay(PLGeneral::uint32 nValue);
-		PLPG1_API float GetAngleOfDeepestStep() const;
-		PLPG1_API void SetAngleOfDeepestStep(float fValue);
-		PLPG1_API float GetAngleOfHighestStep() const;
-		PLPG1_API void SetAngleOfHighestStep(float fValue);
-		PLPG1_API float GetRandomAngleAddition() const;
-		PLPG1_API void SetRandomAngleAddition(float fValue);
-		PLPG1_API float GetAccFactor() const;
-		PLPG1_API void SetAccFactor(float fValue);
+		PLPG_API PLGeneral::uint32 GetSteps() const;
+		PLPG_API void SetSteps(PLGeneral::uint32 nValue);
+		PLPG_API PLGeneral::uint32 GetRaysPerStep() const;
+		PLPG_API void SetRaysPerStep(PLGeneral::uint32 nValue);
+		PLPG_API PLGeneral::uint32 GetDropsPerRay() const;
+		PLPG_API void SetDropsPerRay(PLGeneral::uint32 nValue);
+		PLPG_API float GetAngleOfDeepestStep() const;
+		PLPG_API void SetAngleOfDeepestStep(float fValue);
+		PLPG_API float GetAngleOfHighestStep() const;
+		PLPG_API void SetAngleOfHighestStep(float fValue);
+		PLPG_API float GetRandomAngleAddition() const;
+		PLPG_API void SetRandomAngleAddition(float fValue);
+		PLPG_API float GetAccFactor() const;
+		PLPG_API void SetAccFactor(float fValue);
 
 
 	//[-------------------------------------------------------]
@@ -99,13 +99,13 @@ class PGFountain : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGFountain();
+		PLPG_API PGFountain();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGFountain();
+		PLPG_API virtual ~PGFountain();
 
 
 	//[-------------------------------------------------------]
@@ -159,4 +159,4 @@ class PGFountain : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGFOUNTAIN_H__
+#endif // __PLPG_PGFOUNTAIN_H__

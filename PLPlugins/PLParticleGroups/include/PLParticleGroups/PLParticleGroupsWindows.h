@@ -21,8 +21,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_WINDOWS_H__
-#define __PLPG1_WINDOWS_H__
+#ifndef __PLPG_WINDOWS_H__
+#define __PLPG_WINDOWS_H__
 #pragma once
 
 
@@ -31,17 +31,17 @@
 //[-------------------------------------------------------]
 #ifdef PLPARTICLEGROUPS_EXPORTS
 	// To export classes, methods and variables
-	#define PLPG1_API __declspec(dllexport)
+	#define PLPG_API __declspec(dllexport)
 
 	// To export RTTI elements
-	#define PLPG1_RTTI_EXPORT 1
+	#define PLPG_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
-	#define PLPG1_API __declspec(dllimport)
+	#define PLPG_API __declspec(dllimport)
 
 	// To import RTTI elements
-	#define PLPG1_RTTI_EXPORT 0
+	#define PLPG_RTTI_EXPORT 0
 #endif
 
 
-#endif // __PLPG1_WINDOWS_H__
+#endif // __PLPG_WINDOWS_H__

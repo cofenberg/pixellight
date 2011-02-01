@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGDUST_H__
-#define __PLPG1_PGDUST_H__
+#ifndef __PLPG_PGDUST_H__
+#define __PLPG_PGDUST_H__
 #pragma once
 
 
@@ -50,7 +50,7 @@ class PGDust : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGDust, "PLParticleGroups", PLParticleGroups::PGPhysics, "Dust particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGDust, "PLParticleGroups", PLParticleGroups::PGPhysics, "Dust particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 
@@ -63,13 +63,13 @@ class PGDust : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGDust();
+		PLPG_API PGDust();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGDust();
+		PLPG_API virtual ~PGDust();
 
 
 	//[-------------------------------------------------------]
@@ -115,4 +115,4 @@ class PGDust : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGDUST_H__
+#endif // __PLPG_PGDUST_H__

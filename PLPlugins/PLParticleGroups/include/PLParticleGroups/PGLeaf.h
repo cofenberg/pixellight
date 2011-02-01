@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGLEAF_H__
-#define __PLPG1_PGLEAF_H__
+#ifndef __PLPG_PGLEAF_H__
+#define __PLPG_PGLEAF_H__
 #pragma once
 
 
@@ -51,7 +51,7 @@ class PGLeaf : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGLeaf, "PLParticleGroups", PLScene::SNParticleGroup, "Leaf particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGLeaf, "PLParticleGroups", PLScene::SNParticleGroup, "Leaf particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Radius,			float,				5.0f,								ReadWrite,	DirectValue,	"Leaf area radius",			"Min='0.0001'")
 		pl_attribute(Height,			float,				15.0f,								ReadWrite,	DirectValue,	"Maximum leaf height",		"")
@@ -73,13 +73,13 @@ class PGLeaf : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGLeaf();
+		PLPG_API PGLeaf();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGLeaf();
+		PLPG_API virtual ~PGLeaf();
 
 
 	//[-------------------------------------------------------]
@@ -133,4 +133,4 @@ class PGLeaf : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGLEAF_H__
+#endif // __PLPG_PGLEAF_H__

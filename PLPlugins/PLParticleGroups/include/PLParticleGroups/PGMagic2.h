@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGMAGIC2_H__
-#define __PLPG1_PGMAGIC2_H__
+#ifndef __PLPG_PGMAGIC2_H__
+#define __PLPG_PGMAGIC2_H__
 #pragma once
 
 
@@ -51,7 +51,7 @@ class PGMagic2 : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGMagic2, "PLParticleGroups", PLScene::SNParticleGroup, "Magic particle group 2")
+	pl_class(PLPG_RTTI_EXPORT, PGMagic2, "PLParticleGroups", PLScene::SNParticleGroup, "Magic particle group 2")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(SmallParticles,			bool,				true,							ReadWrite,	DirectValue,	"Small particles?",									"")
 		pl_attribute(TexAni,					bool,				false,							ReadWrite,	DirectValue,	"Texture animation?",								"")
@@ -72,13 +72,13 @@ class PGMagic2 : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGMagic2();
+		PLPG_API PGMagic2();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGMagic2();
+		PLPG_API virtual ~PGMagic2();
 
 
 	//[-------------------------------------------------------]
@@ -124,4 +124,4 @@ class PGMagic2 : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGMAGIC2_H__
+#endif // __PLPG_PGMAGIC2_H__

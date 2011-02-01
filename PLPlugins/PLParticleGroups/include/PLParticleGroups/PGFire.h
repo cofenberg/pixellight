@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGFIRE_H__
-#define __PLPG1_PGFIRE_H__
+#ifndef __PLPG_PGFIRE_H__
+#define __PLPG_PGFIRE_H__
 #pragma once
 
 
@@ -50,7 +50,7 @@ class PGFire : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGFire, "PLParticleGroups", PLParticleGroups::PGPhysics, "Fire particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGFire, "PLParticleGroups", PLParticleGroups::PGPhysics, "Fire particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,		float,				1.0f,						ReadWrite,	DirectValue,	"Size",						"")
 		// Overwritten PLScene::SNParticleGroup variables
@@ -67,13 +67,13 @@ class PGFire : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGFire();
+		PLPG_API PGFire();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGFire();
+		PLPG_API virtual ~PGFire();
 
 
 	//[-------------------------------------------------------]
@@ -118,4 +118,4 @@ class PGFire : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGFIRE_H__
+#endif // __PLPG_PGFIRE_H__

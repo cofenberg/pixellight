@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGSPRING_H__
-#define __PLPG1_PGSPRING_H__
+#ifndef __PLPG_PGSPRING_H__
+#define __PLPG_PGSPRING_H__
 #pragma once
 
 
@@ -50,7 +50,7 @@ class PGSpring : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGSpring, "PLParticleGroups", PLParticleGroups::PGPhysics, "Spring particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGSpring, "PLParticleGroups", PLParticleGroups::PGPhysics, "Spring particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,			float,				0.2f,							ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(RotVelocity,	float,				1.0f,							ReadWrite,	DirectValue,	"Rotation velocity",		"")
@@ -69,13 +69,13 @@ class PGSpring : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGSpring();
+		PLPG_API PGSpring();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGSpring();
+		PLPG_API virtual ~PGSpring();
 
 
 	//[-------------------------------------------------------]
@@ -120,4 +120,4 @@ class PGSpring : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGSPRING_H__
+#endif // __PLPG_PGSPRING_H__

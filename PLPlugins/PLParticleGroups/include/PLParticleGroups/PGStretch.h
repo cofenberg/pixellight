@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGSTRETCH_H__
-#define __PLPG1_PGSTRETCH_H__
+#ifndef __PLPG_PGSTRETCH_H__
+#define __PLPG_PGSTRETCH_H__
 #pragma once
 
 
@@ -51,7 +51,7 @@ class PGStretch : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGStretch, "PLParticleGroups", PLScene::SNParticleGroup, "Stretch particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGStretch, "PLParticleGroups", PLScene::SNParticleGroup, "Stretch particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,		float,				2.0f,										ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(Length,	float,				10.0f,										ReadWrite,	DirectValue,	"Length",					"")
@@ -70,13 +70,13 @@ class PGStretch : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGStretch();
+		PLPG_API PGStretch();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGStretch();
+		PLPG_API virtual ~PGStretch();
 
 
 	//[-------------------------------------------------------]
@@ -125,4 +125,4 @@ class PGStretch : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGSTRETCH_H__
+#endif // __PLPG_PGSTRETCH_H__

@@ -30,8 +30,8 @@
 */
 
 
-#ifndef __PLPG1_PLPARTICLEGROUPS_H__
-#define __PLPG1_PLPARTICLEGROUPS_H__
+#ifndef __PLPG_PLPARTICLEGROUPS_H__
+#define __PLPG_PLPARTICLEGROUPS_H__
 #pragma once
 
 
@@ -49,4 +49,4 @@
 #endif
 
 
-#endif // __PLPG1_PLPARTICLEGROUPS_H__
+#endif // __PLPG_PLPARTICLEGROUPS_H__

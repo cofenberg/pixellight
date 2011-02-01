@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGIMAGE_H__
-#define __PLPG1_PGIMAGE_H__
+#ifndef __PLPG_PGIMAGE_H__
+#define __PLPG_PGIMAGE_H__
 #pragma once
 
 
@@ -51,7 +51,7 @@ class PGImage : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGImage, "PLParticleGroups", PLScene::SNParticleGroup, "Image particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGImage, "PLParticleGroups", PLScene::SNParticleGroup, "Image particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(ImageFilename,		PLGeneral::String,		"Data/Textures/PGImage_Test.dds",	ReadWrite,	DirectValue,	"Image to create the particles from",	"Type='Image'")
 		pl_attribute(RedColorKey,		PLGeneral::uint8,		0,									ReadWrite,	DirectValue,	"Color key red component",				"")
@@ -75,13 +75,13 @@ class PGImage : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGImage();
+		PLPG_API PGImage();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGImage();
+		PLPG_API virtual ~PGImage();
 
 
 	//[-------------------------------------------------------]
@@ -127,4 +127,4 @@ class PGImage : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGIMAGE_H__
+#endif // __PLPG_PGIMAGE_H__

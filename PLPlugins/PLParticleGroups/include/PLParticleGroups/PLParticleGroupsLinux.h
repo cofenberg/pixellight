@@ -21,8 +21,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_LINUX_H__
-#define __PLPG1_LINUX_H__
+#ifndef __PLPG_LINUX_H__
+#define __PLPG_LINUX_H__
 #pragma once
 
 
@@ -32,21 +32,21 @@
 #ifdef PLPARTICLEGROUPS_EXPORTS
 	#ifdef HAVE_VISIBILITY_ATTR
 		// To export classes, methods and variables
-		#define PLPG1_API __attribute__ ((visibility("default")))
+		#define PLPG_API __attribute__ ((visibility("default")))
 	#else
 		// To export classes, methods and variables
-		#define PLPG1_API
+		#define PLPG_API
 	#endif
 
 	// To export RTTI elements
-	#define PLPG1_RTTI_EXPORT 1
+	#define PLPG_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
-	#define PLPG1_API
+	#define PLPG_API
 
 	// To import RTTI elements
-	#define PLPG1_RTTI_EXPORT 0
+	#define PLPG_RTTI_EXPORT 0
 #endif
 
 
-#endif // __PLPG1_LINUX_H__
+#endif // __PLPG_LINUX_H__

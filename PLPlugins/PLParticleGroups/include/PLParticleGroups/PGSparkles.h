@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGSPARKLES_H__
-#define __PLPG1_PGSPARKLES_H__
+#ifndef __PLPG_PGSPARKLES_H__
+#define __PLPG_PGSPARKLES_H__
 #pragma once
 
 
@@ -50,7 +50,7 @@ class PGSparkles : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGSparkles, "PLParticleGroups", PLParticleGroups::PGPhysics, "Sparkles particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGSparkles, "PLParticleGroups", PLParticleGroups::PGPhysics, "Sparkles particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(EnergyPerSec,		PLGeneral::uint32,	100,							ReadWrite,	DirectValue,	"The energy consumption per second of one particle",					"")
 		pl_attribute(EnergyMin,			PLGeneral::uint32,	100,							ReadWrite,	DirectValue,	"Minimum of energy",													"")
@@ -74,13 +74,13 @@ class PGSparkles : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGSparkles();
+		PLPG_API PGSparkles();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGSparkles();
+		PLPG_API virtual ~PGSparkles();
 
 
 	//[-------------------------------------------------------]
@@ -134,4 +134,4 @@ class PGSparkles : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGSPARKLES_H__
+#endif // __PLPG_PGSPARKLES_H__

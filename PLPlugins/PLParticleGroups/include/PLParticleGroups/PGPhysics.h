@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGPHYSICS_H__
-#define __PLPG1_PGPHYSICS_H__
+#ifndef __PLPG_PGPHYSICS_H__
+#define __PLPG_PGPHYSICS_H__
 #pragma once
 
 
@@ -51,7 +51,7 @@ class PGPhysics : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGPhysics, "PLParticleGroups", PLScene::SNParticleGroup, "Abstract physics particle group base class")
+	pl_class(PLPG_RTTI_EXPORT, PGPhysics, "PLParticleGroups", PLScene::SNParticleGroup, "Abstract physics particle group base class")
 	pl_class_end
 
 
@@ -67,7 +67,7 @@ class PGPhysics : public PLScene::SNParticleGroup {
 		*    The gravity vector of the physics world this scene node is in, if no
 		*    physics world was found (0.0, -9.81, 0.0) is returned instead
 		*/
-		PLPG1_API PLMath::Vector3 GetGravity() const;
+		PLPG_API PLMath::Vector3 GetGravity() const;
 
 
 	//[-------------------------------------------------------]
@@ -78,13 +78,13 @@ class PGPhysics : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGPhysics();
+		PLPG_API PGPhysics();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGPhysics();
+		PLPG_API virtual ~PGPhysics();
 
 
 };
@@ -96,4 +96,4 @@ class PGPhysics : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGPHYSICS_H__
+#endif // __PLPG_PGPHYSICS_H__

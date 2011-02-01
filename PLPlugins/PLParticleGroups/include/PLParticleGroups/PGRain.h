@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGRAIN_H__
-#define __PLPG1_PGRAIN_H__
+#ifndef __PLPG_PGRAIN_H__
+#define __PLPG_PGRAIN_H__
 #pragma once
 
 
@@ -50,7 +50,7 @@ class PGRain : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGRain, "PLParticleGroups", PLParticleGroups::PGPhysics, "Rain particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGRain, "PLParticleGroups", PLParticleGroups::PGPhysics, "Rain particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(EnergyPerSec,		PLGeneral::uint32,	30,							ReadWrite,	DirectValue,	"The energy consumption per second of one particle",					"")
 		pl_attribute(EnergyMin,			PLGeneral::uint32,	300,						ReadWrite,	DirectValue,	"Minimum of energy",													"")
@@ -74,13 +74,13 @@ class PGRain : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGRain();
+		PLPG_API PGRain();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGRain();
+		PLPG_API virtual ~PGRain();
 
 
 	//[-------------------------------------------------------]
@@ -134,4 +134,4 @@ class PGRain : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGRAIN_H__
+#endif // __PLPG_PGRAIN_H__

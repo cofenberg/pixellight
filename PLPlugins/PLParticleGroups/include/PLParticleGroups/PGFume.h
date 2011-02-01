@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGFUME_H__
-#define __PLPG1_PGFUME_H__
+#ifndef __PLPG_PGFUME_H__
+#define __PLPG_PGFUME_H__
 #pragma once
 
 
@@ -66,7 +66,7 @@ class PGFume : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGFume, "PLParticleGroups", PLScene::SNParticleGroup, "Fume particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGFume, "PLParticleGroups", PLScene::SNParticleGroup, "Fume particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,						float,				2.0f,										ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
 		pl_attribute(SizeTimeScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Size time scale",									"")
@@ -89,13 +89,13 @@ class PGFume : public PLScene::SNParticleGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGFume();
+		PLPG_API PGFume();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGFume();
+		PLPG_API virtual ~PGFume();
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class PGFume : public PLScene::SNParticleGroup {
 		*  @param[out] cData
 		*    Will receive the default settings
 		*/
-		PLPG1_API void GetDefaultSettings(PGFume::InitData &cData) const;
+		PLPG_API void GetDefaultSettings(PGFume::InitData &cData) const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class PGFume : public PLScene::SNParticleGroup {
 		*  @return
 		*    'true' if new particles should be created. else 'false'
 		*/
-		PLPG1_API bool GetCreateNewParticles() const;
+		PLPG_API bool GetCreateNewParticles() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class PGFume : public PLScene::SNParticleGroup {
 		*  @param[in] bCreate
 		*    Create new particles?
 		*/
-		PLPG1_API void CreateNewParticles(bool bCreate = true);
+		PLPG_API void CreateNewParticles(bool bCreate = true);
 
 
 	//[-------------------------------------------------------]
@@ -186,4 +186,4 @@ class PGFume : public PLScene::SNParticleGroup {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGFUME_H__
+#endif // __PLPG_PGFUME_H__

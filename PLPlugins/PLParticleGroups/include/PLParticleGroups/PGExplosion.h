@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGEXPLOSION_H__
-#define __PLPG1_PGEXPLOSION_H__
+#ifndef __PLPG_PGEXPLOSION_H__
+#define __PLPG_PGEXPLOSION_H__
 #pragma once
 
 
@@ -70,7 +70,7 @@ class PGExplosion : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGExplosion, "PLParticleGroups", PLParticleGroups::PGPhysics, "Explosion particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGExplosion, "PLParticleGroups", PLParticleGroups::PGPhysics, "Explosion particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Mode,						pl_enum_type(EMode),	Repeat,								ReadWrite,	DirectValue,	"Explosion mode",									"")
 		// Overwritten PLScene::SNParticleGroup variables
@@ -89,13 +89,13 @@ class PGExplosion : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGExplosion();
+		PLPG_API PGExplosion();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGExplosion();
+		PLPG_API virtual ~PGExplosion();
 
 
 	//[-------------------------------------------------------]
@@ -147,4 +147,4 @@ class PGExplosion : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGEXPLOSION_H__
+#endif // __PLPG_PGEXPLOSION_H__

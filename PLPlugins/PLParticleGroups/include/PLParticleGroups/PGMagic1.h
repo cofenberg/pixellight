@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPG1_PGMAGIC1_H__
-#define __PLPG1_PGMAGIC1_H__
+#ifndef __PLPG_PGMAGIC1_H__
+#define __PLPG_PGMAGIC1_H__
 #pragma once
 
 
@@ -50,7 +50,7 @@ class PGMagic1 : public PGPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG1_RTTI_EXPORT, PGMagic1, "PLParticleGroups", PLParticleGroups::PGPhysics, "Magic particle group 1")
+	pl_class(PLPG_RTTI_EXPORT, PGMagic1, "PLParticleGroups", PLParticleGroups::PGPhysics, "Magic particle group 1")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,			float,				0.2f,							ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(BuildPerSec,	PLGeneral::uint32,	100,							ReadWrite,	DirectValue,	"Particle building speed",	"")
@@ -68,13 +68,13 @@ class PGMagic1 : public PGPhysics {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPG1_API PGMagic1();
+		PLPG_API PGMagic1();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPG1_API virtual ~PGMagic1();
+		PLPG_API virtual ~PGMagic1();
 
 
 	//[-------------------------------------------------------]
@@ -119,4 +119,4 @@ class PGMagic1 : public PGPhysics {
 } // PLParticleGroups
 
 
-#endif // __PLPG1_PGMAGIC1_H__
+#endif // __PLPG_PGMAGIC1_H__
