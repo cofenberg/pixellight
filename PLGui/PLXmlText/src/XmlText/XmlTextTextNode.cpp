@@ -62,7 +62,7 @@ XmlTextTextNode::~XmlTextTextNode()
 void XmlTextTextNode::OnParse(XmlNode &cXmlNode)
 {
 	// Get XML text
-	XmlText &cXmlText = (XmlText&)cXmlNode;
+	XmlText &cXmlText = static_cast<XmlText&>(cXmlNode);
 	m_sText = cXmlText.GetValue();
 }
 

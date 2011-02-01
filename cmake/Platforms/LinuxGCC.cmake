@@ -67,7 +67,7 @@ endif()
 
 # Compiler flags
 set(LINUX_COMPILE_FLAGS
-	-Wold-style-cast										# Warn if an old-style (C-style) cast is used
+#	-Wold-style-cast										# Warn if an old-style (C-style) cast is used
 	-pthread												# Use pthreads
 	-fno-rtti												# No C++ RTTI
 	-fno-exceptions											# No C++ exception handling

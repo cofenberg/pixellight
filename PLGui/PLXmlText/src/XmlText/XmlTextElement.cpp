@@ -148,7 +148,7 @@ void XmlTextElement::Parse(XmlNode &cXmlNode)
 		XmlTextElement *pChild = nullptr;
 		if (pChildNode->GetType() == XmlNode::Element) {
 			// We found a XML element
-			XmlElement *pElement = (XmlElement*)pChildNode;
+			XmlElement *pElement = static_cast<XmlElement*>(pChildNode);
 			String sElement = pElement->GetValue();
 
 			// Create element
@@ -201,22 +201,22 @@ Color4 XmlTextElement::GetColor(const String &sColor)
 	sColor_.ToLower();
 
 	// Predefined color?
-	if (sColor_ == "aqua")			return Color4((uint8)  0, 255, 255, 255);
-	else if (sColor_ == "black")	return Color4((uint8)  0,   0,   0, 255);
-	else if (sColor_ == "blue")		return Color4((uint8)  0,   0, 255, 255);
-	else if (sColor_ == "fuchsia")	return Color4((uint8)255,   0, 255, 255);
-	else if (sColor_ == "gray")		return Color4((uint8)128, 128, 128, 255);
-	else if (sColor_ == "green")	return Color4((uint8)  0, 128,   0, 255);
-	else if (sColor_ == "lime")		return Color4((uint8)  0, 255,   0, 255);
-	else if (sColor_ == "maroon")	return Color4((uint8)128,   0,   0, 255);
-	else if (sColor_ == "navy")		return Color4((uint8)  0,   0, 128, 255);
-	else if (sColor_ == "olive")	return Color4((uint8)128, 128,   0, 255);
-	else if (sColor_ == "purple")	return Color4((uint8)128,   0, 128, 255);
-	else if (sColor_ == "red")		return Color4((uint8)255,   0,   0, 255);
-	else if (sColor_ == "silver")	return Color4((uint8)192, 192, 192, 255);
-	else if (sColor_ == "teal")		return Color4((uint8)  0, 128, 128, 255);
-	else if (sColor_ == "white")	return Color4((uint8)255, 255, 255, 255);
-	else if (sColor_ == "yellow")	return Color4((uint8)255, 255,   0, 255);
+	if (sColor_ == "aqua")			return Color4(static_cast<uint8>(  0), 255, 255, 255);
+	else if (sColor_ == "black")	return Color4(static_cast<uint8>(  0),   0,   0, 255);
+	else if (sColor_ == "blue")		return Color4(static_cast<uint8>(  0),   0, 255, 255);
+	else if (sColor_ == "fuchsia")	return Color4(static_cast<uint8>(255),   0, 255, 255);
+	else if (sColor_ == "gray")		return Color4(static_cast<uint8>(128), 128, 128, 255);
+	else if (sColor_ == "green")	return Color4(static_cast<uint8>(  0), 128,   0, 255);
+	else if (sColor_ == "lime")		return Color4(static_cast<uint8>(  0), 255,   0, 255);
+	else if (sColor_ == "maroon")	return Color4(static_cast<uint8>(128),   0,   0, 255);
+	else if (sColor_ == "navy")		return Color4(static_cast<uint8>(  0),   0, 128, 255);
+	else if (sColor_ == "olive")	return Color4(static_cast<uint8>(128), 128,   0, 255);
+	else if (sColor_ == "purple")	return Color4(static_cast<uint8>(128),   0, 128, 255);
+	else if (sColor_ == "red")		return Color4(static_cast<uint8>(255),   0,   0, 255);
+	else if (sColor_ == "silver")	return Color4(static_cast<uint8>(192), 192, 192, 255);
+	else if (sColor_ == "teal")		return Color4(static_cast<uint8>(  0), 128, 128, 255);
+	else if (sColor_ == "white")	return Color4(static_cast<uint8>(255), 255, 255, 255);
+	else if (sColor_ == "yellow")	return Color4(static_cast<uint8>(255), 255,   0, 255);
 
 	// Color in form #RGB
 	else if (sColor.GetSubstring(0, 1) == "#" && sColor.GetLength() == 4) {

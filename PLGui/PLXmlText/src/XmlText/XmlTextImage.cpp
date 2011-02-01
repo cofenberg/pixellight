@@ -75,7 +75,7 @@ void XmlTextImage::OnParse(XmlNode &cXmlNode)
 		}
 
 		// Get XML element
-		XmlElement &cXmlElement = (XmlElement&)cXmlNode;
+		XmlElement &cXmlElement = static_cast<XmlElement&>(cXmlNode);
 
 		// Parse attributes
 		XmlAttribute *pAttribute = cXmlElement.GetFirstAttribute();

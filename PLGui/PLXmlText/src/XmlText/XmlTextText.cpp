@@ -73,7 +73,7 @@ void XmlTextText::OnParse(XmlNode &cXmlNode)
 	// Is this an XML element?
 	if (cXmlNode.GetType() == XmlNode::Element) {
 		// Get XML element
-		XmlElement &cXmlElement = (XmlElement&)cXmlNode;
+		XmlElement &cXmlElement = static_cast<XmlElement&>(cXmlNode);
 
 		// Parse attributes
 		XmlAttribute *pAttribute = cXmlElement.GetFirstAttribute();

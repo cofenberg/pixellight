@@ -408,7 +408,7 @@ void XmlTextRenderer::AddLineBreak(bool bForce, bool bJustify)
 
 		// Jump to next line
 		m_vPos.x  = m_vSectionPos.x;
-		m_vPos.y += (int)(nLineHeight * LINE_HEIGHT_FACTOR);
+		m_vPos.y += static_cast<int>(nLineHeight * LINE_HEIGHT_FACTOR);
 	}
 }
 
@@ -440,7 +440,7 @@ void XmlTextRenderer::AddPrimitive(const XmlTextPrimitive &cPrimitive)
 
 	// Add primitive
 	XmlTextPrimitive cPrim = cPrimitive;
-	cPrim.m_nHGap = m_pFont ? (int)(m_pFont->GetHeight() * 0.3f) : 0;
+	cPrim.m_nHGap = m_pFont ? static_cast<int>(m_pFont->GetHeight() * 0.3f) : 0;
 	m_lstLine.Add(cPrim);
 
 	// Adjust width and height
@@ -461,7 +461,7 @@ void XmlTextRenderer::Flush(bool bJustify)
 		if (m_lstLine[0].m_nType == XmlTextPrimitive::PrimitiveBullet) {
 			// Draw bullet
 			int nSize = 4;
-			Vector2i vPos = m_vPos + Vector2i(m_nIndent - nSize - 4, (int)(m_nLineHeight/2.5f) - nSize/2);
+			Vector2i vPos = m_vPos + Vector2i(m_nIndent - nSize - 4, static_cast<int>(m_nLineHeight/2.5f) - nSize/2);
 			m_pGraphics->DrawBox(m_cTextColor, vPos, Vector2i(vPos.x + nSize, vPos.y + nSize));
 		}
 	}
@@ -473,13 +473,13 @@ void XmlTextRenderer::Flush(bool bJustify)
 
 	// Calculate horizontal gap for justified alignment
 	int nCount = (m_lstLine.GetNumOfElements() > 1 ? m_lstLine.GetNumOfElements() - 1 : 1);
-	float fRealGap = (float)(m_vSectionSize.x - m_nIndent - m_nLineWidthRaw) / nCount;
+	float fRealGap = static_cast<float>(m_vSectionSize.x - m_nIndent - m_nLineWidthRaw) / nCount;
 	float fGap = 0.0f;
 
 	// Draw background
 	if (!m_cBgColor.IsTransparent()) {
 		int nY = m_nLineHeight / 10 + 1;
-		m_pGraphics->DrawBox(m_cBgColor, Vector2i(m_vPos.x, m_vPos.y - nY), Vector2i(m_vPos.x + m_vSectionSize.x - 1, m_vPos.y + (int)(m_nLineHeight * 1.2f) - nY));
+		m_pGraphics->DrawBox(m_cBgColor, Vector2i(m_vPos.x, m_vPos.y - nY), Vector2i(m_vPos.x + m_vSectionSize.x - 1, m_vPos.y + static_cast<int>(m_nLineHeight * 1.2f) - nY));
 	}
 
 	// Calculate start position
@@ -526,7 +526,7 @@ void XmlTextRenderer::Flush(bool bJustify)
 		int nGap = cPrimitive.m_nHGap;
 		if (m_nHAlign == HAlignJustify && bJustify) {
 			fGap += fRealGap;
-			nGap = (int)fGap;
+			nGap = static_cast<int>(fGap);
 			fGap -= nGap;
 		}
 		vPos.x += cPrimitive.m_vSize.x + nGap;
