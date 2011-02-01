@@ -46,6 +46,9 @@ namespace PLGeneral {
 *
 *  @remarks
 *    The log is written in pure text to the file.
+*
+*  @note
+*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "PLGeneral::LogFormater" of the context "PLGeneral::Log"
 */
 class LogFormaterText : public LogFormater {
 

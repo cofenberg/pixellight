@@ -53,6 +53,9 @@ class File;
 *  @remarks
 *    Defines the interface for a formater of the log. With this interface you can
 *    implement a formater which will format the output of the log.
+*
+*  @note
+*    - Implementation of the strategy design pattern, this class is the strategy of the context "PLGeneral::Log"
 */
 class LogFormater {
 

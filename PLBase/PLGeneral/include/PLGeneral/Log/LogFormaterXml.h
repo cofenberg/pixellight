@@ -43,6 +43,9 @@ namespace PLGeneral {
 /**
 *  @brief
 *    XML log formater
+*
+*  @note
+*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "PLGeneral::LogFormater" of the context "PLGeneral::Log"
 */
 class LogFormaterXml : public LogFormater {
 

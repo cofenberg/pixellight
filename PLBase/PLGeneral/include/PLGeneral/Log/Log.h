@@ -92,6 +92,7 @@ namespace PLGeneral {
 *      e.g.: if the overalll log level is set to info, log messages marked as
 *      warning, error or critical are written to the log, too
 *    - You can define as many debug log levels as you want
+*    - Implementation of the strategy design pattern, this class is the context
 */
 class Log : public Singleton<Log> {
 
@@ -162,13 +163,13 @@ class Log : public Singleton<Log> {
 		*    Open the log file by using a filename
 		*
 		*  @param[in] sFilename
-		*    The log's filename
+		*    The log's filename, the log formater is automatically created by using the filename extension
 		*
 		*  @return
-		*    'true' if all went fine, else 'false' (maybe the log is already opened?)
+		*    'true' if all went fine, else 'false' (maybe the log is already opened or the filename extension is not supported?)
 		*
 		*  @note
-		*    - Supported log filename extensions: "txt", "xml", "html"
+		*    - Supported log filename extensions: "txt" (LogFormaterText), "log" (LogFormaterText), "xml" (LogFormaterXml), "html" (LogFormaterHtml)
 		*/
 		PLGENERAL_API bool Open(const String &sFilename);
 

@@ -50,6 +50,7 @@ namespace PLGeneral {
 *    - Background: The background is set in the <body> tag
 *    - Background: You must also give the option name (e.g. bgcolor=<color in HTML notation>)
 *    - DefaultTextColor: The color must be in HTML notation. Either the color name(e.g. red) or the RGB values in hexadecimal. (e.g. #FF0000)
+*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "PLGeneral::LogFormater" of the context "PLGeneral::Log"
 */
 class LogFormaterHtml : public LogFormater {
 

@@ -61,13 +61,14 @@ namespace PLGeneral {
 *    Because it seems that according to the ISO/IEC standard 14882 par. 17.4.3 (http://www.kuzbass.ru:8086/docs/isocpp/template.html)
 *    instantiation of a template (which is defined in an namespace) inside another namespace is forbidden, use the
 *    export macros like this:
-*      namespace PLMath {
-*        class GraphManager;
+*      namespace PLGeneral {
+*        class System;
 *      }
-*      PLMATHAPI_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphManager>;
+*      PLGENERAL_TEMPLATE template class PLGENERAL_API PLGeneral::Singleton<PLGeneral::System>;
 *
 *  @note
 *    - As the class same indicates, this is an implementation of the singleton design pattern
+*    - Do only use singletons, if they *really* make sense - not just because it's comfortable to have a global instance, this may lead to a shaky design...
 */
 template <class AType> class PLGENERAL_TMPL Singleton {
 
