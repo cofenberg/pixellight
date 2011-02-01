@@ -115,7 +115,7 @@ void SystemButton::SetSystemCommand(ESystemCommand nSystemCommand)
 void SystemButton::OnButtonClicked()
 {
 	// Execute system command
-	Widget *pWidget = (Widget*)GetParent();
+	Widget *pWidget = GetParent();
 	if (m_nSystemCommand == CommandMinimize) {
 		pWidget->SetWindowState(StateMinimized);
 	} else if (m_nSystemCommand == CommandMaximize) {

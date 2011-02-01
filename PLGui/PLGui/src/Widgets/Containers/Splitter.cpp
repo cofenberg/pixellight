@@ -375,7 +375,7 @@ void Splitter::ChangeSize(int nDelta)
 	int nSizeDelta = (bStaticLeft ? nDelta : -nDelta);
 	if (cSize.GetPolicy() == SizeHint::Percent) {
 		// Convert from percent to pixels
-		float fSizeDelta = 100.0f * (float)nSizeDelta / (float)nOverallSize;
+		float fSizeDelta = 100.0f * static_cast<float>(nSizeDelta) / static_cast<float>(nOverallSize);
 
 		// Change size
 		float fNewSize = cSize.GetSizeFloat() + fSizeDelta;

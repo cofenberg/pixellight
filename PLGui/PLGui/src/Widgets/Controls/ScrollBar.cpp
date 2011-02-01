@@ -230,7 +230,7 @@ void ScrollBar::OnMouseMove(const PLMath::Vector2i &vPos)
 		if (nSize <= 0) nSize = 1;
 
 		// Get ratio of screen-size to value-size
-		float fRatio = (float)nRange / (float)nSize;
+		float fRatio = static_cast<float>(nRange) / static_cast<float>(nSize);
 
 		// Get screen delta
 		int nScreenDelta = 0;
@@ -238,7 +238,7 @@ void ScrollBar::OnMouseMove(const PLMath::Vector2i &vPos)
 		else if (m_nOrientation == Vertical)	nScreenDelta = vRel.y;
 		if (nScreenDelta != 0) {
 			// Change value
-			int nDelta = (int)(nScreenDelta * fRatio);
+			int nDelta = static_cast<int>(nScreenDelta * fRatio);
 			if (nDelta == 0) nDelta = (nScreenDelta > 0 ? 1 : -1);
 			SetValue(GetValue() + nDelta);
 		}
@@ -391,7 +391,7 @@ void ScrollBar::CalculateHandlePos()
 	int nPos = GetValue() - GetMinValue();
 
 	// Calculate current handle position
-	int nHandlePos = (int)((float)nSize * (float)nPos / (float)nRange);
+	int nHandlePos = static_cast<int>(static_cast<float>(nSize) * static_cast<float>(nPos) / static_cast<float>(nRange));
 	if (m_nOrientation == Horizontal) {
 		m_sHandle.vPos1 = Vector2i(nPos1 + nHandlePos,					vScrollBarPos1.y);
 		m_sHandle.vPos2 = Vector2i(nPos1 + nHandlePos + nSliderSize - 1,	vScrollBarPos2.y);

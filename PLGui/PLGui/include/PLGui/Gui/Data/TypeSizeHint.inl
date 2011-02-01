@@ -59,7 +59,8 @@ class Type<PLGui::SizeHint> {
 		static const int TypeID = 2201;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return "sizehint";
 		}
 
@@ -86,7 +87,7 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to int
 		static int ConvertToInt(const PLGui::SizeHint &cSize)
 		{
-			return (int)cSize.GetSize();
+			return static_cast<int>(cSize.GetSize());
 		}
 
 		// Convert int to PLGui::SizeHint
@@ -98,7 +99,7 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to int8
 		static PLGeneral::int8 ConvertToInt8(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::int8)cSize.GetSize();
+			return static_cast<PLGeneral::int8>(cSize.GetSize());
 		}
 
 		// Convert int8 to PLGui::SizeHint
@@ -110,7 +111,7 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to int16
 		static PLGeneral::int16 ConvertToInt16(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::int16)cSize.GetSize();
+			return static_cast<PLGeneral::int16>(cSize.GetSize());
 		}
 
 		// Convert int16 to PLGui::SizeHint
@@ -122,7 +123,7 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to int32
 		static PLGeneral::int32 ConvertToInt32(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::int32)cSize.GetSize();
+			return static_cast<PLGeneral::int32>(cSize.GetSize());
 		}
 
 		// Convert int32 to PLGui::SizeHint
@@ -134,19 +135,19 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to int64
 		static PLGeneral::int64 ConvertToInt64(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::int64)cSize.GetSize();
+			return static_cast<PLGeneral::int64>(cSize.GetSize());
 		}
 
 		// Convert int64 to PLGui::SizeHint
 		static PLGui::SizeHint ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return PLGui::SizeHint(PLGui::SizeHint::Pixel, (PLGeneral::uint32)nValue);
+			return PLGui::SizeHint(PLGui::SizeHint::Pixel, static_cast<PLGeneral::uint32>(nValue));
 		}
 
 		// Convert PLGui::SizeHint to int8
 		static PLGeneral::uint8 ConvertToUInt8(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::uint8)cSize.GetSize();
+			return static_cast<PLGeneral::uint8>(cSize.GetSize());
 		}
 
 		// Convert uint8 to PLGui::SizeHint
@@ -158,7 +159,7 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to uint16
 		static PLGeneral::uint16 ConvertToUInt16(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::uint16)cSize.GetSize();
+			return static_cast<PLGeneral::uint16>(cSize.GetSize());
 		}
 
 		// Convert uint16 to PLGui::SizeHint
@@ -170,7 +171,7 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to uint32
 		static PLGeneral::uint32 ConvertToUInt32(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::uint32)cSize.GetSize();
+			return static_cast<PLGeneral::uint32>(cSize.GetSize());
 		}
 
 		// Convert uint32 to PLGui::SizeHint
@@ -182,25 +183,25 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to uint64
 		static PLGeneral::uint64 ConvertToUInt64(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::uint64)cSize.GetSize();
+			return static_cast<PLGeneral::uint64>(cSize.GetSize());
 		}
 
 		// Convert uint64 to PLGui::SizeHint
 		static PLGui::SizeHint ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return PLGui::SizeHint(PLGui::SizeHint::Pixel, (PLGeneral::uint32)nValue);
+			return PLGui::SizeHint(PLGui::SizeHint::Pixel, static_cast<PLGeneral::uint32>(nValue));
 		}
 
 		// Convert PLGui::SizeHint to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLGui::SizeHint &cSize)
 		{
-			return (PLGeneral::uint_ptr)cSize.GetSize();
+			return static_cast<PLGeneral::uint_ptr>(cSize.GetSize());
 		}
 
 		// Convert uint_ptr to PLGui::SizeHint
 		static PLGui::SizeHint ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return PLGui::SizeHint(PLGui::SizeHint::Pixel, (PLGeneral::uint32)nValue);
+			return PLGui::SizeHint(PLGui::SizeHint::Pixel, static_cast<PLGeneral::uint32>(nValue));
 		}
 
 		// Convert PLGui::SizeHint to float
@@ -220,14 +221,14 @@ class Type<PLGui::SizeHint> {
 		// Convert PLGui::SizeHint to double
 		static double ConvertToDouble(const PLGui::SizeHint &cSize)
 		{
-			return (double)cSize.GetSizeFloat();
+			return static_cast<double>(cSize.GetSizeFloat());
 		}
 
 		// Convert double to PLGui::SizeHint
 		static PLGui::SizeHint ConvertFromDouble(double dValue)
 		{
 			PLGui::SizeHint cSize(PLGui::SizeHint::Pixel);
-			cSize.SetSizeFloat((float)dValue);
+			cSize.SetSizeFloat(static_cast<float>(dValue));
 			return cSize;
 		}
 

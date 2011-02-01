@@ -306,7 +306,7 @@ PLMath::Vector2i Label::OnPreferredSize(const Vector2i &vRefSize) const
 
 		// Check if text has to be wrapped
 		bool bHasNewLines = (sText.IndexOf('\r') > -1) || (sText.IndexOf('\n') > -1);
-		if (GetWrap() == NoTextWrap || (nLineWidth > -1 && (int)nTextWidth < nLineWidth && !bHasNewLines) ) {
+		if (GetWrap() == NoTextWrap || (nLineWidth > -1 && static_cast<int>(nTextWidth) < nLineWidth && !bHasNewLines) ) {
 			// No wrapping
 			Vector2i vPreferredSize;
 			vPreferredSize.x = (vRefSize.x > -1 ? vRefSize.x : nTextWidth);
@@ -331,7 +331,7 @@ PLMath::Vector2i Label::OnPreferredSize(const Vector2i &vRefSize) const
 				int nWidth	 = cGraphics.GetTextWidth(cFont, sWord);
 
 				// Add word to line
-				if ((sWord != '\n') && ((int)nLine+nWidth <= nLineWidth || nLineWidth <= -1 || nLine == 0)) {
+				if ((sWord != '\n') && (static_cast<int>(nLine+nWidth) <= nLineWidth || nLineWidth <= -1 || nLine == 0)) {
 					// Add word
 					lstWords.Add(sWord);
 					nLine += nWidth + nGap;
@@ -406,7 +406,7 @@ PLMath::Vector2i Label::OnPreferredSize(const Vector2i &vRefSize) const
 					}
 
 					// Save width of widest line
-					if ((int)nWidth > nMaxLineWidth)
+					if (static_cast<int>(nWidth) > nMaxLineWidth)
 						nMaxLineWidth = nWidth;
 				}
 
@@ -451,7 +451,7 @@ void Label::OnDraw(Graphics &cGraphics)
 
 		// Check if text has to be wrapped
 		bool bHasNewLines = (sText.IndexOf('\r') > -1) || (sText.IndexOf('\n') > -1);
-		if (GetWrap() == NoTextWrap || ((int)nTextWidth < nLineWidth && !bHasNewLines) ) {
+		if (GetWrap() == NoTextWrap || (static_cast<int>(nTextWidth) < nLineWidth && !bHasNewLines) ) {
 			// No wrapping
 
 			// Align text (horizontally)
@@ -493,7 +493,7 @@ void Label::OnDraw(Graphics &cGraphics)
 				int nWidth	 = cGraphics.GetTextWidth(cFont, sWord);
 
 				// Add word to line
-				if ((sWord != '\n') && ((int)nLine+nWidth <= nLineWidth || nLine == 0)) {
+				if ((sWord != '\n') && (static_cast<int>(nLine+nWidth) <= nLineWidth || nLine == 0)) {
 					// Add word
 					lstWords.Add(sWord);
 					nLine += nWidth + nGap;

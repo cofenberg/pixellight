@@ -86,11 +86,11 @@ void MenuBar::OnDraw(Graphics &cGraphics)
 	for (uint32 i=0; i<m_pMenu->GetItems().GetNumOfElements(); i++) {
 		// Get item
 		MenuItem *pItem = m_pMenu->GetItems().Get(i);
-		if ((int)i < m_nItems) {
+		if (static_cast<int>(i) < m_nItems) {
 			// Draw item
 			Vector2i vPos1	= m_pItems[i].vPos1;
 			Vector2i vPos2	= m_pItems[i].vPos2;
-			bool bSelected	= (m_nSelection == (int)i);
+			bool bSelected	= (m_nSelection == static_cast<int>(i));
 			bool bDrawArrow	= false;
 			uint32 nWidgetState = 0;
 			if (IsEnabled())					nWidgetState |= WidgetEnabled;

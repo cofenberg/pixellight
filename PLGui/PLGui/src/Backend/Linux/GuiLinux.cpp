@@ -112,7 +112,7 @@ GuiLinux::GuiLinux(Gui *pGui) : GuiImpl(pGui),
 						1, 1,
 						0, CopyFromParent, InputOutput, CopyFromParent,
 						0, &sAttribs);
-	XSetWMProtocols(m_pDisplay, m_nHiddenWindow, (Atom*)&m_sClientProtocols, 7);
+	XSetWMProtocols(m_pDisplay, m_nHiddenWindow, reinterpret_cast<Atom*>(&m_sClientProtocols), 7);
 }
 
 /**
@@ -190,7 +190,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	::Window nWindow = (pWidget ? (::Window)pWidget->GetWindowHandle() : NULL_HANDLE);
+	::Window nWindow = (pWidget ? static_cast< ::Window>(pWidget->GetWindowHandle()) : NULL_HANDLE);
 
 	// Post message
 	switch (cMessage.GetType()) {
@@ -231,7 +231,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 			xEvent.xclient.message_type	= 0;
 			xEvent.xclient.format		= 32;
 			xEvent.xclient.data.l[0]	= m_sClientProtocols.Timer;
-			xEvent.xclient.data.l[1]	= (long int)(void*)cMessage.GetTimer();
+			xEvent.xclient.data.l[1]	= reinterpret_cast<long int>(static_cast<void*>(cMessage.GetTimer()));
 			xEvent.xclient.data.l[2]	= 0;
 
 			// Send message
@@ -596,7 +596,7 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 	WidgetLinux *pWidgetLinux = nullptr;
 	XPointer pData = nullptr;
 	if (XFindContext(m_pDisplay, pEvent->xany.window, 0, &pData) == 0 && pData) {
-		pWidgetLinux = (WidgetLinux*)pData;
+		pWidgetLinux = reinterpret_cast<WidgetLinux*>(pData);
 	}
 	Widget	 *pWidget	= (pWidgetLinux	? pWidgetLinux->m_pWidget : nullptr);
 	Gui		 *pGui		= m_pGui;
@@ -609,15 +609,15 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 		case ClientMessage:
 		{
 			// Exit event
-			if ((Atom)pEvent->xclient.data.l[0] == m_sClientProtocols.Exit) {
+			if (static_cast<Atom>(pEvent->xclient.data.l[0]) == m_sClientProtocols.Exit) {
 				// Send OnExit message
 				m_pGui->SendMessage(GuiMessage::OnExit());
 			}
 
 			// Timer event
-			if ((Atom)pEvent->xclient.data.l[0] == m_sClientProtocols.Timer) {
+			if (static_cast<Atom>(pEvent->xclient.data.l[0]) == m_sClientProtocols.Timer) {
 				// Get timer
-				Timer *pTimer = (Timer*)pEvent->xclient.data.l[1];
+				Timer *pTimer = reinterpret_cast<Timer*>(pEvent->xclient.data.l[1]);
 				if (pTimer) {
 					// Send OnTimer message
 					m_pGui->SendMessage(GuiMessage::OnTimer(pTimer));
@@ -627,12 +627,12 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 			// XEMBED protocol (for embedding windows, like e.g. tray icons)
 			if (pEvent->xclient.message_type == m_sAtoms._XEMBED) {
 				// Get tray icon window
-				TrayIconWidgetLinux *pTrayIcon = (TrayIconWidgetLinux*)pWidget;
+				TrayIconWidgetLinux *pTrayIcon = static_cast<TrayIconWidgetLinux*>(pWidget);
 
 				// Inform about XEMBED message
 				if (pEvent->xclient.data.l[1] == XEMBED_EMBEDDED_NOTIFY) {
 					// Window has been embedded
-					pTrayIcon->OnXEmbedEmbeddedNotify((::Window)pEvent->xclient.data.l[3], pEvent->xclient.data.l[4]);
+					pTrayIcon->OnXEmbedEmbeddedNotify(static_cast< ::Window>(pEvent->xclient.data.l[3]), pEvent->xclient.data.l[4]);
 				} else if (pEvent->xclient.data.l[1] == XEMBED_WINDOW_ACTIVATE) {
 					// Window has been activated
 					pTrayIcon->OnXEmbedWindowActivate();
@@ -669,26 +669,26 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 			case ClientMessage:
 			{
 				// Destroy widget event
-				if ((Atom)pEvent->xclient.data.l[0] == m_sClientProtocols.DestroyWidget) {
+				if (static_cast<Atom>(pEvent->xclient.data.l[0]) == m_sClientProtocols.DestroyWidget) {
 					// Destroy the widget and all of it's client widgets
 					DestroyWidget(pWidget);
 				}
 
 				// Close event
-				if ((Atom)pEvent->xclient.data.l[0] == m_sClientProtocols.Close) {
+				if (static_cast<Atom>(pEvent->xclient.data.l[0]) == m_sClientProtocols.Close) {
 					// Send message
 					pGui->SendMessage(GuiMessage::OnClose(pWidget));
 				}
 
 				// Focus event
-				if ((Atom)pEvent->xclient.data.l[0] == m_sClientProtocols.Focus) {
+				if (static_cast<Atom>(pEvent->xclient.data.l[0]) == m_sClientProtocols.Focus) {
 					// Try to set focus to this widget
 					// [sbusch] ToDo
 	//				pWidget->SetFocus();
 				}
 
 				// Theme has changed
-				if ((Atom)pEvent->xclient.data.l[0] == m_sClientProtocols.ThemeChanged) {
+				if (static_cast<Atom>(pEvent->xclient.data.l[0]) == m_sClientProtocols.ThemeChanged) {
 					// Send message
 					pGui->SendMessage(GuiMessage::OnThemeChanged(pWidget));
 				}
@@ -859,7 +859,7 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 				// Process this message only if the widget is not disabled
 				if (pWidgetLinux->m_bEnabled) {
 					// Get mouse button
-					EMouseButton nButton = (EMouseButton)(Button0 + (pEvent->xbutton.button - XLib::Button1));
+					EMouseButton nButton = static_cast<EMouseButton>(Button0 + (pEvent->xbutton.button - XLib::Button1));
 
 					// Send OnMouseButtonUp message
 					pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, nButton, Vector2i(pEvent->xbutton.x, pEvent->xbutton.y)));
@@ -930,7 +930,7 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 					uint32 nModifiers = pGuiLinux->GetModifierKeys();
 
 					// Send message
-					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)(int)nKey, nModifiers));
+					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, static_cast<uint32>(nKey), nModifiers));
 				}
 				break;
 			}
@@ -950,7 +950,7 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 					uint32 nModifiers = pGuiLinux->GetModifierKeys();
 
 					// Send message
-					pGui->SendMessage(GuiMessage::OnKeyUp(pWidget, (uint32)(int)nKey, nModifiers));
+					pGui->SendMessage(GuiMessage::OnKeyUp(pWidget, static_cast<uint32>(nKey), nModifiers));
 				}
 				break;
 			}
@@ -970,7 +970,7 @@ void GuiLinux::DestroyWidget(Widget *pWidget)
 	}
 
 	// Get backend
-	WidgetLinux *pWidgetLinux = (WidgetLinux*)pWidget->GetImpl();
+	WidgetLinux *pWidgetLinux = static_cast<WidgetLinux*>(pWidget->GetImpl());
 
 	// Mark window destroyed
 	pWidgetLinux->m_bDestroyed = true;

@@ -187,7 +187,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		// Try to unsnap
 		if (vRel.x > UNSNAP_GAP) {
 			// Unsnap
-			vNewPos.x = vPos.x + (int)Math::Sign((float)vRel.x) * UNSNAP;
+			vNewPos.x = vPos.x + static_cast<int>(Math::Sign(static_cast<float>(vRel.x))) * UNSNAP;
 			m_pSnappedLeft = nullptr;
 		} else {
 			// Stay snapped
@@ -200,7 +200,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		// Try to unsnap
 		if (vRel.x < -UNSNAP_GAP) {
 			// Unsnap
-			vNewPos.x = vPos.x + (int)Math::Sign((float)vRel.x) * UNSNAP;
+			vNewPos.x = vPos.x + static_cast<int>(Math::Sign(static_cast<float>(vRel.x))) * UNSNAP;
 			m_pSnappedRight = nullptr;
 		} else {
 			// Stay snapped
@@ -213,7 +213,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		// Try to unsnap
 		if (vRel.y > UNSNAP_GAP) {
 			// Unsnap
-			vNewPos.y = vPos.y + (int)Math::Sign((float)vRel.y) * UNSNAP;
+			vNewPos.y = vPos.y + static_cast<int>(Math::Sign(static_cast<float>(vRel.y))) * UNSNAP;
 			m_pSnappedTop = nullptr;
 		} else {
 			// Stay snapped
@@ -226,7 +226,7 @@ void ModSnap::TryUnsnap(const PLMath::Vector2i &vPos)
 		// Try to unsnap
 		if (vRel.y < -UNSNAP_GAP) {
 			// Unsnap
-			vNewPos.y = vPos.y + (int)Math::Sign((float)vRel.y) * UNSNAP;
+			vNewPos.y = vPos.y + static_cast<int>(Math::Sign(static_cast<float>(vRel.y)) * UNSNAP);
 			m_pSnappedBottom = nullptr;
 		} else {
 			// Stay snapped

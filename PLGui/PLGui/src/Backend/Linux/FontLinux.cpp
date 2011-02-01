@@ -45,7 +45,7 @@ namespace PLGui {
 *    Constructor
 */
 FontLinux::FontLinux(Font &cFont) : FontImpl(cFont),
-	m_pDisplay(((GuiLinux*)cFont.GetGui()->GetImpl())->GetDisplay()),
+	m_pDisplay(static_cast<GuiLinux*>(cFont.GetGui()->GetImpl())->GetDisplay()),
 	m_pXFont(nullptr),
 	m_nHeight(0)
 {
@@ -101,7 +101,7 @@ bool FontLinux::LoadFont(const String &sFamily, uint32 nHeight, uint32 nWeight, 
 		String sSlant		= (nStyle == StyleItalics ? 'i' : 'r');
 		String sWidth		= "normal";
 		String sStyle		= '*';
-		String sPixelSize	= String() + (int)nHeight;
+		String sPixelSize	= String() + nHeight;
 		String sPointSize	= '*';
 
 		// Compose font name

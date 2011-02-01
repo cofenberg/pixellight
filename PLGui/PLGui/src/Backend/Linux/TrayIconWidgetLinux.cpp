@@ -69,8 +69,8 @@ TrayIconWidgetLinux::TrayIconWidgetLinux(Widget *pParent) : Widget(pParent, true
 	//   This is done by the 'true' in Widget(pParent, BaseWidget, true)
 
 	// Get linux implementations
-	GuiLinux	*pGuiLinux	  = (GuiLinux*)	  m_pGui->GetImpl();
-	WidgetLinux *pWidgetLinux = (WidgetLinux*)m_pWidgetImpl;
+	GuiLinux	*pGuiLinux	  = static_cast<GuiLinux*>   (m_pGui->GetImpl());
+	WidgetLinux *pWidgetLinux = static_cast<WidgetLinux*>(m_pWidgetImpl);
 
 	// Find system tray window
 	m_nEmbedderWindow = XGetSelectionOwner(pWidgetLinux->m_pDisplay, XInternAtom(pWidgetLinux->m_pDisplay, "_NET_SYSTEM_TRAY_S0", False));
@@ -113,7 +113,7 @@ TrayIconWidgetLinux::TrayIconWidgetLinux(Widget *pParent) : Widget(pParent, true
 	unsigned long sXEmbedInfo[2];
     sXEmbedInfo[0] = 0;
     sXEmbedInfo[1] = 0;
-    XChangeProperty(pWidgetLinux->m_pDisplay, pWidgetLinux->m_nWindow, pGuiLinux->m_sAtoms._XEMBED_INFO, pGuiLinux->m_sAtoms._XEMBED_INFO, 32, PropModeReplace, (unsigned char*)sXEmbedInfo, 2);
+    XChangeProperty(pWidgetLinux->m_pDisplay, pWidgetLinux->m_nWindow, pGuiLinux->m_sAtoms._XEMBED_INFO, pGuiLinux->m_sAtoms._XEMBED_INFO, 32, PropModeReplace, reinterpret_cast<unsigned char*>(sXEmbedInfo), 2);
 
 	// Don't draw a background
 	SetBackgroundColor(Color4::Transparent);
@@ -151,14 +151,14 @@ void TrayIconWidgetLinux::ShowNotification(const String &sTitle, const String &s
 	long nSize = sText.GetNumOfBytes();
 
 	// Start tray message
-	SendSysTrayMessage(((WidgetLinux*)m_pWidgetImpl)->m_nWindow, SYSTEM_TRAY_BEGIN_MESSAGE, 0, nSize, nID);
+	SendSysTrayMessage(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nWindow, SYSTEM_TRAY_BEGIN_MESSAGE, 0, nSize, nID);
 
 	// Send string
-	char *pszString = (char*)sText.GetUTF8();
+	const char *pszString = sText.GetUTF8();
 	while (nSize > 0) {
 		// Send a portion of the data, max. 20 bytes
 		long nPortion = (nSize > 20 ? 20 : nSize);
-		SendSysTrayMessageData(((WidgetLinux*)m_pWidgetImpl)->m_nWindow, pszString, nPortion);
+		SendSysTrayMessageData(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nWindow, pszString, nPortion);
 
 		// Go on
 		pszString += nPortion;
@@ -173,7 +173,7 @@ void TrayIconWidgetLinux::ShowNotification(const String &sTitle, const String &s
 void TrayIconWidgetLinux::EmbedIntoSysTray()
 {
 	// Send message
-	SendSysTrayMessage(m_nEmbedderWindow, SYSTEM_TRAY_REQUEST_DOCK, ((WidgetLinux*)GetImpl())->m_nWindow, 0, 0);
+	SendSysTrayMessage(m_nEmbedderWindow, SYSTEM_TRAY_REQUEST_DOCK, static_cast<WidgetLinux*>(GetImpl())->m_nWindow, 0, 0);
 }
 
 /**
@@ -362,15 +362,15 @@ void TrayIconWidgetLinux::SendXEmbedMessage(long nMessage, long nDetail, long nD
 		XEvent sEvent;
 		sEvent.xclient.type			= ClientMessage;
 		sEvent.xclient.window		= m_nEmbedderWindow;
-		sEvent.xclient.message_type	= ((GuiLinux*)m_pGui->GetImpl())->m_sAtoms._XEMBED;
+		sEvent.xclient.message_type	= static_cast<GuiLinux*>(m_pGui->GetImpl())->m_sAtoms._XEMBED;
 		sEvent.xclient.format		= 32;
 		sEvent.xclient.data.l[0]	= CurrentTime;
 		sEvent.xclient.data.l[1]	= nMessage;
 		sEvent.xclient.data.l[2]	= nDetail;
 		sEvent.xclient.data.l[3]	= nData1;
 		sEvent.xclient.data.l[4]	= nData2;
-		XSendEvent(((WidgetLinux*)m_pWidgetImpl)->m_pDisplay, m_nEmbedderWindow, False, NoEventMask, &sEvent);
-		XSync(((WidgetLinux*)m_pWidgetImpl)->m_pDisplay, False);
+		XSendEvent(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_pDisplay, m_nEmbedderWindow, False, NoEventMask, &sEvent);
+		XSync(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_pDisplay, False);
 	}
 }
 
@@ -386,15 +386,15 @@ void TrayIconWidgetLinux::SendSysTrayMessage(::Window nWindow, long nMessage, lo
 		XEvent sEvent;
 		sEvent.xclient.type			= ClientMessage;
 		sEvent.xclient.window		= nWindow;
-		sEvent.xclient.message_type = ((GuiLinux*)m_pGui->GetImpl())->m_sAtoms._NET_SYSTEM_TRAY_OPCODE;
+		sEvent.xclient.message_type = static_cast<GuiLinux*>(m_pGui->GetImpl())->m_sAtoms._NET_SYSTEM_TRAY_OPCODE;
 		sEvent.xclient.format		= 32;
 		sEvent.xclient.data.l[0]	= CurrentTime;
 		sEvent.xclient.data.l[1]	= nMessage;
 		sEvent.xclient.data.l[2]	= nDetail;
 		sEvent.xclient.data.l[3]	= nData1;
 		sEvent.xclient.data.l[4]	= nData2;
-		XSendEvent(((WidgetLinux*)m_pWidgetImpl)->m_pDisplay, m_nEmbedderWindow, False, NoEventMask, &sEvent);
-		XSync(((WidgetLinux*)m_pWidgetImpl)->m_pDisplay, False);
+		XSendEvent(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_pDisplay, m_nEmbedderWindow, False, NoEventMask, &sEvent);
+		XSync(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_pDisplay, False);
 	}
 }
 
@@ -412,13 +412,13 @@ void TrayIconWidgetLinux::SendSysTrayMessageData(::Window nWindow, const char *p
 			XEvent sEvent;
 			sEvent.xclient.type			= ClientMessage;
 			sEvent.xclient.window		= nWindow;
-			sEvent.xclient.message_type = ((GuiLinux*)m_pGui->GetImpl())->m_sAtoms._NET_SYSTEM_TRAY_MESSAGE_DATA;
+			sEvent.xclient.message_type = static_cast<GuiLinux*>(m_pGui->GetImpl())->m_sAtoms._NET_SYSTEM_TRAY_MESSAGE_DATA;
 			sEvent.xclient.format		= 8;
 			for (uint32 i=0; i<nSize; i++) {
 				sEvent.xclient.data.b[i] = pszString[i];
 			}
-			XSendEvent(((WidgetLinux*)m_pWidgetImpl)->m_pDisplay, m_nEmbedderWindow, False, StructureNotifyMask, &sEvent);
-			XSync(((WidgetLinux*)m_pWidgetImpl)->m_pDisplay, False);
+			XSendEvent(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_pDisplay, m_nEmbedderWindow, False, StructureNotifyMask, &sEvent);
+			XSync(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_pDisplay, False);
 		}
 	}
 }

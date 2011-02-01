@@ -114,7 +114,7 @@ bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool
 			WM_HINTS,
 			32,
 			PropModeReplace,
-			(unsigned char*)&MWMHints,
+			reinterpret_cast<unsigned char*>(&MWMHints),
 			sizeof(MWMHints) / 4
 		);
 
@@ -138,7 +138,7 @@ bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool
 			WM_HINTS,
 			32,
 			PropModeReplace,
-			(unsigned char*)&KWMHints,
+			reinterpret_cast<unsigned char*>(&KWMHints),
 			sizeof(KWMHints) / 4
 		);
 
@@ -162,7 +162,7 @@ bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool
 			WM_HINTS,
 			32,
 			PropModeReplace,
-			(unsigned char*)&GNOMEHints,
+			reinterpret_cast<unsigned char*>(&GNOMEHints),
 			sizeof(GNOMEHints) / 4
 		);
 
@@ -200,7 +200,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 		// Convert image data to output color depth
 		u_int32_t *pBuffer = new u_int32_t[nWidth*nHeight*4];
 		for (int i=0; i<nWidth*nHeight; i++) {
-			pBuffer[i] = GetXColor(Color3((uint8)pData[i*4], (uint8)pData[i*4+1], (uint8)pData[i*4+2]), nDepth);
+			pBuffer[i] = GetXColor(Color3(static_cast<uint8>(pData[i*4]), static_cast<uint8>(pData[i*4+1]), static_cast<uint8>(pData[i*4+2])), nDepth);
 		}
 
 		// Create X image
@@ -216,7 +216,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 							(nDepth > 16) ? 32 : (nDepth > 8) ? 16 : 8,
 							0
 						  );
-		pXImage->data = (char*)pBuffer;
+		pXImage->data = reinterpret_cast<char*>(pBuffer);
 		XInitImage(pXImage);
 
 		// Create pixmap
@@ -241,7 +241,7 @@ bool ToolsLinux::CreatePixmapFromImage(Display *pDisplay, Image &cImage, Pixmap 
 								8,
 								0
 							);
-		pXMaskImage->data = new char [pXMaskImage->bytes_per_line * nHeight];
+		pXMaskImage->data = new char[pXMaskImage->bytes_per_line * nHeight];
 
 		// Set transparent pixels: all pixels that have an alpha value > 0 are drawn, all other are transparent
 		for (int y=0; y<nHeight; y++)

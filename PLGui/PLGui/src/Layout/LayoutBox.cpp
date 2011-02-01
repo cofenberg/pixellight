@@ -206,7 +206,7 @@ void LayoutBox::ApplyLayout()
 	}
 
 	// Assign sizes of floating elements and apply minimum values
-	uint32 nSizeLeft = PLMath::Math::Max((int)nContainerSize1 - (int)nSizeUsed, 0);
+	uint32 nSizeLeft = PLMath::Math::Max(static_cast<int>(nContainerSize1) - static_cast<int>(nSizeUsed), 0);
 	nSizeUsed = 0;
 	for (uint32 i=0; i<m_pWidget->GetChildren().GetNumOfElements(); i++) {
 		// Get child widget

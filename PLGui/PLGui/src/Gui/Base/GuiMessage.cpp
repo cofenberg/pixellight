@@ -454,7 +454,7 @@ GuiMessage &GuiMessage::operator =(const GuiMessage &cOther)
 String GuiMessage::ToString() const
 {
 	// Get window handle
-	String sMessage = "[" + (m_pWidget ? m_pWidget->GetDescriptor() : String("%")) + "] ";
+	String sMessage = '[' + (m_pWidget ? m_pWidget->GetDescriptor() : String('%')) + "] ";
 
 	// Get message type
 	switch (m_nType) {
@@ -481,13 +481,13 @@ String GuiMessage::ToString() const
 		// Internal message
 		case MessageOnInternalMessage:
 			sMessage += "OnInternalMessage";
-			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ')';
+			sMessage += String() + " (Data = " + m_nData + ", DataPtr = " + reinterpret_cast<uint_ptr>(m_pDataPtr) + ')';
 			break;
 
 		// User message
 		case MessageOnUserMessage:
 			sMessage += "OnUserMessage";
-			sMessage += String() + " (Data = " + (int)m_nData + ", DataPtr = " + (uint_ptr)m_pDataPtr + ')';
+			sMessage += String() + " (Data = " + m_nData + ", DataPtr = " + reinterpret_cast<uint_ptr>(m_pDataPtr) + ')';
 			break;
 
 		// Theme has been changed
@@ -503,19 +503,19 @@ String GuiMessage::ToString() const
 		// Child widget has been changed
 		case MessageOnUpdateChildWidget:
 			sMessage += "OnUpdateChildWidget";
-			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ')';
+			sMessage += String() + " (Child=" + reinterpret_cast<uint_ptr>(m_pChildWidget) + ')';
 			break;
 
 		// Child widget has been added
 		case MessageOnAddChildWidget:
 			sMessage += "OnAddChildWidget";
-			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ')';
+			sMessage += String() + " (Child=" + reinterpret_cast<uint_ptr>(m_pChildWidget) + ')';
 			break;
 
 		// Child widget has been removed
 		case MessageOnRemoveChildWidget:
 			sMessage += "OnRemoveChildWidget";
-			sMessage += String() + " (Child=" + (uint_ptr)m_pChildWidget + ')';
+			sMessage += String() + " (Child=" + reinterpret_cast<uint_ptr>(m_pChildWidget) + ')';
 			break;
 
 		// Widget shall be closed (ALT+F4 or X-Button pressed)
@@ -691,19 +691,19 @@ String GuiMessage::ToString() const
 		// Key gets pressed, pressed key and modifier keys pressed as parameters
 		case MessageOnKeyDown:
 			sMessage += "OnKeyDown";
-			sMessage += String() + " (Key=" + (int)m_nKey + ", Modifier=" + (int)m_nModifiers + ')';
+			sMessage += String() + " (Key=" + m_nKey + ", Modifier=" + m_nModifiers + ')';
 			break;
 
 		// Key gets released, released key and modifier keys pressed as parameters
 		case MessageOnKeyUp:
 			sMessage += "OnKeyUp";
-			sMessage += String() + " (Key=" + (int)m_nKey + ", Modifier=" + (int)m_nModifiers + ')';
+			sMessage += String() + " (Key=" + m_nKey + ", Modifier=" + m_nModifiers + ')';
 			break;
 
 		// Hotkey pressed, hotkey ID as parameter
 		case MessageOnHotkey:
 			sMessage += "OnHotkey";
-			sMessage += String() + " (Hotkey=" + (int)m_nKey + ')';
+			sMessage += String() + " (Hotkey=" + m_nKey + ')';
 			break;
 
 		// Data has been dropped onto the widget

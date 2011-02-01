@@ -279,12 +279,12 @@ String Widget::GetDescriptor() const
 
 	// ID available?
 	else if (m_nID > 0) {
-		return String() + (int)m_nID;
+		return String() + m_nID;
 	}
 
 	// Window handle available?
 	else if (m_pWidgetImpl) {
-		return String() + (int)m_pWidgetImpl->GetWindowHandle();
+		return String() + static_cast<int>(m_pWidgetImpl->GetWindowHandle());
 	}
 
 	// Unknown widget
@@ -413,12 +413,12 @@ Widget *Widget::GetCommonParent(const Widget &cWidget) const
 {
 	// Same widget?
 	if (&cWidget == this) {
-		return (Widget*)&cWidget;
+		return const_cast<Widget*>(&cWidget);
 	} else {
 		// Go down the parents of this widget
 		for (const Widget *pThisWidget=this; pThisWidget!=nullptr; pThisWidget=pThisWidget->GetParent()) {
 			// Find the first common parent - go down the parents of the other widget
-			for (Widget *pOtherWidget=(Widget*)&cWidget; pOtherWidget!=nullptr; pOtherWidget=pOtherWidget->GetParent()) {
+			for (Widget *pOtherWidget=const_cast<Widget*>(&cWidget); pOtherWidget!=nullptr; pOtherWidget=pOtherWidget->GetParent()) {
 				// Common parent found?
 				if (pThisWidget == pOtherWidget)
 					return pOtherWidget;
@@ -437,7 +437,7 @@ Widget *Widget::GetCommonParent(const Widget &cWidget) const
 Widget *Widget::GetTopLevelWidget() const
 {
 	// Start with this widget
-	Widget *pWidget = (Widget*)this;
+	Widget *pWidget = const_cast<Widget*>(this);
 
 	// Find top-level widget in hierarchy
 	while (pWidget && !pWidget->IsTopLevel())
@@ -454,7 +454,7 @@ Widget *Widget::GetTopLevelWidget() const
 Widget *Widget::GetContentWidget() const
 {
 	// Return widget itself as content widget
-	return (Widget*)this;
+	return const_cast<Widget*>(this);
 }
 
 /**
@@ -497,7 +497,7 @@ Widget *Widget::GetPreviousSibling() const
 	Widget *pParent = GetParent();
 	if (pParent) {
 		// Get index of this widget
-		int nIndex = pParent->GetChildren().GetIndex((Widget*)this);
+		int nIndex = pParent->GetChildren().GetIndex(const_cast<Widget*>(this));
 
 		// Return sibling
 		return pParent->GetChildren().Get(nIndex-1);
@@ -517,7 +517,7 @@ Widget *Widget::GetNextSibling() const
 	Widget *pParent = GetParent();
 	if (pParent) {
 		// Get index of this widget
-		int nIndex = pParent->GetChildren().GetIndex((Widget*)this);
+		int nIndex = pParent->GetChildren().GetIndex(const_cast<Widget*>(this));
 
 		// Return sibling
 		return pParent->GetChildren().Get(nIndex+1);
@@ -1374,7 +1374,7 @@ void Widget::AddModifier(const String &sName, const String &sClass, const String
 	// Class found?
 	if (pClass && pClass->IsDerivedFrom("PLGui::Modifier")) {
 		// Create modifier
-		Modifier *pModifier = (Modifier*)pClass->Create();
+		Modifier *pModifier = static_cast<Modifier*>(pClass->Create());
 		if (pModifier) {
 			// Set options
 			if (sOptions.GetLength())
@@ -1474,7 +1474,7 @@ void Widget::SetLayout(const String &sClass, const String &sOptions)
 	// Class found?
 	if (pClass && pClass->IsDerivedFrom("PLGui::Layout")) {
 		// Create modifier
-		pLayout = (Layout*)pClass->Create();
+		pLayout = static_cast<Layout*>(pClass->Create());
 		if (pLayout) {
 			// Set options
 			if (sOptions.GetLength())

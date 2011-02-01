@@ -80,7 +80,7 @@ Gui *CursorManager::GetGui() const
 Cursor *CursorManager::GetCursor(EMouseCursor nCursor)
 {
 	// Get pointer to standard cursor
-	int nIndex = (int)nCursor;
+	int nIndex = nCursor;
 	if (!m_pCursors[nIndex]) {
 		// Create cursor
 		m_pCursors[nIndex] = new Cursor(*m_pGui);

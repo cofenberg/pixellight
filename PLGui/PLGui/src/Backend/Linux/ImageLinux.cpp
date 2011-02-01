@@ -52,7 +52,7 @@ namespace PLGui {
 *    Constructor
 */
 ImageLinux::ImageLinux(Image &cImage) : ImageImpl(cImage),
-	m_pDisplay(((GuiLinux*)cImage.GetGui()->GetImpl())->GetDisplay()),
+	m_pDisplay(static_cast<GuiLinux*>(cImage.GetGui()->GetImpl())->GetDisplay()),
 	m_pPixmap(XLib::None),
 	m_pMaskPixmap(XLib::None),
 	m_pImage(new PLGraphics::Image())

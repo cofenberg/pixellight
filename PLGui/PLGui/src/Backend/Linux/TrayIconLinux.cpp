@@ -54,7 +54,7 @@ namespace PLGui {
 *    Constructor
 */
 TrayIconLinux::TrayIconLinux(TrayIcon &cTrayIcon) : TrayIconImpl(cTrayIcon),
-	m_pDisplay(((GuiLinux*)cTrayIcon.GetGui()->GetImpl())->GetDisplay()),
+	m_pDisplay(static_cast<GuiLinux*>(cTrayIcon.GetGui()->GetImpl())->GetDisplay()),
 	m_pWidget(nullptr)
 {
 }

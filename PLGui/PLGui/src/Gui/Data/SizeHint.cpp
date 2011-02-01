@@ -43,7 +43,7 @@ namespace PLGui {
 */
 SizeHint::SizeHint(EPolicy nPolicy, uint32 nSize) :
 	m_nPolicy(nPolicy),
-	m_fSize((float)nSize)
+	m_fSize(static_cast<float>(nSize))
 {
 }
 
@@ -114,7 +114,7 @@ void SizeHint::SetPolicy(EPolicy nPolicy)
 uint32 SizeHint::GetSize() const
 {
 	// Return size
-	return (uint32)m_fSize;
+	return static_cast<uint32>(m_fSize);
 }
 
 /**
@@ -134,7 +134,7 @@ float SizeHint::GetSizeFloat() const
 void SizeHint::SetSize(uint32 nSize)
 {
 	// Set size
-	m_fSize = (float)nSize;
+	m_fSize = static_cast<float>(nSize);
 }
 
 /**
@@ -157,7 +157,7 @@ void SizeHint::Set(EPolicy nPolicy, uint32 nSize)
 	m_nPolicy = nPolicy;
 
 	// Set size
-	m_fSize = (float)nSize;
+	m_fSize = static_cast<float>(nSize);
 }
 
 /**
@@ -180,8 +180,8 @@ void SizeHint::SetFloat(EPolicy nPolicy, float fSize)
 int SizeHint::CalculateSize(uint32 nParentSize, int nPreferredSize) const
 {
 	// Calculate size
-		 if (m_nPolicy == Pixel)							return (int)m_fSize;
-	else if (m_nPolicy == Percent)							return (int)((m_fSize / 100.0f) * nParentSize);
+		 if (m_nPolicy == Pixel)							return static_cast<int>(m_fSize);
+	else if (m_nPolicy == Percent)							return static_cast<int>((m_fSize / 100.0f) * nParentSize);
 	else if (m_nPolicy == Preferred && nPreferredSize > -1)	return nPreferredSize;
 	else													return -1;
 }
@@ -196,11 +196,11 @@ String SizeHint::ToString() const
 	switch (m_nPolicy) {
 		// Pixel
 		case Pixel:
-			return PLGeneral::String() + (int)m_fSize + "px";
+			return PLGeneral::String() + static_cast<int>(m_fSize) + "px";
 
 		// Percent
 		case Percent:
-			return PLGeneral::String() + m_fSize + "%";
+			return PLGeneral::String() + m_fSize + '%';
 
 		// Preferred
 		case Preferred:

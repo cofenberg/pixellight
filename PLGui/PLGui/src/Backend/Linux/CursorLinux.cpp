@@ -49,7 +49,7 @@ namespace PLGui {
 *    Constructor
 */
 CursorLinux::CursorLinux(Cursor &cCursor) : CursorImpl(cCursor),
-	m_pDisplay(((GuiLinux*)cCursor.GetGui()->GetImpl())->GetDisplay()),
+	m_pDisplay(static_cast<GuiLinux*>(cCursor.GetGui()->GetImpl())->GetDisplay()),
 	m_pXCursor(NULL_HANDLE)
 {
 }

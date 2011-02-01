@@ -177,7 +177,7 @@ void Slider::OnMouseMove(const PLMath::Vector2i &vPos)
 		if (nSize <= 0) nSize = 1;
 
 		// Get ratio of screen-size to value-size
-		float fRatio = (float)nRange / (float)nSize;
+		float fRatio = static_cast<float>(nRange) / static_cast<float>(nSize);
 
 		// Get screen position
 		int nScreenPos = 0;
@@ -185,7 +185,7 @@ void Slider::OnMouseMove(const PLMath::Vector2i &vPos)
 		else if (m_nOrientation == Vertical)	nScreenPos = m_vMousePos.y - m_sHandle.nMinPos;
 
 		// Calculate new value
-		int nNewValue = (int)(m_nMinValue + (float)nScreenPos * fRatio);
+		int nNewValue = static_cast<int>(m_nMinValue + static_cast<float>(nScreenPos) * fRatio);
 		if (m_nValue != nNewValue) {
 			// Set Value
 			SetValue(nNewValue);
@@ -277,7 +277,7 @@ void Slider::CalculateHandlePos()
 	int nPos = GetValue() - GetMinValue();
 
 	// Calculate current handle position
-	int nHandlePos = (int)((float)nSize * (float)nPos / (float)nRange);
+	int nHandlePos = static_cast<int>(static_cast<float>(nSize) * static_cast<float>(nPos) / static_cast<float>(nRange));
 	if (m_nOrientation == Horizontal) {
 		m_sHandle.vPos1		= Vector2i(vSliderPos1.x + nHandlePos,			vSliderPos1.y);
 		m_sHandle.vPos2		= Vector2i(vSliderPos1.x + nHandlePos + 10 - 1,	vSliderPos2.y);

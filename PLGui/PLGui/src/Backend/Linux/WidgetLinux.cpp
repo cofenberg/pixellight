@@ -58,7 +58,7 @@ namespace PLGui
 */
 WidgetLinux::WidgetLinux(Widget &cWidget) :
 	WidgetImpl(cWidget),
-	m_pDisplay(((GuiLinux*)cWidget.GetGui()->GetImpl())->GetDisplay()),
+	m_pDisplay(static_cast<GuiLinux*>(cWidget.GetGui()->GetImpl())->GetDisplay()),
 	m_nScreen(0),
 	m_nWindow(0),
 	m_bWrapper(false),
@@ -142,10 +142,10 @@ void WidgetLinux::CreateWidget()
 		ToolsLinux::SetNoWindowDecoration(m_pDisplay, m_nWindow, false);
 
 		// Save pointer to virtual widget object
-		XSaveContext(m_pDisplay, m_nWindow, 0, (char*)this);
+		XSaveContext(m_pDisplay, m_nWindow, 0, reinterpret_cast<char*>(this));
 
 		// Add custom message for 'Close Window'
-		XSetWMProtocols(m_pDisplay, m_nWindow, (Atom*)&((GuiLinux*)m_pWidget->GetGui()->GetImpl())->m_sClientProtocols, 7);
+		XSetWMProtocols(m_pDisplay, m_nWindow, reinterpret_cast<Atom*>(&static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl())->m_sClientProtocols), 7);
 
 		// Send OnCreate message
 		m_pWidget->GetGui()->SendMessage(GuiMessage::OnCreate(m_pWidget));
@@ -165,7 +165,7 @@ void WidgetLinux::CreateWrapperWidget(handle nWindowHandle)
 	m_bWrapper = true;
 
 	// Save window handle
-	m_nWindow = (::Window)nWindowHandle;
+	m_nWindow = static_cast< ::Window>(nWindowHandle);
 }
 
 bool WidgetLinux::IsDestroyed() const
@@ -179,7 +179,7 @@ void WidgetLinux::Destroy()
 	// Check if the widget has already been destroyed
 	if (!m_bDestroyed) {
 		// Get GUI
-		GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Send destroy event
 		XEvent sEvent;
@@ -200,7 +200,7 @@ void WidgetLinux::Destroy()
 handle WidgetLinux::GetWindowHandle() const
 {
 	// Return window handle
-	return (handle)m_nWindow;
+	return static_cast<handle>(m_nWindow);
 }
 
 void WidgetLinux::SetParent(WidgetImpl *pParent)
@@ -219,7 +219,7 @@ void WidgetLinux::SetShowInTaskbar(bool bShowInTaskbar)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Get GUI
-		GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Set or remove taskbar flag
 		m_bShowInTaskbar = bShowInTaskbar;
@@ -298,7 +298,7 @@ void WidgetLinux::SetTopmost(bool bTopmost)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Get GUI
-		GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Set or remove topmost flag
 		m_bTopmost = bTopmost;
@@ -321,7 +321,7 @@ void WidgetLinux::SetWindowState(EWindowState nWindowState)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Get GUI
-		GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Set window state
 		if (nWindowState == StateFullscreen) {
@@ -365,8 +365,8 @@ void WidgetLinux::SetVisible(bool bVisible)
 		XSync(m_pDisplay, False);
 
 		// Show in taskbar?
-		if (!m_bShowInTaskbar)	AddWMState   (((GuiLinux*)m_pWidget->GetGui()->GetImpl())->m_sAtoms._NET_WM_STATE_SKIP_TASKBAR);
-		else					RemoveWMState(((GuiLinux*)m_pWidget->GetGui()->GetImpl())->m_sAtoms._NET_WM_STATE_SKIP_TASKBAR);
+		if (!m_bShowInTaskbar)	AddWMState   (static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl())->m_sAtoms._NET_WM_STATE_SKIP_TASKBAR);
+		else					RemoveWMState(static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl())->m_sAtoms._NET_WM_STATE_SKIP_TASKBAR);
 
 		// Save visible-flag
 		m_bVisible = bVisible;
@@ -487,12 +487,12 @@ void WidgetLinux::SetTitle(const String &sTitle)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Get GUI
-		GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Set window title
-		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms.WM_NAME,				 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, (unsigned char *)sTitle.GetUTF8(), sTitle.GetLength());
-		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_NAME,		 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, (unsigned char *)sTitle.GetUTF8(), sTitle.GetLength());
-		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_VISIBLE_NAME, pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, (unsigned char *)sTitle.GetUTF8(), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms.WM_NAME,				 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_NAME,		 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_VISIBLE_NAME, pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -506,8 +506,8 @@ void WidgetLinux::SetIcon(const Image &cIcon)
 		// Set icon hint
 		XWMHints sWMHints;
 		sWMHints.flags = IconPixmapHint | IconMaskHint;
-		sWMHints.icon_pixmap = ((ImageLinux*)cIcon.GetImpl())->GetPixmap();
-		sWMHints.icon_mask   = ((ImageLinux*)cIcon.GetImpl())->GetMaskPixmap();
+		sWMHints.icon_pixmap = static_cast<ImageLinux*>(cIcon.GetImpl())->GetPixmap();
+		sWMHints.icon_mask   = static_cast<ImageLinux*>(cIcon.GetImpl())->GetMaskPixmap();
 		XSetWMHints(m_pDisplay, m_nWindow, &sWMHints);
 
 		// Do it!
@@ -520,7 +520,7 @@ void WidgetLinux::SetCursor(const Cursor &cCursor)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Set cursor
-		XDefineCursor(m_pDisplay, m_nWindow, ((CursorLinux*)cCursor.GetImpl())->GetXCursor());
+		XDefineCursor(m_pDisplay, m_nWindow, static_cast<CursorLinux*>(cCursor.GetImpl())->GetXCursor());
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -554,7 +554,7 @@ bool WidgetLinux::GetMousePos(Vector2i &vPos)
 void WidgetLinux::AddWMState(::Atom sAtom1, ::Atom sAtom2)
 {
 	// Get GUI
-	GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+	GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 	// Send _NET_WM_STATE_ADD event
 	XEvent sEvent;
@@ -574,7 +574,7 @@ void WidgetLinux::AddWMState(::Atom sAtom1, ::Atom sAtom2)
 void WidgetLinux::RemoveWMState(::Atom sAtom1, ::Atom sAtom2)
 {
 	// Get GUI
-	GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+	GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 	// Send _NET_WM_STATE_REMOVE event
 	XEvent sEvent;
@@ -601,7 +601,7 @@ void WidgetLinux::UpdateWMStates()
 		m_bMinimized  = false;
 
 		// Get GUI
-		GuiLinux *pGuiLinux = (GuiLinux*)m_pWidget->GetGui()->GetImpl();
+		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Get WM_STATE properties
 		Atom nType;
@@ -611,7 +611,7 @@ void WidgetLinux::UpdateWMStates()
 		int nResult = XGetWindowProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_STATE, 0, 8192, False, XA_ATOM, &nType, &nFormat, &nItemsRead, &nItemsLeft, &pData);
 		if (nResult == XLib::Success) {
 			// Get atoms
-			Atom *pAtoms = (Atom*)pData;
+			Atom *pAtoms = reinterpret_cast<Atom*>(pData);
 			for (int i=0; i<nItemsRead; i++) {
 				// Look for state atoms
 				if (pAtoms[i] == pGuiLinux->m_sAtoms._NET_WM_STATE_FULLSCREEN)

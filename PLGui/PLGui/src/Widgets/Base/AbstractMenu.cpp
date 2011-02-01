@@ -285,7 +285,7 @@ void AbstractMenu::OnItemClicked(MenuItem *pItem)
 Vector2i AbstractMenu::OnPreferredSize(const Vector2i &vRefSize) const
 {
 	// Update menu data
-	((AbstractMenu*)this)->UpdateMenuData();
+	const_cast<AbstractMenu*>(this)->UpdateMenuData();
 
 	// Give back size of all items as preferred size
 	Vector2i vSize;
@@ -405,7 +405,7 @@ void AbstractMenu::OnKeyDown(uint32 nKey, uint32 nModifiers)
 		// Keyboard shortcut
 		if (nKey >= PLGUIKEY_A && nKey <= PLGUIKEY_Z) {
 			// Get character
-			char nChar = (char)('a' + (nKey - PLGUIKEY_A));
+			char nChar = static_cast<char>('a' + (nKey - PLGUIKEY_A));
 			m_pControlMenu->PressShortcut(nChar);
 			m_pControlMenu->m_nIgnoreMouse = 5;
 		}
@@ -450,7 +450,7 @@ void AbstractMenu::OpenSubmenu(MenuItem *pItem, int nItem)
 
 		// Create popup menu and get size
 		m_pPopupMenu = new PopupMenu(GetGui()->GetRootWidget());
-		m_pPopupMenu->SetMenu((Menu*)m_pSelectedItem);
+		m_pPopupMenu->SetMenu(static_cast<Menu*>(m_pSelectedItem));
 		m_pPopupMenu->SetFocusStyle(NoFocus);
 		m_pPopupMenu->m_pParentMenu = this;
 		m_pPopupMenu->m_pController = m_pController;

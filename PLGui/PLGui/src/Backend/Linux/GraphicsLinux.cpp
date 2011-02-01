@@ -75,7 +75,7 @@ GraphicsLinux::GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nWindow)
 GraphicsLinux::GraphicsLinux(Graphics &cGraphics) : GraphicsImpl(cGraphics)
 {
 	// Get linux GUI
-	GuiLinux *pGuiLinux = (GuiLinux*)cGraphics.GetGui()->GetImpl();
+	GuiLinux *pGuiLinux = static_cast<GuiLinux*>(cGraphics.GetGui()->GetImpl());
 	m_pDisplay = pGuiLinux->m_pDisplay;
 	m_nScreen = DefaultScreen(m_pDisplay);
 	m_nWindow = RootWindow(m_pDisplay, m_nScreen);
@@ -165,8 +165,8 @@ void GraphicsLinux::DrawImage(const Image &cImage, const Vector2i &vPos, const V
 	// Check if window handle is valid
 	if (m_nWindow) {
 		// Get image and mask pixmaps
-		Pixmap pixmap = ((ImageLinux*)cImage.GetImpl())->GetPixmap();
-		Pixmap mask   = ((ImageLinux*)cImage.GetImpl())->GetMaskPixmap();
+		Pixmap pixmap = static_cast<ImageLinux*>(cImage.GetImpl())->GetPixmap();
+		Pixmap mask   = static_cast<ImageLinux*>(cImage.GetImpl())->GetMaskPixmap();
 
 		// Set mask
 		::XGCValues	sGCValues;
@@ -195,11 +195,11 @@ void GraphicsLinux::DrawText(const Font &cFont, const Color4 &cTextColor, const 
 	sGCValues.function   = GXcopy;
 	sGCValues.foreground = ToolsLinux::GetXColor(Color3(cTextColor), m_nColorDepth);
 	sGCValues.background = ToolsLinux::GetXColor(Color3(cBkColor),   m_nColorDepth);
-	sGCValues.font = ((FontLinux*)cFont.GetImpl())->GetXFont()->fid;
+	sGCValues.font = static_cast<FontLinux*>(cFont.GetImpl())->GetXFont()->fid;
 	XChangeGC(m_pDisplay, m_sGC, GCFunction | GCForeground | GCBackground | GCFont, &sGCValues);
 
 	// Get font height
-	uint32 nHeight = ((FontLinux*)cFont.GetImpl())->GetHeight();
+	uint32 nHeight = static_cast<FontLinux*>(cFont.GetImpl())->GetHeight();
 
 	// Draw text
 	if (sText.GetFormat() == String::ASCII)
@@ -215,10 +215,10 @@ uint32 GraphicsLinux::GetTextWidth(const Font &cFont, const String &sText)
 	// Get text width
 	uint32 nWidth = 0;
 	if (sText.GetFormat() == String::ASCII)
-		nWidth = XTextWidth(((FontLinux*)cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
+		nWidth = XTextWidth(static_cast<FontLinux*>(cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
 	else if (sText.GetFormat() == String::Unicode)
 		// [TODO] Look at XTextWidth16 etc.
-		nWidth = XTextWidth(((FontLinux*)cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
+		nWidth = XTextWidth(static_cast<FontLinux*>(cFont.GetImpl())->GetXFont(), sText.GetASCII(), sText.GetLength());
 
 	// Return width
 	return nWidth;
@@ -227,7 +227,7 @@ uint32 GraphicsLinux::GetTextWidth(const Font &cFont, const String &sText)
 uint32 GraphicsLinux::GetTextHeight(const Font &cFont, const String &sText)
 {
 	// Return text height from font
-	return ((FontLinux*)cFont.GetImpl())->GetHeight();
+	return static_cast<FontLinux*>(cFont.GetImpl())->GetHeight();
 }
 
 

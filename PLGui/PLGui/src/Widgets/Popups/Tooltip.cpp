@@ -93,7 +93,7 @@ Tooltip::~Tooltip()
 void Tooltip::OnShowTooltip()
 {
 	// Set maximum text width to 80% of the screen width
-	int nWidth = (int)(GetScreen()->GetSize().x * 0.8f);
+	int nWidth = static_cast<int>(GetScreen()->GetSize().x * 0.8f);
 
 	// Set label text
 	m_pLabel->SetText(m_sTooltip);

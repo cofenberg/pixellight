@@ -166,7 +166,7 @@ Gui::Gui(const String &sGui) :
 		const Class *pClass = ClassManager::GetInstance()->GetClass(sGui);
 		if (pClass && pClass->IsDerivedFrom("PLGui::GuiImpl")) {
 			// Create the specified GUI implementation
-			m_pGuiImpl = (GuiImpl*)pClass->Create(Params<Object*, Gui*>(this));
+			m_pGuiImpl = static_cast<GuiImpl*>(pClass->Create(Params<Object*, Gui*>(this)));
 		}
 	} else {
 		// Create system GUI
@@ -706,7 +706,7 @@ void Gui::SetTheme(const String &sClass, const String &sOptions)
 	// Class found?
 	if (pClass && pClass->IsDerivedFrom("PLGui::Theme")) {
 		// Create theme
-		Theme *pTheme = (Theme*)pClass->Create();
+		Theme *pTheme = static_cast<Theme*>(pClass->Create());
 		if (pTheme) {
 			// Set options
 			if (sOptions.GetLength()) {
