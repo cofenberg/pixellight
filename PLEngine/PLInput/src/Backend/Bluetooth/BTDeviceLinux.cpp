@@ -185,10 +185,10 @@ bool BTDeviceLinux::Open(uint16 nOutputPort, uint16 nInputPort)
 
 	// Create output socket
 	m_nCtrlSocket = socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP);
-	if (connect(m_nCtrlSocket, (struct sockaddr*)&sCtrlAddr, sizeof(sCtrlAddr)) == 0) {
+	if (connect(m_nCtrlSocket, reinterpret_cast<struct sockaddr*>(&sCtrlAddr), sizeof(sCtrlAddr)) == 0) {
 		// Create input socket
 		m_nIntSocket = socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP);
-		if (connect(m_nIntSocket, (struct sockaddr*)&sIntAddr, sizeof(sIntAddr)) == 0) {
+		if (connect(m_nIntSocket, reinterpret_cast<struct sockaddr*>(&sIntAddr), sizeof(sIntAddr)) == 0) {
 			// Connection successful
 			int nFlags = fcntl(m_nIntSocket, F_GETFL, 0);
 			fcntl(m_nIntSocket, F_SETFL, nFlags | O_NONBLOCK);
@@ -257,7 +257,7 @@ bool BTDeviceLinux::Write(const uint8 *pBuffer, uint32 nSize)
 	int nRes = write(m_nCtrlSocket, nTemp, nSize+1);
 	ReadHandshake();
 	UnlockMutex();
-	if (nRes > 0) return ((uint32)nRes - 1 == nSize);
+	if (nRes > 0) return (static_cast<uint32>(nRes) - 1 == nSize);
 	else		  return false;
 }
 

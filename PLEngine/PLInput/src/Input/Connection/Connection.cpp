@@ -113,16 +113,16 @@ void Connection::PassValue()
 		// Pass value
 		switch (m_pInput->GetType()) {
 			case ControlButton:
-				((Button*)m_pOutput)->SetPressed(((Button*)m_pInput)->IsPressed());
+				static_cast<Button*>(m_pOutput)->SetPressed(static_cast<Button*>(m_pInput)->IsPressed());
 				break;
 
 			case ControlAxis:
 			{
-				Axis *pInputAxis = (Axis*)m_pInput;
+				Axis *pInputAxis = static_cast<Axis*>(m_pInput);
 				if (m_fScale != 1.0f)
-					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue() * m_fScale, pInputAxis->IsValueRelative());
+					static_cast<Axis*>(m_pOutput)->SetValue(pInputAxis->GetValue() * m_fScale, pInputAxis->IsValueRelative());
 				else
-					((Axis*)m_pOutput)->SetValue(pInputAxis->GetValue(), pInputAxis->IsValueRelative());
+					static_cast<Axis*>(m_pOutput)->SetValue(pInputAxis->GetValue(), pInputAxis->IsValueRelative());
 				break;
 			}
 		}
@@ -140,11 +140,11 @@ void Connection::PassValueBackwards()
 		// Pass value
 		switch (m_pOutput->GetType()) {
 			case ControlLED:
-				((LED*)m_pInput)->SetLEDs(((LED*)m_pOutput)->GetLEDs());
+				static_cast<LED*>(m_pInput)->SetLEDs(static_cast<LED*>(m_pOutput)->GetLEDs());
 				break;
 
 			case ControlEffect:
-				((Effect*)m_pInput)->SetValue(((Effect*)m_pOutput)->GetValue());
+				static_cast<Effect*>(m_pInput)->SetValue(static_cast<Effect*>(m_pOutput)->GetValue());
 				break;
 		}
 	}

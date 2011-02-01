@@ -292,7 +292,7 @@ void Application::TestConnections()
 	pVirtualController->ConnectToDevices();
 
 	// Get device
-	pDevice = (Device*)pVirtualController;
+	pDevice = reinterpret_cast<Device*>(pVirtualController);
 	if (pDevice) {
 		// Connect event handler
 		pDevice->OnControl.Connect(&EventHandlerOnControl);
@@ -338,16 +338,16 @@ void Application::OnControl(Control *pControl)
 	// Display control value
 	String sValue;
 	if (pControl->GetType() == ControlButton) {
-		sValue = ((Button*)pControl)->IsPressed() ? "<pressed>" : "<released>";
+		sValue = static_cast<Button*>(pControl)->IsPressed() ? "<pressed>" : "<released>";
 	} else if (pControl->GetType() == ControlAxis) {
-		sValue = String::Format("%5.2f", ((Axis*)pControl)->GetValue());
+		sValue = String::Format("%5.2f", static_cast<Axis*>(pControl)->GetValue());
 	}
 	System::GetInstance()->GetConsole().Print("- '" + sControl + "': " + sValue + '\n');
 
 	// LED test
-	if ((pControl->GetName() == "Plus" || pControl->GetName() == "Minus") && ((Button*)pControl)->IsPressed()) {
+	if ((pControl->GetName() == "Plus" || pControl->GetName() == "Minus") && static_cast<Button*>(pControl)->IsPressed()) {
 		// Get LED control
-		LED *pLED = (LED*)pControl->GetController()->GetControl("LED");
+		LED *pLED = static_cast<LED*>(pControl->GetController()->GetControl("LED"));
 		if (pLED) {
 			// Change LED value
 			uint32 nLED = pLED->GetLEDs();
@@ -361,8 +361,8 @@ void Application::OnControl(Control *pControl)
 	// Rumble test
 	if (pControl->GetName() == "Button1" || pControl->GetName() == "Button2") {
 		// Get rumble control (try "Rumble3" first for joystick, then "Rumble1" for WiiMote)
-		Effect *pRumble = (Effect*)pControl->GetController()->GetControl("Rumble3");
-		if (!pRumble) pRumble = (Effect*)pControl->GetController()->GetControl("Rumble1");
+		Effect *pRumble = static_cast<Effect*>(pControl->GetController()->GetControl("Rumble3"));
+		if (!pRumble) pRumble = static_cast<Effect*>(pControl->GetController()->GetControl("Rumble1"));
 		if (pRumble) {
 			// Enable or disable rumble?
 			if (pControl->GetName() == "Button1")

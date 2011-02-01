@@ -25,8 +25,10 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/System/MutexGuard.h>
 #include <PLGeneral/Log/Log.h>
+#include "PLInput/Input/Controller.h"
 #include "PLInput/Input/InputManager.h"
-#include "PLInput/Input/Devices/Mouse.h"
+#include "PLInput/Input/Devices/Device.h"
+#include "PLInput/Input/Controls/Control.h"
 #include "PLInput/Backend/Provider.h"
 
 
@@ -163,7 +165,7 @@ Device *InputManager::GetDevice(const String &sDevice) const
 */
 Keyboard *InputManager::GetKeyboard() const
 {
-	return (Keyboard*)GetDevice("Keyboard");
+	return reinterpret_cast<Keyboard*>(GetDevice("Keyboard"));
 }
 
 /**
@@ -172,7 +174,7 @@ Keyboard *InputManager::GetKeyboard() const
 */
 Mouse *InputManager::GetMouse() const
 {
-	return (Mouse*)GetDevice("Mouse");
+	return reinterpret_cast<Mouse*>(GetDevice("Mouse"));
 }
 
 
@@ -246,7 +248,7 @@ void InputManager::DetectProvider(const String &sProvider, bool bReset)
 		// Create provider
 		const Class *pClass = ClassManager::GetInstance()->GetClass(sProvider);
 		if (pClass) {
-			pProvider = (Provider*)pClass->Create();
+			pProvider = static_cast<Provider*>(pClass->Create());
 		}
 
 		// Add provider

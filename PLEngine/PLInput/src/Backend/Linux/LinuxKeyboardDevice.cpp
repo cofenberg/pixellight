@@ -92,7 +92,7 @@ void LinuxKeyboardDevice::Update()
 	// Check if input device is valid
 	if (m_pDevice) {
 		// Get keyboard device
-		Keyboard *pKeyboard = (Keyboard*)m_pDevice;
+		Keyboard *pKeyboard = static_cast<Keyboard*>(m_pDevice);
 
 		// Get keyboard state
 		XLockDisplay(m_pDisplay);

@@ -128,7 +128,7 @@ void LinuxEventDevice::Update()
 	// Read input events
 	struct input_event pEvents[64];
 	ssize_t nSize = read(m_nFile, pEvents, sizeof(struct input_event)*64);
-	int nEvents = (nSize > 0 ? (int)(nSize / sizeof(struct input_event)) : 0);
+	int nEvents = (nSize > 0 ? static_cast<int>(nSize / sizeof(struct input_event)) : 0);
 	for (int i=0; i<nEvents; i++) {
 		// Get corresponding control
 		Control *pControl = nullptr;
@@ -152,8 +152,8 @@ void LinuxEventDevice::Update()
 			pControl = m_pDevice->GetControl(String("Button") + (pEvents[i].code - BTN_GAMEPAD));
 
 		// Get control type
-		Axis   *pAxis   = (pControl != nullptr && pControl->GetType() == ControlAxis)   ? (Axis*)  pControl : nullptr;
-		Button *pButton = (pControl != nullptr && pControl->GetType() == ControlButton) ? (Button*)pControl : nullptr;
+		Axis   *pAxis   = (pControl != nullptr && pControl->GetType() == ControlAxis)   ? static_cast<Axis*>  (pControl) : nullptr;
+		Button *pButton = (pControl != nullptr && pControl->GetType() == ControlButton) ? static_cast<Button*>(pControl) : nullptr;
 
 		// Set control value
 		if (pEvents[i].type == EV_KEY && pButton) {
@@ -165,7 +165,7 @@ void LinuxEventDevice::Update()
 			input_absinfo sAbsInfo;
 			if (!ioctl(m_nFile, EVIOCGABS(0), &sAbsInfo)) {
 				// Get value in a range of -1.0 - +1.0
-				float fValue = ((float)(pEvents[i].value - sAbsInfo.minimum) / (float)(sAbsInfo.maximum - sAbsInfo.minimum)) * 2.0f - 1.0f;
+				float fValue = (static_cast<float>(pEvents[i].value - sAbsInfo.minimum) / static_cast<float>(sAbsInfo.maximum - sAbsInfo.minimum)) * 2.0f - 1.0f;
 				if (fValue >  1.0f) fValue =  1.0f;
 				if (fValue < -1.0f) fValue = -1.0f;
 				pAxis->SetValue(fValue, false);

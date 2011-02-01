@@ -100,7 +100,7 @@ Joystick::Joystick(const String &sName, DeviceImpl *pImpl) : Device(sName, "Joys
 	// Check if we have a HID backend
 	if (pImpl && pImpl->GetBackendType() == BackendHID) {
 		// Save extra pointer to HIDDevice
-		m_pHIDDevice = (HIDDevice*)pImpl;
+		m_pHIDDevice = static_cast<HIDDevice*>(pImpl);
 
 		// Connect to HIDDevice events
 		m_pHIDDevice->EventOnRead.Connect(&EventHandlerOnDeviceRead);
@@ -153,7 +153,7 @@ void Joystick::Update()
 	// Check if we have an UpdateDevice backend
 	if (m_pImpl && m_pImpl->GetBackendType() == BackendUpdateDevice) {
 		// Update device backend
-		((UpdateDevice*)m_pImpl)->Update();
+		static_cast<UpdateDevice*>(m_pImpl)->Update();
 	}
 }
 
@@ -188,7 +188,7 @@ void Joystick::UpdateOutputControl(Control *pControl)
 					if (fValue > 1.0f) fValue = 1.0f;
 
 					// Scale from 0..1 to logical range and set value
-					pCapability->m_nValue = (uint32)(pCapability->m_nLogicalMin + fValue*(pCapability->m_nLogicalMax-pCapability->m_nLogicalMin));
+					pCapability->m_nValue = static_cast<uint32>(pCapability->m_nLogicalMin + fValue*(pCapability->m_nLogicalMax-pCapability->m_nLogicalMin));
 				}
 			}
 		}
@@ -219,12 +219,12 @@ void Joystick::ParseInputReport()
 		for (uint32 i=0; i<lstInputValues.GetNumOfElements(); i++) {
 			// Get raw value and compute logical value
 			uint32 nValue = lstInputValues[i].m_nValue;
-			float  fValue = (float)nValue;
+			float  fValue = static_cast<float>(nValue);
 			if (lstInputValues[i].m_nUsage != UsageHat) {
-				uint32 nMin	= (uint32)lstInputValues[i].m_nLogicalMin;
-				uint32 nMax	= (uint32)lstInputValues[i].m_nLogicalMax;
+				uint32 nMin	= static_cast<uint32>(lstInputValues[i].m_nLogicalMin);
+				uint32 nMax	= static_cast<uint32>(lstInputValues[i].m_nLogicalMax);
 				uint32 nMid	=  nMin/2 + nMax/2;
-				fValue		= ((float)nValue - nMid) / ((float)nMax - nMin) * 2.0f;
+				fValue		= (static_cast<float>(nValue) - nMid) / (static_cast<float>(nMax) - nMin) * 2.0f;
 			}
 
 			// Set axis value

@@ -82,7 +82,7 @@ void Mouse::Update()
 {
 	// Update device backend
 	if (m_pImpl && m_pImpl->GetBackendType() == BackendUpdateDevice) {
-		((UpdateDevice*)m_pImpl)->Update();
+		static_cast<UpdateDevice*>(m_pImpl)->Update();
 	}
 }
 

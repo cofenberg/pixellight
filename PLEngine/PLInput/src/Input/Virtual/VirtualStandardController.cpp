@@ -216,10 +216,10 @@ VirtualStandardController::~VirtualStandardController()
 void VirtualStandardController::ConnectToDevices()
 {
 	// Connect mouse
-	ConnectAll((Controller*)InputManager::GetInstance()->GetMouse(), "Mouse", "");
+	ConnectAll(InputManager::GetInstance()->GetMouse(), "Mouse", "");
 
 	// Connect keyboard
-	ConnectAll((Controller*)InputManager::GetInstance()->GetKeyboard(), "", "");
+	ConnectAll(InputManager::GetInstance()->GetKeyboard(), "", "");
 
 	// Connect character controls
 	List<Device*> &lstDevices = InputManager::GetInstance()->GetDevices();
@@ -230,7 +230,7 @@ void VirtualStandardController::ConnectToDevices()
 		// Mouse
 		if (pDevice->GetName() == "Mouse") {
 			// Get mouse
-			Mouse *pMouse = (Mouse*)pDevice;
+			Mouse *pMouse = static_cast<Mouse*>(pDevice);
 
 			// Movement
 			// Keep pressed to pan
@@ -266,7 +266,7 @@ void VirtualStandardController::ConnectToDevices()
 		// Keyboard
 		else if (pDevice->GetName() == "Keyboard") {
 			// Get keyboard
-			Keyboard *pKeyboard = (Keyboard*)pDevice;
+			Keyboard *pKeyboard = static_cast<Keyboard*>(pDevice);
 
 			// WASD
 			Connect("Forward",			&pKeyboard->KeyW);
@@ -307,7 +307,7 @@ void VirtualStandardController::ConnectToDevices()
 		// Joystick
 		else if (pDevice->GetName().IsSubstring("Joystick")) {
 			// Get joystick
-			Joystick *pJoystick = (Joystick*)pDevice;
+			Joystick *pJoystick = static_cast<Joystick*>(pDevice);
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
@@ -326,7 +326,7 @@ void VirtualStandardController::ConnectToDevices()
 		// SpaceMouse
 		else if (pDevice->GetName().IsSubstring("SpaceMouse")) {
 			// Get space mouse
-			SpaceMouse *pSpaceMouse = (SpaceMouse*)pDevice;
+			SpaceMouse *pSpaceMouse = static_cast<SpaceMouse*>(pDevice);
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
@@ -362,7 +362,7 @@ void VirtualStandardController::ConnectToDevices()
 		// WiiMote
 		else if (pDevice->GetName().IsSubstring("WiiMote")) {
 			// Get WiiMote
-			WiiMote *pWiiMote = (WiiMote*)pDevice;
+			WiiMote *pWiiMote = static_cast<WiiMote*>(pDevice);
 
 			// Movement
 			// [TODO] We need some more logic here to calculate movement from WiiMote data

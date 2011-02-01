@@ -161,7 +161,7 @@ void Application::TestFonts()
 
 		// Get font info
 		String sFamily = cFontInfo.GetFamily();
-		String sHeight = String() + (int)cFontInfo.GetHeight();
+		String sHeight = String() + cFontInfo.GetHeight();
 		String sWeight = "Normal";
 		if (cFontInfo.GetWeight() == WeightBold)  sWeight = "Bold";
 		if (cFontInfo.GetWeight() == WeightLight) sWeight = "Light";

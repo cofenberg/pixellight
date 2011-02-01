@@ -68,7 +68,7 @@ SpaceMouse::SpaceMouse(const String &sName, DeviceImpl *pImpl) : Device(sName, "
 	// Check if we have a HID backend
 	if (pImpl && pImpl->GetBackendType() == BackendHID) {
 		// Save extra pointer to HIDDevice
-		m_pHIDDevice = (HIDDevice*)pImpl;
+		m_pHIDDevice = static_cast<HIDDevice*>(pImpl);
 
 		// Connect to HIDDevice events
 		m_pHIDDevice->EventOnRead.Connect(&EventHandlerOnDeviceRead);
@@ -112,9 +112,9 @@ void SpaceMouse::OnDeviceRead()
 			// Translation
 			case 0x01:
 			{
-				float fTransX = (float)(int16)((pInputBuffer[1] & 0x000000ff) | ((int)pInputBuffer[2]<<8 & 0xffffff00));
-				float fTransY = (float)(int16)((pInputBuffer[3] & 0x000000ff) | ((int)pInputBuffer[4]<<8 & 0xffffff00));
-				float fTransZ = (float)(int16)((pInputBuffer[5] & 0x000000ff) | ((int)pInputBuffer[6]<<8 & 0xffffff00));
+				float fTransX = static_cast<float>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00));
+				float fTransY = static_cast<float>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00));
+				float fTransZ = static_cast<float>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00));
 				if (TransX.GetValue() != fTransX) TransX.SetValue(fTransX, false);
 				if (TransY.GetValue() != fTransY) TransY.SetValue(fTransY, false);
 				if (TransZ.GetValue() != fTransZ) TransZ.SetValue(fTransZ, false);
@@ -124,9 +124,9 @@ void SpaceMouse::OnDeviceRead()
 			// Rotation
 			case 0x02:
 			{
-				float fRotX = (float)(int16)((pInputBuffer[1] & 0x000000ff) | ((int)pInputBuffer[2]<<8 & 0xffffff00));
-				float fRotY = (float)(int16)((pInputBuffer[3] & 0x000000ff) | ((int)pInputBuffer[4]<<8 & 0xffffff00));
-				float fRotZ = (float)(int16)((pInputBuffer[5] & 0x000000ff) | ((int)pInputBuffer[6]<<8 & 0xffffff00));
+				float fRotX = static_cast<float>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00));
+				float fRotY = static_cast<float>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00));
+				float fRotZ = static_cast<float>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00));
 				if (RotX.GetValue() != fRotX) RotX.SetValue(fRotX, false);
 				if (RotY.GetValue() != fRotY) RotY.SetValue(fRotY, false);
 				if (RotZ.GetValue() != fRotZ) RotZ.SetValue(fRotZ, false);

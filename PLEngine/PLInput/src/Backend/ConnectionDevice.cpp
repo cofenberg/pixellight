@@ -91,7 +91,7 @@ uint32 ConnectionDevice::GetInputReportSize() const
 */
 void ConnectionDevice::SetInputReportSize(uint32 nSize)
 {
-	m_nInputReportSize = (uint16)nSize;
+	m_nInputReportSize = static_cast<uint16>(nSize);
 }
 
 /**
@@ -109,7 +109,7 @@ uint32 ConnectionDevice::GetOutputReportSize() const
 */
 void ConnectionDevice::SetOutputReportSize(uint32 nSize)
 {
-	m_nOutputReportSize = (uint16)nSize;
+	m_nOutputReportSize = static_cast<uint16>(nSize);
 }
 
 /**
@@ -306,7 +306,7 @@ void ConnectionDevice::UnlockMutex()
 int ConnectionDevice::ReadThread(void *pData)
 {
 	// Get handler
-	ConnectionDevice *pDevice = (ConnectionDevice*)pData;
+	ConnectionDevice *pDevice = static_cast<ConnectionDevice*>(pData);
 	while (!pDevice->m_bThreadExit) {
 		// Read data from device
 		pDevice->Read(pDevice->m_pInputBuffer, pDevice->m_nInputReportSize);

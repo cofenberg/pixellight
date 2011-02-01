@@ -137,7 +137,7 @@ void LED::SetOn(int nLED, bool bOn)
 	// Check index
 	if (nLED >= 0 && nLED < 32) {
 		// Set LED state
-		uint32 nMask = ((uint32)1) << nLED;
+		uint32 nMask = static_cast<uint32>(1) << nLED;
 		if (bOn)
 			m_nLEDs |= nMask;
 		else

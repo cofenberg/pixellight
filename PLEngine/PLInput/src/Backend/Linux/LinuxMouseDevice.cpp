@@ -67,7 +67,7 @@ void LinuxMouseDevice::Update()
 	// Check if input device is valid
 	if (m_pDevice) {
 		// Get mouse device
-		Mouse *pMouse = (Mouse*)m_pDevice;
+		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 
 		// Get mouse state
 		::Window 	 nRootWindow, nChildWindow;

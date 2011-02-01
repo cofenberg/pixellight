@@ -345,9 +345,9 @@ void Controller::InformControl(Control *pControl)
 		m_bChanged = true;
 
 		// Check if a button was hit
-		if (pControl->GetType() == ControlButton && ((Button*)pControl)->CheckHit()) {
+		if (pControl->GetType() == ControlButton && static_cast<Button*>(pControl)->CheckHit()) {
 			// Save key character
-			m_nChar = ((Button*)pControl)->GetCharacter();
+			m_nChar = static_cast<Button*>(pControl)->GetCharacter();
 		}
 
 		// Check if an output value was changed
@@ -393,8 +393,8 @@ void Controller::InitControlList(EControlType nType) const
 
 		// Add control to appropriate list
 		if (pControl->GetType() == nType) {
-				 if (nType == ControlButton)	m_lstButtons.Add((Button*) pControl);
-			else if (nType == ControlAxis)		m_lstAxes   .Add((Axis*)pControl);
+				 if (nType == ControlButton)	m_lstButtons.Add(static_cast<Button*>(pControl));
+			else if (nType == ControlAxis)		m_lstAxes   .Add(reinterpret_cast<Axis*>(pControl));
 		}
 	}
 }
