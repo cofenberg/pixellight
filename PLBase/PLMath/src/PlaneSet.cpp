@@ -458,7 +458,7 @@ void PlaneSet::CalculateSphere(Sphere &cSphere) const
 
 	// Get sphere position and radius
 	if (lstPoints.GetNumOfElements()) {
-		vD /= lstPoints.GetNumOfElements();
+		vD /= static_cast<float>(lstPoints.GetNumOfElements());
 		cSphere.SetPos(vD);
 		float fMaxLength = 0.0f;
 		for (uint32 i=0; i<lstPoints.GetNumOfElements(); i++) {

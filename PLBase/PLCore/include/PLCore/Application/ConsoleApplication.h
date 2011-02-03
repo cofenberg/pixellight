@@ -58,6 +58,9 @@ namespace PLCore {
 *    provides a name, title and version of the application. It also provides an instance
 *    of the command line parser to work with command line parameters (see PLGeneral::CommandLine
 *    for further explanations).
+*
+*  @note
+*    - Implementation of the template method design pattern (although this class is not abstract)
 */
 class ConsoleApplication {
 
