@@ -142,7 +142,7 @@ void JabberConnection::Message(const String &sTo, const String &sSubject, const 
 *  @brief
 *    Constructor
 */
-JabberConnection::JabberConnection(JabberClient &cClient) : Connection(static_cast<PLGeneral::Host&>(cClient)),
+JabberConnection::JabberConnection(JabberClient &cClient) : Connection(reinterpret_cast<PLGeneral::Host&>(cClient)),
 	m_cInput(*this),
 	m_cOutput(*this)
 {
