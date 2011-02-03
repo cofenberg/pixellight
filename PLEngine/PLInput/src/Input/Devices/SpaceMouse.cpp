@@ -112,9 +112,9 @@ void SpaceMouse::OnDeviceRead()
 			// Translation
 			case 0x01:
 			{
-				float fTransX = static_cast<float>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00));
-				float fTransY = static_cast<float>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00));
-				float fTransZ = static_cast<float>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00));
+				float fTransX = static_cast<float>(static_cast<int16>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
+				float fTransY = static_cast<float>(static_cast<int16>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
+				float fTransZ = static_cast<float>(static_cast<int16>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
 				if (TransX.GetValue() != fTransX) TransX.SetValue(fTransX, false);
 				if (TransY.GetValue() != fTransY) TransY.SetValue(fTransY, false);
 				if (TransZ.GetValue() != fTransZ) TransZ.SetValue(fTransZ, false);
@@ -124,9 +124,9 @@ void SpaceMouse::OnDeviceRead()
 			// Rotation
 			case 0x02:
 			{
-				float fRotX = static_cast<float>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00));
-				float fRotY = static_cast<float>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00));
-				float fRotZ = static_cast<float>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00));
+				float fRotX = static_cast<float>(static_cast<int16>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
+				float fRotY = static_cast<float>(static_cast<int16>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
+				float fRotZ = static_cast<float>(static_cast<int16>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
 				if (RotX.GetValue() != fRotX) RotX.SetValue(fRotX, false);
 				if (RotY.GetValue() != fRotY) RotY.SetValue(fRotY, false);
 				if (RotZ.GetValue() != fRotZ) RotZ.SetValue(fRotZ, false);
