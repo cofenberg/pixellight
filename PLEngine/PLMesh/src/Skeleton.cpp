@@ -75,7 +75,7 @@ void Skeleton::UpdateJointInformation()
 				nNumOfRootJoints++;
 			uint32 nNumOfChildren = 0;
 			for (uint32 j=0; j<m_lstElements.GetNumOfElements(); j++) {
-				if (m_lstElements[j]->GetParent() == (int)i)
+				if (m_lstElements[j]->GetParent() == static_cast<int>(i))
 					nNumOfChildren++;
 			}
 			pJoint->m_lstChildren.Resize(nNumOfChildren);
@@ -90,7 +90,7 @@ void Skeleton::UpdateJointInformation()
 				m_lstRootJoints[nNumOfRootJoints++] = i;
 			uint32 nNumOfChildren = 0;
 			for (uint32 j=0; j<m_lstElements.GetNumOfElements(); j++) {
-				if (m_lstElements[j]->GetParent() == (int)i) {
+				if (m_lstElements[j]->GetParent() == static_cast<int>(i)) {
 					pJoint->m_lstChildren[nNumOfChildren] = j;
 					nNumOfChildren++;
 				}
@@ -160,11 +160,11 @@ Skeleton &Skeleton::operator =(const Skeleton &cSource)
 	Unload();
 
 	// Call base function
-	*((Resource<Skeleton>*)this)    = cSource;
-	*((ElementManager<Joint>*)this) = cSource;
+	*static_cast<Resource<Skeleton>*>(this)    = cSource;
+	*static_cast<ElementManager<Joint>*>(this) = cSource;
 
 	// Call base functiona
-	*((JointAni*)this) = *((const JointAni*)&cSource);
+	*static_cast<JointAni*>(this) = *static_cast<const JointAni*>(&cSource);
 
 /* [TODO]
 	// Copy data

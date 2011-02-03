@@ -146,7 +146,7 @@ Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic, const String &s
 	if (pBaseClass) {
 		const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass(sName);
 		if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
-			MeshCreator *pMC = (MeshCreator*)pClass->Create();
+			MeshCreator *pMC = static_cast<MeshCreator*>(pClass->Create());
 			if (pMC) {
 				// Set parameters
 				if (sParameters.GetLength())

@@ -83,7 +83,7 @@ void InputStream::ParseStream(const String &sStream)
 		XmlElement *pRoot = cXml.GetRootElement();
 		if (pRoot) {
 			// Add element
-			XmlElement *pElement = (XmlElement*)pRoot->Clone();
+			XmlElement *pElement = static_cast<XmlElement*>(pRoot->Clone());
 			m_pStream->LinkEndChild(*pElement);
 
 			// Callback function for element

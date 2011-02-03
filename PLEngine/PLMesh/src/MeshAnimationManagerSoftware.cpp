@@ -106,9 +106,9 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 
 	{ // Set base morph target
 		// Get data
-		float *pfVertices   = (float*)pVB->GetData(0, VertexBuffer::Position);
+		float *pfVertices   = static_cast<float*>(pVB->GetData(0, VertexBuffer::Position));
 		uint32 nVertexSize  = pVB->GetVertexSize();
-		float *pfVerticesT  = (float*)pVBT->GetData(0, VertexBuffer::Position);
+		float *pfVerticesT  = static_cast<float*>(pVBT->GetData(0, VertexBuffer::Position));
 		uint32 nVertexTSize = pVBT->GetVertexSize();
 
 		// Loop through all vertices
@@ -119,8 +119,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			pfVerticesT[2] = pfVertices[2];
 
 			// Next data, please
-			pfVertices = (float*)((char*)pfVertices+nVertexSize);
-			pfVerticesT = (float*)((char*)pfVerticesT+nVertexTSize);
+			pfVertices = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVertices)+nVertexSize);
+			pfVerticesT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVerticesT)+nVertexTSize);
 		}
 	}
 
@@ -136,13 +136,13 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 				uint32         nVertexIDs   = lstVertexIDs.GetNumOfElements();
 				if (nVertexIDs) {
 					// Get data
-					float *pfVertices  = (float*)pVBMT->GetData(0, VertexBuffer::Position);
+					float *pfVertices  = static_cast<float*>(pVBMT->GetData(0, VertexBuffer::Position));
 					uint32 nVertexSize = pVBMT->GetVertexSize();
 
 					// Use vertex ID's to add certain deltas
 					for (uint32 nVertex=0; nVertex<nVertexIDs; nVertex++) {
 						// Get vertex to set
-						float *pfVerticesT = (float*)pVBT->GetData(lstVertexIDs[nVertex], VertexBuffer::Position);
+						float *pfVerticesT = static_cast<float*>(pVBT->GetData(lstVertexIDs[nVertex], VertexBuffer::Position));
 
 						// Set data
 						pfVerticesT[Vector3::X] += pfVertices[Vector3::X]*fWeight;
@@ -150,13 +150,13 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 						pfVerticesT[Vector3::Z] += pfVertices[Vector3::Z]*fWeight;
 
 						// Next data, please
-						pfVertices = (float*)((char*)pfVertices+nVertexSize);
+						pfVertices = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVertices)+nVertexSize);
 					}
 				} else {
 					// Get data
-					float *pfVertices  = (float*)pVBMT->GetData(0, VertexBuffer::Position);
+					float *pfVertices  = static_cast<float*>(pVBMT->GetData(0, VertexBuffer::Position));
 					uint32 nVertexSize = pVBMT->GetVertexSize();
-					float *pfVerticesT = (float*)pVBT->GetData(0, VertexBuffer::Position);
+					float *pfVerticesT = static_cast<float*>(pVBT->GetData(0, VertexBuffer::Position));
 					uint32 nVertexTSize = pVBT->GetVertexSize();
 
 					// Go through ALL vertices and add deltas
@@ -167,8 +167,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 						pfVerticesT[Vector3::Z] += pfVertices[Vector3::Z]*fWeight;
 
 						// Next data, please
-						pfVertices = (float*)((char*)pfVertices+nVertexSize);
-						pfVerticesT = (float*)((char*)pfVerticesT+nVertexTSize);
+						pfVertices = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVertices)+nVertexSize);
+						pfVerticesT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVerticesT)+nVertexTSize);
 					}
 				}
 				pVBMT->Unlock();
@@ -201,13 +201,13 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 	const Array<JointHandler> &lstJointHandlers = pSH->GetJointHandlers();
 
 	// Get data
-	float       *pfPosition   = (float*)      pVBT->GetData(0, VertexBuffer::Position);
-	const float *pfNormal     = (const float*)pVB-> GetData(0, VertexBuffer::Normal);
-	float       *pfNormalT    = (float*)      pVBT->GetData(0, VertexBuffer::Normal);
-	const float *pfTangent    = (const float*)pVB-> GetData(0, VertexBuffer::Tangent);
-	float       *pfTangentT   = (float*)      pVBT->GetData(0, VertexBuffer::Tangent);
-	const float *pfBinormal   = (const float*)pVB-> GetData(0, VertexBuffer::Binormal);
-	float       *pfBinormalT  = (float*)      pVBT->GetData(0, VertexBuffer::Binormal);
+	float       *pfPosition   = static_cast<float*>      (pVBT->GetData(0, VertexBuffer::Position));
+	const float *pfNormal     = static_cast<const float*>(pVB-> GetData(0, VertexBuffer::Normal));
+	float       *pfNormalT    = static_cast<float*>      (pVBT->GetData(0, VertexBuffer::Normal));
+	const float *pfTangent    = static_cast<const float*>(pVB-> GetData(0, VertexBuffer::Tangent));
+	float       *pfTangentT   = static_cast<float*>      (pVBT->GetData(0, VertexBuffer::Tangent));
+	const float *pfBinormal   = static_cast<const float*>(pVB-> GetData(0, VertexBuffer::Binormal));
+	float       *pfBinormalT  = static_cast<float*>      (pVBT->GetData(0, VertexBuffer::Binormal));
 	const uint32 nVertexSize  = pVB->GetVertexSize();
 	const uint32 nVertexTSize = pVBT->GetVertexSize();
 
@@ -242,7 +242,7 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 		pfPosition[Vector3::Y] = vPos.y;
 		pfPosition[Vector3::Z] = vPos.z;
 		// Next position, please
-		pfPosition = (float*)((char*)pfPosition+nVertexSize);
+		pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 	// Normal
 		if (pfNormal) {
@@ -265,8 +265,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			pfNormalT[Vector3::Y] = vPos.y;
 			pfNormalT[Vector3::Z] = vPos.z;
 			// Next normal, please
-			pfNormal = (const float*)((const char*)pfNormal+nVertexSize);
-			pfNormalT = (float*)((char*)pfNormalT+nVertexTSize);
+			pfNormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfNormal)+nVertexSize);
+			pfNormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfNormalT)+nVertexTSize);
 		}
 
 	// Tangent
@@ -290,8 +290,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			pfTangentT[Vector3::Y] = vPos.y;
 			pfTangentT[Vector3::Z] = vPos.z;
 			// Next tangent, please
-			pfTangent = (const float*)((const char*)pfTangent+nVertexSize);
-			pfTangentT = (float*)((char*)pfTangentT+nVertexTSize);
+			pfTangent = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfTangent)+nVertexSize);
+			pfTangentT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTangentT)+nVertexTSize);
 		}
 
 	// Binormal
@@ -315,8 +315,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			pfBinormalT[Vector3::Y] = vPos.y;
 			pfBinormalT[Vector3::Z] = vPos.z;
 			// Next binormal, please
-			pfBinormal = (const float*)((const char*)pfBinormal+nVertexSize);
-			pfBinormalT = (float*)((char*)pfBinormalT+nVertexTSize);
+			pfBinormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfBinormal)+nVertexSize);
+			pfBinormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfBinormalT)+nVertexTSize);
 		}
 
 		// Next vertex weights
@@ -367,7 +367,7 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			}
 
 			// Next position, please
-			pfPosition = (float*)((char*)pfPosition+nVertexSize);
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 			// Next vertex weights
 			pVertexWeights++;
@@ -427,11 +427,11 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			}
 
 			// Next position, please
-			pfPosition = (float*)((char*)pfPosition+nVertexSize);
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 			// Next normal, please
-			pfNormal = (const float*)((const char*)pfNormal+nVertexSize);
-			pfNormalT = (float*)((char*)pfNormalT+nVertexTSize);
+			pfNormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfNormal)+nVertexSize);
+			pfNormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfNormalT)+nVertexTSize);
 
 			// Next vertex weights
 			pVertexWeights++;
@@ -517,19 +517,19 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			}
 
 			// Next position, please
-			pfPosition = (float*)((char*)pfPosition+nVertexSize);
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 			// Next normal, please
-			pfNormal = (const float*)((const char*)pfNormal+nVertexSize);
-			pfNormalT = (float*)((char*)pfNormalT+nVertexTSize);
+			pfNormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfNormal)+nVertexSize);
+			pfNormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfNormalT)+nVertexTSize);
 
 			// Next tangent, please
-			pfTangent = (const float*)((const char*)pfTangent+nVertexSize);
-			pfTangentT = (float*)((char*)pfTangentT+nVertexTSize);
+			pfTangent = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfTangent)+nVertexSize);
+			pfTangentT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTangentT)+nVertexTSize);
 
 			// Next binormal, please
-			pfBinormal = (const float*)((const char*)pfBinormal+nVertexSize);
-			pfBinormalT = (float*)((char*)pfBinormalT+nVertexTSize);
+			pfBinormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfBinormal)+nVertexSize);
+			pfBinormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfBinormalT)+nVertexTSize);
 
 			// Next vertex weights
 			pVertexWeights++;
@@ -602,15 +602,15 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			}
 
 			// Next position, please
-			pfPosition = (float*)((char*)pfPosition+nVertexSize);
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 			// Next normal, please
-			pfNormal = (const float*)((const char*)pfNormal+nVertexSize);
-			pfNormalT = (float*)((char*)pfNormalT+nVertexTSize);
+			pfNormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfNormal)+nVertexSize);
+			pfNormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfNormalT)+nVertexTSize);
 
 			// Next tangent, please
-			pfTangent = (const float*)((const char*)pfTangent+nVertexSize);
-			pfTangentT = (float*)((char*)pfTangentT+nVertexTSize);
+			pfTangent = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfTangent)+nVertexSize);
+			pfTangentT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTangentT)+nVertexTSize);
 
 			// Next vertex weights
 			pVertexWeights++;
@@ -683,15 +683,15 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			}
 
 			// Next position, please
-			pfPosition = (float*)((char*)pfPosition+nVertexSize);
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 			// Next normal, please
-			pfNormal = (const float*)((const char*)pfNormal+nVertexSize);
-			pfNormalT = (float*)((char*)pfNormalT+nVertexTSize);
+			pfNormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfNormal)+nVertexSize);
+			pfNormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfNormalT)+nVertexTSize);
 
 			// Next binormal, please
-			pfBinormal = (const float*)((const char*)pfBinormal+nVertexSize);
-			pfBinormalT = (float*)((char*)pfBinormalT+nVertexTSize);
+			pfBinormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfBinormal)+nVertexSize);
+			pfBinormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfBinormalT)+nVertexTSize);
 
 			// Next vertex weights
 			pVertexWeights++;
@@ -722,7 +722,7 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 			pfPosition[Vector3::Y] = vPos.y;
 			pfPosition[Vector3::Z] = vPos.z;
 			// Next position, please
-			pfPosition = (float*)((char*)pfPosition+nVertexSize);
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 
 		// Normal
 			if (pfNormal) {
@@ -745,8 +745,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 				pfNormalT[Vector3::Y] = vPos.y;
 				pfNormalT[Vector3::Z] = vPos.z;
 				// Next normal, please
-				pfNormal = (const float*)((const char*)pfNormal+nVertexSize);
-				pfNormalT = (float*)((char*)pfNormalT+nVertexTSize);
+				pfNormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfNormal)+nVertexSize);
+				pfNormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfNormalT)+nVertexTSize);
 			}
 
 		// Tangent
@@ -770,8 +770,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 				pfTangentT[Vector3::Y] = vPos.y;
 				pfTangentT[Vector3::Z] = vPos.z;
 				// Next tangent, please
-				pfTangent = (const float*)((const char*)pfTangent+nVertexSize);
-				pfTangentT = (float*)((char*)pfTangentT+nVertexTSize);
+				pfTangent = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfTangent)+nVertexSize);
+				pfTangentT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTangentT)+nVertexTSize);
 			}
 
 		// Binormal
@@ -795,8 +795,8 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 				pfBinormalT[Vector3::Y] = vPos.y;
 				pfBinormalT[Vector3::Z] = vPos.z;
 				// Next binormal, please
-				pfBinormal = (const float*)((const char*)pfBinormal+nVertexSize);
-				pfBinormalT = (float*)((char*)pfBinormalT+nVertexTSize);
+				pfBinormal = reinterpret_cast<const float*>(reinterpret_cast<const char*>(pfBinormal)+nVertexSize);
+				pfBinormalT = reinterpret_cast<float*>(reinterpret_cast<char*>(pfBinormalT)+nVertexTSize);
 			}
 
 			// Next vertex weights

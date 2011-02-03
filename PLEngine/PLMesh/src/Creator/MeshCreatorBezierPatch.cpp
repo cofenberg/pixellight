@@ -147,7 +147,7 @@ Mesh *MeshCreatorBezierPatch::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 			// Create the first line of points
 			for (uint32 v=0; v<=Divisions; v++) {
 				// Percent along y axis
-				float fPY = ((float)v)/((float)Divisions);
+				float fPY = static_cast<float>(v)/static_cast<float>(Divisions);
 
 				// Use the 4 points from the derives curve to calculate the points along that curve
 				pvLast[v] = Bernstein(fPY, vTemp);
@@ -164,10 +164,10 @@ Mesh *MeshCreatorBezierPatch::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					uint32 nVertex = 0;
 					for (uint32 u=1; u<=Divisions; u++) {
 						// Percent along y axis
-						float fPY = ((float)u)/((float)Divisions);
+						float fPY = static_cast<float>(u)/static_cast<float>(Divisions);
 
 						// Percent along old y axis
-						float fPYOld = ((float)u-1.0f)/((float)Divisions);
+						float fPYOld = static_cast<float>(u-1.0f)/static_cast<float>(Divisions);
 
 						// Calculate new bezier points
 						vTemp[0] = Bernstein(fPY, m_vV[0]);
@@ -182,15 +182,15 @@ Mesh *MeshCreatorBezierPatch::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 						cGeometry.SetIndexSize((Divisions+1)*2);
 						for (uint32 v=0; v<=Divisions; v++) {
 							// Percent along the x axis
-							float fPX = ((float)v)/((float)Divisions);
+							float fPX = static_cast<float>(v)/static_cast<float>(Divisions);
 
 							// V0
-							float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + pvLast[v].x;
 							pfVertex[Vector3::Y] = vOffset.y + pvLast[v].y;
 							pfVertex[Vector3::Z] = vOffset.z + pvLast[v].z;
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 								pfVertex[Vector2::X] = fPX;
 								pfVertex[Vector2::Y] = fPYOld;
 							}
@@ -199,12 +199,12 @@ Mesh *MeshCreatorBezierPatch::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 
 							// V1
 							pvLast[v] = Bernstein(fPX, vTemp);	// Generate new point
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + pvLast[v].x;
 							pfVertex[Vector3::Y] = vOffset.y + pvLast[v].y;
 							pfVertex[Vector3::Z] = vOffset.z + pvLast[v].z;
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 								pfVertex[Vector2::X] = fPX;
 								pfVertex[Vector2::Y] = fPY;
 							}

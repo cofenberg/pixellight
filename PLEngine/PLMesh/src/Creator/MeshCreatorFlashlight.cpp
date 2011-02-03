@@ -109,17 +109,17 @@ Mesh *MeshCreatorFlashlight::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic)
 						cGeometry.SetPrimitiveType(Primitive::TriangleFan);
 						cGeometry.SetStartIndex(0);
 						for (uint32 i=0; i<Detail; i++) {
-							float ca = (float)Math::Cos(i*Math::Pi2/Detail);
-							float sa = (float)Math::Sin(i*Math::Pi2/Detail);
+							float ca = static_cast<float>(Math::Cos(i*Math::Pi2/Detail));
+							float sa = static_cast<float>(Math::Sin(i*Math::Pi2/Detail));
 							float *pfVertex;
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord));
 								pfVertex[Vector4::X] = 0.5f*(ca + 1);
 								pfVertex[Vector4::Y] = 0.5f*(sa + 1);
 								pfVertex[Vector4::Z] = 1.0f;
 								pfVertex[Vector4::W] = 1.0f;
 							}
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + 0.21f*ca;
 							pfVertex[Vector3::Y] = vOffset.y - 0.21f*sa;
 							pfVertex[Vector3::Z] = vOffset.z - 0.75f;
@@ -135,19 +135,19 @@ Mesh *MeshCreatorFlashlight::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic)
 						cGeometry.SetPrimitiveType(Primitive::TriangleStrip);
 						cGeometry.SetStartIndex(nIndex);
 						for (uint32 i=0; i<=Detail; i++) {
-							float ca = (float)Math::Cos(i*Math::Pi2/Detail);
-							float sa = (float)Math::Sin(i*Math::Pi2/Detail);
+							float ca = static_cast<float>(Math::Cos(i*Math::Pi2/Detail));
+							float sa = static_cast<float>(Math::Sin(i*Math::Pi2/Detail));
 
 							// 0
 							float *pfVertex;
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord));
 								pfVertex[Vector4::X] = 0.0f;
-								pfVertex[Vector4::Y] = float(2*i)/Detail;
+								pfVertex[Vector4::Y] = static_cast<float>(2*i)/Detail;
 								pfVertex[Vector4::Z] = 1.0f;
 								pfVertex[Vector4::W] = 1.0f;
 							}
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + 0.21f*ca;
 							pfVertex[Vector3::Y] = vOffset.y + 0.21f*sa;
 							pfVertex[Vector3::Z] = vOffset.z;
@@ -156,13 +156,13 @@ Mesh *MeshCreatorFlashlight::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic)
 
 							// 1
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord));
 								pfVertex[Vector4::X] = 3.0f;
-								pfVertex[Vector4::Y] = float(2*i)/Detail;
+								pfVertex[Vector4::Y] = static_cast<float>(2*i)/Detail;
 								pfVertex[Vector4::Z] = 1.0f;
 								pfVertex[Vector4::W] = 1.0f;
 							}
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + 0.21f*ca;
 							pfVertex[Vector3::Y] = vOffset.y + 0.21f*sa;
 							pfVertex[Vector3::Z] = vOffset.z - 0.75f;
@@ -179,19 +179,19 @@ Mesh *MeshCreatorFlashlight::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic)
 						cGeometry.SetStartIndex(nIndex);
 						nFirstIndex = nIndex;
 						for (uint32 i=0; i<=Detail; i++) {
-							float ca = (float)Math::Cos(i*Math::Pi2/Detail);
-							float sa = (float)Math::Sin(i*Math::Pi2/Detail);
+							float ca = static_cast<float>(Math::Cos(i*Math::Pi2/Detail));
+							float sa = static_cast<float>(Math::Sin(i*Math::Pi2/Detail));
 
 							// 0
 							float *pfVertex;
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord));
 								pfVertex[Vector4::X] = 0.0f;
-								pfVertex[Vector4::Y] = 35*float(2*i)/Detail;
+								pfVertex[Vector4::Y] = 35*static_cast<float>(2*i)/Detail;
 								pfVertex[Vector4::Z] = 0.0f;
 								pfVertex[Vector4::W] = 35.0f;
 							}
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + 0.35f*ca;
 							pfVertex[Vector3::Y] = vOffset.y + 0.35f*sa;
 							pfVertex[Vector3::Z] = vOffset.z + 0.25f;
@@ -200,13 +200,13 @@ Mesh *MeshCreatorFlashlight::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic)
 
 							// 1
 							if (TexCoords) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::TexCoord));
 								pfVertex[Vector4::X] = 21.0f;
-								pfVertex[Vector4::Y] = 21*float(2*i)/Detail;
+								pfVertex[Vector4::Y] = 21*static_cast<float>(2*i)/Detail;
 								pfVertex[Vector4::Z] = 0.0f;
 								pfVertex[Vector4::W] = 21.0f;
 							}
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + 0.21f*ca;
 							pfVertex[Vector3::Y] = vOffset.y + 0.21f*sa;
 							pfVertex[Vector3::Z] = vOffset.z;

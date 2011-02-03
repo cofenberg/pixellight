@@ -125,7 +125,7 @@ Mesh::~Mesh()
 */
 MeshManager *Mesh::GetMeshManager() const
 {
-	return (MeshManager*)GetManager();
+	return static_cast<MeshManager*>(GetManager());
 }
 
 /**
@@ -235,11 +235,11 @@ void Mesh::Draw(const Matrix4x4 &mWorldViewProjection, bool bBlend, uint32 nFlag
 								// Is the geometry using the current bound material and is this geometry active?
 								if (nMat == cGeometry.GetMaterial() && cGeometry.IsActive()) {
 									// Check if we have to bind this material the first time
-									if (nBoundMaterial != (int)nMat)
+									if (nBoundMaterial != static_cast<int>(nMat))
 										nBoundMaterial = nMat;
 
 									// Check if we have to bind this material pass the first time
-									if (nBoundPass != (int)nPass) {
+									if (nBoundPass != static_cast<int>(nPass)) {
 										nBoundPass = nPass;
 										pMaterial->SetupPass(nPass);
 									}
@@ -296,8 +296,8 @@ void Mesh::Draw(const Matrix4x4 &mWorldViewProjection, bool bBlend, uint32 nFlag
 				if (pVertexBuffer->Lock(Lock::ReadOnly)) {
 					if (pVertexBuffer->GetData(0, VertexBuffer::Normal, 0)) {
 						for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
-							const float *pP = (const float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
-							const float *pN = (const float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+							const float *pP = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
+							const float *pN = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 							m_pRenderer->GetDrawHelpers().DrawLine(Color4::White,
 																   Vector3(pP[Vector3::X], pP[Vector3::Y], pP[Vector3::Z]),
 																   Vector3(pP[Vector3::X]+pN[Vector3::X], pP[Vector3::Y]+pN[Vector3::Y], pP[Vector3::Z]+pN[Vector3::Z]),
@@ -349,9 +349,9 @@ Mesh &Mesh::operator =(const Mesh &cSource)
 
 	// Copy skeleton handlers
 	ClearSkeletonHandlers();
-	for (uint32 i=0; i<((Mesh&)cSource).GetSkeletonHandlers().GetNumOfElements(); i++) {
+	for (uint32 i=0; i<const_cast<Mesh&>(cSource).GetSkeletonHandlers().GetNumOfElements(); i++) {
 		SkeletonHandler *pSkeletonHandler = new SkeletonHandler();
-		pSkeletonHandler->SetResource(((Mesh&)cSource).GetSkeletonHandlers()[i]->GetResource());
+		pSkeletonHandler->SetResource(const_cast<Mesh&>(cSource).GetSkeletonHandlers()[i]->GetResource());
 		m_lstSkeletonHandler.Add(pSkeletonHandler);
 	}
 
@@ -803,8 +803,10 @@ bool Mesh::CalculateBoundingBox(Vector3 &vMin, Vector3 &vMax)
 			// Check components
 			if (nMorph) {
 				for (int i=0; i<3; i++) {
-					if (vMin[i] > vMinT[i]) vMin[i] = vMinT[i];
-					if (vMax[i] > vMaxT[i]) vMax[i] = vMaxT[i];
+					if (vMin[i] > vMinT[i])
+						vMin[i] = vMinT[i];
+					if (vMax[i] > vMaxT[i])
+						vMax[i] = vMaxT[i];
 				}
 			} else {
 				vMin = vMinT;

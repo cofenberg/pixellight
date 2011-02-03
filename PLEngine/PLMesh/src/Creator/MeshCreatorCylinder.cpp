@@ -136,13 +136,13 @@ Mesh *MeshCreatorCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) c
 					const Vector3 &vOffset = Offset.Get();
 
 					// Add center point of cap #1
-					float *pfVertex = (float*)pVertexBuffer->GetData(nNumVertices-2, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nNumVertices-2, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vOffset.x + 0.0f;
 					pfVertex[Vector3::Y] = vOffset.y - Height/2;
 					pfVertex[Vector3::Z] = vOffset.z + 0.0f;
 
 					// Add center point of cap #2
-					pfVertex = (float*)pVertexBuffer->GetData(nNumVertices-1, VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nNumVertices-1, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vOffset.x + 0.0f;
 					pfVertex[Vector3::Y] = vOffset.y + Height/2;
 					pfVertex[Vector3::Z] = vOffset.z + 0.0f;
@@ -152,13 +152,13 @@ Mesh *MeshCreatorCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) c
 					uint32 nVertex = 0;
 					bool   bParity = false;
 					float  fTheta  = 0.0f;
-					float  fAngle = (float)6.28f/Slices;
+					float  fAngle = 6.28f/static_cast<float>(Slices);
 					for (uint32 i=0, j=0; i<Slices; i++, j+=2, fTheta+=fAngle) {
 						// V0
 						float fX = BaseRadius*Math::Sin(fTheta);
 						float fY = BaseRadius*Math::Cos(fTheta);
 						if (TexCoords) {
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 							if (bParity) {
 								pfVertex[Vector2::X] = 0.0f;
 								pfVertex[Vector2::Y] = 1.0f;
@@ -167,7 +167,7 @@ Mesh *MeshCreatorCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) c
 								pfVertex[Vector2::Y] = 1.0f;
 							}
 						}
-						pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 						pfVertex[Vector3::X] = vOffset.x + fX;
 						pfVertex[Vector3::Y] = vOffset.y - Height/2;
 						pfVertex[Vector3::Z] = vOffset.z + fY;
@@ -178,7 +178,7 @@ Mesh *MeshCreatorCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) c
 						fX = TopRadius*Math::Sin(fTheta);
 						fY = TopRadius*Math::Cos(fTheta);
 						if (TexCoords) {
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 							if (bParity) {
 								pfVertex[Vector2::X] = 0.0f;
 								pfVertex[Vector2::Y] = 0.0f;
@@ -187,7 +187,7 @@ Mesh *MeshCreatorCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) c
 								pfVertex[Vector2::Y] = 0.0f;
 							}
 						}
-						pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 						pfVertex[Vector3::X] = vOffset.x + fX;
 						pfVertex[Vector3::Y] = vOffset.y + Height/2;
 						pfVertex[Vector3::Z] = vOffset.z + fY;

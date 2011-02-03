@@ -526,7 +526,7 @@ bool MeshLoaderPLXml::ReadVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nInde
 					const VertexBuffer::Attribute *pVertexAttribute = cVertexBuffer.GetVertexAttribute(nAttribute);
 
 					// Get the vertex data
-					const void *pData = cVertexBuffer.GetData(nVertex, pVertexAttribute->nSemantic, pVertexAttribute->nChannel);
+					void *pData = cVertexBuffer.GetData(nVertex, pVertexAttribute->nSemantic, pVertexAttribute->nChannel);
 
 					// Get the vertex attribute type
 					VertexBuffer::EType nType = VertexBuffer::RGBA;
@@ -555,42 +555,42 @@ bool MeshLoaderPLXml::ReadVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nInde
 							if (sValue.GetLength()) {
 								switch (nType) {
 									case VertexBuffer::RGBA:
-										ParseTools::ParseFloatArray(sValue, (float*)pData, 4);
+										ParseTools::ParseFloatArray(sValue, static_cast<float*>(pData), 4);
 										break;
 
 									case VertexBuffer::Float1:
-										ParseTools::ParseFloatArray(sValue, (float*)pData, 1);
+										ParseTools::ParseFloatArray(sValue, static_cast<float*>(pData), 1);
 										break;
 
 									case VertexBuffer::Float2:
-										ParseTools::ParseFloatArray(sValue, (float*)pData, 2);
+										ParseTools::ParseFloatArray(sValue, static_cast<float*>(pData), 2);
 										break;
 
 									case VertexBuffer::Float3:
-										ParseTools::ParseFloatArray(sValue, (float*)pData, 3);
+										ParseTools::ParseFloatArray(sValue, static_cast<float*>(pData), 3);
 										break;
 
 									case VertexBuffer::Float4:
-										ParseTools::ParseFloatArray(sValue, (float*)pData, 4);
+										ParseTools::ParseFloatArray(sValue, static_cast<float*>(pData), 4);
 										break;
 
 									case VertexBuffer::Short2:
 									{
 										int nData[2];
-										ParseTools::ParseIntegerArray(sValue, (int*)nData, 2);
-										((short*)pData)[0] = (short)nData[0];
-										((short*)pData)[1] = (short)nData[1];
+										ParseTools::ParseIntegerArray(sValue, static_cast<int*>(nData), 2);
+										static_cast<short*>(pData)[0] = static_cast<short>(nData[0]);
+										static_cast<short*>(pData)[1] = static_cast<short>(nData[1]);
 										break;
 									}
 
 									case VertexBuffer::Short4:
 									{
 										int nData[4];
-										ParseTools::ParseIntegerArray(sValue, (int*)nData, 4);
-										((short*)pData)[0] = (short)nData[0];
-										((short*)pData)[1] = (short)nData[1];
-										((short*)pData)[2] = (short)nData[2];
-										((short*)pData)[3] = (short)nData[3];
+										ParseTools::ParseIntegerArray(sValue, static_cast<int*>(nData), 4);
+										static_cast<short*>(pData)[0] = static_cast<short>(nData[0]);
+										static_cast<short*>(pData)[1] = static_cast<short>(nData[1]);
+										static_cast<short*>(pData)[2] = static_cast<short>(nData[2]);
+										static_cast<short*>(pData)[3] = static_cast<short>(nData[3]);
 										break;
 									}
 								}
@@ -1300,17 +1300,17 @@ bool MeshLoaderPLXml::WriteIndexBuffer(IndexBuffer &cIndexBuffer, XmlElement &cL
 		switch (cIndexBuffer.GetElementType()) {
 			case IndexBuffer::UInt:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += String::Format("%d ", ((uint32*)pData)[i]);
+					sValue += String::Format("%d ", static_cast<uint32*>(pData)[i]);
 				break;
 
 			case IndexBuffer::UShort:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += String::Format("%d ", ((uint16*)pData)[i]);
+					sValue += String::Format("%d ", static_cast<uint16*>(pData)[i]);
 				break;
 
 			case IndexBuffer::UByte:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += String::Format("%d ", ((uint8*)pData)[i]);
+					sValue += String::Format("%d ", static_cast<uint8*>(pData)[i]);
 				break;
 		}
 
@@ -1526,13 +1526,13 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 				// Add value
 				String sValue;
 				switch (pVertexAttribute->nType) {
-					case VertexBuffer::RGBA:	sValue = cVertexBuffer.GetColor(nVertex, pVertexAttribute->nChannel).ToString();											break;
-					case VertexBuffer::Float1:	sValue = String::Format("%f", *((float*)pData));																			break;
-					case VertexBuffer::Float2:	sValue = String::Format("%f %f", ((float*)pData)[0], ((float*)pData)[1]);													break;
-					case VertexBuffer::Float3:	sValue = String::Format("%f %f %f", ((float*)pData)[0], ((float*)pData)[1], ((float*)pData)[2]);							break;
-					case VertexBuffer::Float4:	sValue = String::Format("%f %f %f %f", ((float*)pData)[0], ((float*)pData)[1], ((float*)pData)[2], ((float*)pData)[3]);		break;
-					case VertexBuffer::Short2:	sValue = String::Format("%d %d", ((uint16*)pData)[0], ((uint16*)pData)[1]);													break;
-					case VertexBuffer::Short4:	sValue = String::Format("%d %d %d %d", ((uint16*)pData)[0], ((uint16*)pData)[1], ((uint16*)pData)[2], ((uint16*)pData)[3]);	break;
+					case VertexBuffer::RGBA:	sValue = cVertexBuffer.GetColor(nVertex, pVertexAttribute->nChannel).ToString();																												break;
+					case VertexBuffer::Float1:	sValue = String::Format("%f", *static_cast<const float*>(pData));																																break;
+					case VertexBuffer::Float2:	sValue = String::Format("%f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1]);																						break;
+					case VertexBuffer::Float3:	sValue = String::Format("%f %f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1], static_cast<const float*>(pData)[2]);												break;
+					case VertexBuffer::Float4:	sValue = String::Format("%f %f %f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1], static_cast<const float*>(pData)[2], static_cast<const float*>(pData)[3]);		break;
+					case VertexBuffer::Short2:	sValue = String::Format("%d %d", static_cast<const uint16*>(pData)[0], static_cast<const uint16*>(pData)[1]);																					break;
+					case VertexBuffer::Short4:	sValue = String::Format("%d %d %d %d", static_cast<const uint16*>(pData)[0], static_cast<const uint16*>(pData)[1], static_cast<const uint16*>(pData)[2], static_cast<const uint16*>(pData)[3]);	break;
 				}
 				XmlText *pValue = new XmlText(sValue);
 				pElement->LinkEndChild(*pValue);
@@ -1792,7 +1792,7 @@ bool MeshLoaderPLXml::WriteAnimations(const Mesh &cMesh, File &cFile, Stack<Mesh
 bool MeshLoaderPLXml::WriteMorphTargetAnimation(Mesh &cMesh, uint32 nAnimation, XmlElement &cMorphTargetAnimationsElement) const
 {
 	// Get the animation
-	MorphTargetAni *pAni = (MorphTargetAni*)cMesh.GetMorphTargetAnimationManager().Get(nAnimation);
+	MorphTargetAni *pAni = cMesh.GetMorphTargetAnimationManager().Get(nAnimation);
 	if (pAni) {
 		// Add morph target animation
 		XmlElement *pMorphTargetAnimationElement = new XmlElement("MorphTargetAnimation");

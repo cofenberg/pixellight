@@ -86,10 +86,10 @@ void MeshCreatorSuperEllipse::EvalSuperEllipse(float fT1, float fT2, float fP1, 
 	float st1 = Math::Sin(fT1);
 	float st2 = Math::Sin(fT2);
 
-	float tmp = float(Math::Sign(ct1)*Math::Pow(Math::Abs(ct1), fP1));
-	pV->x     = float(tmp*Math::Sign(ct2)*Math::Pow(Math::Abs(ct2), fP2));
-	pV->y     = float(Math::Sign(st1)*Math::Pow(Math::Abs(st1), fP1));
-	pV->z     = float(tmp*Math::Sign(st2)*Math::Pow(Math::Abs(st2), fP2));
+	float tmp = static_cast<float>(Math::Sign(ct1)*Math::Pow(Math::Abs(ct1), fP1));
+	pV->x     = static_cast<float>(tmp*Math::Sign(ct2)*Math::Pow(Math::Abs(ct2), fP2));
+	pV->y     = static_cast<float>(Math::Sign(st1)*Math::Pow(Math::Abs(st1), fP1));
+	pV->z     = static_cast<float>(tmp*Math::Sign(st2)*Math::Pow(Math::Abs(st2), fP2));
 }
 
 
@@ -129,7 +129,7 @@ Mesh *MeshCreatorSuperEllipse::Create(Mesh &cMesh, uint32 nLODLevel, bool bStati
 			Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
 			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 				if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-					float fDelta = (float) (0.01*Math::Pi2/Detail);
+					float fDelta = static_cast<float>(0.01*Math::Pi2/Detail);
 					Vector3 p, p1, p2, en;
 					uint32 nVertex = 0;
 					uint32 nIndex = 0;
@@ -144,10 +144,10 @@ Mesh *MeshCreatorSuperEllipse::Create(Mesh &cMesh, uint32 nLODLevel, bool bStati
 						cGeometry.SetStartIndex(nVertex);
 						cGeometry.SetIndexSize((Detail+1)*2);
 
-						float fTheta1 = (float)(j*Math::Pi2/(double)Detail - Math::PiHalf);
-						float fTheta2 = (float)((j+1)*Math::Pi2/(double)Detail - Math::PiHalf);
+						float fTheta1 = static_cast<float>(j*Math::Pi2/static_cast<double>(Detail) - Math::PiHalf);
+						float fTheta2 = static_cast<float>((j+1)*Math::Pi2/static_cast<double>(Detail) - Math::PiHalf);
 						for (uint32 i=0; i<=Detail; i++) {
-							float fTheta3 = (i && i < Detail) ? (float)(i*Math::Pi2/Detail) : 0;
+							float fTheta3 = (i && i < Detail) ? static_cast<float>(i*Math::Pi2/Detail) : 0;
 							float *pfVertex;
 							if (Order) {
 								// V0
@@ -155,18 +155,18 @@ Mesh *MeshCreatorSuperEllipse::Create(Mesh &cMesh, uint32 nLODLevel, bool bStati
 								EvalSuperEllipse(fTheta2+fDelta, fTheta3,		 Power1, Power2, &p1);
 								EvalSuperEllipse(fTheta2,		 fTheta3+fDelta, Power1, Power2, &p2);
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/Detail;
-									pfVertex[Vector2::Y] = (float)2*(j+1)/Detail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/Detail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*(j+1))/Detail;
 								}
 								if (Normals) {
 									en.GetFaceNormal(p1,p,p2);
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = en.x;
 									pfVertex[Vector3::Y] = en.y;
 									pfVertex[Vector3::Z] = en.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;
@@ -178,18 +178,18 @@ Mesh *MeshCreatorSuperEllipse::Create(Mesh &cMesh, uint32 nLODLevel, bool bStati
 								EvalSuperEllipse(fTheta1+fDelta, fTheta3,		 Power1, Power2, &p1);
 								EvalSuperEllipse(fTheta1,		 fTheta3+fDelta, Power1, Power2, &p2);
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/Detail;
-									pfVertex[Vector2::Y] = (float)2*j/Detail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/Detail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*j)/Detail;
 								}
 								if (Normals) {
 									en.GetFaceNormal(p1, p, p2);
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = en.x;
 									pfVertex[Vector3::Y] = en.y;
 									pfVertex[Vector3::Z] = en.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;
@@ -201,18 +201,18 @@ Mesh *MeshCreatorSuperEllipse::Create(Mesh &cMesh, uint32 nLODLevel, bool bStati
 								EvalSuperEllipse(fTheta1+fDelta, fTheta3,		 Power1, Power2, &p1);
 								EvalSuperEllipse(fTheta1,		 fTheta3+fDelta, Power1, Power2, &p2);
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/Detail;
-									pfVertex[Vector2::Y] = (float)2*j/Detail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/Detail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*j)/Detail;
 								}
 								if (Normals) {
 									en.GetFaceNormal(p1, p, p2);
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = en.x;
 									pfVertex[Vector3::Y] = en.y;
 									pfVertex[Vector3::Z] = en.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;
@@ -224,18 +224,18 @@ Mesh *MeshCreatorSuperEllipse::Create(Mesh &cMesh, uint32 nLODLevel, bool bStati
 								EvalSuperEllipse(fTheta2+fDelta, fTheta3,		 Power1, Power2, &p1);
 								EvalSuperEllipse(fTheta2,		 fTheta3+fDelta, Power1, Power2, &p2);
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/Detail;
-									pfVertex[Vector2::Y] = (float)2*(j+1)/Detail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/Detail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*(j+1))/Detail;
 								}
 								if (Normals) {
 									en.GetFaceNormal(p1,p,p2);
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = en.x;
 									pfVertex[Vector3::Y] = en.y;
 									pfVertex[Vector3::Z] = en.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;

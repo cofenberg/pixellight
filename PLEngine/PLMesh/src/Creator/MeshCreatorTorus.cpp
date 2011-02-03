@@ -99,8 +99,8 @@ Mesh *MeshCreatorTorus::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) cons
 
 		// Setup vertices
 		if (pVertexBuffer->Lock(Lock::WriteOnly)) {
-			const float fRingDelta = (float)(Math::Pi2/(nRings-1));
-			const float fSideDelta = (float)(Math::Pi2/(nSides-1));
+			const float fRingDelta = static_cast<float>(Math::Pi2/(nRings-1));
+			const float fSideDelta = static_cast<float>(Math::Pi2/(nSides-1));
 			float fRadius = Width;
 			float fWidth  = Radius;
 
@@ -121,7 +121,7 @@ Mesh *MeshCreatorTorus::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) cons
 
 					// (x,y,z) below is the parametric equation for a torus
 					// when theta and phi both vary from 0 to pi
-					float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					// x = cos(theta)*(R + r*cos(phi))
 					pfVertex[Vector3::X] = vOffset.x + cosTheta*dist;
 					// y = -sin(theta)*(R + r*cos(phi))
@@ -131,14 +131,14 @@ Mesh *MeshCreatorTorus::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) cons
 
 					// Texture coordinates for each vertex
 					if (TexCoords) {
-						pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-						pfVertex[Vector2::X] = (float)j/nSides;
-						pfVertex[Vector2::Y] = (float)i/nRings;
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+						pfVertex[Vector2::X] = static_cast<float>(j)/nSides;
+						pfVertex[Vector2::Y] = static_cast<float>(i)/nRings;
 					}
 
 					// Normal
 					if (Normals) {
-						pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = cosTheta*cosPhi;
 						pfVertex[Vector3::Y] = -sinTheta*cosPhi;
 						pfVertex[Vector3::Z] = sinPhi;

@@ -197,9 +197,9 @@ bool MeshAnimationManager::Apply(MeshHandler &cMeshHandler) const
 						// Get morph target animation
 						const MorphTargetAni *pMorphTargetAni;
 						if (pAnimation->GetAnimation() && pAnimation->GetAnimation()->GetSourceName().GetLength())
-							pMorphTargetAni = (MorphTargetAni*)pMesh->GetMorphTargetAnimationManager().Get(pAnimation->GetAnimation()->GetSourceName());
+							pMorphTargetAni = pMesh->GetMorphTargetAnimationManager().Get(pAnimation->GetAnimation()->GetSourceName());
 						else
-							pMorphTargetAni = (MorphTargetAni*)pMesh->GetMorphTargetAnimationManager().Get(pAnimation->GetName());
+							pMorphTargetAni = pMesh->GetMorphTargetAnimationManager().Get(pAnimation->GetName());
 						if (pMorphTargetAni) {
 							// Add animation
 							pMorphTargetAni->ApplyMorphTargetWeight(cMeshHandler.GetMorphTargetWeights(),

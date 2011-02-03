@@ -117,7 +117,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						if (pIndexBuffer->Lock(Lock::WriteOnly)) {
 							float fDeltaRadius = (OuterRadius - InnerRadius)/Loops;
-							float fDeltaAngle  = (float)(Math::DegToRad*(SweepAngle/Slices));
+							float fDeltaAngle  = static_cast<float>(Math::DegToRad*(SweepAngle/Slices));
 							float fRadius      = InnerRadius;
 
 							// Get offset
@@ -127,7 +127,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 							Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
 							uint32 nVertex = 0;
 							for (uint32 nLoop=0; nLoop<Loops; nLoop++) {
-								float fAngle = (float)(Math::DegToRad*StartAngle);
+								float fAngle = static_cast<float>(Math::DegToRad*StartAngle);
 
 								// Create and setup the geometry
 								Geometry &cGeometry = lstGeometries.Add();
@@ -138,12 +138,12 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 								for (uint32 nSlice=0; nSlice<=Slices; nSlice++) {
 									if (Order) {
 										// Set vertex 0
-										float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + fRadius*Math::Sin(fAngle);
 										pfVertex[Vector3::Y] = vOffset.y + fRadius*Math::Cos(fAngle);
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] =  0.0f;
 											pfVertex[Vector3::Y] =  0.0f;
 											pfVertex[Vector3::Z] = -1.0f;
@@ -154,12 +154,12 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 										nVertex++;
 
 										// Set vertex 1
-										pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + (fRadius + fDeltaRadius)*Math::Sin(fAngle);
 										pfVertex[Vector3::Y] = vOffset.y + (fRadius + fDeltaRadius)*Math::Cos(fAngle);
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] =  0.0f;
 											pfVertex[Vector3::Y] =  0.0f;
 											pfVertex[Vector3::Z] = -1.0f;
@@ -170,12 +170,12 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 										nVertex++;
 									} else {
 										// Set vertex 0
-										float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + (fRadius + fDeltaRadius)*Math::Sin(fAngle);
 										pfVertex[Vector3::Y] = vOffset.y + (fRadius + fDeltaRadius)*Math::Cos(fAngle);
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] = 0.0f;
 											pfVertex[Vector3::Y] = 0.0f;
 											pfVertex[Vector3::Z] = 1.0f;
@@ -186,12 +186,12 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 										nVertex++;
 
 										// Set vertex 1
-										pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + fRadius*Math::Sin(fAngle);
 										pfVertex[Vector3::Y] = vOffset.y + fRadius*Math::Cos(fAngle);
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] = 0.0f;
 											pfVertex[Vector3::Y] = 0.0f;
 											pfVertex[Vector3::Z] = 1.0f;
@@ -232,7 +232,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						if (pIndexBuffer->Lock(Lock::WriteOnly)) {
 							float fDeltaRadius = (OuterRadius - InnerRadius)/float(Loops);
-							float fDeltaAngle  = (float)(Math::DegToRad*(SweepAngle/float(Slices)));
+							float fDeltaAngle  = static_cast<float>(Math::DegToRad*(SweepAngle/float(Slices)));
 							float fRadius      = InnerRadius;
 
 							// Get offset
@@ -244,7 +244,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 
 						// Draw rings
 							for (uint32 nLoop=0; nLoop<=Loops; nLoop++) {
-								float fAngle = (float)(Math::DegToRad*StartAngle);
+								float fAngle = static_cast<float>(Math::DegToRad*StartAngle);
 
 								// Create and setup the geometry
 								Geometry &cGeometry = lstGeometries.Add();
@@ -254,7 +254,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 
 								for (uint32 nSlice=0; nSlice<=Slices; nSlice++) {
 									// Set vertex 0
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + fRadius*Math::Sin(fAngle);
 									pfVertex[Vector3::Y] = vOffset.y + fRadius*Math::Cos(fAngle);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -272,7 +272,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 							}
 
 						// Draw spokes
-							float fAngle = (float)(Math::DegToRad*StartAngle);
+							float fAngle = static_cast<float>(Math::DegToRad*StartAngle);
 							for (uint32 nSlice=0; nSlice<=Slices; nSlice++) {
 								fRadius = InnerRadius;
 
@@ -284,7 +284,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 
 								for (uint32 nLoop=0; nLoop<=Loops; nLoop++) {
 									// Set vertex 0
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + fRadius*Math::Sin(fAngle);
 									pfVertex[Vector3::Y] = vOffset.y + fRadius*Math::Cos(fAngle);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -326,7 +326,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					// Setup vertices & geometry
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-							float fDeltaAngle = (float)(Math::DegToRad*SweepAngle/float(Slices));
+							float fDeltaAngle = static_cast<float>(Math::DegToRad*SweepAngle/float(Slices));
 
 							// Get offset
 							const Vector3 &vOffset = Offset.Get();
@@ -342,10 +342,10 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 								cGeometry.SetStartIndex(nVertex);
 								cGeometry.SetIndexSize(Slices+1);
 								// Setup vertex and index buffer
-								float fAngle = (float)(Math::DegToRad*StartAngle);
+								float fAngle = static_cast<float>(Math::DegToRad*StartAngle);
 								for (uint32 nSlice=0; nSlice<=Slices; nSlice++) {
 									// Set vertex 0
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(fAngle);
 									pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(fAngle);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -368,10 +368,10 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 								cGeometry.SetIndexSize(Slices+1);
 
 								// Setup vertex and index buffer
-								float fAngle = (float)(Math::DegToRad*StartAngle);
+								float fAngle = static_cast<float>(Math::DegToRad*StartAngle);
 								for (uint32 nSlice=0; nSlice<=Slices; nSlice++) {
 									// Set vertex 0
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(fAngle);
 									pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(fAngle);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -398,33 +398,33 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 
 								// Setup vertex and index buffer
 								// Set vertex 0
-								float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
-								pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(float(StartAngle*Math::DegToRad));
-								pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(float(StartAngle*Math::DegToRad));
+								float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
+								pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(static_cast<float>(StartAngle*Math::DegToRad));
+								pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(static_cast<float>(StartAngle*Math::DegToRad));
 								pfVertex[Vector3::Z] = vOffset.z;
 								// Set index 0
 								pIndexBuffer->SetData(nVertex, nVertex);
 								nVertex++;
 								// Set vertex 1
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
-								pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(float(StartAngle*Math::DegToRad));
-								pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(float(StartAngle*Math::DegToRad));
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
+								pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(static_cast<float>(StartAngle*Math::DegToRad));
+								pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(static_cast<float>(StartAngle*Math::DegToRad));
 								pfVertex[Vector3::Z] = vOffset.z;
 								// Set index 1
 								pIndexBuffer->SetData(nVertex, nVertex);
 								nVertex++;
 								// Set vertex 2
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
-								pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(float(fStopAngle*Math::DegToRad));
-								pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(float(fStopAngle*Math::DegToRad));
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
+								pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(static_cast<float>(fStopAngle*Math::DegToRad));
+								pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(static_cast<float>(fStopAngle*Math::DegToRad));
 								pfVertex[Vector3::Z] = vOffset.z;
 								// Set index 2
 								pIndexBuffer->SetData(nVertex, nVertex);
 								nVertex++;
 								// Set vertex 3
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
-								pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(float(fStopAngle*Math::DegToRad));
-								pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(float(fStopAngle*Math::DegToRad));
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
+								pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(static_cast<float>(fStopAngle*Math::DegToRad));
+								pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(static_cast<float>(fStopAngle*Math::DegToRad));
 								pfVertex[Vector3::Z] = vOffset.z;
 								// Set index 3
 								pIndexBuffer->SetData(nVertex, nVertex);
@@ -453,7 +453,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						if (pIndexBuffer->Lock(Lock::WriteOnly)) {
 							float fDeltaRadius = (OuterRadius - InnerRadius)/Loops;
-							float fDeltaAngle  = float(Math::DegToRad*SweepAngle/Slices);
+							float fDeltaAngle  = static_cast<float>(Math::DegToRad*SweepAngle/Slices);
 
 							// Get offset
 							const Vector3 &vOffset = Offset.Get();
@@ -469,10 +469,10 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 							uint32 nVertex = 0;
 							float fRadius = InnerRadius;
 							for (uint32 nLoop=0; nLoop<=Loops; nLoop++) {
-								float fAngle = (float)(Math::DegToRad*StartAngle);
+								float fAngle = static_cast<float>(Math::DegToRad*StartAngle);
 								for (uint32 nSlice=0; nSlice<=Slices; nSlice++) {
 									// Set vertex
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + fRadius*Math::Sin(fAngle);
 									pfVertex[Vector3::Y] = vOffset.y + fRadius*Math::Cos(fAngle);
 									pfVertex[Vector3::Z] = vOffset.z;

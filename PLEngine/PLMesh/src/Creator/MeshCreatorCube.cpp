@@ -84,7 +84,7 @@ void MeshCreatorCube::SetNormals(VertexBuffer &cVertexBuffer, uint32 nSide, floa
 {
 	// Set the normal vector of each corner vertex
 	for (uint32 i=0; i<4; i++) {
-		float *pfVertices = (float*)cVertexBuffer.GetData(i + nSide*4, VertexBuffer::Normal);
+		float *pfVertices = static_cast<float*>(cVertexBuffer.GetData(i + nSide*4, VertexBuffer::Normal));
 		pfVertices[Vector3::X] = fX;
 		pfVertices[Vector3::Y] = fY;
 		pfVertices[Vector3::Z] = fZ;
@@ -119,150 +119,150 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 			if (pVertexBuffer->Lock(Lock::WriteOnly)) { // Setup vertices
 			// x-positive (0)
 				// 0
-				float *pfVertices = (float*)pVertexBuffer->GetData(0, VertexBuffer::Position);
+				float *pfVertices = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 1
-				pfVertices = (float*)pVertexBuffer->GetData(1, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::Position));
 				pfVertices[Vector3::X] = vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = vDimension.z + vOffset.z;
 
 				// 2
-				pfVertices = (float*)pVertexBuffer->GetData(2, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 3
-				pfVertices = (float*)pVertexBuffer->GetData(3, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(3, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 			// x-negative (1)
 				// 4
-				pfVertices = (float*)pVertexBuffer->GetData(4, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(4, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 5
-				pfVertices = (float*)pVertexBuffer->GetData(5, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(5, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 6
-				pfVertices = (float*)pVertexBuffer->GetData(6, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(6, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 7
-				pfVertices = (float*)pVertexBuffer->GetData(7, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(7, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 			// y-positive (2)
 				// 8
-				pfVertices = (float*)pVertexBuffer->GetData(8, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(8, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 9
-				pfVertices = (float*)pVertexBuffer->GetData(9, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(9, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 10
-				pfVertices = (float*)pVertexBuffer->GetData(10, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(10, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 11
-				pfVertices = (float*)pVertexBuffer->GetData(11, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(11, VertexBuffer::Position));
 				pfVertices[Vector3::X] = vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = vDimension.z + vOffset.z;
 
 			// y-negative (3)
 				// 12
-				pfVertices = (float*)pVertexBuffer->GetData(12, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(12, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 13
-				pfVertices = (float*)pVertexBuffer->GetData(13, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(13, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 14
-				pfVertices = (float*)pVertexBuffer->GetData(14, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(14, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 15
-				pfVertices = (float*)pVertexBuffer->GetData(15, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(15, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 			// z-positive (4)
 				// 16
-				pfVertices = (float*)pVertexBuffer->GetData(16, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(16, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 17
-				pfVertices = (float*)pVertexBuffer->GetData(17, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(17, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 18
-				pfVertices = (float*)pVertexBuffer->GetData(18, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(18, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 19
-				pfVertices = (float*)pVertexBuffer->GetData(19, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(19, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 			// z-negative (5)
 				// 20
-				pfVertices = (float*)pVertexBuffer->GetData(20, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(20, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 21
-				pfVertices = (float*)pVertexBuffer->GetData(21, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(21, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 22
-				pfVertices = (float*)pVertexBuffer->GetData(22, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(22, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 23
-				pfVertices = (float*)pVertexBuffer->GetData(23, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(23, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
@@ -271,22 +271,22 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 				if (TexCoords) {
 					for (int nSide=0; nSide<6; nSide++) {
 						// 0
-						pfVertices = (float*)pVertexBuffer->GetData(0+nSide*4, VertexBuffer::TexCoord);
+						pfVertices = static_cast<float*>(pVertexBuffer->GetData(0+nSide*4, VertexBuffer::TexCoord));
 						pfVertices[Vector2::X] = 1.0f;
 						pfVertices[Vector2::Y] = 0.0f;
 
 						// 1
-						pfVertices = (float*)pVertexBuffer->GetData(1+nSide*4, VertexBuffer::TexCoord);
+						pfVertices = static_cast<float*>(pVertexBuffer->GetData(1+nSide*4, VertexBuffer::TexCoord));
 						pfVertices[Vector2::X] = 0.0f;
 						pfVertices[Vector2::Y] = 0.0f;
 
 						// 2
-						pfVertices = (float*)pVertexBuffer->GetData(2+nSide*4, VertexBuffer::TexCoord);
+						pfVertices = static_cast<float*>(pVertexBuffer->GetData(2+nSide*4, VertexBuffer::TexCoord));
 						pfVertices[Vector2::X] = 0.0f;
 						pfVertices[Vector2::Y] = 1.0f;
 
 						// 3
-						pfVertices = (float*)pVertexBuffer->GetData(3+nSide*4, VertexBuffer::TexCoord);
+						pfVertices = static_cast<float*>(pVertexBuffer->GetData(3+nSide*4, VertexBuffer::TexCoord));
 						pfVertices[Vector2::X] = 1.0f;
 						pfVertices[Vector2::Y] = 1.0f;
 					}
@@ -362,49 +362,49 @@ Mesh *MeshCreatorCube::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 			pVertexBuffer->Allocate(8, bStatic ? Usage::Static : Usage::Dynamic);
 			if (pVertexBuffer->Lock(Lock::WriteOnly)) { // Setup vertices
 				// 0
-				float *pfVertices = (float*)pVertexBuffer->GetData(0, VertexBuffer::Position);
+				float *pfVertices = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 1
-				pfVertices = (float*)pVertexBuffer->GetData(1, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 2
-				pfVertices = (float*)pVertexBuffer->GetData(2, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 3
-				pfVertices = (float*)pVertexBuffer->GetData(3, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(3, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] =  vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 4
-				pfVertices = (float*)pVertexBuffer->GetData(4, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(4, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 5
-				pfVertices = (float*)pVertexBuffer->GetData(5, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(5, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] = -vDimension.z + vOffset.z;
 
 				// 6
-				pfVertices = (float*)pVertexBuffer->GetData(6, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(6, VertexBuffer::Position));
 				pfVertices[Vector3::X] =  vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;
 
 				// 7
-				pfVertices = (float*)pVertexBuffer->GetData(7, VertexBuffer::Position);
+				pfVertices = static_cast<float*>(pVertexBuffer->GetData(7, VertexBuffer::Position));
 				pfVertices[Vector3::X] = -vDimension.x + vOffset.x;
 				pfVertices[Vector3::Y] = -vDimension.y + vOffset.y;
 				pfVertices[Vector3::Z] =  vDimension.z + vOffset.z;

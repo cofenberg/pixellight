@@ -321,7 +321,7 @@ bool MeshLoaderPL::ReadIndexBuffer(File &cFile, IndexBuffer &cIndexBuffer, bool 
 	MeshFile::IndexBuffer sIndexBuffer;
 	if (!cFile.Read(&sIndexBuffer, 1, sizeof(sIndexBuffer)))
 		return false; // Error!
-	cIndexBuffer.SetElementType((IndexBuffer::EType)sIndexBuffer.nElementType);
+	cIndexBuffer.SetElementType(static_cast<IndexBuffer::EType>(sIndexBuffer.nElementType));
 	cIndexBuffer.Allocate(sIndexBuffer.nElements, bStatic ? Usage::Static : Usage::Dynamic);
 
 	// Read data
@@ -351,7 +351,7 @@ bool MeshLoaderPL::ReadGeometry(File &cFile, Geometry &cGeometry) const
 	cGeometry.SetName		  (sGeometry.szName);
 	cGeometry.SetFlags		  (sGeometry.nFlags);
 	cGeometry.SetActive		  (sGeometry.bActive);
-	cGeometry.SetPrimitiveType((Primitive::Enum)sGeometry.nPrimitiveType);
+	cGeometry.SetPrimitiveType(static_cast<Primitive::Enum>(sGeometry.nPrimitiveType));
 	cGeometry.SetMaterial	  (sGeometry.nMaterial);
 	cGeometry.SetStartIndex   (sGeometry.nStartIndex);
 	cGeometry.SetIndexSize	  (sGeometry.nIndexSize);
@@ -471,9 +471,9 @@ bool MeshLoaderPL::ReadVertexAttribute(File &cFile, VertexBuffer &cVertexBuffer)
 	if (!cFile.Read(&sVertexAttribute, 1, sizeof(sVertexAttribute)))
 		return false; // Error!
 	cVertexBuffer.AddVertexAttribute(
-		(VertexBuffer::ESemantic)sVertexAttribute.nSemantic,
+		static_cast<VertexBuffer::ESemantic>(sVertexAttribute.nSemantic),
 		sVertexAttribute.nChannel,
-		(VertexBuffer::EType)sVertexAttribute.nType
+		static_cast<VertexBuffer::EType>(sVertexAttribute.nType)
 	);
 
 	// Done
@@ -1243,7 +1243,7 @@ bool MeshLoaderPL::WriteAnimations(const Mesh &cMesh, File &cFile, Stack<MeshFil
 bool MeshLoaderPL::WriteMorphTargetAnimation(Mesh &cMesh, File &cFile, Stack<MeshFile::Chunk> &cChunkStack, uint32 nAnimation) const
 {
 	// Get the animation
-	MorphTargetAni *pAni = (MorphTargetAni*)cMesh.GetMorphTargetAnimationManager().Get(nAnimation);
+	MorphTargetAni *pAni = cMesh.GetMorphTargetAnimationManager().Get(nAnimation);
 	if (pAni) {
 		// Start chunk
 		if (BeginChunk(cFile, cChunkStack, MeshFile::CHUNK_MORPHTARGETANIMATION)) {

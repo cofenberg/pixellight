@@ -144,8 +144,8 @@ JointHandler &JointHandler::operator =(const JointHandler &cSource)
 	SetElement(cSource.GetElement());
 
 	// Copy joint state
-	m_bUserControlled    = cSource.m_bUserControlled;
-	*((JointState*)this) = *((const JointState*)&cSource);
+	m_bUserControlled = cSource.m_bUserControlled;
+	*static_cast<JointState*>(this) = *static_cast<const JointState*>(&cSource);
 
 	// Return this
 	return *this;
@@ -160,7 +160,7 @@ bool JointHandler::operator ==(const JointHandler &cJointHandler) const
 	// Compare element and joint state
 	return (GetElement() == cJointHandler.GetElement()			 &&
 		    m_bUserControlled == cJointHandler.m_bUserControlled &&
-		    *((const JointState*)this) == *((const JointState*)&cJointHandler));
+		    *static_cast<const JointState*>(this) == *static_cast<const JointState*>(&cJointHandler));
 }
 
 

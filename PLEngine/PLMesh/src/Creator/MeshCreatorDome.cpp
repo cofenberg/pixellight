@@ -92,7 +92,7 @@ Mesh *MeshCreatorDome::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 		pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
 		if (TexCoords)
 			pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
-		pVertexBuffer->Allocate((uint32)((360/DTheta)*(90/DPhi)*4), bStatic ? Usage::Static : Usage::Dynamic);
+		pVertexBuffer->Allocate(static_cast<uint32>((360/DTheta)*(90/DPhi)*4), bStatic ? Usage::Static : Usage::Dynamic);
 
 		// Setup vertices & geometry
 		if (pVertexBuffer->Lock(Lock::WriteOnly)) {
@@ -101,15 +101,15 @@ Mesh *MeshCreatorDome::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 
 			// Generate the dome
 			uint32 nVertex = 0;
-			for (int nPhi=0; nPhi<=90-DPhi; nPhi+=(uint32)DPhi) {
-				for (int nTheta=0; nTheta<=360-DTheta; nTheta+=(uint32)DTheta) {
+			for (int nPhi=0; nPhi<=90-DPhi; nPhi+=static_cast<uint32>(DPhi)) {
+				for (int nTheta=0; nTheta<=360-DTheta; nTheta+=static_cast<uint32>(DTheta)) {
 					// Calculate the vertex at nPhi, nTheta
-					float vx = float(Radius*Math::Sin(nPhi*Math::DegToRad)*Math::Cos(Math::DegToRad*nTheta));
-					float vy = float(Radius*Math::Sin(nPhi*Math::DegToRad)*Math::Sin(Math::DegToRad*nTheta));
-					float vz = float(Radius*Math::Cos(nPhi*Math::DegToRad));
+					float vx = static_cast<float>(Radius*Math::Sin(nPhi*Math::DegToRad)*Math::Cos(Math::DegToRad*nTheta));
+					float vy = static_cast<float>(Radius*Math::Sin(nPhi*Math::DegToRad)*Math::Sin(Math::DegToRad*nTheta));
+					float vz = static_cast<float>(Radius*Math::Cos(nPhi*Math::DegToRad));
 
 					// Set vertex
-					float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[0] = vOffset.x + vx;
 					pfVertex[1] = vOffset.y + vz;
 					pfVertex[2] = vOffset.z + vy;
@@ -123,19 +123,19 @@ Mesh *MeshCreatorDome::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 
 					// Calculate the spherical texture coordinates
 					if (TexCoords) {
-						pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-						pfVertex[0] = HTile * (float)(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
-						pfVertex[1] = VTile * (float)(Math::ASin(vy)/Math::Pi) + 0.5f;
+						pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+						pfVertex[0] = HTile * static_cast<float>(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
+						pfVertex[1] = VTile * static_cast<float>(Math::ASin(vy)/Math::Pi) + 0.5f;
 					}
 					nVertex++;
 
 					// Calculate the vertex at nPhi+DPhi, nTheta
-					vx = float(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Cos(nTheta*Math::DegToRad));
-					vy = float(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Sin(nTheta*Math::DegToRad));
-					vz = float(Radius*Math::Cos((nPhi+DPhi)*Math::DegToRad));
+					vx = static_cast<float>(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Cos(nTheta*Math::DegToRad));
+					vy = static_cast<float>(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Sin(nTheta*Math::DegToRad));
+					vz = static_cast<float>(Radius*Math::Cos((nPhi+DPhi)*Math::DegToRad));
 					
 					// Set vertex
-					pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[0] = vOffset.x + vx;
 					pfVertex[1] = vOffset.y + vz;
 					pfVertex[2] = vOffset.z + vy;
@@ -148,19 +148,19 @@ Mesh *MeshCreatorDome::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 
 					// Calculate the spherical texture coordinates
 					if (TexCoords) {
-						pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-						pfVertex[0] = HTile * (float)(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
-						pfVertex[1] = VTile * (float)(Math::ASin(vy)/Math::Pi) + 0.5f;
+						pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+						pfVertex[0] = HTile * static_cast<float>(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
+						pfVertex[1] = VTile * static_cast<float>(Math::ASin(vy)/Math::Pi) + 0.5f;
 					}
 					nVertex++;
 
 					// Calculate the vertex at nPhi, nTheta+DTheta
-					vx = float(Radius*Math::Sin(Math::DegToRad*nPhi)*Math::Cos(Math::DegToRad*(nTheta+DTheta)));
-					vy = float(Radius*Math::Sin(Math::DegToRad*nPhi)*Math::Sin(Math::DegToRad*(nTheta+DTheta)));
-					vz = float(Radius*Math::Cos(Math::DegToRad*nPhi));
+					vx = static_cast<float>(Radius*Math::Sin(Math::DegToRad*nPhi)*Math::Cos(Math::DegToRad*(nTheta+DTheta)));
+					vy = static_cast<float>(Radius*Math::Sin(Math::DegToRad*nPhi)*Math::Sin(Math::DegToRad*(nTheta+DTheta)));
+					vz = static_cast<float>(Radius*Math::Cos(Math::DegToRad*nPhi));
 
 					// Set vertex
-					pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[0] = vOffset.x + vx;
 					pfVertex[1] = vOffset.y + vz;
 					pfVertex[2] = vOffset.z + vy;
@@ -173,20 +173,20 @@ Mesh *MeshCreatorDome::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 
 					// Calculate the spherical texture coordinates
 					if (TexCoords) {
-						pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-						pfVertex[0] = HTile * (float)(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
-						pfVertex[1] = VTile * (float)(Math::ASin(vy)/Math::Pi) + 0.5f;
+						pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+						pfVertex[0] = HTile * static_cast<float>(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
+						pfVertex[1] = VTile * static_cast<float>(Math::ASin(vy)/Math::Pi) + 0.5f;
 					}
 					nVertex++;
 
 					if (nPhi > -90 && nPhi < 90) {
 						// Calculate the vertex at nPhi+DPhi, nTheta+DTheta
-						vx = float(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Cos(Math::DegToRad*(nTheta+DTheta)));
-						vy = float(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Sin(Math::DegToRad*(nTheta+DTheta)));
-						vz = float(Radius*Math::Cos((nPhi+DPhi)*Math::DegToRad));
+						vx = static_cast<float>(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Cos(Math::DegToRad*(nTheta+DTheta)));
+						vy = static_cast<float>(Radius*Math::Sin((nPhi+DPhi)*Math::DegToRad)*Math::Sin(Math::DegToRad*(nTheta+DTheta)));
+						vz = static_cast<float>(Radius*Math::Cos((nPhi+DPhi)*Math::DegToRad));
 
 						// Set vertex
-						pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+						pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 						pfVertex[0] = vOffset.x + vx;
 						pfVertex[1] = vOffset.y + vz;
 						pfVertex[2] = vOffset.z + vy;
@@ -198,9 +198,9 @@ Mesh *MeshCreatorDome::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 						vz /= mag;
 
 						if (TexCoords) {
-							pfVertex    = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-							pfVertex[0] = HTile * (float)(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
-							pfVertex[1] = VTile * (float)(Math::ASin(vy)/Math::Pi) + 0.5f;
+							pfVertex    = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+							pfVertex[0] = HTile * static_cast<float>(Math::ATan2(vx, vz)/(Math::Pi2)) + 0.5f;
+							pfVertex[1] = VTile * static_cast<float>(Math::ASin(vy)/Math::Pi) + 0.5f;
 						}
 						nVertex++;
 					}

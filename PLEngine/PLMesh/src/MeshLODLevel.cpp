@@ -148,7 +148,7 @@ MeshLODLevel &MeshLODLevel::operator =(const MeshLODLevel &cSource)
 
 	// Copy octree
 	DestroyOctree();
-	MeshOctree *pOctree = ((const MeshLODLevel&)cSource).GetOctree();
+	MeshOctree *pOctree = static_cast<const MeshLODLevel&>(cSource).GetOctree();
 	if (pOctree)
 		CreateOctree(pOctree->GetSubdivide(), pOctree->GetMinGeometries());
 
@@ -267,8 +267,7 @@ Array<Geometry> *MeshLODLevel::GetGeometries() const
 *  @brief
 *    Creates the LOD level octree
 */
-bool MeshLODLevel::CreateOctree(uint32 nSubdivide, uint32 nMinGeometries,
-								Array<Array<uint32>*> *plstOctreeIDList)
+bool MeshLODLevel::CreateOctree(uint32 nSubdivide, uint32 nMinGeometries, Array<Array<uint32>*> *plstOctreeIDList)
 {
 	// Destroy old octree
 	DestroyOctree();
@@ -440,21 +439,21 @@ void MeshLODLevel::BuildEdgeList()
 			if (i1 < i2) {
 				MeshEdge &cEdge = m_lstEdges[nEdgeCount];
 
-				cEdge.nVertex[0]   = (uint16)i1;
-				cEdge.nVertex[1]   = (uint16)i2;
-				cEdge.nTriangle[0] = (uint16)a;
-				cEdge.nTriangle[1] = (uint16)a;
+				cEdge.nVertex[0]   = static_cast<uint16>(i1);
+				cEdge.nVertex[1]   = static_cast<uint16>(i2);
+				cEdge.nTriangle[0] = static_cast<uint16>(a);
+				cEdge.nTriangle[1] = static_cast<uint16>(a);
 
 				uint32 nEdgeIndex = pnFirstEdge[i1];
 				if (nEdgeIndex == 0xFFFF) {
-					pnFirstEdge[i1] = (uint16)nEdgeCount;
+					pnFirstEdge[i1] = static_cast<uint16>(nEdgeCount);
 				} else {
 					uint32 nIndex = pnNextEdge[nEdgeIndex];
 					while (nIndex != 0xFFFF) {
 						nEdgeIndex = nIndex;
 						nIndex     = pnNextEdge[nEdgeIndex];
 					}
-					pnNextEdge[nEdgeIndex] = (uint16)nEdgeCount;
+					pnNextEdge[nEdgeIndex] = static_cast<uint16>(nEdgeCount);
 				}
 
 				pnNextEdge[nEdgeCount] = 0xFFFF;
@@ -485,7 +484,7 @@ void MeshLODLevel::BuildEdgeList()
 				for (uint32 nEdgeIndex=pnFirstEdge[i2]; nEdgeIndex!=0xFFFF; nEdgeIndex=pnNextEdge[nEdgeIndex]) {
 					MeshEdge &cEdge = m_lstEdges[nEdgeIndex];
 					if ((cEdge.nVertex[1] == i1) && (cEdge.nTriangle[0] == cEdge.nTriangle[1])) {
-						cEdge.nTriangle[1] = (uint16)a;
+						cEdge.nTriangle[1] = static_cast<uint16>(a);
 						break;
 					}
 				}
@@ -939,7 +938,7 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 						// new one:
 						uint32 *pIndexT       = lstNewGeometryIndexBuffer[nNewGeometry];
 						uint32  nNewIndexSize = pNewGeometry->GetIndexSize()+cGeometry.GetIndexSize();
-						pIndexT = (uint32*)MemoryManager::Reallocator(pIndexT, sizeof(uint32)*nNewIndexSize);
+						pIndexT = static_cast<uint32*>(MemoryManager::Reallocator(pIndexT, sizeof(uint32)*nNewIndexSize));
 						for (uint32 i=0; i<cGeometry.GetIndexSize(); i++)
 							pIndexT[pNewGeometry->GetIndexSize()+i] = m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i);
 						pNewGeometry->SetIndexSize(nNewIndexSize);
@@ -1031,9 +1030,9 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 						// new one:
 						uint16 *pIndexT       = lstNewGeometryIndexBuffer[nNewGeometry];
 						uint32  nNewIndexSize = pNewGeometry->GetIndexSize()+cGeometry.GetIndexSize();
-						pIndexT = (uint16*)MemoryManager::Reallocator(pIndexT, sizeof(uint16)*nNewIndexSize);
+						pIndexT = static_cast<uint16*>(MemoryManager::Reallocator(pIndexT, sizeof(uint16)*nNewIndexSize));
 						for (uint32 i=0; i<cGeometry.GetIndexSize(); i++)
-							pIndexT[pNewGeometry->GetIndexSize()+i] = (uint16)m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i);
+							pIndexT[pNewGeometry->GetIndexSize()+i] = static_cast<uint16>(m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i));
 						pNewGeometry->SetIndexSize(nNewIndexSize);
 						lstNewGeometryIndexBuffer.ReplaceAtIndex(nNewGeometry, pIndexT);
 						break;
@@ -1059,7 +1058,7 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 					// Add temp geometry index buffer
 					uint16 *pIndexT = new uint16[cGeometry.GetIndexSize()];
 					for (uint32 i=0; i<cGeometry.GetIndexSize(); i++)
-						pIndexT[i] = (uint16)m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i);
+						pIndexT[i] = static_cast<uint16>(m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i));
 					lstNewGeometryIndexBuffer.Add(pIndexT);
 				}
 			}
@@ -1123,9 +1122,9 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 						// new one:
 						uint8  *pIndexT       = lstNewGeometryIndexBuffer[nNewGeometry];
 						uint32  nNewIndexSize = pNewGeometry->GetIndexSize()+cGeometry.GetIndexSize();
-						pIndexT = (uint8*)MemoryManager::Reallocator(pIndexT, sizeof(uint8)*nNewIndexSize);
+						pIndexT = static_cast<uint8*>(MemoryManager::Reallocator(pIndexT, sizeof(uint8)*nNewIndexSize));
 						for (uint32 i=0; i<cGeometry.GetIndexSize(); i++)
-							pIndexT[pNewGeometry->GetIndexSize()+i] = (uint8)m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i);
+							pIndexT[pNewGeometry->GetIndexSize()+i] = static_cast<uint8>(m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i));
 						pNewGeometry->SetIndexSize(nNewIndexSize);
 						lstNewGeometryIndexBuffer.ReplaceAtIndex(nNewGeometry, pIndexT);
 						break;
@@ -1151,7 +1150,7 @@ bool MeshLODLevel::GenerateOctreeGeometries(uint32 nSubdivide, uint32 nMinGeomet
 					// Add temp geometry index buffer
 					uint8 *pIndexT = new uint8[cGeometry.GetIndexSize()];
 					for (uint32 i=0; i<cGeometry.GetIndexSize(); i++)
-						pIndexT[i] = (uint8)m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i);
+						pIndexT[i] = static_cast<uint8>(m_pIndexBuffer->GetData(cGeometry.GetStartIndex()+i));
 					lstNewGeometryIndexBuffer.Add(pIndexT);
 				}
 			}
@@ -1231,7 +1230,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 				switch (m_pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{
-						const uint32 *pIndices = (const uint32*)m_pIndexBuffer->GetData();
+						const uint32 *pIndices = static_cast<const uint32*>(m_pIndexBuffer->GetData());
 						if (m_pIndexBuffer->GetNumOfElements()) {
 							// Loop through all geometries
 							bool bFirst = true;
@@ -1243,7 +1242,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 									for (uint32 i=pGeometry->GetStartIndex(); i<pGeometry->GetStartIndex()+pGeometry->GetIndexSize(); i++) {
 										// Check index
 										if (i < m_pIndexBuffer->GetNumOfElements()) {
-											const float *pfPos = (const float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+											const float *pfPos = static_cast<const float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 											if (bFirst) {
 												vMinPos = vMaxPos = pfPos;
 												bFirst = false;
@@ -1273,7 +1272,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 
 					case IndexBuffer::UShort:
 					{
-						const uint16 *pIndices = (const uint16*)m_pIndexBuffer->GetData();
+						const uint16 *pIndices = static_cast<const uint16*>(m_pIndexBuffer->GetData());
 						if (m_pIndexBuffer->GetNumOfElements()) {
 							// Loop through all geometries
 							bool bFirst = true;
@@ -1285,7 +1284,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 									for (uint32 i=pGeometry->GetStartIndex(); i<pGeometry->GetStartIndex()+pGeometry->GetIndexSize(); i++) {
 										// Check index
 										if (i < m_pIndexBuffer->GetNumOfElements()) {
-											const float *pfPos = (const float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+											const float *pfPos = static_cast<const float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 											if (bFirst) {
 												vMinPos = vMaxPos = pfPos;
 												bFirst = false;
@@ -1315,7 +1314,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 
 					case IndexBuffer::UByte:
 					{
-						const uint8 *pIndices = (const uint8*)m_pIndexBuffer->GetData();
+						const uint8 *pIndices = static_cast<const uint8*>(m_pIndexBuffer->GetData());
 						if (m_pIndexBuffer->GetNumOfElements()) {
 							// Loop through all geometries
 							bool bFirst = true;
@@ -1327,7 +1326,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 									for (uint32 i=pGeometry->GetStartIndex(); i<pGeometry->GetStartIndex()+pGeometry->GetIndexSize(); i++) {
 										// Check index
 										if (i < m_pIndexBuffer->GetNumOfElements()) {
-											const float *pfPos = (const float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+											const float *pfPos = static_cast<const float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 											if (bFirst) {
 												vMinPos = vMaxPos = pfPos;
 												bFirst = false;
@@ -1389,7 +1388,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 				switch (m_pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{
-						const uint32 *pIndices = (const uint32*)m_pIndexBuffer->GetData();
+						const uint32 *pIndices = static_cast<const uint32*>(m_pIndexBuffer->GetData());
 						if (m_pIndexBuffer->GetNumOfElements()) {
 							uint32 nNumOfPoints = 0;
 
@@ -1403,7 +1402,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 									for (uint32 i=pGeometry->GetStartIndex(); i<pGeometry->GetStartIndex()+pGeometry->GetIndexSize(); i++) {
 										// Check index
 										if (i < m_pIndexBuffer->GetNumOfElements()) {
-											const float *pfPos = (const float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+											const float *pfPos = static_cast<const float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 											vPos.x += pfPos[0];
 											vPos.y += pfPos[1];
 											vPos.z += pfPos[2];
@@ -1412,7 +1411,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 									nNumOfPoints += pGeometry->GetIndexSize();
 								}
 							}
-							vPos /= (float)nNumOfPoints;
+							vPos /= static_cast<float>(nNumOfPoints);
 
 							// Second: Find maximum distance from center (sphere radius)
 							// Loop through all geometries
@@ -1425,7 +1424,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 										// Check index
 										if (nIndex < m_pIndexBuffer->GetNumOfElements()) {
 											for (uint32 i=0; i<m_pIndexBuffer->GetNumOfElements(); i++) {
-												Vector3 vV = (float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+												Vector3 vV = static_cast<float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 												fRadius    = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 											}
 										}
@@ -1439,7 +1438,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 
 					case IndexBuffer::UShort:
 					{
-						const uint16 *pIndices = (const uint16*)m_pIndexBuffer->GetData();
+						const uint16 *pIndices = static_cast<const uint16*>(m_pIndexBuffer->GetData());
 						if (m_pIndexBuffer->GetNumOfElements()) {
 							uint32 nNumOfPoints = 0;
 
@@ -1453,7 +1452,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 									for (uint32 i=pGeometry->GetStartIndex(); i<pGeometry->GetStartIndex()+pGeometry->GetIndexSize(); i++) {
 										// Check index
 										if (i < m_pIndexBuffer->GetNumOfElements()) {
-											const float *pfPos = (const float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+											const float *pfPos = static_cast<const float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 											vPos.x += pfPos[0];
 											vPos.y += pfPos[1];
 											vPos.z += pfPos[2];
@@ -1462,7 +1461,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 									nNumOfPoints += pGeometry->GetIndexSize();
 								}
 							}
-							vPos /= (float)nNumOfPoints;
+							vPos /= static_cast<float>(nNumOfPoints);
 
 							// Second: Find maximum distance from center (sphere radius)
 							// Loop through all geometries
@@ -1475,7 +1474,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 										// Check index
 										if (nIndex < m_pIndexBuffer->GetNumOfElements()) {
 											for (uint32 i=0; i<m_pIndexBuffer->GetNumOfElements(); i++) {
-												Vector3 vV = (float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+												Vector3 vV = static_cast<float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 												fRadius    = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 											}
 										}
@@ -1489,7 +1488,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 
 					case IndexBuffer::UByte:
 					{
-						const uint8 *pIndices = (const uint8*)m_pIndexBuffer->GetData();
+						const uint8 *pIndices = static_cast<const uint8*>(m_pIndexBuffer->GetData());
 						if (m_pIndexBuffer->GetNumOfElements()) {
 							uint32 nNumOfPoints = 0;
 
@@ -1503,7 +1502,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 									for (uint32 i=pGeometry->GetStartIndex(); i<pGeometry->GetStartIndex()+pGeometry->GetIndexSize(); i++) {
 										// Check index
 										if (i < m_pIndexBuffer->GetNumOfElements()) {
-											const float *pfPos = (const float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+											const float *pfPos = static_cast<const float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 											vPos.x += pfPos[0];
 											vPos.y += pfPos[1];
 											vPos.z += pfPos[2];
@@ -1512,7 +1511,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 									nNumOfPoints += pGeometry->GetIndexSize();
 								}
 							}
-							vPos /= (float)nNumOfPoints;
+							vPos /= static_cast<float>(nNumOfPoints);
 
 							// Second: Find maximum distance from center (sphere radius)
 							// Loop through all geometries
@@ -1525,7 +1524,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 										// Check index
 										if (nIndex < m_pIndexBuffer->GetNumOfElements()) {
 											for (uint32 i=0; i<m_pIndexBuffer->GetNumOfElements(); i++) {
-												Vector3 vV = (float*)cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position);
+												Vector3 vV = static_cast<float*>(cVertexBuffer.GetData(pIndices[i], VertexBuffer::Position));
 												fRadius    = Math::Max(fRadius, (vV-vPos).GetSquaredLength());
 											}
 										}

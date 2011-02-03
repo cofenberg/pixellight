@@ -3178,15 +3178,15 @@ Mesh *MeshCreatorTeapot::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) con
 
 					// Setup vertex buffer
 					for (uint32 nVertex=0; nVertex<num_teapot_vertices; nVertex++) {
-						float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
-						pfVertex[Vector3::X] = vOffset.x + (float)teapot_vertices[nVertex*3+0];
-						pfVertex[Vector3::Y] = vOffset.y + (float)teapot_vertices[nVertex*3+1];
-						pfVertex[Vector3::Z] = vOffset.z + (float)teapot_vertices[nVertex*3+2];
+						float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
+						pfVertex[Vector3::X] = vOffset.x + static_cast<float>(teapot_vertices[nVertex*3+0]);
+						pfVertex[Vector3::Y] = vOffset.y + static_cast<float>(teapot_vertices[nVertex*3+1]);
+						pfVertex[Vector3::Z] = vOffset.z + static_cast<float>(teapot_vertices[nVertex*3+2]);
 						if (Normals) {
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
-							pfVertex[Vector3::X] = (float)teapot_normals[nVertex*3+0];
-							pfVertex[Vector3::Y] = (float)teapot_normals[nVertex*3+1];
-							pfVertex[Vector3::Z] = (float)teapot_normals[nVertex*3+2];
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
+							pfVertex[Vector3::X] = static_cast<float>(teapot_normals[nVertex*3+0]);
+							pfVertex[Vector3::Y] = static_cast<float>(teapot_normals[nVertex*3+1]);
+							pfVertex[Vector3::Z] = static_cast<float>(teapot_normals[nVertex*3+2]);
 						}
 					}
 

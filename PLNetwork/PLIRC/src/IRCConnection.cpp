@@ -419,7 +419,7 @@ void IRCConnection::ProcessIRCMessage(const String &sMessage)
 			// CTCP message
 			if (pszParams[3][0] == '\1') {
 				// Get CTCP command
-				int nLen = (int)strlen(pszParams[3])-2;
+				int nLen = static_cast<int>(strlen(pszParams[3]))-2;
 				for (int i=0; i<nLen; i++) pszParams[3][i] = pszParams[3][i+1];
 				pszParams[3][nLen] = '\0';
 
@@ -510,7 +510,7 @@ void IRCConnection::ProcessServerMessage(const String &sSource, int nCmd, char *
 			// Get end of first nick name
 			const char *pszEnd = strchr(pszStart, ' ');
 			if (!pszEnd) pszEnd = pszStart + strlen(pszStart);
-			unsigned int nLength = (unsigned int)(pszEnd - pszStart);
+			unsigned int nLength = static_cast<unsigned int>(pszEnd - pszStart);
 
 			// Copy first nick name
 			char szNick[256];
@@ -597,7 +597,7 @@ void IRCConnection::ProcessMode(const String &sSource, const String &sTarget, ch
 	OnMode(sSource, sTarget, szMode);
 
 	// Has the mode of a channel been set?
-	if (sTarget[(uint32)0] == '#') {
+	if (sTarget[static_cast<uint32>(0)] == '#') {
 		// Get mode string
 		const String &sChannel = sTarget;
 		const char *pszMode = pszParams[3];
@@ -607,7 +607,7 @@ void IRCConnection::ProcessMode(const String &sSource, const String &sTarget, ch
 		// Loop over mode string
 		int  nParam = 4;
 		bool bSet = true;
-		for (int i=0; i<(int)strlen(pszMode); i++) {
+		for (int i=0; i<static_cast<int>(strlen(pszMode)); i++) {
 			// Set mode
 			if (pszMode[i] == '+') {
 				bSet = true;

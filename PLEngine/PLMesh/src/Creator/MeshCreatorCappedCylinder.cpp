@@ -109,7 +109,7 @@ Mesh *MeshCreatorCappedCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bSta
 					Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
 					float r  = Radius;
 					float l  = Length*0.5f;
-					float a  = float(Math::Pi2)/float(n);
+					float a  = static_cast<float>(Math::Pi2)/static_cast<float>(n);
 					float sa = Math::Sin(a);
 					float ca = Math::Cos(a);
 
@@ -128,23 +128,23 @@ Mesh *MeshCreatorCappedCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bSta
 					uint32 nStartIndex = 0;
 					uint32 nIndex      = 0;
 					for (uint32 i=0; i<=n; i++) {
-						float *pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+						float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 						pfVertex[Vector3::X] = vOffset.x + ny*r;
 						pfVertex[Vector3::Y] = vOffset.y - l;
 						pfVertex[Vector3::Z] = vOffset.z + nz*r;
 						if (Normals) {
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Normal);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Normal));
 							pfVertex[Vector3::X] = ny;
 							pfVertex[Vector3::Y] = 0.0f;
 							pfVertex[Vector3::Z] = nz;
 						}
 						nIndex++;
-						pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 						pfVertex[Vector3::X] = vOffset.x + ny*r;
 						pfVertex[Vector3::Y] = vOffset.y + l;
 						pfVertex[Vector3::Z] = vOffset.z + nz*r;
 						if (Normals) {
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Normal);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Normal));
 							pfVertex[Vector3::X] = ny;
 							pfVertex[Vector3::Y] = 0.0f;
 							pfVertex[Vector3::Z] = nz;
@@ -182,23 +182,23 @@ Mesh *MeshCreatorCappedCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bSta
 						float nz2 = 0.0f;
 						nIndex = nStartIndex;
 						for (uint32 i=0; i<=n; i++) {
-							float *pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + ny*r;
 							pfVertex[Vector3::Y] = vOffset.y + nx*r + l;
 							pfVertex[Vector3::Z] = vOffset.z + nz*r;
 							if (Normals) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Normal);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Normal));
 								pfVertex[Vector3::X] = ny;
 								pfVertex[Vector3::Y] = nx;
 								pfVertex[Vector3::Z] = nz;
 							}
 							nIndex++;
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + ny2*r;
 							pfVertex[Vector3::Y] = vOffset.y + nx2*r + l;
 							pfVertex[Vector3::Z] = vOffset.z + nz2*r;
 							if (Normals) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Normal);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Normal));
 								pfVertex[Vector3::X] = ny2;
 								pfVertex[Vector3::Y] = nx2;
 								pfVertex[Vector3::Z] = nz2;
@@ -241,23 +241,23 @@ Mesh *MeshCreatorCappedCylinder::Create(Mesh &cMesh, uint32 nLODLevel, bool bSta
 						float nz2 = 0.0f;
 						nIndex = nStartIndex;
 						for (uint32 i=0; i<=n; i++) {
-							float *pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + ny2*r;
 							pfVertex[Vector3::Y] = vOffset.y + nx2*r - l;
 							pfVertex[Vector3::Z] = vOffset.z + nz2*r;
 							if (Normals) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Normal);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Normal));
 								pfVertex[Vector3::X] = ny2;
 								pfVertex[Vector3::Y] = nx2;
 								pfVertex[Vector3::Z] = nz2;
 							}
 							nIndex++;
-							pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vOffset.x + ny*r;
 							pfVertex[Vector3::Y] = vOffset.y + nx*r - l;
 							pfVertex[Vector3::Z] = vOffset.z + nz*r;
 							if (Normals) {
-								pfVertex = (float*)pVertexBuffer->GetData(nIndex, VertexBuffer::Normal);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nIndex, VertexBuffer::Normal));
 								pfVertex[Vector3::X] = ny;
 								pfVertex[Vector3::Y] = nx;
 								pfVertex[Vector3::Z] = nz;

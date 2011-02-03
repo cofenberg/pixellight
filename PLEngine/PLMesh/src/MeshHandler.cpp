@@ -234,7 +234,7 @@ void MeshHandler::Update(float fTimeDifference, uint32 nLODLevel)
 			if (m_bMeshUpdateRequired) {
 				// Apply mesh animation manager
 				if (m_pMeshAnimationManager)
-					((MeshAnimationManager*)m_pMeshAnimationManager)->Apply(*this);
+					static_cast<MeshAnimationManager*>(m_pMeshAnimationManager)->Apply(*this);
 
 				// Rebuild of current triangle plane list required
 				m_bRecalculateTrianglePlanes = true;
@@ -293,11 +293,11 @@ void MeshHandler::Draw(bool bBlend, bool bUseMaterials) const
 								// Is the geometry using the current bound material and is this geometry active?
 								if (nMat == cGeometry.GetMaterial() && cGeometry.IsActive() && m_cGeometryVisibility.IsSet(nGeo)) {
 									// Check if we have to bind this material the first time
-									if (nBoundMaterial != (int)nMat)
+									if (nBoundMaterial != static_cast<int>(nMat))
 										nBoundMaterial = nMat;
 
 									// Check if we have to bind this material pass the first time
-									if (nBoundPass != (int)nPass) {
+									if (nBoundPass != static_cast<int>(nPass)) {
 										nBoundPass = nPass;
 										pMaterial->SetupPass(nPass);
 									}
@@ -366,8 +366,8 @@ void MeshHandler::DrawNormals(const Color4 &cColor, const Matrix4x4 &mWorldViewP
 		if (m_pCurrentVertexBuffer->GetData(0, VertexBuffer::Normal, 0)) {
 			DrawHelpers &cDrawHelpers = m_pRenderer->GetDrawHelpers();
 			for (uint32 i=0; i<m_pCurrentVertexBuffer->GetNumOfElements(); i++) {
-				const float *pfP = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position);
-				const float *pfN = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Normal);
+				const float *pfP = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position));
+				const float *pfN = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Normal));
 				cDrawHelpers.DrawLine(cColor,
 									  Vector3(pfP[Vector3::X], pfP[Vector3::Y], pfP[Vector3::Z]),
 									  Vector3(pfP[Vector3::X] + pfN[Vector3::X]*fScale, pfP[Vector3::Y] + pfN[Vector3::Y]*fScale, pfP[Vector3::Z] + pfN[Vector3::Z]*fScale),
@@ -390,8 +390,8 @@ void MeshHandler::DrawTangents(const Color4 &cColor, const Matrix4x4 &mWorldView
 		if (m_pCurrentVertexBuffer->GetData(0, VertexBuffer::Tangent, 0)) {
 			DrawHelpers &cDrawHelpers = m_pRenderer->GetDrawHelpers();
 			for (uint32 i=0; i<m_pCurrentVertexBuffer->GetNumOfElements(); i++) {
-				const float *pfP = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position);
-				const float *pfT = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Tangent);
+				const float *pfP = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position));
+				const float *pfT = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Tangent));
 				cDrawHelpers.DrawLine(cColor,
 									  Vector3(pfP[Vector3::X], pfP[Vector3::Y], pfP[Vector3::Z]),
 									  Vector3(pfP[Vector3::X] + pfT[Vector3::X]*fScale, pfP[Vector3::Y] + pfT[Vector3::Y]*fScale, pfP[Vector3::Z] + pfT[Vector3::Z]*fScale),
@@ -414,8 +414,8 @@ void MeshHandler::DrawBinormals(const Color4 &cColor, const Matrix4x4 &mWorldVie
 		if (m_pCurrentVertexBuffer->GetData(0, VertexBuffer::Binormal, 0)) {
 			DrawHelpers &cDrawHelpers = m_pRenderer->GetDrawHelpers();
 			for (uint32 i=0; i<m_pCurrentVertexBuffer->GetNumOfElements(); i++) {
-				const float *pfP = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position);
-				const float *pfB = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Binormal);
+				const float *pfP = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position));
+				const float *pfB = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Binormal));
 				cDrawHelpers.DrawLine(cColor,
 									  Vector3(pfP[Vector3::X], pfP[Vector3::Y], pfP[Vector3::Z]),
 									  Vector3(pfP[Vector3::X] + pfB[Vector3::X]*fScale, pfP[Vector3::Y] + pfB[Vector3::Y]*fScale, pfP[Vector3::Z] + pfB[Vector3::Z]*fScale),
@@ -438,7 +438,7 @@ void MeshHandler::DrawVertexNumbers(Font &cFont, const Color4 &cColor, const Mat
 		// Loop through all vertices
 		DrawHelpers &cDrawHelpers = m_pRenderer->GetDrawHelpers();
 		for (uint32 i=0; i<m_pCurrentVertexBuffer->GetNumOfElements(); i++) {
-			const float *pfVertex = (const float*)m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position);
+			const float *pfVertex = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(i, VertexBuffer::Position));
 			vV.x = pfVertex[Vector3::X];
 			vV.y = pfVertex[Vector3::Y];
 			vV.z = pfVertex[Vector3::Z];
@@ -465,7 +465,7 @@ void MeshHandler::DrawAnchorPoints(Font &cFont, const Color4 &cColor, const Matr
 			const AnchorPoint *pAnchorPoint = m_pMesh->GetAnchorPointManager().Get(i);
 			if (pAnchorPoint) {
 				if (!pAnchorPoint->GetType()) { // Vertex
-					const float *pfVertex = (const float*)m_pCurrentVertexBuffer->GetData(pAnchorPoint->GetID(), VertexBuffer::Position);
+					const float *pfVertex = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(pAnchorPoint->GetID(), VertexBuffer::Position));
 					if (pfVertex) {
 						vPos.x = pfVertex[Vector3::X];
 						vPos.y = pfVertex[Vector3::Y];
@@ -611,7 +611,7 @@ MeshAnimationManager *MeshHandler::CreateMeshAnimationManager(const String &sNam
 		if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
 			Object *pObject = pClass->Create();
 			if (pObject) {
-				m_pMeshAnimationManager = (MeshAnimationManager*)pObject;
+				m_pMeshAnimationManager = static_cast<MeshAnimationManager*>(pObject);
 
 				// Connect event handler
 				m_pMeshAnimationManager->EventAnimationFrameChange.Connect(&EventHandlerAnimationFrameChange);
@@ -670,7 +670,7 @@ AnimationInfo *MeshHandler::GetAnimationInfo(const String &sName, int nLogMessag
 
 			// Check the morph target animations from the mesh
 			if (m_pMesh) {
-				pInfo = (MorphTargetAni*)m_pMesh->GetMorphTargetAnimationManager().Get(sName);
+				pInfo = static_cast<MorphTargetAni*>(m_pMesh->GetMorphTargetAnimationManager().Get(sName));
 				if (pInfo)
 					return pInfo;
 			}
@@ -884,7 +884,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 			// Lock buffers
 			if (m_pCurrentVertexBuffer->Lock(Lock::ReadOnly)) {
 				// Get a pointer to the first vertex position
-				const char *pFirstVertex = (const char*)m_pCurrentVertexBuffer->GetData(0, VertexBuffer::Position);
+				const char *pFirstVertex = static_cast<const char*>(m_pCurrentVertexBuffer->GetData(0, VertexBuffer::Position));
 				if (pFirstVertex) {
 					const uint32 nVertexSize = m_pCurrentVertexBuffer->GetVertexSize();
 
@@ -916,22 +916,22 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 										if (cGeometry.GetPrimitiveType() == Primitive::TriangleList) {
 											if (pIndexBuffer->GetElementType() == IndexBuffer::UInt) {
 												// Get a pointer to the first index of the geometry
-												const uint32 *pnIndex = ((const uint32*)pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
+												const uint32 *pnIndex = static_cast<const uint32*>(pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
 
 												// Loop through all triangles
 												for (uint32 nTri=0; nTri<nNumOfTriangles; nTri++) {
 													// Get triangle data
-													const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV1.x = pfVertex[Vector3::X];
 													vV1.y = pfVertex[Vector3::Y];
 													vV1.z = pfVertex[Vector3::Z];
 													pnIndex++;
-													pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV2.x = pfVertex[Vector3::X];
 													vV2.y = pfVertex[Vector3::Y];
 													vV2.z = pfVertex[Vector3::Z];
 													pnIndex++;
-													pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV3.x = pfVertex[Vector3::X];
 													vV3.y = pfVertex[Vector3::Y];
 													vV3.z = pfVertex[Vector3::Z];
@@ -959,22 +959,22 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												}
 											} else if (pIndexBuffer->GetElementType() == IndexBuffer::UShort) {
 												// Get a pointer to the first index of the geometry
-												const uint16 *pnIndex = ((const uint16*)pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
+												const uint16 *pnIndex = static_cast<const uint16*>(pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
 
 												// Loop through all triangles
 												for (uint32 nTri=0; nTri<nNumOfTriangles; nTri++) {
 													// Get triangle data
-													const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV1.x = pfVertex[Vector3::X];
 													vV1.y = pfVertex[Vector3::Y];
 													vV1.z = pfVertex[Vector3::Z];
 													pnIndex++;
-													pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV2.x = pfVertex[Vector3::X];
 													vV2.y = pfVertex[Vector3::Y];
 													vV2.z = pfVertex[Vector3::Z];
 													pnIndex++;
-													pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV3.x = pfVertex[Vector3::X];
 													vV3.y = pfVertex[Vector3::Y];
 													vV3.z = pfVertex[Vector3::Z];
@@ -1002,22 +1002,22 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												}
 											} else {
 												// Get a pointer to the first index of the geometry
-												const uint8 *pnIndex = ((const uint8*)pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
+												const uint8 *pnIndex = static_cast<const uint8*>(pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
 
 												// Loop through all triangles
 												for (uint32 nTri=0; nTri<nNumOfTriangles; nTri++) {
 													// Get triangle data
-													const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV1.x = pfVertex[Vector3::X];
 													vV1.y = pfVertex[Vector3::Y];
 													vV1.z = pfVertex[Vector3::Z];
 													pnIndex++;
-													pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV2.x = pfVertex[Vector3::X];
 													vV2.y = pfVertex[Vector3::Y];
 													vV2.z = pfVertex[Vector3::Z];
 													pnIndex++;
-													pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+													pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 													vV3.x = pfVertex[Vector3::X];
 													vV3.y = pfVertex[Vector3::Y];
 													vV3.z = pfVertex[Vector3::Z];
@@ -1050,15 +1050,15 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												// Get triangle data
 												uint32 nVertex1, nVertex2, nVertex3;
 												pLODLevel->GetTriangle(nGeometryIndex, nTri, nVertex1, nVertex2, nVertex3);
-												const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*nVertex1);
+												const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*nVertex1);
 												vV1.x = pfVertex[Vector3::X];
 												vV1.y = pfVertex[Vector3::Y];
 												vV1.z = pfVertex[Vector3::Z];
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*nVertex2);
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*nVertex2);
 												vV2.x = pfVertex[Vector3::X];
 												vV2.y = pfVertex[Vector3::Y];
 												vV2.z = pfVertex[Vector3::Z];
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*nVertex3);
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*nVertex3);
 												vV3.x = pfVertex[Vector3::X];
 												vV3.y = pfVertex[Vector3::Y];
 												vV3.z = pfVertex[Vector3::Z];
@@ -1100,22 +1100,22 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 									if (cGeometry.GetPrimitiveType() == Primitive::TriangleList) {
 										if (pIndexBuffer->GetElementType() == IndexBuffer::UInt) {
 											// Get a pointer to the first index of the geometry
-											const uint32 *pnIndex = ((const uint32*)pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
+											const uint32 *pnIndex = static_cast<const uint32*>(pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
 
 											// Loop through all triangles
 											for (uint32 nTri=0; nTri<nNumOfTriangles; nTri++) {
 												// Get triangle data
-												const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV1.x = pfVertex[Vector3::X];
 												vV1.y = pfVertex[Vector3::Y];
 												vV1.z = pfVertex[Vector3::Z];
 												pnIndex++;
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV2.x = pfVertex[Vector3::X];
 												vV2.y = pfVertex[Vector3::Y];
 												vV2.z = pfVertex[Vector3::Z];
 												pnIndex++;
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV3.x = pfVertex[Vector3::X];
 												vV3.y = pfVertex[Vector3::Y];
 												vV3.z = pfVertex[Vector3::Z];
@@ -1143,22 +1143,22 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 											}
 										} else if (pIndexBuffer->GetElementType() == IndexBuffer::UShort) {
 											// Get a pointer to the first index of the geometry
-											const uint16 *pnIndex = ((const uint16*)pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
+											const uint16 *pnIndex = static_cast<const uint16*>(pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
 
 											// Loop through all triangles
 											for (uint32 nTri=0; nTri<nNumOfTriangles; nTri++) {
 												// Get triangle data
-												const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV1.x = pfVertex[Vector3::X];
 												vV1.y = pfVertex[Vector3::Y];
 												vV1.z = pfVertex[Vector3::Z];
 												pnIndex++;
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV2.x = pfVertex[Vector3::X];
 												vV2.y = pfVertex[Vector3::Y];
 												vV2.z = pfVertex[Vector3::Z];
 												pnIndex++;
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV3.x = pfVertex[Vector3::X];
 												vV3.y = pfVertex[Vector3::Y];
 												vV3.z = pfVertex[Vector3::Z];
@@ -1186,22 +1186,22 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 											}
 										} else {
 											// Get a pointer to the first index of the geometry
-											const uint8 *pnIndex = ((const uint8*)pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
+											const uint8 *pnIndex = static_cast<const uint8*>(pIndexBuffer->GetData()) + cGeometry.GetStartIndex();
 
 											// Loop through all triangles
 											for (uint32 nTri=0; nTri<nNumOfTriangles; nTri++) {
 												// Get triangle data
-												const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV1.x = pfVertex[Vector3::X];
 												vV1.y = pfVertex[Vector3::Y];
 												vV1.z = pfVertex[Vector3::Z];
 												pnIndex++;
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV2.x = pfVertex[Vector3::X];
 												vV2.y = pfVertex[Vector3::Y];
 												vV2.z = pfVertex[Vector3::Z];
 												pnIndex++;
-												pfVertex = (const float*)(pFirstVertex + nVertexSize*(*pnIndex));
+												pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*(*pnIndex));
 												vV3.x = pfVertex[Vector3::X];
 												vV3.y = pfVertex[Vector3::Y];
 												vV3.z = pfVertex[Vector3::Z];
@@ -1234,15 +1234,15 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 											// Get triangle data
 											uint32 nVertex1, nVertex2, nVertex3;
 											pLODLevel->GetTriangle(nGeo, nTri, nVertex1, nVertex2, nVertex3);
-											const float *pfVertex = (const float*)(pFirstVertex + nVertexSize*nVertex1);
+											const float *pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*nVertex1);
 											vV1.x = pfVertex[Vector3::X];
 											vV1.y = pfVertex[Vector3::Y];
 											vV1.z = pfVertex[Vector3::Z];
-											pfVertex = (const float*)(pFirstVertex + nVertexSize*nVertex2);
+											pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*nVertex2);
 											vV2.x = pfVertex[Vector3::X];
 											vV2.y = pfVertex[Vector3::Y];
 											vV2.z = pfVertex[Vector3::Z];
-											pfVertex = (const float*)(pFirstVertex + nVertexSize*nVertex3);
+											pfVertex = reinterpret_cast<const float*>(pFirstVertex + nVertexSize*nVertex3);
 											vV3.x = pfVertex[Vector3::X];
 											vV3.y = pfVertex[Vector3::Y];
 											vV3.z = pfVertex[Vector3::Z];
@@ -1324,15 +1324,15 @@ uint32 MeshHandler::FindGeometries(const PlaneSet &cPlaneSet, uint32 **ppnGeomet
 								// Get triangle data
 								uint32 nVertex1, nVertex2, nVertex3;
 								pLODLevel->GetTriangle(nGeo, nTri, nVertex1, nVertex2, nVertex3);
-								const float *pfVertex = (const float*)m_pCurrentVertexBuffer->GetData(nVertex1, VertexBuffer::Position);
+								const float *pfVertex = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
 								vV1.x = pfVertex[Vector3::X];
 								vV1.y = pfVertex[Vector3::Y];
 								vV1.z = pfVertex[Vector3::Z];
-								pfVertex = (const float*)m_pCurrentVertexBuffer->GetData(nVertex2, VertexBuffer::Position);
+								pfVertex = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(nVertex2, VertexBuffer::Position));
 								vV2.x = pfVertex[Vector3::X];
 								vV2.y = pfVertex[Vector3::Y];
 								vV2.z = pfVertex[Vector3::Z];
-								pfVertex = (const float*)m_pCurrentVertexBuffer->GetData(nVertex3, VertexBuffer::Position);
+								pfVertex = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(nVertex3, VertexBuffer::Position));
 								vV3.x = pfVertex[Vector3::X];
 								vV3.y = pfVertex[Vector3::Y];
 								vV3.z = pfVertex[Vector3::Z];
@@ -1415,17 +1415,17 @@ void MeshHandler::BuildTrianglePlaneList()
 				for (uint32 i=0; i<lstTriangles.GetNumOfElements(); i++) {
 					const MeshTriangle &cTriangle = lstTriangles[i];
 					// V0
-					const float *pfVertex = (const float*)pVertexBuffer->GetData(cTriangle.nVertex[0], VertexBuffer::Position);
+					const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(cTriangle.nVertex[0], VertexBuffer::Position));
 					vV0.x = pfVertex[0];
 					vV0.y = pfVertex[1];
 					vV0.z = pfVertex[2];
 					// V1
-					pfVertex = (const float*)pVertexBuffer->GetData(cTriangle.nVertex[1], VertexBuffer::Position);
+					pfVertex = static_cast<const float*>(pVertexBuffer->GetData(cTriangle.nVertex[1], VertexBuffer::Position));
 					vV1.x = pfVertex[0];
 					vV1.y = pfVertex[1];
 					vV1.z = pfVertex[2];
 					// V2
-					pfVertex = (const float*)pVertexBuffer->GetData(cTriangle.nVertex[2], VertexBuffer::Position);
+					pfVertex = static_cast<const float*>(pVertexBuffer->GetData(cTriangle.nVertex[2], VertexBuffer::Position));
 					vV2.x = pfVertex[0];
 					vV2.y = pfVertex[1];
 					vV2.z = pfVertex[2];
@@ -1449,17 +1449,17 @@ void MeshHandler::BuildTrianglePlaneList()
 							uint32 nVertex0, nVertex1, nVertex2;
 							pLODLevel->GetTriangle(nGeo, nTri, nVertex0, nVertex1, nVertex2);
 							// V0
-							const float *pfVertex = (const float*)pVertexBuffer->GetData(nVertex0, VertexBuffer::Position);
+							const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex0, VertexBuffer::Position));
 							vV0.x = pfVertex[0];
 							vV0.y = pfVertex[1];
 							vV0.z = pfVertex[2];
 							// V1
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
 							vV1.x = pfVertex[0];
 							vV1.y = pfVertex[1];
 							vV1.z = pfVertex[2];
 							// V2
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::Position));
 							vV2.x = pfVertex[0];
 							vV2.y = pfVertex[1];
 							vV2.z = pfVertex[2];

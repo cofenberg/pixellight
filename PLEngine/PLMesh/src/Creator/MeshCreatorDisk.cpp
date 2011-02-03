@@ -100,8 +100,8 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 			IndexBuffer *pIndexBuffer = pLODLevel->GetIndexBuffer();
 
 			// Draw
-			float da = float(2.0f*Math::Pi/Slices);
-			float dr = (OuterRadius - InnerRadius)/(float)Loops;
+			float da = static_cast<float>(2.0f*Math::Pi/Slices);
+			float dr = (OuterRadius - InnerRadius)/static_cast<float>(Loops);
 			switch (DrawStyle) {
 				case Fill:
 				{
@@ -135,22 +135,22 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 								float r2 = r1 + dr;
 								if (Order) {
 									for (int nSlice=Slices; nSlice>=0; nSlice--) {
-										float a  = (nSlice == (int)Slices) ? 0.0f : nSlice*da;
+										float a  = (nSlice == static_cast<int>(Slices)) ? 0.0f : nSlice*da;
 										float sa = Math::Sin(a);
 										float ca = Math::Cos(a);
 
 										// Set vertex 0
-										float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + r2*sa;
 										pfVertex[Vector3::Y] = vOffset.y + r2*ca;
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (TexCoords) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 											pfVertex[Vector2::X] = 0.5f - sa*r2/dtc;
 											pfVertex[Vector2::Y] = 0.5f + ca*r2/dtc;
 										}
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] =  0.0f;
 											pfVertex[Vector3::Y] =  0.0f;
 											pfVertex[Vector3::Z] = -1.0f;
@@ -161,17 +161,17 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 										nVertex++;
 
 										// Set vertex 1
-										pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + r1*sa;
 										pfVertex[Vector3::Y] = vOffset.y + r1*ca;
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (TexCoords) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 											pfVertex[Vector2::X] = 0.5f - sa*r1/dtc;
 											pfVertex[Vector2::Y] = 0.5f + ca*r1/dtc;
 										}
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] =  0.0f;
 											pfVertex[Vector3::Y] =  0.0f;
 											pfVertex[Vector3::Z] = -1.0f;
@@ -188,17 +188,17 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 										float ca = Math::Cos(a);
 
 										// Set vertex 0
-										float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + r2*sa;
 										pfVertex[Vector3::Y] = vOffset.y + r2*ca;
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (TexCoords) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 											pfVertex[Vector2::X] = 0.5f + sa*r2/dtc;
 											pfVertex[Vector2::Y] = 0.5f + ca*r2/dtc;
 										}
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] = 0.0f;
 											pfVertex[Vector3::Y] = 0.0f;
 											pfVertex[Vector3::Z] = 1.0f;
@@ -209,17 +209,17 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 										nVertex++;
 
 										// Set vertex 1
-										pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + r1*sa;
 										pfVertex[Vector3::Y] = vOffset.y + r1*ca;
 										pfVertex[Vector3::Z] = vOffset.z;
 										if (TexCoords) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 											pfVertex[Vector2::X] = 0.5f + sa*r1/dtc;
 											pfVertex[Vector2::Y] = 0.5f + ca*r1/dtc;
 										}
 										if (Normals) {
-											pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+											pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 											pfVertex[Vector3::X] = 0.0f;
 											pfVertex[Vector3::Y] = 0.0f;
 											pfVertex[Vector3::Z] = 1.0f;
@@ -274,7 +274,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 										float a = nSlice*da;
 
 										// Set vertex
-										float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + r*Math::Sin(a);
 										pfVertex[Vector3::Y] = vOffset.y + r*Math::Cos(a);
 										pfVertex[Vector3::Z] = vOffset.z;
@@ -302,7 +302,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 										float r = InnerRadius + nLoop*dr;
 
 										// Set vertex
-										float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+										float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 										pfVertex[Vector3::X] = vOffset.x + r*x;
 										pfVertex[Vector3::Y] = vOffset.y + r*y;
 										pfVertex[Vector3::Z] = vOffset.z;
@@ -353,7 +353,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 							uint32 nVertex = 0;
 							for (float a=0; a<2.0f*Math::Pi+da; a+=da) {
 								// Set vertex
-								float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(a);
 								pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(a);
 								pfVertex[Vector3::Z] = vOffset.z;
@@ -374,7 +374,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 								// Setup vertex and index buffer
 								for (float a=0; a<2.0f*Math::Pi+da; a+=da) {
 									// Set vertex
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(a);
 									pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(a);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -425,7 +425,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 									float a = nSlice*da;
 
 									// Set vertex
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + InnerRadius*Math::Sin(a);
 									pfVertex[Vector3::Y] = vOffset.y + InnerRadius*Math::Cos(a);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -436,7 +436,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 								}
 							} else {
 								// Set vertex
-								float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x;
 								pfVertex[Vector3::Y] = vOffset.y;
 								pfVertex[Vector3::Z] = vOffset.z;
@@ -452,7 +452,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 									float a = nSlice*da;
 									// Set vertex
 
-									float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+									float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 									pfVertex[Vector3::X] = vOffset.x + OuterRadius*Math::Sin(a);
 									pfVertex[Vector3::Y] = vOffset.y + OuterRadius*Math::Cos(a);
 									pfVertex[Vector3::Z] = vOffset.z;
@@ -463,7 +463,7 @@ Mesh *MeshCreatorDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 								}
 							} else {
 								// Set vertex
-								float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x;
 								pfVertex[Vector3::Y] = vOffset.y;
 								pfVertex[Vector3::Z] = vOffset.z;

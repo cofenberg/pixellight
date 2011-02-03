@@ -94,7 +94,7 @@ void RunClient()
 	ChatClient cClient;
 
 	// Create a client connection at host address 'localhost' (our local server) at port '4000'
-	ChatClientConnection *pConnection = (ChatClientConnection*)cClient.Connect("localhost", 4000);
+	ChatClientConnection *pConnection = static_cast<ChatClientConnection*>(cClient.Connect("localhost", 4000));
 	if (pConnection) {
 		bool bActive = true;
 		String sMessage;

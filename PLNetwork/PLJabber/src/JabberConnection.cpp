@@ -142,7 +142,7 @@ void JabberConnection::Message(const String &sTo, const String &sSubject, const 
 *  @brief
 *    Constructor
 */
-JabberConnection::JabberConnection(JabberClient &cClient) : Connection((PLGeneral::Host&)cClient),
+JabberConnection::JabberConnection(JabberClient &cClient) : Connection(static_cast<PLGeneral::Host&>(cClient)),
 	m_cInput(*this),
 	m_cOutput(*this)
 {
@@ -163,7 +163,7 @@ JabberConnection::~JabberConnection()
 void JabberConnection::SendElement(const XmlElement &cElement) const
 {
 	// [DEBUG] Output to console
-	System::GetInstance()->GetConsole().Print("SEND: " + ((XmlElement&)cElement).ToString() + '\n');
+	System::GetInstance()->GetConsole().Print("SEND: " + cElement.ToString() + '\n');
 
 	// Send to XML output stream
 	m_cOutput.SendElement(cElement);
@@ -335,7 +335,7 @@ void JabberConnection::OnReceive(const char *pBuffer, uint32 nSize)
 void JabberConnection::OnStreamStarted(const XmlElement &cStream)
 {
 	// [DEBUG] Output to console
-	System::GetInstance()->GetConsole().Print("RECV: " + ((XmlElement&)cStream).ToString() + '\n');
+	System::GetInstance()->GetConsole().Print("RECV: " + cStream.ToString() + '\n');
 
 	// Use value of attribute 'from' as the new server name (could be an alias)
 	m_sServer = cStream.GetAttribute("from");
@@ -347,7 +347,7 @@ void JabberConnection::OnStreamStarted(const XmlElement &cStream)
 void JabberConnection::OnElement(const XmlElement &cElement)
 {
 	// [DEBUG] Output to console
-	System::GetInstance()->GetConsole().Print("RECV: " + ((XmlElement&)cElement).ToString() + '\n');
+	System::GetInstance()->GetConsole().Print("RECV: " + cElement.ToString() + '\n');
 
 	// Check type of element
 	if (cElement.GetValue() == "iq") {
@@ -413,7 +413,7 @@ void JabberConnection::OnRoster(const XmlElement &cElement)
 	const XmlNode *pQuery = cElement.GetFirstChildElement();
 	for (const XmlNode *pNode=pQuery->GetFirstChild(); pNode; pNode=pNode->GetNextSibling()) {
 		if (pNode->GetType() == XmlNode::Element) {
-			XmlElement *pElement = (XmlElement*)pNode;
+			const XmlElement *pElement = static_cast<const XmlElement*>(pNode);
 			if (pElement->GetValue() == "item") {
 				String sJID  = pElement->GetAttribute("jid");
 				String sName = pElement->GetAttribute("name");

@@ -113,7 +113,7 @@ bool MeshOctree::Build(MeshLODLevel &cMeshLODLevel, uint32 nNumOfGeometries, con
 		const Geometry &cGeometry = cMeshLODLevel.GetGeometries()->Get(m_pnGeometries[0]);
 		for (int i=0; i<3; i++) {
 			vBoundingBox[0][i] = 
-			vBoundingBox[1][i] = ((float*)pVertexBuffer->GetData(pIndexBuffer->GetData(cGeometry.GetStartIndex()), VertexBuffer::Position))[i];
+			vBoundingBox[1][i] = static_cast<float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(cGeometry.GetStartIndex()), VertexBuffer::Position))[i];
 		}
 	}
 
@@ -129,7 +129,7 @@ bool MeshOctree::Build(MeshLODLevel &cMeshLODLevel, uint32 nNumOfGeometries, con
 		// Loop through geometry vertices
 		uint32 nIndex = cGeometry.GetStartIndex();
 		for (uint32 i=0; i<cGeometry.GetIndexSize(); i++) {
-			const float *pfVertex = (const float*)pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex++), VertexBuffer::Position);
+			const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex++), VertexBuffer::Position));
 			if (vBoundingBox[0].x > pfVertex[Vector3::X])
 				vBoundingBox[0].x = pfVertex[Vector3::X];
 			if (vBoundingBox[1].x < pfVertex[Vector3::X])
@@ -146,9 +146,9 @@ bool MeshOctree::Build(MeshLODLevel &cMeshLODLevel, uint32 nNumOfGeometries, con
 	}
 	if (m_pParent) { // Adjust bounding box
 		// Get parent center position
-		const Vector3 &vPCenter = ((MeshOctree*)m_pParent)->m_vBBCenter;
-		const Vector3  vPBBMin  = ((MeshOctree*)m_pParent)->m_cBoundingBox.GetCorner1();
-		const Vector3  vPBBMax  = ((MeshOctree*)m_pParent)->m_cBoundingBox.GetCorner2();
+		const Vector3 &vPCenter = static_cast<MeshOctree*>(m_pParent)->m_vBBCenter;
+		const Vector3  vPBBMin  = static_cast<MeshOctree*>(m_pParent)->m_cBoundingBox.GetCorner1();
+		const Vector3  vPBBMax  = static_cast<MeshOctree*>(m_pParent)->m_cBoundingBox.GetCorner2();
 
 		// Check octree sector
 		switch (m_nIDOffset) {
@@ -294,7 +294,7 @@ bool MeshOctree::Build(MeshLODLevel &cMeshLODLevel, uint32 nNumOfGeometries, con
 
 	// [TODO] Clean this up
 	// Check if the octree should be divided
-	if ((signed)m_nLevel >= m_nSubdivide) {
+	if (static_cast<signed>(m_nLevel) >= m_nSubdivide) {
 //	if (m_nLevel >= m_nSubdivide || m_nNumOfGeometries < m_nMinGeometries) {
 		// Unlock the buffers
 		if (!m_pParent) {
@@ -325,7 +325,7 @@ bool MeshOctree::Build(MeshLODLevel &cMeshLODLevel, uint32 nNumOfGeometries, con
 			uint32 nIndex = cGeometry.GetStartIndex();
 			for (uint32 i=0; i<cGeometry.GetIndexSize(); i++) {
 				// Get vertex
-				float *pfVertex = ((float*)pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex++), VertexBuffer::Position));
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex++), VertexBuffer::Position));
 
 				// Check in which octree sector the vertex is in
 				// 0.  left     top		 back
@@ -404,8 +404,7 @@ bool MeshOctree::Build(MeshLODLevel &cMeshLODLevel, uint32 nNumOfGeometries, con
 				// Build child
 				m_ppChild[nChild] = new MeshOctree();
 				m_ppChild[nChild]->Init(this, m_nSubdivide, m_nMinGeometries, i);
-				((MeshOctree*)m_ppChild[nChild])->Build(cMeshLODLevel, nGeometriesT[i], pGeometriesT[i],
-														plstOctreeIDList);
+				static_cast<MeshOctree*>(m_ppChild[nChild])->Build(cMeshLODLevel, nGeometriesT[i], pGeometriesT[i], plstOctreeIDList);
 				nChild++;
 			}
 		}
@@ -439,7 +438,7 @@ void MeshOctree::Draw(const Color4 &cColor, const Matrix4x4 &mWorldViewProjectio
 
 		// Draw children
 		for (uint32 nChild=0; nChild<m_nNumOfChildren; nChild++)
-			((MeshOctree*)m_ppChild[nChild])->Draw(cColor, mWorldViewProjection, fLineWidth);
+			static_cast<MeshOctree*>(m_ppChild[nChild])->Draw(cColor, mWorldViewProjection, fLineWidth);
 	}
 }
 

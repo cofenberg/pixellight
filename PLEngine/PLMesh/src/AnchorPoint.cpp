@@ -98,7 +98,7 @@ void AnchorPoint::SetID(uint32 nID)
 AnchorPoint &AnchorPoint::operator =(const AnchorPoint &cSource)
 {
 	// Call base function
-	*((Element<AnchorPoint>*)this) = cSource;
+	*static_cast<Element<AnchorPoint>*>(this) = cSource;
 
 	// Copy data
 	m_bType = cSource.m_bType;

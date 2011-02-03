@@ -137,96 +137,96 @@ Mesh *MeshCreatorSphere::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) con
 
 							float *pfVertex;
 							if (Order) {
-								e.x = float(Math::Cos(dTheta2)*Math::Cos(dTheta3));
-								e.y = (float)Math::Sin(dTheta2);
-								e.z = float(Math::Cos(dTheta2)*Math::Sin(dTheta3));
+								e.x = static_cast<float>(Math::Cos(dTheta2)*Math::Cos(dTheta3));
+								e.y = static_cast<float>(Math::Sin(dTheta2));
+								e.z = static_cast<float>(Math::Cos(dTheta2)*Math::Sin(dTheta3));
 								p.x = fRadius*e.x;
 								p.y = fRadius*e.y;
 								p.z = fRadius*e.z;
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/nDetail;
-									pfVertex[Vector2::Y] = (float)2*(j+1)/nDetail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/nDetail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*(j+1))/nDetail;
 								}
 								if (Normals) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = e.x;
 									pfVertex[Vector3::Y] = e.y;
 									pfVertex[Vector3::Z] = e.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;
 								pIndexBuffer->SetData(nIndex++, nVertex);
 								nVertex++;
 
-								e.x = float(Math::Cos(dTheta1)*Math::Cos(dTheta3));
-								e.y = (float)Math::Sin(dTheta1);
-								e.z = float(Math::Cos(dTheta1)*Math::Sin(dTheta3));
+								e.x = static_cast<float>(Math::Cos(dTheta1)*Math::Cos(dTheta3));
+								e.y = static_cast<float>(Math::Sin(dTheta1));
+								e.z = static_cast<float>(Math::Cos(dTheta1)*Math::Sin(dTheta3));
 								p.x = fRadius*e.x;
 								p.y = fRadius*e.y;
 								p.z = fRadius*e.z;
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/nDetail;
-									pfVertex[Vector2::Y] = (float)2*j/nDetail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/nDetail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*j)/nDetail;
 								}
 								if (Normals) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = e.x;
 									pfVertex[Vector3::Y] = e.y;
 									pfVertex[Vector3::Z] = e.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;
 								pIndexBuffer->SetData(nIndex++, nVertex);
 								nVertex++;
 							} else {
-								e.x = float(Math::Cos(dTheta1)*Math::Cos(dTheta3));
-								e.y = (float)Math::Sin(dTheta1);
-								e.z = float(Math::Cos(dTheta1)*Math::Sin(dTheta3));
+								e.x = static_cast<float>(Math::Cos(dTheta1)*Math::Cos(dTheta3));
+								e.y = static_cast<float>(Math::Sin(dTheta1));
+								e.z = static_cast<float>(Math::Cos(dTheta1)*Math::Sin(dTheta3));
 								p.x = fRadius*e.x;
 								p.y = fRadius*e.y;
 								p.z = fRadius*e.z;
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/nDetail;
-									pfVertex[Vector2::Y] = (float)2*j/nDetail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/nDetail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*j)/nDetail;
 								}
 								if (Normals) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = e.x;
 									pfVertex[Vector3::Y] = e.y;
 									pfVertex[Vector3::Z] = e.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;
 								pIndexBuffer->SetData(nIndex++, nVertex);
 								nVertex++;
 
-								e.x = float(Math::Cos(dTheta2)*Math::Cos(dTheta3));
-								e.y = (float)Math::Sin(dTheta2);
-								e.z = float(Math::Cos(dTheta2)*Math::Sin(dTheta3));
+								e.x = static_cast<float>(Math::Cos(dTheta2)*Math::Cos(dTheta3));
+								e.y = static_cast<float>(Math::Sin(dTheta2));
+								e.z = static_cast<float>(Math::Cos(dTheta2)*Math::Sin(dTheta3));
 								p.x = fRadius*e.x;
 								p.y = fRadius*e.y;
 								p.z = fRadius*e.z;
 								if (TexCoords) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
-									pfVertex[Vector2::X] = (float)i/nDetail;
-									pfVertex[Vector2::Y] = (float)2*(j+1)/nDetail;
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
+									pfVertex[Vector2::X] = static_cast<float>(i)/nDetail;
+									pfVertex[Vector2::Y] = static_cast<float>(2*(j+1))/nDetail;
 								}
 								if (Normals) {
-									pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+									pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 									pfVertex[Vector3::X] = e.x;
 									pfVertex[Vector3::Y] = e.y;
 									pfVertex[Vector3::Z] = e.z;
 								}
-								pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+								pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 								pfVertex[Vector3::X] = vOffset.x + p.x;
 								pfVertex[Vector3::Y] = vOffset.y + p.y;
 								pfVertex[Vector3::Z] = vOffset.z + p.z;

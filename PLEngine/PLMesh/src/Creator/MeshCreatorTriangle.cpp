@@ -129,51 +129,51 @@ Mesh *MeshCreatorTriangle::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) c
 					vN.GetFaceNormal(vV1, vV2, vV3);
 
 					// V1
-					float *pfVertex = (float*)pVertexBuffer->GetData(0, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vOffset.x + vV1.x;
 					pfVertex[Vector3::Y] = vOffset.y + vV1.y;
 					pfVertex[Vector3::Z] = vOffset.z + vV1.z;
 					if (TexCoords) {
-						pfVertex = (float*)pVertexBuffer->GetData(0, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 0.0f;
 						pfVertex[Vector2::Y] = 0.0f;
 					}
 					if (Normals) {
-						pfVertex = (float*)pVertexBuffer->GetData(0, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = vN.x;
 						pfVertex[Vector3::Y] = vN.y;
 						pfVertex[Vector3::Z] = vN.z;
 					}
 
 					// V2
-					pfVertex = (float*)pVertexBuffer->GetData(1, VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vOffset.x + vV2.x;
 					pfVertex[Vector3::Y] = vOffset.y + vV2.y;
 					pfVertex[Vector3::Z] = vOffset.z + vV2.z;
 					if (TexCoords) {
-						pfVertex = (float*)pVertexBuffer->GetData(1, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 1.0f;
 						pfVertex[Vector2::Y] = 0.0f;
 					}
 					if (Normals) {
-						pfVertex = (float*)pVertexBuffer->GetData(1, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = vN.x;
 						pfVertex[Vector3::Y] = vN.y;
 						pfVertex[Vector3::Z] = vN.z;
 					}
 
 					// V3
-					pfVertex = (float*)pVertexBuffer->GetData(2, VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vOffset.x + vV3.x;
 					pfVertex[Vector3::Y] = vOffset.y + vV3.y;
 					pfVertex[Vector3::Z] = vOffset.z + vV3.z;
 					if (TexCoords) {
-						pfVertex = (float*)pVertexBuffer->GetData(2, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 1.0f;
 						pfVertex[Vector2::Y] = 1.0f;
 					}
 					if (Normals) {
-						pfVertex = (float*)pVertexBuffer->GetData(2, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = vN.x;
 						pfVertex[Vector3::Y] = vN.y;
 						pfVertex[Vector3::Z] = vN.z;

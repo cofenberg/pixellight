@@ -224,17 +224,17 @@ void MeshMorphTarget::BuildTrianglePlaneList()
 					for (uint32 i=0; i<lstTriangles.GetNumOfElements(); i++) {
 						const MeshTriangle &cTriangle = lstTriangles[i];
 						// V0
-						const float *pfVertex = (const float*)pVertexBuffer->GetData(cTriangle.nVertex[0], VertexBuffer::Position);
+						const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(cTriangle.nVertex[0], VertexBuffer::Position));
 						vV0.x = pfVertex[0];
 						vV0.y = pfVertex[1];
 						vV0.z = pfVertex[2];
 						// V1
-						pfVertex = (const float*)pVertexBuffer->GetData(cTriangle.nVertex[1], VertexBuffer::Position);
+						pfVertex = static_cast<const float*>(pVertexBuffer->GetData(cTriangle.nVertex[1], VertexBuffer::Position));
 						vV1.x = pfVertex[0];
 						vV1.y = pfVertex[1];
 						vV1.z = pfVertex[2];
 						// V2
-						pfVertex = (const float*)pVertexBuffer->GetData(cTriangle.nVertex[2], VertexBuffer::Position);
+						pfVertex = static_cast<const float*>(pVertexBuffer->GetData(cTriangle.nVertex[2], VertexBuffer::Position));
 						vV2.x = pfVertex[0];
 						vV2.y = pfVertex[1];
 						vV2.z = pfVertex[2];
@@ -258,17 +258,17 @@ void MeshMorphTarget::BuildTrianglePlaneList()
 								uint32 nVertex0, nVertex1, nVertex2;
 								pLODLevel->GetTriangle(nGeo, nTri, nVertex0, nVertex1, nVertex2);
 								// V0
-								const float *pfVertex = (const float*)pVertexBuffer->GetData(nVertex0, VertexBuffer::Position);
+								const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex0, VertexBuffer::Position));
 								vV0.x = pfVertex[0];
 								vV0.y = pfVertex[1];
 								vV0.z = pfVertex[2];
 								// V1
-								pfVertex = (const float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Position);
+								pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
 								vV1.x = pfVertex[0];
 								vV1.y = pfVertex[1];
 								vV1.z = pfVertex[2];
 								// V2
-								pfVertex = (const float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::Position);
+								pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::Position));
 								vV2.x = pfVertex[0];
 								vV2.y = pfVertex[1];
 								vV2.z = pfVertex[2];
@@ -320,7 +320,7 @@ bool MeshMorphTarget::CalculateNormals()
 			pVertexBuffer->Lock(Lock::ReadWrite)) {
 			// Init normals
 			for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
-				float *pNormal = (float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+				float *pNormal = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 				pNormal[0] = 0.0f;
 				pNormal[1] = 0.0f;
 				pNormal[2] = 0.0f;
@@ -339,20 +339,20 @@ bool MeshMorphTarget::CalculateNormals()
 					pLODLevel->GetTriangle(i, j, nVertex1, nVertex2, nVertex3);
 
 					// Calculate face normal
-					v1 = Vector3((float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::Position)) - Vector3((float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
-					v2 = Vector3((float*)pVertexBuffer->GetData(nVertex3, VertexBuffer::Position)) - Vector3((float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
+					v1 = Vector3(static_cast<float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::Position))) - Vector3(static_cast<float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Position)));
+					v2 = Vector3(static_cast<float*>(pVertexBuffer->GetData(nVertex3, VertexBuffer::Position))) - Vector3(static_cast<float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Position)));
 					vNormal = v1.CrossProduct(v2);
 
 					// Add to vertex normals
-					float *pNormal = (float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Normal);
+					float *pNormal = static_cast<float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Normal));
 					pNormal[0] += vNormal.x;
 					pNormal[1] += vNormal.y;
 					pNormal[2] += vNormal.z;
-					pNormal     = (float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::Normal);
+					pNormal     = static_cast<float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::Normal));
 					pNormal[0] += vNormal.x;
 					pNormal[1] += vNormal.y;
 					pNormal[2] += vNormal.z;
-					pNormal     = (float*)pVertexBuffer->GetData(nVertex3, VertexBuffer::Normal);
+					pNormal     = static_cast<float*>(pVertexBuffer->GetData(nVertex3, VertexBuffer::Normal));
 					pNormal[0] += vNormal.x;
 					pNormal[1] += vNormal.y;
 					pNormal[2] += vNormal.z;
@@ -391,7 +391,7 @@ bool MeshMorphTarget::CalculateNormals()
 				}*/
 
 				// Normalize
-				float *pNormal = (float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+				float *pNormal = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 				float  fX      = pNormal[0];
 				float  fY      = pNormal[1];
 				float  fZ      = pNormal[2];
@@ -475,14 +475,14 @@ bool MeshMorphTarget::CalculateTangentSpaceVectors(bool bTangent, bool bBinormal
 
 					// Get vertex data
 					// 1
-					const float *pfPos1		 = (const float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Position);
-					const float *pfTexCoord1 = (const float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::TexCoord);
+					const float *pfPos1		 = static_cast<const float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
+					const float *pfTexCoord1 = static_cast<const float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::TexCoord));
 					// 2
-					const float *pfPos2		 = (const float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::Position);
-					const float *pfTexCoord2 = (const float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::TexCoord);
+					const float *pfPos2		 = static_cast<const float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::Position));
+					const float *pfTexCoord2 = static_cast<const float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::TexCoord));
 					// 3
-					const float *pfPos3		 = (const float*)pVertexBuffer->GetData(nVertex3, VertexBuffer::Position);
-					const float *pfTexCoord3 = (const float*)pVertexBuffer->GetData(nVertex3, VertexBuffer::TexCoord);
+					const float *pfPos3		 = static_cast<const float*>(pVertexBuffer->GetData(nVertex3, VertexBuffer::Position));
+					const float *pfTexCoord3 = static_cast<const float*>(pVertexBuffer->GetData(nVertex3, VertexBuffer::TexCoord));
 
 					// Position vectors
 					float x1 = pfPos2[Vector3::X] - pfPos1[Vector3::X];
@@ -517,7 +517,7 @@ bool MeshMorphTarget::CalculateTangentSpaceVectors(bool bTangent, bool bBinormal
 
 			// Calculate the final tangents
 			for (uint32 i=0; i<nNumOfVertices; i++) {
-				const float *pfNormal = (const float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+				const float *pfNormal = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 				vN.x = pfNormal[Vector3::X];
 				vN.y = pfNormal[Vector3::Y];
 				vN.z = pfNormal[Vector3::Z];
@@ -528,7 +528,7 @@ bool MeshMorphTarget::CalculateTangentSpaceVectors(bool bTangent, bool bBinormal
 
 				// Save tangent
 				if (bTangent) {
-					float *pfTangent = (float*)pVertexBuffer->GetData(i, VertexBuffer::Tangent);
+					float *pfTangent = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Tangent));
 					pfTangent[Vector3::X] = vTangent.x;
 					pfTangent[Vector3::Y] = vTangent.y;
 					pfTangent[Vector3::Z] = vTangent.z;
@@ -536,7 +536,7 @@ bool MeshMorphTarget::CalculateTangentSpaceVectors(bool bTangent, bool bBinormal
 
 				// Calculate and save binormal
 				if (bBinormal) {
-					float *pfBinormal = (float*)pVertexBuffer->GetData(i, VertexBuffer::Binormal);
+					float *pfBinormal = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Binormal));
 
 					// Calculate handedness
 					vBinormal = vN.CrossProduct(vTangent);
