@@ -127,7 +127,7 @@ bool SQSphere::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 							m_cSphere.SetRadius(pSceneNode->GetTransform().GetInverseMatrix().RotateVector(Vector3(m_cSphere.GetRadius(), m_cSphere.GetRadius(), m_cSphere.GetRadius())).GetLength());
 
 							// Container recursion
-							const bool bContinue = PerformQueryRec(((SceneContainer*)pSceneNode)->GetHierarchyInstance()->GetRootNode());
+							const bool bContinue = PerformQueryRec(static_cast<SceneContainer*>(pSceneNode)->GetHierarchyInstance()->GetRootNode());
 
 							// Restore sphere
 							m_cSphere = cSphere;
@@ -139,8 +139,8 @@ bool SQSphere::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 						// Is this a cell-portal?
 						} else if (pSceneNode->IsPortal() && pSceneNode->IsInstanceOf("PLScene::SNCellPortal") && !(pSceneNode->GetFlags() & SNCellPortal::NoPassThrough)) {
 							// Get the target cell
-							SNCellPortal   &cCellPortal	= (SNCellPortal&)*pSceneNode;
-							SceneContainer *pCell		= (SceneContainer*)cCellPortal.GetTargetCellInstance();
+							SNCellPortal   &cCellPortal	= static_cast<SNCellPortal&>(*pSceneNode);
+							SceneContainer *pCell		= reinterpret_cast<SceneContainer*>(cCellPortal.GetTargetCellInstance());
 							if (pCell && pCell != pSceneNode->GetContainer()) {
 								// Backup current sphere
 								const Sphere cSphere = m_cSphere;

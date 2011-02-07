@@ -282,8 +282,8 @@ void SNParticleGroup::SetupTextureAnimation(uint32 nColumns, uint32 nRows)
 		m_nTextureAnimationRows    = nRows;
 
 		// Create the list of texture coordinates
-		const float fWidth  = (float)1/nColumns;
-		const float fHeight = (float)1/nRows;
+		const float fWidth  = 1.0f/static_cast<float>(nColumns);
+		const float fHeight = 1.0f/static_cast<float>(nRows);
 		float fY = 1.0f;
 		for (uint32 nRow=0; nRow<nRows; nRow++) {
 			float fX = 0.0f;
@@ -365,7 +365,7 @@ SNParticleGroup::SNParticleGroup() :
 	m_bCreateParticles(true)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
 }
 
 /**
@@ -485,7 +485,7 @@ void SNParticleGroup::CreateShapes()
 	if (m_pVertexBuffer->Lock(Lock::WriteOnly)) {
 		// Vertex buffer data
 		const uint32 nVertexSize = m_pVertexBuffer->GetVertexSize();
-		float *pfPosition = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::Position);
+		float *pfPosition = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
 
 		// Particle data
 		if (GetFlags() & PointSprites) {
@@ -498,7 +498,7 @@ void SNParticleGroup::CreateShapes()
 						pfPosition[0] = cParticle.vPos.x;
 						pfPosition[1] = cParticle.vPos.y;
 						pfPosition[2] = cParticle.vPos.z;
-						pfPosition = (float*)((char*)pfPosition+nVertexSize);
+						pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 						m_nUsedVertices++;
 					}
 				}
@@ -510,7 +510,7 @@ void SNParticleGroup::CreateShapes()
 						pfPosition[0] = cParticle.vPos.x;
 						pfPosition[1] = cParticle.vPos.y;
 						pfPosition[2] = cParticle.vPos.z;
-						pfPosition = (float*)((char*)pfPosition+nVertexSize);
+						pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 						m_pVertexBuffer->SetColor(m_nUsedVertices, cParticle.vColor);
 						m_nUsedVertices++;
 					}
@@ -536,7 +536,7 @@ void SNParticleGroup::CreateShapes()
 			vX.Invert();
 
 			// Create the particle shapes
-			float *pfTexCoord = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord);
+			float *pfTexCoord = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 			Vector3 vRight, vUp, vXT, vYT;
 
 			m_nUsedIndices  = 0;
@@ -630,10 +630,10 @@ void SNParticleGroup::CreateShapes()
 						pfPosition[0] = vTopLeft.x;
 						pfPosition[1] = vTopLeft.y;
 						pfPosition[2] = vTopLeft.z;
-						pfPosition = (float*)((char*)pfPosition+nVertexSize);
+						pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 						pfTexCoord[0] = pvParticleTexCoord[0].x;
 						pfTexCoord[1] = pvParticleTexCoord[0].y;
-						pfTexCoord = (float*)((char*)pfTexCoord+nVertexSize);
+						pfTexCoord = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTexCoord)+nVertexSize);
 						m_pVertexBuffer->SetColor(m_nUsedVertices, cParticle.vColor);
 						m_nUsedVertices++;
 
@@ -641,10 +641,10 @@ void SNParticleGroup::CreateShapes()
 						pfPosition[0] = vTopRight.x;
 						pfPosition[1] = vTopRight.y;
 						pfPosition[2] = vTopRight.z;
-						pfPosition = (float*)((char*)pfPosition+nVertexSize);
+						pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 						pfTexCoord[0] = pvParticleTexCoord[1].x;
 						pfTexCoord[1] = pvParticleTexCoord[1].y;
-						pfTexCoord = (float*)((char*)pfTexCoord+nVertexSize);
+						pfTexCoord = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTexCoord)+nVertexSize);
 						m_pVertexBuffer->SetColor(m_nUsedVertices, cParticle.vColor);
 						m_nUsedVertices++;
 
@@ -652,10 +652,10 @@ void SNParticleGroup::CreateShapes()
 						pfPosition[0] = vBottomRight.x;
 						pfPosition[1] = vBottomRight.y;
 						pfPosition[2] = vBottomRight.z;
-						pfPosition = (float*)((char*)pfPosition+nVertexSize);
+						pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 						pfTexCoord[0] = pvParticleTexCoord[2].x;
 						pfTexCoord[1] = pvParticleTexCoord[2].y;
-						pfTexCoord = (float*)((char*)pfTexCoord+nVertexSize);
+						pfTexCoord = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTexCoord)+nVertexSize);
 						m_pVertexBuffer->SetColor(m_nUsedVertices, cParticle.vColor);
 						m_nUsedVertices++;
 
@@ -663,10 +663,10 @@ void SNParticleGroup::CreateShapes()
 						pfPosition[0] = vBottomLeft.x;
 						pfPosition[1] = vBottomLeft.y;
 						pfPosition[2] = vBottomLeft.z;
-						pfPosition = (float*)((char*)pfPosition+nVertexSize);
+						pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition)+nVertexSize);
 						pfTexCoord[0] = pvParticleTexCoord[3].x;
 						pfTexCoord[1] = pvParticleTexCoord[3].y;
-						pfTexCoord = (float*)((char*)pfTexCoord+nVertexSize);
+						pfTexCoord = reinterpret_cast<float*>(reinterpret_cast<char*>(pfTexCoord)+nVertexSize);
 						m_pVertexBuffer->SetColor(m_nUsedVertices, cParticle.vColor);
 						m_nUsedVertices++;
 

@@ -158,7 +158,7 @@ void SNConsole::NotifyUpdate()
 	if (m_nState == Active || m_nState == Activating) {
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
-		Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
+		Controller *pController = reinterpret_cast<Controller*>(GetSceneContext()->GetDefaultInputController());
 		if ((pController && pController->GetActive()) || !pController) {
 			// Get keyboard input device
 			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
@@ -223,7 +223,7 @@ void SNConsole::NotifyUpdate()
 		#ifdef WIN32
 			// Check for log update
 			// [TODO] Use FS own functions for this if implemented...
-			if ((int)m_nLastRow == m_nRow) {
+			if (static_cast<int>(m_nLastRow) == m_nRow) {
 				WIN32_FIND_DATA File;
 				HANDLE hFind = FindFirstFile(Log::GetInstance()->GetFilename(), &File);
 				if (hFind != INVALID_HANDLE_VALUE) {
@@ -254,7 +254,7 @@ void SNConsole::NotifyUpdate()
 				// Read a log line by reading until a '\n' is found
 				do {
 					// Set the current file pointer position
-					if (!cFile.Seek(-int(nOffset), File::SeekEnd)) {
+					if (!cFile.Seek(-static_cast<int>(nOffset), File::SeekEnd)) {
 						// We reached the beginning of the file :)
 						m_nRow = nRow-1;
 						break;
@@ -262,7 +262,7 @@ void SNConsole::NotifyUpdate()
 
 					// Update the offset
 					nOffset++;
-				} while ((char)cFile.GetC() != '\n');
+				} while (static_cast<char>(cFile.GetC()) != '\n');
 				if (nRow < m_nRow+1)
 					nRow++;
 			} while (nRow < m_nRow+1);
@@ -279,14 +279,14 @@ void SNConsole::NotifyUpdate()
 					i = BufferSize - 1;
 					do {
 						// Set the current file pointer position
-						if (!cFile.Seek(-int(nOffset), File::SeekEnd)) {
+						if (!cFile.Seek(-static_cast<int>(nOffset), File::SeekEnd)) {
 							// We reached the beginning of the file :)
 							m_nRow = nRow-1;
 							break;
 						}
 
 						// Read a character
-						szBuffer[i] = (char)cFile.GetC();
+						szBuffer[i] = static_cast<char>(cFile.GetC());
 
 						// Update the offsets
 						i--;
@@ -360,7 +360,7 @@ void SNConsole::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 		}
 
 		// Get the font
-		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 		if (pFont) {
 			// Set render states
 			cRenderer.GetRendererContext().GetEffectManager().Use();

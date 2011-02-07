@@ -643,7 +643,7 @@ ValueType &FastPool<ValueType>::AddAtIndex(int nIndex)
 		uint32     nCurIndex = 0;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				ValueType &cNewElement = AddElement();
 				cNewElement.m_pNextElement     = pElement;
@@ -715,7 +715,7 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 		uint32     nCurIndex = 0;
 		while (pElement) {
 			// Index reached?
-			if (nCurIndex == (uint32)nIndex) {
+			if (nCurIndex == static_cast<uint32>(nIndex)) {
 				// Create the new pool element
 				ValueType &cNewElement = AddElement();
 				cNewElement					   = Element;

@@ -100,7 +100,7 @@ bool ImagePL::Load(const String &sFilename)
 		Unload();
 
 		// Get the PixelLight ingame GUI implementation
-		GuiPL *pGuiPL = (GuiPL*)m_pImage->GetGui()->GetImpl();
+		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pImage->GetGui()->GetImpl());
 		if (pGuiPL) {
 			// Get the renderer instance
 			PLRenderer::Renderer *pRenderer = pGuiPL->GetRenderer();
@@ -116,9 +116,9 @@ bool ImagePL::Load(const String &sFilename)
 
 						// Get width and height
 						if (m_pTextureBuffer->GetType() == PLRenderer::Resource::TypeTextureBuffer2D)
-							m_vSize = ((const PLRenderer::TextureBuffer2D*)m_pTextureBuffer)->GetSize();
+							m_vSize = static_cast<const PLRenderer::TextureBuffer2D*>(m_pTextureBuffer)->GetSize();
 						else
-							m_vSize = ((const PLRenderer::TextureBufferRectangle*)m_pTextureBuffer)->GetSize();
+							m_vSize = static_cast<const PLRenderer::TextureBufferRectangle*>(m_pTextureBuffer)->GetSize();
 
 						// Done
 						return true;
@@ -144,7 +144,7 @@ bool ImagePL::LoadWithColorKey(const String &sFilename, const Color3 &cColor)
 		Unload();
 
 		// Get the PixelLight ingame GUI implementation
-		GuiPL *pGuiPL = (GuiPL*)m_pImage->GetGui()->GetImpl();
+		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pImage->GetGui()->GetImpl());
 		if (pGuiPL) {
 			// Get the renderer instance
 			PLRenderer::Renderer *pRenderer = pGuiPL->GetRenderer();
@@ -163,9 +163,9 @@ bool ImagePL::LoadWithColorKey(const String &sFilename, const Color3 &cColor)
 
 						// Get width and height
 						if (m_pTextureBuffer->GetType() == PLRenderer::Resource::TypeTextureBuffer2D)
-							m_vSize = ((const PLRenderer::TextureBuffer2D*)m_pTextureBuffer)->GetSize();
+							m_vSize = static_cast<const PLRenderer::TextureBuffer2D*>(m_pTextureBuffer)->GetSize();
 						else
-							m_vSize = ((const PLRenderer::TextureBufferRectangle*)m_pTextureBuffer)->GetSize();
+							m_vSize = static_cast<const PLRenderer::TextureBufferRectangle*>(m_pTextureBuffer)->GetSize();
 
 						// Done
 						return true;

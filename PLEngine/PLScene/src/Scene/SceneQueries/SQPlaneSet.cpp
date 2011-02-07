@@ -125,7 +125,7 @@ bool SQPlaneSet::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 							m_cPlaneSet *= pSceneNode->GetTransform().GetInverseMatrix();
 
 							// Container recursion
-							const bool bContinue = PerformQueryRec(((SceneContainer*)pSceneNode)->GetHierarchyInstance()->GetRootNode());
+							const bool bContinue = PerformQueryRec(static_cast<SceneContainer*>(pSceneNode)->GetHierarchyInstance()->GetRootNode());
 
 							// Restore plane set
 							m_cPlaneSet = cPlaneSet;
@@ -137,8 +137,8 @@ bool SQPlaneSet::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 						// Is this a cell-portal?
 						} else if (pSceneNode->IsPortal() && pSceneNode->IsInstanceOf("PLScene::SNCellPortal") && !(pSceneNode->GetFlags() & SNCellPortal::NoPassThrough)) {
 							// Get the target cell
-							SNCellPortal   &cCellPortal	= (SNCellPortal&)*pSceneNode;
-							SceneContainer *pCell		= (SceneContainer*)cCellPortal.GetTargetCellInstance();
+							SNCellPortal   &cCellPortal	= static_cast<SNCellPortal&>(*pSceneNode);
+							SceneContainer *pCell		= reinterpret_cast<SceneContainer*>(cCellPortal.GetTargetCellInstance());
 							if (pCell && pCell != pSceneNode->GetContainer()) {
 								// Backup current plane set
 								const PlaneSet cPlaneSet = m_cPlaneSet;

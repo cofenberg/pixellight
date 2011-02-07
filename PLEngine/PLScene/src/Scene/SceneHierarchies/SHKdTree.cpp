@@ -170,14 +170,14 @@ void SHKdTreeNode::Merge()
 void SHKdTreeNode::Split()
 {
 	// Create the child nodes
-	m_pLeftNode  = (SHKdTreeNode*)&GetFreeNode();
-	m_pRightNode = (SHKdTreeNode*)&GetFreeNode();
+	m_pLeftNode  = static_cast<SHKdTreeNode*>(&GetFreeNode());
+	m_pRightNode = static_cast<SHKdTreeNode*>(&GetFreeNode());
 	m_pLeftNode->m_pParentNode = m_pRightNode->m_pParentNode = this;
 	m_pLeftNode->m_nLevel = m_pRightNode->m_nLevel = m_nLevel + 1;
 
 	// Get the split axis
 	const float fSize[3] = { m_cAABoundingBox.GetWidth(), m_cAABoundingBox.GetHeight(), m_cAABoundingBox.GetDepth() };
-	m_nSplitAxis = (EAxis)m_cAABoundingBox.GetLongestAxis();
+	m_nSplitAxis = static_cast<EAxis>(m_cAABoundingBox.GetLongestAxis());
 
 	// Get the split value
 	m_fSplitValue = m_cAABoundingBox.vMin[m_nSplitAxis] + fSize[m_nSplitAxis]*0.5f;

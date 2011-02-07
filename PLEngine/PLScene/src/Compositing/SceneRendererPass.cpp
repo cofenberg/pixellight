@@ -72,7 +72,7 @@ void SceneRendererPass::SetFlags(uint32 nValue)
 SceneContext *SceneRendererPass::GetSceneContext() const
 {
 	// Get the owner scene renderer
-	SceneRenderer *pSceneRenderer = (SceneRenderer*)GetManager();
+	SceneRenderer *pSceneRenderer = static_cast<SceneRenderer*>(GetManager());
 	if (pSceneRenderer) {
 		return &pSceneRenderer->GetSceneRendererManager().GetSceneContext();
 	} else {
@@ -101,7 +101,7 @@ Renderer *SceneRendererPass::GetRenderer() const
 SceneRendererPass *SceneRendererPass::GetFirstInstanceOfSceneRendererPassClass(const String &sClassName) const
 {
 	// Get the scene renderer we're in
-	SceneRenderer *pSceneRenderer = (SceneRenderer*)GetManager();
+	SceneRenderer *pSceneRenderer = static_cast<SceneRenderer*>(GetManager());
 	if (pSceneRenderer) {
 		// Loop through all scene renderer pass instances within the scene renderer
 		for (uint32 i=0; i<pSceneRenderer->GetNumOfElements(); i++) {

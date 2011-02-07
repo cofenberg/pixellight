@@ -95,10 +95,10 @@ void SNMBillboardCylindrical::BuildTransformMatrix(const Matrix4x4 &mView, const
 		  float x      = UpVector.Get().x;
 		  float y      = UpVector.Get().y;
 		  float z      = UpVector.Get().z;
-	const float fTheta = float(-180.0f*Math::ATan2(mView.xz, mView.zz)/Math::Pi);
+	const float fTheta = static_cast<float>(-180.0f*Math::ATan2(mView.xz, mView.zz)/Math::Pi);
 		  float d      = x*x + y*y + z*z;
-	const float ct     = (float)Math::Cos(Math::DegToRad*fTheta);
-	const float st     = (float)Math::Sin(Math::DegToRad*fTheta);
+	const float ct     = static_cast<float>(Math::Cos(Math::DegToRad*fTheta));
+	const float st     = static_cast<float>(Math::Sin(Math::DegToRad*fTheta));
 
 	// Normalize
 	if (d > 0.0f) {

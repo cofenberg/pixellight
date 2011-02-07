@@ -100,7 +100,7 @@ void SNMLightRandomAnimation::NotifyUpdate()
 	m_fTimer += Timing::GetInstance()->GetTimeDifference()*Speed;
 
 	// Set current scene node scale
-	SNLight &cLight = (SNLight&)GetSceneNode();
+	SNLight &cLight = static_cast<SNLight&>(GetSceneNode());
 
 	// Animate color
 		  Color3 cColor  = cLight.Color.Get();

@@ -67,9 +67,9 @@ SNMMeshUpdate *SNMMesh::GetSNMMeshUpdate() const
 {
 	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
 	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
-	SNMMeshUpdate *pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().GetModifier(sSNMMeshUpdate);
+	SNMMeshUpdate *pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(GetSceneNode().GetModifier(sSNMMeshUpdate));
 	if (!pSNMMeshUpdate)
-		pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\"");
+		pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(GetSceneNode().AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\""));
 
 	// Return the SNMMeshUpdate instance
 	return pSNMMeshUpdate;

@@ -111,7 +111,7 @@ void SNGui::SetFocus(bool bFocus)
 void SNGui::NotifyUpdate()
 {
 	// Get the PixelLight ingame GUI implementation
-	GuiPL *pGuiPL = (GuiPL*)m_pGui->GetImpl();
+	GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());
 	if (pGuiPL) {
 		// Check if there are system messages waiting
 		if (m_pGui->HasPendingMessages())
@@ -133,7 +133,7 @@ void SNGui::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 		SceneNode::DrawPost(cRenderer, pVisNode);
 
 		// Get the PixelLight ingame GUI implementation
-		GuiPL *pGuiPL = (GuiPL*)m_pGui->GetImpl();
+		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());
 		if (pGuiPL) {
 			// Draw the ingame GUI
 			pGuiPL->Render();
@@ -156,7 +156,7 @@ void SNGui::InitFunction()
 
 		// [TODO] The GUI already needs a renderer instance during the initialization...
 		// Get the PixelLight ingame GUI implementation
-		GuiPL *pGuiPL = (GuiPL*)m_pGui->GetImpl();
+		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());
 		if (pGuiPL) {
 			pGuiPL->m_pRenderer = &GetSceneContext()->GetRendererContext().GetRenderer();
 			pGuiPL->SetInputController(GetSceneContext()->GetDefaultInputController());

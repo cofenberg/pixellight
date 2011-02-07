@@ -48,12 +48,12 @@ const VisContainer *VisNode::GetVisRootContainer() const
 	if (m_pParent) {
 		const SQCull *pSceneQuery = nullptr;
 		if (m_pParent->IsContainer())
-			pSceneQuery = ((VisContainer*)m_pParent)->GetCullQuery();
+			pSceneQuery = static_cast<const VisContainer*>(m_pParent)->GetCullQuery();
 		else if (m_pParent->IsPortal())
-			pSceneQuery = ((VisContainer*)m_pParent->GetParent())->GetCullQuery();
+			pSceneQuery = static_cast<const VisContainer*>(m_pParent->GetParent())->GetCullQuery();
 		return pSceneQuery ? pSceneQuery->GetVisRootContainer() : nullptr;
 	} else {
-		return (VisContainer*)this;
+		return static_cast<const VisContainer*>(this);
 	}
 }
 
@@ -83,7 +83,7 @@ const Matrix4x4 &VisNode::GetProjectionMatrix() const
 {
 	const VisNode *pVisNodeParent = GetParent();
 	if (pVisNodeParent && pVisNodeParent->IsContainer())
-		return ((VisContainer*)pVisNodeParent)->GetCullQuery()->GetProjectionMatrix();
+		return static_cast<const VisContainer*>(pVisNodeParent)->GetCullQuery()->GetProjectionMatrix();
 	else
 		return Matrix4x4::Identity;
 }
@@ -96,7 +96,7 @@ const Matrix4x4 &VisNode::GetViewMatrix() const
 {
 	const VisNode *pVisNodeParent = GetParent();
 	if (pVisNodeParent && pVisNodeParent->IsContainer())
-		return ((VisContainer*)pVisNodeParent)->GetCullQuery()->GetViewMatrix();
+		return static_cast<const VisContainer*>(pVisNodeParent)->GetCullQuery()->GetViewMatrix();
 	else
 		return Matrix4x4::Identity;
 }
@@ -109,7 +109,7 @@ const Matrix4x4 &VisNode::GetViewProjectionMatrix() const
 {
 	const VisNode *pVisNodeParent = GetParent();
 	if (pVisNodeParent && pVisNodeParent->IsContainer())
-		return ((VisContainer*)pVisNodeParent)->GetCullQuery()->GetViewProjectionMatrix();
+		return static_cast<const VisContainer*>(pVisNodeParent)->GetCullQuery()->GetViewProjectionMatrix();
 	else
 		return Matrix4x4::Identity;
 }

@@ -179,7 +179,7 @@ void GuiPL::Render()
 				m_pRenderer->SetRenderState(PLRenderer::RenderState::ZWriteEnable,		false);						// We don't need depth test
 				m_pRenderer->SetRenderState(PLRenderer::RenderState::CullMode,			PLRenderer::Cull::None);	// We don't need backface culling
 				m_pRenderer->SetRenderState(PLRenderer::RenderState::FixedFillMode,		PLRenderer::Fill::Solid);	// Even in wireframe mode rendering, we want to see the ingame GUI
-				m_pRenderer->GetDrawHelpers().Begin2DMode(0.0f, 0.0f, (float)m_vScreenSize.x, (float)m_vScreenSize.y);
+				m_pRenderer->GetDrawHelpers().Begin2DMode(0.0f, 0.0f, static_cast<float>(m_vScreenSize.x), static_cast<float>(m_vScreenSize.y));
 
 				// The render states are now set
 				bFirstVisibleTopLevelWidget = false;
@@ -360,7 +360,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 	const Vector2i vAbsPos = cWidget.GetAbsPos();
 
 	// Scissor rectangle in virtual GUI screen space dimension
-	Rectangle cRectangle((float)vAbsPos.x, (float)vAbsPos.y, float(vAbsPos.x + cWidget.GetSize().x), float(vAbsPos.y + cWidget.GetSize().y));
+	Rectangle cRectangle(static_cast<float>(vAbsPos.x), static_cast<float>(vAbsPos.y), static_cast<float>(vAbsPos.x + cWidget.GetSize().x), static_cast<float>(vAbsPos.y + cWidget.GetSize().y));
 
 	// Transform the scissor rectancle into real viewport coordinates
 	const Vector2 vScale(m_pRenderer->GetViewport().GetWidth()/m_vScreenSize.x, m_pRenderer->GetViewport().GetHeight()/m_vScreenSize.y);
@@ -376,7 +376,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 	// Check for transparency settings?
 	if (nTransparency == NoTransparency) {
 		// Get the widget implementation
-		const WidgetPL *pWidgetPL = (WidgetPL*)cWidget.GetImpl();
+		const WidgetPL *pWidgetPL = static_cast<WidgetPL*>(cWidget.GetImpl());
 		if (pWidgetPL && pWidgetPL->m_nTransparency == AlphaTransparency) {
 			nTransparency	   = pWidgetPL->m_nTransparency;
 			cTransparencyColor = pWidgetPL->m_cTransparencyColor;
@@ -394,7 +394,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 
 	{ // Recursion part
 		// Get list of widget children
-		const List<Widget*> &cChildren = ((WidgetPL*)cWidget.GetImpl())->m_lstChildren;
+		const List<Widget*> &cChildren = static_cast<WidgetPL*>(cWidget.GetImpl())->m_lstChildren;
 
 		// Iterate through the child widgets
 		Iterator<Widget*> cIterator = cChildren.GetEndIterator();
@@ -413,7 +413,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 	{ // Topmost recursion part
 		// [TODO] Draw topmost widgets in a complete seperate draw step, or is the current solution ok?
 		// Get list of widget children
-		const List<Widget*> &cChildren = ((WidgetPL*)cWidget.GetImpl())->m_lstTopmostChildren;
+		const List<Widget*> &cChildren = static_cast<WidgetPL*>(cWidget.GetImpl())->m_lstTopmostChildren;
 
 		// Iterate through the child widgets
 		Iterator<Widget*> cIterator = cChildren.GetEndIterator();
@@ -523,7 +523,7 @@ void GuiPL::UpdateMouse()
 	// [TODO] PLGui::GuiApplication type check
 	// Get the main window of the application
 	if (PLCore::ConsoleApplication::GetApplication()) {
-		Widget *pWidget = ((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget();
+		Widget *pWidget = static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget();
 		if (pWidget) {
 			// Check if the mouse is currently over either the widget or one of it's child widgets
 			if (pWidget->IsMouseOver()) {
@@ -535,16 +535,16 @@ void GuiPL::UpdateMouse()
 
 					{ // Calculate the absolute ingame GUI mouse cursor position
 						// Calculate normalized mouse position
-						const float fNormalizedX = float(m_vSystemMousePos.x)/float(pWidget->GetSize().x);
-						const float fNormalizedY = float(m_vSystemMousePos.y)/float(pWidget->GetSize().y);
+						const float fNormalizedX = static_cast<float>(m_vSystemMousePos.x)/static_cast<float>(pWidget->GetSize().x);
+						const float fNormalizedY = static_cast<float>(m_vSystemMousePos.y)/static_cast<float>(pWidget->GetSize().y);
 
 						// Calculate the mouse position within the virtual GUI space
-						m_vMousePos.x = int(fNormalizedX*m_vScreenSize.x);
-						m_vMousePos.y = int(fNormalizedY*m_vScreenSize.y);
+						m_vMousePos.x = static_cast<int>(fNormalizedX*m_vScreenSize.x);
+						m_vMousePos.y = static_cast<int>(fNormalizedY*m_vScreenSize.y);
 					}
 
 					// Get the widget implementation
-					const WidgetPL *pMouseOverPL = m_pMouseOver ? (WidgetPL*)m_pMouseOver->GetImpl() : nullptr;
+					const WidgetPL *pMouseOverPL = m_pMouseOver ? static_cast<WidgetPL*>(m_pMouseOver->GetImpl()) : nullptr;
 
 					// Currently over a widget that captures the mouse?
 					if (pMouseOverPL && pMouseOverPL->m_bCaptureMouse) {
@@ -703,7 +703,7 @@ Widget *GuiPL::FindWidgetAtPos(const Vector2i &vMousePos, Widget &cParentWidget)
 	Widget *pMouseAtPos = nullptr;
 
 	// Get list of widget children
-	const List<Widget*> &cChildren = ((WidgetPL*)cParentWidget.GetImpl())->m_lstChildren;
+	const List<Widget*> &cChildren = static_cast<WidgetPL*>(cParentWidget.GetImpl())->m_lstChildren;
 
 	// Iterate through the child widgets
 	Iterator<Widget*> cIterator = cChildren.GetIterator();

@@ -90,7 +90,7 @@ void SNMPositionKeyframeAnimation::SetKeys(const String &sValue)
 			nAnimationPlaybackFlags |= Animation::PingPong;
 
 		// Start the animation
-		m_pAnimation->Start(0, m_pChunk->GetNumOfElements()-1, (float)FramesPerSecond, nAnimationPlaybackFlags);
+		m_pAnimation->Start(0, m_pChunk->GetNumOfElements()-1, static_cast<float>(FramesPerSecond), nAnimationPlaybackFlags);
 	}
 }
 
@@ -171,7 +171,7 @@ void SNMPositionKeyframeAnimation::OnActivate(bool bActivate)
 void SNMPositionKeyframeAnimation::NotifyUpdate()
 {
 	// Are there any keys?
-	const float *pfData = (const float*)m_pChunk->GetData();
+	const float *pfData = reinterpret_cast<const float*>(m_pChunk->GetData());
 	if (pfData) {
 		// Update the animation
 		m_pAnimation->Update(Speed*Timing::GetInstance()->GetTimeDifference());
@@ -184,7 +184,7 @@ void SNMPositionKeyframeAnimation::NotifyUpdate()
 			SceneNode *pTargetSceneNode = GetSceneNode().GetContainer()->Get(CoordinateSystem);
 			if (pTargetSceneNode && pTargetSceneNode->IsContainer()) {
 				// Get the transform matrix that transform from "the other scene container" into "this scene container"
-				((SceneContainer*)pTargetSceneNode)->GetTransformMatrixTo(*GetSceneNode().GetContainer(), mTransform);
+				static_cast<SceneContainer*>(pTargetSceneNode)->GetTransformMatrixTo(*GetSceneNode().GetContainer(), mTransform);
 				bUseTransform = true;
 			}
 		}

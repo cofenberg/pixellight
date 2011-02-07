@@ -61,7 +61,7 @@ SNCoordinateAxis3D::SNCoordinateAxis3D() :
 	SetAABoundingBox(AABoundingBox(Vector3::Zero, Vector3::One));
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPost));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPost));
 }
 
 /**
@@ -99,7 +99,7 @@ void SNCoordinateAxis3D::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 		// Draw texts
 		Font *pFont = nullptr;
 		if (!(GetFlags() & NoXText) || !(GetFlags() & NoYText) || !(GetFlags() & NoZText)) {
-			pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+			pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 			if (GetFlags() & DepthTest) {
 				cRenderer.SetRenderState(RenderState::ZEnable,      true);
 				cRenderer.SetRenderState(RenderState::ZWriteEnable, false);

@@ -90,7 +90,7 @@ void SNMScaleKeyframeAnimation::SetKeys(const String &sValue)
 			nAnimationPlaybackFlags |= Animation::PingPong;
 
 		// Start the animation
-		m_pAnimation->Start(0, m_pChunk->GetNumOfElements()-1, (float)FramesPerSecond, nAnimationPlaybackFlags);
+		m_pAnimation->Start(0, m_pChunk->GetNumOfElements()-1, static_cast<float>(FramesPerSecond), nAnimationPlaybackFlags);
 	}
 }
 
@@ -170,7 +170,7 @@ void SNMScaleKeyframeAnimation::OnActivate(bool bActivate)
 void SNMScaleKeyframeAnimation::NotifyUpdate()
 {
 	// Are there any keys?
-	const float *pfData = (const float*)m_pChunk->GetData();
+	const float *pfData = reinterpret_cast<const float*>(m_pChunk->GetData());
 	if (pfData) {
 		// Update the frame
 		m_pAnimation->Update(Speed*Timing::GetInstance()->GetTimeDifference());

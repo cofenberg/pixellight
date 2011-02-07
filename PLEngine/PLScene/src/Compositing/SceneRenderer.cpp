@@ -47,7 +47,7 @@ namespace PLScene {
 SceneRendererManager &SceneRenderer::GetSceneRendererManager() const
 {
 	// There MUST always be a manager!
-	return (SceneRendererManager&)*m_pManager;
+	return static_cast<SceneRendererManager&>(*m_pManager);
 }
 
 /**
@@ -67,7 +67,7 @@ SceneRendererPass *SceneRenderer::Create(const String &sClass, const String &sNa
 			const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
 			if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
 				PL_LOG(Debug, "Create scene renderer pass '" + sName + "' of type '" + sClass + "'")
-				SceneRendererPass *pPass = (SceneRendererPass*)pClass->Create();
+				SceneRendererPass *pPass = static_cast<SceneRendererPass*>(pClass->Create());
 				if (pPass) {
 					if (sParameters.GetLength())
 						pPass->SetValues(sParameters);

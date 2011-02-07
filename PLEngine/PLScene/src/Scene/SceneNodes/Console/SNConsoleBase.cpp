@@ -234,7 +234,7 @@ void SNConsoleBase::ProcessKeyMessage()
 {
 	// Check if input is active
 	// [TODO] Don't use devices directly, use a virtual controller instead
-	Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
+	Controller *pController = reinterpret_cast<Controller*>(GetSceneContext()->GetDefaultInputController());
 	if ((pController && pController->GetActive()) || !pController) {
 		// Get keyboard input device
 		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
@@ -617,7 +617,7 @@ void SNConsoleBase::ProcessCommand(const String &sCommand)
 		if (pCommand->GetNumOfParams()) {
 			uint32 nNumOfParameters = GetNumOfParamsInString(sProcessCommand);
 			if (nNumOfParameters < pCommand->GetNumOfParams()) {
-				PL_LOG(Error, String("This command requires ") + (int)pCommand->GetNumOfParams() + " parameter(s), but only " + (int)nNumOfParameters + " given!")
+				PL_LOG(Error, String("This command requires ") + pCommand->GetNumOfParams() + " parameter(s), but only " + nNumOfParameters + " given!")
 
 				// Done
 				return;

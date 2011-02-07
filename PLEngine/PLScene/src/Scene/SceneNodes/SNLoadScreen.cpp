@@ -144,16 +144,16 @@ void SNLoadScreen::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 		if (GetFlags() & NoImageBlend) {
 			// No image blend, please
 			for (uint8 i=0; i<Images; i++) {
-				m_fAlpha[i] = (fProgress-((float)i*fPerImage))/fPerImage;
+				m_fAlpha[i] = (fProgress-(static_cast<float>(i)*fPerImage))/fPerImage;
 				m_fAlpha[i] = (m_fAlpha[i] > 1.0f || m_fAlpha[i] < 0.0f) ? 0.0f : 1.0f;
 			}
 		} else {
 			if (Images > 1) {
 				// Image blend, please
 				for (uint8 i=0; i<Images; i++) {
-					m_fAlpha[i] = (fProgress-((float)i*fPerImage))/fPerImage;
+					m_fAlpha[i] = (fProgress-(static_cast<float>(i)*fPerImage))/fPerImage;
 					if (m_fAlpha[i] > 1.0f)
-						m_fAlpha[i] = 1.0f-(fProgress-(fPerImage*(float)(i+1)))/fPerImage;
+						m_fAlpha[i] = 1.0f-(fProgress-(fPerImage*static_cast<float>(i+1)))/fPerImage;
 				}
 			} else {
 				m_fAlpha[0] = fProgress*10;

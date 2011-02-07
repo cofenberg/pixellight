@@ -138,7 +138,7 @@ SceneNode *SceneContainer::Create(const String &sClass, const String &sName, con
 			const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
 			if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
 				PL_LOG(Debug, "Create scene node '" + sName + "' of type '" + sClass + "'")
-				SceneNode *pNode = (SceneNode*)pClass->Create();
+				SceneNode *pNode = static_cast<SceneNode*>(pClass->Create());
 				if (pNode) {
 
 					// [TODO] Check/refactor the initialization/de-initialzation process
@@ -173,7 +173,7 @@ void SceneContainer::CalculateAABoundingBox()
 	// If there are any scene nodes...
 	if (GetNumOfElements()) {
 		// Set first bounding box
-		cAABoundingBox = Get((uint32)0)->GetContainerAABoundingBox();
+		cAABoundingBox = Get(static_cast<uint32>(0))->GetContainerAABoundingBox();
 
 		// Combine all bounding boxes
 		for (uint32 i=1; i<GetNumOfElements(); i++)
@@ -252,7 +252,7 @@ SceneHierarchy *SceneContainer::CreateHierarchy(const String &sClass)
 						delete m_pHierarchy;
 
 					// Create new hierarchy
-					m_pHierarchy = (SceneHierarchy*)pObject;
+					m_pHierarchy = static_cast<SceneHierarchy*>(pObject);
 					m_pHierarchy->m_pSceneContainer = this;
 
 					// Initialize the hierarchy
@@ -321,7 +321,7 @@ SceneQuery *SceneContainer::CreateQuery(const String &sClass)
 			if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
 				Object *pObject = pClass->Create();
 				if (pObject) {
-					SceneQuery *pSceneQuery = (SceneQuery*)pObject;
+					SceneQuery *pSceneQuery = static_cast<SceneQuery*>(pObject);
 					pSceneQuery->m_pSceneContainer = this;
 
 					// Add to query manager
@@ -381,7 +381,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 
 	// Set scene container
 	if (cNode.IsContainer())
-		((SceneContainer&)cNode).m_pSceneContext = m_pSceneContext;
+		static_cast<SceneContainer&>(cNode).m_pSceneContext = m_pSceneContext;
 
 	// Emit event
 	cNode.EventContainer.Emit();
@@ -404,7 +404,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 	} else { // Find an unused node name
 		if (sNameT.GetLength()) {
 			for (uint32 i=0; ; i++) {
-				const String sNewName = sNameT + int(i);
+				const String sNewName = sNameT + static_cast<int>(i);
 				if (!Get(sNewName)) {
 					cNode.m_sName = sNewName;
 					m_mapElements.Add(sNewName, &cNode);
@@ -413,7 +413,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 			}
 		} else {
 			for (uint32 i=0; ; i++) {
-				const String sNewName = cNode.GetClass()->GetClassName() + int(i);
+				const String sNewName = cNode.GetClass()->GetClassName() + static_cast<int>(i);
 				if (!Get(sNewName)) {
 					cNode.m_sName = sNewName;
 					m_mapElements.Add(sNewName, &cNode);
@@ -522,16 +522,16 @@ SceneNode *SceneContainer::Get(uint32 nIndex) const
 SceneNode *SceneContainer::Get(const String &sName) const
 {
 	// Name not empty and is '.' the first character?
-	if (sName.GetLength() && sName[(uint32)0] != '.') {
+	if (sName.GetLength() && sName[static_cast<uint32>(0)] != '.') {
 		// Is the name 'This' at the beginning?
 		static const String sThis = "This";
 		if (sName.Compare(sThis, 0, 4)) {
 			// Return this scene node?
-			if (sName[(uint32)4] == '\0')
-				return (SceneNode*)this; // [HACK] Make this not 'const'
+			if (sName[static_cast<uint32>(4)] == '\0')
+				return const_cast<SceneNode*>(reinterpret_cast<const SceneNode*>(this)); // [HACK] Make this not 'const'
 
 			// Did a '.' follow?
-			if (sName[(uint32)4] == '.')
+			if (sName[static_cast<uint32>(4)] == '.')
 				return Get(sName.GetSubstring(5));
 		}
 
@@ -539,11 +539,11 @@ SceneNode *SceneContainer::Get(const String &sName) const
 		static const String sRoot = "Root";
 		if (sName.Compare(sRoot, 0, 4)) {
 			// Return root scene node?
-			if (sName[(uint32)4] == '\0')
+			if (sName[static_cast<uint32>(4)] == '\0')
 				return m_pSceneContext->GetRoot();
 
 			// Did a '.' follow?
-			if (sName[(uint32)4] == '.')
+			if (sName[static_cast<uint32>(4)] == '.')
 				return m_pSceneContext->GetRoot() ? m_pSceneContext->GetRoot()->Get(sName.GetSubstring(5)) : nullptr;
 		}
 
@@ -551,11 +551,11 @@ SceneNode *SceneContainer::Get(const String &sName) const
 		static const String sParent = "Parent";
 		if (sName.Compare(sParent, 0, 6)) {
 			// Return parent scene node?
-			if (sName[(uint32)6] == '\0')
+			if (sName[static_cast<uint32>(6)] == '\0')
 				return GetContainer();
 
 			// Did a '.' follow?
-			if (sName[(uint32)6] == '.') {
+			if (sName[static_cast<uint32>(6)] == '.') {
 				// Is there a parent container?
 				return GetContainer() ? GetContainer()->Get(sName.GetSubstring(7)) : nullptr;
 			}
@@ -566,13 +566,13 @@ SceneNode *SceneContainer::Get(const String &sName) const
 		if (nIndex >= 0) {
 			// Get the name of the scene container
 			String sContainerName;
-			sContainerName.Insert(sName, 0, (uint32)nIndex);
+			sContainerName.Insert(sName, 0, static_cast<uint32>(nIndex));
 
 			// Get the scene node and check whether it is a scene container
 			SceneNode *pSceneNode = Get(sContainerName);
 			if (pSceneNode && (pSceneNode->m_nInternalFlags & ClassContainer)) {
 				// Change 'into' this scene container
-				return ((SceneContainer*)pSceneNode)->Get(sName.GetSubstring(nIndex+1));
+				return static_cast<SceneContainer*>(pSceneNode)->Get(sName.GetSubstring(nIndex+1));
 			}
 		} else {
 			// Search for a scene node with this name

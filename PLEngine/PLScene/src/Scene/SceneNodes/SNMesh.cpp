@@ -533,7 +533,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Draw vertex numbers?
 			if (nDebugFlags & DebugShowVertexNumbers) {
-				Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 				if (pFont)
 					m_pMeshHandler->DrawVertexNumbers(*pFont, Color4::White, pVisNode->GetWorldViewProjectionMatrix());
 			}
@@ -550,7 +550,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 						// Draw joint names?
 						if (nDebugFlags & DebugShowJointNames) {
-							Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+							Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 							if (pFont)
 								pSkeletonHandler->DrawJointNames(*pFont, Color4::Green, pVisNode->GetWorldViewProjectionMatrix());
 						}
@@ -564,7 +564,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Draw anchor points?
 			if (nDebugFlags & DebugShowAnchorPoints) {
-				Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 				if (pFont)
 					m_pMeshHandler->DrawAnchorPoints(*pFont, Color4::Green, pVisNode->GetWorldViewProjectionMatrix());
 			}

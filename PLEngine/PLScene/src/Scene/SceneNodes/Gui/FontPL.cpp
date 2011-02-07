@@ -68,17 +68,17 @@ FontPL::~FontPL()
 PLRenderer::Font *FontPL::GetRendererFont()
 {
 	// Get the renderer font
-	PLRenderer::Font *pRendererFont = (PLRenderer::Font*)m_cRendererFont.GetResource();
+	PLRenderer::Font *pRendererFont = static_cast<PLRenderer::Font*>(m_cRendererFont.GetResource());
 
 	// Is the renderer font already there?
 	if (!pRendererFont) {
 		// Get the PixelLight ingame GUI implementation
-		GuiPL *pGuiPL = (GuiPL*)m_pFont->GetGui()->GetImpl();
+		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pFont->GetGui()->GetImpl());
 		if (pGuiPL) {
 			// Get the renderer instance
 			PLRenderer::Renderer *pRenderer = pGuiPL->GetRenderer();
 			if (pRenderer) {
-				pRendererFont = (PLRenderer::Font*)pRenderer->GetFontManager().GetFontTexture(m_pFont->GetFilename(), m_pFont->GetHeight());
+				pRendererFont = reinterpret_cast<PLRenderer::Font*>(pRenderer->GetFontManager().GetFontTexture(m_pFont->GetFilename(), m_pFont->GetHeight()));
 				m_cRendererFont.SetResource(pRendererFont);
 			}
 		}

@@ -313,8 +313,8 @@ void SNCamera::SetAutoUpdate(bool bAutoUpdate)
 Matrix4x4 &SNCamera::GetProjectionMatrix(const Rectangle &cViewport)
 {
 	// Get the viewport width and height
-	const uint32 nViewportWidth  = uint32(cViewport.GetWidth());
-	const uint32 nViewportHeight = uint32(cViewport.GetHeight());
+	const uint32 nViewportWidth  = static_cast<uint32>(cViewport.GetWidth());
+	const uint32 nViewportHeight = static_cast<uint32>(cViewport.GetHeight());
 
 	// Calculate projection matrix if required
 	if (m_bAutoUpdate && ((m_nInternalCameraFlags & RecalculateProjectionMatrix) ||
@@ -324,11 +324,11 @@ Matrix4x4 &SNCamera::GetProjectionMatrix(const Rectangle &cViewport)
 		m_nViewportHeight = nViewportHeight;
 
 		// Calculate projection matrix
-		const float fAspectRadio = (float)m_nViewportWidth/((float)m_nViewportHeight*m_fAspect);
+		const float fAspectRadio = static_cast<float>(m_nViewportWidth)/(static_cast<float>(m_nViewportHeight)*m_fAspect);
 		if (GetFlags() & NoZFar)
-			m_mProj.PerspectiveFovInfinite(float(m_fFOV*Math::DegToRad), fAspectRadio, m_fZNear);
+			m_mProj.PerspectiveFovInfinite(static_cast<float>(m_fFOV*Math::DegToRad), fAspectRadio, m_fZNear);
 		else
-			m_mProj.PerspectiveFov(float(m_fFOV*Math::DegToRad), fAspectRadio, m_fZNear, m_fZFar);
+			m_mProj.PerspectiveFov(static_cast<float>(m_fFOV*Math::DegToRad), fAspectRadio, m_fZNear, m_fZFar);
 
 		// Recalculation done
 		m_nInternalCameraFlags &= ~RecalculateProjectionMatrix;
@@ -391,8 +391,8 @@ Matrix3x4 &SNCamera::GetViewMatrix()
 Frustum &SNCamera::GetFrustum(const Rectangle &cViewport)
 {
 	// Get the viewport width and height
-	const uint32 nViewportWidth  = uint32(cViewport.GetWidth());
-	const uint32 nViewportHeight = uint32(cViewport.GetHeight());
+	const uint32 nViewportWidth  = static_cast<uint32>(cViewport.GetWidth());
+	const uint32 nViewportHeight = static_cast<uint32>(cViewport.GetHeight());
 
 	// Calculate frustum if required
 	if (m_bAutoUpdate && ((m_nInternalCameraFlags & RecalculateFrustum) ||
@@ -419,8 +419,8 @@ Frustum &SNCamera::GetFrustum(const Rectangle &cViewport)
 const Array<Vector3> &SNCamera::GetFrustumVertices(const Rectangle &cViewport)
 {
 	// Get the viewport width and height
-	const uint32 nViewportWidth  = uint32(cViewport.GetWidth());
-	const uint32 nViewportHeight = uint32(cViewport.GetHeight());
+	const uint32 nViewportWidth  = static_cast<uint32>(cViewport.GetWidth());
+	const uint32 nViewportHeight = static_cast<uint32>(cViewport.GetHeight());
 
 	// Calculate frustum vertices if required
 	if ((m_nInternalCameraFlags & RecalculateFrustumVertices) ||
@@ -461,12 +461,12 @@ bool SNCamera::GetViewportCorners(Vector3 &vUpperRight, Vector3 &vLowerRight, Ve
 {
 	// Get the viewport
 	const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
-	const uint32 nViewportWidth  = uint32(cRenderer.GetViewport().GetWidth());
-	const uint32 nViewportHeight = uint32(cRenderer.GetViewport().GetHeight());
+	const uint32 nViewportWidth  = static_cast<uint32>(cRenderer.GetViewport().GetWidth());
+	const uint32 nViewportHeight = static_cast<uint32>(cRenderer.GetViewport().GetHeight());
 
 	// Get near x/y/z
-	const float fAspectRadio = (float)nViewportWidth/((float)nViewportHeight*m_fAspect);
-	const float e			 = float(1/Math::Tan(Math::DegToRad*m_fFOV*0.5f));
+	const float fAspectRadio = static_cast<float>(nViewportWidth)/(static_cast<float>(nViewportHeight)*m_fAspect);
+	const float e			 = static_cast<float>(1/Math::Tan(Math::DegToRad*m_fFOV*0.5f));
 
 	// Get viewport corners
 	vUpperRight.SetXYZ( fDistance/e,  fAspectRadio*fDistance/e, -fDistance);

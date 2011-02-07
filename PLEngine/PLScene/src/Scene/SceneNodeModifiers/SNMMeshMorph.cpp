@@ -183,7 +183,7 @@ void SNMMeshMorph::UpdateMorphTarget()
 				const int nIndex = pMesh->GetMorphTargetIndex(m_sName);
 				if (nIndex >= 0) {
 					// State change? We use the 'const'-version for this to avoid forcing a mesh update...
-					const Array<float> &lstBaseMorphTargetWeights = ((const MeshHandler*)pMeshHandler)->GetBaseMorphTargetWeights();
+					const Array<float> &lstBaseMorphTargetWeights = static_cast<const MeshHandler*>(pMeshHandler)->GetBaseMorphTargetWeights();
 					if (lstBaseMorphTargetWeights[nIndex] != m_fWeight) {
 						// Get/create the mesh animation manager
 						if (!pMeshHandler->GetMeshAnimationManager())

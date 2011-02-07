@@ -50,7 +50,7 @@ namespace PLScene {
 */
 const SQCull *VisContainer::GetCullQuery() const
 {
-	return (SQCull*)m_pQueryHandler->GetElement();
+	return static_cast<SQCull*>(m_pQueryHandler->GetElement());
 }
 
 /**
@@ -123,9 +123,9 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 	// Is this a scene container?
 	VisNode *pNode;
 	if (cSceneNode.IsContainer()) {
-		const VisContainer *pContainer = m_mapContainers.Get(cSceneNode.GetName());
+		VisContainer *pContainer = m_mapContainers.Get(cSceneNode.GetName());
 		if (pContainer)
-			pNode = (VisNode*)pContainer;
+			pNode = static_cast<VisNode*>(pContainer);
 		else {
 			VisContainer *pNewContainer = new VisContainer(this);
 			m_mapContainers.Add(cSceneNode.GetName(), pNewContainer);
@@ -133,7 +133,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			// Connect event handler so we get informed if this visibility container is loosing it's scene node
 			cSceneNode.EventDestroy.Connect(&pNewContainer->EventHandlerDestroy);
 
-			SQCull *pCullQuery = (SQCull*)((SceneContainer&)cSceneNode).CreateQuery("PLScene::SQCull");
+			SQCull *pCullQuery = static_cast<SQCull*>(static_cast<SceneContainer&>(cSceneNode).CreateQuery("PLScene::SQCull"));
 			if (pCullQuery) {
 				pNewContainer->m_pQueryHandler->SetElement(pCullQuery);
 				pCullQuery->m_pVisRootContainer = GetCullQuery() ? GetCullQuery()->m_pVisRootContainer : pNewContainer;
@@ -148,12 +148,12 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 		if (pPortal) {
 			if (!pPortal->m_pTargetCell) {
 				// Get the target cell
-				SceneNode *pCell = (SceneNode*)((SNCellPortal&)cSceneNode).GetTargetCellInstance();
+				SceneNode *pCell = reinterpret_cast<SceneNode*>(static_cast<SNCellPortal&>(cSceneNode).GetTargetCellInstance());
 				if (pCell) {
 					// Is this REALLY a cell or is someone fooling us?
 					if (pCell->IsCell()) {
 						pPortal->m_pTargetCell = new VisContainer(pPortal);
-						SQCull *pCullQuery = (SQCull*)((SceneContainer*)pCell)->CreateQuery("PLScene::SQCull");
+						SQCull *pCullQuery = static_cast<SQCull*>(static_cast<SceneContainer*>(pCell)->CreateQuery("PLScene::SQCull"));
 						if (pCullQuery) {
 							pPortal->m_pTargetCell->m_pQueryHandler->SetElement(pCullQuery);
 							pCullQuery->m_pVisRootContainer = GetCullQuery() ? GetCullQuery()->m_pVisRootContainer : pPortal->m_pTargetCell;
@@ -174,12 +174,12 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			cSceneNode.EventDestroy.Connect(&pPortal->EventHandlerDestroy);
 
 			// Get the target cell
-			SceneNode *pCell = (SceneNode*)((SNCellPortal&)cSceneNode).GetTargetCellInstance();
+			SceneNode *pCell = reinterpret_cast<SceneNode*>(static_cast<SNCellPortal&>(cSceneNode).GetTargetCellInstance());
 			if (pCell) {
 				// Is this REALLY a cell or is someone fooling us?
 				if (pCell->IsCell()) {
 					pPortal->m_pTargetCell = new VisContainer(pPortal);
-					SQCull *pCullQuery = (SQCull*)((SceneContainer*)pCell)->CreateQuery("PLScene::SQCull");
+					SQCull *pCullQuery = static_cast<SQCull*>(static_cast<SceneContainer*>(pCell)->CreateQuery("PLScene::SQCull"));
 					if (pCullQuery) {
 						pPortal->m_pTargetCell->m_pQueryHandler->SetElement(pCullQuery);
 						pCullQuery->m_pVisRootContainer = GetCullQuery() ? GetCullQuery()->m_pVisRootContainer : pPortal->m_pTargetCell;
@@ -243,7 +243,7 @@ void VisContainer::NotifyDestroy()
 		// Get the parent visibility container
 		const VisNode *pParent = GetParent();
 		if (pParent && pParent->IsContainer()) {
-			VisContainer *pParentVisContainer = (VisContainer*)pParent;
+			VisContainer *pParentVisContainer = const_cast<VisContainer*>(static_cast<const VisContainer*>(pParent));
 
 			// Unregister within the parent container
 			VisContainer *pContainer = pParentVisContainer->m_mapContainers.Get(pSceneNode->GetName());

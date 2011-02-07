@@ -101,8 +101,8 @@ void GraphicsPL::DrawLine(const Color4 &cColor, const Vector2i &vPos1, const Vec
 	}
 
 	// Draw line
-	m_pRenderer->GetDrawHelpers().DrawLine(cFinalColor, Vector2((float)vPos1.x + m_vAbsPos.x, (float)vPos1.y + m_vAbsPos.y),
-														Vector2((float)vPos2.x + m_vAbsPos.x, (float)vPos2.y + m_vAbsPos.y), (float)nWidth);
+	m_pRenderer->GetDrawHelpers().DrawLine(cFinalColor, Vector2(static_cast<float>(vPos1.x) + m_vAbsPos.x, static_cast<float>(vPos1.y) + m_vAbsPos.y),
+														Vector2(static_cast<float>(vPos2.x) + m_vAbsPos.x, static_cast<float>(vPos2.y) + m_vAbsPos.y), static_cast<float>(nWidth));
 }
 
 void GraphicsPL::DrawRect(const Color4 &cColor, const Vector2i &vPos1, const Vector2i &vPos2, uint32 nRoundX, uint32 nRoundY, uint32 nWidth)
@@ -124,8 +124,8 @@ void GraphicsPL::DrawRect(const Color4 &cColor, const Vector2i &vPos1, const Vec
 	}
 
 	// Draw line
-	m_pRenderer->GetDrawHelpers().DrawQuad(cFinalColor, Vector2((float)vPos1.x + m_vAbsPos.x, (float)vPos1.y + m_vAbsPos.y),
-														Vector2((float)vPos2.x - vPos1.x, (float)vPos2.y - vPos1.y), (float)nWidth);
+	m_pRenderer->GetDrawHelpers().DrawQuad(cFinalColor, Vector2(static_cast<float>(vPos1.x) + m_vAbsPos.x, static_cast<float>(vPos1.y) + m_vAbsPos.y),
+														Vector2(static_cast<float>(vPos2.x - vPos1.x), static_cast<float>(vPos2.y - vPos1.y)), static_cast<float>(nWidth));
 }
 
 void GraphicsPL::DrawBox(const Color4 &cColor, const Vector2i &vPos1, const Vector2i &vPos2, uint32 nRoundX, uint32 nRoundY)
@@ -147,8 +147,8 @@ void GraphicsPL::DrawBox(const Color4 &cColor, const Vector2i &vPos1, const Vect
 	}
 
 	// Draw line
-	m_pRenderer->GetDrawHelpers().DrawQuad(cFinalColor, Vector2((float)vPos1.x + m_vAbsPos.x, (float)vPos1.y + m_vAbsPos.y),
-														Vector2((float)vPos2.x - vPos1.x, (float)vPos2.y - vPos1.y), 0.0f);
+	m_pRenderer->GetDrawHelpers().DrawQuad(cFinalColor, Vector2(static_cast<float>(vPos1.x) + m_vAbsPos.x, static_cast<float>(vPos1.y) + m_vAbsPos.y),
+														Vector2(static_cast<float>(vPos2.x - vPos1.x), static_cast<float>(vPos2.y - vPos1.y)), 0.0f);
 }
 
 void GraphicsPL::DrawGradientBox(const Color4 &cColor1, const Color4 &cColor2, float fAngle, const Vector2i &vPos1, const Vector2i &vPos2)
@@ -159,7 +159,7 @@ void GraphicsPL::DrawGradientBox(const Color4 &cColor1, const Color4 &cColor2, f
 void GraphicsPL::DrawImage(const PLGui::Image &cImage, const Vector2i &vPos, const Vector2i &vSize)
 {
 	// cImage must be an instance of PLScene::ImagePL!
-	ImagePL *pImagePL = (ImagePL*)cImage.GetImpl();
+	ImagePL *pImagePL = static_cast<ImagePL*>(cImage.GetImpl());
 	if (pImagePL) {
 		// Get the texture buffer
 		TextureBuffer *pTextureBuffer = pImagePL->GetTextureBuffer();
@@ -179,8 +179,8 @@ void GraphicsPL::DrawImage(const PLGui::Image &cImage, const Vector2i &vPos, con
 
 			// Draw
 			SamplerStates cSamplerStates;
-			m_pRenderer->GetDrawHelpers().DrawImage(*pTextureBuffer, cSamplerStates, Vector2((float)vPos.x + m_vAbsPos.x, (float)vPos.y + m_vAbsPos.y),
-													 Vector2((float)vSize.x, (float)vSize.y), cFinalColor);
+			m_pRenderer->GetDrawHelpers().DrawImage(*pTextureBuffer, cSamplerStates, Vector2(static_cast<float>(vPos.x) + m_vAbsPos.x, static_cast<float>(vPos.y) + m_vAbsPos.y),
+													 Vector2(static_cast<float>(vSize.x), static_cast<float>(vSize.y)), cFinalColor);
 		}
 	}
 }
@@ -188,7 +188,7 @@ void GraphicsPL::DrawImage(const PLGui::Image &cImage, const Vector2i &vPos, con
 void GraphicsPL::DrawText(const PLGui::Font &cFont, const Color4 &cTextColor, const Color4 &cBkColor, const Vector2i &vPos, const String &sText)
 {
 	// cFont must be an instance of PLScene::FontPL!
-	FontPL *pFontPL = (FontPL*)cFont.GetImpl();
+	FontPL *pFontPL = static_cast<FontPL*>(cFont.GetImpl());
 	if (pFontPL) {
 		// Get the renderer font
 		PLRenderer::Font *pRendererFont = pFontPL->GetRendererFont();
@@ -212,7 +212,7 @@ void GraphicsPL::DrawText(const PLGui::Font &cFont, const Color4 &cTextColor, co
 				cFinalTextColor.a *= m_cTransparencyColor.a;
 
 			// Draw text
-			m_pRenderer->GetDrawHelpers().DrawText(*pRendererFont, sText, cFinalTextColor, Vector2((float)vPos.x + m_vAbsPos.x, (float)vPos.y + m_vAbsPos.y));
+			m_pRenderer->GetDrawHelpers().DrawText(*pRendererFont, sText, cFinalTextColor, Vector2(static_cast<float>(vPos.x) + m_vAbsPos.x, static_cast<float>(vPos.y) + m_vAbsPos.y));
 		}
 	}
 }
@@ -220,7 +220,7 @@ void GraphicsPL::DrawText(const PLGui::Font &cFont, const Color4 &cTextColor, co
 uint32 GraphicsPL::GetTextWidth(const PLGui::Font &cFont, const String &sText)
 {
 	// cFont must be an instance of PLScene::FontPL!
-	FontPL *pFontPL = (FontPL*)cFont.GetImpl();
+	FontPL *pFontPL = static_cast<FontPL*>(cFont.GetImpl());
 	if (pFontPL) {
 		// Get the renderer font
 		PLRenderer::Font *pRendererFont = pFontPL->GetRendererFont();
@@ -235,7 +235,7 @@ uint32 GraphicsPL::GetTextWidth(const PLGui::Font &cFont, const String &sText)
 uint32 GraphicsPL::GetTextHeight(const PLGui::Font &cFont, const String &sText)
 {
 	// cFont must be an instance of PLScene::FontPL!
-	FontPL *pFontPL = (FontPL*)cFont.GetImpl();
+	FontPL *pFontPL = static_cast<FontPL*>(cFont.GetImpl());
 	if (pFontPL) {
 		// Get the renderer font
 		PLRenderer::Font *pRendererFont = pFontPL->GetRendererFont();

@@ -169,7 +169,7 @@ const SQCull::Statistics &SQCull::GetStatistics() const
 */
 SceneContainer *SQCull::GetCameraContainer() const
 {
-	return (SceneContainer*)m_pCameraContainer->GetElement();
+	return static_cast<SceneContainer*>(m_pCameraContainer->GetElement());
 }
 
 /**
@@ -265,8 +265,9 @@ const VisContainer *SQCull::GetVisRootContainer() const
 	if (!m_pVisRootContainer) {
 		// Because the user is NOT allowed to manipulate the visibility tree by itself
 		// ALL functions and returned stuff has to be constant...
-		((SQCull*)&(*this))->m_pVisRootContainer = ((SQCull*)&(*this))->m_pVisContainer = new VisContainer();
-		((SQCull*)&(*this))->m_pVisRootContainer->m_pQueryHandler->SetElement(((SQCull*)&(*this)));
+		SQCull *pSQCull = const_cast<SQCull*>(this);
+		pSQCull->m_pVisRootContainer = pSQCull->m_pVisContainer = new VisContainer();
+		pSQCull->m_pVisRootContainer->m_pQueryHandler->SetElement(pSQCull);
 	}
 	return m_pVisRootContainer;
 }
@@ -280,8 +281,9 @@ const VisContainer &SQCull::GetVisContainer() const
 	if (!m_pVisContainer) {
 		// Because the user is NOT allowed to manipulate the visibility tree by itself
 		// ALL functions and returned stuff has to be constant...
-		((SQCull*)&(*this))->m_pVisRootContainer = ((SQCull*)&(*this))->m_pVisContainer = new VisContainer();
-		((SQCull*)&(*this))->m_pVisRootContainer->m_pQueryHandler->SetElement(((SQCull*)&(*this)));
+		SQCull *pSQCull = const_cast<SQCull*>(this);
+		pSQCull->m_pVisRootContainer = pSQCull->m_pVisContainer = new VisContainer();
+		pSQCull->m_pVisRootContainer->m_pQueryHandler->SetElement(pSQCull);
 	}
 	return *m_pVisContainer;
 }
@@ -558,7 +560,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 				// Is this an anti-portal?
 				if (pSceneNode->IsPortal() && pSceneNode->IsInstanceOf(sSNAntiPortal)) {
 					// Is the camera in front of this anti-portal?
-					Plane::ESide nSide = ((SNAntiPortal*)pSceneNode)->GetPolygon().GetPlane().GetSide(pSceneNode->GetTransform().GetInverseMatrix()*m_vCameraPosition);
+					Plane::ESide nSide = static_cast<SNAntiPortal*>(pSceneNode)->GetPolygon().GetPlane().GetSide(pSceneNode->GetTransform().GetInverseMatrix()*m_vCameraPosition);
 					if (nSide == Plane::InFront) {
 						// Next item, please
 						pItem = pItem->GetNextItem();
@@ -576,8 +578,8 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					}
 					if (bVisible) {
 						// Get and check the container space anti-portal polygon
-						SNAntiPortal &cAntiPortal = (SNAntiPortal&)*pSceneNode;
-						Polygon		 &cPolygon    = (Polygon&)cAntiPortal.GetContainerPolygon();
+						SNAntiPortal &cAntiPortal = static_cast<SNAntiPortal&>(*pSceneNode);
+						Polygon &cPolygon = const_cast<Polygon&>(reinterpret_cast<const Polygon&>(cAntiPortal.GetContainerPolygon()));
 						if (cPolygon.GetVertexList().GetNumOfElements() >= 3) {
 							// Calculate the new anti-portal view frustum using the clipped anti-portal polygon
 							PlaneSet *pPlaneSet = new PlaneSet();
@@ -646,7 +648,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 						// are within the same space, don't perform a portal side check
 						if (pSceneNode->GetContainer() != m_pCameraContainer->GetElement()) {
 							// Is the camera in front of this cell-portal?
-							Plane::ESide nSide = ((SNCellPortal*)pSceneNode)->GetPolygon().GetPlane().GetSide(pSceneNode->GetTransform().GetInverseMatrix()*m_vCameraPosition);
+							Plane::ESide nSide = static_cast<SNCellPortal*>(pSceneNode)->GetPolygon().GetPlane().GetSide(pSceneNode->GetTransform().GetInverseMatrix()*m_vCameraPosition);
 							if (nSide == Plane::InFront) {
 								// Next item, please
 								pItem = pItem->GetNextItem();
@@ -662,12 +664,12 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 						if (pSceneNode->GetFlags() & SceneNode::NoCulling) {
 							bVisible = true;
 						} else {
-							if (pSceneNode->IsLight() && !((SNLight*)pSceneNode)->IsEffectLight()) {
-								if (((SNLight*)pSceneNode)->IsSpotLight()) {
-									bVisible = Intersect::PlaneSetSphere(m_cViewFrustum, pSceneNode->GetTransform().GetPosition(), ((SNSpotLight*)pSceneNode)->GetRange()) &&
-											Intersect::PlaneSetPoints(m_cViewFrustum, ((SNSpotLight*)pSceneNode)->GetFrustumVertices());
-								} else if (((SNLight*)pSceneNode)->IsPointLight()) {
-									bVisible = Intersect::PlaneSetSphere(m_cViewFrustum, pSceneNode->GetTransform().GetPosition(), ((SNPointLight*)pSceneNode)->GetRange());
+							if (pSceneNode->IsLight() && !static_cast<SNLight*>(pSceneNode)->IsEffectLight()) {
+								if (static_cast<SNLight*>(pSceneNode)->IsSpotLight()) {
+									bVisible = Intersect::PlaneSetSphere(m_cViewFrustum, pSceneNode->GetTransform().GetPosition(), static_cast<SNSpotLight*>(pSceneNode)->GetRange()) &&
+											Intersect::PlaneSetPoints(m_cViewFrustum, static_cast<SNSpotLight*>(pSceneNode)->GetFrustumVertices());
+								} else if (static_cast<SNLight*>(pSceneNode)->IsPointLight()) {
+									bVisible = Intersect::PlaneSetSphere(m_cViewFrustum, pSceneNode->GetTransform().GetPosition(), static_cast<SNPointLight*>(pSceneNode)->GetRange());
 								} else {
 									bVisible = Intersect::PlaneSetAABox(m_cViewFrustum, cAABB.vMin, cAABB.vMax);
 								}
@@ -735,7 +737,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 				m_lstNodeDistanceQueue.ExtractTop(&pSceneNode, &fNearestSquaredDistance);
 
 				// Add the scene node to the list of visible scene nodes
-				VisContainer &cVisContainer = (VisContainer&)GetVisContainer();
+				VisContainer &cVisContainer = const_cast<VisContainer&>(GetVisContainer());
 				VisNode *pNode = cVisContainer.AddSceneNode(*pSceneNode, fNearestSquaredDistance);
 				if (pNode) {
 					SQCull *pCullQuery = nullptr;
@@ -783,10 +785,10 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 						// Is recursion allowed?
 						if (!(pSceneNode->GetFlags() & SceneContainer::NoRecursion)) {
 							// Get the cull query
-							pCullQuery = (SQCull*)((const VisContainer*)pNode)->GetCullQuery();
+							pCullQuery = const_cast<SQCull*>(static_cast<const VisContainer*>(pNode)->GetCullQuery());
 							if (pCullQuery) {
 								// Set the projection information
-								VisContainer::Projection &sNewProjection = ((VisContainer*)pNode)->m_sProjection;
+								VisContainer::Projection &sNewProjection = static_cast<VisContainer*>(pNode)->m_sProjection;
 								VisContainer::Projection &sProjection    = cVisContainer.m_sProjection;
 								sNewProjection.cRectangle = sProjection.cRectangle;
 								sNewProjection.fZNear     = sProjection.fZNear;
@@ -819,25 +821,25 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					// Is this a cell-portal?
 					} else if (pSceneNode->IsPortal() && pSceneNode->IsInstanceOf(sSNCellPortal)) {
 						// Is it possible to 'see through' this cell-portal?
-						if (((const VisPortal*)pNode)->GetTargetVisContainer() && (pSceneNode->GetFlags() & SNCellPortal::NoSeeThrough))
+						if (static_cast<const VisPortal*>(pNode)->GetTargetVisContainer() && (pSceneNode->GetFlags() & SNCellPortal::NoSeeThrough))
 							continue;
 
 						// Get and check the container space cell-portal polygon
-						SNCellPortal &cCellPortal = (SNCellPortal&)*pSceneNode;
-						Polygon		 &cPolygon    = (Polygon&)cCellPortal.GetContainerPolygon();
+						SNCellPortal &cCellPortal = static_cast<SNCellPortal&>(*pSceneNode);
+						Polygon		 &cPolygon    = const_cast<Polygon&>(static_cast<const Polygon&>(cCellPortal.GetContainerPolygon()));
 						if (cPolygon.GetVertexList().GetNumOfElements() >= 3) {
 							// Set the projection information
-							VisContainer *pCell = ((const VisPortal*)pNode)->GetTargetVisContainer();
+							VisContainer *pCell = static_cast<const VisPortal*>(pNode)->GetTargetVisContainer();
 							if (pCell && pCell->GetSceneNode()) {
 								VisContainer::Projection &sNewProjection = pCell->m_sProjection;
 								VisContainer::Projection &sProjection    = cVisContainer.m_sProjection;
 
 								// Calculate the cell-portal scissor rectangle
 								// Get viewport parameters
-								const uint32 nX      = (uint32)cRenderer.GetViewport().GetX();
-								const uint32 nY      = (uint32)cRenderer.GetViewport().GetY();
-								const uint32 nWidth  = (uint32)cRenderer.GetViewport().GetWidth();
-								const uint32 nHeight = (uint32)cRenderer.GetViewport().GetHeight();
+								const uint32 nX      = static_cast<uint32>(cRenderer.GetViewport().GetX());
+								const uint32 nY      = static_cast<uint32>(cRenderer.GetViewport().GetY());
+								const uint32 nWidth  = static_cast<uint32>(cRenderer.GetViewport().GetWidth());
+								const uint32 nHeight = static_cast<uint32>(cRenderer.GetViewport().GetHeight());
 
 								// Calculate the model view projection matrix
 								Matrix4x4 mMVP = m_mViewProjection;
@@ -874,7 +876,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 									// Is there a valid clipped cell portal polygon? (< 3 - something went totally wrong :)
 									if (bUseClippedPolygon && cClippedPolygon.GetVertexList().GetNumOfElements() >= 3) {
 										// Setup the container query
-										pCullQuery = (SQCull*)pCell->GetCullQuery();
+										pCullQuery = const_cast<SQCull*>(pCell->GetCullQuery());
 										if (pCullQuery) {
 											pCullQuery->SetMode(GetMode());
 											pCullQuery->SetVisibilityThreshold(GetVisibilityThreshold());
@@ -889,8 +891,8 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 
 											// [TODO] Make this universal
 											// Make the world matrix relative to the container the camera is in
-											VisContainer &cPortalVisContainer = (VisContainer&)pCullQuery->GetVisContainer();
-											SceneContainer *pCameraContainer = ((SQCull*)m_pVisRootContainer->m_pQueryHandler->GetElement())->GetCameraContainer();
+											VisContainer &cPortalVisContainer = const_cast<VisContainer&>(pCullQuery->GetVisContainer());
+											SceneContainer *pCameraContainer = static_cast<SQCull*>(m_pVisRootContainer->m_pQueryHandler->GetElement())->GetCameraContainer();
 											if (pCameraContainer) {
 												cPortalVisContainer.SetWorldMatrix(pCell->GetSceneNode()->GetTransform().GetMatrix()*pCameraContainer->GetTransform().GetInverseMatrix());
 
@@ -1083,7 +1085,7 @@ bool SQCull::InsideViewFrustum(const SceneHierarchyNode &cHierarchyNode, bool &b
 bool SQCull::PerformQuery()
 {
 	// Initializes the visibility container if required...
-	VisContainer &cVisContainer = (VisContainer&)GetVisContainer();
+	VisContainer &cVisContainer = const_cast<VisContainer&>(GetVisContainer());
 
 	// If mode is previous, we just inform the scene query listeners again... :)
 	if (m_nMode == Previous) {
@@ -1175,14 +1177,14 @@ bool SQCull::PerformQuery()
 					pContainer->OnAddedToVisibilityTree(*pNode);
 
 					// Set the projection information
-					VisContainer::Projection &sNewProjection = ((VisContainer*)pNode)->m_sProjection;
+					VisContainer::Projection &sNewProjection = static_cast<VisContainer*>(pNode)->m_sProjection;
 					VisContainer::Projection &sProjection    = m_pVisContainer->m_sProjection;
 					sNewProjection.cRectangle = sProjection.cRectangle;
 					sNewProjection.fZNear     = sProjection.fZNear;
 					sNewProjection.fZFar      = sProjection.fZFar;
 
 					// Recursion
-					SQCull *pCullQuery = (SQCull*)((const VisContainer*)pNode)->GetCullQuery();
+					SQCull *pCullQuery = const_cast<SQCull*>(static_cast<const VisContainer*>(pNode)->GetCullQuery());
 					if (pCullQuery) {
 						pCullQuery->SetMode(GetMode());
 						pCullQuery->SetVisibilityThreshold(GetVisibilityThreshold());
@@ -1265,7 +1267,7 @@ bool SQCull::PerformQuery()
 		m_sStatistics.nNumOfVisibleSceneNodes = cVisContainer.m_lstNodes.GetNumOfElements();
 
 		// Get culling time
-		m_sStatistics.nCullTime = (uint32)cStopwatch.GetMilliseconds();
+		m_sStatistics.nCullTime = static_cast<uint32>(cStopwatch.GetMilliseconds());
 
 		// Reset hierarchy pointer - just for sure :)
 		m_pHierarchy = nullptr;

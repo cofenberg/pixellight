@@ -102,7 +102,7 @@ SPScene::~SPScene()
 */
 SceneContainer *SPScene::GetRootContainer() const
 {
-	return (SceneContainer*)m_pRootContainerHandler->GetElement();
+	return static_cast<SceneContainer*>(m_pRootContainerHandler->GetElement());
 }
 
 /**
@@ -120,7 +120,7 @@ bool SPScene::SetRootContainer(SceneContainer *pContainer)
 */
 SceneContainer *SPScene::GetSceneContainer() const
 {
-	return (SceneContainer*)m_pSceneContainerHandler->GetElement();
+	return static_cast<SceneContainer*>(m_pSceneContainerHandler->GetElement());
 }
 
 /**
@@ -141,9 +141,9 @@ bool SPScene::SetSceneContainer(SceneContainer *pContainer)
 	}
 
 	// Create cull query
-	SQCull *pCullQuery = (SQCull*)m_pCullQuery->GetElement();
+	SQCull *pCullQuery = static_cast<SQCull*>(m_pCullQuery->GetElement());
 	if (!pCullQuery && pContainer) {
-		pCullQuery = (SQCull*)pContainer->CreateQuery("PLScene::SQCull");
+		pCullQuery = static_cast<SQCull*>(pContainer->CreateQuery("PLScene::SQCull"));
 		if (pCullQuery) {
 			m_pCullQuery->SetElement(pCullQuery);
 
@@ -165,7 +165,7 @@ bool SPScene::SetSceneContainer(SceneContainer *pContainer)
 */
 SNCamera *SPScene::GetCamera() const
 {
-	return (SNCamera*)m_pCameraNodeHandler->GetElement();
+	return static_cast<SNCamera*>(m_pCameraNodeHandler->GetElement());
 }
 
 /**
@@ -183,7 +183,7 @@ void SPScene::SetCamera(SNCamera *pCamera)
 */
 SQCull *SPScene::GetCullQuery() const
 {
-	return (SQCull*)m_pCullQuery->GetElement();
+	return static_cast<SQCull*>(m_pCullQuery->GetElement());
 }
 
 /**
@@ -246,7 +246,7 @@ void SPScene::DrawPre(Renderer &cRenderer, SceneContainer &cContainer)
 		SceneNode *pNode = cContainer.Get(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawPre)) {
 			if (pNode->IsContainer())
-				DrawPre(cRenderer, (SceneContainer&)*pNode);
+				DrawPre(cRenderer, static_cast<SceneContainer&>(*pNode));
 			else
 				pNode->DrawPre(cRenderer);
 		}
@@ -271,7 +271,7 @@ void SPScene::DrawSolid(Renderer &cRenderer, SceneContainer &cContainer)
 		SceneNode *pNode = cContainer.Get(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawSolid)) {
 			if (pNode->IsContainer())
-				DrawSolid(cRenderer, (SceneContainer&)*pNode);
+				DrawSolid(cRenderer, static_cast<SceneContainer&>(*pNode));
 			else
 				pNode->DrawSolid(cRenderer);
 		}
@@ -296,7 +296,7 @@ void SPScene::DrawTransparent(Renderer &cRenderer, SceneContainer &cContainer)
 		SceneNode *pNode = cContainer.Get(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawTransparent)) {
 			if (pNode->IsContainer())
-				DrawTransparent(cRenderer, (SceneContainer&)*pNode);
+				DrawTransparent(cRenderer, static_cast<SceneContainer&>(*pNode));
 			else
 				pNode->DrawTransparent(cRenderer);
 		}
@@ -321,7 +321,7 @@ void SPScene::DrawDebug(Renderer &cRenderer, SceneContainer &cContainer)
 		SceneNode *pNode = cContainer.Get(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawDebug)) {
 			if (pNode->IsContainer()) {
-				DrawDebug(cRenderer, (SceneContainer&)*pNode);
+				DrawDebug(cRenderer, static_cast<SceneContainer&>(*pNode));
 			} else {
 				if (pNode->GetDebugFlags() & SceneNode::DebugEnabled)
 					pNode->DrawDebug(cRenderer);
@@ -348,7 +348,7 @@ void SPScene::DrawPost(Renderer &cRenderer, SceneContainer &cContainer)
 		SceneNode *pNode = cContainer.Get(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawPost)) {
 			if (pNode->IsContainer())
-				DrawPost(cRenderer, (SceneContainer&)*pNode);
+				DrawPost(cRenderer, static_cast<SceneContainer&>(*pNode));
 			else
 				pNode->DrawPost(cRenderer);
 		}
@@ -368,7 +368,7 @@ void SPScene::OnPaint(Surface &cSurface)
 	SNCamera *pCamera = nullptr;
 	SceneRenderer *pSceneRenderer = nullptr;
 	if (m_pCameraNodeHandler->GetElement()) {
-		pCamera = (SNCamera*)m_pCameraNodeHandler->GetElement();
+		pCamera = static_cast<SNCamera*>(m_pCameraNodeHandler->GetElement());
 		if (pCamera)
 			pSceneRenderer = pCamera->GetSceneRenderer();
 	}
@@ -384,7 +384,7 @@ void SPScene::OnPaint(Surface &cSurface)
 		SceneContainer *pRootContainer = GetRootContainer();
 		if (pRootContainer) {
 			// Get the cull query
-			SQCull *pCullQuery = (SQCull*)m_pCullQuery->GetElement();
+			SQCull *pCullQuery = static_cast<SQCull*>(m_pCullQuery->GetElement());
 			if (pCullQuery) {
 				// Set camera (can be a null pointer)
 				if (pCamera) {

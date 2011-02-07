@@ -54,7 +54,7 @@ SNMCameraZoom::SNMCameraZoom(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNo
 	ZoomFactor(this),
 	ZoomSpeed(this),
 	EventHandlerUpdate(&SNMCameraZoom::NotifyUpdate, this),
-	m_fOriginalFOV(cSceneNode.IsCamera() ? ((SNCamera&)cSceneNode).GetFOV() : 0.0f),
+	m_fOriginalFOV(cSceneNode.IsCamera() ? static_cast<SNCamera&>(cSceneNode).GetFOV() : 0.0f),
 	m_fCurrentZoomFactor(0.0f)
 {
 }
@@ -119,7 +119,7 @@ void SNMCameraZoom::NotifyUpdate()
 		}
 
 		// Set the current FOV of the owner camera
-		((SNCamera&)cSceneNode).SetFOV(m_fOriginalFOV - m_fCurrentZoomFactor*ZoomDegree);
+		static_cast<SNCamera&>(cSceneNode).SetFOV(m_fOriginalFOV - m_fCurrentZoomFactor*ZoomDegree);
 	}
 }
 

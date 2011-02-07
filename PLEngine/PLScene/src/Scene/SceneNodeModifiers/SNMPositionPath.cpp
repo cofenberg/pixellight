@@ -211,14 +211,14 @@ void SNMPositionPath::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNo
 		}
 
 		// Show node names
-		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 		if (pFont) {
 			// Get cull query (if available) which enables us to cull 3D texts
 			const SQCull *pCullQuery = nullptr;
 			if (pVisNode) {
 				const VisNode *pParentVisNode = pVisNode->GetParent();
 				if (pParentVisNode && pParentVisNode->IsContainer()) {
-					pCullQuery = ((const VisContainer*)pParentVisNode)->GetCullQuery();
+					pCullQuery = static_cast<const VisContainer*>(pParentVisNode)->GetCullQuery();
 				}
 			}
 

@@ -125,7 +125,7 @@ bool SQLine::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 							m_cLine *= pSceneNode->GetTransform().GetInverseMatrix();
 
 							// Container recursion
-							const bool bContinue = PerformQueryRec(((SceneContainer*)pSceneNode)->GetHierarchyInstance()->GetRootNode());
+							const bool bContinue = PerformQueryRec(static_cast<SceneContainer*>(pSceneNode)->GetHierarchyInstance()->GetRootNode());
 
 							// Restore line
 							m_cLine = cLine;
@@ -137,8 +137,8 @@ bool SQLine::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 						// Is this a cell-portal?
 						} else if (pSceneNode->IsPortal() && pSceneNode->IsInstanceOf("PLScene::SNCellPortal") && !(pSceneNode->GetFlags() & SNCellPortal::NoPassThrough)) {
 							// Get the target cell
-							SNCellPortal   &cCellPortal	= (SNCellPortal&)*pSceneNode;
-							SceneContainer *pCell		= (SceneContainer*)cCellPortal.GetTargetCellInstance();
+							SNCellPortal   &cCellPortal	= static_cast<SNCellPortal&>(*pSceneNode);
+							SceneContainer *pCell		= reinterpret_cast<SceneContainer*>(cCellPortal.GetTargetCellInstance());
 							if (pCell && pCell != pSceneNode->GetContainer()) {
 								// Backup current line
 								const Line cLine = m_cLine;

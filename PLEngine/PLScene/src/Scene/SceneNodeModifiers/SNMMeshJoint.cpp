@@ -243,7 +243,7 @@ bool SNMMeshJoint::GetTargetRotation(Quaternion &qRot) const
 		pTarget = GetSceneNode().GetContainer()->Get(RotationFrom.Get());
 	else {
 		// This must be the root :()
-		pTarget = ((SceneContainer*)this)->Get(RotationFrom.Get());
+		pTarget = static_cast<const SceneContainer&>(GetSceneNode()).Get(RotationFrom.Get());
 	}
 	if (!pTarget)
 		return false; // Error - no valid target scene node, no target rotation :(
@@ -294,7 +294,7 @@ void SNMMeshJoint::UpdateJoint()
 			if (pJointHandler) {
 				// Set joint rotation
 				Quaternion qRot;
-				EulerAngles::ToQuaternion(float(m_vRotation.x*Math::DegToRad), float(m_vRotation.y*Math::DegToRad), float(m_vRotation.z*Math::DegToRad), qRot);
+				EulerAngles::ToQuaternion(static_cast<float>(m_vRotation.x*Math::DegToRad), static_cast<float>(m_vRotation.y*Math::DegToRad), static_cast<float>(m_vRotation.z*Math::DegToRad), qRot);
 				pJointHandler->SetRotation(qRot);
 
 				// The mesh requires an update
@@ -364,7 +364,7 @@ void SNMMeshJoint::NotifyUpdate()
 						const float fTimeDiff = Timing::GetInstance()->GetTimeDifference()*Speed;
 						for (int i=0; i<3; i++) {
 							// Radians to degree
-							fTargetAngles[i] = float(fTargetAngles[i]*Math::RadToDeg);
+							fTargetAngles[i] = static_cast<float>(fTargetAngles[i]*Math::RadToDeg);
 
 							// Clamp this component to a range?
 							if (m_vMin[i] != m_vMax[i]) {
@@ -408,9 +408,9 @@ void SNMMeshJoint::NotifyUpdate()
 						}
 
 						// Get target rotation as quaternion
-						EulerAngles::ToQuaternion(float(m_vRotation[0]*Math::DegToRad),
-												  float(m_vRotation[1]*Math::DegToRad),
-												  float(m_vRotation[2]*Math::DegToRad),
+						EulerAngles::ToQuaternion(static_cast<float>(m_vRotation[0]*Math::DegToRad),
+												  static_cast<float>(m_vRotation[1]*Math::DegToRad),
+												  static_cast<float>(m_vRotation[2]*Math::DegToRad),
 												  qTargetRotation);
 
 						// Transform target rotation from relative to absolute
@@ -452,7 +452,7 @@ void SNMMeshJoint::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			// Draw joint name
 			const Joint *pJoint = pJointHandler->GetElement();
 			if (pJoint) {
-				Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 				if (pFont)
 					cRenderer.GetDrawHelpers().DrawText(*pFont, pJoint->GetName(), Color4::Green, pJointHandler->GetTranslationAbsolute(), pVisNode->GetWorldViewProjectionMatrix(), Font::CenterText);
 			}

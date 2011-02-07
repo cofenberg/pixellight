@@ -126,9 +126,9 @@ Vector3 SceneNode::GetRotation() const
 	// To have well defined values, ensure that the Euler angles are between [0, 360]
 	static const float Min = 0.0f;
 	static const float Max = 360.0f;
-	fAngleX = Math::WrapToInterval(float(fAngleX*Math::RadToDeg), Min, Max);
-	fAngleY = Math::WrapToInterval(float(fAngleY*Math::RadToDeg), Min, Max);
-	fAngleZ = Math::WrapToInterval(float(fAngleZ*Math::RadToDeg), Min, Max);
+	fAngleX = Math::WrapToInterval(static_cast<float>(fAngleX*Math::RadToDeg), Min, Max);
+	fAngleY = Math::WrapToInterval(static_cast<float>(fAngleY*Math::RadToDeg), Min, Max);
+	fAngleZ = Math::WrapToInterval(static_cast<float>(fAngleZ*Math::RadToDeg), Min, Max);
 
 	// Return the Euler angles representation of the rotation in degree
 	return Vector3(fAngleX, fAngleY, fAngleZ);
@@ -141,9 +141,9 @@ void SceneNode::SetRotation(const Vector3 &vValue)
 	Quaternion qRotation;
 	static const float Min = 0.0f;
 	static const float Max = 360.0f;
-	EulerAngles::ToQuaternion(float(Math::WrapToInterval(vValue.x, Min, Max)*Math::DegToRad),
-							  float(Math::WrapToInterval(vValue.y, Min, Max)*Math::DegToRad),
-							  float(Math::WrapToInterval(vValue.z, Min, Max)*Math::DegToRad), qRotation);
+	EulerAngles::ToQuaternion(static_cast<float>(Math::WrapToInterval(vValue.x, Min, Max)*Math::DegToRad),
+							  static_cast<float>(Math::WrapToInterval(vValue.y, Min, Max)*Math::DegToRad),
+							  static_cast<float>(Math::WrapToInterval(vValue.z, Min, Max)*Math::DegToRad), qRotation);
 	m_cTransform.SetRotation(qRotation);
 }
 
@@ -191,10 +191,10 @@ SceneContext *SceneNode::GetSceneContext() const
 {
 	// Is this a scene container?
 	if (IsContainer()) {
-		return ((SceneContainer*)this)->m_pSceneContext;
+		return static_cast<const SceneContainer*>(this)->m_pSceneContext;
 	} else {
 		// Get the scene context the parent scene container is in
-		SceneContainer *pSceneContainer = (SceneContainer*)GetManager();
+		SceneContainer *pSceneContainer = static_cast<SceneContainer*>(GetManager());
 		return pSceneContainer ? pSceneContainer->GetSceneContext() : nullptr;
 	}
 }
@@ -205,7 +205,7 @@ SceneContext *SceneNode::GetSceneContext() const
 */
 SceneContainer *SceneNode::GetContainer() const
 {
-	return (SceneContainer*)GetManager();
+	return static_cast<SceneContainer*>(GetManager());
 }
 
 /**
@@ -237,12 +237,12 @@ bool SceneNode::SetContainer(SceneContainer &cSceneContainer)
 SceneContainer *SceneNode::GetRootContainer() const
 {
 	// Search for the scene root container
-	SceneNode *pSceneNode = (SceneNode*)this;
+	const SceneNode *pSceneNode = static_cast<const SceneNode*>(this);
 	while (pSceneNode->GetContainer() && pSceneNode->GetContainer()->GetContainer())
 		pSceneNode = pSceneNode->GetContainer();
 
 	// Return the found scene root container
-	return (pSceneNode && pSceneNode->IsContainer()) ? (SceneContainer*)pSceneNode : nullptr;
+	return (pSceneNode && pSceneNode->IsContainer()) ? const_cast<SceneContainer*>(static_cast<const SceneContainer*>(pSceneNode)) : nullptr;
 }
 
 /**
@@ -253,7 +253,7 @@ SceneContainer *SceneNode::GetCommonContainer(SceneNode &cSceneNode) const
 {
 	// Same scene node?
 	if (&cSceneNode == this) {
-		return IsContainer() ? ((SceneContainer*)&cSceneNode) : nullptr;
+		return IsContainer() ? static_cast<SceneContainer*>(&cSceneNode) : nullptr;
 	} else {
 		// Go down the parents of this scene node
 		for (const SceneContainer *pThisSceneContainer=GetContainer(); pThisSceneContainer!=nullptr; pThisSceneContainer=pThisSceneContainer->GetContainer()) {
@@ -471,8 +471,8 @@ void SceneNode::MoveTo(const Vector3 &vPosition)
 	//			if (Intersect::SphereLine(cSceneNode.GetContainerBoundingSphere(), cLine.vStart, cLine.vEnd)) {
 				if (Intersect::AABoxLine(cSceneNode.GetContainerAABoundingBox().vMin, cSceneNode.GetContainerAABoundingBox().vMax, cLine)) {
 					// Get the target cell
-					SNCellPortal	&cCellPortal = (SNCellPortal&)cSceneNode;
-					const SceneNode *pTargetCell = (const SceneNode*)cCellPortal.GetTargetCellInstance();
+					SNCellPortal	&cCellPortal = static_cast<SNCellPortal&>(cSceneNode);
+					const SceneNode *pTargetCell = reinterpret_cast<const SceneNode*>(cCellPortal.GetTargetCellInstance());
 					if (pTargetCell) {
 						// Transform the line into the scene node space
 						Line cLineT(cLine);
@@ -483,7 +483,7 @@ void SceneNode::MoveTo(const Vector3 &vPosition)
 						if (cPlane.GetSide(cLineT.vStart) == Plane::Behind &&
 							cPlane.GetSide(cLineT.vEnd)   != Plane::Behind) {
 							// Set the new parent container
-							SetContainer(*((SceneContainer*)pTargetCell));
+							SetContainer(*const_cast<SceneContainer*>(static_cast<const SceneContainer*>(pTargetCell)));
 
 							// The new position, rotation and scale
 							Vector3    vNewPosition = m_cTransform.GetPosition();
@@ -571,7 +571,7 @@ void SceneNode::SetAABoundingBox(const AABoundingBox &cAABoundingBox)
 	if (IsContainer()) {
 		// Destroy the current hierarchy, but do NOT create the new one at once - this
 		// is done if the new hierarchy is requested the first time  :)
-		SceneContainer *pContainer = (SceneContainer*)this;
+		SceneContainer *pContainer = static_cast<SceneContainer*>(this);
 		if (pContainer->m_pHierarchy) {
 			delete pContainer->m_pHierarchy;
 			pContainer->m_pHierarchy = nullptr;
@@ -711,7 +711,7 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 				// Create class instance
 				Object *pObject = pClass->Create(Params<Object*, SceneNode&>(*this));
 				if (pObject) {
-					SceneNodeModifier *pModifier = (SceneNodeModifier*)pObject;
+					SceneNodeModifier *pModifier = static_cast<SceneNodeModifier*>(pObject);
 
 					// Check the scene node class
 					if (IsInstanceOf(pModifier->GetSceneNodeClass())) {
@@ -960,7 +960,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		if (pVisNode) {
 			const VisNode *pParentVisNode = pVisNode->GetParent();
 			if (pParentVisNode && pParentVisNode->IsContainer()) {
-				pCullQuery = ((const VisContainer*)pParentVisNode)->GetCullQuery();
+				pCullQuery = static_cast<const VisContainer*>(pParentVisNode)->GetCullQuery();
 			}
 		}
 
@@ -986,7 +986,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			cRenderer.GetDrawHelpers().DrawLine(Color4::Green, Vector3::Zero, Vector3::UnitY, pVisNode->GetWorldViewProjectionMatrix(), 1.0f);
 
 			// Draw texts
-			Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 			if (pFont) {
 				if (!pCullQuery || Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), m_cTransform.GetMatrix()*Vector3::UnitZ))
 					cRenderer.GetDrawHelpers().DrawText(*pFont, "z (dir)", Color4::Blue, Vector3::UnitZ, pVisNode->GetWorldViewProjectionMatrix(), Font::CenterText);
@@ -1000,7 +1000,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		// Show the scene node name? (not required if ALL names are shown :)
 		if (pVisNode && !(m_nDebugFlags & DebugNoName) &&
 			(!pCullQuery || Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), m_cTransform.GetPosition()))) {
-			Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 			if (pFont) {
 				cEffectManager.Use();
 				cRenderer.SetRenderState(RenderState::ZEnable,      false);
@@ -1021,7 +1021,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		// Draw debug text?
 		if (m_nDebugFlags & DebugText) {
 			// Get the font
-			Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 			if (pFont) {
 				// Setup render states
 				cEffectManager.Use();

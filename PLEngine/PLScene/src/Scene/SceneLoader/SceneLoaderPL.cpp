@@ -293,7 +293,7 @@ bool SceneLoaderPL::LoadRec(SInstance &sInstance, SceneContainer &cContainer, co
 
 				// Check whether the scene node is really a scene container
 				if (pSceneNode && pSceneNode->IsContainer()) {
-					LoadRec(sInstance, (SceneContainer&)*pSceneNode, *pElement, nFirstSceneRow, nLastSceneRow);
+					LoadRec(sInstance, static_cast<SceneContainer&>(*pSceneNode), *pElement, nFirstSceneRow, nLastSceneRow);
 				} else {
 					// Get scene node class name
 					const String sClass = pElement->GetAttribute("Class");
@@ -436,7 +436,7 @@ bool SceneLoaderPL::SaveRec(SInstance &sInstance, const SceneContainer &cContain
 				XmlElement *pNode = new XmlElement("Container");
 				pNode->SetAttribute("Class", pSceneNode->GetClass()->GetClassName());
 				pSceneNode->GetValuesXml(*pNode, bNoDefault ? NoDefault : WithDefault);
-				SaveRec(sInstance, *((const SceneContainer*)pSceneNode), *pNode);
+				SaveRec(sInstance, *static_cast<const SceneContainer*>(pSceneNode), *pNode);
 				cParent.LinkEndChild(*pNode);
 
 				// Update the statistics
@@ -473,8 +473,8 @@ bool SceneLoaderPL::SaveModifiers(SInstance &sInstance, XmlElement &cParent, con
 		if (pModifier && !(pModifier->GetFlags() & SceneNodeModifier::Automatic)) {
 			// Save
 			XmlElement *pModifierElement = new XmlElement("Modifier");
-			pModifierElement->SetAttribute("Class", ((Object*)pModifier)->GetClass()->GetClassName());
-			((Object*)pModifier)->GetValuesXml(*pModifierElement, bNoDefault ? NoDefault : WithDefault);
+			pModifierElement->SetAttribute("Class", reinterpret_cast<const Object*>(pModifier)->GetClass()->GetClassName());
+			reinterpret_cast<const Object*>(pModifier)->GetValuesXml(*pModifierElement, bNoDefault ? NoDefault : WithDefault);
 			cParent.LinkEndChild(*pModifierElement);
 
 			// Update the statistics

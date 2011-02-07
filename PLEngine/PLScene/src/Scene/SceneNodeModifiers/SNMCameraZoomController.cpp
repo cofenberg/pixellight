@@ -108,7 +108,7 @@ void SNMCameraZoomController::OnActivate(bool bActivate)
 void SNMCameraZoomController::NotifyControl(Control *pControl)
 {
 	if (pControl == &m_pController->Zoom)
-		ZoomFactor = ((Button*)pControl)->IsPressed() ? 1.0f : 0.0f;
+		ZoomFactor = static_cast<Button*>(pControl)->IsPressed() ? 1.0f : 0.0f;
 }
 
 

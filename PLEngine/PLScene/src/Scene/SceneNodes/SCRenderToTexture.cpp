@@ -105,7 +105,7 @@ SCRenderToTexture::EFormat SCRenderToTexture::GetFormat() const
 
 void SCRenderToTexture::SetFormat(EFormat nValue)
 {
-	if ((int)m_nFormat != nValue) {
+	if (static_cast<int>(m_nFormat) != nValue) {
 		m_nFormat = nValue;
 		if (IsInitialized())
 			CreateSurfaceTexture();
@@ -162,13 +162,13 @@ void SCRenderToTexture::SetPainter(const String &sValue)
 				m_pSurfaceTextureBuffer->SetActive(false);
 
 				// THIS is the scene root :)
-				SPScene *pPainter = (SPScene*)pSurfacePainter;
+				SPScene *pPainter = static_cast<SPScene*>(pSurfacePainter);
 				pPainter->SetRootContainer(this);
 
 				// Tell the surface scene painter about the 'conrete scene'
 				SceneNode *pSceneNode = Get(m_sSceneName);
 				if (pSceneNode && pSceneNode->IsContainer())
-					pPainter->SetSceneContainer((SceneContainer*)pSceneNode);
+					pPainter->SetSceneContainer(static_cast<SceneContainer*>(pSceneNode));
 				else
 					pPainter->SetSceneContainer(nullptr);
 
@@ -193,7 +193,7 @@ void SCRenderToTexture::SetSceneRenderer(const String &sValue)
 		if (m_pSurfaceTextureBuffer) {
 			SurfacePainter *pSurfacePainter = m_pSurfaceTextureBuffer->GetPainter();
 			if (pSurfacePainter && pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
-				SPScene *pPainter = (SPScene*)pSurfacePainter;
+				SPScene *pPainter = static_cast<SPScene*>(pSurfacePainter);
 				pPainter->SetDefaultSceneRenderer(m_sSceneRenderer);
 			}
 		}
@@ -214,10 +214,10 @@ void SCRenderToTexture::SetSceneName(const String &sValue)
 		if (m_pSurfaceTextureBuffer) {
 			SurfacePainter *pSurfacePainter = m_pSurfaceTextureBuffer->GetPainter();
 			if (pSurfacePainter && pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
-				SPScene *pPainter = (SPScene*)pSurfacePainter;
+				SPScene *pPainter = static_cast<SPScene*>(pSurfacePainter);
 				SceneNode *pSceneNode = Get(m_sSceneName);
 				if (pSceneNode && pSceneNode->IsContainer())
-					pPainter->SetSceneContainer((SceneContainer*)pSceneNode);
+					pPainter->SetSceneContainer(static_cast<SceneContainer*>(pSceneNode));
 				else
 					pPainter->SetSceneContainer(nullptr);
 			}
@@ -263,7 +263,7 @@ SCRenderToTexture::SCRenderToTexture() :
 	SetFlags(GetFlags()|NoCulling|NoRecursion);
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPre));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPre));
 }
 
 /**
@@ -363,12 +363,12 @@ void SCRenderToTexture::CreateSurfaceTexture()
 			m_pSurfaceTextureBuffer->SetActive(false);
 
 			// THIS is the scene root :)
-			SPScene *pPainter = (SPScene*)pSurfacePainter;
+			SPScene *pPainter = static_cast<SPScene*>(pSurfacePainter);
 			pPainter->SetRootContainer(this);
 
 			// Tell the surface scene painter about the 'conrete scene'
 			SceneNode *pSceneNode = Get(m_sSceneName);
-			pPainter->SetSceneContainer((pSceneNode && pSceneNode->IsContainer()) ? (SceneContainer*)pSceneNode : nullptr);
+			pPainter->SetSceneContainer((pSceneNode && pSceneNode->IsContainer()) ? static_cast<SceneContainer*>(pSceneNode) : nullptr);
 
 			// Set default scene renderer
 			pPainter->SetDefaultSceneRenderer(m_sSceneRenderer);
@@ -408,7 +408,7 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 		// Check FPS limitation
 		if (FPSLimit) {
 			uint32 nCurrentTime = System::GetInstance()->GetMilliseconds();
-			if (m_nFPSLimitLastTime && nCurrentTime-m_nFPSLimitLastTime < (unsigned)1000/FPSLimit)
+			if (m_nFPSLimitLastTime && nCurrentTime-m_nFPSLimitLastTime < static_cast<uint32>(1000.0f/FPSLimit))
 				return; // Do not update
 			m_nFPSLimitLastTime = nCurrentTime;
 		}
@@ -416,7 +416,7 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 		// Get the surface scene painter
 		SurfacePainter *pSurfacePainter = m_pSurfaceTextureBuffer->GetPainter();
 		if (pSurfacePainter && pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
-			SPScene *pPainter = (SPScene*)pSurfacePainter;
+			SPScene *pPainter = static_cast<SPScene*>(pSurfacePainter);
 
 			// Deactivate THIS node to avoid recursion
 			SetActive(false);
@@ -431,8 +431,8 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 				if (!pSceneNode->IsActive())
 					return;
 
-				pPainter->SetCamera((SNCamera*)pSceneNode);
-				((SNCamera*)pSceneNode)->SetCamera(cRenderer);
+				pPainter->SetCamera(static_cast<SNCamera*>(pSceneNode));
+				static_cast<SNCamera*>(pSceneNode)->SetCamera(cRenderer);
 			} else
 				pPainter->SetCamera(nullptr);
 
@@ -444,7 +444,7 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 			if (!pPainter->GetSceneContainer()) {
 				pSceneNode = Get(m_sSceneName);
 				if (pSceneNode && pSceneNode->IsContainer())
-					pPainter->SetSceneContainer((SceneContainer*)pSceneNode);
+					pPainter->SetSceneContainer(static_cast<SceneContainer*>(pSceneNode));
 			}
 
 

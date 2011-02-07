@@ -207,10 +207,10 @@ void SNPointLight::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		GetAABoundingBox().GetVertices(vVertex.GetData());
 
 		// Get viewport parameters
-		const uint32 nX      = (uint32)cRenderer.GetViewport().GetX();
-		const uint32 nY      = (uint32)cRenderer.GetViewport().GetY();
-		const uint32 nWidth  = (uint32)cRenderer.GetViewport().GetWidth();
-		const uint32 nHeight = (uint32)cRenderer.GetViewport().GetHeight();
+		const uint32 nX      = static_cast<uint32>(cRenderer.GetViewport().GetX());
+		const uint32 nY      = static_cast<uint32>(cRenderer.GetViewport().GetY());
+		const uint32 nWidth  = static_cast<uint32>(cRenderer.GetViewport().GetWidth());
+		const uint32 nHeight = static_cast<uint32>(cRenderer.GetViewport().GetHeight());
 
 		// Calculate the scissor rectangle
 		Rectangle cRectangle;
@@ -226,7 +226,7 @@ void SNPointLight::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			// Begin 2D mode
 			static const Color4 cColor(1.0f, 0.3f, 0.3f, 1.0f);
 			DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-			cDrawHelpers.Begin2DMode((float)nX, (float)nY, (float)nWidth, (float)nHeight);
+			cDrawHelpers.Begin2DMode(static_cast<float>(nX), static_cast<float>(nY), static_cast<float>(nWidth), static_cast<float>(nHeight));
 
 				// Draw the rectangle
 				cDrawHelpers.DrawLine(cColor, Vector2(cRectangle.vMin.x, cRectangle.vMin.y), Vector2(cRectangle.vMax.x, cRectangle.vMin.y), 2.0f);

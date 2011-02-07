@@ -141,7 +141,7 @@ void SNLoadScreenPL::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 			}
 
 			// Draw text
-			Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 			if (pFont)
 				cDrawHelpers.DrawText(*pFont, PLT("Loading") + String::Format(" - %.0f %%", fProgress*100.0f), Color4::White, Vector2(0.5f, 0.9f), Font::CenterText);
 

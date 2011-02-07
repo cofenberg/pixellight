@@ -86,7 +86,7 @@ void VisPortal::NotifyDestroy()
 		// Get the parent visibility container
 		const VisNode *pParent = GetParent();
 		if (pParent && pParent->IsContainer()) {
-			VisContainer *pParentVisContainer = (VisContainer*)pParent;
+			VisContainer *pParentVisContainer = const_cast<VisContainer*>(static_cast<const VisContainer*>(pParent));
 
 			// Unregister within the parent container
 			VisPortal *pPortal = pParentVisContainer->m_mapPortals.Get(pSceneNode->GetName());

@@ -121,7 +121,7 @@ SCCell *SNCellPortal::GetTargetCellInstance()
 	}
 
 	// Return the target cell
-	return (SCCell*)m_pTargetCell->GetElement();
+	return reinterpret_cast<SCCell*>(m_pTargetCell->GetElement());
 }
 
 /**
@@ -139,7 +139,7 @@ const Matrix3x4 &SNCellPortal::GetWarpMatrix()
 			SceneNode *pTargetNode = pContainer->Get(m_sTargetCell);
 			if (pTargetNode && pTargetNode->IsCell()) {
 				// Get transform matrix
-				pContainer->GetTransformMatrixTo((SceneContainer&)*pTargetNode, m_mWarp);
+				pContainer->GetTransformMatrixTo(static_cast<SceneContainer&>(*pTargetNode), m_mWarp);
 			}
 		}
 

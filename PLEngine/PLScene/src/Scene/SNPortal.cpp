@@ -264,7 +264,7 @@ void SNPortal::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			if (pVisNode) {
 				const VisNode *pParentVisNode = pVisNode->GetParent();
 				if (pParentVisNode && pParentVisNode->IsContainer())
-					pCullQuery = ((const VisContainer*)pParentVisNode)->GetCullQuery();
+					pCullQuery = static_cast<const VisContainer*>(pParentVisNode)->GetCullQuery();
 			}
 
 			// Set render states
@@ -286,7 +286,7 @@ void SNPortal::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Draw vertices?
 			if (GetDebugFlags() & DebugPortalVertices) {
-				Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 				if (pFont) {
 					for (uint32 i=0; i<lstVertices.GetNumOfElements(); i++) {
 						if (!pCullQuery || Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), GetTransform().GetPosition()+lstVertices[i]))

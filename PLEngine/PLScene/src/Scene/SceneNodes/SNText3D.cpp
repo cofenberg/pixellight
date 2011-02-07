@@ -120,7 +120,7 @@ SNText3D::SNText3D() :
 	m_bBackgroundMaterial(false)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawTransparent));
 
 	// We have to recalculate the current axis align bounding box in 'scene node space'
 	DirtyAABoundingBox();
@@ -171,10 +171,10 @@ void SNText3D::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 
 	// Is there any text to draw?
 	if (GetText().GetLength() && pVisNode) {
-		const PLRenderer::Font *pDefaultFont = (PLRenderer::Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		const PLRenderer::Font *pDefaultFont = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 		const String			sFont        = (GetFont().GetLength() || !pDefaultFont) ? GetFont() : pDefaultFont->GetFilename();
 		const uint32			nFontSize    = (GetFontSize() || !pDefaultFont) ? GetFontSize() : pDefaultFont->GetSize();
-			  PLRenderer::Font *pFont        = (PLRenderer::Font*)cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize);
+			  PLRenderer::Font *pFont        = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));
 		if (pFont) {
 			// Is there a background material?
 			Material *pMaterial = GetBackgroundMaterialHandler().GetResource();
@@ -237,10 +237,10 @@ void SNText3D::UpdateAABoundingBox()
 {
 	// Get the font
 	Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
-	const PLRenderer::Font *pDefaultFont = (PLRenderer::Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+	const PLRenderer::Font *pDefaultFont = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 	const String			sFont        = (GetFont().GetLength() || !pDefaultFont) ? GetFont() : pDefaultFont->GetFilename();
 	const uint32			nFontSize    = (GetFontSize() || !pDefaultFont) ? GetFontSize() : pDefaultFont->GetSize();
-		  PLRenderer::Font *pFont        = (PLRenderer::Font*)cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize);
+		  PLRenderer::Font *pFont        = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));
 	if (pFont) {
 		// Get the width and height of the text
 		// -> The 3D placed text should have a height of 1 to be independent of the actual 'font size'

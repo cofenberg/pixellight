@@ -151,7 +151,7 @@ bool SQAABoundingBox::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 							m_cAABoundingBox.AppendToCubicHull(vT);
 
 							// Container recursion
-							const bool bContinue = PerformQueryRec(((SceneContainer*)pSceneNode)->GetHierarchyInstance()->GetRootNode());
+							const bool bContinue = PerformQueryRec(static_cast<SceneContainer*>(pSceneNode)->GetHierarchyInstance()->GetRootNode());
 
 							// Restore axis aligned bounding box
 							m_cAABoundingBox = cAABoundingBox;
@@ -163,8 +163,8 @@ bool SQAABoundingBox::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 						// Is this a cell-portal?
 						} else if (pSceneNode->IsPortal() && pSceneNode->IsInstanceOf("PLScene::SNCellPortal") && !(pSceneNode->GetFlags() & SNCellPortal::NoPassThrough)) {
 							// Get the target cell
-							SNCellPortal   &cCellPortal	= (SNCellPortal&)*pSceneNode;
-							SceneContainer *pCell		= (SceneContainer*)cCellPortal.GetTargetCellInstance();
+							SNCellPortal   &cCellPortal	= static_cast<SNCellPortal&>(*pSceneNode);
+							SceneContainer *pCell		= reinterpret_cast<SceneContainer*>(cCellPortal.GetTargetCellInstance());
 							if (pCell && pCell != pSceneNode->GetContainer()) {
 								// Backup current axis aligned bounding box
 								const AABoundingBox cAABoundingBox = m_cAABoundingBox;

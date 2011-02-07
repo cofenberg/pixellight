@@ -84,13 +84,13 @@ void GMMSurfacePatch::ComputeVariance(uint32 &nOffset)
 			fHeight = m_pGMMSurface->GetHeightMap()[nYOffset*m_pGMMSurface->GetHeightMapSize()+nXOffset];
 
 			// First texture coordinates
-			pVertex->u = (float)nXOffset/m_pGMMSurface->GetHeightMapSize();
-			pVertex->v = (float)nYOffset/m_pGMMSurface->GetHeightMapSize();
+			pVertex->u = static_cast<float>(nXOffset)/m_pGMMSurface->GetHeightMapSize();
+			pVertex->v = static_cast<float>(nYOffset)/m_pGMMSurface->GetHeightMapSize();
 
 			// Set vertex position
-			pVertex->x = (float)nXOffset;
+			pVertex->x = static_cast<float>(nXOffset);
 			pVertex->y = fHeight;
-			pVertex->z = (float)nYOffset;
+			pVertex->z = static_cast<float>(nYOffset);
 
 			// Update variance levels
 			for (int i=0; i<4; i++) {
@@ -105,7 +105,7 @@ void GMMSurfacePatch::ComputeVariance(uint32 &nOffset)
 						fHeight2 = m_pGMMSurface->GetHeightMap()[(py+nStep)*m_pGMMSurface->GetHeightMapSize()+px];
 
 						// Compute variance
-						f = (float)(fHeight2-fHeight1)/nStep;
+						f = static_cast<float>(fHeight2-fHeight1)/nStep;
 						fVariance = pVertex->y-(fHeight1+(nYOffset%nStep)*f);
 					} else if (!(nYOffset%nStep)) {
 						// Get height
@@ -113,7 +113,7 @@ void GMMSurfacePatch::ComputeVariance(uint32 &nOffset)
 						fHeight2 = m_pGMMSurface->GetHeightMap()[py*m_pGMMSurface->GetHeightMapSize()+px+nStep];
 
 						// Compute variance
-						f = (float)(fHeight2-fHeight1)/nStep;
+						f = static_cast<float>(fHeight2-fHeight1)/nStep;
 						fVariance = pVertex->y-(fHeight1+(nXOffset%nStep)*f);
 					}
 
@@ -149,10 +149,10 @@ void GMMSurfacePatch::UpdateBoundingBox()
 		}
 
 	// Get bounding box
-	GetBBMin().x = (float)m_nXOffset;
-	GetBBMin().z = (float)m_nYOffset;
-	GetBBMax().x = (float)m_nXOffset+m_pGMMSurface->GetPatchSize();
-	GetBBMax().z = (float)m_nYOffset+m_pGMMSurface->GetPatchSize();
+	GetBBMin().x = static_cast<float>(m_nXOffset);
+	GetBBMin().z = static_cast<float>(m_nYOffset);
+	GetBBMax().x = static_cast<float>(m_nXOffset)+m_pGMMSurface->GetPatchSize();
+	GetBBMax().z = static_cast<float>(m_nYOffset)+m_pGMMSurface->GetPatchSize();
 
 	// Get center
 	m_vCenter = (GetBBMin()+GetBBMax())/2;

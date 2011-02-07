@@ -90,7 +90,7 @@ bool GMMSurface::Create(uint32 nHeightMapSize, float fHeightMap[], uint32 nPatch
 	m_nPatches   = m_nXYPatches*m_nXYPatches;
 
 	// Levels
-	m_nGeoMipMaps = (nGeoMipMaps == -1) ? (uint32)(Math::Log((double)m_nPatchSize)*1.4427)+1 : nGeoMipMaps;
+	m_nGeoMipMaps = (nGeoMipMaps == -1) ? static_cast<uint32>(Math::Log(static_cast<double>(m_nPatchSize))*1.4427)+1 : nGeoMipMaps;
 	m_ppLevels = new GMMSurfaceLevel*[m_nGeoMipMaps];
 	for (uint32 i=0; i<m_nGeoMipMaps; i++) {
 		m_ppLevels[i] = new GMMSurfaceLevel(*m_pRenderer);
@@ -117,7 +117,7 @@ bool GMMSurface::Create(uint32 nHeightMapSize, float fHeightMap[], uint32 nPatch
 	// Build quadtree
 	m_cQuadtree.Init(0, 0, m_nXYPatches, m_nXYPatches);
 	m_cQuadtree.Build();
-	m_cQuadtree.UpdateBoundingBoxes((QuadtreePatch**)m_ppPatches);
+	m_cQuadtree.UpdateBoundingBoxes(reinterpret_cast<QuadtreePatch**>(m_ppPatches));
 
 	// Create vertex buffer
 	m_pVertexBuffer = m_pRenderer->CreateVertexBuffer();
@@ -130,13 +130,13 @@ bool GMMSurface::Create(uint32 nHeightMapSize, float fHeightMap[], uint32 nPatch
 
 		for (uint32 i=0; i<m_nVertices; i++) {
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(i, VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(i, VertexBuffer::Position));
 			pfVertex[Vector3::X] = pVertex->x;
 			pfVertex[Vector3::Y] = pVertex->y;
 			pfVertex[Vector3::Z] = pVertex->z;
 
 			// Texture coordinate 0
-			pfVertex = (float*)m_pVertexBuffer->GetData(i, VertexBuffer::TexCoord, 0);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(i, VertexBuffer::TexCoord, 0));
 			pfVertex[Vector2::X] = pVertex->u;
 			pfVertex[Vector2::Y] = pVertex->v;
 
@@ -400,7 +400,7 @@ void GMMSurface::Update()
 	}
 
 	// Update visibility
-	m_cQuadtree.UpdateVisibility(cPlaneSet, (QuadtreePatch**)m_ppPatches);
+	m_cQuadtree.UpdateVisibility(cPlaneSet, reinterpret_cast<QuadtreePatch**>(m_ppPatches));
 
 	// Update patches
 	for (uint32 i=0; i<m_nPatches; i++)

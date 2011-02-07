@@ -103,7 +103,7 @@ bool SQByName::PerformQueryRec(const SceneContainer &cContainer)
 		// Is this a container and is recursion allowed?
 		if ((m_nFlags & Recursive) && pSceneNode->IsContainer() && !(pSceneNode->GetFlags() & SceneContainer::NoRecursion)) {
 			// Container recursion
-			if (!PerformQueryRec((SceneContainer&)*pSceneNode))
+			if (!PerformQueryRec(static_cast<SceneContainer&>(*pSceneNode)))
 				return false; // Stop the query right now
 		}
 	}

@@ -102,10 +102,10 @@ WidgetPL::WidgetPL(Widget &cWidget) : WidgetImpl(cWidget),
 	// Add widget to list
 	if (m_pWidget->GetParent()) {
 		// Add the widget into the list of z position sorted child widgets, by default above all already existing widgets
-		((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstChildren.Add(m_pWidget);
+		static_cast<WidgetPL*>(m_pWidget->GetParent()->GetImpl())->m_lstChildren.Add(m_pWidget);
 	} else {
 		// Add top-level widgets to z position sorted list in Gui implementation, by default above all already existing widget
-		((GuiPL*)m_pWidget->GetGui()->GetImpl())->AddTopLevelWidget(m_pWidget);
+		static_cast<GuiPL*>(m_pWidget->GetGui()->GetImpl())->AddTopLevelWidget(m_pWidget);
 	}
 }
 
@@ -153,7 +153,7 @@ void WidgetPL::Destroy()
 		Gui *pGui = m_pWidget->GetGui();
 		if (pGui) {
 			// Get the GUI implementation instance
-			GuiPL *pGuiPL = (GuiPL*)pGui->GetImpl();
+			GuiPL *pGuiPL = static_cast<GuiPL*>(pGui->GetImpl());
 
 			// If the mouse was over this widget, set the current mouse over widget to a null pointer
 			if (pGuiPL && pGuiPL->m_pMouseOver == m_pWidget)
@@ -172,7 +172,7 @@ void WidgetPL::Destroy()
 
 			// Remove from parent widget or GUI top-level list
 			if (m_pWidget->GetParent())
-				((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstChildren.Remove(m_pWidget);
+				static_cast<WidgetPL*>(m_pWidget->GetParent()->GetImpl())->m_lstChildren.Remove(m_pWidget);
 			else {
 				if (pGuiPL)
 					pGuiPL->m_lstTopLevelWidgets.Remove(m_pWidget);
@@ -263,14 +263,14 @@ void WidgetPL::SetZPos(EZPos nZPos, Widget *pWidget)
 	// Is this a top-level widget?
 	if (m_pWidget->GetParent()) {
 		// Set z position
-		SetZPos(((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstChildren, nZPos, pWidget);
+		SetZPos(static_cast<WidgetPL*>(m_pWidget->GetParent()->GetImpl())->m_lstChildren, nZPos, pWidget);
 
 		// Set z position for topmost widgets
 		if (m_bTopmost && pWidget && pWidget->GetTopmost())
-			SetZPos(((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstTopmostChildren, nZPos, pWidget);
+			SetZPos(static_cast<WidgetPL*>(m_pWidget->GetParent()->GetImpl())->m_lstTopmostChildren, nZPos, pWidget);
 	} else {
 		// Set z position
-		SetZPos(((GuiPL*)m_pWidget->GetGui()->GetImpl())->m_lstTopLevelWidgets, nZPos, pWidget);
+		SetZPos(static_cast<GuiPL*>(m_pWidget->GetGui()->GetImpl())->m_lstTopLevelWidgets, nZPos, pWidget);
 	}
 }
 
@@ -285,7 +285,7 @@ void WidgetPL::SetTopmost(bool bTopmost)
 	// State change?
 	if (m_bTopmost != bTopmost) {
 		// Get the topmost children list of the parent widget
-		Array<Widget*> &lstTopmostChildren = ((WidgetPL*)m_pWidget->GetParent()->GetImpl())->m_lstTopmostChildren;
+		Array<Widget*> &lstTopmostChildren = static_cast<WidgetPL*>(m_pWidget->GetParent()->GetImpl())->m_lstTopmostChildren;
 
 		// Change to topmost?
 		if (m_bTopmost) {

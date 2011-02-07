@@ -98,7 +98,7 @@ SNEngineInformation::SNEngineInformation() :
 	SetFlags(GetFlags()|NoCulling);
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPost));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPost));
 }
 
 /**
@@ -152,7 +152,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 				// Draw the background material
 				PLRenderer::Material *pMaterial = GetProfilingMaterialHandler().GetResource();
 				if (pMaterial) {
-					const float fY = float(25+pGroup->GetNumOfElements()*10);
+					const float fY = static_cast<float>(25+pGroup->GetNumOfElements()*10);
 					for (uint32 i=0; i<pMaterial->GetNumOfPasses(); i++) {
 						pMaterial->SetupPass(i);
 						Color4 cColor;
@@ -164,7 +164,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 				}
 
 				// Get the font
-				Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 				if (pFont) {
 					// Setup render states
 					cRenderer.GetRendererContext().GetEffectManager().Use();
@@ -176,7 +176,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 
 					// Draw all elements
 					for (uint32 i=0, nY=15; i<pGroup->GetNumOfElements(); i++, nY+=10)
-						cDrawHelpers.DrawText(*pFont, pGroup->Get(i)->GetName() + ": " + pGroup->Get(i)->GetText(), Color4::White, Vector2(10.0f, (float)nY));
+						cDrawHelpers.DrawText(*pFont, pGroup->Get(i)->GetName() + ": " + pGroup->Get(i)->GetText(), Color4::White, Vector2(10.0f, static_cast<float>(nY)));
 				}
 			} else { // Draw general information
 				// Draw the background material
@@ -193,7 +193,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 				}
 
 				// Get the font
-				Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 				if (pFont) {
 					// Setup render states
 					cRenderer.GetRendererContext().GetEffectManager().Use();
@@ -228,7 +228,7 @@ void SNEngineInformation::NotifyUpdate()
 	if ((InfoFlags & Profiling) && Profiling::GetInstance()->IsActive()) {
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
-		Controller *pController = (Controller*)GetSceneContext()->GetDefaultInputController();
+		Controller *pController = reinterpret_cast<Controller*>(GetSceneContext()->GetDefaultInputController());
 		if ((pController && pController->GetActive()) || !pController) {
 			// Get keyboard input device
 			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
@@ -289,7 +289,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 		cDrawHelpers.DrawLine(Color4::Blue,  Vector3::Zero, Vector3::UnitZ, mViewProjection, 1.0f);
 
 		// Draw texts
-		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 		if (pFont) {
 			Vector3 vV(1.0f, 0.0f, 0.0f);
 			SNCamera *pCamera = SNCamera::GetCamera();
@@ -390,7 +390,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	// Draw FPS
 	if ((InfoFlags & FPS) && cConfig.GetVar("PLScene::EngineDebugConfig", "ShowFPS").GetBool()) {
 		// Get the font
-		Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 		if (pFont) {
 			// Setup render states
 			cRenderer.GetRendererContext().GetEffectManager().Use();

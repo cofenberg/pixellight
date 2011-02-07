@@ -73,7 +73,7 @@ SkyLayer::EType SkyLayer::GetType() const
 void SkyLayer::SetType(EType nValue)
 {
 	if (m_nType != nValue) {
-		m_nType = (EType)nValue;
+		m_nType = nValue;
 
 		// Create the sky mesh
 		Mesh *pMesh = nullptr;
@@ -94,47 +94,47 @@ void SkyLayer::SetType(EType nValue)
 						if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 							// Setup vertices
 							// 0
-							float *pfVertex = (float*)pVertexBuffer->GetData(0, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
 							pfVertex[Vector3::X] = -10000.0f;
 							pfVertex[Vector3::Y] =      0.0f;
 							pfVertex[Vector3::Z] = -10000.0f;
 
 							// 1
-							pfVertex = (float*)pVertexBuffer->GetData(1, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::Position));
 							pfVertex[Vector3::X] =  10000.0f;
 							pfVertex[Vector3::Y] =      0.0f;
 							pfVertex[Vector3::Z] = -10000.0f;
 
 							// 2
-							pfVertex = (float*)pVertexBuffer->GetData(2, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::Position));
 							pfVertex[Vector3::X] = 10000.0f;
 							pfVertex[Vector3::Y] =     0.0f;
 							pfVertex[Vector3::Z] = 10000.0f;
 
 							// 3
-							pfVertex = (float*)pVertexBuffer->GetData(3, VertexBuffer::Position);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(3, VertexBuffer::Position));
 							pfVertex[Vector3::X] = -10000.0f;
 							pfVertex[Vector3::Y] =      0.0f;
 							pfVertex[Vector3::Z] =  10000.0f;
 
 							// Setup texture coordinates
 							// 0
-							pfVertex = (float*)pVertexBuffer->GetData(0, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 							pfVertex[Vector2::X] = 0.0f;
 							pfVertex[Vector2::Y] = 0.0f;
 
 							// 1
-							pfVertex = (float*)pVertexBuffer->GetData(1, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::TexCoord));
 							pfVertex[Vector2::X] = 1000.0f;
 							pfVertex[Vector2::Y] = 0.0f;
 
 							// 2
-							pfVertex = (float*)pVertexBuffer->GetData(2, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::TexCoord));
 							pfVertex[Vector2::X] = 1000.0f;
 							pfVertex[Vector2::Y] = 1000.0f;
 
 							// 3
-							pfVertex = (float*)pVertexBuffer->GetData(3, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(3, VertexBuffer::TexCoord));
 							pfVertex[Vector2::X] = 0.0f;
 							pfVertex[Vector2::Y] = 1000.0f;
 
@@ -266,7 +266,7 @@ SkyLayer::~SkyLayer()
 */
 SNSky *SkyLayer::GetSky() const
 {
-	return (SNSky*)GetManager();
+	return static_cast<SNSky*>(GetManager());
 }
 
 /**
@@ -302,7 +302,7 @@ const Matrix3x4 &SkyLayer::GetTransformMatrix()
 	if (m_bRecalculateWorldMatrix) {
 		// Set rotation
 		Quaternion qRotation;
-		EulerAngles::ToQuaternion(float(m_vRot.x*Math::DegToRad), float(m_vRot.y*Math::DegToRad), float(m_vRot.z*Math::DegToRad), qRotation);
+		EulerAngles::ToQuaternion(static_cast<float>(m_vRot.x*Math::DegToRad), static_cast<float>(m_vRot.y*Math::DegToRad), static_cast<float>(m_vRot.z*Math::DegToRad), qRotation);
 
 		// Set position and rotation
 		m_mTrans.FromQuatTrans(qRotation, m_vPos);
@@ -382,7 +382,7 @@ SNSky::SNSky() :
 	SetAABoundingBox(AABoundingBox(Vector3(-10000.0f, -10000.0f, -10000.0f), Vector3(10000.0f, 10000.0f, 10000.0f)));
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPre));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPre));
 }
 
 /**
@@ -416,16 +416,16 @@ void SNSky::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 
 		// Draw solid sky layers
 		for (uint32 i=0; i<GetNumOfElements(); i++) {
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*((SkyLayer*)Get(i))->GetTransformMatrix());
-			MeshHandler *pMeshHandler = ((SkyLayer*)Get(i))->GetMeshHandler();
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*static_cast<SkyLayer*>(Get(i))->GetTransformMatrix());
+			MeshHandler *pMeshHandler = static_cast<SkyLayer*>(Get(i))->GetMeshHandler();
 			if (pMeshHandler)
 				pMeshHandler->Draw();
 		}
 
 		// Draw transparent sky layers
 		for (uint32 i=0; i<GetNumOfElements(); i++) {
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*((SkyLayer*)Get(i))->GetTransformMatrix());
-			MeshHandler *pMeshHandler = ((SkyLayer*)Get(i))->GetMeshHandler();
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*static_cast<SkyLayer*>(Get(i))->GetTransformMatrix());
+			MeshHandler *pMeshHandler = static_cast<SkyLayer*>(Get(i))->GetMeshHandler();
 			if (pMeshHandler)
 				pMeshHandler->Draw(true);
 		}
@@ -520,7 +520,7 @@ void SNSky::NotifyUpdate()
 	// Update sky layers
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 	for (uint32 i=0; i<GetNumOfElements(); i++) {
-		MeshHandler *pMeshHandler = ((SkyLayer*)Get(i))->GetMeshHandler();
+		MeshHandler *pMeshHandler = static_cast<SkyLayer*>(Get(i))->GetMeshHandler();
 		if (pMeshHandler)
 			pMeshHandler->Update(fTimeDiff);
 	}

@@ -71,7 +71,7 @@ SceneContext::SceneContext(RendererContext &cRendererContext) :
 SceneContext::~SceneContext()
 {
 	// Get the root scene container (if there's one)
-	SceneContainer *pRootContainer = (SceneContainer*)m_pRoot->GetElement();
+	SceneContainer *pRootContainer = static_cast<SceneContainer*>(m_pRoot->GetElement());
 	if (pRootContainer) {
 		// Destoy the root scene container in a safe way
 		pRootContainer->Clear();
@@ -126,7 +126,7 @@ SceneContainer *SceneContext::GetRoot()
 	if (!m_pRoot->GetElement()) {
 		const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass("PLScene::SceneContainer");
 		if (pClass) {
-			SceneContainer *pContainer = (SceneContainer*)pClass->Create();
+			SceneContainer *pContainer = static_cast<SceneContainer*>(pClass->Create());
 			m_pRoot->SetElement(pContainer);
 			pContainer->m_pSceneContext = this;
 			pContainer->SetProtected(true);
@@ -142,7 +142,7 @@ SceneContainer *SceneContext::GetRoot()
 	}
 
 	// Done
-	return (SceneContainer*)m_pRoot->GetElement();
+	return static_cast<SceneContainer*>(m_pRoot->GetElement());
 }
 
 /**

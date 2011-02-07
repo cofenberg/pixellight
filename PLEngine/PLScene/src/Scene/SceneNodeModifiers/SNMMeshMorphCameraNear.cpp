@@ -99,7 +99,7 @@ void SNMMeshMorphCameraNear::NotifyUpdate()
 	if (pCamera) {
 		// Get joint position in world space
 		Vector3 vPosition;
-		if (!Joint.Get().GetLength() || !((SNMesh&)GetSceneNode()).GetSkeletonJointWorldPosition(Joint.Get(), vPosition))
+		if (!Joint.Get().GetLength() || !static_cast<SNMesh&>(GetSceneNode()).GetSkeletonJointWorldPosition(Joint.Get(), vPosition))
 			vPosition = GetSceneNode().GetTransform().GetPosition();
 
 		// Update the morph target weight

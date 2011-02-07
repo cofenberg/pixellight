@@ -131,7 +131,7 @@ SNBitmap3D::SNBitmap3D() :
 	m_bUpdateColor(true)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
 
 	// We have to recalculate the current axis align bounding box in 'scene node space'
 	DirtyAABoundingBox();
@@ -206,7 +206,7 @@ void SNBitmap3D::UpdateTextureCoordinatesAndColor()
 		// Update position offset?
 		if (m_bUpdatePositionOffset) {
 			// Fill position data
-			float *pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
 			if (pfVertex) {
 				const uint32 nVertexSize = m_pVertexBuffer->GetVertexSize();
 
@@ -214,19 +214,19 @@ void SNBitmap3D::UpdateTextureCoordinatesAndColor()
 				pfVertex[0] = -0.5f + m_vPositionOffset.x;
 				pfVertex[1] = -0.5f + m_vPositionOffset.y;
 				pfVertex[2] =         m_vPositionOffset.z;
-				pfVertex = (float*)((char*)pfVertex + nVertexSize);
+				pfVertex = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVertex) + nVertexSize);
 
 				// Bottom left
 				pfVertex[0] = -0.5f + m_vPositionOffset.x;
 				pfVertex[1] =  0.5f + m_vPositionOffset.y;
 				pfVertex[2] =         m_vPositionOffset.z;
-				pfVertex = (float*)((char*)pfVertex + nVertexSize);
+				pfVertex = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVertex) + nVertexSize);
 
 				// Bottom right
 				pfVertex[0] =  0.5f + m_vPositionOffset.x;
 				pfVertex[1] =  0.5f + m_vPositionOffset.y;
 				pfVertex[2] =         m_vPositionOffset.z;
-				pfVertex = (float*)((char*)pfVertex + nVertexSize);
+				pfVertex = reinterpret_cast<float*>(reinterpret_cast<char*>(pfVertex) + nVertexSize);
 
 				// Top right
 				pfVertex[0] =  0.5f + m_vPositionOffset.x;
@@ -241,22 +241,22 @@ void SNBitmap3D::UpdateTextureCoordinatesAndColor()
 		// Update texture coordinates?
 		if (m_bUpdateTextureCoordinates) {
 			// Top left
-			float *pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord);
+			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 			pfVertex[0] = GetTexelStart().x;
 			pfVertex[1] = GetTexelEnd().y;
 
 			// Top right
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord));
 			pfVertex[0] = GetTexelStart().x;
 			pfVertex[1] = GetTexelStart().y;
 
 			// Bottom right
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord));
 			pfVertex[0] = GetTexelEnd().x;
 			pfVertex[1] = GetTexelStart().y;
 
 			// Bottom left
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord));
 			pfVertex[0] = GetTexelEnd().x;
 			pfVertex[1] = GetTexelEnd().y;
 

@@ -78,7 +78,7 @@ SCMirror::SCMirror() :
 	FPSLimit(this)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
 
 	// We have to recalculate the current axis align bounding box in 'scene node space'
 	DirtyAABoundingBox();
@@ -134,7 +134,7 @@ void SCMirror::UpdateVirtualCamera()
 	SNCamera *pCamera = SNCamera::GetCamera();
 	if (pCamera) {
 		// Get the 'virtual camera'
-		SNCamera *pVirtualCamera = (SNCamera*)Get(CameraName.Get());
+		SNCamera *pVirtualCamera = static_cast<SNCamera*>(Get(CameraName.Get()));
 		if (pVirtualCamera) {
 			pVirtualCamera->SetAutoUpdate(false);
 
@@ -206,7 +206,7 @@ void SCMirror::SetDynamicTexture()
 				if (pParameter) {
 					if (pParameter->GetType() == PLRenderer::Parameters::TextureBuffer) {
 						// Jipi, we can set the texture directly!
-						pMaterial->GetParameterManager().SetParameterTextureBuffer(DynamicMap.Get(), (TextureBuffer*)m_pSurfaceTextureBuffer->GetTextureBuffer());
+						pMaterial->GetParameterManager().SetParameterTextureBuffer(DynamicMap.Get(), static_cast<TextureBuffer*>(m_pSurfaceTextureBuffer->GetTextureBuffer()));
 					} else {
 						PL_LOG(Error, "Parameter '" + DynamicMap.Get() + "' found within material '" + Material.Get() + "', but it's no texture parameter!")
 					}
@@ -221,7 +221,7 @@ void SCMirror::SetDynamicTexture()
 								// Add a new parameter to the material
 								if (pMaterial->GetParameterManager().CreateParameter(PLRenderer::Parameters::TextureBuffer, DynamicMap.Get())) {
 									// Set the texture parameter
-									pMaterial->GetParameterManager().SetParameterTextureBuffer(DynamicMap.Get(), (TextureBuffer*)m_pSurfaceTextureBuffer->GetTextureBuffer());
+									pMaterial->GetParameterManager().SetParameterTextureBuffer(DynamicMap.Get(), static_cast<TextureBuffer*>(m_pSurfaceTextureBuffer->GetTextureBuffer()));
 								} else {
 									PL_LOG(Error, "Can't add new parameter '" + DynamicMap.Get() + "' to the material '" + Material.Get() + "'!")
 								}
@@ -387,7 +387,7 @@ void SCMirror::InitFunction()
 						// Setup indices and vertices
 						for (uint32 i=0; i<pIndexBuffer->GetNumOfElements(); i++) {
 							const Vector3 &vPos = m_cPolygon.GetVertexList().Get(i);
-							float *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 							pfVertex[Vector3::X] = vPos.x;
 							pfVertex[Vector3::Y] = vPos.y;
 							pfVertex[Vector3::Z] = vPos.z;
@@ -396,7 +396,7 @@ void SCMirror::InitFunction()
 							// [TODO] Find another, more flexible way to setup the texture coordinates!!
 							// (the 'mirror polygon' can have more that 4 vertices and the order of them
 							// isn't fixed!)
-							pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord));
 							switch (i) {
 								case 0:
 									pfVertex[Vector2::X] = 0.0f;
