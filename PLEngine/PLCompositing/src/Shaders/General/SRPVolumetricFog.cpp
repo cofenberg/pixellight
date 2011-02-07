@@ -139,7 +139,7 @@ void SRPVolumetricFog::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Draw the target cell
 					DrawRec(cRenderer, *pVisCell->GetCullQuery());
@@ -152,8 +152,8 @@ void SRPVolumetricFog::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					DrawRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery()) {
+					DrawRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 					// Set the previous scissor rectangle
 					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
@@ -161,10 +161,10 @@ void SRPVolumetricFog::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 
 			// Is this a fog node?
 			} else if (pSceneNode->IsFog()) {
-				SNFog *pFog = (SNFog*)pSceneNode;
+				SNFog *pFog = static_cast<SNFog*>(pSceneNode);
 				// Spherical fog?
 				if (pFog->IsSphereFog())
-					DrawVolumetricSphereFogRec(cRenderer, cCullQuery, *((SNSphereFog*)pFog), *pVisNode);
+					DrawVolumetricSphereFogRec(cRenderer, cCullQuery, *static_cast<SNSphereFog*>(pFog), *pVisNode);
 
 			// This must just be a quite boring scene node, ignore it
 			} else {
@@ -195,7 +195,7 @@ void SRPVolumetricFog::DrawVolumetricSphereFogRec(Renderer &cRenderer, const SQC
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisPortal    *pVisPortal = (const VisPortal*)pVisNode;
+				const VisPortal    *pVisPortal = static_cast<const VisPortal*>(pVisNode);
 				const VisContainer *pVisCell   = pVisPortal->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery() && pVisPortal->GetSceneNode()) {
 					// [TODO] Find a better solution without changing temporarily fog variables
@@ -208,7 +208,7 @@ void SRPVolumetricFog::DrawVolumetricSphereFogRec(Renderer &cRenderer, const SQC
 					Vector3    vOldScale    = cSphereFog.GetTransform().GetScale();
 
 					// Update position, scale and rotation using the given warp matrix of the portal
-					const Matrix3x4 &mWarp = ((SNCellPortal*)pVisPortal->GetSceneNode())->GetWarpMatrix();
+					const Matrix3x4 &mWarp = static_cast<SNCellPortal*>(pVisPortal->GetSceneNode())->GetWarpMatrix();
 					// New position
 					Vector3 vPosition = mWarp*vOldPosition;
 					cSphereFog.GetTransform().SetPosition(vPosition);
@@ -237,8 +237,8 @@ void SRPVolumetricFog::DrawVolumetricSphereFogRec(Renderer &cRenderer, const SQC
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					DrawRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery()) {
+					DrawRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 					// Set the previous scissor rectangle
 					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
@@ -343,7 +343,7 @@ void SRPVolumetricFog::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, c
 						// Make our program to the current one
 						if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 							// Set pointers to uniforms & attributes of a generated program if they are not set yet
-							GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+							GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 							if (!pGeneratedProgramUserData) {
 								pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 								Program *pProgram = pGeneratedProgram->pProgram;

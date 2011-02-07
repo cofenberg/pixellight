@@ -345,7 +345,7 @@ void SRPDirectionalLightingFixedFunctions::Draw(Renderer &cRenderer, const SQCul
 			// Setup light
 			FixedFunctions::Light sLight;
 			pFixedFunctions->GetDefaultLightSettings(sLight);
-			sLight.cDiffuse = ((SNLight*)pVisNode->GetSceneNode())->Color.Get()*LightingIntensity;
+			sLight.cDiffuse = static_cast<SNLight*>(pVisNode->GetSceneNode())->Color.Get()*LightingIntensity;
 			sLight.nType = FixedFunctions::LightType::Directional;
 			sLight.vDirection = -pVisNode->GetWorldMatrix().GetZAxis().GetNormalized();
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, Matrix4x4::Identity);

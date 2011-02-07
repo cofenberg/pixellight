@@ -396,7 +396,7 @@ void SRPDeferredSSAO::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 										cRenderer.SetRenderTarget(m_pRenderTargetXBlur);
 
 										// Draws the blur
-										DrawBlur(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*m_pRenderTargetAO->GetTextureBuffer(), *pNormalDepthTextureBuffer, true);
+										DrawBlur(sShaderLanguage, *pVertexBuffer, static_cast<TextureBufferRectangle&>(*m_pRenderTargetAO->GetTextureBuffer()), *pNormalDepthTextureBuffer, true);
 									}
 
 									{ // Y blur, the result is written into the alpha channel of the GBuffer RT0
@@ -407,7 +407,7 @@ void SRPDeferredSSAO::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 										cRenderer.SetColorMask(false, false, false, true);
 
 										// Draws the blur
-										DrawBlur(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*m_pRenderTargetXBlur->GetTextureBuffer(), *pNormalDepthTextureBuffer, false);
+										DrawBlur(sShaderLanguage, *pVertexBuffer, static_cast<TextureBufferRectangle&>(*m_pRenderTargetXBlur->GetTextureBuffer()), *pNormalDepthTextureBuffer, false);
 									}
 								}
 							}

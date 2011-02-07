@@ -126,7 +126,7 @@ void SRPDirectionalLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQue
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Draw the target cell
 					DrawRec(cRenderer, *pVisCell->GetCullQuery());
@@ -139,8 +139,8 @@ void SRPDirectionalLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQue
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					DrawRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery()) {
+					DrawRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 					// Set the previous scissor rectangle
 					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
@@ -204,7 +204,7 @@ const VisNode *SRPDirectionalLighting::GetFirstDirectionalLightRec(const SQCull 
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Search within the target cell
 					const VisNode *pFoundVisNode = GetFirstDirectionalLightRec(*pVisCell->GetCullQuery());
@@ -216,8 +216,8 @@ const VisNode *SRPDirectionalLighting::GetFirstDirectionalLightRec(const SQCull 
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Search within this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					const VisNode *pFoundVisNode = GetFirstDirectionalLightRec(*((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery()) {
+					const VisNode *pFoundVisNode = GetFirstDirectionalLightRec(*static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 					if (pFoundVisNode)
 						return pFoundVisNode;
 				}
@@ -225,7 +225,7 @@ const VisNode *SRPDirectionalLighting::GetFirstDirectionalLightRec(const SQCull 
 			// This must just be a quite boring scene node :)
 			} else {
 				// Is this a directional light scene node?
-				if (pSceneNode->IsLight() && ((SNLight*)pSceneNode)->IsDirectionalLight())
+				if (pSceneNode->IsLight() && static_cast<SNLight*>(pSceneNode)->IsDirectionalLight())
 					return pVisNode;
 			}
 		}

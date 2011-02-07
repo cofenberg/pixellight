@@ -69,7 +69,7 @@ void ShadowMappingUSM::CalculateLightMatrices(SNLight &cLight, Matrix4x4 &mLight
 	// Spot or point light?
 	if (cLight.IsSpotLight()) {
 		// Cast to spot light
-		SNSpotLight &cSpotLight = (SNSpotLight&)cLight;
+		SNSpotLight &cSpotLight = static_cast<SNSpotLight&>(cLight);
 
 		// We "could" just reuse the view matrix of the light, but when for example constantly rotating the light around the z-axis,
 		// the shadow mapping artefacts would also constantly move resulting in an annoying noisy shadow...

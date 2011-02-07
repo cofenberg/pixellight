@@ -97,7 +97,7 @@ void SRPDeferredEdgeAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				TextureBufferRectangle *pNormalDepthTextureBuffer = pSRPDeferredGBuffer->GetRenderTargetTextureBuffer(1);
 				if (pNormalDepthTextureBuffer) {
 					// Get the "PLCompositing::SRPBegin" instance
-					SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
+					SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
 					if (pSRPBegin) {
 						// We need up-to-date front render target content, so swap the render targets
 						pSRPBegin->SwapRenderTargets();
@@ -162,7 +162,7 @@ void SRPDeferredEdgeAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								// Make our program to the current one
 								if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 									// Set pointers to uniforms & attributes of a generated program if they are not set yet
-									GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+									GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 									if (!pGeneratedProgramUserData) {
 										pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 										Program *pProgram = pGeneratedProgram->pProgram;

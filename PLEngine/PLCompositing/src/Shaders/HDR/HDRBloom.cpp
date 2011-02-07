@@ -195,7 +195,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				// Make our downscale program to the current one
 				if (pGeneratedProgram && m_pRenderer->SetProgram(pGeneratedProgram->pProgram)) {
 					// Set pointers to uniforms & attributes of a generated program if they are not set yet
-					GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+					GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 					if (!pGeneratedProgramUserData) {
 						pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 						Program *pProgram = pGeneratedProgram->pProgram;

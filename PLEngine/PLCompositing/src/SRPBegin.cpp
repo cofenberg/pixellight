@@ -198,7 +198,7 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				}
 
 				// Create the render target
-				m_pRenderTarget[i] = cRenderer.CreateSurfaceTextureBufferRectangle(vRenderTargetSize, (TextureBuffer::EPixelFormat)TextureFormat.GetInt(), nFlags);
+				m_pRenderTarget[i] = cRenderer.CreateSurfaceTextureBufferRectangle(vRenderTargetSize, static_cast<TextureBuffer::EPixelFormat>(TextureFormat.GetInt()), nFlags);
 				m_bCurrentFrontRenderTarget = 1;
 			}
 		}

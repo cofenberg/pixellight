@@ -157,7 +157,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 			// Get texture size
 			uint16 nTextureSize = 1024;
 			m_pCurrentSpotShadowRenderTarget = &m_pSpotShadowRenderTarget[0];
-			const float fRange = ((SNSpotLight&)cLight).GetRange();
+			const float fRange = static_cast<SNSpotLight&>(cLight).GetRange();
 			float fMinimumDistanceToCamera = fSquaredDistanceToCamera-(fRange*fRange);
 			if (fMinimumDistanceToCamera > 20.0f*20.0f) {
 				nTextureSize = 64;
@@ -180,7 +180,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 			// Get texture size
 			uint16 nTextureSize = 512;
 			m_pCurrentCubeShadowRenderTarget = &m_pCubeShadowRenderTarget[0];
-			const float fRange = ((SNPointLight&)cLight).GetRange();
+			const float fRange = static_cast<SNPointLight&>(cLight).GetRange();
 			float fMinimumDistanceToCamera = fSquaredDistanceToCamera-(fRange*fRange);
 			if (fMinimumDistanceToCamera > 20.0f*20.0f) {
 				nTextureSize = 32;
@@ -210,9 +210,9 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 			// Create cull query if required
 			const SQCull *pRootQuery = cCullQuery.GetVisRootContainer() ? cCullQuery.GetVisRootContainer()->GetCullQuery() : nullptr;
 			if (pRootQuery) {
-				SQCull *pLightCullQuery = (SQCull*)m_pLightCullQuery->GetElement();
+				SQCull *pLightCullQuery = static_cast<SQCull*>(m_pLightCullQuery->GetElement());
 				if (!pLightCullQuery) {
-					pLightCullQuery = (SQCull*)pRootQuery->GetSceneContainer().CreateQuery("PLScene::SQCull");
+					pLightCullQuery = static_cast<SQCull*>(pRootQuery->GetSceneContainer().CreateQuery("PLScene::SQCull"));
 					if (pLightCullQuery) {
 						m_pLightCullQuery->SetElement(pLightCullQuery);
 
@@ -270,7 +270,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(10.0f));
 
 						// Get world space inverse light radius
-						const float fInvRadius = 1.0f/(cLight.IsPointLight() ? ((SNPointLight&)cLight).GetRange() : 0.0f);
+						const float fInvRadius = 1.0f/(cLight.IsPointLight() ? static_cast<SNPointLight&>(cLight).GetRange() : 0.0f);
 
 						// Spot or point light?
 						if (cLight.IsSpotLight()) {
@@ -343,7 +343,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 								}
 							}
 						} else {
-							SNPointLight &cPointLight = (SNPointLight&)cLight;
+							SNPointLight &cPointLight = static_cast<SNPointLight&>(cLight);
 
 							// Enable color writes - this shadow map technique requires it!
 							cRenderer.SetColorMask();
@@ -384,10 +384,10 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 										break;
 								}
 								Quaternion qRot;
-								EulerAngles::ToQuaternion(float(vRot.x*Math::DegToRad), float(vRot.y*Math::DegToRad), float(vRot.z*Math::DegToRad), qRot);
+								EulerAngles::ToQuaternion(static_cast<float>(vRot.x*Math::DegToRad), static_cast<float>(vRot.y*Math::DegToRad), static_cast<float>(vRot.z*Math::DegToRad), qRot);
 
 								// Calculate and set projection matrix
-								m_mLightProjection.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.01f, cPointLight.GetRange());
+								m_mLightProjection.PerspectiveFov(static_cast<float>(90.0f*Math::DegToRad), 1.0f, 0.01f, cPointLight.GetRange());
 
 								// Calculate and set view matrix
 								m_mLightView.View(qRot, cLight.GetTransform().GetPosition());
@@ -537,7 +537,7 @@ void SRPShadowMapping::CollectMeshBatchesRec(const SQCull &cCullQuery)
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery())
 					CollectMeshBatchesRec(*pVisCell->GetCullQuery());
 
@@ -545,8 +545,8 @@ void SRPShadowMapping::CollectMeshBatchesRec(const SQCull &cCullQuery)
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Collect this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery())
-					CollectMeshBatchesRec(*((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery())
+					CollectMeshBatchesRec(*static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 			// This must just be a quite boring scene node :)
 			} else {
@@ -642,7 +642,7 @@ SRPShadowMapping::GeneratedProgramUserData *SRPShadowMapping::MakeMaterialCurren
 	GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 	if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 		// Set pointers to uniforms & attributes of a generated program if they are not set yet
-		pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+		pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 		if (!pGeneratedProgramUserData) {
 			pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 			Program *pProgram = pGeneratedProgram->pProgram;

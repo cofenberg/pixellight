@@ -97,7 +97,7 @@ void SRPFunctionsTransparent::DrawRec(Renderer &cRenderer, const SQCull &cCullQu
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Draw the target cell
 					DrawRec(cRenderer, *pVisCell->GetCullQuery());
@@ -114,8 +114,8 @@ void SRPFunctionsTransparent::DrawRec(Renderer &cRenderer, const SQCull &cCullQu
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					DrawRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery()) {
+					DrawRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 					// Set the previous scissor rectangle
 					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);

@@ -382,14 +382,14 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				SurfaceTextureBuffer *pRenderTargetTexture = bRenderTarget ? m_pDownsampleLogRenderTarget : m_pDownsampleRenderTarget;
 
 				// Get the texture buffer we will downscale
-				TextureBufferRectangle *pTextureBufferRectangle = (TextureBufferRectangle*)(bRenderTarget ? m_pDownsampleRenderTarget->GetTextureBuffer() : m_pDownsampleLogRenderTarget->GetTextureBuffer());
+				TextureBufferRectangle *pTextureBufferRectangle = static_cast<TextureBufferRectangle*>(bRenderTarget ? m_pDownsampleRenderTarget->GetTextureBuffer() : m_pDownsampleLogRenderTarget->GetTextureBuffer());
 
 				// Set the current render target
 				m_pRenderer->SetRenderTarget(pRenderTargetTexture);
 
 				// Backup texture width
 				vFinalTextureSize			 = vCurrentSize/TextureScaleFactor;
-				pFinalTextureBufferRectangle = (TextureBufferRectangle*)pRenderTargetTexture->GetTextureBuffer();
+				pFinalTextureBufferRectangle = static_cast<TextureBufferRectangle*>(pRenderTargetTexture->GetTextureBuffer());
 
 				// Set the "TextureSize" fragment shader parameter
 				if (m_pDownsampleTextureSizeProgramUniform)
@@ -397,7 +397,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 
 				// Set the "Size" fragment shader parameter
 				if (m_pDownsampleSizeProgramUniform)
-					m_pDownsampleSizeProgramUniform->Set(float(vFinalTextureSize.x)/pRenderTargetTexture->GetSize().x, float(vFinalTextureSize.y)/pRenderTargetTexture->GetSize().y);
+					m_pDownsampleSizeProgramUniform->Set(static_cast<float>(vFinalTextureSize.x)/pRenderTargetTexture->GetSize().x, float(vFinalTextureSize.y)/pRenderTargetTexture->GetSize().y);
 
 				// Set the "Texture" fragment shader parameter
 				if (m_pDownsampleTextureProgramUniform) {

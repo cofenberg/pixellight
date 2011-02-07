@@ -121,7 +121,7 @@ void SRPLightEffectsFixedFunctions::PrepareRec(Renderer &cRenderer, const SQCull
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Draw the target cell
 					PrepareRec(cRenderer, *pVisCell->GetCullQuery());
@@ -134,8 +134,8 @@ void SRPLightEffectsFixedFunctions::PrepareRec(Renderer &cRenderer, const SQCull
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery()) {
-					PrepareRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery()) {
+					PrepareRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 					// Set the previous scissor rectangle
 					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
@@ -182,7 +182,7 @@ void SRPLightEffectsFixedFunctions::PrepareRec(Renderer &cRenderer, const SQCull
 						const uint32 nTemp = cRenderer.GetRenderState(RenderState::ZFunc);
 						cRenderer.SetRenderState(RenderState::ZFunc, Compare::Always);
 						pLightEffect->pOcclusionQueryAll->BeginOcclusionQuery();
-						DrawBillboard(pVisNode->GetWorldMatrix().GetTranslation(), ((SNLight*)pSceneNode)->CoronaSize);
+						DrawBillboard(pVisNode->GetWorldMatrix().GetTranslation(), static_cast<SNLight*>(pSceneNode)->CoronaSize);
 						pLightEffect->pOcclusionQueryAll->EndOcclusionQuery();
 						cRenderer.SetRenderState(RenderState::ZFunc, nTemp);
 						// Visible
@@ -248,19 +248,19 @@ void SRPLightEffectsFixedFunctions::DrawBillboard(const Vector3 &vPos, float fSi
 		// Set (fixed) texture coordinates
 		if (m_pBillboardVB->Lock(Lock::WriteOnly)) {
 			// Vertex 0 (right/bottom)
-			float *pfVertex = (float*)m_pBillboardVB->GetData(0, VertexBuffer::TexCoord);
+			float *pfVertex = static_cast<float*>(m_pBillboardVB->GetData(0, VertexBuffer::TexCoord));
 			pfVertex[0] = 1.0f;
 			pfVertex[1] = 1.0f;
 			// Vertex 1 (left/bottom)
-			pfVertex	= (float*)m_pBillboardVB->GetData(1, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pBillboardVB->GetData(1, VertexBuffer::TexCoord));
 			pfVertex[0] = 0.0f;
 			pfVertex[1] = 1.0f;
 			// Vertex 2 (right/top)
-			pfVertex	= (float*)m_pBillboardVB->GetData(2, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pBillboardVB->GetData(2, VertexBuffer::TexCoord));
 			pfVertex[0] = 1.0f;
 			pfVertex[1] = 0.0f;
 			// Vertex 3 (left/top)
-			pfVertex	= (float*)m_pBillboardVB->GetData(3, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pBillboardVB->GetData(3, VertexBuffer::TexCoord));
 			pfVertex[0] = 0.0f;
 			pfVertex[1] = 0.0f;
 
@@ -283,25 +283,25 @@ void SRPLightEffectsFixedFunctions::DrawBillboard(const Vector3 &vPos, float fSi
 				const Vector3 vDY(mView.yx, mView.yy, mView.yz);
 
 				// Vertex 0 (right/bottom)
-				float *pfVertex = (float*)m_pBillboardVB->GetData(0, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(m_pBillboardVB->GetData(0, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(vDX.x + vDY.x);
 				pfVertex[1] = vPos.y + fSize*(vDX.y + vDY.y);
 				pfVertex[2] = vPos.z + fSize*(vDX.z + vDY.z);
 
 				// Vertex 1 (left/bottom)
-				pfVertex	= (float*)m_pBillboardVB->GetData(1, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pBillboardVB->GetData(1, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(-vDX.x + vDY.x);
 				pfVertex[1] = vPos.y + fSize*(-vDX.y + vDY.y);
 				pfVertex[2] = vPos.z + fSize*(-vDX.z + vDY.z);
 
 				// Vertex 2 (right/top)
-				pfVertex	= (float*)m_pBillboardVB->GetData(2, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pBillboardVB->GetData(2, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(vDX.x - vDY.x);
 				pfVertex[1] = vPos.y + fSize*(vDX.y - vDY.y);
 				pfVertex[2] = vPos.z + fSize*(vDX.z - vDY.z);
 
 				// Vertex 3 (left/top)
-				pfVertex	= (float*)m_pBillboardVB->GetData(3, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pBillboardVB->GetData(3, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(-vDX.x - vDY.x);
 				pfVertex[1] = vPos.y + fSize*(-vDX.y - vDY.y);
 				pfVertex[2] = vPos.z + fSize*(-vDX.z - vDY.z);
@@ -336,19 +336,19 @@ void SRPLightEffectsFixedFunctions::DrawBillboard(const Vector3 &vPos, float fSi
 		// Set (fixed) texture coordinates
 		if (m_pBillboardColorVB->Lock(Lock::WriteOnly)) {
 			// Vertex 0 (right/bottom)
-			float *pfVertex = (float*)m_pBillboardColorVB->GetData(0, VertexBuffer::TexCoord);
+			float *pfVertex = static_cast<float*>(m_pBillboardColorVB->GetData(0, VertexBuffer::TexCoord));
 			pfVertex[0] = 1.0f;
 			pfVertex[1] = 1.0f;
 			// Vertex 1 (left/bottom)
-			pfVertex	= (float*)m_pBillboardColorVB->GetData(1, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pBillboardColorVB->GetData(1, VertexBuffer::TexCoord));
 			pfVertex[0] = 0.0f;
 			pfVertex[1] = 1.0f;
 			// Vertex 2 (right/top)
-			pfVertex	= (float*)m_pBillboardColorVB->GetData(2, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pBillboardColorVB->GetData(2, VertexBuffer::TexCoord));
 			pfVertex[0] = 1.0f;
 			pfVertex[1] = 0.0f;
 			// Vertex 3 (left/top)
-			pfVertex	= (float*)m_pBillboardColorVB->GetData(3, VertexBuffer::TexCoord);
+			pfVertex	= static_cast<float*>(m_pBillboardColorVB->GetData(3, VertexBuffer::TexCoord));
 			pfVertex[0] = 0.0f;
 			pfVertex[1] = 0.0f;
 
@@ -371,28 +371,28 @@ void SRPLightEffectsFixedFunctions::DrawBillboard(const Vector3 &vPos, float fSi
 				const Vector3 vDY(mView.yx, mView.yy, mView.yz);
 
 				// Vertex 0 (right/bottom)
-				float *pfVertex = (float*)m_pBillboardColorVB->GetData(0, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(m_pBillboardColorVB->GetData(0, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(vDX.x + vDY.x);
 				pfVertex[1] = vPos.y + fSize*(vDX.y + vDY.y);
 				pfVertex[2] = vPos.z + fSize*(vDX.z + vDY.z);
 				m_pBillboardColorVB->SetColor(0, cColor);
 
 				// Vertex 1 (left/bottom)
-				pfVertex	= (float*)m_pBillboardColorVB->GetData(1, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pBillboardColorVB->GetData(1, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(-vDX.x + vDY.x);
 				pfVertex[1] = vPos.y + fSize*(-vDX.y + vDY.y);
 				pfVertex[2] = vPos.z + fSize*(-vDX.z + vDY.z);
 				m_pBillboardColorVB->SetColor(1, cColor);
 
 				// Vertex 2 (right/top)
-				pfVertex	= (float*)m_pBillboardColorVB->GetData(2, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pBillboardColorVB->GetData(2, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(vDX.x - vDY.x);
 				pfVertex[1] = vPos.y + fSize*(vDX.y - vDY.y);
 				pfVertex[2] = vPos.z + fSize*(vDX.z - vDY.z);
 				m_pBillboardColorVB->SetColor(2, cColor);
 
 				// Vertex 3 (left/top)
-				pfVertex	= (float*)m_pBillboardColorVB->GetData(3, VertexBuffer::Position);
+				pfVertex	= static_cast<float*>(m_pBillboardColorVB->GetData(3, VertexBuffer::Position));
 				pfVertex[0] = vPos.x + fSize*(-vDX.x - vDY.x);
 				pfVertex[1] = vPos.y + fSize*(-vDX.y - vDY.y);
 				pfVertex[2] = vPos.z + fSize*(-vDX.z - vDY.z);
@@ -443,7 +443,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 			}
 		} else {
 			// Get the "PLCompositing::SRPLightEffectsFixedFunctions" instance used for the prepare step
-			SRPLightEffectsFixedFunctions *pSRPLightEffectsFixedFunctions = (SRPLightEffectsFixedFunctions*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPLightEffectsFixedFunctions");
+			SRPLightEffectsFixedFunctions *pSRPLightEffectsFixedFunctions = static_cast<SRPLightEffectsFixedFunctions*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPLightEffectsFixedFunctions"));
 			if (pSRPLightEffectsFixedFunctions) {
 				// Are there any light effects to draw?
 				if (pSRPLightEffectsFixedFunctions->m_lstLightEffects.GetNumOfElements()) {
@@ -467,7 +467,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 					Material *pMaterial = nullptr;
 					const float fWidth  = cRenderer.GetViewport().GetWidth();
 					const float fHeight = cRenderer.GetViewport().GetHeight();
-					const uint32 nTotalFragments = uint32(fWidth*fHeight);
+					const uint32 nTotalFragments = static_cast<uint32>(fWidth*fHeight);
 					// Free light effect, get factor and draw coronas
 					Iterator<LightEffect*> cIterator = pSRPLightEffectsFixedFunctions->m_lstLightEffects.GetIterator();
 					while (cIterator.HasNext()) {
@@ -487,14 +487,14 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 								while (!pLightEffect->pOcclusionQuery->PullOcclusionQuery(&nNumberOfVisibleFragments)) {
 									// We have to wait for the result...
 								}
-								pLightEffect->fFactor = float(nNumberOfVisibleFragments)/float(nNumberOfVisibleFragmentsAll);
-								pLightEffect->fFlareBlendFactor = pLightEffect->fFactor*Math::Min(float(nNumberOfVisibleFragmentsAll)/float(nTotalFragments)*1000.0f, 1.0f);
+								pLightEffect->fFactor = static_cast<float>(nNumberOfVisibleFragments)/static_cast<float>(nNumberOfVisibleFragmentsAll);
+								pLightEffect->fFlareBlendFactor = pLightEffect->fFactor*Math::Min(static_cast<float>(nNumberOfVisibleFragmentsAll)/static_cast<float>(nTotalFragments)*1000.0f, 1.0f);
 								pLightEffect->fFactor = Math::Pow(pLightEffect->fFactor, 2.0f);
 							} else {
 								pLightEffect->fFactor = pLightEffect->fFlareBlendFactor = 0.0f;
 							}
 						}
-						SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+						SNLight *pLight = static_cast<SNLight*>(pLightEffect->pVisNode->GetSceneNode());
 						if (pLightEffect->fFactor) {
 							// Calculate some special flare/blend data
 							if ((bFlaresActive && (pLight->GetFlags() & SNLight::Flares)) ||
@@ -541,7 +541,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 						while (cIterator.HasPrevious()) {
 							// Get
 							LightEffect *pLightEffect = cIterator.Previous();
-							SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+							SNLight *pLight = static_cast<SNLight*>(pLightEffect->pVisNode->GetSceneNode());
 							if (!pLight->IsEffectLight()) {
 								const float fFactor = pLightEffect->fFlareBlendFactor;
 								if (fFactor && bFlaresActive && (pLight->GetFlags() & SNLight::Flares)) {
@@ -584,7 +584,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 						while (cIterator.HasNext()) {
 							// Get
 							const LightEffect *pLightEffect = cIterator.Next();
-							const SNLight *pLight = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+							const SNLight *pLight = static_cast<SNLight*>(pLightEffect->pVisNode->GetSceneNode());
 							if (!pLight->IsEffectLight() && pLightEffect->fFlareBlendFactor && bBlendActive && (pLight->GetFlags() & SNLight::Blend)) {
 								float fFactor = pLightEffect->fFlareBlendFactor*pLight->ScreenBrighten;
 								if (fFactor) {
@@ -618,9 +618,9 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 						while (cIterator.HasPrevious()) {
 							// Get
 							const LightEffect *pLightEffect = cIterator.Previous();
-							const SNLight *pLightT = (SNLight*)pLightEffect->pVisNode->GetSceneNode();
+							const SNLight *pLightT = static_cast<SNLight*>(pLightEffect->pVisNode->GetSceneNode());
 							if (pLightT->IsEffectLight()) {
-								SNEffectLight *pLight = (SNEffectLight*)pLightT;
+								SNEffectLight *pLight = const_cast<SNEffectLight*>(static_cast<const SNEffectLight*>(pLightT));
 								if (pLightEffect->fFactor) {
 									const Color3 cColor = pLight->Color.Get();
 

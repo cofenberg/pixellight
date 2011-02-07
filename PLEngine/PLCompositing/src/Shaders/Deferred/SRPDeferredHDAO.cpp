@@ -128,7 +128,7 @@ void SRPDeferredHDAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 		// Make our program to the current one
 		if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 			// Set pointers to uniforms & attributes of a generated program if they are not set yet
-			GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+			GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 			if (!pGeneratedProgramUserData) {
 				pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 				Program *pProgram = pGeneratedProgram->pProgram;
@@ -206,7 +206,7 @@ void SRPDeferredHDAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 					nNumberOfRingGathers = 1;
 				if (nNumberOfRingGathers > 20)
 					nNumberOfRingGathers = 20;
-				pGeneratedProgramUserData->pNumRingGathers->Set((int)nNumberOfRingGathers);
+				pGeneratedProgramUserData->pNumRingGathers->Set(static_cast<int>(nNumberOfRingGathers));
 			}
 
 			// NumRings
@@ -216,7 +216,7 @@ void SRPDeferredHDAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 					nNumberOfRings = 1;
 				if (nNumberOfRings > 4)
 					nNumberOfRings = 4;
-				pGeneratedProgramUserData->pNumRings->Set((int)nNumberOfRings);
+				pGeneratedProgramUserData->pNumRings->Set(static_cast<int>(nNumberOfRings));
 			}
 
 			// Resolution

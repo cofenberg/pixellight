@@ -103,7 +103,7 @@ SRPDirectionalLightingShaders::~SRPDirectionalLightingShaders()
 */
 SNDirectionalLight *SRPDirectionalLightingShaders::GetUsedLight() const
 {
-	return (SNDirectionalLight*)m_cLightNodeHandler.GetElement();
+	return reinterpret_cast<SNDirectionalLight*>(m_cLightNodeHandler.GetElement());
 }
 
 
@@ -529,7 +529,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 							static const String sLightMapColor			= "LightMapColor";
 							static const String sAmbientOcclusionFactor = "AmbientOcclusionFactor";
 							static const String sEmissiveMapColor		= "EmissiveMapColor";
-							pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+							pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 							if (!pGeneratedProgramUserData) {
 								pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 								Program *pProgram = pGeneratedProgram->pProgram;
@@ -1060,7 +1060,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 		if (pVisNode && pVisNode->GetSceneNode() && pVisNode->GetSceneNode()->IsLight()) {
 			// Get the view space light direction vector and the light color
 			m_vLightDirection = -pVisNode->GetWorldViewMatrix().GetZAxis().GetNormalized();
-			m_cLightColor     = ((SNLight*)pVisNode->GetSceneNode())->Color.Get()*LightingIntensity;
+			m_cLightColor     = static_cast<SNLight*>(pVisNode->GetSceneNode())->Color.Get()*LightingIntensity;
 			m_cLightNodeHandler.SetElement(pVisNode->GetSceneNode());
 		} else {
 			// Sorry, there's no visible directional light scene node

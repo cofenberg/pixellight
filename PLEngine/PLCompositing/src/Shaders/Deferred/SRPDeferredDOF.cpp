@@ -692,7 +692,7 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					VertexBuffer *pVertexBuffer = pFullscreenQuad->GetVertexBuffer();
 					if (pVertexBuffer) {
 						// Get the "PLCompositing::SRPBegin" instance
-						SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
+						SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
 						if (pSRPBegin) {
 							// We need up-to-date front render target content, so swap the render targets
 							pSRPBegin->SwapRenderTargets();
@@ -718,25 +718,25 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 								// Calculate the depth blur
 								cRenderer.SetColorMask(false, false, false, true);
-								CalculateDepthBlur(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), *pNormalDepthTextureBuffer, fNearPlaneDepth, fFocalPlaneDepth, fFarPlaneDepth, fBlurrinessCutoff);
+								CalculateDepthBlur(sShaderLanguage, *pVertexBuffer, static_cast<TextureBufferRectangle&>(*pFrontSurfaceTextureBuffer->GetTextureBuffer()), *pNormalDepthTextureBuffer, fNearPlaneDepth, fFocalPlaneDepth, fFarPlaneDepth, fBlurrinessCutoff);
 								cRenderer.SetColorMask();
 								if (GetFlags() & DebugDepthBlur) {
 									// Debug depth blur data
 									pSRPBegin->SwapRenderTargets();
 									pFrontSurfaceTextureBuffer = pSRPBegin->GetFrontRenderTarget();
 									if (pFrontSurfaceTextureBuffer && pFrontSurfaceTextureBuffer->GetTextureBuffer())
-										Debug(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), 0);
+										Debug(sShaderLanguage, *pVertexBuffer, static_cast<TextureBufferRectangle&>(*pFrontSurfaceTextureBuffer->GetTextureBuffer()), 0);
 								} else {
 									// Calculate the blur texture buffer
 									if (BlurDownscale < 1.0f)
 										BlurDownscale = 1.0f;
-									CalculateBlur(sShaderLanguage, *pVertexBuffer, (TextureBufferRectangle&)*pFrontSurfaceTextureBuffer->GetTextureBuffer(), 0.0f, BlurPasses, BlurDownscale);
+									CalculateBlur(sShaderLanguage, *pVertexBuffer, static_cast<TextureBufferRectangle&>(*pFrontSurfaceTextureBuffer->GetTextureBuffer()), 0.0f, BlurPasses, BlurDownscale);
 
 									// We need up-to-date front render target content, so swap the render targets
 									pSRPBegin->SwapRenderTargets();
 
 									// Get blur texture buffer
-									TextureBufferRectangle *pTextureBuffer = (TextureBufferRectangle*)GetBlurTextureBuffer();
+									TextureBufferRectangle *pTextureBuffer = static_cast<TextureBufferRectangle*>(GetBlurTextureBuffer());
 									if (pTextureBuffer) {
 										// Debug blur data?
 										if (GetFlags() & DebugBlur) {
@@ -809,7 +809,7 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 													// Set the "TextureSize" fragment shader parameter
 													if (m_pResultTextureSizeProgramUniform)
-														m_pResultTextureSizeProgramUniform->Set(((TextureBufferRectangle*)pFrontSurfaceTextureBuffer->GetTextureBuffer())->GetSize());
+														m_pResultTextureSizeProgramUniform->Set(static_cast<TextureBufferRectangle*>(pFrontSurfaceTextureBuffer->GetTextureBuffer())->GetSize());
 
 													// Set the "EffectWeight" fragment shader parameter
 													if (m_pResultEffectWeightProgramUniform)

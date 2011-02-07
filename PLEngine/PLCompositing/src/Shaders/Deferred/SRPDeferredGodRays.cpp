@@ -151,7 +151,7 @@ void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							// Make our program to the current one
 							if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 								// Set pointers to uniforms & attributes of a generated program if they are not set yet
-								GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+								GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 								if (!pGeneratedProgramUserData) {
 									pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 									Program *pProgram = pGeneratedProgram->pProgram;

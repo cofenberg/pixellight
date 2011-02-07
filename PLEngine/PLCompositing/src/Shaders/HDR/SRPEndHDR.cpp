@@ -117,7 +117,7 @@ SRPEndHDR::~SRPEndHDR()
 void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
 	// Get the "PLCompositing::SRPBegin" instance
-	SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
+	SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
 	if (pSRPBegin) {
 		// Get the back render target of SRPBegin, this holds the current content
 		SurfaceTextureBuffer *pSurfaceTextureBuffer = pSRPBegin->GetBackRenderTarget();
@@ -163,7 +163,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// If there's no program generator, we don't need to continue
 				if (m_pProgramGenerator) {
 					// Get the texture we will use as 'source texture' when rendering the fullscreen quad
-					TextureBufferRectangle *pHDRTextureBuffer = (TextureBufferRectangle*)pSurfaceTextureBuffer->GetTextureBuffer();
+					TextureBufferRectangle *pHDRTextureBuffer = static_cast<TextureBufferRectangle*>(pSurfaceTextureBuffer->GetTextureBuffer());
 
 					// Reset all render states to default
 					cRenderer.GetRendererContext().GetEffectManager().Use();
@@ -189,7 +189,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					if (bAutomaticAverageLuminance) {
 						if (!m_pHDRAverageLuminance)
 							m_pHDRAverageLuminance = new HDRAverageLuminance(cRenderer);
-						m_pHDRAverageLuminance->CalculateAverageLuminance(sShaderLanguage, (TextureBufferRectangle&)*pSurfaceTextureBuffer->GetTextureBuffer(), LuminanceConvert.Get());
+						m_pHDRAverageLuminance->CalculateAverageLuminance(sShaderLanguage, static_cast<TextureBufferRectangle&>(*pSurfaceTextureBuffer->GetTextureBuffer()), LuminanceConvert.Get());
 
 						// Light adaptation
 						if (bLightAdaptation && m_pHDRAverageLuminance->GetTextureBuffer()) {
@@ -211,7 +211,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							BloomDownscale = 1.0f;
 						if (!m_pHDRBloom)
 							m_pHDRBloom = new HDRBloom(cRenderer);
-						m_pHDRBloom->CalculateBloom(sShaderLanguage, (TextureBufferRectangle&)*pSurfaceTextureBuffer->GetTextureBuffer(), BloomBrightThreshold, bToneMapping, bAutomaticAverageLuminance,
+						m_pHDRBloom->CalculateBloom(sShaderLanguage, static_cast<TextureBufferRectangle&>(*pSurfaceTextureBuffer->GetTextureBuffer()), BloomBrightThreshold, bToneMapping, bAutomaticAverageLuminance,
 													LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale);
 
 						// Show bloom texture (for debugging)
@@ -221,7 +221,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							bLightAdaptation		   = false;
 							bBloom					   = false;
 							bGammaCorrection		   = false;
-							pHDRTextureBuffer = (TextureBufferRectangle*)m_pHDRBloom->GetTextureBuffer();
+							pHDRTextureBuffer = static_cast<TextureBufferRectangle*>(m_pHDRBloom->GetTextureBuffer());
 						}
 					}
 
@@ -253,7 +253,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Make our program to the current one
 					if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 						// Set pointers to uniforms & attributes of a generated program if they are not set yet
-						GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+						GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 						if (!pGeneratedProgramUserData) {
 							pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 							Program *pProgram = pGeneratedProgram->pProgram;

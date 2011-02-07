@@ -105,7 +105,7 @@ void SRPDebugSceneNodeNames::DrawRec(Font &cFont, const SQCull &cCullQuery) cons
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Draw the target cell
 					DrawRec(cFont, *pVisCell->GetCullQuery());
@@ -118,8 +118,8 @@ void SRPDebugSceneNodeNames::DrawRec(Font &cFont, const SQCull &cCullQuery) cons
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery())
-					DrawRec(cFont, *((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery())
+					DrawRec(cFont, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 			// This must just be a quite boring scene node :)
 			} else {
@@ -150,10 +150,10 @@ void SRPDebugSceneNodeNames::DrawName(Font &cFont, const SQCull &cCullQuery, con
 void SRPDebugSceneNodeNames::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
 	// Get the font
-		  Font *pDefaultFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+		  Font *pDefaultFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 	const String sFont		 = (FontName.Get().GetLength() || !pDefaultFont) ? FontName.Get() : pDefaultFont->GetFilename();
 	const uint32 nFontSize	 = (FontSize || !pDefaultFont) ? FontSize : pDefaultFont->GetSize();
-		  Font *pFont		 = (Font*)cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize);
+		  Font *pFont		 = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));
 	if (pFont)  {
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();

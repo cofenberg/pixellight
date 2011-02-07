@@ -163,7 +163,7 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 		// Make our program to the current one
 		if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 			// Set pointers to uniforms & attributes of a generated program if they are not set yet
-			GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+			GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 			if (!pGeneratedProgramUserData) {
 				pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 				Program *pProgram = pGeneratedProgram->pProgram;
@@ -222,16 +222,16 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 			}
 
 			// Get the width and height of the texture buffer
-			const float fWidth  = (float)cNormalDepthTextureBuffer.GetSize().x;
-			const float fHeight = (float)cNormalDepthTextureBuffer.GetSize().y;
+			const float fWidth  = static_cast<float>(cNormalDepthTextureBuffer.GetSize().x);
+			const float fHeight = static_cast<float>(cNormalDepthTextureBuffer.GetSize().y);
 
 			// NumSteps
 			if (pGeneratedProgramUserData->pNumSteps)
-				pGeneratedProgramUserData->pNumSteps->Set((int)NumberOfSteps);
+				pGeneratedProgramUserData->pNumSteps->Set(static_cast<int>(NumberOfSteps));
 
 			// NumDir
 			if (pGeneratedProgramUserData->pNumDir)
-				pGeneratedProgramUserData->pNumDir->Set((int)m_nNumberOfDirections);
+				pGeneratedProgramUserData->pNumDir->Set(static_cast<int>(m_nNumberOfDirections));
 
 			{ // Radius
 				// Calculate the radius to use
@@ -252,7 +252,7 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 
 			{ // Angle bias and contrast
 				// Calculate the angle in radians
-				const float fAngle = float(AngleBias * Math::DegToRad);
+				const float fAngle = static_cast<float>(AngleBias * Math::DegToRad);
 
 				// AngleBias
 				if (pGeneratedProgramUserData->pAngleBias)
@@ -274,7 +274,7 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 
 			{ // Focal length
 				// Calculate the focal length
-				const float fFovY         = float((SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f) * Math::DegToRad);
+				const float fFovY         = static_cast<float>((SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f) * Math::DegToRad);
 				const float fFocalLengthY = 1.0f / Math::Tan(fFovY * 0.5f);
 				const float fFocalLengthX = fFocalLengthY * ((fHeight * (SNCamera::GetCamera() ? SNCamera::GetCamera()->GetAspect() : 1.0f)) / fWidth);
 
@@ -311,9 +311,9 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 					pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(nWidth, nHeight, 1));
 
 					// Create the texture data
-					float *pfData = (float*)pImageBuffer->GetData();
+					float *pfData = reinterpret_cast<float*>(pImageBuffer->GetData());
 					for (int i=0; i<64*64*4; i+=4) {
-						const float fAngle = float(2.0f*Math::Pi*Math::GetRandFloat()/(float)m_nNumberOfDirections);
+						const float fAngle = static_cast<float>(2.0f*Math::Pi*Math::GetRandFloat()/static_cast<float>(m_nNumberOfDirections));
 						pfData[i  ] = Math::Cos(fAngle);
 						pfData[i+1] = Math::Sin(fAngle);
 						pfData[i+2] = Math::GetRandFloat();

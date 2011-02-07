@@ -166,65 +166,65 @@ bool PostProcessor::BeginProcessing(Renderer &cRenderer, SurfaceTextureBuffer &c
 		if (m_pVertexBuffer->Lock(Lock::WriteOnly)) {
 		// Vertex 0
 			// Position
-			float *pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
 			pfVertex[Vector4::X] = 0.0f;
 			pfVertex[Vector4::Y] = 0.0f;
 			pfVertex[Vector4::Z] = 1.0f;
 			pfVertex[Vector4::W] = 1.0f;
 			// Texture coordinate 0
-			pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord, 0);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord, 0));
 			pfVertex[Vector2::X] = 0.0f;
 			pfVertex[Vector2::Y] = 0.0f;
 			// Texture coordinate 1
-			pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord, 1);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord, 1));
 			pfVertex[Vector2::X] = 0.0f;
 			pfVertex[Vector2::Y] = 0.0f;
 
 		// Vertex 1
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::Position);
-			pfVertex[Vector4::X] = (float)vSize.x;
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[Vector4::X] = static_cast<float>(vSize.x);
 			pfVertex[Vector4::Y] = 0.0f;
 			pfVertex[Vector4::Z] = 1.0f;
 			pfVertex[Vector4::W] = 1.0f;
 			// Texture coordinate 0
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord, 0);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord, 0));
 			pfVertex[Vector2::X] = 1.0f;
 			pfVertex[Vector2::Y] = 0.0f;
 			// Texture coordinate 1
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord, 1);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord, 1));
 			pfVertex[Vector2::X] = 1.0f;
 			pfVertex[Vector2::Y] = 0.0f;
 
 		// Vertex 2
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::Position));
 			pfVertex[Vector4::X] = 0.0f;
-			pfVertex[Vector4::Y] = (float)vSize.y;
+			pfVertex[Vector4::Y] = static_cast<float>(vSize.y);
 			pfVertex[Vector4::Z] = 1.0f;
 			pfVertex[Vector4::W] = 1.0f;
 			// Texture coordinate 0
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord, 0);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord, 0));
 			pfVertex[Vector2::X] = 0.0f;
 			pfVertex[Vector2::Y] = 1.0f;
 			// Texture coordinate 1
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord, 1);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord, 1));
 			pfVertex[Vector2::X] = 0.0f;
 			pfVertex[Vector2::Y] = 1.0f;
 
 		// Vertex 3
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::Position);
-			pfVertex[Vector4::X] = (float)vSize.x;
-			pfVertex[Vector4::Y] = (float)vSize.y;
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[Vector4::X] = static_cast<float>(vSize.x);
+			pfVertex[Vector4::Y] = static_cast<float>(vSize.y);
 			pfVertex[Vector4::Z] = 1.0f;
 			pfVertex[Vector4::W] = 1.0f;
 			// Texture coordinate 0
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 0);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 0));
 			pfVertex[Vector2::X] = 1.0f;
 			pfVertex[Vector2::Y] = 1.0f;
 			// Texture coordinate 1
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 1);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 1));
 			pfVertex[Vector2::X] = 1.0f;
 			pfVertex[Vector2::Y] = 1.0f;
 
@@ -238,7 +238,7 @@ bool PostProcessor::BeginProcessing(Renderer &cRenderer, SurfaceTextureBuffer &c
 		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 		if (pFixedFunctions)
 			pFixedFunctions->ResetTransformStates();
-		cRenderer.GetDrawHelpers().Begin2DMode(0.0f, (float)vSize.y, (float)vSize.x, 0.0f);
+		cRenderer.GetDrawHelpers().Begin2DMode(0.0f, static_cast<float>(vSize.y), static_cast<float>(vSize.x), 0.0f);
 
 		// Done
 		return true;
@@ -262,16 +262,16 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 			// in the quad need to be updated
 			if (m_pVertexBuffer->Lock()) {
 				// Check extents
-				float *pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord, 0);
+				float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord, 0));
 				if (pfVertex[Vector2::X] != m_fExtentX) {
 					pfVertex[Vector2::X] = m_fExtentX;
-					pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 0);
+					pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 0));
 					pfVertex[Vector2::X] = m_fExtentX;
 				}
-				pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord, 0);
+				pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord, 0));
 				if (pfVertex[Vector2::Y] != m_fExtentY) {
 					pfVertex[Vector2::Y] = m_fExtentY;
-					pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 0);
+					pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord, 0));
 					pfVertex[Vector2::Y] = m_fExtentY;
 				}
 
@@ -292,9 +292,9 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 						m_bClearRenderTarget[0] = m_bClearRenderTarget[1] = true;
 					else
 						nIncSize++;
-					pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::Position, 0);
+					pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::Position, 0));
 					pfVertex[Vector2::X] = pfVertex[Vector2::X]*fScaleX;
-					pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::Position, 0);
+					pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::Position, 0));
 					pfVertex[Vector2::X] = pfVertex[Vector2::X]*fScaleX;
 				}
 				if (fScaleY != 1.0f) {
@@ -302,9 +302,9 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 						m_bClearRenderTarget[0] = m_bClearRenderTarget[1] = true;
 					else
 						nIncSize++;
-					pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::Position, 0);
+					pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::Position, 0));
 					pfVertex[Vector2::Y] = pfVertex[Vector2::Y]*fScaleY;
-					pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::Position, 0);
+					pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::Position, 0));
 					pfVertex[Vector2::Y] = pfVertex[Vector2::Y]*fScaleY;
 				}
 				if (nIncSize == 2)
@@ -351,7 +351,7 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 			// Set target dimension
 			pParameter = pMaterial->GetParameter("TargetDimension");
 			if (pParameter)
-				pParameter->SetValue2f((float)m_pColorSurface->GetSize().x, (float)m_pColorSurface->GetSize().y);
+				pParameter->SetValue2f(static_cast<float>(m_pColorSurface->GetSize().x), static_cast<float>(m_pColorSurface->GetSize().y));
 
 			// Set dynamic source texture
 			pParameter = pMaterial->GetParameter("SourceColor");
@@ -396,7 +396,7 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 			// Set texture coordinate scale matrix
 			Matrix4x4 mScale;
 			if (nType == PLRenderer::Resource::TypeTextureBufferRectangle)
-				mScale.SetScaleMatrix((float)m_pColorSurface->GetSize().x, (float)m_pColorSurface->GetSize().y, 1.0f);
+				mScale.SetScaleMatrix(static_cast<float>(m_pColorSurface->GetSize().x), static_cast<float>(m_pColorSurface->GetSize().y), 1.0f);
 
 			// Get the effect and set some general shader parameters
 			Effect *pEffect = pMaterial->GetEffect();

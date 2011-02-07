@@ -75,7 +75,7 @@ SRPEnd::~SRPEnd()
 void SRPEnd::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
 	// Get the "PLCompositing::SRPBegin" instance
-	SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
+	SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
 	if (pSRPBegin) {
 		// Get the original set render target
 		Surface *pSurface = pSRPBegin->GetOriginalRenderTarget();

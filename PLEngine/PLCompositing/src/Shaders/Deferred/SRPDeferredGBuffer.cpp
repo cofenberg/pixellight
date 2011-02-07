@@ -141,7 +141,7 @@ TextureBufferRectangle *SRPDeferredGBuffer::GetRenderTargetTextureBuffer(uint32 
 {
 	switch (nIndex)  {
 		case 0:
-			return m_pRenderTarget ? (TextureBufferRectangle*)m_pRenderTarget->GetTextureBuffer() : nullptr;
+			return m_pRenderTarget ? static_cast<TextureBufferRectangle*>(m_pRenderTarget->GetTextureBuffer()) : nullptr;
 
 		case 1:
 			return m_pColorTarget1;
@@ -213,7 +213,7 @@ void SRPDeferredGBuffer::CollectMeshBatchesRec(const SQCull &cCullQuery)
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery())
 					CollectMeshBatchesRec(*pVisCell->GetCullQuery());
 
@@ -221,8 +221,8 @@ void SRPDeferredGBuffer::CollectMeshBatchesRec(const SQCull &cCullQuery)
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Collect this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery())
-					CollectMeshBatchesRec(*((const VisContainer*)pVisNode)->GetCullQuery());
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery())
+					CollectMeshBatchesRec(*static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
 
 			// This must just be a quite boring scene node :)
 			} else {
@@ -600,7 +600,7 @@ SRPDeferredGBuffer::GeneratedProgramUserData *SRPDeferredGBuffer::MakeMaterialCu
 	GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
 	if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 		// Set pointers to uniforms & attributes of a generated program if they are not set yet
-		pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+		pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 		if (!pGeneratedProgramUserData) {
 			pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 			Program *pProgram = pGeneratedProgram->pProgram;
@@ -1146,9 +1146,9 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 					pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(vRTSize.x, vRTSize.y, 1));
 					// [TODO] Currently, I just assume a real rectangle instance... find a better way!
-					m_pColorTarget1 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
-					m_pColorTarget2 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
-					m_pColorTarget3 = (TextureBufferRectangle*)cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget);
+					m_pColorTarget1 = static_cast<TextureBufferRectangle*>(cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget));
+					m_pColorTarget2 = static_cast<TextureBufferRectangle*>(cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget));
+					m_pColorTarget3 = static_cast<TextureBufferRectangle*>(cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget));
 				}
 			}
 		}
@@ -1158,11 +1158,11 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			// Backup the current render target, pass on the depth buffer of the surface texture buffer and set the new render target
 			m_pSurfaceBackup = cRenderer.GetRenderTarget();
 			if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
-				m_pRenderTarget->TakeDepthBufferFromSurfaceTextureBuffer((SurfaceTextureBuffer&)*m_pSurfaceBackup);
+				m_pRenderTarget->TakeDepthBufferFromSurfaceTextureBuffer(static_cast<SurfaceTextureBuffer&>(*m_pSurfaceBackup));
 			cRenderer.SetRenderTarget(m_pRenderTarget);
-			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget1, 1);
-			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget2, 2);
-			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget3, 3);
+			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget1), 1);
+			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget2), 2);
+			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget3), 3);
 
 			// Reset all render states to default
 			cRenderer.GetRendererContext().GetEffectManager().Use();
@@ -1233,7 +1233,7 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 			// Give back the depth buffer of the surface texture buffer and restore the previously set render target
 			if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
-				((SurfaceTextureBuffer*)m_pSurfaceBackup)->TakeDepthBufferFromSurfaceTextureBuffer(*m_pRenderTarget);
+				static_cast<SurfaceTextureBuffer*>(m_pSurfaceBackup)->TakeDepthBufferFromSurfaceTextureBuffer(*m_pRenderTarget);
 			cRenderer.SetRenderTarget(m_pSurfaceBackup);
 		}
 	}

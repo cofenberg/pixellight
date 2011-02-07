@@ -415,7 +415,7 @@ void SRPDeferredGlow::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					CalculateGlow(sShaderLanguage, *pVertexBuffer, *pTextureBuffer, 0.0f, GlowBlurPasses, GlowDownscale);
 
 					// Get glow texture buffer
-					pTextureBuffer = (TextureBufferRectangle*)GetTextureBuffer();
+					pTextureBuffer = static_cast<TextureBufferRectangle*>(GetTextureBuffer());
 					if (pTextureBuffer) {
 						// Create the shaders and programs right now?
 						if (!m_pResultFragmentShader || m_pResultFragmentShader->GetShaderLanguage() != sShaderLanguage || m_bResultDiscard != !(GetFlags() & NoDiscard)) {

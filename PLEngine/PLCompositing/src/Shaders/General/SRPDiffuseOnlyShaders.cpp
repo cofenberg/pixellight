@@ -194,7 +194,7 @@ void SRPDiffuseOnlyShaders::DrawMesh(Renderer &cRenderer, const SQCull &cCullQue
 							if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 								// Set pointers to uniforms & attributes of a generated program if they are not set yet
 								static const String sDiffuseColor = "DiffuseColor";
-								GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+								GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 								if (!pGeneratedProgramUserData) {
 									pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 									Program *pProgram = pGeneratedProgram->pProgram;

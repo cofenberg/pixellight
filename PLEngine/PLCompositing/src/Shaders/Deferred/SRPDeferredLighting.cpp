@@ -141,7 +141,7 @@ void SRPDeferredLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery,
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
-				const VisContainer *pVisCell = ((const VisPortal*)pVisNode)->GetTargetVisContainer();
+				const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
 				if (pVisCell && pVisCell->GetCullQuery()) {
 					// Draw the target cell
 					DrawRec(cRenderer, *pVisCell->GetCullQuery(), cSRPDeferredGBuffer);
@@ -151,14 +151,14 @@ void SRPDeferredLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery,
 			// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
 			} else if (pVisNode->IsContainer()) {
 				// Draw this container without special processing
-				if (((const VisContainer*)pVisNode)->GetCullQuery())
-					DrawRec(cRenderer, *((const VisContainer*)pVisNode)->GetCullQuery(), cSRPDeferredGBuffer);
+				if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery())
+					DrawRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery(), cSRPDeferredGBuffer);
 
 			// Is this a light?
 			} else if (pSceneNode->IsLight()) {
-				if (((SNLight*)pSceneNode)->IsRenderLight()) {
+				if (static_cast<SNLight*>(pSceneNode)->IsRenderLight()) {
 					// Render the light
-					RenderLight(cRenderer, cCullQuery, cSRPDeferredGBuffer, *((SNLight*)pSceneNode), *pVisNode);
+					RenderLight(cRenderer, cCullQuery, cSRPDeferredGBuffer, *static_cast<SNLight*>(pSceneNode), *pVisNode);
 				}
 
 			// This must just be a quite boring scene node, ignore it
@@ -186,7 +186,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 	const bool bDirectional		= cLight.IsDirectionalLight();
 
 	// Get the light range
-	const float fRange = bPoint ? ((SNPointLight&)cLight).GetRange() : 0.0f;
+	const float fRange = bPoint ? static_cast<SNPointLight&>(cLight).GetRange() : 0.0f;
 
 	// Skip none directional lights with a radius of <= 0, they have no visible incluence!
 	if (!bDirectional && fRange <= 0.0f)
@@ -203,10 +203,10 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 		cLight.GetAABoundingBox().GetVertices(vVertex.GetData());
 
 		// Get viewport parameters
-		const uint32 nX      = (uint32)cRenderer.GetViewport().GetX();
-		const uint32 nY      = (uint32)cRenderer.GetViewport().GetY();
-		const uint32 nWidth  = (uint32)cRenderer.GetViewport().GetWidth();
-		const uint32 nHeight = (uint32)cRenderer.GetViewport().GetHeight();
+		const uint32 nX      = static_cast<uint32>(cRenderer.GetViewport().GetX());
+		const uint32 nY      = static_cast<uint32>(cRenderer.GetViewport().GetY());
+		const uint32 nWidth  = static_cast<uint32>(cRenderer.GetViewport().GetWidth());
+		const uint32 nHeight = static_cast<uint32>(cRenderer.GetViewport().GetHeight());
 
 		// Calculate the rectangle on the screen enclosing the given vertices
 		cScissorRectangle.ScreenRectangle(vVertex, true, cLightVisNode.GetWorldViewProjectionMatrix(), nX, nY, nWidth, nHeight);
@@ -223,7 +223,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 		if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow)) {
 			// Get the shadow mapping scene renderer pass
 			static const String sClassName = "PLCompositing::SRPShadowMapping";
-			pSRPShadowMapping = (SRPShadowMapping*)GetFirstInstanceOfSceneRendererPassClass(sClassName);
+			pSRPShadowMapping = static_cast<SRPShadowMapping*>(GetFirstInstanceOfSceneRendererPassClass(sClassName));
 
 			// Is the shadow mapping scene renderer pass active?
 			if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
@@ -261,7 +261,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 			bSpotCone = true;
 
 			// The inner angle MUST be smaller than the outer one, else we do not use a smooth cone
-			bSpotSmoothCone = ((SNSpotLight&)cLight).GetOuterAngle() > ((SNSpotLight&)cLight).GetInnerAngle();
+			bSpotSmoothCone = static_cast<SNSpotLight&>(cLight).GetOuterAngle() > static_cast<SNSpotLight&>(cLight).GetInnerAngle();
 		}
 
 		// Reset the program flags
@@ -312,7 +312,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 		// Make our program to the current one
 		if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
 			// Set pointers to uniforms & attributes of a generated program if they are not set yet
-			GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+			GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 			if (!pGeneratedProgramUserData) {
 				pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 				Program *pProgram = pGeneratedProgram->pProgram;
@@ -404,7 +404,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 					TextureBuffer *pCubeMap = nullptr;
 
 					// Get the projective material to use
-					const Material *pProjectiveMaterial = ((SNProjectivePointLight&)cLight).GetProjectedMaterialHandler().GetResource();
+					const Material *pProjectiveMaterial = static_cast<SNProjectivePointLight&>(cLight).GetProjectedMaterialHandler().GetResource();
 					if (pProjectiveMaterial) {
 						// Get the DiffuseMap-parameter of the projective material
 						const Parameter *pParameter = pProjectiveMaterial->GetParameter(Material::DiffuseMap);
@@ -457,7 +457,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 							TextureBuffer *pSpotMap = nullptr;
 
 							// Get the projective material to use
-							const Material *pProjectiveMaterial = ((SNProjectiveSpotLight&)cLight).GetProjectedMaterialHandler().GetResource();
+							const Material *pProjectiveMaterial = static_cast<SNProjectiveSpotLight&>(cLight).GetProjectedMaterialHandler().GetResource();
 							if (pProjectiveMaterial) {
 								// Get the DiffuseMap-parameter of the projective material
 								const Parameter *pParameter = pProjectiveMaterial->GetParameter(Material::DiffuseMap);
@@ -502,7 +502,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 								Matrix4x4 mTransform = mClipSpaceToTextureSpace;
 
 								// View space to clip space [-1...1]
-								mTransform *= ((SNProjectiveSpotLight&)cLight).GetProjectionMatrix();
+								mTransform *= static_cast<SNProjectiveSpotLight&>(cLight).GetProjectionMatrix();
 
 								// Set the fragment shader parameter
 								pGeneratedProgramUserData->pViewSpaceToSpotMapSpace->Set(mTransform*cLightVisNode.GetWorldViewMatrix().GetInverted());
@@ -513,12 +513,12 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 						if (pGeneratedProgramUserData->pSpotConeCos) {
 							if (bSpotSmoothCone) {
 								// Set spot light cone outer and inner angle in view space
-								pGeneratedProgramUserData->pSpotConeCos->Set(float(Math::Cos(((SNSpotLight&)cLight).GetOuterAngle()*Math::DegToRad*0.5f)),
-																			 float(Math::Cos(((SNSpotLight&)cLight).GetInnerAngle()*Math::DegToRad*0.5f)));
+								pGeneratedProgramUserData->pSpotConeCos->Set(static_cast<float>(Math::Cos(static_cast<SNSpotLight&>(cLight).GetOuterAngle()*Math::DegToRad*0.5f)),
+																			 static_cast<float>(Math::Cos(static_cast<SNSpotLight&>(cLight).GetInnerAngle()*Math::DegToRad*0.5f)));
 
 							} else {
 								// Set spot light cone outer angle in view space
-								pGeneratedProgramUserData->pSpotConeCos->Set(float(Math::Cos(((SNSpotLight&)cLight).GetOuterAngle()*Math::DegToRad*0.5f)));
+								pGeneratedProgramUserData->pSpotConeCos->Set(static_cast<float>(Math::Cos(static_cast<SNSpotLight&>(cLight).GetOuterAngle()*Math::DegToRad*0.5f)));
 							}
 						}
 					}
@@ -585,9 +585,9 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 							if (!(GetFlags() & NoSoftShadow) && pGeneratedProgramUserData->pTexelSize) {
 								float fSize = 0.0f;
 								if (pShadowMap->GetType() == TextureBuffer::TypeTextureBuffer2D)
-									fSize = (float)((TextureBuffer2D*)pShadowMap)->GetSize().x;
+									fSize = static_cast<float>(static_cast<TextureBuffer2D*>(pShadowMap)->GetSize().x);
 								else if (pShadowMap->GetType() == TextureBuffer::TypeTextureBufferCube)
-									fSize = (float)((TextureBufferCube*)pShadowMap)->GetSize();
+									fSize = static_cast<float>(static_cast<TextureBufferCube*>(pShadowMap)->GetSize());
 								pGeneratedProgramUserData->pTexelSize->Set(fSize ? 0.5f/fSize : 1.0f);
 							}
 						}
@@ -602,7 +602,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 			// Set the "InvFocalLen" fragment shader parameter
 			if (pGeneratedProgramUserData->pInvFocalLen) {
 				// Calculate the focal length
-				const float fFovY         = float((SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f) * Math::DegToRad);
+				const float fFovY         = static_cast<float>((SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f) * Math::DegToRad);
 				const float fFocalLengthY = 1.0f / Math::Tan(fFovY * 0.5f);
 				const float fFocalLengthX = fFocalLengthY * ((vSize.y * (SNCamera::GetCamera() ? SNCamera::GetCamera()->GetAspect() : 1.0f)) / vSize.x);
 

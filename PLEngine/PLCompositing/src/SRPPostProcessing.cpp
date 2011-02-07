@@ -94,7 +94,7 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 {
 	// Loop through all modifiers of the camera scene node
 	uint32		    nModifier = 0;
-	SNMPostProcess *pModifier = (SNMPostProcess*)cCamera.GetModifier("PLCompositing::SNMPostProcess", nModifier);
+	SNMPostProcess *pModifier = static_cast<SNMPostProcess*>(cCamera.GetModifier("PLCompositing::SNMPostProcess", nModifier));
 	while (pModifier) {
 		// Is this modifier active and the effect weight greater than zero?
 		if (pModifier->IsActive() && pModifier->EffectWeight.GetFloat() > 0.0f) {
@@ -102,13 +102,13 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 
 			// [TODO] If there's an "PLCompositing::SRPDeferredDOF" instance, "PLCompositing::SNMPostProcessDepthOfField" has already been processed -> Find a way to deal with build in post process effects!
 			if (GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPDeferredDOF") && pModifier->GetClass()->GetClassName() == "PLCompositing::SNMPostProcessDepthOfField") {
-				pModifier = (SNMPostProcess*)cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+				pModifier = static_cast<SNMPostProcess*>(cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier));
 				continue;
 			}
 
 
 			// Get the post process manager
-			PostProcessManager &cPPM = ((SNMPostProcess*)pModifier)->GetPostProcessManager();
+			PostProcessManager &cPPM = static_cast<SNMPostProcess*>(pModifier)->GetPostProcessManager();
 
 			// Loop through all post processes
 			for (uint32 nPostProcess=0; nPostProcess<cPPM.GetNumOfElements(); nPostProcess++) {
@@ -119,7 +119,7 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 						m_pPostProcessor = new PostProcessor();
 
 					// Setup the texture format
-					m_pPostProcessor->SetTextureFormat(((SNMPostProcess*)pModifier)->GetPostProcessManager().GetTextureFormat());
+					m_pPostProcessor->SetTextureFormat(static_cast<SNMPostProcess*>(pModifier)->GetPostProcessManager().GetTextureFormat());
 
 					// Done, we need post processing
 					return true;
@@ -128,7 +128,7 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 		}
 
 		// Next modifier, please
-		pModifier = (SNMPostProcess*)cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+		pModifier = static_cast<SNMPostProcess*>(cCamera.GetModifier("PLCompositing::SNMPostProcess", ++nModifier));
 	}
 
 	// Done, we need not need post processing
@@ -144,7 +144,7 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	// Perform post processing?
 	if (SNCamera::GetCamera() && IsPostProcessingRequired(*SNCamera::GetCamera()) && m_pPostProcessor) {
 		// Get the "PLCompositing::SRPBegin" instance
-		SRPBegin *pSRPBegin = (SRPBegin*)GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin");
+		SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
 		if (pSRPBegin) {
 			// We need up-to-date front render target content, so swap the render targets
 			pSRPBegin->SwapRenderTargets();
@@ -169,7 +169,7 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					if (pCamera) {
 						// Loop through all modifiers of the camera scene node
 						uint32		    nModifier = 0;
-						SNMPostProcess *pModifier = (SNMPostProcess*)pCamera->GetModifier("PLCompositing::SNMPostProcess", nModifier);
+						SNMPostProcess *pModifier = static_cast<SNMPostProcess*>(pCamera->GetModifier("PLCompositing::SNMPostProcess", nModifier));
 						while (pModifier) {
 							// Is this modifier active and the effect weight greater than zero?
 							if (pModifier->IsActive() && pModifier->EffectWeight.GetFloat() > 0.0f) {
@@ -177,12 +177,12 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 								// [TODO] If there's an "PLCompositing::SRPDeferredDOF" instance, "PLCompositing::SNMPostProcessDepthOfField" has already been processed -> Find a way to deal with build in post process effects!
 								if (GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPDeferredDOF") && pModifier->GetClass()->GetClassName() == "PLCompositing::SNMPostProcessDepthOfField") {
-									pModifier = (SNMPostProcess*)pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+									pModifier = static_cast<SNMPostProcess*>(pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier));
 									continue;
 								}
 
 
-								SNMPostProcess *pPostProcessModifier = (SNMPostProcess*)pModifier;
+								SNMPostProcess *pPostProcessModifier = static_cast<SNMPostProcess*>(pModifier);
 
 								// Get the post process manager
 								PostProcessManager &cPPM = pPostProcessModifier->GetPostProcessManager();
@@ -205,7 +205,7 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							}
 
 							// Next modifier, please
-							pModifier = (SNMPostProcess*)pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier);
+							pModifier = static_cast<SNMPostProcess*>(pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nModifier));
 						}
 					}
 
