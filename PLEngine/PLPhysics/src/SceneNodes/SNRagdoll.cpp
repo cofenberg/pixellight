@@ -450,7 +450,7 @@ void SNRagdoll::CreatePhysicsRagdoll(bool bAllowAttachToWorld)
 	SceneContainer *pContainer = GetContainer();
 	while (pContainer && !pContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld"))
 		pContainer = pContainer->GetContainer();
-	m_pWorldContainer = (SCPhysicsWorld*)pContainer;
+	m_pWorldContainer = static_cast<SCPhysicsWorld*>(pContainer);
 
 	// Create the physics bodies and joints
 	if (m_pWorldContainer)
@@ -1061,9 +1061,9 @@ SNMMeshUpdate *SNRagdoll::GetSNMMeshUpdate()
 {
 	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
 	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
-	SNMMeshUpdate *pSNMMeshUpdate = (SNMMeshUpdate*)GetModifier(sSNMMeshUpdate);
+	SNMMeshUpdate *pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(GetModifier(sSNMMeshUpdate));
 	if (!pSNMMeshUpdate)
-		pSNMMeshUpdate = (SNMMeshUpdate*)AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\"");
+		pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\""));
 
 	// Return the SNMMeshUpdate instance
 	return pSNMMeshUpdate;

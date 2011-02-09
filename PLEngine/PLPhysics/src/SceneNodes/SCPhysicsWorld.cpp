@@ -254,7 +254,7 @@ void SCPhysicsWorld::InitFunction()
 		if (pClass && pClass->IsDerivedFrom("PLPhysics::World")) {
 			Object *pObject = pClass->Create();
 			if (pObject) {
-				m_pWorld = (World*)pObject;
+				m_pWorld = static_cast<World*>(pObject);
 
 				// Use the scene container bounding box for the world size
 				m_pWorld->SetWorldSize(GetAABoundingBox().vMin, GetAABoundingBox().vMax);

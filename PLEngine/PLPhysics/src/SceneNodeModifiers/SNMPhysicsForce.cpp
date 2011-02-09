@@ -91,7 +91,7 @@ void SNMPhysicsForce::OnActivate(bool bActivate)
 */
 void SNMPhysicsForce::NotifyUpdate()
 {
-	const SNMPhysicsBody *pModifier = (SNMPhysicsBody*)GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody");
+	const SNMPhysicsBody *pModifier = static_cast<SNMPhysicsBody*>(GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody"));
 	if (pModifier) {
 		Body *pBody = pModifier->GetBody();
 		if (pBody)

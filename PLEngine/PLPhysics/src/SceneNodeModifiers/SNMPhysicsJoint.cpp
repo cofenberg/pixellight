@@ -79,7 +79,7 @@ SCPhysicsWorld *SNMPhysicsJoint::GetWorldContainer() const
 */
 Joint *SNMPhysicsJoint::GetJoint() const
 {
-	return (Joint*)m_pJointHandler->GetElement();
+	return static_cast<Joint*>(m_pJointHandler->GetElement());
 }
 
 /**
@@ -88,7 +88,7 @@ Joint *SNMPhysicsJoint::GetJoint() const
 */
 SNMPhysicsBody *SNMPhysicsJoint::GetParentBodyModifier() const
 {
-	return (SNMPhysicsBody*)GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody");
+	return reinterpret_cast<SNMPhysicsBody*>(GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody"));
 }
 
 /**
@@ -98,7 +98,7 @@ SNMPhysicsBody *SNMPhysicsJoint::GetParentBodyModifier() const
 SNMPhysicsBody *SNMPhysicsJoint::GetChildBodyModifier() const
 {
 	const SceneNode *pSceneNode = GetSceneNode().GetContainer()->Get(m_sChild);
-	return pSceneNode ? (SNMPhysicsBody*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBody") : nullptr;
+	return pSceneNode ? reinterpret_cast<SNMPhysicsBody*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBody")) : nullptr;
 }
 
 
@@ -149,14 +149,14 @@ void SNMPhysicsJoint::RecreatePhysicsJoint()
 void SNMPhysicsJoint::InformedOnInit()
 {
 	// Get PL physics world this joint is in
-	const SceneContainer *pContainer = GetSceneNode().GetContainer();
+	SceneContainer *pContainer = GetSceneNode().GetContainer();
 	while (pContainer && !pContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld"))
 		pContainer = pContainer->GetContainer();
 
 	// Setup physics joint
 	if (pContainer) {
 		// Backup pointer to the world container
-		m_pWorldContainer = (SCPhysicsWorld*)pContainer;
+		m_pWorldContainer = static_cast<SCPhysicsWorld*>(pContainer);
 		if (m_pWorldContainer->GetWorld()) {
 			// Create the physics joint
 			CreatePhysicsJoint();

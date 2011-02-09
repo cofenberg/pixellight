@@ -216,7 +216,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 			if (fYRotationChange) {
 				// Get a quaternion representation of the rotation delta
 				Quaternion qRotInc;
-				EulerAngles::ToQuaternion(0.0f, float(fYRotationChange*Math::DegToRad), 0.0f, qRotInc);
+				EulerAngles::ToQuaternion(0.0f, static_cast<float>(fYRotationChange*Math::DegToRad), 0.0f, qRotInc);
 
 				// Update rotation
 				GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
@@ -245,7 +245,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 	}
 
 	// Setup character animation
-	MeshHandler *pMeshHandler = ((SNMesh&)cSceneNode).GetMeshHandler();
+	MeshHandler *pMeshHandler = static_cast<SNMesh&>(cSceneNode).GetMeshHandler();
 	if (pMeshHandler) {
 		MeshAnimationManager *pAniManager = pMeshHandler->GetMeshAnimationManager();
 		if (!pAniManager)
@@ -300,9 +300,9 @@ SNMMeshUpdate *SNMPhysicsCharacterController::GetSNMMeshUpdate() const
 {
 	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
 	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
-	SNMMeshUpdate *pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().GetModifier(sSNMMeshUpdate);
+	SNMMeshUpdate *pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(GetSceneNode().GetModifier(sSNMMeshUpdate));
 	if (!pSNMMeshUpdate)
-		pSNMMeshUpdate = (SNMMeshUpdate*)GetSceneNode().AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\"");
+		pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(GetSceneNode().AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\""));
 
 	// Return the SNMMeshUpdate instance
 	return pSNMMeshUpdate;

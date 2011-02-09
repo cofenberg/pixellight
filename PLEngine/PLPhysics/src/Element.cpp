@@ -42,7 +42,7 @@ namespace PLPhysics {
 */
 World &Element::GetWorld() const
 {
-	return (World&)*GetManager();
+	return static_cast<World&>(*GetManager());
 }
 
 /**

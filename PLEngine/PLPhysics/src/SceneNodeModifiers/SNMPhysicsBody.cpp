@@ -173,7 +173,7 @@ SCPhysicsWorld *SNMPhysicsBody::GetWorldContainer() const
 */
 Body *SNMPhysicsBody::GetBody() const
 {
-	return (Body*)m_pBodyHandler->GetElement();
+	return static_cast<Body*>(m_pBodyHandler->GetElement());
 }
 
 
@@ -483,14 +483,14 @@ void SNMPhysicsBody::NotifyTransform()
 void SNMPhysicsBody::InformedOnInit()
 {
 	// Get the PL physics world this body is in
-	const SceneContainer *pContainer = GetSceneNode().GetContainer();
+	SceneContainer *pContainer = GetSceneNode().GetContainer();
 	while (pContainer && !pContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld"))
 		pContainer = pContainer->GetContainer();
 
 	// Setup physics body
 	if (pContainer) {
 		// Backup pointer to the world container
-		m_pWorldContainer = (SCPhysicsWorld*)pContainer;
+		m_pWorldContainer = static_cast<SCPhysicsWorld*>(pContainer);
 		if (m_pWorldContainer->GetWorld()) {
 			// Create the PL physics body
 			CreatePhysicsBody();

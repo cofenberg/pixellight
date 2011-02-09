@@ -164,7 +164,7 @@ Sensor::BodyInfo &Sensor::GetFreeBodyInfo()
 	if (lstFreeBodyInformation.IsEmpty())
 		return *(new BodyInfo);
 	else {
-		BodyInfo *pBodyInfo = (BodyInfo*)lstFreeBodyInformation.Get(0);
+		BodyInfo *pBodyInfo = static_cast<BodyInfo*>(lstFreeBodyInformation.Get(0));
 		lstFreeBodyInformation.RemoveAtIndex(0);
 		return *pBodyInfo;
 	}

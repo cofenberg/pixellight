@@ -77,7 +77,7 @@ RagdollJoint::~RagdollJoint()
 */
 Joint *RagdollJoint::GetJoint() const
 {
-	return (Joint*)m_pJointHandler->GetElement();
+	return static_cast<Joint*>(m_pJointHandler->GetElement());
 }
 
 /**
@@ -137,7 +137,7 @@ void RagdollJoint::CreatePhysicsJoint()
 					switch (nJointType) {
 						case Hinge:
 						{
-							JointHinge *pJoint = (JointHinge*)pWorld->CreateJointHinge(bAttachToWorldT ? nullptr : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1);
+							JointHinge *pJoint = static_cast<JointHinge*>(pWorld->CreateJointHinge(bAttachToWorldT ? nullptr : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1));
 							if (pJoint) {
 								pJoint->SetLowRange(fLowJointRange1);
 								pJoint->SetHighRange(fHighJointRange1);
@@ -148,7 +148,7 @@ void RagdollJoint::CreatePhysicsJoint()
 
 						case Universal:
 						{
-							JointUniversal *pJoint = (JointUniversal*)pWorld->CreateJointUniversal(bAttachToWorldT ? nullptr : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1, qNodeRotation*vRotAxis2);
+							JointUniversal *pJoint = static_cast<JointUniversal*>(pWorld->CreateJointUniversal(bAttachToWorldT ? nullptr : pParentBody->GetBody(), pAttachedBody->GetBody(), vRealJointAnchor, qNodeRotation*vRotAxis1, qNodeRotation*vRotAxis2));
 							if (pJoint) {
 								pJoint->SetLowRange1(fLowJointRange1);
 								pJoint->SetHighRange1(fHighJointRange1);
@@ -181,7 +181,7 @@ void RagdollJoint::DestroyPhysicsJoint()
 */
 void RagdollJoint::GetCurrentAnchor(Vector3 &vPosition) const
 {
-	const Joint *pJoint = (Joint*)m_pJointHandler->GetElement();
+	const Joint *pJoint = static_cast<Joint*>(m_pJointHandler->GetElement());
 	if (pJoint)
 		pJoint->GetCurrentPivotPoint(vPosition);
 
@@ -191,7 +191,7 @@ void RagdollJoint::GetCurrentAnchor(Vector3 &vPosition) const
 		const RagdollBody *pAttachedBody = m_pParentRagdoll->GetBody(sAttached);
 		if (pAttachedBody && pAttachedBody->bEnabled) {
 			// Get the attached physics body
-			const Body *pBody = (Body*)pAttachedBody->GetBody();
+			const Body *pBody = static_cast<Body*>(pAttachedBody->GetBody());
 			if (pBody) {
 				// Get initial physics body transform matrix
 				Matrix3x4 mInitTrans;

@@ -68,7 +68,7 @@ JointImpl &Joint::GetJointImpl() const
 */
 Body *Joint::GetParentBody() const
 {
-	return (Body*)m_pParentBodyHandler->GetElement();
+	return reinterpret_cast<Body*>(m_pParentBodyHandler->GetElement());
 }
 
 /**
@@ -77,7 +77,7 @@ Body *Joint::GetParentBody() const
 */
 Body *Joint::GetChildBody() const
 {
-	return (Body*)m_pChildBodyHandler->GetElement();
+	return reinterpret_cast<Body*>(m_pChildBodyHandler->GetElement());
 }
 
 
@@ -180,8 +180,8 @@ Joint::Joint(World &cWorld, JointImpl &cJointImpl, Body *pParentBody, Body *pChi
 	m_pChildBodyHandler(new ElementHandler())
 {
 	// Set the physics bodies this joint is attached to
-	m_pParentBodyHandler->SetElement((Element*)pParentBody);
-	m_pChildBodyHandler ->SetElement((Element*)pChildBody);
+	m_pParentBodyHandler->SetElement(reinterpret_cast<Element*>(pParentBody));
+	m_pChildBodyHandler ->SetElement(reinterpret_cast<Element*>(pChildBody));
 }
 
 

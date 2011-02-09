@@ -78,7 +78,7 @@ RagdollBody::~RagdollBody()
 */
 Body *RagdollBody::GetBody() const
 {
-	return (Body*)m_pBodyHandler->GetElement();
+	return static_cast<Body*>(m_pBodyHandler->GetElement());
 }
 
 /**
@@ -170,7 +170,7 @@ void RagdollBody::DestroyPhysicsBody()
 */
 void RagdollBody::GetRotation(Quaternion &qQ) const
 {
-	const Body *pBody = (const Body*)m_pBodyHandler->GetElement();
+	const Body *pBody = static_cast<const Body*>(m_pBodyHandler->GetElement());
 	if (pBody)
 		pBody->GetRotation(qQ);
 }
@@ -181,7 +181,7 @@ void RagdollBody::GetRotation(Quaternion &qQ) const
 */
 void RagdollBody::GetTransformMatrix(Matrix3x4 &mTrans) const
 {
-	const Body *pBody = (const Body*)m_pBodyHandler->GetElement();
+	const Body *pBody = static_cast<const Body*>(m_pBodyHandler->GetElement());
 	if (pBody) {
 		Quaternion qQ;
 		pBody->GetRotation(qQ);

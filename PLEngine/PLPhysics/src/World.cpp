@@ -52,7 +52,7 @@ World::~World()
 	// Destroy all visibility information
 	Iterator<void*> cIterator = m_lstFreeBodyInformation.GetIterator();
 	while (cIterator.HasNext())
-		delete (Sensor::BodyInfo*)cIterator.Next();
+		delete static_cast<Sensor::BodyInfo*>(cIterator.Next());
 }
 
 

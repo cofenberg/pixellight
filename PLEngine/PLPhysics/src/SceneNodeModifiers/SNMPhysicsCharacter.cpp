@@ -149,7 +149,7 @@ bool SNMPhysicsCharacter::Jump()
 		const SceneNode &cSceneNode = GetSceneNode();
 
 		// Get the PL physics body scene node modifier of the scene node
-		const SNMPhysicsBody *pModifier = (SNMPhysicsBody*)cSceneNode.GetModifier("PLPhysics::SNMPhysicsBody");
+		const SNMPhysicsBody *pModifier = static_cast<SNMPhysicsBody*>(cSceneNode.GetModifier("PLPhysics::SNMPhysicsBody"));
 		if (pModifier) {
 			// Get the PL physics body of the scene node
 			const Body *pBody = pModifier->GetBody();
@@ -211,7 +211,7 @@ bool SNMPhysicsCharacter::Jump()
 Body *SNMPhysicsCharacter::GetPhysicsBody() const
 {
 	// Get the PL physics body scene node modifier of the scene node
-	const SNMPhysicsBody *pModifier = (SNMPhysicsBody*)GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody");
+	const SNMPhysicsBody *pModifier = static_cast<SNMPhysicsBody*>(GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody"));
 
 	// Return the PL physics body this modifier is using
 	return pModifier ? pModifier->GetBody() : nullptr;

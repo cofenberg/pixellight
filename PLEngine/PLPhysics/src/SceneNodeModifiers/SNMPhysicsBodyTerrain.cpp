@@ -92,7 +92,7 @@ void SNMPhysicsBodyTerrain::CreatePhysicsBody()
 {
 	if (m_pWorldContainer && m_pWorldContainer->GetWorld()) {
 		// Get the gmm surface of the terrain scene node
-		SNTerrain &cTerrainSceneNode = (SNTerrain&)GetSceneNode();
+		SNTerrain &cTerrainSceneNode = static_cast<SNTerrain&>(GetSceneNode());
 		const GMMSurface *pGMMSurface = cTerrainSceneNode.GetGMMSurface();
 		if (pGMMSurface && pGMMSurface->GetHeightMap()) {
 			// Create the PL physics body

@@ -173,7 +173,7 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 		while (pContainer && !pContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld"))
 			pContainer = pContainer->GetContainer();
 		if (pContainer) {
-			SCPhysicsWorld *pPhysicsWorldContainer = (SCPhysicsWorld*)pContainer;
+			SCPhysicsWorld *pPhysicsWorldContainer = static_cast<SCPhysicsWorld*>(pContainer);
 			World		   *pPhysicsWorld		   = pPhysicsWorldContainer->GetWorld();
 			if (pPhysicsWorld) {
 				// Get the physics force line
@@ -200,14 +200,14 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
-					if (PLCore::ConsoleApplication::GetApplication() && ((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
+					if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
 						// Get current mouse cursor position inside the widget
-						if (((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
+						if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 							// Get current mouse position in world coordinates relative to the picked point on the body
-							Vector3 v2DPos((float)m_vPickingMousePos.x, (float)m_vPickingMousePos.y, 0.0001f);
+							Vector3 v2DPos(static_cast<float>(m_vPickingMousePos.x), static_cast<float>(m_vPickingMousePos.y), 0.0001f);
 							Vector3 vV0 = v2DPos.To3DCoordinate(pCamera->GetProjectionMatrix(cRenderer.GetViewport()),
 																pCamera->GetViewMatrix(),
 																Matrix4x4::Identity,
@@ -277,14 +277,14 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
-					if (PLCore::ConsoleApplication::GetApplication() && ((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
+					if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
 						// Get current mouse cursor position inside the widget
-						if (((PLGui::GuiApplication*)PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
+						if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 							// Get current mouse position in world coordinates relative to the picked point on the body
-							Vector3 v2DPos((float)m_vPickingMousePos.x, (float)m_vPickingMousePos.y, 0.0001f);
+							Vector3 v2DPos(static_cast<float>(m_vPickingMousePos.x), static_cast<float>(m_vPickingMousePos.y), 0.0001f);
 							Vector3 vV0 = v2DPos.To3DCoordinate(pCamera->GetProjectionMatrix(cRenderer.GetViewport()),
 																pCamera->GetViewMatrix(),
 																Matrix4x4::Identity,

@@ -111,9 +111,9 @@ void SNMPhysicsCorrectDistance::NotifyUpdate()
 			pBlendOutTarget = pTarget;
 	} else {
 		// This must be the root :()
-		pTarget = ((SceneContainer*)this)->Get(Target.Get());
+		pTarget = static_cast<SceneContainer&>(GetSceneNode()).Get(Target.Get());
 		if (BlendOutTarget.Get().GetLength())
-			pBlendOutTarget = ((SceneContainer*)this)->Get(BlendOutTarget.Get());
+			pBlendOutTarget = static_cast<SceneContainer&>(GetSceneNode()).Get(BlendOutTarget.Get());
 		else
 			pBlendOutTarget = pTarget;
 	}
@@ -151,7 +151,7 @@ void SNMPhysicsCorrectDistance::NotifyUpdate()
 		while (pContainer && !pContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld"))
 			pContainer = pContainer->GetContainer();
 		if (pContainer) {
-			World *pPhysicsWorld = ((SCPhysicsWorld*)pContainer)->GetWorld();
+			World *pPhysicsWorld = static_cast<const SCPhysicsWorld*>(pContainer)->GetWorld();
 			if (pPhysicsWorld) {
 				// Perform physics raycast from target to the owner scene node
 				const Vector3 &vPos    = cSceneNode.GetTransform().GetPosition();
@@ -163,7 +163,7 @@ void SNMPhysicsCorrectDistance::NotifyUpdate()
 						float fDistance = -1.0f;
 
 						// Get the PL physics body scene node modifier of the target scene node
-						const SNMPhysicsBody *pModifier = (const SNMPhysicsBody*)pBlendOutTarget->GetModifier("PLPhysics::SNMPhysicsBody");
+						const SNMPhysicsBody *pModifier = static_cast<const SNMPhysicsBody*>(pBlendOutTarget->GetModifier("PLPhysics::SNMPhysicsBody"));
 						if (pModifier && pModifier->GetBody()) {
 							// Get the PL physics body this modifier is using
 							const Body *pTargetBody = pModifier->GetBody();

@@ -119,7 +119,7 @@ void SNMPhysicsUpdateVelocity::NotifyPosition()
 		// Loop through all scene node modifiers and update the velocities of all static physics bodies
 		for (uint32 i=0; i<nNumOfModifiers; i++) {
 			// Get the physics body scene node modifier
-			const SNMPhysicsBody *pSNMPhysicsBody = (SNMPhysicsBody*)cSceneNode.GetModifier(sSNMPhysicsBody, i);
+			const SNMPhysicsBody *pSNMPhysicsBody = static_cast<SNMPhysicsBody*>(cSceneNode.GetModifier(sSNMPhysicsBody, i));
 			if (pSNMPhysicsBody) {
 				// Get the physics body, mass of 0 = static body
 				Body *pBody = pSNMPhysicsBody->GetBody();
@@ -168,7 +168,7 @@ void SNMPhysicsUpdateVelocity::NotifyRotation()
 		// Loop through all scene node modifiers and update the velocities of all static physics bodies
 		for (uint32 i=0; i<nNumOfModifiers; i++) {
 			// Get the physics body scene node modifier
-			const SNMPhysicsBody *pSNMPhysicsBody = (SNMPhysicsBody*)cSceneNode.GetModifier(sSNMPhysicsBody, i);
+			const SNMPhysicsBody *pSNMPhysicsBody = static_cast<SNMPhysicsBody*>(cSceneNode.GetModifier(sSNMPhysicsBody, i));
 			if (pSNMPhysicsBody) {
 				// Get the physics body, mass of 0 = static body
 				Body *pBody = pSNMPhysicsBody->GetBody();
