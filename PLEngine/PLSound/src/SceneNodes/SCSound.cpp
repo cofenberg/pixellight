@@ -192,7 +192,7 @@ void SCSound::InitFunction()
 		if (pClass && pClass->IsDerivedFrom("PLSound::SoundManager")) {
 			Object *pObject = pClass->Create();
 			if (pObject) {
-				m_pSoundManager = (SoundManager*)pObject;
+				m_pSoundManager = static_cast<SoundManager*>(pObject);
 				if (m_pSoundManager->Init()) {
 					m_pSoundManager->SetVolume(m_fVolume);
 					m_pSoundManager->SetPitch (m_fPitch);

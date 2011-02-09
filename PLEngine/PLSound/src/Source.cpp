@@ -52,7 +52,7 @@ Source::~Source()
 */
 Buffer *Source::GetBuffer() const
 {
-	return (Buffer*)m_cBufferHandler.GetResource();
+	return static_cast<Buffer*>(m_cBufferHandler.GetResource());
 }
 
 /**
@@ -116,7 +116,7 @@ bool Source::Load(Buffer *pBuffer)
 void Source::Unload()
 {
 	// Is a buffer loaded?
-	Buffer *pBuffer = (Buffer*)m_cBufferHandler.GetResource();
+	Buffer *pBuffer = static_cast<Buffer*>(m_cBufferHandler.GetResource());
 	if (pBuffer) {
 		// Remove this source from the buffer
 		pBuffer->m_lstSources.Remove(this);

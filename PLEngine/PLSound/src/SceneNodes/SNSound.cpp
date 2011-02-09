@@ -72,7 +72,7 @@ void SNSound::SetVolume(float fValue)
 {
 	if (m_fVolume != fValue) {
 		m_fVolume = fValue;
-		Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+		Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 		if (pSS)
 			pSS->SetVolume(m_fVolume);
 	}
@@ -87,7 +87,7 @@ void SNSound::SetPitch(float fValue)
 {
 	if (m_fPitch != fValue) {
 		m_fPitch = fValue;
-		Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+		Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 		if (pSS)
 			pSS->SetPitch(m_fPitch);
 	}
@@ -102,7 +102,7 @@ void SNSound::SetReferenceDistance(float fValue)
 {
 	if (m_fReferenceDistance != fValue) {
 		m_fReferenceDistance = fValue;
-		Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+		Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 		if (pSS)
 			pSS->SetReferenceDistance(m_fReferenceDistance);
 	}
@@ -117,7 +117,7 @@ void SNSound::SetMaxDistance(float fValue)
 {
 	if (m_fMaxDistance != fValue) {
 		m_fMaxDistance = fValue;
-		Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+		Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 		if (pSS)
 			pSS->SetMaxDistance(m_fMaxDistance);
 	}
@@ -132,7 +132,7 @@ void SNSound::SetRolloffFactor(float fValue)
 {
 	if (m_fRolloffFactor != fValue) {
 		m_fRolloffFactor = fValue;
-		Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+		Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 		if (pSS)
 			pSS->SetRolloffFactor(m_fRolloffFactor);
 	}
@@ -184,7 +184,7 @@ SNSound::SNSound() :
 SNSound::~SNSound()
 {
 	// Destroy used sound source
-	Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+	Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 	if (pSS)
 		delete pSS;
 	delete m_pSoundSourceHandler;
@@ -196,7 +196,7 @@ SNSound::~SNSound()
 */
 Source *SNSound::GetSoundSource() const
 {
-	return (Source*)m_pSoundSourceHandler->GetResource();
+	return static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 }
 
 
@@ -210,12 +210,12 @@ Source *SNSound::GetSoundSource() const
 SCSound *SNSound::GetSoundContainer() const
 {
 	// Get the PL sound container this scene node is in
-	const SceneContainer *pContainer = GetContainer();
+	SceneContainer *pContainer = GetContainer();
 	while (pContainer && !pContainer->IsInstanceOf("PLSound::SCSound"))
 		pContainer = pContainer->GetContainer();
 
 	// Done
-	return (pContainer && pContainer->IsInstanceOf("PLSound::SCSound")) ? (SCSound*)pContainer : nullptr;
+	return (pContainer && pContainer->IsInstanceOf("PLSound::SCSound")) ? static_cast<SCSound*>(pContainer) : nullptr;
 }
 
 /**
@@ -225,7 +225,7 @@ SCSound *SNSound::GetSoundContainer() const
 void SNSound::Load()
 {
 	// Destroy currently used sound source
-	Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+	Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 	if (pSS)
 		delete pSS;
 
@@ -258,7 +258,7 @@ void SNSound::NotifyPosition()
 {
 	// Update sound source position
 	if (GetContainer()) {
-		Source *pSS = (Source*)m_pSoundSourceHandler->GetResource();
+		Source *pSS = static_cast<Source*>(m_pSoundSourceHandler->GetResource());
 		if (pSS) {
 			// Get the PL sound container this scene node is in
 			SCSound *pSoundContainer = GetSoundContainer();
