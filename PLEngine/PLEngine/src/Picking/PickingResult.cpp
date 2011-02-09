@@ -153,14 +153,14 @@ bool PickingResult::GetTextureCoordinate(Vector2 &vTexCoord, uint32 nTexCoordCha
 						VertexBuffer *pVertexBuffer = pMeshHandler->GetVertexBuffer();
 						if (pVertexBuffer && pVertexBuffer->GetNumOfElements() && pVertexBuffer->Lock(Lock::ReadOnly)) {
 							// Get triangle vertex position
-							const Vector3 vA = (const float*)pVertexBuffer->GetData(nVertex0, VertexBuffer::Position);
-							const Vector3 vB = (const float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::Position);
-							const Vector3 vC = (const float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::Position);
+							const Vector3 vA = static_cast<const float*>(pVertexBuffer->GetData(nVertex0, VertexBuffer::Position));
+							const Vector3 vB = static_cast<const float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::Position));
+							const Vector3 vC = static_cast<const float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::Position));
 
 							// Get triangle texture coordinates
-							const float *pfTexCoordA = (const float*)pVertexBuffer->GetData(nVertex0, VertexBuffer::TexCoord, nTexCoordChannel);
-							const float *pfTexCoordB = (const float*)pVertexBuffer->GetData(nVertex1, VertexBuffer::TexCoord, nTexCoordChannel);
-							const float *pfTexCoordC = (const float*)pVertexBuffer->GetData(nVertex2, VertexBuffer::TexCoord, nTexCoordChannel);
+							const float *pfTexCoordA = static_cast<const float*>(pVertexBuffer->GetData(nVertex0, VertexBuffer::TexCoord, nTexCoordChannel));
+							const float *pfTexCoordB = static_cast<const float*>(pVertexBuffer->GetData(nVertex1, VertexBuffer::TexCoord, nTexCoordChannel));
+							const float *pfTexCoordC = static_cast<const float*>(pVertexBuffer->GetData(nVertex2, VertexBuffer::TexCoord, nTexCoordChannel));
 
 							// Unlock the vertex buffer
 							pVertexBuffer->Unlock();
@@ -225,10 +225,10 @@ bool PickingResult::GetWrappedTextureCoordinate(Vector2 &vTexCoord, uint32 nTexC
 	// Get the currently picked texture coordinate
 	if (GetTextureCoordinate(vTexCoord, nTexCoordChannel)) {
 		// Perform wrapping to get into the 0..1 intervall
-		vTexCoord.x = vTexCoord.x - int(vTexCoord.x);
+		vTexCoord.x = vTexCoord.x - static_cast<int>(vTexCoord.x);
 		if (vTexCoord.x < 0.0f)
 			vTexCoord.x = vTexCoord.x + 1.0f;
-		vTexCoord.y = vTexCoord.y - int(vTexCoord.y);
+		vTexCoord.y = vTexCoord.y - static_cast<int>(vTexCoord.y);
 		if (vTexCoord.y < 0.0f)
 			vTexCoord.y = vTexCoord.y + 1.0f;
 

@@ -137,7 +137,7 @@ void WindowConnection::SetDisplayMode(const DisplayMode &sDisplayMode)
 			m_sDisplayMode = sDisplayMode;
 
 			// Backup information
-			const SurfaceWindow *pSurface  = (SurfaceWindow*)GetSurface();
+			const SurfaceWindow *pSurface  = static_cast<SurfaceWindow*>(GetSurface());
 			if (pSurface && pSurface->GetWindow()) {
 				// Backup information
 				bool			bFullscreen = IsFullscreen();
@@ -237,7 +237,7 @@ void WindowConnection::SetFullscreen(bool bFullscreen)
 	// Set fullscreen mode
 	if (IsFullscreen() != bFullscreen) {
 		// Backup information
-		const SurfaceWindow *pSurface  = (SurfaceWindow*)GetSurface();
+		const SurfaceWindow *pSurface  = static_cast<SurfaceWindow*>(GetSurface());
 		if (pSurface && pSurface->GetWindow()) {
 			// Backup information
 			SurfacePainter *pPainter = GetSurface()->GetPainter();
@@ -336,7 +336,7 @@ void WindowConnection::InitWidget(bool bFullscreen)
 	Init(*m_pRenderer, nWindow, m_sDisplayMode, bFullscreen);
 
 	// Backup the fullscreen mode
-	m_bFullscreenMode = GetSurface() ? ((SurfaceWindow*)GetSurface())->IsFullscreen() : false;
+	m_bFullscreenMode = GetSurface() ? static_cast<SurfaceWindow*>(GetSurface())->IsFullscreen() : false;
 
 	// Update fullscreen Alt-Tab
 	SetFullscreenAltTab(GetFullscreenAltTab());

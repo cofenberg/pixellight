@@ -80,7 +80,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 	cPickingResult.m_fNearestSquaredDistance = -1.0f;
 
 	// Trace line
-	SQLine *pQuery = (SQLine*)cContainer.CreateQuery("PLScene::SQLine");
+	SQLine *pQuery = static_cast<SQLine*>(cContainer.CreateQuery("PLScene::SQLine"));
 	if (pQuery) {
 		pQuery->EventSceneNode.Connect(&EventSceneNode);
 		pQuery->GetLine().Set(vLineStartPos, vLineEndPos);
@@ -140,7 +140,7 @@ void Picking::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 	// First at all, call the picking filter function
 	if (m_pPickingResult->m_pSceneContainer && OnPickingCandidate(cSceneNode) && cSceneNode.GetMeshHandler()) {
 		// We KNOW that it's a SQLine!
-		SQLine &cLineQuery = (SQLine&)cQuery;
+		SQLine &cLineQuery = static_cast<SQLine&>(cQuery);
 
 		// Get line start/end position in node space
 		const Vector3 vLineStartPos = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vStart;

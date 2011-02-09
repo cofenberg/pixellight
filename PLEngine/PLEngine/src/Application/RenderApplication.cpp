@@ -157,7 +157,7 @@ bool RenderApplication::IsFullscreen() const
 	Widget *pWidget = GetMainWindow();
 	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
 		// Return the current state
-		return ((RenderWindow*)pWidget)->IsFullscreen();
+		return static_cast<RenderWindow*>(pWidget)->IsFullscreen();
 	}
 
 	// Error!
@@ -174,7 +174,7 @@ void RenderApplication::SetFullscreen(bool bFullscreen)
 	Widget *pWidget = GetMainWindow();
 	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
 		// Set the current state
-		((RenderWindow*)pWidget)->SetFullscreen(bFullscreen);
+		static_cast<RenderWindow*>(pWidget)->SetFullscreen(bFullscreen);
 	}
 }
 
@@ -228,9 +228,9 @@ Surface *RenderApplication::GetSurface(const Widget *pWidget) const
 	if (pWidget) {
 		// Get surface from RenderWidget or RenderWindow
 		if (pWidget->IsInstanceOf("PLEngine::RenderWidget")) {
-			return ((const RenderWidget*)pWidget)->GetSurface();
+			return static_cast<const RenderWidget*>(pWidget)->GetSurface();
 		} else if (pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
-			return ((const RenderWindow*)pWidget)->GetSurface();
+			return static_cast<const RenderWindow*>(pWidget)->GetSurface();
 		}
 	}
 
@@ -253,7 +253,8 @@ bool RenderApplication::Init()
 	if (ConsoleApplication::Init()) {
 		// Create renderer context
 		OnCreateRendererContext();
-		if (!m_bRunning) return false;
+		if (!m_bRunning)
+			return false;
 
 		// Check if a renderer context has been created
 		if (m_pRendererContext) {
@@ -268,18 +269,21 @@ bool RenderApplication::Init()
 
 			// Create main window
 			OnCreateMainWindow();
-			if (!m_bRunning) return false;
+			if (!m_bRunning)
+				return false;
 
 			// Create surface painter
 			OnCreatePainter();
-			if (!m_bRunning) return false;
+			if (!m_bRunning)
+				return false;
 
 			// Initialize input system
 			InputManager::GetInstance()->DetectDevices();
 
 			// Create virtual input controller
 			OnCreateInputController();
-			if (!m_bRunning) return false;
+			if (!m_bRunning)
+				return false;
 
 			// Done
 			return true;
@@ -390,7 +394,7 @@ void RenderApplication::OnCreateRendererContext()
 	const String sDefaultShaderLanguage = GetConfig().GetVar("PLEngine::RendererConfig", "DefaultShaderLanguage");
 
 	// Create and return renderer context instance
-	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, (Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : nullptr;
+	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, static_cast<Renderer::EMode>(nRendererMode), nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : nullptr;
 	if (!m_pRendererContext) {
 		// Error!
 		PL_LOG(Error, "Can't create renderer context instance: " + sRenderer)
@@ -481,10 +485,10 @@ void RenderApplication::NotifyDestroy()
 	const Widget *pWidget = GetMainWindow();
 	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
 		// Write fullscreen state back to the configuration
-		GetConfig().SetVar("PLEngine::RendererConfig", "Fullscreen", String::Format("%d", ((const RenderWindow*)pWidget)->IsFullscreen()));
+		GetConfig().SetVar("PLEngine::RendererConfig", "Fullscreen", String::Format("%d", static_cast<const RenderWindow*>(pWidget)->IsFullscreen()));
 
 		// Write down display mode information
-		const DisplayMode &sDisplayMode = ((const RenderWindow*)pWidget)->GetDisplayMode();
+		const DisplayMode &sDisplayMode = static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
 		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayWidth",     String::Format("%d", sDisplayMode.vSize.x));
 		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayHeight",    String::Format("%d", sDisplayMode.vSize.y));
 		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayColorBits", String::Format("%d", sDisplayMode.nColorBits));
@@ -499,9 +503,8 @@ void RenderApplication::NotifyDestroy()
 void RenderApplication::NotifyActivate(bool bActivate)
 {
 	// Activate input controller when window is active, otherwise stop input
-	if (m_pInputController) {
+	if (m_pInputController)
 		m_pInputController->SetActive(bActivate);
-	}
 }
 
 

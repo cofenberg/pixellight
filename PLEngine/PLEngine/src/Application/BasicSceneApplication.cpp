@@ -86,7 +86,7 @@ BasicSceneApplication::~BasicSceneApplication()
 SceneContainer *BasicSceneApplication::GetScene() const
 {
 	// This cast is safe because we 'know' it can ONLY be a scene container!
-	return (SceneContainer*)m_cSceneContainerHandler.GetElement();
+	return static_cast<SceneContainer*>(m_cSceneContainerHandler.GetElement());
 }
 
 /**
@@ -139,7 +139,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 		// Get scene surface painter
 		SurfacePainter *pPainter = GetPainter();
 		if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-			SPScene *pSPScene = (SPScene*)pPainter;
+			SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 
 			// Reset to default scene renderer
 			m_sDefaultSceneRenderer = DefaultSceneRenderer;
@@ -217,7 +217,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 				pCamera->SetActive(true);
 
 			// Assign this camera to the scene renderer and to the application
-			SetCamera((SNCamera*)pCamera);
+			SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 			// Post process keys
 			for (uint32 i=0; i<m_lstPostKeys.GetNumOfElements(); i++) {
@@ -248,7 +248,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 SNCamera *BasicSceneApplication::GetCamera() const
 {
 	// This cast is safe because we 'know' it can ONLY be a camera!
-	return (SNCamera*)m_cCameraHandler.GetElement();
+	return reinterpret_cast<SNCamera*>(m_cCameraHandler.GetElement());
 }
 
 /**
@@ -296,16 +296,16 @@ void BasicSceneApplication::SetCamera(SNCamera *pCamera)
 		m_cCameraHandler.GetElement()->SetActive(false);
 
 	// Set new camera
-	m_cCameraHandler.SetElement((SceneNode*)pCamera);
+	m_cCameraHandler.SetElement(reinterpret_cast<SceneNode*>(pCamera));
 
 	// Get scene surface painter... and inform it about the new set camera
 	SurfacePainter *pPainter = GetPainter();
 	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene"))
-		((SPScene*)pPainter)->SetCamera(pCamera);
+		static_cast<SPScene*>(pPainter)->SetCamera(pCamera);
 
 	// Activate the new camera
 	if (pCamera)
-		((SceneNode*)pCamera)->SetActive(true);
+		reinterpret_cast<SceneNode*>(pCamera)->SetActive(true);
 }
 
 
@@ -351,7 +351,7 @@ void BasicSceneApplication::OnCreateRootScene()
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		// First, create the scene root container which holds the scene container with our 'concrete' scene within it
-		SceneContainer *pRootContainer = pSceneContext->GetRoot() ? (SceneContainer*)pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene") : nullptr;
+		SceneContainer *pRootContainer = pSceneContext->GetRoot() ? static_cast<SceneContainer*>(pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene")) : nullptr;
 		if (pRootContainer) {
 			// Protect this important container!
 			pRootContainer->SetProtected(true);
@@ -359,14 +359,14 @@ void BasicSceneApplication::OnCreateRootScene()
 			// Create a scene container with our 'concrete scene'
 			SceneNode *pSceneContainerNode = pRootContainer->Create("PLScene::SceneContainer", "Scene");
 			if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
-				SceneContainer *pSceneContainer = (SceneContainer*)pSceneContainerNode;
+				SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 
 				// Protect this important container!
 				pSceneContainer->SetProtected(true);
 
 				// Connect event handler
 				if (pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer"))
-					((SceneContainer*)pSceneContainerNode)->EventLoadProgress.Connect(&EventHandlerLoadProgress);
+					static_cast<SceneContainer*>(pSceneContainerNode)->EventLoadProgress.Connect(&EventHandlerLoadProgress);
 
 				// Create the 'concrete scene'
 				OnCreateScene(*pSceneContainer);
@@ -381,7 +381,7 @@ void BasicSceneApplication::OnCreateRootScene()
 			// can change the scene time (slowdown or accelerate)
 			pSceneNode = pRootContainer->Create("PLScene::SNConsole");
 			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLScene::SNConsoleBase")) {
-				SNConsoleBase *pConsole = (SNConsoleBase*)pSceneNode;
+				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands
 				pConsole->RegisterCommand(0,	"quit",			"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
@@ -420,7 +420,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();
 	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-		SPScene *pSPScene = (SPScene*)pPainter;
+		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 		pSPScene->SetRootContainer(cContainer.GetContainer());
 		pSPScene->SetSceneContainer(&cContainer);
 	}
@@ -429,7 +429,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 	SceneNode *pCamera = cContainer.Create("PLScene::SNCamera", "Camera");
 	if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 		// Make this to our main scene camera
-		SetCamera((SNCamera*)pCamera);
+		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 		// Add a controller modifier so we can look around the camera by using a default control
 		pCamera->AddModifier("PLScene::SNMLookController");
@@ -468,7 +468,7 @@ void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cScen
 
 	// Key/value data scene node?
 	} else if (cSceneNode.IsInstanceOf("PLScene::SNKeyValue")) {
-		const SNKeyValue &cKeyValue = (const SNKeyValue&)cSceneNode;
+		const SNKeyValue &cKeyValue = static_cast<const SNKeyValue&>(cSceneNode);
 
 		// SceneRenderer
 		if (cKeyValue.Key.GetString() == "SceneRenderer") {
@@ -483,7 +483,7 @@ void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cScen
 			// Get scene surface painter
 			SurfacePainter *pPainter = GetPainter();
 			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-				SceneRenderer *pSceneRenderer = ((SPScene*)pPainter)->GetDefaultSceneRenderer();
+				SceneRenderer *pSceneRenderer = static_cast<SPScene*>(pPainter)->GetDefaultSceneRenderer();
 				if (pSceneRenderer) {
 					SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get("Begin");
 					if (pSceneRendererPass)

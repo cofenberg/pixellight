@@ -88,7 +88,7 @@ SceneRenderer *SceneRendererTool::GetSceneRenderer() const
 	// Get the painter
 	if (m_pSurfacePainter && m_pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
 		// Return the default scene renderer
-		return ((SPScene*)m_pSurfacePainter)->GetDefaultSceneRenderer();
+		return static_cast<SPScene*>(m_pSurfacePainter)->GetDefaultSceneRenderer();
 	}
 
 	// Error!

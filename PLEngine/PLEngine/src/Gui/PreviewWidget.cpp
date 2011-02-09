@@ -76,7 +76,7 @@ PreviewWidget::~PreviewWidget()
 */
 void PreviewWidget::ResetView()
 {
-	SPPreview *pPainter = (SPPreview*)GetSurface()->GetPainter();
+	SPPreview *pPainter = static_cast<SPPreview*>(GetSurface()->GetPainter());
 	if (pPainter)
 		pPainter->SetCameraPosition(Vector3(0.5f, 0.5f, -0.5f));
 }
@@ -113,7 +113,7 @@ void PreviewWidget::OnMouseMove(const Vector2i &vPos)
 	// Is the left or right mouse button pressed?
 	if (m_bLeftMouseButtonPressed || m_bRightMouseButtonPressed) {
 		// Preview camera control
-		SPPreview *pPainter = (SPPreview*)GetSurface()->GetPainter();
+		SPPreview *pPainter = static_cast<SPPreview*>(GetSurface()->GetPainter());
 		if (pPainter) {
 			Vector3 vCameraPos = pPainter->GetCameraPosition();
 			if (m_bLeftMouseButtonPressed) {

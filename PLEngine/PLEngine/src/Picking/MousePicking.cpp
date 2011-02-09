@@ -144,15 +144,15 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 {
 	// Don't do picking if mouse is outside the widget - or there's no widget and/or camera at all
 	if (m_pWidget && m_pCamera && m_pCamera->GetContainer() &&
-		vMousePos.x >= 0 && vMousePos.x < (int)m_pWidget->GetSize().x &&
-		vMousePos.y >= 0 && vMousePos.y < (int)m_pWidget->GetSize().y) {
+		vMousePos.x >= 0 && vMousePos.x < static_cast<int>(m_pWidget->GetSize().x) &&
+		vMousePos.y >= 0 && vMousePos.y < static_cast<int>(m_pWidget->GetSize().y)) {
 		// Trace line from the camera position to the mouse world position
 
 		// Get the viewport rectangle
-		Rectangle cViewport(0.0f, 0.0f, (float)m_pWidget->GetSize().x, (float)m_pWidget->GetSize().y);
+		Rectangle cViewport(0.0f, 0.0f, static_cast<float>(m_pWidget->GetSize().x), static_cast<float>(m_pWidget->GetSize().y));
 
 		// Get picking line start and end
-		Vector3 v2DPos((float)vMousePos.x, (float)vMousePos.y, 0.0f);
+		Vector3 v2DPos(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 0.0f);
 		Vector3 vLineStartPos = v2DPos.To3DCoordinate(m_pCamera->GetProjectionMatrix(cViewport),
 													  m_pCamera->GetViewMatrix(),
 													  Matrix4x4::Identity,

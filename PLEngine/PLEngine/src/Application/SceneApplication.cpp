@@ -248,7 +248,8 @@ bool SceneApplication::Init()
 
 			// Create root scene
 			OnCreateRootScene();
-			if (!m_bRunning) return false;
+			if (!m_bRunning)
+				return false;
 
 			// Done
 			return true;
@@ -305,7 +306,7 @@ void SceneApplication::OnCreateRootScene()
 	// Is there a scene context?
 	if (m_pSceneContext) {
 		// First, create the scene root container which holds the scene container with our 'concrete' scene within it
-		SceneContainer *pRootContainer = m_pSceneContext->GetRoot() ? (SceneContainer*)m_pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene") : nullptr;
+		SceneContainer *pRootContainer = m_pSceneContext->GetRoot() ? static_cast<SceneContainer*>(m_pSceneContext->GetRoot()->Create("PLScene::SceneContainer", "RootScene")) : nullptr;
 		if (pRootContainer) {
 			// Protect this important container!
 			pRootContainer->SetProtected(true);
@@ -326,7 +327,7 @@ void SceneApplication::OnCreateRootScene()
 			// can change the scene time (slowdown or accelerate)
 			pSceneNode = pRootContainer->Create("PLScene::SNConsole");
 			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLScene::SNConsoleBase")) {
-				SNConsoleBase *pConsole = (SNConsoleBase*)pSceneNode;
+				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands
 				pConsole->RegisterCommand(0,	"quit",			"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
