@@ -57,7 +57,7 @@ JointUpVector::~JointUpVector()
 *    Constructor
 */
 JointUpVector::JointUpVector(PLPhysics::World &cWorld, PLPhysics::Body &cParentBody, const Vector3 &vPinDir) :
-	PLPhysics::JointUpVector(cWorld, ((World&)cWorld).CreateJointImpl(), cParentBody, vPinDir)
+	PLPhysics::JointUpVector(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), cParentBody, vPinDir)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -65,19 +65,19 @@ JointUpVector::JointUpVector(PLPhysics::World &cWorld, PLPhysics::Body &cParentB
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Flush assigned body (MUST be done before creating the joint!)
-	((BodyImpl&)cParentBody.GetBodyImpl()).Flush();
+	static_cast<BodyImpl&>(cParentBody.GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent bodiy
-	const Newton::NewtonBody *pNewtonParentBody = ((BodyImpl&)cParentBody.GetBodyImpl()).GetNewtonBody();
+	const Newton::NewtonBody *pNewtonParentBody = static_cast<BodyImpl&>(cParentBody.GetBodyImpl()).GetNewtonBody();
 
 	// Create the Newton physics joint
 	Newton::NewtonJoint *pNewtonJoint = NewtonConstraintCreateUpVector(pNewtonWorld, m_vPinDir, pNewtonParentBody);
 
 	// Initialize the Newton physics joint
-	((JointImpl&)GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

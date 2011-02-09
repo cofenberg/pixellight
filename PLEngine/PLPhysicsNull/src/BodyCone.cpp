@@ -54,10 +54,10 @@ BodyCone::~BodyCone()
 *    Constructor
 */
 BodyCone::BodyCone(PLPhysics::World &cWorld, float fRadius, float fHeight) :
-	PLPhysics::BodyCone(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius, fHeight)
+	PLPhysics::BodyCone(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius, fHeight)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

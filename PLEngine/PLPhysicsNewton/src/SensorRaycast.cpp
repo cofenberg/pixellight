@@ -59,10 +59,10 @@ float SensorRaycast::RayFilterCallback(const Newton::NewtonBody *pPhysicsBody, c
 									   int nCollisionID, void *pUserData, float fIntersectParam)
 {
 	// Get the pointer to the raycast sensor
-	SensorRaycast *pSensor = (SensorRaycast*)pUserData;
+	SensorRaycast *pSensor = static_cast<SensorRaycast*>(pUserData);
 	if (pSensor) {
 		// Get the pointer to the PL physics body
-		PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
+		PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pPhysicsBody));
 		if (pBody && pBody->IsActive()) {
 			// Call the sensor callback function
 			if (pSensor->Callback(*pBody, fIntersectParam, pfNormal, nCollisionID)) {
@@ -102,7 +102,7 @@ uint32 SensorRaycast::Check()
 	Sensor::Check();
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)GetWorld()).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(GetWorld()).GetNewtonWorld();
 
 	// Perform Newton physics ray cast
 	NewtonWorldRayCast(pNewtonWorld, m_vStart, m_vEnd, RayFilterCallback, this, nullptr);

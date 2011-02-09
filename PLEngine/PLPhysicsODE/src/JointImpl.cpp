@@ -68,7 +68,7 @@ void JointImpl::InitializeODEJoint(PLPhysics::Joint &cJoint, dJointID pODEJoint)
 //[-------------------------------------------------------]
 PLPhysics::Joint *JointImpl::GetJoint() const
 {
-	return (PLPhysics::Joint*)dJointGetData(m_pODEJoint);
+	return static_cast<PLPhysics::Joint*>(dJointGetData(m_pODEJoint));
 }
 
 bool JointImpl::IsBreakable() const

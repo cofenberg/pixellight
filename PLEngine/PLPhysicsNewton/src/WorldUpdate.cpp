@@ -96,7 +96,7 @@ bool WorldUpdate::Update(float fTimeScaleFactor, float fMaxTimeDifference, float
 	const int32 nMilliseconds = nTime - m_nLastTime;
 
 	// Get the number of seconds past since the last slice
-	float fSeconds = float(nMilliseconds)/1000.0f*fTimeScaleFactor;
+	float fSeconds = static_cast<float>(nMilliseconds)/1000.0f*fTimeScaleFactor;
 	if (fSeconds > fMaxTimeDifference)
 		fSeconds = fMaxTimeDifference;
 	m_fTimeElapsed += fSeconds;
@@ -108,7 +108,7 @@ bool WorldUpdate::Update(float fTimeScaleFactor, float fMaxTimeDifference, float
 	// Perform physics simulation
 	while (m_fTimeElapsed > fStepSize) {
 		// Physical world step
-		Newton::NewtonUpdate(((World*)m_pWorld)->GetNewtonWorld(), fStepSize);
+		Newton::NewtonUpdate(static_cast<World*>(m_pWorld)->GetNewtonWorld(), fStepSize);
 
 		// Decrease elapsed time
 		m_fTimeElapsed -= fStepSize;

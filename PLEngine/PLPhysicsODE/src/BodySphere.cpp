@@ -54,13 +54,13 @@ BodySphere::~BodySphere()
 *    Constructor
 */
 BodySphere::BodySphere(PLPhysics::World &cWorld, float fRadius) :
-	PLPhysics::BodySphere(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius)
+	PLPhysics::BodySphere(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius)
 {
 	// Create the ODE physics geometry
-	dGeomID pODEGeomID = dCreateSphere(((World&)cWorld).GetODESpace(), m_fRadius);
+	dGeomID pODEGeomID = dCreateSphere(static_cast<World&>(cWorld).GetODESpace(), m_fRadius);
 
 	// Initialize the ODE physics geometry
-	((BodyImpl&)GetBodyImpl()).InitializeODEGeometry(*this, pODEGeomID);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeODEGeometry(*this, pODEGeomID);
 }
 
 
@@ -76,7 +76,7 @@ void BodySphere::SetMass(float fMass)
 	if (fMass) {
 		dMass sMass;
 		dMassSetSphereTotal(&sMass, fMass, m_fRadius);
-		((BodyImpl&)GetBodyImpl()).SetODEMass(sMass);
+		static_cast<BodyImpl&>(GetBodyImpl()).SetODEMass(sMass);
 	}
 }
 

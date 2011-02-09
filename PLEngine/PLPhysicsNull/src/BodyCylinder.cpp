@@ -54,10 +54,10 @@ BodyCylinder::~BodyCylinder()
 *    Constructor
 */
 BodyCylinder::BodyCylinder(PLPhysics::World &cWorld, float fRadius, float fHeight) :
-	PLPhysics::BodyCylinder(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius, fHeight)
+	PLPhysics::BodyCylinder(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius, fHeight)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

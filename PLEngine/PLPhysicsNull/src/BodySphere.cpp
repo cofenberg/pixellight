@@ -54,10 +54,10 @@ BodySphere::~BodySphere()
 *    Constructor
 */
 BodySphere::BodySphere(PLPhysics::World &cWorld, float fRadius) :
-	PLPhysics::BodySphere(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius)
+	PLPhysics::BodySphere(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

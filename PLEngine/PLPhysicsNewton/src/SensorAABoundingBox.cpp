@@ -66,7 +66,7 @@ void SensorAABoundingBox::AABoundingBoxIteratorCallback(const Newton::NewtonBody
 	// Get the pointer to the axis aligned bounding box sensor
 	if (m_pCurrentSensor) {
 		// Get the pointer to the PL physics body
-		PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
+		PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pPhysicsBody));
 		if (pBody && pBody->IsActive()) {
 			// Call the sensor callback function
 			m_pCurrentSensor->Callback(*pBody, 0.0f, Vector3::Zero, 0);
@@ -97,7 +97,7 @@ uint32 SensorAABoundingBox::Check()
 	Sensor::Check();
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)GetWorld()).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(GetWorld()).GetNewtonWorld();
 
 	// Perform Newton physics axis aligned bounding box check
 	m_pCurrentSensor = this;

@@ -66,7 +66,7 @@ pl_implement_class(World)
 //[-------------------------------------------------------]
 uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
 {
-	return uint32(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
+	return static_cast<uint32>(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
 }
 
 
@@ -410,16 +410,16 @@ void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Bod
 			m_mapBodyPairs.Add(sBodyPair, nFlags);
 
 			// Add the bodies to each other
-			((BodyImpl&)cBody1.GetBodyImpl()).m_lstPartnerBodies.Add(&((PLPhysics::Body&)cBody2));
-			((BodyImpl&)cBody2.GetBodyImpl()).m_lstPartnerBodies.Add(&((PLPhysics::Body&)cBody1));
+			static_cast<BodyImpl&>(cBody1.GetBodyImpl()).m_lstPartnerBodies.Add(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody2)));
+			static_cast<BodyImpl&>(cBody2.GetBodyImpl()).m_lstPartnerBodies.Add(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody1)));
 		}
 	} else {
 		// Remove from map
 		m_mapBodyPairs.Remove(sBodyPair);
 
 		// Remove the bodies from each other
-		((BodyImpl&)cBody1.GetBodyImpl()).m_lstPartnerBodies.Remove(&((PLPhysics::Body&)cBody2));
-		((BodyImpl&)cBody2.GetBodyImpl()).m_lstPartnerBodies.Remove(&((PLPhysics::Body&)cBody1));
+		static_cast<BodyImpl&>(cBody1.GetBodyImpl()).m_lstPartnerBodies.Remove(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody2)));
+		static_cast<BodyImpl&>(cBody2.GetBodyImpl()).m_lstPartnerBodies.Remove(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody1)));
 	}
 }
 
@@ -453,7 +453,7 @@ void World::UpdateSimulation()
 				Iterator<PLPhysics::Body*> cIterator = m_lstChangedByUser.GetIterator();
 				while (cIterator.HasNext()) {
 					PLPhysics::Body *pBody = cIterator.Next();
-					BodyImpl &cBodyImpl = (BodyImpl&)pBody->GetBodyImpl();
+					BodyImpl &cBodyImpl = static_cast<BodyImpl&>(pBody->GetBodyImpl());
 					cBodyImpl.m_bChangedByUser = false;
 
 					// Reset the force and torque of the PL physics body

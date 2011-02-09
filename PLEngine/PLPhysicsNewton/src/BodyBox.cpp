@@ -56,7 +56,7 @@ BodyBox::~BodyBox()
 *    Constructor
 */
 BodyBox::BodyBox(PLPhysics::World &cWorld, const Vector3 &vDimension) :
-	PLPhysics::BodyBox(cWorld, ((World&)cWorld).CreateBodyImpl(), vDimension)
+	PLPhysics::BodyBox(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), vDimension)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -64,7 +64,7 @@ BodyBox::BodyBox(PLPhysics::World &cWorld, const Vector3 &vDimension) :
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Create collision primitive
 	Newton::NewtonCollision *pCollision = NewtonCreateBox(pNewtonWorld, m_vDimension.x, m_vDimension.y, m_vDimension.z, 0, nullptr);
@@ -82,7 +82,7 @@ BodyBox::BodyBox(PLPhysics::World &cWorld, const Vector3 &vDimension) :
 	const float fCollisionVolume = m_vDimension.x*m_vDimension.y*m_vDimension.z;
 
 	// Initialize the Newton physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

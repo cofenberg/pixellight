@@ -54,10 +54,10 @@ BodyCapsule::~BodyCapsule()
 *    Constructor
 */
 BodyCapsule::BodyCapsule(PLPhysics::World &cWorld, float fRadius, float fHeight) :
-	PLPhysics::BodyCapsule(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius, fHeight)
+	PLPhysics::BodyCapsule(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius, fHeight)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

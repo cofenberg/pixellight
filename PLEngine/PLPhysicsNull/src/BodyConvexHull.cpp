@@ -56,10 +56,10 @@ BodyConvexHull::~BodyConvexHull()
 *    Constructor
 */
 BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, const String &sMesh, const Vector3 &vMeshScale) :
-	PLPhysics::BodyConvexHull(cWorld, ((World&)cWorld).CreateBodyImpl(), sMesh, vMeshScale)
+	PLPhysics::BodyConvexHull(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), sMesh, vMeshScale)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

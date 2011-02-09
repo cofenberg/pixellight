@@ -162,7 +162,7 @@ void BodyImpl::AddForce(const Vector3 &vForce)
 {
 	m_vForce += vForce;
 	if (!m_bChangedByUser) {
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 		m_bChangedByUser = true;
 	}
 }
@@ -171,7 +171,7 @@ void BodyImpl::SetForce(const Vector3 &vForce)
 {
 	m_vForce = vForce;
 	if (!m_bChangedByUser) {
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 		m_bChangedByUser = true;
 	}
 }
@@ -185,7 +185,7 @@ void BodyImpl::AddTorque(const Vector3 &vTorque)
 {
 	m_vTorque += vTorque;
 	if (!m_bChangedByUser) {
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 		m_bChangedByUser = true;
 	}
 }
@@ -194,7 +194,7 @@ void BodyImpl::SetTorque(const Vector3 &vTorque)
 {
 	m_vTorque = vTorque;
 	if (!m_bChangedByUser) {
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 		m_bChangedByUser = true;
 	}
 }

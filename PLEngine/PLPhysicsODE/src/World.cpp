@@ -68,7 +68,7 @@ pl_implement_class(World)
 //[-------------------------------------------------------]
 PLGeneral::uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
 {
-	return uint32(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
+	return static_cast<uint32>(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
 }
 
 
@@ -234,14 +234,14 @@ PLPhysics::JointImpl &World::CreateJointImpl() const
 void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 {
 	// Get the (active) PL physics bodies
-	PLPhysics::Body *pBody1 = (PLPhysics::Body*)dGeomGetData(pGeomID1);
+	PLPhysics::Body *pBody1 = static_cast<PLPhysics::Body*>(dGeomGetData(pGeomID1));
 	if (pBody1 && pBody1->IsActive() && pBody1->IsCollisionActive()) {
-		PLPhysics::Body *pBody2 = (PLPhysics::Body*)dGeomGetData(pGeomID2);
+		PLPhysics::Body *pBody2 = static_cast<PLPhysics::Body*>(dGeomGetData(pGeomID2));
 		if (pBody2 && pBody2->IsActive() && pBody2->IsCollisionActive()) {
 			// Are the two bodies in different collision groups? If yes, is collision between this groups allowed?
 			PLGeneral::uint8 nCollisionGroup1 = pBody1->GetCollisionGroup();
 			PLGeneral::uint8 nCollisionGroup2 = pBody2->GetCollisionGroup();
-			if ((((World&)pBody1->GetWorld()).m_nGroupCollision[nCollisionGroup1] & (1<<nCollisionGroup2))) {
+			if ((static_cast<World&>(pBody1->GetWorld()).m_nGroupCollision[nCollisionGroup1] & (1<<nCollisionGroup2))) {
 				// Get body pair flags
 				nCollisionGroup1 = pBody1->GetWorld().GetBodyPairFlags(*pBody1, *pBody2);
 
@@ -295,12 +295,12 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 
 								// Lots of ways to set friction properties...
 								tempContact.surface.mode = dContactApprox1 | dContactSlip1 | dContactSlip2 | dContactSoftCFM;
-								tempContact.surface.slip1 = (dReal).2;
-								tempContact.surface.slip2 = (dReal).1;
+								tempContact.surface.slip1 = static_cast<dReal>(0.2);
+								tempContact.surface.slip2 = static_cast<dReal>(0.1);
 								// tempContact.surface.mode = dContactBounce | dContactSoftCFM;
-								tempContact.surface.bounce = (dReal)0.1;
-								tempContact.surface.bounce_vel = (dReal)0.2;
-								tempContact.surface.soft_cfm = (dReal)0.001;
+								tempContact.surface.bounce = static_cast<dReal>(0.1);
+								tempContact.surface.bounce_vel = static_cast<dReal>(0.2);
+								tempContact.surface.soft_cfm = static_cast<dReal>(0.001);
 								// tempContact.surface.mu = dInfinity;
 								// tempContact.surface.mu2 = 0;
 
@@ -400,12 +400,12 @@ void World::NearCallback(void *pData, dGeomID pGeomID1, dGeomID pGeomID2)
 
 		// Collide all geoms internal to the space(s)
 		if (dGeomIsSpace(pGeomID1))
-			dSpaceCollide((dSpaceID)pGeomID1, pData, &NearCallback);
+			dSpaceCollide(reinterpret_cast<dSpaceID>(pGeomID1), pData, &NearCallback);
 		if (dGeomIsSpace(pGeomID2))
-			dSpaceCollide((dSpaceID)pGeomID2, pData, &NearCallback);
+			dSpaceCollide(reinterpret_cast<dSpaceID>(pGeomID2), pData, &NearCallback);
 	} else { // Colliding two "normal" (non-space) geometries
 		// Call world on collision function
-		((World*)pData)->OnCollision(pGeomID1, pGeomID2);
+		static_cast<World*>(pData)->OnCollision(pGeomID1, pGeomID2);
 	}
 }
 
@@ -688,16 +688,16 @@ void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Bod
 			m_mapBodyPairs.Add(sBodyPair, nFlags);
 
 			// Add the bodies to each other
-			((BodyImpl&)cBody1.GetBodyImpl()).m_lstPartnerBodies.Add(&((PLPhysics::Body&)cBody2));
-			((BodyImpl&)cBody2.GetBodyImpl()).m_lstPartnerBodies.Add(&((PLPhysics::Body&)cBody1));
+			static_cast<BodyImpl&>(cBody1.GetBodyImpl()).m_lstPartnerBodies.Add(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody2)));
+			static_cast<BodyImpl&>(cBody2.GetBodyImpl()).m_lstPartnerBodies.Add(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody1)));
 		}
 	} else {
 		// Remove from map
 		m_mapBodyPairs.Remove(sBodyPair);
 
 		// Remove the bodies from each other
-		((BodyImpl&)cBody1.GetBodyImpl()).m_lstPartnerBodies.Remove(&((PLPhysics::Body&)cBody2));
-		((BodyImpl&)cBody2.GetBodyImpl()).m_lstPartnerBodies.Remove(&((PLPhysics::Body&)cBody1));
+		static_cast<BodyImpl&>(cBody1.GetBodyImpl()).m_lstPartnerBodies.Remove(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody2)));
+		static_cast<BodyImpl&>(cBody2.GetBodyImpl()).m_lstPartnerBodies.Remove(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody1)));
 	}
 }
 
@@ -751,7 +751,7 @@ void World::UpdateSimulation()
 		for (uint32 i=0; i<GetNumOfElements(); i++) {
 			PLPhysics::Element *pElement = Get(i);
 			if (pElement && pElement->IsBody()) {
-				PLPhysics::Body *pBody = (PLPhysics::Body*)pElement;
+				PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(pElement);
 				if (pBody->IsActive() && !pBody->IsFrozen()) {
 					// Emit event
 					pBody->EventTransform.Emit();

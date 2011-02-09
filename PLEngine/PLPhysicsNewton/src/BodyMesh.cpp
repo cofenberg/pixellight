@@ -70,7 +70,7 @@ BodyMesh::~BodyMesh()
 *    Constructor
 */
 BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const String &sMesh, const Vector3 &vMeshScale, bool bOptimize) :
-	PLPhysics::BodyMesh(cWorld, ((World&)cWorld).CreateBodyImpl(), sMesh, vMeshScale, bOptimize)
+	PLPhysics::BodyMesh(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), sMesh, vMeshScale, bOptimize)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -78,11 +78,11 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// First at all: IS there already a collision mesh with this name and scale?
 	const String sMeshScale = m_sMesh + String::Format("_%g_%g_%g", vMeshScale.x, vMeshScale.y, vMeshScale.z);
-	Newton::NewtonCollision *pCollision = ((World&)cWorld).GetCollisionMeshMap().Get(sMeshScale);
+	Newton::NewtonCollision *pCollision = static_cast<World&>(cWorld).GetCollisionMeshMap().Get(sMeshScale);
 
 	// If not, create it NOW
 	if (!pCollision) {
@@ -147,7 +147,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 											{ // Add first side face
 												// Get triangle vertices
 												for (int nV=0; nV<3; nV++) {
-													const float *pfVertex = (const float*)pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position);
+													const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
 													fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
 													fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
 													fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
@@ -163,7 +163,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 											{ // Add second side face
 												// Get triangle vertices
 												for (int nV=0; nV<3; nV++) {
-													const float *pfVertex = (const float*)pVertexBuffer->GetData(nVertex[2-nV], VertexBuffer::Position);
+													const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[2-nV], VertexBuffer::Position));
 													fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
 													fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
 													fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
@@ -184,7 +184,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 
 											// Get triangle vertices
 											for (int nV=0; nV<3; nV++) {
-												const float *pfVertex = (const float*)pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position);
+												const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
 												fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
 												fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
 												fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
@@ -226,7 +226,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 
 		// Add to collision mesh map
 		if (pCollision)
-			((World&)cWorld).GetCollisionMeshMap().Add(sMeshScale, pCollision);
+			static_cast<World&>(cWorld).GetCollisionMeshMap().Add(sMeshScale, pCollision);
 	}
 
 	// Create the rigid body
@@ -239,7 +239,7 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 		#endif
 
 		// Initialize the Newton physics body
-		((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
+		static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
 	}
 
 	// Reactivate the physics simulation if required

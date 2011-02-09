@@ -61,7 +61,7 @@ JointUniversal::~JointUniversal()
 unsigned JointUniversal::JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, Newton::NewtonHingeSliderUpdateDesc *pDesc)
 {
 	// Get joint
-	const JointUniversal *pJoint = (JointUniversal*)NewtonJointGetUserData(pNewtonJoint);
+	const JointUniversal *pJoint = static_cast<JointUniversal*>(NewtonJointGetUserData(pNewtonJoint));
 	if (!pJoint)
 		return 0;
 
@@ -112,7 +112,7 @@ unsigned JointUniversal::JointUserCallback(const Newton::NewtonJoint *pNewtonJoi
 */
 JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
 							   const Vector3 &vPivotPoint, const Vector3 &vPinDir1, const Vector3 &vPinDir2) :
-	PLPhysics::JointUniversal(cWorld, ((World&)cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2)
+	PLPhysics::JointUniversal(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -120,17 +120,17 @@ JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParen
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Flush assigned bodies (MUST be done before creating the joint!)
 	if (pParentBody)
-		((BodyImpl&)pParentBody->GetBodyImpl()).Flush();
+		static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).Flush();
 	if (pChildBody)
-		((BodyImpl&)pChildBody ->GetBodyImpl()).Flush();
+		static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent and child bodies
-	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
-	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
 
 
 	// [TODO] ??
@@ -165,7 +165,7 @@ JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParen
 	NewtonUniversalSetUserCallback(pNewtonJoint, JointUserCallback);
 
 	// Initialize the Newton physics joint
-	((JointImpl&)GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

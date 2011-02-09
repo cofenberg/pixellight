@@ -56,10 +56,10 @@ JointHinge::~JointHinge()
 */
 JointHinge::JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
 					   const Vector3 &vPivotPoint, const Vector3 &vPinDir) :
-	PLPhysics::JointHinge(cWorld, ((World&)cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir)
+	PLPhysics::JointHinge(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir)
 {
 	// Initialize the null physics joint
-	((JointImpl&)GetJointImpl()).InitializeNullJoint(*this);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNullJoint(*this);
 }
 
 

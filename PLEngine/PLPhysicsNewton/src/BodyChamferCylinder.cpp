@@ -56,7 +56,7 @@ BodyChamferCylinder::~BodyChamferCylinder()
 *    Constructor
 */
 BodyChamferCylinder::BodyChamferCylinder(PLPhysics::World &cWorld, float fRadius, float fHeight) :
-	PLPhysics::BodyChamferCylinder(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius, fHeight)
+	PLPhysics::BodyChamferCylinder(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius, fHeight)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -64,7 +64,7 @@ BodyChamferCylinder::BodyChamferCylinder(PLPhysics::World &cWorld, float fRadius
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Create collision primitive
 	Newton::NewtonCollision *pCollision = NewtonCreateChamferCylinder(pNewtonWorld, m_fRadius, m_fHeight, 0, nullptr);
@@ -80,10 +80,10 @@ BodyChamferCylinder::BodyChamferCylinder(PLPhysics::World &cWorld, float fRadius
 
 	// Calculate the collision volume
 	// [TODO] Find the correct formular...
-	const float fCollisionVolume = float(Math::Pi*m_fRadius*m_fRadius*m_fHeight);
+	const float fCollisionVolume = static_cast<float>(Math::Pi*m_fRadius*m_fRadius*m_fHeight);
 
 	// Initialize the Newton physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

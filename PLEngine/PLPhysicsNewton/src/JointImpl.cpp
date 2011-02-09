@@ -69,7 +69,7 @@ void JointImpl::InitializeNewtonJoint(PLPhysics::Joint &cJoint, Newton::NewtonJo
 //[-------------------------------------------------------]
 PLPhysics::Joint *JointImpl::GetJoint() const
 {
-	return (PLPhysics::Joint*)NewtonJointGetUserData(m_pNewtonJoint);
+	return static_cast<PLPhysics::Joint*>(NewtonJointGetUserData(m_pNewtonJoint));
 }
 
 bool JointImpl::IsBreakable() const
@@ -138,7 +138,7 @@ JointImpl::~JointImpl()
 			NewtonJointSetUserData(m_pNewtonJoint, nullptr);
 
 			// Destroy the Newton physics joint, there's no function like NewtonJointGetWorld(m_pNewtonJoint) :(
-			NewtonDestroyJoint(((World&)cWorld).GetNewtonWorld(), m_pNewtonJoint);
+			NewtonDestroyJoint(static_cast<World&>(cWorld).GetNewtonWorld(), m_pNewtonJoint);
 
 			// Reactivate the physics simulation if required
 			if (bSimulationActive)

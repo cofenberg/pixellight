@@ -55,10 +55,10 @@ BodyBox::~BodyBox()
 *    Constructor
 */
 BodyBox::BodyBox(PLPhysics::World &cWorld, const Vector3 &vDimension) :
-	PLPhysics::BodyBox(cWorld, ((World&)cWorld).CreateBodyImpl(), vDimension)
+	PLPhysics::BodyBox(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), vDimension)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

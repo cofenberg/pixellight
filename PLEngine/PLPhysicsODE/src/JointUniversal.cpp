@@ -58,14 +58,14 @@ JointUniversal::~JointUniversal()
 */
 JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
 							   const Vector3 &vPivotPoint, const Vector3 &vPinDir1, const Vector3 &vPinDir2) :
-	PLPhysics::JointUniversal(cWorld, ((World&)cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2)
+	PLPhysics::JointUniversal(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2)
 {
 	// Get the ODE physics world
-	dWorldID pODEWorld = ((World&)cWorld).GetODEWorld();
+	dWorldID pODEWorld = static_cast<World&>(cWorld).GetODEWorld();
 
 	// Get the ODE physics parent and child bodies
-	const dBodyID pODEParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetODEBody() : nullptr;
-	const dBodyID pODEChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetODEBody() : nullptr;
+	const dBodyID pODEParentBody = pParentBody ? static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).GetODEBody() : nullptr;
+	const dBodyID pODEChildBody  = pChildBody  ? static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).GetODEBody() : nullptr;
 
 	// Create the ODE physics joint
 	dJointID pODEJoint = dJointCreateUniversal(pODEWorld, 0);
@@ -75,7 +75,7 @@ JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParen
 	dJointAttach(pODEJoint, pODEParentBody, pODEChildBody);
 
 	// Initialize the ODE physics joint
-	((JointImpl&)GetJointImpl()).InitializeODEJoint(*this, pODEJoint);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeODEJoint(*this, pODEJoint);
 }
 
 

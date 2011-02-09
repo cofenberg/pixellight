@@ -54,10 +54,10 @@ BodyTerrain::~BodyTerrain()
 *    Constructor
 */
 BodyTerrain::BodyTerrain(PLPhysics::World &cWorld) :
-	PLPhysics::BodyTerrain(cWorld, ((World&)cWorld).CreateBodyImpl())
+	PLPhysics::BodyTerrain(cWorld, static_cast<World&>(cWorld).CreateBodyImpl())
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

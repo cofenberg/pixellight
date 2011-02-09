@@ -74,7 +74,7 @@ pl_implement_class(World)
 //[-------------------------------------------------------]
 uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
 {
-	return uint32(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
+	return static_cast<uint32>(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
 }
 
 
@@ -107,7 +107,7 @@ bool World::MyCompareFunction::IsGreater(const BodyPair &sKey1, const BodyPair &
 			// ThreadPriorityClass
 			if (sVar == "ThreadPriorityClass") {
 				if (m_nThreadPriorityClass < 6)
-					((WorldThread*)m_pWorldUpdate)->SetPriorityClass((Thread::EPriorityClass)m_nThreadPriorityClass);
+					static_cast<WorldThread*>(m_pWorldUpdate)->SetPriorityClass(static_cast<Thread::EPriorityClass>(m_nThreadPriorityClass);
 				else {
 					// Change to none thread update object
 					delete m_pWorldUpdate;
@@ -116,7 +116,7 @@ bool World::MyCompareFunction::IsGreater(const BodyPair &sKey1, const BodyPair &
 
 			// ThreadPriority
 			} else if (sVar == "ThreadPriority")
-				((WorldThread*)m_pWorldUpdate)->SetPriority((Thread::EPriority)m_nThreadPriority);
+				static_cast<WorldThread*>(m_pWorldUpdate)->SetPriority(static_cast<Thread::EPriority>(m_nThreadPriority));
 		} else {
 			// ThreadPriorityClass
 			if (sVar == "ThreadPriorityClass") {
@@ -297,7 +297,7 @@ PLPhysics::JointImpl &World::CreateJointImpl() const
 */
 void World::PhysicsSerialize(void *pSerializeHandle, const void *pBuffer, int nSize)
 {
-	((File*)pSerializeHandle)->Write(pBuffer, 1, (uint32)nSize);
+	static_cast<File*>(pSerializeHandle)->Write(pBuffer, 1, static_cast<uint32>(nSize));
 }
 
 /**
@@ -306,7 +306,7 @@ void World::PhysicsSerialize(void *pSerializeHandle, const void *pBuffer, int nS
 */
 void World::PhysicsDeserialize(void *pSerializeHandle, void *pBuffer, int nSize)
 {
-	((File*)pSerializeHandle)->Read(pBuffer, 1, (uint32)nSize);
+	static_cast<File*>(pSerializeHandle)->Read(pBuffer, 1, static_cast<uint32>(nSize));
 }
 
 /**
@@ -318,7 +318,7 @@ int World::PhysicsGetBuoyancyPlane(const int nCollisionID, void *pContext, const
 	// Get the PL physics world
 	if (!pContext)
 		return 0;
-	const World &cWorld = *((const World*)pContext);
+	const World &cWorld = *static_cast<const World*>(pContext);
 
 	// Get plane
 	Plane cPlane;
@@ -339,9 +339,9 @@ int World::PhysicsGetBuoyancyPlane(const int nCollisionID, void *pContext, const
 void World::PhysicsApplyGravityForce(const NewtonBody *pPhysicsBody, dFloat fTimeStep, int nThreadIndex)
 {
 	// Get the pointer to the PL physics body and implementation
-	PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
+	PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pPhysicsBody));
 	if (pBody && pBody->IsActive()) {
-			  BodyImpl   &cBodyImpl   = (BodyImpl&)pBody->GetBodyImpl();
+			  BodyImpl   &cBodyImpl   = static_cast<BodyImpl&>(pBody->GetBodyImpl());
 		const NewtonBody *pNewtonBody = cBodyImpl.m_pNewtonBody;
 
 		// Get the initial force
@@ -353,7 +353,7 @@ void World::PhysicsApplyGravityForce(const NewtonBody *pPhysicsBody, dFloat fTim
 			const float fMass = pBody->GetMass();
 
 			// Use buoyancy force?
-			const World &cWorld = (const World&)pBody->GetWorld();
+			World &cWorld = static_cast<World&>(pBody->GetWorld());
 			if (cWorld.IsBuoyancyActive()) {
 				float fMatrix[16];
 				NewtonBodyGetMatrix(pNewtonBody, fMatrix);
@@ -362,7 +362,7 @@ void World::PhysicsApplyGravityForce(const NewtonBody *pPhysicsBody, dFloat fTim
 					// Body is in fluid, so we add buoyancy forces
 					// Add force
 					NewtonBodyAddBuoyancyForce(pNewtonBody, 70/cBodyImpl.m_fCollisionVolume*0.1f,
-											   0.3f, 0.3f, cWorld.m_vGravity, PhysicsGetBuoyancyPlane, (void*)&cWorld);
+											   0.3f, 0.3f, cWorld.m_vGravity, PhysicsGetBuoyancyPlane, reinterpret_cast<void*>(&cWorld));
 
 					// When in a fluid, we don't want our body to get autofreezed
 					NewtonBodySetAutoSleep(pNewtonBody, 0);
@@ -401,9 +401,9 @@ void World::PhysicsApplyGravityForce(const NewtonBody *pPhysicsBody, dFloat fTim
 void World::PhysicsSetTransform(const NewtonBody *pPhysicsBody, const dFloat *pfMatrix, int nThreadIndex)
 {
 	// Get the pointer to the PL physics body and implementation
-	PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
+	PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pPhysicsBody));
 	if (pBody && pBody->IsActive()) {
-		BodyImpl &cBodyImpl = (BodyImpl&)pBody->GetBodyImpl();
+		BodyImpl &cBodyImpl = static_cast<BodyImpl&>(pBody->GetBodyImpl());
 		const NewtonBody *pNewtonBody = cBodyImpl.m_pNewtonBody;
 
 		// Is the physics body asleep or frozen?
@@ -411,7 +411,7 @@ void World::PhysicsSetTransform(const NewtonBody *pPhysicsBody, const dFloat *pf
 			// Add the body to the list of changed bodies if required
 			uint8 &nFlags = cBodyImpl.m_nChangedByPhysicsFlags;
 			if (!nFlags)
-				((World&)pBody->GetWorld()).m_lstChangedByPhysics.Add(pBody);
+				static_cast<World&>(pBody->GetWorld()).m_lstChangedByPhysics.Add(pBody);
 
 			// Set flags
 			nFlags |= BodyImpl::Position;
@@ -431,10 +431,10 @@ void World::PhysicsSetTransform(const NewtonBody *pPhysicsBody, const dFloat *pf
 void World::PhysicsBodyDestructor(const NewtonBody *pPhysicsBody)
 {
 	// Get the pointer to the PL physics body and implementation
-	PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
+	PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pPhysicsBody));
 	if (pBody) {
 		// Destroy the PL physics body, too
-		((BodyImpl&)pBody->GetBodyImpl()).m_pNewtonBody = nullptr;
+		static_cast<BodyImpl&>(pBody->GetBodyImpl()).m_pNewtonBody = nullptr;
 		delete pBody;
 	}
 }
@@ -446,10 +446,10 @@ void World::PhysicsBodyDestructor(const NewtonBody *pPhysicsBody)
 void World::PhysicsJointDestructor(const NewtonJoint *pPhysicsJoint)
 {
 	// Get the pointer to the PL physics joint
-	PLPhysics::Joint *pJoint = (PLPhysics::Joint*)NewtonJointGetUserData(pPhysicsJoint);
+	PLPhysics::Joint *pJoint = static_cast<PLPhysics::Joint*>(NewtonJointGetUserData(pPhysicsJoint));
 	if (pJoint) {
 		// Destroy the PL physics joint, too
-		((JointImpl&)pJoint->GetJointImpl()).m_pNewtonJoint = nullptr;
+		static_cast<JointImpl&>(pJoint->GetJointImpl()).m_pNewtonJoint = nullptr;
 		delete pJoint;
 	}
 }
@@ -467,19 +467,19 @@ void *World::PhysicsAllocMemory(int nSizeInBytes)
 // Memory de-allocation for Newton
 void World::PhysicsFreeMemory(void *pPtr, int nSizeInBytes)
 {
-	delete [] (char*)pPtr;
+	delete [] static_cast<char*>(pPtr);
 }
 
 // This callback is called when the two aabb boxes of the collision object overlap
 int World::OnAABBOverlap(const NewtonMaterial *pMaterial, const NewtonBody *pNewtonBody1, const NewtonBody *pNewtonBody2, int nThreadIndex)
 {
 	// Get the PL physics bodies
-	PLPhysics::Body *pBody1 = (PLPhysics::Body*)NewtonBodyGetUserData(pNewtonBody1);
+	PLPhysics::Body *pBody1 = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pNewtonBody1));
 	if (pBody1 && pBody1->IsActive() && pBody1->IsCollisionActive()) {
-		PLPhysics::Body *pBody2 = (PLPhysics::Body*)NewtonBodyGetUserData(pNewtonBody2);
+		PLPhysics::Body *pBody2 = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pNewtonBody2));
 		if (pBody2 && pBody2->IsActive() && pBody2->IsCollisionActive()) {
 			// Get the physics world
-			World &cWorld = (World&)pBody1->GetWorld();
+			World &cWorld = static_cast<World&>(pBody1->GetWorld());
 
 			// Are the two bodies in different collision groups? If yes, is collision between this groups allowed?
 			uint8 nCollisionGroup1 = pBody1->GetCollisionGroup();
@@ -528,10 +528,10 @@ int World::IslandUpdate(const NewtonWorld *pNewtonWorld, const void *pIslandHand
 		NewtonBody *pPhysicsBody = NewtonIslandGetBody(pIslandHandle, i);
 		if (pPhysicsBody) {
 			// Get the pointer to the PL physics body and implementation and check at first whether or not auto-freeze is enabled
-			PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pPhysicsBody);
+			PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pPhysicsBody));
 			if (pBody && pBody->IsActive() && pBody->IsAutoFreeze()) {
 				// Check freeze threshold ('current length' < 'threshold length')
-					  BodyImpl   &cBodyImpl   = (BodyImpl&)pBody->GetBodyImpl();
+					  BodyImpl   &cBodyImpl   = static_cast<BodyImpl&>(pBody->GetBodyImpl());
 				const NewtonBody *pNewtonBody = cBodyImpl.m_pNewtonBody;
 				dFloat fVector[3];
 
@@ -564,9 +564,9 @@ int World::IslandUpdate(const NewtonWorld *pNewtonWorld, const void *pIslandHand
 void World::WakeUp(const Newton::NewtonBody *pNewtonBody, void *pUserData)
 {
 	// Get the pointer to the PL physics body and implementation and check at first whether or not auto-freeze is enabled
-	PLPhysics::Body *pBody = (PLPhysics::Body*)NewtonBodyGetUserData(pNewtonBody);
+	PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(pNewtonBody));
 	if (pBody)
-		((BodyImpl&)pBody->GetBodyImpl()).SetNewtonBodyFreezeState(false);
+		static_cast<BodyImpl&>(pBody->GetBodyImpl()).SetNewtonBodyFreezeState(false);
 }
 
 
@@ -596,7 +596,7 @@ PLPhysics::Body *World::CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, 
 	PLPhysics::Body *pBody = new BodyConvexHull(*this, cMeshManager, sMesh, vMeshScale);
 
 	// If the mesh loading failed, the Newton body is a null pointer...
-	if (((BodyImpl&)pBody->GetBodyImpl()).GetNewtonBody())
+	if (static_cast<BodyImpl&>(pBody->GetBodyImpl()).GetNewtonBody())
 		return pBody;
 	else {
 		// Error!
@@ -610,7 +610,7 @@ PLPhysics::Body *World::CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const 
 	PLPhysics::Body *pBody = new BodyMesh(*this, cMeshManager, sMesh, vMeshScale, bOptimize);
 
 	// If the mesh loading failed, the Newton body is a null pointer...
-	if (((BodyImpl&)pBody->GetBodyImpl()).GetNewtonBody())
+	if (static_cast<BodyImpl&>(pBody->GetBodyImpl()).GetNewtonBody())
 		return pBody;
 	else {
 		// Error!
@@ -882,16 +882,16 @@ void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Bod
 			m_mapBodyPairs.Add(sBodyPair, nFlags);
 
 			// Add the bodies to each other
-			((BodyImpl&)cBody1.GetBodyImpl()).m_lstPartnerBodies.Add(&((PLPhysics::Body&)cBody2));
-			((BodyImpl&)cBody2.GetBodyImpl()).m_lstPartnerBodies.Add(&((PLPhysics::Body&)cBody1));
+			static_cast<BodyImpl&>(cBody1.GetBodyImpl()).m_lstPartnerBodies.Add(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody2)));
+			static_cast<BodyImpl&>(cBody2.GetBodyImpl()).m_lstPartnerBodies.Add(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody1)));
 		}
 	} else {
 		// Remove from map
 		m_mapBodyPairs.Remove(sBodyPair);
 
 		// Remove the bodies from each other
-		((BodyImpl&)cBody1.GetBodyImpl()).m_lstPartnerBodies.Remove(&((PLPhysics::Body&)cBody2));
-		((BodyImpl&)cBody2.GetBodyImpl()).m_lstPartnerBodies.Remove(&((PLPhysics::Body&)cBody1));
+		static_cast<BodyImpl&>(cBody1.GetBodyImpl()).m_lstPartnerBodies.Remove(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody2)));
+		static_cast<BodyImpl&>(cBody2.GetBodyImpl()).m_lstPartnerBodies.Remove(&const_cast<PLPhysics::Body&>(static_cast<const PLPhysics::Body&>(cBody1)));
 	}
 }
 
@@ -932,7 +932,7 @@ void World::UpdateSimulation()
 			{
 				Iterator<PLPhysics::Body*> cIterator = m_lstChangedByUser.GetIterator();
 				while (cIterator.HasNext()) {
-					BodyImpl   &cBodyImpl     = (BodyImpl&)cIterator.Next()->GetBodyImpl();
+					BodyImpl   &cBodyImpl     = static_cast<BodyImpl&>(cIterator.Next()->GetBodyImpl());
 					NewtonBody *pNewtonBody   = cBodyImpl.m_pNewtonBody;
 					uint16     &nUserFlags    = cBodyImpl.m_nChangedByUserFlags;
 					uint8      &nPhysicsFlags = cBodyImpl.m_nChangedByPhysicsFlags;
@@ -1074,7 +1074,7 @@ void World::UpdateSimulation()
 			{
 				Iterator<PLPhysics::Body*> cIterator = m_lstChangedByPhysics.GetIterator();
 				while (cIterator.HasNext()) {
-					BodyImpl   &cBodyImpl   = (BodyImpl&)cIterator.Next()->GetBodyImpl();
+					BodyImpl   &cBodyImpl   = static_cast<BodyImpl&>(cIterator.Next()->GetBodyImpl());
 					NewtonBody *pNewtonBody = cBodyImpl.m_pNewtonBody;
 					uint8      &nFlags      = cBodyImpl.m_nChangedByPhysicsFlags;
 

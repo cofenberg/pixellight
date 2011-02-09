@@ -109,7 +109,7 @@ void BodyImpl::SetODEMass(const dMass &sMass)
 //[-------------------------------------------------------]
 PLPhysics::Body *BodyImpl::GetBody() const
 {
-	return (PLPhysics::Body*)dGeomGetData(m_pODEGeometry);
+	return static_cast<PLPhysics::Body*>(dGeomGetData(m_pODEGeometry));
 }
 
 bool BodyImpl::IsActive() const
@@ -143,7 +143,7 @@ void BodyImpl::SetMass(float fMass)
 		// Create the ODE physics body
 		if (!m_pODEBody) {
 			// Create the body
-			m_pODEBody = dBodyCreate(((World&)GetBody()->GetWorld()).GetODEWorld());
+			m_pODEBody = dBodyCreate(static_cast<World&>(GetBody()->GetWorld()).GetODEWorld());
 			dBodySetAutoDisableFlag(m_pODEBody, m_bAutoFreeze);
 			SetFrozen(m_bFrozen);
 			dBodySetGravityMode(m_pODEBody, m_bUseGravity);

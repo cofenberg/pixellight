@@ -56,7 +56,7 @@ BodyCylinder::~BodyCylinder()
 *    Constructor
 */
 BodyCylinder::BodyCylinder(PLPhysics::World &cWorld, float fRadius, float fHeight) :
-	PLPhysics::BodyCylinder(cWorld, ((World&)cWorld).CreateBodyImpl(), fRadius, fHeight)
+	PLPhysics::BodyCylinder(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius, fHeight)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -64,7 +64,7 @@ BodyCylinder::BodyCylinder(PLPhysics::World &cWorld, float fRadius, float fHeigh
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Create collision primitive
 	Newton::NewtonCollision *pCollision = NewtonCreateCylinder(pNewtonWorld, m_fRadius, m_fHeight, 0, nullptr);
@@ -79,10 +79,10 @@ BodyCylinder::BodyCylinder(PLPhysics::World &cWorld, float fRadius, float fHeigh
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Calculate the collision volume
-	const float fCollisionVolume = float(Math::Pi*m_fRadius*m_fRadius*m_fHeight);
+	const float fCollisionVolume = static_cast<float>(Math::Pi*m_fRadius*m_fRadius*m_fHeight);
 
 	// Initialize the Newton physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

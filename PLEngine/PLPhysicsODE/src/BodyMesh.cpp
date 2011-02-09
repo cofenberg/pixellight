@@ -59,10 +59,10 @@ BodyMesh::~BodyMesh()
 *    Constructor
 */
 BodyMesh::BodyMesh(PLPhysics::World &cWorld, const String &sMesh, const Vector3 &vMeshScale, bool bOptimize) :
-	PLPhysics::BodyMesh(cWorld, ((World&)cWorld).CreateBodyImpl(), sMesh, vMeshScale, bOptimize)
+	PLPhysics::BodyMesh(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), sMesh, vMeshScale, bOptimize)
 {
 	// Initialize the ODE physics body
-//	((BodyImpl&)GetBodyImpl()).InitializeODEActor(this);
+//	static_cast<BodyImpl&>(GetBodyImpl()).InitializeODEActor(this);
 }
 
 

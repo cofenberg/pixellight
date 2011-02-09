@@ -55,13 +55,13 @@ BodyBox::~BodyBox()
 *    Constructor
 */
 BodyBox::BodyBox(PLPhysics::World &cWorld, const Vector3 &vDimension) :
-	PLPhysics::BodyBox(cWorld, ((World&)cWorld).CreateBodyImpl(), vDimension)
+	PLPhysics::BodyBox(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), vDimension)
 {
 	// Create the ODE physics geometry
-	dGeomID pODEGeomID = dCreateBox(((World&)cWorld).GetODESpace(), m_vDimension.x, m_vDimension.y, m_vDimension.z);
+	dGeomID pODEGeomID = dCreateBox(static_cast<World&>(cWorld).GetODESpace(), m_vDimension.x, m_vDimension.y, m_vDimension.z);
 
 	// Initialize the ODE physics geometry
-	((BodyImpl&)GetBodyImpl()).InitializeODEGeometry(*this, pODEGeomID);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeODEGeometry(*this, pODEGeomID);
 }
 
 
@@ -77,7 +77,7 @@ void BodyBox::SetMass(float fMass)
 	if (fMass) {
 		dMass sMass;
 		dMassSetBoxTotal(&sMass, fMass, m_vDimension.x, m_vDimension.y, m_vDimension.z);
-		((BodyImpl&)GetBodyImpl()).SetODEMass(sMass);
+		static_cast<BodyImpl&>(GetBodyImpl()).SetODEMass(sMass);
 	}
 }
 

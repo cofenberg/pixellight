@@ -65,7 +65,7 @@ BodyTerrain::~BodyTerrain()
 */
 BodyTerrain::BodyTerrain(PLPhysics::World &cWorld, uint32 nWidth, uint32 nHeight,
 						 const float fTerrain[], const Vector3 &vBoxMin, const Vector3 &vBoxMax, const Vector3 &vScale) :
-	PLPhysics::BodyTerrain(cWorld, ((World&)cWorld).CreateBodyImpl()),
+	PLPhysics::BodyTerrain(cWorld, static_cast<World&>(cWorld).CreateBodyImpl()),
 	m_nWidth(nWidth),
 	m_nHeight(nHeight),
 	m_pfTerrain(fTerrain),
@@ -79,7 +79,7 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld, uint32 nWidth, uint32 nHeight
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Create collision primitive
 	NewtonCollision *pCollision = NewtonCreateUserMeshCollision(pNewtonWorld, m_vBoxMin, m_vBoxMax, this, MeshCollisionCollideCallback, UserMeshCollisionRayHitCallback, nullptr, nullptr, nullptr, 0);
@@ -94,7 +94,7 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld, uint32 nWidth, uint32 nHeight
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Initialize the Newton physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)
@@ -167,11 +167,15 @@ dFloat BodyTerrain::RayCastCell(int xIndex0, int zIndex0, const Vector3 &p0, con
 	dFloat t;
 
 	// Clamp x
-	if (xIndex0 < 0)				xIndex0 = 0;
-	if (xIndex0 >= (int)m_nWidth-1) xIndex0 = m_nWidth-2;
+	if (xIndex0 < 0)
+		xIndex0 = 0;
+	if (xIndex0 >= static_cast<int>(m_nWidth)-1)
+		xIndex0 = m_nWidth-2;
 	// Clamp z
-	if (zIndex0 < 0)				 zIndex0 = 0;
-	if (zIndex0 >= (int)m_nHeight-1) zIndex0 = m_nHeight-2;
+	if (zIndex0 < 0)
+		zIndex0 = 0;
+	if (zIndex0 >= static_cast<int>(m_nHeight)-1)
+		zIndex0 = m_nHeight-2;
 
 	// Get the 3d point at the corner of the cell
 	Vector3 p00((xIndex0 + 0)*m_vScale.x, HEIGHFIELD(zIndex0+0, xIndex0+0), (zIndex0 + 0)*m_vScale.z);
@@ -369,7 +373,7 @@ bool BodyTerrain::ClipRay2d(Vector3 &p0, Vector3 &p1, const Vector3 &boxP0, cons
 void BodyTerrain::MeshCollisionCollideCallback(NewtonUserMeshCollisionCollideDesc *pCollideDescData)
 {
 	// The user data is the pointer to the collision geometry
-	BodyTerrain *map = (BodyTerrain*)pCollideDescData->m_userData;
+	BodyTerrain *map = static_cast<BodyTerrain*>(pCollideDescData->m_userData);
 
 	int x;
 	int z;
@@ -390,23 +394,31 @@ void BodyTerrain::MeshCollisionCollideCallback(NewtonUserMeshCollisionCollideDes
 
 	map->CalculateMinExtend3d(p0, p1, boxP0, boxP1);
 
-	x0 = (int)(boxP0.x*(1.0f/map->m_vScale.x));
-	x1 = (int)(boxP1.x*(1.0f/map->m_vScale.x));
+	x0 = static_cast<int>(boxP0.x*(1.0f/map->m_vScale.x));
+	x1 = static_cast<int>(boxP1.x*(1.0f/map->m_vScale.x));
 
-	z0 = (int)(boxP0.z*(1.0f/map->m_vScale.z));
-	z1 = (int)(boxP1.z*(1.0f/map->m_vScale.z));
+	z0 = static_cast<int>(boxP0.z*(1.0f/map->m_vScale.z));
+	z1 = static_cast<int>(boxP1.z*(1.0f/map->m_vScale.z));
 
 	// Clamp x
-	if (x0 < 0)					  x0 = 0;
-	if (x0 >= (int)map->m_nWidth) x0 = map->m_nWidth-1;
-	if (x1 < 0)					  x1 = 0;
-	if (x1 >= (int)map->m_nWidth) x1 = map->m_nWidth-1;
+	if (x0 < 0)
+		x0 = 0;
+	if (x0 >= static_cast<int>(map->m_nWidth))
+		x0 = map->m_nWidth-1;
+	if (x1 < 0)
+		x1 = 0;
+	if (x1 >= static_cast<int>(map->m_nWidth))
+		x1 = map->m_nWidth-1;
 //	if (x0 == x1) return;
 	// Clamp z
-	if (z0 < 0)					   z0 = 0;
-	if (z0 >= (int)map->m_nHeight) z0 = map->m_nHeight-1;
-	if (z1 < 0)					   z1 = 0;
-	if (z1 >= (int)map->m_nHeight) z1 = map->m_nHeight-1;
+	if (z0 < 0)
+		z0 = 0;
+	if (z0 >= static_cast<int>(map->m_nHeight))
+		z0 = map->m_nHeight-1;
+	if (z1 < 0)
+		z1 = 0;
+	if (z1 >= static_cast<int>(map->m_nHeight))
+		z1 = map->m_nHeight-1;
 //	if (z0 == z1) return;
 
 	// Initialize the callback data structure
@@ -512,7 +524,7 @@ dFloat BodyTerrain::UserMeshCollisionRayHitCallback(NewtonUserMeshCollisionRayHi
 
 
 	// The user data is the pointer to the collision geometry
-	BodyTerrain *map = (BodyTerrain*)pRayDescData->m_userData;
+	BodyTerrain *map = static_cast<BodyTerrain*>(pRayDescData->m_userData);
 
 	Vector3 q0(pRayDescData->m_p0[0], pRayDescData->m_p0[1], pRayDescData->m_p0[2]);
 	Vector3 q1(pRayDescData->m_p1[0], pRayDescData->m_p1[1], pRayDescData->m_p1[2]);
@@ -577,8 +589,8 @@ dFloat BodyTerrain::UserMeshCollisionRayHitCallback(NewtonUserMeshCollisionRayHi
 			tz = 1.0e10f;
 		}
 
-		xIndex0 = int (ix0);
-		zIndex0 = int (iz0);
+		xIndex0 = static_cast<int>(ix0);
+		zIndex0 = static_cast<int>(iz0);
 
 		// For each cell touched by the line
 		do {

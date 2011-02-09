@@ -56,7 +56,7 @@ BodyEllipsoid::~BodyEllipsoid()
 *    Constructor
 */
 BodyEllipsoid::BodyEllipsoid(PLPhysics::World &cWorld, const Vector3 &vRadius) :
-	PLPhysics::BodyEllipsoid(cWorld, ((World&)cWorld).CreateBodyImpl(), vRadius)
+	PLPhysics::BodyEllipsoid(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), vRadius)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -64,7 +64,7 @@ BodyEllipsoid::BodyEllipsoid(PLPhysics::World &cWorld, const Vector3 &vRadius) :
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Create collision primitive
 	Newton::NewtonCollision *pCollision = NewtonCreateSphere(pNewtonWorld, m_vRadius.x, m_vRadius.y, m_vRadius.z, 0, nullptr);
@@ -79,10 +79,10 @@ BodyEllipsoid::BodyEllipsoid(PLPhysics::World &cWorld, const Vector3 &vRadius) :
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Calculate the collision volume
-	const float fCollisionVolume = float((4/3)*Math::Pi*m_vRadius.x*m_vRadius.y*m_vRadius.z);
+	const float fCollisionVolume = static_cast<float>((4/3)*Math::Pi*m_vRadius.x*m_vRadius.y*m_vRadius.z);
 
 	// Initialize the Newton physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, fCollisionVolume);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

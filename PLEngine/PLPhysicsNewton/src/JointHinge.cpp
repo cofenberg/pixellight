@@ -60,7 +60,7 @@ JointHinge::~JointHinge()
 unsigned JointHinge::JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, Newton::NewtonHingeSliderUpdateDesc *pDesc)
 {
 	// Get joint
-	const JointHinge *pJoint = (JointHinge*)NewtonJointGetUserData(pNewtonJoint);
+	const JointHinge *pJoint = static_cast<JointHinge*>(NewtonJointGetUserData(pNewtonJoint));
 	if (pJoint) {
 		// Check break
 		if (pJoint->IsBreakable()) {
@@ -85,12 +85,12 @@ unsigned JointHinge::JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, 
 
 			// Destroy the joint?
 			if (bBreak)
-				NewtonDestroyJoint(((World&)pJoint->GetWorld()).GetNewtonWorld(), pNewtonJoint);
+				NewtonDestroyJoint(static_cast<World&>(pJoint->GetWorld()).GetNewtonWorld(), pNewtonJoint);
 		}
 
 		// Get min/max angle limits
-		const float fAngleMinLimit = float(pJoint->GetLowRange());
-		const float fAngleMaxLimit = float(pJoint->GetHighRange());
+		const float fAngleMinLimit = static_cast<float>(pJoint->GetLowRange());
+		const float fAngleMaxLimit = static_cast<float>(pJoint->GetHighRange());
 
 		// Check limits
 		const float fAngle = NewtonHingeGetJointAngle(pNewtonJoint);
@@ -119,7 +119,7 @@ unsigned JointHinge::JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, 
 */
 JointHinge::JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
 					   const Vector3 &vPivotPoint, const Vector3 &vPinDir) :
-	PLPhysics::JointHinge(cWorld, ((World&)cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir)
+	PLPhysics::JointHinge(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -127,17 +127,17 @@ JointHinge::JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, P
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Flush assigned bodies (MUST be done before creating the joint!)
 	if (pParentBody)
-		((BodyImpl&)pParentBody->GetBodyImpl()).Flush();
+		static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).Flush();
 	if (pChildBody)
-		((BodyImpl&)pChildBody ->GetBodyImpl()).Flush();
+		static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent and child bodies
-	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
-	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
 
 	// Get body initial transform matrix
 	if (pParentBody) {
@@ -161,7 +161,7 @@ JointHinge::JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, P
 	NewtonHingeSetUserCallback(pNewtonJoint, JointUserCallback);
 
 	// Initialize the Newton physics joint
-	((JointImpl&)GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

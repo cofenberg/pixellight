@@ -64,7 +64,7 @@ BodyConvexHull::~BodyConvexHull()
 *    Constructor
 */
 BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManager, const String &sMesh, const Vector3 &vMeshScale) :
-	PLPhysics::BodyConvexHull(cWorld, ((World&)cWorld).CreateBodyImpl(), sMesh, vMeshScale)
+	PLPhysics::BodyConvexHull(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), sMesh, vMeshScale)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -72,11 +72,11 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// First at all: IS there already a collision convex hull with this name and scale?
 	const String sMeshScale = m_sMesh + String::Format("_%g_%g_%g", vMeshScale.x, vMeshScale.y, vMeshScale.z);
-	Newton::NewtonCollision *pCollision = ((World&)cWorld).GetCollisionConvexHullMap().Get(sMeshScale);
+	Newton::NewtonCollision *pCollision = static_cast<World&>(cWorld).GetCollisionConvexHullMap().Get(sMeshScale);
 
 	// If not, create it NOW
 	if (!pCollision) {
@@ -92,7 +92,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 			if (pVertexBuffer->Lock(Lock::ReadOnly)) {
 				if (m_vMeshScale == Vector3::One) { // We can take the orginal vertex data
 					pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
-														(float*)pVertexBuffer->GetData(0, VertexBuffer::Position),
+														static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position)),
 														pVertexBuffer->GetVertexSize(), fTolerance, 0, nullptr);
 				} else { // We have to use own scaled vertex data
 					float *fVertices = new float[3*pVertexBuffer->GetNumOfElements()];
@@ -100,7 +100,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 
 					// Fill our scaled vertex data
 					for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
-						const float *fVertexT = (const float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+						const float *fVertexT = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 						fVertex[Vector3::X] = fVertexT[Vector3::X]*m_vMeshScale.x;
 						fVertex[Vector3::Y] = fVertexT[Vector3::Y]*m_vMeshScale.y;
 						fVertex[Vector3::Z] = fVertexT[Vector3::Z]*m_vMeshScale.z;
@@ -121,7 +121,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 
 			// Add to convex hull collision map
 			if (pCollision)
-				((World&)cWorld).GetCollisionConvexHullMap().Add(sMeshScale, pCollision);
+				static_cast<World&>(cWorld).GetCollisionConvexHullMap().Add(sMeshScale, pCollision);
 		}
 
 		// Cleanup
@@ -138,7 +138,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 		#endif
 
 		// Initialize the Newton physics body
-		((BodyImpl&)GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
+		static_cast<BodyImpl&>(GetBodyImpl()).InitializeNewtonBody(*this, *pNewtonBody, 0.0f);
 	}
 
 	// Reactivate the physics simulation if required

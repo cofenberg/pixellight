@@ -150,7 +150,7 @@ void BodyImpl::Flush()
 		// And DON'T forget to remove this one from the 'I need an update' list of the world!
 		PLPhysics::Body *pBody = GetBody();
 		if (pBody)
-			((World&)cWorld).m_lstChangedByUser.Remove(pBody);
+			static_cast<World&>(cWorld).m_lstChangedByUser.Remove(pBody);
 	}
 }
 
@@ -200,7 +200,7 @@ void BodyImpl::SetNewtonBodyFreezeState(bool bFreeze)
 //[-------------------------------------------------------]
 PLPhysics::Body *BodyImpl::GetBody() const
 {
-	return (PLPhysics::Body*)NewtonBodyGetUserData(m_pNewtonBody);
+	return static_cast<PLPhysics::Body*>(NewtonBodyGetUserData(m_pNewtonBody));
 }
 
 bool BodyImpl::IsActive() const
@@ -269,7 +269,7 @@ void BodyImpl::SetPosition(const Vector3 &vPosition)
 {
 	m_vPosition = vPosition;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Position;
 }
 
@@ -282,7 +282,7 @@ void BodyImpl::SetRotation(const Quaternion &qRotation)
 {
 	m_qRotation = qRotation;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Rotation;
 }
 
@@ -297,7 +297,7 @@ void BodyImpl::SetTransformMatrix(const Matrix3x4 &mTrans)
 	mTrans.GetTranslation(m_vPosition);
 	m_qRotation.FromRotationMatrix(mTrans);
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Position;
 	m_nChangedByUserFlags |= Rotation;
 }
@@ -319,7 +319,7 @@ void BodyImpl::SetLinearVelocity(const Vector3 &vVelocity)
 {
 	m_vLinearVelocity = vVelocity;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= LinearVelocity;
 }
 
@@ -332,7 +332,7 @@ void BodyImpl::SetAngularVelocity(const Vector3 &vVelocity)
 {
 	m_vAngularVelocity = vVelocity;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= AngularVelocity;
 }
 
@@ -345,7 +345,7 @@ void BodyImpl::AddForce(const Vector3 &vForce)
 {
 	m_vForce += vForce;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Force;
 }
 
@@ -353,7 +353,7 @@ void BodyImpl::SetForce(const Vector3 &vForce)
 {
 	m_vForce = vForce;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Force;
 }
 
@@ -366,7 +366,7 @@ void BodyImpl::AddTorque(const Vector3 &vTorque)
 {
 	m_vTorque += vTorque;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Torque;
 }
 
@@ -374,7 +374,7 @@ void BodyImpl::SetTorque(const Vector3 &vTorque)
 {
 	m_vTorque = vTorque;
 	if (!m_nChangedByUserFlags)
-		((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+		static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 	m_nChangedByUserFlags |= Torque;
 }
 
@@ -415,7 +415,7 @@ void BodyImpl::SetFrozen(bool bFrozen)
 	if (m_bFrozen != bFrozen) {
 		m_bFrozen = bFrozen;
 		if (!m_nChangedByUserFlags)
-			((World&)GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
+			static_cast<World&>(GetBody()->GetWorld()).m_lstChangedByUser.Add(GetBody());
 		m_nChangedByUserFlags |= bFrozen ? Freeze : Unfreeze;
 	}
 }
@@ -513,11 +513,11 @@ BodyImpl::~BodyImpl()
 
 			// Ensure the body is NOT within an update list of the world
 			if (m_nChangedByUserFlags) {
-				((World&)cWorld).m_lstChangedByUser.Remove(pBody);
+				static_cast<World&>(cWorld).m_lstChangedByUser.Remove(pBody);
 				m_nChangedByUserFlags = 0;
 			}
 			if (m_nChangedByPhysicsFlags) {
-				((World&)cWorld).m_lstChangedByPhysics.Remove(pBody);
+				static_cast<World&>(cWorld).m_lstChangedByPhysics.Remove(pBody);
 				m_nChangedByPhysicsFlags = 0;
 			}
 		}

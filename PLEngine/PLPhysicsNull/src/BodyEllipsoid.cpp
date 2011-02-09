@@ -55,10 +55,10 @@ BodyEllipsoid::~BodyEllipsoid()
 *    Constructor
 */
 BodyEllipsoid::BodyEllipsoid(PLPhysics::World &cWorld, const Vector3 &vRadius) :
-	PLPhysics::BodyEllipsoid(cWorld, ((World&)cWorld).CreateBodyImpl(), vRadius)
+	PLPhysics::BodyEllipsoid(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), vRadius)
 {
 	// Initialize the null physics body
-	((BodyImpl&)GetBodyImpl()).InitializeNullBody(*this);
+	static_cast<BodyImpl&>(GetBodyImpl()).InitializeNullBody(*this);
 }
 
 

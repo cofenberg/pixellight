@@ -56,10 +56,10 @@ JointUniversal::~JointUniversal()
 */
 JointUniversal::JointUniversal(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
 							   const Vector3 &vPivotPoint, const Vector3 &vPinDir1, const Vector3 &vPinDir2) :
-	PLPhysics::JointUniversal(cWorld, ((World&)cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2)
+	PLPhysics::JointUniversal(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir1, vPinDir2)
 {
 	// Initialize the null physics joint
-	((JointImpl&)GetJointImpl()).InitializeNullJoint(*this);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNullJoint(*this);
 }
 
 

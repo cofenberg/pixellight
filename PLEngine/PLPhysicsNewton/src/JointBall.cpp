@@ -59,7 +59,7 @@ JointBall::~JointBall()
 void JointBall::JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, dFloat fTimeStep)
 {
 	// Get joint
-	JointBall *pJoint = (JointBall*)NewtonJointGetUserData(pNewtonJoint);
+	JointBall *pJoint = static_cast<JointBall*>(NewtonJointGetUserData(pNewtonJoint));
 	if (pJoint) {
 		// Check limits
 		// [TODO]
@@ -76,7 +76,7 @@ void JointBall::JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, dFloa
 */
 JointBall::JointBall(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
 					 const Vector3 &vPivotPoint, const Vector3 &vPinDir) :
-	PLPhysics::JointBall(cWorld, ((World&)cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir)
+	PLPhysics::JointBall(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), pParentBody, pChildBody, vPivotPoint, vPinDir)
 {
 	// Deactivate the physics simulation if required
 	const bool bSimulationActive = cWorld.IsSimulationActive();
@@ -84,17 +84,17 @@ JointBall::JointBall(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLP
 		cWorld.SetSimulationActive(false);
 
 	// Get the Newton physics world
-	Newton::NewtonWorld *pNewtonWorld = ((World&)cWorld).GetNewtonWorld();
+	Newton::NewtonWorld *pNewtonWorld = static_cast<World&>(cWorld).GetNewtonWorld();
 
 	// Flush assigned bodies (MUST be done before creating the joint!)
 	if (pParentBody)
-		((BodyImpl&)pParentBody->GetBodyImpl()).Flush();
+		static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).Flush();
 	if (pChildBody)
-		((BodyImpl&)pChildBody ->GetBodyImpl()).Flush();
+		static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).Flush();
 
 	// Get the Newton physics parent and child bodies
-	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? ((BodyImpl&)pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
-	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? ((BodyImpl&)pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonParentBody = pParentBody ? static_cast<BodyImpl&>(pParentBody->GetBodyImpl()).GetNewtonBody() : nullptr;
+	const Newton::NewtonBody *pNewtonChildBody  = pChildBody  ? static_cast<BodyImpl&>(pChildBody ->GetBodyImpl()).GetNewtonBody() : nullptr;
 
 	// Create the Newton physics joint
 	Newton::NewtonJoint *pNewtonJoint = NewtonConstraintCreateBall(pNewtonWorld, m_vPivotPoint,
@@ -105,10 +105,10 @@ JointBall::JointBall(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLP
 
 	// [TODO]
 	NewtonBallSetConeLimits(pNewtonJoint, m_vPinDir, 0.0f, 0.0f);
-//	NewtonBallSetConeLimits(pNewtonJoint, m_vPinDir, dFloat(m_fMaxConeAngle*Math::DegToRad), dFloat(m_fMaxTwistAngle*Math::DegToRad));
+//	NewtonBallSetConeLimits(pNewtonJoint, m_vPinDir, static_cast<dFloat>(m_fMaxConeAngle*Math::DegToRad), static_cast<dFloat>(m_fMaxTwistAngle*Math::DegToRad));
 
 	// Initialize the Newton physics joint
-	((JointImpl&)GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNewtonJoint(*this, *pNewtonJoint);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

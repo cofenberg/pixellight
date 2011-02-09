@@ -55,10 +55,10 @@ JointUpVector::~JointUpVector()
 *    Constructor
 */
 JointUpVector::JointUpVector(PLPhysics::World &cWorld, PLPhysics::Body &cParentBody, const Vector3 &vPinDir) :
-	PLPhysics::JointUpVector(cWorld, ((World&)cWorld).CreateJointImpl(), cParentBody, vPinDir)
+	PLPhysics::JointUpVector(cWorld, static_cast<World&>(cWorld).CreateJointImpl(), cParentBody, vPinDir)
 {
 	// Initialize the null physics joint
-	((JointImpl&)GetJointImpl()).InitializeNullJoint(*this);
+	static_cast<JointImpl&>(GetJointImpl()).InitializeNullJoint(*this);
 }
 
 

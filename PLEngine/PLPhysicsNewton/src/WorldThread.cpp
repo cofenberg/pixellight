@@ -53,8 +53,8 @@ WorldThread::WorldThread(World &cWorld) : WorldUpdate(cWorld),
 	m_fFrameRate(cWorld.m_fFrameRate)
 {
 	// Setup priority
-	SetPriorityClass((Thread::EPriorityClass)cWorld.m_nThreadPriorityClass);
-	SetPriority((Thread::EPriority)cWorld.m_nThreadPriority);
+	SetPriorityClass(static_cast<Thread::EPriorityClass>(cWorld.m_nThreadPriorityClass));
+	SetPriority(static_cast<Thread::EPriority>(cWorld.m_nThreadPriority));
 
 	// Give the thread a neat name
 	SetName("PixelLightNewtonGameDynamicsWorldUpdate");
@@ -136,7 +136,7 @@ int WorldThread::Run()
 		}
 
 		// Sleep...
-		System::GetInstance()->Sleep(uint32(1000.0f/m_fFrameRate));
+		System::GetInstance()->Sleep(static_cast<uint32>(1000.0f/m_fFrameRate));
 	}
 
 	// Done
