@@ -228,7 +228,7 @@ bool SurfaceWindow::Init()
 		int nBestSamples = 0;
 
 		// Get window device context
-		m_hDC = ::GetDC(static_cast<HWND>(nWindow));
+		m_hDC = ::GetDC(reinterpret_cast<HWND>(nWindow));
 		if (m_hDC) { // Did we get a device context?
 			// Choose pixel format
 			PL_LOG(Info, "Search for a suitable pixel format")
@@ -330,7 +330,7 @@ void SurfaceWindow::DeInit()
 		}
 
 		// Release the Windows DC
-		if (m_hDC && !ReleaseDC(static_cast<HWND>(nWindow), m_hDC))
+		if (m_hDC && !ReleaseDC(reinterpret_cast<HWND>(nWindow), m_hDC))
 			PL_LOG(Error, "Release OpenGL device context failed")
 		m_hDC = nullptr;
 

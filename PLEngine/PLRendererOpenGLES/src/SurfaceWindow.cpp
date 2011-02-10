@@ -93,7 +93,7 @@ Vector2i SurfaceWindow::GetSize() const
 	if (GetWindow()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect(static_cast<HWND>(GetWindow()), &sRect);
+			GetClientRect(reinterpret_cast<HWND>(GetWindow()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		#ifdef LINUX
@@ -127,7 +127,7 @@ bool SurfaceWindow::Init()
 		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// Create window surface
-		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), static_cast<EGLNativeWindowType>(nWindow), nullptr);
+		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), reinterpret_cast<EGLNativeWindowType>(nWindow), nullptr);
 		if (m_hSurface == EGL_NO_SURFACE) {
 			PL_LOG(Warning, "Could not create OpenGL ES surface");
 

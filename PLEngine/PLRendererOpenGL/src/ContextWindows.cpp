@@ -116,8 +116,8 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 					if (nMultisampleAntialiasingSamples) {
 						// This is somewhat stupied, but I don't see another solution... wglChoosePixelFormatARB etc. can only be received if
 						// a OpenGL context was already loaded (probably delayed dll loading?)
-						wglGetPixelFormatAttribivARB = static_cast<PFNWGLGETPIXELFORMATATTRIBIVARBPROC>(wglGetProcAddress("wglGetPixelFormatAttribivARB"));
-						wglChoosePixelFormatARB		 = static_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>	   (wglGetProcAddress("wglChoosePixelFormatARB"));
+						wglGetPixelFormatAttribivARB = reinterpret_cast<PFNWGLGETPIXELFORMATATTRIBIVARBPROC>(wglGetProcAddress("wglGetPixelFormatAttribivARB"));
+						wglChoosePixelFormatARB		 = reinterpret_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>	    (wglGetProcAddress("wglChoosePixelFormatARB"));
 						if (wglGetPixelFormatAttribivARB && wglChoosePixelFormatARB) {
 							// Search for a suitable pixel format
 							int nAttribs[] = {

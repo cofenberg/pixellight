@@ -79,7 +79,7 @@ inline void *ReverseBytes(void *p, uint32 length)
 	return p;
 }
 
-template<typename tAnyType> inline tAnyType Reverse(const tAnyType &t) { return *static_cast<tAnyType*>(ReverseBytes(reinterpret_cast<void*>(&t), sizeof(tAnyType))); }
+template<typename tAnyType> inline tAnyType Reverse(tAnyType &t) { return *reinterpret_cast<tAnyType*>(ReverseBytes(reinterpret_cast<void*>(&t), sizeof(tAnyType))); }
 #if defined (WIN32) && ! defined (LITTLE_ENDIAN)
 	#define LITTLE_ENDIAN
 #endif

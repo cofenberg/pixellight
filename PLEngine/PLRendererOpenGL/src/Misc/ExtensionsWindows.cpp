@@ -621,7 +621,7 @@ bool OpenGLExtensions::Init()
 		glUniform4fARB				= reinterpret_cast<PFNGLUNIFORM4FARBPROC>				(wglGetProcAddress("glUniform4fARB"));
 		glUniform1iARB				= reinterpret_cast<PFNGLUNIFORM1IARBPROC>				(wglGetProcAddress("glUniform1iARB"));
 		glUniform2iARB				= reinterpret_cast<PFNGLUNIFORM2IARBPROC>				(wglGetProcAddress("glUniform2iARB"));
-		glUniform3iARB				= reinterpret_cast<PFNGLUNIFORM3IARBPROC<				(wglGetProcAddress("glUniform3iARB"));
+		glUniform3iARB				= reinterpret_cast<PFNGLUNIFORM3IARBPROC>				(wglGetProcAddress("glUniform3iARB"));
 		glUniform4iARB				= reinterpret_cast<PFNGLUNIFORM4IARBPROC>				(wglGetProcAddress("glUniform4iARB"));
 		glUniform1fvARB				= reinterpret_cast<PFNGLUNIFORM1FVARBPROC>				(wglGetProcAddress("glUniform1fvARB"));
 		glUniform2fvARB				= reinterpret_cast<PFNGLUNIFORM2FVARBPROC>				(wglGetProcAddress("glUniform2fvARB"));
