@@ -97,7 +97,7 @@ void Source::Unload()
 bool Source::Play(bool bRestart)
 {
 	// Is a buffer loaded?
-	Buffer *pBuffer = (Buffer*)GetBuffer();
+	Buffer *pBuffer = static_cast<Buffer*>(GetBuffer());
 	if (!pBuffer)
 		return false; // Error!
 
@@ -114,7 +114,7 @@ bool Source::Play(bool bRestart)
 		m_nChannel = pBuffer->Play();
 
 		// Add source to sound manager
-		((SoundManager&)GetSoundManager()).AddActiveSource(*this);
+		static_cast<SoundManager&>(GetSoundManager()).AddActiveSource(*this);
 
 		// Get frequency and setup pitch
 		m_nFrequency = FSOUND_GetFrequency(m_nChannel);
@@ -142,7 +142,7 @@ bool Source::Play(bool bRestart)
 bool Source::IsPlaying() const
 {
 	// Is a buffer loaded?
-	const Buffer *pBuffer = (const Buffer*)GetBuffer();
+	const Buffer *pBuffer = static_cast<const Buffer*>(GetBuffer());
 	return (pBuffer && pBuffer->IsPlaying(m_nChannel));
 }
 
@@ -163,14 +163,14 @@ bool Source::IsPaused() const
 void Source::Stop()
 {
 	// Is a buffer loaded? (using 'IsPlaying()' to test this is NOT correct in here!)
-	Buffer *pBuffer = (Buffer*)GetBuffer();
+	Buffer *pBuffer = static_cast<Buffer*>(GetBuffer());
 	if (pBuffer) {
 		// Stop playback
 		pBuffer->Stop(m_nChannel);
 		m_nChannel = -1;
 
 		// Remove source from sound manager
-		((SoundManager&)GetSoundManager()).RemoveActiveSource(*this);
+		static_cast<SoundManager&>(GetSoundManager()).RemoveActiveSource(*this);
 	}
 }
 
@@ -184,7 +184,7 @@ void Source::SetVolume(float fVolume)
 	// No change = nothing to do :)
 	if (m_fVolume != fVolume) {
 		m_fVolume = fVolume;
-		Buffer *pBuffer = (Buffer*)GetBuffer();
+		Buffer *pBuffer = static_cast<Buffer*>(GetBuffer());
 		if (pBuffer)
 			pBuffer->SetVolume(m_nChannel, m_fVolume);
 	}
@@ -213,7 +213,7 @@ void Source::SetLooping(bool bLooping)
 		m_bLooping = bLooping;
 
 		// Is a buffer loaded?
-		Buffer *pBuffer = (Buffer*)GetBuffer();
+		Buffer *pBuffer = static_cast<Buffer*>(GetBuffer());
 		if (pBuffer) {
 			// Set looping state
 			// [HW sound] We have to pause the playback if we want to change the looping mode...
@@ -236,7 +236,7 @@ void Source::SetPitch(float fPitch)
 {
 	m_fPitch = fPitch;
 	if (IsPlaying()) {
-		int nFrequency = (GetFlags() & Source::NoMasterPitch) ? int(m_nFrequency*m_fPitch) : int(m_nFrequency*(m_fPitch*GetSoundManager().GetPitch()));
+		int nFrequency = (GetFlags() & Source::NoMasterPitch) ? static_cast<int>(m_nFrequency*m_fPitch) : static_cast<int>(m_nFrequency*(m_fPitch*GetSoundManager().GetPitch()));
 		if (nFrequency < 100)
 			nFrequency = 100;
 		if (nFrequency > 705600)

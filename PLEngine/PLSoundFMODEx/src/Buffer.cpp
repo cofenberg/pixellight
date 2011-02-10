@@ -90,7 +90,7 @@ bool Buffer::LoadBuffer(const String &sFilename, bool bStream)
 	// Check parameter
 	if (sFilename.GetLength()) {
 		// Get FMOD Ex system instance
-		FMOD::System *pSystem = ((SoundManager&)GetSoundManager()).GetSystem();
+		FMOD::System *pSystem = static_cast<SoundManager&>(GetSoundManager()).GetSystem();
 		if (pSystem) {
 			// Use streaming?
 			FMOD_RESULT nResult;
@@ -122,14 +122,14 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 	// Check parameter
 	if (nSize) {
 		// Get FMOD Ex system instance
-		FMOD::System *pSystem = ((SoundManager&)GetSoundManager()).GetSystem();
+		FMOD::System *pSystem = static_cast<SoundManager&>(GetSoundManager()).GetSystem();
 		if (pSystem) {
 			// Use streaming?
 			FMOD_RESULT nResult;
 			if (bStream)
-				nResult = pSystem->createStream((const char*)&nData, FMOD_DEFAULT | FMOD_OPENMEMORY | FMOD_3D, 0, &m_pSound);
+				nResult = pSystem->createStream(reinterpret_cast<const char*>(&nData), FMOD_DEFAULT | FMOD_OPENMEMORY | FMOD_3D, 0, &m_pSound);
 			else
-				nResult = pSystem->createSound ((const char*)&nData, FMOD_DEFAULT | FMOD_OPENMEMORY | FMOD_3D, 0, &m_pSound);
+				nResult = pSystem->createSound (reinterpret_cast<const char*>(&nData), FMOD_DEFAULT | FMOD_OPENMEMORY | FMOD_3D, 0, &m_pSound);
 			if (SoundManager::ErrorCheck(nResult)) {
 				m_bStreamed = bStream;
 

@@ -52,7 +52,7 @@ pl_implement_class(SoundManager)
 // From PLGeneral::File
 size_t SoundManager::read_func(void *ptr, size_t size, size_t nmemb, void *datasource)
 {
-	return datasource ? (size_t)((File*)datasource)->Read(ptr, 1, (long)(size*nmemb)) : 0;
+	return datasource ? static_cast<size_t>(static_cast<File*>(datasource)->Read(ptr, 1, static_cast<long>(size*nmemb))) : 0;
 }
 
 int SoundManager::seek_func(void *datasource, int64 offset, int whence)
@@ -60,13 +60,13 @@ int SoundManager::seek_func(void *datasource, int64 offset, int whence)
 	if (datasource) {
 		switch (whence) {
 			case SEEK_SET:
-				return !((File*)datasource)->Seek((uint32)offset, File::SeekSet);
+				return !static_cast<File*>(datasource)->Seek(static_cast<uint32>(offset), File::SeekSet);
 
 			case SEEK_CUR:
-				return !((File*)datasource)->Seek((uint32)offset, File::SeekCurrent);
+				return !static_cast<File*>(datasource)->Seek(static_cast<uint32>(offset), File::SeekCurrent);
 
 			case SEEK_END:
-				return !((File*)datasource)->Seek((uint32)offset, File::SeekEnd);
+				return !static_cast<File*>(datasource)->Seek(static_cast<uint32>(offset), File::SeekEnd);
 		}
 	}
 
@@ -77,7 +77,7 @@ int SoundManager::seek_func(void *datasource, int64 offset, int whence)
 int SoundManager::close_func(void *datasource)
 {
 	if (datasource) {
-		File *pFile = (File*)datasource;
+		File *pFile = static_cast<File*>(datasource);
 		pFile->Close();
 		delete pFile;
 	}
@@ -87,15 +87,15 @@ int SoundManager::close_func(void *datasource)
 
 long SoundManager::tell_func(void *datasource)
 {
-	return datasource ? ((File*)datasource)->Tell() : -1;
+	return datasource ? static_cast<File*>(datasource)->Tell() : -1;
 }
 
 // From memory
 size_t SoundManager::read_func_mem(void *ptr, size_t size, size_t nmemb, void *datasource)
 {
-	if (datasource && ((MemData*)datasource)->pnData+size*nmemb < ((MemData*)datasource)->pnDataE) {
-		MemoryManager::Copy(ptr, ((MemData*)datasource)->pnData, uint32(size*nmemb));
-		((MemData*)datasource)->pnData += size*nmemb;
+	if (datasource && static_cast<MemData*>(datasource)->pnData+size*nmemb < static_cast<MemData*>(datasource)->pnDataE) {
+		MemoryManager::Copy(ptr, static_cast<MemData*>(datasource)->pnData, static_cast<uint32>(size*nmemb));
+		static_cast<MemData*>(datasource)->pnData += size*nmemb;
 		return size*nmemb;
 	} else {
 		// Error!
@@ -295,7 +295,7 @@ bool SoundManager::Init()
 	// Create device
 	if (DeviceName.GetString().GetLength()) {
 		// Have a name from enumeration process above, so use it...
-		m_pDevice = alcOpenDevice((const ALchar*)DeviceName.GetString().GetASCII());
+		m_pDevice = alcOpenDevice(static_cast<const ALchar*>(DeviceName.GetString().GetASCII()));
 	} else {
 		// This is supposed to select the "preferred device"
 		m_pDevice = alcOpenDevice(nullptr);
@@ -321,16 +321,16 @@ bool SoundManager::Init()
 				m_nEAXLevel = 0;
 			//#define USE_EAX
 				#ifdef USE_EAX
-					if (alIsExtensionPresent((ALubyte*)"EAX2.0") == AL_TRUE) {
+					if (alIsExtensionPresent(static_cast<ALubyte*>("EAX2.0")) == AL_TRUE) {
 						m_nEAXLevel = 2;
 					} else {
-						if (alIsExtensionPresent((ALubyte*)"EAX") == AL_TRUE)
+						if (alIsExtensionPresent(static_cast<ALubyte*>("EAX")) == AL_TRUE)
 							m_nEAXLevel = 1;
 					}
 
 					// Set EAX environment if EAX is available
 					if (m_nEAXLevel != 0) {
-						EAXSet pfPropSet = (EAXSet)alGetProcAddress((ALubyte*)"EAXSet");
+						EAXSet pfPropSet = static_cast<EAXSet>(alGetProcAddress(static_cast<ALubyte*>("EAXSet")));
 						if (pfPropSet != nullptr) {
 							long nGlobalReverb = -10000;
 							pfPropSet(&DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_ROOM,		   0, &nGlobalReverb, sizeof(unsigned long));
@@ -416,7 +416,7 @@ bool SoundManager::Update()
 
 	// Check active sources
 	for (uint32 i=0; i<m_lstActiveSources.GetNumOfElements(); i++) {
-		Source *pSource = (Source*)m_lstActiveSources[i];
+		Source *pSource = static_cast<Source*>(m_lstActiveSources[i]);
 		pSource->Update();
 		if (!pSource->IsPlaying()) {
 			// Remove the inactive sound source

@@ -87,7 +87,7 @@ void *F_CALLBACKAPI FSOpen(const char *pszName)
 
 		// Try to open the file
 		if (pFile->Open(File::FileRead)) {
-			return (void*)pFile; // Return opend file object
+			return static_cast<void*>(pFile); // Return opend file object
 		}
 
 		// Cleanup on error
@@ -101,14 +101,14 @@ void *F_CALLBACKAPI FSOpen(const char *pszName)
 void F_CALLBACKAPI FSClose(void *pHandle)
 {
 	if (pHandle) {
-		((File*)pHandle)->Close();
-		delete ((File*)pHandle);
+		static_cast<File*>(pHandle)->Close();
+		delete static_cast<File*>(pHandle);
 	}
 }
 
 int F_CALLBACKAPI FSRead(void *pBuffer, int nSize, void *pHandle)
 {
-	return pHandle ? ((File*)pHandle)->Read(pBuffer, 1, nSize) : -1;
+	return pHandle ? static_cast<File*>(pHandle)->Read(pBuffer, 1, nSize) : -1;
 }
 
 int F_CALLBACKAPI FSSeek(void *pHandle, int nPos, signed char nMode)
@@ -116,13 +116,13 @@ int F_CALLBACKAPI FSSeek(void *pHandle, int nPos, signed char nMode)
 	if (pHandle) {
 		switch (nMode) {
 			case SEEK_SET:
-				return !((File*)pHandle)->Seek(nPos, File::SeekSet);
+				return !static_cast<File*>(pHandle)->Seek(nPos, File::SeekSet);
 
 			case SEEK_CUR:
-				return !((File*)pHandle)->Seek(nPos, File::SeekCurrent);
+				return !static_cast<File*>(pHandle)->Seek(nPos, File::SeekCurrent);
 
 			case SEEK_END:
-				return !((File*)pHandle)->Seek(nPos, File::SeekEnd);
+				return !static_cast<File*>(pHandle)->Seek(nPos, File::SeekEnd);
 		}
 	}
 
@@ -132,7 +132,7 @@ int F_CALLBACKAPI FSSeek(void *pHandle, int nPos, signed char nMode)
 
 int F_CALLBACKAPI FSTell(void *pHandle)
 {
-	return pHandle ? ((File*)pHandle)->Tell() : -1;
+	return pHandle ? static_cast<File*>(pHandle)->Tell() : -1;
 }
 
 
@@ -151,7 +151,8 @@ void * F_CALLBACKAPI FMODReallocationFunction(void *pAddress, unsigned int nSize
 
 void F_CALLBACKAPI FMODDeallocationFunction(void *pAddress)
 {
-	if (pAddress) MemoryManager::Deallocator(MemoryManager::DeleteArray, pAddress);
+	if (pAddress)
+		MemoryManager::Deallocator(MemoryManager::DeleteArray, pAddress);
 }
 
 
@@ -303,7 +304,7 @@ void SoundManager::SetVolume(float fVolume)
 	// No change = nothing to do :)
 	if (m_fVolume != fVolume) {
 		m_fVolume = fVolume;
-		FSOUND_SetSFXMasterVolume((int)(fVolume*255));
+		FSOUND_SetSFXMasterVolume(static_cast<int>(fVolume*255));
 	}
 }
 
@@ -355,7 +356,8 @@ PLSound::Source *SoundManager::CreateSoundSource(PLSound::Buffer *pSoundBuffer)
 {
 	// Create the FMOD sound source
 	PLSound::Source *pSS = new Source(*this);
-	if (pSoundBuffer) pSS->Load(pSoundBuffer);
+	if (pSoundBuffer)
+		pSS->Load(pSoundBuffer);
 
 	// Return the created sound source
 	return pSS;
@@ -424,8 +426,12 @@ bool SoundManager::Init()
 		if (nRetryCount < 10) {
 			// Done
 			return true;
-		} else PL_LOG(Error, String::Format("Error on FMOD initialization! (%s)", FMOD_ErrorString(FSOUND_GetError())))
-	} else PL_LOG(Error, String::Format("Invalid FMOD version! (v%.1f required!)", FMOD_VERSION))
+		} else {
+			PL_LOG(Error, String::Format("Error on FMOD initialization! (%s)", FMOD_ErrorString(FSOUND_GetError())))
+		}
+	} else {
+		PL_LOG(Error, String::Format("Invalid FMOD version! (v%.1f required!)", FMOD_VERSION))
+	}
 
 	// Error!
 	return false;

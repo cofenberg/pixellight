@@ -124,10 +124,11 @@ bool StreamOgg::FillBuffer(ALuint nBuffer)
 	int nSize = 0;
 
 	// Read data
-	while (nSize < (int)m_nSwapSize) {
+	while (nSize < static_cast<int>(m_nSwapSize)) {
 		int nSection;
-		int nResult = ov_read(&m_cOggStream, (char*)&m_pnSwap[nSize], m_nSwapSize - nSize, 0, 2, 1, &nSection);
-		if (nResult > 0) nSize += nResult;
+		int nResult = ov_read(&m_cOggStream, reinterpret_cast<char*>(&m_pnSwap[nSize]), m_nSwapSize - nSize, 0, 2, 1, &nSection);
+		if (nResult > 0)
+			nSize += nResult;
 		else {
 			if (nResult < 0)
 				return false; // Error!

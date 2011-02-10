@@ -89,7 +89,7 @@ FMOD_RESULT F_CALLBACK FSOpen(const char *pszName, int nUnicode, unsigned int *p
 			// Return opend file object
 			*pFileSize	= pFile->GetSize();
 			*ppHandle	= pFile;
-			*ppUserData	= (void*)0x12345678;
+			*ppUserData	= reinterpret_cast<void*>(0x12345678);
 
 			// Done
 			return FMOD_OK;
@@ -106,33 +106,39 @@ FMOD_RESULT F_CALLBACK FSOpen(const char *pszName, int nUnicode, unsigned int *p
 FMOD_RESULT F_CALLBACK FSClose(void *pHandle, void *pUserData)
 {
 	if (pHandle) {
-		((File*)pHandle)->Close();
-		delete ((File*)pHandle);
+		static_cast<File*>(pHandle)->Close();
+		delete static_cast<File*>(pHandle);
 
 		return FMOD_OK;
-	} else return FMOD_ERR_INVALID_PARAM;
+	} else {
+		return FMOD_ERR_INVALID_PARAM;
+	}
 }
 
 FMOD_RESULT F_CALLBACK FSRead(void *pHandle, void *pBuffer, unsigned int nSizeBytes, unsigned int *pnBytesRead, void *pUserData)
 {
 	if (pHandle) {
 		if (pnBytesRead) {
-			*pnBytesRead = ((File*)pHandle)->Read(pBuffer, 1, nSizeBytes);
+			*pnBytesRead = static_cast<File*>(pHandle)->Read(pBuffer, 1, nSizeBytes);
 			if (*pnBytesRead < nSizeBytes)
 				return FMOD_ERR_FILE_EOF;
 		}
 
 		return FMOD_OK;
-	} else return FMOD_ERR_INVALID_PARAM;
+	} else {
+		return FMOD_ERR_INVALID_PARAM;
+	}
 }
 
 FMOD_RESULT F_CALLBACK FSSeek(void *pHandle, unsigned int nPos, void *pUserData)
 {
 	if (pHandle) {
-		((File*)pHandle)->Seek(nPos, File::SeekSet);
+		static_cast<File*>(pHandle)->Seek(nPos, File::SeekSet);
 
 		return FMOD_OK;
-	} else return FMOD_ERR_INVALID_PARAM;
+	} else {
+		return FMOD_ERR_INVALID_PARAM;
+	}
 }
 
 
@@ -154,7 +160,8 @@ void * F_CALLBACK FMODExReallocationFunction(void *pAddress, unsigned int nSize,
 void F_CALLBACK FMODExDeallocationFunction(void *pAddress, FMOD_MEMORY_TYPE nType)
 {
 	// 'nType' is not used (that's NO problem!)
-	if (pAddress) MemoryManager::Deallocator(MemoryManager::DeleteArray, pAddress);
+	if (pAddress)
+		MemoryManager::Deallocator(MemoryManager::DeleteArray, pAddress);
 }
 
 
@@ -172,7 +179,9 @@ bool SoundManager::ErrorCheck(FMOD_RESULT nResult)
 
 		// Error!
 		return false;
-	} else return true;
+	} else {
+		return true;
+	}
 }
 
 
@@ -338,7 +347,8 @@ void SoundManager::SetVolume(float fVolume)
 		if (m_pSystem) {
 			FMOD::ChannelGroup *pChannelGroup;
 			m_pSystem->getMasterChannelGroup(&pChannelGroup);
-			if (pChannelGroup) pChannelGroup->setVolume(fVolume);
+			if (pChannelGroup)
+				pChannelGroup->setVolume(fVolume);
 		}
 	}
 }
@@ -358,7 +368,8 @@ void SoundManager::SetPitch(float fPitch)
 		if (m_pSystem) {
 			FMOD::ChannelGroup *pChannelGroup;
 			m_pSystem->getMasterChannelGroup(&pChannelGroup);
-			if (pChannelGroup) pChannelGroup->setPitch(fPitch);
+			if (pChannelGroup)
+				pChannelGroup->setPitch(fPitch);
 		}
 	}
 }
@@ -398,7 +409,8 @@ PLSound::Source *SoundManager::CreateSoundSource(PLSound::Buffer *pSoundBuffer)
 {
 	// Create the FMOD Ex sound source
 	PLSound::Source *pSS = new Source(*this);
-	if (pSoundBuffer) pSS->Load(pSoundBuffer);
+	if (pSoundBuffer)
+		pSS->Load(pSoundBuffer);
 
 	// Return the created sound source
 	return pSS;
@@ -426,10 +438,10 @@ bool SoundManager::SetListenerAttribute(EListener nAttribute, const Vector3 &vV)
 
 	// Setup listener
 	m_pSystem->set3DListenerAttributes(0,
-									   (const FMOD_VECTOR*)&m_vListenerAttributes[ListenerPosition].x,
-									   (const FMOD_VECTOR*)&m_vListenerAttributes[ListenerVelocity].x,
-									   (const FMOD_VECTOR*)&vForward.x,
-									   (const FMOD_VECTOR*)&vUpward.x);
+									   reinterpret_cast<const FMOD_VECTOR*>(&m_vListenerAttributes[ListenerPosition].x),
+									   reinterpret_cast<const FMOD_VECTOR*>(&m_vListenerAttributes[ListenerVelocity].x),
+									   reinterpret_cast<const FMOD_VECTOR*>(&vForward.x),
+									   reinterpret_cast<const FMOD_VECTOR*>(&vUpward.x));
 
 	// Done
 	return true;
@@ -451,7 +463,7 @@ bool SoundManager::Init()
 		FMOD::System_Create(&m_pSystem);
 		if (ErrorCheck(nResult)) {
 			// Check the version
-			unsigned int nVersion;
+			unsigned int nVersion = 0;
 			nResult = m_pSystem->getVersion(&nVersion);
 			if (ErrorCheck(nResult)) {
 				if (nVersion >= FMOD_VERSION) {
@@ -459,7 +471,7 @@ bool SoundManager::Init()
 					m_pSystem->setDriver(Driver);
 
 					// Set output
-					m_pSystem->setOutput((FMOD_OUTPUTTYPE)Output.GetInt());
+					m_pSystem->setOutput(static_cast<FMOD_OUTPUTTYPE>(Output.GetInt()));
 
 					// Set buffer size
 					m_pSystem->setDSPBufferSize(BufferLength, NumOfBuffers);
@@ -472,7 +484,9 @@ bool SoundManager::Init()
 						if (ErrorCheck(nResult))
 							return true; // Done
 					}
-				} else PL_LOG(Error, String::Format("You are using an old version of FMOD %08x. This program requires %08x", nVersion, FMOD_VERSION))
+				} else {
+					PL_LOG(Error, String::Format("You are using an old version of FMOD %08x. This program requires %08x", nVersion, FMOD_VERSION))
+				}
 			}
 
 			// Cleanup on error
@@ -508,7 +522,8 @@ bool SoundManager::DeInit()
 bool SoundManager::Update()
 {
 	// Check system instance
-	if (!m_pSystem) return false; // Error!
+	if (!m_pSystem)
+		return false; // Error!
 
 	// Update FMOD Ex
 	m_pSystem->update();

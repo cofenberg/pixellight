@@ -98,7 +98,7 @@ void Source::Unload()
 bool Source::Play(bool bRestart)
 {
 	// Is a buffer loaded?
-	Buffer *pBuffer = (Buffer*)GetBuffer();
+	Buffer *pBuffer = static_cast<Buffer*>(GetBuffer());
 	if (pBuffer && pBuffer->GetSound()) {
 		// Paused?
 		if (IsPaused() && !bRestart) {
@@ -116,7 +116,7 @@ bool Source::Play(bool bRestart)
 			}
 
 			// Get FMOD Ex system instance
-			FMOD::System *pSystem = ((SoundManager&)GetSoundManager()).GetSystem();
+			FMOD::System *pSystem = static_cast<SoundManager&>(GetSoundManager()).GetSystem();
 			if (pSystem) {
 				// Set looping
 				pBuffer->GetSound()->setLoopCount(m_bLooping ? -1 : 0);
@@ -125,7 +125,7 @@ bool Source::Play(bool bRestart)
 				FMOD_RESULT nResult = pSystem->playSound(FMOD_CHANNEL_FREE, pBuffer->GetSound(), false, &m_pChannel);
 				if (SoundManager::ErrorCheck(nResult)) {
 					// Add source to sound manager
-					((SoundManager&)GetSoundManager()).AddActiveSource(*this);
+					static_cast<SoundManager&>(GetSoundManager()).AddActiveSource(*this);
 
 					// Set mode
 					if (m_b2D)
@@ -209,7 +209,7 @@ void Source::Stop()
 		m_pChannel = nullptr;
 
 		// Remove source from sound manager
-		((SoundManager&)GetSoundManager()).RemoveActiveSource(*this);
+		static_cast<SoundManager&>(GetSoundManager()).RemoveActiveSource(*this);
 	}
 }
 
@@ -343,11 +343,11 @@ bool Source::SetAttribute(EAttributes nAttribute, const Vector3 &vV)
 		// Set sound API value
 		switch (nAttribute) {
 			case Position:
-				m_pChannel->set3DAttributes((const FMOD_VECTOR*)&m_vAttributes[Position].x, nullptr);
+				m_pChannel->set3DAttributes(reinterpret_cast<const FMOD_VECTOR*>(&m_vAttributes[Position].x), nullptr);
 				return true; // Done
 
 			case Velocity:
-				m_pChannel->set3DAttributes(nullptr, (const FMOD_VECTOR*)&m_vAttributes[Velocity].x);
+				m_pChannel->set3DAttributes(nullptr, reinterpret_cast<const FMOD_VECTOR*>(&m_vAttributes[Velocity].x));
 				return true; // Done
 		}
 	}

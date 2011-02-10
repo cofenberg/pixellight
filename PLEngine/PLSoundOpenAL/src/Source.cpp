@@ -106,11 +106,11 @@ bool Source::Load(PLSound::Buffer *pBuffer)
 	if (pBuffer) {
 		// Load the buffer
 		if (pBuffer->IsStreamed()) {
-			m_pStream = ((Buffer*)pBuffer)->CreateStream(m_nSource);
+			m_pStream = static_cast<Buffer*>(pBuffer)->CreateStream(m_nSource);
 			if (!m_pStream)
 				return false; // Error!
 		} else {
-			alSourcei(m_nSource, AL_BUFFER, ((Buffer*)pBuffer)->GetOpenALBuffer());
+			alSourcei(m_nSource, AL_BUFFER, static_cast<Buffer*>(pBuffer)->GetOpenALBuffer());
 			ALuint nError = alGetError();
 			if (nError != AL_NO_ERROR) {
 				PL_LOG(Error, String::Format("alSourcei: %s", alGetString(nError)))
@@ -165,7 +165,7 @@ bool Source::Play(bool bRestart)
 			return false; // Error!
 
 		// Add source to sound manager
-		((SoundManager&)GetSoundManager()).AddActiveSource(*this);
+		static_cast<SoundManager&>(GetSoundManager()).AddActiveSource(*this);
 	}
 
 	// Setup pitch
@@ -237,7 +237,7 @@ void Source::Stop()
 			m_pStream->DeInit();
 
 		// Remove source from sound manager
-		((SoundManager&)GetSoundManager()).RemoveActiveSource(*this);
+		static_cast<SoundManager&>(GetSoundManager()).RemoveActiveSource(*this);
 	}
 }
 

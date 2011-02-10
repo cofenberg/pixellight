@@ -81,6 +81,7 @@ elseif(LINUX)
 	##################################################
 	add_compile_flags(
 		${LINUX_COMPILE_FLAGS}
+		-Wno-write-strings	# Disable "warning: deprecated conversion from string constant to ‘char*’" warnings - we can't change the (legacy) FMOD library producing a lot of those warnings!
 	)
 endif()
 

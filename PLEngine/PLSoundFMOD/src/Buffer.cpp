@@ -129,10 +129,10 @@ bool Buffer::SetVolume(int nChannel, float fVolume)
 {
 	// Set volume
 	if (m_pMod) {
-		FMUSIC_SetMasterVolume(m_pMod, (int)(fVolume*256));
+		FMUSIC_SetMasterVolume(m_pMod, static_cast<int>(fVolume*256));
 	} else {
 		if ((m_pSample || m_pStream) && nChannel > -1) {
-			FSOUND_SetVolume(nChannel, (int)(fVolume*255));
+			FSOUND_SetVolume(nChannel, static_cast<int>(fVolume*255));
 		} else {
 			// Error!
 			return false;
@@ -207,7 +207,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 	if (nSize) {
 		// Load buffer
 		bool bError = false;
-		m_pMod = FMUSIC_LoadSongEx((const char*)&nData, 0, nSize, FSOUND_LOADMEMORY, nullptr, 0);
+		m_pMod = FMUSIC_LoadSongEx(reinterpret_cast<const char*>(&nData), 0, nSize, FSOUND_LOADMEMORY, nullptr, 0);
 		if (m_pMod) {
 			if (FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_MOD || FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_S3M)
 				FMUSIC_SetPanSeperation(m_pMod, 0.85f); // 15% crossover
@@ -216,11 +216,11 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 			int nFlag = 0;
 //			int nFlag = FSOUND_HW3D;
 			if (bStream) {
-				m_pStream = FSOUND_Stream_Open((const char*)&nData, FSOUND_NORMAL | FSOUND_MPEGACCURATE | FSOUND_LOADMEMORY | FSOUND_LOOP_OFF, 0, nSize);
+				m_pStream = FSOUND_Stream_Open(reinterpret_cast<const char*>(&nData), FSOUND_NORMAL | FSOUND_MPEGACCURATE | FSOUND_LOADMEMORY | FSOUND_LOOP_OFF, 0, nSize);
 				if (!m_pStream)
 					bError = true;
 			} else {
-				m_pSample = FSOUND_Sample_Load(FSOUND_FREE, (const char*)&nData, FSOUND_NORMAL | FSOUND_LOADMEMORY | nFlag, 0, nSize);
+				m_pSample = FSOUND_Sample_Load(FSOUND_FREE, reinterpret_cast<const char*>(&nData), FSOUND_NORMAL | FSOUND_LOADMEMORY | nFlag, 0, nSize);
 				if (m_pSample)
 					FSOUND_Sample_SetMode(m_pSample, FSOUND_LOOP_OFF);
 				else

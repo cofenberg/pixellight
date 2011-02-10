@@ -76,7 +76,7 @@ Stream *Buffer::CreateStream(ALuint nSource)
 				MemoryManager::Copy(&sWavHeader, m_pnData, sizeof(StreamWav::Header));
 
 				// Is this wav file?
-				sExtension = MemoryManager::Compare((const char*)sWavHeader.wave, "WAVE", 4) ? "ogg" : "wav";
+				sExtension = MemoryManager::Compare(reinterpret_cast<const char*>(sWavHeader.wave), "WAVE", 4) ? "ogg" : "wav";
 			} else {
 				sExtension = "ogg";
 			}

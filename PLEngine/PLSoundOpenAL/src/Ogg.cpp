@@ -77,7 +77,7 @@ bool LoadOGG(File *pFile, Array<uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFr
 			long nBytes;
 			do {
 				// Read up to a buffer's worth of decoded sound data
-				nBytes = ov_read(&oggFile, (char*)nArray, BufferSize, nEndian, 2, 1, &nBitStream);
+				nBytes = ov_read(&oggFile, reinterpret_cast<char*>(nArray), BufferSize, nEndian, 2, 1, &nBitStream);
 				if (nBytes < 0) {
 					// Error!
 					bResult = false;
@@ -138,7 +138,7 @@ bool LoadOGG(const uint8 nData[], uint32 nSize, Array<uint8> &lstBuffer, ALenum 
 		long nBytes;
 		do {
 			// Read up to a buffer's worth of decoded sound data
-			nBytes = ov_read(&oggFile, (char*)nArray, 32768, nEndian, 2, 1, &nBitStream);
+			nBytes = ov_read(&oggFile, reinterpret_cast<char*>(nArray), 32768, nEndian, 2, 1, &nBitStream);
 			if (nBytes < 0) {
 				// Error!
 				bResult = false;
