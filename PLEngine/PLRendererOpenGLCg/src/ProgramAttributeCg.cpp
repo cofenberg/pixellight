@@ -66,10 +66,10 @@ bool ProgramAttributeCg::Set(PLRenderer::VertexBuffer *pVertexBuffer, uint32 nIn
 		const PLRenderer::VertexBuffer::Attribute *pVertexAttribute = pVertexBuffer->GetVertexAttribute(nIndex);
 		if (pVertexAttribute) {
 			// Bind and update the vertex buffer if required
-			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->BindAndUpdate();
+			static_cast<PLRendererOpenGL::VertexBuffer*>(pVertexBuffer)->BindAndUpdate();
 
 			// Create the connection between "vertex program attribute" and "vertex buffer attribute"
-			cgGLSetParameterPointer(m_pCgParameter, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, pVertexBuffer->GetVertexSize(), (const void*)pVertexAttribute->nOffset);
+			cgGLSetParameterPointer(m_pCgParameter, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, pVertexBuffer->GetVertexSize(), reinterpret_cast<const void*>(pVertexAttribute->nOffset));
 
 			// Enable vertex attribute array
 			cgGLEnableClientState(m_pCgParameter);
@@ -94,10 +94,10 @@ bool ProgramAttributeCg::Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRenderer
 		const PLRenderer::VertexBuffer::Attribute *pVertexAttribute = pVertexBuffer->GetVertexAttribute(nSemantic, nChannel);
 		if (pVertexAttribute) {
 			// Bind and update the vertex buffer if required
-			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->BindAndUpdate();
+			static_cast<PLRendererOpenGL::VertexBuffer*>(pVertexBuffer)->BindAndUpdate();
 
 			// Create the connection between "vertex program attribute" and "vertex buffer attribute"
-			cgGLSetParameterPointer(m_pCgParameter, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, pVertexBuffer->GetVertexSize(), (const void*)pVertexAttribute->nOffset);
+			cgGLSetParameterPointer(m_pCgParameter, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, pVertexBuffer->GetVertexSize(), reinterpret_cast<const void*>(pVertexAttribute->nOffset));
 
 			// Enable vertex attribute array
 			cgGLEnableClientState(m_pCgParameter);

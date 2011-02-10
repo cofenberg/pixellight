@@ -466,23 +466,23 @@ int ProgramUniformCg::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 			// Check resource type
 			switch (pTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
-					nOpenGLTexture = ((PLRendererOpenGL::TextureBuffer1D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBuffer1D*>(pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
-					nOpenGLTexture = ((PLRendererOpenGL::TextureBuffer2D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBuffer2D*>(pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
-					nOpenGLTexture = ((PLRendererOpenGL::TextureBufferRectangle*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBufferRectangle*>(pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
-					nOpenGLTexture = ((PLRendererOpenGL::TextureBuffer3D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBuffer3D*>(pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
-					nOpenGLTexture = ((PLRendererOpenGL::TextureBufferCube*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBufferCube*>(pTextureBuffer)->GetOpenGLTexture();
 					break;
 			}
 		}
@@ -493,7 +493,7 @@ int ProgramUniformCg::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 
 		// Inform the renderer
 		if (pTextureBuffer)
-			((PLRendererOpenGL::Renderer&)pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(nTextureUnit, pTextureBuffer);
+			static_cast<PLRendererOpenGL::Renderer&>(pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(nTextureUnit, pTextureBuffer);
 
 		// Done
 		return nTextureUnit;

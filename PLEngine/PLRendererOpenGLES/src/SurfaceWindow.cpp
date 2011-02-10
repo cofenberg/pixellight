@@ -93,12 +93,12 @@ Vector2i SurfaceWindow::GetSize() const
 	if (GetWindow()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect((HWND)GetWindow(), &sRect);
+			GetClientRect(static_cast<HWND>(GetWindow()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		#ifdef LINUX
 			// Get the X server display connection
-			Display *pDisplay = ((Renderer&)GetRenderer()).m_pDisplay;
+			Display *pDisplay = static_cast<Renderer&>(GetRenderer()).m_pDisplay;
 			if (pDisplay) {
 				// Get X window geometry information
 				::Window nRootWindow = 0;
@@ -124,10 +124,10 @@ bool SurfaceWindow::Init()
 	const handle nWindow = GetWindow();
 	if (nWindow) {
 		// Get the OpenGL ES renderer
-		Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
+		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// Create window surface
-		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), (EGLNativeWindowType)nWindow, nullptr);
+		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), static_cast<EGLNativeWindowType>(nWindow), nullptr);
 		if (m_hSurface == EGL_NO_SURFACE) {
 			PL_LOG(Warning, "Could not create OpenGL ES surface");
 
@@ -145,7 +145,7 @@ void SurfaceWindow::DeInit()
 	// Initialized?
 	if (m_hSurface) {
 		// Get the OpenGL ES renderer
-		Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
+		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// If this is the current render target, make the main window to the new current one
 		if (cRendererOpenGLES.GetRenderTarget() == this) {
@@ -161,19 +161,19 @@ void SurfaceWindow::DeInit()
 bool SurfaceWindow::MakeCurrent(uint8 nFace)
 {
 	// Make this surface current
-	return (((Renderer&)GetRenderer()).MakeCurrent(m_hSurface) == EGL_TRUE);
+	return (static_cast<Renderer&>(GetRenderer()).MakeCurrent(m_hSurface) == EGL_TRUE);
 }
 
 bool SurfaceWindow::UnmakeCurrent()
 {
 	// Make the internal dummy surface to the currently used one
-	return (((Renderer&)GetRenderer()).MakeCurrent(nullptr) == EGL_TRUE);
+	return (static_cast<Renderer&>(GetRenderer()).MakeCurrent(nullptr) == EGL_TRUE);
 }
 
 bool SurfaceWindow::Present()
 {
 	// Get the OpenGL ES renderer
-	Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
+	Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 	// Swap buffers
 	return (cRendererOpenGLES.GetEGLDisplay() && m_hSurface && eglSwapBuffers(cRendererOpenGLES.GetEGLDisplay(), m_hSurface) == EGL_TRUE);

@@ -68,14 +68,14 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 			bool bGLSL = false;
 
 			// There must be a vertex and a fragment shader
-			VertexShaderCg *pVertexShader = (VertexShaderCg*)m_cVertexShaderHandler.GetResource();
+			VertexShaderCg *pVertexShader = static_cast<VertexShaderCg*>(m_cVertexShaderHandler.GetResource());
 			if (pVertexShader) {
 				// Is this a GLSL vertex shader?
 				if (pVertexShader->GetCgProfile() == CG_PROFILE_GLSLV)
 					bGLSL = true;
 
 				// Get the fragment shader
-				FragmentShaderCg *pFragmentShader = (FragmentShaderCg*)m_cFragmentShaderHandler.GetResource();
+				FragmentShaderCg *pFragmentShader = static_cast<FragmentShaderCg*>(m_cFragmentShaderHandler.GetResource());
 				if (pFragmentShader) {
 					// Is this a GLSL fragment shader?
 					if (pFragmentShader->GetCgProfile() == CG_PROFILE_GLSLF && !bGLSL) {
@@ -83,7 +83,7 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 						PL_LOG(Error, "Fragment shader is using GLSL, but vertex shader is not!")
 					} else {
 						// Geometry shader is optional
-						GeometryShaderCg *pGeometryShader = (GeometryShaderCg*)m_cGeometryShaderHandler.GetResource();
+						GeometryShaderCg *pGeometryShader = static_cast<GeometryShaderCg*>(m_cGeometryShaderHandler.GetResource());
 
 						// Create the Cg combined program
 						if (pGeometryShader) {
@@ -272,7 +272,7 @@ void ProgramCg::DestroyAttributeInformation()
 	if (nNumOfAttributes) {
 		// Destroy the attribute instances
 		for (uint32 i=0; i<nNumOfAttributes; i++)
-			delete (ProgramAttributeCg*)m_lstAttributes[i];
+			delete static_cast<ProgramAttributeCg*>(m_lstAttributes[i]);
 
 		// Clear the attribute list and hash map
 		m_lstAttributes.Clear();
@@ -360,7 +360,7 @@ void ProgramCg::DestroyUniformInformation()
 	if (nNumOfUniforms) {
 		// Destroy the uniform instances
 		for (uint32 i=0; i<nNumOfUniforms; i++)
-			delete (ProgramUniformCg*)m_lstUniforms[i];
+			delete static_cast<ProgramUniformCg*>(m_lstUniforms[i]);
 
 		// Clear the uniform list and hash map
 		m_lstUniforms.Clear();
@@ -382,17 +382,17 @@ String ProgramCg::GetShaderLanguage() const
 
 PLRenderer::VertexShader *ProgramCg::GetVertexShader() const
 {
-	return (PLRenderer::VertexShader*)m_cVertexShaderHandler.GetResource();
+	return static_cast<PLRenderer::VertexShader*>(m_cVertexShaderHandler.GetResource());
 }
 
 bool ProgramCg::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 {
 	// Is the new vertex shader the same one as the current one?
-	PLRenderer::VertexShader *pCurrentVertexShader = (PLRenderer::VertexShader*)m_cVertexShaderHandler.GetResource();
+	PLRenderer::VertexShader *pCurrentVertexShader = static_cast<PLRenderer::VertexShader*>(m_cVertexShaderHandler.GetResource());
 	if (pCurrentVertexShader != pVertexShader) {
 		// The shader language of the program and the vertex shader must match and the vertex shader must be valid!
 		if (pVertexShader && (pVertexShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
-			!((VertexShaderCg*)pVertexShader)->GetCgVertexProgram()))
+			!static_cast<VertexShaderCg*>(pVertexShader)->GetCgVertexProgram()))
 			return false; // Error!
 
 		// Update the vertex shader resource handler
@@ -408,17 +408,17 @@ bool ProgramCg::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 
 PLRenderer::GeometryShader *ProgramCg::GetGeometryShader() const
 {
-	return (PLRenderer::GeometryShader*)m_cGeometryShaderHandler.GetResource();
+	return static_cast<PLRenderer::GeometryShader*>(m_cGeometryShaderHandler.GetResource());
 }
 
 bool ProgramCg::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 {
 	// Is the new geometry shader the same one as the current one?
-	PLRenderer::GeometryShader *pCurrentGeometryShader = (PLRenderer::GeometryShader*)m_cGeometryShaderHandler.GetResource();
+	PLRenderer::GeometryShader *pCurrentGeometryShader = static_cast<PLRenderer::GeometryShader*>(m_cGeometryShaderHandler.GetResource());
 	if (pCurrentGeometryShader != pGeometryShader) {
 		// The shader language of the program and the geometry shader must match and the geometry shader must be valid!
 		if (pGeometryShader && (pGeometryShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
-			!((GeometryShaderCg*)pGeometryShader)->GetCgGeometryProgram()))
+			!static_cast<GeometryShaderCg*>(pGeometryShader)->GetCgGeometryProgram()))
 			return false; // Error, shader language mismatch!
 
 		// Update the geometry shader resource handler
@@ -436,17 +436,17 @@ bool ProgramCg::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 
 PLRenderer::FragmentShader *ProgramCg::GetFragmentShader() const
 {
-	return (PLRenderer::FragmentShader*)m_cFragmentShaderHandler.GetResource();
+	return static_cast<PLRenderer::FragmentShader*>(m_cFragmentShaderHandler.GetResource());
 }
 
 bool ProgramCg::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 {
 	// Is the new fragment shader the same one as the current one?
-	PLRenderer::FragmentShader *pCurrentFragmentShader = (PLRenderer::FragmentShader*)m_cFragmentShaderHandler.GetResource();
+	PLRenderer::FragmentShader *pCurrentFragmentShader = static_cast<PLRenderer::FragmentShader*>(m_cFragmentShaderHandler.GetResource());
 	if (pCurrentFragmentShader != pFragmentShader) {
 		// The shader language of the program and the fragment shader must match and the fragment shader must be valid!
 		if (pFragmentShader && (pFragmentShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
-			!((FragmentShaderCg*)pFragmentShader)->GetCgFragmentProgram()))
+			!static_cast<FragmentShaderCg*>(pFragmentShader)->GetCgFragmentProgram()))
 			return false; // Error, shader language mismatch!
 
 		// Update the fragment shader resource handler
@@ -523,7 +523,7 @@ bool ProgramCg::MakeCurrent()
 		const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
 		for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
 			// Enable vertex attribute array
-			cgGLEnableClientState(((ProgramAttributeCg*)lstAttributes[i])->m_pCgParameter);
+			cgGLEnableClientState(static_cast<ProgramAttributeCg*>(lstAttributes[i])->m_pCgParameter);
 		}
 
 		// Done
@@ -542,7 +542,7 @@ bool ProgramCg::UnmakeCurrent()
 		const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
 		for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
 			// Disable vertex attribute array
-			cgGLDisableClientState(((ProgramAttributeCg*)lstAttributes[i])->m_pCgParameter);
+			cgGLDisableClientState(static_cast<ProgramAttributeCg*>(lstAttributes[i])->m_pCgParameter);
 		}
 
 		// Iterate through all Cg programs of the Cg combined program and disable all required profiles

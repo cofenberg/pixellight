@@ -174,7 +174,7 @@ void FragmentShaderCg::RestoreDeviceData(uint8 **ppBackup)
 	// Restore data
 	if (*ppBackup) {
 		// The string class takes over the control of the string memory and also deletes it
-		SetSourceCode(String((char*)*ppBackup, false), GetProfile(), m_sEntry);
+		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sEntry);
 	}
 }
 

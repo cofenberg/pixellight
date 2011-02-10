@@ -49,7 +49,7 @@ IndexBuffer::~IndexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferNum--;
 }
 
 /**
@@ -107,7 +107,7 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 	m_nUsageAPI(0)
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nIndexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nIndexBufferNum++;
 }
 
 
@@ -155,7 +155,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 	// Init data
 	uint8 *pDataBackup = nullptr;
@@ -169,9 +169,9 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 
 		// Delete data
 		if (m_nElementType == UShort)
-			delete [] (uint16*)m_pData;
+			delete [] static_cast<uint16*>(m_pData);
 		else
-			delete [] (uint8*)m_pData;
+			delete [] static_cast<uint8*>(m_pData);
 		m_pData = nullptr;
 	}
 	if (m_nIndexBuffer && nUsage == PLRenderer::Usage::Software) {
@@ -243,7 +243,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem += m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem += m_nSize;
 
 	// Done
 	return true;
@@ -259,14 +259,14 @@ bool IndexBuffer::Clear()
 		}
 		if (m_pData) {
 			if (m_nElementType == UShort)
-				delete [] (uint16*)m_pData;
+				delete [] static_cast<uint16*>(m_pData);
 			else
-				delete [] (uint8*)m_pData;
+				delete [] static_cast<uint8*>(m_pData);
 			m_pData = nullptr;
 		}
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 		// Init
 		m_nElements  = 0;
@@ -301,7 +301,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 		}
 
 		// Map the index buffer
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferLocks++;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferLocks++;
 		m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 		if (m_pData)
 			m_pLockedData = m_pData;
@@ -360,7 +360,7 @@ bool IndexBuffer::Unlock()
 		//	glUnmapBufferOES(GL_ELEMENT_ARRAY_BUFFER);
 		}
 	}
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 	m_pLockedData   = nullptr;
 	m_bLockReadOnly = false;
 

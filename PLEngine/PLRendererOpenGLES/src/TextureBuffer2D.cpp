@@ -53,8 +53,8 @@ TextureBuffer2D::~TextureBuffer2D()
 	glDeleteTextures(1, &m_nOpenGLESTexture);
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -89,7 +89,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 	m_bRectangleTexture(bRectangleTexture)
 {
 	// Get the OpenGL ES renderer instance
-	Renderer &cRendererOpenGLES = (Renderer&)cRenderer;
+	Renderer &cRendererOpenGLES = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
 	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
@@ -131,7 +131,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 				bool bMipmaps = (nFlags & Mipmaps);
 				if (!m_nNumOfMipmaps && bMipmaps) {
 					// Calculate the number of mipmaps
-					m_nNumOfMipmaps = (uint32)Math::Log2(float(Math::Max(m_vSize.x, m_vSize.y)));
+					m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(Math::Max(m_vSize.x, m_vSize.y))));
 
 					// Upload the base map of the texture buffer
 					if (bUsePreCompressedData)
@@ -236,7 +236,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 	m_nOpenGLESTexture(0)
 {
 	// Get the OpenGL ES renderer instance
-	Renderer &cRendererOpenGLES = (Renderer&)cRenderer;
+	Renderer &cRendererOpenGLES = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
 	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
@@ -271,7 +271,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 			glGenerateMipmap(GL_TEXTURE_2D);
 
 			// Calculate the number of mipmaps
-			m_nNumOfMipmaps = (uint32)Math::Log2(float(Math::Max(m_vSize.x, m_vSize.y)));
+			m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(Math::Max(m_vSize.x, m_vSize.y))));
 		}
 
 		// Get the total number of bytes this texture buffer requires
@@ -291,7 +291,7 @@ bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace) {
 		// Get the OpenGL ES renderer instance
-		const Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
+		const Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// Get API pixel format
 		const uint32 *pAPIPixelFormat = cRendererOpenGLES.GetAPIPixelFormat(m_nFormat);
@@ -348,7 +348,8 @@ bool TextureBuffer2D::MakeCurrent(uint32 nStage)
 	/*
 	// Check if there are renderer information
 	if (GetRenderer().GetTextureBuffer(nStage) != this) {
-		if (!GetRenderer().SetTextureBuffer(nStage, this)) return true; // Done
+		if (!GetRenderer().SetTextureBuffer(nStage, this))
+			return true; // Done
 	}
 
 	// Make this texture buffer to the renderers current one

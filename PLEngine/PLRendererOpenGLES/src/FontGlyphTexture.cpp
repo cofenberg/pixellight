@@ -59,7 +59,7 @@ FontGlyphTexture::FontGlyphTexture(FontTexture &cFontTexture, unsigned long nCha
 			if (!FT_Get_Glyph((*pFTFace)->glyph, &sFTGlyph)) {
 				// Convert the glyph to a bitmap
 				FT_Glyph_To_Bitmap(&sFTGlyph, ft_render_mode_normal, 0, 1);
-				FT_BitmapGlyph sFTBitmapGlyph = (FT_BitmapGlyph)sFTGlyph;
+				FT_BitmapGlyph sFTBitmapGlyph = reinterpret_cast<FT_BitmapGlyph>(sFTGlyph);
 
 				// Get a reference to the glypth bitmap
 				FT_Bitmap &sFTBitmap = sFTBitmapGlyph->bitmap;
@@ -72,22 +72,22 @@ FontGlyphTexture::FontGlyphTexture(FontTexture &cFontTexture, unsigned long nCha
 					glTexSubImage2D(GL_TEXTURE_2D, 0, vPosition.x, vPosition.y, m_nSize.x, m_nSize.y, GL_ALPHA, GL_UNSIGNED_BYTE, sFTBitmap.buffer);
 
 				// Set the distance (in pixel) from the current pen position to the glyph bitmap
-				m_vCorner.SetXY((float)sFTBitmapGlyph->left, (float)sFTBitmapGlyph->top - m_nSize.y);
+				m_vCorner.SetXY(static_cast<float>(sFTBitmapGlyph->left), static_cast<float>(sFTBitmapGlyph->top) - m_nSize.y);
 
 				// Set the pen advance, the FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-				m_vPenAdvance.x = float((*pFTFace)->glyph->advance.x)/64.0f;
-				m_vPenAdvance.y = float((*pFTFace)->glyph->advance.y)/64.0f;
+				m_vPenAdvance.x = static_cast<float>((*pFTFace)->glyph->advance.x)/64.0f;
+				m_vPenAdvance.y = static_cast<float>((*pFTFace)->glyph->advance.y)/64.0f;
 
 				// Get the size of the glyph texture atlas
 				const Vector2i &vGlyphTextureAtlasSize = cFontTexture.GetGlyphTextureAtlasSize();
 
 				// Calculate the normalized minimum glyph texture coordinate inside the glyph texture atlas
-				m_vTexCoordMin.x = float(vPosition.x)/float(vGlyphTextureAtlasSize.x);
-				m_vTexCoordMin.y = float(vPosition.y)/float(vGlyphTextureAtlasSize.y);
+				m_vTexCoordMin.x = static_cast<float>(vPosition.x)/static_cast<float>(vGlyphTextureAtlasSize.x);
+				m_vTexCoordMin.y = static_cast<float>(vPosition.y)/static_cast<float>(vGlyphTextureAtlasSize.y);
 
 				// Calculate the normalized maximum glyph texture coordinate inside the glyph texture atlas
-				m_vTexCoordMax.x = float(vPosition.x + m_nSize.x)/float(vGlyphTextureAtlasSize.x);
-				m_vTexCoordMax.y = float(vPosition.y + m_nSize.y)/float(vGlyphTextureAtlasSize.y);
+				m_vTexCoordMax.x = static_cast<float>(vPosition.x + m_nSize.x)/static_cast<float>(vGlyphTextureAtlasSize.x);
+				m_vTexCoordMax.y = static_cast<float>(vPosition.y + m_nSize.y)/static_cast<float>(vGlyphTextureAtlasSize.y);
 			}
 		}
 	}

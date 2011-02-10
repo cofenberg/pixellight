@@ -204,7 +204,7 @@ void ProgramGLSL::DestroyAttributeInformation()
 	if (nNumOfAttributes) {
 		// Destroy the attribute instances
 		for (uint32 i=0; i<nNumOfAttributes; i++)
-			delete (ProgramAttributeGLSL*)m_lstAttributes[i];
+			delete static_cast<ProgramAttributeGLSL*>(m_lstAttributes[i]);
 
 		// Clear the attribute list and hash map
 		m_lstAttributes.Clear();
@@ -294,7 +294,7 @@ void ProgramGLSL::DestroyUniformInformation()
 	if (nNumOfUniforms) {
 		// Destroy the uniform instances
 		for (uint32 i=0; i<nNumOfUniforms; i++)
-			delete (ProgramUniformGLSL*)m_lstUniforms[i];
+			delete static_cast<ProgramUniformGLSL*>(m_lstUniforms[i]);
 
 		// Clear the uniform list and hash map
 		m_lstUniforms.Clear();
@@ -316,13 +316,13 @@ String ProgramGLSL::GetShaderLanguage() const
 
 PLRenderer::VertexShader *ProgramGLSL::GetVertexShader() const
 {
-	return (PLRenderer::VertexShader*)m_cVertexShaderHandler.GetResource();
+	return static_cast<PLRenderer::VertexShader*>(m_cVertexShaderHandler.GetResource());
 }
 
 bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 {
 	// Is the new vertex shader the same one as the current one?
-	PLRenderer::VertexShader *pCurrentVertexShader = (PLRenderer::VertexShader*)m_cVertexShaderHandler.GetResource();
+	PLRenderer::VertexShader *pCurrentVertexShader = static_cast<PLRenderer::VertexShader*>(m_cVertexShaderHandler.GetResource());
 	if (pCurrentVertexShader != pVertexShader) {
 		// The shader language of the program and the vertex shader must match
 		if (pVertexShader && pVertexShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
@@ -330,14 +330,14 @@ bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 
 		// Detach the current vertex shader from the program
 		if (pCurrentVertexShader)
-			glDetachShader(m_nOpenGLESProgram, ((VertexShaderGLSL*)pCurrentVertexShader)->GetOpenGLESVertexShader());
+			glDetachShader(m_nOpenGLESProgram, static_cast<VertexShaderGLSL*>(pCurrentVertexShader)->GetOpenGLESVertexShader());
 
 		// Update the vertex shader resource handler
 		m_cVertexShaderHandler.SetResource(pVertexShader);
 
 		// Attach the new vertex shader to the program
 		if (pVertexShader)
-			glAttachShader(m_nOpenGLESProgram, ((VertexShaderGLSL*)pVertexShader)->GetOpenGLESVertexShader());
+			glAttachShader(m_nOpenGLESProgram, static_cast<VertexShaderGLSL*>(pVertexShader)->GetOpenGLESVertexShader());
 
 		// Denote that a program relink is required
 		RelinkRequired();
@@ -361,13 +361,13 @@ bool ProgramGLSL::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 
 PLRenderer::FragmentShader *ProgramGLSL::GetFragmentShader() const
 {
-	return (PLRenderer::FragmentShader*)m_cFragmentShaderHandler.GetResource();
+	return static_cast<PLRenderer::FragmentShader*>(m_cFragmentShaderHandler.GetResource());
 }
 
 bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 {
 	// Is the new fragment shader the same one as the current one?
-	PLRenderer::FragmentShader *pCurrentFragmentShader = (PLRenderer::FragmentShader*)m_cFragmentShaderHandler.GetResource();
+	PLRenderer::FragmentShader *pCurrentFragmentShader = static_cast<PLRenderer::FragmentShader*>(m_cFragmentShaderHandler.GetResource());
 	if (pCurrentFragmentShader != pFragmentShader) {
 		// The shader language of the program and the fragment shader must match
 		if (pFragmentShader && pFragmentShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
@@ -375,14 +375,14 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 
 		// Detach the current fragment shader from the program
 		if (pCurrentFragmentShader)
-			glDetachShader(m_nOpenGLESProgram, ((FragmentShaderGLSL*)pCurrentFragmentShader)->GetOpenGLESFragmentShader());
+			glDetachShader(m_nOpenGLESProgram, static_cast<FragmentShaderGLSL*>(pCurrentFragmentShader)->GetOpenGLESFragmentShader());
 
 		// Update the fragment shader resource handler
 		m_cFragmentShaderHandler.SetResource(pFragmentShader);
 
 		// Attach the new fragment shader to the program
 		if (pFragmentShader)
-			glAttachShader(m_nOpenGLESProgram, ((FragmentShaderGLSL*)pFragmentShader)->GetOpenGLESFragmentShader());
+			glAttachShader(m_nOpenGLESProgram, static_cast<FragmentShaderGLSL*>(pFragmentShader)->GetOpenGLESFragmentShader());
 
 		// Denote that a program relink is required
 		RelinkRequired();
@@ -448,7 +448,7 @@ bool ProgramGLSL::MakeCurrent()
 
 		// Enable all vertex attribute arrays
 		for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
-			glEnableVertexAttribArray(((ProgramAttributeGLSL*)m_lstAttributes[i])->m_nOpenGLESAttributeLocation);
+			glEnableVertexAttribArray(static_cast<ProgramAttributeGLSL*>(m_lstAttributes[i])->m_nOpenGLESAttributeLocation);
 
 		// Done
 		return true;
@@ -462,7 +462,7 @@ bool ProgramGLSL::UnmakeCurrent()
 {
 	// Disable all vertex attribute arrays
 	for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
-		glDisableVertexAttribArray(((ProgramAttributeGLSL*)m_lstAttributes[i])->m_nOpenGLESAttributeLocation);
+		glDisableVertexAttribArray(static_cast<ProgramAttributeGLSL*>(m_lstAttributes[i])->m_nOpenGLESAttributeLocation);
 
 	// Currently, no program is set
 	glUseProgram(0);

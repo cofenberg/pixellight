@@ -55,8 +55,8 @@ TextureBufferCube::~TextureBufferCube()
 	glDeleteTextures(1, &m_nOpenGLESTexture);
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -81,7 +81,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 	m_nOpenGLESTexture(0)
 {
 	// Get the OpenGL ES renderer instance
-	Renderer &cRendererOpenGLES = (Renderer&)cRenderer;
+	Renderer &cRendererOpenGLES = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
 	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
@@ -124,7 +124,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 				else {
 					// Calculate the number of mipmaps if required
 					if (!m_nNumOfMipmaps) {
-						m_nNumOfMipmaps = (uint32)Math::Log2(float(m_nSize));
+						m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 						bAutomaticMipmaps = true;
 					}
 				}
@@ -237,7 +237,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 	m_nOpenGLESTexture(0)
 {
 	// Get the OpenGL ES renderer instance
-	Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
+	Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 	// Update renderer statistics
 	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
@@ -272,7 +272,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 			glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
 			// Calculate the number of mipmaps
-			m_nNumOfMipmaps = (uint32)Math::Log2(float(m_nSize));
+			m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 		}
 
 		// Get the total number of bytes this texture buffer requires
@@ -292,7 +292,7 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && nFace <= 5) {
 		// Get the OpenGL ES renderer instance
-		const Renderer &cRendererOpenGLES = (Renderer&)GetRenderer();
+		const Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// Get API pixel format
 		const uint32 *pAPIPixelFormat = cRendererOpenGLES.GetAPIPixelFormat(m_nFormat);

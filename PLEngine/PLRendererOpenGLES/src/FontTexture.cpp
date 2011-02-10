@@ -121,19 +121,19 @@ bool FontTexture::IsValid() const
 float FontTexture::GetAscender() const
 {
 	// The FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-	return m_pFTFace ? float((*m_pFTFace)->size->metrics.ascender)/64.0f : 0.0f;
+	return m_pFTFace ? static_cast<float>((*m_pFTFace)->size->metrics.ascender)/64.0f : 0.0f;
 }
 
 float FontTexture::GetDescender() const
 {
 	// The FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-	return m_pFTFace ? float((*m_pFTFace)->size->metrics.descender)/64.0f : 0.0f;
+	return m_pFTFace ? static_cast<float>((*m_pFTFace)->size->metrics.descender)/64.0f : 0.0f;
 }
 
 float FontTexture::GetHeight() const
 {
 	// The FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-	return m_pFTFace ? float((*m_pFTFace)->size->metrics.height)/64.0f : 0.0f;
+	return m_pFTFace ? static_cast<float>((*m_pFTFace)->size->metrics.height)/64.0f : 0.0f;
 }
 
 float FontTexture::GetTextWidth(const String &sText)
@@ -157,7 +157,7 @@ void FontTexture::Draw(const String &sText, const Color4 &cColor, const Matrix4x
 	if (m_nOpenGLESGlyphTextureAtlas) {
 		// Get and set the program for font rendering
 		FontManager::GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
-		PLRenderer::Program *pProgram = ((FontManager*)m_pFontManager)->GetProgram(&pGeneratedProgramUserData);
+		PLRenderer::Program *pProgram = static_cast<FontManager*>(m_pFontManager)->GetProgram(&pGeneratedProgramUserData);
 		if (pProgram && pGeneratedProgramUserData && pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix &&
 			pGeneratedProgramUserData->pGlyphMap && pGeneratedProgramUserData->pColor && pGeneratedProgramUserData->pGlyphSizePenPosition &&
 			pGeneratedProgramUserData->pTextureCoordinateMinMax && m_pFontManager->GetRenderer().SetProgram(pProgram)) {
@@ -165,7 +165,7 @@ void FontTexture::Draw(const String &sText, const Color4 &cColor, const Matrix4x
 			pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(mObjectSpaceToClipSpace);
 
 			// Set glyph texture atlas - must be GLSL because that's the only supported shader language in here :D
-			((ProgramUniformGLSL*)pGeneratedProgramUserData->pGlyphMap)->Set((GLenum)GL_TEXTURE_2D, m_nOpenGLESGlyphTextureAtlas);
+			static_cast<ProgramUniformGLSL*>(pGeneratedProgramUserData->pGlyphMap)->Set(static_cast<GLenum>(GL_TEXTURE_2D), m_nOpenGLESGlyphTextureAtlas);
 
 			// Enable/disable mipmapping
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (nFlags & Mipmapping) ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR);
@@ -184,19 +184,19 @@ void FontTexture::Draw(const String &sText, const Color4 &cColor, const Matrix4x
 				vPenPosition.x -= GetTextWidth(sText)/2;
 
 			// Get the renderer instance
-			Renderer &cRenderer = (Renderer&)GetFontManager().GetRenderer();
+			Renderer &cRenderer = static_cast<Renderer&>(GetFontManager().GetRenderer());
 
 			// Iterate through all characters of the text to draw
 			for (uint32 i=0; i<sText.GetLength(); i++, pszText++) {
 				// Get the character code
-				const unsigned char nCharacterCode = (unsigned char)*pszText;
+				const unsigned char nCharacterCode = static_cast<unsigned char>(*pszText);
 
 				// Get the glyph instance of the character to draw
-				FontGlyphTexture *pFontGlyphTexture = (FontGlyphTexture*)m_lstGlyphs[nCharacterCode];
+				FontGlyphTexture *pFontGlyphTexture = static_cast<FontGlyphTexture*>(m_lstGlyphs[nCharacterCode]);
 				if (pFontGlyphTexture) {
 					// Set glyph size and pen position
-					pGeneratedProgramUserData->pGlyphSizePenPosition->Set(float(pFontGlyphTexture->GetSize().x)*vScale.x,					// Object space glyph x size in points   (x) => x scale
-																		  float(pFontGlyphTexture->GetSize().y)*vScale.y,					// Object space glyph y size in points   (y) => y scale
+					pGeneratedProgramUserData->pGlyphSizePenPosition->Set(static_cast<float>(pFontGlyphTexture->GetSize().x)*vScale.x,		// Object space glyph x size in points   (x) => x scale
+																		  static_cast<float>(pFontGlyphTexture->GetSize().y)*vScale.y,		// Object space glyph y size in points   (y) => y scale
 																		  (vPenPosition.x + pFontGlyphTexture->GetCorner().x)*vScale.x,		// Object space pen x position in points (z) => x bias
 																		  (vPenPosition.y + pFontGlyphTexture->GetCorner().y)*vScale.y);	// Object space pen y position in points (w) => y bias
 
@@ -237,7 +237,7 @@ FontTexture::FontTexture(FontManager &cFontManager, File &cFile) : PLRenderer::F
 
 	// Create the FreeType library face
 	m_pFTFace = new FT_Face;
-	if (FT_New_Memory_Face(*cFontManager.GetFTLibrary(), (FT_Byte const*)m_pFontFileData, (FT_Long)m_nFontFileSize, 0, m_pFTFace)) {
+	if (FT_New_Memory_Face(*cFontManager.GetFTLibrary(), static_cast<FT_Byte const*>(m_pFontFileData), static_cast<FT_Long>(m_nFontFileSize), 0, m_pFTFace)) {
 		// Error!
 		delete m_pFTFace;
 		m_pFTFace = nullptr;
@@ -332,8 +332,8 @@ void FontTexture::CreateGlyphTextureAtlas()
 			}
 
 			// Update renderer statistics
-			((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum++;
-			((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem += GetGlyphTextureAtlasNumOfBytes(true);
+			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum++;
+			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem += GetGlyphTextureAtlasNumOfBytes(true);
 		}
 	}
 }
@@ -386,8 +386,8 @@ void FontTexture::DestroyGlyphTextureAtlas()
 		glDeleteTextures(1, &m_nOpenGLESGlyphTextureAtlas);
 
 		// Update renderer statistics
-		((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-		((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetGlyphTextureAtlasNumOfBytes(true);
+		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetGlyphTextureAtlasNumOfBytes(true);
 
 		// Reset glyph texture atlas information
 		m_nOpenGLESGlyphTextureAtlas = 0;

@@ -95,7 +95,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 	// Get display
 	#ifdef LINUX
-		m_hDisplay = eglGetDisplay((EGLNativeDisplayType)m_pDisplay);
+		m_hDisplay = eglGetDisplay(static_cast<EGLNativeDisplayType>(m_pDisplay));
 	#else
 		m_hDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	#endif
@@ -227,7 +227,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 					for (uint32 i=0; i<PLRenderer::RenderState::Number; i++) {
 						uint32 nState = m_nRenderState[i];
 						m_nRenderState[i] = m_nRenderState[i]+1;
-						SetRenderState((PLRenderer::RenderState::Enum)i, nState);
+						SetRenderState(static_cast<PLRenderer::RenderState::Enum>(i), nState);
 					}
 
 					// Reset render
@@ -567,7 +567,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 			SetTextureBuffer(i, pTextureBuffer);
 	} else {
 		// Check if the stage is correct
-		if (nStage >= (signed)m_sCapabilities.nMaxTextureUnits)
+		if (nStage >= static_cast<int>(m_sCapabilities.nMaxTextureUnits))
 			return false; // Error!
 
 		// Is this texture buffer already set?
@@ -584,7 +584,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 			m_ppnInternalSamplerState[nStage][i]++;
 
 			// Reset the state
-			SetSamplerState(nStage, (PLRenderer::Sampler::Enum)i, m_ppnSamplerState[nStage][i]);
+			SetSamplerState(nStage, static_cast<PLRenderer::Sampler::Enum>(i), m_ppnSamplerState[nStage][i]);
 		}
 	}
 
@@ -659,12 +659,12 @@ void Renderer::ShowOpenGLESInformation()
 	GLint nValue = 0;
 
 	// Show some OpenGL ES information
-	PL_LOG(Info, String::Format("OpenGL ES 2.0 version: %s",		glGetString(GL_VERSION)	 ? (const char*)glGetString(GL_VERSION)	 : "-"))
-	PL_LOG(Info, String::Format("OpenGL ES 2.0 vendor info: %s",	glGetString(GL_VENDOR)	 ? (const char*)glGetString(GL_VENDOR)	 : "-"))
-	PL_LOG(Info, String::Format("OpenGL ES 2.0 renderer info: %s",	glGetString(GL_RENDERER) ? (const char*)glGetString(GL_RENDERER) : "-"))
+	PL_LOG(Info, String::Format("OpenGL ES 2.0 version: %s",		glGetString(GL_VERSION)	 ? reinterpret_cast<const char*>(glGetString(GL_VERSION))  : "-"))
+	PL_LOG(Info, String::Format("OpenGL ES 2.0 vendor info: %s",	glGetString(GL_VENDOR)	 ? reinterpret_cast<const char*>(glGetString(GL_VENDOR))   : "-"))
+	PL_LOG(Info, String::Format("OpenGL ES 2.0 renderer info: %s",	glGetString(GL_RENDERER) ? reinterpret_cast<const char*>(glGetString(GL_RENDERER)) : "-"))
 
 	{ // Show some OpenGL ES shader information
-		PL_LOG(Info, String::Format("OpenGL ES 2.0 shading language version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION) ? (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION) : "-"))
+		PL_LOG(Info, String::Format("OpenGL ES 2.0 shading language version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION) ? reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)) : "-"))
 
 		// GL_MAX_VERTEX_ATTRIBS
 		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nValue);
@@ -919,7 +919,7 @@ String Renderer::GetAPI(uint32 *pnVersion) const
 
 		// Get version (for example '2.1.3' -> we are only interessted in '2.1' because
 		// the third number is not really normed)
-		String sVersion = (const char*)glGetString(GL_VERSION);
+		String sVersion = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 		if (sVersion.GetLength()) {
 			// Major
 			int nIndex = sVersion.IndexOf('.');
@@ -947,7 +947,7 @@ String Renderer::GetAPI(uint32 *pnVersion) const
 
 String Renderer::GetVendor() const
 {
-	return (const char*)glGetString(GL_VENDOR);
+	return reinterpret_cast<const char*>(glGetString(GL_VENDOR));
 }
 
 String Renderer::GetDefaultShaderLanguage() const
@@ -1640,7 +1640,7 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 
 	{ // Handle rectangle texture restrictions
 		PLRenderer::TextureBuffer *pTextureBuffer = m_ppCurrentTextureBuffer[nStage];
-		if (pTextureBuffer && pTextureBuffer->GetType() == PLRenderer::Resource::TypeTextureBuffer2D && ((TextureBuffer2D*)pTextureBuffer)->IsRectangleTexture()) {
+		if (pTextureBuffer && pTextureBuffer->GetType() == PLRenderer::Resource::TypeTextureBuffer2D && static_cast<TextureBuffer2D*>(pTextureBuffer)->IsRectangleTexture()) {
 			// ... just set this fixed settings, and let it go...
 			glActiveTexture(GL_TEXTURE0 + nStage);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (m_ppnSamplerState[nStage][PLRenderer::Sampler::MinFilter] == PLRenderer::TextureFiltering::None) ? GL_NEAREST : GL_LINEAR);
@@ -1797,12 +1797,12 @@ bool Renderer::SetViewport(const PLMath::Rectangle *pRectangle, float fMinZ, flo
 
 	// OpenGL assumes LOWER-left corner of the viewport rectangle, in pixels
 	// and TOP-left corner given - so fit it :)
-	GLint nY = (GLint)m_cViewportRect.GetY();
+	GLint nY = static_cast<GLint>(m_cViewportRect.GetY());
 	if (m_cCurrentSurface.GetSurface())
-		nY = m_cCurrentSurface.GetSurface()->GetSize().y-GLint(m_cViewportRect.vMax.y);
+		nY = m_cCurrentSurface.GetSurface()->GetSize().y - static_cast<GLint>(m_cViewportRect.vMax.y);
 
 	// Set viewport
-	glViewport(GLint(m_cViewportRect.GetX()), nY, GLint(m_cViewportRect.GetWidth()), (GLint)m_cViewportRect.GetHeight());
+	glViewport(static_cast<GLint>(m_cViewportRect.GetX()), nY, static_cast<GLint>(m_cViewportRect.GetWidth()), static_cast<GLint>(m_cViewportRect.GetHeight()));
 
 	// Set depth range
 	glDepthRangef(fMinZ, fMaxZ);
@@ -1818,12 +1818,12 @@ bool Renderer::SetScissorRect(const PLMath::Rectangle *pRectangle)
 
 	// OpenGL assumes LOWER-left corner of the viewport rectangle, in pixels
 	// and TOP-left corner given - so fit it :)
-	GLint nY = (GLint)m_cScissorRect.GetY();
+	GLint nY = static_cast<GLint>(m_cScissorRect.GetY());
 	if (m_cCurrentSurface.GetSurface())
-		nY = m_cCurrentSurface.GetSurface()->GetSize().y-GLint(m_cScissorRect.vMax.y);
+		nY = m_cCurrentSurface.GetSurface()->GetSize().y - static_cast<GLint>(m_cScissorRect.vMax.y);
 
 	// Set scissor rectangle
-	glScissor(GLint(m_cScissorRect.GetX()), nY, GLint(m_cScissorRect.GetWidth()), (GLint)m_cScissorRect.GetHeight());
+	glScissor(static_cast<GLint>(m_cScissorRect.GetX()), nY, static_cast<GLint>(m_cScissorRect.GetWidth()), static_cast<GLint>(m_cScissorRect.GetHeight()));
 
 	// Done
 	return true;
@@ -1931,23 +1931,30 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 
 	// Check face index
 	if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
-		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = (PLRenderer::SurfaceTextureBuffer*)pSurface;
+		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
 		if (pSurfaceTextureBuffer->GetTextureBuffer()) {
 			if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
-				if (nFace > 5) return false; // Error!
+				if (nFace > 5)
+					return false; // Error!
 			} else {
-				if (nFace > 0) return false; // Error!
+				if (nFace > 0)
+					return false; // Error!
 			}
-		} else return false; // Error!?!
+		} else {
+			// Error!?!
+			return false;
+		}
 	} else {
-		if (nFace > 0) return false; // Error!
+		if (nFace > 0)
+			return false; // Error!
 	}
 
-	if (m_cCurrentSurface.GetSurface()) UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
+	if (m_cCurrentSurface.GetSurface())
+		UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
 	m_cCurrentSurface.SetSurface(pSurface);
 
 	// Make the surface to the current render target
-	bool bError = MakeSurfaceCurrent(*pSurface, nFace);
+	const bool bError = MakeSurfaceCurrent(*pSurface, nFace);
 
 	// Setup viewport and scissor rectangle
 	SetViewport();
@@ -1960,12 +1967,14 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nColorIndex, uint8 nFace)
 {
 /*	// Check parameter
-	if (!m_lstSurfaces.IsElement(pSurface)) return true;
-	if (m_cCurrentSurface.GetSurface()) m_cCurrentSurface.GetSurface()->UnmakeCurrent();
+	if (!m_lstSurfaces.IsElement(pSurface))
+		return true;
+	if (m_cCurrentSurface.GetSurface())
+		m_cCurrentSurface.GetSurface()->UnmakeCurrent();
 	m_cCurrentSurface.SetSurface(pSurface);
 
 	// Make the surface to the current render target
-	bool bError = pSurface->MakeCurrent(nFace);
+	const bool bError = pSurface->MakeCurrent(nFace);
 
 	// Done
 	return bError;
@@ -1980,7 +1989,7 @@ bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 	// In case the current surface is a texture, we need to 'finish' the current rendering process
 //	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
 //	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer)
-//		((SurfaceTextureBuffer*)pSurface)->Finish();
+//		static_cast<SurfaceTextureBuffer*>(pSurface)->Finish();
 
 	// Get viewport data
 	GLint nViewPort[4];
@@ -2010,10 +2019,12 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 			SetTextureBuffer(i, pTextureBuffer);
 	} else {
 		// Check if the stage is correct
-		if (nStage >= m_sCapabilities.nMaxTextureUnits) return false; // Error!
+		if (nStage >= m_sCapabilities.nMaxTextureUnits)
+			return false; // Error!
 
 		// Is this texture buffer already set?
-		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer) return false; // Error!
+		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer)
+			return false; // Error!
 
 		// Make this texture buffer to the renderers current one
 		PLRenderer::TextureBuffer *pT = m_ppCurrentTextureBuffer[nStage];
@@ -2048,7 +2059,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 	// Should an index buffer be set?
 	if (pIndexBuffer) {
 		// Yes, make it current
-		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
+		if (!static_cast<IndexBuffer*>(pIndexBuffer)->MakeCurrent()) {
 			// Now, no index buffer is set...
 			m_pCurrentIndexBuffer = nullptr;
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -2068,18 +2079,18 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 {
 	// Is the new program the same one as the current one?
-	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
+	PLRenderer::Program *pCurrentProgram = static_cast<PLRenderer::Program*>(m_cProgramHandler.GetResource());
 	if (pCurrentProgram != pProgram) {
 		// Was there a previous program? (must be GLSL because that's the only supported shader language in here :D)
 		if (pCurrentProgram)
-			((ProgramGLSL*)pCurrentProgram)->UnmakeCurrent();
+			static_cast<ProgramGLSL*>(pCurrentProgram)->UnmakeCurrent();
 
 		// Update the program resource handler
 		m_cProgramHandler.SetResource(pProgram);
 
 		// Make the new program to the current one (must be GLSL because that's the only supported shader language in here :D)
 		if (pProgram)
-			return ((ProgramGLSL*)pProgram)->MakeCurrent();
+			return static_cast<ProgramGLSL*>(pProgram)->MakeCurrent();
 	}
 
 	// Done
@@ -2177,7 +2188,7 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
 	if (&nAPIValue != &Array<uint32>::Null) {
 		// Draw primitive
-		glDrawElements(nAPIValue, nNumVertices, nTypeAPI, (char*)((IndexBuffer*)m_pCurrentIndexBuffer)->GetDynamicData()+(nStartIndex*nTypeSize));
+		glDrawElements(nAPIValue, nNumVertices, nTypeAPI, static_cast<char*>(static_cast<IndexBuffer*>(m_pCurrentIndexBuffer)->GetDynamicData())+(nStartIndex*nTypeSize));
 	} else {
 		// Error, invalid value!
 		return false;

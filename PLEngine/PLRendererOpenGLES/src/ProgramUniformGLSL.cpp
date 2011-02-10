@@ -456,17 +456,17 @@ int ProgramUniformGLSL::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
-					nOpenGLESTexture = ((TextureBuffer2D*)pTextureBuffer)->GetOpenGLESTexture();
+					nOpenGLESTexture = static_cast<TextureBuffer2D*>(pTextureBuffer)->GetOpenGLESTexture();
 					nOpenGLESTextureTarget = GL_TEXTURE_2D;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
 					// [TODO]
-	//				nOpenGLESTexture =  ((TextureBuffer3D*)pTextureBuffer)->GetOpenGLESTexture();
+	//				nOpenGLESTexture =  static_cast<TextureBuffer3D*>(pTextureBuffer)->GetOpenGLESTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
-					nOpenGLESTexture = ((TextureBufferCube*)pTextureBuffer)->GetOpenGLESTexture();
+					nOpenGLESTexture = static_cast<TextureBufferCube*>(pTextureBuffer)->GetOpenGLESTexture();
 					nOpenGLESTextureTarget = GL_TEXTURE_CUBE_MAP;
 					break;
 			}
@@ -483,7 +483,7 @@ int ProgramUniformGLSL::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 
 		// Inform the renderer
 		if (pTextureBuffer)
-			((Renderer&)pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(m_nTextureUnit, pTextureBuffer);
+			static_cast<Renderer&>(pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(m_nTextureUnit, pTextureBuffer);
 
 		// Done, return the texture unit the uniform is assigned to
 		return m_nTextureUnit;
