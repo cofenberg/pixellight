@@ -1,8 +1,7 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
  *      This is a scene viewer sample which shows you how to setup PL
- *      and loading a scene. All scene nodes from the PLSampleSceneNodes
- *      project can be used here.
+ *      and loading a scene.
  *      If a command line parameter is provided, the given scene is loaded automatically.
  *      Press the 'print'-key to make a screenshot.
  *

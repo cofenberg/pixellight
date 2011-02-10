@@ -1,17 +1,20 @@
 <?xml version="1.0" ?>
-<Plugin Version="1">
-    <Active>1</Active>
-    <ForceBuildTypeMatch>0</ForceBuildTypeMatch>
-    <Name>PLSampleSceneNodes</Name>
-    <Version>1.0</Version>
-    <Vendor>PixelLight</Vendor>
-    <Description>A collection of sample scene nodes</Description>
-    <Platform Name="Win32">
-        <Library Type="Release">PLSampleSceneNodes.dll</Library>
-        <Library Type="Debug">PLSampleSceneNodesD.dll</Library>
-    </Platform>
-    <Platform Name="Linux">
-        <Library Type="Release">libPLSampleSceneNodes.so</Library>
-        <Library Type="Debug">libPLSampleSceneNodesD.so</Library>
-    </Platform>
+<Plugin Version="1" PixelLightVersion="PixelLight 0.9.5-R1">
+	<Active>1</Active>
+	<Name>PLDefaultFileFormats</Name>
+	<Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
+	<License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
+	<Description>Various PixelLight default file format plugins adding loader implementations</Description>
+	<Platform Name="Win32">
+		<Library Type="Release">PLDefaultFileFormats.dll</Library>
+		<Library Type="Debug">PLDefaultFileFormatsD.dll</Library>
+	</Platform>
+	<Platform Name="Win64">
+		<Library Type="Release">PLDefaultFileFormats64.dll</Library>
+		<Library Type="Debug">PLDefaultFileFormatsD64.dll</Library>
+	</Platform>
+	<Platform Name="Linux">
+		<Library Type="Release">libPLDefaultFileFormats.so</Library>
+		<Library Type="Debug">libPLDefaultFileFormatsD.so</Library>
+	</Platform>
 </Plugin>
