@@ -32,7 +32,7 @@
 pl_module_plugin("PLSoundFMOD")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("FMOD 3.75 (http://www.fmod.org/) sound implementation (legacy version of FMOD)")
+	pl_module_description("FMOD 3.75 (http://www.fmod.org/) sound implementation (legacy version of FMOD), FMOD Sound System, copyright Firelight Technologies Pty, Ltd., 1994-2011.")
 	pl_module_dependencies_win32_release("fmod.dll")
 	pl_module_dependencies_win32_debug("fmod.dll")
 	pl_module_dependencies_win64_release("")	// No 64 bit support possible because there's no 64 bit version of FMOD 3.75

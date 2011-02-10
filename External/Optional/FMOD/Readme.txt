@@ -1,4 +1,4 @@
-FMOD 3.75
+FMOD 3.75 - FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2011.
 - Used by the sound backend "PLSoundFMOD" (external Windows dependencies: "fmod.dll")
 - FMOD is supporting many different sound formats. But it's only free if your software is
   freeware. For commercial software you have to pay for a license!

@@ -183,19 +183,32 @@ String SoundManager::GetDescription() const
 
 bool SoundManager::GetFormatList(List<Format> &lstList) const
 {
-	{ // wav
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &List<Format>::Null) {
-			cFormat.sFormat		 = "wav";
-			cFormat.sDescription = PLT("Audio files");
-		}
-	}
+	// List of supported file formats:
+	static const char *szSupportedFormats[] = {
+		// Extension	Description
+		"WAV",			"Microsoft Wave files",
+		"OGG",			"Ogg Vorbis format",
+		"\0"			// Notes the end of the list
+	};
 
-	{ // ogg
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &List<Format>::Null) {
-			cFormat.sFormat		 = "ogg";
-			cFormat.sDescription = PLT("Audio files");
+	// Add all supported file formats to the given list
+	for (uint32 i=0; *szSupportedFormats[i] != '\0'; i+=2) {
+		{ // Lower case
+			Format &cFormat = lstList.Add();
+			if (&cFormat != &List<Format>::Null) {
+				cFormat.sFormat = szSupportedFormats[i];
+				cFormat.sFormat.ToLower();
+				cFormat.sDescription = szSupportedFormats[i+1];
+			}
+		}
+
+		{ // Upper case
+			Format &cFormat = lstList.Add();
+			if (&cFormat != &List<Format>::Null) {
+				cFormat.sFormat = szSupportedFormats[i];
+				cFormat.sFormat.ToUpper();
+				cFormat.sDescription = szSupportedFormats[i+1];
+			}
 		}
 	}
 

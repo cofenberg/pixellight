@@ -178,8 +178,8 @@ SoundManager::SoundManager() :
 	PL_LOG(Info, "Create sound manager: " + GetDescription())
 
 	// Initialize listener attributes
-	SetListenerAttribute(ListenerForward, Vector3(0.0f, 0.0f, 1.0f));
-	SetListenerAttribute(ListenerUpward,  Vector3(0.0f, 1.0f, 0.0f));
+	SetListenerAttribute(ListenerForward, Vector3::UnitZ);
+	SetListenerAttribute(ListenerUpward,  Vector3::UnitY);
 }
 
 /**
@@ -225,68 +225,37 @@ String SoundManager::GetDescription() const
 
 bool SoundManager::GetFormatList(List<Format> &lstList) const
 {
-	{ // mp3
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "mp3";
-			cFormat.sDescription = PLT("Audio files");
-		}
-	}
+	// List of supported FMOD file formats:
+	static const char *szSupportedFormats[] = {
+		// Extension	Description
+		"MP3",			"MPEG I/II Layer 3, including VBR support",
+		"WAV",			"Microsoft Wave files, inlcluding compressed wavs. PCM, MP3 and IMA ADPCM compressed wav files are supported across all platforms in FMOD Ex, and other compression formats are supported via windows codecs on that platform",
+		"MID",			"MIDI using operating system or custom DLS patches",
+		"IT",			"Impulse tracker sequenced mod format. FMOD Ex also fully supports resonant filters in .IT files, and the per channel or per instrument echo effect send, that can be enabled in ModPlug Tracker. This is cross platform effect support and does not require DirectX like other libraries do",
+		"MOD",			"Protracker / Fasttracker and others sequenced mod format",
+		"S3M",			"ScreamTracker 3 sequenced mod format",
+		"XM",			"(FastTracker 2 sequenced format",
+		"\0"			// Notes the end of the list
+	};
 
-	{ // wav
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "wav";
-			cFormat.sDescription = PLT("Audio files");
+	// Add all supported file formats to the given list
+	for (uint32 i=0; *szSupportedFormats[i] != '\0'; i+=2) {
+		{ // Lower case
+			Format &cFormat = lstList.Add();
+			if (&cFormat != &List<Format>::Null) {
+				cFormat.sFormat = szSupportedFormats[i];
+				cFormat.sFormat.ToLower();
+				cFormat.sDescription = szSupportedFormats[i+1];
+			}
 		}
-	}
 
-	{ // mid
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "mid";
-			cFormat.sDescription = PLT("Midi files");
-		}
-	}
-
-	{ // midi
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "midi";
-			cFormat.sDescription = PLT("Midi files");
-		}
-	}
-
-	{ // it
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "it";
-			cFormat.sDescription = PLT("Mod files");
-		}
-	}
-
-	{ // mod
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "mod";
-			cFormat.sDescription = PLT("Mod files");
-		}
-	}
-
-	// s3m
-	{
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "s3m";
-			cFormat.sDescription = PLT("Mod files");
-		}
-	}
-
-	{ // xm
-		Format &cFormat = lstList.Add();
-		if (&cFormat != &Array<Format>::Null) {
-			cFormat.sFormat		 = "xm";
-			cFormat.sDescription = PLT("Mod files");
+		{ // Upper case
+			Format &cFormat = lstList.Add();
+			if (&cFormat != &List<Format>::Null) {
+				cFormat.sFormat = szSupportedFormats[i];
+				cFormat.sFormat.ToUpper();
+				cFormat.sDescription = szSupportedFormats[i+1];
+			}
 		}
 	}
 

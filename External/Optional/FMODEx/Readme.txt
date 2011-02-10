@@ -1,4 +1,4 @@
-FMOD Ex 4.18.03
+FMOD Ex 4.32.08 - FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2011.
 - Used by the sound backend "PLSoundFMODEx" (external Windows dependencies: "fmodex.dll")
 - FMOD Ex is supporting many different sound formats. But it's only free if your software is
   freeware. For commercial software you have to pay for a license!
@@ -11,6 +11,7 @@ FMOD Ex 4.18.03
 		- "fmod_codec.h"
 		- "fmod_dsp.h"
 		- "fmod_errors.h"
+		- "fmod_memoryinfo.h"
 		- "fmod_output.h"
 	- "External\_Windows_x86_32\FMODEx\lib"
 		- "fmodex_vc.lib"
@@ -21,10 +22,8 @@ FMOD Ex 4.18.03
 		- "fmod_codec.h"
 		- "fmod_dsp.h"
 		- "fmod_errors.h"
+		- "fmod_memoryinfo.h"
 		- "fmod_output.h"
 		- "fmodlinux.h"
 	- "External\_Linux_x86_32\FMODEx\lib"
 		- "libfmodex.so"
-		- "libfmodexp.so"
-	- "External\_Linux_x86_32\FMODEx\plugins"
-		- Add the content from the downloaded SDK directory
