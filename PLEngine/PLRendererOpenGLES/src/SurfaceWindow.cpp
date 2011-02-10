@@ -127,7 +127,12 @@ bool SurfaceWindow::Init()
 		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// Create window surface
-		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(), cRendererOpenGLES.GetEGLConfig(), reinterpret_cast<EGLNativeWindowType>(nWindow), nullptr);
+		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(),
+											cRendererOpenGLES.GetEGLConfig(),
+											(EGLNativeWindowType)nWindow,	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
+																			// reinterpret_cast<EGLNativeWindowType>(nWindow) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nWindow)
+																			// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
+											nullptr);
 		if (m_hSurface == EGL_NO_SURFACE) {
 			PL_LOG(Warning, "Could not create OpenGL ES surface");
 
