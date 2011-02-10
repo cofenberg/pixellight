@@ -193,7 +193,7 @@ void PrintList(int nType, const String &sPrefix, Array<String> &lstNames)
 	while (cIterator.HasNext()) {
 		// Print string
 		String sName = cIterator.Next();
-		Message(nType, sPrefix + "'" + sName + "'");
+		Message(nType, sPrefix + '\'' + sName + '\'');
 	}
 }
 
@@ -245,7 +245,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 	while (cIterator.HasNext()) {
 		// Parse file
 		String sFilename = cIterator.Next();
-		Message(STATUS, "Parsing source file at '" + sFilename + "'");
+		Message(STATUS, "Parsing source file at '" + sFilename + '\'');
 
 		// Open file
 		File cFile(sFilename);
@@ -264,7 +264,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 			if (cRegExNoStepInto.Match(sLine)) {
 				// Get expression
 				String sExpression = cRegExNoStepInto.GetNameResult("exp");
-				Message(STATUS, "NoStepInto: '" + sExpression + "'");
+				Message(STATUS, "NoStepInto: '" + sExpression + '\'');
 
 				// Write to registry
 				Registry cReg;
@@ -281,7 +281,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 			if (cRegExStepInto.Match(sLine)) {
 				// Get expression
 				String sExpression = cRegExStepInto.GetNameResult("exp");
-				Message(STATUS, "StepInto: '" + sExpression + "'");
+				Message(STATUS, "StepInto: '" + sExpression + '\'');
 
 				// Write to registry
 				Registry cReg;
@@ -297,7 +297,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 			// Check for localization string
 			if (cRegExI18n.Match(sLine)) {
 				String sString = cRegExI18n.GetResult(0);
-				Message(STATUS, "Localization String: '" + sString + "'");
+				Message(STATUS, "Localization String: '" + sString + '\'');
 				pLocalizationGroup->AddText(sString, sString);
 			}
 		}
@@ -321,7 +321,7 @@ bool ParseModule(Project &cProject)
 {
 	// Parse main source file
 	String sMainSrc = cProject.sMainSrc;
-	Message(STATUS, "Parsing main source file at '" + sMainSrc + "'");
+	Message(STATUS, "Parsing main source file at '" + sMainSrc + '\'');
 
 	// Open file
 	File cFile(sMainSrc);
@@ -355,82 +355,82 @@ bool ParseModule(Project &cProject)
 		if (cRegExModule.Match(sLine)) {
 			cProject.sModuleName = cRegExModule.GetNameResult("name");
 			cProject.bModulePlugin = false;
-			Message(STATUS, "Module name = '" + cProject.sModuleName + "'");
+			Message(STATUS, "Module name = '" + cProject.sModuleName + '\'');
 		}
 
 		// Check for pl_module_plugin
 		if (cRegExModulePlugin.Match(sLine)) {
 			cProject.sModuleName = cRegExModulePlugin.GetNameResult("name");
 			cProject.bModulePlugin = true;
-			Message(STATUS, "Module name = '" + cProject.sModuleName + "'");
+			Message(STATUS, "Module name = '" + cProject.sModuleName + '\'');
 			Message(STATUS, "This module is a plugin");
 		}
 
 		// Check for pl_module_vendor
 		if (cRegExVendor.Match(sLine)) {
 			cProject.sModuleVendor = GetQuotedString(cRegExVendor.GetNameResult("text"));
-			Message(STATUS, "Vendor name = '" + cProject.sModuleVendor + "'");
+			Message(STATUS, "Vendor name = '" + cProject.sModuleVendor + '\'');
 		}
 
 		// Check for pl_module_license
 		if (cRegExLicense.Match(sLine)) {
 			cProject.sModuleLicense = GetQuotedString(cRegExLicense.GetNameResult("text"));
-			Message(STATUS, "License = '" + cProject.sModuleLicense + "'");
+			Message(STATUS, "License = '" + cProject.sModuleLicense + '\'');
 		}
 
 		// Check for pl_module_description
 		if (cRegExDescription.Match(sLine)) {
 			cProject.sModuleDescription = GetQuotedString(cRegExDescription.GetNameResult("text"));
-			Message(STATUS, "Description = '" + cProject.sModuleDescription + "'");
+			Message(STATUS, "Description = '" + cProject.sModuleDescription + '\'');
 		}
 
 		// Check for pl_module_version
 		if (cRegExVersion.Match(sLine)) {
 			cProject.sModuleVersion = GetQuotedString(cRegExVersion.GetNameResult("text"));
-			Message(STATUS, "Version = '" + cProject.sModuleVersion + "'");
+			Message(STATUS, "Version = '" + cProject.sModuleVersion + '\'');
 		}
 
 		// Check for pl_module_dependencies_win32_release
 		if (cRegExDepsWin32Release.Match(sLine)) {
 			cProject.sDependWin32Release = GetQuotedString(cRegExDepsWin32Release.GetNameResult("text"));
-			Message(STATUS, "Win32 release dependencies = '" + cProject.sDependWin32Release + "'");
+			Message(STATUS, "Win32 release dependencies = '" + cProject.sDependWin32Release + '\'');
 		}
 
 		// Check for pl_module_dependencies_win32_debug
 		if (cRegExDepsWin32Debug.Match(sLine)) {
 			cProject.sDependWin32Debug = GetQuotedString(cRegExDepsWin32Debug.GetNameResult("text"));
-			Message(STATUS, "Win32 debug dependencies = '" + cProject.sDependWin32Debug + "'");
+			Message(STATUS, "Win32 debug dependencies = '" + cProject.sDependWin32Debug + '\'');
 		}
 
 		// Check for pl_module_dependencies_win64_release
 		if (cRegExDepsWin64Release.Match(sLine)) {
 			cProject.sDependWin64Release = GetQuotedString(cRegExDepsWin64Release.GetNameResult("text"));
-			Message(STATUS, "Win64 release dependencies = '" + cProject.sDependWin64Release + "'");
+			Message(STATUS, "Win64 release dependencies = '" + cProject.sDependWin64Release + '\'');
 		}
 
 		// Check for pl_module_dependencies_win64_debug
 		if (cRegExDepsWin64Debug.Match(sLine)) {
 			cProject.sDependWin64Debug = GetQuotedString(cRegExDepsWin64Debug.GetNameResult("text"));
-			Message(STATUS, "Win64 debug dependencies = '" + cProject.sDependWin64Debug + "'");
+			Message(STATUS, "Win64 debug dependencies = '" + cProject.sDependWin64Debug + '\'');
 		}
 
 		// Check for pl_module_dependencies_linux_release
 		if (cRegExDepsLinuxRelease.Match(sLine)) {
 			cProject.sDependLinuxRelease = GetQuotedString(cRegExDepsLinuxRelease.GetNameResult("text"));
-			Message(STATUS, "Linux release dependencies = '" + cProject.sDependLinuxRelease + "'");
+			Message(STATUS, "Linux release dependencies = '" + cProject.sDependLinuxRelease + '\'');
 		}
 
 		// Check for pl_module_dependencies_linux_debug
 		if (cRegExDepsLinuxDebug.Match(sLine)) {
 			cProject.sDependLinuxDebug = GetQuotedString(cRegExDepsLinuxDebug.GetNameResult("text"));
-			Message(STATUS, "Linux debug dependencies = '" + cProject.sDependLinuxDebug + "'");
+			Message(STATUS, "Linux debug dependencies = '" + cProject.sDependLinuxDebug + '\'');
 		}
 
 		// Check for pl_module_active
 		if (cRegExActive.Match(sLine)) {
 			String sActive = cRegExActive.GetNameResult("num");
 			cProject.bModuleActive = (sActive == "1");
-			Message(STATUS, String("Active = '") + (cProject.bModuleActive ? "yes" : "no") + "'");
+			Message(STATUS, String("Active = '") + (cProject.bModuleActive ? "yes" : "no") + '\'');
 		}
 	}
 
@@ -468,7 +468,7 @@ bool ParseProject(Project &cProject)
 {
 	// Parse project
 	String sPath = cProject.sPath;
-	Message(STATUS, "Parsing project at '" + sPath + "'");
+	Message(STATUS, "Parsing project at '" + sPath + '\'');
 
 	// Find VC projects
 	Message(STATUS, "Looking for project files");
@@ -481,7 +481,7 @@ bool ParseProject(Project &cProject)
 	Iterator<String> cIterator = lstProjects.GetIterator();
 	while (cIterator.HasNext()) {
 		String sFilename = Url(cIterator.Next()).GetFilename();
-		Message(DEBUG, String("Project ") + "'" + sFilename + "'");
+		Message(DEBUG, String("Project ") + '\'' + sFilename + '\'');
 		if (sFilename.IndexOf("Stat") > -1) {
 			Message(DEBUG, "This is a static lib version, ignoring ...");
 		} else if (sFilename.IndexOf("Internal") > -1) {
@@ -494,12 +494,12 @@ bool ParseProject(Project &cProject)
 
 	// Recognize suffix
 	if (cProject.sSuffix.GetLength() > 0) {
-		Message(STATUS, "Using project suffix '" + cProject.sSuffix + "'");
+		Message(STATUS, "Using project suffix '" + cProject.sSuffix + '\'');
 	}
 
 	// Check if a project name has been found
 	if (sName.GetLength() > 0) {
-		Message(STATUS, "Found project '" + sName + "'");
+		Message(STATUS, "Found project '" + sName + '\'');
 		cProject.sName = sName;
 	} else {
 		Message(ERR, "Could not determine project name!");
@@ -509,7 +509,7 @@ bool ParseProject(Project &cProject)
 	// Find main source file
 	String sMainSrc = sPath + "/src/" + sName + ".cpp";
 	if (FileObject(sMainSrc).Exists()) {
-		Message(STATUS, "Found main source file '" + sMainSrc + "'");
+		Message(STATUS, "Found main source file '" + sMainSrc + '\'');
 		cProject.sMainSrc = sMainSrc;
 	} else {
 		Message(ERR, "Could not determine main source file!");
@@ -526,7 +526,7 @@ bool ParseProject(Project &cProject)
 	String sSourcePath = sPath + "/src";
 	FileObject cSrcFile(sSourcePath);
 	if (cSrcFile.Exists() && cSrcFile.IsDirectory()) {
-		Message(STATUS, "Found source files at '" + sSourcePath + "'");
+		Message(STATUS, "Found source files at '" + sSourcePath + '\'');
 		cProject.sSourcePath = sSourcePath;
 	} else {
 		Message(ERR, "Could not find source files in '" + sSourcePath + "'!");
@@ -539,9 +539,9 @@ bool ParseProject(Project &cProject)
 	String sIncludePath = sPath + "/include";
 	FileObject cIncFile(sIncludePath);
 	if (cIncFile.Exists() && cIncFile.IsDirectory()) {
-		Message(STATUS, "Found include files at '" + sIncludePath + "'");
+		Message(STATUS, "Found include files at '" + sIncludePath + '\'');
 	} else {
-		Message(STATUS, "Could not find include files, taking '" + sSourcePath + "'");
+		Message(STATUS, "Could not find include files, taking '" + sSourcePath + '\'');
 		sIncludePath = sSourcePath;
 		cProject.sIncludePath = sIncludePath;
 	}
@@ -571,7 +571,7 @@ bool CreatePluginFile(Project &cProject)
 {
 	// Compose output filename
 	cProject.sOutputPlugin = cProject.sOutputPath + '/' + cProject.sName + cProject.sSuffix + ".plugin";
-	Message(STATUS, "Writing plugin file '" + cProject.sOutputPlugin + "'");
+	Message(STATUS, "Writing plugin file '" + cProject.sOutputPlugin + '\'');
 
 	// Open plugin file
 	File cFile(cProject.sOutputPlugin);
@@ -678,7 +678,7 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 
 	// Output startup info
 	Message(MESSAGE, "PLProject V1.0");
-	Message(MESSAGE, "Current dir is '" + System::GetInstance()->GetCurrentDir() + "'");
+	Message(MESSAGE, "Current dir is '" + System::GetInstance()->GetCurrentDir() + '\'');
 
 	// Parse command line
 	String sPath;

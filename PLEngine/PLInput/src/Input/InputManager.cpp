@@ -103,7 +103,7 @@ void InputManager::DetectDevices(bool bReset)
 	while (cIterator.HasNext()) {
 		// Get provider name
 		String sName = cIterator.Next()->GetClassName();
-		PL_LOG(Info, "InputManager: Detecting device of input provider '" + sName + "'")
+		PL_LOG(Info, "InputManager: Detecting device of input provider '" + sName + '\'')
 
 		if (sName == "PLInput::LegacyJoystickProvider")
 			bWindowsJoystick = true;

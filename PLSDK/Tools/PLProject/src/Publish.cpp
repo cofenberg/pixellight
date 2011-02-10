@@ -98,7 +98,7 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 									sRealSourceDirectory = sSourceDirectory;
 								} else {
 									// Error!
-									Message(ERR, "Failed to find '" + sFile + "'");
+									Message(ERR, "Failed to find '" + sFile + '\'');
 
 									// Get us out of this loop right now!
 									return false;
@@ -122,13 +122,13 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 						const String sTargetFilename = Url(sTargetDirectory 	+ '/' + sCurrentFile).GetUrl();
 
 						// Write a message
-						Message(MESSAGE, "Copy '" + sSourceFilename + "' to '" + sTargetFilename + "'");
+						Message(MESSAGE, "Copy '" + sSourceFilename + "' to '" + sTargetFilename + '\'');
 
 						// Copy file
 						File cFile(sSourceFilename);
 						if (!cFile.Copy(sTargetFilename, true)) {
 							// Error!
-							Message(ERR, "Failed to copy '" + sSourceFilename + "' to '" + sTargetFilename + "'");
+							Message(ERR, "Failed to copy '" + sSourceFilename + "' to '" + sTargetFilename + '\'');
 
 							// Get us out of this loop right now!
 							return false;
@@ -142,13 +142,13 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 				const String sTargetFilename = Url(sTargetDirectory + '/' + sFile).GetUrl();
 
 				// Write a message
-				Message(MESSAGE, "Copy '" + sSourceFilename + "' to '" + sTargetFilename + "'");
+				Message(MESSAGE, "Copy '" + sSourceFilename + "' to '" + sTargetFilename + '\'');
 
 				// Copy file
 				File cFile(sSourceFilename);
 				if (!cFile.Copy(sTargetFilename, true)) {
 					// Error!
-					Message(ERR, "Failed to copy '" + sSourceFilename + "' to '" + sTargetFilename + "'");
+					Message(ERR, "Failed to copy '" + sSourceFilename + "' to '" + sTargetFilename + '\'');
 
 					// Get us out of this loop right now!
 					return false;
@@ -180,10 +180,10 @@ bool Publish(const String &sTargetDirectory)
 			String sPluginsDirectory = Core::GetRuntimeDirectory() + "/Plugins";
 			if (sPluginsDirectory.GetLength()) {
 				// Show some information
-				Message(MESSAGE, "Publishing '" + sTargetDirectory + "'");
-				Message(MESSAGE, "PixelLight runtime shared libraries directory '" + sRuntimeSharedLibrariesDirectory + "'");
-				Message(MESSAGE, "PixelLight runtime data directory '" + sRuntimeDataDirectory + "'");
-				Message(MESSAGE, "PixelLight plugins directory '" + sPluginsDirectory + "'");
+				Message(MESSAGE, "Publishing '" + sTargetDirectory + '\'');
+				Message(MESSAGE, "PixelLight runtime shared libraries directory '" + sRuntimeSharedLibrariesDirectory + '\'');
+				Message(MESSAGE, "PixelLight runtime data directory '" + sRuntimeDataDirectory + '\'');
+				Message(MESSAGE, "PixelLight plugins directory '" + sPluginsDirectory + '\'');
 
 				// Copy PixelLight runtime shared libraries
 				Message(MESSAGE, "Copy PixelLight runtime shared libraries...");

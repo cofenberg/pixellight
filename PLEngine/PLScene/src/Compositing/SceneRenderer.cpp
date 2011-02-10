@@ -66,7 +66,7 @@ SceneRendererPass *SceneRenderer::Create(const String &sClass, const String &sNa
 		if (pBaseClass) {
 			const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
 			if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
-				PL_LOG(Debug, "Create scene renderer pass '" + sName + "' of type '" + sClass + "'")
+				PL_LOG(Debug, "Create scene renderer pass '" + sName + "' of type '" + sClass + '\'')
 				SceneRendererPass *pPass = static_cast<SceneRendererPass*>(pClass->Create());
 				if (pPass) {
 					if (sParameters.GetLength())

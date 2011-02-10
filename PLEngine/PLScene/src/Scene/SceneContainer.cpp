@@ -137,7 +137,7 @@ SceneNode *SceneContainer::Create(const String &sClass, const String &sName, con
 		if (pBaseClass) {
 			const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
 			if (pClass && pClass->IsDerivedFrom(*pBaseClass)) {
-				PL_LOG(Debug, "Create scene node '" + sName + "' of type '" + sClass + "'")
+				PL_LOG(Debug, "Create scene node '" + sName + "' of type '" + sClass + '\'')
 				SceneNode *pNode = static_cast<SceneNode*>(pClass->Create());
 				if (pNode) {
 
