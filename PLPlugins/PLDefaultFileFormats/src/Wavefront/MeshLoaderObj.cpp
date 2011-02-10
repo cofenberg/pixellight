@@ -227,7 +227,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(VertexTex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
+			return Math::Abs(static_cast<int>(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
 							cVertex.fS*123+cVertex.fT*42))%m_nSlots;
 		}
 
@@ -299,7 +299,8 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			pVertex->fZ = cTokenizer.GetNextToken().GetFloat();
 
 			// Add vertex to temp list
-			if (!lstVertices.GetNumOfElements()) lstVertices.Add(new Array<Obj::Vertex*>);
+			if (!lstVertices.GetNumOfElements())
+				lstVertices.Add(new Array<Obj::Vertex*>);
 			lstVertices[lstVertices.GetNumOfElements()-1]->Add(pVertex);
 
 		// frame
@@ -367,8 +368,10 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					pFace->nNormal[2]   = nIndices[1][2] = nNormal;
 
 					// Set face material
-					if (pMaterial) pFace->nMaterial = pMaterial->nID;
-					else		   pFace->nMaterial = -1;
+					if (pMaterial)
+						pFace->nMaterial = pMaterial->nID;
+					else
+						pFace->nMaterial = -1;
 
 					// Add face to temp list
 					lstFaces.Add(pFace);
@@ -407,7 +410,8 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					// map_Kd
 					} else if (cMatTokenizer.CompareToken("map_Kd")) {
 						// Material texture
-						if (pMaterial) pMaterial->sTexture = cMatTokenizer.GetNextToken();
+						if (pMaterial)
+							pMaterial->sTexture = cMatTokenizer.GetNextToken();
 					}
 				}
 				cMatTokenizer.Stop();
@@ -429,7 +433,9 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				pMaterial->sTexture = sMaterial;
 				lstMaterials.Add(pMaterial);
 				mapMaterials.Add(pMaterial->sName, pMaterial);
-			} else pMaterial = pFoundMaterial;
+			} else {
+				pMaterial = pFoundMaterial;
+			}
 		}
 	}
 	cTokenizer.Stop();
@@ -445,7 +451,7 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		for (uint32 nVertex=0; nVertex<3; nVertex++) {
 			// Setup face vertex
 			nV = pFace->nVertex[nVertex];
-			if (nV < 0 || nV >= (signed)lstVertices[0]->GetNumOfElements()) {
+			if (nV < 0 || nV >= static_cast<signed>(lstVertices[0]->GetNumOfElements())) {
 				// ? Error! ?
 				pFace->nVertex[nVertex] = 0;
 			} else {
@@ -455,7 +461,7 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				cVertex.fZ = lstVertices[0]->Get(nV)->fZ;
 				if (lstNormals.GetNumOfElements()) {
 					nN = pFace->nNormal[nVertex];
-					if (nN >= 0 && nN < (signed)lstNormals.GetNumOfElements()) {
+					if (nN >= 0 && nN < static_cast<signed>(lstNormals.GetNumOfElements())) {
 						cVertex.fNX = lstNormals[nN]->fX;
 						cVertex.fNY = lstNormals[nN]->fY;
 						cVertex.fNZ = lstNormals[nN]->fZ;
@@ -471,7 +477,7 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				}
 				if (lstTexCoords.GetNumOfElements()) {
 					nT = pFace->nTexCoord[nVertex];
-					if (nT >= 0 && nT < (signed)lstTexCoords.GetNumOfElements()) {
+					if (nT >= 0 && nT < static_cast<signed>(lstTexCoords.GetNumOfElements())) {
 						cVertex.fS = lstTexCoords[nT]->fS;
 						cVertex.fT = lstTexCoords[nT]->fT;
 					} else { // ? Error! ?
@@ -528,21 +534,21 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					const Obj::Face *pFace = lstFaces[i];
 					// V0
 					nID      = lstVertexTex[pFace->nVertex[0]]->nVertex;
-					pfVertex = (float*)pVertexBuffer->GetData(pFace->nVertex[0], VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(pFace->nVertex[0], VertexBuffer::Position));
 					pfVertex[Vector3::X] = plstFrame->Get(nID)->fX - plstFrame0->Get(nID)->fX;
 					pfVertex[Vector3::Y] = plstFrame->Get(nID)->fY - plstFrame0->Get(nID)->fY;
 					pfVertex[Vector3::Z] = plstFrame->Get(nID)->fZ - plstFrame0->Get(nID)->fZ;
 
 					// V1
 					nID      = lstVertexTex[pFace->nVertex[1]]->nVertex;
-					pfVertex = (float*)pVertexBuffer->GetData(pFace->nVertex[1], VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(pFace->nVertex[1], VertexBuffer::Position));
 					pfVertex[Vector3::X] = plstFrame->Get(nID)->fX - plstFrame0->Get(nID)->fX;
 					pfVertex[Vector3::Y] = plstFrame->Get(nID)->fY - plstFrame0->Get(nID)->fY;
 					pfVertex[Vector3::Z] = plstFrame->Get(nID)->fZ - plstFrame0->Get(nID)->fZ;
 
 					// V2
 					nID      = lstVertexTex[pFace->nVertex[2]]->nVertex;
-					pfVertex = (float*)pVertexBuffer->GetData(pFace->nVertex[2], VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(pFace->nVertex[2], VertexBuffer::Position));
 					pfVertex[Vector3::X] = plstFrame->Get(nID)->fX - plstFrame0->Get(nID)->fX;
 					pfVertex[Vector3::Y] = plstFrame->Get(nID)->fY - plstFrame0->Get(nID)->fY;
 					pfVertex[Vector3::Z] = plstFrame->Get(nID)->fZ - plstFrame0->Get(nID)->fZ;
@@ -552,8 +558,10 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				pVertexBuffer->Unlock();
 			}
 		} else { // Main frame
-			if (lstTexCoords.GetNumOfElements()) pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
-			if (lstNormals.GetNumOfElements()) pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal, 0, VertexBuffer::Float3);
+			if (lstTexCoords.GetNumOfElements())
+				pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+			if (lstNormals.GetNumOfElements())
+				pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal, 0, VertexBuffer::Float3);
 			pVertexBuffer->Allocate(lstVertexTex.GetNumOfElements(), bStatic ? Usage::Static : Usage::Dynamic);
 			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 				// Fill vertex buffer
@@ -561,18 +569,18 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					const Obj::Face *pFace = lstFaces[i];
 					// V0
 					nID      = lstVertexTex[pFace->nVertex[0]]->nVertex;
-					pfVertex = (float*)pVertexBuffer->GetData(pFace->nVertex[0], VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(pFace->nVertex[0], VertexBuffer::Position));
 					pfVertex[Vector3::X] = plstFrame->Get(nID)->fX;
 					pfVertex[Vector3::Y] = plstFrame->Get(nID)->fY;
 					pfVertex[Vector3::Z] = plstFrame->Get(nID)->fZ;
 					nID = pFace->nVertex[0];
 					if (lstTexCoords.GetNumOfElements()) {
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = lstVertexTex[nID]->fS;
 						pfVertex[Vector2::Y] = lstVertexTex[nID]->fT;
 					}
 					if (lstNormals.GetNumOfElements()) {
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = lstVertexTex[nID]->fNX;
 						pfVertex[Vector3::Y] = lstVertexTex[nID]->fNY;
 						pfVertex[Vector3::Z] = lstVertexTex[nID]->fNZ;
@@ -580,18 +588,18 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 					// V1
 					nID      = lstVertexTex[pFace->nVertex[1]]->nVertex;
-					pfVertex = (float*)pVertexBuffer->GetData(pFace->nVertex[1], VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(pFace->nVertex[1], VertexBuffer::Position));
 					pfVertex[Vector3::X] = plstFrame->Get(nID)->fX;
 					pfVertex[Vector3::Y] = plstFrame->Get(nID)->fY;
 					pfVertex[Vector3::Z] = plstFrame->Get(nID)->fZ;
 					nID = pFace->nVertex[1];
 					if (lstTexCoords.GetNumOfElements()) {
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = lstVertexTex[nID]->fS;
 						pfVertex[Vector2::Y] = lstVertexTex[nID]->fT;
 					}
 					if (lstNormals.GetNumOfElements()) {
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = lstVertexTex[nID]->fNX;
 						pfVertex[Vector3::Y] = lstVertexTex[nID]->fNY;
 						pfVertex[Vector3::Z] = lstVertexTex[nID]->fNZ;
@@ -599,18 +607,18 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 					// V2
 					nID      = lstVertexTex[pFace->nVertex[2]]->nVertex;
-					pfVertex = (float*)pVertexBuffer->GetData(pFace->nVertex[2], VertexBuffer::Position);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(pFace->nVertex[2], VertexBuffer::Position));
 					pfVertex[Vector3::X] = plstFrame->Get(nID)->fX;
 					pfVertex[Vector3::Y] = plstFrame->Get(nID)->fY;
 					pfVertex[Vector3::Z] = plstFrame->Get(nID)->fZ;
 					nID = pFace->nVertex[2];
 					if (lstTexCoords.GetNumOfElements()) {
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = lstVertexTex[nID]->fS;
 						pfVertex[Vector2::Y] = lstVertexTex[nID]->fT;
 					}
 					if (lstNormals.GetNumOfElements()) {
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = lstVertexTex[nID]->fNX;
 						pfVertex[Vector3::Y] = lstVertexTex[nID]->fNY;
 						pfVertex[Vector3::Z] = lstVertexTex[nID]->fNZ;
@@ -636,7 +644,7 @@ bool MeshLoaderObj::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		uint32 nVertices    = 0;
 
 		// Go through all object materials
-		for (int nMat=-1; nMat<(int)cMesh.GetNumOfMaterials(); nMat++) {
+		for (int nMat=-1; nMat<static_cast<int>(cMesh.GetNumOfMaterials()); nMat++) {
 			// Fill index buffer
 			for (uint32 i=0; i<lstFaces.GetNumOfElements(); i++) {
 				// Get the face

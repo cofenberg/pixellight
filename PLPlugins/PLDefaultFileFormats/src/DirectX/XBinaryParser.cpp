@@ -87,8 +87,10 @@ XToken::XToken(EType nType) :
 */
 XToken::~XToken()
 {
-	if (m_pChildToken) delete m_pChildToken;
-	if (m_pNextToken)  delete m_pNextToken;
+	if (m_pChildToken)
+		delete m_pChildToken;
+	if (m_pNextToken)
+		delete m_pNextToken;
 }
 
 /**
@@ -101,35 +103,57 @@ void XToken::ReadTokens(File &cFile, XToken &cParentToken)
 
 	// Read the first token type
 	uint16 nTokenType;
-	int nNumOfReadBytes = (int)cFile.Read(&nTokenType, sizeof(nTokenType), 1);
+	int nNumOfReadBytes = static_cast<int>(cFile.Read(&nTokenType, sizeof(nTokenType), 1));
 	while (nNumOfReadBytes) {
 		XToken *pNewToken = nullptr;
 
 		// Process the token
 		switch (nTokenType) {
-			case TOKEN_NAME:			pNewToken = new XTokenName(cFile);		break;
-			case TOKEN_STRING:			pNewToken = new XTokenString(cFile);	break;
-			case TOKEN_INTEGER:			pNewToken = new XTokenInt(cFile);		break;
-			case TOKEN_GUID:			pNewToken = new XTokenGUID(cFile);		break;
-			case TOKEN_INTEGER_LIST:	pNewToken = new XTokenIntList(cFile);	break;
-			case TOKEN_FLOAT_LIST:		pNewToken = new XTokenFloatList(cFile);	break;
+			case TOKEN_NAME:
+				pNewToken = new XTokenName(cFile);
+				break;
+
+			case TOKEN_STRING:	
+				pNewToken = new XTokenString(cFile);
+				break;
+
+			case TOKEN_INTEGER:
+				pNewToken = new XTokenInt(cFile);
+				break;
+
+			case TOKEN_GUID:
+				pNewToken = new XTokenGUID(cFile);
+				break;
+
+			case TOKEN_INTEGER_LIST:
+				pNewToken = new XTokenIntList(cFile);
+				break;
+
+			case TOKEN_FLOAT_LIST:
+				pNewToken = new XTokenFloatList(cFile);
+				break;
 
 			case TOKEN_OBRACE:
 				// '{' found, go 'inside'
 				if (pCurrentToken) {
 					ReadTokens(cFile, *pCurrentToken);
 					break;
-				} else return; // Error!
+				} else {
+					// Error!
+					return;
+				}
 
 			case TOKEN_CBRACE:
 				// '}' found, return to the parent
 				return;
 
-			case TOKEN_TEMPLATE:		pNewToken = new XTokenTemplate(cFile);	break;
+			case TOKEN_TEMPLATE:
+				pNewToken = new XTokenTemplate(cFile);
+				break;
 
 			default:
 				// Once we reach an unknown type we'll just add the token
-				pNewToken = new XToken((EType)nTokenType);
+				pNewToken = new XToken(static_cast<EType>(nTokenType));
 				break;
 		}
 
@@ -145,7 +169,7 @@ void XToken::ReadTokens(File &cFile, XToken &cParentToken)
 		}
 
 		// Read the next token type
-		nNumOfReadBytes = (int)cFile.Read(&nTokenType, sizeof(nTokenType), 1);
+		nNumOfReadBytes = static_cast<int>(cFile.Read(&nTokenType, sizeof(nTokenType), 1));
 	}
 }
 
@@ -231,7 +255,8 @@ XTokenName::XTokenName(File &cFile) : XToken(TOKEN_NAME),
 */
 XTokenName::~XTokenName()
 {
-	if (m_pszName) delete m_pszName;
+	if (m_pszName)
+		delete m_pszName;
 }
 
 
@@ -298,7 +323,8 @@ XTokenString::XTokenString(File &cFile) : XToken(TOKEN_STRING),
 */
 XTokenString::~XTokenString()
 {
-	if (m_pszString) delete m_pszString;
+	if (m_pszString)
+		delete m_pszString;
 }
 
 
@@ -355,7 +381,8 @@ XTokenIntList::XTokenIntList(File &cFile) : XToken(TOKEN_INTEGER_LIST),
 */
 XTokenIntList::~XTokenIntList()
 {
-	if (m_list) delete m_list;
+	if (m_list)
+		delete m_list;
 }
 
 
@@ -382,7 +409,8 @@ XTokenFloatList::XTokenFloatList(File &cFile) : XToken(TOKEN_FLOAT_LIST),
 */
 XTokenFloatList::~XTokenFloatList()
 {
-	if (m_list) delete m_list;
+	if (m_list)
+		delete m_list;
 }
 
 
@@ -425,8 +453,10 @@ XTokenTemplate::XTokenTemplate(File &cFile) : XToken(TOKEN_TEMPLATE),
 */
 XTokenTemplate::~XTokenTemplate()
 {
-	if (pszName) delete pszName;
-	if (pGUID)   delete pGUID;
+	if (pszName)
+		delete pszName;
+	if (pGUID)
+		delete pGUID;
 }
 
 

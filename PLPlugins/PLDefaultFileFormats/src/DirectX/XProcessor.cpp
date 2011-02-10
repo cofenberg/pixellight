@@ -76,7 +76,8 @@ XNode::XNode(EType nType) :
 */
 XNode::~XNode()
 {
-	if (m_pcNextNode) delete m_pcNextNode;
+	if (m_pcNextNode)
+		delete m_pcNextNode;
 }
 
 
@@ -107,7 +108,8 @@ XRoot::XRoot() : XNode(Root),
 */
 XRoot::~XRoot()
 {
-	if (m_pcFirstNode) delete m_pcFirstNode;
+	if (m_pcFirstNode)
+		delete m_pcFirstNode;
 }
 
 /**
@@ -150,7 +152,8 @@ XReference::XReference() : XNode(Reference),
 */
 XReference::~XReference()
 {
-	if (pszName) delete [] pszName;
+	if (pszName)
+		delete [] pszName;
 }
 
 
@@ -199,8 +202,10 @@ XMaterial::XMaterial() : XNode(Material),
 */
 XMaterial::~XMaterial()
 {
-	if (pszName)		   delete [] pszName;
-	if (psTextureFilename) delete psTextureFilename;
+	if (pszName)
+		delete [] pszName;
+	if (psTextureFilename)
+		delete psTextureFilename;
 }
 
 
@@ -234,8 +239,10 @@ XMesh::XMesh() : XNode(Mesh),
 */
 XMesh::~XMesh()
 {
-	if (pszName) delete [] pszName;
-	if (psVertices) delete [] psVertices;
+	if (pszName)
+		delete [] pszName;
+	if (psVertices)
+		delete [] psVertices;
 	if (psFaces) {
 		XMeshFace *psMeshFace    = psFaces;
 		XMeshFace *psMeshFaceEnd = &psFaces[nFaces];
@@ -244,23 +251,28 @@ XMesh::~XMesh()
 		delete [] psFaces;
 	}
 	if (psFaceWraps) {
-		if (psFaceWraps->psFaceWrapValues) delete [] psFaceWraps->psFaceWrapValues;
+		if (psFaceWraps->psFaceWrapValues)
+			delete [] psFaceWraps->psFaceWrapValues;
 		delete psFaceWraps;
 	}
 	if (psTextureCoords) {
-		if (psTextureCoords->psTextureCoords) delete [] psTextureCoords->psTextureCoords;
+		if (psTextureCoords->psTextureCoords)
+			delete [] psTextureCoords->psTextureCoords;
 		delete psTextureCoords;
 	}
 	if (psNormals) {
-		if (psNormals->psNormals) delete [] psNormals->psNormals;
+		if (psNormals->psNormals)
+			delete [] psNormals->psNormals;
 		delete psNormals;
 	}
 	if (psVertexColors) {
-		if (psVertexColors->psVertexColors) delete [] psVertexColors->psVertexColors;
+		if (psVertexColors->psVertexColors)
+			delete [] psVertexColors->psVertexColors;
 		delete psVertexColors;
 	}
 	if (psMaterialList) {
-		if (psMaterialList->pnFaceIndexes) delete [] psMaterialList->pnFaceIndexes;
+		if (psMaterialList->pnFaceIndexes)
+			delete [] psMaterialList->pnFaceIndexes;
 		delete psMaterialList;
 	}
 }
@@ -302,8 +314,10 @@ XFrame::XFrame() : XNode(Frame),
 */
 XFrame::~XFrame()
 {
-	if (pszName)		   delete [] pszName;
-	if (psTransformMatrix) delete psTransformMatrix;
+	if (pszName)
+		delete [] pszName;
+	if (psTransformMatrix)
+		delete psTransformMatrix;
 }
 
 

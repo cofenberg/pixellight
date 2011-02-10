@@ -319,7 +319,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(Vertex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
+			return Math::Abs(static_cast<int>(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
 								cVertex.fS*123+cVertex.fT*42))%m_nSlots;
 		}
 };
@@ -391,7 +391,7 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		Q3Bsp::Face &cFace = lstFaces[i];
 		cFace.nTextureID  = pBSPFace->textureID;
 		cFace.nLightmapID = pBSPFace->lightmapID;
-		for (uint32 nVertex=0; nVertex<(uint32)pBSPFace->numMeshVerts; nVertex++) {
+		for (uint32 nVertex=0; nVertex<static_cast<uint32>(pBSPFace->numMeshVerts); nVertex++) {
 			uint32 nIndex = pBSPFace->startVertIndex+pMeshVertices[pBSPFace->meshVertIndex+nVertex];
 			if (nIndex < nNumOfVertices && nIndex >= 0) {
 				tBSPVertex *pBspVertex = &pVertices[nIndex];
@@ -433,9 +433,12 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	MeshMorphTarget *pMorphTarget  = cMesh.AddMorphTarget();
 	VertexBuffer    *pVertexBuffer = pMorphTarget->GetVertexBuffer();
 	pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
-	if (bNormals)    pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
-	if (bTexCoords)  pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
-	if (bLTexCoords) pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 1, VertexBuffer::Float2);
+	if (bNormals)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
+	if (bTexCoords)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+	if (bLTexCoords)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 1, VertexBuffer::Float2);
 	pVertexBuffer->Allocate(lstVertexTex.GetNumOfElements(), bStatic ? Usage::Static : Usage::Dynamic);
 
 	// Add materials
@@ -454,7 +457,9 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			lstMaterials.Add(pMaterial);
 			mapMaterials.Add(sMatName, pMaterial);
 			cFace.nMaterialID = pMaterial->nIndex;
-		} else cFace.nMaterialID = pFoundMaterial->nIndex;
+		} else {
+			cFace.nMaterialID = pFoundMaterial->nIndex;
+		}
 	}
 
 	// Get the renderer context
@@ -476,7 +481,7 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		pMat->SetEffect(pFX);
 
 		// Valid texture?
-		if (pMaterial->nTextureID < 0 || pMaterial->nTextureID >= (int)nNumOfTextures)
+		if (pMaterial->nTextureID < 0 || pMaterial->nTextureID >= static_cast<int>(nNumOfTextures))
 			continue;
 		tBSPTexture *pTexture = &pTextures[pMaterial->nTextureID];
 		sFilenameT = pTexture->strName;
@@ -487,7 +492,8 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		// Try to load in directly by using the given filename
 		File *pTextureFile = (File*)FileSystem::GetInstance()->Open(sFilenameT);
 		if (!pTextureFile || !pTextureFile->Open()) {
-			if (pTextureFile) pTextureFile->Release();
+			if (pTextureFile)
+				pTextureFile->Release();
 			// Try to load in the texture with an supported image format
 			LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType("Image");
 			if (pLoadableType) {
@@ -497,19 +503,24 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					// Loop through all supported image formats
 					for (uint32 nFormat=0; nFormat<pLoadableType->GetNumOfFormats() && !bValid; nFormat++) {
 						// Construct filename
-						if (nPath) sFilenameT = pLoadableType->GetSearchPath(nPath-1) + String::Format("%s.", pTexture->strName) + pLoadableType->GetFormat(nFormat);
-						else	   sFilenameT = String::Format("%s.", pTexture->strName) + pLoadableType->GetFormat(nFormat);
+						if (nPath)
+							sFilenameT = pLoadableType->GetSearchPath(nPath-1) + String::Format("%s.", pTexture->strName) + pLoadableType->GetFormat(nFormat);
+						else
+							sFilenameT = String::Format("%s.", pTexture->strName) + pLoadableType->GetFormat(nFormat);
 
 						// Try to open this file
 						pTextureFile = (File*)FileSystem::GetInstance()->Open(sFilenameT);
 						if (pTextureFile) {
-							if (pTextureFile->Open()) bValid = true;
+							if (pTextureFile->Open())
+								bValid = true;
 							pTextureFile->Release();
 						}
 					}
 				}
 			}
-		} else pTextureFile->Release();
+		} else {
+			pTextureFile->Release();
+		}
 		*/
 
 		EffectTechnique *pTechnique = pFX->AddTechnique();
@@ -522,7 +533,7 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 //		pFXPassLayer->Load(sFilenameT);
 
 		// Add lightmap texture
-		if (pMaterial->nLightmapID < 0 || pMaterial->nLightmapID >= (int)nNumOfLightmaps)
+		if (pMaterial->nLightmapID < 0 || pMaterial->nLightmapID >= static_cast<int>(nNumOfLightmaps))
 			continue;
 		tBSPLightmap *pLightmap = &pLightmaps[pMaterial->nLightmapID];
 
@@ -533,9 +544,9 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			uint8 *pImageData = &pLightmap->imageBits[0][0][0];
 			for (int nElement=0; nElement<128*128; nElement+=3) {
 				max  = 1.0f;
-				r    = ((float)pImageData[nElement]*3.1f)/255.0f;
-				g    = ((float)pImageData[nElement+1]*3.1f)/255.0f;
-				b    = ((float)pImageData[nElement+2]*3.1f)/255.0f;
+				r    = (static_cast<float>(pImageData[nElement])*3.1f)/255.0f;
+				g    = (static_cast<float>(pImageData[nElement+1])*3.1f)/255.0f;
+				b    = (static_cast<float>(pImageData[nElement+2])*3.1f)/255.0f;
 				if (r > 1.0f)
 					if ((1.0f/r) < max)
 						max = 1.0f/r;
@@ -550,9 +561,9 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				r   *= max;
 				g   *= max;
 				b   *= max;
-				pImageData[nElement]   = (uint8)r;
-				pImageData[nElement+1] = (uint8)g;
-				pImageData[nElement+2] = (uint8)b;
+				pImageData[nElement]   = static_cast<uint8>(r);
+				pImageData[nElement+1] = static_cast<uint8>(g);
+				pImageData[nElement+2] = static_cast<uint8>(b);
 			}
 
 			// Create the image
@@ -563,7 +574,7 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 			// Create the texture
 			pTex = cRendererContext.GetTextureManager().Create(sLName);
-			pTex->SetTextureBuffer((TextureBuffer*)pVertexBuffer->GetRenderer().CreateTextureBuffer2D(cImage));
+			pTex->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(pVertexBuffer->GetRenderer().CreateTextureBuffer2D(cImage)));
 		}
 
 		pFXPassLayer = pFXPass->AddLayer();
@@ -579,14 +590,14 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				const Q3Bsp::Vertex *pVertex = cIterator.Next();
 
 				// Position
-				float *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 				pfVertex[Vector3::X] = pVertex->fX;
 				pfVertex[Vector3::Y] = pVertex->fY;
 				pfVertex[Vector3::Z] = pVertex->fZ;
 
 				// Normal
 				if (bNormals) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 					pfVertex[Vector3::X] = pVertex->fNX;
 					pfVertex[Vector3::Y] = pVertex->fNY;
 					pfVertex[Vector3::Z] = pVertex->fNZ;
@@ -594,14 +605,14 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 				// Texture coordinate
 				if (bTexCoords) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = pVertex->fS;
 					pfVertex[Vector2::Y] = pVertex->fT;
 				}
 
 				// Lightmap texture coordinate
 				if (bLTexCoords) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord, 1);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord, 1));
 					pfVertex[Vector2::X] = pVertex->fLS;
 					pfVertex[Vector2::Y] = pVertex->fLT;
 				}
@@ -631,12 +642,12 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			// Check material ID's
 			for (uint32 i=0; i<nNumOfFaces; i++) {
 				Q3Bsp::Face &cFace = lstFaces[i];
-				if (cFace.nTextureID >= (int)cMesh.GetNumOfMaterials())
+				if (cFace.nTextureID >= static_cast<int>(cMesh.GetNumOfMaterials()))
 					cFace.nTextureID = -1;
 			}
 
 			// Go through all object materials
-			for (int nMat=-1; nMat<(int)cMesh.GetNumOfMaterials(); nMat++) {
+			for (int nMat=-1; nMat<static_cast<int>(cMesh.GetNumOfMaterials()); nMat++) {
 				// Fill index buffer
 				for (uint32 i=0; i<nNumOfFaces; i++) {
 					// Get the face

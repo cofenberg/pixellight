@@ -230,7 +230,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(Vertex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fS*30+cVertex.fT*20*m_nSlots+cVertex.nVertex*4))%m_nSlots;
+			return Math::Abs(static_cast<int>(cVertex.fS*30+cVertex.fT*20*m_nSlots+cVertex.nVertex*4))%m_nSlots;
 		}
 
 
@@ -251,8 +251,10 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	// Read file header
 	MD2Header sHeader;
 	cFile.Read(&sHeader, 1, sizeof(sHeader));
-	if (sHeader.magic != 844121161) return false; // Error, wrong ID
-	if (sHeader.version != 8) return false; // Error, wrong version
+	if (sHeader.magic != 844121161)
+		return false; // Error, wrong ID
+	if (sHeader.version != 8)
+		return false; // Error, wrong version
 
 	// Load frames
 	uint8 *pFrames = new uint8[sHeader.frameSize*sHeader.numFrames];
@@ -278,9 +280,9 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 // First, get total number of indices
 	uint32 nNumOfIndices = 0;
-	long *pCommand = (long*)pGLCommands;
+	long *pCommand = reinterpret_cast<long*>(pGLCommands);
 	while (*pCommand != 0) {
-		uint32 nVertices = Math::Abs((int)*pCommand);
+		uint32 nVertices = Math::Abs(static_cast<int>(*pCommand));
 		nNumOfIndices += nVertices;
 		pCommand += nVertices*3+1;
 	}
@@ -302,25 +304,27 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		uint32 nIndex = 0;
 		uint32 nStartVertex = 0;
 
-		pCommand = (long*)pGLCommands;
+		pCommand = reinterpret_cast<long*>(pGLCommands);
 		while (*pCommand != 0) {
-			uint32 nVertices = Math::Abs((int)*pCommand);
+			uint32 nVertices = Math::Abs(static_cast<int>(*pCommand));
 			Geometry &cGeometry = lstGeometries.Add();
 			cGeometry.SetStartIndex(nStartVertex);
 			cGeometry.SetIndexSize(nVertices);
 			cGeometry.SetMaterial(0);
-			if (nVertices == 3) cGeometry.SetPrimitiveType(Primitive::TriangleList);
-			else				cGeometry.SetPrimitiveType(*pCommand > 0 ? Primitive::TriangleStrip : Primitive::TriangleFan);
+			if (nVertices == 3)
+				cGeometry.SetPrimitiveType(Primitive::TriangleList);
+			else
+				cGeometry.SetPrimitiveType(*pCommand > 0 ? Primitive::TriangleStrip : Primitive::TriangleFan);
 			pCommand++;
 
 			// Get vertices
 			for (uint32 i=0; i<nVertices; i++) {
 				// Get texture coordinate 1
-				float fS = *((float*)pCommand);
+				float fS = *reinterpret_cast<float*>(pCommand);
 				pCommand++;
 
 				// Get texture coordinate 2
-				float fT = *((float*)pCommand);
+				float fT = *reinterpret_cast<float*>(pCommand);
 				pCommand++;
 
 				// Add vertex to list if not already in
@@ -341,10 +345,10 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	}
 
 // Create morph targets
-	MD2Frame *pBaseMD2Frame = (MD2Frame*)pFrames;
-	for (uint32 nFrame=0; nFrame<(uint32)sHeader.numFrames; nFrame++) {
+	MD2Frame *pBaseMD2Frame = reinterpret_cast<MD2Frame*>(pFrames);
+	for (uint32 nFrame=0; nFrame<static_cast<uint32>(sHeader.numFrames); nFrame++) {
 		// Get frame pointer
-		MD2Frame *pMD2Frame = (MD2Frame*)(pFrames + nFrame*sHeader.frameSize);
+		MD2Frame *pMD2Frame = reinterpret_cast<MD2Frame*>(pFrames + nFrame*sHeader.frameSize);
 
 		// Add morph target
 		MeshMorphTarget *pMorphTarget = cMesh.AddMorphTarget();
@@ -364,7 +368,7 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					uint32             nVertexID = pVertex->nVertex;
 
 					// Position
-					float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[Vector3::X] = (pMD2Frame->vertices[nVertexID].vertex[0]*pMD2Frame->scale[0] + pMD2Frame->translate[0]) -
 										   (pBaseMD2Frame->vertices[nVertexID].vertex[0]*pBaseMD2Frame->scale[0] + pBaseMD2Frame->translate[0]);
 					pfVertex[Vector3::Y] = (pMD2Frame->vertices[nVertexID].vertex[2]*pMD2Frame->scale[2] + pMD2Frame->translate[2]) -
@@ -373,7 +377,7 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 										   (pBaseMD2Frame->vertices[nVertexID].vertex[1]*pBaseMD2Frame->scale[1] + pBaseMD2Frame->translate[1]);
 
 					// Texture coordinate
-					pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = pVertex->fS;
 					pfVertex[Vector2::Y] = pVertex->fT;
 				}
@@ -383,13 +387,13 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					uint32             nVertexID = pVertex->nVertex;
 
 					// Position
-					float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[Vector3::X] = pMD2Frame->vertices[nVertexID].vertex[0]*pMD2Frame->scale[0] + pMD2Frame->translate[0];
 					pfVertex[Vector3::Y] = pMD2Frame->vertices[nVertexID].vertex[2]*pMD2Frame->scale[2] + pMD2Frame->translate[2];
 					pfVertex[Vector3::Z] = pMD2Frame->vertices[nVertexID].vertex[1]*pMD2Frame->scale[1] + pMD2Frame->translate[1];
 
 					// Texture coordinate
-					pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = pVertex->fS;
 					pfVertex[Vector2::Y] = pVertex->fT;
 				}
@@ -403,28 +407,32 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 // Write animations (we use classic c-strings in here, but that's no problem and there can't be a buffer overflow)
 	String sName, sLastName;
 	uint32 nStart = 0, nEnd = 0;
-	for (uint32 nFrame=0; nFrame<(uint32)sHeader.numFrames; nFrame++) {
+	for (uint32 nFrame=0; nFrame<static_cast<uint32>(sHeader.numFrames); nFrame++) {
 		// Get frame pointer
-		MD2Frame *pMD2Frame = (MD2Frame*)(pFrames + nFrame*sHeader.frameSize);
+		MD2Frame *pMD2Frame = reinterpret_cast<MD2Frame*>(pFrames + nFrame*sHeader.frameSize);
 
 		// Get frame name
-		int j = (int)Wrapper::GetStringLength(pMD2Frame->name) - 1;
-		if (j > 15) j = 15; // No buffer overflow, please!
+		int j = static_cast<int>(Wrapper::GetStringLength(pMD2Frame->name) - 1);
+		if (j > 15)
+			j = 15; // No buffer overflow, please!
 		while ((j >= 0 &&
 				pMD2Frame->name[j] >= '0' &&
 				pMD2Frame->name[j] <= '9') ||
-				pMD2Frame->name[j] == '_')
-				j--;
+				pMD2Frame->name[j] == '_') {
+			j--;
+		}
 		j++;
 		sName.Copy(pMD2Frame->name, j);
-		if (!nFrame) sLastName = sName;
+		if (!nFrame)
+			sLastName = sName;
 
 		// Compare frame names
-		if (sName == sLastName && nFrame < (uint32)sHeader.numFrames-1) {
+		if (sName == sLastName && static_cast<int>(nFrame) < sHeader.numFrames-1) {
 			// Add frame to animation
 			nEnd = nFrame;
 		} else { // Save last finished animation and start a new one
-			if (nFrame >= (uint32)sHeader.numFrames-1) nEnd = nFrame;
+			if (static_cast<int>(nFrame) >= sHeader.numFrames-1)
+				nEnd = nFrame;
 
 			// Add morph target animation
 			MorphTargetAni *pAni = new MorphTargetAni(sLastName, &cMesh.GetMorphTargetAnimationManager());
@@ -442,8 +450,10 @@ bool MeshLoaderMd2::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				Array<float> &lstFrameKeysT = lstFrameKeys[i].lstFrameKeys;
 				lstFrameKeysT.Resize(nFrames);
 				for (uint32 i2=0; i2<lstFrameKeysT.GetNumOfElements(); i2++) {
-					if (i == i2) lstFrameKeysT[i2] = 1.0f;
-					else		 lstFrameKeysT[i2] = 0.0f;
+					if (i == i2)
+						lstFrameKeysT[i2] = 1.0f;
+					else
+						lstFrameKeysT[i2] = 0.0f;
 				}
 			}
 			pAni->SetEndFrame(nFrames);

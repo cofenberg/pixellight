@@ -215,7 +215,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(Vertex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
+			return Math::Abs(static_cast<int>(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
 								cVertex.fS*123+cVertex.fT*42))%m_nSlots;
 		}
 
@@ -594,14 +594,20 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			}
 
 			// Update states
-			if (pNormalList)   bNormals   = true;
-			if (pTexCoordList) bTexCoords = true;
+			if (pNormalList)
+				bNormals   = true;
+			if (pTexCoordList)
+				bTexCoords = true;
 
 			// Clean up
-			if (pVertexList)   delete [] pVertexList;
-			if (pNormalList)   delete [] pNormalList;
-			if (pTexFaces)     delete [] pTexFaces;
-			if (pTexCoordList) delete [] pTexCoordList;
+			if (pVertexList)
+				delete [] pVertexList;
+			if (pNormalList)
+				delete [] pNormalList;
+			if (pTexFaces)
+				delete [] pTexFaces;
+			if (pTexCoordList)
+				delete [] pTexCoordList;
 		}
 	}
 	cTokenizer.Stop();
@@ -615,8 +621,10 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	MeshMorphTarget *pMorphTarget = cMesh.AddMorphTarget();
 	VertexBuffer *pVertexBuffer = pMorphTarget->GetVertexBuffer();
 	pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
-	if (bNormals)   pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
-	if (bTexCoords) pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+	if (bNormals)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
+	if (bTexCoords)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
 	pVertexBuffer->Allocate(lstVertexTex.GetNumOfElements(), bStatic ? Usage::Static : Usage::Dynamic);
 
 	// Fill vertex buffer
@@ -628,14 +636,14 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				const Ase::Vertex &cVertex = *cIterator.Next();
 
 				// Position
-				float *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 				pfVertex[Vector3::X] = cVertex.fX;
 				pfVertex[Vector3::Y] = cVertex.fY;
 				pfVertex[Vector3::Z] = cVertex.fZ;
 
 				// Normal
 				if (bNormals) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 					pfVertex[Vector3::X] = cVertex.fNX;
 					pfVertex[Vector3::Y] = cVertex.fNY;
 					pfVertex[Vector3::Z] = cVertex.fNZ;
@@ -643,7 +651,7 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 				// Texture coordinate
 				if (bTexCoords) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = cVertex.fS;
 					pfVertex[Vector2::Y] = cVertex.fT;
 				}
@@ -677,12 +685,12 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		// Check material ID's
 		for (uint32 i=0; i<lstFaceLists.GetNumOfElements(); i++) {
 			Ase::FaceList *pFaceList = lstFaceLists[i];
-			if (pFaceList->nMaterial >= (int)cMesh.GetNumOfMaterials())
+			if (pFaceList->nMaterial >= static_cast<int>(cMesh.GetNumOfMaterials()))
 				pFaceList->nMaterial = -1;
 		}
 
 		// Go through all object materials
-		for (int nMat=-1; nMat<(int)cMesh.GetNumOfMaterials(); nMat++) {
+		for (int nMat=-1; nMat<static_cast<int>(cMesh.GetNumOfMaterials()); nMat++) {
 			// Fill vertex buffer
 			for (uint32 i=0; i<lstFaceLists.GetNumOfElements(); i++) {
 				const Ase::FaceList *pFaceList = lstFaceLists[i];

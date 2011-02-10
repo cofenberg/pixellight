@@ -73,7 +73,7 @@ XRootBinary::XRootBinary(File &cFile)
 		switch (pToken->GetType()) {
 			case XToken::TOKEN_NAME:
 			{
-				XTokenName *pTokenName = (XTokenName*)pToken;
+				XTokenName *pTokenName = static_cast<XTokenName*>(pToken);
 
 				// Header
 				if (g_sHeader == pTokenName->GetName()) {
@@ -113,7 +113,8 @@ XRootBinary::XRootBinary(File &cFile)
 		}
 
 		// Next token, please
-		if (pToken) pToken = pToken->GetNextToken();
+		if (pToken)
+			pToken = pToken->GetNextToken();
 	}
 }
 
@@ -138,11 +139,11 @@ XHeader *XRootBinary::ProcessHeader(XTokenName &cTokenName)
 	XToken *pToken = cTokenName.GetFirstChildToken();
 	if (pToken) {
 		if (pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
-			XTokenIntList *pIntListToken = (XTokenIntList*)pToken;
+			XTokenIntList *pIntListToken = static_cast<XTokenIntList*>(pToken);
 			if (pIntListToken->m_nLength == 3) {
 				XHeader *pcHeader = new XHeader();
-				pcHeader->nMajor = (uint16)pIntListToken->m_list[0];
-				pcHeader->nMinor = (uint16)pIntListToken->m_list[1];
+				pcHeader->nMajor = static_cast<uint16>(pIntListToken->m_list[0]);
+				pcHeader->nMinor = static_cast<uint16>(pIntListToken->m_list[1]);
 				pcHeader->nFlags = pIntListToken->m_list[2];
 
 				// Return the processed header
@@ -176,7 +177,7 @@ XMaterial *XRootBinary::ProcessMaterial(XToken **ppToken)
 		// Get material name token
 		*ppToken = (*ppToken)->GetNextToken();
 		if (*ppToken && (*ppToken)->GetType() == XToken::TOKEN_NAME) {
-			pTokenName = (XTokenName*)*ppToken;
+			pTokenName = static_cast<XTokenName*>(*ppToken);
 		} else {
 			// Error!
 		}
@@ -186,7 +187,7 @@ XMaterial *XRootBinary::ProcessMaterial(XToken **ppToken)
 	XToken *pToken = (*ppToken)->GetFirstChildToken();
 	if (pToken) {
 		if (pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
-			XTokenFloatList *pFloatListToken = (XTokenFloatList*)pToken;
+			XTokenFloatList *pFloatListToken = static_cast<XTokenFloatList*>(pToken);
 			if (pFloatListToken->m_nLength == 11) {
 				// Create the material
 				XMaterial *pcMaterial = new XMaterial();
@@ -222,7 +223,7 @@ XMaterial *XRootBinary::ProcessMaterial(XToken **ppToken)
 					if (pToken->GetType() == XToken::TOKEN_NAME) {
 						XToken *pTextureFilenameToken = pToken->GetFirstChildToken();
 						if (pTextureFilenameToken && pTextureFilenameToken->GetType() == XToken::TOKEN_STRING) {
-							XTokenString *pStringToken = (XTokenString*)pTextureFilenameToken;
+							XTokenString *pStringToken = static_cast<XTokenString*>(pTextureFilenameToken);
 							pcMaterial->psTextureFilename = new XTextureFilename;
 							pcMaterial->psTextureFilename->pszName = pStringToken->GetString();
 							pStringToken->ControlTaken();
@@ -267,7 +268,7 @@ XFrame *XRootBinary::ProcessFrame(XToken **ppToken)
 			// Get frame name token
 			*ppToken = (*ppToken)->GetNextToken();
 			if (*ppToken && (*ppToken)->GetType() == XToken::TOKEN_NAME) {
-				pTokenName = (XTokenName*)*ppToken;
+				pTokenName = static_cast<XTokenName*>(*ppToken);
 			} else {
 				// Error!
 			}
@@ -285,7 +286,7 @@ XFrame *XRootBinary::ProcessFrame(XToken **ppToken)
 	XToken  *pFrameChildToken = (*ppToken)->GetFirstChildToken();
 	while (pFrameChildToken) {
 		if (pFrameChildToken->GetType() == XToken::TOKEN_NAME) {
-			XTokenName *pTokenName = (XTokenName*)pFrameChildToken;
+			XTokenName *pTokenName = static_cast<XTokenName*>(pFrameChildToken);
 			XNode      *pcNewNode  = nullptr;
 
 			// FrameTransformMatrix
@@ -322,7 +323,8 @@ XFrame *XRootBinary::ProcessFrame(XToken **ppToken)
 		}
 
 		// Next token, please
-		if (pFrameChildToken) pFrameChildToken = pFrameChildToken->GetNextToken();
+		if (pFrameChildToken)
+			pFrameChildToken = pFrameChildToken->GetNextToken();
 	}
 
 	// Return the processed frame
@@ -338,7 +340,7 @@ XFrameTransformMatrix *XRootBinary::ProcessFrameTransformMatrix(XTokenName &cTok
 	XToken *pToken = cTokenName.GetFirstChildToken();
 	if (pToken) {
 		if (pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
-			XTokenFloatList *pFloatListToken = (XTokenFloatList*)pToken;
+			XTokenFloatList *pFloatListToken = static_cast<XTokenFloatList*>(pToken);
 			if (pFloatListToken->m_nLength == 16) {
 				XFrameTransformMatrix *psTransformMatrix = new XFrameTransformMatrix();
 
@@ -387,7 +389,7 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 			// Get mesh name token
 			*ppToken = (*ppToken)->GetNextToken();
 			if (*ppToken && (*ppToken)->GetType() == XToken::TOKEN_NAME) {
-				pTokenName = (XTokenName*)*ppToken;
+				pTokenName = static_cast<XTokenName*>(*ppToken);
 			} else {
 				// Error!
 			}
@@ -405,7 +407,7 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 	if (pToken) {
 		// Next must be the number of vertices
 		if (pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
-			XTokenIntList *pNumOfVerticesToken = (XTokenIntList*)pToken;
+			XTokenIntList *pNumOfVerticesToken = static_cast<XTokenIntList*>(pToken);
 			if (pNumOfVerticesToken->m_nLength == 1) {
 				// Set number of vertices
 				pcMesh->nVertices = pNumOfVerticesToken->m_list[0];
@@ -413,17 +415,17 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 				// Next must be the vertices list
 				pToken = pToken->GetNextToken();
 				if (pToken && pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
-					XTokenFloatList *pVerticesToken = (XTokenFloatList*)pToken;
+					XTokenFloatList *pVerticesToken = static_cast<XTokenFloatList*>(pToken);
 					if (pVerticesToken->m_nLength == pcMesh->nVertices*3) {
 						// 'Steal' the vertex data
-						pcMesh->psVertices = (XVector*)pVerticesToken->m_list;
+						pcMesh->psVertices = reinterpret_cast<XVector*>(pVerticesToken->m_list);
 						pVerticesToken->m_nLength = 0;
 						pVerticesToken->m_list    = nullptr;
 
 						// Next must be the face list
 						pToken = pToken->GetNextToken();
 						if (pToken && pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
-							XTokenIntList *pFacesToken = (XTokenIntList*)pToken;
+							XTokenIntList *pFacesToken = static_cast<XTokenIntList*>(pToken);
 
 							// Set number of faces
 							uint32 nNumOfFaces = pFacesToken->m_list[0];
@@ -445,7 +447,7 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 							pToken = pToken->GetNextToken();
 							while (pToken) {
 								if (pToken->GetType() == XToken::TOKEN_NAME) {
-									XTokenName *pTokenName = (XTokenName*)pToken;
+									XTokenName *pTokenName = static_cast<XTokenName*>(pToken);
 
 									// MeshFaceWraps
 									if (g_sMeshFaceWraps == pTokenName->GetName()) {
@@ -526,8 +528,10 @@ XMesh *XRootBinary::ProcessMesh(XToken **ppToken)
 	m_sStatistics.nNumOfMeshes++;
 	m_sStatistics.nNumOfMeshVertices += pcMesh->nVertices;
 	m_sStatistics.nNumOfMeshFaces    += pcMesh->nFaces;
-	if (pcMesh->psTextureCoords) m_sStatistics.bTextureCoords = true;
-	if (pcMesh->psNormals)		 m_sStatistics.bNormals       = true;
+	if (pcMesh->psTextureCoords)
+		m_sStatistics.bTextureCoords = true;
+	if (pcMesh->psNormals)
+		m_sStatistics.bNormals       = true;
 
 	// Return the processed mesh
 	return pcMesh;
@@ -554,7 +558,7 @@ XMeshTextureCoords *XRootBinary::ProcessMeshTextureCoords(XTokenName &cTokenName
 	if (pToken) {
 		// Next must be the number of texture coordinates
 		if (pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
-			XTokenIntList *pNumOfTextureCoordsToken = (XTokenIntList*)pToken;
+			XTokenIntList *pNumOfTextureCoordsToken = static_cast<XTokenIntList*>(pToken);
 			if (pNumOfTextureCoordsToken->m_nLength == 1) {
 				XMeshTextureCoords *pTextureCoords = new XMeshTextureCoords;
 
@@ -564,10 +568,10 @@ XMeshTextureCoords *XRootBinary::ProcessMeshTextureCoords(XTokenName &cTokenName
 				// Next must be the texture coordinates list
 				pToken = pToken->GetNextToken();
 				if (pToken && pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
-					XTokenFloatList *pTextureCoordsToken = (XTokenFloatList*)pToken;
+					XTokenFloatList *pTextureCoordsToken = static_cast<XTokenFloatList*>(pToken);
 					if (pTextureCoordsToken->m_nLength == pTextureCoords->nTextureCoords*2) {
 						// 'Steal' the texture coordinate data
-						pTextureCoords->psTextureCoords = (XCoords2d*)pTextureCoordsToken->m_list;
+						pTextureCoords->psTextureCoords = reinterpret_cast<XCoords2d*>(pTextureCoordsToken->m_list);
 						pTextureCoordsToken->m_nLength = 0;
 						pTextureCoordsToken->m_list    = nullptr;
 
@@ -607,7 +611,7 @@ XMeshNormals *XRootBinary::ProcessMeshNormals(XTokenName &cTokenName)
 	if (pToken) {
 		// Next must be the number of normals
 		if (pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
-			XTokenIntList *pNumOfNormalsToken = (XTokenIntList*)pToken;
+			XTokenIntList *pNumOfNormalsToken = static_cast<XTokenIntList*>(pToken);
 			if (pNumOfNormalsToken->m_nLength == 1) {
 				XMeshNormals *pNormals = new XMeshNormals;
 
@@ -617,10 +621,10 @@ XMeshNormals *XRootBinary::ProcessMeshNormals(XTokenName &cTokenName)
 				// Next must be the normals list
 				pToken = pToken->GetNextToken();
 				if (pToken && pToken->GetType() == XToken::TOKEN_FLOAT_LIST) {
-					XTokenFloatList *pNormalsToken = (XTokenFloatList*)pToken;
+					XTokenFloatList *pNormalsToken = static_cast<XTokenFloatList*>(pToken);
 					if (pNormalsToken->m_nLength == pNormals->nNormals*3) {
 						// 'Steal' the normal data
-						pNormals->psNormals = (XVector*)pNormalsToken->m_list;
+						pNormals->psNormals = reinterpret_cast<XVector*>(pNormalsToken->m_list);
 						pNormalsToken->m_nLength = 0;
 						pNormalsToken->m_list    = nullptr;
 
@@ -676,7 +680,7 @@ XMeshMaterialList *XRootBinary::ProcessMeshMaterialList(XTokenName &cTokenName)
 	if (pToken) {
 		// Next must be an integer list with at least 3 entries
 		if (pToken->GetType() == XToken::TOKEN_INTEGER_LIST) {
-			XTokenIntList *pIntList = (XTokenIntList*)pToken;
+			XTokenIntList *pIntList = static_cast<XTokenIntList*>(pToken);
 			if (pIntList->m_nLength > 2) {
 				// Create the material list
 				XMeshMaterialList *psMaterialList = new XMeshMaterialList;
@@ -691,7 +695,9 @@ XMeshMaterialList *XRootBinary::ProcessMeshMaterialList(XTokenName &cTokenName)
 				if (psMaterialList->nFaceIndexes) {
 					psMaterialList->pnFaceIndexes = new uint32[psMaterialList->nFaceIndexes];
 					MemoryManager::Copy(psMaterialList->pnFaceIndexes, &pIntList->m_list[2], sizeof(uint32)*psMaterialList->nFaceIndexes);
-				} else psMaterialList->pnFaceIndexes = nullptr;
+				} else {
+					psMaterialList->pnFaceIndexes = nullptr;
+				}
 
 				// Used materials
 				psMaterialList->pcFirstMaterial = nullptr;
@@ -701,7 +707,7 @@ XMeshMaterialList *XRootBinary::ProcessMeshMaterialList(XTokenName &cTokenName)
 					while (pToken) {
 						// Check token type
 						if (pToken->GetType() == XToken::TOKEN_NAME) {
-							XTokenName *pTokenName = (XTokenName*)pToken;
+							XTokenName *pTokenName = static_cast<XTokenName*>(pToken);
 
 							// Create a new reference
 							XReference *pcReference = new XReference();

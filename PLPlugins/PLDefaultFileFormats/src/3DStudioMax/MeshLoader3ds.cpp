@@ -72,27 +72,28 @@ Lib3dsBool Lib3dsError(void *pSelf)
 long Lib3dsSeek(void *pSelf, long nOffset, Lib3dsIoSeek nOrigin)
 {
 	if (nOrigin == LIB3DS_SEEK_CUR)
-		return !((File*)pSelf)->Seek(nOffset, File::SeekCurrent);
+		return !static_cast<File*>(pSelf)->Seek(nOffset, File::SeekCurrent);
 	else if (nOrigin == LIB3DS_SEEK_END)
-		return !((File*)pSelf)->Seek(nOffset, File::SeekEnd);
+		return !static_cast<File*>(pSelf)->Seek(nOffset, File::SeekEnd);
 	else if (nOrigin == LIB3DS_SEEK_SET)
-		return !((File*)pSelf)->Seek(nOffset, File::SeekSet);
-	else return -1;
+		return !static_cast<File*>(pSelf)->Seek(nOffset, File::SeekSet);
+	else
+		return -1;
 }
 
 long Lib3dsTell(void *pSelf)
 {
-	return ((File*)pSelf)->Tell();
+	return static_cast<File*>(pSelf)->Tell();
 }
 
 size_t Lib3dsRead(void *pSelf, void *pBuffer, size_t nSize)
 {
-	return ((File*)pSelf)->Read(pBuffer, 1, nSize);
+	return static_cast<File*>(pSelf)->Read(pBuffer, 1, nSize);
 }
 
 size_t Lib3dsWrite(void *pSelf, const void *pBuffer, size_t nSize)
 {
-	return ((File*)pSelf)->Write(pBuffer, 1, nSize);
+	return static_cast<File*>(pSelf)->Write(pBuffer, 1, nSize);
 }
 
 // Internal helper function to add the mesh data to the buffers
@@ -131,7 +132,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 			if (pTexel) {
 				for (uint32 nID=nStartVertex; nID<nEndVertex; nID++) {
 					// Position
-					float *pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 					vV.x = pPoints->pos[Vector3::X];
 					vV.y = pPoints->pos[Vector3::Y];
 					vV.z = pPoints->pos[Vector3::Z];
@@ -142,13 +143,13 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 					pPoints++;
 
 					// Init normal
-					pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 					pfVertex[Vector3::X] = 0.0f;
 					pfVertex[Vector3::Y] = 0.0f;
 					pfVertex[Vector3::Z] = 0.0f;
 
 					// Texture coordinate
-					pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = (*pTexel)[0];
 					pfVertex[Vector2::Y] = 1.0f - (*pTexel)[1];
 					pTexel++;
@@ -156,7 +157,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 			} else {
 				for (uint32 nID=nStartVertex; nID<nEndVertex; nID++) {
 					// Position
-					float *pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 					vV.x = pPoints->pos[Vector3::X];
 					vV.y = pPoints->pos[Vector3::Y];
 					vV.z = pPoints->pos[Vector3::Z];
@@ -167,13 +168,13 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 					pPoints++;
 
 					// Init normal
-					pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 					pfVertex[Vector3::X] = 0.0f;
 					pfVertex[Vector3::Y] = 0.0f;
 					pfVertex[Vector3::Z] = 0.0f;
 
 					// Texture coordinate
-					pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = 0.0f;
 					pfVertex[Vector2::Y] = 0.0f;
 				}
@@ -181,7 +182,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 		} else {
 			for (uint32 nID=nStartVertex; nID<nEndVertex; nID++) {
 				// Position
-				float *pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 				vV.x = pPoints->pos[Vector3::X];
 				vV.y = pPoints->pos[Vector3::Y];
 				vV.z = pPoints->pos[Vector3::Z];
@@ -192,7 +193,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 				pPoints++;
 
 				// Init normal
-				pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+				pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 				pfVertex[Vector3::X] = 0.0f;
 				pfVertex[Vector3::Y] = 0.0f;
 				pfVertex[Vector3::Z] = 0.0f;
@@ -211,7 +212,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 				const Lib3dsMaterial *pMat = 0;
 				if (cFace.material[0])
 					pMat = lib3ds_file_material_by_name(pFile, cFace.material);
-				if (pMat && pMat->user.i == (int)nMat && !cUsedFaces.IsSet(p)) {
+				if (pMat && pMat->user.i == static_cast<int>(nMat) && !cUsedFaces.IsSet(p)) {
 					cUsedFaces.Set(p);
 
 					// Loop through the face indices
@@ -221,7 +222,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 						uint32 nT = cFace.points[i]+nStartVertex;
 
 						// Set normal
-						float *pfVertex = (float*)pVertexBuffer->GetData(nT, VertexBuffer::Normal);
+						float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nT, VertexBuffer::Normal));
 						pfVertex[Vector3::X] +=  (*pfNormalT)[Vector3::X];
 						pfVertex[Vector3::Y] +=  (*pfNormalT)[Vector3::Z];
 						pfVertex[Vector3::Z] += -(*pfNormalT)[Vector3::Y];
@@ -258,7 +259,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 					uint32 nT = cFace.points[i]+nStartVertex;
 
 					// Set normal
-					float *pfVertex = (float*)pVertexBuffer->GetData(nT, VertexBuffer::Normal);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nT, VertexBuffer::Normal));
 					pfVertex[Vector3::X] +=  (*pfNormalT)[Vector3::X];
 					pfVertex[Vector3::Y] +=  (*pfNormalT)[Vector3::Z];
 					pfVertex[Vector3::Z] += -(*pfNormalT)[Vector3::Y];
@@ -283,7 +284,7 @@ void ProcessMesh(Lib3dsFile *pFile, Lib3dsMesh *p3dsMesh, VertexBuffer *pVertexB
 
 		// Normalize vertex normals
 		for (uint32 nID=nStartVertex; nID<nEndVertex; nID++) {
-			float *pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+			float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 			float  fLength  = Math::Sqrt(pfVertex[Vector3::X]*pfVertex[Vector3::X] + pfVertex[Vector3::Y]*pfVertex[Vector3::Y] + pfVertex[Vector3::Z]*pfVertex[Vector3::Z]);
 			pfVertex[Vector3::X] /= fLength;
 			pfVertex[Vector3::Y] /= fLength;
@@ -313,7 +314,8 @@ void GetInformationRec(Lib3dsFile *pFile, const Lib3dsNode *pNode, uint32 &nVert
 		if (pMesh) {
 			nVertices += pMesh->points;
 			nFaces    += pMesh->faces;
-			if (pMesh->texelL) bTexCoords = true;
+			if (pMesh->texelL)
+				bTexCoords = true;
 		}
 	}
 }
@@ -333,7 +335,8 @@ void GetInformation(Lib3dsFile *pFile, uint32 &nVertices, uint32 &nFaces, bool &
 		while (pMesh) {
 			nVertices += pMesh->points;
 			nFaces    += pMesh->faces;
-			if (pMesh->texelL) bTexCoords = true;
+			if (pMesh->texelL)
+				bTexCoords = true;
 			pMesh = pMesh->next;
 		}
 	}
@@ -436,7 +439,8 @@ bool MeshLoader3ds::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	VertexBuffer *pVertexBuffer = pMorphTarget->GetVertexBuffer();
 	pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
 	pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
-	if (bTexCoords) pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+	if (bTexCoords)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
 	pVertexBuffer->Allocate(nVertices, bStatic ? Usage::Static : Usage::Dynamic);
 
 	// Allocate index

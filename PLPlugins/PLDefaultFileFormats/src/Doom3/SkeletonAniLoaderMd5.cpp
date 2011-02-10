@@ -95,8 +95,13 @@ bool SkeletonAniLoaderMd5::Load(Skeleton &cSkeleton, File &cFile)
 	if (cTokenizer.ExpectToken("MD5Version"))
 		nVersion = cTokenizer.GetNextToken().GetInt();
 	switch (nVersion) {
-		case 6:  bResult = LoadV6 (cSkeleton, cTokenizer, pRefSkeleton); break;
-		case 10: bResult = LoadV10(cSkeleton, cTokenizer); break;
+		case 6:
+			bResult = LoadV6 (cSkeleton, cTokenizer, pRefSkeleton);
+			break;
+
+		case 10:
+			bResult = LoadV10(cSkeleton, cTokenizer);
+			break;
 	}
 	cTokenizer.Stop();
 
@@ -189,24 +194,33 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 					pJoint->lstRangeEnd.Resize(6);
 					lstJointsT.Add(pJoint);
 					mapJoints.Add(cTokenizer.GetToken(), pJoint);
-				} else pJoint = pFoundJoint;
+				} else {
+					pJoint = pFoundJoint;
+				}
 			} else {
 				// attribute
 				if (cTokenizer.CompareToken("attribute")) {
 					cTokenizer.GetNextToken();
-					if (cTokenizer.CompareToken("x"))		   nAnimatedComponent = 0;
-					else if (cTokenizer.CompareToken("y"))	   nAnimatedComponent = 1;
-					else if (cTokenizer.CompareToken("z"))	   nAnimatedComponent = 2;
-					else if (cTokenizer.CompareToken("yaw"))   nAnimatedComponent = 3;
-					else if (cTokenizer.CompareToken("pitch")) nAnimatedComponent = 4;
-					else if (cTokenizer.CompareToken("roll"))  nAnimatedComponent = 5;
+					if (cTokenizer.CompareToken("x"))
+						nAnimatedComponent = 0;
+					else if (cTokenizer.CompareToken("y"))
+						nAnimatedComponent = 1;
+					else if (cTokenizer.CompareToken("z"))
+						nAnimatedComponent = 2;
+					else if (cTokenizer.CompareToken("yaw"))
+						nAnimatedComponent = 3;
+					else if (cTokenizer.CompareToken("pitch"))
+						nAnimatedComponent = 4;
+					else if (cTokenizer.CompareToken("roll"))
+						nAnimatedComponent = 5;
 				} else {
 					if (pJoint && nAnimatedComponent >= 0) {
 						// range
 						if (cTokenizer.CompareToken("range")) {
 							pJoint->lstRangeStart[nAnimatedComponent] = cTokenizer.GetNextToken().GetInt();
 							uint32 nEnd = pJoint->lstRangeEnd[nAnimatedComponent] = cTokenizer.GetNextToken().GetInt();
-							if (nNumOfFrames < nEnd) nNumOfFrames = nEnd;
+							if (nNumOfFrames < nEnd)
+								nNumOfFrames = nEnd;
 
 						// keys
 						} else if (cTokenizer.CompareToken("keys")) {
@@ -266,7 +280,9 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 		if (pRefParentJoint) {
 			Joint *pParentJoint = cSkeleton.Get(pRefParentJoint->GetName());
 			pJoint->SetParent(pParentJoint->GetID());
-		} else pJoint->SetParent(-1);
+		} else {
+			pJoint->SetParent(-1);
+		}
 	}
 
 	// Ok... now it's time to create the frame keys (uff :)
@@ -285,7 +301,8 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 				for (int i=0; i<6; i++) {
 					if (nFrame < pJointT->lstRangeStart[i] || nFrame >= pJointT->lstRangeEnd[i])
 						fData[i] = 0.0f;
-					else fData[i] = pJointT->lstKeys[i][nFrame-pJointT->lstRangeStart[i]];
+					else
+						fData[i] = pJointT->lstKeys[i][nFrame-pJointT->lstRangeStart[i]];
 				}
 
 				// Set translation
@@ -294,7 +311,7 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 				// [TODO] Check this
 				// Get current joint rotation quaternion
 	//			qRotation.FromEulerAnglesXYZ(float(fData[3]*Math::DegToRad), float(fData[4]*Math::DegToRad), float(fData[5]*Math::DegToRad));
-				EulerAngles::ToQuaternion(float(fData[5]*Math::DegToRad), float(fData[4]*Math::DegToRad), float(fData[3]*Math::DegToRad), qRotation);
+				EulerAngles::ToQuaternion(static_cast<float>(fData[5]*Math::DegToRad), static_cast<float>(fData[4]*Math::DegToRad), static_cast<float>(fData[3]*Math::DegToRad), qRotation);
 				qRotation.UnitInvert();
 
 				// Make the joint relative to the base frame
@@ -397,7 +414,7 @@ bool SkeletonAniLoaderMd5::LoadV10(Skeleton &cSkeleton, Tokenizer &cTokenizer) c
 				// Set parent joint
 				pJoint->SetParent(cTokenizer.GetNextToken().GetInt());
 				// Animated components
-				cAniJoint.nAnimatedComponents = (uint8)cTokenizer.GetNextToken().GetInt();
+				cAniJoint.nAnimatedComponents = static_cast<uint8>(cTokenizer.GetNextToken().GetInt());
 				// First key (ignored)
 				cTokenizer.GetNextToken();
 			}
@@ -487,24 +504,30 @@ bool SkeletonAniLoaderMd5::LoadV10(Skeleton &cSkeleton, Tokenizer &cTokenizer) c
 			// Translation
 			if (nAnimatedComponents & Skeleton::AX)
 				vTranslationAbsolute.x = lstFrameKeysT[nKey++];
-			else vTranslationAbsolute.x = pJoint->GetTranslationAbsolute().x;
+			else
+				vTranslationAbsolute.x = pJoint->GetTranslationAbsolute().x;
 			if (nAnimatedComponents & Skeleton::AY)
 				vTranslationAbsolute.y = lstFrameKeysT[nKey++];
-			else vTranslationAbsolute.y = pJoint->GetTranslationAbsolute().y;
+			else
+				vTranslationAbsolute.y = pJoint->GetTranslationAbsolute().y;
 			if (nAnimatedComponents & Skeleton::AZ)
 				vTranslationAbsolute.z = lstFrameKeysT[nKey++];
-			else vTranslationAbsolute.z = pJoint->GetTranslationAbsolute().z;
+			else
+				vTranslationAbsolute.z = pJoint->GetTranslationAbsolute().z;
 
 			// Rotation
 			if (nAnimatedComponents & Skeleton::AYaw)
 				qRotationAbsolute.x = lstFrameKeysT[nKey++];
-			else qRotationAbsolute.x = pJoint->GetRotationAbsolute().x;
+			else
+				qRotationAbsolute.x = pJoint->GetRotationAbsolute().x;
 			if (nAnimatedComponents & Skeleton::APitch)
 				qRotationAbsolute.y = lstFrameKeysT[nKey++];
-			else qRotationAbsolute.y = pJoint->GetRotationAbsolute().y;
+			else
+				qRotationAbsolute.y = pJoint->GetRotationAbsolute().y;
 			if (nAnimatedComponents & Skeleton::ARoll)
 				qRotationAbsolute.z = lstFrameKeysT[nKey++];
-			else qRotationAbsolute.z = pJoint->GetRotationAbsolute().z;
+			else
+				qRotationAbsolute.z = pJoint->GetRotationAbsolute().z;
 			if (nAnimatedComponents & Skeleton::AW)
 				qRotationAbsolute.w = lstFrameKeysT[nKey++];
 			else {

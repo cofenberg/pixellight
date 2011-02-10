@@ -72,7 +72,8 @@ bool MeshLoaderX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Read the file header and validate it
 	XFileHeader sFileHeader;
-	if (!cFile.Read(&sFileHeader, 1, sizeof(XFileHeader))) return false; // Error!
+	if (!cFile.Read(&sFileHeader, 1, sizeof(XFileHeader)))
+		return false; // Error!
 
 	// Check the signature (must be "xof")
 	if (sFileHeader.nSignature[0] != 'x' || sFileHeader.nSignature[1] != 'o' || sFileHeader.nSignature[2] != 'f') {
@@ -199,7 +200,7 @@ bool MeshLoaderX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 											// Is this the current processed material?
 											if (pcMaterial->GetType() == XNode::Reference) {
 												// [TODO] Use a kind of name table because we can't ensure the material name is correct!
-												if (cMaterial.GetName() == ((XReference*)pcMaterial)->pszName) {
+												if (cMaterial.GetName() == static_cast<XReference*>(pcMaterial)->pszName) {
 													for (uint32 nFaceIndex=0; nFaceIndex<cXMesh.nFaces; nFaceIndex++) {
 														// Jap, add the vertex indices
 														const XMeshFace &sFace = cXMesh.psFaces[nFaceIndex];
@@ -239,7 +240,7 @@ bool MeshLoaderX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 												// Is this the current processed material?
 												if (pcMaterial->GetType() == XNode::Reference) {
 													// [TODO] Use a kind of name table because we can't ensure the material name is correct!
-													if (cMaterial.GetName() == ((XReference*)pcMaterial)->pszName) {
+													if (cMaterial.GetName() == static_cast<XReference*>(pcMaterial)->pszName) {
 														// Jap, add the vertex indices
 														const XMeshFace &sFace = cXMesh.psFaces[nFaceIndex];
 
@@ -354,7 +355,7 @@ void MeshLoaderX::ProcessNodes(Mesh &cMesh, XNode *pXNode, const Matrix4x4 &mTra
 			case XNode::Material:
 			{
 				// Create a PixelLight material
-				XMaterial *pXMaterial = (XMaterial*)pXNode;
+				XMaterial *pXMaterial = static_cast<XMaterial*>(pXNode);
 				// [TODO] What do do if there's already a material with the given name??
 				Material  *pMaterial  = cMesh.GetRenderer()->GetRendererContext().GetMaterialManager().Create(pXMaterial->pszName);
 				if (pMaterial) {
@@ -391,7 +392,7 @@ void MeshLoaderX::ProcessNodes(Mesh &cMesh, XNode *pXNode, const Matrix4x4 &mTra
 			case XNode::Mesh:
 			{
 				uint32 nVertexOffsetAdd = 0;
-				XMesh *pXMesh = (XMesh*)pXNode;
+				XMesh *pXMesh = static_cast<XMesh*>(pXNode);
 				lstXMeshes.Add(pXMesh);
 
 				// Fill vertex data
@@ -403,7 +404,7 @@ void MeshLoaderX::ProcessNodes(Mesh &cMesh, XNode *pXNode, const Matrix4x4 &mTra
 
 						// Position
 						for (uint32 i=0; i<pXMesh->nVertices; i++) {
-							float *pfVertex = (float*)pVertexBuffer->GetData(nVertexOffset+i, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertexOffset+i, VertexBuffer::Position));
 							if (pfVertex) {
 								const XVector &sVector = pXMesh->psVertices[i];
 
@@ -423,7 +424,7 @@ void MeshLoaderX::ProcessNodes(Mesh &cMesh, XNode *pXNode, const Matrix4x4 &mTra
 						if (psTextureCoords && psTextureCoords->psTextureCoords) {
 							uint32 nTextureCoords = psTextureCoords->nTextureCoords < pVertexBuffer->GetNumOfElements() ? psTextureCoords->nTextureCoords : pVertexBuffer->GetNumOfElements();
 							for (uint32 i=0; i<nTextureCoords; i++) {
-								float           *pfVertex  = (float*)pVertexBuffer->GetData(nVertexOffset+i, VertexBuffer::TexCoord);
+								float           *pfVertex  = static_cast<float*>(pVertexBuffer->GetData(nVertexOffset+i, VertexBuffer::TexCoord));
 								const XCoords2d &sCoords2D = psTextureCoords->psTextureCoords[i];
 								pfVertex[0] = sCoords2D.u;
 								pfVertex[1] = sCoords2D.v;
@@ -435,7 +436,7 @@ void MeshLoaderX::ProcessNodes(Mesh &cMesh, XNode *pXNode, const Matrix4x4 &mTra
 						if (psNormals && psNormals->psNormals) {
 							uint32 nNormals = psNormals->nNormals < pVertexBuffer->GetNumOfElements() ? psNormals->nNormals : pVertexBuffer->GetNumOfElements();
 							for (uint32 i=0; i<nNormals; i++) {
-								float          *pfVertex = (float*)pVertexBuffer->GetData(nVertexOffset+i, VertexBuffer::Normal);
+								float          *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertexOffset+i, VertexBuffer::Normal));
 								const  XVector &sVector  = psNormals->psNormals[i];
 
 								// Calculate absolute vertex normal rotation
@@ -469,7 +470,7 @@ void MeshLoaderX::ProcessNodes(Mesh &cMesh, XNode *pXNode, const Matrix4x4 &mTra
 
 			case XNode::Frame:
 			{
-				XFrame *pXFrame = (XFrame*)pXNode;
+				XFrame *pXFrame = static_cast<XFrame*>(pXNode);
 				ProcessNodes(cMesh, pXFrame->GetFirstChildNode(), pXFrame->psTransformMatrix ? mTransform*Matrix4x4(pXFrame->psTransformMatrix->sFrameMatrix.f) : mTransform,
 							 nVertexOffset, nIndexOffset, lstXMeshes);
 				break;

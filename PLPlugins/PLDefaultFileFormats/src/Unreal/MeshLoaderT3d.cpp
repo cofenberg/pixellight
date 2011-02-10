@@ -219,7 +219,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(Vertex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
+			return Math::Abs(static_cast<int>(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
 							 cVertex.fS*123+cVertex.fT*42))%m_nSlots;
 		}
 
@@ -259,23 +259,30 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	float texSize = 512;
 
 	uint32 nPolyMask = 0;
-	if (removePortals)   nPolyMask |= 0x4000000;
-	if (removeInvisible) nPolyMask |= 0x1;
-	if (removeTwoSided)  nPolyMask |= 0x100;
+	if (removePortals)
+		nPolyMask |= 0x4000000;
+	if (removeInvisible)
+		nPolyMask |= 0x1;
+	if (removeTwoSided)
+		nPolyMask |= 0x100;
 
 	// Read file
 	while (cTokenizer.GetNextToken().GetLength() && !cTokenizer.CompareToken("End")) {
 		// Begin
-		if (!cTokenizer.CompareToken("Begin")) continue;
-		if (!cTokenizer.GetNextToken().GetLength() || cTokenizer.CompareToken("End")) continue;
+		if (!cTokenizer.CompareToken("Begin"))
+			continue;
+		if (!cTokenizer.GetNextToken().GetLength() || cTokenizer.CompareToken("End"))
+			continue;
 
 		// PolyList
 		if (cTokenizer.CompareToken("PolyList")) {
 			// Read this section
 			while (cTokenizer.GetNextToken().GetLength() && !cTokenizer.CompareToken("End")) {
 				// Begin
-				if (!cTokenizer.CompareToken("Begin")) continue;
-				if (!cTokenizer.GetNextToken().GetLength() || cTokenizer.CompareToken("End")) continue;
+				if (!cTokenizer.CompareToken("Begin"))
+					continue;
+				if (!cTokenizer.GetNextToken().GetLength() || cTokenizer.CompareToken("End"))
+					continue;
 
 				// Polygon
 				if (cTokenizer.CompareToken("Polygon")) {
@@ -303,7 +310,9 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 								lstMaterials.Add(pMaterial);
 								mapMaterials.Add(pMaterial->sName, pMaterial);
 								pPoly->nMaterialID = pMaterial->nID;
-							} else pPoly->nMaterialID = pFoundMaterial->nID;
+							} else {
+								pPoly->nMaterialID = pFoundMaterial->nID;
+							}
 
 						// Flags
 						} else if (cTokenizer.CompareToken("Flags")) {
@@ -356,11 +365,15 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					}
 
 				// Unknown section
-				} else SkipSectionRec(cTokenizer);
+				} else {
+					SkipSectionRec(cTokenizer);
+				}
 			}
 
 		// Unknown section
-		} else SkipSectionRec(cTokenizer);
+		} else {
+			SkipSectionRec(cTokenizer);
+		}
 	}
 	cTokenizer.Stop();
 
@@ -391,14 +404,14 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		Vector3 *vtxDest = pvVertices  + nStartIndex;
 		Vector2 *texDest = pvTexCoords + nStartIndex;
 		
-		for (uint32 j=0; j<(uint32)3*pPoly->lstVertices.GetNumOfElements()-6; j++) {
+		for (int j=0; j<3*pPoly->lstVertices.GetNumOfElements()-6; j++) {
 			pnTanIndices[nIDest + j] = i;
 			pnBinIndices[nIDest + j] = i;
 			pnNrmIndices[nIDest + j] = i;
 		}
 
 		uint32 nIndex1, nIndex2;
-		for (uint32 j=0; j<(uint32)pPoly->lstVertices.GetNumOfElements(); j++) {
+		for (uint32 j=0; j<static_cast<uint32>(pPoly->lstVertices.GetNumOfElements()); j++) {
 			vtxDest[j] = pPoly->lstVertices[j];
 			texDest[j].x = (pPoly->lstVertices[j] - pPoly->vOrigin).DotProduct(pPoly->vS/texSize);
 			texDest[j].y = (pPoly->lstVertices[j] - pPoly->vOrigin).DotProduct(pPoly->vT/texSize);
@@ -429,7 +442,7 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	T3d::Vertex cVertex;
 	for (uint32 i=0; i<nNumOfPolys; i++) {
 		T3d::Polygon *pPoly = lstPolys[i];
-		for (uint32 j=0; j<(uint32)pPoly->lstIndices.GetNumOfElements(); j++) {
+		for (uint32 j=0; j<static_cast<uint32>(pPoly->lstIndices.GetNumOfElements()); j++) {
 			uint32 nV = pPoly->lstIndices[j];
 			cVertex.nVertex = nV;
 			cVertex.fX  = pvVertices[nV].x;
@@ -464,8 +477,10 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	MeshMorphTarget *pMorphTarget = cMesh.AddMorphTarget();
 	VertexBuffer *pVertexBuffer = pMorphTarget->GetVertexBuffer();
 	pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
-	if (bNormals)   pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
-	if (bTexCoords) pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
+	if (bNormals)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal,   0, VertexBuffer::Float3);
+	if (bTexCoords)
+		pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, 0, VertexBuffer::Float2);
 	pVertexBuffer->Allocate(lstVertexTex.GetNumOfElements(), bStatic ? Usage::Static : Usage::Dynamic);
 
 	// Get the material manager
@@ -487,14 +502,14 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				const T3d::Vertex *pVertex = cIterator.Next();
 
 				// Position
-				float *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 				pfVertex[Vector3::X] = pVertex->fX;
 				pfVertex[Vector3::Y] = pVertex->fY;
 				pfVertex[Vector3::Z] = pVertex->fZ;
 
 				// Normal
 				if (bNormals) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 					pfVertex[Vector3::X] = pVertex->fNX;
 					pfVertex[Vector3::Y] = pVertex->fNY;
 					pfVertex[Vector3::Z] = pVertex->fNZ;
@@ -502,7 +517,7 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 				// Texture coordinate
 				if (bTexCoords) {
-					pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord));
 					pfVertex[Vector2::X] = pVertex->fS;
 					pfVertex[Vector2::Y] = pVertex->fT;
 				}
@@ -529,7 +544,7 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		uint32 nVertices    = 0;
 
 		// Go through all object materials
-		for (int nMat=-1; nMat<(int)cMesh.GetNumOfMaterials(); nMat++) {
+		for (int nMat=-1; nMat<static_cast<int>(cMesh.GetNumOfMaterials()); nMat++) {
 			// Fill index buffer
 			for (uint32 i=0; i<nNumOfPolys; i++) {
 				// Get the polygon

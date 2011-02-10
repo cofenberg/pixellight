@@ -118,14 +118,15 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				// Skip the whole block
 				cTokenizer.SetDelimiters(" \t\r\n{()[]=,;\"");
 				while (cTokenizer.GetNextToken().GetLength()) {
-					if (cTokenizer.GetToken() == sCloseBracket) break;
+					if (cTokenizer.GetToken() == sCloseBracket)
+						break;
 				}
 				cTokenizer.SetDelimiters(" \t\r\n{}()[]=,;\"");
 				continue;
 			}
 
 			// Create the cell
-			SCCell *pCell = (SCCell*)cContainer.Create("PLScene::SCCell", sModelName);
+			SCCell *pCell = static_cast<SCCell*>(cContainer.Create("PLScene::SCCell", sModelName));
 			sInstance.nTotalNumOfCells++;
 			sInstance.lstCells.Add(pCell);
 
@@ -172,7 +173,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						for (uint32 nVertex=0; nVertex<nNumOfVertices; nVertex++) {
 							// Position
-							float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 							vCenter.x += pfVertex[Vector3::X] = cTokenizer.GetNextToken().GetFloat()*Scale;
 							if (SwapYZ) {
 								vCenter.z += pfVertex[Vector3::Z] = cTokenizer.GetNextToken().GetFloat()*Scale;
@@ -183,12 +184,12 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 							}
 
 							// Texture coordinate
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::TexCoord));
 							pfVertex[Vector2::X] = cTokenizer.GetNextToken().GetFloat();
 							pfVertex[Vector2::Y] = cTokenizer.GetNextToken().GetFloat();
 
 							// Normal
-							pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Normal);
+							pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Normal));
 							pfVertex[Vector3::X] = cTokenizer.GetNextToken().GetFloat();
 							if (SwapYZ) {
 								pfVertex[Vector3::Z] = cTokenizer.GetNextToken().GetFloat();
@@ -200,12 +201,12 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 						}
 
 						// Calculate the center
-						vCenter /= float(nNumOfVertices);
+						vCenter /= static_cast<float>(nNumOfVertices);
 
 						// Center the mesh
 						for (uint32 nVertex=0; nVertex<nNumOfVertices; nVertex++) {
 							// Position
-							float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+							float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 							pfVertex[Vector3::X] -= vCenter.x;
 							pfVertex[Vector3::Y] -= vCenter.y;
 							pfVertex[Vector3::Z] -= vCenter.z;
@@ -234,10 +235,10 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 									// Check index order
 									Vector3 vV0, vV1, vV2, vN;
 									for (uint32 nIndex=0; nIndex<nNumOfIndices; nIndex+=3) {
-										vV0 = (float*)pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+0), VertexBuffer::Position);
-										vV1 = (float*)pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+1), VertexBuffer::Position);
-										vV2 = (float*)pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+2), VertexBuffer::Position);
-										vN  = (float*)pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+0), VertexBuffer::Normal);
+										vV0 = static_cast<float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+0), VertexBuffer::Position));
+										vV1 = static_cast<float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+1), VertexBuffer::Position));
+										vV2 = static_cast<float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+2), VertexBuffer::Position));
+										vN  = static_cast<float*>(pVertexBuffer->GetData(pIndexBuffer->GetData(nIndex+0), VertexBuffer::Normal));
 										if ((vV1-vV0).CrossProduct(vV2-vV0).DotProduct(vN) < 0.0f) {
 											uint32 nTemp = pIndexBuffer->GetData(nIndex+1);
 											pIndexBuffer->SetData(nIndex+1, pIndexBuffer->GetData(nIndex+2));
@@ -264,7 +265,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				}
 
 				// Create the mesh
-				SNMesh *pMeshNode = (SNMesh*)pCell->Create("PLScene::SNMesh", sName, String::Format("Position=\"%g %g %g\"", vCenter.x, vCenter.y, vCenter.z));
+				SNMesh *pMeshNode = static_cast<SNMesh*>(pCell->Create("PLScene::SNMesh", sName, String::Format("Position=\"%g %g %g\"", vCenter.x, vCenter.y, vCenter.z)));
 				if (pMeshNode) {
 					sInstance.nTotalNumOfMeshes++;
 					// Set the mesh
@@ -323,7 +324,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				}
 
 				// Calculate the center
-				vCenter /= float(nNumOfPoints);
+				vCenter /= static_cast<float>(nNumOfPoints);
 
 				// Center the points
 				for (uint32 nPoint=0; nPoint<nNumOfPoints; nPoint++)
@@ -335,8 +336,8 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				if (pPosCell && pNegCell) {
 					// Positive portal
 					String sName = "PortalTo_" + pNegCell->GetName();
-					SNCellPortal *pPortal = (SNCellPortal*)pPosCell->Create("PLScene::SNCellPortal", sName, String::Format("Position=\"%g %g %g\" TargetCell=\"Parent.",
-						vCenter.x-pPosCell->GetTransform().GetPosition().x, vCenter.y-pPosCell->GetTransform().GetPosition().y, vCenter.z-pPosCell->GetTransform().GetPosition().z) + pNegCell->GetName() + '\"');
+					SNCellPortal *pPortal = static_cast<SNCellPortal*>(pPosCell->Create("PLScene::SNCellPortal", sName, String::Format("Position=\"%g %g %g\" TargetCell=\"Parent.",
+						vCenter.x-pPosCell->GetTransform().GetPosition().x, vCenter.y-pPosCell->GetTransform().GetPosition().y, vCenter.z-pPosCell->GetTransform().GetPosition().z) + pNegCell->GetName() + '\"'));
 					if (pPortal) {
 						sInstance.nTotalNumOfPortals++;
 						PLMath::Polygon &cPolygon = pPortal->GetPolygon();
@@ -348,8 +349,8 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 
 					// Negative portal
 					sName = "PortalTo_" + pPosCell->GetName();
-					pPortal = (SNCellPortal*)pNegCell->Create("PLScene::SNCellPortal", sName, String::Format("Position=\"%g %g %g\" TargetCell=\"Parent.",
-						vCenter.x-pNegCell->GetTransform().GetPosition().x, vCenter.y-pNegCell->GetTransform().GetPosition().y, vCenter.z-pNegCell->GetTransform().GetPosition().z) + pPosCell->GetName() + '\"');
+					pPortal = static_cast<SNCellPortal*>(pNegCell->Create("PLScene::SNCellPortal", sName, String::Format("Position=\"%g %g %g\" TargetCell=\"Parent.",
+						vCenter.x-pNegCell->GetTransform().GetPosition().x, vCenter.y-pNegCell->GetTransform().GetPosition().y, vCenter.z-pNegCell->GetTransform().GetPosition().z) + pPosCell->GetName() + '\"'));
 					if (pPortal) {
 						sInstance.nTotalNumOfPortals++;
 						PLMath::Polygon &cPolygon = pPortal->GetPolygon();
@@ -474,7 +475,8 @@ SceneLoaderProc::~SceneLoaderProc()
 bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContainer, const String &sFilename) const
 {
 	// Check parameters
-	if (!sFilename.GetLength()) return false; // Error!
+	if (!sFilename.GetLength())
+		return false; // Error!
 
 	// Open the file
 	File cFile(sFilename);
@@ -518,7 +520,8 @@ bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContain
 			// Look for '}'
 			while (cTokenizer.GetNextToken().GetLength()) {
 				// }
-				if (cTokenizer.GetToken() == sCloseBracket) break;
+				if (cTokenizer.GetToken() == sCloseBracket)
+					break;
 
 				// "classname" MUST come first
 				if (cTokenizer.GetToken() == sClassName) {
@@ -531,7 +534,7 @@ bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContain
 							if (pSceneNode) {
 								sInstance.nTotalNumOfLights++;
 								if (pSceneNode->IsLight())
-									pLight = (SNPointLight*)pSceneNode;
+									pLight = static_cast<SNPointLight*>(pSceneNode);
 							}
 
 						// info_player_start
@@ -542,7 +545,9 @@ bool SceneLoaderProc::LoadMapFile(SInstance &sInstance, SceneContainer &cContain
 								pSceneNode->AddModifier("PLScene::SNMRotationFixRoll");
 								pSceneNode->AddModifier("PLScene::SNMMoveController", "Speed=\"0.2\"");
 							}
-						} else pSceneNode = pLight = nullptr;
+						} else {
+							pSceneNode = pLight = nullptr;
+						}
 					}
 					continue;
 				}
@@ -687,7 +692,8 @@ int SceneLoaderProc::GetCellIndexByName(SInstance &sInstance, const String &sNam
 */
 int SceneLoaderProc::GetCell(SInstance &sInstance, const Vector3 &vPos) const
 {
-	if (sInstance.lstNodes.IsEmpty()) return 0; // Error!
+	if (sInstance.lstNodes.IsEmpty())
+		return 0; // Error!
 	Node *pNode = &sInstance.lstNodes[0];
 	while (true) {
 		if (pNode->cPlane.GetSide(vPos) == Plane::InFront) { // Front
@@ -713,7 +719,8 @@ int SceneLoaderProc::GetCell(SInstance &sInstance, const Vector3 &vPos) const
 void SceneLoaderProc::PushLight(SInstance &sInstance, SNPointLight &cLight, Node *pNode) const
 {
 	if (sInstance.lstNodes.GetNumOfElements()) {
-		if (!pNode) pNode = &sInstance.lstNodes[0];
+		if (!pNode)
+			pNode = &sInstance.lstNodes[0];
 
 		float fRadius   = cLight.GetRange();
 		float fDistance = pNode->cPlane.GetDistance(cLight.GetTransform().GetPosition());

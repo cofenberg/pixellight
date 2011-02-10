@@ -124,7 +124,8 @@ void Parameter_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokeni
 		// Annotation?
 		if (sToken == '<') {
 			// Skip the annotation
-			while (cTokenizer.GetNextToken().GetLength() &&	cTokenizer.GetToken() != '>');
+			while (cTokenizer.GetNextToken().GetLength() &&	cTokenizer.GetToken() != '>')
+				;	// Nothing to do in here
 			sToken = cTokenizer.GetNextToken(); // Skip '>'
 		}
 
@@ -136,7 +137,8 @@ void Parameter_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokeni
 				sValue = "";
 				while (cTokenizer.GetNextToken().GetLength()) {
 					sToken = cTokenizer.GetToken();
-					if (sToken == '}') break;
+					if (sToken == '}')
+						break;
 					if (sToken != ',')
 						sValue += sToken + " ";
 				}
@@ -148,7 +150,8 @@ void Parameter_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokeni
 		cTokenizer.GetNextToken();
 	} else {
 		// Skip the rest
-		while (cTokenizer.GetNextToken().GetLength() && cTokenizer.GetToken() != ';');
+		while (cTokenizer.GetNextToken().GetLength() && cTokenizer.GetToken() != ';')
+			;	// Nothing to do in here
 	}
 
 }
@@ -172,7 +175,8 @@ void Technique_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokeni
 		while (cTokenizer.GetNextToken().GetLength()) {
 			// Check for '}'
 			sToken = cTokenizer.GetToken();
-			if (sToken == '}') break;
+			if (sToken == '}')
+				break;
 
 			// ONLY 'pass' allowed within a technique!
 			if (sToken == "pass") {
@@ -211,7 +215,8 @@ void Technique_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokeni
 									} else {
 										if (sToken == '}' || sToken == ')') {
 											nDepth--;
-											if (!nDepth) break;
+											if (!nDepth)
+												break;
 										}
 									}
 								}
@@ -270,7 +275,8 @@ void Program_Callback(EffectLoaderFX::SInstance &sInstance, Tokenizer &cTokenize
 					} else {
 						if (sToken == ')') {
 							nDepth--;
-							if (!nDepth) break;
+							if (!nDepth)
+								break;
 						}
 					}
 				}
@@ -394,7 +400,8 @@ bool EffectLoaderFX::Load(Effect &cEffect, File &cFile)
 				} else {
 					if (sToken == '}' || sToken == ')') {
 						nDepth--;
-						if (!nDepth) break;
+						if (!nDepth)
+							break;
 					}
 				}
 			}

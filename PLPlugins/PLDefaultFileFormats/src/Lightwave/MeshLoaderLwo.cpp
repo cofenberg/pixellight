@@ -68,7 +68,7 @@ static const int StringLength = 1024;
 // Endians
 inline void *ReverseBytes(void *p, uint32 length)
 {
-	uint8 *&q = (uint8*&)p;
+	uint8 *&q = reinterpret_cast<uint8*&>(p);
 	for (uint32 i=0; i<length/2; i++) {
 		// Swap p[i] and p[length-i]
 		q[i]		  ^= q[length-i-1];
@@ -79,7 +79,7 @@ inline void *ReverseBytes(void *p, uint32 length)
 	return p;
 }
 
-template<typename tAnyType> inline tAnyType Reverse(const tAnyType &t) { return *(tAnyType*)ReverseBytes((void*)&t, sizeof(tAnyType)); }
+template<typename tAnyType> inline tAnyType Reverse(const tAnyType &t) { return *static_cast<tAnyType*>(ReverseBytes(reinterpret_cast<void*>(&t), sizeof(tAnyType))); }
 #if defined (WIN32) && ! defined (LITTLE_ENDIAN)
 	#define LITTLE_ENDIAN
 #endif
@@ -221,7 +221,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	Array<Lwo::Triangle*> lstTriangles;
 	uint32 nMaxNumOfTexCoords = 0;
 	char szTemp[StringLength];
-	while (cFile.Tell() < (int32)nFileSize && !bCreateMesh) {
+	while (cFile.Tell() < static_cast<int32>(nFileSize) && !bCreateMesh) {
 		// Read chunk tag
 		uint32 nTag;
 		cFile.Read(&nTag,       4, 1);
@@ -427,12 +427,13 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 							cFile.Read(&vV.y, sizeof(float), 1);
 							vV.y = big(vV.y);
 
-							if (nFace < (uint32)lstTriangles.GetNumOfElements()) {
+							if (nFace < static_cast<uint32>(lstTriangles.GetNumOfElements())) {
 								Lwo::Triangle *pTriangle = lstTriangles[nFace];
 								Lwo::Vertex   &cVertex   = lstVertices[nVert];
 								uint32 i;
 								for (i=0; i<3; i++) {
-									if (pTriangle->nIndex[i] != nVert) continue;
+									if (pTriangle->nIndex[i] != nVert)
+										continue;
 
 									// Check whether this vertex has already a texture coordinate
 									if (cVertex.bTexCoordUsed[0]) {
@@ -461,12 +462,15 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 									} else {
 										cVertex.vTexCoord[0] = vV;
 										cVertex.bTexCoordUsed[0] = true;
-										if (nMaxNumOfTexCoords < 1) nMaxNumOfTexCoords = 1;
+										if (nMaxNumOfTexCoords < 1)
+											nMaxNumOfTexCoords = 1;
 									}
 									break;
 								}
-								if (i >= 3) PL_LOG(Warning, String::Format("Invalid vertex index in VMAD/TXUV, vertex %i not in face %i (%i,%i,%i)",
-									nVert, nFace, pTriangle->nIndex[0], pTriangle->nIndex[1], pTriangle->nIndex[2]))
+								if (i >= 3) {
+									PL_LOG(Warning, String::Format("Invalid vertex index in VMAD/TXUV, vertex %i not in face %i (%i,%i,%i)",
+										nVert, nFace, pTriangle->nIndex[0], pTriangle->nIndex[1], pTriangle->nIndex[2]))
+								}
 							}
 						}
 						break;
@@ -508,7 +512,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 							vV.y = big(vV.y);
 
 							// Add uv coord to vertex
-							if (nIndex < (uint32)lstVertices.GetNumOfElements()) {
+							if (nIndex < static_cast<uint32>(lstVertices.GetNumOfElements())) {
 								uint32 nUsed = 0;
 								for (uint32 i=0; i<4; i++) {
 									Lwo::Vertex &cVertex = lstVertices[nIndex];
@@ -520,9 +524,11 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 										break;
 									}
 								}
-								if (nUsed >= 4) PL_LOG(Warning, String::Format("Found more than 4 uv maps for vertex %i, not supported", nIndex))
+								if (nUsed >= 4)
+									PL_LOG(Warning, String::Format("Found more than 4 uv maps for vertex %i, not supported", nIndex))
 								else {
-									if (nMaxNumOfTexCoords < nUsed+1) nMaxNumOfTexCoords = nUsed+1;
+									if (nMaxNumOfTexCoords < nUsed+1)
+										nMaxNumOfTexCoords = nUsed+1;
 								}
 							}
 						}
@@ -544,7 +550,8 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				// Tag not completely read, still some bytes left!
 				cFile.Seek(nOldPos+nChunkSize);
 			}
-			if (nChunkSize & 1) cFile.Seek(1, File::SeekCurrent);
+			if (nChunkSize & 1)
+				cFile.Seek(1, File::SeekCurrent);
 		}
 	}
 
@@ -571,14 +578,14 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			const Lwo::Vertex &cVertex = lstVertices[i];
 
 			// Position
-			float *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 			pfVertex[Vector3::X] = cVertex.vPos.x;
 			pfVertex[Vector3::Y] = cVertex.vPos.y;
 			pfVertex[Vector3::Z] = cVertex.vPos.z;
 
 			// Texture coordinates
 			for (uint32 nCoord=0; nCoord<nMaxNumOfTexCoords; nCoord++) {
-				pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord, nCoord);
+				pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord, nCoord));
 				pfVertex[Vector2::X] = cVertex.vTexCoord[nCoord].x;
 				pfVertex[Vector2::Y] = cVertex.vTexCoord[nCoord].y;
 			}

@@ -77,8 +77,13 @@ bool MeshLoaderMd5::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	if (cTokenizer.ExpectToken("MD5Version"))
 		nVersion = cTokenizer.GetNextToken().GetInt();
 	switch (nVersion) {
-		case 6:  bResult = LoadV6( cMesh, cTokenizer, bStatic); break;
-		case 10: bResult = LoadV10(cMesh, cTokenizer, bStatic); break;
+		case 6:
+			bResult = LoadV6( cMesh, cTokenizer, bStatic);
+			break;
+
+		case 10:
+			bResult = LoadV10(cMesh, cTokenizer, bStatic);
+			break;
 	}
 	cTokenizer.Stop();
 	if (bResult) {
@@ -282,7 +287,8 @@ bool MeshLoaderMd5::LoadV6(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) con
 						} else if (cTokenizer.CompareToken("parent")) {
 							// Parent joint
 							Joint *pParent = pSkeleton->Get(cTokenizer.GetNextToken());
-							if (pParent) pJoint->SetParent(pParent->GetID());
+							if (pParent)
+								pJoint->SetParent(pParent->GetID());
 						}
 					}
 				}
@@ -328,13 +334,13 @@ bool MeshLoaderMd5::LoadV6(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) con
 					cTokenizer.GetNextToken(); // Skip vertex id
 
 					// No position given because defined over weights...
-					float *pfVertex = (float*)pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::Position));
 					pfVertex[0] = 0.0f;
 					pfVertex[0] = 0.0f;
 					pfVertex[0] = 0.0f;
 
 					// Texture coordinate
-					pfVertex = (float*)pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::TexCoord));
 					pfVertex[0] = cTokenizer.GetNextToken().GetFloat();			// U
 					pfVertex[1] = 1.0f-cTokenizer.GetNextToken().GetFloat();	// V
 
@@ -415,7 +421,7 @@ bool MeshLoaderMd5::LoadV6(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) con
 						vPos.y += (mRot.fM[1]*vV.x + mRot.fM[4]*vV.y + mRot.fM[7]*vV.z + vBindPos.y)*fBias;
 						vPos.z += (mRot.fM[2]*vV.x + mRot.fM[5]*vV.y + mRot.fM[8]*vV.z + vBindPos.z)*fBias;
 					}
-					float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vPos.x;
 					pfVertex[Vector3::Y] = vPos.y;
 					pfVertex[Vector3::Z] = vPos.z;
@@ -587,13 +593,13 @@ bool MeshLoaderMd5::LoadV10(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) co
 					cTokenizer.GetNextToken(); // Skip vertex id
 
 					// No position given because defined over weights...
-					float *pfVertex = (float*)pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::Position));
 					pfVertex[0] = 0.0f;
 					pfVertex[0] = 0.0f;
 					pfVertex[0] = 0.0f;
 
 					// Texture coordinate
-					pfVertex = (float*)pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::TexCoord);
+					pfVertex = static_cast<float*>(pVertexBuffer->GetData(i+nVerticesOffset, VertexBuffer::TexCoord));
 					pfVertex[0] = cTokenizer.GetNextToken().GetFloat();	// U
 					pfVertex[1] = cTokenizer.GetNextToken().GetFloat();	// V
 
@@ -673,7 +679,7 @@ bool MeshLoaderMd5::LoadV10(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) co
 						vPos.y += (mTrans.yx*vV.x + mTrans.yy*vV.y + mTrans.yz*vV.z + mTrans.yw)*fBias;
 						vPos.z += (mTrans.zx*vV.x + mTrans.zy*vV.y + mTrans.zz*vV.z + mTrans.zw)*fBias;
 					}
-					float *pfVertex = (float*)pVertexBuffer->GetData(nVertex, VertexBuffer::Position);
+					float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nVertex, VertexBuffer::Position));
 					pfVertex[Vector3::X] = vPos.x;
 					pfVertex[Vector3::Y] = vPos.y;
 					pfVertex[Vector3::Z] = vPos.z;

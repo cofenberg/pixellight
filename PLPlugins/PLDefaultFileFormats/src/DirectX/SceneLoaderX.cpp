@@ -79,7 +79,8 @@ bool SceneLoaderX::Load(SceneContainer &cContainer, File &cFile)
 
 	// Read the file header and validate it
 	XFileHeader sFileHeader;
-	if (!cFile.Read(&sFileHeader, 1, sizeof(XFileHeader))) return false; // Error!
+	if (!cFile.Read(&sFileHeader, 1, sizeof(XFileHeader)))
+		return false; // Error!
 
 	// Check the signature (must be "xof")
 	if (sFileHeader.nSignature[0] != 'x' || sFileHeader.nSignature[1] != 'o' || sFileHeader.nSignature[2] != 'f') {
@@ -212,7 +213,7 @@ void SceneLoaderX::ProcessNodes(SInstance &sInstance, SceneContainer &cContainer
 			case XNode::Material:
 			{
 				// Create a PixelLight material
-				XMaterial *pXMaterial = (XMaterial*)pXNode;
+				XMaterial *pXMaterial = static_cast<XMaterial*>(pXNode);
 				// [TODO] What do do if there's already a material with the given name??
 				Material  *pMaterial  = cContainer.GetSceneContext()->GetRendererContext().GetMaterialManager().Create(pXMaterial->pszName);
 				if (pMaterial) {
@@ -248,10 +249,10 @@ void SceneLoaderX::ProcessNodes(SInstance &sInstance, SceneContainer &cContainer
 
 			case XNode::Mesh:
 			{
-				XMesh *pXMesh = (XMesh*)pXNode;
+				XMesh *pXMesh = static_cast<XMesh*>(pXNode);
 
 				// Create a new mesh scene node
-				SNMesh *pMeshSceneNode = (SNMesh*)cContainer.Create("PLScene::SNMesh", pXMesh->pszName, "Flags=\"Automatic\"");
+				SNMesh *pMeshSceneNode = static_cast<SNMesh*>(cContainer.Create("PLScene::SNMesh", pXMesh->pszName, "Flags=\"Automatic\""));
 				if (pMeshSceneNode) {
 					// Update the statistics
 					sInstance.nTotalNumOfNodes++;
@@ -264,15 +265,15 @@ void SceneLoaderX::ProcessNodes(SInstance &sInstance, SceneContainer &cContainer
 
 			case XNode::Frame:
 			{
-				XFrame *pXFrame     = (XFrame*)pXNode;
+				XFrame *pXFrame     = static_cast<XFrame*>(pXNode);
 				XNode  *pXChildNode = pXFrame->GetFirstChildNode();
 				if (pXChildNode) {
 					// Before we just create a new scene container, check wether a simple
 					// scene node will also do the job
 					if (pXChildNode->GetType() == XNode::Mesh && !pXChildNode->GetNextNode()) {
 						// Create a new mesh scene node
-						String  sName          = String(pXFrame->pszName) + '_' + ((XMesh*)pXChildNode)->pszName;
-						SNMesh *pMeshSceneNode = (SNMesh*)cContainer.Create("PLScene::SNMesh", sName, "Flags=\"Automatic\"");
+						String  sName          = String(pXFrame->pszName) + '_' + static_cast<XMesh*>(pXChildNode)->pszName;
+						SNMesh *pMeshSceneNode = static_cast<SNMesh*>(cContainer.Create("PLScene::SNMesh", sName, "Flags=\"Automatic\""));
 						if (pMeshSceneNode) {
 							// Update the statistics
 							sInstance.nTotalNumOfNodes++;
@@ -282,11 +283,11 @@ void SceneLoaderX::ProcessNodes(SInstance &sInstance, SceneContainer &cContainer
 								pMeshSceneNode->GetTransform().SetMatrix(Matrix4x4(pXFrame->psTransformMatrix->sFrameMatrix.f));
 
 							// Process the mesh
-							ProcessMesh(sInstance, *((XMesh*)pXChildNode), *pMeshSceneNode, sResourceName + '_' + sName);
+							ProcessMesh(sInstance, *static_cast<XMesh*>(pXChildNode), *pMeshSceneNode, sResourceName + '_' + sName);
 						}
 					} else {
 						// Create a new scene container
-						SceneContainer *pContainer = (SceneContainer*)cContainer.Create("PLScene::SceneContainer", pXFrame->pszName, "Flags=\"Automatic\"");
+						SceneContainer *pContainer = static_cast<SceneContainer*>(cContainer.Create("PLScene::SceneContainer", pXFrame->pszName, "Flags=\"Automatic\""));
 						if (pContainer) {
 							// Update the statistics
 							sInstance.nTotalNumOfContainers++;
@@ -354,7 +355,7 @@ void SceneLoaderX::ProcessMesh(SInstance &sInstance, XMesh &cXMesh, SNMesh &cMes
 		if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Position
 			for (uint32 i=0; i<cXMesh.nVertices; i++) {
-				float *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
 				if (pfVertex) {
 					const XVector &sVector = cXMesh.psVertices[i];
 
@@ -370,7 +371,7 @@ void SceneLoaderX::ProcessMesh(SInstance &sInstance, XMesh &cXMesh, SNMesh &cMes
 			if (psTextureCoords && psTextureCoords->psTextureCoords) {
 				uint32 nTextureCoords = psTextureCoords->nTextureCoords < pVertexBuffer->GetNumOfElements() ? psTextureCoords->nTextureCoords : pVertexBuffer->GetNumOfElements();
 				for (uint32 i=0; i<nTextureCoords; i++) {
-					float          *pfVertex   = (float*)pVertexBuffer->GetData(i, VertexBuffer::TexCoord);
+					float          *pfVertex   = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::TexCoord));
 					const XCoords2d &sCoords2D = psTextureCoords->psTextureCoords[i];
 					pfVertex[0] = sCoords2D.u;
 					pfVertex[1] = sCoords2D.v;
@@ -382,7 +383,7 @@ void SceneLoaderX::ProcessMesh(SInstance &sInstance, XMesh &cXMesh, SNMesh &cMes
 			if (psNormals && psNormals->psNormals) {
 				uint32 nNormals = psNormals->nNormals < pVertexBuffer->GetNumOfElements() ? psNormals->nNormals : pVertexBuffer->GetNumOfElements();
 				for (uint32 i=0; i<nNormals; i++) {
-					float         *pfVertex = (float*)pVertexBuffer->GetData(i, VertexBuffer::Normal);
+					float         *pfVertex = static_cast<float*>(pVertexBuffer->GetData(i, VertexBuffer::Normal));
 					const XVector &sVector  = psNormals->psNormals[i];
 
 					// Fill vertex data
@@ -442,7 +443,7 @@ void SceneLoaderX::ProcessMesh(SInstance &sInstance, XMesh &cXMesh, SNMesh &cMes
 										// Is this the current processed material?
 										if (pcMaterial->GetType() == XNode::Reference) {
 											// [TODO] Use a kind of name table because we can't ensure the material name is correct!
-											if (cMaterial.GetName() == ((XReference*)pcMaterial)->pszName) {
+											if (cMaterial.GetName() == static_cast<XReference*>(pcMaterial)->pszName) {
 												for (uint32 nFaceIndex=0; nFaceIndex<cXMesh.nFaces; nFaceIndex++) {
 													// Jap, add the vertex indices
 													const XMeshFace &sFace = cXMesh.psFaces[nFaceIndex];
@@ -482,7 +483,7 @@ void SceneLoaderX::ProcessMesh(SInstance &sInstance, XMesh &cXMesh, SNMesh &cMes
 											// Is this the current processed material?
 											if (pcMaterial->GetType() == XNode::Reference) {
 												// [TODO] Use a kind of name table because we can't ensure the material name is correct!
-												if (cMaterial.GetName() == ((XReference*)pcMaterial)->pszName) {
+												if (cMaterial.GetName() == static_cast<XReference*>(pcMaterial)->pszName) {
 													// Jap, add the vertex indices
 													const XMeshFace &sFace = cXMesh.psFaces[nFaceIndex];
 

@@ -230,7 +230,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(VertexTex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
+			return Math::Abs(static_cast<int>(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
 							 cVertex.fS*123+cVertex.fT*42))%m_nSlots;
 		}
 
@@ -468,15 +468,15 @@ bool MeshLoaderM3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			for (uint32 i=0; i<3; i++) {
 				uint32 nID = pFace->nVertex[i];
 				const M3d::VertexTex &cVertex = *lstVertexTex[nID];
-				float *pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+				float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 				pfVertex[Vector3::X] = cVertex.fX;
 				pfVertex[Vector3::Y] = cVertex.fY;
 				pfVertex[Vector3::Z] = cVertex.fZ;
-				pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+				pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 				pfVertex[Vector3::X] = cVertex.fNX;
 				pfVertex[Vector3::Y] = cVertex.fNY;
 				pfVertex[Vector3::Z] = cVertex.fNZ;
-				pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+				pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 				pfVertex[Vector2::X] = cVertex.fS;
 				pfVertex[Vector2::Y] = cVertex.fT;
 			}
@@ -502,14 +502,14 @@ bool MeshLoaderM3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		if (bMergeMeshes) nNumOfMeshes = 1;
 		for (uint32 nMesh=0; nMesh<nNumOfMeshes; nMesh++) {
 			// Go through all object materials
-			for (int nMat=-1; nMat<(signed)cMesh.GetNumOfMaterials(); nMat++) {
+			for (int nMat=-1; nMat<static_cast<int>(cMesh.GetNumOfMaterials()); nMat++) {
 				// Fill vertex buffer
 				for (uint32 nFace=0; nFace<lstFaces.GetNumOfElements(); nFace++) {
 					// Get the face
 					const M3d::Face *pFace = lstFaces[nFace];
 
 					// Check mesh ID and material
-					if ((bMergeMeshes || pFace->nMeshID == nMesh) && pFace->nMaterial == (uint32)nMat) {
+					if ((bMergeMeshes || pFace->nMeshID == nMesh) && pFace->nMaterial == static_cast<uint32>(nMat)) {
 						// V0
 						pIndexBuffer->SetData(nIndex++, pFace->nVertex[0]);
 

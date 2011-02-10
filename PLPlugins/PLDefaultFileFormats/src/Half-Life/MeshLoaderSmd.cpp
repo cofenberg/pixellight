@@ -216,7 +216,7 @@ class VertexHashTable {
 		*/
 		uint32 GetKey(Vertex &cVertex)
 		{
-			return Math::Abs((int)(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
+			return Math::Abs(static_cast<int>(cVertex.fX*10+cVertex.fY*100+cVertex.fZ*112+
 								cVertex.fS*123+cVertex.fT*42+cVertex.nBone))%m_nSlots;
 		}
 
@@ -272,7 +272,9 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				if (cTokenizer.GetNextToken() == '\"') {
 					pNode->sName = cTokenizer.GetNextToken();
 					cTokenizer.GetNextToken();
-				} else pNode->sName = cTokenizer.GetToken();
+				} else {
+					pNode->sName = cTokenizer.GetToken();
+				}
 
 				// Get parent
 				pNode->nParent = cTokenizer.GetNextToken().GetInt();
@@ -292,10 +294,12 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			if (cSkeletonManager.Get(cMesh.GetName())) {
 				uint32 i = 0;
 				do {
-					sName = cMesh.GetName() + '_' + int(i);
+					sName = cMesh.GetName() + '_' + static_cast<int>(i);
 					i++;
 				} while (cSkeletonManager.Get(sName));
-			} else sName = cMesh.GetName();
+			} else {
+				sName = cMesh.GetName();
+			}
 
 			// Create skeleton
 			Skeleton *pSkeleton = cSkeletonManager.Create(sName);
@@ -332,7 +336,7 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					pJoint->SetTranslation(vTranslation);
 					// [TODO] The result is wrong...
 					Quaternion qRotation;
-					EulerAngles::ToQuaternion(float(roll*Math::RadToDeg), float(pitch*Math::RadToDeg), float(yaw*Math::RadToDeg), qRotation);
+					EulerAngles::ToQuaternion(static_cast<float>(roll*Math::RadToDeg), static_cast<float>(pitch*Math::RadToDeg), static_cast<float>(yaw*Math::RadToDeg), qRotation);
 					qRotation.Invert();
 					pJoint->SetRotation(qRotation);
 				}
@@ -467,19 +471,19 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					const Smd::Face &cFace = *lstFaces[i];
 
 					// Check material
-					if (cFace.nMaterial == (int)nMat) {
+					if (cFace.nMaterial == static_cast<int>(nMat)) {
 						// V0
 						uint32 nID = cFace.nVertex[2];
 						const Smd::Vertex *pVertex = lstVertex[nID];
-						float *pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+						float *pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 						pfVertex[Vector3::X] = pVertex->fX;
 						pfVertex[Vector3::Y] = pVertex->fY;
 						pfVertex[Vector3::Z] = pVertex->fZ;
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = pVertex->fNX;
 						pfVertex[Vector3::Y] = pVertex->fNY;
 						pfVertex[Vector3::Z] = pVertex->fNZ;
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = pVertex->fS;
 						pfVertex[Vector2::Y] = pVertex->fT;
 						pIndexBuffer->SetData(nIndex++,  nID);
@@ -487,15 +491,15 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 						// V1
 						nID = cFace.nVertex[1];
 						pVertex = lstVertex[nID];
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 						pfVertex[Vector3::X] = pVertex->fX;
 						pfVertex[Vector3::Y] = pVertex->fY;
 						pfVertex[Vector3::Z] = pVertex->fZ;
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = pVertex->fNX;
 						pfVertex[Vector3::Y] = pVertex->fNY;
 						pfVertex[Vector3::Z] = pVertex->fNZ;
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = pVertex->fS;
 						pfVertex[Vector2::Y] = pVertex->fT;
 						pIndexBuffer->SetData(nIndex++,  nID);
@@ -503,15 +507,15 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 						// V2
 						nID = cFace.nVertex[0];
 						pVertex = lstVertex[nID];
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Position);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Position));
 						pfVertex[Vector3::X] = pVertex->fX;
 						pfVertex[Vector3::Y] = pVertex->fY;
 						pfVertex[Vector3::Z] = pVertex->fZ;
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::Normal);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::Normal));
 						pfVertex[Vector3::X] = pVertex->fNX;
 						pfVertex[Vector3::Y] = pVertex->fNY;
 						pfVertex[Vector3::Z] = pVertex->fNZ;
-						pfVertex = (float*)pVertexBuffer->GetData(nID, VertexBuffer::TexCoord);
+						pfVertex = static_cast<float*>(pVertexBuffer->GetData(nID, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = pVertex->fS;
 						pfVertex[Vector2::Y] = pVertex->fT;
 						pIndexBuffer->SetData(nIndex++,  nID);

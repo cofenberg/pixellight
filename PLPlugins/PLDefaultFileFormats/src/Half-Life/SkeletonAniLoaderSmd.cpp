@@ -111,7 +111,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 					pJoint->SetTranslation(vTranslation);
 					// [TODO] The result is wrong...
 					Quaternion qRotation;
-					EulerAngles::ToQuaternion(float(roll*Math::RadToDeg), float(pitch*Math::RadToDeg), float(yaw*Math::RadToDeg), qRotation);
+					EulerAngles::ToQuaternion(static_cast<float>(roll*Math::RadToDeg), static_cast<float>(pitch*Math::RadToDeg), static_cast<float>(yaw*Math::RadToDeg), qRotation);
 					qRotation.Invert();
 					pJoint->SetRotation(qRotation);
 				}
@@ -168,7 +168,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 							// Set rotation
 							// [TODO] Check this
 							Quaternion qRotation;
-							EulerAngles::ToQuaternion(float(roll*Math::RadToDeg), float(pitch*Math::RadToDeg), float(yaw*Math::RadToDeg), qRotation);
+							EulerAngles::ToQuaternion(static_cast<float>(roll*Math::RadToDeg), static_cast<float>(pitch*Math::RadToDeg), static_cast<float>(yaw*Math::RadToDeg), qRotation);
 							qRotation.Invert();
 							qRotation = qRotation*qRotation;
 							lstFrameKeysT[nKey] = qRotation.x;
