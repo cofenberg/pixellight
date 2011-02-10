@@ -53,8 +53,8 @@ TextureBufferCube::~TextureBufferCube()
 		glDeleteTextures(1, &m_nOpenGLTexture);
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -79,7 +79,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 	m_nOpenGLTexture(0)
 {
 	// Get the OpenGL renderer instance
-	Renderer &cRendererOpenGL = (Renderer&)cRenderer;
+	Renderer &cRendererOpenGL = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
 	cRendererOpenGL.GetStatisticsT().nTextureBuffersNum++;
@@ -125,7 +125,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 				else {
 					// Calculate the number of mipmaps if required
 					if (!m_nNumOfMipmaps) {
-						m_nNumOfMipmaps = (uint32)Math::Log2(float(m_nSize));
+						m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 						bAutomaticMipmaps = true;
 
 						// Try to build mipmaps automatically on the GPU
@@ -280,7 +280,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 	m_nOpenGLTexture(0)
 {
 	// Get the OpenGL renderer instance
-	Renderer &cRendererOpenGL = (Renderer&)GetRenderer();
+	Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 	// Update renderer statistics
 	cRendererOpenGL.GetStatisticsT().nTextureBuffersNum++;
@@ -306,9 +306,9 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, m_nOpenGLTexture);
 
 		// Build mipmaps automatically on the GPU?
-		if ((m_nFlags & Mipmaps) && ((Renderer&)GetRenderer()).IsGL_SGIS_generate_mipmap()) {
+		if ((m_nFlags & Mipmaps) && cRendererOpenGL.IsGL_SGIS_generate_mipmap()) {
 			// Calculate the number of mipmaps - it's not allowed to access this automatic mipmaps??
-	//		m_nNumOfMipmaps = (uint32)Math::Log2(float(m_nSize));
+	//		m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 
 			// Enable automatic mipmap generation
 			glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_GENERATE_MIPMAP_SGIS, true);
@@ -349,7 +349,7 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && nFace <= 5) {
 		// Get the OpenGL renderer instance
-		const Renderer &cRendererOpenGL = (Renderer&)GetRenderer();
+		const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 		// Get API pixel format
 		const uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
@@ -412,7 +412,7 @@ bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pDa
 		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, m_nOpenGLTexture);
 
 		// Get the OpenGL renderer instance
-		const Renderer &cRendererOpenGL = (Renderer&)GetRenderer();
+		const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 		// Download
 		const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(nFormat);
@@ -478,7 +478,7 @@ void TextureBufferCube::BackupDeviceData(uint8 **ppBackup)
 				}
 			} else {
 				// Get the OpenGL renderer instance
-				const Renderer &cRendererOpenGL = (Renderer&)GetRenderer();
+				const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 				// Get format information
 				const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(m_nFormat);
@@ -519,7 +519,7 @@ void TextureBufferCube::RestoreDeviceData(uint8 **ppBackup)
 		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, m_nOpenGLTexture);
 
 		// Get the OpenGL renderer instance
-		const Renderer &cRendererOpenGL = (Renderer&)GetRenderer();
+		const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 		// Get API pixel format
 		const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(m_nFormat);

@@ -82,24 +82,24 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 
 			// Get the first best pixel format
 			const PIXELFORMATDESCRIPTOR sPixelFormatDescriptor = {
-				sizeof(PIXELFORMATDESCRIPTOR),					// Size of this pixel format descriptor
-				1,												// Version number
-				PFD_DRAW_TO_WINDOW |							// Format must support window
-				PFD_SUPPORT_OPENGL |							// Format must support OpenGL
-				PFD_DOUBLEBUFFER,								// Must support double buffering
-				PFD_TYPE_RGBA,									// Request an RGBA format
-				(UCHAR)nBits,									// Select our color depth
-				0, 0, 0, 0, 0, 0,								// Color bits ignored
-				0,												// No alpha buffer
-				0,												// Shift bit ignored
-				0,												// No accumulation buffer
-				0, 0, 0, 0,										// Accumulation bits ignored
-				(BYTE)cRenderer.GetCapabilities().nZBufferBits,	// Z-buffer (depth buffer)
-				(BYTE)cRenderer.GetCapabilities().nStencilBits,	// Stencil buffer bits
-				0,												// No auxiliary buffer
-				PFD_MAIN_PLANE,									// Main drawing layer
-				0,												// Reserved
-				0, 0, 0											// Layer masks ignored
+				sizeof(PIXELFORMATDESCRIPTOR),									// Size of this pixel format descriptor
+				1,																// Version number
+				PFD_DRAW_TO_WINDOW |											// Format must support window
+				PFD_SUPPORT_OPENGL |											// Format must support OpenGL
+				PFD_DOUBLEBUFFER,												// Must support double buffering
+				PFD_TYPE_RGBA,													// Request an RGBA format
+				static_cast<UCHAR>(nBits),										// Select our color depth
+				0, 0, 0, 0, 0, 0,												// Color bits ignored
+				0,																// No alpha buffer
+				0,																// Shift bit ignored
+				0,																// No accumulation buffer
+				0, 0, 0, 0,														// Accumulation bits ignored
+				static_cast<BYTE>(cRenderer.GetCapabilities().nZBufferBits),	// Z-buffer (depth buffer)
+				static_cast<BYTE>(cRenderer.GetCapabilities().nStencilBits),	// Stencil buffer bits
+				0,																// No auxiliary buffer
+				PFD_MAIN_PLANE,													// Main drawing layer
+				0,																// Reserved
+				0, 0, 0															// Layer masks ignored
 			};
 			const int nPixelFormat = ChoosePixelFormat(m_hDummyWindowDeviceContext, &sPixelFormatDescriptor);
 			if (nPixelFormat != 0) {
@@ -116,8 +116,8 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 					if (nMultisampleAntialiasingSamples) {
 						// This is somewhat stupied, but I don't see another solution... wglChoosePixelFormatARB etc. can only be received if
 						// a OpenGL context was already loaded (probably delayed dll loading?)
-						wglGetPixelFormatAttribivARB = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)wglGetProcAddress("wglGetPixelFormatAttribivARB");
-						wglChoosePixelFormatARB		 = (PFNWGLCHOOSEPIXELFORMATARBPROC)		wglGetProcAddress("wglChoosePixelFormatARB");
+						wglGetPixelFormatAttribivARB = static_cast<PFNWGLGETPIXELFORMATATTRIBIVARBPROC>(wglGetProcAddress("wglGetPixelFormatAttribivARB"));
+						wglChoosePixelFormatARB		 = static_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>	   (wglGetProcAddress("wglChoosePixelFormatARB"));
 						if (wglGetPixelFormatAttribivARB && wglChoosePixelFormatARB) {
 							// Search for a suitable pixel format
 							int nAttribs[] = {
@@ -164,7 +164,7 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 								// Search for the pixel format with the closest number of multisample samples to the requested
 								for (uint32 i=0; i<nPFormats; i++) {
 									wglGetPixelFormatAttribivARB(m_hDummyWindowDeviceContext, nPixelFormats[i], 0, 1, &nAttrib, &nSamples);
-									int nDiff = Math::Abs(nSamples - (int)nMultisampleAntialiasingSamples);
+									int nDiff = Math::Abs(nSamples - static_cast<int>(nMultisampleAntialiasingSamples));
 									if (nDiff < nMinDiff) {
 										nMinDiff	 = nDiff;
 										nBestFormat  = i;
@@ -298,8 +298,8 @@ bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &ls
 		bool bNewMode = true;
 		for (uint32 i=0; i<lstDisplayModeList.GetNumOfElements(); i++) {
 			const PLRenderer::DisplayMode *pDisplayMode = lstDisplayModeList[i];
-			if ((DWORD)pDisplayMode->vSize.x == DevMode.dmPelsWidth && (DWORD)pDisplayMode->vSize.y == DevMode.dmPelsHeight &&
-				(DWORD)pDisplayMode->nColorBits == DevMode.dmBitsPerPel && (DWORD)pDisplayMode->nFrequency == DevMode.dmDisplayFrequency) {
+			if (static_cast<DWORD>(pDisplayMode->vSize.x) == DevMode.dmPelsWidth && static_cast<DWORD>(pDisplayMode->vSize.y) == DevMode.dmPelsHeight &&
+				static_cast<DWORD>(pDisplayMode->nColorBits) == DevMode.dmBitsPerPel && static_cast<DWORD>(pDisplayMode->nFrequency) == DevMode.dmDisplayFrequency) {
 				// We already have such a display mode within our list!
 				bNewMode = false;
 

@@ -45,9 +45,10 @@ OcclusionQuery::~OcclusionQuery()
 {
 	// Destroy OpenGL occlusion query
 	if (m_nQuery) {
-		if (((Renderer&)GetRenderer()).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
 			glDeleteQueriesARB(1, &m_nQuery);
-		else glDeleteOcclusionQueriesNV(1, &m_nQuery);
+		else
+			glDeleteOcclusionQueriesNV(1, &m_nQuery);
 	}
 }
 
@@ -69,9 +70,10 @@ OcclusionQuery::OcclusionQuery(PLRenderer::Renderer &cRenderer) : PLRenderer::Oc
 	// Check whether occlusion query is supported
 	if (cRenderer.GetCapabilities().bOcclusionQuery) {
 		// Create OpenGL occlusion query
-		if (((Renderer&)cRenderer).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(cRenderer).IsGL_ARB_occlusion_query())
 			glGenQueriesARB(1, &m_nQuery);
-		else glGenOcclusionQueriesNV(1, &m_nQuery);
+		else
+			glGenOcclusionQueriesNV(1, &m_nQuery);
 	}
 }
 
@@ -85,13 +87,15 @@ bool OcclusionQuery::BeginOcclusionQuery()
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// Update the skip counter
 		m_nSkipCounter++;
-		if (m_nSkipCounter >= m_nSkipRate) m_nSkipCounter = 0;
+		if (m_nSkipCounter >= m_nSkipRate)
+			m_nSkipCounter = 0;
 
 		// New or none visible objects must always be tested but visible objects can be skipped
 		if (!m_nSkipCounter || m_nPixelCount <= m_nMinFragments) {
-			if (((Renderer&)GetRenderer()).IsGL_ARB_occlusion_query())
+			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
 				glBeginQueryARB(GL_SAMPLES_PASSED_ARB, m_nQuery);
-			else glBeginOcclusionQueryNV(m_nQuery);
+			else
+				glBeginOcclusionQueryNV(m_nQuery);
 
 			// Done
 			return true;
@@ -108,9 +112,10 @@ void OcclusionQuery::EndOcclusionQuery()
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// New or none visible objects must always be tested but visible objects can be skipped
 		if (!m_nSkipCounter || m_nPixelCount <= m_nMinFragments) {
-			if (((Renderer&)GetRenderer()).IsGL_ARB_occlusion_query())
+			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
 				glEndQueryARB(GL_SAMPLES_PASSED_ARB);
-			else glEndOcclusionQueryNV();
+			else
+				glEndOcclusionQueryNV();
 		}
 	}
 }
@@ -120,22 +125,26 @@ bool OcclusionQuery::PullOcclusionQuery(uint32 *pnNumOfFragments)
 	// Check whether occlusion query is supported
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// Check whether the queried data is already available
-		if (((Renderer&)GetRenderer()).IsGL_ARB_occlusion_query()) {
+		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query()) {
 			GLint nAvailable;
 			glGetQueryObjectivARB(m_nQuery, GL_QUERY_RESULT_AVAILABLE_ARB, &nAvailable);
-			if (!nAvailable) return false; // Error!
+			if (!nAvailable)
+				return false; // Error!
 
 			// Query
 			glGetQueryObjectuivARB(m_nQuery, GL_QUERY_RESULT_ARB, &m_nPixelCount);
-			if (pnNumOfFragments) *pnNumOfFragments = m_nPixelCount;
+			if (pnNumOfFragments)
+				*pnNumOfFragments = m_nPixelCount;
 		} else {
 			GLint nAvailable;
 			glGetOcclusionQueryivNV(m_nQuery, GL_PIXEL_COUNT_AVAILABLE_NV, &nAvailable);
-			if (!nAvailable) return false; // Error!
+			if (!nAvailable)
+				return false; // Error!
 
 			// Query
 			glGetOcclusionQueryuivNV(m_nQuery, GL_PIXEL_COUNT_NV, &m_nPixelCount);
-			if (pnNumOfFragments) *pnNumOfFragments = m_nPixelCount;
+			if (pnNumOfFragments)
+				*pnNumOfFragments = m_nPixelCount;
 		}
 	} else {
 		// Error, occlusion query is not supported!
@@ -182,9 +191,10 @@ void OcclusionQuery::BackupDeviceData(uint8 **ppBackup)
 
 	// Destroy OpenGL occlusion query
 	if (m_nQuery) {
-		if (((Renderer&)GetRenderer()).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
 			glDeleteQueriesARB(1, &m_nQuery);
-		else glDeleteOcclusionQueriesNV(1, &m_nQuery);
+		else
+			glDeleteOcclusionQueriesNV(1, &m_nQuery);
 		m_nQuery = 0;
 	}
 }
@@ -194,9 +204,10 @@ void OcclusionQuery::RestoreDeviceData(uint8 **ppBackup)
 	// Check whether occlusion query is supported
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// Create OpenGL occlusion query
-		if (((Renderer&)GetRenderer()).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
 			glGenQueriesARB(1, &m_nQuery);
-		else glGenOcclusionQueriesNV(1, &m_nQuery);
+		else
+			glGenOcclusionQueriesNV(1, &m_nQuery);
 	}
 }
 

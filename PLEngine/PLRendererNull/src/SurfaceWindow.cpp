@@ -89,7 +89,7 @@ Vector2i SurfaceWindow::GetSize() const
 	if (GetWindow()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect((HWND)GetWindow(), &sRect);
+			GetClientRect(static_cast<HWND>(GetWindow()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		// [TODO] Linux

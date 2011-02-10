@@ -126,7 +126,7 @@ void VertexShaderGLSL::BackupDeviceData(uint8 **ppBackup)
 	glGetObjectParameterivARB(m_nOpenGLVertexShader, GL_OBJECT_SHADER_SOURCE_LENGTH_ARB, &nShaderSourceLength);
 	if (nShaderSourceLength > 1) {
 		*ppBackup = new uint8[nShaderSourceLength];
-		glGetShaderSourceARB(m_nOpenGLVertexShader, nShaderSourceLength, nullptr, (GLcharARB*)*ppBackup);
+		glGetShaderSourceARB(m_nOpenGLVertexShader, nShaderSourceLength, nullptr, reinterpret_cast<GLcharARB*>(*ppBackup));
 		glDeleteObjectARB(m_nOpenGLVertexShader);
 		m_nOpenGLVertexShader = 0;
 	} else {
@@ -141,7 +141,7 @@ void VertexShaderGLSL::RestoreDeviceData(uint8 **ppBackup)
 		m_nOpenGLVertexShader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
 
 		// The string class takes over the control of the string memory and also deletes it
-		SetSourceCode(String((char*)*ppBackup, false));
+		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false));
 	}
 }
 

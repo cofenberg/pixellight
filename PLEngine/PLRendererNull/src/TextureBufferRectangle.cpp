@@ -48,7 +48,7 @@ namespace PLRendererNull {
 TextureBufferRectangle::~TextureBufferRectangle()
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
 }
 
 
@@ -63,7 +63,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 	PLRenderer::TextureBufferRectangle(cRenderer, nFlags)
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nTextureBuffersNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nTextureBuffersNum++;
 
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
@@ -83,7 +83,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 	PLRenderer::TextureBufferRectangle(cRenderer, nFlags)
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nTextureBuffersNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nTextureBuffersNum++;
 
 	// Init data
 	m_vSize   = vSize;

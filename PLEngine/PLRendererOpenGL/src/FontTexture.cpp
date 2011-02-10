@@ -119,19 +119,19 @@ bool FontTexture::IsValid() const
 float FontTexture::GetAscender() const
 {
 	// The FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-	return m_pFTFace ? float((*m_pFTFace)->size->metrics.ascender)/64.0f : 0.0f;
+	return m_pFTFace ? static_cast<float>((*m_pFTFace)->size->metrics.ascender)/64.0f : 0.0f;
 }
 
 float FontTexture::GetDescender() const
 {
 	// The FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-	return m_pFTFace ? float((*m_pFTFace)->size->metrics.descender)/64.0f : 0.0f;
+	return m_pFTFace ? static_cast<float>((*m_pFTFace)->size->metrics.descender)/64.0f : 0.0f;
 }
 
 float FontTexture::GetHeight() const
 {
 	// The FreeType library measures font size in terms of 1/64ths of pixels, so we have to adjust with /64
-	return m_pFTFace ? float((*m_pFTFace)->size->metrics.height)/64.0f : 0.0f;
+	return m_pFTFace ? static_cast<float>((*m_pFTFace)->size->metrics.height)/64.0f : 0.0f;
 }
 
 float FontTexture::GetTextWidth(const String &sText)
@@ -164,7 +164,7 @@ FontTexture::FontTexture(FontManager &cFontManager, File &cFile) : PLRenderer::F
 
 	// Create the FreeType library face
 	m_pFTFace = new FT_Face;
-	if (FT_New_Memory_Face(*cFontManager.GetFTLibrary(), (FT_Byte const*)m_pFontFileData, (FT_Long)m_nFontFileSize, 0, m_pFTFace)) {
+	if (FT_New_Memory_Face(*cFontManager.GetFTLibrary(), static_cast<FT_Byte const*>(m_pFontFileData), static_cast<FT_Long>(m_nFontFileSize), 0, m_pFTFace)) {
 		// Error!
 		delete m_pFTFace;
 		m_pFTFace = nullptr;
@@ -225,7 +225,7 @@ void FontTexture::CreateGlyphTextureAtlas()
 				glBindTexture(GL_TEXTURE_2D, m_nOpenGLGlyphTextureAtlas);
 
 				// Build mipmaps automatically on the GPU supported
-				if (((Renderer&)GetRenderer()).IsGL_SGIS_generate_mipmap()) {
+				if (static_cast<Renderer&>(GetRenderer()).IsGL_SGIS_generate_mipmap()) {
 					// Enable automatic mipmap generation
 					glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, true);
 
@@ -262,8 +262,8 @@ void FontTexture::CreateGlyphTextureAtlas()
 			}
 
 			// Update renderer statistics
-			((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum++;
-			((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem += GetGlyphTextureAtlasNumOfBytes(true);
+			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum++;
+			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem += GetGlyphTextureAtlasNumOfBytes(true);
 		}
 	}
 }
@@ -316,8 +316,8 @@ void FontTexture::DestroyGlyphTextureAtlas()
 		glDeleteTextures(1, &m_nOpenGLGlyphTextureAtlas);
 
 		// Update renderer statistics
-		((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-		((Renderer&)GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetGlyphTextureAtlasNumOfBytes(true);
+		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetGlyphTextureAtlasNumOfBytes(true);
 
 		// Reset glyph texture atlas information
 		m_nOpenGLGlyphTextureAtlas = 0;

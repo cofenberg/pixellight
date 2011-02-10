@@ -79,7 +79,7 @@ SurfaceTextureBuffer::SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRe
 //[-------------------------------------------------------]
 PLRenderer::TextureBuffer *SurfaceTextureBuffer::GetTextureBuffer() const
 {
-	return (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+	return static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 }
 
 uint8 SurfaceTextureBuffer::GetTextureBufferFace() const
@@ -99,18 +99,18 @@ void SurfaceTextureBuffer::TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::S
 Vector2i SurfaceTextureBuffer::GetSize() const
 {
 	// Return the size depending of the texture buffer type
-	PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+	PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 	if (pTextureBuffer) {
 		switch (pTextureBuffer->GetType()) {
 			case PLRenderer::Resource::TypeTextureBuffer2D:
-				return ((PLRenderer::TextureBuffer2D*)pTextureBuffer)->GetSize();
+				return static_cast<PLRenderer::TextureBuffer2D*>(pTextureBuffer)->GetSize();
 
 			case PLRenderer::Resource::TypeTextureBufferRectangle:
-				return ((PLRenderer::TextureBufferRectangle*)pTextureBuffer)->GetSize();
+				return static_cast<PLRenderer::TextureBufferRectangle*>(pTextureBuffer)->GetSize();
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
 			{
-				 const uint32 nSize = ((PLRenderer::TextureBufferCube*)pTextureBuffer)->GetSize();
+				 const uint32 nSize = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer)->GetSize();
 				 return Vector2i(nSize, nSize);
 			}
 		}

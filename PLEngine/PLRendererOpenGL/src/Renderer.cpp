@@ -151,9 +151,9 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 		// Show some OpenGL information
 		PL_LOG(Info, "OpenGL information")
-		PL_LOG(Info, String::Format("Version: %s",		 (const char*)glGetString(GL_VERSION)))
-		PL_LOG(Info, String::Format("Vendor info: %s",	 (const char*)glGetString(GL_VENDOR)))
-		PL_LOG(Info, String::Format("Renderer info: %s", (const char*)glGetString(GL_RENDERER)))
+		PL_LOG(Info, String::Format("Version: %s",		 reinterpret_cast<const char*>(glGetString(GL_VERSION))))
+		PL_LOG(Info, String::Format("Vendor info: %s",	 reinterpret_cast<const char*>(glGetString(GL_VENDOR))))
+		PL_LOG(Info, String::Format("Renderer info: %s", reinterpret_cast<const char*>(glGetString(GL_RENDERER))))
 
 		// Show general OpenGL information
 		ShowGeneralOpenGLInformation();
@@ -205,7 +205,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 			for (uint32 i=0; i<PLRenderer::RenderState::Number; i++) {
 				uint32 nState = m_nRenderState[i];
 				m_nRenderState[i] = m_nRenderState[i]+1;
-				SetRenderState((PLRenderer::RenderState::Enum)i, nState);
+				SetRenderState(static_cast<PLRenderer::RenderState::Enum>(i), nState);
 			}
 
 			// Reset render
@@ -682,7 +682,7 @@ void Renderer::SetupCapabilities()
 	else
 		nGLTemp = 1;
 	// At the moment, this render backend supports up to 16 color render targets
-	m_sCapabilities.nMaxColorRenderTargets = (nGLTemp > 16) ? 16 : (uint8)nGLTemp;
+	m_sCapabilities.nMaxColorRenderTargets = (nGLTemp > 16) ? 16 : static_cast<uint8>(nGLTemp);
 
 	// Maximum number of texture units
 	if (IsGL_ARB_multitexture()) {
@@ -692,47 +692,49 @@ void Renderer::SetupCapabilities()
 		// -> "http://developer.nvidia.com/object/General_FAQ.html"
 		glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB, &nGLTemp);
 
-		m_sCapabilities.nMaxTextureUnits = (uint8)nGLTemp;
-	} else m_sCapabilities.nMaxTextureUnits = 1;
+		m_sCapabilities.nMaxTextureUnits = static_cast<uint8>(nGLTemp);
+	} else {
+		m_sCapabilities.nMaxTextureUnits = 1;
+	}
 
 	// Maximum anisotropy
 	glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &nGLTemp);
-	m_sCapabilities.nMaxAnisotropy = (uint16)nGLTemp;
+	m_sCapabilities.nMaxAnisotropy = static_cast<uint16>(nGLTemp);
 
 	// Maximum tessellation factor
 	m_sCapabilities.nMaxTessellationFactor = IsGL_AMD_vertex_shader_tessellator() ? 15 : 1;
 
 	// Maximum texture buffer size
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nGLTemp);
-	m_sCapabilities.nMaxTextureBufferSize = (uint16)nGLTemp;
+	m_sCapabilities.nMaxTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// Rectangle texture buffers supported?
 	// GL_EXT_texture_rectangle, GL_NV_texture_rectangle and GL_ARB_texture_rectangle ONLY differ within their name :)
-	m_sCapabilities.bTextureBufferRectangle = IsGL_EXT_texture_rectangle() || IsGL_NV_texture_rectangle() || IsGL_ARB_texture_rectangle();
+	m_sCapabilities.bTextureBufferRectangle = (IsGL_EXT_texture_rectangle() || IsGL_NV_texture_rectangle() || IsGL_ARB_texture_rectangle());
 
 	// Maximum rectangle texture buffer size
 	glGetIntegerv(GL_MAX_RECTANGLE_TEXTURE_SIZE_ARB, &nGLTemp);
-	m_sCapabilities.nMaxRectangleTextureBufferSize = (uint16)nGLTemp;
+	m_sCapabilities.nMaxRectangleTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// 3D texture buffers supported?
 	m_sCapabilities.bTextureBuffer3D = IsGL_EXT_texture3D();
 
 	// Maximum 3D texture buffer size
 	glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE_EXT, &nGLTemp);
-	m_sCapabilities.nMax3DTextureBufferSize = (uint16)nGLTemp;
+	m_sCapabilities.nMax3DTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// Cube texture buffers supported?
-	m_sCapabilities.bTextureBufferCube = IsGL_ARB_texture_cube_map() || IsGL_EXT_texture_cube_map();
+	m_sCapabilities.bTextureBufferCube = (IsGL_ARB_texture_cube_map() || IsGL_EXT_texture_cube_map());
 
 	// Maximum cube texture buffer size
 	glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE_ARB, &nGLTemp);
-	m_sCapabilities.nMaxCubeTextureBufferSize = (uint16)nGLTemp;
+	m_sCapabilities.nMaxCubeTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// Stencil wrap supported?
 	m_sCapabilities.bStencilWrap = IsGL_EXT_stencil_wrap();
 
 	// Two sided stencils supported?
-	m_sCapabilities.bTwoSidedStencils = IsGL_EXT_stencil_two_side() || IsGL_ATI_separate_stencil();
+	m_sCapabilities.bTwoSidedStencils = (IsGL_EXT_stencil_two_side() || IsGL_ATI_separate_stencil());
 
 	// Depth bounds test supported?
 	m_sCapabilities.bDepthBoundsTest = IsGL_EXT_depth_bounds_test();
@@ -744,7 +746,7 @@ void Renderer::SetupCapabilities()
 	m_sCapabilities.bPointParameters = IsGL_ARB_point_parameters();
 
 	// Occlusion query supported
-	m_sCapabilities.bOcclusionQuery = IsGL_ARB_occlusion_query() || (IsGL_NV_occlusion_query() && IsGL_HP_occlusion_test());
+	m_sCapabilities.bOcclusionQuery = (IsGL_ARB_occlusion_query() || (IsGL_NV_occlusion_query() && IsGL_HP_occlusion_test()));
 
 	// Vertex buffer secondary color supported?
 	m_sCapabilities.bVertexBufferSecondaryColor = IsGL_EXT_secondary_color();
@@ -882,7 +884,7 @@ void Renderer::RestoreDeviceStates()
 	for (uint32 i=0; i<PLRenderer::RenderState::Number; i++) {
 		uint32 nState = m_nRenderState[i];
 		m_nRenderState[i] = m_nRenderState[i]+1;
-		SetRenderState((PLRenderer::RenderState::Enum)i, nState);
+		SetRenderState(static_cast<PLRenderer::RenderState::Enum>(i), nState);
 	}
 
 	// Reset texture buffers
@@ -915,7 +917,7 @@ void Renderer::RestoreDeviceStates()
 			m_ppnInternalSamplerState[nStage][i] = m_ppnSamplerState[nStage][i] + 1;
 
 			// Set state
-			SetSamplerState(nStage, (PLRenderer::Sampler::Enum)i, nState);
+			SetSamplerState(nStage, static_cast<PLRenderer::Sampler::Enum>(i), nState);
 		}
 	}
 
@@ -926,23 +928,23 @@ void Renderer::RestoreDeviceStates()
 		PLRenderer::Resource *pResource = cIterator.Next();
 		switch (pResource->GetType()) {
 			case PLRenderer::Resource::TypeTextureBuffer1D:
-				MemoryManager::Set(&((TextureBuffer1D*)pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				MemoryManager::Set(&static_cast<TextureBuffer1D*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
 				break;
 
 			case PLRenderer::Resource::TypeTextureBuffer2D:
-				MemoryManager::Set(&((TextureBuffer2D*)pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				MemoryManager::Set(&static_cast<TextureBuffer2D*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
 				break;
 
 			case PLRenderer::Resource::TypeTextureBufferRectangle:
-				MemoryManager::Set(&((TextureBufferRectangle*)pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				MemoryManager::Set(&static_cast<TextureBufferRectangle*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
 				break;
 
 			case PLRenderer::Resource::TypeTextureBuffer3D:
-				MemoryManager::Set(&((TextureBuffer3D*)pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				MemoryManager::Set(&static_cast<TextureBuffer3D*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
 				break;
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
-				MemoryManager::Set(&((TextureBufferCube*)pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				MemoryManager::Set(&static_cast<TextureBufferCube*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
 				break;
 		}
 	}
@@ -961,7 +963,7 @@ void Renderer::RestoreDeviceStates()
 	}
 
 	{ // Reset program
-		PLRenderer::Program *pProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
+		PLRenderer::Program *pProgram = static_cast<PLRenderer::Program*>(m_cProgramHandler.GetResource());
 		m_cProgramHandler.SetResource(nullptr);
 		SetProgram(pProgram);
 	}
@@ -987,7 +989,7 @@ String Renderer::GetAPI(uint32 *pnVersion) const
 
 		// Get version (for example '2.1.3' -> we are only interessted in '2.1' because
 		// the third number is not really normed)
-		String sVersion = (const char*)glGetString(GL_VERSION);
+		String sVersion = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 		if (sVersion.GetLength()) {
 			// Major
 			int nIndex = sVersion.IndexOf('.');
@@ -1015,7 +1017,7 @@ String Renderer::GetAPI(uint32 *pnVersion) const
 
 String Renderer::GetVendor() const
 {
-	return (const char*)glGetString(GL_VENDOR);
+	return reinterpret_cast<const char*>(glGetString(GL_VENDOR));
 }
 
 String Renderer::GetDefaultShaderLanguage() const
@@ -1037,7 +1039,7 @@ PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLan
 			const Class *pClass = m_mapShaderLanguages.Get(sUsedShaderLanguage);
 			if (pClass) {
 				// Create an instance
-				pShaderLanguage = (ShaderLanguage*)pClass->Create(Params<Object*, Renderer&>(*this));
+				pShaderLanguage = static_cast<ShaderLanguage*>(pClass->Create(Params<Object*, Renderer&>(*this)));
 				if (pShaderLanguage) {
 					// Register the instance
 					m_lstShaderLanguageInstances.Add(pShaderLanguage);
@@ -1127,14 +1129,18 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 		Math::IsPowerOfTwo(vSize.x) && Math::IsPowerOfTwo(vSize.y)) {
 		// Create and register renderer surface
 		uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
-		if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps) nTextureBufferFlags |= PLRenderer::TextureBuffer::Mipmaps;
+		if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps)
+			nTextureBufferFlags |= PLRenderer::TextureBuffer::Mipmaps;
 		PLRenderer::TextureBuffer *pTextureBuffer = new TextureBuffer2D(*this, vSize, nFormat, nTextureBufferFlags);
 		PLRenderer::SurfaceTextureBuffer *pRendererSurface = new SurfaceTextureBuffer(*this, *pTextureBuffer, nFlags, nMaxColorTargets);
 		m_lstSurfaces.Add(pRendererSurface);
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return nullptr; // Error!
+	} else {
+		// Error!
+		return nullptr;
+	}
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
@@ -1152,7 +1158,10 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return nullptr; // Error!
+	} else {
+		// Error!
+		return nullptr;
+	}
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
@@ -1176,7 +1185,8 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint1
 PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!CheckTextureBuffer1D(cImage, nInternalFormat)) return nullptr; // Error!
+	if (!CheckTextureBuffer1D(cImage, nInternalFormat))
+		return nullptr; // Error!
 
 	// Create the OpenGL 1D texture buffer
 	return new TextureBuffer1D(*this, cImage, nInternalFormat, nFlags);
@@ -1185,7 +1195,8 @@ PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(PLGraphics::Image &
 PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!CheckTextureBuffer2D(cImage, nInternalFormat)) return nullptr; // Error!
+	if (!CheckTextureBuffer2D(cImage, nInternalFormat))
+		return nullptr; // Error!
 
 	// Create the OpenGL 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
@@ -1194,7 +1205,8 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(PLGraphics::Image &
 PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat)) return nullptr; // Error!
+	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat))
+		return nullptr; // Error!
 
 	// Create the OpenGL rectangle texture buffer
 	return new TextureBufferRectangle(*this, cImage, nInternalFormat, nFlags);
@@ -1203,7 +1215,8 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(PLGraphics::Im
 PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer3D(cImage, nInternalFormat)) return nullptr; // Error!
+	if (!m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer3D(cImage, nInternalFormat))
+		return nullptr; // Error!
 
 	// Create the OpenGL 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
@@ -1212,7 +1225,8 @@ PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(PLGraphics::Image &
 PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!m_sCapabilities.bTextureBufferCube || !CheckTextureBufferCube(cImage, nInternalFormat)) return nullptr; // Error!
+	if (!m_sCapabilities.bTextureBufferCube || !CheckTextureBufferCube(cImage, nInternalFormat))
+		return nullptr; // Error!
 
 	// Create the OpenGL cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
@@ -1243,7 +1257,8 @@ PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()
 bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValue)
 {
 	// Check if the state is a valid render state member
-	if (nState >= PLRenderer::RenderState::Number) return false; // Error!
+	if (nState >= PLRenderer::RenderState::Number)
+		return false; // Error!
 
 	// Check if this render state is already set to this value
 	if (m_nRenderState[nState] != nValue) {
@@ -1259,53 +1274,60 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					case PLRenderer::RenderState::FillMode:
 						if (GetRenderState(PLRenderer::RenderState::FixedFillMode) == PLRenderer::Fill::Unknown) {
 							const uint32 &nAPIValue = m_cPLE_FILLWrapper[nValue];
-							if (&nAPIValue != &Array<uint32>::Null) {
+							if (&nAPIValue != &Array<uint32>::Null)
 								glPolygonMode(GL_FRONT_AND_BACK, nAPIValue);
-							} else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
 					case PLRenderer::RenderState::CullMode:
-						if (nValue == PLRenderer::Cull::None) glDisable(GL_CULL_FACE);
+						if (nValue == PLRenderer::Cull::None)
+							glDisable(GL_CULL_FACE);
 						else {
 							// Invert cull mode?
 							bool bAPISwapY = false;
 							if (m_cCurrentSurface.GetSurface())
 								bAPISwapY = m_cCurrentSurface.GetSurface()->IsAPISwapY();
-							if (!bAPISwapY &&  GetRenderState(PLRenderer::RenderState::InvCullMode) ||
-								 bAPISwapY && !GetRenderState(PLRenderer::RenderState::InvCullMode)) {
-								if (nValue == PLRenderer::Cull::CW) nValue = PLRenderer::Cull::CCW;
-								else								nValue = PLRenderer::Cull::CW;
-							}
+							if (!bAPISwapY &&  GetRenderState(PLRenderer::RenderState::InvCullMode) || bAPISwapY && !GetRenderState(PLRenderer::RenderState::InvCullMode))
+								nValue = (nValue == PLRenderer::Cull::CW) ? PLRenderer::Cull::CCW : PLRenderer::Cull::CW;
 
 							// Set the state
 							glEnable(GL_CULL_FACE);
 							const uint32 &nAPIValue = m_cPLE_CULLWrapper[nValue];
-							if (&nAPIValue != &Array<uint32>::Null) {
+							if (&nAPIValue != &Array<uint32>::Null)
 								glFrontFace(nAPIValue);
-							} else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
 				// Z buffer
 					case PLRenderer::RenderState::ZEnable:
-							 if (nValue == 0) glDisable(GL_DEPTH_TEST);
-						else if (nValue == 1) glEnable(GL_DEPTH_TEST);
-						else				  return false; // Error, invalid value!
+						if (nValue == 0)
+							glDisable(GL_DEPTH_TEST);
+						else if (nValue == 1)
+							glEnable(GL_DEPTH_TEST);
+						else
+							return false; // Error, invalid value!
 						break;
 
 					case PLRenderer::RenderState::ZWriteEnable:
-							 if (nValue == 0) glDepthMask(false);
-						else if (nValue == 1) glDepthMask(true);
-						else				  return false; // Error, invalid value!
+						if (nValue == 0)
+							glDepthMask(false);
+						else if (nValue == 1)
+							glDepthMask(true);
+						else
+							return false; // Error, invalid value!
 						break;
 
 					case PLRenderer::RenderState::ZFunc:
 					{
 						const uint32 &nAPIValue = m_cPLE_CMPWrapper[nValue];
-						if (&nAPIValue != &Array<uint32>::Null) {
+						if (&nAPIValue != &Array<uint32>::Null)
 							glDepthFunc(nAPIValue);
-						} else return false; // Error, invalid value!
+						else
+							return false; // Error, invalid value!
 						break;
 					}
 
@@ -1349,18 +1371,22 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 				switch (nState) {
 				// Blend
 					case PLRenderer::RenderState::BlendEnable:
-							 if (nValue == 0) glDisable(GL_BLEND);
-						else if (nValue == 1) glEnable(GL_BLEND);
-						else				  return false; // Error, invalid value!
+						if (nValue == 0)
+							glDisable(GL_BLEND);
+						else if (nValue == 1)
+							glEnable(GL_BLEND);
+						else
+							return false; // Error, invalid value!
 						break;
 
 					case PLRenderer::RenderState::SrcBlendFunc:
 					{
 						const uint32 &nAPIValue1 = m_cPLE_BLENDWrapper[nValue];
 						const uint32 &nAPIValue2 = m_cPLE_BLENDWrapper[GetRenderState(PLRenderer::RenderState::DstBlendFunc)];
-						if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null)) {
+						if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 							glBlendFunc(nAPIValue1, nAPIValue2);
-						} else return false; // Error, invalid value!
+						else
+							return false; // Error, invalid value!
 						break;
 					}
 
@@ -1368,17 +1394,21 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					{
 						const uint32 &nAPIValue1 = m_cPLE_BLENDWrapper[nValue];
 						const uint32 &nAPIValue2 = m_cPLE_BLENDWrapper[GetRenderState(PLRenderer::RenderState::SrcBlendFunc)];
-						if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null)) {
+						if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 							glBlendFunc(nAPIValue2, nAPIValue1);
-						} else return false; // Error, invalid value!
+						else
+							return false; // Error, invalid value!
 						break;
 					}
 
 				// Stencil
 					case PLRenderer::RenderState::StencilEnable:
-							 if (nValue == 0) glDisable(GL_STENCIL_TEST);
-						else if (nValue == 1) glEnable(GL_STENCIL_TEST);
-						else				  return false; // Error, invalid value!
+						if (nValue == 0)
+							glDisable(GL_STENCIL_TEST);
+						else if (nValue == 1)
+							glEnable(GL_STENCIL_TEST);
+						else
+							return false; // Error, invalid value!
 						break;
 
 					case PLRenderer::RenderState::StencilFunc:
@@ -1390,13 +1420,15 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFunc)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 									glStencilFuncSeparateATI(nAPIValue2, nAPIValue1, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							} else {
 								// No two sided
 								const uint32 &nAPIValue = m_cPLE_CMPWrapper[nValue];
 								if (&nAPIValue != &Array<uint32>::Null)
 									glStencilFuncSeparateATI(nAPIValue, nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 
 						// For other GPU's
@@ -1408,7 +1440,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							const uint32 &nAPIValue = m_cPLE_CMPWrapper[nValue];
 							if (&nAPIValue != &Array<uint32>::Null)
 								glStencilFunc(nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-							else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
@@ -1421,13 +1454,15 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFunc)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 									glStencilFuncSeparateATI(nAPIValue2, nAPIValue1, nValue, GetRenderState(PLRenderer::RenderState::StencilMask));
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							} else {
 								// No two sided
 								const uint32 &nAPIValue = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 								if (&nAPIValue != &Array<uint32>::Null)
 									glStencilFuncSeparateATI(nAPIValue, nAPIValue, nValue, GetRenderState(PLRenderer::RenderState::StencilMask));
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 
 						// For other GPU's
@@ -1436,7 +1471,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							const uint32 &nAPIValue = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 							if (&nAPIValue != &Array<uint32>::Null)
 								glStencilFunc(nAPIValue, nValue, GetRenderState(PLRenderer::RenderState::StencilMask));
-							else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
@@ -1449,13 +1485,15 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFunc)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 									glStencilFuncSeparateATI(nAPIValue2, nAPIValue1, GetRenderState(PLRenderer::RenderState::StencilRef), nValue);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							} else {
 								// No two sided
 								const uint32 &nAPIValue = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 								if (&nAPIValue != &Array<uint32>::Null)
 									glStencilFuncSeparateATI(nAPIValue, nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), nValue);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 
 						// For other GPU's
@@ -1464,7 +1502,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							const uint32 &nAPIValue = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 							if (&nAPIValue != &Array<uint32>::Null)
 								glStencilFunc(nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), nValue);
-							else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
@@ -1477,8 +1516,12 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null)) {
 								if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode))
 									glStencilOpSeparateATI(GL_BACK, nAPIValue1, nAPIValue2, nAPIValue3);
-								else glStencilOpSeparateATI(GL_FRONT_AND_BACK, nAPIValue1, nAPIValue2, nAPIValue3);
-							} else return false; // Error, invalid value!
+								else
+									glStencilOpSeparateATI(GL_FRONT_AND_BACK, nAPIValue1, nAPIValue2, nAPIValue3);
+							} else {
+								// Error, invalid value!
+								return false;
+							}
 
 						// For other GPU's
 						} else {
@@ -1491,7 +1534,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilPass)];
 							if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 								glStencilOp(nAPIValue1, nAPIValue2, nAPIValue3);
-							else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
@@ -1504,8 +1548,12 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null)) {
 								if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode))
 									glStencilOpSeparateATI(GL_BACK, nAPIValue2, nAPIValue1, nAPIValue3);
-								else glStencilOpSeparateATI(GL_FRONT_AND_BACK, nAPIValue2, nAPIValue1, nAPIValue3);
-							} else return false; // Error, invalid value!
+								else
+									glStencilOpSeparateATI(GL_FRONT_AND_BACK, nAPIValue2, nAPIValue1, nAPIValue3);
+							} else {
+								// Error, invalid value!
+								return false;
+							}
 
 						// For other GPU's
 						} else {
@@ -1518,7 +1566,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilPass)];
 							if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 								glStencilOp(nAPIValue2, nAPIValue1, nAPIValue3);
-							else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
@@ -1531,8 +1580,12 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null)) {
 								if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode))
 									glStencilOpSeparateATI(GL_BACK, nAPIValue2, nAPIValue3, nAPIValue1);
-								else glStencilOpSeparateATI(GL_FRONT_AND_BACK, nAPIValue2, nAPIValue3, nAPIValue1);
-							} else return false; // Error, invalid value!
+								else
+									glStencilOpSeparateATI(GL_FRONT_AND_BACK, nAPIValue2, nAPIValue3, nAPIValue1);
+							} else {
+								// Error, invalid value!
+								return false;
+							}
 
 						// For other GPU's
 						} else {
@@ -1545,12 +1598,14 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilZFail)];
 							if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 								glStencilOp(nAPIValue2, nAPIValue3, nAPIValue1);
-							else return false; // Error, invalid value!
+							else
+								return false; // Error, invalid value!
 						}
 						break;
 
 					case PLRenderer::RenderState::TwoSidedStencilMode:
-						if (!m_sCapabilities.bTwoSidedStencils) return false; // Error, two sided stencils are not supported!
+						if (!m_sCapabilities.bTwoSidedStencils)
+							return false; // Error, two sided stencils are not supported!
 
 						// For ATI GPU's
 						if (IsGL_ATI_separate_stencil()) {
@@ -1559,7 +1614,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFunc)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 									glStencilFuncSeparateATI(nAPIValue2, nAPIValue1, GetRenderState(PLRenderer::RenderState::StencilRef), nValue);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 							{ // Back
 								const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilFail)];
@@ -1567,7 +1623,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilPass)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOpSeparateATI(GL_BACK, nAPIValue1, nAPIValue2, nAPIValue3);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 							{ // Front and back
 								const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFail)];
@@ -1575,7 +1632,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOpSeparateATI(GL_FRONT, nAPIValue1, nAPIValue2, nAPIValue3);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 
 						// For other GPU's
@@ -1590,7 +1648,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 									const uint32 &nAPIValue = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 									if (&nAPIValue != &Array<uint32>::Null)
 										glStencilFunc(nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-									else return false; // Error, invalid value!
+									else
+										return false; // Error, invalid value!
 								}
 								{ // Operation
 									const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilFail)];
@@ -1598,7 +1657,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 									const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilPass)];
 									if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 										glStencilOp(nAPIValue1, nAPIValue2, nAPIValue3);
-									else return false; // Error, invalid value!
+									else
+										return false; // Error, invalid value!
 								}
 								// Front
 								glActiveStencilFaceEXT(GL_FRONT);
@@ -1606,7 +1666,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 									const uint32 &nAPIValue = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFunc)];
 									if (&nAPIValue != &Array<uint32>::Null)
 										glStencilFunc(nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-									else return false; // Error, invalid value!
+									else
+										return false; // Error, invalid value!
 								}
 								{ // Operation
 									const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFail)];
@@ -1614,14 +1675,19 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 									const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
 									if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 										glStencilOp(nAPIValue1, nAPIValue2, nAPIValue3);
-									else return false; // Error, invalid value!
+									else
+										return false; // Error, invalid value!
 								}
-							} else return false; // Error, invalid value!
+							} else {
+								// Error, invalid value!
+								return false;
+							}
 						}
 						break;
 
 					case PLRenderer::RenderState::CCWStencilFunc:
-						if (!m_sCapabilities.bTwoSidedStencils) return false; // Error, two sided stencils are not supported!
+						if (!m_sCapabilities.bTwoSidedStencils)
+							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
 							if (IsGL_ATI_separate_stencil()) {
@@ -1629,7 +1695,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
 									glStencilFuncSeparateATI(nAPIValue1, nAPIValue2, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 
 							// For other GPU's
 							} else {
@@ -1640,13 +1707,17 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 									glActiveStencilFaceEXT(GL_FRONT);
 									// Set stencil function
 									glStencilFunc(nAPIValue, GetRenderState(PLRenderer::RenderState::StencilRef), GetRenderState(PLRenderer::RenderState::StencilMask));
-								} else return false; // Error, invalid value!
+								} else {
+									// Error, invalid value!
+									return false;
+								}
 							}
 						}
 						break;
 
 					case PLRenderer::RenderState::CCWStencilFail:
-						if (!m_sCapabilities.bTwoSidedStencils) return false; // Error, two sided stencils are not supported!
+						if (!m_sCapabilities.bTwoSidedStencils)
+							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
 							if (IsGL_ATI_separate_stencil()) {
@@ -1655,7 +1726,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOpSeparateATI(GL_FRONT, nAPIValue1, nAPIValue2, nAPIValue3);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 
 							// For other GPU's
 							} else {
@@ -1667,13 +1739,15 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOp(nAPIValue1, nAPIValue2, nAPIValue3);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 						}
 						break;
 
 					case PLRenderer::RenderState::CCWStencilZFail:
-						if (!m_sCapabilities.bTwoSidedStencils) return false; // Error, two sided stencils are not supported!
+						if (!m_sCapabilities.bTwoSidedStencils)
+							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
 							if (IsGL_ATI_separate_stencil()) {
@@ -1682,7 +1756,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOpSeparateATI(GL_FRONT, nAPIValue2, nAPIValue1, nAPIValue3);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 
 							// For other GPU's
 							} else {
@@ -1694,13 +1769,15 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOp(nAPIValue2, nAPIValue1, nAPIValue3);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 						}
 						break;
 
 					case PLRenderer::RenderState::CCWStencilPass:
-						if (!m_sCapabilities.bTwoSidedStencils) return false; // Error, two sided stencils are not supported!
+						if (!m_sCapabilities.bTwoSidedStencils)
+							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
 							if (IsGL_ATI_separate_stencil()) {
@@ -1709,7 +1786,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilZFail)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOpSeparateATI(GL_FRONT, nAPIValue2, nAPIValue3, nAPIValue1);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 
 							// For other GPU's
 							} else {
@@ -1721,7 +1799,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilZFail)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null) && (&nAPIValue3 != &Array<uint32>::Null))
 									glStencilOp(nAPIValue2, nAPIValue3, nAPIValue1);
-								else return false; // Error, invalid value!
+								else
+									return false; // Error, invalid value!
 							}
 						}
 						break;
@@ -1740,14 +1819,16 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 				case PLRenderer::RenderState::PointSizeMin:
 					// Point parameters supported?
-					if (!m_sCapabilities.bPointParameters) return false; // Error, not supported!
+					if (!m_sCapabilities.bPointParameters)
+						return false; // Error, not supported!
 
 					glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, Tools::UInt32ToFloat(nValue));
 					break;
 
 				case PLRenderer::RenderState::PointSizeMax:
 					// Point parameters supported?
-					if (!m_sCapabilities.bPointParameters) return false; // Error, not supported!
+					if (!m_sCapabilities.bPointParameters)
+						return false; // Error, not supported!
 
 					glPointParameterfARB(GL_POINT_SIZE_MAX_ARB, Tools::UInt32ToFloat(nValue));
 					break;
@@ -1755,7 +1836,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 				case PLRenderer::RenderState::PointScaleA:
 				{
 					// Point parameters supported?
-					if (!m_sCapabilities.bPointParameters) return false; // Error, not supported!
+					if (!m_sCapabilities.bPointParameters)
+						return false; // Error, not supported!
 
 					float fQ[] = { Tools::UInt32ToFloat(nValue),
 								   Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
@@ -1767,7 +1849,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 				case PLRenderer::RenderState::PointScaleB:
 				{
 					// Point parameters supported?
-					if (!m_sCapabilities.bPointParameters) return false; // Error, not supported!
+					if (!m_sCapabilities.bPointParameters)
+						return false; // Error, not supported!
 
 					float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
 								   Tools::UInt32ToFloat(nValue),
@@ -1779,7 +1862,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 				case PLRenderer::RenderState::PointScaleC:
 				{
 					// Point parameters supported?
-					if (!m_sCapabilities.bPointParameters) return false; // Error, not supported!
+					if (!m_sCapabilities.bPointParameters)
+						return false; // Error, not supported!
 
 					float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
 								   Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
@@ -1815,7 +1899,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 			// Misc
 				case PLRenderer::RenderState::PointSpriteEnable:
 					// Point sprite supported?
-					if (!m_sCapabilities.bPointSprite) return false; // Error, not supported!
+					if (!m_sCapabilities.bPointSprite)
+						return false; // Error, not supported!
 
 					if (nValue == 0) {
 						glDisable(GL_POINT_SPRITE_ARB);
@@ -1823,30 +1908,43 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					} else if (nValue == 1) {
 						glEnable(GL_POINT_SPRITE_ARB);
 						glTexEnvf(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, true);
-					} else return false; // Error, invalid value!
+					} else {
+						// Error, invalid value!
+						return false;
+					}
 					break;
 
 				case PLRenderer::RenderState::DitherEnable:
-						 if (nValue == 0) glDisable(GL_DITHER);
-					else if (nValue == 1) glEnable(GL_DITHER);
-					else				  return false; // Error, invalid value!
+					if (nValue == 0)
+						glDisable(GL_DITHER);
+					else if (nValue == 1)
+						glEnable(GL_DITHER);
+					else
+						return false; // Error, invalid value!
 					break;
 
 				case PLRenderer::RenderState::ScissorTestEnable:
-						 if (nValue == 0) glDisable(GL_SCISSOR_TEST);
-					else if (nValue == 1) glEnable(GL_SCISSOR_TEST);
-					else				  return false; // Error, invalid value!
+					if (nValue == 0)
+						glDisable(GL_SCISSOR_TEST);
+					else if (nValue == 1)
+						glEnable(GL_SCISSOR_TEST);
+					else
+						return false; // Error, invalid value!
 					break;
 
 				case PLRenderer::RenderState::MultisampleEnable:
 					// Multisample antialiasing samples
-					if (m_sCapabilities.nMultisampleAntialiasingSamples < 2) return false; // Error, not supported!
+					if (m_sCapabilities.nMultisampleAntialiasingSamples < 2)
+						return false; // Error, not supported!
 
 					if (nValue == 0) {
 						glDisable(GL_MULTISAMPLE_ARB);
 					} else if (nValue == 1) {
 						glEnable(GL_MULTISAMPLE_ARB);
-					} else return false; // Error, invalid value!
+					} else {
+						// Error, invalid value!
+						return false;
+					}
 					break;
 
 				case PLRenderer::RenderState::InvCullMode:
@@ -1857,37 +1955,53 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							bAPISwapY = m_cCurrentSurface.GetSurface()->IsAPISwapY();
 						if (!bAPISwapY && nValue || bAPISwapY && !nValue) { // Invert current active cull mode
 							switch (GetRenderState(PLRenderer::RenderState::CullMode)) {
-								case PLRenderer::Cull::CW:  nValue = PLRenderer::Cull::CCW; break;
-								case PLRenderer::Cull::CCW: nValue = PLRenderer::Cull::CW;  break;
+								case PLRenderer::Cull::CW:
+									nValue = PLRenderer::Cull::CCW;
+									break;
+
+								case PLRenderer::Cull::CCW:
+									nValue = PLRenderer::Cull::CW;
+									break;
 							}
 						} else { // Use current cull mode
 							switch (GetRenderState(PLRenderer::RenderState::CullMode)) {
-								case PLRenderer::Cull::CW:  nValue = PLRenderer::Cull::CW;  break;
-								case PLRenderer::Cull::CCW: nValue = PLRenderer::Cull::CCW; break;
+								case PLRenderer::Cull::CW:
+									nValue = PLRenderer::Cull::CW;
+									break;
+
+								case PLRenderer::Cull::CCW:
+									nValue = PLRenderer::Cull::CCW;
+									break;
 							}
 						}
 
 						// Set the state
 						const uint32 &nAPIValue = m_cPLE_CULLWrapper[nValue];
-						if (&nAPIValue != &Array<uint32>::Null) {
+						if (&nAPIValue != &Array<uint32>::Null)
 							glFrontFace(nAPIValue);
-						} else return false; // Error, invalid value!
+						else
+							return false; // Error, invalid value!
 					}
 					break;
 
 				case PLRenderer::RenderState::FixedFillMode:
 					if (nValue != PLRenderer::Fill::Unknown) {
 						const uint32 &nAPIValue = m_cPLE_FILLWrapper[nValue];
-						if (&nAPIValue != &Array<uint32>::Null) glPolygonMode(GL_FRONT_AND_BACK, nAPIValue);
-						else										return false; // Error, invalid value!
+						if (&nAPIValue != &Array<uint32>::Null)
+							glPolygonMode(GL_FRONT_AND_BACK, nAPIValue);
+						else
+							return false; // Error, invalid value!
 					} else {
 						const uint32 &nAPIValue = m_cPLE_FILLWrapper[GetRenderState(PLRenderer::RenderState::FillMode)];
-						if (&nAPIValue != &Array<uint32>::Null) glPolygonMode(GL_FRONT_AND_BACK, nAPIValue);
-						else										return false; // Error, invalid value!
+						if (&nAPIValue != &Array<uint32>::Null)
+							glPolygonMode(GL_FRONT_AND_BACK, nAPIValue);
+						else
+							return false; // Error, invalid value!
 					}
 					break;
 
-				default: return false; // Error, invalid render state!
+				default:
+					return false; // Error, invalid render state!
 			}
 		}
 	}
@@ -1916,7 +2030,8 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 				nValue = PLRenderer::TextureFiltering::None;
 
 				// Check if this sampler state is already set to this value
-				if (m_ppnInternalSamplerState[nStage][nState] == nValue) return true; // Nothing to do here :)
+				if (m_ppnInternalSamplerState[nStage][nState] == nValue)
+					return true; // Nothing to do here :)
 			}
 		}
 
@@ -1935,27 +2050,30 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 			case PLRenderer::Sampler::AddressU:
 			{
 				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
+				if (&nAPIValue != &Array<uint32>::Null)
 					glTexParameteri(nType, GL_TEXTURE_WRAP_S, nAPIValue);
-				} else return false; // Error, invalid value!
+				else
+					return false; // Error, invalid value!
 				break;
 			}
 
 			case PLRenderer::Sampler::AddressV:
 			{
 				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
+				if (&nAPIValue != &Array<uint32>::Null)
 					glTexParameteri(nType, GL_TEXTURE_WRAP_T, nAPIValue);
-				} else return false; // Error, invalid value!
+				else
+					return false; // Error, invalid value!
 				break;
 			}
 
 			case PLRenderer::Sampler::AddressW:
 			{
 				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
+				if (&nAPIValue != &Array<uint32>::Null)
 					glTexParameteri(nType, GL_TEXTURE_WRAP_R_EXT, nAPIValue);
-				} else return false; // Error, invalid value!
+				else
+					return false; // Error, invalid value!
 				break;
 			}
 
@@ -1970,12 +2088,12 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 					case PLRenderer::TextureFiltering::Anisotropic: // GL treats linear and aniso the same
 					case PLRenderer::TextureFiltering::Linear:
 						glTexParameteri(nType, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-					break;
+						break;
 
 					case PLRenderer::TextureFiltering::Point:
 					case PLRenderer::TextureFiltering::None:
 						glTexParameteri(nType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-					break;
+						break;
 				}
 				break;
 
@@ -1995,13 +2113,15 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 
 			case PLRenderer::Sampler::MaxAnisotropy:
 				if (m_sCapabilities.nMaxAnisotropy) {
-					if (nValue > m_sCapabilities.nMaxAnisotropy) nValue = m_sCapabilities.nMaxAnisotropy;
+					if (nValue > m_sCapabilities.nMaxAnisotropy)
+						nValue = m_sCapabilities.nMaxAnisotropy;
 					glTexParameteri(nType, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
 					break;
 				}
 				break;
 
-			default: return false; // Invalid sampler state!
+			default:
+				return false; // Invalid sampler state!
 		}
 	}
 
@@ -2016,7 +2136,8 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 bool Renderer::BeginScene()
 {
 	// Is the scene rendering already active?
-	if (m_bSceneRendering) return false; // Error!
+	if (m_bSceneRendering)
+		return false; // Error!
 
 	// Activate scene rendering
 	m_bSceneRendering = true;
@@ -2028,7 +2149,8 @@ bool Renderer::BeginScene()
 bool Renderer::EndScene()
 {
 	// Is scene rendering active?
-	if (!m_bSceneRendering) return false; // Error!
+	if (!m_bSceneRendering)
+		return false; // Error!
 
 	// End scene
 	m_bSceneRendering = false;
@@ -2044,12 +2166,12 @@ bool Renderer::SetViewport(const PLMath::Rectangle *pRectangle, float fMinZ, flo
 
 	// OpenGL assumes LOWER-left corner of the viewport rectangle, in pixels
 	// and TOP-left corner given - so fit it :)
-	GLint nY = (GLint)m_cViewportRect.GetY();
+	GLint nY = static_cast<GLint>(m_cViewportRect.GetY());
 	if (m_cCurrentSurface.GetSurface())
-		nY = m_cCurrentSurface.GetSurface()->GetSize().y-GLint(m_cViewportRect.vMax.y);
+		nY = m_cCurrentSurface.GetSurface()->GetSize().y - static_cast<GLint>(m_cViewportRect.vMax.y);
 
 	// Set viewport
-	glViewport(GLint(m_cViewportRect.GetX()), nY, GLint(m_cViewportRect.GetWidth()), (GLint)m_cViewportRect.GetHeight());
+	glViewport(static_cast<GLint>(m_cViewportRect.GetX()), nY, static_cast<GLint>(m_cViewportRect.GetWidth()), static_cast<GLint>(m_cViewportRect.GetHeight()));
 
 	// Set depth range
 	glDepthRange(fMinZ, fMaxZ);
@@ -2065,12 +2187,12 @@ bool Renderer::SetScissorRect(const PLMath::Rectangle *pRectangle)
 
 	// OpenGL assumes LOWER-left corner of the viewport rectangle, in pixels
 	// and TOP-left corner given - so fit it :)
-	GLint nY = (GLint)m_cScissorRect.GetY();
+	GLint nY = static_cast<GLint>(m_cScissorRect.GetY());
 	if (m_cCurrentSurface.GetSurface())
-		nY = m_cCurrentSurface.GetSurface()->GetSize().y-GLint(m_cScissorRect.vMax.y);
+		nY = m_cCurrentSurface.GetSurface()->GetSize().y - static_cast<GLint>(m_cScissorRect.vMax.y);
 
 	// Set scissor rectangle
-	glScissor(GLint(m_cScissorRect.GetX()), nY, GLint(m_cScissorRect.GetWidth()), (GLint)m_cScissorRect.GetHeight());
+	glScissor(static_cast<GLint>(m_cScissorRect.GetX()), nY, static_cast<GLint>(m_cScissorRect.GetWidth()), static_cast<GLint>(m_cScissorRect.GetHeight()));
 
 	// Done
 	return true;
@@ -2097,9 +2219,12 @@ bool Renderer::GetDepthBounds(float &fZMin, float &fZMax) const
 
 bool Renderer::SetDepthBounds(float fZMin, float fZMax)
 {
-	if (!m_sCapabilities.bDepthBoundsTest) return false; // Error!
-	if (fZMin == 0.0f && fZMax == 1.0f) glDisable(GL_DEPTH_BOUNDS_TEST_EXT);
-	else								glEnable(GL_DEPTH_BOUNDS_TEST_EXT);
+	if (!m_sCapabilities.bDepthBoundsTest)
+		return false; // Error!
+	if (fZMin == 0.0f && fZMax == 1.0f)
+		glDisable(GL_DEPTH_BOUNDS_TEST_EXT);
+	else
+		glEnable(GL_DEPTH_BOUNDS_TEST_EXT);
 	glDepthBoundsEXT(fZMin, fZMax);
 
 	// Done
@@ -2187,20 +2312,27 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 		// Make the dummy rendering context to the current one?
 		if (pSurface) {
 			// Check parameter
-			if (!m_lstSurfaces.IsElement(pSurface)) return false; // Error!
+			if (!m_lstSurfaces.IsElement(pSurface))
+				return false; // Error!
 
 			// Check face index
 			if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
-				PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = (PLRenderer::SurfaceTextureBuffer*)pSurface;
+				PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
 				if (pSurfaceTextureBuffer->GetTextureBuffer()) {
 					if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
-						if (nFace > 5) return false; // Error!
+						if (nFace > 5)
+							return false; // Error!
 					} else {
-						if (nFace > 0) return false; // Error!
+						if (nFace > 0)
+							return false; // Error!
 					}
-				} else return false; // ??!
+				} else {
+					// ??!
+					return false;
+				}
 			} else {
-				if (nFace > 0) return false; // Error!
+				if (nFace > 0)
+					return false; // Error!
 			}
 
 			PLRenderer::Surface *pPrevSurface = m_cCurrentSurface.GetSurface();
@@ -2215,9 +2347,9 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 			// are always correct (can buffer share states in any way??)
 			// (Clip planes, color mask etc. are also per context...)
 			if ((pSurface->GetType() == PLRenderer::Surface::TextureBuffer &&
-				((SurfaceTextureBuffer*)pSurface)->IsPBufferUsed()) ||
+				static_cast<SurfaceTextureBuffer*>(pSurface)->IsPBufferUsed()) ||
 				(pPrevSurface && pPrevSurface->GetType() == PLRenderer::Surface::TextureBuffer &&
-				((SurfaceTextureBuffer*)pPrevSurface)->IsPBufferUsed())) {
+				static_cast<SurfaceTextureBuffer*>(pPrevSurface)->IsPBufferUsed())) {
 				// Restore device states
 				RestoreDeviceStates();
 			}
@@ -2243,10 +2375,10 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
 	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
 		// Same texture buffer format?
-		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = (PLRenderer::SurfaceTextureBuffer*)pSurface;
+		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
 		if (pTextureBuffer && pTextureBuffer->GetFormat() == pSurfaceTextureBuffer->GetFormat()) {
 			// Setup
-			((SurfaceTextureBuffer*)m_cCurrentSurface.GetSurface())->SetColorRenderTarget(nColorIndex, pTextureBuffer);
+			static_cast<SurfaceTextureBuffer*>(m_cCurrentSurface.GetSurface())->SetColorRenderTarget(nColorIndex, pTextureBuffer);
 
 			// Done
 			return true;
@@ -2262,7 +2394,7 @@ bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 	// In case the current surface is a texture, we need to 'finish' the current rendering process
 	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
 	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer)
-		((SurfaceTextureBuffer*)pSurface)->Finish();
+		static_cast<SurfaceTextureBuffer*>(pSurface)->Finish();
 
 	// Get viewport data
 	GLint nViewPort[4];
@@ -2292,10 +2424,12 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 			SetTextureBuffer(i, pTextureBuffer);
 	} else {
 		// Check if the stage is correct
-		if (nStage >= (signed)m_sCapabilities.nMaxTextureUnits) return false; // Error!
+		if (nStage >= static_cast<int>(m_sCapabilities.nMaxTextureUnits))
+			return false; // Error!
 
 		// Is this texture buffer already set?
-		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer) return false; // Error!
+		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer)
+			return false; // Error!
 
 		// Make this texture buffer to the renderers current one
 		PLRenderer::TextureBuffer *pPreviousTextureBuffer = m_ppCurrentTextureBuffer[nStage];
@@ -2306,23 +2440,23 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 			uint32 *pnSamplerState = nullptr;
 			switch (pPreviousTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
-					pnSamplerState = &((TextureBuffer1D*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer1D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
-					pnSamplerState = &((TextureBuffer2D*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer2D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
-					pnSamplerState = &((TextureBufferRectangle*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBufferRectangle*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
-					pnSamplerState = &((TextureBuffer3D*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer3D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
-					pnSamplerState = &((TextureBufferCube*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBufferCube*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 			}
 
@@ -2391,7 +2525,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glDisable(GL_TEXTURE_RECTANGLE_EXT);
 						glDisable(GL_TEXTURE_3D_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-						pnSamplerState = &((TextureBuffer1D*)pTextureBuffer)->m_nSamplerState[0];
+						pnSamplerState = &static_cast<TextureBuffer1D*>(pTextureBuffer)->m_nSamplerState[0];
 						break;
 
 					case PLRenderer::Resource::TypeTextureBuffer2D:
@@ -2400,7 +2534,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glDisable(GL_TEXTURE_RECTANGLE_EXT);
 						glDisable(GL_TEXTURE_3D_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-						pnSamplerState = &((TextureBuffer2D*)pTextureBuffer)->m_nSamplerState[0];
+						pnSamplerState = &static_cast<TextureBuffer2D*>(pTextureBuffer)->m_nSamplerState[0];
 						break;
 
 					case PLRenderer::Resource::TypeTextureBufferRectangle:
@@ -2409,7 +2543,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glDisable(GL_TEXTURE_2D);
 						glDisable(GL_TEXTURE_3D_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-						pnSamplerState = &((TextureBufferRectangle*)pTextureBuffer)->m_nSamplerState[0];
+						pnSamplerState = &static_cast<TextureBufferRectangle*>(pTextureBuffer)->m_nSamplerState[0];
 						break;
 
 					case PLRenderer::Resource::TypeTextureBuffer3D:
@@ -2418,7 +2552,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glDisable(GL_TEXTURE_2D);
 						glDisable(GL_TEXTURE_RECTANGLE_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-						pnSamplerState = &((TextureBuffer3D*)pTextureBuffer)->m_nSamplerState[0];
+						pnSamplerState = &static_cast<TextureBuffer3D*>(pTextureBuffer)->m_nSamplerState[0];
 						break;
 
 					case PLRenderer::Resource::TypeTextureBufferCube:
@@ -2427,7 +2561,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glDisable(GL_TEXTURE_2D);
 						glDisable(GL_TEXTURE_RECTANGLE_EXT);
 						glDisable(GL_TEXTURE_3D_EXT);
-						pnSamplerState = &((TextureBufferCube*)pTextureBuffer)->m_nSamplerState[0];
+						pnSamplerState = &static_cast<TextureBufferCube*>(pTextureBuffer)->m_nSamplerState[0];
 						break;
 				}
 
@@ -2441,7 +2575,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 							m_ppnInternalSamplerState[nStage][i]++;
 
 							// Reset the state
-							SetSamplerState(nStage, (PLRenderer::Sampler::Enum)i, m_ppnSamplerState[nStage][i]);
+							SetSamplerState(nStage, static_cast<PLRenderer::Sampler::Enum>(i), m_ppnSamplerState[nStage][i]);
 						}
 					}
 				}
@@ -2454,7 +2588,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						m_pFixedFunctions->m_ppnInternalTextureStageState[nStage][i]++;
 
 						// Reset the state
-						m_pFixedFunctions->SetTextureStageState(nStage, (FixedFunctions::TextureStage::Enum)i, m_pFixedFunctions->m_ppnTextureStageState[nStage][i]);
+						m_pFixedFunctions->SetTextureStageState(nStage, static_cast<FixedFunctions::TextureStage::Enum>(i), m_pFixedFunctions->m_ppnTextureStageState[nStage][i]);
 					}
 				}
 			}
@@ -2494,10 +2628,12 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 			SetTextureBuffer(i, pTextureBuffer);
 	} else {
 		// Check if the stage is correct
-		if (nStage >= (signed)m_sCapabilities.nMaxTextureUnits) return false; // Error!
+		if (nStage >= static_cast<int>(m_sCapabilities.nMaxTextureUnits))
+			return false; // Error!
 
 		// Is this texture buffer already set?
-		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer) return false; // Error!
+		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer)
+			return false; // Error!
 
 		// Make this texture buffer to the renderers current one
 		PLRenderer::TextureBuffer *pPreviousTextureBuffer = m_ppCurrentTextureBuffer[nStage];
@@ -2508,23 +2644,23 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 			uint32 *pnSamplerState = nullptr;
 			switch (pPreviousTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
-					pnSamplerState = &((TextureBuffer1D*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer1D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
-					pnSamplerState = &((TextureBuffer2D*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer2D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
-					pnSamplerState = &((TextureBufferRectangle*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBufferRectangle*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
-					pnSamplerState = &((TextureBuffer3D*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer3D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
-					pnSamplerState = &((TextureBufferCube*)pPreviousTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBufferCube*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 			}
 
@@ -2554,7 +2690,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					glDisable(GL_TEXTURE_RECTANGLE_EXT);
 					glDisable(GL_TEXTURE_3D_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-					pnSamplerState = &((TextureBuffer1D*)pTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer1D*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
@@ -2563,7 +2699,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					glDisable(GL_TEXTURE_RECTANGLE_EXT);
 					glDisable(GL_TEXTURE_3D_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-					pnSamplerState = &((TextureBuffer2D*)pTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer2D*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
@@ -2572,7 +2708,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					glDisable(GL_TEXTURE_2D);
 					glDisable(GL_TEXTURE_3D_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-					pnSamplerState = &((TextureBufferRectangle*)pTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBufferRectangle*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
@@ -2581,7 +2717,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					glDisable(GL_TEXTURE_2D);
 					glDisable(GL_TEXTURE_RECTANGLE_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-					pnSamplerState = &((TextureBuffer3D*)pTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBuffer3D*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
@@ -2590,7 +2726,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					glDisable(GL_TEXTURE_2D);
 					glDisable(GL_TEXTURE_RECTANGLE_EXT);
 					glDisable(GL_TEXTURE_3D_EXT);
-					pnSamplerState = &((TextureBufferCube*)pTextureBuffer)->m_nSamplerState[0];
+					pnSamplerState = &static_cast<TextureBufferCube*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
 			}
 
@@ -2604,7 +2740,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 						m_ppnInternalSamplerState[nStage][i]++;
 
 						// Reset the state
-						SetSamplerState(nStage, (PLRenderer::Sampler::Enum)i, m_ppnSamplerState[nStage][i]);
+						SetSamplerState(nStage, static_cast<PLRenderer::Sampler::Enum>(i), m_ppnSamplerState[nStage][i]);
 					}
 				}
 			}
@@ -2617,7 +2753,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					m_pFixedFunctions->m_ppnInternalTextureStageState[nStage][i]++;
 
 					// Reset the state
-					m_pFixedFunctions->SetTextureStageState(nStage, (FixedFunctions::TextureStage::Enum)i, m_pFixedFunctions->m_ppnTextureStageState[nStage][i]);
+					m_pFixedFunctions->SetTextureStageState(nStage, static_cast<FixedFunctions::TextureStage::Enum>(i), m_pFixedFunctions->m_ppnTextureStageState[nStage][i]);
 				}
 			}
 		} else {
@@ -2649,7 +2785,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 	// Should an index buffer be set?
 	if (pIndexBuffer) {
 		// Yes, make it current
-		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
+		if (!static_cast<IndexBuffer*>(pIndexBuffer)->MakeCurrent()) {
 			// Now, no index buffer is set...
 			m_pCurrentIndexBuffer = nullptr;
 			if (IsGL_ARB_vertex_buffer_object())
@@ -2671,11 +2807,11 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 {
 	// Is the new program the same one as the current one?
-	PLRenderer::Program *pCurrentProgram = (PLRenderer::Program*)m_cProgramHandler.GetResource();
+	PLRenderer::Program *pCurrentProgram = static_cast<PLRenderer::Program*>(m_cProgramHandler.GetResource());
 	if (pCurrentProgram != pProgram) {
 		// Was there a previous program?
 		if (pCurrentProgram) {
-			((Program*)pCurrentProgram)->UnmakeCurrent();
+			static_cast<Program*>(pCurrentProgram)->UnmakeCurrent();
 
 			// [HACK] When using GLSL as Cg profile we need to use 'glUseProgramObjectARB()' to deactivate shaders
 			glUseProgramObjectARB(0);
@@ -2686,7 +2822,7 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 
 		// Make the new program to the current one
 		if (pProgram)
-			return ((Program*)pProgram)->MakeCurrent();
+			return static_cast<Program*>(pProgram)->MakeCurrent();
 	}
 
 	// Done
@@ -2774,7 +2910,7 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 		return false; // Definitely NOT good...
 
 	// Define an offset helper macro just used inside this function
-	#define BUFFER_OFFSET(i) ((char*)((IndexBuffer*)m_pCurrentIndexBuffer)->GetDynamicData()+(i))
+	#define BUFFER_OFFSET(i) (static_cast<char*>(static_cast<IndexBuffer*>(m_pCurrentIndexBuffer)->GetDynamicData())+i)
 
 	// Get API dependent type
 	uint32 nTypeSize;
@@ -2821,8 +2957,8 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 			// On my old GeForce4 Ti 4200: max elements vertices = 4096 and max elements indices = 4096
 			// ... on my Radion 9600 Mobile the extension can handle much more vertices (2147483647) and indices (65535)
 			// ... we check for this to avoid problems...
-			if (IsGL_EXT_draw_range_elements() && nNumVertices < (uint32)GetGL_MAX_ELEMENTS_INDICES_EXT() &&
-				nMaxIndex < (uint32)GetGL_MAX_ELEMENTS_VERTICES_EXT()) {
+			if (IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
+				nMaxIndex < static_cast<uint32>(GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
 				// Draw primitive
 				glDrawRangeElementsEXT(nAPIValue, nMinIndex, nMaxIndex, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
 			} else {
@@ -2843,8 +2979,8 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 			// On my old GeForce4 Ti 4200: max elements vertices = 4096 and max elements indices = 4096
 			// ... on my Radion 9600 Mobile the extension can handle much more vertices (2147483647) and indices (65535)
 			// ... we check for this to avoid problems...
-			if (IsGL_EXT_draw_range_elements() && nNumVertices < (uint32)GetGL_MAX_ELEMENTS_INDICES_EXT() &&
-				nMaxIndex < (uint32)GetGL_MAX_ELEMENTS_VERTICES_EXT()) {
+			if (IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
+				nMaxIndex < static_cast<uint32>(GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
 				// Draw primitive
 				glDrawRangeElementsEXT(nAPIValue, nMinIndex, nMaxIndex, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
 			} else {

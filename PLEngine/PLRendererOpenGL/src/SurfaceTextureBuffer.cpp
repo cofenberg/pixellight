@@ -102,9 +102,9 @@ void SurfaceTextureBuffer::SetColorRenderTarget(uint8 nColorIndex, PLRenderer::T
 										   GL_COLOR_ATTACHMENT4_EXT, GL_COLOR_ATTACHMENT5_EXT, GL_COLOR_ATTACHMENT6_EXT, GL_COLOR_ATTACHMENT7_EXT,
 										   GL_COLOR_ATTACHMENT8_EXT, GL_COLOR_ATTACHMENT9_EXT, GL_COLOR_ATTACHMENT10_EXT, GL_COLOR_ATTACHMENT11_EXT,
 										   GL_COLOR_ATTACHMENT12_EXT, GL_COLOR_ATTACHMENT13_EXT, GL_COLOR_ATTACHMENT14_EXT, GL_COLOR_ATTACHMENT15_EXT};
-			if (((Renderer&)GetRenderer()).IsGL_ARB_draw_buffers())
+			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
 				glDrawBuffersARB(m_nMaxColorTargets, db);
-			else if (((Renderer&)GetRenderer()).IsGL_ATI_draw_buffers())
+			else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
 				glDrawBuffersATI(m_nMaxColorTargets, db);
 		}
 	}
@@ -149,33 +149,33 @@ SurfaceTextureBuffer::SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRe
 bool SurfaceTextureBuffer::CreateFBO()
 {
 	// Get renderer
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
 	// FBO supported?
 	if (cRenderer.IsGL_EXT_framebuffer_object()) {
 		// Get the depending of the texture buffer type
-		PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+		PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 		if (pTextureBuffer) {
 			// Get size
 			Vector2i vSize(-1, -1);
 			switch (pTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer2D:
 				{
-					PLRenderer::TextureBuffer2D *pTextureBuffer2D = (PLRenderer::TextureBuffer2D*)pTextureBuffer;
+					PLRenderer::TextureBuffer2D *pTextureBuffer2D = static_cast<PLRenderer::TextureBuffer2D*>(pTextureBuffer);
 					vSize = pTextureBuffer2D->GetSize();
 					break;
 				}
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
 				{
-					PLRenderer::TextureBufferRectangle *pTextureBufferRectangle = (PLRenderer::TextureBufferRectangle*)pTextureBuffer;
+					PLRenderer::TextureBufferRectangle *pTextureBufferRectangle = static_cast<PLRenderer::TextureBufferRectangle*>(pTextureBuffer);
 					vSize = pTextureBufferRectangle->GetSize();
 					break;
 				}
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
 				{
-					PLRenderer::TextureBufferCube *pTextureBufferCube = (PLRenderer::TextureBufferCube*)pTextureBuffer;
+					PLRenderer::TextureBufferCube *pTextureBufferCube = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer);
 					const uint32 nSize = pTextureBufferCube->GetSize();
 					vSize.x = vSize.y = nSize;
 					break;
@@ -217,31 +217,31 @@ bool SurfaceTextureBuffer::CreateFBO()
 bool SurfaceTextureBuffer::CreatePBuffer()
 {
 	// Get renderer and check whether PBuffer is support
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (cRenderer.IsWGL_ARB_pbuffer()) {
 		// Get the depending of the texture buffer type
-		PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+		PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 		if (pTextureBuffer) {
 			// Get size
 			Vector2i vSize(-1, -1);
 			switch (pTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer2D:
 				{
-					PLRenderer::TextureBuffer2D *pTextureBuffer2D = (PLRenderer::TextureBuffer2D*)pTextureBuffer;
+					PLRenderer::TextureBuffer2D *pTextureBuffer2D = static_cast<PLRenderer::TextureBuffer2D*>(pTextureBuffer);
 					vSize = pTextureBuffer2D->GetSize();
 					break;
 				}
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
 				{
-					PLRenderer::TextureBufferRectangle *pTextureBufferRectangle = (PLRenderer::TextureBufferRectangle*)pTextureBuffer;
+					PLRenderer::TextureBufferRectangle *pTextureBufferRectangle = static_cast<PLRenderer::TextureBufferRectangle*>(pTextureBuffer);
 					vSize = pTextureBufferRectangle->GetSize();
 					break;
 				}
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
 				{
-					PLRenderer::TextureBufferCube *pTextureBufferCube = (PLRenderer::TextureBufferCube*)pTextureBuffer;
+					PLRenderer::TextureBufferCube *pTextureBufferCube = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer);
 					const uint32 nSize = pTextureBufferCube->GetSize();
 					vSize.x = vSize.y = nSize;
 					break;
@@ -276,29 +276,21 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 						break;
 
 					case PLRenderer::TextureBuffer::L16F:
-						if (cRenderer.IsWGL_ATI_pixel_format_float())
-							sColor = "r ati_float=16";
-						else sColor = "r float=16";
+						sColor = cRenderer.IsWGL_ATI_pixel_format_float() ? "r ati_float=16" : "r float=16";
 						break;
 
 					case PLRenderer::TextureBuffer::L32F:
-						if (cRenderer.IsWGL_ATI_pixel_format_float())
-							sColor = "r ati_float=32";
-						else sColor = "r float=32";
+						sColor = cRenderer.IsWGL_ATI_pixel_format_float() ? "r ati_float=32" : "r float=32";
 						break;
 
 					case PLRenderer::TextureBuffer::R16G16B16A16F:
-						if (cRenderer.IsWGL_ATI_pixel_format_float())
-							sColor = "rgba ati_float=16";
-						else sColor = "rgba float=16";
+						sColor = cRenderer.IsWGL_ATI_pixel_format_float() ? "rgba ati_float=16" : "rgba float=16";
 						break;
 
 					case PLRenderer::TextureBuffer::R32G32B32A32F:
-						if (cRenderer.IsWGL_ATI_pixel_format_float())
-							sColor = "rgba ati_float=32";
-						else sColor = "rgba float=32";
+						sColor = cRenderer.IsWGL_ATI_pixel_format_float() ? "rgba ati_float=32" : "rgba float=32";
 						break;
-				};
+				}
 				if (sColor.GetLength()) {
 					// Get texture buffer type as string
 					String sType;
@@ -333,7 +325,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 						cRenderer.MakeTextureBufferCurrent(*pTextureBuffer, 0);
 
 						// First: TRY ALL!! :)
-						m_pPBuffer = new PBuffer(sColor + " " + sType + " " + sAuxiliaryBuffers, true);
+						m_pPBuffer = new PBuffer(sColor + ' ' + sType + ' ' + sAuxiliaryBuffers, true);
 						if (m_pPBuffer) {
 							if (m_pPBuffer->Initialize(vSize.x, vSize.y, false, true))
 								return true; // Done
@@ -342,7 +334,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 							delete m_pPBuffer;
 
 							// Second: Ignore type
-							m_pPBuffer = new PBuffer(sColor + " " + sAuxiliaryBuffers, true);
+							m_pPBuffer = new PBuffer(sColor + ' ' + sAuxiliaryBuffers, true);
 							if (m_pPBuffer) {
 								if (m_pPBuffer->Initialize(vSize.x, vSize.y, false, true))
 									return true; // Done
@@ -368,7 +360,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 //[-------------------------------------------------------]
 PLRenderer::TextureBuffer *SurfaceTextureBuffer::GetTextureBuffer() const
 {
-	return (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+	return static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 }
 
 uint8 SurfaceTextureBuffer::GetTextureBufferFace() const
@@ -379,7 +371,7 @@ uint8 SurfaceTextureBuffer::GetTextureBufferFace() const
 void SurfaceTextureBuffer::TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::SurfaceTextureBuffer &cSurfaceTextureBuffer)
 {
 	// Cast to OpenGL implementation
-	SurfaceTextureBuffer &cSurfaceTextureBufferOpenGL = (SurfaceTextureBuffer&)cSurfaceTextureBuffer;
+	SurfaceTextureBuffer &cSurfaceTextureBufferOpenGL = static_cast<SurfaceTextureBuffer&>(cSurfaceTextureBuffer);
 
 	// Both must use FBO
 	if (m_pFrameBufferObject && cSurfaceTextureBufferOpenGL.m_pFrameBufferObject)
@@ -393,18 +385,18 @@ void SurfaceTextureBuffer::TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::S
 Vector2i SurfaceTextureBuffer::GetSize() const
 {
 	// Return the size depending of the texture buffer type
-	PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+	PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 	if (pTextureBuffer) {
 		switch (pTextureBuffer->GetType()) {
 			case PLRenderer::Resource::TypeTextureBuffer2D:
-				return ((PLRenderer::TextureBuffer2D*)pTextureBuffer)->GetSize();
+				return static_cast<PLRenderer::TextureBuffer2D*>(pTextureBuffer)->GetSize();
 
 			case PLRenderer::Resource::TypeTextureBufferRectangle:
-				return ((PLRenderer::TextureBufferRectangle*)pTextureBuffer)->GetSize();
+				return static_cast<PLRenderer::TextureBufferRectangle*>(pTextureBuffer)->GetSize();
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
 			{
-				const uint32 nSize = ((PLRenderer::TextureBufferCube*)pTextureBuffer)->GetSize();
+				const uint32 nSize = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer)->GetSize();
 				return Vector2i(nSize, nSize);
 			}
 		}
@@ -427,8 +419,10 @@ bool SurfaceTextureBuffer::Init()
 	if (!CreateFBO()) {
 		// Ok, we can't use FBO, try if we can used an ugly PBuffer... :(
 		// [TODO] At the moment, MRT will cause a COMPLETE (!) system hang for me, so do NOT use it for sure
-		if (m_nMaxColorTargets > 1) return false; // Error!
-		else						return CreatePBuffer();
+		if (m_nMaxColorTargets > 1)
+			return false; // Error!
+		else
+			return CreatePBuffer();
 	}
 
 	// Done
@@ -438,7 +432,7 @@ bool SurfaceTextureBuffer::Init()
 void SurfaceTextureBuffer::DeInit()
 {
 	// If this is the current render target, make the main window to the new current one
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (cRenderer.GetRenderTarget() == this)
 		cRenderer.SetRenderTarget(nullptr);
 
@@ -483,7 +477,8 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 		// Set target face
 		if (GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube)
 			m_nFace = nFace;
-		else m_nFace = 0;
+		else
+			m_nFace = 0;
 
 		// Cleanup texture buffer handlers
 		for (uint32 i=0; i<m_lstTextureBufferHandler.GetNumOfElements(); i++)
@@ -497,7 +492,7 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 
 		// Frame buffer object used?
 		if (m_pFrameBufferObject && m_cTextureBufferHandler.GetResource()) {
-			m_pFrameBufferObject->SwitchTarget((PLRenderer::TextureBuffer&)*m_cTextureBufferHandler.GetResource(), 0, nFace);
+			m_pFrameBufferObject->SwitchTarget(static_cast<PLRenderer::TextureBuffer&>(*m_cTextureBufferHandler.GetResource()), 0, nFace);
 			m_pFrameBufferObject->Bind();
 
 			// Need rendering to depth only
@@ -509,9 +504,9 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 				// Set draw buffers
 				GLuint db[4] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT,
 								 GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT };
-				if (((Renderer&)GetRenderer()).IsGL_ARB_draw_buffers())
+				if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
 					glDrawBuffersARB(m_nMaxColorTargets, db);
-				else if (((Renderer&)GetRenderer()).IsGL_ATI_draw_buffers())
+				else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
 					glDrawBuffersATI(m_nMaxColorTargets, db);
 			}
 
@@ -536,9 +531,9 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 			m_pPBuffer->Activate();
 
 			// Set draw buffers
-			if (((Renderer&)GetRenderer()).IsGL_ARB_draw_buffers())
+			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
 				glDrawBuffersARB(m_nMaxColorTargets, nDrawBuffers);
-			else if (((Renderer&)GetRenderer()).IsGL_ATI_draw_buffers())
+			else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
 				glDrawBuffersATI(m_nMaxColorTargets, nDrawBuffers);
 
 		// Else...
@@ -560,8 +555,9 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 bool SurfaceTextureBuffer::UnmakeCurrent()
 {
 	// Check whether the data is valid
-	if (!m_cTextureBufferHandler.GetResource()) return false; // Error!
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	if (!m_cTextureBufferHandler.GetResource())
+		return false; // Error!
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
 	// Frame buffer object used?
 	if (m_pFrameBufferObject) {
@@ -570,11 +566,19 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 		// Try to build mipmaps automatically on the GPU?
 		if (GetFlags() & Mipmaps) {
 			PLRenderer::TextureBuffer *pTextureBuffer = cRenderer.GetTextureBuffer(0);
-			cRenderer.SetTextureBuffer(0, (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource());
+			cRenderer.SetTextureBuffer(0, static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource()));
 			switch (m_cTextureBufferHandler.GetResource()->GetType()) {
-				case PLRenderer::Resource::TypeTextureBuffer2D:		   glGenerateMipmapEXT(GL_TEXTURE_2D);				break;
-//				case PLRenderer::Resource::TypeTextureBufferRectangle: glGenerateMipmapEXT(GL_TEXTURE_RECTANGLE_EXT);	break; // Not supported...
-				case PLRenderer::Resource::TypeTextureBufferCube:	   glGenerateMipmapEXT(GL_TEXTURE_CUBE_MAP_ARB);	break;
+				case PLRenderer::Resource::TypeTextureBuffer2D:
+					glGenerateMipmapEXT(GL_TEXTURE_2D);
+					break;
+
+//				case PLRenderer::Resource::TypeTextureBufferRectangle:
+//					glGenerateMipmapEXT(GL_TEXTURE_RECTANGLE_EXT);
+//					break; // Not supported...
+
+				case PLRenderer::Resource::TypeTextureBufferCube:
+					glGenerateMipmapEXT(GL_TEXTURE_CUBE_MAP_ARB);
+					break;
 			}
 			cRenderer.SetTextureBuffer(0, pTextureBuffer);
 		}
@@ -600,7 +604,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 
 				// Bind texture buffers
 				for (uint32 i=0; i<m_lstTextureBufferHandler.GetNumOfElements(); i++) {
-					PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_lstTextureBufferHandler[i]->GetResource();
+					PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_lstTextureBufferHandler[i]->GetResource());
 					if (pTextureBuffer) {
 						cRenderer.MakeTextureBufferCurrent(*pTextureBuffer, 0);
 						m_pPBuffer->Bind(nDrawBuffersARB[i], m_nFace);
@@ -611,7 +615,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 		{ // Copy to texture buffer using glCopyTexSubImage2D()
 			// Copy texture buffers
 			for (uint32 i=0; i<m_lstTextureBufferHandler.GetNumOfElements(); i++) {
-				PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_lstTextureBufferHandler[i]->GetResource();
+				PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_lstTextureBufferHandler[i]->GetResource());
 				if (pTextureBuffer) {
 					glDrawBuffer(nDrawBuffers[i]);
 					cRenderer.MakeTextureBufferCurrent(*pTextureBuffer, 0);
@@ -642,7 +646,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 
 	// Do only use glCopyTexSubImage2D()
 	} else if (m_lstTextureBufferHandler.GetNumOfElements()) {
-		PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_lstTextureBufferHandler[0]->GetResource();
+		PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_lstTextureBufferHandler[0]->GetResource());
 		if (pTextureBuffer) {
 			cRenderer.MakeTextureBufferCurrent(*pTextureBuffer, 0);
 			switch (pTextureBuffer->GetType()) {

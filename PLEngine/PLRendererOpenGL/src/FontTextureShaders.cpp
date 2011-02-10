@@ -67,7 +67,7 @@ void FontTextureShaders::Draw(const String &sText, const Color4 &cColor, const M
 	if (m_nOpenGLGlyphTextureAtlas) {
 		// Get and set the program for font rendering
 		FontManager::GeneratedProgramUserData *pGeneratedProgramUserData = nullptr;
-		PLRenderer::Program *pProgram = ((FontManager*)m_pFontManager)->GetProgram(&pGeneratedProgramUserData);
+		PLRenderer::Program *pProgram = static_cast<FontManager*>(m_pFontManager)->GetProgram(&pGeneratedProgramUserData);
 		if (pProgram && pGeneratedProgramUserData && pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix &&
 			pGeneratedProgramUserData->pGlyphMap && pGeneratedProgramUserData->pColor && pGeneratedProgramUserData->pGlyphSizePenPosition &&
 			pGeneratedProgramUserData->pTextureCoordinateMinMax && m_pFontManager->GetRenderer().SetProgram(pProgram)) {
@@ -75,7 +75,7 @@ void FontTextureShaders::Draw(const String &sText, const Color4 &cColor, const M
 			pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(mObjectSpaceToClipSpace);
 
 			// Set glyph texture atlas
-			((ProgramUniform*)pGeneratedProgramUserData->pGlyphMap)->Set(GL_TEXTURE_2D, m_nOpenGLGlyphTextureAtlas);
+			static_cast<ProgramUniform*>(pGeneratedProgramUserData->pGlyphMap)->Set(GL_TEXTURE_2D, m_nOpenGLGlyphTextureAtlas);
 
 			// Enable/disable mipmapping
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (nFlags & Mipmapping) ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR);
@@ -94,19 +94,19 @@ void FontTextureShaders::Draw(const String &sText, const Color4 &cColor, const M
 				vPenPosition.x -= GetTextWidth(sText)/2;
 
 			// Get the renderer instance
-			Renderer &cRenderer = (Renderer&)GetFontManager().GetRenderer();
+			Renderer &cRenderer = static_cast<Renderer&>(GetFontManager().GetRenderer());
 
 			// Iterate through all characters of the text to draw
 			for (uint32 i=0; i<sText.GetLength(); i++, pszText++) {
 				// Get the character code
-				const unsigned char nCharacterCode = (unsigned char)*pszText;
+				const unsigned char nCharacterCode = static_cast<unsigned char>(*pszText);
 
 				// Get the glyph instance of the character to draw
-				FontGlyphTexture *pFontGlyphTexture = (FontGlyphTexture*)m_lstGlyphs[nCharacterCode];
+				FontGlyphTexture *pFontGlyphTexture = static_cast<FontGlyphTexture*>(m_lstGlyphs[nCharacterCode]);
 				if (pFontGlyphTexture) {
 					// Set glyph size and pen position
-					pGeneratedProgramUserData->pGlyphSizePenPosition->Set(float(pFontGlyphTexture->GetSize().x)*vScale.x,					// Object space glyph x size in points   (x) => x scale
-																		  float(pFontGlyphTexture->GetSize().y)*vScale.y,					// Object space glyph y size in points   (y) => y scale
+					pGeneratedProgramUserData->pGlyphSizePenPosition->Set(static_cast<float>(pFontGlyphTexture->GetSize().x)*vScale.x,		// Object space glyph x size in points   (x) => x scale
+																		  static_cast<float>(pFontGlyphTexture->GetSize().y)*vScale.y,		// Object space glyph y size in points   (y) => y scale
 																		  (vPenPosition.x + pFontGlyphTexture->GetCorner().x)*vScale.x,		// Object space pen x position in points (z) => x bias
 																		  (vPenPosition.y + pFontGlyphTexture->GetCorner().y)*vScale.y);	// Object space pen y position in points (w) => y bias
 

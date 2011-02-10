@@ -47,7 +47,7 @@ namespace PLRendererNull {
 TextureBuffer1D::~TextureBuffer1D()
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
 }
 
 
@@ -62,7 +62,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 	PLRenderer::TextureBuffer1D(cRenderer, nFlags)
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nTextureBuffersNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nTextureBuffersNum++;
 
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();

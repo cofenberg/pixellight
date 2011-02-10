@@ -91,7 +91,7 @@ Vector2i SurfaceWindow::GetSize() const
 	if (GetWindow()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect((HWND)GetWindow(), &sRect);
+			GetClientRect(static_cast<HWND>(GetWindow()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		#ifdef LINUX
@@ -100,7 +100,7 @@ Vector2i SurfaceWindow::GetSize() const
 			unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
 
 			// Get the Linux context implementation
-			ContextLinux *pContextLinux = (ContextLinux*)((Renderer&)GetRenderer()).GetContext();
+			ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 			if (pContextLinux) {
 				// Get the X server display connection
 				Display *pDisplay = pContextLinux->GetDisplay();

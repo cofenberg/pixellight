@@ -64,11 +64,11 @@ FixedFunctions::FixedFunctions(Renderer &cRendererOpenGL) :
 
 		// Maximum number of active lights
 		glGetIntegerv(GL_MAX_LIGHTS, &nGLTemp);
-		m_sCapabilities.nMaxActiveLights = (uint8)nGLTemp;
+		m_sCapabilities.nMaxActiveLights = static_cast<uint8>(nGLTemp);
 
 		// Maximum number of clip planes
 		glGetIntegerv(GL_MAX_CLIP_PLANES, &nGLTemp);
-		m_sCapabilities.nMaxClipPlanes = (uint8)nGLTemp;
+		m_sCapabilities.nMaxClipPlanes = static_cast<uint8>(nGLTemp);
 
 		// Vertex buffer fog coordinates supported?
 		m_sCapabilities.bVertexBufferFogCoord = (m_pRendererOpenGL->IsGL_ARB_vertex_program() || m_pRendererOpenGL->IsGL_EXT_fog_coord());
@@ -263,9 +263,9 @@ void FixedFunctions::RestoreDeviceStates()
 	m_mWorld = Matrix4x4::Zero;
 	SetTransformState(Transform::World, mTrans);
 	for (uint32 i=3; i<Transform::Number; i++) {
-		mTrans = GetTransformState((Transform::Enum)i);
+		mTrans = GetTransformState(static_cast<Transform::Enum>(i));
 		m_mTextureMatrix[i - 3] = Matrix4x4::Zero;
-		SetTransformState((Transform::Enum)i, mTrans);
+		SetTransformState(static_cast<Transform::Enum>(i), mTrans);
 	}
 
 	// Texture stage states
@@ -273,7 +273,7 @@ void FixedFunctions::RestoreDeviceStates()
 		for (uint32 i=0; i<TextureStage::Number; i++) {
 			uint32 nState = m_ppnInternalTextureStageState[nStage][i];
 			m_ppnInternalTextureStageState[nStage][i] = m_ppnInternalTextureStageState[nStage][i] + 1;
-			SetTextureStageState(nStage, (TextureStage::Enum)i, nState);
+			SetTextureStageState(nStage, static_cast<TextureStage::Enum>(i), nState);
 		}
 	}
 
@@ -281,7 +281,7 @@ void FixedFunctions::RestoreDeviceStates()
 	for (uint32 i=0; i<MaterialState::Number; i++) {
 		uint32 nState = m_nMaterialState[i];
 		m_nMaterialState[i] = m_nMaterialState[i] + 1;
-		SetMaterialState((MaterialState::Enum)i, nState);
+		SetMaterialState(static_cast<MaterialState::Enum>(i), nState);
 	}
 
 	// Light states
@@ -378,9 +378,9 @@ void FixedFunctions::ViewMatrixUpdated()
 void FixedFunctions::UpdateCurrentOpenGLTextureMatrix(uint32 nStage)
 {
 	if (m_pRendererOpenGL->GetTextureBuffer(nStage) && m_pRendererOpenGL->GetTextureBuffer(nStage)->GetType() == PLRenderer::Resource::TypeTextureBufferRectangle) {
-		PLRenderer::TextureBufferRectangle *pTextureBuffer = (PLRenderer::TextureBufferRectangle*)m_pRendererOpenGL->GetTextureBuffer(nStage);
+		PLRenderer::TextureBufferRectangle *pTextureBuffer = static_cast<PLRenderer::TextureBufferRectangle*>(m_pRendererOpenGL->GetTextureBuffer(nStage));
 		Matrix4x4 mScale;
-		mScale.SetScaleMatrix((float)pTextureBuffer->GetSize().x, (float)pTextureBuffer->GetSize().y, 1.0f);
+		mScale.SetScaleMatrix(static_cast<float>(pTextureBuffer->GetSize().x), static_cast<float>(pTextureBuffer->GetSize().y), 1.0f);
 
 		// If automatic texture generation is reflection map, we need to apply the transpose of the
 		// view matrix in order to get the reflection looking correct. Unusual for rectangle textures,
@@ -391,7 +391,9 @@ void FixedFunctions::UpdateCurrentOpenGLTextureMatrix(uint32 nStage)
 								  m_mView.xz, m_mView.yz, m_mView.zz, 0.0f,
 								  0.0f,       0.0f,       0.0f,       1.0f);
 			m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage]*mTransposed*mScale;
-		} else m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage]*mScale;
+		} else {
+			m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage]*mScale;
+		}
 	} else {
 		// If automatic texture generation is reflection map, we need to apply the transpose of the
 		// view matrix in order to get the reflection looking correct
@@ -401,7 +403,9 @@ void FixedFunctions::UpdateCurrentOpenGLTextureMatrix(uint32 nStage)
 								  m_mView.xz, m_mView.yz, m_mView.zz, 0.0f,
 								  0.0f,       0.0f,       0.0f,       1.0f);
 			m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage]*mTransposed;
-		} else m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage];
+		} else {
+			m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage];
+		}
 	}
 
 	// Set texture matrix
@@ -419,9 +423,9 @@ void FixedFunctions::UpdateShaderOpenGLTextureMatrix(uint32 nStage)
 	// texture coordinates :)
 	if (m_pRendererOpenGL->GetTextureBuffer(nStage) &&
 		m_pRendererOpenGL->GetTextureBuffer(nStage)->GetType() == PLRenderer::Resource::TypeTextureBufferRectangle) {
-		PLRenderer::TextureBufferRectangle *pT = (PLRenderer::TextureBufferRectangle*)m_pRendererOpenGL->GetTextureBuffer(nStage);
+		PLRenderer::TextureBufferRectangle *pT = static_cast<PLRenderer::TextureBufferRectangle*>(m_pRendererOpenGL->GetTextureBuffer(nStage));
 		Matrix4x4 mScale;
-		mScale.SetScaleMatrix((float)pT->GetSize().x, (float)pT->GetSize().y, 1.0f);
+		mScale.SetScaleMatrix(static_cast<float>(pT->GetSize().x), static_cast<float>(pT->GetSize().y), 1.0f);
 		glMatrixMode(GL_TEXTURE);
 		m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage]*mScale;
 		glLoadMatrixf(m_mTextureMatrix[nStage]);
@@ -467,7 +471,7 @@ void FixedFunctions::ResetRenderStates()
 {
 	// Set renderer states to this default settings
 	for (uint32 i=0; i<RenderState::Number; i++)
-		SetRenderState((RenderState::Enum)i, m_nDefaultRenderState[i]);
+		SetRenderState(static_cast<RenderState::Enum>(i), m_nDefaultRenderState[i]);
 }
 
 int FixedFunctions::GetRenderState(RenderState::Enum nState) const
@@ -799,7 +803,7 @@ void FixedFunctions::ResetTextureStageStates()
 	// Set texture stage states to this default settings
 	for (uint32 nStage=0; nStage<m_pRendererOpenGL->GetCapabilities().nMaxTextureUnits; nStage++) {
 		for (uint32 i=0; i<TextureStage::Number; i++)
-			SetTextureStageState(nStage, (TextureStage::Enum)i, m_nDefaultTextureStageState[i]);
+			SetTextureStageState(nStage, static_cast<TextureStage::Enum>(i), m_nDefaultTextureStageState[i]);
 	}
 }
 
@@ -958,12 +962,12 @@ bool FixedFunctions::SetTextureStageState(uint32 nStage, TextureStage::Enum nSta
 		switch (nState) {
 			case TextureStage::ColorTexEnv:
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-				ConfigureTexEnv((TextureEnvironment::Enum)nValue, true);
+				ConfigureTexEnv(static_cast<TextureEnvironment::Enum>(nValue), true);
 				break;
 
 			case TextureStage::AlphaTexEnv:
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-				ConfigureTexEnv((TextureEnvironment::Enum)nValue, false);
+				ConfigureTexEnv(static_cast<TextureEnvironment::Enum>(nValue), false);
 				break;
 
 			case TextureStage::TexGen:
@@ -1040,7 +1044,7 @@ void FixedFunctions::ResetMaterialStates()
 {
 	// Set material states to this default settings
 	for (uint32 i=0; i<MaterialState::Number; i++)
-		SetMaterialState((MaterialState::Enum)i, m_nDefaultMaterialState[i]);
+		SetMaterialState(static_cast<MaterialState::Enum>(i), m_nDefaultMaterialState[i]);
 }
 
 int FixedFunctions::GetMaterialState(MaterialState::Enum nState) const
@@ -1237,7 +1241,7 @@ bool FixedFunctions::SetClipPlaneEnabled(char nIndex, bool bEnable)
 			SetClipPlaneEnabled(i, bEnable);
 	} else {
 		// Check whether the index is valid
-		if (nIndex >= (signed)m_sCapabilities.nMaxClipPlanes)
+		if (nIndex >= static_cast<int>(m_sCapabilities.nMaxClipPlanes))
 			return false; // Error!
 
 		// Enable/disable clip plane
@@ -1245,7 +1249,7 @@ bool FixedFunctions::SetClipPlaneEnabled(char nIndex, bool bEnable)
 			glEnable(GL_CLIP_PLANE0 + nIndex);
 		else
 			glDisable(GL_CLIP_PLANE0 + nIndex);
-		m_pbClipPlane[(uint32)nIndex] = bEnable;
+		m_pbClipPlane[static_cast<uint32>(nIndex)] = bEnable;
 	}
 
 	// Done
@@ -1259,10 +1263,10 @@ bool FixedFunctions::GetClipPlane(uint8 nIndex, float &fA, float &fB, float &fC,
 		return false; // Error!
 
 	// Get the clip plane
-	fA = (float)m_ppdClipPlane[nIndex][0];
-	fB = (float)m_ppdClipPlane[nIndex][1];
-	fC = (float)m_ppdClipPlane[nIndex][2];
-	fD = (float)m_ppdClipPlane[nIndex][3];
+	fA = static_cast<float>(m_ppdClipPlane[nIndex][0]);
+	fB = static_cast<float>(m_ppdClipPlane[nIndex][1]);
+	fC = static_cast<float>(m_ppdClipPlane[nIndex][2]);
+	fD = static_cast<float>(m_ppdClipPlane[nIndex][3]);
 
 	// Done
 	return true;
@@ -1276,15 +1280,15 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 			SetClipPlane(i, fA, fB, fC, fD);
 	} else {
 		// Check whether the index is valid
-		if (nIndex < 0 || nIndex >= (signed)m_sCapabilities.nMaxClipPlanes)
+		if (nIndex < 0 || nIndex >= static_cast<int>(m_sCapabilities.nMaxClipPlanes))
 			return false; // Error!
 
 		// Set the clip plane
-		m_ppdClipPlane[(uint32)nIndex][0] = fA;
-		m_ppdClipPlane[(uint32)nIndex][1] = fB;
-		m_ppdClipPlane[(uint32)nIndex][2] = fC;
-		m_ppdClipPlane[(uint32)nIndex][3] = fD;
-		glClipPlane(GL_CLIP_PLANE0 + nIndex, m_ppdClipPlane[(uint32)nIndex]);
+		m_ppdClipPlane[static_cast<uint32>(nIndex)][0] = fA;
+		m_ppdClipPlane[static_cast<uint32>(nIndex)][1] = fB;
+		m_ppdClipPlane[static_cast<uint32>(nIndex)][2] = fC;
+		m_ppdClipPlane[static_cast<uint32>(nIndex)][3] = fD;
+		glClipPlane(GL_CLIP_PLANE0 + nIndex, m_ppdClipPlane[static_cast<uint32>(nIndex)]);
 	}
 
 	// Done
@@ -1350,7 +1354,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 
 	// Should an vertex buffer be set?
 	if (pVertexBuffer) {
-		VertexBuffer *pVertexBufferOpenGL = (VertexBuffer*)pVertexBuffer;
+		VertexBuffer *pVertexBufferOpenGL = static_cast<VertexBuffer*>(pVertexBuffer);
 
 		// Bind and update the vertex buffer if required
 		pVertexBufferOpenGL->BindAndUpdate();
@@ -1361,7 +1365,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 		const uint8 *pData		  = pVertexBufferOpenGL->GetOpenGLVertexBuffer() ? nullptr : pVertexBufferOpenGL->GetDynamicBuffer();
 
 		// Define an offset helper macro just used inside this function
-		#define BUFFER_OFFSET(i) ((char*)pData+(i+nBytesOffset))
+		#define BUFFER_OFFSET(i) (reinterpret_cast<const char*>(pData)+(i+nBytesOffset))
 
 		// Set vertex elements
 		for (uint32 i=0; i<pVertexBufferOpenGL->GetNumOfVertexAttributes(); i++) {

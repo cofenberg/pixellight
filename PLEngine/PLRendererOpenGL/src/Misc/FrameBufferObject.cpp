@@ -168,8 +168,12 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 
 			// Done
 			return bResult;
-		} else PL_LOG(Error, "Width and height of FBO must be none zero!")
-	} else PL_LOG(Error, "GL_EXT_framebuffer_object not supported!")
+		} else {
+			PL_LOG(Error, "Width and height of FBO must be none zero!")
+		}
+	} else {
+		PL_LOG(Error, "GL_EXT_framebuffer_object not supported!")
+	}
 
 	// Error!
 	return false;
@@ -189,27 +193,27 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 		switch (cTextureBuffer.GetType()) {
 			case PLRenderer::Resource::TypeTextureBuffer1D:
 				nTarget = GL_TEXTURE_1D;
-				nOpenGLID = ((TextureBuffer1D&)cTextureBuffer).GetOpenGLTexture();
+				nOpenGLID = static_cast<TextureBuffer1D&>(cTextureBuffer).GetOpenGLTexture();
 				break;
 
 			case PLRenderer::Resource::TypeTextureBuffer2D:
 				nTarget = GL_TEXTURE_2D;
-				nOpenGLID = ((TextureBuffer2D&)cTextureBuffer).GetOpenGLTexture();
+				nOpenGLID = static_cast<TextureBuffer2D&>(cTextureBuffer).GetOpenGLTexture();
 				break;
 
 			case PLRenderer::Resource::TypeTextureBufferRectangle:
 				nTarget = GL_TEXTURE_RECTANGLE_EXT;
-				nOpenGLID = ((TextureBufferRectangle&)cTextureBuffer).GetOpenGLTexture();
+				nOpenGLID = static_cast<TextureBufferRectangle&>(cTextureBuffer).GetOpenGLTexture();
 				break;
 
 			case PLRenderer::Resource::TypeTextureBuffer3D:
 				nTarget = GL_TEXTURE_3D_EXT;
-				nOpenGLID = ((TextureBuffer3D&)cTextureBuffer).GetOpenGLTexture();
+				nOpenGLID = static_cast<TextureBuffer3D&>(cTextureBuffer).GetOpenGLTexture();
 				break;
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
 				nTarget = GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace;
-				nOpenGLID = ((TextureBufferCube&)cTextureBuffer).GetOpenGLTexture();
+				nOpenGLID = static_cast<TextureBufferCube&>(cTextureBuffer).GetOpenGLTexture();
 				break;
 		}
 		if (nTarget >= 0 && nOpenGLID) {

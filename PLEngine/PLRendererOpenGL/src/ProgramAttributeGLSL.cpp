@@ -68,10 +68,10 @@ bool ProgramAttributeGLSL::Set(PLRenderer::VertexBuffer *pVertexBuffer, uint32 n
 		const PLRenderer::VertexBuffer::Attribute *pVertexAttribute = pVertexBuffer->GetVertexAttribute(nIndex);
 		if (pVertexAttribute) {
 			// Bind and update the vertex buffer if required
-			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->BindAndUpdate();
+			static_cast<PLRendererOpenGL::VertexBuffer*>(pVertexBuffer)->BindAndUpdate();
 
 			// Create the connection between "vertex program attribute" and "vertex buffer attribute"
-			glVertexAttribPointerARB(m_nOpenGLAttributeLocation, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, GL_FALSE, pVertexBuffer->GetVertexSize(), (const void*)pVertexAttribute->nOffset);
+			glVertexAttribPointerARB(m_nOpenGLAttributeLocation, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, GL_FALSE, pVertexBuffer->GetVertexSize(), reinterpret_cast<const void*>(pVertexAttribute->nOffset));
 
 			// Enable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
 			glEnableVertexAttribArrayARB(m_nOpenGLAttributeLocation);
@@ -96,10 +96,10 @@ bool ProgramAttributeGLSL::Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRender
 		const PLRenderer::VertexBuffer::Attribute *pVertexAttribute = pVertexBuffer->GetVertexAttribute(nSemantic, nChannel);
 		if (pVertexAttribute) {
 			// Bind and update the vertex buffer if required
-			((PLRendererOpenGL::VertexBuffer*)pVertexBuffer)->BindAndUpdate();
+			static_cast<PLRendererOpenGL::VertexBuffer*>(pVertexBuffer)->BindAndUpdate();
 
 			// Create the connection between "vertex program attribute" and "vertex buffer attribute"
-			glVertexAttribPointerARB(m_nOpenGLAttributeLocation, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, GL_FALSE, pVertexBuffer->GetVertexSize(), (const void*)pVertexAttribute->nOffset);
+			glVertexAttribPointerARB(m_nOpenGLAttributeLocation, pVertexAttribute->nComponentsAPI, pVertexAttribute->nTypeAPI, GL_FALSE, pVertexBuffer->GetVertexSize(), reinterpret_cast<const void*>(pVertexAttribute->nOffset));
 
 			// Enable vertex attribute array (OpenGL program independent, so we don't need to call glUseProgram first!)
 			glEnableVertexAttribArrayARB(m_nOpenGLAttributeLocation);

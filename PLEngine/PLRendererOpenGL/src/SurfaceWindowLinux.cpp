@@ -44,7 +44,7 @@ namespace PLRendererOpenGL {
 bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
 	// Get the Linux OpenGL render context
-	ContextLinux *pContextLinux = (ContextLinux*)((Renderer&)GetRenderer()).GetContext();
+	ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 	if (pContextLinux) {
 		// Get the X server display connection
 		Display *pDisplay = pContextLinux->GetDisplay();
@@ -66,9 +66,9 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 
 bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 {
-	if (((int)fRed*10) <= 10 && ((int)fGreen*10) <= 10 && ((int)fBlue*10) <= 10) {
+	if (static_cast<int>(fRed*10) <= 10 && static_cast<int>(fGreen*10) <= 10 && static_cast<int>(fBlue*10) <= 10) {
 		// Get the Linux OpenGL render context
-		ContextLinux *pContextLinux = (ContextLinux*)((Renderer&)GetRenderer()).GetContext();
+		ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 		if (pContextLinux) {
 			// Get the X server display connection
 			Display *pDisplay = pContextLinux->GetDisplay();
@@ -110,10 +110,10 @@ bool SurfaceWindow::Init()
 /*		// Is fullscreen?
 		if (m_bIsFullscreen) {
 			// Get the renderer instance
-			Renderer &cRenderer = (Renderer&)GetRenderer();
+			Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
 			// Get the Linux OpenGL render context
-			ContextLinux *pContextLinux = (ContextLinux*)cRenderer.GetContext();
+			ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
 			if (pContextLinux) {
 
 				// Get the X server display connection
@@ -176,7 +176,7 @@ void SurfaceWindow::DeInit()
 	// First check if there's a window
 	if (m_nWindow) {
 		// Get the renderer instance
-		Renderer &cRenderer = (Renderer&)GetRenderer();
+		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
 		// If this is the current render target, make the main window to the new current one
 		if (cRenderer.GetRenderTarget() == this)
@@ -192,7 +192,7 @@ void SurfaceWindow::DeInit()
 		// Is fullscreen?
 		if (m_bIsFullscreen) {
 			// Get the Linux OpenGL render context
-			ContextLinux *pContextLinux = (ContextLinux*)cRenderer.GetContext();
+			ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
 			if (pContextLinux) {
 				// Get the X server display connection
 				Display *pDisplay = pContextLinux->GetDisplay();
@@ -216,7 +216,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 	// First check if there's a window
 	if (m_nWindow) {
 		// Get the Linux OpenGL render context
-		ContextLinux *pContextLinux = (ContextLinux*)((Renderer&)GetRenderer()).GetContext();
+		ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 		if (pContextLinux) {
 			// Make this surface current
 			return glXMakeCurrent(pContextLinux->GetDisplay(), m_nWindow, pContextLinux->GetRenderContext());
@@ -232,7 +232,7 @@ bool SurfaceWindow::Present()
 	// First check if there's a window
 	if (m_nWindow) {
 		// Get the Linux OpenGL render context
-		ContextLinux *pContextLinux = (ContextLinux*)((Renderer&)GetRenderer()).GetContext();
+		ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 		if (pContextLinux) {
 			glXSwapBuffers(pContextLinux->GetDisplay(), m_nWindow);
 		}

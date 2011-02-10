@@ -76,7 +76,8 @@ void OcclusionQuery::EndOcclusionQuery()
 bool OcclusionQuery::PullOcclusionQuery(uint32 *pnNumOfFragments)
 {
 	m_nPixelCount = 0;
-	if (pnNumOfFragments) *pnNumOfFragments = m_nPixelCount;
+	if (pnNumOfFragments)
+		*pnNumOfFragments = m_nPixelCount;
 
 	// Done
 	return true;

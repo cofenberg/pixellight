@@ -451,27 +451,27 @@ int ProgramUniformGLSL::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 			// Check resource type
 			switch (pTextureBuffer->GetType()) {
 				case PLRenderer::Resource::TypeTextureBuffer1D:
-					nOpenGLTexture = ((TextureBuffer1D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<TextureBuffer1D*>(pTextureBuffer)->GetOpenGLTexture();
 					nOpenGLTextureTarget = GL_TEXTURE_1D;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
-					nOpenGLTexture = ((TextureBuffer2D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<TextureBuffer2D*>(pTextureBuffer)->GetOpenGLTexture();
 					nOpenGLTextureTarget = GL_TEXTURE_2D;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
-					nOpenGLTexture = ((TextureBufferRectangle*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<TextureBufferRectangle*>(pTextureBuffer)->GetOpenGLTexture();
 					nOpenGLTextureTarget = GL_TEXTURE_RECTANGLE_EXT;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:
-					nOpenGLTexture = ((TextureBuffer3D*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<TextureBuffer3D*>(pTextureBuffer)->GetOpenGLTexture();
 					nOpenGLTextureTarget = GL_TEXTURE_3D_EXT;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
-					nOpenGLTexture = ((TextureBufferCube*)pTextureBuffer)->GetOpenGLTexture();
+					nOpenGLTexture = static_cast<TextureBufferCube*>(pTextureBuffer)->GetOpenGLTexture();
 					nOpenGLTextureTarget = GL_TEXTURE_CUBE_MAP_ARB;
 					break;
 			}
@@ -488,7 +488,7 @@ int ProgramUniformGLSL::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 
 		// Inform the renderer
 		if (pTextureBuffer)
-			((Renderer&)pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(m_nTextureUnit, pTextureBuffer);
+			static_cast<Renderer&>(pTextureBuffer->GetRenderer()).SetShaderProgramTextureBuffer(m_nTextureUnit, pTextureBuffer);
 
 		// Done, return the texture unit the uniform is assigned to
 		return m_nTextureUnit;

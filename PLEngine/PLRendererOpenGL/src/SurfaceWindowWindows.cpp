@@ -67,7 +67,8 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
 	WORD nRamp[256*3];
 
-	if (!GetDeviceGammaRamp(m_hDC, nRamp)) return false; // Error!
+	if (!GetDeviceGammaRamp(m_hDC, nRamp))
+		return false; // Error!
 	float fRGB[3] = {1.0f, 1.0f, 1.0f};
 	for (int i=0; i<3; i++) {
 		float fSum = 0.0;
@@ -78,7 +79,7 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 			if (j != 0 && nRamp[j] != 0 && nRamp[j] != 65536) {
 				double B = (j % 256)/256.0;
 				double A = nRamp[j]/65536.0;
-				float  C = (float)(Math::Log(A)/Math::Log(B));
+				float  C = static_cast<float>(Math::Log(A)/Math::Log(B));
 				fSum += C;
 				nCount++;
 			}
@@ -96,12 +97,18 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 {
 	// Clamp color components
-	if (fRed   < 0.01f) fRed   = 0.01f;
-	if (fGreen < 0.01f) fGreen = 0.01f;
-	if (fBlue  < 0.01f) fBlue  = 0.01f;
-	if (fRed   > 4.0f)  fRed   = 4.0f;
-	if (fGreen > 4.0f)  fGreen = 4.0f;
-	if (fBlue  > 4.0f)  fBlue  = 4.0f;
+	if (fRed   < 0.01f)
+		fRed   = 0.01f;
+	if (fGreen < 0.01f)
+		fGreen = 0.01f;
+	if (fBlue  < 0.01f)
+		fBlue  = 0.01f;
+	if (fRed   > 4.0f)
+		fRed   = 4.0f;
+	if (fGreen > 4.0f)
+		fGreen = 4.0f;
+	if (fBlue  > 4.0f)
+		fBlue  = 4.0f;
 
 	WORD nRamp[256*3];
 	float fRGB[3] = {fRed, fGreen, fBlue};
@@ -109,14 +116,14 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 		int nMin = 256*i;
 		int nMax = nMin+256;
 		for (int j=nMin; j<nMax; j++)
-			nRamp[j] = (WORD)(Math::Pow((float)((j % 256)/256.0), (float)fRGB[i])*65536);
+			nRamp[j] = static_cast<WORD>(Math::Pow(static_cast<float>((j % 256)/256.0), static_cast<float>(fRGB[i]))*65536);
 	}
 
 	// Gamma was changed...
 	m_bGammaChanged = true;
 
 	// Call the OS gamma ramp function
-	return SetDeviceGammaRamp(m_hDC, nRamp) != 0;
+	return (SetDeviceGammaRamp(m_hDC, nRamp) != 0);
 }
 
 
@@ -139,8 +146,8 @@ bool SurfaceWindow::Init()
 			DEVMODE DevMode;
 			while (EnumDisplaySettings(nullptr, nDisplayMode++, &DevMode)) {
 				// Get required information
-				if (m_sDisplayMode.vSize.x	  == (int)DevMode.dmPelsWidth  &&
-					m_sDisplayMode.vSize.y	  == (int)DevMode.dmPelsHeight &&
+				if (m_sDisplayMode.vSize.x	  == static_cast<int>(DevMode.dmPelsWidth)  &&
+					m_sDisplayMode.vSize.y	  == static_cast<int>(DevMode.dmPelsHeight) &&
 					m_sDisplayMode.nColorBits == DevMode.dmBitsPerPel &&
 					(!m_sDisplayMode.nFrequency || m_sDisplayMode.nFrequency  == DevMode.dmDisplayFrequency)) {
 					bFound = true;
@@ -176,31 +183,31 @@ bool SurfaceWindow::Init()
 
 		// Setup pixel format
 		PIXELFORMATDESCRIPTOR pfd = {
-			sizeof(PIXELFORMATDESCRIPTOR),						// Size of this pixel format descriptor
-			1,													// Version number
-			PFD_DRAW_TO_WINDOW |								// Format must support window
-			PFD_SUPPORT_OPENGL |								// Format must support OpenGL
-			PFD_DOUBLEBUFFER,									// Must support double buffering
-			PFD_TYPE_RGBA,										// Request an RGBA format
-			(UCHAR)nBitsPerPixel,								// Select our color depth
-			0, 0, 0, 0, 0, 0,									// Color bits ignored
-			0,													// No alpha buffer
-			0,													// Shift bit ignored
-			0,													// No accumulation buffer
-			0, 0, 0, 0,											// Accumulation bits ignored
-			(BYTE)GetRenderer().GetCapabilities().nZBufferBits,	// Z-buffer (depth buffer)  
-			(BYTE)GetRenderer().GetCapabilities().nStencilBits,	// Stencil buffer bits
-			0,													// No auxiliary buffer
-			PFD_MAIN_PLANE,										// Main drawing layer
-			0,													// Reserved
-			0, 0, 0												// Layer masks ignored
+			sizeof(PIXELFORMATDESCRIPTOR),										// Size of this pixel format descriptor
+			1,																	// Version number
+			PFD_DRAW_TO_WINDOW |												// Format must support window
+			PFD_SUPPORT_OPENGL |												// Format must support OpenGL
+			PFD_DOUBLEBUFFER,													// Must support double buffering
+			PFD_TYPE_RGBA,														// Request an RGBA format
+			static_cast<UCHAR>(nBitsPerPixel),									// Select our color depth
+			0, 0, 0, 0, 0, 0,													// Color bits ignored
+			0,																	// No alpha buffer
+			0,																	// Shift bit ignored
+			0,																	// No accumulation buffer
+			0, 0, 0, 0,															// Accumulation bits ignored
+			static_cast<BYTE>(GetRenderer().GetCapabilities().nZBufferBits),	// Z-buffer (depth buffer)  
+			static_cast<BYTE>(GetRenderer().GetCapabilities().nStencilBits),	// Stencil buffer bits
+			0,																	// No auxiliary buffer
+			PFD_MAIN_PLANE,														// Main drawing layer
+			0,																	// Reserved
+			0, 0, 0																// Layer masks ignored
 		};
 
 		// Setup OpenGL device context
 		PL_LOG(Info, "Setup OpenGL device context")
 
 		// Get multisample antialiasing samples per pixel
-		const uint32 nMultisampleAntialiasingSamples = ((Renderer&)GetRenderer()).GetMultisampleAntialiasingSamples();
+		const uint32 nMultisampleAntialiasingSamples = static_cast<Renderer&>(GetRenderer()).GetMultisampleAntialiasingSamples();
 
 		// Search for a suitable pixel format
 		int nAttribs[] = {
@@ -221,7 +228,7 @@ bool SurfaceWindow::Init()
 		int nBestSamples = 0;
 
 		// Get window device context
-		m_hDC = ::GetDC((HWND)nWindow);
+		m_hDC = ::GetDC(static_cast<HWND>(nWindow));
 		if (m_hDC) { // Did we get a device context?
 			// Choose pixel format
 			PL_LOG(Info, "Search for a suitable pixel format")
@@ -253,7 +260,7 @@ bool SurfaceWindow::Init()
 					// Search for the pixel format with the closest number of multisample samples to the requested
 					for (uint32 i=0; i<nPFormats; i++) {
 						wglGetPixelFormatAttribivARB(m_hDC, nPixelFormats[i], 0, 1, &nAttrib, &nSamples);
-						int nDiff = Math::Abs(nSamples - (int)nMultisampleAntialiasingSamples);
+						int nDiff = Math::Abs(nSamples - static_cast<int>(nMultisampleAntialiasingSamples));
 						if (nDiff < nMinDiff) {
 							nMinDiff	 = nDiff;
 							nBestFormat  = i;
@@ -312,7 +319,7 @@ void SurfaceWindow::DeInit()
 		glFinish();
 
 		// If this is the current render target, make the main window to the new current one
-		Renderer &cRenderer = (Renderer&)GetRenderer();
+		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 		if (cRenderer.GetRenderTarget() == this)
 			cRenderer.SetRenderTarget(nullptr);
 
@@ -323,7 +330,7 @@ void SurfaceWindow::DeInit()
 		}
 
 		// Release the Windows DC
-		if (m_hDC && !ReleaseDC((HWND)nWindow, m_hDC))
+		if (m_hDC && !ReleaseDC(static_cast<HWND>(nWindow), m_hDC))
 			PL_LOG(Error, "Release OpenGL device context failed")
 		m_hDC = nullptr;
 
@@ -342,7 +349,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 {
 	if (m_hDC) {
 		// Get the OpenGL render context
-		ContextWindows *pContextWindows = (ContextWindows*)((Renderer&)GetRenderer()).GetContext();
+		ContextWindows *pContextWindows = static_cast<ContextWindows*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 		if (pContextWindows) {
 			// Get the OpenGL render context
 			HGLRC pHGLRC = pContextWindows->GetRenderContext();

@@ -48,7 +48,7 @@ VertexBuffer::~VertexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferNum--;
 }
 
 
@@ -68,7 +68,7 @@ VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::Vertex
 	MemoryManager::Set(m_nOffset, -1, sizeof(uint32)*NumOfSemantics*MaxPipelineChannels);
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nVertexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nVertexBufferNum++;
 }
 
 /**
@@ -113,7 +113,7 @@ void *VertexBuffer::GetData(uint32 nIndex, uint32 nSemantic, uint32 nChannel)
 			if (nChannel < MaxPipelineChannels && nSemantic >= Position && nSemantic <= Binormal) {
 				// Return the vertex buffer attribute data
 				if (m_nOffset[nSemantic][nChannel] >= 0)
-					return ((uint8*)m_pLockedData)+nIndex*m_nVertexSize+m_nOffset[nSemantic][nChannel];
+					return static_cast<uint8*>(m_pLockedData)+nIndex*m_nVertexSize+m_nOffset[nSemantic][nChannel];
 			}
 		}
 	}
@@ -129,7 +129,7 @@ Color4 VertexBuffer::GetColor(uint32 nIndex, uint32 nChannel)
 		// Check whether the channel is correct
 		if (nChannel < 2) {
 			// Return the color of the vertex
-			const float *pfColor = (const float*)GetData(nIndex, Color, nChannel);
+			const float *pfColor = static_cast<const float*>(GetData(nIndex, Color, nChannel));
 			if (pfColor)
 				return Color4(pfColor[0], pfColor[1], pfColor[2], pfColor[3]);
 		}
@@ -146,7 +146,7 @@ bool VertexBuffer::SetColor(uint32 nIndex, const Color4 &cColor, uint32 nChannel
 		// Check whether the channel is correct
 		if (nChannel < 2) {
 			// Set the color of the vertex
-			float *pfColor = (float*)GetData(nIndex, Color, nChannel);
+			float *pfColor = static_cast<float*>(GetData(nIndex, Color, nChannel));
 			if (pfColor) {
 				pfColor[0] = cColor.r;
 				pfColor[1] = cColor.g;
@@ -229,7 +229,8 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 	// Check if we have to reallocate the buffer
 	if (m_nSize != m_nVertexSize*nElements || m_nUsage != nUsage || m_bManaged != bManaged) {
 		// Check the vertex buffer size
-		if (m_nVertexSize*nElements <= 0) return false; // Error!
+		if (m_nVertexSize*nElements <= 0)
+			return false; // Error!
 
 		// If the buffer is already allocated...
 		uint8 *pDataBackup = nullptr;
@@ -248,7 +249,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		ForceUnlock();
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
 
 		// Setup data
 		m_nElements  = nElements;
@@ -257,14 +258,16 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		m_bManaged   = bManaged;
 
 		// Create the vertex buffer
-		if (!m_pData) m_pData = new uint8[m_nSize];
+		if (!m_pData)
+			m_pData = new uint8[m_nSize];
 
 		// Restore old data if required
 		if (pDataBackup) {
 			// We can just copy the old data in... vertex size CAN'T change in this situation!
 			if (Lock(PLRenderer::Lock::WriteOnly)) {
 				uint32 nSize = nSizeBackup;
-				if (nSize > m_nSize) nSize = m_nSize;
+				if (nSize > m_nSize)
+					nSize = m_nSize;
 				MemoryManager::Copy(GetData(), pDataBackup, nSize);
 				Unlock();
 			}
@@ -274,7 +277,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
 	}
 
 	// Get data attribute offsets
@@ -294,10 +297,13 @@ bool VertexBuffer::Clear()
 	if (m_pData) {
 		delete [] m_pData;
 		m_pData = nullptr;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
 
 	// Init
 	m_nElements = 0;
@@ -312,17 +318,20 @@ bool VertexBuffer::Clear()
 void *VertexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's a vertex buffer
-	if (!m_pData) return nullptr; // Error!
+	if (!m_pData)
+		return nullptr; // Error!
 
 	// Check whether the vertex buffer is already locked
 	m_nLockCount++;
-	if (m_pLockedData) return m_pLockedData; // Return the locked data
+	if (m_pLockedData)
+		return m_pLockedData; // Return the locked data
 
 	// Check if there's an vertex buffer or the data is already locked
-	if (m_pLockedData || !m_pData) return nullptr; // Error!
+	if (m_pLockedData || !m_pData)
+		return nullptr; // Error!
 
 	// Lock the vertex buffer
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 	m_pLockedData = m_pData;
 
@@ -338,15 +347,17 @@ void *VertexBuffer::GetData()
 bool VertexBuffer::Unlock()
 {
 	// Check whether data is locked
-	if (!m_pLockedData) return false; // Error!
+	if (!m_pLockedData)
+		return false; // Error!
 
 	// Do we have to unlock the buffer now?
 	m_nLockCount--;
-	if (m_nLockCount) return true; // Nope, it's still used somewhere else...
+	if (m_nLockCount)
+		return true; // Nope, it's still used somewhere else...
 
 	// Unlock the vertex buffer
 	m_pLockedData = nullptr;
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 
 	// Done
 	return true;

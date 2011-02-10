@@ -48,7 +48,7 @@ VertexBuffer::~VertexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferNum--;
 }
 
 /**
@@ -116,7 +116,7 @@ VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::Vertex
 	MemoryManager::Set(m_nOffset, -1, sizeof(int)*NumOfSemantics*MaxPipelineChannels);
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nVertexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nVertexBufferNum++;
 }
 
 
@@ -133,7 +133,7 @@ void *VertexBuffer::GetData(uint32 nIndex, uint32 nSemantic, uint32 nChannel)
 			if (nChannel < MaxPipelineChannels && nSemantic >= Position && nSemantic <= Binormal) {
 				// Return the vertex buffer attribute data
 				if (m_nOffset[nSemantic][nChannel] >= 0)
-					return ((uint8*)m_pLockedData)+nIndex*m_nVertexSize+m_nOffset[nSemantic][nChannel];
+					return static_cast<uint8*>(m_pLockedData)+nIndex*m_nVertexSize+m_nOffset[nSemantic][nChannel];
 			}
 		}
 	}
@@ -149,7 +149,7 @@ Color4 VertexBuffer::GetColor(uint32 nIndex, uint32 nChannel)
 		// Check whether the channel is correct
 		if (nChannel < 2) {
 			// Return the color of the vertex
-			const float *pfColor = (const float*)GetData(nIndex, Color, nChannel);
+			const float *pfColor = static_cast<const float*>(GetData(nIndex, Color, nChannel));
 			if (pfColor)
 				return Color4(pfColor[0], pfColor[1], pfColor[2], pfColor[3]);
 		}
@@ -166,7 +166,7 @@ bool VertexBuffer::SetColor(uint32 nIndex, const Color4 &cColor, uint32 nChannel
 		// Check whether the channel is correct
 		if (nChannel < 2) {
 			// Set the color of the vertex
-			float *pfColor = (float*)GetData(nIndex, Color, nChannel);
+			float *pfColor = static_cast<float*>(GetData(nIndex, Color, nChannel));
 			if (pfColor) {
 				pfColor[0] = cColor.r;
 				pfColor[1] = cColor.g;
@@ -249,25 +249,31 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 	// Check if we have to reallocate the buffer
 	if (m_nSize != m_nVertexSize*nElements || m_nUsage != nUsage || m_bManaged != bManaged) {
 		// Check the vertex buffer size
-		if (m_nVertexSize*nElements <= 0) return false; // Error!
+		if (m_nVertexSize*nElements <= 0)
+			return false; // Error!
 
 		// Vertex buffer extension available?
-		if (!((Renderer&)GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
+		if (!static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
 			// Fallback to legacy software implementation
 			nUsage = PLRenderer::Usage::Software;
 			bManaged = false;
 		}
 
 		// Get API dependent usage
-			 if (nUsage == PLRenderer::Usage::Static)    m_nUsageAPI = GL_STATIC_DRAW_ARB;
-		else if (nUsage == PLRenderer::Usage::Dynamic)   m_nUsageAPI = GL_DYNAMIC_DRAW_ARB;
-		else if (nUsage == PLRenderer::Usage::WriteOnly) m_nUsageAPI = GL_STREAM_DRAW_ARB;
+	 	if (nUsage == PLRenderer::Usage::Static)
+			m_nUsageAPI = GL_STATIC_DRAW_ARB;
+		else if (nUsage == PLRenderer::Usage::Dynamic)
+			m_nUsageAPI = GL_DYNAMIC_DRAW_ARB;
+		else if (nUsage == PLRenderer::Usage::WriteOnly)
+			m_nUsageAPI = GL_STREAM_DRAW_ARB;
 		else if (nUsage != PLRenderer::Usage::Software) {
 			m_nUsageAPI = 0;
 
 			// Error!
 			return false;
-		} else m_nUsageAPI = 0;
+		} else {
+			m_nUsageAPI = 0;
+		}
 
 		// If the buffer is already allocated...
 		uint8 *pDataBackup = nullptr;
@@ -298,7 +304,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		ForceUnlock();
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
 
 		// Setup data
 		m_nElements  = nElements;
@@ -309,10 +315,11 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		// Create the vertex buffer
 		bool bVBO = false;
 		if (nUsage != PLRenderer::Usage::Software &&
-			((Renderer&)GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
+			static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
 			// Use VBO
 			bVBO = true;
-			if (!m_nVertexBuffer) glGenBuffersARB(1, &m_nVertexBuffer);
+			if (!m_nVertexBuffer)
+				glGenBuffersARB(1, &m_nVertexBuffer);
 			GLint nArrayBufferBackup;
 			glGetIntegerv(GL_ARRAY_BUFFER_BINDING_ARB, &nArrayBufferBackup);
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, m_nVertexBuffer);
@@ -334,16 +341,20 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 		// No VBO or managed?
 		if (!bVBO || bManaged) {
-			if (!m_pData) m_pData = new uint8[m_nSize];
+			if (!m_pData)
+				m_pData = new uint8[m_nSize];
 			m_bUpdateVBO = true;
-		} else m_bUpdateVBO = false;
+		} else {
+			m_bUpdateVBO = false;
+		}
 
 		// Restore old data if required
 		if (pDataBackup) {
 			// We can just copy the old data in... vertex size CAN'T change in this situation!
 			if (Lock(PLRenderer::Lock::WriteOnly)) {
 				uint32 nSize = nSizeBackup;
-				if (nSize > m_nSize) nSize = m_nSize;
+				if (nSize > m_nSize)
+					nSize = m_nSize;
 				MemoryManager::Copy(GetData(), pDataBackup, nSize);
 				Unlock();
 			}
@@ -353,7 +364,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
 	}
 
 	// Get data attribute offsets
@@ -369,7 +380,8 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 bool VertexBuffer::Clear()
 {
-	if (!IsAllocated()) return false; // Error!
+	if (!IsAllocated())
+		return false; // Error!
 	ForceUnlock();
 	if (m_nVertexBuffer) {
 		glDeleteBuffersARB(1, &m_nVertexBuffer);
@@ -381,7 +393,7 @@ bool VertexBuffer::Clear()
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
 
 	// Init
 	m_nElements	 = 0;
@@ -398,11 +410,13 @@ bool VertexBuffer::Clear()
 void *VertexBuffer::Lock(uint32 nFlag)
 {
 	// Check whether there's a vertex buffer
-	if (!m_nVertexBuffer && !m_pData) return nullptr; // Error!
+	if (!m_nVertexBuffer && !m_pData)
+		return nullptr; // Error!
 
 	// Check whether the vertex buffer is already locked
 	m_nLockCount++;
-	if (m_pLockedData) return m_pLockedData;
+	if (m_pLockedData)
+		return m_pLockedData;
 
 	// Get API dependent flag
 	uint32 nFlagAPI;
@@ -415,12 +429,16 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	} else if (nFlag == PLRenderer::Lock::ReadWrite) {
 		nFlagAPI        = GL_READ_WRITE_ARB;
 		m_bLockReadOnly = false;
-	} else return nullptr; // Error!
+	} else {
+		// Error!
+		return nullptr;
+	}
 
 	// Map the vertex buffer
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
-	if (m_pData) m_pLockedData = m_pData;
+	if (m_pData)
+		m_pLockedData = m_pData;
 	else if (m_nVertexBuffer) {
 		// Bind and update the vertex buffer if required
 		BindAndUpdate();
@@ -430,7 +448,8 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	}
 
 	// Lock valid?
-	if (!m_pLockedData) m_nLockCount--;
+	if (!m_pLockedData)
+		m_nLockCount--;
 
 	// Return the locked data
 	return m_pLockedData;
@@ -444,11 +463,13 @@ void *VertexBuffer::GetData()
 bool VertexBuffer::Unlock()
 {
 	// Check whether data is locked
-	if (!m_pLockedData) return false; // Error!
+	if (!m_pLockedData)
+		return false; // Error!
 
 	// Do we have to unlock the buffer now?
 	m_nLockCount--;
-	if (m_nLockCount) return true; // Nope, it's still used somewhere else...
+	if (m_nLockCount)
+		return true; // Nope, it's still used somewhere else...
 
 	// Unlock the vertex buffer
 	if (m_pData) {
@@ -463,7 +484,7 @@ bool VertexBuffer::Unlock()
 			glUnmapBufferARB(GL_ARRAY_BUFFER_ARB);
 		}
 	}
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 	m_pLockedData   = nullptr;
 	m_bLockReadOnly = false;
 
@@ -482,7 +503,9 @@ void VertexBuffer::BackupDeviceData(uint8 **ppBackup)
 		*ppBackup = new uint8[m_nSize];
 		MemoryManager::Copy(*ppBackup, GetData(), m_nSize);
 		ForceUnlock();
-	} else *ppBackup = nullptr;
+	} else {
+		*ppBackup = nullptr;
+	}
 
 	// Destroy the vertex buffer
 	if (m_nVertexBuffer) {

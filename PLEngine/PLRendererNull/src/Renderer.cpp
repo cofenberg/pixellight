@@ -307,7 +307,10 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return nullptr; // Error!
+	} else {
+		// Error!
+		return nullptr;
+	}
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
@@ -322,13 +325,17 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 
 		// Return created renderer surface
 		return pRendererSurface;
-	} else return nullptr; // Error!
+	} else {
+		// Error!
+		return nullptr;
+	}
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
 {
 	// Valid dimension?
-	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize)) return nullptr; // Error!
+	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize))
+		return nullptr; // Error!
 
 	// Create and register renderer surface
 	PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferCube(*this, nSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
@@ -441,7 +448,10 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 
 		// All went fine
 		return true;
-	} else return false; // Error!
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 
@@ -521,23 +531,30 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 
 	// Check face index
 	if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
-		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = (PLRenderer::SurfaceTextureBuffer*)pSurface;
+		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
 		if (pSurfaceTextureBuffer->GetTextureBuffer()) {
 			if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
-				if (nFace > 5) return false; // Error!
+				if (nFace > 5)
+					return false; // Error!
 			} else {
-				if (nFace > 0) return false; // Error!
+				if (nFace > 0)
+					return false; // Error!
 			}
-		} else return false; // Error!?!
+		} else {
+			// Error!?!
+			return false;
+		}
 	} else {
-		if (nFace > 0) return false; // Error!
+		if (nFace > 0)
+			return false; // Error!
 	}
 
-	if (m_cCurrentSurface.GetSurface()) UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
+	if (m_cCurrentSurface.GetSurface())
+		UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
 	m_cCurrentSurface.SetSurface(pSurface);
 
 	// Make the surface to the current render target
-	bool bError = MakeSurfaceCurrent(*pSurface, nFace);
+	const bool bError = MakeSurfaceCurrent(*pSurface, nFace);
 
 	// Setup viewport and scissor rectangle
 	SetViewport();
@@ -550,12 +567,14 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nColorIndex, uint8 nFace)
 {
 /*	// Check parameter
-	if (!m_lstSurfaces.IsElement(pSurface)) return true;
-	if (m_cCurrentSurface.GetSurface()) m_cCurrentSurface.GetSurface()->UnmakeCurrent();
+	if (!m_lstSurfaces.IsElement(pSurface))
+		return true;
+	if (m_cCurrentSurface.GetSurface())
+		m_cCurrentSurface.GetSurface()->UnmakeCurrent();
 	m_cCurrentSurface.SetSurface(pSurface);
 
 	// Make the surface to the current render target
-	bool bError = pSurface->MakeCurrent(nFace);
+	const bool bError = pSurface->MakeCurrent(nFace);
 
 	// Done
 	return bError;
@@ -578,10 +597,12 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 			SetTextureBuffer(i, pTextureBuffer);
 	} else {
 		// Check if the stage is correct
-		if (nStage >= m_sCapabilities.nMaxTextureUnits) return false; // Error!
+		if (nStage >= m_sCapabilities.nMaxTextureUnits)
+			return false; // Error!
 
 		// Is this texture buffer already set?
-		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer) return false; // Error!
+		if (m_ppCurrentTextureBuffer[nStage] == pTextureBuffer)
+			return false; // Error!
 
 		// Make this texture buffer to the renderers current one
 		PLRenderer::TextureBuffer *pT = m_ppCurrentTextureBuffer[nStage];
@@ -607,7 +628,8 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 {
 	// Is this index buffer already set?
-	if (m_pCurrentIndexBuffer == pIndexBuffer) return false; // Error!
+	if (m_pCurrentIndexBuffer == pIndexBuffer)
+		return false; // Error!
 
 	// Make this index buffer to the renderers current one
 	PLRenderer::IndexBuffer *pT = m_pCurrentIndexBuffer;
@@ -616,7 +638,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 	// Should an index buffer be set?
 	if (pIndexBuffer) {
 		// Yes, make it current
-		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
+		if (!static_cast<IndexBuffer*>(pIndexBuffer)->MakeCurrent()) {
 			m_pCurrentIndexBuffer = pT;
 
 			// Error!

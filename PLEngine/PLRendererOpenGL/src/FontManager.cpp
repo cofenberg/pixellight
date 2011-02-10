@@ -129,7 +129,7 @@ PLRenderer::Program *FontManager::GetProgram(GeneratedProgramUserData **ppGenera
 			PLRenderer::Program *pProgram = pGeneratedProgram->pProgram;
 
 			// Set pointers to uniforms & attributes of a generated program if they are not set yet
-			GeneratedProgramUserData *pGeneratedProgramUserData = (GeneratedProgramUserData*)pGeneratedProgram->pUserData;
+			GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
 			if (!pGeneratedProgramUserData) {
 				pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
 				// Vertex shader attributes
@@ -209,28 +209,28 @@ PLRenderer::VertexBuffer *FontManager::GetVertexBuffer()
 		if (m_pVertexBuffer->Lock(PLRenderer::Lock::WriteOnly)) {
 		// Vertex 0 - lower/left corner
 			// Position
-			float *pfVertex = (float*)m_pVertexBuffer->GetData(0, PLRenderer::VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, PLRenderer::VertexBuffer::Position));
 			pfVertex[Vector4::X] = 0.0f;	// x
 			pfVertex[Vector4::Y] = 0.0f;	// y
 			pfVertex[Vector4::Z] = 0.0f;	// Index
 
 		// Vertex 1 - lower/right corner
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, PLRenderer::VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, PLRenderer::VertexBuffer::Position));
 			pfVertex[Vector4::X] = 1.0f;	// x
 			pfVertex[Vector4::Y] = 0.0f;	// y
 			pfVertex[Vector4::Z] = 1.0f;	// Index
 
 		// Vertex 2 - upper/left corner
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, PLRenderer::VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, PLRenderer::VertexBuffer::Position));
 			pfVertex[Vector4::X] = 0.0f;	// x
 			pfVertex[Vector4::Y] = 1.0f;	// y
 			pfVertex[Vector4::Z] = 2.0f;	// Index
 
 		// Vertex 3 - upper/right corner
 			// Position
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, PLRenderer::VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, PLRenderer::VertexBuffer::Position));
 			pfVertex[Vector4::X] = 1.0f;	// x
 			pfVertex[Vector4::Y] = 1.0f;	// y
 			pfVertex[Vector4::Z] = 3.0f;	// Index

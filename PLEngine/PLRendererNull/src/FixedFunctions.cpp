@@ -182,7 +182,7 @@ void FixedFunctions::ResetRenderStates()
 {
 	// Set renderer states to this default settings
 	for (uint32 i=0; i<RenderState::Number; i++)
-		SetRenderState((RenderState::Enum)i, m_nDefaultRenderState[i]);
+		SetRenderState(static_cast<RenderState::Enum>(i), m_nDefaultRenderState[i]);
 }
 
 int FixedFunctions::GetRenderState(RenderState::Enum nState) const
@@ -339,7 +339,7 @@ void FixedFunctions::ResetTextureStageStates()
 	// Set texture stage states to this default settings
 	for (uint32 nStage=0; nStage<m_pRendererNull->GetCapabilities().nMaxTextureUnits; nStage++) {
 		for (uint32 i=0; i<TextureStage::Number; i++)
-			SetTextureStageState(nStage, (TextureStage::Enum)i, m_nDefaultTextureStageState[i]);
+			SetTextureStageState(nStage, static_cast<TextureStage::Enum>(i), m_nDefaultTextureStageState[i]);
 	}
 }
 
@@ -376,7 +376,7 @@ void FixedFunctions::ResetMaterialStates()
 {
 	// Set material states to this default settings
 	for (uint32 i=0; i<MaterialState::Number; i++)
-		SetMaterialState((MaterialState::Enum)i, m_nDefaultMaterialState[i]);
+		SetMaterialState(static_cast<MaterialState::Enum>(i), m_nDefaultMaterialState[i]);
 }
 
 int FixedFunctions::GetMaterialState(MaterialState::Enum nState) const
@@ -486,7 +486,7 @@ bool FixedFunctions::SetClipPlaneEnabled(char nIndex, bool bEnable)
 			SetClipPlaneEnabled(i, bEnable);
 	} else {
 		// Check whether the index and the device is valid
-		if (nIndex >= (signed)m_sCapabilities.nMaxClipPlanes)
+		if (nIndex >= static_cast<int>(m_sCapabilities.nMaxClipPlanes))
 			return false; // Error!
 	}
 
@@ -512,7 +512,7 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 			SetClipPlane(i, fA, fB, fC, fD);
 	} else {
 		// Check whether the index and the device is valid
-		if (nIndex >= (signed)m_sCapabilities.nMaxClipPlanes)
+		if (nIndex >= static_cast<int>(m_sCapabilities.nMaxClipPlanes))
 			return false; // Error!
 	}
 
@@ -559,7 +559,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 	// Should an vertex buffer be set?
 	if (pVertexBuffer) {
 		// Yes, make it current
-		if (!((VertexBuffer*)pVertexBuffer)->MakeCurrent(nOffset)) {
+		if (!static_cast<VertexBuffer*>(pVertexBuffer)->MakeCurrent(nOffset)) {
 			m_ppCurrentVertexBuffer[nStreamNumber] = pT;
 
 			// Error!

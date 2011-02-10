@@ -432,7 +432,9 @@ bool OpenGLExtensions::IsSupported(const char *pszExtension) const
 				PL_LOG(Info, String::Format("Use extension '%s'", pszExtension))
 				return true;
 			}
-		} else PL_LOG(Info, String::Format("Extension '%s' not found (nothing critical)", pszExtension))
+		} else {
+			PL_LOG(Info, String::Format("Extension '%s' not found (nothing critical)", pszExtension))
+		}
 	}
 
 	// Extension isn't supported!
@@ -466,26 +468,26 @@ bool OpenGLExtensions::CheckExtension(const char *pszExtension) const
 					// WGL extensions
 					if (!m_bWGL_ARB_extensions_string)
 						return false; // Extension not found
-					pszExtensions = (const char*)wglGetExtensionsStringARB(wglGetCurrentDC());
+					pszExtensions = static_cast<const char*>(wglGetExtensionsStringARB(wglGetCurrentDC()));
 				#endif
 				#ifdef LINUX
 					// Get the Linux context implementation
-					ContextLinux *pContextLinux = (ContextLinux*)m_pRenderer->GetContext();
+					ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
 					if (pContextLinux) {
 						// Get the X server display connection
 						Display *pDisplay = pContextLinux->GetDisplay();
 						if (pDisplay) {
 							if (i == 2)
-								pszExtensions = (const char*)glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay));
+								pszExtensions = static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay)));
 							else
-								pszExtensions = (const char*)glXGetClientString(pDisplay, GLX_EXTENSIONS);
+								pszExtensions = static_cast<const char*>(glXGetClientString(pDisplay, GLX_EXTENSIONS));
 						}
 					}
 				#endif
 
 			// Normal extensions
 			} else {
-				pszExtensions = (const char*)glGetString(GL_EXTENSIONS);
+				pszExtensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 			}
 			if (!pszExtensions)
 			  return false; // Extension not found
@@ -596,7 +598,7 @@ void OpenGLExtensions::ShowGeneralOpenGLInformation() const
 	PL_LOG(Info, "General OpenGL information:")
 
 	if (m_bGL_ARB_shading_language_100)
-		PL_LOG(Info, String::Format("OpenGL shading language version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION_ARB) ? (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION_ARB) : "-"))
+		PL_LOG(Info, String::Format("OpenGL shading language version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION_ARB) ? reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION_ARB)) : "-"))
 
 	if (m_bGL_ARB_multitexture) {
 		glGetIntegerv(GL_MAX_TEXTURE_COORDS_ARB, &nTemp);
@@ -783,7 +785,7 @@ void OpenGLExtensions::WriteExtensionStringIntoLog(const char *pszExtensions) co
 				pszSpace++;
 			if (pszSpace-pszExtensions) {
 				String sExtension;
-				sExtension.Copy(pszExtensions, uint32(pszSpace-pszExtensions));
+				sExtension.Copy(pszExtensions, static_cast<uint32>(pszSpace-pszExtensions));
 				PL_LOG(Info, sExtension)
 			}
 			if (*pszSpace != '\0') {
