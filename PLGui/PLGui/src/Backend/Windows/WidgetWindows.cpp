@@ -40,8 +40,7 @@
 using namespace PLGeneral;
 using namespace PLGraphics;
 using namespace PLMath;
-namespace PLGui
-{
+namespace PLGui {
 
 
 //[-------------------------------------------------------]
@@ -83,7 +82,7 @@ WidgetWindows::~WidgetWindows()
 void WidgetWindows::CreateWidget()
 {
 	// Get parent widget
-	HWND hParent = m_pWidget->GetParent() ? (HWND)m_pWidget->GetParent()->GetWindowHandle() : nullptr;
+	HWND hParent = m_pWidget->GetParent() ? reinterpret_cast<HWND>(m_pWidget->GetParent()->GetWindowHandle()) : nullptr;
 
 	// Set window style
 	uint32 nWinStyle, nExtStyle;
@@ -113,7 +112,7 @@ void WidgetWindows::CreateWrapperWidget(handle nWindowHandle)
 	m_bWrapper = true;
 
 	// Save window handle
-	m_hWnd = (HWND)nWindowHandle;
+	m_hWnd = reinterpret_cast<HWND>(nWindowHandle);
 }
 
 bool WidgetWindows::IsDestroyed() const
@@ -134,7 +133,7 @@ void WidgetWindows::Destroy()
 handle WidgetWindows::GetWindowHandle() const
 {
 	// Return window handle
-	return (handle)m_hWnd;
+	return reinterpret_cast<handle>(m_hWnd);
 }
 
 void WidgetWindows::SetParent(WidgetImpl *pParent)
@@ -186,7 +185,7 @@ Vector2i WidgetWindows::GetPos() const
 	RECT sParentRect;
 	sParentRect.left = sParentRect.top = 0;
 	if (m_pWidget->GetParent()) {
-		GetWindowRect((HWND)m_pWidget->GetParent()->GetWindowHandle(), &sParentRect);
+		GetWindowRect(reinterpret_cast<HWND>(m_pWidget->GetParent()->GetWindowHandle()), &sParentRect);
 	}
 
 	// Get position
@@ -227,10 +226,10 @@ void WidgetWindows::SetZPos(EZPos nZPos, Widget *pWidget)
 	HWND hWndAfter = nullptr;
 	if (nZPos == ZBehind && pWidget) {
 		// This widget will be in front of our widget
-		hWndAfter = (HWND)pWidget->GetWindowHandle();
+		hWndAfter = reinterpret_cast<HWND>(pWidget->GetWindowHandle());
 	} else if (nZPos == ZAbove && pWidget) {
 		// This widget will be behind our widget
-		hWndAfter = GetNextWindow((HWND)pWidget->GetWindowHandle(), GW_HWNDPREV);
+		hWndAfter = GetNextWindow(reinterpret_cast<HWND>(pWidget->GetWindowHandle()), GW_HWNDPREV);
 		if (!hWndAfter) hWndAfter = HWND_TOP;
 	} else if (nZPos == ZTop) {
 		// Our widget will be on top of the screen
@@ -241,7 +240,7 @@ void WidgetWindows::SetZPos(EZPos nZPos, Widget *pWidget)
 	}
 
 	// Set Z position
-	SetWindowPos((HWND)GetWindowHandle(), hWndAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+	SetWindowPos(reinterpret_cast<HWND>(GetWindowHandle()), hWndAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 }
 
 bool WidgetWindows::IsTopmost() const
@@ -413,18 +412,18 @@ void WidgetWindows::SetTitle(const String &sTitle)
 void WidgetWindows::SetIcon(const Image &cIcon)
 {
 	// Get icon handle
-	ImageWindows *pImageWindows = (ImageWindows*)cIcon.GetImpl();
+	ImageWindows *pImageWindows = static_cast<ImageWindows*>(cIcon.GetImpl());
 	HICON hIcon = pImageWindows ? pImageWindows->GetIconHandle() : nullptr;
 
 	// Set icon
-	::SendMessageA(m_hWnd, WM_SETICON, (WPARAM)ICON_SMALL, (LPARAM)hIcon);
-	::SendMessageA(m_hWnd, WM_SETICON, (WPARAM)ICON_BIG,   (LPARAM)hIcon);
+	::SendMessageA(m_hWnd, WM_SETICON, static_cast<WPARAM>(ICON_SMALL), reinterpret_cast<LPARAM>(hIcon));
+	::SendMessageA(m_hWnd, WM_SETICON, static_cast<WPARAM>(ICON_BIG),   reinterpret_cast<LPARAM>(hIcon));
 }
 
 void WidgetWindows::SetCursor(const Cursor &cCursor)
 {
 	// Set mouse cursor to what is specified for the particular window
-	::SetCursor(((CursorWindows*)m_pWidget->GetCursor().GetImpl())->GetHandle());
+	::SetCursor(static_cast<CursorWindows*>(m_pWidget->GetCursor().GetImpl())->GetHandle());
 }
 
 bool WidgetWindows::GetMousePos(Vector2i &vPos)

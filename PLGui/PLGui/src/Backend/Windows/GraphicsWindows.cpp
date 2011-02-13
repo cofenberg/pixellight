@@ -96,9 +96,9 @@ void GraphicsWindows::DrawLine(const Color4 &cColor, const Vector2i &vPos1, cons
 {
 	if (m_hDC) {
 		// Set attributes
-		COLORREF hColor	 = RGB((int)(cColor.GetR()*255), (int)(cColor.GetG()*255), (int)(cColor.GetB()*255));
+		COLORREF hColor	 = RGB(static_cast<int>(cColor.GetR()*255), static_cast<int>(cColor.GetG()*255), static_cast<int>(cColor.GetB()*255));
 		HPEN	 hPen	 = CreatePen(PS_SOLID, nWidth, hColor);
-		HPEN	 hOldPen = (HPEN)SelectObject(m_hDC, hPen);
+		HPEN	 hOldPen = static_cast<HPEN>(SelectObject(m_hDC, hPen));
 
 		// Draw line
 		POINT sPoints[2];
@@ -119,12 +119,12 @@ void GraphicsWindows::DrawRect(const Color4 &cColor, const Vector2i &vPos1, cons
 {
 	if (m_hDC) {
 		// Set attributes
-		HPEN hPen		 = CreatePen(PS_SOLID, nWidth, RGB((int)(cColor.GetR()*255),
-														   (int)(cColor.GetG()*255),
-														   (int)(cColor.GetB()*255)));
-		HBRUSH hBrush	 = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
-		HPEN hOldPen	 = (HPEN)SelectObject(m_hDC, hPen);
-		HBRUSH hOldBrush = (HBRUSH)SelectObject(m_hDC, hBrush);
+		HPEN hPen		 = CreatePen(PS_SOLID, nWidth, RGB(static_cast<int>(cColor.GetR()*255),
+														   static_cast<int>(cColor.GetG()*255),
+														   static_cast<int>(cColor.GetB()*255)));
+		HBRUSH hBrush	 = static_cast<HBRUSH>(GetStockObject(HOLLOW_BRUSH));
+		HPEN hOldPen	 = static_cast<HPEN>(SelectObject(m_hDC, hPen));
+		HBRUSH hOldBrush = static_cast<HBRUSH>(SelectObject(m_hDC, hBrush));
 
 		// Draw box
 		if (vPos1 == vPos2) {
@@ -157,11 +157,11 @@ void GraphicsWindows::DrawBox(const Color4 &cColor, const Vector2i &vPos1, const
 			cGraphics.FillRectangle(&cBrush, vPos1.x, vPos1.y, vPos2.x - vPos1.x + 1, vPos2.y - vPos1.y + 1);
 		} else {
 			// Set attributes
-			COLORREF hColor	 = RGB((int)(cColor.GetR()*255), (int)(cColor.GetG()*255), (int)(cColor.GetB()*255));
+			COLORREF hColor	 = RGB(static_cast<int>(cColor.GetR()*255), static_cast<int>(cColor.GetG()*255), static_cast<int>(cColor.GetB()*255));
 			HPEN hPen		 = CreatePen(PS_SOLID, 0, hColor);
-			HPEN hOldPen	 = (HPEN)SelectObject(m_hDC, hPen);
+			HPEN hOldPen	 = static_cast<HPEN>(SelectObject(m_hDC, hPen));
 			HBRUSH hBrush	 = CreateSolidBrush(hColor);
-			HBRUSH hOldBrush = (HBRUSH)SelectObject(m_hDC, hBrush);
+			HBRUSH hOldBrush = static_cast<HBRUSH>(SelectObject(m_hDC, hBrush));
 
 			// Draw box (+1, because Windows excludes the second corner)
 			if (vPos1 == vPos2)
@@ -199,7 +199,7 @@ void GraphicsWindows::DrawImage(const Image &cImage, const Vector2i &vPos, const
 	// Check if image is valid
 	if (!cImage.IsEmpty()) {
 		// Bind image
-		HBITMAP hBitmap = ((ImageWindows*)cImage.GetImpl())->GetBitmapHandle();
+		HBITMAP hBitmap = static_cast<ImageWindows*>(cImage.GetImpl())->GetBitmapHandle();
 		SelectObject(m_hMemDC, hBitmap);
 
 		// Check for alpha channel
@@ -237,15 +237,15 @@ void GraphicsWindows::DrawText(const Font &cFont, const Color4 &cTextColor, cons
 		int				  nBackMode  = GetBkMode   (m_hDC);
 
 		// Set text attributes
-		SetTextColor(m_hDC, RGB((int)(cTextColor.GetR()*255), (int)(cTextColor.GetG()*255), (int)(cTextColor.GetB()*255)));
+		SetTextColor(m_hDC, RGB(static_cast<int>(cTextColor.GetR()*255), static_cast<int>(cTextColor.GetG()*255), static_cast<int>(cTextColor.GetB()*255)));
 		if (cBkColor.IsTransparent()) SetBkMode(m_hDC, TRANSPARENT);
 		else {
 			SetBkMode(m_hDC, OPAQUE);
-			SetBkColor(m_hDC, RGB((int)(cBkColor.GetR()*255), (int)(cBkColor.GetG()*255), (int)(cBkColor.GetB()*255)));
+			SetBkColor(m_hDC, RGB(static_cast<int>(cBkColor.GetR()*255), static_cast<int>(cBkColor.GetG()*255), static_cast<int>(cBkColor.GetB()*255)));
 		}
 
 		// Select font
-		HFONT hFont = ((FontWindows*)cFont.GetImpl())->GetHandle();
+		HFONT hFont = static_cast<FontWindows*>(cFont.GetImpl())->GetHandle();
 		if (hFont) SelectObject(m_hDC, hFont);
 
 		// Print text
@@ -267,7 +267,7 @@ uint32 GraphicsWindows::GetTextWidth(const Font &cFont, const String &sText)
 	// Text must not be empty
 	if (sText.GetLength()) {
 		// Select font
-		HFONT hFont = ((FontWindows*)cFont.GetImpl())->GetHandle();
+		HFONT hFont = static_cast<FontWindows*>(cFont.GetImpl())->GetHandle();
 		if (hFont) SelectObject(m_hDC, hFont);
 
 		// Get text width
@@ -291,7 +291,7 @@ uint32 GraphicsWindows::GetTextHeight(const Font &cFont, const String &sText)
 	// Text must not be empty
 	if (sText.GetLength()) {
 		// Select font
-		HFONT hFont = ((FontWindows*)cFont.GetImpl())->GetHandle();
+		HFONT hFont = static_cast<FontWindows*>(cFont.GetImpl())->GetHandle();
 		if (hFont) SelectObject(m_hDC, hFont);
 
 		// Get text height

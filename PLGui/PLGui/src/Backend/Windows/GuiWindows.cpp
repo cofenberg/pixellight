@@ -84,7 +84,7 @@ GuiWindows::GuiWindows(Gui *pGui) : GuiImpl(pGui),
 {
 	// Create window class
 	m_WndClass.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
-	m_WndClass.lpfnWndProc		= (WNDPROC)WndProc;
+	m_WndClass.lpfnWndProc		= static_cast<WNDPROC>(WndProc);
 	m_WndClass.cbClsExtra		= 0;
 	m_WndClass.cbWndExtra		= 0;
 	m_WndClass.hInstance		= m_hInstance;
@@ -143,10 +143,10 @@ void GuiWindows::ProcessMessage()
 		m_pGui->SendMessage(GuiMessage::OnExit());
 	} else if (sMsg.message == PL_INTERNAL) {
 		// OnInternalMessage message
-		m_pGui->SendMessage(GuiMessage::OnInternalMessage((uint32)sMsg.wParam, (uint32)sMsg.lParam));
+		m_pGui->SendMessage(GuiMessage::OnInternalMessage(static_cast<uint32>(sMsg.wParam), static_cast<uint32>(sMsg.lParam)));
 	} else if (sMsg.message == PL_TIMER) {
 		// OnTimer message
-		m_pGui->SendMessage(GuiMessage::OnTimer((Timer*)sMsg.lParam));
+		m_pGui->SendMessage(GuiMessage::OnTimer(reinterpret_cast<Timer*>(sMsg.lParam)));
 	} else if (sMsg.message == PL_WAKEUP) {
 		// OnWakeup message
 		m_pGui->SendMessage(GuiMessage::OnWakeup());
@@ -165,7 +165,7 @@ void GuiWindows::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	HWND hWnd = (pWidget ? (HWND)pWidget->GetWindowHandle() : nullptr);
+	HWND hWnd = (pWidget ? reinterpret_cast<HWND>(pWidget->GetWindowHandle()) : nullptr);
 
 	// Post message
 	switch (cMessage.GetType()) {
@@ -175,7 +175,7 @@ void GuiWindows::PostMessage(const GuiMessage &cMessage)
 
 		case MessageOnTimer:					/**< Timer message */
 			// Send timer message
-			::PostThreadMessage(m_nThreadID, PL_TIMER, (WPARAM)this, (LPARAM)cMessage.GetTimer());
+			::PostThreadMessage(m_nThreadID, PL_TIMER, reinterpret_cast<WPARAM>(this), reinterpret_cast<LPARAM>(cMessage.GetTimer()));
 			break;
 
 		case MessageOnWakeup:					/**< Wakeup message loop */
@@ -189,7 +189,7 @@ void GuiWindows::PostMessage(const GuiMessage &cMessage)
 
 		case MessageOnInternalMessage:			/**< Internal message */
 			// Send timer message
-			::PostThreadMessage(m_nThreadID, PL_INTERNAL, (WPARAM)cMessage.GetData(), (LPARAM)cMessage.GetDataPointer());
+			::PostThreadMessage(m_nThreadID, PL_INTERNAL, static_cast<WPARAM>(cMessage.GetData()), reinterpret_cast<LPARAM>(cMessage.GetDataPointer()));
 			break;
 
 		case MessageOnThemeChanged:				/**< Theme has been changed */
@@ -352,7 +352,7 @@ void GuiWindows::EnumerateScreens(List<Screen*> &lstScreens)
 {
 	// Enumerate display monitors
 	m_lstScreens.Clear();
-	if (EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, (LPARAM)this)) {
+	if (EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, reinterpret_cast<LPARAM>(this))) {
 		// Copy list of screens
 		lstScreens = m_lstScreens;
 	} else {
@@ -386,16 +386,16 @@ void GuiWindows::SetMouseVisible(bool bVisible)
 	}
 }
 
-void GuiWindows::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
+void GuiWindows::ListFonts(List<FontInfo> &lstFonts) const
 {
 	// Enumerate all styles and charsets of all fonts
-	PLGeneral::List<String> lstFontNames;
+	List<String> lstFontNames;
 	{
 		LOGFONT lf;
 		lf.lfFaceName[0]	= '\0';
 		lf.lfCharSet		= DEFAULT_CHARSET;
 		lf.lfPitchAndFamily	= 0;
-		EnumFontFamiliesEx(::GetDC(nullptr), &lf, (FONTENUMPROCW)FontEnumProc, (LPARAM)(void*)&lstFontNames, 0);
+		EnumFontFamiliesEx(::GetDC(nullptr), &lf, reinterpret_cast<FONTENUMPROCW>(FontEnumProc), reinterpret_cast<LPARAM>(static_cast<void*>(&lstFontNames)), 0);
 	}
 
 	// Enumerate all styles and charsets of all fonts
@@ -408,7 +408,7 @@ void GuiWindows::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
 		wcscpy_s(lf.lfFaceName, sName.GetUnicode());
 		lf.lfCharSet		= DEFAULT_CHARSET;
 		lf.lfPitchAndFamily	= 0;
-		EnumFontFamiliesEx(::GetDC(nullptr), &lf, (FONTENUMPROCW)FontEnumProc2, (LPARAM)(void*)&lstFonts, 0);
+		EnumFontFamiliesEx(::GetDC(nullptr), &lf, reinterpret_cast<FONTENUMPROCW>(FontEnumProc2), reinterpret_cast<LPARAM>(static_cast<void*>(&lstFonts)), 0);
 	}
 }
 
@@ -466,11 +466,11 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 {
 	// Get pointers to widget and GUI
 	WidgetWindows *pWidgetWindows = nullptr;
-	if (nMsg == WM_CREATE) pWidgetWindows = (WidgetWindows*)((CREATESTRUCT*)lParam)->lpCreateParams;
-	else if (hWnd != nullptr) pWidgetWindows = (WidgetWindows*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-	Widget	   *pWidget		= (pWidgetWindows ? pWidgetWindows->m_pWidget	 : nullptr);
-	Gui		   *pGui		= (pWidget		  ? pWidget->GetGui()			 : nullptr);
-	GuiWindows *pGuiWindows	= (pGui			  ? (GuiWindows*)pGui->GetImpl() : nullptr);
+	if (nMsg == WM_CREATE) pWidgetWindows = static_cast<WidgetWindows*>(reinterpret_cast<CREATESTRUCT*>(lParam)->lpCreateParams);
+	else if (hWnd != nullptr) pWidgetWindows = reinterpret_cast<WidgetWindows*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+	Widget	   *pWidget		= (pWidgetWindows ? pWidgetWindows->m_pWidget				  : nullptr);
+	Gui		   *pGui		= (pWidget		  ? pWidget->GetGui()						  : nullptr);
+	GuiWindows *pGuiWindows	= (pGui			  ? static_cast<GuiWindows*>(pGui->GetImpl()) : nullptr);
 
 	// Disable screen saver and monitor power management...
 	// [TODO] Always? Shouldn't this be an option?
@@ -491,7 +491,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// Initialize widget
 			case WM_CREATE:
 				// Set widget pointer and handle (SetWindowLongPtr is the 64bit equivalent to SetWindowLong)
-				SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pWidgetWindows);
+				SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWidgetWindows));
 				pWidgetWindows->m_hWnd = hWnd;
 
 				// Send OnCreate message
@@ -568,14 +568,14 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			case WM_KILLFOCUS:
 			{
 				// Get new focus widget
-				Widget *pFocus = GetPLGuiWidget((HWND)wParam);
+				Widget *pFocus = GetPLGuiWidget(reinterpret_cast<HWND>(wParam));
 				if (pFocus && pFocus != pWidget) {
 					// Send OnGetFocus message first!
 					if (pGui)
 						pGui->SendMessage(GuiMessage::OnGetFocus(pFocus));
 
 					// Ignore coming WM_SETFOCUS message
-					((WidgetWindows*)pFocus->GetImpl())->m_bIgnoreSetFocus = true;
+					static_cast<WidgetWindows*>(pFocus->GetImpl())->m_bIgnoreSetFocus = true;
 				}
 
 				// Send OnLooseFocus message
@@ -773,7 +773,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			case WM_MOUSEWHEEL:
 				// Send OnMouseWheel message
 				if (pGui)
-					pGui->SendMessage(GuiMessage::OnMouseWheel(pWidget, (short)HIWORD(wParam)/120));
+					pGui->SendMessage(GuiMessage::OnMouseWheel(pWidget, static_cast<short>(HIWORD(wParam))/120));
 				return 0;
 
 			// Keyboard key down
@@ -789,7 +789,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 
 				// Send OnKeyDown message
 				if (pGui)
-					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)wParam, nModifiers));
+					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, static_cast<uint32>(wParam), nModifiers));
 				return 0;
 			}
 
@@ -806,7 +806,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 
 				// Send OnKeyUp message
 				if (pGui)
-					pGui->SendMessage(GuiMessage::OnKeyUp(pWidget, (uint32)wParam, nModifiers));
+					pGui->SendMessage(GuiMessage::OnKeyUp(pWidget, static_cast<uint32>(wParam), nModifiers));
 				return 0;
 			}
 
@@ -815,8 +815,8 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			{
 				// Send OnKeyDown followed by an OnKeyUp message
 				if (pGui) {
-					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, (uint32)wParam, PLGUIMOD_ALT));
-					pGui->SendMessage(GuiMessage::OnKeyUp  (pWidget, (uint32)wParam, PLGUIMOD_ALT));
+					pGui->SendMessage(GuiMessage::OnKeyDown(pWidget, static_cast<uint32>(wParam), PLGUIMOD_ALT));
+					pGui->SendMessage(GuiMessage::OnKeyUp  (pWidget, static_cast<uint32>(wParam), PLGUIMOD_ALT));
 				}
 				return 0;
 			}
@@ -825,7 +825,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			case WM_HOTKEY:
 				// Send OnHotkey message
 				if (pGui)
-					pGui->SendMessage(GuiMessage::OnHotkey(pWidget, (uint32)wParam));
+					pGui->SendMessage(GuiMessage::OnHotkey(pWidget, static_cast<uint32>(wParam)));
 				return 0;
 
 			// Drag and drop of files
@@ -833,18 +833,18 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			{
 				// Get dropped filenames. Because there's no way - without extreme overhead :) - to check whether
 				// we really need to use Unicode or ASCII is quite enough, we always use Unicode just to be sure.
-				uint32 nNumOfFiles = DragQueryFileW((HDROP)wParam, 0xFFFFFFFF, (LPWSTR)nullptr, 0);
+				uint32 nNumOfFiles = DragQueryFileW(reinterpret_cast<HDROP>(wParam), 0xFFFFFFFF, static_cast<LPWSTR>(nullptr), 0);
 				if (nNumOfFiles) {
 					// Create the file list
 					Array<String> lstFiles;
 					lstFiles.Resize(nNumOfFiles);
 					for (uint32 i=0; i<nNumOfFiles; i++) {
 						// Get the length of the string (+1 for \0)
-						UINT nSize = DragQueryFileW((HDROP)wParam, i, nullptr, 0) + 1;
+						UINT nSize = DragQueryFileW(reinterpret_cast<HDROP>(wParam), i, nullptr, 0) + 1;
 
 						// Create the string and fill it
 						wchar_t *pszFile = new wchar_t[nSize];
-						DragQueryFileW((HDROP)wParam, i, pszFile, nSize);
+						DragQueryFileW(reinterpret_cast<HDROP>(wParam), i, pszFile, nSize);
 
 						// Store the string (the PL string takes over the control)
 						lstFiles[i] = String(pszFile, false, nSize - 1);
@@ -870,7 +870,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 			// Tray icon message
 			case PL_TRAYICON:
 				// Process tray icon message
-				ProcessTrayIconMessage((TrayIcon*)pWidget->GetUserData(), wParam, lParam);
+				ProcessTrayIconMessage(static_cast<TrayIcon*>(pWidget->GetUserData()), wParam, lParam);
 				return 0;
 		}
 	}
@@ -886,7 +886,7 @@ LRESULT CALLBACK GuiWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM
 BOOL CALLBACK GuiWindows::MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
 {
 	// Get pointer to GuiWindows object
-	GuiWindows *pThis = (GuiWindows*)dwData;
+	GuiWindows *pThis = reinterpret_cast<GuiWindows*>(dwData);
 
 	// Get index of this monitor
 	int nMonitor = pThis->m_lstScreens.GetNumOfElements();
@@ -900,7 +900,7 @@ BOOL CALLBACK GuiWindows::MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPR
 		pScreen->SetName   (String("Monitor") + nMonitor);
 		pScreen->SetPos	   (Vector2i(sMonitorInfo.rcMonitor.left, sMonitorInfo.rcMonitor.top));
 		pScreen->SetSize   (Vector2i(sMonitorInfo.rcMonitor.right - sMonitorInfo.rcMonitor.left, sMonitorInfo.rcMonitor.bottom - sMonitorInfo.rcMonitor.top));
-		pScreen->SetDefault((bool)(sMonitorInfo.dwFlags & MONITORINFOF_PRIMARY));
+		pScreen->SetDefault(static_cast<bool>(sMonitorInfo.dwFlags & MONITORINFOF_PRIMARY));
 		pThis->m_lstScreens.Add(pScreen);
 	} else {
 		// [TODO] Log error
@@ -920,7 +920,7 @@ BOOL CALLBACK GuiWindows::MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPR
 int CALLBACK GuiWindows::FontEnumProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, DWORD FontType, LPARAM lParam)
 {
 	// Get output list
-	PLGeneral::List<String> &lstFonts = *((PLGeneral::List<String>*)(void*)lParam);
+	List<String> &lstFonts = *(static_cast<List<String>*>(reinterpret_cast<void*>(lParam)));
 
 	// Get font name
 	String sFont = lpelfe->elfLogFont.lfFaceName;
@@ -940,13 +940,13 @@ int CALLBACK GuiWindows::FontEnumProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lp
 int CALLBACK GuiWindows::FontEnumProc2(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, DWORD FontType, LPARAM lParam)
 {
 	// Get output list
-	PLGeneral::List<FontInfo> &lstFonts = *((PLGeneral::List<FontInfo>*)(void*)lParam);
+	List<FontInfo> &lstFonts = *(static_cast<List<FontInfo>*>(reinterpret_cast<void*>(lParam)));
 
 	// Create font info
 	FontInfo cFontInfo(
 		"",
 		String(lpelfe->elfLogFont.lfFaceName),
-		(uint32)lpelfe->elfLogFont.lfHeight,
+		static_cast<uint32>(lpelfe->elfLogFont.lfHeight),
 		(lpelfe->elfLogFont.lfWeight >= FW_BOLD ? WeightBold : (lpelfe->elfLogFont.lfWeight >= FW_NORMAL ? WeightNormal : WeightLight)),
 		(lpelfe->elfLogFont.lfItalic ? StyleItalics : StyleNormal) );
 
@@ -1036,7 +1036,7 @@ Widget *GuiWindows::GetPLGuiWidget(HWND hWnd)
 		String sClassName = szClassName;
 		if (sClassName == L"PLGuiWidget") {
 			// We have a PLGui widget here!
-			WidgetWindows *pWidgetWindows = (WidgetWindows*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+			WidgetWindows *pWidgetWindows = reinterpret_cast<WidgetWindows*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 			if (pWidgetWindows) {
 				// Return widget
 				return pWidgetWindows->m_pWidget;

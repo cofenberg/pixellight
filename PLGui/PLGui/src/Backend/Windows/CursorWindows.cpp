@@ -137,7 +137,7 @@ void CursorWindows::Load(const String &sFilename, const Vector2i &vHotspot)
 		cImage.Load(sFilename);
 
 		// Create cursor from image
-		m_hCursor = ToolsWindows::CreateCursorFromBitmap(((ImageWindows*)cImage.GetImpl())->GetBitmapHandle(), RGB(255, 255, 255), vHotspot.x, vHotspot.y);
+		m_hCursor = ToolsWindows::CreateCursorFromBitmap(static_cast<ImageWindows*>(cImage.GetImpl())->GetBitmapHandle(), RGB(255, 255, 255), vHotspot.x, vHotspot.y);
 	}
 }
 

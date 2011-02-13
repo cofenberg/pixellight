@@ -76,7 +76,7 @@ DataObject ClipBoardWindows::GetData()
 			String sText;
 			HANDLE hData = GetClipboardData(CF_UNICODETEXT);
 			if (hData) {
-				wchar_t *pszBuffer = (wchar_t*)GlobalLock(hData);
+				wchar_t *pszBuffer = static_cast<wchar_t*>(GlobalLock(hData));
 				sText = pszBuffer; // We need to copy the text!
 				GlobalUnlock(hData);
 			}
@@ -96,7 +96,7 @@ DataObject ClipBoardWindows::GetData()
 			String sText;
 			HANDLE hData = GetClipboardData(CF_TEXT);
 			if (hData) {
-				char *pszBuffer = (char*)GlobalLock(hData);
+				char *pszBuffer = static_cast<char*>(GlobalLock(hData));
 				sText = pszBuffer; // We need to copy the text!
 				GlobalUnlock(hData);
 			}
@@ -131,7 +131,7 @@ void ClipBoardWindows::SetData(const DataObject &cData)
 					HGLOBAL hClipBuffer = GlobalAlloc(GMEM_MOVEABLE, sText.GetLength() + 1);
 					if (hClipBuffer) {
 						// Lock the handle and copy the text to the buffer
-						char *pszBuffer = (char*)GlobalLock(hClipBuffer);
+						char *pszBuffer = static_cast<char*>(GlobalLock(hClipBuffer));
 						if (pszBuffer) {
 							MemoryManager::Copy(pszBuffer, sText.GetASCII(), sText.GetLength());
 							pszBuffer[sText.GetLength()] = '\0'; // Set terminating zero
@@ -147,9 +147,9 @@ void ClipBoardWindows::SetData(const DataObject &cData)
 					HGLOBAL hClipBuffer    = GlobalAlloc(GMEM_MOVEABLE, (sText.GetLength() + 1)*nCharacterSize);
 					if (hClipBuffer) {
 						// Lock the handle and copy the text to the buffer
-						wchar_t *pszBuffer = (wchar_t*)GlobalLock(hClipBuffer);
+						wchar_t *pszBuffer = static_cast<wchar_t*>(GlobalLock(hClipBuffer));
 						if (pszBuffer) {
-							MemoryManager::Copy(pszBuffer, sText.GetUnicode(), uint32(sText.GetLength()*nCharacterSize));
+							MemoryManager::Copy(pszBuffer, sText.GetUnicode(), static_cast<uint32>(sText.GetLength()*nCharacterSize));
 							pszBuffer[sText.GetLength()] = '\0'; // Set terminating zero
 						}
 						GlobalUnlock(hClipBuffer);

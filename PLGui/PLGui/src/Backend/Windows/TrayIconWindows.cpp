@@ -100,17 +100,17 @@ void TrayIconWindows::SetVisible(bool bVisible)
 		if (!m_pWindow) {
 			// [TODO] Pass GUI here somehow
 			m_pWindow = new Widget();
-			m_pWindow->SetUserData((void*)m_pTrayIcon);
+			m_pWindow->SetUserData(static_cast<void*>(m_pTrayIcon));
 		}
 
 		// Get icon handle
-		ImageWindows *pImageWindows = (ImageWindows*)m_pTrayIcon->GetIcon().GetImpl();
+		ImageWindows *pImageWindows = static_cast<ImageWindows*>(m_pTrayIcon->GetIcon().GetImpl());
 		HICON hIcon = pImageWindows ? pImageWindows->GetIconHandle() : LoadIcon(nullptr, IDI_QUESTION);
 
 		// Set options to create the icon
 		memset(&m_sNotifyIcon, 0, sizeof(NOTIFYICONDATA));
 		m_sNotifyIcon.cbSize			= sizeof(NOTIFYICONDATA);
-		m_sNotifyIcon.hWnd				= (HWND)m_pWindow->GetWindowHandle();
+		m_sNotifyIcon.hWnd				= reinterpret_cast<HWND>(m_pWindow->GetWindowHandle());
 		m_sNotifyIcon.uID				= m_nID;
 		m_sNotifyIcon.uFlags			= NIF_MESSAGE | NIF_ICON | NIF_TIP;
 		m_sNotifyIcon.uCallbackMessage	= PL_TRAYICON;
@@ -129,7 +129,7 @@ void TrayIconWindows::SetVisible(bool bVisible)
 		NOTIFYICONDATA sNotifyIcon;
 		memset(&sNotifyIcon, 0, sizeof(NOTIFYICONDATA));
 		sNotifyIcon.cbSize	= sizeof(NOTIFYICONDATA);
-		sNotifyIcon.hWnd	= (HWND)m_pWindow->GetWindowHandle();
+		sNotifyIcon.hWnd	= reinterpret_cast<HWND>(m_pWindow->GetWindowHandle());
 		sNotifyIcon.uID		= m_nID;
 		sNotifyIcon.uFlags	= 0;
 
@@ -146,14 +146,14 @@ void TrayIconWindows::Update()
 	// Only change something, if the tray icon is visible (otherwise it will be updated automatically by SetVisible)
 	if (m_bVisible) {
 		// Get ImageWindows implementation
-		ImageWindows *pImageWindows = (ImageWindows*)m_pTrayIcon->GetIcon().GetImpl();
+		ImageWindows *pImageWindows = static_cast<ImageWindows*>(m_pTrayIcon->GetIcon().GetImpl());
 		HICON hIcon = pImageWindows->GetIconHandle();
 
 		// Set options for tray icon
 		NOTIFYICONDATA sNotifyIcon;
 		memset(&sNotifyIcon, 0, sizeof(NOTIFYICONDATA));
 		sNotifyIcon.cbSize	= sizeof(NOTIFYICONDATA);
-		sNotifyIcon.hWnd	= (HWND)m_pWindow->GetWindowHandle();
+		sNotifyIcon.hWnd	= reinterpret_cast<HWND>(m_pWindow->GetWindowHandle());
 		sNotifyIcon.uID		= m_nID;
 		sNotifyIcon.uFlags	= NIF_ICON | NIF_TIP;
 		sNotifyIcon.hIcon	= hIcon;
