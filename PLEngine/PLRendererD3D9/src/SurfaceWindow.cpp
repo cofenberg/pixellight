@@ -83,7 +83,7 @@ void SurfaceWindow::NotifySize(const Vector2i &vSize)
 {
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	LPDIRECT3D9 pD3D = cRenderer.GetInstance();
 	if (pD3D) {
 		LPDIRECT3DDEVICE9 pDevice = cRenderer.GetDevice();
@@ -150,7 +150,7 @@ Vector2i SurfaceWindow::GetSize() const
 bool SurfaceWindow::Init()
 {
 	// Get renderer
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (GetWindow()) {
 		LPDIRECT3D9 pD3D = cRenderer.GetInstance();
 		if (pD3D) {
@@ -199,7 +199,7 @@ void SurfaceWindow::DeInit()
 {
 	if (m_pSwapChain) {
 		// Get renderer
-		Renderer &cRenderer = (Renderer&)GetRenderer();
+		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
 		// Release swap chain
 		if (cRenderer.m_pFirstSwapChainUserSurface == this)
@@ -212,7 +212,7 @@ void SurfaceWindow::DeInit()
 bool SurfaceWindow::MakeCurrent(uint8 nFace)
 {
 	if (m_pSwapChain) {
-		Renderer &cRenderer = (Renderer&)GetRenderer();
+		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 		LPDIRECT3DDEVICE9 pDevice = cRenderer.GetDevice();
 		if (pDevice) {
 			// Tell the Direct3D device to render to the first swap chain’s back buffer
@@ -236,7 +236,7 @@ bool SurfaceWindow::Present()
 	// Is there a swap chain and a back buffer?
 	if (m_pSwapChain && m_pBackBuffer && GetWindow()) {
 		// Get surface window and present swap chain to window
-		if (m_pSwapChain->Present(nullptr, nullptr, (HWND)GetWindow(), nullptr, 0) == D3D_OK) {
+		if (m_pSwapChain->Present(nullptr, nullptr, reinterpret_cast<HWND>(GetWindow()), nullptr, 0) == D3D_OK) {
 			m_pBackBuffer->Release();
 			m_pBackBuffer = nullptr;
 

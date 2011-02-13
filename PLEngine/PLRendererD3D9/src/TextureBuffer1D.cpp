@@ -54,8 +54,8 @@ TextureBuffer1D::~TextureBuffer1D()
 		m_pD3D9Texture->Release();
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -80,7 +80,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 	m_pD3D9Texture(nullptr)
 {
 	// Get the concrete renderer implementation
-	Renderer &cRendererD3D9 = (Renderer&)cRenderer;
+	Renderer &cRendererD3D9 = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
 	cRendererD3D9.GetStatisticsT().nTextureBuffersNum++;
@@ -100,9 +100,9 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 			uint32 *pAPIPixelFormat = cRendererD3D9.GetAPIPixelFormat(m_nFormat);
 			if (pAPIPixelFormat) {
 				// Get Direct3D 9 device
-				LPDIRECT3DDEVICE9 pDevice = ((Renderer&)cRenderer).GetDevice();
+				LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(cRenderer).GetDevice();
 				if (pDevice) {
-					D3DFORMAT nAPIFormat = (D3DFORMAT)*pAPIPixelFormat;
+					D3DFORMAT nAPIFormat = static_cast<D3DFORMAT>(*pAPIPixelFormat);
 
 					// Get the size
 					m_nSize = pImageBuffer->GetSize().x;
@@ -125,7 +125,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						uint32 nNumOfImageMipmaps = pImagePart->GetNumOfMipmaps() - 1;
 						if (bMipmaps && !nNumOfImageMipmaps) {
 							// Calculate the number of mipmaps
-							m_nNumOfMipmaps = (uint32)Math::Log2(float(m_nSize));
+							m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 						} else {
 							m_nNumOfMipmaps = nNumOfImageMipmaps;
 						}
@@ -137,7 +137,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							m_nFormat			  = nImageFormat;
 							pAPIPixelFormat		  = cRendererD3D9.GetAPIPixelFormat(m_nFormat);
 							if (pAPIPixelFormat) {
-								nAPIFormat = (D3DFORMAT)*pAPIPixelFormat;
+								nAPIFormat = static_cast<D3DFORMAT>(*pAPIPixelFormat);
 								if (pDevice->CreateTexture(m_nSize, 1, m_nNumOfMipmaps, 0, nAPIFormat, D3DPOOL_DEFAULT, &m_pD3D9Texture, nullptr) != D3D_OK) {
 									// Error!
 									m_nFormat		= Unknown;
@@ -196,11 +196,11 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 													break;
 
 												case CompressionLATC1:
-													nSourceFormat = (D3DFORMAT)'1ITA';
+													nSourceFormat = static_cast<D3DFORMAT>('1ITA');
 													break;
 
 												case CompressionLATC2:
-													nSourceFormat = (D3DFORMAT)'2ITA';
+													nSourceFormat = static_cast<D3DFORMAT>('2ITA');
 													break;
 
 												// [TODO] Check Image::DXTC_RXGB
@@ -210,15 +210,15 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 											}
 											if (nSourceFormat != D3DFMT_UNKNOWN) {
 												RECT sSourceRect[] = { 0, 0, m_nSize, 1 };
-												D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, (uint8*)pMipmapImageBuffer->GetCompressedData(), nSourceFormat,
+												D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, static_cast<const uint8*>(pMipmapImageBuffer->GetCompressedData()), nSourceFormat,
 																		  pMipmapImageBuffer->GetCompressedDataSize(), nullptr,
 																		  sSourceRect, D3DX_FILTER_NONE, 0);
 											}
 										} else {
 											// Uncompressed source data
-											D3DFORMAT  nSourceFormat;
-											uint8      nNumOfComponents = (uint8)pMipmapImageBuffer->GetComponentsPerPixel();
-											uint8     *pTempData        = (uint8*)pMipmapImageBuffer->GetData();
+											D3DFORMAT    nSourceFormat;
+											uint8  nNumOfComponents = static_cast<uint8>(pMipmapImageBuffer->GetComponentsPerPixel());
+											uint8 *pTempData        = const_cast<uint8*>(static_cast<const uint8*>(pMipmapImageBuffer->GetData()));
 											switch (nNumOfComponents) {
 												case 1:
 													nSourceFormat = D3DFMT_L8;
@@ -235,8 +235,8 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 													nSourceFormat = D3DFMT_R8G8B8;
 													pTempData = new uint8[nTempSize];
 														  uint8 *pTempImageData = pTempData;
-													const uint8 *pImageData     = (const uint8*)pMipmapImageBuffer->GetData();
-													const uint8 *pImageDataEnd  = (const uint8*)pMipmapImageBuffer->GetData() + nTempSize;
+													const uint8 *pImageData     = static_cast<const uint8*>(pMipmapImageBuffer->GetData());
+													const uint8 *pImageDataEnd  = static_cast<const uint8*>(pMipmapImageBuffer->GetData()) + nTempSize;
 													while (pImageData<pImageDataEnd) {
 														// Copy data and swap r/b
 														pTempImageData[0] = pImageData[2];
@@ -263,7 +263,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 												D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, pTempData, nSourceFormat,
 																		  nSize*nNumOfComponents, nullptr, sSourceRect, D3DX_FILTER_NONE, 0);
 											}
-											if (pTempData != (uint8*)pMipmapImageBuffer->GetData())
+											if (pTempData != static_cast<const uint8*>(pMipmapImageBuffer->GetData()))
 												delete [] pTempData;
 										}
 
@@ -311,7 +311,7 @@ bool TextureBuffer1D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 	// Check parameters and Direct3D 9 texture
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace && m_pD3D9Texture) {
 		// Get API pixel format
-		uint32 *pAPIPixelFormat = ((PLRenderer::RendererBackend&)GetRenderer()).GetAPIPixelFormat(nFormat);
+		uint32 *pAPIPixelFormat = static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetAPIPixelFormat(nFormat);
 		if (pAPIPixelFormat) {
 			// Get the size of this mipmap level
 			uint32 nSize = GetSize(nMipmap);
@@ -321,7 +321,7 @@ bool TextureBuffer1D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 			if (m_pD3D9Texture->GetSurfaceLevel(nMipmap, &pDestSurface) == D3D_OK) {
 				// Upload
 				RECT sSourceRect[]  = { 0, 0, nSize, 1 };
-				D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, pData, (D3DFORMAT)*pAPIPixelFormat,
+				D3DXLoadSurfaceFromMemory(pDestSurface, nullptr, nullptr, pData, static_cast<D3DFORMAT>(*pAPIPixelFormat),
 										  IsCompressedFormat() ? GetNumOfBytes(nMipmap) : nSize*GetComponentsPerPixel(),
 										  nullptr, sSourceRect, D3DX_FILTER_NONE, 0);
 
@@ -356,7 +356,7 @@ bool TextureBuffer1D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData
 bool TextureBuffer1D::MakeCurrent(uint32 nStage)
 {
 	// Check if there are renderer information
-	LPDIRECT3DDEVICE9 pDevice = ((Renderer&)GetRenderer()).GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(GetRenderer()).GetDevice();
 	if (pDevice) {
 		if (GetRenderer().GetTextureBuffer(nStage) != this) {
 			if (!GetRenderer().SetTextureBuffer(nStage, this))

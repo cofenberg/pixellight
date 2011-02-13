@@ -65,16 +65,16 @@ FixedFunctions::FixedFunctions(Renderer &cRendererD3D9) :
 		m_pRendererD3D9->GetInstance()->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &pCaps);
 
 		// Maximum number of active lights
-		m_sCapabilities.nMaxActiveLights = (uint8)pCaps.MaxActiveLights;
+		m_sCapabilities.nMaxActiveLights = static_cast<uint8>(pCaps.MaxActiveLights);
 
 		// Maximum number of clip planes
-		m_sCapabilities.nMaxClipPlanes = (uint8)pCaps.MaxUserClipPlanes;
+		m_sCapabilities.nMaxClipPlanes = static_cast<uint8>(pCaps.MaxUserClipPlanes);
 
 		// Vertex buffer fog coordinates supported?
 		m_sCapabilities.bVertexBufferFogCoord = true;
 
 		// Maximum vertex buffer streams
-		m_sCapabilities.nMaxVertexBufferStreams = (uint8)pCaps.MaxStreams;
+		m_sCapabilities.nMaxVertexBufferStreams = static_cast<uint8>(pCaps.MaxStreams);
 	}
 
 	{ // Wrappers
@@ -299,7 +299,7 @@ bool FixedFunctions::SetVertexDeclaration()
 		// the vertex buffer directly...
 		if (m_nNumOfVertexStreams == 1) {
 			// We can use the vertex declaration of the vertex buffer directly
-			if (m_pRendererD3D9->GetDevice()->SetVertexDeclaration(((VertexBuffer*)m_ppCurrentVertexBuffer[0])->GetVertexDeclaration()) != D3D_OK)
+			if (m_pRendererD3D9->GetDevice()->SetVertexDeclaration(static_cast<VertexBuffer*>(m_ppCurrentVertexBuffer[0])->GetVertexDeclaration()) != D3D_OK)
 				return false; // Error!
 		} else {
 			// Release the previous constructed vertex declaration
@@ -369,12 +369,12 @@ bool FixedFunctions::SetVertexDeclaration()
 
 							// Set declaration
 							D3DVERTEXELEMENT9 *pDecl = &m_pConstructedDeclarations[nDeclaration];
-							pDecl->Stream	  = (WORD)nStreamNumber;
-							pDecl->Offset	  = (WORD)pAttribute->nOffset;
-							pDecl->Type		  = (uint8)pAttribute->nTypeAPI;
+							pDecl->Stream	  = static_cast<WORD>(nStreamNumber);
+							pDecl->Offset	  = static_cast<WORD>(pAttribute->nOffset);
+							pDecl->Type		  = static_cast<uint8>(pAttribute->nTypeAPI);
 							pDecl->Method	  = D3DDECLMETHOD_DEFAULT;
 							pDecl->Usage	  = nUsageAPI;
-							pDecl->UsageIndex = (BYTE)pAttribute->nChannel;
+							pDecl->UsageIndex = static_cast<BYTE>(pAttribute->nChannel);
 
 							// Next declaration, please
 							nDeclaration++;
@@ -443,7 +443,7 @@ void FixedFunctions::ResetRenderStates()
 {
 	// Set renderer states to this default settings
 	for (uint32 i=0; i<RenderState::Number; i++)
-		SetRenderState((RenderState::Enum)i, m_nDefaultRenderState[i]);
+		SetRenderState(static_cast<RenderState::Enum>(i), m_nDefaultRenderState[i]);
 }
 
 int FixedFunctions::GetRenderState(RenderState::Enum nState) const
@@ -752,7 +752,7 @@ void FixedFunctions::ResetTextureStageStates()
 	// Set texture stage states to this default settings
 	for (uint32 nStage=0; nStage<m_pRendererD3D9->GetCapabilities().nMaxTextureUnits; nStage++) {
 		for (uint32 i=0; i<TextureStage::Number; i++)
-			SetTextureStageState(nStage, (TextureStage::Enum)i, m_nDefaultTextureStageState[i]);
+			SetTextureStageState(nStage, static_cast<TextureStage::Enum>(i), m_nDefaultTextureStageState[i]);
 	}
 }
 
@@ -862,11 +862,11 @@ bool FixedFunctions::SetTextureStageState(uint32 nStage, TextureStage::Enum nSta
 		// Set texture stage state
 		switch (nState) {
 			case TextureStage::ColorTexEnv:
-				ConfigureTexEnv(pDevice, nStage, (TextureEnvironment::Enum)nValue, true);
+				ConfigureTexEnv(pDevice, nStage, static_cast<TextureEnvironment::Enum>(nValue), true);
 				break;
 
 			case TextureStage::AlphaTexEnv:
-				ConfigureTexEnv(pDevice, nStage, (TextureEnvironment::Enum)nValue, false);
+				ConfigureTexEnv(pDevice, nStage, static_cast<TextureEnvironment::Enum>(nValue), false);
 				break;
 
 			case TextureStage::TexGen:
@@ -920,7 +920,7 @@ void FixedFunctions::ResetMaterialStates()
 {
 	// Set material states to this default settings
 	for (uint32 i=0; i<MaterialState::Number; i++)
-		SetMaterialState((MaterialState::Enum)i, m_nDefaultMaterialState[i]);
+		SetMaterialState(static_cast<MaterialState::Enum>(i), m_nDefaultMaterialState[i]);
 }
 
 int FixedFunctions::GetMaterialState(MaterialState::Enum nState) const
@@ -1186,7 +1186,7 @@ bool FixedFunctions::SetClipPlaneEnabled(char nIndex, bool bEnable)
 			SetClipPlaneEnabled(i, bEnable);
 	} else {
 		// Check whether the index and the device is valid
-		if (nIndex >= (signed)m_sCapabilities.nMaxClipPlanes || !m_pRendererD3D9->GetDevice())
+		if (nIndex >= static_cast<signed>(m_sCapabilities.nMaxClipPlanes) || !m_pRendererD3D9->GetDevice())
 			return false; // Error!
 
 		// Set clip plane state
@@ -1228,7 +1228,7 @@ bool FixedFunctions::SetClipPlane(char nIndex, float fA, float fB, float fC, flo
 			SetClipPlane(i, fA, fB, fC, fD);
 	} else {
 		// Check whether the index and the device is valid
-		if (nIndex >= (signed)m_sCapabilities.nMaxClipPlanes || !m_pRendererD3D9->GetDevice())
+		if (nIndex >= static_cast<signed>(m_sCapabilities.nMaxClipPlanes) || !m_pRendererD3D9->GetDevice())
 			return false; // Error!
 
 		// Set the clip plane
@@ -1289,7 +1289,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 	// Should an vertex buffer be set?
 	if (pVertexBuffer) {
 		// Yes, make it current
-		if (!((VertexBuffer*)pVertexBuffer)->MakeCurrent(nStreamNumber, nOffset)) {
+		if (!static_cast<VertexBuffer*>(pVertexBuffer)->MakeCurrent(nStreamNumber, nOffset)) {
 			m_ppCurrentVertexBuffer[nStreamNumber] = pT;
 
 			// Error!

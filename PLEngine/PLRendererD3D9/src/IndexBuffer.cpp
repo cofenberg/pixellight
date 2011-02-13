@@ -47,7 +47,7 @@ IndexBuffer::~IndexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferNum--;
 }
 
 
@@ -66,7 +66,7 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 	m_nTypeAPI(D3DFMT_UNKNOWN)
 {
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nIndexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nIndexBufferNum++;
 }
 
 /**
@@ -76,10 +76,10 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 bool IndexBuffer::MakeCurrent()
 {
 	// Check if there's an index buffer and check if there are renderer information
-	if ((m_pIndexBuffer || m_pData) && ((Renderer&)GetRenderer()).GetDevice()) {
+	if ((m_pIndexBuffer || m_pData) && static_cast<Renderer&>(GetRenderer()).GetDevice()) {
 		// Make this index buffer to the renderers current one
 		if (m_pIndexBuffer)
-			return (((Renderer&)GetRenderer()).GetDevice()->SetIndices(m_pIndexBuffer) == D3D_OK);
+			return (static_cast<Renderer&>(GetRenderer()).GetDevice()->SetIndices(m_pIndexBuffer) == D3D_OK);
 		else
 			return true; // Done
 	} else {
@@ -119,7 +119,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 		return true; // Done
 
 	// Check if there are renderer information
-	if (!((Renderer&)GetRenderer()).GetDevice())
+	if (!static_cast<Renderer&>(GetRenderer()).GetDevice())
 		return false; // Error!
 
 	// Get API dependent usage
@@ -143,7 +143,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 	// Init data
 	uint8 *pDataBackup = nullptr;
@@ -157,9 +157,9 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 
 		// Delete data
 		if (m_nElementType == UInt)
-			delete [] (uint32*)m_pData;
+			delete [] static_cast<uint32*>(m_pData);
 		else
-			delete [] (uint16*)m_pData;
+			delete [] static_cast<uint16*>(m_pData);
 		m_pData = nullptr;
 	} else if (m_pIndexBuffer) {
 		if (bKeepData && !m_pData && !pDataBackup && Lock(PLRenderer::Lock::ReadOnly)) {
@@ -182,12 +182,12 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	// Create the index buffer
 	if (nUsage != PLRenderer::Usage::Software) {
 		// Create the Direct3D index buffer
-		if (((Renderer&)GetRenderer()).GetDevice()->CreateIndexBuffer(m_nSize,
-																	  m_nUsageAPI,
-																	  m_nTypeAPI,
-																	  m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
-																	  &m_pIndexBuffer,
-																	  nullptr) != D3D_OK)
+		if (static_cast<Renderer&>(GetRenderer()).GetDevice()->CreateIndexBuffer(m_nSize,
+																				 m_nUsageAPI,
+																				 m_nTypeAPI,
+																				 m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
+																				 &m_pIndexBuffer,
+																				 nullptr) != D3D_OK)
 			return false; // Error!
 	} else {
 		// Create software index buffer
@@ -208,13 +208,13 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 
 		// Cleanup
 		if (m_nElementType == UInt)
-			delete [] (uint32*)m_pData;
+			delete [] static_cast<uint32*>(m_pData);
 		else
-			delete [] (uint16*)m_pData;
+			delete [] static_cast<uint16*>(m_pData);
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem += m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem += m_nSize;
 
 	// Done
 	return true;
@@ -228,9 +228,9 @@ bool IndexBuffer::Clear()
 		m_pIndexBuffer = nullptr;
 	} else if (m_pData) {
 		if (m_nElementType == UInt)
-			delete [] (uint32*)m_pData;
+			delete [] static_cast<uint32*>(m_pData);
 		else
-			delete [] (uint16*)m_pData;
+			delete [] static_cast<uint16*>(m_pData);
 		m_pData = nullptr;
 	} else {
 		// Error!
@@ -238,7 +238,7 @@ bool IndexBuffer::Clear()
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
 
 	// Init
 	m_nElements	= 0;
@@ -274,7 +274,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 		return nullptr; // Error!
 
 	// Lock the index buffer
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBufferLocks++;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 	if (m_pIndexBuffer) {
 		if (m_pIndexBuffer->Lock(0, 0, &m_pLockedData, nFlagAPI) != D3D_OK)
@@ -313,7 +313,7 @@ bool IndexBuffer::Unlock()
 		if (m_pIndexBuffer->Unlock() != D3D_OK)
 			return false; // Error!
 	}
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 
 	// Done
 	return true;
@@ -352,12 +352,12 @@ void IndexBuffer::RestoreDeviceData(uint8 **ppBackup)
 	// Restore required?
 	if (!m_bManaged && GetUsage() < PLRenderer::Usage::Software && *ppBackup) {
 		// Restore data
-		((Renderer&)GetRenderer()).GetDevice()->CreateIndexBuffer(m_nSize,
-																  m_nUsageAPI,
-																  m_nTypeAPI,
-																  m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
-																  &m_pIndexBuffer,
-																  nullptr);
+		static_cast<Renderer&>(GetRenderer()).GetDevice()->CreateIndexBuffer(m_nSize,
+																			 m_nUsageAPI,
+																			 m_nTypeAPI,
+																			 m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
+																			 &m_pIndexBuffer,
+																			 nullptr);
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);
 			Unlock();

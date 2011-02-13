@@ -64,7 +64,7 @@ OcclusionQuery::OcclusionQuery(PLRenderer::Renderer &cRenderer) : PLRenderer::Oc
 	m_nPixelCount(100000)
 {
 	// Check if there are renderer information
-	LPDIRECT3DDEVICE9 pDevice = ((Renderer&)cRenderer).GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(cRenderer).GetDevice();
 	if (pDevice) {
 		// Create Direct3D9 occlusion query
 		if (pDevice->CreateQuery(D3DQUERYTYPE_OCCLUSION, &m_pQuery) == D3D_OK)
@@ -117,7 +117,7 @@ bool OcclusionQuery::PullOcclusionQuery(uint32 *pnNumOfFragments)
 	// Check whether hardware occlusion query is supported or not
 	if (m_bHWOcclusionSupport) {
 		// Query
-		if (m_pQuery->GetData((void*)&m_nPixelCount, sizeof(uint32), D3DGETDATA_FLUSH) != S_OK)
+		if (m_pQuery->GetData(static_cast<void*>(&m_nPixelCount), sizeof(uint32), D3DGETDATA_FLUSH) != S_OK)
 			return false; // Error!
 		if (pnNumOfFragments)
 			*pnNumOfFragments = m_nPixelCount;
@@ -173,7 +173,7 @@ void OcclusionQuery::BackupDeviceData(uint8 **ppBackup)
 void OcclusionQuery::RestoreDeviceData(uint8 **ppBackup)
 {
 	if (m_bHWOcclusionSupport)
-		((Renderer&)GetRenderer()).GetDevice()->CreateQuery(D3DQUERYTYPE_OCCLUSION, &m_pQuery);
+		static_cast<Renderer&>(GetRenderer()).GetDevice()->CreateQuery(D3DQUERYTYPE_OCCLUSION, &m_pQuery);
 }
 
 

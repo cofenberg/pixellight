@@ -211,7 +211,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 				for (uint32 i=0; i<PLRenderer::RenderState::Number; i++) {
 					uint32 nState = m_nRenderState[i];
 					m_nRenderState[i] = m_nRenderState[i]+1;
-					SetRenderState((PLRenderer::RenderState::Enum)i, nState);
+					SetRenderState(static_cast<PLRenderer::RenderState::Enum>(i), nState);
 				}
 
 				// Reset render
@@ -224,7 +224,8 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 					PL_LOG(Error, "Can't create Direct3D device! (D3DERR_NOTAVAILABLE)")
 				else if (nError == D3DERR_OUTOFVIDEOMEMORY)
 					PL_LOG(Error, "Can't create Direct3D device! (D3DERR_OUTOFVIDEOMEMORY)")
-				else PL_LOG(Error, "Can't create Direct3D device!")
+				else
+					PL_LOG(Error, "Can't create Direct3D device!")
 			}
 		} else {
 			m_pD3D->Release();
@@ -514,32 +515,32 @@ void Renderer::InitWrappers()
 
 	// Texture buffer pixel formats
 	m_cPLE_TPFWrapper.Resize(PLRenderer::TextureBuffer::NumOfPixelFormats, false, false);
-	m_cPLE_TPFWrapper += D3DFMT_L8;									//  0: PLRenderer::TextureBuffer::L8
-	m_cPLE_TPFWrapper += D3DFMT_L16;								//  1: PLRenderer::TextureBuffer::L16
-	m_cPLE_TPFWrapper += D3DFMT_A8;									//  2: PLRenderer::TextureBuffer::A8
-	m_cPLE_TPFWrapper += D3DFMT_A4L4;								//  3: PLRenderer::TextureBuffer::L4A4
-	m_cPLE_TPFWrapper += D3DFMT_A8L8;								//  4: PLRenderer::TextureBuffer::L8A8
-	m_cPLE_TPFWrapper += D3DFMT_D16;								//  5: PLRenderer::TextureBuffer::D16
-	m_cPLE_TPFWrapper += D3DFMT_D24X8;								//  6: PLRenderer::TextureBuffer::D24
-	m_cPLE_TPFWrapper += D3DFMT_D32;								//  7: PLRenderer::TextureBuffer::D32
-	m_cPLE_TPFWrapper += D3DFMT_R3G3B2;								//  8: PLRenderer::TextureBuffer::R3G3B2
-	m_cPLE_TPFWrapper += D3DFMT_R5G6B5;								//  9: PLRenderer::TextureBuffer::R5G6B5
-	m_cPLE_TPFWrapper += D3DFMT_A1R5G5B5;							// 10: PLRenderer::TextureBuffer::R5G5B5A1
-	m_cPLE_TPFWrapper += D3DFMT_A4R4G4B4;							// 11: PLRenderer::TextureBuffer::R4G4B4A4
+	m_cPLE_TPFWrapper += D3DFMT_L8;													//  0: PLRenderer::TextureBuffer::L8
+	m_cPLE_TPFWrapper += D3DFMT_L16;												//  1: PLRenderer::TextureBuffer::L16
+	m_cPLE_TPFWrapper += D3DFMT_A8;													//  2: PLRenderer::TextureBuffer::A8
+	m_cPLE_TPFWrapper += D3DFMT_A4L4;												//  3: PLRenderer::TextureBuffer::L4A4
+	m_cPLE_TPFWrapper += D3DFMT_A8L8;												//  4: PLRenderer::TextureBuffer::L8A8
+	m_cPLE_TPFWrapper += D3DFMT_D16;												//  5: PLRenderer::TextureBuffer::D16
+	m_cPLE_TPFWrapper += D3DFMT_D24X8;												//  6: PLRenderer::TextureBuffer::D24
+	m_cPLE_TPFWrapper += D3DFMT_D32;												//  7: PLRenderer::TextureBuffer::D32
+	m_cPLE_TPFWrapper += D3DFMT_R3G3B2;												//  8: PLRenderer::TextureBuffer::R3G3B2
+	m_cPLE_TPFWrapper += D3DFMT_R5G6B5;												//  9: PLRenderer::TextureBuffer::R5G6B5
+	m_cPLE_TPFWrapper += D3DFMT_A1R5G5B5;											// 10: PLRenderer::TextureBuffer::R5G5B5A1
+	m_cPLE_TPFWrapper += D3DFMT_A4R4G4B4;											// 11: PLRenderer::TextureBuffer::R4G4B4A4
 	// D3DFMT_R8G8B8 isn't supported widely on current graphics adapters, so we DON'T use it!
-	m_cPLE_TPFWrapper += D3DFMT_X8R8G8B8;							// 12: PLRenderer::TextureBuffer::R8G8B8
-	m_cPLE_TPFWrapper += D3DFMT_A8R8G8B8;							// 13: PLRenderer::TextureBuffer::R8G8B8A8
-	m_cPLE_TPFWrapper += D3DFMT_A2R10G10B10;						// 14: PLRenderer::TextureBuffer::R10G10B10A2
-	m_cPLE_TPFWrapper += D3DFMT_A16B16G16R16;						// 15: PLRenderer::TextureBuffer::R16G16B16A16
-	m_cPLE_TPFWrapper += D3DFMT_DXT1;								// 16: PLRenderer::TextureBuffer::DXT1
-	m_cPLE_TPFWrapper += D3DFMT_DXT3;								// 17: PLRenderer::TextureBuffer::DXT3
-	m_cPLE_TPFWrapper += D3DFMT_DXT5;								// 18: PLRenderer::TextureBuffer::DXT5
-	m_cPLE_TPFWrapper += (D3DFORMAT)MAKEFOURCC('A', 'T', 'I', '1');	// 19: PLRenderer::TextureBuffer::LATC1
-	m_cPLE_TPFWrapper += (D3DFORMAT)MAKEFOURCC('A', 'T', 'I', '2');	// 19: PLRenderer::TextureBuffer::LATC2
-	m_cPLE_TPFWrapper += D3DFMT_R16F;								// 20: PLRenderer::TextureBuffer::L16F
-	m_cPLE_TPFWrapper += D3DFMT_R32F;								// 21: PLRenderer::TextureBuffer::L32F
-	m_cPLE_TPFWrapper += D3DFMT_A16B16G16R16F;						// 22: PLRenderer::TextureBuffer::R16G16B16A16F
-	m_cPLE_TPFWrapper += D3DFMT_A32B32G32R32F;						// 23: PLRenderer::TextureBuffer::R32G32B32A32F
+	m_cPLE_TPFWrapper += D3DFMT_X8R8G8B8;											// 12: PLRenderer::TextureBuffer::R8G8B8
+	m_cPLE_TPFWrapper += D3DFMT_A8R8G8B8;											// 13: PLRenderer::TextureBuffer::R8G8B8A8
+	m_cPLE_TPFWrapper += D3DFMT_A2R10G10B10;										// 14: PLRenderer::TextureBuffer::R10G10B10A2
+	m_cPLE_TPFWrapper += D3DFMT_A16B16G16R16;										// 15: PLRenderer::TextureBuffer::R16G16B16A16
+	m_cPLE_TPFWrapper += D3DFMT_DXT1;												// 16: PLRenderer::TextureBuffer::DXT1
+	m_cPLE_TPFWrapper += D3DFMT_DXT3;												// 17: PLRenderer::TextureBuffer::DXT3
+	m_cPLE_TPFWrapper += D3DFMT_DXT5;												// 18: PLRenderer::TextureBuffer::DXT5
+	m_cPLE_TPFWrapper += static_cast<D3DFORMAT>(MAKEFOURCC('A', 'T', 'I', '1'));	// 19: PLRenderer::TextureBuffer::LATC1
+	m_cPLE_TPFWrapper += static_cast<D3DFORMAT>(MAKEFOURCC('A', 'T', 'I', '2'));	// 19: PLRenderer::TextureBuffer::LATC2
+	m_cPLE_TPFWrapper += D3DFMT_R16F;												// 20: PLRenderer::TextureBuffer::L16F
+	m_cPLE_TPFWrapper += D3DFMT_R32F;												// 21: PLRenderer::TextureBuffer::L32F
+	m_cPLE_TPFWrapper += D3DFMT_A16B16G16R16F;										// 22: PLRenderer::TextureBuffer::R16G16B16A16F
+	m_cPLE_TPFWrapper += D3DFMT_A32B32G32R32F;										// 23: PLRenderer::TextureBuffer::R32G32B32A32F
 }
 
 /**
@@ -553,20 +554,20 @@ void Renderer::SetupCapabilities()
 	m_pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &pCaps);
 
 	// Maximum number of color render targets
-	m_sCapabilities.nMaxColorRenderTargets = (uint8)pCaps.NumSimultaneousRTs;
+	m_sCapabilities.nMaxColorRenderTargets = static_cast<uint8>(pCaps.NumSimultaneousRTs);
 
 	// Maximum number of texture units
-	m_sCapabilities.nMaxTextureUnits = (uint8)pCaps.MaxSimultaneousTextures;
+	m_sCapabilities.nMaxTextureUnits = static_cast<uint8>(pCaps.MaxSimultaneousTextures);
 
 	// Maximum anisotropy
-	m_sCapabilities.nMaxAnisotropy = (uint16)pCaps.MaxAnisotropy;
+	m_sCapabilities.nMaxAnisotropy = static_cast<uint16>(pCaps.MaxAnisotropy);
 
 	// Maximum tessellation factor
 	// [TODO] ATI extension available
-	m_sCapabilities.nMaxTessellationFactor = (uint8)1;
+	m_sCapabilities.nMaxTessellationFactor = static_cast<uint8>(1);
 
 	// Maximum texture buffer size
-	m_sCapabilities.nMaxTextureBufferSize = (uint16)pCaps.MaxTextureWidth;
+	m_sCapabilities.nMaxTextureBufferSize = static_cast<uint16>(pCaps.MaxTextureWidth);
 
 	// [TODO] Perform a correct check...
 	// Rectangle texture buffers supported?
@@ -575,19 +576,19 @@ void Renderer::SetupCapabilities()
 //											  pCaps.TextureCaps & D3DPTEXTURECAPS_POW2;
 
 	// Maximum rectangle texture buffer size
-	m_sCapabilities.nMaxRectangleTextureBufferSize = (uint16)pCaps.MaxTextureWidth;
+	m_sCapabilities.nMaxRectangleTextureBufferSize = static_cast<uint16>(pCaps.MaxTextureWidth);
 
 	// 3D texture buffers supported?
 	m_sCapabilities.bTextureBuffer3D = (pCaps.TextureCaps & D3DPTEXTURECAPS_VOLUMEMAP) != 0;
 
 	// Maximum 3D texture buffer size
-	m_sCapabilities.nMax3DTextureBufferSize = (uint16)pCaps.MaxVolumeExtent;
+	m_sCapabilities.nMax3DTextureBufferSize = static_cast<uint16>(pCaps.MaxVolumeExtent);
 
 	// Cube texture buffers supported?
 	m_sCapabilities.bTextureBufferCube = (pCaps.TextureCaps & D3DPTEXTURECAPS_CUBEMAP) != 0;
 
 	// Maximum cube texture buffer size
-	m_sCapabilities.nMaxCubeTextureBufferSize = (uint16)pCaps.MaxTextureWidth;
+	m_sCapabilities.nMaxCubeTextureBufferSize = static_cast<uint16>(pCaps.MaxTextureWidth);
 
 	// Stencil wrap supported?
 	if ((pCaps.StencilCaps & D3DSTENCILCAPS_INCR) && (pCaps.StencilCaps & D3DSTENCILCAPS_DECR))
@@ -1479,10 +1480,10 @@ bool Renderer::SetViewport(const PLMath::Rectangle *pRectangle, float fMinZ, flo
 
 		// Get D3D viewport
 		D3DVIEWPORT9 sViewData;
-		sViewData.X      = DWORD(m_cViewportRect.GetX());
-		sViewData.Y      = DWORD(m_cViewportRect.GetY());
-		sViewData.Width  = DWORD(m_cViewportRect.GetWidth());
-		sViewData.Height = DWORD(m_cViewportRect.GetHeight());
+		sViewData.X      = static_cast<DWORD>(m_cViewportRect.GetX());
+		sViewData.Y      = static_cast<DWORD>(m_cViewportRect.GetY());
+		sViewData.Width  = static_cast<DWORD>(m_cViewportRect.GetWidth());
+		sViewData.Height = static_cast<DWORD>(m_cViewportRect.GetHeight());
 		sViewData.MinZ   = fMinZ;
 		sViewData.MaxZ   = fMaxZ;
 
@@ -1503,10 +1504,10 @@ bool Renderer::SetScissorRect(const PLMath::Rectangle *pRectangle)
 	// Check device
 	if (m_pDevice) {
 		// Get scissor rectangle
-		uint32 nX      = uint32(m_cViewportRect.GetX());
-		uint32 nY      = uint32(m_cViewportRect.GetY());
-		uint32 nWidth  = uint32(m_cViewportRect.GetWidth());
-		uint32 nHeight = uint32(m_cViewportRect.GetHeight());
+		uint32 nX      = static_cast<uint32>(m_cViewportRect.GetX());
+		uint32 nY      = static_cast<uint32>(m_cViewportRect.GetY());
+		uint32 nWidth  = static_cast<uint32>(m_cViewportRect.GetWidth());
+		uint32 nHeight = static_cast<uint32>(m_cViewportRect.GetHeight());
 
 		// Set scissor rectangle
 		RECT sRect = {nX, nY, nX+nWidth, nY+nHeight};
@@ -1600,7 +1601,7 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 
 	// Check face index
 	if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
-		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = (PLRenderer::SurfaceTextureBuffer*)pSurface;
+		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
 		if (pSurfaceTextureBuffer->GetTextureBuffer()) {
 			if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
 				if (nFace > 5)
@@ -1649,7 +1650,7 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 		return true; // Done
 
 	// Get texture surface
-	LPDIRECT3DTEXTURE9 pD3D9Texture = ((TextureBuffer2D*)pTextureBuffer)->GetD3D9Texture();
+	LPDIRECT3DTEXTURE9 pD3D9Texture = static_cast<TextureBuffer2D*>(pTextureBuffer)->GetD3D9Texture();
 	if (!pD3D9Texture)
 		return false; // Error!
 	LPDIRECT3DSURFACE9 pTextureSurface;
@@ -1739,7 +1740,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 			SetTextureBuffer(i, pTextureBuffer);
 	} else {
 		// Check if the stage is correct
-		if (nStage >= (signed)m_sCapabilities.nMaxTextureUnits)
+		if (nStage >= static_cast<signed>(m_sCapabilities.nMaxTextureUnits))
 			return false; // Error!
 
 		// Is this texture buffer already set?
@@ -1763,7 +1764,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 
 			// Is the internal PLRenderer::Sampler::MipFilter state other than the 'official' state?
 			if (m_ppnInternalSamplerState[nStage][PLRenderer::Sampler::MipFilter] != m_ppnSamplerState[nStage][PLRenderer::Sampler::MipFilter])
-				SetSamplerState(nStage, (PLRenderer::Sampler::Enum)PLRenderer::Sampler::MipFilter, m_ppnSamplerState[nStage][PLRenderer::Sampler::MipFilter]);
+				SetSamplerState(nStage, static_cast<PLRenderer::Sampler::Enum>(PLRenderer::Sampler::MipFilter), m_ppnSamplerState[nStage][PLRenderer::Sampler::MipFilter]);
 		} else {
 			// No, deactivate texture buffer
 			m_pDevice->SetTexture(nStage, nullptr);
@@ -1787,7 +1788,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 	// Should an index buffer be set?
 	if (pIndexBuffer) {
 		// Yes, make it current
-		if (!((IndexBuffer*)pIndexBuffer)->MakeCurrent()) {
+		if (!static_cast<IndexBuffer*>(pIndexBuffer)->MakeCurrent()) {
 			m_pCurrentIndexBuffer = pT;
 
 			// Error!
@@ -1860,7 +1861,7 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 			return false; // Error!
 
 		// Draw primitive
-		return (m_pDevice->DrawPrimitive((D3DPRIMITIVETYPE)nAPIValue, nStartIndex, nPrimitiveCount) == D3D_OK);
+		return (m_pDevice->DrawPrimitive(static_cast<D3DPRIMITIVETYPE>(nAPIValue), nStartIndex, nPrimitiveCount) == D3D_OK);
 	} else {
 		// Error, invalid value!
 		return false;
@@ -1926,7 +1927,7 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 			return false; // Error!
 
 		// Draw primitive
-		return m_pDevice->DrawIndexedPrimitive((D3DPRIMITIVETYPE)nAPIValue,
+		return m_pDevice->DrawIndexedPrimitive(static_cast<D3DPRIMITIVETYPE>(nAPIValue),
 											   0, // Done in SetStreamSource()
 											   nMinIndex, nNumVertices,
 											   nStartIndex, nPrimitiveCount) == D3D_OK;

@@ -48,7 +48,7 @@ VertexBuffer::~VertexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferNum--;
 }
 
 
@@ -70,7 +70,7 @@ VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::Vertex
 	MemoryManager::Set(m_nOffset, -1, sizeof(int)*NumOfSemantics*MaxPipelineChannels);
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)cRenderer).GetStatisticsT().nVertexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nVertexBufferNum++;
 }
 
 /**
@@ -90,7 +90,7 @@ bool VertexBuffer::MakeCurrent(uint32 nStreamNumber, uint32 nOffset)
 {
 	// Check if there's an vertex buffer and declaration and check if there are renderer information
 	if ((m_pVertexBuffer || m_pData) && m_pVertexDeclaration) {
-		LPDIRECT3DDEVICE9 pDevice = ((Renderer&)GetRenderer()).GetDevice();
+		LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(GetRenderer()).GetDevice();
 		if (pDevice) {
 			if (m_pData)
 				return true; // Done
@@ -131,7 +131,7 @@ LPDIRECT3DVERTEXBUFFER9 VertexBuffer::GetAPIVertexBuffer() const
 bool VertexBuffer::CreateVertexDeclaration()
 {
 	// Check if there are renderer information
-	LPDIRECT3DDEVICE9 pDevice = ((Renderer&)GetRenderer()).GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(GetRenderer()).GetDevice();
 	if (pDevice) {
 		D3DVERTEXELEMENT9 *pDeclarations = new D3DVERTEXELEMENT9[m_lstVertexAttributes.GetNumOfElements()+1];
 
@@ -191,11 +191,11 @@ bool VertexBuffer::CreateVertexDeclaration()
 
 			// Set declaration
 			pDecl->Stream	  = 0;
-			pDecl->Offset	  = (WORD)cAttribute.nOffset;
-			pDecl->Type		  = (uint8)cAttribute.nTypeAPI;
+			pDecl->Offset	  = static_cast<WORD>(cAttribute.nOffset);
+			pDecl->Type		  = static_cast<uint8>(cAttribute.nTypeAPI);
 			pDecl->Method	  = D3DDECLMETHOD_DEFAULT;
 			pDecl->Usage	  = nUsageAPI;
-			pDecl->UsageIndex = (BYTE)cAttribute.nChannel;
+			pDecl->UsageIndex = static_cast<BYTE>(cAttribute.nChannel);
 		}
 
 		// End of declaration (see D3DDECL_END())
@@ -247,7 +247,7 @@ void *VertexBuffer::GetData(uint32 nIndex, uint32 nSemantic, uint32 nChannel)
 			if (nChannel < MaxPipelineChannels && nSemantic >= Position && nSemantic <= Binormal) {
 				// Return the vertex buffer attribute data
 				if (m_nOffset[nSemantic][nChannel] >= 0)
-					return ((uint8*)m_pLockedData)+nIndex*m_nVertexSize+m_nOffset[nSemantic][nChannel];
+					return static_cast<uint8*>(m_pLockedData)+nIndex*m_nVertexSize+m_nOffset[nSemantic][nChannel];
 			}
 		}
 	}
@@ -263,7 +263,7 @@ Color4 VertexBuffer::GetColor(uint32 nIndex, uint32 nChannel)
 		// Check whether the channel is correct
 		if (nChannel < 2) {
 			// Return the color of the vertex
-			const uint32 *pnColor = (const uint32*)GetData(nIndex, Color, nChannel);
+			const uint32 *pnColor = static_cast<const uint32*>(GetData(nIndex, Color, nChannel));
 			if (pnColor)
 				return Color4(Color4::RedFromUInt32(*pnColor), Color4::GreenFromUInt32(*pnColor), Color4::BlueFromUInt32(*pnColor), Color4::AlphaFromUInt32(*pnColor));
 		}
@@ -280,7 +280,7 @@ bool VertexBuffer::SetColor(uint32 nIndex, const Color4 &cColor, uint32 nChannel
 		// Check whether the channel is correct
 		if (nChannel < 2) {
 			// Set the color of the vertex
-			uint32 *pnColor = (uint32*)GetData(nIndex, Color, nChannel);
+			uint32 *pnColor = static_cast<uint32*>(GetData(nIndex, Color, nChannel));
 			if (pnColor) {
 				*pnColor = cColor.ToUInt32();
 
@@ -354,7 +354,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 	// Check if we have to reallocate the buffer
 	if (m_nSize != m_nVertexSize*nElements || m_nUsage != nUsage || m_bManaged != bManaged) {
 		// Check if there are renderer information
-		LPDIRECT3DDEVICE9 pDevice = ((Renderer&)GetRenderer()).GetDevice();
+		LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(GetRenderer()).GetDevice();
 		if (!pDevice)
 			return false; // Error!
 
@@ -406,7 +406,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		ForceUnlock();
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
 
 		// Setup data
 		m_nElements = nElements;
@@ -447,7 +447,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// Update renderer statistics
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
 	}
 
 	// Get data attribute offsets
@@ -477,7 +477,7 @@ bool VertexBuffer::Clear()
 	}
 
 	// Update renderer statistics
-	((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
 
 	// Init
 	m_nElements	= 0;
@@ -511,7 +511,7 @@ void *VertexBuffer::Lock(uint32 nFlag)
 			return nullptr; // Error!
 
 		// Lock the vertex buffer
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
 		m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 		if (m_pVertexBuffer && m_pVertexBuffer->Lock(0, 0, &m_pLockedData, nFlagAPI) != D3D_OK)
 			return nullptr; // Error!
@@ -545,7 +545,7 @@ bool VertexBuffer::Unlock()
 		m_pLockedData = nullptr;
 		if (m_pVertexBuffer && m_pVertexBuffer->Unlock() != D3D_OK)
 			return false; // Error!
-		((PLRenderer::RendererBackend&)GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 	}
 
 	// Done
@@ -586,9 +586,9 @@ void VertexBuffer::RestoreDeviceData(uint8 **ppBackup)
 	// Restore required?
 	if (!m_bManaged && GetUsage() < PLRenderer::Usage::Software && *ppBackup) {
 		// Restore data
-		((Renderer&)GetRenderer()).GetDevice()->CreateVertexBuffer(m_nSize,
-																   m_nUsageAPI, 0, m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
-																   &m_pVertexBuffer, nullptr);
+		static_cast<Renderer&>(GetRenderer()).GetDevice()->CreateVertexBuffer(m_nSize,
+																			  m_nUsageAPI, 0, m_bManaged ? D3DPOOL_MANAGED : D3DPOOL_DEFAULT,
+																			  &m_pVertexBuffer, nullptr);
 		CreateVertexDeclaration();
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);

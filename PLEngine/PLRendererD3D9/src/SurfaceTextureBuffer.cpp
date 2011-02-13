@@ -81,7 +81,7 @@ SurfaceTextureBuffer::SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRe
 //[-------------------------------------------------------]
 PLRenderer::TextureBuffer *SurfaceTextureBuffer::GetTextureBuffer() const
 {
-	return (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+	return static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 }
 
 uint8 SurfaceTextureBuffer::GetTextureBufferFace() const
@@ -101,19 +101,19 @@ void SurfaceTextureBuffer::TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::S
 Vector2i SurfaceTextureBuffer::GetSize() const
 {
 	// Return the size depending of the texture buffer type
-	PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+	PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 	if (pTextureBuffer) {
 		switch (pTextureBuffer->GetType()) {
 			case PLRenderer::Resource::TypeTextureBuffer2D:
-				return ((PLRenderer::TextureBuffer2D*)pTextureBuffer)->GetSize();
+				return static_cast<PLRenderer::TextureBuffer2D*>(pTextureBuffer)->GetSize();
 
 			// [TODO] TextureBufferRectangle currently not supported
 //			case PLRenderer::Resource::TypeTextureBufferRectangle:
-//				return ((PLRenderer::TextureBufferRectangle*)pTextureBuffer)->GetSize();
+//				return static_cast<PLRenderer::TextureBufferRectangle*>(pTextureBuffer)->GetSize();
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
 			{
-				const uint32 nSize = ((PLRenderer::TextureBufferCube*)pTextureBuffer)->GetSize();
+				const uint32 nSize = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer)->GetSize();
 				return Vector2i(nSize, nSize);
 			}
 		}
@@ -140,9 +140,9 @@ bool SurfaceTextureBuffer::Init()
 	DeInit();
 
 	// Get renderer
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (cRenderer.GetDevice()) {
-		PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+		PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 		if (pTextureBuffer) {
 			// Get API pixel format
 			uint32 *pAPIPixelFormat = cRenderer.GetAPIPixelFormat(pTextureBuffer->GetFormat());
@@ -152,7 +152,7 @@ bool SurfaceTextureBuffer::Init()
 					case PLRenderer::Resource::TypeTextureBuffer2D:
 					{
 						// Get texture surface
-						LPDIRECT3DTEXTURE9 pD3D9Texture = ((TextureBuffer2D*)pTextureBuffer)->GetD3D9Texture();
+						LPDIRECT3DTEXTURE9 pD3D9Texture = static_cast<TextureBuffer2D*>(pTextureBuffer)->GetD3D9Texture();
 						if (!pD3D9Texture || pD3D9Texture->GetSurfaceLevel(0, &m_pTextureSurface) != D3D_OK)
 							return false; // Error!
 						break;
@@ -161,7 +161,7 @@ bool SurfaceTextureBuffer::Init()
 					case PLRenderer::Resource::TypeTextureBufferRectangle:
 					{
 						// Get texture surface
-						LPDIRECT3DTEXTURE9 pD3D9Texture = ((TextureBufferRectangle*)pTextureBuffer)->GetD3D9Texture();
+						LPDIRECT3DTEXTURE9 pD3D9Texture = static_cast<TextureBufferRectangle*>(pTextureBuffer)->GetD3D9Texture();
 						if (!pD3D9Texture || pD3D9Texture->GetSurfaceLevel(0, &m_pTextureSurface) != D3D_OK)
 							return false; // Error!
 						break;
@@ -196,14 +196,14 @@ void SurfaceTextureBuffer::DeInit()
 bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 {
 	// Get renderer
-	Renderer &cRenderer = (Renderer&)GetRenderer();
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (cRenderer.GetDevice()) {
 		// Begin scene
-		PLRenderer::TextureBuffer *pTextureBuffer = (PLRenderer::TextureBuffer*)m_cTextureBufferHandler.GetResource();
+		PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 		if (pTextureBuffer) {
 			if (pTextureBuffer->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
 				// Get the cube texture
-				LPDIRECT3DCUBETEXTURE9 pD3D9Texture = ((TextureBufferCube*)pTextureBuffer)->GetD3D9Texture();
+				LPDIRECT3DCUBETEXTURE9 pD3D9Texture = static_cast<TextureBufferCube*>(pTextureBuffer)->GetD3D9Texture();
 				if (!pD3D9Texture)
 					return false; // Error!
 
