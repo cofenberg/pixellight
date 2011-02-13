@@ -122,24 +122,25 @@ void PGSparkles::InitParticle(Particle &cParticle) const
 		float fVelLength = MediumSpeed/cParticle.vVelocity.GetLength();
 		cParticle.vVelocity.x *= fVelLength;
 		cParticle.vVelocity.z *= fVelLength;
-		fVelLength += (float)(0.2*fVelLength);
+		fVelLength += static_cast<float>(0.2*fVelLength);
 		cParticle.vVelocity.y *= fVelLength;
 	} else {
 		float fVelLength = 1/cParticle.vVelocity.GetLength();
 		cParticle.vVelocity.x *= fVelLength*MediumSpeed/5;
 		cParticle.vVelocity.y *= fVelLength*MediumSpeed/5;
 		cParticle.vVelocity.z *= (fVelLength*MediumSpeed);
-		if (cParticle.vVelocity.z > 1) cParticle.vVelocity.z = -cParticle.vVelocity.z;
+		if (cParticle.vVelocity.z > 1)
+			cParticle.vVelocity.z = -cParticle.vVelocity.z;
 	}
 	cParticle.fEnergy = Math::GetRandNegFloat()*EnergyRange + EnergyMin;
 
-	cParticle.vColor[0] = (float)Brightness/255;
-	cParticle.vColor[1] = (float)Brightness/255;
-	cParticle.vColor[2] = (float)Brightness/255;
-	cParticle.vColor[3] = (float)cParticle.fEnergy/255;
+	cParticle.vColor[0] = static_cast<float>(Brightness)/255.0f;
+	cParticle.vColor[1] = static_cast<float>(Brightness)/255.0f;
+	cParticle.vColor[2] = static_cast<float>(Brightness)/255.0f;
+	cParticle.vColor[3] = cParticle.fEnergy/255.0f;
 
-	cParticle.fSize    = (float)(MediumSize + Math::GetRandNegFloat()*MediumSize*0.1)/10;
-	cParticle.fCustom1 = (float)(cParticle.fSize*1.9);
+	cParticle.fSize    = static_cast<float>(MediumSize + Math::GetRandNegFloat()*MediumSize*0.1)/10;
+	cParticle.fCustom1 = cParticle.fSize*1.9f;
 
 	cParticle.bDistorted	 = true;
 	cParticle.vDistortion.x = 0.0f;
@@ -161,8 +162,10 @@ void PGSparkles::NotifyUpdate()
 		if (!(System::GetInstance()->GetMicroseconds() % BuildPerSec)) {
 			while (Math::GetRand() % 5) {
 				Particle *pParticle = AddParticle();
-				if (pParticle) InitParticle(*pParticle);
-				else		   break;
+				if (pParticle)
+					InitParticle(*pParticle);
+				else
+					break;
 			}
 		}
 
@@ -196,7 +199,8 @@ void PGSparkles::NotifyUpdate()
 				cParticle.fSize   -= fTimeDiff;
 				if (cParticle.fEnergy <= 0 || cParticle.fSize <= 0)
 					InitParticle(cParticle);
-				else cParticle.vColor[3] = cParticle.fEnergy/255;
+				else
+					cParticle.vColor[3] = cParticle.fEnergy/255;
 			}
 		}
 

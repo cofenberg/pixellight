@@ -77,8 +77,8 @@ void PGDust::InitFunction()
 	float fLength = 0.01f;
 	Particle *pParticle = AddParticle();
 	while (pParticle) {
-		pParticle->fSize	   = fLength + (float)(Math::GetRand() % 100) / 400.0f;
-		pParticle->vColor.a    = pParticle->fEnergy = 0.4f + (float)(Math::GetRand() % 100) / 500.0f;
+		pParticle->fSize	   = fLength + static_cast<float>(Math::GetRand() % 100) / 400.0f;
+		pParticle->vColor.a    = pParticle->fEnergy = 0.4f + static_cast<float>(Math::GetRand() % 100) / 500.0f;
 		pParticle->vPos		   = GetTransform().GetPosition();
 		pParticle->vVelocity.x = Math::GetRandNegFloat()*fLength;
 		pParticle->vVelocity.y = Math::GetRandNegFloat()*fLength;

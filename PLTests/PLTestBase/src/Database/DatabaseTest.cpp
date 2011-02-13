@@ -102,7 +102,7 @@ void DatabaseTest::PrintFields(DatabaseQueryResult *pQResult)
 
 	// Print the fild names
 	for (uint32 i=0; i<lstList.GetNumOfElements(); i++)
-		Print(String("Field ") + int(i) + ": " + lstList[i] + '\n');
+		Print(String("Field ") + i + ": " + lstList[i] + '\n');
 }
 
 /**
@@ -131,7 +131,7 @@ void DatabaseTest::PrintRows(DatabaseQueryResult *pQResult)
 		int livel = pmapRow->Get("livel").GetInt();
 
 		// Print
-		Print(String("Record: ") + "id: " + int(id) + " name: " + name + " livel: " + livel + '\n');
+		Print(String("Record: ") + "id: " + id + " name: " + name + " livel: " + livel + '\n');
 
 		// Next, please
 		pmapRow = pQResult->FetchRow();

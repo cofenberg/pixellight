@@ -103,9 +103,9 @@ void Application::OnCreateMainWindow()
 
 		// Get the display mode to use
 		if (pWidget->IsInstanceOf("PLEngine::RenderWidget"))
-			pDisplayMode = &((const RenderWidget*)pWidget)->GetDisplayMode();
+			pDisplayMode = &static_cast<const RenderWidget*>(pWidget)->GetDisplayMode();
 		else if (pWidget->IsInstanceOf("PLEngine::RenderWindow"))
-			pDisplayMode = &((const RenderWindow*)pWidget)->GetDisplayMode();
+			pDisplayMode = &static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
 	}
 
 	// Get the used renderer

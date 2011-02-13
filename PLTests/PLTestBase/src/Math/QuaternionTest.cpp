@@ -45,8 +45,8 @@ bool QuaternionTest::CheckAxisAngle(float fX, float fY, float fZ, float fAngle, 
 	Quaternion qQ;
 
 	// Degree to radian
-	fAngle         = float(fAngle*Math::DegToRad);
-	fExpectedAngle = float(fExpectedAngle*Math::DegToRad);
+	fAngle         = static_cast<float>(fAngle*Math::DegToRad);
+	fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
 
 	qQ.FromAxisAngle(fX, fY, fZ, fAngle);
 	qQ.ToAxisAngle(fXT, fYT, fZT, fAngleT);
@@ -59,9 +59,9 @@ bool QuaternionTest::CheckAxisAngle(float fX, float fY, float fZ, float fAngle, 
 bool QuaternionTest::CheckFromRotationMatrix3x3(float fAngleX, float fAngleY, float fAngleZ)
 {
 	// Degree to radian
-	fAngleX = float(fAngleX*Math::DegToRad);
-	fAngleY = float(fAngleY*Math::DegToRad);
-	fAngleZ = float(fAngleZ*Math::DegToRad);
+	fAngleX = static_cast<float>(fAngleX*Math::DegToRad);
+	fAngleY = static_cast<float>(fAngleY*Math::DegToRad);
+	fAngleZ = static_cast<float>(fAngleZ*Math::DegToRad);
 
 	Quaternion qQ, qQT;
 	Matrix3x3 m3x3;
@@ -74,9 +74,9 @@ bool QuaternionTest::CheckFromRotationMatrix3x3(float fAngleX, float fAngleY, fl
 bool QuaternionTest::CheckToRotationMatrix3x3(float fAngleX, float fAngleY, float fAngleZ)
 {
 	// Degree to radian
-	fAngleX = float(fAngleX*Math::DegToRad);
-	fAngleY = float(fAngleY*Math::DegToRad);
-	fAngleZ = float(fAngleZ*Math::DegToRad);
+	fAngleX = static_cast<float>(fAngleX*Math::DegToRad);
+	fAngleY = static_cast<float>(fAngleY*Math::DegToRad);
+	fAngleZ = static_cast<float>(fAngleZ*Math::DegToRad);
 
 	Matrix3x3 m3x3, mT3x3;
 	Quaternion qQ;
@@ -89,9 +89,9 @@ bool QuaternionTest::CheckToRotationMatrix3x3(float fAngleX, float fAngleY, floa
 bool QuaternionTest::CheckFromRotationMatrix4x4(float fAngleX, float fAngleY, float fAngleZ)
 {
 	// Degree to radian
-	fAngleX = float(fAngleX*Math::DegToRad);
-	fAngleY = float(fAngleY*Math::DegToRad);
-	fAngleZ = float(fAngleZ*Math::DegToRad);
+	fAngleX = static_cast<float>(fAngleX*Math::DegToRad);
+	fAngleY = static_cast<float>(fAngleY*Math::DegToRad);
+	fAngleZ = static_cast<float>(fAngleZ*Math::DegToRad);
 
 	Quaternion qQ, qQT;
 	Matrix4x4 m4x4;
@@ -104,9 +104,9 @@ bool QuaternionTest::CheckFromRotationMatrix4x4(float fAngleX, float fAngleY, fl
 bool QuaternionTest::CheckToRotationMatrix4x4(float fAngleX, float fAngleY, float fAngleZ)
 {
 	// Degree to radian
-	fAngleX = float(fAngleX*Math::DegToRad);
-	fAngleY = float(fAngleY*Math::DegToRad);
-	fAngleZ = float(fAngleZ*Math::DegToRad);
+	fAngleX = static_cast<float>(fAngleX*Math::DegToRad);
+	fAngleY = static_cast<float>(fAngleY*Math::DegToRad);
+	fAngleZ = static_cast<float>(fAngleZ*Math::DegToRad);
 
 	Matrix4x4 m4x4, mT4x4;
 	Quaternion qQ;

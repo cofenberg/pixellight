@@ -89,7 +89,7 @@ void Application::Restart()
 			pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessOldFilm", "Flags='Inactive'");
 
 			// Make this to our main scene camera
-			SetCamera((SNCamera*)pCamera);
+			SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 		}
 
 		// Create an UFO from mars attacking the earth :D
@@ -125,7 +125,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		case PLGUIKEY_P:
 		{
 			// Get the camera
-			const SceneNode *pCamera = (SceneNode*)GetCamera();
+			const SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Loop through all available post process scene node modifiers
 				bool			   bRenderToTexture = false;
@@ -203,7 +203,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	// Create a scene container with our 'concrete sound scene' using the default sound API
 	SceneNode *pSceneContainerNode = cContainer.Create("PLSound::SCSound", "SoundScene", "Pitch=\"0.6\"");
 	if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
-		SceneContainer *pSceneContainer = (SceneContainer*)pSceneContainerNode;
+		SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 
 		// Protect this important container!
 		pSceneContainer->SetProtected(true);
@@ -212,7 +212,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		// Setup scene surface painter
 		SurfacePainter *pPainter = GetPainter();
 		if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-			SPScene *pSPScene = (SPScene*)pPainter;
+			SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 			pSPScene->SetRootContainer(cContainer.GetContainer());
 			pSPScene->SetSceneContainer(pSceneContainer);
 

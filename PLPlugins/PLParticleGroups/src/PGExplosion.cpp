@@ -182,8 +182,13 @@ void PGExplosion::NotifyUpdate()
 		// Explosion finished?
 		if (!nActive) {
 			switch (Mode) {
-				case Repeat: InitParticles(); break;
-				case Remove: Delete();		  break;
+				case Repeat:
+					InitParticles();
+					break;
+
+				case Remove:
+					Delete();
+					break;
 			}
 		}
 	}

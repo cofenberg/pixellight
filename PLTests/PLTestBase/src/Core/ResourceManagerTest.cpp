@@ -85,9 +85,9 @@ void ResourceManagerTest::Test()
 
 	// Get resources
 	StartTask("Get resources");
-	EndTask(lstManager.Get((uint32)0) == pMini0 && lstManager.Get("Mini 0") == pMini0 &&
-			lstManager.Get((uint32)1) == pMini1 && lstManager.Get("Mini 1") == pMini1 &&
-			lstManager.Get((uint32)2) == pMini2 && lstManager.Get("Mini 2") == pMini2);
+	EndTask(lstManager.Get(static_cast<uint32>(0)) == pMini0 && lstManager.Get("Mini 0") == pMini0 &&
+			lstManager.Get(static_cast<uint32>(1)) == pMini1 && lstManager.Get("Mini 1") == pMini1 &&
+			lstManager.Get(static_cast<uint32>(2)) == pMini2 && lstManager.Get("Mini 2") == pMini2);
 
 	// Clear
 	StartTask("Clear");

@@ -136,7 +136,7 @@ bool Application::ChoosePhysicsAPI()
 				// Setup scene surface painter
 				SurfacePainter *pPainter = GetPainter();
 				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-					SPScene *pSPScene = (SPScene*)pPainter;
+					SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 					pSPScene->SetRootContainer(nullptr);
 					pSPScene->SetSceneContainer(nullptr);
 					pSPScene->SetCamera(nullptr);
@@ -368,7 +368,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		// Create a scene container with our 'concrete physics scene', the physics simulation is not active by default
 		SceneNode *pSceneContainerNode = cContainer.Create("PLPhysics::SCPhysicsWorld", "Scene", "PhysicsAPI=\"" + m_sPhysicsAPI + "\" SimulationActive=\"0\"");
 		if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
-			SceneContainer *pSceneContainer = (SceneContainer*)pSceneContainerNode;
+			SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 
 			// Protect this important container!
 			pSceneContainer->SetProtected(true);
@@ -384,7 +384,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			pSceneContainer->Create("PLScene::SNHelper", "RagdollTargetHelper");
 
 			// Throw in a cooool ragdoll into the scene :)
-			m_pRagdoll = (SNRagdoll*)pSceneContainer->Create("PLPhysics::SNRagdoll", "Ragdoll", "Position=\"0.3 2.0 7.1\" Scale=\"0.015 0.015 0.015\" Mesh=\"Data/Meshes/Soldier.mesh\" RagdollFilename=\"Data/Misc/Soldier.ragdoll\" InitFrozen=\"0\"");
+			m_pRagdoll = static_cast<SNRagdoll*>(pSceneContainer->Create("PLPhysics::SNRagdoll", "Ragdoll", "Position=\"0.3 2.0 7.1\" Scale=\"0.015 0.015 0.015\" Mesh=\"Data/Meshes/Soldier.mesh\" RagdollFilename=\"Data/Misc/Soldier.ragdoll\" InitFrozen=\"0\""));
 			// Add an anchor scene node modifier attaching the camera target helper scene node to the ragdoll
 			if (m_pRagdoll)
 				m_pRagdoll->AddModifier("PLScene::SNMAnchor", "AttachedNode=\"RagdollTargetHelper\" PositionOffset=\"0.0 80.0 0.0\"");
@@ -408,7 +408,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			SceneNode *pCamera = pSceneContainer->Create("PLScene::SNCamera", "LookAtCamera", "Position=\"0.0 5.0 15.0\"");
 			if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 				// Make this to our main scene camera
-				SetCamera((SNCamera*)pCamera);
+				SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 				// Add a 'look at' scene node modifier
 				pCamera->AddModifier("PLScene::SNMRotationTarget", "Target=\"RagdollTargetHelper\"");
@@ -417,7 +417,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			// Setup scene surface painter
 			SurfacePainter *pPainter = GetPainter();
 			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-				SPScene *pSPScene = (SPScene*)pPainter;
+				SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 				pSPScene->SetRootContainer(cContainer.GetContainer());
 				pSPScene->SetSceneContainer(pSceneContainer);
 			}
@@ -428,7 +428,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Add our information text scene nodes
 				SceneNode *pInfoText = pContainer->Create("PLScene::SceneContainer", "InfoText", "Flags=\"NoCulling\"");
 				if (pInfoText && pInfoText->IsInstanceOf("PLScene::SceneContainer")) {
-					SceneContainer *pInfoTextContainer = (SceneContainer*)pInfoText;
+					SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pInfoText);
 					
 					// The name of the used physics API
 					pInfoTextContainer->Create("PLScene::SNText2D", "PhysicsAPI", "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Physics API: ") + GetPhysicsAPI() + '\"');

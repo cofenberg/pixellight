@@ -105,13 +105,13 @@ void Application::UpdateMassTextNode()
 	SceneContainer *pRootContainer = GetRootScene();
 	if (pRootContainer) {
 		// Get the scene info text container
-		SceneContainer *pSceneContainer = (SceneContainer*)pRootContainer->Get("InfoText");
+		SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pRootContainer->Get("InfoText"));
 		if (pSceneContainer) {
 			// Get the mass text scene node
 			SceneNode *pInfoTextNode = pSceneContainer->Get("Mass");
 			if (pInfoTextNode) {
 				// Get the scene container
-				pSceneContainer = (SceneContainer*)pRootContainer->Get("Scene");
+				pSceneContainer = static_cast<SceneContainer*>(pRootContainer->Get("Scene"));
 				if (pSceneContainer) {
 					// Get the current mass of the small falling box
 					SceneNode *pSceneNode = pSceneContainer->Get("SmallBox");
@@ -169,7 +169,7 @@ bool Application::ChoosePhysicsAPI()
 				// Setup scene surface painter
 				SurfacePainter *pPainter = GetPainter();
 				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-					SPScene *pSPScene = (SPScene*)pPainter;
+					SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 					pSPScene->SetRootContainer(nullptr);
 					pSPScene->SetSceneContainer(nullptr);
 					pSPScene->SetCamera(nullptr);
@@ -204,7 +204,7 @@ bool Application::ChoosePhysicsAPI()
 Body *Application::GetPhysicsBody(SceneNode &cSceneNode) const
 {
 	// Get the PL physics body scene node modifier of the given scene node
-	const SNMPhysicsBodyBox *pModifier = (SNMPhysicsBodyBox*)cSceneNode.GetModifier("PLPhysics::SNMPhysicsBodyBox");
+	const SNMPhysicsBodyBox *pModifier = static_cast<SNMPhysicsBodyBox*>(cSceneNode.GetModifier("PLPhysics::SNMPhysicsBodyBox"));
 
 	// Return the PL physics body this modifier is using
 	return pModifier ? pModifier->GetBody() : nullptr;
@@ -452,7 +452,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		// Create a scene container with our 'concrete physics scene', the physics simulation is not active by default
 		SceneNode *pSceneContainerNode = cContainer.Create("PLPhysics::SCPhysicsWorld", "Scene", "PhysicsAPI=\"" + m_sPhysicsAPI + "\" SimulationActive=\"0\"");
 		if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
-			SceneContainer *pSceneContainer = (SceneContainer*)pSceneContainerNode;
+			SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 
 			// Protect this important container!
 			pSceneContainer->SetProtected(true);
@@ -462,7 +462,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			SceneNode *pCamera = pSceneContainer->Create("PLScene::SNCamera", "FixedCamera", "Position=\"0.0 5.0 15.0\" Rotation=\"30.0 180.0 0.0\"");
 			if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 				// Make this to our main scene camera
-				SetCamera((SNCamera*)pCamera);
+				SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 			}
 
 			// Create an static physics scene node with the 'floor' mesh
@@ -495,7 +495,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			// Setup scene surface painter
 			SurfacePainter *pPainter = GetPainter();
 			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-				SPScene *pSPScene = (SPScene*)pPainter;
+				SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 				pSPScene->SetRootContainer(cContainer.GetContainer());
 				pSPScene->SetSceneContainer(pSceneContainer);
 			}
@@ -514,7 +514,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Add our information text scene nodes
 				SceneNode *pInfoText = pContainer->Create("PLScene::SceneContainer", "InfoText", "Flags=\"NoCulling\"");
 				if (pInfoText && pInfoText->IsInstanceOf("PLScene::SceneContainer")) {
-					SceneContainer *pInfoTextContainer = (SceneContainer*)pInfoText;
+					SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pInfoText);
 					
 					// The name of the used physics API
 					pInfoTextContainer->Create("PLScene::SNText2D", "PhysicsAPI", "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Physics API: ") + GetPhysicsAPI() + '\"');
@@ -541,7 +541,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			pSceneNode = pSceneContainer->Get("Box");
 			if (pSceneNode) {
 				// Get the physics body scene node modifier of the 'Box' scene node
-				SNMPhysicsBodyBox *pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
+				SNMPhysicsBodyBox *pBodyModifier = static_cast<SNMPhysicsBodyBox*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox"));
 				if (pBodyModifier) {
 					// Get the physics body of 'Box'
 					Body *pBoxBody = pBodyModifier->GetBody();
@@ -549,7 +549,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					pSceneNode = pBoxBody ? pSceneContainer->Get("SmallBox") : nullptr;
 					if (pSceneNode) {
 						// Get the physics body scene node modifier of the 'SmallBox' scene node
-						pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
+						pBodyModifier = static_cast<SNMPhysicsBodyBox*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox"));
 						if (pBodyModifier) {
 							// Get the physics body of 'SmallBox'
 							Body *pSmallBoxBody = pBodyModifier->GetBody();
@@ -568,7 +568,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			pSceneNode = pSceneContainer->Get("Box");
 			if (pSceneNode) {
 				// Get the physics body scene node modifier of the 'Box' scene node
-				SNMPhysicsBodyBox *pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
+				SNMPhysicsBodyBox *pBodyModifier = static_cast<SNMPhysicsBodyBox*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox"));
 				if (pBodyModifier) {
 					// Get the physics body of 'Box'
 					Body *pBoxBody = pBodyModifier->GetBody();
@@ -576,7 +576,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 					pSceneNode = pBoxBody ? pSceneContainer->Get("SmallBox") : nullptr;
 					if (pSceneNode) {
 						// Get the physics body scene node modifier of the 'SmallBox' scene node
-						pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
+						pBodyModifier = static_cast<SNMPhysicsBodyBox*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox"));
 						if (pBodyModifier) {
 							// Get the physics body of 'SmallBox'
 							Body *pSmallBoxBody = pBodyModifier->GetBody();
@@ -598,7 +598,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			pSceneNode = pSceneContainer->Get("Box");
 			if (pSceneNode) {
 				// Get the physics body scene node modifier of the 'Box' scene node
-				SNMPhysicsBodyBox *pBodyModifier = (SNMPhysicsBodyBox*)pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
+				SNMPhysicsBodyBox *pBodyModifier = static_cast<SNMPhysicsBodyBox*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox"));
 				if (pBodyModifier) {
 					// Get the physics body of 'Box'
 					Body *pBoxBody = pBodyModifier->GetBody();
@@ -614,7 +614,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			// Connect contact event handler
 			if (pSceneContainer->IsInstanceOf("PLPhysics::SCPhysicsWorld")) {
 				// Get the physics world
-				World *pPhysicsWorld = ((SCPhysicsWorld*)pSceneContainer)->GetWorld();
+				World *pPhysicsWorld = static_cast<SCPhysicsWorld*>(pSceneContainer)->GetWorld();
 				if (pPhysicsWorld)
 					pPhysicsWorld->EventContact.Connect(&EventHandlerContact);
 			}

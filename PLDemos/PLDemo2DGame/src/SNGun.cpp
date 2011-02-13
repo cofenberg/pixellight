@@ -160,7 +160,7 @@ void SNGun::NotifyUpdate()
 	m_fFrame += fDelta * 3.0f;
 	if (m_fFrame > 12.0f) m_fFrame = 12.0f;
 	if (m_fFrame <  0.0f) m_fFrame =  0.0f;
-	m_nFrame = (char)m_fFrame;
+	m_nFrame = static_cast<char>(m_fFrame);
 
 	// Create a projectile?
 	if (m_pController->Fire.IsHit()) {
@@ -201,7 +201,7 @@ void SNGun::NotifyUpdate()
 
 	// Collision detection
 	// Create a new scene query we can use to check which scene nodes are within a given axis aligned bounding box
-	SQAABoundingBox *pSceneQuery = (SQAABoundingBox*)GetContainer()->CreateQuery("PLScene::SQAABoundingBox");
+	SQAABoundingBox *pSceneQuery = static_cast<SQAABoundingBox*>(GetContainer()->CreateQuery("PLScene::SQAABoundingBox"));
 	if (pSceneQuery) {
 		// Connect event handler
 		pSceneQuery->EventSceneNode.Connect(&EventHandlerOnSceneNode);

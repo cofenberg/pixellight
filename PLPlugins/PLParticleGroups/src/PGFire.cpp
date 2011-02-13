@@ -122,7 +122,8 @@ void PGFire::NotifyUpdate()
 			pParticle->vColor.r    = pParticle->vColor.g = pParticle->vColor.b = 1.0f;
 			pParticle->bDistorted  = false;
 
-			if (!pParticle->pRot) pParticle->pRot = new Quaternion();
+			if (!pParticle->pRot)
+				pParticle->pRot = new Quaternion();
 			Matrix3x3 mRot;
 			mRot.LookAt(Vector3::Zero, pParticle->vVelocity.GetNormalized(), Vector3::UnitY);
 			pParticle->pRot->FromRotationMatrix(mRot);
@@ -143,7 +144,8 @@ void PGFire::NotifyUpdate()
 				} else {
 					cParticle.fSize += fTimeDiff*2*Size;
 					cParticle.vColor.a = cParticle.fEnergy*5;
-					if (cParticle.vColor.a > 1.0f) cParticle.vColor.a = 1.0f;
+					if (cParticle.vColor.a > 1.0f)
+						cParticle.vColor.a = 1.0f;
 
 					cParticle.vVelocity += GetGravity()*fTimeDiff*2*Size;
 

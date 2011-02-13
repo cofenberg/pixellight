@@ -79,52 +79,52 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 			// security we check the pointer given by GetData() for a null pointer, but normally that's not required.
 
 			// Setup vertex 0
-			float *pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::Position);
+			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
 			if (pfVertex) {
 				pfVertex[0] = -1.0f;
 				pfVertex[1] =  1.0f;
 				pfVertex[2] =  0.0f;
 			}
-			pfVertex = (float*)m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 			if (pfVertex) {
 				pfVertex[0] = 0.0f;
 				pfVertex[1] = 0.0f;
 			}
 
 			// Setup vertex 1
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::Position));
 			if (pfVertex) {
 				pfVertex[0] = -1.0f;
 				pfVertex[1] = -1.0f;
 				pfVertex[2] =  0.0f;
 			}
-			pfVertex = (float*)m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord));
 			if (pfVertex) {
 				pfVertex[0] = 0.0f;
 				pfVertex[1] = 1.0f;
 			}
 
 			// Setup vertex 2
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::Position));
 			if (pfVertex) {
 				pfVertex[0] = 1.0f;
 				pfVertex[1] = 1.0f;
 				pfVertex[2] = 0.0f;
 			}
-			pfVertex = (float*)m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord));
 			if (pfVertex) {
 				pfVertex[0] = 1.0f;
 				pfVertex[1] = 0.0f;
 			}
 
 			// Setup vertex 3
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::Position);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::Position));
 			if (pfVertex) {
 				pfVertex[0] =  1.0f;
 				pfVertex[1] = -1.0f;
 				pfVertex[2] =  0.0f;
 			}
-			pfVertex = (float*)m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord);
+			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord));
 			if (pfVertex) {
 				pfVertex[0] = 1.0f;
 				pfVertex[1] = 1.0f;
@@ -143,7 +143,7 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		Image cImage;
 		if (cImage.Load("Data/Textures/PLLogo.dds")) {	// Within "Runtime/Data/Standard.zip"
 			// Create the texture buffer instance by using our image data
-			m_pTextureBuffer = (TextureBuffer*)GetRenderer().CreateTextureBuffer2D(cImage);
+			m_pTextureBuffer = reinterpret_cast<TextureBuffer*>(GetRenderer().CreateTextureBuffer2D(cImage));
 		}
 	}
 }

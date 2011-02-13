@@ -184,17 +184,17 @@ void Vector4Test::Test()
 	bResult = true;
 	// 90°
 	vV = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-	m4x4.FromEulerAngleY(float(90.0f*Math::DegToRad));
+	m4x4.FromEulerAngleY(static_cast<float>(90.0f*Math::DegToRad));
 	vV *= m4x4;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, 0.0f) || !Math::AreEqual(vV.z, -1.0f) || !Math::AreEqual(vV.w, 1.0f)) bResult = false;
 	// -90°
 	vV = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-	m4x4.FromEulerAngleY(-float(90.0f*Math::DegToRad));
+	m4x4.FromEulerAngleY(-static_cast<float>(90.0f*Math::DegToRad));
 	vV *= m4x4;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, 0.0f) || !Math::AreEqual(vV.z, 1.0f) || !Math::AreEqual(vV.w, 1.0f)) bResult = false;
 	// -90° + translation (2, 3, 4)
 	vV = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-	m4x4.FromEulerAngleY(-float(90.0f*Math::DegToRad));
+	m4x4.FromEulerAngleY(-static_cast<float>(90.0f*Math::DegToRad));
 	m4x4.SetTranslation(2.0f, 3.0f, 4.0f);
 	vV *= m4x4;
 	if (!Math::AreEqual(vV.x, 2.0f) || !Math::AreEqual(vV.y, 3.0f) || !Math::AreEqual(vV.z, 5.0f) || !Math::AreEqual(vV.w, 1.0f)) bResult = false;

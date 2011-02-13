@@ -149,7 +149,7 @@ void PGFume::OnAddedToVisibilityTree(VisNode &cVisNode)
 */
 void PGFume::InitParticle(Particle &cParticle) const
 {
-	float vColor = (float)(200 + Math::GetRand()%56)/255;
+	float vColor = static_cast<float>(200 + Math::GetRand()%56)/255;
 	cParticle.vColor[0]     = vColor*Color.Get().r;
 	cParticle.vColor[1]     = vColor*Color.Get().g;
 	cParticle.vColor[2]     = vColor*Color.Get().b;
@@ -187,13 +187,14 @@ void PGFume::NotifyUpdate()
 				// Create a new particle
 				m_fParticleTime = m_SData.fParticleTime;
 				Particle *pParticle = AddParticle();
-				if (pParticle) InitParticle(*pParticle);
+				if (pParticle)
+					InitParticle(*pParticle);
 			}
 		}
 
 		uint32 nActive = 0;
 		{ // Update particles
-			float fFriction = (float)Math::Pow(0.3f, fTimeDiff);
+			float fFriction = static_cast<float>(Math::Pow(0.3f, fTimeDiff));
 			Iterator<Particle> cIterator = GetParticleIterator();
 			while (cIterator.HasNext()) {
 				Particle &cParticle = cIterator.Next();
@@ -249,14 +250,17 @@ void PGFume::NotifyUpdate()
 bool PGFume::InitParticleGroup(uint32 nMaxNumOfParticles, const String &sMaterial, const void *pData)
 {
 	if (pData) {
-		const InitData &cData = *((InitData*)pData);
+		const InitData &cData = *static_cast<const InitData*>(pData);
 		m_SData.fSize		  = cData.fSize;
 		m_SData.fEnergy		  = cData.fEnergy;
 		m_SData.fParticleTime = cData.fParticleTime;
-	} else GetDefaultSettings(m_SData);
+	} else {
+		GetDefaultSettings(m_SData);
+	}
 
 	// Initialize the particles
-	if (!InitParticles(nMaxNumOfParticles, sMaterial)) return false; // Error!
+	if (!InitParticles(nMaxNumOfParticles, sMaterial))
+		return false; // Error!
 
 	// Init data
 	m_fParticleTime = m_SData.fParticleTime;

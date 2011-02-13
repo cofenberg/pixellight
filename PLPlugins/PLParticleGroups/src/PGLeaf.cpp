@@ -116,14 +116,15 @@ void PGLeaf::InitParticle(Particle &cParticle) const
 	cParticle.vPos.y = (Math::GetRandFloat()*Height) + GetTransform().GetPosition().y;
 	Vector3 vN(Math::GetRandNegFloat(), Math::GetRandNegFloat(), Math::GetRandNegFloat());
 	vN.SetLength(1.0f);
-	if (!cParticle.pRot) cParticle.pRot = new Quaternion();
-	EulerAngles::ToQuaternion(float(vN.x*Math::RadToDeg), float(vN.y*Math::RadToDeg), float(vN.z*Math::RadToDeg), *cParticle.pRot);
+	if (!cParticle.pRot)
+		cParticle.pRot = new Quaternion();
+	EulerAngles::ToQuaternion(static_cast<float>(vN.x*Math::RadToDeg), static_cast<float>(vN.y*Math::RadToDeg), static_cast<float>(vN.z*Math::RadToDeg), *cParticle.pRot);
 	cParticle.bDistorted  = true;
 	cParticle.fCustom1    = cParticle.fSize = LeafSize + LeafSizeVariation*Math::GetRandNegFloat();
 	cParticle.vVelocity.x = Math::GetRandNegFloat();
 	cParticle.vVelocity.y = Math::GetRandNegFloat();
 	cParticle.vVelocity.z = Math::GetRandNegFloat();
-	cParticle.nCustom1    = (((int)(Math::GetRandNegFloat()*255.0f*2.0f))<<8)|0xff;
+	cParticle.nCustom1    = ((static_cast<int>(Math::GetRandNegFloat()*255.0f*2.0f))<<8)|0xff;
 	Vector3 vD = Vector3::UnitY.CrossProduct(vN);
 	vD.SetLength(cParticle.fSize);
 	cParticle.vDistortion.x = vD.x;
@@ -167,7 +168,9 @@ void PGLeaf::NotifyUpdate()
 				// Two wind (dot wind vector normal)
 				Vector3 vRot;
 				EulerAngles::FromQuaternion(*cParticle.pRot, vRot.x, vRot.y, vRot.z);
-				vRot.x *= float(Math::RadToDeg); vRot.y *= float(Math::RadToDeg); vRot.z *= float(Math::RadToDeg);
+				vRot.x *= static_cast<float>(Math::RadToDeg);
+				vRot.y *= static_cast<float>(Math::RadToDeg);
+				vRot.z *= static_cast<float>(Math::RadToDeg);
 				cParticle.vVelocity += Wind.Get()*fTimeDiff*Math::Abs(vRot.DotProduct(Wind.Get()));
 
 				// Four collision (just check wether leaf would end up on wrong side)
@@ -176,7 +179,7 @@ void PGLeaf::NotifyUpdate()
 					cParticle.vVelocity.y *= -1.0;
 					cParticle.vVelocity.z *= Math::GetRandNegFloat();
 					cParticle.vVelocity.x *= Math::GetRandNegFloat();
-					cParticle.nCustom1     = (((int)(Math::GetRandNegFloat()*255.0f*8.0f))<<8) | (cParticle.nCustom1&0xff);
+					cParticle.nCustom1     = ((static_cast<int>(Math::GetRandNegFloat()*255.0f*8.0f))<<8) | (cParticle.nCustom1&0xff);
 				}
 
 				// Five check wether particle has left area and can die... if it is outside, let it die
@@ -185,17 +188,21 @@ void PGLeaf::NotifyUpdate()
 				float  fDistToCenter = fDistx*fDistx + fDisty*fDisty;
 				uint32 nStart		 = cParticle.nCustom1 & 0xff;
 				if (nStart < 0xff) { // It is being spawned
-					nStart += (uint32)(fTimeDiff*512.0f + 0.5f);
-					if (nStart > 0xff) nStart = 0xff; // Clamp
+					nStart += static_cast<uint32>(fTimeDiff*512.0f + 0.5f);
+					if (nStart > 0xff)
+						nStart = 0xff; // Clamp
 					cParticle.nCustom1 = (cParticle.nCustom1&0xffffff00)|nStart; // Write to lower 8 bits
 				}
 
 				if (fDistToCenter > Radius*Radius) {
 					// Start dying... set alpha according to how far it is away
 					fDistToCenter = 255 - (Math::Sqrt(fDistToCenter) - Radius)*3.0f;
-					cParticle.fSize = (float)((int)(fDistToCenter*(cParticle.nCustom1 & 0xff))>>8)/255*cParticle.fCustom1;
-					if (cParticle.fSize < 0.2f) InitParticle(cParticle);
-				} else cParticle.fSize = (float)(cParticle.nCustom1 &0xff)/255*cParticle.fCustom1;
+					cParticle.fSize = static_cast<float>(static_cast<int>(fDistToCenter*(cParticle.nCustom1 & 0xff))>>8)/255*cParticle.fCustom1;
+					if (cParticle.fSize < 0.2f)
+						InitParticle(cParticle);
+				} else {
+					cParticle.fSize = static_cast<float>(cParticle.nCustom1 &0xff)/255*cParticle.fCustom1;
+				}
 
 				// Update position
 				cParticle.vPos += cParticle.vVelocity*fTimeDiff*cParticle.fSize/2;
@@ -205,9 +212,9 @@ void PGLeaf::NotifyUpdate()
 				vAxis.SetLength(1);
 
 				// Transform normal and distortion
-				vAxis *= (((float)(cParticle.nCustom1>>8))/255.0f)*fTimeDiff/10;
+				vAxis *= ((static_cast<float>(cParticle.nCustom1>>8))/255.0f)*fTimeDiff/10;
 				Quaternion qRotInc;
-				EulerAngles::ToQuaternion(float(vAxis.x*Math::DegToRad), float(vAxis.y*Math::DegToRad), float(vAxis.z*Math::DegToRad), qRotInc);
+				EulerAngles::ToQuaternion(static_cast<float>(vAxis.x*Math::DegToRad), static_cast<float>(vAxis.y*Math::DegToRad), static_cast<float>(vAxis.z*Math::DegToRad), qRotInc);
 				*cParticle.pRot *= qRotInc;
 
 				Vector3 d = cParticle.vDistortion;
@@ -216,11 +223,15 @@ void PGLeaf::NotifyUpdate()
 
 				// Update color
 				EulerAngles::FromQuaternion(*cParticle.pRot, vRot.x, vRot.y, vRot.z);
-				vRot.x *= float(Math::RadToDeg); vRot.y *= float(Math::RadToDeg); vRot.z *= float(Math::RadToDeg);
+				vRot.x *= static_cast<float>(Math::RadToDeg);
+				vRot.y *= static_cast<float>(Math::RadToDeg);
+				vRot.z *= static_cast<float>(Math::RadToDeg);
 				vAxis = vRot.Normalize();
 				fDistx  = vAxis.x+vAxis.y*2+vAxis.z*3;
-				if (fDistx > 1.0f) fDistx = 1.0f;
-				if (fDistx < 0.5f) fDistx = 0.5f;
+				if (fDistx > 1.0f)
+					fDistx = 1.0f;
+				if (fDistx < 0.5f)
+					fDistx = 0.5f;
 				cParticle.vColor[0] = cParticle.vFixPos.x*fDistx;
 				cParticle.vColor[1] = cParticle.vFixPos.y*fDistx;
 				cParticle.vColor[2] = cParticle.vFixPos.z*fDistx;

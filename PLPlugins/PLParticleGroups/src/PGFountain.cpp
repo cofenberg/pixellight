@@ -219,23 +219,25 @@ void PGFountain::InitFunction()
 
 					// Angle, which the ray gets out of the fountain with
 					float fStepAngle;
-					if (m_nSteps > 1)
+					if (m_nSteps > 1) {
 						fStepAngle = m_fAngleOfDeepestStep + (m_fAngleOfHighestStep-m_fAngleOfDeepestStep)
-									 *float(k)/(m_nSteps-1) + Math::GetRandFloat()*m_fRandomAngleAddition;
-					else fStepAngle = m_fAngleOfDeepestStep + Math::GetRandFloat()*m_fRandomAngleAddition;
+									 *static_cast<float>(k)/(m_nSteps-1) + Math::GetRandFloat()*m_fRandomAngleAddition;
+					} else {
+						fStepAngle = m_fAngleOfDeepestStep + Math::GetRandFloat()*m_fRandomAngleAddition;
+					}
 				
 					// This is the speed caused by the step
 					Vector3 &vNewSpeed = pParticle->vVelocity;
-					vNewSpeed.x = Math::Cos(float(fStepAngle*Math::DegToRad))*(0.2f+0.04f*k);
-					vNewSpeed.y = Math::Sin(float(fStepAngle*Math::DegToRad))*(0.2f+0.04f*k);
+					vNewSpeed.x = Math::Cos(static_cast<float>(fStepAngle*Math::DegToRad))*(0.2f+0.04f*k);
+					vNewSpeed.y = Math::Sin(static_cast<float>(fStepAngle*Math::DegToRad))*(0.2f+0.04f*k);
 
 					// Angle you see when you look down on the fountain
-					float fRayAngle = (float)j/(float)m_nRaysPerStep*360.0f + 12.0f;	// +12.0 causes a rotation (12°)
+					float fRayAngle = static_cast<float>(j)/static_cast<float>(m_nRaysPerStep)*360.0f + 12.0f;	// +12.0 causes a rotation (12°)
 
 					// For the next computations "vNewSpeed.x" is the radius. Care! Dont swap the two
 					// lines, because the second one changes vNewSpeed.x!
-					vNewSpeed.z = vNewSpeed.x*Math::Sin(float(fRayAngle*Math::DegToRad));
-					vNewSpeed.x = vNewSpeed.x*Math::Cos(float(fRayAngle*Math::DegToRad));
+					vNewSpeed.z = vNewSpeed.x*Math::Sin(static_cast<float>(fRayAngle*Math::DegToRad));
+					vNewSpeed.x = vNewSpeed.x*Math::Cos(static_cast<float>(fRayAngle*Math::DegToRad));
 					vNewSpeed *= 3.0f;
 
 					// Calculate how many steps are required, that a drop comes out and falls down again
@@ -317,8 +319,9 @@ void PGFountain::NotifyUpdate()
 
 					// Check height
 					if (cParticle.vPos.y < GetTransform().GetPosition().y) {
-						cParticle.fCustom2 = cParticle.fCustom2 - int(cParticle.fCustom2);
-						if (cParticle.fCustom2 > 0.0f) cParticle.fCustom2 -= 1.0f;
+						cParticle.fCustom2 = cParticle.fCustom2 - static_cast<int>(cParticle.fCustom2);
+						if (cParticle.fCustom2 > 0.0f)
+							cParticle.fCustom2 -= 1.0f;
 					}
 				} else {
 					cParticle.bActive = false;

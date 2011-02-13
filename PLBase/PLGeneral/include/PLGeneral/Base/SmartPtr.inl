@@ -75,7 +75,7 @@ SmartPtr<AType>::SmartPtr(const SmartPtr<AType> &pPtr) :
 template <class AType>
 SmartPtr<AType>::~SmartPtr()
 {
-	SetPtr((RefCount<AType>*)nullptr);
+	SetPtr(static_cast<RefCount<AType>*>(nullptr));
 }
 
 /**
@@ -194,7 +194,7 @@ template <class AType>
 void SmartPtr<AType>::SetPtr(void *pPtr)
 {
 	// Create a reference counter for the object, then assign it
-	SetPtr(pPtr ? new RefCountPtr<AType>((AType*)pPtr) : (RefCount<AType>*)nullptr);
+	SetPtr(pPtr ? new RefCountPtr<AType>(static_cast<AType*>(pPtr)) : static_cast<RefCount<AType>*>(nullptr));
 }
 
 /**

@@ -48,8 +48,8 @@ bool EulerAnglesTest::CheckEulerAngleX(float fAngle, float fExpectedAngle)
 	Quaternion qRot;
 
 	// Degree to radian
-	fAngle         = float(fAngle*Math::DegToRad);
-	fExpectedAngle = float(fExpectedAngle*Math::DegToRad);
+	fAngle         = static_cast<float>(fAngle*Math::DegToRad);
+	fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
 
 	// FromEulerAngleX() & FromMatrix()
 	mRot.FromEulerAngleX(fAngle);
@@ -77,8 +77,8 @@ bool EulerAnglesTest::CheckEulerAngleY(float fAngle, float fExpectedAngle)
 	Quaternion qRot;
 
 	// Degree to radian
-	fAngle         = float(fAngle*Math::DegToRad);
-	fExpectedAngle = float(fExpectedAngle*Math::DegToRad);
+	fAngle         = static_cast<float>(fAngle*Math::DegToRad);
+	fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
 
 	// FromEulerAngleY() & FromMatrix()
 	mRot.FromEulerAngleY(fAngle);
@@ -106,8 +106,8 @@ bool EulerAnglesTest::CheckEulerAngleZ(float fAngle, float fExpectedAngle)
 	Quaternion qRot;
 
 	// Degree to radian
-	fAngle         = float(fAngle*Math::DegToRad);
-	fExpectedAngle = float(fExpectedAngle*Math::DegToRad);
+	fAngle         = static_cast<float>(fAngle*Math::DegToRad);
+	fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
 
 	// FromEulerAngleZ() & FromMatrix()
 	mRot.FromEulerAngleZ(fAngle);

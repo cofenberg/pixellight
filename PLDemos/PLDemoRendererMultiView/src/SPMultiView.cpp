@@ -98,8 +98,8 @@ void SPMultiView::OnPaint(Surface &cSurface)
 	Renderer &cRenderer = GetRenderer();
 
 	// Get the current viewport settings
-	uint32 nWidth  = uint32(cRenderer.GetViewport().GetWidth());
-	uint32 nHeight = uint32(cRenderer.GetViewport().GetHeight());
+	uint32 nWidth  = static_cast<uint32>(cRenderer.GetViewport().GetWidth());
+	uint32 nHeight = static_cast<uint32>(cRenderer.GetViewport().GetHeight());
 	float fMinZ, fMaxZ;
 	cRenderer.GetViewport(&fMinZ, &fMaxZ);
 
@@ -108,7 +108,7 @@ void SPMultiView::OnPaint(Surface &cSurface)
 
 	{ // Viewport 1 (red)
 		// Setup viewport and reset scissor rectangle
-		Rectangle cRect(0.0f, 0.0f, float(nWidth/2), float(nHeight));
+		Rectangle cRect(0.0f, 0.0f, static_cast<float>(nWidth/2), static_cast<float>(nHeight));
 		cRenderer.SetViewport(&cRect, fMinZ, fMaxZ);
 		cRenderer.SetScissorRect();
 
@@ -121,7 +121,7 @@ void SPMultiView::OnPaint(Surface &cSurface)
 
 	{ // Viewport 2 (green)
 		// Setup viewport and reset scissor rectangle
-		Rectangle cRect(float(nWidth/2), 0.0f, float(nWidth), float(nHeight));
+		Rectangle cRect(static_cast<float>(nWidth/2), 0.0f, static_cast<float>(nWidth), static_cast<float>(nHeight));
 		cRenderer.SetViewport(&cRect, fMinZ, fMaxZ);
 		cRenderer.SetScissorRect();
 
@@ -134,8 +134,8 @@ void SPMultiView::OnPaint(Surface &cSurface)
 
 	{ // Viewport 3 (blue)
 		// Setup viewport and reset scissor rectangle
-		float fX = float(nWidth/2-100);
-		float fY = float(nHeight/2-100);
+		float fX = static_cast<float>(nWidth/2-100);
+		float fY = static_cast<float>(nHeight/2-100);
 		Rectangle cRect(fX, fY, fX+200.0f, fY+200.0f);
 		cRenderer.SetViewport(&cRect, fMinZ, fMaxZ);
 		cRenderer.SetScissorRect();

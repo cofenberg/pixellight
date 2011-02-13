@@ -158,7 +158,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	SceneNode *pCamera = cContainer.Create("PLScene::SNCamera", "FreeCamera", "Position=\"1 2 -3\" Rotation=\"25 210 0\"");
 	if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 		// Make this to our main scene camera
-		SetCamera((SNCamera*)pCamera);
+		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 	}
 
 	// Create a scene node with the soldier mesh which can produce a shadow
@@ -173,7 +173,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();
 	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-		SPScene *pSPScene = (SPScene*)pPainter;
+		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 		pSPScene->SetRootContainer(cContainer.GetContainer());
 		pSPScene->SetSceneContainer(&cContainer);
 

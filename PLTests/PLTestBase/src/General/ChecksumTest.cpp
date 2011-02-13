@@ -107,16 +107,16 @@ void ChecksumTest::Test()
 	// ChecksumMD5: Get(const uint8 nBuffer[], uint32 nNumOfBytes)
 	StartTask("ChecksumMD5: Get(const uint8 nBuffer[], uint32 nNumOfBytes)");
 	// Alphabet
-	sChecksum = cChecksumMD5.Get((uint8*)"abcdefghijklmnopqrstuvwxyz", (uint32)strlen("abcdefghijklmnopqrstuvwxyz"));
+	sChecksum = cChecksumMD5.Get(reinterpret_cast<const uint8*>("abcdefghijklmnopqrstuvwxyz"), static_cast<uint32>(strlen("abcdefghijklmnopqrstuvwxyz")));
 	if (sChecksum != "c3fcd3d76192e4007dfb496cca67e13b") bResult = false;
 	// Corrupted alphabet (one of the letters in the alphabet (in this case 'm') is changed to uppercase)
-	sChecksum = cChecksumMD5.Get((uint8*)"abcdefghijklMnopqrstuvwxyz", (uint32)strlen("abcdefghijklMnopqrstuvwxyz"));
+	sChecksum = cChecksumMD5.Get(reinterpret_cast<const uint8*>("abcdefghijklMnopqrstuvwxyz"), static_cast<uint32>(strlen("abcdefghijklMnopqrstuvwxyz")));
 	if (sChecksum == "c3fcd3d76192e4007dfb496cca67e13b") bResult = false;
 	// Alphabet and numbers
-	sChecksum = cChecksumMD5.Get((uint8*)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", (uint32)strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
+	sChecksum = cChecksumMD5.Get(reinterpret_cast<const uint8*>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"), static_cast<uint32>(strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")));
 	if (sChecksum != "d174ab98d277d9f5a5611c2c9f419d9f") bResult = false;
 	// Corrupted alphabet and numbers ('9' removed)
-	sChecksum = cChecksumMD5.Get((uint8*)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678", (uint32)strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678"));
+	sChecksum = cChecksumMD5.Get(reinterpret_cast<const uint8*>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678"), static_cast<uint32>(strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678")));
 	if (sChecksum == "d174ab98d277d9f5a5611c2c9f419d9f") bResult = false;
 	EndTask(bResult);
 
@@ -177,16 +177,16 @@ void ChecksumTest::Test()
 	// ChecksumCRC32: Get(const uint8 nBuffer[], uint32 nNumOfBytes)
 	StartTask("ChecksumCRC32: Get(const uint8 nBuffer[], uint32 nNumOfBytes)");
 	// Alphabet
-	sChecksum = cChecksumCRC32.Get((uint8*)"abcdefghijklmnopqrstuvwxyz", (uint32)strlen("abcdefghijklmnopqrstuvwxyz"));
+	sChecksum = cChecksumCRC32.Get(reinterpret_cast<const uint8*>("abcdefghijklmnopqrstuvwxyz"), static_cast<uint32>(strlen("abcdefghijklmnopqrstuvwxyz")));
 	if (sChecksum != "4c2750bd") bResult = false;
 	// Corrupted alphabet (one of the letters in the alphabet (in this case 'm') is changed to uppercase)
-	sChecksum = cChecksumCRC32.Get((uint8*)"abcdefghijklMnopqrstuvwxyz", (uint32)strlen("abcdefghijklMnopqrstuvwxyz"));
+	sChecksum = cChecksumCRC32.Get(reinterpret_cast<const uint8*>("abcdefghijklMnopqrstuvwxyz"), static_cast<uint32>(strlen("abcdefghijklMnopqrstuvwxyz")));
 	if (sChecksum == "4c2750bd") bResult = false;
 	// Alphabet and numbers
-	sChecksum = cChecksumCRC32.Get((uint8*)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", (uint32)strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
+	sChecksum = cChecksumCRC32.Get(reinterpret_cast<const uint8*>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"), static_cast<uint32>(strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")));
 	if (sChecksum != "1fc2e6d2") bResult = false;
 	// Corrupted alphabet and numbers ('9' removed)
-	sChecksum = cChecksumCRC32.Get((uint8*)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678", (uint32)strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678"));
+	sChecksum = cChecksumCRC32.Get(reinterpret_cast<const uint8*>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678"), static_cast<uint32>(strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678")));
 	if (sChecksum == "170fccc") bResult = false;
 	EndTask(bResult);
 
@@ -247,16 +247,16 @@ void ChecksumTest::Test()
 	// ChecksumSHA1: Get(const uint8 nBuffer[], uint32 nNumOfBytes)
 	StartTask("ChecksumSHA1: Get(const uint8 nBuffer[], uint32 nNumOfBytes)");
 	// Alphabet
-	sChecksum = cChecksumSHA1.Get((uint8*)"abcdefghijklmnopqrstuvwxyz", (uint32)strlen("abcdefghijklmnopqrstuvwxyz"));
+	sChecksum = cChecksumSHA1.Get(reinterpret_cast<const uint8*>("abcdefghijklmnopqrstuvwxyz"), static_cast<uint32>(strlen("abcdefghijklmnopqrstuvwxyz")));
 	if (sChecksum != "32d10c7b8cf96570ca04ce37f2a19d84240d3a89") bResult = false;
 	// Corrupted alphabet (one of the letters in the alphabet (in this case 'm') is changed to uppercase)
-	sChecksum = cChecksumSHA1.Get((uint8*)"abcdefghijklMnopqrstuvwxyz", (uint32)strlen("abcdefghijklMnopqrstuvwxyz"));
+	sChecksum = cChecksumSHA1.Get(reinterpret_cast<const uint8*>("abcdefghijklMnopqrstuvwxyz"), static_cast<uint32>(strlen("abcdefghijklMnopqrstuvwxyz")));
 	if (sChecksum == "32d10c7b8cf96570ca04ce37f2a19d84240d3a89") bResult = false;
 	// Alphabet and numbers
-	sChecksum = cChecksumSHA1.Get((uint8*)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", (uint32)strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
+	sChecksum = cChecksumSHA1.Get(reinterpret_cast<const uint8*>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"), static_cast<uint32>(strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")));
 	if (sChecksum != "761c457bf73b14d27e9e9265c46f4b4dda11f940") bResult = false;
 	// Corrupted alphabet and numbers ('9' removed)
-	sChecksum = cChecksumSHA1.Get((uint8*)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678", (uint32)strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678"));
+	sChecksum = cChecksumSHA1.Get(reinterpret_cast<const uint8*>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678"), static_cast<uint32>(strlen("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678")));
 	if (sChecksum == "761c457bf73b14d27e9e9265c46f4b4dda11f940") bResult = false;
 	EndTask(bResult);
 

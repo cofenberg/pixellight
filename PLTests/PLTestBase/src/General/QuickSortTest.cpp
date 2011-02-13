@@ -49,9 +49,9 @@ class QuickSortTestClass : public QuickSort {
 	private:
 		virtual char Compare(void *pElement1, void *pElement2) const
 		{
-			if (*((int*)pElement1)  < *((int*)pElement2)) return -1;
-			if (*((int*)pElement1) == *((int*)pElement2)) return  0;
-			else										  return  1;
+			if (*static_cast<int*>(pElement1)  < *static_cast<int*>(pElement2)) return -1;
+			if (*static_cast<int*>(pElement1) == *static_cast<int*>(pElement2)) return  0;
+			else															    return  1;
 		};
 
 

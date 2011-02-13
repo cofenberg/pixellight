@@ -100,7 +100,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Toggle post processing
 		case PLGUIKEY_SPACE:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Loop through all available post process scene node modifiers
 				uint32			   nIndex    = 0;
@@ -119,7 +119,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Next post process effect
 		case PLGUIKEY_PRIOR:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Increase the current selected modifier index
 				m_nCurrentSelectedModifier++;
@@ -136,7 +136,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Previous post process effect
 		case PLGUIKEY_NEXT:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Decrease the current selected modifier index
 				if (m_nCurrentSelectedModifier)
@@ -154,7 +154,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Rainbow"
 		case PLGUIKEY_1:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new one
 				pCamera->ClearModifiers();
@@ -166,7 +166,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Cartoon"
 		case PLGUIKEY_2:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
 				pCamera->ClearModifiers();
@@ -179,7 +179,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Animated cartoon"
 		case PLGUIKEY_3:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
 				pCamera->ClearModifiers();
@@ -193,7 +193,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Animated old cartoon"
 		case PLGUIKEY_4:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
 				pCamera->ClearModifiers();
@@ -207,7 +207,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Scatch"
 		case PLGUIKEY_5:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new one
 				pCamera->ClearModifiers();
@@ -219,7 +219,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Animated old scatch"
 		case PLGUIKEY_6:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
 				pCamera->ClearModifiers();
@@ -232,7 +232,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		// Custom post process effect: "Edeg glow"
 		case PLGUIKEY_7:
 		{
-			SceneNode *pCamera = (SceneNode*)GetCamera();
+			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new one
 				pCamera->ClearModifiers();
@@ -281,7 +281,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	SceneNode *pCamera = cContainer.Create("PLScene::SNCamera", "FixedCamera", "Position=\"0.0 0.0 -2.5\" Rotation=\"0.0 180.0 0.0\" FOV=\"60\"");
 	if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 		// Make this to our main scene camera
-		SetCamera((SNCamera*)pCamera);
+		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 		// Get class list of all available post process scene node modifiers
 		m_lstModifierClasses.Clear();
@@ -295,7 +295,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();
 	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-		SPScene *pSPScene = (SPScene*)pPainter;
+		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 		pSPScene->SetRootContainer(cContainer.GetContainer());
 		pSPScene->SetSceneContainer(&cContainer);
 	}
@@ -306,7 +306,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		// Add our information text scene nodes
 		SceneNode *pInfoText = pContainer->Create("PLScene::SceneContainer", "InfoText", "Flags=\"NoCulling\"");
 		if (pInfoText && pInfoText->IsInstanceOf("PLScene::SceneContainer")) {
-			SceneContainer *pInfoTextContainer = (SceneContainer*)pInfoText;
+			SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pInfoText);
 			pInfoTextContainer->Create("PLScene::SNText2D", '0', "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'F1'        = Show/hide this help text")       + '\"');
 			pInfoTextContainer->Create("PLScene::SNText2D", '1', "Position=\"0.01 0.03\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'Space'     = Enable/disable post processing") + '\"');
 			pInfoTextContainer->Create("PLScene::SNText2D", '2', "Position=\"0.01 0.05\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("'1-7'       = Custom post process effects")    + '\"');

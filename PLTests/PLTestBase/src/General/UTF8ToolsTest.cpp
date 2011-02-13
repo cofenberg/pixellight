@@ -56,12 +56,12 @@ void UTF8ToolsTest::Test()
 	// Some test data
 	const char    *pszASCIIString1    = "\\u65e5\\u672c\\u8a9e";
 	const wchar_t *pszWCharString1    = L"\u65e5\u672c\u8a9e";
-	const char    *pszUTF8String1     = (const char*)"日本語";
+	const char    *pszUTF8String1     = "日本語";
 	wchar_t        nWideCharacter1    = 26085; // 3 characters => 日
 	wchar_t        nWideCharacter2    = 26412; // 3 characters => 本
 	wchar_t        nWideCharacter3    = 35486; // 3 characters => 語
 	const char    *pszASCIICharacter1 = "\\u65e5";
-	const char    *pszUTF8Character1  = (const char*)"日";
+	const char    *pszUTF8Character1  = "日";
 
 	// Variables
 	wchar_t szWCharTemp[256];
@@ -93,35 +93,35 @@ void UTF8ToolsTest::Test()
 
 	// GetNumOfCharacterBytes(char nCharacter)
 	StartTask("GetNumOfCharacterBytes(char nCharacter)");
-	if (UTF8Tools::GetNumOfCharacterBytes((const char&)"0") != 1) bResult = false;
-	if (UTF8Tools::GetNumOfCharacterBytes((const char&)"A") != 1) bResult = false;
-	if (UTF8Tools::GetNumOfCharacterBytes((const char&)"+") != 1) bResult = false;
+	if (UTF8Tools::GetNumOfCharacterBytes('0') != 1) bResult = false;
+	if (UTF8Tools::GetNumOfCharacterBytes('A') != 1) bResult = false;
+	if (UTF8Tools::GetNumOfCharacterBytes('+') != 1) bResult = false;
 	if (UTF8Tools::GetNumOfCharacterBytes(*pszUTF8Character1) != 3) bResult = false;
 	EndTask(bResult);
 
 	// GetNumOfCharacterBytes(wchar_t nWideCharacter)
 	StartTask("GetNumOfCharacterBytes(wchar_t nWideCharacter");
-	if (UTF8Tools::GetNumOfCharacterBytes(wchar_t('0')) != 1) bResult = false;
-	if (UTF8Tools::GetNumOfCharacterBytes(wchar_t('A')) != 1) bResult = false;
-	if (UTF8Tools::GetNumOfCharacterBytes(wchar_t('+')) != 1) bResult = false;
+	if (UTF8Tools::GetNumOfCharacterBytes(L'0') != 1) bResult = false;
+	if (UTF8Tools::GetNumOfCharacterBytes(L'A') != 1) bResult = false;
+	if (UTF8Tools::GetNumOfCharacterBytes(L'+') != 1) bResult = false;
 	if (UTF8Tools::GetNumOfCharacterBytes(nWideCharacter1) != 3) bResult = false;
 	EndTask(bResult);
 
 	// GetWideCharacter(const char nCharacter[])
 	StartTask("GetWideCharacter(const char nCharacter[])");
-	if (UTF8Tools::GetWideCharacter((const char*)"0") != '0') bResult = false;
-	if (UTF8Tools::GetWideCharacter((const char*)"A") != 'A') bResult = false;
-	if (UTF8Tools::GetWideCharacter((const char*)"+") != '+') bResult = false;
+	if (UTF8Tools::GetWideCharacter("0") != '0') bResult = false;
+	if (UTF8Tools::GetWideCharacter("A") != 'A') bResult = false;
+	if (UTF8Tools::GetWideCharacter("+") != '+') bResult = false;
 	if (UTF8Tools::GetWideCharacter(pszUTF8Character1) != nWideCharacter1) bResult = false;
 	EndTask(bResult);
 
 	// GetNextWideCharacter(const char **ppszString)
 	StartTask("GetNextWideCharacter(const char **ppszString)");
-	pszUTF8Temp = (const char*)"0";
+	pszUTF8Temp = "0";
 	if (UTF8Tools::GetNextWideCharacter(&pszUTF8Temp) != '0') bResult = false;
-	pszUTF8Temp = (const char*)"A";
+	pszUTF8Temp = "A";
 	if (UTF8Tools::GetNextWideCharacter(&pszUTF8Temp) != 'A') bResult = false;
-	pszUTF8Temp = (const char*)"+";
+	pszUTF8Temp = "+";
 	if (UTF8Tools::GetNextWideCharacter(&pszUTF8Temp) != '+') bResult = false;
 	// Read first character
 	pszUTF8Temp = pszUTF8String1;
@@ -191,7 +191,7 @@ void UTF8ToolsTest::Test()
 	// GetNumOfStringBytes(const char szString[])
 	StartTask("GetNumOfStringBytes(const char szString[])");
 	bResult = true;
-	if (UTF8Tools::GetNumOfStringBytes(pszUTF8String1) != strlen((char*)pszUTF8String1)) bResult = false;
+	if (UTF8Tools::GetNumOfStringBytes(pszUTF8String1) != strlen(pszUTF8String1)) bResult = false;
 	EndTask(bResult);
 
 	// GetNumOfCharacters(const char szString[])
@@ -230,11 +230,11 @@ void UTF8ToolsTest::Test()
 	// FindCharacter(const char szString[], uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex)
 	StartTask("FindCharacter(const char szString[], uint32 nNumOfBytes, wchar_t nWideCharacter, uint32 *pnCharacterIndex)");
 	bResult = true;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), nWideCharacter1, &nTemp) != pszUTF8String1   || nTemp != 0) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), nWideCharacter2, &nTemp) != pszUTF8String1+3 || nTemp != 1) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), nWideCharacter3, &nTemp) != pszUTF8String1+6 || nTemp != 2) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, (uint32)strlen((char*)pszUTF8String1), 55,				 &nTemp) != nullptr			 || nTemp != 0) bResult = false;
-	if (UTF8Tools::FindCharacter(pszUTF8String1, 3,										nWideCharacter2, &nTemp) != nullptr			 || nTemp != 0) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, static_cast<uint32>(strlen(pszUTF8String1)), nWideCharacter1, &nTemp) != pszUTF8String1   || nTemp != 0) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, static_cast<uint32>(strlen(pszUTF8String1)), nWideCharacter2, &nTemp) != pszUTF8String1+3 || nTemp != 1) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, static_cast<uint32>(strlen(pszUTF8String1)), nWideCharacter3, &nTemp) != pszUTF8String1+6 || nTemp != 2) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, static_cast<uint32>(strlen(pszUTF8String1)), 55,			   &nTemp) != nullptr		   || nTemp != 0) bResult = false;
+	if (UTF8Tools::FindCharacter(pszUTF8String1, 3,								 			  nWideCharacter2, &nTemp) != nullptr		   || nTemp != 0) bResult = false;
 	EndTask(bResult);
 
 	// FromWideCharacter(char szDestination[], wchar_t nWideCharacter)
@@ -242,7 +242,7 @@ void UTF8ToolsTest::Test()
 	bResult = true;
 	if (UTF8Tools::FromWideCharacter(szUTF8Temp, nWideCharacter1) == 3) {
 		// Is the result correct?
-		if (strncmp((char*)szUTF8Temp, (char*)pszUTF8String1, 3)) bResult = false;
+		if (strncmp(szUTF8Temp, pszUTF8String1, 3)) bResult = false;
 	} else bResult = false;
 	EndTask(bResult);
 
@@ -252,7 +252,7 @@ void UTF8ToolsTest::Test()
 	if (UTF8Tools::FromWideCharacterString(nullptr, 0, pszWCharString1, 0) != 9) bResult = false;
 	if (UTF8Tools::FromWideCharacterString(szUTF8Temp, 256, pszWCharString1, 0) == 9) {
 		// Is the result correct?
-		if (strncmp((char*)szUTF8Temp, (char*)pszUTF8String1, 3)) bResult = false;
+		if (strncmp(szUTF8Temp, pszUTF8String1, 3)) bResult = false;
 	} else bResult = false;
 	EndTask(bResult);
 
@@ -296,50 +296,50 @@ void UTF8ToolsTest::Test()
 	// Unescape(char *pszDestination, uint32 nNumOfBytes, const char szSource[])
 	StartTask("Unescape(char *pszDestination, uint32 nNumOfBytes, const char szSource[])");
 	bResult = true;
-	if (UTF8Tools::Unescape(nullptr, 0, pszASCIIString1) != strlen((char*)pszUTF8String1)) bResult = false;
-	if (UTF8Tools::Unescape(szUTF8Temp, 256, pszASCIIString1) == strlen((char*)pszUTF8String1)) {
+	if (UTF8Tools::Unescape(nullptr, 0, pszASCIIString1) != strlen(pszUTF8String1)) bResult = false;
+	if (UTF8Tools::Unescape(szUTF8Temp, 256, pszASCIIString1) == strlen(pszUTF8String1)) {
 		// Is the result correct?
-		if (strcmp((char*)szUTF8Temp, (char*)pszUTF8String1)) bResult = false;
+		if (strcmp(szUTF8Temp, pszUTF8String1)) bResult = false;
 	} else bResult = false;
 	EndTask(bResult);
 
 	// Compare(const char szFirst[], const char szSecond[], uint32 nCount)
 	StartTask("Compare(const char szFirst[], const char szSecond[], uint32 nCount)");
 	bResult = true;
-	if (UTF8Tools::Compare((char*)"",		(char*)"")		 !=  0)	bResult = false;
-	if (UTF8Tools::Compare((char*)"",		(char*)"a")		 >  -1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"a",		(char*)"")		 <   1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"a",		(char*)"b")		 >  -1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"b",		(char*)"a")		 <   1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"1234",	(char*)"4321")	 >  -1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"ABBA",	(char*)"ABBA")	 !=  0)	bResult = false;
-	if (UTF8Tools::Compare((char*)"ABBA",	(char*)"abbaba") >  -1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"abbaba",	(char*)"ABBA")	 <   1)	bResult = false;
-	if (UTF8Tools::Compare((char*)"ABBA",	(char*)"BAAB")	 >  -1)	bResult = false;
+	if (UTF8Tools::Compare("",			"")		  !=  0)	bResult = false;
+	if (UTF8Tools::Compare("",			"a")	  >  -1)	bResult = false;
+	if (UTF8Tools::Compare("a",			"")		  <   1)	bResult = false;
+	if (UTF8Tools::Compare("a",			"b")	  >  -1)	bResult = false;
+	if (UTF8Tools::Compare("b",			"a")	  <   1)	bResult = false;
+	if (UTF8Tools::Compare("1234",		"4321")	  >  -1)	bResult = false;
+	if (UTF8Tools::Compare("ABBA",		"ABBA")	  !=  0)	bResult = false;
+	if (UTF8Tools::Compare("ABBA",		"abbaba") >  -1)	bResult = false;
+	if (UTF8Tools::Compare("abbaba",	"ABBA")	  <   1)	bResult = false;
+	if (UTF8Tools::Compare("ABBA",		"BAAB")	  >  -1)	bResult = false;
 	EndTask(bResult);
 
 	// FindSubstring(const char szSource[], const char szSubstring[])
 	StartTask("FindSubstring(const char szSource[], const char szSubstring[])");
 	bResult = true;
-	if (UTF8Tools::FindSubstring((char*)"", (char*)"")) bResult = false;
-	if (UTF8Tools::FindSubstring((char*)"a", (char*)"")) bResult = false;
-	if (_stricmp((const char*)UTF8Tools::FindSubstring((char*)"a", (char*)"a"), "a")) bResult = false;
-	if (_stricmp((const char*)UTF8Tools::FindSubstring((char*)"abba", (char*)"a"), "abba")) bResult = false;
-	if (_stricmp((const char*)UTF8Tools::FindSubstring((char*)"abba", (char*)"ab"), "abba")) bResult = false;
-	if (_stricmp((const char*)UTF8Tools::FindSubstring((char*)"abba", (char*)"abba"), "abba")) bResult = false;
-	if (!(const char*)UTF8Tools::FindSubstring((char*)"abba", (char*)"abbab")) bResult = false;
-	if (_stricmp((const char*)UTF8Tools::FindSubstring((char*)"abba", (char*)"bba"), "bba")) bResult = false;
+	if (UTF8Tools::FindSubstring("", "")) bResult = false;
+	if (UTF8Tools::FindSubstring("a", "")) bResult = false;
+	if (_stricmp(UTF8Tools::FindSubstring("a", "a"), "a")) bResult = false;
+	if (_stricmp(UTF8Tools::FindSubstring("abba", "a"), "abba")) bResult = false;
+	if (_stricmp(UTF8Tools::FindSubstring("abba", "ab"), "abba")) bResult = false;
+	if (_stricmp(UTF8Tools::FindSubstring("abba", "abba"), "abba")) bResult = false;
+	if (!UTF8Tools::FindSubstring("abba", "abbab")) bResult = false;
+	if (_stricmp(UTF8Tools::FindSubstring("abba", "bba"), "bba")) bResult = false;
 	EndTask(bResult);
 
 	// Copy(char szDestination[], const char szSource[], uint32 nCount)
 	StartTask("Copy(char szDestination[], const char szSource[], uint32 nCount)");
 	bResult = true;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)""),		   ""))     bResult = false;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)"", 0),	   ""))     bResult = false;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)"a"),	   "a"))    bResult = false;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)"abba"),	   "abba")) bResult = false;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)"baab", 2), "baba")) bResult = false;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)"abba", 8), "abba")) bResult = false;
-	if (strcmp((const char*)UTF8Tools::Copy(szUTF8Temp, (char*)"aa"),	   "aa"))   bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, ""),		   ""))     bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, "", 0),	   ""))     bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, "a"),	   "a"))    bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, "abba"),	   "abba")) bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, "baab", 2), "baba")) bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, "abba", 8), "abba")) bResult = false;
+	if (strcmp(UTF8Tools::Copy(szUTF8Temp, "aa"),	   "aa"))   bResult = false;
 	EndTask(bResult);
 }

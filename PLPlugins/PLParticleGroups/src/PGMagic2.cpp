@@ -100,17 +100,17 @@ void PGMagic2::InitFunction()
 		if (!SmallParticles || (Math::GetRand() % 10) == 5) {
 			pParticle->nAnimationStep = 0;
 			pParticle->nCustom1 = 1;
-			pParticle->fSize = (8.0f+((float)(Math::GetRand() % 800)/200))*Size;
+			pParticle->fSize = (8.0f+(static_cast<float>(Math::GetRand() % 800)/200))*Size;
 			pParticle->vPos = pParticle->vFixPos = pParticle->vDistortion = GetTransform().GetPosition();
 		} else {
 			pParticle->nAnimationStep = 1;
 			pParticle->nCustom1 = 0;
-			pParticle->fSize = (1.0f+((float)(Math::GetRand() % 1000)/500))*Size;
+			pParticle->fSize = (1.0f+(static_cast<float>(Math::GetRand() % 1000)/500))*Size;
 			for (int i=0; i<3; i++) {
 				if ((Math::GetRand() % 2))
-					pParticle->vPos[i] = pParticle->vFixPos[i] = pParticle->vDistortion[i] = (float)(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
+					pParticle->vPos[i] = pParticle->vFixPos[i] = pParticle->vDistortion[i] = static_cast<float>(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
 				else
-					pParticle->vPos[i] = pParticle->vFixPos[i] = pParticle->vDistortion[i] = -(float)(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
+					pParticle->vPos[i] = pParticle->vFixPos[i] = pParticle->vDistortion[i] = -static_cast<float>(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
 			}
 		}
 		pParticle->fCustom1 = pParticle->fSize;
@@ -214,8 +214,9 @@ void PGMagic2::NotifyUpdate()
 								cParticle.vDistortion[i] = cParticle.vFixPos[i];
 							else {
 								if (Math::GetRand() % 2)
-									cParticle.vDistortion[i] -= (float)1+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
-								else cParticle.vDistortion[i] += (float)1+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
+									cParticle.vDistortion[i] -= 1.0f+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
+								else
+									cParticle.vDistortion[i] += 1.0f+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
 							}
 						}
 					} else {
@@ -230,8 +231,9 @@ void PGMagic2::NotifyUpdate()
 								cParticle.vDistortion[i] = cParticle.vFixPos[i];
 							else {
 								if (Math::GetRand() % 2)
-									cParticle.vDistortion[i] -= (float)1+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
-								else cParticle.vDistortion[i] += (float)1+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
+									cParticle.vDistortion[i] -= 1.0f+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
+								else
+									cParticle.vDistortion[i] += 1.0f+(Math::GetRand() % 200)/100+GetTransform().GetPosition()[i];
 							}
 						}
 					}

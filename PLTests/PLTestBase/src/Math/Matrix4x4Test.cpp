@@ -44,8 +44,8 @@ bool Matrix4x4Test::CheckAxisAngle(float fX, float fY, float fZ, float fAngle, f
 	Matrix4x4 mRot;
 
 	// Degree to radian
-	fAngle         = float(fAngle*Math::DegToRad);
-	fExpectedAngle = float(fExpectedAngle*Math::DegToRad);
+	fAngle         = static_cast<float>(fAngle*Math::DegToRad);
+	fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
 
 	mRot.FromAxisAngle(fX, fY, fZ, fAngle);
 	mRot.ToAxisAngle(fXT, fYT, fZT, fAngleT);
@@ -146,17 +146,17 @@ void Matrix4x4Test::Test()
 	bResult = true;
 	// 90°
 	vV3 = Vector3(1.0f, 0.0f, 0.0f);
-	mM.FromEulerAngleY(float(90.0f*Math::DegToRad));
+	mM.FromEulerAngleY(static_cast<float>(90.0f*Math::DegToRad));
 	vV3 = mM*vV3;
 	if (!Math::AreEqual(vV3.x, 0.0f) || !Math::AreEqual(vV3.y, 0.0f) || !Math::AreEqual(vV3.z, -1.0f)) bResult = false;
 	// -90°
 	vV3 = Vector3(1.0f, 0.0f, 0.0f);
-	mM.FromEulerAngleY(-float(90.0f*Math::DegToRad));
+	mM.FromEulerAngleY(-static_cast<float>(90.0f*Math::DegToRad));
 	vV3 *= mM;
 	if (!Math::AreEqual(vV3.x, 0.0f) || !Math::AreEqual(vV3.y, 0.0f) || !Math::AreEqual(vV3.z, 1.0f)) bResult = false;
 	// -90° + translation (2, 3, 4)
 	vV3 = Vector3(1.0f, 0.0f, 0.0f);
-	mM.FromEulerAngleY(-float(90.0f*Math::DegToRad));
+	mM.FromEulerAngleY(-static_cast<float>(90.0f*Math::DegToRad));
 	mM.SetTranslation(2.0f, 3.0f, 4.0f);
 	vV3 = mM*vV3;
 	if (!Math::AreEqual(vV3.x, 2.0f) || !Math::AreEqual(vV3.y, 3.0f) || !Math::AreEqual(vV3.z, 5.0f)) bResult = false;
@@ -171,7 +171,7 @@ void Matrix4x4Test::Test()
 	if (!mM.IsZero()) bResult = false;
 	mM.yz = 0.001f;
 	if (mM.IsZero()) bResult = false;
-	mM.yz = (float)Math::Epsilon;
+	mM.yz = static_cast<float>(Math::Epsilon);
 	if (!mM.IsZero()) bResult = false;
 	EndTask(bResult);
 
@@ -182,7 +182,7 @@ void Matrix4x4Test::Test()
 	if (!mM.IsTrueZero()) bResult = false;
 	mM.yz = 0.001f;
 	if (mM.IsTrueZero()) bResult = false;
-	mM.yz = (float)Math::Epsilon;
+	mM.yz = static_cast<float>(Math::Epsilon);
 	if (mM.IsTrueZero()) bResult = false;
 	EndTask(bResult);
 
@@ -205,7 +205,7 @@ void Matrix4x4Test::Test()
 	if (!mM.IsIdentity()) bResult = false;
 	mM.yz = 0.001f;
 	if (mM.IsIdentity()) bResult = false;
-	mM.yz = (float)Math::Epsilon;
+	mM.yz = static_cast<float>(Math::Epsilon);
 	if (!mM.IsIdentity()) bResult = false;
 	EndTask(bResult);
 
@@ -216,7 +216,7 @@ void Matrix4x4Test::Test()
 	if (!mM.IsTrueIdentity()) bResult = false;
 	mM.yz = 0.001f;
 	if (mM.IsTrueIdentity()) bResult = false;
-	mM.yz = (float)Math::Epsilon;
+	mM.yz = static_cast<float>(Math::Epsilon);
 	if (mM.IsTrueIdentity()) bResult = false;
 	EndTask(bResult);
 

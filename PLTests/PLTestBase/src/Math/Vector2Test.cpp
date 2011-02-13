@@ -181,12 +181,12 @@ void Vector2Test::Test()
 	bResult = true;
 	// 90°
 	vV = Vector2(1.0f, 0.0f);
-	m3x3.FromEulerAngleZ(float(90.0f*Math::DegToRad));
+	m3x3.FromEulerAngleZ(static_cast<float>(90.0f*Math::DegToRad));
 	vV *= m3x3;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, 1.0f)) bResult = false;
 	// -90°
 	vV = Vector2(1.0f, 0.0f);
-	m3x3.FromEulerAngleZ(-float(90.0f*Math::DegToRad));
+	m3x3.FromEulerAngleZ(-static_cast<float>(90.0f*Math::DegToRad));
 	vV *= m3x3;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, -1.0f)) bResult = false;
 	EndTask(bResult);
@@ -196,17 +196,17 @@ void Vector2Test::Test()
 	bResult = true;
 	// 90°
 	vV = Vector2(1.0f, 0.0f);
-	m4x4.FromEulerAngleZ(float(90.0f*Math::DegToRad));
+	m4x4.FromEulerAngleZ(static_cast<float>(90.0f*Math::DegToRad));
 	vV *= m4x4;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, 1.0f)) bResult = false;
 	// -90°
 	vV = Vector2(1.0f, 0.0f);
-	m4x4.FromEulerAngleZ(-float(90.0f*Math::DegToRad));
+	m4x4.FromEulerAngleZ(-static_cast<float>(90.0f*Math::DegToRad));
 	vV *= m4x4;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, -1.0f)) bResult = false;
 	// -90° + translation (2, 3, 4)
 	vV = Vector2(1.0f, 0.0f);
-	m4x4.FromEulerAngleZ(-float(90.0f*Math::DegToRad));
+	m4x4.FromEulerAngleZ(-static_cast<float>(90.0f*Math::DegToRad));
 	m4x4.SetTranslation(2.0f, 3.0f, 4.0f);
 	vV *= m4x4;
 	if (!Math::AreEqual(vV.x, 2.0f) || !Math::AreEqual(vV.y, 2.0f)) bResult = false;

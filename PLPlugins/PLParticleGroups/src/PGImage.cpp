@@ -107,9 +107,9 @@ void PGImage::InitFunction()
 				uint32 nParticles = 0;
 				for (uint32 i=0; i<nPixels; i++) {
 					// Place particle at this image position?
-					uint8 nDifR = (uint8)Math::Abs(pData[0]-RedColorKey);
-					uint8 nDifG = (uint8)Math::Abs(pData[1]-GreenColorKey);
-					uint8 nDifB = (uint8)Math::Abs(pData[2]-BlueColorKey);
+					uint8 nDifR = static_cast<uint8>(Math::Abs(pData[0]-RedColorKey));
+					uint8 nDifG = static_cast<uint8>(Math::Abs(pData[1]-GreenColorKey));
+					uint8 nDifB = static_cast<uint8>(Math::Abs(pData[2]-BlueColorKey));
 					if (!(nDifR <= ColorKeyTolerance && nDifG <= ColorKeyTolerance && nDifB <= ColorKeyTolerance))
 						nParticles++; // A particle here, please
 					pData += nColorComponents;
@@ -123,9 +123,9 @@ void PGImage::InitFunction()
 				for (int nY=nHeight-1; nY>=0; nY--) {
 					for (uint32 nX=0; nX<nWidth; nX++) {
 						// Place particle at this image position?
-						uint8 nDifR = (uint8)Math::Abs(pData[0]-RedColorKey);
-						uint8 nDifG = (uint8)Math::Abs(pData[1]-GreenColorKey);
-						uint8 nDifB = (uint8)Math::Abs(pData[2]-BlueColorKey);
+						uint8 nDifR = static_cast<uint8>(Math::Abs(pData[0]-RedColorKey));
+						uint8 nDifG = static_cast<uint8>(Math::Abs(pData[1]-GreenColorKey));
+						uint8 nDifB = static_cast<uint8>(Math::Abs(pData[2]-BlueColorKey));
 						if (nDifR <= ColorKeyTolerance && nDifG <= ColorKeyTolerance && nDifB <= ColorKeyTolerance) {
 							// No particle here, please
 							pData += nColorComponents;
@@ -142,9 +142,9 @@ void PGImage::InitFunction()
 								pParticle->fCustom2 = 0.5f+Math::GetRandFloat()*2.0f;
 								if (Math::GetRandFloat() > 0.5f)
 									pParticle->fCustom2 = -pParticle->fCustom2;
-								pParticle->fSize = (1.0f+((float)(Math::GetRand() % 1000)/500))*ImageScale;
-								pParticle->vPos.x = pParticle->vFixPos.x = pParticle->vDistortion.x = float(nX*ImageScale);
-								pParticle->vPos.y = pParticle->vFixPos.y = pParticle->vDistortion.y = float(nY*ImageScale);
+								pParticle->fSize = (1.0f+(static_cast<float>(Math::GetRand() % 1000)/500))*ImageScale;
+								pParticle->vPos.x = pParticle->vFixPos.x = pParticle->vDistortion.x = static_cast<float>(nX*ImageScale);
+								pParticle->vPos.y = pParticle->vFixPos.y = pParticle->vDistortion.y = static_cast<float>(nY*ImageScale);
 								pParticle->vPos.z = pParticle->vFixPos.z = pParticle->vDistortion.z = 0.0f;
 								pParticle->fCustom1 = pParticle->fSize;
 								pParticle->fCustom2 *= 2;
@@ -227,8 +227,9 @@ void PGImage::NotifyUpdate()
 							cParticle.vDistortion[i] = cParticle.vFixPos[i];
 						else {
 							if (Math::GetRand() % 2)
-								cParticle.vDistortion[i] = (float)(Math::GetRand() % 100)/1000+cParticle.vFixPos[i];
-							else cParticle.vDistortion[i] = (float)(Math::GetRand() % 100)/1000+cParticle.vFixPos[i];
+								cParticle.vDistortion[i] = static_cast<float>(Math::GetRand() % 100)/1000+cParticle.vFixPos[i];
+							else
+								cParticle.vDistortion[i] = static_cast<float>(Math::GetRand() % 100)/1000+cParticle.vFixPos[i];
 						}
 					}
 				}

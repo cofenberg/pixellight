@@ -136,9 +136,9 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// SNBomb
 				} else if (pSceneNode->IsInstanceOf("SNBomb")) {
 					// Draw the bomb (original image dimension: 188x18)
-					char nFrame = ((SNBomb*)pSceneNode)->GetFrame();
+					char nFrame = static_cast<SNBomb*>(pSceneNode)->GetFrame();
 					DrawImage(cRenderer, "Data/Textures/2DGame/Bomb.png", pSceneNode->GetTransform().GetPosition() - Vector3(8.0f, 8.0f, 0.0f), Vector2(16.0f, 16.0f),
-							  Vector2(float(1+nFrame*17)/188.0f, 0.0f), Vector2(16.0f/188.0f, 1.0f));
+							  Vector2(static_cast<float>(1+nFrame*17)/188.0f, 0.0f), Vector2(16.0f/188.0f, 1.0f));
 
 				// SNUFO
 				} else if (pSceneNode->IsInstanceOf("SNUFO")) {
@@ -148,9 +148,9 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// SNGun
 				} else if (pSceneNode->IsInstanceOf("SNGun")) {
 					// Draw the gun
-					char nFrame = ((SNGun*)pSceneNode)->GetFrame();
+					char nFrame = static_cast<SNGun*>(pSceneNode)->GetFrame();
 					DrawImage(cRenderer, "Data/Textures/2DGame/Gun.png", pSceneNode->GetTransform().GetPosition() - Vector3(18.0f, 7.0f, 0.0f), Vector2(36.0f, 14.0f),
-							  Vector2(float(1+nFrame*38)/495.0f, 0.0f), Vector2(36.0f/495.0f, 1.0f));
+							  Vector2(static_cast<float>(1+nFrame*38)/495.0f, 0.0f), Vector2(36.0f/495.0f, 1.0f));
 				}
 			}
 		}
@@ -166,7 +166,7 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	cDrawHelpers.End2DMode();
 
 	// Get the font
-	Font *pFont = (Font*)cRenderer.GetFontManager().GetDefaultFontTexture();
+	Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
 	if (pFont) {
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();

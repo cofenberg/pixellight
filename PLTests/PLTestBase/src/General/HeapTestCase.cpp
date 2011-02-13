@@ -114,7 +114,7 @@ bool HeapTestCase::Test(Heap<int, String> &cHeap)
 			// Increase the number of elements
 			nNumOfElements++;
 		}
-		if (nNumOfElements != (int)lstElements.GetNumOfElements()) bResult = false;
+		if (nNumOfElements != static_cast<int>(lstElements.GetNumOfElements())) bResult = false;
 
 		// There should a next element...
 		if (!cIterator.HasNext()) bResult = false;

@@ -239,7 +239,7 @@ void SPRTTShaders::DrawScene(Renderer &cRenderer)
 		Matrix4x4 mWorld;
 		{
 			// Build a rotation matrix by using a given euler angle around the y-axis
-			mWorld.FromEulerAngleY(float(m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 		}
 
 		// Set program uniforms
@@ -256,7 +256,7 @@ void SPRTTShaders::DrawScene(Renderer &cRenderer)
 			{
 				const float fAspect      = 1.0f;
 				const float fAspectRadio = cRenderer.GetViewport().GetWidth()/(cRenderer.GetViewport().GetHeight()*fAspect);
-				mProjection.PerspectiveFov(float(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
+				mProjection.PerspectiveFov(static_cast<float>(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
 			}
 
 			// Calculate the final composed world view projection matrix
@@ -334,11 +334,11 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 	Surface *pRenderSurfaceBackup = cRenderer.GetRenderTarget();
 	if (cRenderer.SetRenderTarget(m_pRenderTarget)) {
 		if (m_pColorTarget1)
-			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget1, 1);
+			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget1), 1);
 		if (m_pColorTarget2)
-			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget2, 2);
+			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget2), 2);
 		if (m_pColorTarget3)
-			cRenderer.SetColorRenderTarget((TextureBuffer*)m_pColorTarget3, 3);
+			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget3), 3);
 
 		// Draw the scene
 		DrawScene(cRenderer);
@@ -384,7 +384,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			{
 				const float fAspect      = 1.0f;
 				const float fAspectRadio = cRenderer.GetViewport().GetWidth()/(cRenderer.GetViewport().GetHeight()*fAspect);
-				mProjection.PerspectiveFov(float(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
+				mProjection.PerspectiveFov(static_cast<float>(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
 			}
 
 			// Calculate the composed view projection matrix
@@ -423,7 +423,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set object space to clip space matrix uniform
 			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
-				mWorld.FromEulerAngleY(float(m_fRotation*Math::DegToRad));
+				mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(-2.0f, 1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
@@ -431,7 +431,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set the texture buffer we rendered our teapot in as the current texture buffer
 			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
 			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget1 ? (TextureBuffer*)m_pColorTarget1 : m_pRenderTarget->GetTextureBuffer());
+				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget1 ? static_cast<TextureBuffer*>(m_pColorTarget1) : m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -448,7 +448,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set object space to clip space matrix uniform
 			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
-				mWorld.FromEulerAngleZ(float(m_fRotation*Math::DegToRad));
+				mWorld.FromEulerAngleZ(static_cast<float>(m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(0.0f, 1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
@@ -456,7 +456,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set the texture buffer we rendered our teapot in as the current texture buffer
 			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
 			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget2 ? (TextureBuffer*)m_pColorTarget2 : m_pRenderTarget->GetTextureBuffer());
+				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget2 ? static_cast<TextureBuffer*>(m_pColorTarget2) : m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -473,7 +473,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set object space to clip space matrix uniform
 			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
-				mWorld.FromEulerAngleZ(float(-m_fRotation*Math::DegToRad));
+				mWorld.FromEulerAngleZ(static_cast<float>(-m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(-2.0f, -1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
@@ -481,7 +481,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set the texture buffer we rendered our teapot in as the current texture buffer
 			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
 			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget3 ? (TextureBuffer*)m_pColorTarget3 : m_pRenderTarget->GetTextureBuffer());
+				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget3 ? static_cast<TextureBuffer*>(m_pColorTarget3) : m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -498,7 +498,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			// Set object space to clip space matrix uniform
 			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
-				mWorld.FromEulerAngleZ(float(-m_fRotation*Math::DegToRad));
+				mWorld.FromEulerAngleZ(static_cast<float>(-m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(2.0f, -1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}

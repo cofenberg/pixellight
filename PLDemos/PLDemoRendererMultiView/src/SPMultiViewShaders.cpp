@@ -137,7 +137,7 @@ void SPMultiViewShaders::DrawScene(uint32 nScene)
 		Matrix4x4 mWorld;
 		{
 			// Build a rotation matrix by using a given euler angle around the y-axis
-			mWorld.FromEulerAngleY(float(m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 		}
 
 		// Set program uniforms
@@ -154,7 +154,7 @@ void SPMultiViewShaders::DrawScene(uint32 nScene)
 			{
 				const float fAspect      = 1.0f;
 				const float fAspectRadio = cRenderer.GetViewport().GetWidth()/(cRenderer.GetViewport().GetHeight()*fAspect);
-				mProjection.PerspectiveFov(float(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
+				mProjection.PerspectiveFov(static_cast<float>(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
 			}
 
 			// Calculate the final composed world view projection matrix

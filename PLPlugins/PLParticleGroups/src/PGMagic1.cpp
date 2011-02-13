@@ -147,16 +147,19 @@ void PGMagic1::NotifyUpdate()
 				Particle &cParticle = cIterator.Next();
 
 				cParticle.fEnergy -= fTimeDiff/10;
-				if (cParticle.fCustom1 > 0.0f) cParticle.vColor.a -= cParticle.fCustom1*fTimeDiff/5;
-				else						   cParticle.vColor.a += cParticle.fCustom1*fTimeDiff/5;
+				if (cParticle.fCustom1 > 0.0f)
+					cParticle.vColor.a -= cParticle.fCustom1*fTimeDiff/5;
+				else
+					cParticle.vColor.a += cParticle.fCustom1*fTimeDiff/5;
 				if (cParticle.vColor.a < 0.0f) {
 					RemoveParticle(cParticle);
 				} else {
 					Vector3 vGravity = GetGravity();
 					cParticle.fSize += fTimeDiff*Size*cParticle.fCustom1*2;
-					if (cParticle.vColor.a > 0.2f) cParticle.vVelocity += vGravity*fTimeDiff/10-
-																		  vGravity*(GetTransform().GetPosition()-cParticle.vPos).GetLength()*fTimeDiff/10;
-					else						   cParticle.vVelocity -= vGravity*fTimeDiff;
+					if (cParticle.vColor.a > 0.2f)
+						cParticle.vVelocity += vGravity*fTimeDiff/10-vGravity*(GetTransform().GetPosition()-cParticle.vPos).GetLength()*fTimeDiff/10;
+					else
+						cParticle.vVelocity -= vGravity*fTimeDiff;
 					cParticle.vPos += cParticle.vVelocity*fTimeDiff;
 					cParticle.fRot += fTimeDiff*cParticle.fCustom1;
 

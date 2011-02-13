@@ -160,7 +160,7 @@ bool MapTestCase::Test(Map<String, int> &cMap)
 			// Increase the number of elements
 			nNumOfElements++;
 		}
-		if (nNumOfElements != (int)lstValues.GetNumOfElements()) bResult = false;
+		if (nNumOfElements != static_cast<int>(lstValues.GetNumOfElements())) bResult = false;
 
 		// There should be a next element...
 		if (!cIterator.HasNext()) bResult = false;
@@ -187,7 +187,7 @@ bool MapTestCase::Test(Map<String, int> &cMap)
 			// Increase the number of elements
 			nNumOfElements++;
 		}
-		if (nNumOfElements != (int)lstKeys.GetNumOfElements()) bResult = false;
+		if (nNumOfElements != static_cast<int>(lstKeys.GetNumOfElements())) bResult = false;
 
 		// There should be a next element...
 		if (!cIterator.HasNext()) bResult = false;

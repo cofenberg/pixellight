@@ -81,7 +81,7 @@ void XmlTest::Test()
 	XmlElement *pItemElement = nullptr;
 
 	// Get the "ToDo" element
-	XmlNode *pNode = (XmlNode*)cDocument.GetFirstChild("ToDo");
+	XmlNode *pNode = static_cast<XmlNode*>(cDocument.GetFirstChild("ToDo"));
 	if (pNode) {
 		// It is a child of the document, and can be selected by name
 		pTodoElement = pNode->ToElement();
@@ -94,13 +94,13 @@ void XmlTest::Test()
 
 		// Change the distance to "doing bills" from
 		// "none" to "here". It's the next sibling element.
-		pItemElement = (XmlElement*)pItemElement->GetNextSiblingElement();
+		pItemElement = static_cast<XmlElement*>(pItemElement->GetNextSiblingElement());
 		pItemElement->SetAttribute("distance", "here");
 
 		// Remove the "Look for Evil Dinosours!" item.
 		// It is 1 more sibling away. We ask the parent to remove
 		// a particular child.
-		pItemElement = (XmlElement*)pItemElement->GetNextSiblingElement();
+		pItemElement = static_cast<XmlElement*>(pItemElement->GetNextSiblingElement());
 		pTodoElement->RemoveChild(*pItemElement);
 
 		pItemElement = nullptr;

@@ -91,7 +91,7 @@ void SNProjectile::NotifyUpdate()
 	// Collision detection
 	} else {
 		// Create a new scene query we can use to check which scene nodes are within a given axis aligned bounding box
-		SQAABoundingBox *pSceneQuery = (SQAABoundingBox*)GetContainer()->CreateQuery("PLScene::SQAABoundingBox");
+		SQAABoundingBox *pSceneQuery = static_cast<SQAABoundingBox*>(GetContainer()->CreateQuery("PLScene::SQAABoundingBox"));
 		if (pSceneQuery) {
 			// Connect event handler
 			pSceneQuery->EventSceneNode.Connect(&EventHandlerSceneNode);

@@ -93,7 +93,7 @@ void Application::UpdateTimeScaleTextNode()
 	SceneContainer *pSceneContainer = GetScene();
 	if (pSceneContainer) {
 		// Get the scene info text container
-		SceneContainer *pInfoTextContainer = (SceneContainer*)pSceneContainer->Get("Parent.InfoText");
+		SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pSceneContainer->Get("Parent.InfoText"));
 		if (pInfoTextContainer) {
 			// Get the time scale text scene node
 			SceneNode *pInfoTextNode = pInfoTextContainer->Get("TimeScale");
@@ -148,7 +148,7 @@ bool Application::ChooseSoundAPI()
 				// Setup scene surface painter
 				SurfacePainter *pPainter = GetPainter();
 				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-					SPScene *pSPScene = (SPScene*)pPainter;
+					SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 					pSPScene->SetRootContainer(nullptr);
 					pSPScene->SetSceneContainer(nullptr);
 					pSPScene->SetCamera(nullptr);
@@ -288,7 +288,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		// Create a scene container with our 'concrete sound scene' using the chosen sound API
 		SceneNode *pSceneContainerNode = cContainer.Create("PLSound::SCSound", "SoundScene", "SoundAPI=\"" + m_sSoundAPI + "\" Pitch=\"" + String::Format("%g", Timing::GetInstance()->GetTimeScaleFactor()) + '\"');
 		if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
-			SceneContainer *pSceneContainer = (SceneContainer*)pSceneContainerNode;
+			SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 
 			// Protect this important container!
 			pSceneContainer->SetProtected(true);
@@ -301,7 +301,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			SceneNode *pCamera = pSceneContainer->Create("PLScene::SNCamera", "FreeCamera", "Position=\"0.0 -1.5 1.4\" Rotation=\"-14.0 180.0 0.0\"");
 			if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 				// Make this to our main scene camera
-				SetCamera((SNCamera*)pCamera);
+				SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 				// Add a controller modifier so we can look around the camera by using a default control
 				pCamera->AddModifier("PLScene::SNMLookController");
@@ -348,7 +348,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			// Setup scene surface painter
 			SurfacePainter *pPainter = GetPainter();
 			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-				SPScene *pSPScene = (SPScene*)pPainter;
+				SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 				pSPScene->SetRootContainer(cContainer.GetContainer());
 				pSPScene->SetSceneContainer(pSceneContainer);
 			}
@@ -359,7 +359,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Get/add our information text scene nodes
 				SceneNode *pInfoText = pContainer->Create("PLScene::SceneContainer", "InfoText", "Flags=\"NoCulling\"");
 				if (pInfoText && pInfoText->IsInstanceOf("PLScene::SceneContainer")) {
-					SceneContainer *pInfoTextContainer = (SceneContainer*)pInfoText;
+					SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pInfoText);
 
 					// The name of the used sound API
 					pInfoTextContainer->Create("PLScene::SNText2D", "SoundAPI", "Position=\"0.01 0.01\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Sound API: ") + GetSoundAPI() + '\"');

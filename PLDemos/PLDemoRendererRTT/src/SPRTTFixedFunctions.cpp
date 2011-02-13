@@ -130,7 +130,7 @@ void SPRTTFixedFunctions::DrawScene(Renderer &cRenderer)
 	{ // Set the world matrix
 		// Build a rotation matrix by using a given euler angle around the y-axis
 		Matrix4x4 mWorld;
-		mWorld.FromEulerAngleY(float(m_fRotation*Math::DegToRad));
+		mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 	}
 
@@ -144,7 +144,7 @@ void SPRTTFixedFunctions::DrawScene(Renderer &cRenderer)
 		Matrix4x4 mProj;
 		const float fAspect      = 1.0f;
 		const float fAspectRadio = cRenderer.GetViewport().GetWidth()/(cRenderer.GetViewport().GetHeight()*fAspect);
-		mProj.PerspectiveFov(float(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
+		mProj.PerspectiveFov(static_cast<float>(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
 		pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProj);
 	}
 
@@ -192,7 +192,7 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 			Matrix4x4 mProj;
 			const float fAspect      = 1.0f;
 			const float fAspectRadio = cRenderer.GetViewport().GetWidth()/(cRenderer.GetViewport().GetHeight()*fAspect);
-			mProj.PerspectiveFov(float(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
+			mProj.PerspectiveFov(static_cast<float>(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProj);
 		}
 
@@ -229,7 +229,7 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 			cRenderer.SetSamplerState(0, Sampler::MipFilter, TextureFiltering::None);
 
 			// Draw
-			mWorld.FromEulerAngleY(float(m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 			mWorld.SetTranslation(-2.0f, 1.0f, 0.0f);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 			cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
@@ -242,7 +242,7 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 			cRenderer.SetSamplerState(0, Sampler::MipFilter, TextureFiltering::None);
 
 			// Draw
-			mWorld.FromEulerAngleZ(float(m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleZ(static_cast<float>(m_fRotation*Math::DegToRad));
 			mWorld.SetTranslation(0.0f, 1.0f, 0.0f);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 			cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
@@ -255,7 +255,7 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 			cRenderer.SetSamplerState(0, Sampler::MipFilter, TextureFiltering::None);
 
 			// Draw
-			mWorld.FromEulerAngleZ(float(-m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleZ(static_cast<float>(-m_fRotation*Math::DegToRad));
 			mWorld.SetTranslation(-2.0f, -1.0f, 0.0f);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 			cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
@@ -273,7 +273,7 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 			cRenderer.SetSamplerState(0, Sampler::MipFilter, TextureFiltering::None);
 
 			// Draw
-			mWorld.FromEulerAngleZ(float(-m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleZ(static_cast<float>(-m_fRotation*Math::DegToRad));
 			mWorld.SetTranslation(2.0f, -1.0f, 0.0f);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 			cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);

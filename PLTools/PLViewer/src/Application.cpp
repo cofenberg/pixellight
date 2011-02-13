@@ -285,7 +285,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();
 	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-		SPScene *pSPScene = (SPScene*)pPainter;
+		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 		pSPScene->SetRootContainer(cContainer.GetContainer());
 		pSPScene->SetSceneContainer(&cContainer);
 	}
@@ -296,10 +296,10 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	SceneContainer *pContainer = cContainer.GetContainer();
 	if (pContainer) {
 		// Create a 'ingame'-GUI scene node
-		const SNGui *pGuiSceneNode = (SNGui*)pContainer->Create("PLScene::SNGui", "GUI");
+		const SNGui *pGuiSceneNode = static_cast<SNGui*>(pContainer->Create("PLScene::SNGui", "GUI"));
 		if (pGuiSceneNode) {
 			// Setup the GUI
-			Gui *pGui = (Gui*)pGuiSceneNode->GetGui();
+			Gui *pGui = static_cast<Gui*>(pGuiSceneNode->GetGui());
 			if (pGui) {
 				pGui->SetTooltipEnabled(false);
 				pGui->SetMouseVisible(false);

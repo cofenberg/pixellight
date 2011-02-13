@@ -51,13 +51,13 @@ void MiscTest::Test()
 	StartTask("Degree to Radian & Radian to Degree");
 	bResult = true;
 	// Degree to Radian
-	fFloat = float(50.0f*Math::DegToRad);
-	if (!Math::AreEqual(float(fFloat*Math::RadToDeg), 50.0f)) bResult = false;
+	fFloat = static_cast<float>(50.0f*Math::DegToRad);
+	if (!Math::AreEqual(static_cast<float>(fFloat*Math::RadToDeg), 50.0f)) bResult = false;
 	dDouble = 50.0*Math::DegToRad;
 	if (!Math::AreEqual(dDouble*Math::RadToDeg, 50.0)) bResult = false;
 	// Radian to Degree
-	fFloat = float(50.0f*Math::RadToDeg);
-	if (!Math::AreEqual(float(fFloat*Math::DegToRad), 50.0f)) bResult = false;
+	fFloat = static_cast<float>(50.0f*Math::RadToDeg);
+	if (!Math::AreEqual(static_cast<float>(fFloat*Math::DegToRad), 50.0f)) bResult = false;
 	dDouble = 50.0*Math::RadToDeg;
 	if (!Math::AreEqual(dDouble*Math::DegToRad, 50.0)) bResult = false;
 	EndTask(bResult);

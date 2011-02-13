@@ -59,9 +59,10 @@ Vector3 PGPhysics::GetGravity() const
 
 	// Get the gravity vector
 	Vector3 vGravity;
-	if (pContainer && ((SCPhysicsWorld*)pContainer)->GetWorld())
-		((SCPhysicsWorld*)pContainer)->GetWorld()->GetGravity(vGravity);
-	else vGravity.SetXYZ(0.0f, -9.81f, 0.0f);
+	if (pContainer && static_cast<SCPhysicsWorld*>(pContainer)->GetWorld())
+		static_cast<SCPhysicsWorld*>(pContainer)->GetWorld()->GetGravity(vGravity);
+	else
+		vGravity.SetXYZ(0.0f, -9.81f, 0.0f);
 
 	// Return the gravity vector
 	return vGravity;
