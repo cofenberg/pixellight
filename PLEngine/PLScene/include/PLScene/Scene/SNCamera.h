@@ -351,7 +351,7 @@ class SNCamera : public SceneNode {
 	protected:
 		/**
 		*  @brief
-		*    Flags which hold �nternal camera information
+		*    Flags which hold internal camera information
 		*/
 		enum EInternalCameraFlags {
 			RecalculateProjectionMatrix	= 1<<0,	/**< Recalculation of projection matrix required */

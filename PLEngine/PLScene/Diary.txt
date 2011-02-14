@@ -1,3 +1,10 @@
+>> 14.02.2011
+[CO]
+- Bugfix: "WidgetPL::~WidgetPL()": When a widget gets destroyed, we really need to remove GUI messages within the internal GUI message queue using
+  this widget!
+
+
+
 >> 19.12.2010
 [CO]
 - SceneNode debug text: Printed rotation is now between [0, 360]

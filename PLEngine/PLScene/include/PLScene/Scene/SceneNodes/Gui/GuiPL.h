@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Queue.h>
 #include <PLGeneral/Container/Bitset.h>
 #include <PLGui/Backend/GuiImpl.h>
+#include <PLGui/Gui/Base/GuiMessage.h>
 #include "PLScene/PLScene.h"
 
 
@@ -285,7 +285,7 @@ class GuiPL : public PLGui::GuiImpl {
 		PLMath::Vector2i					 m_vScreenSize;								/**< Screen size */
 		PLRenderer::Renderer				*m_pRenderer;								/**< Used renderer, a null pointer on error */
 		PLGeneral::Mutex					*m_pMessageQueueMutex;						/**< GUI message queue mutex, always valid! */
-		PLGeneral::Queue<PLGui::GuiMessage>  m_lstMessageQueue;							/**< GUI message queue */
+		PLGeneral::List<PLGui::GuiMessage>   m_lstMessageQueue;							/**< GUI message queue */
 
 		// Widgets
 		PLGui::Widget						*m_pMouseOver;								/**< Widget that the mouse has currently entered */

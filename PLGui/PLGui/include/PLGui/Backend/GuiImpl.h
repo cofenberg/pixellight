@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
 #include <PLCore/Base/Object.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/Gui/Resources/FontInfo.h"

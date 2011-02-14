@@ -241,8 +241,8 @@ void GuiPL::ProcessMessage()
 	// Is there anything within the GUI message queue?
 	if (m_lstMessageQueue.GetNumOfElements()) {
 		// Pop a message from the queue
-		GuiMessage cMessage;
-		m_lstMessageQueue.Pop(&cMessage);
+		GuiMessage cMessage = m_lstMessageQueue.Get(0);
+		m_lstMessageQueue.RemoveAtIndex(0);
 
 		// Pass on the GUI message
 		m_pGui->SendMessage(cMessage);
@@ -255,7 +255,7 @@ void GuiPL::PostMessage(const GuiMessage &cMessage)
 	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
 
 	// Add the GUI message to the internal GUI message queue processed by GuiPL::ProcessMessage()
-	m_lstMessageQueue.Push(cMessage);
+	m_lstMessageQueue.Add(cMessage);
 }
 
 void GuiPL::EnumerateScreens(List<Screen*> &lstScreens)

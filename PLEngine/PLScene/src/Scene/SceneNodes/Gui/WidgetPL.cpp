@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/System/MutexGuard.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Screen.h>
 #include <PLGui/Gui/Base/GuiMessage.h>
@@ -117,6 +118,30 @@ WidgetPL::~WidgetPL()
 {
 	// If not done already, destroy the widget
 	if (!m_bWrapper) {
+		// Get the GUI instance
+		Gui *pGui = m_pWidget->GetGui();
+		if (pGui) {
+			// Get the GUI implementation instance
+			GuiPL *pGuiPL = static_cast<GuiPL*>(pGui->GetImpl());
+			if (pGuiPL) {
+				// We REALLY need to check whether there are still some GUI messages within the internal GUI message queue using this widget!
+
+				// Lock the GUI message queue
+				const MutexGuard cMutexGuard(*pGuiPL->m_pMessageQueueMutex);
+
+				// Loop through the queue
+				for (uint32 i=0; i<pGuiPL->m_lstMessageQueue.GetNumOfElements(); i++) {
+					// Is this GUI message using this widget?
+					if (pGuiPL->m_lstMessageQueue[i].GetWidget() == m_pWidget) {
+						// Jap, deal with the GUI message!
+						pGuiPL->m_lstMessageQueue.RemoveAtIndex(i);
+						i--;
+					}
+				}
+			}
+		}
+
+		// Destroy the widget
 		Destroy();
 	}
 }
