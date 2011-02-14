@@ -92,8 +92,8 @@ SceneContainer::SceneContainer() :
 	AABBMin(this),
 	AABBMax(this),
 	Filename(this),
-	m_pSceneContext(nullptr),
 	m_sHierarchy("PLScene::SHList"),
+	m_pSceneContext(nullptr),
 	m_pHierarchy(nullptr),
 	m_pQueryManager(nullptr)
 {

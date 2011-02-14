@@ -53,9 +53,9 @@ pl_implement_class(SNMMoveController)
 *    Constructor
 */
 SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
-	EventHandlerUpdate(&SNMMoveController::NotifyUpdate, this),
 	InputSemantic(this),
 	Speed(this),
+	EventHandlerUpdate(&SNMMoveController::NotifyUpdate, this),
 	m_pController(new MoveController())
 {
 }

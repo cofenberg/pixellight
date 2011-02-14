@@ -60,10 +60,10 @@ PGFume::PGFume() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
+	EventHandlerUpdate(&PGFume::NotifyUpdate, this),
 	m_bUpdate(false),
 	m_fParticleTime(0.0f),
-	m_bCreateNewParticles(true),
-	EventHandlerUpdate(&PGFume::NotifyUpdate, this)
+	m_bCreateNewParticles(true)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial				   = "Data/Effects/PGFume.plfx";

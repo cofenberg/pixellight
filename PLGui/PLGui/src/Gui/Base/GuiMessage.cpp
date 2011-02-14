@@ -661,25 +661,25 @@ String GuiMessage::ToString() const
 		// Mouse button is pressed, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonDown:
 			sMessage += "OnMouseButtonDown";
-			sMessage += String() + " Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
+			sMessage += String() + " Button=" + static_cast<uint32>(m_nMouseButton) + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button is released, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonUp:
 			sMessage += "OnMouseButtonUp";
-			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
+			sMessage += String() + " (Button=" + static_cast<uint32>(m_nMouseButton) + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button has been clicked, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonClick:
 			sMessage += "OnMouseButtonClick";
-			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
+			sMessage += String() + " (Button=" + static_cast<uint32>(m_nMouseButton) + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonDoubleClick:
 			sMessage += "OnMouseButtonDoubleClick";
-			sMessage += String() + " (Button=" + m_nMouseButton + ", Pos=" + m_vPosSize.ToString() + ')';
+			sMessage += String() + " (Button=" + static_cast<uint32>(m_nMouseButton) + ", Pos=" + m_vPosSize.ToString() + ')';
 			break;
 
 		// Mouse wheel moved, mouse wheel movement as parameter

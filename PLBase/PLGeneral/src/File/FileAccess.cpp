@@ -61,9 +61,9 @@ FileAccess::Entry::Entry() :
 */
 FileAccess::Entry::Entry(const Entry &cEntry) :
 	m_nID(cEntry.m_nID),
-	m_bCaseSensitive(cEntry.m_bCaseSensitive),
 	m_sUsername(cEntry.m_sUsername),
 	m_sPassword(cEntry.m_sPassword),
+	m_bCaseSensitive(cEntry.m_bCaseSensitive),
 	m_nFlagsMask(cEntry.m_nFlagsMask),
 	m_nFlagsValue(cEntry.m_nFlagsValue),
 	m_nUserFlags(cEntry.m_nUserFlags),
@@ -289,8 +289,8 @@ FileAccess::FileAccess() :
 *    Copy constructor
 */
 FileAccess::FileAccess(const FileAccess &cFileAccess) :
-	m_nNextID(cFileAccess.m_nNextID),
-	m_mapEntries(cFileAccess.m_mapEntries)
+	m_mapEntries(cFileAccess.m_mapEntries),
+	m_nNextID(cFileAccess.m_nNextID)
 {
 }
 
@@ -308,8 +308,8 @@ FileAccess::~FileAccess()
 */
 FileAccess &FileAccess::operator =(const FileAccess &cFileAccess)
 {
-	m_nNextID	 = cFileAccess.m_nNextID;
 	m_mapEntries = cFileAccess.m_mapEntries;
+	m_nNextID	 = cFileAccess.m_nNextID;
 	return *this;
 }
 

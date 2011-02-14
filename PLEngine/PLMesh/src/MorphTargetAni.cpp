@@ -42,7 +42,7 @@ namespace PLMesh {
 *    Constructor
 */
 MorphTargetAni::MorphTargetAni(const String &sName, ElementManager<MorphTargetAni> *pManager) :
-	Element<MorphTargetAni>(sName, pManager), AnimationBase()
+	AnimationBase(), Element<MorphTargetAni>(sName, pManager)
 {
 }
 

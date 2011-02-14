@@ -34,10 +34,11 @@ namespace PLMath {
 //[ Constructor                                           ]
 //[-------------------------------------------------------]
 inline Matrix3x4::Matrix3x4() :
-	// Set identity
-	xx(1.0f), xy(0.0f), xz(0.0f), xw(0.0f),
-	yx(0.0f), yy(1.0f), yz(0.0f), yw(0.0f),
-	zx(0.0f), zy(0.0f), zz(1.0f), zw(0.0f)
+	// Set identity - and respect the correct initialization order!
+	xx(1.0f), yx(0.0f), zx(0.0f),
+	xy(0.0f), yy(1.0f), zy(0.0f),
+	xz(0.0f), yz(0.0f), zz(1.0f),
+	xw(0.0f), yw(0.0f), zw(0.0f)
 {
 }
 
@@ -54,9 +55,11 @@ inline Matrix3x4::Matrix3x4(const Matrix3x4 &mM)
 inline Matrix3x4::Matrix3x4(float fXX, float fXY, float fXZ, float fXW,
 							float fYX, float fYY, float fYZ, float fYW,
 							float fZX, float fZY, float fZZ, float fZW) :
-	xx(fXX), xy(fXY), xz(fXZ), xw(fXW),
-	yx(fYX), yy(fYY), yz(fYZ), yw(fYW),
-	zx(fZX), zy(fZY), zz(fZZ), zw(fZW)
+	// Copy over the values - and respect the correct initialization order!
+	xx(fXX), yx(fYX), zx(fZX),
+	xy(fXY), yy(fYY), zy(fZY),
+	xz(fXZ), yz(fYZ), zz(fZZ),
+	xw(fXW), yw(fYW), zw(fZW)
 {
 }
 

@@ -81,8 +81,8 @@ SNMAnchor::SNMAnchor(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	JointPositionOffset(this),
 	JointRotationOffset(this),
 	Flags(this),
-	EventHandlerPositionRotationUpdate(&SNMAnchor::NotifyPositionRotationUpdate, this),
-	EventHandlerContainer			  (&SNMAnchor::NotifyContainer,				 this)
+	EventHandlerContainer			  (&SNMAnchor::NotifyContainer,				 this),
+	EventHandlerPositionRotationUpdate(&SNMAnchor::NotifyPositionRotationUpdate, this)
 {
 }
 

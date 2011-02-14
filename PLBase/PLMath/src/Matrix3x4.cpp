@@ -50,16 +50,20 @@ const Matrix3x4 Matrix3x4::Identity(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.
 //[ Constructor                                           ]
 //[-------------------------------------------------------]
 Matrix3x4::Matrix3x4(const Matrix3x3 &mM) :
-	xx(mM.xx), xy(mM.xy), xz(mM.xz), xw(0.0f),
-	yx(mM.yx), yy(mM.yy), yz(mM.yz), yw(0.0f),
-	zx(mM.zx), zy(mM.zy), zz(mM.zz), zw(0.0f)
+	// Copy over the values - and respect the correct initialization order!
+	xx(mM.xx), yx(mM.yx), zx(mM.zx),
+	xy(mM.xy), yy(mM.yy), zy(mM.zy),
+	xz(mM.xz), yz(mM.yz), zz(mM.zz),
+	xw(0.0f),  yw(0.0f),  zw(0.0f)
 {
 }
 
 Matrix3x4::Matrix3x4(const Matrix4x4 &mM) :
-	xx(mM.xx), xy(mM.xy), xz(mM.xz), xw(mM.xw),
-	yx(mM.yx), yy(mM.yy), yz(mM.yz), yw(mM.yw),
-	zx(mM.zx), zy(mM.zy), zz(mM.zz), zw(mM.zw)
+	// Copy over the values - and respect the correct initialization order!
+	xx(mM.xx), yx(mM.yx), zx(mM.zx),
+	xy(mM.xy), yy(mM.yy), zy(mM.zy),
+	xz(mM.xz), yz(mM.yz), zz(mM.zz),
+	xw(mM.xw), yw(mM.yw), zw(mM.zw)
 {
 }
 
@@ -83,14 +87,18 @@ bool Matrix3x4::operator !=(const Matrix3x4 &mM) const
 
 bool Matrix3x4::CompareScale(const Matrix3x4 &mM, float fEpsilon) const
 {
-	if (fEpsilon) return (Math::AreEqual(Math::Abs(xx-mM.xx), fEpsilon) && Math::AreEqual(Math::Abs(yy-mM.yy), fEpsilon) && Math::AreEqual(Math::Abs(zz-mM.zz), fEpsilon));
-	else		  return (xx == mM.xx && yy == mM.yy && zz == mM.zz);
+	if (fEpsilon)
+		return (Math::AreEqual(Math::Abs(xx-mM.xx), fEpsilon) && Math::AreEqual(Math::Abs(yy-mM.yy), fEpsilon) && Math::AreEqual(Math::Abs(zz-mM.zz), fEpsilon));
+	else
+		return (xx == mM.xx && yy == mM.yy && zz == mM.zz);
 }
 
 bool Matrix3x4::CompareTranslation(const Matrix3x4 &mM, float fEpsilon) const
 {
-	if (fEpsilon) return (Math::AreEqual(Math::Abs(xw-mM.xw), fEpsilon) && Math::AreEqual(Math::Abs(yw-mM.yw), fEpsilon) && Math::AreEqual(Math::Abs(zw-mM.zw), fEpsilon));
-	else		  return (xw == mM.xw && yw == mM.yw && zw == mM.zw);
+	if (fEpsilon)
+		return (Math::AreEqual(Math::Abs(xw-mM.xw), fEpsilon) && Math::AreEqual(Math::Abs(yw-mM.yw), fEpsilon) && Math::AreEqual(Math::Abs(zw-mM.zw), fEpsilon));
+	else
+		return (xw == mM.xw && yw == mM.yw && zw == mM.zw);
 }
 
 bool Matrix3x4::CompareRotation(const Matrix3x4 &mM, float fEpsilon) const

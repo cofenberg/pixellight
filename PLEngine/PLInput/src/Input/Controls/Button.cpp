@@ -41,9 +41,9 @@ namespace PLInput {
 *    Constructor
 */
 Button::Button(Controller *pController, const String &sName, const String &sDescription, char nCharacter) : Control(pController, ControlButton, sName, sDescription),
+	m_nCharacter(nCharacter),
 	m_bPressed(false),
-	m_bHit(false),
-	m_nCharacter(nCharacter)
+	m_bHit(false)
 {
 }
 
@@ -52,9 +52,9 @@ Button::Button(Controller *pController, const String &sName, const String &sDesc
 *    Copy constructor
 */
 Button::Button(const Button &cOther) : Control(cOther.GetController(), ControlButton, cOther.GetName(), cOther.GetDescription()),
+	m_nCharacter(cOther.m_nCharacter),
 	m_bPressed(cOther.m_bPressed),
-	m_bHit(cOther.m_bHit),
-	m_nCharacter(cOther.m_nCharacter)
+	m_bHit(cOther.m_bHit)
 {
 }
 

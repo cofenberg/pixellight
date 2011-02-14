@@ -51,8 +51,8 @@ pl_implement_class(SNMCameraZoomController)
 *    Constructor
 */
 SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCameraZoom(cSceneNode),
-	EventHandlerControl(&SNMCameraZoomController::NotifyControl, this),
 	InputSemantic(this),
+	EventHandlerControl(&SNMCameraZoomController::NotifyControl, this),
 	m_pController(new CameraZoomController())
 {
 	// Connect input control event handler

@@ -53,8 +53,8 @@ XmlTextSection::XmlTextSection(XmlTextElement *pParent) : XmlTextElement(pParent
 	m_nPaddingTop(0),
 	m_nPaddingBottom(0),
 	m_cBgColor(Color4::Transparent),
-	m_nBorder(0),
-	m_fAlpha(1.0f)
+	m_fAlpha(1.0f),
+	m_nBorder(0)
 {
 }
 

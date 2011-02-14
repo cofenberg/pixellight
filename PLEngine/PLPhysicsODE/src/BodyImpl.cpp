@@ -434,8 +434,8 @@ BodyImpl::BodyImpl() :
 	m_fMass(0.0f),
 	m_bAutoFreeze(true),
 	m_bFrozen(true),
-	m_bUseGravity(true),
 	m_bCollisionActive(true),
+	m_bUseGravity(true),
 	m_nCollisionGroup(0)
 {
 }

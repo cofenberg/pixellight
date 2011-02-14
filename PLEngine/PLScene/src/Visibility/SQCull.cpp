@@ -77,16 +77,16 @@ pl_implement_class(SQCull)
 *    Default constructor
 */
 SQCull::SQCull() :
-	m_bSetIdentityWorldMatrix(true),
-	m_pCameraContainer(new SceneNodeHandler()),
-	m_bCameraInCell(false),
-	m_pHierarchy(nullptr),
 	m_nMode(Coherent),
 	m_nVisibilityThreshold(10),
+	m_pCameraContainer(new SceneNodeHandler()),
+	m_bCameraInCell(false),
+	m_bSetIdentityWorldMatrix(true),
+	m_pHierarchy(nullptr),
+	m_nFrame(0),
 	m_nCurrentQueries(0),
 	m_nOcclusionQueries(0),
 	m_ppOcclusionQueries(nullptr),
-	m_nFrame(0),
 	m_pVisRootContainer(nullptr),
 	m_pVisContainer(nullptr)
 {

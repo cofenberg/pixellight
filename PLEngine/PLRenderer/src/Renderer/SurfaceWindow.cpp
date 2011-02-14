@@ -88,9 +88,9 @@ bool SurfaceWindow::IsFullscreen() const
 */
 SurfaceWindow::SurfaceWindow(SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
 	Surface(*cHandler.GetRenderer(), Surface::Window),
+	m_bIsFullscreen(bFullscreen),
 	m_pHandler(&cHandler),
-	m_nWindow(nWindow),
-	m_bIsFullscreen(bFullscreen)
+	m_nWindow(nWindow)
 {
 }
 
@@ -103,9 +103,9 @@ SurfaceWindow::SurfaceWindow(SurfaceWindowHandler &cHandler, handle nWindow, boo
 *    Copy constructor
 */
 SurfaceWindow::SurfaceWindow(const SurfaceWindow &cSource) : Surface(cSource.GetRenderer(), cSource.GetType()),
+	m_bIsFullscreen(cSource.IsFullscreen()),
 	m_pHandler(cSource.GetHandler()),
-	m_nWindow(cSource.GetWindow()),
-	m_bIsFullscreen(cSource.IsFullscreen())
+	m_nWindow(cSource.GetWindow())
 {
 	// No implementation because the copy constructor is never used
 }

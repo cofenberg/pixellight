@@ -54,9 +54,9 @@ pl_implement_class(SNMLookController)
 *    Constructor
 */
 SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
-	EventHandlerUpdate(&SNMLookController::NotifyUpdate, this),
 	InputSemantic(this),
 	Flags(this),
+	EventHandlerUpdate(&SNMLookController::NotifyUpdate, this),
 	m_pController(new LookController())
 {
 	// Overwrite the default setting of the flags

@@ -51,8 +51,8 @@ namespace PLRendererOpenGL {
 FrameBufferObject::FrameBufferObject() :
 	m_nFrameBufferIndex(0),
 	m_nMultisampleFrameBufferIndex(0),
-	m_nDepthBufferIndex(0),
 	m_nColorBufferIndex(0),
+	m_nDepthBufferIndex(0),
 	m_nStencilBufferIndex(0)
 {
 }

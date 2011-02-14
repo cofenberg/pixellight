@@ -75,8 +75,8 @@ pl_implement_class(GuiPL)
 *    Constructor
 */
 GuiPL::GuiPL(Gui *pGui) : GuiImpl(pGui),
-	EventHandlerTimer(&GuiPL::NotifyTimer, this),
 	InputSemantic(this),
+	EventHandlerTimer(&GuiPL::NotifyTimer, this),
 	m_pGui(pGui),
 	m_vScreenSize(1024, 768),
 	m_pRenderer(nullptr),

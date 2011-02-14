@@ -51,20 +51,15 @@ namespace PLCore {
 *    Constructor
 */
 Class::Class(uint32 nModuleID, const String &sName, const String &sDescription, const String &sNamespace, const String &sBaseClass) :
-	m_nModuleID(nModuleID),
-	m_bInitialized(false),
-	m_pBaseClass(nullptr),
 	m_sName(sName),
 	m_sNamespace(sNamespace),
+	m_sClassName((m_sNamespace != "") ? m_sNamespace + "::" + m_sName : m_sName),
 	m_sDescription(sDescription),
-	m_sBaseClass(sBaseClass)
+	m_sBaseClass(sBaseClass),
+	m_nModuleID(nModuleID),
+	m_bInitialized(false),
+	m_pBaseClass(nullptr)
 {
-	// Compose namespace and name
-	if (m_sNamespace != "")
-		m_sClassName = m_sNamespace + "::" + m_sName;
-	else
-		m_sClassName = m_sName;
-
 	// Register at class manager
 	ClassManager::GetInstance()->RegisterClass(m_nModuleID, this);
 }

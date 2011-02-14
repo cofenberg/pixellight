@@ -61,7 +61,6 @@ pl_implement_class(SRPDeferredSSAO)
 *    Default constructor
 */
 SRPDeferredSSAO::SRPDeferredSSAO() :
-	EventHandlerDirty(&SRPDeferredSSAO::OnDirty, this),
 	ShaderLanguage(this),
 	Contrast(this),
 	BlurRadius(this),
@@ -69,6 +68,7 @@ SRPDeferredSSAO::SRPDeferredSSAO() :
 	ResolutionScale(this),
 	SceneScale(this),
 	Flags(this),
+	EventHandlerDirty(&SRPDeferredSSAO::OnDirty, this),
 	m_pRenderTargetAO(nullptr),
 	m_pRenderTargetXBlur(nullptr),
 	m_pVertexShader(nullptr),

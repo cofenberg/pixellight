@@ -176,6 +176,7 @@ PGFountain::PGFountain() :
 	AccFactor(this),
 	Material(this),
 	Particles(this),
+	EventHandlerUpdate(&PGFountain::NotifyUpdate, this),
 	m_bUpdate(false),
 	m_nSteps(8),
 	m_nRaysPerStep(6),
@@ -183,8 +184,7 @@ PGFountain::PGFountain() :
 	m_fAngleOfDeepestStep(80.0f),
 	m_fAngleOfHighestStep(85.0f),
 	m_fRandomAngleAddition(20.0f),
-	m_fAccFactor(0.11f),
-	EventHandlerUpdate(&PGFountain::NotifyUpdate, this)
+	m_fAccFactor(0.11f)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGFountain.dds";

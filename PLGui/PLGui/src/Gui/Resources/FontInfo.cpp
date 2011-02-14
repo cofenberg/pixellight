@@ -67,11 +67,11 @@ FontInfo::FontInfo(const String &sFilename, const String &sFamily, uint32 nHeigh
 *    Copy constructor
 */
 FontInfo::FontInfo(const FontInfo &cFontInfo) :
+	m_sFilename(cFontInfo.m_sFilename),
 	m_sFamily(cFontInfo.m_sFamily),
 	m_nHeight(cFontInfo.m_nHeight),
 	m_nWeight(cFontInfo.m_nWeight),
-	m_nStyle(cFontInfo.m_nStyle),
-	m_sFilename(cFontInfo.m_sFilename)
+	m_nStyle(cFontInfo.m_nStyle)
 {
 }
 

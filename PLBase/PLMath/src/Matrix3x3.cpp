@@ -48,16 +48,18 @@ const Matrix3x3 Matrix3x3::Identity(1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.
 //[ Constructor                                           ]
 //[-------------------------------------------------------]
 Matrix3x3::Matrix3x3(const Matrix3x4 &mM) :
-	xx(mM.xx), xy(mM.xy), xz(mM.xz),
-	yx(mM.yx), yy(mM.yy), yz(mM.yz),
-	zx(mM.zx), zy(mM.zy), zz(mM.zz)
+	// Copy over the values - and respect the correct initialization order!
+	xx(mM.xx), yx(mM.yx), zx(mM.zx),
+	xy(mM.xy), yy(mM.yy), zy(mM.zy),
+	xz(mM.xz), yz(mM.yz), zz(mM.zz)	
 {
 }
 
 Matrix3x3::Matrix3x3(const Matrix4x4 &mM) :
-	xx(mM.xx), xy(mM.xy), xz(mM.xz),
-	yx(mM.yx), yy(mM.yy), yz(mM.yz),
-	zx(mM.zx), zy(mM.zy), zz(mM.zz)
+	// Copy over the values - and respect the correct initialization order!
+	xx(mM.xx), yx(mM.yx), zx(mM.zx),
+	xy(mM.xy), yy(mM.yy), zy(mM.zy),
+	xz(mM.xz), yz(mM.yz), zz(mM.zz)
 {
 }
 
@@ -81,8 +83,10 @@ bool Matrix3x3::operator !=(const Matrix3x3 &mM) const
 
 bool Matrix3x3::CompareScale(const Matrix3x3 &mM, float fEpsilon) const
 {
-	if (fEpsilon) return (Math::AreEqual(Math::Abs(xx-mM.xx), fEpsilon) && Math::AreEqual(Math::Abs(yy-mM.yy), fEpsilon) && Math::AreEqual(Math::Abs(zz-mM.zz), fEpsilon));
-	else		  return (xx == mM.xx && yy == mM.yy && zz == mM.zz);
+	if (fEpsilon)
+		return (Math::AreEqual(Math::Abs(xx-mM.xx), fEpsilon) && Math::AreEqual(Math::Abs(yy-mM.yy), fEpsilon) && Math::AreEqual(Math::Abs(zz-mM.zz), fEpsilon));
+	else
+		return (xx == mM.xx && yy == mM.yy && zz == mM.zz);
 }
 
 bool Matrix3x3::CompareRotation(const Matrix3x3 &mM, float fEpsilon) const

@@ -205,8 +205,8 @@ SNPortal::SNPortal() :
 	Vertices(this),
 	Flags(this),
 	DebugFlags(this),
-	EventHandlerContainerPositionRotationScale(&SNPortal::NotifyContainerPositionRotationScale, this),
-	m_nInternalPortalFlags(RecalculateContainerPolygon)
+	m_nInternalPortalFlags(RecalculateContainerPolygon),
+	EventHandlerContainerPositionRotationScale(&SNPortal::NotifyContainerPositionRotationScale, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|CastShadow|ReceiveShadow);

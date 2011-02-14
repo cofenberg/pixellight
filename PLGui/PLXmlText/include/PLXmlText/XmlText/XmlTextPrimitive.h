@@ -82,9 +82,9 @@ class XmlTextPrimitive {
 			m_nType(PrimitiveText),
 			m_cTextColor(PLGraphics::Color4::Transparent),
 			m_cBgColor(PLGraphics::Color4::Transparent),
+			m_nHGap(0),
 			m_pImage(nullptr),
 			m_nIndent(0),
-			m_nHGap(0),
 			m_pFont(nullptr)
 		{
 		}
@@ -101,10 +101,10 @@ class XmlTextPrimitive {
 			m_cTextColor(cPrimitive.m_cTextColor),
 			m_cBgColor(cPrimitive.m_cBgColor),
 			m_vSize(cPrimitive.m_vSize),
+			m_nHGap(cPrimitive.m_nHGap),
 			m_sText(cPrimitive.m_sText),
 			m_pImage(cPrimitive.m_pImage),
 			m_nIndent(cPrimitive.m_nIndent),
-			m_nHGap(cPrimitive.m_nHGap),
 			m_pFont(cPrimitive.m_pFont ? new PLGui::Font(*cPrimitive.m_pFont) : nullptr)
 		{
 		}

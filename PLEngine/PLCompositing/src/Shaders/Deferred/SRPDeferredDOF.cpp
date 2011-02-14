@@ -65,7 +65,6 @@ pl_implement_class(SRPDeferredDOF)
 *    Default constructor
 */
 SRPDeferredDOF::SRPDeferredDOF() :
-	EventHandlerDirty(&SRPDeferredDOF::OnDirty, this),
 	ShaderLanguage(this),
 	EffectWeight(this),
 	NearPlaneDepth(this),
@@ -75,6 +74,7 @@ SRPDeferredDOF::SRPDeferredDOF() :
 	BlurPasses(this),
 	BlurDownscale(this),
 	Flags(this),
+	EventHandlerDirty(&SRPDeferredDOF::OnDirty, this),
 	m_bResultIndex(0),
 	m_pVertexShader(nullptr),
 	m_pDepthBlurFragmentShader(nullptr),

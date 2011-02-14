@@ -289,8 +289,11 @@ BodyImpl::BodyImpl() :
 	m_fMass(0.0f),
 	m_bAutoFreeze(true),
 	m_bFrozen(true),
-	m_bUseGravity(true),
 	m_bCollisionActive(true),
+	m_bUseGravity(true),
+	m_fFreezeLinearVelocity(0.0f),
+	m_fFreezeAngularVelocity(0.0f),
+	m_nFreezeSteps(0),
 	m_nCollisionGroup(0),
 	m_bChangedByUser(false)
 {

@@ -201,9 +201,9 @@ SNMPhysicsBody::SNMPhysicsBody(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	m_pBodyHandler(new ElementHandler()),
 	m_bListening(true),
 	EventHandlerActive   (&SNMPhysicsBody::NotifyActive,    this),
-	EventHandlerTransform(&SNMPhysicsBody::NotifyTransform, this),
 	EventHandlerPosition (&SNMPhysicsBody::NotifyPosition,  this),
-	EventHandlerRotation (&SNMPhysicsBody::NotifyRotation,  this)
+	EventHandlerRotation (&SNMPhysicsBody::NotifyRotation,  this),
+	EventHandlerTransform(&SNMPhysicsBody::NotifyTransform, this)
 {
 }
 

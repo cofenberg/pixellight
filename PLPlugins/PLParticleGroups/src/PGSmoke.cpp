@@ -60,10 +60,10 @@ PGSmoke::PGSmoke() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
-	m_fParticleTime(0.0f),
-	m_bCreateNewParticles(true),
 	EventHandlerUpdate(&PGSmoke::NotifyUpdate, this),
-	m_bUpdate(false)
+	m_bUpdate(false),
+	m_fParticleTime(0.0f),
+	m_bCreateNewParticles(true)
 {
 	// Overwritten PLScene::SNParticleGroup variables
 	m_sMaterial				   = "Data/Textures/PGSmoke.dds";

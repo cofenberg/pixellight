@@ -89,10 +89,10 @@ SNEngineInformation::SNEngineInformation() :
 	InfoFlags(this),
 	ProfilingMaterial(this),
 	Flags(this),
+	EventHandlerUpdate(&SNEngineInformation::NotifyUpdate, this),
 	m_sProfilingMaterial("Data/Effects/PLProfiling.plfx"),
 	m_bProfilingMaterial(false),
-	m_pProfilingMaterial(new MaterialHandler()),
-	EventHandlerUpdate(&SNEngineInformation::NotifyUpdate, this)
+	m_pProfilingMaterial(new MaterialHandler())
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|NoCulling);

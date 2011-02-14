@@ -130,6 +130,8 @@ RendererConfig::~RendererConfig()
 */
 RendererConfig::RendererConfig(const RendererConfig &cSource) :
 	Fullscreen(this),
+	ZBufferBits(this),
+	StencilBits(this),
 	MultisampleAntialiasingSamples(this),
 	DefaultShaderLanguage(this),
 	// Display mode
@@ -137,8 +139,6 @@ RendererConfig::RendererConfig(const RendererConfig &cSource) :
 	DisplayHeight(this),
 	DisplayColorBits(this),
 	DisplayFrequency(this),
-	ZBufferBits(this),
-	StencilBits(this),
 	// Misc
 	VSync(this),
 	UseExtensions(this),

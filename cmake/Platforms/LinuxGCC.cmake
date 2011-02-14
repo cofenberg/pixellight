@@ -67,14 +67,20 @@ endif()
 
 # Compiler flags
 set(LINUX_COMPILE_FLAGS
-#	-Wold-style-cast										# Warn if an old-style (C-style) cast is used - just set it to look for c-style casts because some used libs produce c-style warnings and we can't change that
 	-pthread												# Use pthreads
+	-ffor-scope												# If -ffor-scope is specified, the scope of variables declared in a for-init-statement is limited to the `for' loop itself, as specified by the C++ standard
 	-fno-rtti												# No C++ RTTI
 	-fno-exceptions											# No C++ exception handling
 	-pipe													# Use Pipes
 	-msse3													# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
 	# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 	-ffast-math												# Perform floating point transformations that may break IEEE/ISO rules regarding floating point arithmetic
+	# Some dialect-options of gcc: http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html
+	-Wnon-virtual-dtor										# Warn when a class has virtual functions and accessible non-virtual destructor, in which case it would be possible but unsafe to delete an instance of a derived class through a pointer to the base class. This warning is also enabled if -Weffc++ is specified.
+	-Wreorder												# Warn when the order of member initializers given in the code does not match the order in which they must be executed
+	-Wstrict-null-sentinel									# Warn also about the use of an uncasted NULL as sentinel
+	-Wsign-promo											# Warn when overload resolution chooses a promotion from unsigned or enumerated type to a signed type, over a conversion to an unsigned type of the same size
+#	-Wold-style-cast										# Warn if an old-style (C-style) cast is used - just set it to look for c-style casts because some used libs produce c-style warnings and we can't change that
 )
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################

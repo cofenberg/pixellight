@@ -86,8 +86,8 @@ Cursor::Cursor(Gui &cGui, const String &sFilename, const Vector2i &vHotspot) :
 Cursor::Cursor(const Cursor &cCursor) :
 	m_pGui(cCursor.m_pGui),
 	m_pCursorImpl(cCursor.m_pCursorImpl),
-	m_sFilename(cCursor.m_sFilename),
-	m_nMouseCursor(cCursor.m_nMouseCursor)
+	m_nMouseCursor(cCursor.m_nMouseCursor),
+	m_sFilename(cCursor.m_sFilename)
 {
 	// Increase reference count for cursor
 	m_pCursorImpl->AddReference();

@@ -98,8 +98,8 @@ bool World::MyCompareFunction::IsGreater(const BodyPair &sKey1, const BodyPair &
 World::World() :
 	m_vWorldSizeMin(-10000.0f, -10000.0f, -10000.0f),
 	m_vWorldSizeMax( 10000.0f,  10000.0f,  10000.0f),
-	m_bSimulationActive(true),
 	m_fFrameRate(60.0f),
+	m_bSimulationActive(true),
 	m_fSimulationSpeed(1.0f),
 	m_fSimulationQuality(1.0f),
 	m_bBuoyancyActive(false),

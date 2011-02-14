@@ -61,12 +61,12 @@ pl_implement_class(SRPDeferredGlow)
 *    Default constructor
 */
 SRPDeferredGlow::SRPDeferredGlow() :
-	EventHandlerDirty(&SRPDeferredGlow::OnDirty, this),
 	ShaderLanguage(this),
 	GlowFactor(this),
 	GlowBlurPasses(this),
 	GlowDownscale(this),
 	Flags(this),
+	EventHandlerDirty(&SRPDeferredGlow::OnDirty, this),
 	m_bResultIndex(0),
 	m_pVertexShader(nullptr),
 	m_pDownscaleFragmentShader(nullptr),

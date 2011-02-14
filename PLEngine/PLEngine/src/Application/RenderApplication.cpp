@@ -59,13 +59,13 @@ namespace PLEngine {
 *    Constructor
 */
 RenderApplication::RenderApplication(const String &sSurfacePainter) : GuiApplication(),
-	m_sSurfacePainter(sSurfacePainter),
-	m_pRendererContext(nullptr),
-	m_pInputController(nullptr),
 	EventHandlerDestroy       (&RenderApplication::NotifyDestroy,    this),
 	EventHandlerActivate	  (&RenderApplication::NotifyActivate,	 this),
 	EventHandlerDisplayMode   (&RenderApplication::OnDisplayMode,    this),
-	EventHandlerFullscreenMode(&RenderApplication::OnFullscreenMode, this)
+	EventHandlerFullscreenMode(&RenderApplication::OnFullscreenMode, this),
+	m_sSurfacePainter(sSurfacePainter),
+	m_pRendererContext(nullptr),
+	m_pInputController(nullptr)
 {
 	// Set application title
 	SetTitle("PixelLight render application");

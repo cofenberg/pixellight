@@ -210,6 +210,7 @@ SNCamera::SNCamera() :
 	SceneRendererFilename(this),
 	Flags(this),
 	DebugFlags(this),
+	EventHandlerPositionRotation(&SNCamera::NotifyPositionRotation, this),
 	m_fFOV(45.0f),
 	m_fAspect(1.0f),
 	m_fZNear(0.01f),
@@ -218,8 +219,7 @@ SNCamera::SNCamera() :
 	m_bAutoUpdate(true),
 	m_nViewportWidth(0),
 	m_nViewportHeight(0),
-	m_pSceneRendererHandler(new SceneRendererHandler()),
-	EventHandlerPositionRotation(&SNCamera::NotifyPositionRotation, this)
+	m_pSceneRendererHandler(new SceneRendererHandler())
 {
 	// Set the internal flag
 	m_nInternalFlags |= ClassCamera;

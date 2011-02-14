@@ -41,10 +41,12 @@ namespace PLInput {
 *    Constructor
 */
 HIDDevice::HIDDevice() :
+	// Device data
 	m_nVendor(0),
 	m_nProduct(0),
-	m_nUsage(0),
+	// Device capabilities
 	m_nUsagePage(0),
+	m_nUsage(0),
 	m_nFeatureReportByteLength(0),
 	m_nNumberLinkCollectionNodes(0),
 	m_nNumberInputButtonCaps(0),
@@ -69,11 +71,13 @@ HIDDevice::HIDDevice() :
 *    Copy constructor
 */
 HIDDevice::HIDDevice(const HIDDevice &cSource) :
+	// Device data
 	m_sName(cSource.m_sName),
 	m_nVendor(cSource.m_nVendor),
 	m_nProduct(cSource.m_nProduct),
-	m_nUsage(cSource.m_nUsage),
+	// Device capabilities
 	m_nUsagePage(cSource.m_nUsagePage),
+	m_nUsage(cSource.m_nUsage),
 	m_nFeatureReportByteLength(cSource.m_nFeatureReportByteLength),
 	m_nNumberLinkCollectionNodes(cSource.m_nNumberLinkCollectionNodes),
 	m_nNumberInputButtonCaps(cSource.m_nNumberInputButtonCaps),
@@ -85,6 +89,7 @@ HIDDevice::HIDDevice(const HIDDevice &cSource) :
 	m_nNumberFeatureButtonCaps(cSource.m_nNumberFeatureButtonCaps),
 	m_nNumberFeatureValueCaps(cSource.m_nNumberFeatureValueCaps),
 	m_nNumberFeatureDataIndices(cSource.m_nNumberFeatureDataIndices),
+	// Controls
 	m_lstInputButtons(cSource.m_lstInputButtons),
 	m_lstInputValues(cSource.m_lstInputValues),
 	m_lstOutputValues(cSource.m_lstOutputValues)
@@ -111,11 +116,14 @@ HIDDevice::~HIDDevice()
 */
 HIDDevice &HIDDevice::operator =(const HIDDevice &cSource)
 {
+	// Device data
 	m_sName							= cSource.m_sName;
 	m_nVendor						= cSource.m_nVendor;
 	m_nProduct						= cSource.m_nProduct;
-	m_nUsage						= cSource.m_nUsage;
+
+	// Device capabilities
 	m_nUsagePage					= cSource.m_nUsagePage;
+	m_nUsage						= cSource.m_nUsage;
 	m_nInputReportSize				= cSource.m_nInputReportSize;
 	m_nOutputReportSize				= cSource.m_nOutputReportSize;
 	m_nFeatureReportByteLength		= cSource.m_nFeatureReportByteLength;
@@ -129,9 +137,13 @@ HIDDevice &HIDDevice::operator =(const HIDDevice &cSource)
 	m_nNumberFeatureButtonCaps		= cSource.m_nNumberFeatureButtonCaps;
 	m_nNumberFeatureValueCaps		= cSource.m_nNumberFeatureValueCaps;
 	m_nNumberFeatureDataIndices		= cSource.m_nNumberFeatureDataIndices;
+
+	// Controls
 	m_lstInputButtons				= cSource.m_lstInputButtons;
 	m_lstInputValues				= cSource.m_lstInputValues;
 	m_lstOutputValues				= cSource.m_lstOutputValues;
+
+	// Done
 	return *this;
 }
 
@@ -141,10 +153,12 @@ HIDDevice &HIDDevice::operator =(const HIDDevice &cSource)
 */
 bool HIDDevice::operator ==(const HIDDevice &cSource)
 {
+			// Device data
 	return (m_nVendor						== cSource.m_nVendor &&
 			m_nProduct						== cSource.m_nProduct &&
-			m_nUsage						== cSource.m_nUsage &&
+			// Device capabilities
 			m_nUsagePage					== cSource.m_nUsagePage &&
+			m_nUsage						== cSource.m_nUsage &&
 			m_nInputReportSize				== cSource.m_nInputReportSize &&
 			m_nOutputReportSize				== cSource.m_nOutputReportSize &&
 			m_nFeatureReportByteLength		== cSource.m_nFeatureReportByteLength &&
@@ -158,6 +172,7 @@ bool HIDDevice::operator ==(const HIDDevice &cSource)
 			m_nNumberFeatureButtonCaps		== cSource.m_nNumberFeatureButtonCaps &&
 			m_nNumberFeatureValueCaps		== cSource.m_nNumberFeatureValueCaps &&
 			m_nNumberFeatureDataIndices		== cSource.m_nNumberFeatureDataIndices &&
+			// Controls
 			m_lstInputButtons				== cSource.m_lstInputButtons &&
 			m_lstInputValues				== cSource.m_lstInputValues &&
 			m_lstOutputValues				== cSource.m_lstOutputValues);

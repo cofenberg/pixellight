@@ -44,8 +44,8 @@ namespace PLGui {
 */
 Screen::Screen(Gui *pGui) :
 	m_pGui(pGui),
-	m_bDefault(false),
-	m_pDesktopWidget(nullptr)
+	m_pDesktopWidget(nullptr),
+	m_bDefault(false)
 {
 }
 

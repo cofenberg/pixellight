@@ -62,8 +62,8 @@ SNMRotationTarget::SNMRotationTarget(SceneNode &cSceneNode) : SNMTransform(cScen
 	Target(this),
 	Offset(this),
 	UpVector(this),
-	EventHandlerDrawDebug	  (&SNMRotationTarget::NotifyDrawDebug,		 this),
-	EventHandlerPositionUpdate(&SNMRotationTarget::NotifyPositionUpdate, this)
+	EventHandlerPositionUpdate(&SNMRotationTarget::NotifyPositionUpdate, this),
+	EventHandlerDrawDebug	  (&SNMRotationTarget::NotifyDrawDebug,		 this)
 {
 }
 

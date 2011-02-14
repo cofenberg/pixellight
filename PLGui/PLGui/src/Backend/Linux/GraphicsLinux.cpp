@@ -55,11 +55,11 @@ namespace PLGui {
 GraphicsLinux::GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nWindow) : GraphicsImpl(),
 	m_pDisplay(pDisplay),
 	m_nScreen(nScreen),
-	m_nColorDepth(16),
-	m_nWindow(nWindow)
+	m_nWindow(nWindow),
+	m_nColorDepth(16)
 {
 	// Get color depth
-	m_nColorDepth  = DefaultDepth(pDisplay, nScreen);
+	m_nColorDepth = DefaultDepth(pDisplay, nScreen);
 
 	// Create graphics context
 	::XGCValues	sGCValues;

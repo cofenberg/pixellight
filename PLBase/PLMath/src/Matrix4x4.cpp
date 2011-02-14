@@ -50,18 +50,20 @@ const Matrix4x4 Matrix4x4::Identity(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.
 //[ Constructor                                           ]
 //[-------------------------------------------------------]
 Matrix4x4::Matrix4x4(const Matrix3x3 &mM) :
-	xx(mM.xx), xy(mM.xy), xz(mM.xz), xw(0.0f),
-	yx(mM.yx), yy(mM.yy), yz(mM.yz), yw(0.0f),
-	zx(mM.zx), zy(mM.zy), zz(mM.zz), zw(0.0f),
-	wx(0.0f),  wy(0.0f),  wz(0.0f),  ww(1.0f)
+	// Copy over the values - and respect the correct initialization order!
+	xx(mM.xx), yx(mM.yx), zx(mM.zx), wx(0.0f),
+	xy(mM.xy), yy(mM.yy), zy(mM.zy), wy(0.0f),
+	xz(mM.xz), yz(mM.yz), zz(mM.zz), wz(0.0f),
+	xw(0.0f),  yw(0.0f),  zw(0.0f),  ww(1.0f)
 {
 }
 
 Matrix4x4::Matrix4x4(const Matrix3x4 &mM) :
-	xx(mM.xx), xy(mM.xy), xz(mM.xz), xw(mM.xw),
-	yx(mM.yx), yy(mM.yy), yz(mM.yz), yw(mM.yw),
-	zx(mM.zx), zy(mM.zy), zz(mM.zz), zw(mM.zw),
-	wx(0.0f),  wy(0.0f),  wz(0.0f),  ww(1.0f)
+	// Copy over the values - and respect the correct initialization order!
+	xx(mM.xx), yx(mM.yx), zx(mM.zx), wx(0.0f),
+	xy(mM.xy), yy(mM.yy), zy(mM.zy), wy(0.0f),
+	xz(mM.xz), yz(mM.yz), zz(mM.zz), wz(0.0f),
+	xw(mM.xw), yw(mM.yw), zw(mM.zw), ww(1.0f)
 {
 }
 
@@ -103,14 +105,18 @@ bool Matrix4x4::operator !=(const Matrix4x4 &mM) const
 
 bool Matrix4x4::CompareScale(const Matrix4x4 &mM, float fEpsilon) const
 {
-	if (fEpsilon) return (Math::AreEqual(Math::Abs(xx-mM.xx), fEpsilon) && Math::AreEqual(Math::Abs(yy-mM.yy), fEpsilon) && Math::AreEqual(Math::Abs(zz-mM.zz), fEpsilon));
-	else		  return (xx == mM.xx && yy == mM.yy && zz == mM.zz);
+	if (fEpsilon)
+		return (Math::AreEqual(Math::Abs(xx-mM.xx), fEpsilon) && Math::AreEqual(Math::Abs(yy-mM.yy), fEpsilon) && Math::AreEqual(Math::Abs(zz-mM.zz), fEpsilon));
+	else
+		return (xx == mM.xx && yy == mM.yy && zz == mM.zz);
 }
 
 bool Matrix4x4::CompareTranslation(const Matrix4x4 &mM, float fEpsilon) const
 {
-	if (fEpsilon) return (Math::AreEqual(Math::Abs(xw-mM.xw), fEpsilon) && Math::AreEqual(Math::Abs(yw-mM.yw), fEpsilon) && Math::AreEqual(Math::Abs(zw-mM.zw), fEpsilon));
-	else		  return (xw == mM.xw && yw == mM.yw && zw == mM.zw);
+	if (fEpsilon)
+		return (Math::AreEqual(Math::Abs(xw-mM.xw), fEpsilon) && Math::AreEqual(Math::Abs(yw-mM.yw), fEpsilon) && Math::AreEqual(Math::Abs(zw-mM.zw), fEpsilon));
+	else
+		return (xw == mM.xw && yw == mM.yw && zw == mM.zw);
 }
 
 bool Matrix4x4::CompareRotation(const Matrix4x4 &mM, float fEpsilon) const

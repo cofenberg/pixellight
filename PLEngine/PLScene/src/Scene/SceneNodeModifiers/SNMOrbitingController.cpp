@@ -54,8 +54,8 @@ pl_implement_class(SNMOrbitingController)
 *    Constructor
 */
 SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
-	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this),
 	InputSemantic(this),
+	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this),
 	m_pController(new OrbitingController())
 {
 }
