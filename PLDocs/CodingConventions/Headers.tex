@@ -6,15 +6,13 @@
 \section{Overview}
 During the development of PixelLight we take especially care of the headers because the time the projects need to compile depends heavily on how the headers are build up and how platform and API independent the project is.
 
-First of all, we use the old fashion \emph{.h}-file extension to mark header files - \emph{hpp} would be the \emph{correct} extension for C++, but it's not widely used.
-
 We have several rules for our header files. See below. At the first look some or all may look extreme, maybe even crazy to you - but it works REALLY well and solves many problems occurring when using such \emph{nasty} headers directly.
 
 
 
 
 \section{\emph{Header guard} and \emph{\#pragma once}}
-Each header has to use definitions and \emph{\#pragma once} - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
+Each header has to use definitions and \emph{\#pragma once} to prevent multiple inclusion - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
 
 \begin{lstlisting}[caption=Header guard]
 #ifndef __PLGENERAL_STRING_H__

@@ -6,25 +6,8 @@
 \section{Compiler and project settings}
 Whenever you create a project using the PixelLight framework you have to set the used runtime library to \emph{Multithreaded DLL}\footnote{Multithreaded or multithreaded debug, for the release and debug versions, respectively} and the structure member alignment to 8, else there may occur undefined errors! In \emph{Microsoft Visual Studio} you can find this properties in the project settings, C++/Code generation menu. Further you have to add the folders were the API includes and libraries can be found. In \emph{Microsoft Visual Studio} you will find this options under: \emph{Menu -> Tools -> Options -> Projects and Solutions -> VC++ Directories}, if you want to set global paths. In general we recommend to setup this within the project dependent settings instead within the global ones. Note that sometimes the order is important, therefore if problems appear place the PixelLight directories over other directories. You also have to add the libraries into your project. (e.g. \emph{PLGeneral.lib}) Note that within the PixelLight SDK only relative paths are used. So you can for instance compile the sample applications at once without any additional manual changes.
 
-
-\paragraph{for-scope}
-Within the PixelLight projects, the \emph{for-scope} is active by default. The following for instance will produce a compiler error:
-\begin{lstlisting}[caption=for-scope]
-for (int i=0; i<1; i++) {
-  // Do anything
-}
-i = 20;  // i has already gone out of scope
-\end{lstlisting}
+\paragraph{Character set}
 Set the used character set to \emph{Unicode} and NOT to \emph{Multi-Byte} which is normally the default setting.
-
-
-
-
-\section{Null pointer}
-For null pointers, PixelLight is using \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer 0.
-\begin{lstlisting}[caption=Null pointer]
-char *pszMyString = nullptr;
-\end{lstlisting}
 
 
 
@@ -40,22 +23,6 @@ if a flag is set:&
   \emph{if (nFlags \& 8)}\\
 \end{tabular}
 It's also possible to store such flags in a string like \emph{1|8|64}. For this purpose the function \emph{PLGeneral::ParseTools::GetStringFromFlags()} is supplied which converts flags into a string and \emph{PLGeneral::ParseTools::GetFlagsFromString()} which will convert a string into normal flags. When working with flags we highly recommend to use definitions like \emph{MyAmazingFlag} instead of \emph{8} - your brain will thank you for that.
-
-
-
-
-\section{Namespaces}
-PixelLight is using multiple namespaces, one for each sub-project. If you want to use for instance the string class which is defined within \emph{PLGeneral} you need to do this:
-\begin{lstlisting}[caption=Explicit namespace]
-PLGeneral::String sMyString;
-\end{lstlisting}
-Or this:
-\begin{lstlisting}[caption=Using namespace]
-using namespace PLGeneral;
-...
-String sMyString;
-\end{lstlisting}
-We recommend to NEVER use \emph{using namespace} within header files - this may for example result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLGeneral::}.
 
 
 

@@ -1,3 +1,12 @@
+>> 14.02.2011
+[CO]
+- CodingConventions: Added used source code file extensions + a footnote about variable prefixes + casting style + enhanced the introduction
+- Moved "for-scope" part from the PLGeneral documentation into the coding conventions document
+- PLGeneral documentation: Removed "Null pointer"-part, it's already within the coding conventions document
+- PLGeneral documentation: Removed "Namespaces"-part, it's already within the coding conventions document
+
+
+
 >> 23.01.2011
 [CO]
 - PLGeneral documentation: Fixed a file example, must be "cFile.GetUrl().GetUrl()" instead of "cFile.GetFilename()"

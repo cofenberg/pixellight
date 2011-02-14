@@ -3,12 +3,6 @@
 
 
 
-\section{Foreword}
-This documentation can't describe everything - because then you would spend more time in reading and rereading this document instead of actual programming. In here, we especially mention things that are important to us. The rest should be pretty self explanatory and it should be possible to \emph{find out} other style conventions by self. We strongly recommend you to spend time in writing clean code yourself to support the \emph{work flow}! It's not important HOW FAST you wrote the code, it's important that this code is well designed, well commented and cleanly written because you may use this code for a loonng time.\footnote{Belief us, at the time of writing we're working already 8 years on PixelLight and are always happy when there's no need to touch code again because it's just fine the way it is}
-
-
-
-
 \section{Keep it simple!}
 The world is complicated enough - if there are multiple solutions, prefer the simplest over the most complicated one! This way, the chances are high that other will understand the solution as well as you when looking at the code some years later.
 
@@ -17,6 +11,95 @@ The world is complicated enough - if there are multiple solutions, prefer the si
 
 \section{Encoding}
 We work with multiple operation systems so we have to take into account \emph{how} text files are saved. All \emph{Diary}, \emph{Readme}, \emph{Todo} and \emph{Plan} text files saved as "Unicode (UTF-8 with signature) - Codepage 65001". All other text files like code or make files saved in classic \emph{ANSI}.
+
+
+
+
+\section{File extension}
+First of all, we use the old fashion \emph{.h}-file extension to mark header files - \emph{hpp} would be the \emph{correct} extension for C++, but it's not widely used. Usually, we outsource inline implementations into files with an \emph{inl}-extension to keep the header files good readable. For source codes, we use the file extension \emph{cpp}.
+
+
+
+
+\section{For-scope}
+Within the PixelLight projects, the \emph{for-scope} is active by default. The following for instance will produce a compiler error:
+\begin{lstlisting}[caption=for-scope]
+for (int i=0; i<1; i++) {
+  // Do anything
+}
+i = 20;  // i has already gone out of scope
+\end{lstlisting}
+
+
+
+
+\section{Null pointer}
+For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer $0$.
+
+\begin{lstlisting}[caption=Null pointer]
+char *pszMyString = nullptr;
+\end{lstlisting}
+
+
+
+
+\section{Casting}
+PixelLight is using \emph{C++ style casts} (\emph{int i = static\_cast<int>(42.21f)}), not \emph{C style casts} (\emph{int i = (int)42.21f}). It's much easier to search for \emph{C++ style casts}\footnote{\emph{static\_cast}, \emph{reinterpret\_cast}, \emph{const\_cast}, and \emph{dynamic\_cast}} and they are less vulnerable to unintended effects as well - and because they are not that compact as the \emph{C style casts}, one may think about it a second time why there's a need for a cast.
+
+\paragraph{GCC}
+GCC, the GNU compiler, offers an option called \emph{-Wold-style-cast} to let the compiler warn if an old-style (C-style) cast to a non-void type is used within a C++ program.
+
+
+
+
+\section{Const correctness}
+Define functions, variables etc. whenever possible to be constant. By giving the compiler this hint, it may be possible to use special optimizations or uncover bugs within the implementation.
+
+There's one situation were we do not use \emph{const} - when dealing with function parameters because
+
+\begin{lstlisting}[caption=Function parameters]
+void MyFunction(int nVariable1, int nVariable2);
+\end{lstlisting}
+
+is inside headers better readable than
+
+\begin{lstlisting}[caption=Constant function parameters]
+void MyFunction(const int nVariable1, const int nVariable2);
+\end{lstlisting}
+
+In this situation, the readability is more important for us. This rule does not apply for pointer or reference parameters like
+
+\begin{lstlisting}[caption=Constant function pointer/reference parameter]
+void MyFunction(const String &sVariable);
+\end{lstlisting}
+
+because the user should be able to see whether or not a function is going to manipulate the parameter variable!
+
+
+
+
+\section{Namespaces}
+PixelLight is using multiple namespaces, one for each sub-project. If you want to use for instance the string class which is defined in PLGeneral you need to do this:
+
+\begin{lstlisting}[caption=Explicit namespace]
+PLGeneral::String sMyString;
+\end{lstlisting}
+
+Or this:
+
+\begin{lstlisting}[caption=Using namespace]
+using namespace PLGeneral;
+...
+String sMyString;
+\end{lstlisting}
+
+Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLGeneral::}. We recommend to NEVER use \emph{using namespace} within header files!
+
+
+
+
+\section{Dynamic parameters}
+When dynamic parameters are used and the name of the parameters inside a string is irrelevant, as this is the case for \emph{PLCore::Params::FromString}, the parameters are named using \emph{Param<x>} were x starts with $0$ (example: \emph{Param0=1 Param1=''Hello''}).  
 
 
 
@@ -46,7 +129,7 @@ struct Info {
 
 
 \section{Prefix}
-Because the readability of code is extremely important when working in a team and/or using code from others, one of our goals was to make the PixelLight code as readable and well structured as possible. We are using a name style convention.
+Because the readability of code is extremely important when working in a team and/or using code from others, one of our goals was to make the PixelLight code as readable and well structured as possible. We are using a name style convention\footnote{We know that there are a lot of discussions around the internet whether or not prefixes should be used. In the year 2002 we decided to use them and we don't change it - due to the dimension of the PixelLight project, it would be a huge effort to change it anyway.}.
 
 Variable prefixes for standard types:
 
@@ -112,26 +195,6 @@ We recommend you to use the PixelLight name convention and marking debug version
 
 
 
-\section{Namespaces}
-PixelLight is using multiple namespaces, one for each sub-project. If you want to use for instance the string class which is defined in PLGeneral you need to do this:
-
-\begin{lstlisting}[caption=Explicit namespace]
-PLGeneral::String sMyString;
-\end{lstlisting}
-
-Or this:
-
-\begin{lstlisting}[caption=Using namespace]
-using namespace PLGeneral;
-...
-String sMyString;
-\end{lstlisting}
-
-Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLGeneral::}. We recommend to NEVER use \emph{using namespace} within header files!
-
-
-
-
 \section{Events and signals}
 As soon as an event is inside a class, we refer to it as \emph{signal}. As such, the prefix \emph{Event} like within \emph{EventKeyDown} is used outside classes while prefix \emph{Signal} like within \emph{SignalKeyDown} is used inside classes.
 
@@ -144,49 +207,7 @@ Within our name convention for event handlers and RTTI slot names, there's a \em
 
 
 
-\section{Dynamic parameters}
-When dynamic parameters are used and the name of the parameters inside a string is irrelevant, as this is the case for \emph{PLCore::Params::FromString}, the parameters are named using \emph{Param<x>} were x starts with $0$ (example: \emph{Param0=1 Param1=''Hello''}).  
-
-
-
-
 \section{Reuseability and adding new stuff}
 Before you add new classes, functions an so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
 
 Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does NOT mean that it's possible to copy'n'past it and then hacking around for a certain project! Reuseability means that it's possible to directly reuse, to share, something between multiple projects in a quite universal way without the need to enhance and hack around constantly!
-
-
-
-
-\section{Const correctness}
-Define functions, variables etc. whenever possible to be constant. By giving the compiler this hint, it may be possible to use special optimizations or uncover bugs within the implementation.
-
-There's one situation were we do not use \emph{const} - when dealing with function parameters because
-
-\begin{lstlisting}[caption=Function parameters]
-void MyFunction(int nVariable1, int nVariable2);
-\end{lstlisting}
-
-is inside headers better readable than
-
-\begin{lstlisting}[caption=Constant function parameters]
-void MyFunction(const int nVariable1, const int nVariable2);
-\end{lstlisting}
-
-In this situation, the readability is more important for us. This rule does not apply for pointer or reference parameters like
-
-\begin{lstlisting}[caption=Constant function pointer/reference parameter]
-void MyFunction(const String &sVariable);
-\end{lstlisting}
-
-because the user should be able to see whether or not a function is going to manipulate the parameter variable!
-
-
-
-
-\section{Null pointer}
-For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer 0.
-
-\begin{lstlisting}[caption=Null pointer]
-char *pszMyString = nullptr;
-\end{lstlisting}
