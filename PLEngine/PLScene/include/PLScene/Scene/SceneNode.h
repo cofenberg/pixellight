@@ -959,9 +959,9 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		enum EInternalFlags {
 			// Recalculate
 			RecalculateAABoundingBox		   = 1<<0,	/**< Recalculation of the current axis align bounding box required */
-			RecalculateContainerAABoundingBox  = 1<<1,	/**< Recalculation of the current axis align bounding box in 'scene container space' required */
-			RecalculateBoundingSphere		   = 1<<2,	/**< Recalculation of the bounding sphere in 'scene node space' required */
-			RecalculateContainerBoundingSphere = 1<<3,	/**< Recalculation of the current bounding sphere in 'scene container space' required */
+			RecalculateContainerAABoundingBox  = 1<<1,	/**< Recalculation of the current axis align bounding box in 'scene container space' required (data is derived from the axis align bounding box and is using the current scene node transformation) */
+			RecalculateBoundingSphere		   = 1<<2,	/**< Recalculation of the bounding sphere in 'scene node space' required (data is derived from the axis align bounding box) */
+			RecalculateContainerBoundingSphere = 1<<3,	/**< Recalculation of the current bounding sphere in 'scene container space' required (data is derived from the axis align bounding box and is using the current scene node transformation) */
 			RecalculateHierarchy			   = 1<<4,	/**< Recalculation of the scene hierarchy for this scene node is required */
 			// Scene node types (to avoid RTTI checks in performance critical situations)
 			ClassContainer					   = 1<<5,	/**< Derived from 'SceneContainer' */

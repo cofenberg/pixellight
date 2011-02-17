@@ -110,6 +110,15 @@ inline void SceneNode::DirtyAABoundingBox()
 {
 	// We have to recalculate the current axis align bounding box in 'scene node space'
 	m_nInternalFlags |= RecalculateAABoundingBox;
+
+	// We have to recalculate the current axis align bounding box in 'scene container space' because this data is derived from the axis align bounding box
+	m_nInternalFlags |= RecalculateContainerAABoundingBox;
+
+	// We have to recalculate the bounding sphere in 'sphere node space' because this data is derived from the axis align bounding box
+	m_nInternalFlags |= RecalculateBoundingSphere;
+
+	// We have to recalculate the current bounding sphere in 'sphere container space' because this data is derived from the axis align bounding box
+	m_nInternalFlags |= RecalculateContainerBoundingSphere;
 }
 
 

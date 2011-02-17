@@ -2,6 +2,13 @@
 [CO]
 - Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin project.
   See "PLParticleGroups"-diary for more details.
+- Bugfix: Ouch! There was a (as usual) stupid bug within "SceneNode::DirtyAABoundingBox()": When the axis align bounding box is
+  marked as "dirty" so that it is recalculated the next time it is used, we also need to mark the data derived from the axis align
+  bounding box as dirty! This was the reason why particle effects were "culled to early" within the "PLParticleGroups.scene" scene
+  when looking around... because the particle effects frequently mark their bounding box as dirty - but then, it was actually never
+  recalculated because derived data like the container space axis aligned bounding box looked still "clean" and therefore were not updated.
+  (... double checked the lazy evaluation within scene node - because this bug should have had happened due to the importance and already
+  long usage of this scene node class...)
 
 
 
