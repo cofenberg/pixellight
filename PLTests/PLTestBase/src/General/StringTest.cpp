@@ -25,12 +25,20 @@
 //[-------------------------------------------------------]
 #include <locale.h>
 #include <string.h>
+#include <malloc.h>
 #ifdef LINUX
 	#include <wchar.h>
 	#include <PLGeneral/PLGeneralLinuxWrapper.h>
 #endif
 #include <PLGeneral/String/String.h>
 #include "PLTestBase/General/StringTest.h"
+
+
+//[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4996) // "'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
 
 
 //[-------------------------------------------------------]
@@ -3382,3 +3390,10 @@ void StringTest::Test()
 	float fValue = String("5.12").GetFloat();
 	EndTask(fValue > 5.11999 && fValue < 5.12001);
 }
+
+
+//[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_POP
+
