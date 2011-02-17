@@ -52,7 +52,7 @@ inline bool Math::IsPowerOfTwo(int nNumber)
 */
 inline int Math::GetRandNeg()
 {
-	return (GetRand() % 2) ? GetRand() : -int(GetRand());
+	return (GetRand() % 2) ? GetRand() : -static_cast<int>(GetRand());
 }
 
 /**
@@ -61,7 +61,7 @@ inline int Math::GetRandNeg()
 */
 inline float Math::GetRandNegFloat()
 {
-	return (GetRand() % 2) ? GetRandFloat() : -int(GetRandFloat());
+	return (GetRand() % 2) ? GetRandFloat() : -GetRandFloat();
 }
 
 

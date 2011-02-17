@@ -19,6 +19,7 @@ Changes in PixelLight 0.9.5-R1 (not yet released)
 - Bugfix: "PLPhysics::SNMPhysicsCharacterController" rotation was broken in "PixelLight 0.9.4-R1"
 - Bugfix: "PLGraphics::ImageLoaderJPG": Saving a given RGBA image was not working
 - Bugfix: "PLScene::SceneNode::DirtyAABoundingBox()" was buggy, this caused e.g. particle effects to be "culled to early"
+- Bugfix: "PLMath::Math::GetRandNegFloat()" was broken
 
 
 Changes in PixelLight 0.9.4-R1 (released on December 23, 2010)

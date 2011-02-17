@@ -1,4 +1,12 @@
-﻿>> 27.01.2011
+﻿>> 17.02.2011
+[CO]
+- Bugfix: "Math::GetRandNegFloat()":
+    return (GetRand() % 2) ? GetRandFloat() : -int(GetRandFloat());
+  D'OH! Fixed.
+
+
+
+>> 27.01.2011
 [CO]
 - Matrix4x4 (Matrix3x4 + Matrix3x3): "Invert()": A few years ago, I build in a kind of optimization - if the
   determinant is one (or as one of my Profs would say "one enough"), I assumed that the matrix is orthogonal and
