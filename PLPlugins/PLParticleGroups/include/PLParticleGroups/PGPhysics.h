@@ -50,7 +50,7 @@ class PGPhysics : public SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGPhysics, "PLParticleGroups", SNParticleGroup, "Abstract physics particle group base class")
+	pl_class(PLPG_RTTI_EXPORT, PGPhysics, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Abstract physics particle group base class")
 	pl_class_end
 
 
