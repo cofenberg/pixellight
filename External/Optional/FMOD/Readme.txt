@@ -4,6 +4,7 @@ FMOD 3.75 - FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 199
   freeware. For commercial software you have to pay for a license!
 - We're sorry, but due to legal issues we can't provide you with a downloadable package
 - Download from: http://www.fmod.org/
+	-> FMOD 3.75 download links: http://www.fmod.org/forum/viewtopic.php?f=2&t=13037
 - Here's what you need for the Windows platform and where to put the files:
 	- "External\_Windows_x86_32\FMOD\include\FMOD"
 		- "fmod.h"
