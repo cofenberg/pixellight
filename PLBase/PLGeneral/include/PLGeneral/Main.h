@@ -92,10 +92,6 @@ int PLMain(const PLGeneral::String &sFilename, const PLGeneral::Array<PLGeneral:
 		int main(int argc, char **argv)
 	#endif
 		{
-	#ifdef LINUX
-			// Load the system locale into the process
-			setlocale(LC_ALL, "");
-	#endif
 			PLGeneral::Array<PLGeneral::String> lstArguments;
 			for (int i=1; i<argc; i++)
 				lstArguments.Add(argv[i]);

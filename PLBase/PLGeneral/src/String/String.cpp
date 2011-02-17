@@ -34,10 +34,10 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 #ifdef LINUX
 	#include <inttypes.h>
 	#include <wchar.h>
-	#include <locale.h>
 	#include "PLGeneral/PLGeneralLinuxWrapper.h"
 #endif
 #include "PLGeneral/Core/MemoryManager.h"
@@ -46,6 +46,13 @@
 #include "PLGeneral/String/StringBufferASCII.h"
 #include "PLGeneral/String/StringBufferUnicode.h"
 #include "PLGeneral/String/String.h"
+
+
+//[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4996) // "'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
 
 
 //[-------------------------------------------------------]
@@ -67,10 +74,9 @@ String String::Format(const char *pszFormat, ...)
 
 	// Check format string
 	if (pszFormat && pszFormat[0] != '\0') {
-	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, nullptr);
+		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
+		char *pSaveLocale = _strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 		setlocale(LC_ALL, "C");
-	#endif
 
 		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
@@ -98,9 +104,9 @@ String String::Format(const char *pszFormat, ...)
 			}
 		}
 
-	#ifdef LINUX
+		// Be polite and restore the previously set locale
 		setlocale(LC_ALL, pSaveLocale);
-	#endif
+		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
 	}
 
 	// Return new string
@@ -113,10 +119,9 @@ String String::Format(const wchar_t *pszFormat, ...)
 
 	// Check format string
 	if (pszFormat && pszFormat[0] != L'\0') {
-	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, nullptr);
+		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
+		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 		setlocale(LC_ALL, "C");
-	#endif
 
 		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
@@ -144,9 +149,9 @@ String String::Format(const wchar_t *pszFormat, ...)
 			}
 		}
 
-	#ifdef LINUX
+		// Be polite and restore the previously set locale
 		setlocale(LC_ALL, pSaveLocale);
-	#endif
+		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
 	}
 
 	// Return new string
@@ -2309,27 +2314,32 @@ long String::GetLong() const
 float String::GetFloat() const
 {
 	if (m_pStringBuffer) {
-	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, nullptr);
+		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
+		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 		setlocale(LC_ALL, "C");
-	#endif
+
 		float fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return static_cast<float>(atof(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
+				fReturnValue = static_cast<float>(atof(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
+				break;
 
 			case Unicode:
-				return static_cast<float>(_wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
+				fReturnValue = static_cast<float>(_wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
+				break;
 
 			default:
 				fReturnValue = 0.0f;
 				break;
 		}
-	#ifdef LINUX
+
+		// Be polite and restore the previously set locale
 		setlocale(LC_ALL, pSaveLocale);
-	#endif
+		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
+
 		return fReturnValue;
 	} else {
+		// No string buffer => just return zero
 		return 0.0f;
 	}
 }
@@ -2337,27 +2347,32 @@ float String::GetFloat() const
 double String::GetDouble() const
 {
 	if (m_pStringBuffer) {
-	#ifdef LINUX
-		char *pSaveLocale = setlocale(LC_ALL, nullptr);
+		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
+		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 		setlocale(LC_ALL, "C");
-	#endif
+
 		double fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
-				return atof(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+				fReturnValue = atof(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+				break;
 
 			case Unicode:
-				return _wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
+				fReturnValue = _wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
+				break;
 
 			default:
 				fReturnValue = 0.0;
 				break;
 		}
-	#ifdef LINUX
+
+		// Be polite and restore the previously set locale
 		setlocale(LC_ALL, pSaveLocale);
-	#endif
+		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
+
 		return fReturnValue;
 	} else {
+		// No string buffer => just return zero
 		return 0.0;
 	}
 }
@@ -2897,3 +2912,9 @@ void String::ReleaseStringBuffer()
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGeneral
+
+
+//[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_POP

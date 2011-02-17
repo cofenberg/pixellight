@@ -64,10 +64,6 @@ GuiLinux::GuiLinux(Gui *pGui) : GuiImpl(pGui),
 	m_bModifierCtrl(false),
 	m_bModifierAlt(false)
 {
-	// Reset locale (for floating point format)
-	// [TODO] I seriously doubt this is the right way to handle it....
-	// setlocale(LC_ALL, "");
-
 	// Yes, we want to access Xlib from multiple threads, so we have to call
 	XInitThreads();
 

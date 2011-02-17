@@ -1,3 +1,25 @@
+>> 17.02.2011
+[CO]
+- Program entry point within "Main.h": Removed "setlocale(LC_ALL, "");" because I don't think that it's a good idea to use "setlocale".
+  This is up to the user and the user is also responsible for the consequences when changing the current locale...
+- String internals: Sadly, the current set locale is of course also an issue on all operation systems. It would be fantastic if we never
+  ever would come into contact with "setlocale" at all, but sadly, the user can and possibly WILL change the current set locale and then
+  hell breaks lose because e.g. "42.21" will be written as "42,21" and possibility written e.g. into a XML file... on another side "42,21"
+  is read from the same XML file and boom, invalid floating point number due to the use of another locale. To be honest, I really hate this
+  topic but sadly, I can't just completely ignore it forever.
+  Today I was remembered, again, why we decided to wrap EVERYTHING within PixelLight so more complex projects can use a consistent framework...
+  Just an example: MSVC has some cool string functions like "_sprintf_l", on Linux there are some similar functions allowing you to directly
+  provide the locale to use as a parameter (other systems like Android OS, don't offer such stuff, of course!), instead of using an ugly global
+  setting. But sadly, there's no standard for that. So I backup the current set locale by using "strdup" before changing it (evil dynamic memory
+  management, but currently I see no other simple solution)... but wait, now VC tells me the following:
+    "warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
+  Cool, the VC compiler tells me "Do NOT use POSIX, it's evil!". Because I don't like dozens of "#ifdefs" either, I just
+  suppressed this stupid warning. Low level C/C++, one just must love it! *gruml*
+  Sadly I'am afraid that the locale changes from today are no real solution, and something like a locale class is required... but for now, I
+  just have enough of this topic...
+
+
+
 >> 01.01.2011
 [CO]
 - Renamed the method "Mutex::Lock()" with a timeout as parameter into "Mutex::TryLock()" so one can see that it's really wise to

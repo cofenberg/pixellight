@@ -111,15 +111,16 @@ class PLSceneExport : public SceneExport {
 		int DoExport(const TCHAR *name, ExpInterface *ei, Interface *i, BOOL suppressPrompts = false, DWORD options = 0)
 		{
 			if (name && i) {
-				// We really need to set the locale to a known setting... else we may get floats as "1,123" instead of "1.123"!
-				char *pSaveLocale = setlocale(LC_ALL, nullptr);
+				// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
+				char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 				setlocale(LC_ALL, "C");
 
 				// Export
 				PLSceneEnumProc cExporter(name, *i, options);
 
-				// Restore locale
+				// Be polite and restore the previously set locale
 				setlocale(LC_ALL, pSaveLocale);
+				free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
 			}
 			return 1;
 		}

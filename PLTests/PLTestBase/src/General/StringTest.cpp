@@ -3369,11 +3369,12 @@ void StringTest::Test()
 	bResult = true;
 	if (String::Format("%g", 5.12f) != "5.12") bResult = false;
 	// Now, change the local...
-	char *pLocalSave = setlocale(LC_ALL, nullptr);
+	char *pLocalSave = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 	setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
 								 // is used by printf and so on... (but our string class ignores that :)
 	if (String::Format("%g", 5.12f) != "5.12") bResult = false;
 	setlocale(LC_ALL, pLocalSave); // Reset the local
+	free(pLocalSave);
 	EndTask(bResult);
 
 	// String("5.12").GetFloat()
