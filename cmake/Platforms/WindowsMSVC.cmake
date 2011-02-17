@@ -86,7 +86,7 @@ set(WIN32_COMPILE_FLAGS
 	/Zc:forScope											# Force Conformance In For Loop Scope: Yes
 	/GR-													# Disable RTTI
 	/Zi														# Debug information Format: Program Database
-	/Gm														# Enable Minimal Rebuild
+	/MP														# Multi-processor Compilation
 	/fp:precise												# Floating Point Model: Precise
 )
 if(CMAKE_BUILD_TYPE MATCHES Debug)
