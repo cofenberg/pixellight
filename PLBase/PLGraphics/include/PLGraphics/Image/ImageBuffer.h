@@ -372,6 +372,10 @@ class ImageBuffer {
 		*
 		*  @return
 		*    Pointer to image data, a null pointer on error
+		*
+		*  @remarks
+		*    If the image contains no uncompressed data, but compressed image data is available the data,
+		*    will be decompressed automatically and stored in the decompressed image buffer this method returns.
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetData();
