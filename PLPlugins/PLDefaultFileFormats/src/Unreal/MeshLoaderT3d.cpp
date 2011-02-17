@@ -404,7 +404,7 @@ bool MeshLoaderT3d::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		Vector3 *vtxDest = pvVertices  + nStartIndex;
 		Vector2 *texDest = pvTexCoords + nStartIndex;
 		
-		for (int j=0; j<3*pPoly->lstVertices.GetNumOfElements()-6; j++) {
+		for (int j=0; j<static_cast<int>(3*pPoly->lstVertices.GetNumOfElements())-6; j++) {
 			pnTanIndices[nIDest + j] = i;
 			pnBinIndices[nIDest + j] = i;
 			pnNrmIndices[nIDest + j] = i;

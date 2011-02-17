@@ -2228,12 +2228,12 @@ uint16 String::GetUInt16() const
 			case ASCII:
 				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
 				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10);
+				return static_cast<uint16>(strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10));
 
 			case Unicode:
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
-				return wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10);
+				return static_cast<uint16>(wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10));
 		}
 	}
 
