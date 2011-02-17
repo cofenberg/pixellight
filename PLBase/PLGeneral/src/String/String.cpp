@@ -75,7 +75,7 @@ String String::Format(const char *pszFormat, ...)
 	// Check format string
 	if (pszFormat && pszFormat[0] != '\0') {
 		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
-		char *pSaveLocale = _strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
+		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 		setlocale(LC_ALL, "C");
 
 		// Get the required buffer length, does not include the terminating zero character
@@ -2918,3 +2918,4 @@ void String::ReleaseStringBuffer()
 //[ Compiler settings                                     ]
 //[-------------------------------------------------------]
 PL_WARNING_POP
+
