@@ -75,13 +75,13 @@ Then start 'Build'.
 --------------------
 
 Here's a list of required programs that you need to fully build the SDK on Windows.
-- cmake-2.8.3-win32-x86.exe (http://www.cmake.org)
+- cmake-2.8.4-win32-x86.exe (http://www.cmake.org)
 	- Cross platform build tool used to build the SDK
 
 - nsis-2.46-setup.exe
 	- Used to create the Windows installer
 
-- doxygen-1.7.1-setup.exe
+- doxygen-1.7.3-setup.exe
 	- Doxygen (http://www.doxygen.org)
 	- Used to create the code documentations.
 
