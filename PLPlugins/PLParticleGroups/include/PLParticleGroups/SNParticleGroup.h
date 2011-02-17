@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_PARTICLEGROUP_H__
-#define __PLSCENE_SCENENODE_PARTICLEGROUP_H__
+#ifndef ___PLPG_PARTICLEGROUP_H__
+#define ___PLPG_PARTICLEGROUP_H__
 #pragma once
 
 
@@ -32,7 +32,8 @@
 #include <PLGraphics/Color/Color4.h>
 #include <PLRenderer/Material/MaterialHandler.h>
 #include <PLMesh/Mesh.h>
-#include "PLScene/Scene/SceneNode.h"
+#include <PLScene/Scene/SceneNode.h>
+#include "PLParticleGroups/PLParticleGroups.h"
 
 
 //[-------------------------------------------------------]
@@ -47,7 +48,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLParticleGroups {
 
 
 //[-------------------------------------------------------]
@@ -66,7 +67,7 @@ namespace PLScene {
 *      gets the current bounding box by checking each particle. Try to avoid calling the 'dirty' function
 *      within your particle group implementation each frame. (performance!)
 */
-class SNParticleGroup : public SceneNode {
+class SNParticleGroup : public PLScene::SceneNode {
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +96,7 @@ class SNParticleGroup : public SceneNode {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNParticleGroup, "PLScene", PLScene::SceneNode, "Abstract particle group scene node")
+	pl_class(PLPG_RTTI_EXPORT, SNParticleGroup, "PLParticleGroups", PLScene::SceneNode, "Abstract particle group scene node")
 		pl_properties
 			pl_property("Icon", "Data/Textures/IconParticles.dds")
 		pl_properties_end
@@ -113,15 +114,15 @@ class SNParticleGroup : public SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetMaterial() const;
-		PLS_API void SetMaterial(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::uint32 GetParticles() const;
-		PLS_API void SetParticles(const PLGeneral::uint32 &nValue);
-		PLS_API PLGeneral::uint32 GetTextureAnimationColumns() const;
-		PLS_API void SetTextureAnimationColumns(const PLGeneral::uint32 &nValue);
-		PLS_API PLGeneral::uint32 GetTextureAnimationRows() const;
-		PLS_API void SetTextureAnimationRows(const PLGeneral::uint32 &nValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);	// From SceneNode
+		PLPG_API PLGeneral::String GetMaterial() const;
+		PLPG_API void SetMaterial(const PLGeneral::String &sValue);
+		PLPG_API PLGeneral::uint32 GetParticles() const;
+		PLPG_API void SetParticles(const PLGeneral::uint32 &nValue);
+		PLPG_API PLGeneral::uint32 GetTextureAnimationColumns() const;
+		PLPG_API void SetTextureAnimationColumns(const PLGeneral::uint32 &nValue);
+		PLPG_API PLGeneral::uint32 GetTextureAnimationRows() const;
+		PLPG_API void SetTextureAnimationRows(const PLGeneral::uint32 &nValue);
+		PLPG_API virtual void SetFlags(PLGeneral::uint32 nValue);	// From SceneNode
 
 
 	//[-------------------------------------------------------]
@@ -176,9 +177,9 @@ class SNParticleGroup : public SceneNode {
 			//[ Public functions                                      ]
 			//[-------------------------------------------------------]
 			public:
-				PLS_API Particle();
-				PLS_API virtual ~Particle();
-				PLS_API bool operator ==(const Particle &cOther) const;
+				PLPG_API Particle();
+				PLPG_API virtual ~Particle();
+				PLPG_API bool operator ==(const Particle &cOther) const;
 
 
 		};
@@ -209,7 +210,7 @@ class SNParticleGroup : public SceneNode {
 		*    - Normally, this function calls InitParticles() which further calles
 		*      the scene nodes InitFunction() in which you can initialize the individual particles
 		*/
-		PLS_API virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);
+		PLPG_API virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);
 
 		/**
 		*  @brief
@@ -218,7 +219,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    The maximum possible number of particles
 		*/
-		PLS_API PLGeneral::uint32 GetMaxNumOfParticles() const;
+		PLPG_API PLGeneral::uint32 GetMaxNumOfParticles() const;
 
 		/**
 		*  @brief
@@ -227,7 +228,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    The current number of particles
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfParticles() const;
+		PLPG_API PLGeneral::uint32 GetNumOfParticles() const;
 
 		/**
 		*  @brief
@@ -240,7 +241,7 @@ class SNParticleGroup : public SceneNode {
 		*  @note
 		*    - If GetCreateParticles() is 'false', this function will always return a null pointer
 		*/
-		PLS_API Particle *AddParticle();
+		PLPG_API Particle *AddParticle();
 
 		/**
 		*  @brief
@@ -249,7 +250,7 @@ class SNParticleGroup : public SceneNode {
 		*  @param[in] cParticle
 		*    Particle to remove
 		*/
-		PLS_API void RemoveParticle(Particle &cParticle);
+		PLPG_API void RemoveParticle(Particle &cParticle);
 
 		/**
 		*  @brief
@@ -261,7 +262,7 @@ class SNParticleGroup : public SceneNode {
 		*  @note
 		*    - You have to delete this iterator by yourself if you no longer need it!
 		*/
-		PLS_API PLGeneral::Iterator<Particle> GetParticleIterator() const;
+		PLPG_API PLGeneral::Iterator<Particle> GetParticleIterator() const;
 
 		/**
 		*  @brief
@@ -270,7 +271,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    'true' the particle group can create new particles, else 'false'
 		*/
-		PLS_API bool GetCreateParticles() const;
+		PLPG_API bool GetCreateParticles() const;
 
 		/**
 		*  @brief
@@ -282,7 +283,7 @@ class SNParticleGroup : public SceneNode {
 		*  @see
 		*    - GetCreateParticles()
 		*/
-		PLS_API void SetCreateParticles(bool bCreate = true);
+		PLPG_API void SetCreateParticles(bool bCreate = true);
 
 		/**
 		*  @brief
@@ -293,7 +294,7 @@ class SNParticleGroup : public SceneNode {
 		*  @param[in] nRows
 		*    Number of animation frame rows in the texture
 		*/
-		PLS_API void SetupTextureAnimation(PLGeneral::uint32 nColumns = 1, PLGeneral::uint32 nRows = 1);
+		PLPG_API void SetupTextureAnimation(PLGeneral::uint32 nColumns = 1, PLGeneral::uint32 nRows = 1);
 
 		/**
 		*  @brief
@@ -302,7 +303,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    The number of texture animation steps
 		*/
-		PLS_API PLGeneral::uint32 GetTextureAnimationSteps() const;
+		PLPG_API PLGeneral::uint32 GetTextureAnimationSteps() const;
 
 		/**
 		*  @brief
@@ -311,7 +312,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    'true' if the particle group should be removed automatically, else 'false'
 		*/
-		PLS_API bool GetRemoveAutomatically() const;
+		PLPG_API bool GetRemoveAutomatically() const;
 
 		/**
 		*  @brief
@@ -320,7 +321,7 @@ class SNParticleGroup : public SceneNode {
 		*  @param[in] bRemoveAutomatically
 		*    Should the particle group be removed automatically?
 		*/
-		PLS_API void RemoveAutomatically(bool bRemoveAutomatically = false);
+		PLPG_API void RemoveAutomatically(bool bRemoveAutomatically = false);
 
 		/**
 		*  @brief
@@ -329,7 +330,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    Handler of the particle group material
 		*/
-		PLS_API const PLRenderer::MaterialHandler &GetMaterialHandler();
+		PLPG_API const PLRenderer::MaterialHandler &GetMaterialHandler();
 
 
 	//[-------------------------------------------------------]
@@ -340,13 +341,13 @@ class SNParticleGroup : public SceneNode {
 		*  @brief
 		*    Default constructor
 		*/
-		PLS_API SNParticleGroup();
+		PLPG_API SNParticleGroup();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNParticleGroup();
+		PLPG_API virtual ~SNParticleGroup();
 
 		/**
 		*  @brief
@@ -361,7 +362,7 @@ class SNParticleGroup : public SceneNode {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLS_API bool InitParticles(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "");
+		PLPG_API bool InitParticles(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "");
 
 
 	//[-------------------------------------------------------]
@@ -438,17 +439,17 @@ class SNParticleGroup : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLPG_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr);
+		PLPG_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr);
 
 
 	//[-------------------------------------------------------]
 	//[ Proteced virtual SceneNode functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InitFunction();
-		PLS_API virtual void DeInitFunction();
-		PLS_API virtual void UpdateAABoundingBox();
+		PLPG_API virtual void InitFunction();
+		PLPG_API virtual void DeInitFunction();
+		PLPG_API virtual void UpdateAABoundingBox();
 
 
 };
@@ -457,7 +458,7 @@ class SNParticleGroup : public SceneNode {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLParticleGroups
 
 
-#endif // __PLSCENE_SCENENODE_PARTICLEGROUP_H__
+#endif // ___PLPG_PARTICLEGROUP_H__

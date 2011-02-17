@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/SNParticleGroup.h>
-#include "PLParticleGroups/PLParticleGroups.h"
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -45,18 +44,18 @@ namespace PLParticleGroups {
 *  @brief
 *    Magic particle group 2
 */
-class PGMagic2 : public PLScene::SNParticleGroup {
+class PGMagic2 : public SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGMagic2, "PLParticleGroups", PLScene::SNParticleGroup, "Magic particle group 2")
+	pl_class(PLPG_RTTI_EXPORT, PGMagic2, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Magic particle group 2")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(SmallParticles,			bool,				true,							ReadWrite,	DirectValue,	"Small particles?",									"")
 		pl_attribute(TexAni,					bool,				false,							ReadWrite,	DirectValue,	"Texture animation?",								"")
 		pl_attribute(Size,						float,				1.0f,							ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,					PLGeneral::String,	"Data/Textures/PGMagic2.dds",	ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,					PLGeneral::uint32,	100,							ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,	2,								ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")

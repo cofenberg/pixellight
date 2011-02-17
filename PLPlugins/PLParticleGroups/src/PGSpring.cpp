@@ -59,7 +59,7 @@ PGSpring::PGSpring() :
 	EventHandlerUpdate(&PGSpring::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGSpring.dds";
 	m_nParticles = 20;
 }

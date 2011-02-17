@@ -1,4 +1,17 @@
-﻿/*********************************************************\
+﻿>> 17.02.2011
+[CO]
+- Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin
+  project - the full class name is now "PLParticleGroups::SNParticleGroup". The reason for this is simple: This is one
+  of the oldest classes from the very beginnings of PixelLight and was over the time just updated, but never really refactored
+  because there were no real need for particle systems within the already realized projects. I thought about a heavy refactoring,
+  but I think I can spend my time with better things because nowadays, there are some really good open source particle engines
+  like "SPARK" (http://spark.developpez.com) which can be integrated into PixelLight as plugin. Due to the RTTI and the extreme
+  plugin nature of PixelLight, there's really no need to have a particle system directly within the PLScene project - this is a
+  topic worth of an own project (in fact, there are also commercial particle systems available).
+
+
+
+/*********************************************************\
  *  The entries below are in german only
 \*********************************************************/
 

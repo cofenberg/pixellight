@@ -45,7 +45,6 @@ add_sources(
 	src/Scene/SceneNodes/SNEventArea.cpp
 	src/Scene/SceneNodes/SNCoordinateAxisRotation.cpp
 	src/Scene/SceneNodes/SNEngineInformation.cpp
-	src/Scene/SceneNodes/SNParticleGroup.cpp
 	src/Scene/SceneNodes/SNText.cpp
 	src/Scene/SceneNodes/SNText2D.cpp
 	src/Scene/SceneNodes/SNText3D.cpp

@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/SNParticleGroup.h>
-#include "PLParticleGroups/PLParticleGroups.h"
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -45,13 +44,13 @@ namespace PLParticleGroups {
 *  @brief
 *    Image particle group
 */
-class PGImage : public PLScene::SNParticleGroup {
+class PGImage : public SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGImage, "PLParticleGroups", PLScene::SNParticleGroup, "Image particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGImage, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Image particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(ImageFilename,		PLGeneral::String,		"Data/Textures/PGImage_Test.dds",	ReadWrite,	DirectValue,	"Image to create the particles from",	"Type='Image'")
 		pl_attribute(RedColorKey,		PLGeneral::uint8,		0,									ReadWrite,	DirectValue,	"Color key red component",				"")
@@ -59,7 +58,7 @@ class PGImage : public PLScene::SNParticleGroup {
 		pl_attribute(BlueColorKey,		PLGeneral::uint8,		0,									ReadWrite,	DirectValue,	"Color key blue component",				"")
 		pl_attribute(ColorKeyTolerance,	char,					0,									ReadWrite,	DirectValue,	"Color key tolerance",					"")
 		pl_attribute(ImageScale,		float,					0.1f,								ReadWrite,	DirectValue,	"Image scale",							"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,			PLGeneral::String,		"Data/Effects/PGImage.plfx",		ReadWrite,	GetSet,			"Particle group material",				"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,			PLGeneral::uint32,		1,									ReadWrite,	GetSet,			"Number of particles",					"Min=1")
 		// Overwritten PLScene::SceneNode variables

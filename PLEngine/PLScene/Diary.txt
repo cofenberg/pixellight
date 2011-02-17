@@ -1,3 +1,10 @@
+>> 17.02.2011
+[CO]
+- Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin project.
+  See "PLParticleGroups"-diary for more details.
+
+
+
 >> 14.02.2011
 [CO]
 - Bugfix: "WidgetPL::~WidgetPL()": When a widget gets destroyed, we really need to remove GUI messages within the internal GUI message queue using

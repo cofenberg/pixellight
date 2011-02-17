@@ -8,6 +8,7 @@ define_project(PLParticleGroups)
 ##################################################
 add_sources(
 	src/PGPhysics.cpp
+	src/SNParticleGroup.cpp
 	src/PGStretch.cpp
 	src/PGLeaf.cpp
 	src/PGRain.cpp

@@ -65,7 +65,7 @@ PGRain::PGRain() :
 	EventHandlerUpdate(&PGRain::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGRain.dds";
 	m_nParticles = 800;
 }

@@ -186,7 +186,7 @@ PGFountain::PGFountain() :
 	m_fRandomAngleAddition(20.0f),
 	m_fAccFactor(0.11f)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGFountain.dds";
 	m_nParticles = 600;
 }

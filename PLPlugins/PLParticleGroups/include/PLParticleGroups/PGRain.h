@@ -60,7 +60,7 @@ class PGRain : public PGPhysics {
 		pl_attribute(MediumSize,		PLGeneral::uint32,	5,							ReadWrite,	DirectValue,	"Medium size for each particles",										"")
 		pl_attribute(DownVsAwayRatio,	PLGeneral::uint32,	150,						ReadWrite,	DirectValue,	"150 -> every 150 particle fly randomly away instead of falling down",	"")
 		pl_attribute(BuildPerSec,		PLGeneral::uint32,	100,						ReadWrite,	DirectValue,	"Particle building speed",												"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,			PLGeneral::String,	"Data/Textures/PGRain.dds",	ReadWrite,	GetSet,			"Particle group material",												"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,			PLGeneral::uint32,	800,						ReadWrite,	GetSet,			"Number of particles",													"Min=1")
 	pl_class_end
@@ -102,7 +102,7 @@ class PGRain : public PGPhysics {
 		*  @param[in] cParticle
 		*    Particle to initialize
 		*/
-		void InitParticle(PLScene::SNParticleGroup::Particle &cParticle) const;
+		void InitParticle(SNParticleGroup::Particle &cParticle) const;
 
 		/**
 		*  @brief

@@ -59,7 +59,7 @@ PGStretch::PGStretch() :
 	EventHandlerUpdate(&PGStretch::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGStretch.dds";
 	m_nParticles = 1;
 }

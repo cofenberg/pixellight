@@ -55,7 +55,7 @@ class PGSpring : public PGPhysics {
 		pl_attribute(Size,			float,				0.2f,							ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(RotVelocity,	float,				1.0f,							ReadWrite,	DirectValue,	"Rotation velocity",		"")
 		pl_attribute(VelocityScale,	float,				1.0f,							ReadWrite,	DirectValue,	"Velocity scale",			"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,		PLGeneral::String,	"Data/Textures/PGSpring.dds",	ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,		PLGeneral::uint32,	20,								ReadWrite,	GetSet,			"Number of particles",		"Min=1")
 	pl_class_end

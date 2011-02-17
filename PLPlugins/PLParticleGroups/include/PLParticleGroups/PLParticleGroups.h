@@ -26,7 +26,7 @@
 *
 *  @section intro_sec Introduction
 *
-*  This is the PLParticleGroups reference.
+*  This is the PLParticleGroups reference. The "PG" prefix stands for "Particle Group".
 */
 
 

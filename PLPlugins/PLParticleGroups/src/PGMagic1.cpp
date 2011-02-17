@@ -59,7 +59,7 @@ PGMagic1::PGMagic1() :
 	EventHandlerUpdate(&PGMagic1::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGMagic1.dds";
 	m_nParticles = 200;
 }

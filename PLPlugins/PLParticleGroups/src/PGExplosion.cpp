@@ -59,7 +59,7 @@ PGExplosion::PGExplosion() :
 	EventHandlerUpdate(&PGExplosion::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial				   = "Data/Textures/PGExplosion.dds";
 	m_nParticles			   = 5;
 	m_nTextureAnimationColumns = 4;

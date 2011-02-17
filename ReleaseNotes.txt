@@ -8,6 +8,7 @@ Changes in PixelLight 0.9.5-R1 (not yet released)
 - Change: Migrated from "NULL"-definition for a null pointer to "nullptr" introduced by C++0x and already supported by multiple modern compilers
 - Change: Migrated from C style casts ("int i = (int)42.21f") to C++ style casts ("int i = static_cast<int>(42.21f)")
 - Change: "PLGeneral::String": Refactoring of the UTF8 support for better interaction with other libraries and frameworks like Qt
+- Change: Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin project
 - Change: Updated libogg from "1.2.0" to "1.2.2"
 - Change: Updated libvorbis from "1.3.1" to "1.3.2"
 - Change: Updated from "Cg Toookit 3.0 - July 2010" to "Cg Toookit 3.0 - November 2010"

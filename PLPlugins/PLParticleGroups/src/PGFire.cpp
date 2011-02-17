@@ -58,7 +58,7 @@ PGFire::PGFire() :
 	EventHandlerUpdate(&PGFire::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGFire.dds";
 	m_nParticles = 50;
 }

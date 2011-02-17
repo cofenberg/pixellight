@@ -65,7 +65,7 @@ PGSmoke::PGSmoke() :
 	m_fParticleTime(0.0f),
 	m_bCreateNewParticles(true)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial				   = "Data/Textures/PGSmoke.dds";
 	m_nParticles			   = 20;
 	m_nTextureAnimationColumns = 4;
@@ -245,7 +245,7 @@ void PGSmoke::NotifyUpdate()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScene::SNParticleGroup functions     ]
+//[ Public virtual SNParticleGroup functions              ]
 //[-------------------------------------------------------]
 bool PGSmoke::InitParticleGroup(uint32 nMaxNumOfParticles, const String &sMaterial, const void *pData)
 {

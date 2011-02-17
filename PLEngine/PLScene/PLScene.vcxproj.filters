@@ -190,9 +190,6 @@
     <ClCompile Include="src\Scene\SceneNodes\SNMesh.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\SNParticleGroup.cpp">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\SNPoint.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
@@ -622,9 +619,6 @@
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNMesh.h">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNParticleGroup.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNPoint.h">

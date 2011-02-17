@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/SNParticleGroup.h>
-#include "PLParticleGroups/PLParticleGroups.h"
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -45,13 +44,13 @@ namespace PLParticleGroups {
 *  @brief
 *    Abstract physics particle group base class
 */
-class PGPhysics : public PLScene::SNParticleGroup {
+class PGPhysics : public SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGPhysics, "PLParticleGroups", PLScene::SNParticleGroup, "Abstract physics particle group base class")
+	pl_class(PLPG_RTTI_EXPORT, PGPhysics, "PLParticleGroups", SNParticleGroup, "Abstract physics particle group base class")
 	pl_class_end
 
 

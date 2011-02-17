@@ -30,10 +30,10 @@
 #include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLRenderer/Material/MaterialManager.h>
-#include "PLScene/Visibility/VisNode.h"
-#include "PLScene/Scene/SNCamera.h"
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodes/SNParticleGroup.h"
+#include <PLScene/Visibility/VisNode.h>
+#include <PLScene/Scene/SNCamera.h>
+#include <PLScene/Scene/SceneContext.h>
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -42,7 +42,8 @@
 using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLRenderer;
-namespace PLScene {
+using namespace PLScene;
+namespace PLParticleGroups {
 
 
 //[-------------------------------------------------------]
@@ -896,4 +897,4 @@ void SNParticleGroup::UpdateAABoundingBox()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLParticleGroups

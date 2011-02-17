@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/SNParticleGroup.h>
-#include "PLParticleGroups/PLParticleGroups.h"
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -45,7 +44,7 @@ namespace PLParticleGroups {
 *  @brief
 *    Smoke particle group
 */
-class PGSmoke : public PLScene::SNParticleGroup {
+class PGSmoke : public SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
@@ -66,14 +65,14 @@ class PGSmoke : public PLScene::SNParticleGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGSmoke, "PLParticleGroups", PLScene::SNParticleGroup, "Smoke particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGSmoke, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Smoke particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,						float,				2.0f,										ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
 		pl_attribute(SizeTimeScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Size time scale",									"")
 		pl_attribute(Energie,					float,				1.0f,										ReadWrite,	DirectValue,	"Energie",											"")
 		pl_attribute(Color,						PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Color",											"")
 		pl_attribute(PositionScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Position scale",									"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,					PLGeneral::String,	"Data/Textures/PGSmoke.dds",				ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,					PLGeneral::uint32,	20,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,	4,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
@@ -144,7 +143,7 @@ class PGSmoke : public PLScene::SNParticleGroup {
 		*  @param[in] cParticle
 		*    Particle to initialize
 		*/
-		void InitParticle(PLScene::SNParticleGroup::Particle &cParticle) const;
+		void InitParticle(SNParticleGroup::Particle &cParticle) const;
 
 		/**
 		*  @brief
@@ -171,7 +170,7 @@ class PGSmoke : public PLScene::SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SNParticleGroup functions     ]
+	//[ Public virtual SNParticleGroup functions              ]
 	//[-------------------------------------------------------]
 	public:
 		virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);

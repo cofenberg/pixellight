@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/SNParticleGroup.h>
-#include "PLParticleGroups/PLParticleGroups.h"
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -50,13 +49,13 @@ namespace PLParticleGroups {
 *      PLScene::Particle::fCustom1  = Acc factor
 *      PLScene::Particle::fCustom2  = Time
 */
-class PGFountain : public PLScene::SNParticleGroup {
+class PGFountain : public SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGFountain, "PLParticleGroups", PLScene::SNParticleGroup, "Fountain particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGFountain, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Fountain particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Steps,					PLGeneral::uint32,		8,								ReadWrite,	GetSet,	"Steps",					"")
 		pl_attribute(RaysPerStep,			PLGeneral::uint32,		6,								ReadWrite,	GetSet,	"Rays per step",			"")
@@ -65,7 +64,7 @@ class PGFountain : public PLScene::SNParticleGroup {
 		pl_attribute(AngleOfHighestStep,	float,					85.0f,							ReadWrite,	GetSet,	"Angle of highest step",	"")
 		pl_attribute(RandomAngleAddition,	float,					20.0f,							ReadWrite,	GetSet,	"Random angle addition",	"")
 		pl_attribute(AccFactor,				float,					0.11f,							ReadWrite,	GetSet,	"Acc factor",				"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,				PLGeneral::String,		"Data/Textures/PGFountain.dds",	ReadWrite,	GetSet,	"Particle group material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,				PLGeneral::uint32,		600,							ReadWrite,	GetSet,	"Number of particles",		"Min=1")
 	pl_class_end

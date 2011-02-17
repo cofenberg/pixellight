@@ -65,7 +65,7 @@ PGSparkles::PGSparkles() :
 	EventHandlerUpdate(&PGSparkles::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Textures/PGSparkles.dds";
 	m_nParticles = 300;
 }

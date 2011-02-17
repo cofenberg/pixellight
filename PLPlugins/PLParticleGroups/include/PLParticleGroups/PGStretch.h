@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/SNParticleGroup.h>
-#include "PLParticleGroups/PLParticleGroups.h"
+#include "PLParticleGroups/SNParticleGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -45,18 +44,18 @@ namespace PLParticleGroups {
 *  @brief
 *    Stretch particle group
 */
-class PGStretch : public PLScene::SNParticleGroup {
+class PGStretch : public SNParticleGroup {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPG_RTTI_EXPORT, PGStretch, "PLParticleGroups", PLScene::SNParticleGroup, "Stretch particle group")
+	pl_class(PLPG_RTTI_EXPORT, PGStretch, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Stretch particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Size,		float,				2.0f,										ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(Length,	float,				10.0f,										ReadWrite,	DirectValue,	"Length",					"")
 		pl_attribute(Color,		PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Particle color",			"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,	PLGeneral::String,	"Data/Textures/PGStretch.dds",				ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,	PLGeneral::uint32,	1,											ReadWrite,	GetSet,			"Number of particles",		"Min=1")
 	pl_class_end

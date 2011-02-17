@@ -73,7 +73,7 @@ class PGExplosion : public PGPhysics {
 	pl_class(PLPG_RTTI_EXPORT, PGExplosion, "PLParticleGroups", PLParticleGroups::PGPhysics, "Explosion particle group")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(Mode,						pl_enum_type(EMode),	Repeat,								ReadWrite,	DirectValue,	"Explosion mode",									"")
-		// Overwritten PLScene::SNParticleGroup variables
+		// Overwritten SNParticleGroup variables
 		pl_attribute(Material,					PLGeneral::String,		"Data/Textures/PGExplosion.dds",	ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,					PLGeneral::uint32,		5,									ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,		4,									ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")

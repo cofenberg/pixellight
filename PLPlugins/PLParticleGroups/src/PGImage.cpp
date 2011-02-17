@@ -66,7 +66,7 @@ PGImage::PGImage() :
 	EventHandlerUpdate(&PGImage::NotifyUpdate, this),
 	m_bUpdate(false)
 {
-	// Overwritten PLScene::SNParticleGroup variables
+	// Overwritten SNParticleGroup variables
 	m_sMaterial  = "Data/Effects/PGImage.plfx";
 	m_nParticles = 1;
 
