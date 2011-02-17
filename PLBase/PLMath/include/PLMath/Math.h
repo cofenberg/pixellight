@@ -56,7 +56,7 @@ class Math {
 		PLMATH_API static const double Pi2;			/**< 6.28318530717958623200 (Pi*2) */
 		PLMATH_API static const double PiHalf;		/**< 1.57079632679489655800 (Pi/2) */
 		PLMATH_API static const double DegToRad;	/**< 0.01745329251994329576 (Pi/180) */
-		PLMATH_API static const double RadToDeg;	/**< 57.2957795130823208768 (180/Pí) */
+		PLMATH_API static const double RadToDeg;	/**< 57.2957795130823208768 (180/Pi) */
 		PLMATH_API static const double Epsilon;		/**< 1.192092896e-07F */
 		PLMATH_API static const double Log2Const;	/**< 0.693147180559945309417 */
 		PLMATH_API static const int    RandMax;		/**< Maximum random value (0x7fff) */

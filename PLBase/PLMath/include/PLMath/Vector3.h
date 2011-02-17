@@ -126,9 +126,9 @@ class Vector3 {
 			*    Known vertex element names when dealing with rotations
 			*
 			*  @note
-			*    - Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			*    - Yaw (also called 'heading') change is turning to the left or right
-			*    - Roll (also called 'attitude') change is moving one wingtip up and the other down
+			*    - X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
+			*    - Y rotation axis: Yaw (also called 'heading') change is turning to the left or right
+			*    - Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down
 			*/
 			struct {
 				float fPitch, fYaw, fRoll;
