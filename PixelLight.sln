@@ -156,6 +156,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoRendererTexturing", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2011", "PLTools\PL3dsMaxSceneExport_2011\PL3dsMaxSceneExport_2011.vcxproj", "{1163B90E-6F60-4529-9D67-0F1CD80D6271}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPicking", "PLDemos\PLDemoPicking\PLDemoPickingInternal.vcxproj", "{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1000,6 +1002,17 @@ Global
 		{1163B90E-6F60-4529-9D67-0F1CD80D6271}.Release|Win32.Build.0 = Release|Win32
 		{1163B90E-6F60-4529-9D67-0F1CD80D6271}.Release|x64.ActiveCfg = Release|x64
 		{1163B90E-6F60-4529-9D67-0F1CD80D6271}.Release|x64.Build.0 = Release|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Debug|Win32.Build.0 = Debug|Win32
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Debug|x64.ActiveCfg = Debug|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Debug|x64.Build.0 = Debug|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Hybrid|Win32.ActiveCfg = Release|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Hybrid|x64.ActiveCfg = Release|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Hybrid|x64.Build.0 = Release|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|Win32.ActiveCfg = Release|Win32
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|Win32.Build.0 = Release|Win32
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|x64.ActiveCfg = Release|x64
+		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
 #include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
@@ -32,6 +31,7 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
+#include "MyPicking.h"
 #include "Application.h"
 
 
@@ -53,11 +53,12 @@ using namespace PLScene;
 *    Constructor
 */
 Application::Application() :
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this)
+	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
+	m_pMyPicking(nullptr)
 {
 	// Set application name and title
-	SetName("PLDemoSimpleScene");
-	SetTitle(PLT("PL simple scene demo"));
+	SetName("PLDemoPicking");
+	SetTitle(PLT("PL picking demo"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
@@ -67,6 +68,23 @@ Application::Application() :
 */
 Application::~Application()
 {
+	// Destroy the picking component
+	if (m_pMyPicking)
+		delete m_pMyPicking;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLEngine::BasicSceneApplication functions ]
+//[-------------------------------------------------------]
+void Application::SetCamera(SNCamera *pCamera)
+{
+	// Call base implementation
+	BasicSceneApplication::SetCamera(pCamera);
+
+	// Do also set the camera to use within the picking component
+	if (m_pMyPicking)
+		m_pMyPicking->SetCamera(pCamera);
 }
 
 
@@ -110,35 +128,11 @@ void Application::OnCreateMainWindow()
 //[-------------------------------------------------------]
 bool Application::OnUpdate()
 {
-	// One important word at the beginning: DON'T COPYCAT THIS!
-	// The following is 'just' a simple demonstration how the scene graph 'can' be used. It's
-	// definitely not good to update your scene nodes in the way you can see within this function.
-	// Its quite to intricate, inflexible and not performant. Use for example a scene node modifier
-	// added to your scene node (in this case 'the white light') for this job!
-
 	// Call base implementation
 	if (BasicSceneApplication::OnUpdate()) {
-		// Get the scene container with our 'concrete scene'
-		SceneContainer *pSceneContainer = GetScene();
-		if (pSceneContainer) {
-			// Get the scene node with the name 'Light' (our 'white light')
-			SceneNode *pLight = pSceneContainer->Get("Light");
-			if (pLight) {
-				// This variable is used for the light animation. Its just static you keep the implementation
-				// for a good demo overview completely within this function.
-				static float fLightTimer = 0.0f;
-
-				// We set the current light position using the RTTI class interface. This is quite comfortable
-				// and universal because you haven't to care about the concrete class type - just set the
-				// variable values. For performance critical situations it's recommened to avoid using this RTTI
-				// functions to set your variables and use the conrete provided class interfaces instead.
-				pLight->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
-					Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
-
-				// Update the light timer by using the time difference between the last and the current frame
-				fLightTimer += Timing::GetInstance()->GetTimeDifference();
-			}
-		}
+		// Perform the picking
+		if (m_pMyPicking)
+			m_pMyPicking->PerformPicking();
 
 		// Done
 		return true;
@@ -161,8 +155,8 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 	}
 
-	// Create a scene node with the soldier mesh which can produce a shadow
-	SceneNode *pSceneNode = cContainer.Create("PLScene::SNMesh", "Soldier", "Flags=\"CastShadow|ReceiveShadow\" Position=\"0.0 0.1 -5.0\" Scale=\"0.008 0.008 0.008\" Mesh=\"Data/Meshes/Soldier.mesh\"");
+	// Create a scene node with the soldier mesh - in debug mode, show some fancy technical visualisations
+	SceneNode *pSceneNode = cContainer.Create("PLScene::SNMesh", "Soldier", "Position=\"0.0 0.1 -5.0\" Scale=\"0.008 0.008 0.008\" Mesh=\"Data/Meshes/Soldier.mesh\" DebugFlags=\"DebugShowWireframe|DebugShowJoints|DebugShowJointNames|DebugShowSkeleton\"");
 	if (pSceneNode) {
 		// Rotate the soldier
 		pSceneNode->AddModifier("PLScene::SNMRotationLinearAnimation", "Velocity=\"0 10 0\"");
@@ -174,11 +168,8 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		pSceneNode->AddModifier("PLScene::SNMMeshMorphBlink", "Name=\"blink\"");
 	}
 
-	// Create a light source to illuminate the scene - this light can cast shadows
-	cContainer.Create("PLScene::SNPointLight", "Light", "Flags=\"CastShadow|Flares|Corona\" Range=\"4\"");
-
 	// Create the floor
-	cContainer.Create("PLScene::SNMesh", "Floor", "Flags=\"CastShadow|ReceiveShadow\" Position=\"0.0 0.0 -5.0\" Rotation=\"0.0 180.0 0.0\" Scale=\"4.0 0.1 4.0\" Mesh=\"Default\"");
+	cContainer.Create("PLScene::SNMesh", "Floor", "Position=\"0.0 0.0 -5.0\" Rotation=\"0.0 180.0 0.0\" Scale=\"4.0 0.1 4.0\" Mesh=\"Default\"");
 
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();
@@ -186,35 +177,11 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
 		pSPScene->SetRootContainer(cContainer.GetContainer());
 		pSPScene->SetSceneContainer(&cContainer);
-
-		// Check renderer API and version number, if legacy hardware is used we can only
-		// use a quite primitive scene renderer!
-		String sSceneRenderer = "Deferred.sr";
-		RendererContext *pRendererContext = GetRendererContext();
-		if (pRendererContext) {
-			Renderer &cRenderer = pRendererContext->GetRenderer();
-
-			// OpenGL
-			uint32 nVersion = 0;
-			if (cRenderer.GetAPI(&nVersion) == "OpenGL") {
-				if (nVersion < 14) {
-					sSceneRenderer = DefaultSceneRenderer;
-					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
-									"At least a OpenGL 1.4 compatible graphics card is recommended.")
-				}
-
-			// Direct3D
-			} else if (cRenderer.GetAPI(&nVersion) == "Direct3D") {
-				if (nVersion < 900) {
-					sSceneRenderer = DefaultSceneRenderer;
-					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
-									"At least a Direct3D 9 compatible graphics card is recommended.")
-				}
-			}
-		}
-		pSPScene->SetDefaultSceneRenderer(sSceneRenderer);
 	}
 
 	// Set scene container
 	SetScene(&cContainer);
+
+	// Create the picking component
+	m_pMyPicking = new MyPicking(*this);
 }

@@ -1,4 +1,5 @@
 Changes in PixelLight 0.9.5-R1 (not yet released)
+- Feature: Added new demo "PLDemoPicking" showing how picking works
 - Feature: "PLGraphics": Added basic support for half as image data format
 - Feature: "PLGraphics::ImageLoaderDDS": Added support for half/float images
 - Feature: "PLGraphics::ImageLoaderJPG": Added "fancy upsampling" and "interblock smoothing" as optional load parameters and "quality" as optional save parameter
