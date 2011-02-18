@@ -1,3 +1,18 @@
+>> 18.02.2011
+[CO]
+- "SNMPhysicsBody": There were several attributes which are candidates for more memory efficient flags (this change saved 32 bytes).
+  The following "SNMPhysicsBody"-attributes are now flags with the following names:
+    <Attribute>      <flag>
+    "InitFrozen"  -> "InitUnfrozen"
+    "AutoFreeze"  -> "NoAutoFreeze"
+    "UseGravity"  -> "NoGravity"
+    "UseRotation" -> "NoRotation"
+  This change is not that critical, because those attributes are rarely used. With the previous PixelLight RTTI it wasn't possible to detect exact
+  state changes required for e.g. updating the physics body - but with the current (aka "new" :) RTTI those attributes can finally be flags as I
+  originally intended.
+
+
+
 >> 23.01.2011
 [CO]
 - "SNMPhysicsCharacterController::NotifyUpdate()" was working directly on euler angles which shouldn't be done because euler angles are evil

@@ -475,7 +475,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			m_pFallingBox = pSceneContainer->Create("PLScene::SNMesh", "SmallBox", "Position=\"1.5 4.0 7.2\" Scale=\"0.5 0.5 0.5\" Mesh=\"Default\"");
 			// Add Newton physics body modifier to the floor scene node
 			if (m_pFallingBox)
-				m_pFallingBox->AddModifier("PLPhysics::SNMPhysicsBodyBox", "Mass=\"1.0\" InitFrozen=\"0\"");
+				m_pFallingBox->AddModifier("PLPhysics::SNMPhysicsBodyBox", "Mass=\"1.0\" Flags=\"InitUnfrozen\"");
 
 			// Create a big static physics box scene node
 			pSceneNode = pSceneContainer->Create("PLScene::SNMesh", "BigBox", "Position=\"1.5 0.0 5.5\" Scale=\"1.5 1.5 1.5\" Mesh=\"Default\"");

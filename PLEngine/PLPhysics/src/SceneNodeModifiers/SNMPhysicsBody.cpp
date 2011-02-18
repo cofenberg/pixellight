@@ -90,40 +90,6 @@ void SNMPhysicsBody::SetCenterOfMass(const Vector3 &vValue)
 	}
 }
 
-bool SNMPhysicsBody::GetAutoFreeze() const
-{
-	return m_bAutoFreeze;
-}
-
-void SNMPhysicsBody::SetAutoFreeze(bool bValue)
-{
-	if (m_bAutoFreeze != bValue) {
-		m_bAutoFreeze = bValue;
-
-		// Is there a PL physics body?
-		Body *pBody = GetBody();
-		if (pBody)
-			pBody->SetAutoFreeze(m_bAutoFreeze);
-	}
-}
-
-bool SNMPhysicsBody::GetUseGravity() const
-{
-	return m_bUseGravity;
-}
-
-void SNMPhysicsBody::SetUseGravity(bool bValue)
-{
-	if (m_bUseGravity != bValue) {
-		m_bUseGravity = bValue;
-
-		// Is there a PL physics body?
-		Body *pBody = GetBody();
-		if (pBody)
-			pBody->SetUseGravity(m_bUseGravity);
-	}
-}
-
 const Vector3 &SNMPhysicsBody::GetPositionOffset() const
 {
 	return m_vPositionOffset;
@@ -152,6 +118,28 @@ void SNMPhysicsBody::SetCollisionGroup(uint8 nValue)
 		if (pBody)
 			pBody->SetCollisionGroup(m_nCollisionGroup);
 	}
+}
+
+void SNMPhysicsBody::SetFlags(uint32 nValue)
+{
+	// Auto freeze state change?
+	if ((GetFlags() & NoAutoFreeze) != (nValue & NoAutoFreeze)) {
+		// Is there a PL physics body?
+		Body *pBody = GetBody();
+		if (pBody)
+			pBody->SetAutoFreeze(!(nValue & NoAutoFreeze));
+	}
+
+	// Gravity usage stage change?
+	if ((GetFlags() & NoGravity) != (nValue & NoGravity)) {
+		// Is there a PL physics body?
+		Body *pBody = GetBody();
+		if (pBody)
+			pBody->SetUseGravity(!(nValue & NoGravity));
+	}
+
+	// Call base implementation
+	SNMPhysics::SetFlags(nValue);
 }
 
 
@@ -187,15 +175,10 @@ Body *SNMPhysicsBody::GetBody() const
 SNMPhysicsBody::SNMPhysicsBody(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	Mass(this),
 	CenterOfMass(this),
-	AutoFreeze(this),
-	UseGravity(this),
-	UseRotation(this),
 	PositionOffset(this),
-	InitFrozen(this),
 	CollisionGroup(this),
+	Flags(this),
 	m_fMass(0.0f),
-	m_bAutoFreeze(true),
-	m_bUseGravity(true),
 	m_nCollisionGroup(0),
 	m_pWorldContainer(nullptr),
 	m_pBodyHandler(new ElementHandler()),
@@ -283,14 +266,14 @@ void SNMPhysicsBody::CreatePhysicsBody()
 		// Setup body
 		pBody->SetMass(m_fMass);
 		pBody->SetCenterOfMass(m_vCenterOfMass);
-		pBody->SetAutoFreeze(m_bAutoFreeze);
-		pBody->SetUseGravity(m_bUseGravity);
+		pBody->SetAutoFreeze(!(GetFlags() & NoAutoFreeze));
+		pBody->SetUseGravity(!(GetFlags() & NoGravity));
 		pBody->SetCollisionGroup(m_nCollisionGroup);
 		NotifyPosition();
 		NotifyRotation();
 
 		// Unfreeze body by default?
-		pBody->SetFrozen(InitFrozen);
+		pBody->SetFrozen(!(GetFlags() & InitUnfrozen));
 
 		// Connect event handler
 		pBody->EventTransform.Connect(&EventHandlerTransform);
@@ -330,10 +313,10 @@ void SNMPhysicsBody::NotifyPosition()
 			// Set the position of the PL physics body. If the physics takes place within another
 			// container, we need to transform...
 			Vector3 vPosition = cSceneNode.GetTransform().GetPosition();
-			if (UseRotation)
-				vPosition += cSceneNode.GetTransform().GetRotation()*m_vPositionOffset;
-			else
+			if (GetFlags() & NoRotation)
 				vPosition += m_vPositionOffset;
+			else
+				vPosition += cSceneNode.GetTransform().GetRotation()*m_vPositionOffset;
 			if (m_pWorldContainer != cSceneNode.GetContainer()) {
 				SceneContainer *pContainer = cSceneNode.GetContainer();
 				while (m_pWorldContainer != pContainer) {
@@ -358,7 +341,7 @@ void SNMPhysicsBody::NotifyPosition()
 void SNMPhysicsBody::NotifyRotation()
 {
 	// Do listening and use rotation?
-	if (m_bListening && UseRotation) {
+	if (m_bListening && !(GetFlags() & NoRotation)) {
 		// Is there a PL physics body?
 		Body *pBody = GetBody();
 		if (pBody) {
@@ -420,7 +403,21 @@ void SNMPhysicsBody::NotifyTransform()
 			}
 
 			// Use rotation? If yes, set the rotation of the scene node to the rotation of the PL physics body
-			if (UseRotation) {
+			if (GetFlags() & NoRotation) {
+				// Transform from 'world' into 'container' space...
+				while (lstStack.GetNumOfElements()) {
+					// Get container
+					pContainer = lstStack.Top();
+					lstStack.Pop();
+
+					// Transform
+					vPosition *= pContainer->GetTransform().GetInverseMatrix();
+				}
+
+				// Set position
+				vPosition -= m_vPositionOffset;
+				cSceneNode.MoveTo(vPosition);
+			} else {
 				// Transform from 'world' into 'container' space...
 				Quaternion qRotation;
 				pBody->GetRotation(qRotation);
@@ -438,33 +435,19 @@ void SNMPhysicsBody::NotifyTransform()
 				vPosition -= qRotation*m_vPositionOffset;
 				cSceneNode.MoveTo(vPosition);
 				cSceneNode.GetTransform().SetRotation(qRotation);
-			} else {
-				// Transform from 'world' into 'container' space...
-				while (lstStack.GetNumOfElements()) {
-					// Get container
-					pContainer = lstStack.Top();
-					lstStack.Pop();
-
-					// Transform
-					vPosition *= pContainer->GetTransform().GetInverseMatrix();
-				}
-
-				// Set position
-				vPosition -= m_vPositionOffset;
-				cSceneNode.MoveTo(vPosition);
 			}
 
 		// Else... hurai, the easy situation! :)
 		} else {
 			// Set position
-			if (UseRotation)
-				vPosition -= cSceneNode.GetTransform().GetRotation()*m_vPositionOffset;
-			else
+			if (GetFlags() & NoRotation)
 				vPosition -= m_vPositionOffset;
+			else
+				vPosition -= cSceneNode.GetTransform().GetRotation()*m_vPositionOffset;
 			cSceneNode.MoveTo(vPosition);
 
 			// Use rotation? If yes, set the rotation of the scene node to the rotation of the PL physics body
-			if (UseRotation) {
+			if (!(GetFlags() & NoRotation)) {
 				Quaternion qRotation;
 				pBody->GetRotation(qRotation);
 				cSceneNode.GetTransform().SetRotation(qRotation);

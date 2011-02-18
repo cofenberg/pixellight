@@ -31,10 +31,10 @@
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1" />
         </Node>
         <Node Class="PLScene::SNMesh" Position="2 -1.5 -6" Name="Ball" Mesh="Create PLMesh::MeshCreatorSphere Material='Data/Textures/Checker.dds' Radius='0.5' Detail='26.0'">
-            <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="0.5" InitFrozen="0" />
+            <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="0.5" Flags="InitUnfrozen" />
         </Node>
         <Node Class="PLScene::SNMesh" Name="Marble" Position="0 -0.5 -5" Mesh="Create PLMesh::MeshCreatorSphere Material='Data/Textures/Checker.dds' Radius='0.1' Detail='16.0'" >
-            <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="2.0" InitFrozen="0" />
+            <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="2.0" Flags="InitUnfrozen" />
             <Modifier Class="PLScene::SNMAnchor" AttachedNode="MarbleHelper" Flags="NoRotation" />
             <Modifier Class="PLPhysics::SNMPhysicsCharacterController" JumpForce="0" Speed="10" Acceleration="2" RotationNode="MarbleHelper" />
         </Node>
