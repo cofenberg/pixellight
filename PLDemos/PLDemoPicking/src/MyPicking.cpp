@@ -27,8 +27,7 @@
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Widgets/Widget.h>
 #include <PLInput/Input/Controller.h>
-#include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Devices/Mouse.h>
+#include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLEngine/Picking/PickingResult.h>
 #include "Application.h"
@@ -84,13 +83,14 @@ void MyPicking::PerformPicking()
 	// Get the default input controller of the application
 	Controller *pController = reinterpret_cast<Controller*>(m_pApplication->GetSceneContext()->GetDefaultInputController());
 	if ((pController && pController->GetActive()) || !pController) {
-		// Get mouse input device
-		Mouse *pMouse = InputManager::GetInstance()->GetMouse();
-		if (pMouse) {
+		// Get the "MouseLeft" control
+		Control *pControl = pController->GetControl("MouseLeft");
+		if (pControl && pControl->GetType() == ControlButton) {
+			Button *pButton = reinterpret_cast<Button*>(pControl);
 			SceneNode *pPickedSceneNode = nullptr;
 
 			// If the left mouse button is currently down, do NOT perform new picking
-			if (!pMouse->Left.IsPressed()) {
+			if (!pButton->IsPressed()) {
 				// Get the current time data
 				const uint32 nPastTime = Timing::GetInstance()->GetPastTime();
 
@@ -123,7 +123,7 @@ void MyPicking::PerformPicking()
 			}
 
 			// Is currently anything picked?
-			if (pMouse->Left.IsHit() && pPickedSceneNode) {
+			if (pButton->IsHit() && pPickedSceneNode) {
 				// Toggle the debug mode of the picked scene node
 				if (pPickedSceneNode->GetDebugFlags() & SceneNode::DebugEnabled) {
 					// Disable debug mode

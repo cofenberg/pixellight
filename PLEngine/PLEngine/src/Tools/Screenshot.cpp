@@ -201,7 +201,8 @@ String Screenshot::GetScreenshotFilename(const String &sExtension) const
 {
 	// Open/create screenshots directory
 	String sDirectory = m_sScreenshotDirectory;
-	if (!sDirectory.GetLength()) sDirectory = System::GetInstance()->GetCurrentDir();
+	if (!sDirectory.GetLength())
+		sDirectory = System::GetInstance()->GetCurrentDir();
 	Directory cDirectory(sDirectory + "/_Screenshots");
 	if (!cDirectory.Exists())
 		cDirectory.Create();

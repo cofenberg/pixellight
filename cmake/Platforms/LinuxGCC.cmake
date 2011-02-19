@@ -126,4 +126,3 @@ endif()
 set(LINUX_LINKER_FLAGS
 	-Wl,--as-needed		# Quote from http://www.gentoo.org/proj/en/qa/asneeded.xml : "The flag tells the linker to link in the produced binary only the libraries containing symbols actually used by the binary itself"
 )
-
