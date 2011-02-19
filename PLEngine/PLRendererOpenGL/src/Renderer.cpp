@@ -1814,8 +1814,25 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					break;
 
 				case PLRenderer::RenderState::PointScaleEnable:
-					// ?
+				{
+					// Point parameters supported?
+					if (!m_sCapabilities.bPointParameters)
+						return false; // Error, not supported!
+
+					// Enable or disable point scale?
+					if (nValue) {
+						// There's no special "enable" function in OpenGL, just set proper point parameters...
+						const float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
+											 Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
+											 Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleC)) };
+						glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					} else {
+						// There's no special "disable" function in OpenGL, just set proper point parameters...
+						static const float fQ[] = { 1.0f, 0.0f, 0.0f };
+						glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					}
 					break;
+				}
 
 				case PLRenderer::RenderState::PointSizeMin:
 					// Point parameters supported?
@@ -1834,43 +1851,46 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					break;
 
 				case PLRenderer::RenderState::PointScaleA:
-				{
 					// Point parameters supported?
 					if (!m_sCapabilities.bPointParameters)
 						return false; // Error, not supported!
 
-					float fQ[] = { Tools::UInt32ToFloat(nValue),
-								   Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
-								   Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleC)) };
-					glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					// Point scale enabled? Not not, do not touch the settings!
+					if (GetRenderState(PLRenderer::RenderState::PointScaleEnable)) {
+						const float fQ[] = { Tools::UInt32ToFloat(nValue),
+											 Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
+											 Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleC)) };
+						glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					}
 					break;
-				}
 
 				case PLRenderer::RenderState::PointScaleB:
-				{
 					// Point parameters supported?
 					if (!m_sCapabilities.bPointParameters)
 						return false; // Error, not supported!
 
-					float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
-								   Tools::UInt32ToFloat(nValue),
-								   Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleC)) };
-					glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					// Point scale enabled? Not not, do not touch the settings!
+					if (GetRenderState(PLRenderer::RenderState::PointScaleEnable)) {
+						const float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
+											 Tools::UInt32ToFloat(nValue),
+											 Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleC)) };
+						glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					}
 					break;
-				}
 
 				case PLRenderer::RenderState::PointScaleC:
-				{
 					// Point parameters supported?
 					if (!m_sCapabilities.bPointParameters)
 						return false; // Error, not supported!
 
-					float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
-								   Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
-								   Tools::UInt32ToFloat(nValue) };
-					glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					// Point scale enabled? Not not, do not touch the settings!
+					if (GetRenderState(PLRenderer::RenderState::PointScaleEnable)) {
+						const float fQ[] = { Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleA)),
+											 Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::PointScaleB)),
+											 Tools::UInt32ToFloat(nValue) };
+						glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, fQ);
+					}
 					break;
-				}
 
 				case PLRenderer::RenderState::LineWidth:
 					glLineWidth(Tools::UInt32ToFloat(nValue));
