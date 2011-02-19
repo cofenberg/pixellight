@@ -64,6 +64,15 @@ inline float Math::GetRandNegFloat()
 	return (GetRand() % 2) ? GetRandFloat() : -GetRandFloat();
 }
 
+/**
+*  @brief
+*    Returns a float random number between the given minimum/maximum
+*/
+float Math::GetRandMinMaxFloat(float fMin, float fMax)
+{
+	return fMin + GetRandFloat()*(fMax-fMin);
+}
+
 
 //[-------------------------------------------------------]
 //[ Misc                                                  ]

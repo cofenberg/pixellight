@@ -173,6 +173,20 @@ class Math {
 		*/
 		inline static float GetRandNegFloat();
 
+		/**
+		*  @brief
+		*    Returns a float random number between the given minimum/maximum
+		*
+		*  @param[in] fMin
+		*    Minimum (inclusive), must be <= maximum
+		*  @param[in] fMax
+		*    Maximum (inclusive), must be >= minimum
+		*
+		*  @return
+		*    A float random number between the given minimum/maximum
+		*/
+		inline static float GetRandMinMaxFloat(float fMin, float fMax);
+
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]

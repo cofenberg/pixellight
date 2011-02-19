@@ -1,4 +1,10 @@
-﻿>> 17.02.2011
+﻿>> 19.02.2011
+[CO]
+- Added "Math::GetRandMinMaxFloat()"
+
+
+
+>> 17.02.2011
 [CO]
 - Bugfix: "Math::GetRandNegFloat()":
     return (GetRand() % 2) ? GetRandFloat() : -int(GetRandFloat());
