@@ -156,9 +156,9 @@ bool SceneLoaderX::Load(SceneContainer &cContainer, File &cFile)
 	PL_LOG(Debug, '\n')
 	PL_LOG(Debug, "Scene statistics of '" + cFile.GetUrl().GetNativePath() + '\'')
 	PL_LOG(Debug, "Loading time: " + String::Format("%g", cStopwatch.GetSeconds()) + " sec");
-	PL_LOG(Debug, String("Total number of containers within the scene: (without the root container itself) ") + int(sInstance.nTotalNumOfContainers))
-	PL_LOG(Debug, String("Total number of nodes (without containers) within the scene: ") + int(sInstance.nTotalNumOfNodes))
-	PL_LOG(Debug, String("Total number of materials within the scene: ") + int(sInstance.lstMaterials.GetNumOfElements()))
+	PL_LOG(Debug, String("Total number of containers within the scene: (without the root container itself) ") + static_cast<int>(sInstance.nTotalNumOfContainers))
+	PL_LOG(Debug, String("Total number of nodes (without containers) within the scene: ") + static_cast<int>(sInstance.nTotalNumOfNodes))
+	PL_LOG(Debug, String("Total number of materials within the scene: ") + static_cast<int>(sInstance.lstMaterials.GetNumOfElements()))
 	PL_LOG(Debug, '\n')
 
 	// Done

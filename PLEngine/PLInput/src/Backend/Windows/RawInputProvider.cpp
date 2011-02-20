@@ -83,14 +83,14 @@ void RawInputProvider::QueryDevices()
 				// Keyboard
 				sName = "Keyboard";
 				if (!pDevice->IsVirtual()) {
-					sName += (int)nKeyboard;
+					sName += nKeyboard;
 					nKeyboard++;
 				}
 			} else if (pDevice->GetType() == RIM_TYPEMOUSE)	{
 				// Mouse
 				sName = "Mouse";
 				if (!pDevice->IsVirtual()) {
-					sName += (int)nMouse;
+					sName += nMouse;
 					nMouse++;
 				}
 			}

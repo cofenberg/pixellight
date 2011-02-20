@@ -85,7 +85,7 @@ SNTerrain::SNTerrain() :
 	m_pGMMSurface(nullptr)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid));
 }
 
 /**

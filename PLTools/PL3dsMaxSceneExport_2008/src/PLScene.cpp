@@ -164,7 +164,7 @@ PLSceneNode *PLScene::GetPLSceneNode(INode &cMaxNode)
 {
 	// Bah, std::string is horror. Here I use a hack to use the good old sprintf to convert a pointer address into a string...
 	std::string sKey = "XXXXXXXXXXXXXXXXXXXX";
-	sprintf((char*)sKey.c_str(), "%19p", &cMaxNode);
+	sprintf(const_cast<char*>(sKey.c_str()), "%19p", &cMaxNode);
 	std::map<std::string, PLSceneNode*>::iterator pIterator = m_mapMaxToPLNodes.find(sKey);
 	return pIterator == m_mapMaxToPLNodes.end() ? nullptr : pIterator->second;
 }
@@ -559,7 +559,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 			return nullptr;
 
 		// See if it's a standard material
-		StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMat : nullptr;
+		StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? static_cast<StdMat*>(pMaxMat) : nullptr;
 
 		// Do NOT create material files, do ONLY use the first found active texture...
 		BitmapTex *pBitmapTex = nullptr;
@@ -571,7 +571,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 				if (pTexMap) {
 					// Texture
 					if (pTexMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0x00)) {
-						pBitmapTex = (BitmapTex*)pTexMap;
+						pBitmapTex = static_cast<BitmapTex*>(pTexMap);
 						break;
 					}
 				}
@@ -858,14 +858,14 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 		// Is there a '.' within the node name? If yes, replace it by '-'.
 		size_t nIndex = sName.find_first_of(".");
 		if (nIndex != std::string::npos) {
-			char *pszName = (char*)sName.c_str() + nIndex;
+			char *pszName = const_cast<char*>(sName.c_str()) + nIndex;
 			while (*pszName != '\0') {
 				if (*pszName == '.')
 					*pszName = '-';
 				pszName++;
 			}
 		}
-		TCHAR *pszName = (TCHAR*)sName.c_str();
+		TCHAR *pszName = const_cast<TCHAR*>(sName.c_str());
 
 		// Look for 'cell_' (cell_<cell name>_<node name>)
 		std::string sSceneCellName, sSceneNodeName;
@@ -940,7 +940,7 @@ bool PLScene::AddIGameNode(IGameNode &cIGameNode)
 	m_nNumOfMaxNodes++;
 
 	// Update the 3ds Max progress bar
-	int nProgress = m_nProgressMin+int(float(m_nProgressMax-m_nProgressMin)*float(m_nNumOfMaxNodes)/float(m_nTotalNumOfMaxNodes));
+	int nProgress = m_nProgressMin+static_cast<int>(static_cast<float>(m_nProgressMax-m_nProgressMin)*static_cast<float>(m_nNumOfMaxNodes)/static_cast<float>(m_nTotalNumOfMaxNodes));
 	if (nProgress != m_nProgress) {
 		m_nProgress = nProgress;
 		m_pMaxInterface->ProgressUpdate(m_nProgress, 0, "Collect scene data...");
@@ -977,7 +977,7 @@ void PLScene::OutputStatistics()
 		PLSceneTexture *pTexture = m_lstTextures[i];
 		if (pTexture) {
 			g_pLog->PrintFLine("%d: '%s' -> Reference count: %d (%g%%)", i, pTexture->GetName().c_str(), pTexture->GetReferenceCount(),
-							   float(pTexture->GetReferenceCount())/float(m_sMeshStatistics.nNumOfTextureReferences)*100.0f);
+							   static_cast<float>(pTexture->GetReferenceCount())/static_cast<float>(m_sMeshStatistics.nNumOfTextureReferences)*100.0f);
 		}
 	}
 	g_pLog->AddSpaces(-PLLog::TabSize*2);
@@ -993,7 +993,7 @@ void PLScene::OutputStatistics()
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial) {
 				g_pLog->PrintFLine("%d: '%s' -> Reference count: %d (%g%%)", i, pMaterial->GetName().c_str(), pMaterial->GetReferenceCount(),
-								   float(pMaterial->GetReferenceCount())/float(m_sMeshStatistics.nNumOfMaterialReferences)*100.0f);
+								   static_cast<float>(pMaterial->GetReferenceCount())/static_cast<float>(m_sMeshStatistics.nNumOfMaterialReferences)*100.0f);
 			}
 		}
 		g_pLog->AddSpaces(-PLLog::TabSize*2);
@@ -1027,11 +1027,11 @@ void PLScene::OutputStatistics()
 	// Unique meshes
 	g_pLog->PrintLine("\nUnique meshes: (<percentage of total meshes)");
 	g_pLog->AddSpaces(PLLog::TabSize);
-	g_pLog->PrintFLine("Meshes: %d (%g%%)",     m_sMeshStatistics.nNumOfMeshes,         float(m_sMeshStatistics.nNumOfMeshes)/float(m_sMeshStatistics.nTotalNumOfMeshes)*100.0f);
-	g_pLog->PrintFLine("Vertices: %d (%g%%)",   m_sMeshStatistics.nNumOfMeshVertices,   float(m_sMeshStatistics.nNumOfMeshVertices)/float(m_sMeshStatistics.nTotalNumOfMeshVertices)*100.0f);
-	g_pLog->PrintFLine("Indices: %d (%g%%)",    m_sMeshStatistics.nNumOfMeshIndices,    float(m_sMeshStatistics.nNumOfMeshIndices)/float(m_sMeshStatistics.nTotalNumOfMeshIndices)*100.0f);
-	g_pLog->PrintFLine("Triangles: %d (%g%%)",  m_sMeshStatistics.nNumOfMeshTriangles,  float(m_sMeshStatistics.nNumOfMeshTriangles)/float(m_sMeshStatistics.nTotalNumOfMeshTriangles)*100.0f);
-	g_pLog->PrintFLine("Geometries: %d (%g%%)", m_sMeshStatistics.nNumOfMeshGeometries, float(m_sMeshStatistics.nNumOfMeshGeometries)/float(m_sMeshStatistics.nTotalNumOfMeshGeometries)*100.0f);
+	g_pLog->PrintFLine("Meshes: %d (%g%%)",     m_sMeshStatistics.nNumOfMeshes,         static_cast<float>(m_sMeshStatistics.nNumOfMeshes)        /static_cast<float>(m_sMeshStatistics.nTotalNumOfMeshes)        *100.0f);
+	g_pLog->PrintFLine("Vertices: %d (%g%%)",   m_sMeshStatistics.nNumOfMeshVertices,   static_cast<float>(m_sMeshStatistics.nNumOfMeshVertices)  /static_cast<float>(m_sMeshStatistics.nTotalNumOfMeshVertices)  *100.0f);
+	g_pLog->PrintFLine("Indices: %d (%g%%)",    m_sMeshStatistics.nNumOfMeshIndices,    static_cast<float>(m_sMeshStatistics.nNumOfMeshIndices)   /static_cast<float>(m_sMeshStatistics.nTotalNumOfMeshIndices)   *100.0f);
+	g_pLog->PrintFLine("Triangles: %d (%g%%)",  m_sMeshStatistics.nNumOfMeshTriangles,  static_cast<float>(m_sMeshStatistics.nNumOfMeshTriangles) /static_cast<float>(m_sMeshStatistics.nTotalNumOfMeshTriangles) *100.0f);
+	g_pLog->PrintFLine("Geometries: %d (%g%%)", m_sMeshStatistics.nNumOfMeshGeometries, static_cast<float>(m_sMeshStatistics.nNumOfMeshGeometries)/static_cast<float>(m_sMeshStatistics.nTotalNumOfMeshGeometries)*100.0f);
 	g_pLog->AddSpaces(-PLLog::TabSize);
 
 // Scene details

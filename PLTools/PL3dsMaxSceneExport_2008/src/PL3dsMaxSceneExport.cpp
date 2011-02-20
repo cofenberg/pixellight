@@ -105,7 +105,7 @@ class PLSceneExport : public SceneExport {
 
 		BOOL SupportsOptions(int ext,DWORD options)
 		{
-			return options == SCENE_EXPORT_SELECTED;
+			return (options == SCENE_EXPORT_SELECTED);
 		}
 
 		int DoExport(const TCHAR *name, ExpInterface *ei, Interface *i, BOOL suppressPrompts = false, DWORD options = 0)

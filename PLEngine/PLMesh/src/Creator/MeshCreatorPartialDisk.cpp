@@ -231,8 +231,8 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					// Setup vertices & geometry
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-							float fDeltaRadius = (OuterRadius - InnerRadius)/float(Loops);
-							float fDeltaAngle  = static_cast<float>(Math::DegToRad*(SweepAngle/float(Slices)));
+							float fDeltaRadius = (OuterRadius - InnerRadius)/static_cast<float>(Loops);
+							float fDeltaAngle  = static_cast<float>(Math::DegToRad*(SweepAngle/static_cast<float>(Slices)));
 							float fRadius      = InnerRadius;
 
 							// Get offset
@@ -326,7 +326,7 @@ Mesh *MeshCreatorPartialDisk::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 					// Setup vertices & geometry
 					if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 						if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-							float fDeltaAngle = static_cast<float>(Math::DegToRad*SweepAngle/float(Slices));
+							float fDeltaAngle = static_cast<float>(Math::DegToRad*SweepAngle/static_cast<float>(Slices));
 
 							// Get offset
 							const Vector3 &vOffset = Offset.Get();

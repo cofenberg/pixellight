@@ -168,12 +168,12 @@ void QuaternionTest::Test()
 	bResult = true;
 	// 90°
 	vV3 = Vector3(1.0f, 0.0f, 0.0f);
-	EulerAngles::ToQuaternion(0.0f, float(90.0f*Math::DegToRad), 0.0f, qQ);
+	EulerAngles::ToQuaternion(0.0f, static_cast<float>(90.0f*Math::DegToRad), 0.0f, qQ);
 	vV3 = qQ*vV3;
 	if (!Math::AreEqual(vV3.x, 0.0f) || !Math::AreEqual(vV3.y, 0.0f) || !Math::AreEqual(vV3.z, -1.0f)) bResult = false;
 	// -90°
 	vV3 = Vector3(1.0f, 0.0f, 0.0f);
-	EulerAngles::ToQuaternion(0.0f, -float(90.0f*Math::DegToRad), 0.0f, qQ);
+	EulerAngles::ToQuaternion(0.0f, -static_cast<float>(90.0f*Math::DegToRad), 0.0f, qQ);
 	vV3 = qQ*vV3;
 	if (!Math::AreEqual(vV3.x, 0.0f) || !Math::AreEqual(vV3.y, 0.0f) || !Math::AreEqual(vV3.z, 1.0f)) bResult = false;
 	EndTask(bResult);

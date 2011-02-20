@@ -64,7 +64,7 @@ SNBitmap2D::SNBitmap2D() :
 	SetFlags(GetFlags()|NoCulling);
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPre | UseDrawPost));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPre | UseDrawPost));
 }
 
 /**

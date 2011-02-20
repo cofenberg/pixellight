@@ -245,7 +245,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					cFile.Seek(1, File::SeekCurrent);
 
 				// Parse surface parameters
-				while (cFile.Tell() < int32(nOldPos+nChunkSize)) {
+				while (cFile.Tell() < static_cast<int32>(nOldPos+nChunkSize)) {
 					uint32 nSubTag;
 					cFile.Read(&nSubTag, sizeof(uint32), 1);
 					uint32 nSubSize;
@@ -348,7 +348,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 					break;
 				}
 
-				while (cFile.Tell() < int32(nOldPos+nChunkSize)) {
+				while (cFile.Tell() < static_cast<int32>(nOldPos+nChunkSize)) {
 					uint16 nf;
 					cFile.Read(&nf, sizeof(uint16), 1);
 					nf = big(nf);
@@ -416,7 +416,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 						}
 
 						// Read while not at end of buffer
-						while (cFile.Tell() < int32(nOldPos+nChunkSize)) {
+						while (cFile.Tell() < static_cast<int32>(nOldPos+nChunkSize)) {
 							uint32 nVert = GetVX(cFile);
 							uint32 nFace = GetVX(cFile);
 
@@ -501,7 +501,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 						}
 
 						// Read while not at end of buffer
-						while (cFile.Tell() < int32(nOldPos+nChunkSize)) {
+						while (cFile.Tell() < static_cast<int32>(nOldPos+nChunkSize)) {
 							uint32 nIndex = GetVX(cFile);
 
 							// Read uv coords
@@ -546,7 +546,7 @@ bool MeshLoaderLwo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 		// Pad to 16 bit and skip
 		if (!bCreateMesh) {
-			if (int32(nOldPos+nChunkSize) != cFile.Tell()) {
+			if (static_cast<int32>(nOldPos+nChunkSize) != cFile.Tell()) {
 				// Tag not completely read, still some bytes left!
 				cFile.Seek(nOldPos+nChunkSize);
 			}

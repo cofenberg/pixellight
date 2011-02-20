@@ -95,7 +95,7 @@ void RawInput::DetectDevices()
 					pDevice->m_sDeviceInfo	= sDeviceInfo;
 					pDevice->m_bVirtual		= false;
 					m_lstDevices.Add(pDevice);
-					m_mapDevices.Add((uint32)pDevice->m_hDevice, pDevice);
+					m_mapDevices.Add(reinterpret_cast<uint32>(pDevice->m_hDevice), pDevice);
 				}
 			}
 
@@ -151,7 +151,7 @@ RawInput::RawInput() :
 	m_cWndClass.hInstance		= GetModuleHandle(nullptr);
 	m_cWndClass.hIcon			= nullptr;
 	m_cWndClass.hCursor			= LoadCursor(nullptr, IDC_ARROW);
-	m_cWndClass.hbrBackground	= (HBRUSH)(COLOR_WINDOW);
+	m_cWndClass.hbrBackground	= reinterpret_cast<HBRUSH>(COLOR_WINDOW);
 	m_cWndClass.lpszMenuName	= nullptr;
 	m_cWndClass.cbClsExtra		= 0;
 	m_cWndClass.cbWndExtra		= 0;
@@ -159,7 +159,7 @@ RawInput::RawInput() :
 
 	// Create window
 	m_hWnd = CreateWindow(L"PLInputWindows", L"PLInputWindows", WS_OVERLAPPEDWINDOW, 0, 0, 0, 0, nullptr, nullptr, GetModuleHandle(nullptr), nullptr);
-	SetWindowLongPtr(m_hWnd, GWLP_USERDATA, (LONG_PTR)this);
+	SetWindowLongPtr(m_hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
 	// Register Raw-Input devices
 	RAWINPUTDEVICE cRawInputDevice[2];
@@ -214,15 +214,15 @@ LRESULT RawInput::ProcessRawInput(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lP
 {
 	// Create buffer
 	UINT nSize;
-	GetRawInputData((HRAWINPUT)lParam, RID_INPUT, nullptr, &nSize, sizeof(RAWINPUTHEADER));
+	GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, nullptr, &nSize, sizeof(RAWINPUTHEADER));
 	BYTE *pBuffer = new BYTE[nSize];
 	if (pBuffer) {
 		// Read Raw-Input data
-		if (GetRawInputData((HRAWINPUT)lParam, RID_INPUT, pBuffer, &nSize, sizeof(RAWINPUTHEADER)) == nSize) {
-			RAWINPUT *pRawInput = (RAWINPUT*)pBuffer;
+		if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, pBuffer, &nSize, sizeof(RAWINPUTHEADER)) == nSize) {
+			RAWINPUT *pRawInput = reinterpret_cast<RAWINPUT*>(pBuffer);
 
 			// Get device
-			RawInputDevice *pDevice = m_mapDevices.Get((uint32)pRawInput->header.hDevice);
+			RawInputDevice *pDevice = m_mapDevices.Get(reinterpret_cast<uint32>(pRawInput->header.hDevice));
 
 			// Keyboard input
 			if (pRawInput->header.dwType == RIM_TYPEKEYBOARD) {
@@ -308,7 +308,7 @@ LRESULT WINAPI RawInput::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lPa
 	// Catch Raw-Input messages
 	if (nMsg == WM_INPUT) {
 		// Get device provider instance
-		RawInput *pRawInput = (RawInput*)GetWindowLongPtr(hWnd, -21);
+		RawInput *pRawInput = reinterpret_cast<RawInput*>(GetWindowLongPtr(hWnd, -21));
 		if (pRawInput) {
 			// Call Raw-Input message handler
 			return pRawInput->ProcessRawInput(hWnd, nMsg, wParam, lParam);
@@ -326,7 +326,7 @@ LRESULT WINAPI RawInput::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lPa
 int RawInput::RawInputThread(void *pData)
 {
 	// Get RawInput object
-	RawInput *pRawInput = (RawInput*)pData;
+	RawInput *pRawInput = static_cast<RawInput*>(pData);
 
 	// Read window message for RawInput window
 	MSG sMsg;

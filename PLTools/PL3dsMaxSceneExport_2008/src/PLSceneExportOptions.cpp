@@ -432,11 +432,11 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 	if (GetPrivateProfileString("General", "OverwriteAmbientColor", nullptr, szTemp, 256, pszAbsFilename))
 		bOverwriteAmbientColor = atoi(szTemp) != 0;
 	if (GetPrivateProfileString("General", "OverwrittenAmbientColorR", nullptr, szTemp, 256, pszAbsFilename))
-		fOverwrittenAmbientColor[0] = (float)atof(szTemp);
+		fOverwrittenAmbientColor[0] = static_cast<float>(atof(szTemp));
 	if (GetPrivateProfileString("General", "OverwrittenAmbientColorG", nullptr, szTemp, 256, pszAbsFilename))
-		fOverwrittenAmbientColor[1] = (float)atof(szTemp);
+		fOverwrittenAmbientColor[1] = static_cast<float>(atof(szTemp));
 	if (GetPrivateProfileString("General", "OverwrittenAmbientColorB", nullptr, szTemp, 256, pszAbsFilename))
-		fOverwrittenAmbientColor[2] = (float)atof(szTemp);
+		fOverwrittenAmbientColor[2] = static_cast<float>(atof(szTemp));
 	if (GetPrivateProfileString("General", "SceneContainer", bCanRead ? "" : nullptr, szTemp, 256, pszAbsFilename))
 		sSceneContainer = szTemp;
 	if (GetPrivateProfileString("General", "SceneRenderer", bCanRead ? "" : nullptr, szTemp, 256, pszAbsFilename))

@@ -209,9 +209,9 @@ PLSceneMaterial *PLSceneMaterial::Create(PLScene &cScene, IGameMaterial *pParent
 	Mtl *pMaxMaterial = cIGameMaterial.GetMaxMaterial();
 	if (pMaxMaterial) {
 		// DxMaterial or extend?
-		IDxMaterial2 *pFXMaterial = (IDxMaterial2*)pMaxMaterial->GetInterface(IDXMATERIAL2_INTERFACE);
+		IDxMaterial2 *pFXMaterial = static_cast<IDxMaterial2*>(pMaxMaterial->GetInterface(IDXMATERIAL2_INTERFACE));
 		if (!pFXMaterial && pParentIGameMaterial)
-			pFXMaterial = (IDxMaterial2*)pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE);
+			pFXMaterial = static_cast<IDxMaterial2*>(pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE));
 		if (pFXMaterial) { // Get information from the DirectX Shader material
 			// Get effect filename
 		#if MAX_RELEASE >= 12000	// For R12 release

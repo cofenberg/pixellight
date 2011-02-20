@@ -437,7 +437,7 @@ bool StringBufferASCII::IsSubstring(const wchar_t szString[], uint32 nLength) co
 int StringBufferASCII::IndexOf(const char szString[], uint32 nPos, uint32 nLength) const
 {
 	const char *pszPos = strstr(&m_pszString[nPos], szString);
-	return pszPos ? int(pszPos - m_pszString) : -1;
+	return pszPos ? static_cast<int>(pszPos - m_pszString) : -1;
 }
 
 int StringBufferASCII::IndexOf(const wchar_t szString[], uint32 nPos, uint32 nLength) const
@@ -446,7 +446,7 @@ int StringBufferASCII::IndexOf(const wchar_t szString[], uint32 nPos, uint32 nLe
 	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
 	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
 	const wchar_t *pszPos = wcsstr(&pUnicode[nPos], szString);
-	const int nResult = pszPos ? int(pszPos - pUnicode) : -1;
+	const int nResult = pszPos ? static_cast<int>(pszPos - pUnicode) : -1;
 	delete [] pUnicode;
 	return nResult;
 }
@@ -458,7 +458,7 @@ int StringBufferASCII::LastIndexOf(const char szString[], int nPos, uint32 nLeng
 	const char *pszStringT     = pszStringStart + nPos;
 	for (; pszStringT>=pszStringStart; pszStringT--) {
 		if (!strncmp(pszStringT, szString, nLength))
-			return int(pszStringT - pszStringStart); // We have found something
+			return static_cast<int>(pszStringT - pszStringStart); // We have found something
 	}
 
 	// No substring
@@ -476,7 +476,7 @@ int StringBufferASCII::LastIndexOf(const wchar_t szString[], int nPos, uint32 nL
 	const wchar_t *pszStringT     = pszStringStart + nPos;
 	for (; pszStringT>=pszStringStart; pszStringT--) {
 		if (!wcsncmp(pszStringT, szString, nLength)) {
-			const int nResult = int(pszStringT - pszStringStart);
+			const int nResult = static_cast<int>(pszStringT - pszStringStart);
 			delete [] pUnicode;
 			return nResult; // We have found something
 		}
@@ -807,7 +807,7 @@ StringBuffer *StringBufferASCII::Replace(const char szOld[], uint32 nOldLength, 
 
 	// Copy the rest of the old string to the new string
 	if (*pszString != '\0') {
-		uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
+		uint32 i = static_cast<uint32>(pszNewString + nFinalLength - pszNewStringT);
 		strncpy(pszNewStringT, pszString, i);
 		pszNewStringT += i;
 	}
@@ -890,7 +890,7 @@ StringBuffer *StringBufferASCII::Replace(const wchar_t szOld[], uint32 nOldLengt
 
 	// Copy the rest of the old string to the new string
 	if (*pszString != L'\0') {
-		const uint32 i = uint32(pszNewString + nFinalLength - pszNewStringT);
+		const uint32 i = static_cast<uint32>(pszNewString + nFinalLength - pszNewStringT);
 		wcsncpy(pszNewStringT, pszString, i);
 		pszNewStringT += i;
 	}
@@ -956,7 +956,7 @@ StringBuffer *StringBufferASCII::TrimLeading()
 		return this;
 	} else {
 		// Get the number of characters to delete
-		const uint32 nCount = uint32(pszString - m_pszString);
+		const uint32 nCount = static_cast<uint32>(pszString - m_pszString);
 
 		// Is the string now empty?
 		if (nCount == m_nLength)
@@ -977,13 +977,13 @@ StringBuffer *StringBufferASCII::TrimTrailing()
 		return this;
 	} else {
 		// Get the number of characters to delete
-		const uint32 nCount = uint32(pszEnd - pszString);
+		const uint32 nCount = static_cast<uint32>(pszEnd - pszString);
 
 		// Is the string now empty?
 		if (nCount == m_nLength)
-			return nullptr;													// The string is now empty
+			return nullptr;																// The string is now empty
 		else
-			return Delete(uint32(pszString - m_pszString) + 1, nCount);		// Return the new string buffer
+			return Delete(static_cast<uint32>(pszString - m_pszString) + 1, nCount);	// Return the new string buffer
 	}
 }
 
@@ -998,13 +998,13 @@ StringBuffer *StringBufferASCII::RemoveLineEndings()
 		return this;
 	} else {
 		// Get the number of characters to delete
-		const uint32 nCount = uint32(pszEnd - pszString);
+		const uint32 nCount = static_cast<uint32>(pszEnd - pszString);
 
 		// Is the string now empty?
 		if (nCount == m_nLength)
-			return nullptr;													// The string is now empty
+			return nullptr;																// The string is now empty
 		else
-			return Delete(uint32(pszString - m_pszString) + 1, nCount);		// Return the new string buffer
+			return Delete(static_cast<uint32>(pszString - m_pszString) + 1, nCount);	// Return the new string buffer
 	}
 }
 

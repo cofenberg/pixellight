@@ -312,7 +312,7 @@ Quaternion Vector3::GetRotationTo(const Vector3 &vDest) const
 
 		// Build and return the quaternion
 		Quaternion q;
-		q.FromAxisAngle(vAxis.x, vAxis.y, vAxis.z, float(Math::Pi));
+		q.FromAxisAngle(vAxis.x, vAxis.y, vAxis.z, static_cast<float>(Math::Pi));
 		return q;
 	} else {
 		float fInvS = 1/s;
@@ -535,14 +535,14 @@ Vector3 Vector3::To2DCoordinate(const Matrix4x4 &mWorldViewProjection, const Rec
 Vector3 Vector3::To3DCoordinate(const Matrix4x4 &mProj, const Matrix4x4 &mView, const Matrix4x4 &mWorld, const Rectangle &cViewportRectangle) const
 {
 	// Get viewport parameters
-	uint32 nX      = uint32(cViewportRectangle.GetX());
-	uint32 nY      = uint32(cViewportRectangle.GetY());
-	uint32 nWidth  = uint32(cViewportRectangle.GetWidth());
-	uint32 nHeight = uint32(cViewportRectangle.GetHeight());
+	uint32 nX      = static_cast<uint32>(cViewportRectangle.GetX());
+	uint32 nY      = static_cast<uint32>(cViewportRectangle.GetY());
+	uint32 nWidth  = static_cast<uint32>(cViewportRectangle.GetWidth());
+	uint32 nHeight = static_cast<uint32>(cViewportRectangle.GetHeight());
 
 	// Flip the y component and map x and y from window coordinates
-	Vector3 vPos(float((x - nX) / nWidth),
-				 float(((-y + nHeight) - nY) / nHeight),
+	Vector3 vPos(static_cast<float>((x - nX) / nWidth),
+				 static_cast<float>(((-y + nHeight) - nY) / nHeight),
 				 z);
 
 	// Map to range -1 to 1

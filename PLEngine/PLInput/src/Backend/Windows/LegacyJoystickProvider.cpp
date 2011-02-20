@@ -73,13 +73,15 @@ void LegacyJoystickProvider::QueryDevices()
 		// Check if joystick is valid
 		if (joyGetPos(nJoystick, &sJoyInfo) == JOYERR_NOERROR) {
 			// Get name and check if a device with that ID is not used already
-			String sName = String("Joystick") + (int)nJoystick;
+			String sName = String("Joystick") + nJoystick;
 			if (!CheckDevice(sName)) {
 				// Add device
 				LegacyJoystickDevice *pImpl = new LegacyJoystickDevice(nJoystick);
 				AddDevice(sName, new Joystick(sName, pImpl));
 			}
-		} else break;
+		} else {
+			break;
+		}
 	}
 }
 

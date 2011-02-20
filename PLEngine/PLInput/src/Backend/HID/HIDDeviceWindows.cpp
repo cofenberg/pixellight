@@ -79,7 +79,7 @@ void HIDDeviceWindows::ParseInputReportData(const uint8 *pInputReport, uint32 nS
 	HIDP_DATA *pData = new HIDP_DATA[nItems];
 
 	// Get data
-	HidP_GetData(HidP_Input, pData, &nItems, m_pPreparsedData, (char*)pInputReport, nSize);
+	HidP_GetData(HidP_Input, pData, &nItems, m_pPreparsedData, reinterpret_cast<char*>(const_cast<uint8*>(pInputReport)), nSize);
 	for (uint32 i=0; i<nItems; i++) {
 		// Find button with the given data index
 		for (uint32 j=0; j<m_lstInputButtons.GetNumOfElements(); j++) {
@@ -91,7 +91,7 @@ void HIDDeviceWindows::ParseInputReportData(const uint8 *pInputReport, uint32 nS
 				// Is button set?
 				if (pData[i].On) {
 					// Set button state to 'pressed'
-					uint32 nValue = ((uint32)1) << (pData[i].DataIndex - pCapability->m_nDataIndexMin);
+					uint32 nValue = static_cast<uint32>(1) << (pData[i].DataIndex - pCapability->m_nDataIndexMin);
 					pCapability->m_nValue |= nValue;
 				}
 			}
@@ -149,7 +149,7 @@ void HIDDeviceWindows::SendOutputReportData()
 			}
 
 			// Fill output report
-			if (HidP_SetData(HidP_Output, sData, (PULONG)&nValues, m_pPreparsedData, (char*)m_pOutputBuffer, m_nOutputReportSize) == HIDP_STATUS_SUCCESS) {
+			if (HidP_SetData(HidP_Output, sData, reinterpret_cast<PULONG>(&nValues), m_pPreparsedData, reinterpret_cast<char*>(m_pOutputBuffer), m_nOutputReportSize) == HIDP_STATUS_SUCCESS) {
 				// Send report
 				Write(m_pOutputBuffer, m_nOutputReportSize);
 			}
@@ -164,7 +164,8 @@ void HIDDeviceWindows::SendOutputReportData()
 bool HIDDeviceWindows::Open(uint16 nOutputPort, uint16 nInputPort)
 {
 	// Close first
-	if (IsOpen()) Close();
+	if (IsOpen())
+		Close();
 
 	// Connect to device
 	m_hDevice = CreateFile(GetName().GetUnicode(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, nullptr);
@@ -220,7 +221,7 @@ bool HIDDeviceWindows::Read(uint8 *pBuffer, uint32 nSize)
 		m_sOverlapped.pDevice				 = this;
 
 		// Read from device and give back immediatly. EventOnRead will be emitted, when data has been read
-		if (ReadFileEx(m_hDevice, pBuffer, nSize, (OVERLAPPED*)&m_sOverlapped, &HIDDeviceWindows::OnReadComplete)) {
+		if (ReadFileEx(m_hDevice, pBuffer, nSize, reinterpret_cast<OVERLAPPED*>(&m_sOverlapped), &HIDDeviceWindows::OnReadComplete)) {
 			// Wait for read operation to complete
 			SleepEx(1000, TRUE);
 
@@ -244,7 +245,7 @@ bool HIDDeviceWindows::Write(const uint8 *pBuffer, uint32 nSize)
 		m_sOverlapped.pDevice				 = this;
 
 		// Write to device
-		if (WriteFileEx(m_hDevice, pBuffer, nSize, (OVERLAPPED*)&m_sOverlapped, &HIDDeviceWindows::OnWriteComplete)) {
+		if (WriteFileEx(m_hDevice, pBuffer, nSize, reinterpret_cast<OVERLAPPED*>(&m_sOverlapped), &HIDDeviceWindows::OnWriteComplete)) {
 			// Get error condition
 			return (GetLastError() == ERROR_SUCCESS);
 		}
@@ -261,7 +262,7 @@ bool HIDDeviceWindows::Write(const uint8 *pBuffer, uint32 nSize)
 void CALLBACK HIDDeviceWindows::OnReadComplete(DWORD nErrorCode, DWORD nNumberOfBytesTransfered, LPOVERLAPPED pOverlapped)
 {
 	// Get object
-	HIDDeviceWindows *pThis = ((ExtendedOverlapped*)pOverlapped)->pDevice;
+	HIDDeviceWindows *pThis = reinterpret_cast<ExtendedOverlapped*>(pOverlapped)->pDevice;
 	if (pThis) {
 		// Data has been read
 		pThis->EventOnRead.Emit();

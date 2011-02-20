@@ -133,7 +133,7 @@ int TooltipMessageHandler::ProcessMessage(UINT nMessage, WPARAM wParam, LPARAM l
 	switch(nMessage) {
 		case WM_NOTIFY:
 			// Provide the tooltip text for the toolbar buttons
-			if (((LPNMHDR)lParam)->code == TTN_NEEDTEXT) {
+			if (reinterpret_cast<LPNMHDR>(lParam)->code == TTN_NEEDTEXT) {
 				LPTOOLTIPTEXT lpTooltipText = (LPTOOLTIPTEXT)lParam;
 				switch (lpTooltipText->hdr.idFrom) {
 					case ID_TOOLBAR_0:

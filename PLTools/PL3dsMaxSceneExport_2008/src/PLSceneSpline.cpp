@@ -86,7 +86,7 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	if (pIGameObject) {
 		// Check the type of the IGame object
 		if (pIGameObject->GetIGameType() == IGameObject::IGAME_SPLINE && pIGameObject->InitializeData()) {
-			IGameSpline &cIGameSpline = *((IGameSpline*)pIGameObject);
+			IGameSpline &cIGameSpline = *static_cast<IGameSpline*>(pIGameObject);
 			if (cIGameSpline.GetNumberOfSplines () > 0) {
 				// We only support spline 0
 				IGameSpline3D *pIGameSpline3D = cIGameSpline.GetIGameSpline3D(0);
@@ -95,8 +95,7 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					GMatrix mTransform = cIGameSpline.GetIGameObjectTM();
 
 					// Get the 3ds Max shape object
-					ShapeObject *pMaxShapeObject = (ShapeObject*)pIGameObject->GetMaxObject()->
-						ConvertToType(TIME_PosInfinity, Class_ID(GENERIC_SHAPE_CLASS_ID, 0));
+					ShapeObject *pMaxShapeObject = static_cast<ShapeObject*>(pIGameObject->GetMaxObject()->ConvertToType(TIME_PosInfinity, Class_ID(GENERIC_SHAPE_CLASS_ID, 0)));
 					if (pMaxShapeObject != nullptr && pMaxShapeObject->NumberOfCurves() == cIGameSpline.GetNumberOfSplines()) {
 						// Create XML document
 						XmlDocument cDocument;

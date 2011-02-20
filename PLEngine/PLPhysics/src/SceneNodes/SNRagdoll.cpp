@@ -266,7 +266,7 @@ bool SNRagdoll::CreateRagdoll(SkeletonHandler *pSkeletonHandler)
 								pBody->sName = pRagdollJoint->sAttached;
 								uint32 nIndex = 0;
 								while (m_mapBodies.Get(pBody->sName)) {
-									pBody->sName = pRagdollJoint->sAttached + '_' + int(nIndex);
+									pBody->sName = pRagdollJoint->sAttached + '_' + static_cast<int>(nIndex);
 									nIndex++;
 								}
 								pRagdollJoint->sAttached = pBody->sName;
@@ -552,7 +552,7 @@ RagdollBody *SNRagdoll::AddBody(const String &sName, bool bCreatePhysics)
 	String sBodyName;
 	for (uint32 i=0;; i++) {
 		if (i)
-			sBodyName = sName + '_' + int(i);
+			sBodyName = sName + '_' + static_cast<int>(i);
 		else
 			sBodyName = sName;
 		if (!m_mapBodies.Get(sBodyName)) {
@@ -721,7 +721,7 @@ RagdollJoint *SNRagdoll::AddJoint(const String &sName, bool bCreatePhysics)
 	String sJointName;
 	for (uint32 i=0;; i++) {
 		if (i)
-			sJointName = sName + '_' + int(i);
+			sJointName = sName + '_' + static_cast<int>(i);
 		else
 			sJointName = sName;
 		if (!m_mapJoints.Get(sJointName)) {

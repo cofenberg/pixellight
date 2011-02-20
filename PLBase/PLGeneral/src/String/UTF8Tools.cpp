@@ -350,7 +350,7 @@ uint32 UTF8Tools::GetNumOfCharactersAndBytes(const char *pszString, uint32 &nNum
 		}
 
 		// Get the number of bytes
-		nNumOfBytes = uint32(pszCurrent - pszString);
+		nNumOfBytes = static_cast<uint32>(pszCurrent - pszString);
 
 		// Return the number of characters
 		return nNumOfCharacters;

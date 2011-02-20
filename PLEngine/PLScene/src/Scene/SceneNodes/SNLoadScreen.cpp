@@ -84,7 +84,7 @@ SNLoadScreen::SNLoadScreen() :
 	m_fBarAlpha[0] = m_fBarAlpha[1] = 0.0f;
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPost));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPost));
 }
 
 /**

@@ -67,7 +67,7 @@ SNLineGrid::SNLineGrid() :
 	SetAABoundingBox(AABoundingBox(Vector3(-0.5f, -0.5f, 0.0f), Vector3(0.5f, 0.5f, 0.0f)));
 
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
 }
 
 /**
@@ -120,7 +120,7 @@ void SNLineGrid::DrawGrid(Renderer &cRenderer, const VisNode &cVisNode)
 			// Draw the lines along the x axis
 			float fDelta = 0.5f/NumOfXLines;
 			for (uint32 i=1; i<=NumOfXLines; i++) {
-				const float fPosition = float(i*fDelta);
+				const float fPosition = static_cast<float>(i*fDelta);
 				// Positive axis
 				cDrawHelpers.DrawLine(MinorColor.Get(), Vector3(fPosition, -0.5f, 0.0f), Vector3(fPosition, 0.5f, 0.0f), cVisNode.GetWorldViewProjectionMatrix(), MinorWidth);
 				// Negative axis
@@ -130,7 +130,7 @@ void SNLineGrid::DrawGrid(Renderer &cRenderer, const VisNode &cVisNode)
 			// Draw the lines along the y axis
 			fDelta = 0.5f/NumOfYLines;
 			for (uint32 i=1; i<=NumOfYLines; i++) {
-				const float fPosition = float(i*fDelta);
+				const float fPosition = static_cast<float>(i*fDelta);
 				// Positive axis
 				cDrawHelpers.DrawLine(MinorColor.Get(), Vector3(-0.5f, fPosition, 0.0f), Vector3(0.5f, fPosition, 0.0f), cVisNode.GetWorldViewProjectionMatrix(), MinorWidth);
 				// Negative axis

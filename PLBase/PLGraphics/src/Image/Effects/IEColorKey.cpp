@@ -211,13 +211,13 @@ bool IEColorKey::Apply(ImageBuffer &cImageBuffer) const
 		switch (cImageBuffer.GetDataFormat()) {
 			case DataByte:
 			{
-				ProcessData<uint8> cProcessData(cImageBuffer, m_cColor.GetRInt(), m_cColor.GetGInt(), m_cColor.GetBInt(), uint8(m_fTolerance*255), 0, 255);
+				ProcessData<uint8> cProcessData(cImageBuffer, m_cColor.GetRInt(), m_cColor.GetGInt(), m_cColor.GetBInt(), static_cast<uint8>(m_fTolerance*255), 0, 255);
 				break;
 			}
 
 			case DataWord:
 			{
-				ProcessData<uint16> cProcessData(cImageBuffer, uint16(m_cColor.GetR()*65535), uint16(m_cColor.GetG()*65535), uint16(m_cColor.GetB()*65535), uint16(m_fTolerance*65535), 0, 255);
+				ProcessData<uint16> cProcessData(cImageBuffer, static_cast<uint16>(m_cColor.GetR()*65535), uint16(m_cColor.GetG()*65535), uint16(m_cColor.GetB()*65535), uint16(m_fTolerance*65535), 0, 255);
 				break;
 			}
 

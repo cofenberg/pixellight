@@ -109,7 +109,7 @@ void SNMRotationMoveDirection::NotifyUpdate()
 		else {
 			// Get a quaternion representation of the rotation offset
 			Quaternion qRotOffset;
-			EulerAngles::ToQuaternion(float(Offset.Get().x*Math::DegToRad), float(Offset.Get().y*Math::DegToRad), float(Offset.Get().z*Math::DegToRad), qRotOffset);
+			EulerAngles::ToQuaternion(static_cast<float>(Offset.Get().x*Math::DegToRad), static_cast<float>(Offset.Get().y*Math::DegToRad), static_cast<float>(Offset.Get().z*Math::DegToRad), qRotOffset);
 
 			// Set new rotation
 			cSceneNode.GetTransform().SetRotation(Quaternion(mRot)*qRotOffset);
@@ -122,7 +122,7 @@ void SNMRotationMoveDirection::NotifyUpdate()
 //		else {
 			// Get a quaternion representation of the rotation offset
 //			Quaternion qRotOffset;
-//			EulerAngles::ToQuaternion(float(Offset.Get().x*Math::DegToRad), float(Offset.Get().y*Math::DegToRad), float(Offset.Get().z*Math::DegToRad), qRotOffset);
+//			EulerAngles::ToQuaternion(static_cast<float>(Offset.Get().x*Math::DegToRad), static_cast<float>(Offset.Get().y*Math::DegToRad), static_cast<float>(Offset.Get().z*Math::DegToRad), qRotOffset);
 
 			// Set new rotation
 //			cSceneNode.SetRotation(Vector3::UnitZ.GetRotationTo(vDiff)*Quaternion(mRot)*qRotOffset);

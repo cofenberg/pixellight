@@ -360,7 +360,7 @@ bool PLScenePLMesh::WriteLODLevel(FILE &cFile, ChunkStack &cChunkStack, int nLOD
 		// Write LOD level header
 		MeshFile::LODLevel cLODLevel;
 		cLODLevel.fDistance			   = 0.0f;
-		cLODLevel.nGeometries		   = (uint32)m_nNumOfGeometries;
+		cLODLevel.nGeometries		   = static_cast<uint32>(m_nNumOfGeometries);
 		cLODLevel.nOctreeSubdivide	   = 0;
 		cLODLevel.nOctreeMinGeometries = 0;
 		if (!Write(cFile, &cLODLevel, sizeof(cLODLevel)))
@@ -418,7 +418,7 @@ bool PLScenePLMesh::WriteIndexBuffer(FILE &cFile, ChunkStack &cChunkStack)
 					const Triangle &cTriangle = m_pScene->m_pMeshTriangles[i];
 					if (cTriangle.nMatID == nMat) {
 						for (int j=0; j<3; j++) {
-							uint32 nIndex = (uint32)cTriangle.v[j];
+							uint32 nIndex = static_cast<uint32>(cTriangle.v[j]);
 							if (!Write(cFile, &nIndex, sizeof(uint32)))
 								return false; // Error!
 						}
@@ -431,7 +431,7 @@ bool PLScenePLMesh::WriteIndexBuffer(FILE &cFile, ChunkStack &cChunkStack)
 					const Triangle &cTriangle = m_pScene->m_pMeshTriangles[i];
 					if (cTriangle.nMatID == nMat) {
 						for (int j=0; j<3; j++) {
-							uint16 nIndex = (uint16)cTriangle.v[j];
+							uint16 nIndex = static_cast<uint16>(cTriangle.v[j]);
 							if (!Write(cFile, &nIndex, sizeof(uint16)))
 								return false; // Error!
 						}
@@ -444,7 +444,7 @@ bool PLScenePLMesh::WriteIndexBuffer(FILE &cFile, ChunkStack &cChunkStack)
 					const Triangle &cTriangle = m_pScene->m_pMeshTriangles[i];
 					if (cTriangle.nMatID == nMat) {
 						for (int j=0; j<3; j++) {
-							uint8 nIndex = (uint8)cTriangle.v[j];
+							uint8 nIndex = static_cast<uint8>(cTriangle.v[j]);
 							if (!Write(cFile, &nIndex, sizeof(uint8)))
 								return false; // Error!
 						}
@@ -529,7 +529,7 @@ bool PLScenePLMesh::WriteMorphTarget(FILE &cFile, ChunkStack &cChunkStack, morph
 		// Check whether the number of original vertices matches the number of deltas - if this is not
 		// the case write a warning into the log because this may indicate an situation causing
 		// errors!
-		int nNumOfDeltas = (int)cMorphChannel.mDeltas.size();
+		int nNumOfDeltas = static_cast<int>(cMorphChannel.mDeltas.size());
 		if (m_nOriginalNumOfVertices != nNumOfDeltas) {
 			g_pLog->LogFLine(PLLog::Warning, "Node: '%s' -> Morph target: '%s' -> Mesh has '%d' vertices, but there are '%d' deltas -> both numbers should be equal",
 				m_pIGameNode->GetName(), cMorphChannel.mName, m_nOriginalNumOfVertices, cMorphChannel.mDeltas.size());
@@ -559,13 +559,13 @@ bool PLScenePLMesh::WriteMorphTarget(FILE &cFile, ChunkStack &cChunkStack, morph
 		MeshFile::MorphTarget cMorphTarget;
 		strcpy(cMorphTarget.szName, cMorphChannel.mName);
 		cMorphTarget.bRelative      = true;
-		cMorphTarget.nVertexIDs     = (int)lstPointsMorph.size();
+		cMorphTarget.nVertexIDs     = static_cast<int>(lstPointsMorph.size());
 		cMorphTarget.nVertexBuffers = 1;
 		if (!Write(cFile, &cMorphTarget, sizeof(cMorphTarget)))
 			return false; // Error!
 
 		// Write vertex ID's
-		for (int i=0; i<(int)lstPointsMorph.size(); i++) {
+		for (int i=0; i<static_cast<int>(lstPointsMorph.size()); i++) {
 			int nID = lstPointsMorphID[i];
 			if (!Write(cFile, &nID, sizeof(uint32)))
 				return false; // Error!
@@ -894,7 +894,7 @@ bool PLScenePLMesh::WriteVertexBufferMorph(FILE &cFile, ChunkStack &cChunkStack,
 		int nVertexSize = sizeof(float)*3;
 		int nAttributes = 1;
 		cVertexBuffer.nVertexAttributes = nAttributes;
-		cVertexBuffer.nVertices		    = (int)lstPoints.size();
+		cVertexBuffer.nVertices		    = static_cast<int>(lstPoints.size());
 		cVertexBuffer.nSize			    = cVertexBuffer.nVertices*nVertexSize;
 		if (!Write(cFile, &cVertexBuffer, sizeof(cVertexBuffer)))
 			return false; // Error!
@@ -904,7 +904,7 @@ bool PLScenePLMesh::WriteVertexBufferMorph(FILE &cFile, ChunkStack &cChunkStack,
 		WriteVertexAttribute(cFile, cChunkStack, 0);
 
 		// Write vertex buffer
-		for (int i=0; i<(int)lstPoints.size(); i++) {
+		for (int i=0; i<static_cast<int>(lstPoints.size()); i++) {
 			const Point3 *pPoint = lstPoints[i];
 
 			// Position (delta)
@@ -1461,7 +1461,7 @@ bool PLScenePLMesh::WritePointCacheAnimation(FILE &cFile, ChunkStack &cChunkStac
 		}
 
 		// Write frame keys
-		for (int nFrame=0; nFrame<(int)sMorphTargetAnimation.nFrames; nFrame++) {
+		for (int nFrame=0; nFrame<static_cast<int>(sMorphTargetAnimation.nFrames); nFrame++) {
 			for (uint32 nMorphTarget=0; nMorphTarget<sMorphTargetAnimation.nMorphTargets; nMorphTarget++) {
 				float fValue = (nFrame == nMorphTarget) ? 1.0f : 0.0f;
 				if (!Write(cFile, &fValue, sizeof(float)))

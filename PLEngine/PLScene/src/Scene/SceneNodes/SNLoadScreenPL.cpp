@@ -64,7 +64,7 @@ SNLoadScreenPL::SNLoadScreenPL() :
 	Flags(this)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawPost));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawPost));
 }
 
 /**

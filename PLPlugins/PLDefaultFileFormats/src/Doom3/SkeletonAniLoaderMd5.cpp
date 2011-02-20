@@ -310,7 +310,7 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 
 				// [TODO] Check this
 				// Get current joint rotation quaternion
-	//			qRotation.FromEulerAnglesXYZ(float(fData[3]*Math::DegToRad), float(fData[4]*Math::DegToRad), float(fData[5]*Math::DegToRad));
+	//			qRotation.FromEulerAnglesXYZ(static_cast<float>(fData[3]*Math::DegToRad), static_cast<float>(fData[4]*Math::DegToRad), static_cast<float>(fData[5]*Math::DegToRad));
 				EulerAngles::ToQuaternion(static_cast<float>(fData[5]*Math::DegToRad), static_cast<float>(fData[4]*Math::DegToRad), static_cast<float>(fData[3]*Math::DegToRad), qRotation);
 				qRotation.UnitInvert();
 

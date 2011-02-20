@@ -164,9 +164,9 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 	Mtl *pMaxMaterial = m_pIGameMaterial->GetMaxMaterial();
 	if (pMaxMaterial) {
 		// DxMaterial or extend?
-		IDxMaterial2 *pFXMaterial = (IDxMaterial2*)m_pIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE);
+		IDxMaterial2 *pFXMaterial = static_cast<IDxMaterial2*>(m_pIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE));
 		if (!pFXMaterial && m_pParentIGameMaterial)
-			pFXMaterial = (IDxMaterial2*)m_pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE);
+			pFXMaterial = static_cast<IDxMaterial2*>(m_pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE));
 		if (pFXMaterial) { // Get information from the DirectX Shader material
 			bool bReflectionMap = false;
 
@@ -223,7 +223,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 
 										// If the 'diffuse color' is black, we still NEED the map because of lights!
 										if (pszName && _stricmp(pszName, "None")) {
@@ -244,7 +244,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None")) {
 											// Save the texture and take 'compressedNormalMap' into account ('plt'-file...)
 											pIterator = mapParams.find("compressedNormalMap");
@@ -262,7 +262,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None")) {
 											// If the 'specular color' is black, we DON'T need the map!
 											Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
@@ -289,7 +289,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 										PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 										if (pBitmap) {
 											BitmapInfo &cBInfo = pBitmap->bi;
-											const char *pszName = (const char*)cBInfo.Name();
+											const char *pszName = static_cast<const char*>(cBInfo.Name());
 											if (pszName && _stricmp(pszName, "None")) {
 												// If the 'reflection color' is black, we DON'T need the map!
 												Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
@@ -319,7 +319,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 										PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 										if (pBitmap) {
 											BitmapInfo &cBInfo = pBitmap->bi;
-											const char *pszName = (const char*)cBInfo.Name();
+											const char *pszName = static_cast<const char*>(cBInfo.Name());
 											if (pszName && _stricmp(pszName, "None")) {
 												// If the 'reflection map color' is black, we DON'T need the map!
 												Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
@@ -346,7 +346,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None"))
 											SaveTexture(cMaterialElement, pszName, "ReflectivityMap");
 									}
@@ -361,7 +361,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None")) {
 											// If the 'emissive map color' is black, we DON'T need the map!
 											Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
@@ -385,7 +385,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None")) {
 											// If the 'light map color' is black, we DON'T need the map!
 											Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
@@ -409,7 +409,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None")) {
 											// If the 'parallax' is null, we DON'T need the map!
 											float fValue = 0.04f;
@@ -433,7 +433,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None"))
 											SaveTexture(cMaterialElement, pszName, "DiffuseRampMap");
 									}
@@ -448,7 +448,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None"))
 											SaveTexture(cMaterialElement, pszName, "SpecularRampMap");
 									}
@@ -463,7 +463,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = (const char*)cBInfo.Name();
+										const char *pszName = static_cast<const char*>(cBInfo.Name());
 										if (pszName && _stricmp(pszName, "None"))
 											SaveTexture(cMaterialElement, pszName, "EdgeRampMap");
 									}

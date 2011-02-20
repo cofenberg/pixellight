@@ -127,7 +127,7 @@ void SPSampleTeapot::OnPaint(Surface &cSurface)
 			Matrix4x4 mProj;
 			float fAspect      = 1.0f;
 			float fAspectRadio = cRenderer.GetViewport().GetWidth()/(cRenderer.GetViewport().GetHeight()*fAspect);
-			mProj.PerspectiveFov(float(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
+			mProj.PerspectiveFov(static_cast<float>(45.0f*Math::DegToRad), fAspectRadio, 0.001f, 1000.0f);
 
 			// Set the current projection matrix
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProj);
@@ -154,7 +154,7 @@ void SPSampleTeapot::OnPaint(Surface &cSurface)
 
 		{ // Setup world matrix
 			Matrix4x4 mWorld;
-			mWorld.FromEulerAngleY(float(m_fRotation*Math::DegToRad));
+			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 
 			// Increase the rotation by the current time difference (time past since the last frame)

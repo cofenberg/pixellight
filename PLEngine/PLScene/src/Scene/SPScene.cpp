@@ -401,7 +401,7 @@ void SPScene::OnPaint(Surface &cSurface)
 					pCullQuery->SetCameraContainer(nullptr);
 					pCullQuery->SetCameraPosition(Vector3::Zero);
 					Matrix4x4 mProj;
-					mProj.PerspectiveFov(float(90.0f*Math::DegToRad), 1.0f, 0.001f, 10000.0f);
+					mProj.PerspectiveFov(static_cast<float>(90.0f*Math::DegToRad), 1.0f, 0.001f, 10000.0f);
 					Frustum cFrustum;
 					cFrustum.CreateViewPlanes(mProj, false);
 					pCullQuery->SetViewFrustum(cFrustum);

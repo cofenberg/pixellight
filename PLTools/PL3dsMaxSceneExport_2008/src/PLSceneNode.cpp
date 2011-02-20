@@ -57,13 +57,13 @@ PLScene &PLSceneNode::GetScene() const
 {
 	// Is THIS the root?
 	if (!m_pContainer)
-		return (PLScene&)*this;
+		return static_cast<PLScene&>(const_cast<PLSceneNode&>(*this));
 
 	// Go up until we find a container without a parent container - this MUST be the root of the scene :)
 	PLSceneContainer *pContainer = m_pContainer;
 	while (pContainer->m_pContainer)
 		pContainer = pContainer->m_pContainer;
-	return (PLScene&)*pContainer;
+	return static_cast<PLScene&>(*pContainer);
 }
 
 /**
@@ -222,7 +222,7 @@ PLSceneNode::PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, co
 			AddFlag("Invisible");
 
 		// Is this 3ds Max node excluded from lighting?
-		INodeGIProperties *pINodeGIProperties = (INodeGIProperties*)pMaxNode->GetInterface(NODEGIPROPERTIES_INTERFACE);
+		INodeGIProperties *pINodeGIProperties = static_cast<INodeGIProperties*>(pMaxNode->GetInterface(NODEGIPROPERTIES_INTERFACE));
 		if (pINodeGIProperties && pINodeGIProperties->GIGetIsExcluded())
 			AddFlag("NoLighting");
 
@@ -285,7 +285,7 @@ void PLSceneNode::WriteToFilePosRotScaleBoxFlags(XmlElement &cNodeElement) const
 	const Point3 vParentWorldSpaceCenter = GetContainer() ? GetContainer()->GetWorldSpaceCenter() : Point3(0.0f, 0.0f, 0.0f);
 
 	// Write down the position
-	const Point3 vPos = (GetType() != TypeScene && GetType() != TypeCell) ? m_vPos-vParentWorldSpaceCenter : ((PLSceneContainer*)this)->GetWorldSpaceCenter();
+	const Point3 vPos = (GetType() != TypeScene && GetType() != TypeCell) ? m_vPos-vParentWorldSpaceCenter : static_cast<const PLSceneContainer*>(this)->GetWorldSpaceCenter();
 	if (vPos.x || vPos.y || vPos.z)
 		cNodeElement.SetAttribute("Position", String::Format("%f %f %f", vPos.x, vPos.y, vPos.z));
 
@@ -490,19 +490,19 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const std::string &s
 			PLCore::Chunk cPositionChunk;
 			cPositionChunk.SetSemantic(PLCore::Chunk::Position);
 			cPositionChunk.Allocate(PLCore::Chunk::Float, 3, nFrameCount);
-			float *pfPositionData = (float*)cPositionChunk.GetData();
+			float *pfPositionData = reinterpret_cast<float*>(cPositionChunk.GetData());
 
 			// Prepare the rotation chunk
 			PLCore::Chunk cRotationChunk;
 			cRotationChunk.SetSemantic(PLCore::Chunk::Rotation);
 			cRotationChunk.Allocate(PLCore::Chunk::Float, 4, nFrameCount);
-			float *pfRotationData = (float*)cRotationChunk.GetData();
+			float *pfRotationData = reinterpret_cast<float*>(cRotationChunk.GetData());
 
 			// Prepare the scale chunk
 			PLCore::Chunk cScaleChunk;
 			cScaleChunk.SetSemantic(PLCore::Chunk::Scale);
 			cScaleChunk.Allocate(PLCore::Chunk::Float, 3, nFrameCount);
-			float *pfScaleData = (float*)cScaleChunk.GetData();
+			float *pfScaleData = reinterpret_cast<float*>(cScaleChunk.GetData());
 
 			// Loop through all frames
 			int nTime = cInterval.Start();
@@ -532,7 +532,7 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const std::string &s
 					const Point3 vParentWorldSpaceCenter = GetContainer() ? GetContainer()->GetWorldSpaceCenter() : Point3(0.0f, 0.0f, 0.0f);
 
 					// Get the position
-					const Point3 vFinalPos = (GetType() != TypeScene && GetType() != TypeCell) ? vPos-vParentWorldSpaceCenter : ((PLSceneContainer*)this)->GetWorldSpaceCenter();
+					const Point3 vFinalPos = (GetType() != TypeScene && GetType() != TypeCell) ? vPos-vParentWorldSpaceCenter : static_cast<const PLSceneContainer*>(this)->GetWorldSpaceCenter();
 
 					// x
 					*pfPositionData = vFinalPos.x;

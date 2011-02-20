@@ -331,14 +331,14 @@ class PLSceneMesh {
 				*/
 				int GetKey(const Vertex &cVertex) const
 				{
-					return abs((int)(cVertex.vTexCoord[0].x*1350+
+					return abs(static_cast<int>((cVertex.vTexCoord[0].x*1350+
 									 cVertex.vTexCoord[0].y*420)+
-									 int(cVertex.xyz.x*303000)+
-									 int(cVertex.xyz.y*750000)+
-									 int(cVertex.xyz.z*574000)+
-									 int(cVertex.vNormal.x*3000)+
-									 int(cVertex.vNormal.y*7000)+
-									 int(cVertex.vNormal.z*5000))%m_nSlots;
+									 static_cast<int>(cVertex.xyz.x*303000)+
+									 static_cast<int>(cVertex.xyz.y*750000)+
+									 static_cast<int>(cVertex.xyz.z*574000)+
+									 static_cast<int>(cVertex.vNormal.x*3000)+
+									 static_cast<int>(cVertex.vNormal.y*7000)+
+									 static_cast<int>(cVertex.vNormal.z*5000))%m_nSlots);
 				}
 
 

@@ -246,7 +246,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 {
 	// Cast to mesh object, note that in case of a skinning modifier applied the IGameMesh
 	// pointer may be changed into another mesh like the initial pose
-	IGameMesh *pIGameMesh = (IGameMesh*)&cIGameObject;
+	IGameMesh *pIGameMesh = static_cast<IGameMesh*>(&cIGameObject);
 
 	// By default there is no skinning modifier
 	IGameSkin *pIGameSkin = nullptr;
@@ -269,7 +269,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 						// working in release mode... in debug mode we still get a null pointer...
 						if (p3dsMaxModifier->ClassID() == MR3_CLASS_ID) {
 							// Get the morpher interface
-							MorphR3 *pMorphR3 = (MorphR3*)p3dsMaxModifier;
+							MorphR3 *pMorphR3 = static_cast<MorphR3*>(p3dsMaxModifier);
 
 							// Gain access to the animation controller of a morph channel
 							for (int nChannel=0; nChannel<MR3_NUM_CHANNELS; nChannel++) {
@@ -285,7 +285,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 					// Is this modifier a skinning modifier?
 					} else if (pIGameModifier->IsSkin()) {
 						// Cast to skinning modifier
-						pIGameSkin = (IGameSkin*)pIGameModifier;
+						pIGameSkin = static_cast<IGameSkin*>(pIGameModifier);
 
 						// Get the initial pose mesh and use it as 'current' mesh so we get
 						// the correct initial vertex data
@@ -516,7 +516,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 		int nGeo = 0;
 		for (uint32 nMat=0; nMat<m_lstMaterials.GetNumOfElements(); nMat++) {
 			Geometry &cGeometry = m_pScene->m_pMeshGeometries[nGeo];
-			cGeometry.nMaterial   = (int)nMat;
+			cGeometry.nMaterial   = static_cast<int>(nMat);
 			cGeometry.nStartIndex = nGeoIndices;
 			cGeometry.nIndexSize  = 0;
 			for (int i=0; i<m_nNumOfTriangles; i++) {
@@ -609,7 +609,7 @@ int PLSceneMesh::AddMaterial(IGameMaterial *pParentIGameMaterial, IGameMaterial 
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial && pMaterial->GetIGameMaterial() &&
 				pMaterial->GetIGameMaterial()->GetMaxMaterial() == pIGameMaterial->GetMaxMaterial())
-				return (int)i; // Jap, return the index of the material inside the mesh material list
+				return static_cast<int>(i); // Jap, return the index of the material inside the mesh material list
 		}
 
 		// Ok, we are still here, must be a new one :)
@@ -622,13 +622,13 @@ int PLSceneMesh::AddMaterial(IGameMaterial *pParentIGameMaterial, IGameMaterial 
 					// Jap, return the index of the material inside the mesh material list
 					m_pScene->m_sMeshStatistics.nNumOfMaterialReferences--;
 					pNewMaterial->m_nReferenceCount--;
-					return (int)i;
+					return static_cast<int>(i);
 				}
 			}
 
 			// Add the new material
 			m_lstMaterials.Add(pNewMaterial);
-			return int(m_lstMaterials.GetNumOfElements())-1;
+			return static_cast<int>(m_lstMaterials.GetNumOfElements())-1;
 		}
 	} else {
 		// We need to add a dummy material, use 'wire color' (= object color) as diffuse color
@@ -649,14 +649,14 @@ int PLSceneMesh::AddMaterial(IGameMaterial *pParentIGameMaterial, IGameMaterial 
 		for (uint32 i=0; i<m_lstMaterials.GetNumOfElements(); i++) {
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial && pMaterial->m_sName == sName)
-				return (int)i; // Jap, return the index of the material inside the mesh material list
+				return static_cast<int>(i); // Jap, return the index of the material inside the mesh material list
 		}
 
 		// Add the new material
 		PLSceneMaterial *pNewMaterial = m_pScene->AddMaterial(cColor, sName);
 		if (pNewMaterial) {
 			m_lstMaterials.Add(pNewMaterial);
-			return int(m_lstMaterials.GetNumOfElements())-1;
+			return static_cast<int>(m_lstMaterials.GetNumOfElements())-1;
 		}
 	}
 
@@ -720,7 +720,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 			Mtl *pMaxMat = pIGameMaterial->GetMaxMaterial();
 			if (pMaxMat) {
 				// See if it's a standard material (we need this information for a possible uv generator)
-				StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMat : nullptr;
+				StdMat *pMaxStandardMat = (pMaxMat->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? static_cast<StdMat*>(pMaxMat) : nullptr;
 
 				// Get the active map channels
 				Tab<int> lstMapNumbers = cIGameMesh.GetActiveMapChannelNum();
@@ -732,7 +732,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 						DWORD nIndices[3];
 						cIGameMesh.GetMapFaceIndex(nMapID, nFaceId, nIndices);
 						DWORD nIndex = nIndices[nFaceVertexId];
-						if ((int)nIndex < cIGameMesh.GetNumberOfMapVerts(nMapID)) {
+						if (static_cast<int>(nIndex) < cIGameMesh.GetNumberOfMapVerts(nMapID)) {
 							// Note that WE start at 0 and not at 1...
 							DWORD nTexCoord = nMapID - 1;
 
@@ -746,7 +746,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 									// Check if map is valid
 									if (pTexMap) {
 										// Apply a possible uv generator
-										StdUVGen *pStdUVGen = (StdUVGen*)pTexMap->GetTheUVGen();
+										StdUVGen *pStdUVGen = static_cast<StdUVGen*>(pTexMap->GetTheUVGen());
 										if (pStdUVGen) {
 											Matrix3 mUVTransform;
 											pStdUVGen->GetUVTransform(mUVTransform);
@@ -830,7 +830,7 @@ void PLSceneMesh::AddNodeTrackAnimations(INode &c3dsMaxNode)
 
 		// Loop through the individual note tracks
 		for (int nNoteTrack=0; nNoteTrack<c3dsMaxNode.NumNoteTracks(); nNoteTrack++) {
-			DefNoteTrack *pNoteTrack = (DefNoteTrack*)c3dsMaxNode.GetNoteTrack(nNoteTrack);
+			DefNoteTrack *pNoteTrack = static_cast<DefNoteTrack*>(c3dsMaxNode.GetNoteTrack(nNoteTrack));
 
 			// Loop through the keys of the note track
 			for (int nKey=0; nKey<pNoteTrack->NumKeys(); nKey++) {
@@ -859,7 +859,7 @@ void PLSceneMesh::AddNodeTrackAnimations(INode &c3dsMaxNode)
 /*
 						// speed
 						if (!_strnicmp(sCurrentNote.data(), "speed", 5)) {
-							pAnimation->sAnimation.fSpeed = (float)atof(&sCurrentNote.data()[6]);
+							pAnimation->sAnimation.fSpeed = static_cast<float>(atof(&sCurrentNote.data()[6]));
 
 						// flags
 						} else if (!_strnicmp(sCurrentNote.data(), "flags", 5)) {
@@ -871,7 +871,7 @@ void PLSceneMesh::AddNodeTrackAnimations(INode &c3dsMaxNode)
 							FrameSpeed *pFrameSpeed = new FrameSpeed;
 							pAnimation->lstFrameSpeed.Add(pFrameSpeed);
 							pFrameSpeed->nFrameID = pNoteKey->time/nTicksPerFrame-pAnimation->sAnimation.nStart;
-							pFrameSpeed->fSpeed   = (float)atof(&sCurrentNote.data()[7]);
+							pFrameSpeed->fSpeed   = static_cast<float>(atof(&sCurrentNote.data()[7]));
 
 						// event
 						} else if (!_strnicmp(sCurrentNote.data(), "event", 5)) {

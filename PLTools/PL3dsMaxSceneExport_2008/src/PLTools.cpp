@@ -89,7 +89,7 @@ std::string PLTools::ToString(float fValue)
 std::string PLTools::ToLower(const std::string &sString)
 {
 	std::string sLower = sString;
-	_strlwr((char*)sLower.c_str());
+	_strlwr(const_cast<char*>(sLower.c_str()));
 	return sLower;
 }
 
@@ -110,13 +110,13 @@ void PLTools::GetPosRotScale(const GMatrix &mTransform, Point3 &vPos, Point3 &vR
 		Quat qRotationOffset;
 
 		// We have to add a rotation about the x-axis of -90 degree... is this a IGame transform bug or something other odd??
-		float fAngles[] = {float(HALFPI), 0.0f, 0.0f};
+		float fAngles[] = {static_cast<float>(HALFPI), 0.0f, 0.0f};
 		EulerToQuat(fAngles, qRotationOffset);
 		qRotation = qRotationOffset*qRotation;
 
 		// We have to 'invert the z-axis', this is no PixelLight bug or so, we decided to do so to make things more universal
 		fAngles[0] = 0.0f;
-		fAngles[2] = float(PI);
+		fAngles[2] = static_cast<float>(PI);
 		EulerToQuat(fAngles, qRotationOffset);
 		qRotation = qRotationOffset*qRotation;
 	}
@@ -129,7 +129,7 @@ void PLTools::GetPosRotScale(const GMatrix &mTransform, Point3 &vPos, Point3 &vR
 	vRot.z = RadToDeg(fAngles[2]);
 
 	// Look out! We REALLY need to take the parity of the transform matrix into account!
-	vScale = mTransform.Scaling()*float(mTransform.Parity());
+	vScale = mTransform.Scaling()*static_cast<float>(mTransform.Parity());
 }
 
 /**
@@ -149,19 +149,19 @@ void PLTools::GetPosRotScale(const GMatrix &mTransform, Point3 &vPos, Quat &qRot
 		Quat qRotationOffset;
 
 		// We have to add a rotation about the x-axis of -90 degree... is this a IGame transform bug or something other odd??
-		float fAngles[] = {float(HALFPI), 0.0f, 0.0f};
+		float fAngles[] = {static_cast<float>(HALFPI), 0.0f, 0.0f};
 		EulerToQuat(fAngles, qRotationOffset);
 		qRot = qRotationOffset*qRot;
 
 		// We have to 'invert the z-axis', this is no PixelLight bug or so, we decided to do so to make things more universal
 		fAngles[0] = 0.0f;
-		fAngles[2] = float(PI);
+		fAngles[2] = static_cast<float>(PI);
 		EulerToQuat(fAngles, qRotationOffset);
 		qRot = qRotationOffset*qRot;
 	}
 
 	// Look out! We REALLY need to take the parity of the transform matrix into account!
-	vScale = mTransform.Scaling()*float(mTransform.Parity());
+	vScale = mTransform.Scaling()*static_cast<float>(mTransform.Parity());
 }
 
 /**
@@ -260,7 +260,7 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 			DWORD nSize;
 			if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 				char *pszBuffer = new char[nSize];
-				if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, (BYTE*)pszBuffer, &nSize) == ERROR_SUCCESS) {
+				if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, reinterpret_cast<BYTE*>(pszBuffer), &nSize) == ERROR_SUCCESS) {
 					// Valid directory?
 					if (GetFileAttributesA(pszBuffer) != INVALID_FILE_ATTRIBUTES) {
 						RegCloseKey(hKey);
@@ -277,7 +277,7 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 			DWORD nSize;
 			if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 				char *pszBuffer = new char[nSize];
-				if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, (BYTE*)pszBuffer, &nSize) == ERROR_SUCCESS) {
+				if (RegQueryValueEx(hKey, "Runtime", 0, nullptr, reinterpret_cast<BYTE*>(pszBuffer), &nSize) == ERROR_SUCCESS) {
 					// Valid directory?
 					if (GetFileAttributesA(pszBuffer) != INVALID_FILE_ATTRIBUTES) {
 						RegCloseKey(hKey);

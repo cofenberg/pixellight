@@ -52,7 +52,7 @@ PLScenePortal::PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode
 	if (pIGameObject) {
 		// Check the type of the IGame object
 		if (pIGameObject->GetIGameType() == IGameObject::IGAME_MESH) {
-			IGameMesh &cIGameMesh = *((IGameMesh*)pIGameObject);
+			IGameMesh &cIGameMesh = *static_cast<IGameMesh*>(pIGameObject);
 
 			// Initialize the IGame mesh
 			if (cIGameMesh.InitializeData()) {
@@ -73,7 +73,7 @@ PLScenePortal::PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode
 						GMatrix mTransform = cIGameNode.GetWorldTM().Inverse();
 
 						// Get the portal vertices and center
-						for (std::vector<Point3>::size_type i=0; i<(std::vector<Point3>::size_type)nNumOfVertices; i++) {
+						for (std::vector<Point3>::size_type i=0; i<static_cast<std::vector<Point3>::size_type>(nNumOfVertices); i++) {
 							// Get polygon vertex in 'world space'
 							Point3 &vVertex = m_lstVertices[i];
 							cIGameMesh.GetVertex(lstVertices[i], vVertex);
@@ -86,7 +86,7 @@ PLScenePortal::PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode
 						}
 
 						// Calculate the final center in 'world space'
-						m_vCenter /= (float)nNumOfVertices;
+						m_vCenter /= static_cast<float>(nNumOfVertices);
 
 						// Get the portal normal in 'world space'
 						cIGameMesh.GetNormal(0, 0, m_vNormal);

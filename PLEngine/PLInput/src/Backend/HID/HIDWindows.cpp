@@ -63,15 +63,15 @@ HIDWindows::HIDWindows() :
 	// Try to load "hid.dll"
 	if (m_pDynLibHID->Load("hid.dll")) {
 		// Get global HID function pointers
-		HidD_GetPreparsedData	= (PFNHIDDGETPREPARSEDDATA)		m_pDynLibHID->GetSymbol("HidD_GetPreparsedData");
-		HidD_FreePreparsedData	= (PFNHIDDFREEPREPARSEDDATA)	m_pDynLibHID->GetSymbol("HidD_FreePreparsedData");
-		HidP_GetData			= (PFNHIDPGETDATA)				m_pDynLibHID->GetSymbol("HidP_GetData");
-		HidP_SetData			= (PFNHIDPSETDATA)				m_pDynLibHID->GetSymbol("HidP_SetData");
-		HidD_GetHidGuid			= (PFNHIDPGETHIDGUID)			m_pDynLibHID->GetSymbol("HidD_GetHidGuid");
-		HidD_GetAttributes		= (PFNHIDPGETATTRIBUTES)		m_pDynLibHID->GetSymbol("HidD_GetAttributes");
-		HidP_GetCaps			= (PFNHIDPGETCAPS)				m_pDynLibHID->GetSymbol("HidP_GetCaps");
-		HidP_GetButtonCaps		= (PFNHIDPGETBUTTONCAPS)		m_pDynLibHID->GetSymbol("HidP_GetButtonCaps");
-		HidP_GetValueCaps		= (PFNHIDPGETVALUECAPS)			m_pDynLibHID->GetSymbol("HidP_GetValueCaps");
+		HidD_GetPreparsedData	= static_cast<PFNHIDDGETPREPARSEDDATA>	(m_pDynLibHID->GetSymbol("HidD_GetPreparsedData"));
+		HidD_FreePreparsedData	= static_cast<PFNHIDDFREEPREPARSEDDATA>	(m_pDynLibHID->GetSymbol("HidD_FreePreparsedData"));
+		HidP_GetData			= static_cast<PFNHIDPGETDATA>			(m_pDynLibHID->GetSymbol("HidP_GetData"));
+		HidP_SetData			= static_cast<PFNHIDPSETDATA>			(m_pDynLibHID->GetSymbol("HidP_SetData"));
+		HidD_GetHidGuid			= static_cast<PFNHIDPGETHIDGUID>		(m_pDynLibHID->GetSymbol("HidD_GetHidGuid"));
+		HidD_GetAttributes		= static_cast<PFNHIDPGETATTRIBUTES>		(m_pDynLibHID->GetSymbol("HidD_GetAttributes"));
+		HidP_GetCaps			= static_cast<PFNHIDPGETCAPS>			(m_pDynLibHID->GetSymbol("HidP_GetCaps"));
+		HidP_GetButtonCaps		= static_cast<PFNHIDPGETBUTTONCAPS>		(m_pDynLibHID->GetSymbol("HidP_GetButtonCaps"));
+		HidP_GetValueCaps		= static_cast<PFNHIDPGETVALUECAPS>		(m_pDynLibHID->GetSymbol("HidP_GetValueCaps"));
 
 		// Ensure that we have valid function pointers
 		if (!HidD_GetPreparsedData || !HidD_FreePreparsedData || !HidP_GetData || !HidP_SetData || !HidD_GetHidGuid ||
@@ -123,7 +123,8 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 
 	// Create handle
 	HDEVINFO hDevInfo = SetupDiGetClassDevs(&m_sGUID, nullptr, nullptr, DIGCF_DEVICEINTERFACE);
-	if (!hDevInfo) return;
+	if (!hDevInfo)
+		return;
 
 	// Get device interface
 	SP_DEVICE_INTERFACE_DATA sDevice;
@@ -134,7 +135,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 		DWORD nDetailsSize = 0;
 		SetupDiGetDeviceInterfaceDetail(hDevInfo, &sDevice, nullptr, 0, &nDetailsSize, nullptr);
 		BYTE *pBuffer = new BYTE[nDetailsSize];
-		SP_DEVICE_INTERFACE_DETAIL_DATA *sDeviceDetail = (SP_DEVICE_INTERFACE_DETAIL_DATA*)pBuffer;
+		SP_DEVICE_INTERFACE_DETAIL_DATA *sDeviceDetail = reinterpret_cast<SP_DEVICE_INTERFACE_DETAIL_DATA*>(pBuffer);
 		sDeviceDetail->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
 
 		// Get device interface details
@@ -236,10 +237,10 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 											sCapability.m_nDataIndexMin = pValues[i].NotRange.DataIndex;
 											sCapability.m_nDataIndexMax = pValues[i].NotRange.DataIndex;
 										}
-										sCapability.m_nLogicalMin  = (uint16)pValues[i].LogicalMin;
-										sCapability.m_nLogicalMax  = (uint16)pValues[i].LogicalMax;
-										sCapability.m_nPhysicalMin = (uint16)pValues[i].PhysicalMin;
-										sCapability.m_nPhysicalMax = (uint16)pValues[i].PhysicalMax;
+										sCapability.m_nLogicalMin  = static_cast<uint16>(pValues[i].LogicalMin);
+										sCapability.m_nLogicalMax  = static_cast<uint16>(pValues[i].LogicalMax);
+										sCapability.m_nPhysicalMin = static_cast<uint16>(pValues[i].PhysicalMin);
+										sCapability.m_nPhysicalMax = static_cast<uint16>(pValues[i].PhysicalMax);
 
 										// Add input value control
 										pDevice->m_lstInputValues.Add(sCapability);
@@ -261,10 +262,10 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 										sCapability.m_nReportID    = pValues[i].ReportID;
 										sCapability.m_nDataIndex   = pValues[i].NotRange.DataIndex;
 										sCapability.m_nBitSize	   = pValues[i].BitSize;
-										sCapability.m_nLogicalMin  = (uint16)pValues[i].LogicalMin;
-										sCapability.m_nLogicalMax  = (uint16)pValues[i].LogicalMax;
-										sCapability.m_nPhysicalMin = (uint16)pValues[i].PhysicalMin;
-										sCapability.m_nPhysicalMax = (uint16)pValues[i].PhysicalMax;
+										sCapability.m_nLogicalMin  = static_cast<uint16>(pValues[i].LogicalMin);
+										sCapability.m_nLogicalMax  = static_cast<uint16>(pValues[i].LogicalMax);
+										sCapability.m_nPhysicalMin = static_cast<uint16>(pValues[i].PhysicalMin);
+										sCapability.m_nPhysicalMax = static_cast<uint16>(pValues[i].PhysicalMax);
 
 										// Add output value control
 										pDevice->m_lstOutputValues.Add(sCapability);
@@ -289,7 +290,7 @@ void HIDWindows::EnumerateDevices(List<HIDDevice*> &lstDevices)
 				DWORD nError = GetLastError();
 				LPTSTR s;
 				::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-								nullptr, nError, 0, (LPTSTR)&s, 0, nullptr);
+								nullptr, nError, 0, static_cast<LPTSTR>(&s), 0, nullptr);
 				::LocalFree(s);
 				*/
 

@@ -70,12 +70,12 @@ bool Rectangle::ScreenRectangle(const Array<Vector3> &lstPoints, bool bZCull, co
 		}
 
 		// Clamp x
-		vPoint.x = Math::Max(float(nX),        vPoint.x);
-		vPoint.x = Math::Min(float(nX+nWidth), vPoint.x);
+		vPoint.x = Math::Max(static_cast<float>(nX),        vPoint.x);
+		vPoint.x = Math::Min(static_cast<float>(nX+nWidth), vPoint.x);
 
 		// Clamp y
-		vPoint.y = Math::Max(float(nY),         vPoint.y);
-		vPoint.y = Math::Min(float(nY+nHeight), vPoint.y);
+		vPoint.y = Math::Max(static_cast<float>(nY),         vPoint.y);
+		vPoint.y = Math::Min(static_cast<float>(nY+nHeight), vPoint.y);
 
 		// Update min/max
 		if (i) {
@@ -97,10 +97,10 @@ bool Rectangle::ScreenRectangle(const Array<Vector3> &lstPoints, bool bZCull, co
 	if (nZFar == lstPoints.GetNumOfElements() || nZNear == lstPoints.GetNumOfElements())
 		return false; // Z culled
 	if (nZNear > 0 && nZNear < lstPoints.GetNumOfElements()) {
-		vMin.x = float(nX);
-		vMin.y = float(nY);
-		vMax.x = float(nX + nWidth);
-		vMax.y = float(nY + nHeight);
+		vMin.x = static_cast<float>(nX);
+		vMin.y = static_cast<float>(nY);
+		vMax.x = static_cast<float>(nX + nWidth);
+		vMax.y = static_cast<float>(nY + nHeight);
 	}
 
 	// Done
@@ -146,12 +146,12 @@ bool Rectangle::ScreenRectangle(const Array<Vector4> &lstPoints, bool bZCull, co
 		}
 
 		// Clamp x
-		vPoint.x = Math::Max(float(nX),        vPoint.x);
-		vPoint.x = Math::Min(float(nX+nWidth), vPoint.x);
+		vPoint.x = Math::Max(static_cast<float>(nX),        vPoint.x);
+		vPoint.x = Math::Min(static_cast<float>(nX+nWidth), vPoint.x);
 
 		// Clamp y
-		vPoint.y = Math::Max(float(nY),         vPoint.y);
-		vPoint.y = Math::Min(float(nY+nHeight), vPoint.y);
+		vPoint.y = Math::Max(static_cast<float>(nY),         vPoint.y);
+		vPoint.y = Math::Min(static_cast<float>(nY+nHeight), vPoint.y);
 
 		// Update min/max
 		if (i) {
@@ -173,10 +173,10 @@ bool Rectangle::ScreenRectangle(const Array<Vector4> &lstPoints, bool bZCull, co
 	if (nZFar == lstP.GetNumOfElements() || nZNear == lstP.GetNumOfElements())
 		return false; // Z culled
 	if (nZNear > 0 && nZNear < lstP.GetNumOfElements()) {
-		vMin.x = float(nX);
-		vMin.y = float(nY);
-		vMax.x = float(nX + nWidth);
-		vMax.y = float(nY + nHeight);
+		vMin.x = static_cast<float>(nX);
+		vMin.y = static_cast<float>(nY);
+		vMax.x = static_cast<float>(nX + nWidth);
+		vMax.y = static_cast<float>(nY + nHeight);
 	}
 
 	// Done

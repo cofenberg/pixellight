@@ -117,7 +117,7 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		}
 
 		// Setup log level
-		Log::GetInstance()->SetLogLevel(uint8(m_bEditModeEnabled ? Log::Debug : Log::Info));
+		Log::GetInstance()->SetLogLevel(static_cast<uint8>(m_bEditModeEnabled ? Log::Debug : Log::Info));
 	}
 }
 

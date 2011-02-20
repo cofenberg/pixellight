@@ -113,7 +113,7 @@ PLSceneNode *PLSceneContainer::Get(const std::string &sName)
 				return nullptr; // Error!
 
 			// Change 'into' this scene container
-			return ((PLSceneContainer*)pSceneNode)->Get(sName.substr(i+1));
+			return static_cast<PLSceneContainer*>(pSceneNode)->Get(sName.substr(i+1));
 		}
 		pszNameT++;
 	}
@@ -302,14 +302,14 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	size_t nIndex = sName.find_first_of(".");
 	if (nIndex != std::string::npos) {
 		g_pLog->LogFLine(PLLog::Warning, "Node name '%s' has '.' within it, '.' is replaced by '-' automatically", cIGameNode.GetName());
-		char *pszName = (char*)sName.c_str() + nIndex;
+		char *pszName = const_cast<char*>(sName.c_str()) + nIndex;
 		while (*pszName != '\0') {
 			if (*pszName == '.')
 				*pszName = '-';
 			pszName++;
 		}
 	}
-	TCHAR *pszName = (TCHAR*)sName.c_str();
+	TCHAR *pszName = const_cast<TCHAR*>(sName.c_str());
 
 	// Look for 'cell_' (cell_<cell name>_<node name> or cell_<cell name>_<mesh name>_<instance name>)
 	std::string sSceneCellName, sTargetSceneCellName, sSceneNodeName, sMeshName;
@@ -534,7 +534,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 		if (pMaxObject) {
 			// Get 'real' 3ds Max object (we really need to do this)
 			while (pMaxObject->SuperClassID() == GEN_DERIVOB_CLASS_ID)
-				pMaxObject = ((IDerivedObject*)pMaxObject)->GetObjRef();
+				pMaxObject = static_cast<IDerivedObject*>(pMaxObject)->GetObjRef();
 
 			// Check the type of the object
 			switch (pMaxObject->SuperClassID()) {
@@ -555,7 +555,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 
 						// Update the number of outgoing cell-portals
 						if (pContainer->GetType() == TypeCell) {
-							((PLSceneCell*)pContainer)->m_lstOutgoingCellPortals.push_back((PLSceneCellPortal*)pSceneNode);
+							static_cast<PLSceneCell*>(pContainer)->m_lstOutgoingCellPortals.push_back(static_cast<PLSceneCellPortal*>(pSceneNode));
 
 						// ?? There's something totally wrong! ??
 						} else {
@@ -647,7 +647,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 		{ // Add to 3ds Max node to PL node map, bah, std::string is horror. Here I use a hack
 		  // to use the good old sprintf to convert a pointer address into a string...
 			std::string sKey = "XXXXXXXXXXXXXXXXXXXX";
-			sprintf((char*)sKey.c_str(), "%19p", cIGameNode.GetMaxNode());
+			sprintf(const_cast<char*>(sKey.c_str()), "%19p", cIGameNode.GetMaxNode());
 			GetScene().m_mapMaxToPLNodes.insert(make_pair(sKey, pSceneNode));
 		}
 
@@ -676,11 +676,11 @@ void PLSceneContainer::PostProcess()
 		if (pSceneNode) {
 			switch (pSceneNode->GetType()) {
 				case TypeContainer:
-					((PLSceneContainer*)pSceneNode)->PostProcess();
+					static_cast<PLSceneContainer*>(pSceneNode)->PostProcess();
 					break;
 
 				case TypeCell:
-					((PLSceneCell*)pSceneNode)->PostProcess();
+					static_cast<PLSceneCell*>(pSceneNode)->PostProcess();
 					break;
 			}
 
@@ -730,43 +730,43 @@ void PLSceneContainer::OutputStatistics()
 		g_pLog->PrintFLine("Container '%s':", GetName().c_str());
 	g_pLog->AddSpaces(PLLog::TabSize);
 	if (cScene.m_nTotalNumOfNodes)
-		g_pLog->PrintFLine("Total number of nodes: %d (%g%%)", nTotalNumOfNodes, (float(nTotalNumOfNodes)/float(cScene.m_nTotalNumOfNodes))*100.0f);
+		g_pLog->PrintFLine("Total number of nodes: %d (%g%%)", nTotalNumOfNodes, (static_cast<float>(nTotalNumOfNodes)/static_cast<float>(cScene.m_nTotalNumOfNodes))*100.0f);
 	else
 		g_pLog->PrintFLine("Total number of nodes: %d (0%%)", nTotalNumOfNodes);
 	if (cScene.m_sSceneStatistics.nNumOfCells)
-		g_pLog->PrintFLine("Cells: %d (%g%%)", m_sStatistics.nNumOfCells, (float(m_sStatistics.nNumOfCells)/float(cScene.m_sSceneStatistics.nNumOfCells))*100.0f);
+		g_pLog->PrintFLine("Cells: %d (%g%%)", m_sStatistics.nNumOfCells, (static_cast<float>(m_sStatistics.nNumOfCells)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfCells))*100.0f);
 	else
 		g_pLog->PrintFLine("Cells: %d (0%%)",  m_sStatistics.nNumOfCells);
 	if (cScene.m_sSceneStatistics.nNumOfCameras)
-		g_pLog->PrintFLine("Cameras: %d (%g%%)", m_sStatistics.nNumOfCameras, (float(m_sStatistics.nNumOfCameras)/float(cScene.m_sSceneStatistics.nNumOfCameras))*100.0f);
+		g_pLog->PrintFLine("Cameras: %d (%g%%)", m_sStatistics.nNumOfCameras, (static_cast<float>(m_sStatistics.nNumOfCameras)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfCameras))*100.0f);
 	else
 		g_pLog->PrintFLine("Cameras: %d (0%%)",  m_sStatistics.nNumOfCameras);
 	if (cScene.m_sSceneStatistics.nNumOfLights)
-		g_pLog->PrintFLine("Lights: %d (%g%%)", m_sStatistics.nNumOfLights, (float(m_sStatistics.nNumOfLights)/float(cScene.m_sSceneStatistics.nNumOfLights))*100.0f);
+		g_pLog->PrintFLine("Lights: %d (%g%%)", m_sStatistics.nNumOfLights, (static_cast<float>(m_sStatistics.nNumOfLights)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfLights))*100.0f);
 	else
 		g_pLog->PrintFLine("Lights: %d (0%%)",  m_sStatistics.nNumOfLights);
 	if (cScene.m_sSceneStatistics.nNumOfObjects)
-		g_pLog->PrintFLine("Objects: %d (%g%%)", m_sStatistics.nNumOfObjects, (float(m_sStatistics.nNumOfObjects)/float(cScene.m_sSceneStatistics.nNumOfObjects))*100.0f);
+		g_pLog->PrintFLine("Objects: %d (%g%%)", m_sStatistics.nNumOfObjects, (static_cast<float>(m_sStatistics.nNumOfObjects)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfObjects))*100.0f);
 	else
 		g_pLog->PrintFLine("Objects: %d (0%%)",  m_sStatistics.nNumOfObjects);
 	if (cScene.m_sSceneStatistics.nNumOfHelpers)
-		g_pLog->PrintFLine("Helpers: %d (%g%%)", m_sStatistics.nNumOfHelpers, (float(m_sStatistics.nNumOfHelpers)/float(cScene.m_sSceneStatistics.nNumOfHelpers))*100.0f);
+		g_pLog->PrintFLine("Helpers: %d (%g%%)", m_sStatistics.nNumOfHelpers, (static_cast<float>(m_sStatistics.nNumOfHelpers)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfHelpers))*100.0f);
 	else
 		g_pLog->PrintFLine("Helpers: %d (0%%)",  m_sStatistics.nNumOfHelpers);
 	if (cScene.m_sSceneStatistics.nNumOfUnknown)
-		g_pLog->PrintFLine("Unknown: %d (%g%%)", m_sStatistics.nNumOfUnknown, (float(m_sStatistics.nNumOfUnknown)/float(cScene.m_sSceneStatistics.nNumOfUnknown))*100.0f);
+		g_pLog->PrintFLine("Unknown: %d (%g%%)", m_sStatistics.nNumOfUnknown, (static_cast<float>(m_sStatistics.nNumOfUnknown)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfUnknown))*100.0f);
 	else
 		g_pLog->PrintFLine("Unknown: %d (0%%)",  m_sStatistics.nNumOfUnknown);
 
 	// If this is a cell, show some cell-portal information
 	if (GetType() == TypeCell) {
-		const PLSceneCell &cCell = (PLSceneCell&)*this;
+		const PLSceneCell &cCell = static_cast<PLSceneCell&>(*this);
 
 		// List of outgoing cell-portals
 		std::vector<PLSceneCellPortal*>::size_type nOutgoingCellPortals = cCell.m_lstOutgoingCellPortals.size();
 		if (nOutgoingCellPortals) {
 			g_pLog->PrintSpaces();
-			g_pLog->PrintF("Outgoing cell-portals: %d (%g%%) -> ", nOutgoingCellPortals, float(nOutgoingCellPortals)/float(cScene.m_sSceneStatistics.nNumOfCellPortals)*100.0f);
+			g_pLog->PrintF("Outgoing cell-portals: %d (%g%%) -> ", nOutgoingCellPortals, static_cast<float>(nOutgoingCellPortals)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfCellPortals)*100.0f);
 			for (std::vector<PLSceneCellPortal*>::size_type i=0; i<nOutgoingCellPortals; i++) {
 				const PLSceneCellPortal *pCellPortal = cCell.m_lstOutgoingCellPortals[i];
 				if (pCellPortal) {
@@ -784,7 +784,7 @@ void PLSceneContainer::OutputStatistics()
 		std::vector<PLSceneCellPortal*>::size_type nIncomingCellPortals = cCell.m_lstIncomingCellPortals.size();
 		if (nIncomingCellPortals) {
 			g_pLog->PrintSpaces();
-			g_pLog->PrintF("Incoming cell-portals: %d (%g%%)", nIncomingCellPortals, float(nIncomingCellPortals)/float(cScene.m_sSceneStatistics.nNumOfCellPortals)*100.0f);
+			g_pLog->PrintF("Incoming cell-portals: %d (%g%%)", nIncomingCellPortals, static_cast<float>(nIncomingCellPortals)/static_cast<float>(cScene.m_sSceneStatistics.nNumOfCellPortals)*100.0f);
 			g_pLog->Print(" -> ");
 			for (std::vector<PLSceneCellPortal*>::size_type i=0; i<nIncomingCellPortals; i++) {
 				const PLSceneCellPortal *pCellPortal = cCell.m_lstIncomingCellPortals[i];
@@ -818,9 +818,9 @@ void PLSceneContainer::OutputStatistics()
 		PLSceneNode *pSceneNode = m_lstSceneNodes[i];
 		if (pSceneNode) {
 			if (pSceneNode->GetType() == TypeContainer)
-				((PLSceneContainer*)pSceneNode)->OutputStatistics();
+				static_cast<PLSceneContainer*>(pSceneNode)->OutputStatistics();
 			if (pSceneNode->GetType() == TypeCell)
-				((PLSceneCell*)pSceneNode)->OutputStatistics();
+				static_cast<PLSceneCell*>(pSceneNode)->OutputStatistics();
 		}
 	}
 

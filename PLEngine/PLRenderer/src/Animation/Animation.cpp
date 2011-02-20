@@ -320,7 +320,7 @@ float Animation::GetFrame() const
 		const uint32 nStart = (m_nEnd > m_nStart) ? m_nStart : m_nEnd;
 
 		// Use frame interpolation?
-		const AnimationFrameInfo *pFrameInfo = m_pAnimationInfo->GetFrameInfo(uint32(m_fFrame-nStart));
+		const AnimationFrameInfo *pFrameInfo = m_pAnimationInfo->GetFrameInfo(static_cast<uint32>(m_fFrame-nStart));
 		if (pFrameInfo && pFrameInfo->GetSpeed() < 0.0f)
 			return static_cast<float>(static_cast<uint32>(m_fFrame)); // No interpolation, please
 	}

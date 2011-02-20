@@ -78,7 +78,7 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 			 pMaxObject->CanConvertToType(Class_ID(FSPOT_LIGHT_CLASS_ID, 0)) ||
 			 pMaxObject->CanConvertToType(Class_ID(TDIR_LIGHT_CLASS_ID,  0)))) {
 			// Check the type of the IGame object
-			IGameLight &cIGameLight = *((IGameLight*)pIGameObject);
+			IGameLight &cIGameLight = *static_cast<IGameLight*>(pIGameObject);
 			if (pIGameObject->GetIGameType() == IGameObject::IGAME_LIGHT &&
 				cIGameLight.GetLightType() != IGameLight::IGAME_UNKNOWN) {
 				// Initialize the data of the IGame object - because of the 'clever' default implementation
@@ -90,7 +90,7 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 						AddFlag("Invisible");
 
 					// Get a GenLight from the node
-					GenLight &cMaxLight = *((GenLight*)pMaxObject);
+					GenLight &cMaxLight = *static_cast<GenLight*>(pMaxObject);
 
 					// Cast shadows?
 					if (cIGameLight.CastShadows()) {
@@ -108,7 +108,7 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 					BitmapTex *pBitmapTex = nullptr;
 					Texmap *pMap = cMaxLight.GetProjector() ? cMaxLight.GetProjMap() : nullptr;
 					if (pMap && pMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0x00))
-						pBitmapTex = (BitmapTex*)pMap;
+						pBitmapTex = static_cast<BitmapTex*>(pMap);
 
 					// Add scene node
 					XmlElement *pNodeElement = new XmlElement("Node");

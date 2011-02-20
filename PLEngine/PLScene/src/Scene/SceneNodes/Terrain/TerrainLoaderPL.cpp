@@ -191,11 +191,13 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 			// Loop through the data
 			for (uint32 i=1; i<nSize; i++) {
 				// Set heigh field data
-				*pHeighField = float((*pData))*fYScale;
+				*pHeighField = static_cast<float>((*pData))*fYScale;
 
 				// Check min/max
-				if (fYMin > *pHeighField) fYMin = *pHeighField;
-				if (fYMax < *pHeighField) fYMax = *pHeighField;
+				if (fYMin > *pHeighField)
+					fYMin = *pHeighField;
+				if (fYMax < *pHeighField)
+					fYMax = *pHeighField;
 
 				// Next, please
 				pData++;
@@ -211,7 +213,7 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 			cSNTerrain.m_pGMMSurface->GetMaterialHandler().SetResource(cSNTerrain.GetSceneContext()->GetRendererContext().GetMaterialManager().LoadResource(sMaterial));
 
 			// Setup the bounding box
-			cSNTerrain.SetAABoundingBox(AABoundingBox(0.0f, fYMin, 0.0f, float(nWidth), fYMax, float(nHeight)));
+			cSNTerrain.SetAABoundingBox(AABoundingBox(0.0f, fYMin, 0.0f, static_cast<float>(nWidth), fYMax, static_cast<float>(nHeight)));
 		}
 	} else {
 		// Setup the bounding box

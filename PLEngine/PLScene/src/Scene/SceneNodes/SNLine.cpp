@@ -95,7 +95,7 @@ SNLine::SNLine() :
 	m_vEndPosition(0.0f, 0.0f, 1.0f)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
 
 	// We have to recalculate the current axis align bounding box in 'scene node space'
 	DirtyAABoundingBox();

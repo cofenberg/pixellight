@@ -70,7 +70,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 		float fReflectionColor = 1.0f;
 
 		// See if it's a standard material
-		StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMaterial : nullptr;
+		StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? static_cast<StdMat*>(pMaxMaterial) : nullptr;
 
 		// Textures
 		for (int nSlot=0; nSlot<pMaxMaterial->NumSubTexmaps(); nSlot++) {
@@ -82,12 +82,12 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 					// Is this a "Bitmap" texture map?
 					if (pTexMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)) {
 						TSTR sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
-						BitmapTex *pBitmapTex = (BitmapTex*)pTexMap;
+						BitmapTex *pBitmapTex = static_cast<BitmapTex*>(pTexMap);
 						if (!strlen(sSlotName))
 							g_pLog->LogFLine(PLLog::Warning, "Material '%s': Slot '%d' (value: '%s') has no name!", m_sName.c_str(), nSlot, pBitmapTex->GetMapName());
 
 						// Save the texture
-						SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), (const char*)sSlotName);
+						SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), static_cast<const char*>(sSlotName));
 
 						// Is this a reflection map?
 						if (pMaxStandardMat && !_strnicmp(sSlotName, "Reflection", 10))
@@ -95,7 +95,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 
 					// Is this a "Normal Bump" texture map?
 					} else if (pTexMap->ClassID() == GNORMAL_CLASS_ID) {
-						Gnormal *pGnormal = (Gnormal*)pTexMap;
+						Gnormal *pGnormal = static_cast<Gnormal*>(pTexMap);
 
 						// [TODO] Write a warning into the log if 'Gnormal::method' is not 'TANGENTUV_SPACE'
 
@@ -104,7 +104,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 						Texmap *pNormalMap = pGnormal->GetSubTexmap(0);
 						if (pNormalMap && pNormalMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)) {
 							// Save the texture
-							SaveTexture(cMaterialElement, ((BitmapTex*)pNormalMap)->GetMapName(), "NormalMap");
+							SaveTexture(cMaterialElement, static_cast<BitmapTex*>(pNormalMap)->GetMapName(), "NormalMap");
 						}
 
 						// [TODO] Only export if enabled
@@ -112,7 +112,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 						Texmap *pBumpMap = pGnormal->GetSubTexmap(1);
 						if (pBumpMap && pBumpMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)) {
 							// Save the texture
-							SaveTexture(cMaterialElement, ((BitmapTex*)pBumpMap)->GetMapName(), "HeightMap");
+							SaveTexture(cMaterialElement, static_cast<BitmapTex*>(pBumpMap)->GetMapName(), "HeightMap");
 
 							// [TODO] Save 'weight' as 'parallax'
 						}

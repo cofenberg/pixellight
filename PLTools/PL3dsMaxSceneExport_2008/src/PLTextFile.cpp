@@ -108,7 +108,7 @@ int PLTextFile::GetNumOfSpaces() const
 */
 void PLTextFile::AddSpaces(int nSpaces)
 {
-	if (int(m_nSpaces)+nSpaces <= 0)
+	if (static_cast<int>(m_nSpaces)+nSpaces <= 0)
 		m_nSpaces = 0;
 	else
 		m_nSpaces += nSpaces;

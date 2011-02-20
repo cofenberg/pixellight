@@ -397,7 +397,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 
 				// Set the "Size" fragment shader parameter
 				if (m_pDownsampleSizeProgramUniform)
-					m_pDownsampleSizeProgramUniform->Set(static_cast<float>(vFinalTextureSize.x)/pRenderTargetTexture->GetSize().x, float(vFinalTextureSize.y)/pRenderTargetTexture->GetSize().y);
+					m_pDownsampleSizeProgramUniform->Set(static_cast<float>(vFinalTextureSize.x)/pRenderTargetTexture->GetSize().x, static_cast<float>(vFinalTextureSize.y)/pRenderTargetTexture->GetSize().y);
 
 				// Set the "Texture" fragment shader parameter
 				if (m_pDownsampleTextureProgramUniform) {

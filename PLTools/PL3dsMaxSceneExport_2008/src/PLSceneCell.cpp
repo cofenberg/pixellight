@@ -85,7 +85,7 @@ void PLSceneCell::PostProcess()
 			if (pNode) {
 				if (pNode->GetType() == TypeCell) {
 					// Add this cell-portal to the list of incoming cell-portals of the target cell
-					((PLSceneCell*)pNode)->m_lstIncomingCellPortals.push_back(pCellPortal);
+					static_cast<PLSceneCell*>(pNode)->m_lstIncomingCellPortals.push_back(pCellPortal);
 				} else {
 					g_pLog->LogFLine(PLLog::Error, "Cell-portal '%s': There's a scene node with the name '%s', but this is NO (valid target) cell node! (note: 'Parent.' is added automatically by the exporter if required...)", pCellPortal->GetMaxNode()->GetName(), pCellPortal->GetTargetCell().c_str());
 				}

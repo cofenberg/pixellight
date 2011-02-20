@@ -118,7 +118,7 @@ bool SearchFilterWildcard::CheckFile(const String &sFilename)
 				nFound = sFilename.GetLength();
 
 			// Check result
-			if (nFound >= 0 && nFound-int(nNamePos) >= nMinLength) {
+			if (nFound >= 0 && nFound-static_cast<int>(nNamePos) >= nMinLength) {
 				// Postfix found
 				nNamePos = nFound;
 			} else {

@@ -66,7 +66,7 @@ void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	CameraState cCameraState;
 	Interval cValid = FOREVER;
 	ObjectState cOS = GetMaxNode()->EvalWorldState(nTime);
-	CameraObject *pCamera = (CameraObject*)cOS.obj; // Do we need to perform any class check here??
+	CameraObject *pCamera = static_cast<CameraObject*>(cOS.obj); // Do we need to perform any class check here??
 	pCamera->EvalCameraState(nTime, cValid, &cCameraState);
 
 	// Add scene node

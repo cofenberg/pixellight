@@ -222,12 +222,12 @@ void Vector3Test::Test()
 	bResult = true;
 	// 90°
 	vV = Vector3(1.0f, 0.0f, 0.0f);
-	qQ.FromEulerAnglesXYZ(0.0f, float(90.0f*Math::DegToRad), 0.0f);
+	qQ.FromEulerAnglesXYZ(0.0f, static_cast<float>(90.0f*Math::DegToRad), 0.0f);
 	vV *= qQ;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, 0.0f) || !Math::AreEqual(vV.z, -1.0f)) bResult = false;
 	// -90°
 	vV = Vector3(1.0f, 0.0f, 0.0f);
-	qQ.FromEulerAnglesXYZ(0.0f, -float(90.0f*Math::DegToRad), 0.0f);
+	qQ.FromEulerAnglesXYZ(0.0f, -static_cast<float>(90.0f*Math::DegToRad), 0.0f);
 	vV *= qQ;
 	if (!Math::AreEqual(vV.x, 0.0f) || !Math::AreEqual(vV.y, 0.0f) || !Math::AreEqual(vV.z, 1.0f)) bResult = false;
 	EndTask(bResult);

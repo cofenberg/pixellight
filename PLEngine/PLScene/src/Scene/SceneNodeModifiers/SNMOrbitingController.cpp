@@ -137,9 +137,9 @@ void SNMOrbitingController::NotifyUpdate()
 
 				// Get a quaternion representation of the rotation delta
 				Quaternion qRotInc;
-				EulerAngles::ToQuaternion(-float(fX*Math::DegToRad),
-										  -float(fY*Math::DegToRad),
-										  -float(fZ*Math::DegToRad),
+				EulerAngles::ToQuaternion(-static_cast<float>(fX*Math::DegToRad),
+										  -static_cast<float>(fY*Math::DegToRad),
+										  -static_cast<float>(fZ*Math::DegToRad),
 										  qRotInc);
 
 				// Update rotation

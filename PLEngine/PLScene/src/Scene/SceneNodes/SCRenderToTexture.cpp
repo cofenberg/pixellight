@@ -382,7 +382,7 @@ void SCRenderToTexture::CreateSurfaceTexture()
 		// Find an unused resource name
 		String sName = m_sTextureName + "_0";
 		for (uint32 i=1; cTextureManager.Get(sName); i++)
-			sName = m_sTextureName + '_' + int(i);
+			sName = m_sTextureName + '_' + static_cast<int>(i);
 
 		// We have found an unused name
 		m_sTextureName = sName;

@@ -53,7 +53,8 @@ class Type<TrollType> {
 		static const int TypeID = 100101;
 
 		// Get type name
-		static PLGeneral::String GetTypeName() {
+		static PLGeneral::String GetTypeName()
+		{
 			return "troll";
 		}
 
@@ -68,14 +69,14 @@ class Type<TrollType> {
 		// Convert troll to bool
 		static bool ConvertToBool(const TrollType &cTroll)
 		{
-			return (bool)(cTroll.GetValue() != 0);
+			return static_cast<bool>(cTroll.GetValue() != 0);
 		}
 
 		// Convert bool to troll
 		static TrollType ConvertFromBool(bool bValue)
 		{
 			TrollType cTroll;
-			cTroll.SetValue((int)bValue);
+			cTroll.SetValue(static_cast<int>(bValue));
 			return cTroll;
 		}
 
@@ -96,136 +97,136 @@ class Type<TrollType> {
 		// Convert troll to int8
 		static PLGeneral::int8 ConvertToInt8(const TrollType &cTroll)
 		{
-			return (PLGeneral::int8)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::int8>(ConvertToInt(cTroll));
 		}
 
 		// Convert int8 to troll
 		static TrollType ConvertFromInt8(PLGeneral::int8 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to int16
 		static PLGeneral::int16 ConvertToInt16(const TrollType &cTroll)
 		{
-			return (PLGeneral::int16)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::int16>(ConvertToInt(cTroll));
 		}
 
 		// Convert int16 to troll
 		static TrollType ConvertFromInt16(PLGeneral::int16 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to int32
 		static PLGeneral::int32 ConvertToInt32(const TrollType &cTroll)
 		{
-			return (PLGeneral::int32)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::int32>(ConvertToInt(cTroll));
 		}
 
 		// Convert int32 to troll
 		static TrollType ConvertFromInt32(PLGeneral::int32 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to int64
 		static PLGeneral::int64 ConvertToInt64(const TrollType &cTroll)
 		{
-			return (PLGeneral::int64)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::int64>(ConvertToInt(cTroll));
 		}
 
 		// Convert int64 to troll
 		static TrollType ConvertFromInt64(PLGeneral::int64 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to uint8
 		static PLGeneral::uint8 ConvertToUInt8(const TrollType &cTroll)
 		{
-			return (PLGeneral::uint8)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::uint8>(ConvertToInt(cTroll));
 		}
 
 		// Convert uint8 to troll
 		static TrollType ConvertFromUInt8(PLGeneral::uint8 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to uint16
 		static PLGeneral::uint16 ConvertToUInt16(const TrollType &cTroll)
 		{
-			return (PLGeneral::uint16)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::uint16>(ConvertToInt(cTroll));
 		}
 
 		// Convert uint16 to troll
 		static TrollType ConvertFromUInt16(PLGeneral::uint16 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to uint32
 		static PLGeneral::uint32 ConvertToUInt32(const TrollType &cTroll)
 		{
-			return (PLGeneral::uint32)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::uint32>(ConvertToInt(cTroll));
 		}
 
 		// Convert uint32 to troll
 		static TrollType ConvertFromUInt32(PLGeneral::uint32 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to uint64
 		static PLGeneral::uint64 ConvertToUInt64(const TrollType &cTroll)
 		{
-			return (PLGeneral::uint64)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::uint64>(ConvertToInt(cTroll));
 		}
 
 		// Convert uint64 to troll
 		static TrollType ConvertFromUInt64(PLGeneral::uint64 nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to uint_ptr
 		static PLGeneral::uint_ptr ConvertToUIntPtr(const TrollType &cTroll)
 		{
-			return (PLGeneral::uint_ptr)ConvertToInt(cTroll);
+			return static_cast<PLGeneral::uint_ptr>(ConvertToInt(cTroll));
 		}
 
 		// Convert uint_ptr to troll
 		static TrollType ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
 		{
-			return ConvertFromInt((int)nValue);
+			return ConvertFromInt(static_cast<int>(nValue));
 		}
 
 		// Convert troll to float
 		static float ConvertToFloat(const TrollType &cTroll)
 		{
-			return (float)cTroll.GetValue();
+			return static_cast<float>(cTroll.GetValue());
 		}
 
 		// Convert float to troll
 		static TrollType ConvertFromFloat(float fValue)
 		{
 			TrollType cTroll;
-			cTroll.SetValue((int)fValue);
+			cTroll.SetValue(static_cast<int>(fValue));
 			return cTroll;
 		}
 
 		// Convert troll to double
 		static double ConvertToDouble(const TrollType &cTroll)
 		{
-			return (double)cTroll.GetValue();
+			return static_cast<double>(cTroll.GetValue());
 		}
 
 		// Convert double to troll
 		static TrollType ConvertFromDouble(double dValue)
 		{
 			TrollType cTroll;
-			cTroll.SetValue((int)dValue);
+			cTroll.SetValue(static_cast<int>(dValue));
 			return cTroll;
 		}
 

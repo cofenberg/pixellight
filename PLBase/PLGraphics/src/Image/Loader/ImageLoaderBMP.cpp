@@ -234,7 +234,7 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 			BitmapInfoHeader sInfo;
 			sInfo.nSize				= sizeof(BitmapInfoHeader);
 			sInfo.nWidth			= pImageBuffer->GetSize().x;
-			sInfo.nHeight			= -int32(pImageBuffer->GetSize().y); // negative="top-down"... the way we store our image
+			sInfo.nHeight			= -static_cast<int32>(pImageBuffer->GetSize().y); // negative="top-down"... the way we store our image
 			sInfo.nPlanes			= 1;
 			sInfo.nBitCount			= pImageBuffer->GetBytesPerPixel()*8;
 			sInfo.nCompression		= 0;

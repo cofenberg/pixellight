@@ -83,7 +83,7 @@ void LegacyJoystickDevice::Update()
 	// Check if input device is valid
 	if (m_pDevice) {
 		// Get joystick device
-		Joystick *pJoystick = (Joystick*)m_pDevice;
+		Joystick *pJoystick = static_cast<Joystick*>(m_pDevice);
 
 		// Get joystick state
 		JOYINFOEX sJoyInfo;
@@ -98,22 +98,26 @@ void LegacyJoystickDevice::Update()
 				// Calculate delta
 				int nDelta = 0;
 				switch (i) {
-					case 0: nDelta = (int)(sJoyInfo.dwXpos - nPOV); break;
-					case 1: nDelta = (int)(sJoyInfo.dwYpos - nPOV); break;
-					case 2: nDelta = (int)(sJoyInfo.dwZpos - nPOV); break;
-					case 3: nDelta = (int)(sJoyInfo.dwRpos - nPOV); break;
-					case 4: nDelta = (int)(sJoyInfo.dwUpos - nPOV); break;
-					case 5: nDelta = (int)(sJoyInfo.dwVpos - nPOV); break;
+					case 0: nDelta = static_cast<int>(sJoyInfo.dwXpos - nPOV); break;
+					case 1: nDelta = static_cast<int>(sJoyInfo.dwYpos - nPOV); break;
+					case 2: nDelta = static_cast<int>(sJoyInfo.dwZpos - nPOV); break;
+					case 3: nDelta = static_cast<int>(sJoyInfo.dwRpos - nPOV); break;
+					case 4: nDelta = static_cast<int>(sJoyInfo.dwUpos - nPOV); break;
+					case 5: nDelta = static_cast<int>(sJoyInfo.dwVpos - nPOV); break;
 				}
 
 				// Calculate axis values (between -1.0f and 1.0f)
 				float fPos		 = 0.0f;
 				int   nThreshold = pJoystick->GetThreshold();
 				if (PLMath::Math::Abs(nDelta) >= nThreshold) {
-					if (nDelta < 0.0f)	fPos = (float) (nDelta + nThreshold) / (nPOV - nThreshold);
-					else				fPos = (float) (nDelta - nThreshold) / (nPOV - nThreshold);
-					if (fPos < -1.0f)	fPos = -1.0f;
-					if (fPos >  1.0f)	fPos =  1.0f;
+					if (nDelta < 0.0f)
+						fPos = static_cast<float>(nDelta + nThreshold) / (nPOV - nThreshold);
+					else
+						fPos = static_cast<float>(nDelta - nThreshold) / (nPOV - nThreshold);
+					if (fPos < -1.0f)
+						fPos = -1.0f;
+					if (fPos >  1.0f)
+						fPos =  1.0f;
 				}
 
 				// Set new value

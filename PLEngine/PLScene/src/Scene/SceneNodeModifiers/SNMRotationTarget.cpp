@@ -189,7 +189,7 @@ void SNMRotationTarget::NotifyPositionUpdate()
 	if (GetTargetPosition(vTargetPos)) {
 		// Get a quaternion representation of the rotation offset
 		Quaternion qRotOffset;
-		EulerAngles::ToQuaternion(float(Offset.Get().x*Math::DegToRad), float(Offset.Get().y*Math::DegToRad), float(Offset.Get().z*Math::DegToRad), qRotOffset);
+		EulerAngles::ToQuaternion(static_cast<float>(Offset.Get().x*Math::DegToRad), static_cast<float>(Offset.Get().y*Math::DegToRad), static_cast<float>(Offset.Get().z*Math::DegToRad), qRotOffset);
 
 		// Set rotation
 		Matrix3x3 mRot;

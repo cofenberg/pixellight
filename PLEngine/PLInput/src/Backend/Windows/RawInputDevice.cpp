@@ -269,7 +269,7 @@ void RawInputDevice::Update()
 	// Check if input device is valid
 	if (m_pDevice && m_nType == RIM_TYPEMOUSE) {
 		// Get mouse device
-		Mouse *pMouse = (Mouse*)m_pDevice;
+		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 
 		// Reset mouse movement
 		if (pMouse->X.GetValue() != 0.0f)
@@ -294,7 +294,7 @@ void RawInputDevice::ProcessKeyboardData(unsigned short nMakeCode, unsigned shor
 	// Check if input device is valid
 	if (m_pDevice && m_nType == RIM_TYPEKEYBOARD) {
 		// Get keyboard device
-		Keyboard *pKeyboard = (Keyboard*)m_pDevice;
+		Keyboard *pKeyboard = static_cast<Keyboard*>(m_pDevice);
 
 		// Get button
 		Button *pButton = GetKeyboardKey(pKeyboard, nKey);
@@ -316,20 +316,20 @@ void RawInputDevice::ProcessMouseData(unsigned short nFlags, unsigned long nButt
 	// Check if input device is valid
 	if (m_pDevice && m_nType == RIM_TYPEMOUSE) {
 		// Get mouse device
-		Mouse *pMouse = (Mouse*)m_pDevice;
+		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 
 		// Update axes
 		float fX, fY;
 		if (nFlags & MOUSE_MOVE_ABSOLUTE) {
 			// Absolute position
-			fX = pMouse->X.GetValue() + (float)(nLastX - m_nOldX);
-			fY = pMouse->Y.GetValue() + (float)(nLastY - m_nOldY);
+			fX = pMouse->X.GetValue() + static_cast<float>(nLastX - m_nOldX);
+			fY = pMouse->Y.GetValue() + static_cast<float>(nLastY - m_nOldY);
 			m_nOldX = nLastX;
 			m_nOldY = nLastY;
 		} else {
 			// Relative position
-			fX = pMouse->X.GetValue() + (float)nLastX;
-			fY = pMouse->Y.GetValue() + (float)nLastY;
+			fX = pMouse->X.GetValue() + static_cast<float>(nLastX);
+			fY = pMouse->Y.GetValue() + static_cast<float>(nLastY);
 		}
 
 		// Set axis values
@@ -341,38 +341,48 @@ void RawInputDevice::ProcessMouseData(unsigned short nFlags, unsigned long nButt
 		// Update buttons
 		if (nButtonFlags) {
 			if (nButtonFlags & RI_MOUSE_BUTTON_1_DOWN) {
-				if (!pMouse->Left.IsPressed()) pMouse->Left.SetPressed(true);
+				if (!pMouse->Left.IsPressed())
+					pMouse->Left.SetPressed(true);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_1_UP) {
-				if (pMouse->Left.IsPressed()) pMouse->Left.SetPressed(false);
+				if (pMouse->Left.IsPressed())
+					pMouse->Left.SetPressed(false);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_2_DOWN) {
-				if (!pMouse->Right.IsPressed()) pMouse->Right.SetPressed(true);
+				if (!pMouse->Right.IsPressed())
+					pMouse->Right.SetPressed(true);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_2_UP) {
-				if (pMouse->Right.IsPressed()) pMouse->Right.SetPressed(false);
+				if (pMouse->Right.IsPressed())
+					pMouse->Right.SetPressed(false);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_3_DOWN) {
-				if (!pMouse->Middle.IsPressed()) pMouse->Middle.SetPressed(true);
+				if (!pMouse->Middle.IsPressed())
+					pMouse->Middle.SetPressed(true);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_3_UP) {
-				if (pMouse->Middle.IsPressed()) pMouse->Middle.SetPressed(false);
+				if (pMouse->Middle.IsPressed())
+					pMouse->Middle.SetPressed(false);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_4_DOWN) {
-				if (!pMouse->Button4.IsPressed()) pMouse->Button4.SetPressed(true);
+				if (!pMouse->Button4.IsPressed())
+					pMouse->Button4.SetPressed(true);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_4_UP) {
-				if (pMouse->Button4.IsPressed()) pMouse->Button4.SetPressed(false);
+				if (pMouse->Button4.IsPressed())
+					pMouse->Button4.SetPressed(false);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_5_DOWN) {
-				if (!pMouse->Button5.IsPressed()) pMouse->Button5.SetPressed(true);
+				if (!pMouse->Button5.IsPressed())
+					pMouse->Button5.SetPressed(true);
 			}
 			if (nButtonFlags & RI_MOUSE_BUTTON_5_UP) {
-				if (pMouse->Button5.IsPressed()) pMouse->Button5.SetPressed(false);
+				if (pMouse->Button5.IsPressed())
+					pMouse->Button5.SetPressed(false);
 			}
 			if (nButtonFlags & RI_MOUSE_WHEEL) {
 				// Well ... nButtonData is unsigned, but the wheel delta can be negative. So let's cast USHORT to SHORT.
-				float fValue = (float) *((short*)&nButtonData);
+				float fValue = static_cast<float>(*reinterpret_cast<short*>(&nButtonData));
 				if (pMouse->Wheel.GetValue() != fValue)
 					pMouse->Wheel.SetValue(fValue, true);
 			}

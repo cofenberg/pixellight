@@ -130,7 +130,7 @@ Heap<KeyType, ValueType> &BinaryHeap<KeyType, ValueType, Comparer>::operator =(c
 template <class KeyType, class ValueType, class Comparer>
 int BinaryHeap<KeyType, ValueType, Comparer>::GetParent(uint32 nIndex) const
 {
-	return int(nIndex-1)/2;
+	return static_cast<int>(nIndex-1)/2;
 }
 
 /**

@@ -58,7 +58,7 @@ SNPoint::SNPoint() :
 	Flags(this)
 {
 	// Set draw function flags
-	SetDrawFunctionFlags(uint8(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
+	SetDrawFunctionFlags(static_cast<uint8>(GetDrawFunctionFlags() | UseDrawSolid | UseDrawTransparent));
 }
 
 /**

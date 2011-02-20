@@ -69,7 +69,7 @@ void PLSceneMaterialBakeShell::SaveParameters(XmlElement &cMaterialElement)
 		Mtl *pMaxMaterial = pBackedIGameMaterial->GetMaxMaterial();
 		if (pMaxMaterial) {
 			// See if it's a standard material
-			StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? (StdMat*)pMaxMaterial : nullptr;
+			StdMat *pMaxStandardMat = (pMaxMaterial->ClassID() == Class_ID(DMTL_CLASS_ID, 0)) ? static_cast<StdMat*>(pMaxMaterial) : nullptr;
 
 			// Textures, do only take "Self-Illumination" into account...
 			for (int nSlot=0; nSlot<pMaxMaterial->NumSubTexmaps(); nSlot++) {
@@ -78,10 +78,10 @@ void PLSceneMaterialBakeShell::SaveParameters(XmlElement &cMaterialElement)
 					// Get the texture
 					Texmap *pTexMap = pMaxMaterial->GetSubTexmap(nSlot);
 					if (pTexMap && pTexMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)) {
-						BitmapTex *pBitmapTex = (BitmapTex*)pTexMap;
+						BitmapTex *pBitmapTex = static_cast<BitmapTex*>(pTexMap);
 						TSTR sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
 						if (!_stricmp(sSlotName, "Self-Illumination")) {
-							SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), (const char*)sSlotName);
+							SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), static_cast<const char*>(sSlotName));
 							break;
 						}
 					}

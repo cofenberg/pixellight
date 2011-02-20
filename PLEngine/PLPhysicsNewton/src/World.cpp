@@ -812,7 +812,7 @@ bool World::SetSimulationQuality(float fQuality)
 		if (m_fSimulationQuality >= 0.5f)
 			NewtonSetSolverModel(m_pNewtonWorld, (m_fSimulationQuality >= 0.75f) ? 0 : 1);
 		else
-			NewtonSetSolverModel(m_pNewtonWorld, 2+int((m_fSimulationQuality*2)*10.0f));
+			NewtonSetSolverModel(m_pNewtonWorld, 2+static_cast<int>((m_fSimulationQuality*2)*10.0f));
 
 		// Set the friction model (0=exact coulomb, 1=adaptive coulomb, the default is exact)
 		NewtonSetFrictionModel(m_pNewtonWorld, (m_fSimulationQuality >= 0.5f) ? 0 : 1);

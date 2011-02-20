@@ -134,7 +134,7 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 	const uint32 nFragmentShaderID = cFlags.GetFragmentShaderFlags();
 
 	// Combine the two ID's into an unique 64 bit integer we can use to reference the linked program
-	const uint64 nProgramID = nVertexShaderID + uint64(uint64(nFragmentShaderID)<<32);
+	const uint64 nProgramID = nVertexShaderID + static_cast<uint64>(static_cast<uint64>(nFragmentShaderID)<<32);
 
 	// Is there already a generated program with the requested flags?
 	GeneratedProgram *pGeneratedProgram = m_mapPrograms.Get(nProgramID);

@@ -99,7 +99,7 @@ void SNMRotationLinearAnimation::NotifyUpdate()
 
 		// Get a quaternion representation of the rotation increase
 		Quaternion qRot;
-		EulerAngles::ToQuaternion(float(vRot.x*Math::DegToRad), float(vRot.y*Math::DegToRad), float(vRot.z*Math::DegToRad), qRot);
+		EulerAngles::ToQuaternion(static_cast<float>(vRot.x*Math::DegToRad), static_cast<float>(vRot.y*Math::DegToRad), static_cast<float>(vRot.z*Math::DegToRad), qRot);
 
 		// Apply the rotation increase
 		GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRot);

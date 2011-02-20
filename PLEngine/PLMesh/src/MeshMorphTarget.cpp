@@ -111,7 +111,7 @@ void MeshMorphTarget::SetName(const String &sName)
 			m_sName = sName;
 			while (m_pMesh->m_mapMorphTargets.Get(m_sName)) {
 				// This name is already used, find another one!
-				m_sName = sName + '_' + int(i);
+				m_sName = sName + '_' + static_cast<int>(i);
 				i++;
 			}
 

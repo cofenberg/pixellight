@@ -63,7 +63,7 @@ SNCoordinateAxisRotation::SNCoordinateAxisRotation() :
 	SetFlags(GetFlags()|NoCulling);
 
 	// Set draw function flags, we ONLY want to use the post draw function!
-	SetDrawFunctionFlags(uint8(UseDrawPost));
+	SetDrawFunctionFlags(static_cast<uint8>(UseDrawPost));
 }
 
 /**

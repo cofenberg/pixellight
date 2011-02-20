@@ -145,7 +145,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				String sName;
 				uint32 i = 0;
 				do {
-					sName = sModelName + '_' + int(nSurface+i);
+					sName = sModelName + '_' + static_cast<int>(nSurface+i);
 					i++;
 				} while (cMeshManager.Get(sName));
 

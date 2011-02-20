@@ -379,13 +379,13 @@ int FileWindows::PutS(const String &sString)
 uint32 FileWindows::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Read buffer
-	return IsReadable() ? (uint32)fread(pBuffer, nSize, nCount, m_pFile) : 0;
+	return IsReadable() ? static_cast<uint32>(fread(pBuffer, nSize, nCount, m_pFile)) : 0;
 }
 
 uint32 FileWindows::Write(const void *pBuffer, uint32 nSize, uint32 nCount)
 {
 	// Write buffer
-	return IsWritable() ? (uint32)fwrite(pBuffer, nSize, nCount, m_pFile) : 0;
+	return IsWritable() ? static_cast<uint32>(fwrite(pBuffer, nSize, nCount, m_pFile)) : 0;
 }
 
 bool FileWindows::Flush()

@@ -69,9 +69,9 @@ void PLSceneMaterialFX::SaveParameters(XmlElement &cMaterialElement)
 	Mtl *pMaxMaterial = m_pIGameMaterial->GetMaxMaterial();
 	if (pMaxMaterial) {
 		// DxMaterial or extend?
-		IDxMaterial2 *pFXMaterial = (IDxMaterial2*)m_pIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE);
+		IDxMaterial2 *pFXMaterial = static_cast<IDxMaterial2*>(m_pIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE));
 		if (!pFXMaterial && m_pParentIGameMaterial)
-			pFXMaterial = (IDxMaterial2*)m_pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE);
+			pFXMaterial = static_cast<IDxMaterial2*>(m_pParentIGameMaterial->GetMaxMaterial()->GetInterface(IDXMATERIAL2_INTERFACE));
 		if (pFXMaterial) { // Get information from the DirectX Shader material
 			// Get number of bitmaps used
 			int nNumOfBitmaps = pFXMaterial->GetNumberOfEffectBitmaps();
@@ -81,7 +81,7 @@ void PLSceneMaterialFX::SaveParameters(XmlElement &cMaterialElement)
 				PBBitmap *pBitmap = pFXMaterial->GetEffectBitmap(i);
 				if (pBitmap) {
 					BitmapInfo &cBInfo = pBitmap->bi;
-					const char *pszName = (const char*)cBInfo.Name();
+					const char *pszName = static_cast<const char*>(cBInfo.Name());
 					if (pszName && _stricmp(pszName, "None")) {
 						std::string sSemantic;
 						switch (pFXMaterial->GetBitmapUsage(i)) {

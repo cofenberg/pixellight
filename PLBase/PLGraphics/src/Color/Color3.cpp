@@ -530,7 +530,7 @@ float Color3::GetLuminance() const
 uint8 Color3::GetLuminanceInt() const
 {
 	// "Human formula"... our eyes recognize color components not uniformly
-	return uint8(r*0.299f + g*0.587f + b*0.114f);
+	return static_cast<uint8>(r*0.299f + g*0.587f + b*0.114f);
 }
 
 /**

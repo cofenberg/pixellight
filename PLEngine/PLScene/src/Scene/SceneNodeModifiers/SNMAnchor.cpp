@@ -192,9 +192,9 @@ void SNMAnchor::NotifyPositionRotationUpdate()
 									// Set the rotation of the attached node
 									if (!(GetFlags() & NoRotation)) {
 										Quaternion qRotOffset;
-										EulerAngles::ToQuaternion(float(JointRotationOffset.Get().x*Math::DegToRad),
-																  float(JointRotationOffset.Get().y*Math::DegToRad),
-																  float(JointRotationOffset.Get().z*Math::DegToRad),
+										EulerAngles::ToQuaternion(static_cast<float>(JointRotationOffset.Get().x*Math::DegToRad),
+																  static_cast<float>(JointRotationOffset.Get().y*Math::DegToRad),
+																  static_cast<float>(JointRotationOffset.Get().z*Math::DegToRad),
 																  qRotOffset);
 										qRot = cJointHandler.GetRotationAbsolute().GetUnitInverted()*qRotOffset;
 									}
@@ -216,9 +216,9 @@ void SNMAnchor::NotifyPositionRotationUpdate()
 			// Set the rotation of the attached node
 			if (!(GetFlags() & NoRotation)) {
 				Quaternion qRotOffset;
-				EulerAngles::ToQuaternion(float(RotationOffset.Get().x*Math::DegToRad),
-										  float(RotationOffset.Get().y*Math::DegToRad),
-										  float(RotationOffset.Get().z*Math::DegToRad),
+				EulerAngles::ToQuaternion(static_cast<float>(RotationOffset.Get().x*Math::DegToRad),
+										  static_cast<float>(RotationOffset.Get().y*Math::DegToRad),
+										  static_cast<float>(RotationOffset.Get().z*Math::DegToRad),
 										  qRotOffset);
 				pAttachedSceneNode->GetTransform().SetRotation(Quaternion(mTransform)*(cOwnerSceneNode.GetTransform().GetRotation()*qRotOffset*qRot));
 			}

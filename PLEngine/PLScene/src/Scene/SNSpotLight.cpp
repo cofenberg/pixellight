@@ -204,7 +204,7 @@ const Matrix4x4 &SNSpotLight::GetProjectionMatrix()
 {
 	// Calculate projection matrix if required
 	if (m_nInternalLightFlags & RecalculateProjectionMatrix) {
-		m_mProj.PerspectiveFov(float(m_fOuterAngle*Math::DegToRad),
+		m_mProj.PerspectiveFov(static_cast<float>(m_fOuterAngle*Math::DegToRad),
 							   (GetFlags() & NoCone) ? m_fAspect : 1.0f, m_fZNear, GetRange());
 
 		// Recalculation done
@@ -357,7 +357,7 @@ void SNSpotLight::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			if (!(GetFlags() & NoCone)) {
 				// Calculate the projection matrix
 				Matrix4x4 mProj;
-				mProj.PerspectiveFov(float(m_fInnerAngle*Math::DegToRad), 1.0f, m_fZNear, GetRange());
+				mProj.PerspectiveFov(static_cast<float>(m_fInnerAngle*Math::DegToRad), 1.0f, m_fZNear, GetRange());
 				mProj.Invert();
 
 				// Calculate the world matrix

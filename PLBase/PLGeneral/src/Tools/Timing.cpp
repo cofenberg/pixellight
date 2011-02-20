@@ -79,7 +79,7 @@ bool Timing::CheckUpdate(uint32 *pnTimeToWait) const
 	// Is there a FPS limitation?
 	if (m_fFPSLimit) {
 		const uint32 nPastTime     = System::GetInstance()->GetMilliseconds()-m_nFPSLimitLastTime;
-		const uint32 nTimePerFrame = uint32(1000/m_fFPSLimit);
+		const uint32 nTimePerFrame = static_cast<uint32>(1000/m_fFPSLimit);
 		if (nPastTime < nTimePerFrame) {
 			if (pnTimeToWait)
 				*pnTimeToWait = nTimePerFrame-nPastTime;
