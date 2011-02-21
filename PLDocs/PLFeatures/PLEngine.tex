@@ -125,19 +125,6 @@ Scenes are rendered using a realtime compositing system. For example a first lay
 \end{itemize}
 
 
-\subsection{Particle groups}
-\begin{itemize}
-\item{Particle groups are usual scene nodes}
-\item{They emit and manage particles. Each particle can be customized in an easy way in order to create unique effects}
-\item{Each particle group can only have one material for all its particles for performance reasons. But because you are able to set the texture coordinates for each particle individually, you are able to put many different particle images into one texture and then cut them out to create fast and amazing particle effects}
-\item{The texture coordinate setting of the particles can be done automatically. You only have to define the rows and columns of the single sub-textures in the main material and then you are able to set the used sub texture by its index. With this technique it is also possible to create particles with animated textures!}
-\item{Because the material of the particle group itself can also be animated there are even more particle animation possibilities!}
-\item{Advanced particle effects like distorted particles (beams, lasers etc), rotation of the individual particles, particles with individual orientation etc. are possible}
-\item{Point sprite support for maximum performance}
-\item{Because the RTTI is used, no extra particle editor is required - just tweak the variables}
-\end{itemize}
-
-
 
 
 \section{PLSound}

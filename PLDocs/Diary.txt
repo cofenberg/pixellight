@@ -1,3 +1,9 @@
+>> 21.02.2011
+[CO]
+- Updated PLFeatures-document: The particle base class is no longer "build in" within the PLScene project + mentioned the new SPARK_PL project
+
+
+
 >> 14.02.2011
 [CO]
 - CodingConventions: Added used source code file extensions + a footnote about variable prefixes + casting style + enhanced the introduction
