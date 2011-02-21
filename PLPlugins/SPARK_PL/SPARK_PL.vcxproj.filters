@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\SPARK_PL.cpp" />
+    <ClCompile Include="src\RenderingAPI\SPK_PLLineTrailRenderer.cpp">
+      <Filter>RenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderingAPI\SPK_PLPointRenderer.cpp">
+      <Filter>RenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderingAPI\SPK_PLQuadRenderer.cpp">
+      <Filter>RenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderingAPI\SPK_PLRenderer.cpp">
+      <Filter>RenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderingAPI\SPK_PLLineRenderer.cpp">
+      <Filter>RenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderingAPI\SPK_PLBuffer.cpp">
+      <Filter>RenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SNSystem.cpp" />
+    <ClCompile Include="src\SNBasicDemo.cpp" />
+    <ClCompile Include="src\SNGravitationDemo.cpp" />
+    <ClCompile Include="src\SNFireDemo.cpp" />
+    <ClCompile Include="src\SNGalaxyDemo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\SPARK_PL\SPARK_PL.h" />
+    <ClInclude Include="include\SPARK_PL\SPARK_PLLinux.h" />
+    <ClInclude Include="include\SPARK_PL\SPARK_PLWindows.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPI\SPK_PLLineTrailRenderer.h">
+      <Filter>RenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\RenderingAPI\SPK_PLPointRenderer.h">
+      <Filter>RenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\RenderingAPI\SPK_PLQuadRenderer.h">
+      <Filter>RenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\RenderingAPI\SPK_PLRenderer.h">
+      <Filter>RenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\RenderingAPI\SPK_PLLineRenderer.h">
+      <Filter>RenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\RenderingAPI\SPK_PLBuffer.h">
+      <Filter>RenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\SNSystem.h" />
+    <ClInclude Include="include\SPARK_PL\SNGravitationDemo.h" />
+    <ClInclude Include="include\SPARK_PL\SNBasicDemo.h" />
+    <ClInclude Include="include\SPARK_PL\SNFireDemo.h" />
+    <ClInclude Include="include\SPARK_PL\SNGalaxyDemo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+    <None Include="include\SPARK_PL\RenderingAPI\SPK_PLRenderer.inl">
+      <Filter>RenderingAPI</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="RenderingAPI">
+      <UniqueIdentifier>{6db998f7-f92c-4f5d-a33f-19c019997d63}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

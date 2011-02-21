@@ -158,6 +158,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2011", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPicking", "PLDemos\PLDemoPicking\PLDemoPickingInternal.vcxproj", "{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPARK_PL", "PLPlugins\SPARK_PL\SPARK_PL.vcxproj", "{C2CB2665-591E-4D26-A145-0DB8298CBDB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1013,6 +1015,17 @@ Global
 		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|Win32.Build.0 = Release|Win32
 		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|x64.ActiveCfg = Release|x64
 		{582D9F01-B1D0-4AAF-8DC5-A1B7C5EA68DE}.Release|x64.Build.0 = Release|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Debug|Win32.Build.0 = Debug|Win32
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Debug|x64.ActiveCfg = Debug|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Debug|x64.Build.0 = Debug|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Hybrid|Win32.ActiveCfg = Release|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Hybrid|x64.ActiveCfg = Release|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Hybrid|x64.Build.0 = Release|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|Win32.ActiveCfg = Release|Win32
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|Win32.Build.0 = Release|Win32
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|x64.ActiveCfg = Release|x64
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

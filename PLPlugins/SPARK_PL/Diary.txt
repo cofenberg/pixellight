@@ -1,0 +1,22 @@
+﻿>> 21.02.2011
+[CO]
+- Ok, I think the plugin is now ready for the public Git-repository, although I still have to think about how the plugin can/should be used. The
+  main work was writing the renderer implementations. Currently I just added some scene nodes which are actually ports of some SPARK demos. Possibly,
+  it's a good idea to provide some "standard particle effect scene nodes" like a fire were the user can just adjust some RTTI attributes + it should
+  also be possible to directly use the SPARK interface so that this plugin doesn't take away the freedom to do everything one may do with SPARK.
+
+
+
+>> 20.02.2011
+[CO]
+- Finally, found some time (there was some left under the carpet) to continue the work on the SPARK-plugin. I can now already see particles flying
+  around. I really like SPARK because it's well designed.
+
+
+
+>> 31.01.2011
+[CO]
+- Started the "SPARK_PL"-project. This project integrates the free open source particle engine "SPARK" (http://spark.developpez.com) into PixelLight as a
+  plugin. Within the SPARK SDK, there are some plugins for integration like Irrlicht ("SPARK_IRR") or SFML ("SPARK_SFML"), so I named this new project
+  "SPARK_PL". For now, I decided to link SPARK statically because the lib is quite compact and so, this PixelLight plugin doesn't need additional
+  external dependencies (but it may be changed to dynamically linked later if required/wished).

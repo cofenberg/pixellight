@@ -4,6 +4,12 @@
 
 
 
+>> 31.01.2011
+[CO]
+- Added open source particle engine "SPARK" (http://spark.developpez.com)
+
+
+
 >> 25.12.2010
 [CO]
 - Updated from "Cg Toookit 3.0 - July 2010" to "Cg Toookit 3.0 - November 2010"

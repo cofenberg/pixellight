@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<Scene Version="1" Name="Scene">
+    <Node Class="PLScene::SNCamera" Name="FreeCamera" Rotation="0.0 160.0 0.0">
+        <Modifier Class="PLScene::SNMLookController" />
+        <Modifier Class="PLScene::SNMRotationFixRoll" />
+        <Modifier Class="PLScene::SNMMoveController" />
+    </Node>
+    <Node Class="SPARK_PL::SNBasicDemo" Position="0 0 -4" />
+    <Node Class="SPARK_PL::SNGalaxyDemo" Position="0 0 -10" />
+    <Node Class="SPARK_PL::SNGravitationDemo" Position="4 0 -4" />
+    <Node Class="SPARK_PL::SNFireDemo" Position="4 0 -10" />
+</Scene>

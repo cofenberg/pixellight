@@ -127,6 +127,7 @@ shortcut("Dir_PLScene", "include\\PLScene\\");
 shortcut("Dir_PLPhysics", "include\\PLPhysics\\");
 shortcut("Dir_PLEngine", "include\\PLEngine\\");
 shortcut("Dir_PLParticleGroups", "include\\PLParticleGroups\\");
+shortcut("Dir_SPARK_PL", "include\\SPARK_PL\\");
 // Demos
 shortcut("Dir_Demos", "Demos\\");
 shortcut("Dir_Demos_Bin", "Demos\\Bin\\");
@@ -185,6 +186,7 @@ text_shortcut("Scene_PhysicsJoints", "Demos\\Bin\\Data\\Scenes\\PhysicsJoints.sc
 text_shortcut("Scene_PhysicsManiacMarble", "Demos\\Bin\\Data\\Scenes\\PhysicsManiacMarble.scene");
 text_shortcut("Scene_PhysicsMouseInteraction", "Demos\\Bin\\Data\\Scenes\\PhysicsMouseInteraction.scene");
 text_shortcut("Scene_PLParticleGroups", "Demos\\Bin\\Data\\Scenes\\PLParticleGroups.scene");
+text_shortcut("Scene_SPARK_PL", "Demos\\Bin\\Data\\Scenes\\SPARK_PL.scene");
 text_shortcut("Scene_Mipmaps", "Demos\\Bin\\Data\\Scenes\\Mipmaps.scene");
 text_shortcut("Scene_ReflectionCubeMap", "Demos\\Bin\\Data\\Scenes\\ReflectionCubeMap.scene");
 text_shortcut("Scene_SceneNodeModifiers", "Demos\\Bin\\Data\\Scenes\\SceneNodeModifiers.scene");
@@ -206,6 +208,7 @@ scene_exe_shortcut("SceneExe_PhysicsJoints", "Demos\\Bin\\Data\\Scenes\\PhysicsJ
 scene_exe_shortcut("SceneExe_PhysicsManiacMarble", "Demos\\Bin\\Data\\Scenes\\PhysicsManiacMarble.scene");
 scene_exe_shortcut("SceneExe_PhysicsMouseInteraction", "Demos\\Bin\\Data\\Scenes\\PhysicsMouseInteraction.scene");
 scene_exe_shortcut("SceneExe_PLParticleGroups", "Demos\\Bin\\Data\\Scenes\\PLParticleGroups.scene");
+scene_exe_shortcut("SceneExe_SPARK_PL", "Demos\\Bin\\Data\\Scenes\\SPARK_PL.scene");
 scene_exe_shortcut("SceneExe_Mipmaps", "Demos\\Bin\\Data\\Scenes\\Mipmaps.scene");
 scene_exe_shortcut("SceneExe_ReflectionCubeMap", "Demos\\Bin\\Data\\Scenes\\ReflectionCubeMap.scene");
 scene_exe_shortcut("SceneExe_SceneNodeModifiers", "Demos\\Bin\\Data\\Scenes\\SceneNodeModifiers.scene");
