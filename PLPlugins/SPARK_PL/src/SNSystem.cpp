@@ -62,8 +62,8 @@ pl_implement_class(SNSystem)
 */
 SNSystem::SNSystem() :
 	Flags(this),
-	m_pParticleSystem(nullptr),
 	EventHandlerUpdate(&SNSystem::NotifyUpdate, this),
+	m_pParticleSystem(nullptr),
 	m_bUpdate(false)
 {
 	// Set draw function flags

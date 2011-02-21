@@ -31,6 +31,10 @@
 #include <PLRenderer/Renderer/FixedFunctions.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
+	// [HACK] There are missing forward declarations within the SPARK headers...
+	namespace SPK {
+		class Group;
+	}
 	#include <Extensions/Renderers/SPK_QuadRendererInterface.h>
 	#include <Extensions/Renderers/SPK_Oriented3DRendererInterface.h>
 PL_WARNING_POP

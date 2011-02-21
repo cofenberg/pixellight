@@ -33,6 +33,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
+	${SPARK_INCLUDE_DIRS}
 )
 
 ##################################################
@@ -53,6 +54,7 @@ add_libs(
 	PLRenderer
 	PLMesh
 	PLScene
+	${SPARK_LIBRARIES}
 )
 
 ##################################################
@@ -124,7 +126,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLGraphics PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-SPARK PLGeneral PLCore PLMath PLGraphics PLRenderer PLMesh PLScene)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

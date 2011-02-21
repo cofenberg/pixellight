@@ -32,6 +32,10 @@
 #include <PLScene/Scene/SNCamera.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
+	// [HACK] There are missing forward declarations within the SPARK headers...
+	namespace SPK {
+		class Group;
+	}
 	#include <Core/SPK_Group.h>
 PL_WARNING_POP
 #include "SPARK_PL/RenderingAPI/SPK_PLBuffer.h"
@@ -294,15 +298,15 @@ void SPK_PLPointRenderer::EnablePointParameter(float fSize, bool bDistance) cons
 		fPixelPerUnit = fScreenHeight/(2.0f*Math::Tan(fFovY*0.5f));
 	}
 
-	// Derived size = size*sqrt(1/(A + B*distance + C*distance²))
+	// Derived size = size*sqrt(1/(A + B*distance + C*distanceï¿½))
 	if (bDistance) {
 		const float fSqrtC = PointSizeCurrent/(fSize*fPixelPerUnit);
 		GetPLRenderer().SetRenderState(RenderState::PointScaleA, Tools::FloatToUInt32(0.0f));			// A = 0
 		GetPLRenderer().SetRenderState(RenderState::PointScaleB, Tools::FloatToUInt32(0.0f));			// B = 0
-		GetPLRenderer().SetRenderState(RenderState::PointScaleC, Tools::FloatToUInt32(fSqrtC*fSqrtC));	// C = (PointSizeCurrent/(size*fPixelPerUnit))²
+		GetPLRenderer().SetRenderState(RenderState::PointScaleC, Tools::FloatToUInt32(fSqrtC*fSqrtC));	// C = (PointSizeCurrent/(size*fPixelPerUnit))ï¿½
 	} else {
 		const float fSqrtA = PointSizeCurrent/fSize;
-		GetPLRenderer().SetRenderState(RenderState::PointScaleA, Tools::FloatToUInt32(fSqrtA*fSqrtA));	// A = (PointSizeCurrent/size)²
+		GetPLRenderer().SetRenderState(RenderState::PointScaleA, Tools::FloatToUInt32(fSqrtA*fSqrtA));	// A = (PointSizeCurrent/size)ï¿½
 		GetPLRenderer().SetRenderState(RenderState::PointScaleB, Tools::FloatToUInt32(0.0f));			// B = 0
 		GetPLRenderer().SetRenderState(RenderState::PointScaleC, Tools::FloatToUInt32(0.0f));			// C = 0
 	}
