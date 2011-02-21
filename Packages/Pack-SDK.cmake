@@ -16,7 +16,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	##################################################
 	set(CMAKE_MODULE_PATH		${CMAKE_SOURCE_DIR}/Packages/SDK)
 	set(CPACK_PL_PACKAGE_PATH	${CMAKE_SOURCE_DIR}/Packages)
-	if(MSVC100)
+	if(MSVC10)
 		# Microsoft Visual C++ 2010 Redistributable
 		set(CPACK_PL_VC_MESSAGE	"In order to install PixelLight on your computer, you will need the Microsoft Visual C++ 2010 Redestributable package. Do you want to install it now?")
 		set(CPACK_PL_VC_REDIST	"VC10\\\\vcredist_x86.exe")
