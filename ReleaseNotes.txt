@@ -1,4 +1,4 @@
-Changes in PixelLight 0.9.5-R1 (not yet released)
+Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)
 - Feature: New plugin "SPARK_PL": Integrates the free open source particle engine "SPARK" (http://spark.developpez.com) into PixelLight
 - Feature: Added new demo "PLDemoSPARK_PL" showing how to use the new "SPARK_PL"-project within C++ projects
 - Feature: Added new demo "PLDemoPicking" showing how picking works
