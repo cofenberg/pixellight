@@ -23,25 +23,25 @@ add_sources(
 	src/Core/SPK_Transformable.cpp
 	src/Core/SPK_Vector3D.cpp
 	src/Core/SPK_Zone.cpp
-	src/Core/Emitters/SPK_NormalEmitter.cpp
-	src/Core/Emitters/SPK_RandomEmitter.cpp
-	src/Core/Emitters/SPK_SphericEmitter.cpp
-	src/Core/Emitters/SPK_StraightEmitter.cpp
-	src/Core/Modifiers/SPK_Collision.cpp
-	src/Core/Modifiers/SPK_Destroyer.cpp
-	src/Core/Modifiers/SPK_LinearForce.cpp
-	src/Core/Modifiers/SPK_ModifierGroup.cpp
-	src/Core/Modifiers/SPK_Obstacle.cpp
-	src/Core/Modifiers/SPK_PointMass.cpp
-	src/Core/Modifiers/SPK_Vortex.cpp
-	src/Core/Zones/SPK_AABox.cpp
-	src/Core/Zones/SPK_Line.cpp
-	src/Core/Zones/SPK_Plane.cpp
-	src/Core/Zones/SPK_Point.cpp
-	src/Core/Zones/SPK_Ring.cpp
-	src/Core/Zones/SPK_Sphere.cpp
-	src/Core/Renderers/SPK_Oriented3DRendererInterface.cpp
-	src/Core/Renderers/SPK_QuadRendererInterface.cpp
+	src/Extensions/Emitters/SPK_NormalEmitter.cpp
+	src/Extensions/Emitters/SPK_RandomEmitter.cpp
+	src/Extensions/Emitters/SPK_SphericEmitter.cpp
+	src/Extensions/Emitters/SPK_StraightEmitter.cpp
+	src/Extensions/Modifiers/SPK_Collision.cpp
+	src/Extensions/Modifiers/SPK_Destroyer.cpp
+	src/Extensions/Modifiers/SPK_LinearForce.cpp
+	src/Extensions/Modifiers/SPK_ModifierGroup.cpp
+	src/Extensions/Modifiers/SPK_Obstacle.cpp
+	src/Extensions/Modifiers/SPK_PointMass.cpp
+	src/Extensions/Modifiers/SPK_Vortex.cpp
+	src/Extensions/Zones/SPK_AABox.cpp
+	src/Extensions/Zones/SPK_Line.cpp
+	src/Extensions/Zones/SPK_Plane.cpp
+	src/Extensions/Zones/SPK_Point.cpp
+	src/Extensions/Zones/SPK_Ring.cpp
+	src/Extensions/Zones/SPK_Sphere.cpp
+	src/Extensions/Renderers/SPK_Oriented3DRendererInterface.cpp
+	src/Extensions/Renderers/SPK_QuadRendererInterface.cpp
 	src/PLSceneNodes/SNSystem.cpp
 	src/PLSceneNodes/SNFireDemo.cpp
 	src/PLSceneNodes/SNBasicDemo.cpp
