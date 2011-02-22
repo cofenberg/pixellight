@@ -29,6 +29,12 @@
 #include "Core/SPK_Model.h"
 
 
+// [HACK] There are missing forward declarations within the SPARK headers...
+namespace SPK {
+	class Group;
+}
+
+
 namespace SPK
 {
 	/**
