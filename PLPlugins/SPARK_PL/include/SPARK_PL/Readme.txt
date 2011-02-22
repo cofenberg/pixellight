@@ -2,3 +2,7 @@
 - License: "SPARK is a free software under zlib license" (see "zlib.txt")
 - SPARK download from: http://spark.developpez.com/
 - Used within the "SPARK_PL" plugin (statically linked and therefore without additional external dependencies)
+
+
+Notes:
+- "SPK_DEF.h" was slightly changed so it compiles fine under Linux as well, the code is marked with a [HACK]
