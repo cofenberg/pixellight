@@ -8,17 +8,51 @@ define_project(SPARK_PL)
 ##################################################
 add_sources(
 	src/SPARK_PL.cpp
-	src/SNSystem.cpp
-	src/SNFireDemo.cpp
-	src/SNBasicDemo.cpp
-	src/SNGalaxyDemo.cpp
-	src/SNGravitationDemo.cpp
-	src/RenderingAPI/SPK_PLBuffer.cpp
-	src/RenderingAPI/SPK_PLLineRenderer.cpp
-	src/RenderingAPI/SPK_PLLineTrailRenderer.cpp
-	src/RenderingAPI/SPK_PLPointRenderer.cpp
-	src/RenderingAPI/SPK_PLQuadRenderer.cpp
-	src/RenderingAPI/SPK_PLRenderer.cpp
+	src/Core/SPK_BufferHandler.cpp
+	src/Core/SPK_DEF.cpp
+	src/Core/SPK_Emitter.cpp
+	src/Core/SPK_Factory.cpp
+	src/Core/SPK_Group.cpp
+	src/Core/SPK_Interpolator.cpp
+	src/Core/SPK_Model.cpp
+	src/Core/SPK_Modifier.cpp
+	src/Core/SPK_Particle.cpp
+	src/Core/SPK_Registerable.cpp
+	src/Core/SPK_Renderer.cpp
+	src/Core/SPK_System.cpp
+	src/Core/SPK_Transformable.cpp
+	src/Core/SPK_Vector3D.cpp
+	src/Core/SPK_Zone.cpp
+	src/Core/Emitters/SPK_NormalEmitter.cpp
+	src/Core/Emitters/SPK_RandomEmitter.cpp
+	src/Core/Emitters/SPK_SphericEmitter.cpp
+	src/Core/Emitters/SPK_StraightEmitter.cpp
+	src/Core/Modifiers/SPK_Collision.cpp
+	src/Core/Modifiers/SPK_Destroyer.cpp
+	src/Core/Modifiers/SPK_LinearForce.cpp
+	src/Core/Modifiers/SPK_ModifierGroup.cpp
+	src/Core/Modifiers/SPK_Obstacle.cpp
+	src/Core/Modifiers/SPK_PointMass.cpp
+	src/Core/Modifiers/SPK_Vortex.cpp
+	src/Core/Zones/SPK_AABox.cpp
+	src/Core/Zones/SPK_Line.cpp
+	src/Core/Zones/SPK_Plane.cpp
+	src/Core/Zones/SPK_Point.cpp
+	src/Core/Zones/SPK_Ring.cpp
+	src/Core/Zones/SPK_Sphere.cpp
+	src/Core/Renderers/SPK_Oriented3DRendererInterface.cpp
+	src/Core/Renderers/SPK_QuadRendererInterface.cpp
+	src/PLSceneNodes/SNSystem.cpp
+	src/PLSceneNodes/SNFireDemo.cpp
+	src/PLSceneNodes/SNBasicDemo.cpp
+	src/PLSceneNodes/SNGalaxyDemo.cpp
+	src/PLSceneNodes/SNGravitationDemo.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLBuffer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLLineRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLLineTrailRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLPointRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLRenderer.cpp
 )
 
 ##################################################
@@ -26,6 +60,7 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
+	include/SPARK_PL
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
@@ -33,7 +68,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
-	${SPARK_INCLUDE_DIRS}
 )
 
 ##################################################
@@ -54,7 +88,6 @@ add_libs(
 	PLRenderer
 	PLMesh
 	PLScene
-	${SPARK_LIBRARIES}
 )
 
 ##################################################
@@ -62,6 +95,7 @@ add_libs(
 ##################################################
 add_compile_defs(
 	SPARK_PL_EXPORTS
+	SPK_CORE_EXPORT
 )
 if(WIN32)
 	##################################################
@@ -121,12 +155,12 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime/Plugins/PLScene)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-SPARK PLGeneral PLCore PLMath PLGraphics PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLGraphics PLRenderer PLMesh PLScene)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -135,13 +169,13 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLRuntime/Plugins/PLScene"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLRuntime"
 )
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime/Plugins/PLScene"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime/Plugins/PLScene"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
 	)
 endif()
 
@@ -158,17 +192,17 @@ endif()
 
 # Library
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScene		COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScene		COMPONENT Runtime
-	ARCHIVE DESTINATION ${PL_INSTALL_LIB}							COMPONENT SDK
+	RUNTIME DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
+	ARCHIVE DESTINATION ${PL_INSTALL_LIB}		COMPONENT SDK
 )
 
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
-	DESTINATION ${PL_INSTALL_INCLUDE} 								COMPONENT SDK		PATTERN ".svn" EXCLUDE
+	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		PATTERN ".svn" EXCLUDE
 )
 
 # Plugin file
-install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLScene/${CMAKETOOLS_CURRENT_PLUGIN}
-	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScene				COMPONENT Runtime
+install(FILES ${PL_BIN_DIR}/PLRuntime/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_SHARED}			COMPONENT Runtime
 )

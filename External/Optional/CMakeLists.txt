@@ -28,7 +28,6 @@ add_subdirectory(MySQL)
 add_subdirectory(ODE)
 add_subdirectory(OpenGLES)
 add_subdirectory(Cg)
-add_subdirectory(SPARK)
 
 ##################################################
 ## Dependencies

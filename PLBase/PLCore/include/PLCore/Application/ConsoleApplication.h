@@ -438,7 +438,8 @@ class ConsoleApplication {
 		*    - Scan for plugins in application directory non-recursivly
 		*    - Scan for plugins in application directory "Plugins/" recursivly
 		*    - If UseRuntime is set to 'true':
-		*      - Load plugins from PixelLight runtime directory
+		*      - Scan for plugins in PixelLight runtime directory non-recursivly
+		*      - Scan for plugins in PixelLight runtime directory "Plugins/" recursivly
 		*/
 		PLCORE_API virtual void OnInitPlugins();
 

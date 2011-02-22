@@ -1,3 +1,9 @@
+>> 22.02.2011
+[CO]
+- Added new demo "PLDemoSPARK_PL" showing how to use the new "SPARK_PL"-project within C++ projects
+
+
+
 >> 18.02.2011
 [CO]
 - Added new demo "PLDemoPicking" showing how picking works

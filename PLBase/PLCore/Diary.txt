@@ -1,3 +1,11 @@
+>> 22.02.2011
+[CO]
+- "ConsoleApplication::OnInitPlugins()": The PixelLight runtime directory is now also scanned non-recursively for plugins. This is quite useful
+  for projects which can be used completely dynamically, but can also be used in other C++ projects to access certain features. This behaviour is
+  also symmetric to the application directory scan.
+
+
+
 >> 12.12.2010
 [CO]
 - Loadable-System: At the PixelLight mailing list (pixellight@lists.pixellight.org), a discussion about case-sensitive file-extensions

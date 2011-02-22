@@ -160,6 +160,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPicking", "PLDemos\PL
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPARK_PL", "PLPlugins\SPARK_PL\SPARK_PL.vcxproj", "{C2CB2665-591E-4D26-A145-0DB8298CBDB6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSPARK_PL", "PLDemos\PLDemoSPARK_PL\PLDemoSPARK_PLInternal.vcxproj", "{62F2E608-C1CD-465E-9823-780F71D820BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2CB2665-591E-4D26-A145-0DB8298CBDB6} = {C2CB2665-591E-4D26-A145-0DB8298CBDB6}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1026,6 +1031,17 @@ Global
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|Win32.Build.0 = Release|Win32
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|x64.ActiveCfg = Release|x64
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|x64.Build.0 = Release|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Debug|Win32.Build.0 = Debug|Win32
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Debug|x64.ActiveCfg = Debug|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Debug|x64.Build.0 = Debug|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Hybrid|Win32.ActiveCfg = Release|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Hybrid|x64.ActiveCfg = Release|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Hybrid|x64.Build.0 = Release|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|Win32.ActiveCfg = Release|Win32
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|Win32.Build.0 = Release|Win32
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|x64.ActiveCfg = Release|x64
+		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

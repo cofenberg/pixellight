@@ -36,6 +36,9 @@ add_subdirectory(PLDemoSoundBasic)
 add_subdirectory(PLDemoPostProcess)
 add_subdirectory(PLDemo2DGame)
 add_subdirectory(PLDemoIngameGUI)
+if(PL_PLUGIN_ENGINE_SPARK)
+	add_subdirectory(PLDemoSPARK_PL)
+endif()
 
 ##################################################
 ## Dependencies

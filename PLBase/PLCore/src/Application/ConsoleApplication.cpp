@@ -568,7 +568,7 @@ void ConsoleApplication::OnInitPlugins()
 	// (which is necessary due to VC manifest policy)
 	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
 
-	// Scan for plugins in "Plugins" directory (recursivly)
+	// Scan for plugins in "Plugins" directory (recursively)
 	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/");
 
 	// Use PixelLight runtime?
@@ -576,6 +576,11 @@ void ConsoleApplication::OnInitPlugins()
 		// Get PixelLight runtime directory
 		String sPLDirectory = Core::GetRuntimeDirectory();
 		if (sPLDirectory.GetLength()) {
+			// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
+			// for projects which can be used completely dynamically, but can also be used in other C++ projects
+			// to access certain features.
+			ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
+
 			// Scan for plugins in PixelLight runtime directory
 			ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/");
 		}
