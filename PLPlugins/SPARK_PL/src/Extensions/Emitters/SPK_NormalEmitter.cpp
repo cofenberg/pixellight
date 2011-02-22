@@ -40,7 +40,7 @@ namespace SPK
 	void NormalEmitter::copyChildren(const NormalEmitter& emitter,bool createBase)
 	{
 		Emitter::copyChildren(emitter,createBase);
-		normalZone = dynamic_cast<Zone*>(copyChild(emitter.normalZone,createBase));	
+		normalZone = static_cast<Zone*>(copyChild(emitter.normalZone,createBase));	
 	}
 	
 	void NormalEmitter::destroyChildren(bool keepChildren)

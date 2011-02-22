@@ -7,8 +7,12 @@ define_project(PLDemoSPARK_PL NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application.cpp
+	src/SNBasicDemo.cpp
+	src/SNFireDemo.cpp
+	src/SNGalaxyDemo.cpp
+	src/SNGravitationDemo.cpp
 )
 
 ##################################################

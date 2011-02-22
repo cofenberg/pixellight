@@ -47,7 +47,7 @@ namespace SPK
 		modifiers.clear();
 
 		for (std::vector<Modifier*>::const_iterator it = modifier.modifiers.begin(); it != modifier.modifiers.end(); ++it)
-			modifiers.push_back(dynamic_cast<Modifier*>(copyChild(*it,createBase)));	
+			modifiers.push_back(static_cast<Modifier*>(copyChild(*it,createBase)));	
 	}
 	
 	void ModifierGroup::destroyChildren(bool keepChildren)

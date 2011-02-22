@@ -48,7 +48,7 @@ namespace SPK
 	void Emitter::copyChildren(const Emitter& emitter,bool createBase)
 	{
 		Registerable::copyChildren(emitter,createBase);
-		zone = dynamic_cast<Zone*>(copyChild(emitter.zone,createBase));	
+		zone = static_cast<Zone*>(copyChild(emitter.zone,createBase));	
 	}
 	
 	void Emitter::destroyChildren(bool keepChildren)
