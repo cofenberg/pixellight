@@ -435,11 +435,11 @@ class ConsoleApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Scan for plugins in application directory non-recursivly
-		*    - Scan for plugins in application directory "Plugins/" recursivly
+		*    - Scan for plugins in application directory non-recursively
+		*    - Scan for plugins in application directory "Plugins/" recursively
 		*    - If UseRuntime is set to 'true':
-		*      - Scan for plugins in PixelLight runtime directory non-recursivly
-		*      - Scan for plugins in PixelLight runtime directory "Plugins/" recursivly
+		*      - Scan for plugins in PixelLight runtime directory non-recursively
+		*      - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
 		*/
 		PLCORE_API virtual void OnInitPlugins();
 
