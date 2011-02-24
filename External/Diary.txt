@@ -1,3 +1,9 @@
+>> 24.02.2011
+[CO]
+- Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
+
+
+
 >> 22.02.2011
 [CO]
 - Removed "SPARK" from externals (see "SPARK_PL"-diary for details)
@@ -18,7 +24,7 @@
 
 >> 25.12.2010
 [CO]
-- Updated from "Cg Toookit 3.0 - July 2010" to "Cg Toookit 3.0 - November 2010"
+- Updated from "Cg Toolkit 3.0 - July 2010" to "Cg Toolkit 3.0 - November 2010"
 - Updated "Newton Game Dynamics" from "2.24" to "2.28" on Windows and "2.26" on Linux
 - By accident I found within the latest "Newton Game Dynamics" Linux version a text file stating that this library can be redistributed while
   there are some other license files of this library stating it's not allowed to redistribute it. I did some research and found a discussion at
@@ -76,7 +82,7 @@
 [CO]
 - Wie schon bei OpenGL ES, werden nun auch bei Cg die dlls (hier "cg.dll", "cgGL.dll" und "cgD3D9.dll") bei CMake Check/Install
   ins Runtime Verzeichnis kopiert, und liegen nicht schon im direkt frisch geklonten git Repository
-- Von "Cg Toolkit 2.2, February 2010 Release" auf "Cg Toookit 3.0 - July 2010" umgestellt
+- Von "Cg Toolkit 2.2, February 2010 Release" auf "Cg Toolkit 3.0 - July 2010" umgestellt
 - CMake Check/Install kopiert nun "newton.dll" (Newton), "ode.dll" (ODE) und "PhysXLoader.dll" (PhysX) in das entsprechende
   Runtime Verzeichnis
 - CMake Check/Install kopiert nun "fmod.dll" (FMOD), "fmodex.dll" (FMOD Ex) und "OpenAL32.dll"&"wrap_oal.dll" (OpenAL) in

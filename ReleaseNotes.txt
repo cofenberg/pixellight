@@ -1,5 +1,5 @@
 Changes in PixelLight 0.9.6-R1 (not yet released)
--
+- Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
 
 
 Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)
@@ -18,7 +18,7 @@ Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)
 - Change: Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin project
 - Change: Updated libogg from "1.2.0" to "1.2.2"
 - Change: Updated libvorbis from "1.3.1" to "1.3.2"
-- Change: Updated from "Cg Toookit 3.0 - July 2010" to "Cg Toookit 3.0 - November 2010"
+- Change: Updated from "Cg Toolkit 3.0 - July 2010" to "Cg Toolkit 3.0 - November 2010"
 - Change: Updated OpenEXR from "1.4.0" to "1.6.1"
 - Change: "PLPhysics::SNMPhysicsBody": Made following attributes to flags: InitFrozen->InitUnfrozen, AutoFreeze->NoAutoFreeze, UseGravity->NoGravity, UseRotation->NoRotation
 - Bugfix: The PLImageLoaderEXR plugin was broken, loading exr (high dynamic range image file format) images is working again
@@ -52,7 +52,7 @@ Changes in PixelLight 0.9.3-R1 (released on October 23, 2010)
 - Feature: Input control scene nodes and scene node modifiers are now using virtual input controllers instead of accessing input devices directly
 - Feature: Within "PLScene::SceneApplication::OnInputControllerFound()", input control can be changed (e.g. assigning other keys)
 - Feature: Deferred scene renderer performance improvements (if the CPU is the bottleneck)
-- Change: Updated from "Cg Toolkit 2.2, February 2010 Release" to "Cg Toookit 3.0 - July 2010"
+- Change: Updated from "Cg Toolkit 2.2, February 2010 Release" to "Cg Toolkit 3.0 - July 2010"
 - Change: Introduced new "PLRenderer::ShaderLanguage" interface, removed "Create<Type>Shader()" and "CreateProgram()" within "PLRenderer::Renderer"
 - Change: Camera zoom input control modifier "PLScene::SNMCameraZoom" was replaced by "PLScene::SNMCameraZoomController"
 - Change: "PLPhysics::SNMPhysicsCharacterController" is now using a virtual input controller instead of accessing input devices directly
