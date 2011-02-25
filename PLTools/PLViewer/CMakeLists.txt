@@ -177,6 +177,11 @@ add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 ## Install
 ##################################################
 
+# "WhereIsTheLog.txt"-file
+install(FILES ${CMAKE_SOURCE_DIR}/Bin/PLTools/PLViewer/WhereIsTheLog.txt
+	DESTINATION ${PL_INSTALL_ROOT}/Tools/PLViewer	COMPONENT SDK
+)
+
 # Executable
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 	DESTINATION ${PL_INSTALL_ROOT}/Tools/PLViewer	COMPONENT SDK

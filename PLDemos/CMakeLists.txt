@@ -49,6 +49,11 @@ add_dependencies(PixelLight Demos)
 ## Install
 ##################################################
 
+# "WhereIsTheLog.txt"-file
+install(FILES ${CMAKE_SOURCE_DIR}/Bin/PLDemos/WhereIsTheLog.txt
+	DESTINATION ${PL_INSTALL_DEMOS}/	COMPONENT SDK
+)
+
 # Data
 install(DIRECTORY ${PL_BIN_DIR}/PLDemos/Data
 	DESTINATION ${PL_INSTALL_DEMOS_BIN}	COMPONENT SDK	PATTERN ".svn" EXCLUDE

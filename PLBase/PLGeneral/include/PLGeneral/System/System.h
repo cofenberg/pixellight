@@ -161,9 +161,9 @@ class System : public Singleton<System> {
 		*
 		*  @remarks
 		*    Examples on different systems:
-		*    - Linux:      /home/username
-		*    - Windows XP: C:\Documents and Settings\Username
-		*    - Windows 7:  C:\Users\UserName
+		*    - Linux:      /home/<username>
+		*    - Windows XP: C:\Documents and Settings\<Username>
+		*    - Windows 7:  C:\Users\<UserName>
 		*/
 		PLGENERAL_API String GetUserHomeDir() const;
 
@@ -176,9 +176,9 @@ class System : public Singleton<System> {
 		*
 		*  @remarks
 		*    Examples on different systems:
-		*    - Linux:      /home/username
-		*    - Windows XP: C:\Documents and Settings\Username\Application Data
-		*    - Windows 7:  C:\Users\UserName\application\data
+		*    - Linux:      /home/<username>
+		*    - Windows XP: C:\Documents and Settings\<Username>\Application Data
+		*    - Windows 7:  C:\Users\<UserName>\AppData\Roaming
 		*/
 		PLGENERAL_API String GetUserDataDir() const;
 
