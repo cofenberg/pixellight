@@ -392,6 +392,12 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	return true;
 }
 
+String ProgramGLSL::GetCompiledProgram()
+{
+	// [TODO] How to retrieve the binary from the program object using OpenGL ES 2.0? I wasn't able to figure it out...
+	return "";
+}
+
 const Array<PLRenderer::ProgramAttribute*> &ProgramGLSL::GetAttributes()
 {
 	// Build the attribute information, if required

@@ -103,6 +103,7 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_ARB_draw_buffers,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_shader_objects,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_vertex_shader,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_ARB_get_program_binary,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_texture_rectangle,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		// ATI

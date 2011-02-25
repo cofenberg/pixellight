@@ -97,6 +97,7 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_ARB_draw_buffers(this),
 	GL_ARB_shader_objects(this),
 	GL_ARB_vertex_shader(this),
+	GL_ARB_get_program_binary(this),
 	GL_ARB_texture_rectangle(this),
 	GL_ARB_multisample(this),
 	// ATI

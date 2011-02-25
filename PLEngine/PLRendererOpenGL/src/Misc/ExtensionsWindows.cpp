@@ -673,6 +673,21 @@ bool OpenGLExtensions::Init()
 		m_bGL_ARB_vertex_shader = false;
 	}
 
+	// GL_ARB_get_program_binary
+	if (IsSupported("GL_ARB_get_program_binary")) {
+		glGetProgramBinary  = reinterpret_cast<PFNGLGETPROGRAMBINARYPROC> (wglGetProcAddress("glGetProgramBinary"));
+		glProgramBinary     = reinterpret_cast<PFNGLPROGRAMBINARYPROC>    (wglGetProcAddress("glProgramBinary"));
+		glProgramParameteri = reinterpret_cast<PFNGLPROGRAMPARAMETERIPROC>(wglGetProcAddress("glProgramParameteri"));
+		if (!glGetProgramBinary || !glProgramBinary || !glProgramParameteri) {
+			PL_LOG(Info, "Couldn't use extension 'GL_ARB_get_program_binary'!")
+			m_bGL_ARB_get_program_binary = false;
+		} else {
+			m_bGL_ARB_get_program_binary = true;
+		}
+	} else {
+		m_bGL_ARB_get_program_binary = false;
+	}
+
 	// GL_ARB_texture_rectangle
 	m_bGL_ARB_texture_rectangle = IsSupported("GL_ARB_texture_rectangle");
 

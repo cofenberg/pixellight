@@ -163,6 +163,19 @@ class Program : public Resource {
 
 		/**
 		*  @brief
+		*    Returns the compiled program
+		*
+		*  @return
+		*    The compiled program
+		*
+		*  @note
+		*    - The compiled program depends on the used shader language, it's also possible
+		*      that an implementation is not able to return a compiled program
+		*/
+		virtual PLGeneral::String GetCompiledProgram() = 0;
+
+		/**
+		*  @brief
 		*    Get attributes
 		*
 		*  @return

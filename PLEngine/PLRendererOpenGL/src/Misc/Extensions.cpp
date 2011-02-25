@@ -274,6 +274,11 @@ PFNGLBINDATTRIBLOCATIONARBPROC	glBindAttribLocationARB	= nullptr;
 PFNGLGETACTIVEATTRIBARBPROC		glGetActiveAttribARB	= nullptr;
 PFNGLGETATTRIBLOCATIONARBPROC	glGetAttribLocationARB	= nullptr;
 
+// GL_ARB_get_program_binary
+PFNGLGETPROGRAMBINARYPROC	glGetProgramBinary	= nullptr;
+PFNGLPROGRAMBINARYPROC		glProgramBinary		= nullptr;
+PFNGLPROGRAMPARAMETERIPROC	glProgramParameteri	= nullptr;
+
 // GL_NV_occlusion_query
 PFNGLGENOCCLUSIONQUERIESNVPROC		glGenOcclusionQueriesNV		= nullptr;
 PFNGLDELETEOCCLUSIONQUERIESNVPROC	glDeleteOcclusionQueriesNV	= nullptr;
@@ -386,6 +391,7 @@ bool OpenGLExtensions::IsGL_ARB_fragment_program()				const { return m_bGL_ARB_f
 bool OpenGLExtensions::IsGL_ARB_draw_buffers()					const { return m_bGL_ARB_draw_buffers;				 }
 bool OpenGLExtensions::IsGL_ARB_shader_objects()				const { return m_bGL_ARB_shader_objects;			 }
 bool OpenGLExtensions::IsGL_ARB_vertex_shader()					const { return m_bGL_ARB_vertex_shader;				 }
+bool OpenGLExtensions::IsGL_ARB_get_program_binary()			const { return m_bGL_ARB_get_program_binary;		 }
 bool OpenGLExtensions::IsGL_ARB_texture_rectangle()				const { return m_bGL_ARB_texture_rectangle;			 }
 bool OpenGLExtensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
 // ATI
@@ -521,68 +527,74 @@ void OpenGLExtensions::ResetExtensions()
 
 	// Extensions
 	// WGL (Windows only)
-	m_bWGL_EXT_swap_control				 = false;
-	m_bWGL_ARB_extensions_string		 = false;
-	m_bWGL_ARB_pbuffer					 = false;
-	m_bWGL_ARB_pixel_format				 = false;
-	m_bWGL_ARB_render_texture			 = false;
-	m_bWGL_ARB_make_current_read		 = false;
-	m_bWGL_ARB_multisample				 = false;
-	m_bWGL_ATI_pixel_format_float		 = false;
-	m_bWGL_NV_float_buffer				 = false;
+	m_bWGL_EXT_swap_control					= false;
+	m_bWGL_ARB_extensions_string			= false;
+	m_bWGL_ARB_pbuffer						= false;
+	m_bWGL_ARB_pixel_format					= false;
+	m_bWGL_ARB_render_texture				= false;
+	m_bWGL_ARB_make_current_read			= false;
+	m_bWGL_ARB_multisample					= false;
+	m_bWGL_ATI_pixel_format_float			= false;
+	m_bWGL_NV_float_buffer					= false;
 	// EXT
-	m_bGL_EXT_compiled_vertex_array		 = false;
-	m_bGL_EXT_draw_range_elements		 = false;
-	m_bGL_EXT_fog_coord					 = false;
-	m_bGL_EXT_secondary_color			 = false;
-	m_bGL_EXT_texture_compression_s3tc   = false;
-	m_bGL_EXT_texture_compression_latc	 = false;
-	m_bGL_EXT_texture_lod_bias			 = false;
-	m_bGL_EXT_texture_filter_anisotropic = false;
-	m_bGL_EXT_separate_specular_color    = false;
-	m_bGL_EXT_texture_edge_clamp		 = false;
-	m_bGL_EXT_texture_rectangle			 = false;
-	m_bGL_EXT_texture3D					 = false;
-	m_bGL_EXT_stencil_wrap				 = false;
-	m_bGL_EXT_stencil_two_side			 = false;
-	m_bGL_EXT_packed_depth_stencil		 = false;
-	m_bGL_EXT_depth_bounds_test			 = false;
-	m_bGL_EXT_framebuffer_object		 = false;
-	m_bGL_EXT_framebuffer_multisample	 = false;
-	m_bGL_EXT_framebuffer_blit			 = false;
-	m_bGL_EXT_geometry_shader4			 = false;
+	m_bGL_EXT_compiled_vertex_array			= false;
+	m_bGL_EXT_draw_range_elements			= false;
+	m_bGL_EXT_fog_coord						= false;
+	m_bGL_EXT_secondary_color				= false;
+	m_bGL_EXT_texture_compression_s3tc		= false;
+	m_bGL_EXT_texture_compression_latc		= false;
+	m_bGL_EXT_texture_lod_bias				= false;
+	m_bGL_EXT_texture_filter_anisotropic	= false;
+	m_bGL_EXT_separate_specular_color		= false;
+	m_bGL_EXT_texture_edge_clamp			= false;
+	m_bGL_EXT_texture_rectangle				= false;
+	m_bGL_EXT_texture3D						= false;
+	m_bGL_EXT_texture_cube_map				= false;
+	m_bGL_EXT_stencil_wrap					= false;
+	m_bGL_EXT_stencil_two_side				= false;
+	m_bGL_EXT_packed_depth_stencil			= false;
+	m_bGL_EXT_depth_bounds_test				= false;
+	m_bGL_EXT_framebuffer_object			= false;
+	m_bGL_EXT_framebuffer_multisample		= false;
+	m_bGL_EXT_framebuffer_blit				= false;
+	m_bGL_EXT_geometry_shader4				= false;
 	// ARB
-	m_bGL_ARB_multitexture				 = false;
-	m_bGL_ARB_vertex_buffer_object		 = false;
-	m_bGL_ARB_texture_border_clamp		 = false;
-	m_bGL_ARB_texture_mirrored_repeat	 = false;
-	m_bGL_ARB_texture_cube_map			 = false;
-	m_bGL_ARB_texture_env_combine		 = false;
-	m_bGL_ARB_texture_env_dot3			 = false;
-	m_bGL_ARB_occlusion_query			 = false;
-	m_bGL_ARB_texture_compression		 = false;
-	m_bGL_ARB_depth_texture				 = false;
-	m_bGL_ARB_point_sprite				 = false;
-	m_bGL_ARB_point_parameters			 = false;
-	m_bGL_ARB_shading_language_100		 = false;
-	m_bGL_ARB_vertex_program			 = false;
-	m_bGL_ARB_fragment_program			 = false;
-	m_bGL_ARB_texture_rectangle			 = false;
-	m_bGL_ARB_multisample				 = false;
+	m_bGL_ARB_texture_float					= false;
+	m_bGL_ARB_color_buffer_float			= false;
+	m_bGL_ARB_multitexture					= false;
+	m_bGL_ARB_vertex_buffer_object			= false;
+	m_bGL_ARB_texture_border_clamp			= false;
+	m_bGL_ARB_texture_mirrored_repeat		= false;
+	m_bGL_ARB_texture_cube_map				= false;
+	m_bGL_ARB_texture_env_combine			= false;
+	m_bGL_ARB_texture_env_dot3				= false;
+	m_bGL_ARB_occlusion_query				= false;
+	m_bGL_ARB_texture_compression			= false;
+	m_bGL_ARB_depth_texture					= false;
+	m_bGL_ARB_point_sprite					= false;
+	m_bGL_ARB_point_parameters				= false;
+	m_bGL_ARB_shading_language_100			= false;
+	m_bGL_ARB_vertex_program				= false;
+	m_bGL_ARB_fragment_program				= false;
+	m_bGL_ARB_draw_buffers					= false;
+	m_bGL_ARB_shader_objects				= false;
+	m_bGL_ARB_vertex_shader					= false;
+	m_bGL_ARB_get_program_binary			= false;
+	m_bGL_ARB_texture_rectangle				= false;
+	m_bGL_ARB_multisample					= false;
 	// ATI
-	m_bGL_ATI_separate_stencil			 = false;
-	m_bGL_ATI_draw_buffers				 = false;
-	m_bGL_ATI_texture_compression_3dc	 = false;
+	m_bGL_ATI_separate_stencil				= false;
+	m_bGL_ATI_draw_buffers					= false;
+	m_bGL_ATI_texture_compression_3dc		= false;
 	// AMD
-	m_bGL_AMD_vertex_shader_tessellator  = false;
+	m_bGL_AMD_vertex_shader_tessellator		= false;
 	// NV
-	m_bGL_NV_texture_rectangle			 = false;
-	m_bGL_NV_occlusion_query			 = false;
+	m_bGL_NV_texture_rectangle				= false;
+	m_bGL_NV_occlusion_query				= false;
 	// SGIS
-	m_bGL_SGIS_generate_mipmap			 = false;
+	m_bGL_SGIS_generate_mipmap				= false;
 	// HP
-	m_bGL_HP_occlusion_test				 = false;
-
+	m_bGL_HP_occlusion_test					= false;
 	// Misc
 	m_nGL_MAX_ELEMENTS_VERTICES_EXT = m_nGL_MAX_ELEMENTS_INDICES_EXT = 0;
 }

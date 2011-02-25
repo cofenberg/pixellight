@@ -166,6 +166,7 @@ class ProgramCg : public PLRendererOpenGL::Program {
 		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader);
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const;
 		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader);
+		virtual PLGeneral::String GetCompiledProgram();
 		virtual const PLGeneral::Array<PLRenderer::ProgramAttribute*> &GetAttributes();
 		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLGeneral::String &sName);
 		virtual const PLGeneral::Array<PLRenderer::ProgramUniform*> &GetUniforms();

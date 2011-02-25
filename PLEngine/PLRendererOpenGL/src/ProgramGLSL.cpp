@@ -97,6 +97,10 @@ GLuint ProgramGLSL::GetOpenGLProgram(bool bAutomaticLink)
 				}
 			}
 
+			// The user may request a copy of the compiled program...
+			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_get_program_binary())
+				glProgramParameteri(m_nOpenGLProgram, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_TRUE);
+
 			// Link the program
 			glLinkProgramARB(m_nOpenGLProgram);
 
@@ -446,6 +450,45 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 
 	// Done
 	return true;
+}
+
+String ProgramGLSL::GetCompiledProgram()
+{
+	// GL_ARB_get_program_binary extension required
+	if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_get_program_binary()) {
+		// Get the OpenGL program - this also ensures that the program is linked
+		const GLuint nOpenGLProgram = GetOpenGLProgram();
+
+		// Is the OpenGL program linked?
+		if (IsLinked()) {
+			// Retrieve the binary length from the program object
+			GLint nBinaryLength = 0;
+			// [TODO] Check this! For me, this function just returns always 0? (Catalyst 11.2 - there are forum posts reporting similar problems, a driver issue?)
+			glGetProgramivARB(nOpenGLProgram, GL_PROGRAM_BINARY_LENGTH, &nBinaryLength);
+			if (nBinaryLength) {
+				// Allocate enough memory for the binary
+				char *pszBinary = new char[nBinaryLength];
+
+				// Get program binary formats
+				GLint nNumProgramBinaryFormats = 0;
+				glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &nNumProgramBinaryFormats);
+				GLint *pnProgramBinaryFormags = new GLint[nNumProgramBinaryFormats];
+				glGetIntegerv(GL_PROGRAM_BINARY_FORMATS, pnProgramBinaryFormags);
+
+				// Retrieve the binary from the program object
+				glGetProgramBinary(nOpenGLProgram, nBinaryLength, nullptr, reinterpret_cast<GLenum*>(pnProgramBinaryFormags), pszBinary);
+
+				// Cleanup program binary formats
+				delete [] pnProgramBinaryFormags;
+
+				// Return the retrieve the binary, do not copy, please
+				return String(pszBinary, false, nBinaryLength);
+			}
+		}
+	}
+
+	// Error!
+	return "";
 }
 
 const Array<PLRenderer::ProgramAttribute*> &ProgramGLSL::GetAttributes()

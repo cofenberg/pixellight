@@ -291,6 +291,11 @@ extern PFNGLBINDATTRIBLOCATIONARBPROC	glBindAttribLocationARB;
 extern PFNGLGETACTIVEATTRIBARBPROC		glGetActiveAttribARB;
 extern PFNGLGETATTRIBLOCATIONARBPROC	glGetAttribLocationARB;
 
+// GL_ARB_get_program_binary
+extern PFNGLGETPROGRAMBINARYPROC		glGetProgramBinary;
+extern PFNGLPROGRAMBINARYPROC			glProgramBinary;
+extern PFNGLPROGRAMPARAMETERIPROC		glProgramParameteri;
+
 // GL_ATI_separate_stencil
 extern PFNGLSTENCILOPSEPARATEATIPROC	glStencilOpSeparateATI;
 extern PFNGLSTENCILFUNCSEPARATEATIPROC	glStencilFuncSeparateATI;

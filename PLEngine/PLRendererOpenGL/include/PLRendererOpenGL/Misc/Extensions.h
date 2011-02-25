@@ -147,6 +147,7 @@ class OpenGLExtensions {
 		bool IsGL_ARB_draw_buffers() const;
 		bool IsGL_ARB_shader_objects() const;
 		bool IsGL_ARB_vertex_shader() const;
+		bool IsGL_ARB_get_program_binary() const;
 		bool IsGL_ARB_texture_rectangle() const;
 		bool IsGL_ARB_multisample() const;
 		// ATI
@@ -299,6 +300,7 @@ class OpenGLExtensions {
 		bool m_bGL_ARB_draw_buffers;
 		bool m_bGL_ARB_shader_objects;
 		bool m_bGL_ARB_vertex_shader;
+		bool m_bGL_ARB_get_program_binary;
 		bool m_bGL_ARB_texture_rectangle;
 		bool m_bGL_ARB_multisample;
 		// ATI

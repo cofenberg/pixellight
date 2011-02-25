@@ -1,3 +1,14 @@
+>> 25.02.2011
+[CO]
+- Added "PLRenderer::Program::GetCompiledProgram()"
+PLRendererOpenGL:
+- Added support for "GL_ARB_get_program_binary" - but sadly, "glGetProgramivARB(nOpenGLProgram, GL_PROGRAM_BINARY_LENGTH, &nBinaryLength);" returns
+  always 0? (Catalyst 11.2 - there are forum posts reporting similar problems, a driver issue?)
+  As a result, I can't implement "load from binary object" because I'am not able to test it right now. :/
+  At least the Cg implementation of this new method works, in my test, I received the GLSL codes compiled from the provided Cg shader codes.
+
+
+
 >> 19.02.2011
 [CO]
 PLRendererOpenGL:
