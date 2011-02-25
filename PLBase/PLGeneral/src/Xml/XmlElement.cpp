@@ -79,7 +79,7 @@ XmlElement &XmlElement::operator =(const XmlElement &cSource)
 	m_cCursor   = cSource.m_cCursor;
 
 	// Clone the attributes
-	for(const XmlAttribute *pAttribute=cSource.m_cAttributeSet.GetFirst(); pAttribute; pAttribute=pAttribute->GetNext())
+	for (const XmlAttribute *pAttribute=cSource.m_cAttributeSet.GetFirst(); pAttribute; pAttribute=pAttribute->GetNext())
 		SetAttribute(pAttribute->GetName(), pAttribute->GetValue());
 
 	// Clone the children

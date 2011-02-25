@@ -1,3 +1,12 @@
+>> 26.02.2011
+[CO]
+- StringBufferASCII is now using "memcpy" instead of "strncpy" because "memcpy" is usually slightly faster as "strncpy"
+  (checked usual implementations of those functions). Within this class, it's guaranteed that the values are correct, so there's no security
+  risk in using "memcpy". I know, the difference is not really measurable, but I always try to squish out everything possible out of such
+  basic implementations.
+
+
+
 >> 17.02.2011
 [CO]
 - Program entry point within "Main.h": Removed "setlocale(LC_ALL, "");" because I don't think that it's a good idea to use "setlocale".

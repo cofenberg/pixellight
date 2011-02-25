@@ -31,14 +31,14 @@
 //[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
-void *operator new(size_t nNumOfBytes)
+inline void *operator new(size_t nNumOfBytes)
 {
 	// ANSI says: allocation requests of 0 bytes will still return a valid value
 	if (!nNumOfBytes)
 		nNumOfBytes = 1;
 
 	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for(;;) {
+	for (;;) {
 		// Try the allocation
 		void *pAddress = PLGeneral::MemoryManager::Allocator(PLGeneral::MemoryManager::New, nNumOfBytes, "?", 0);
 		if (pAddress)
@@ -46,14 +46,14 @@ void *operator new(size_t nNumOfBytes)
 	}
 }
 
-void *operator new[](size_t nNumOfBytes)
+inline void *operator new[](size_t nNumOfBytes)
 {
 	// The ANSI standard says that allocation requests of 0 bytes will still return a valid value
 	if (!nNumOfBytes)
 		nNumOfBytes = 1;
 
 	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for(;;) {
+	for (;;) {
 		// Try the allocation
 		void *pAddress = PLGeneral::MemoryManager::Allocator(PLGeneral::MemoryManager::NewArray, nNumOfBytes, "?", 0);
 		if (pAddress)
@@ -61,28 +61,28 @@ void *operator new[](size_t nNumOfBytes)
 	}
 }
 
-void operator delete(void *pAddress)
+inline void operator delete(void *pAddress)
 {
 	// ANSI says: delete & delete[] allow null pointers (they do nothing)
 	if (pAddress)
 		PLGeneral::MemoryManager::Deallocator(PLGeneral::MemoryManager::Delete, pAddress, "?", 0);
 }
 
-void operator delete[](void *pAddress)
+inline void operator delete[](void *pAddress)
 {
 	// ANSI says: delete & delete[] allow null pointers (they do nothing)
 	if (pAddress)
 		PLGeneral::MemoryManager::Deallocator(PLGeneral::MemoryManager::DeleteArray, pAddress, "?", 0);
 }
 
-void *operator new(size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
+inline void *operator new(size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
 {
 	// ANSI says: allocation requests of 0 bytes will still return a valid value
 	if (!nNumOfBytes)
 		nNumOfBytes = 1;
 
 	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for(;;) {
+	for (;;) {
 		// Try the allocation
 		void *pAddress = PLGeneral::MemoryManager::Allocator(PLGeneral::MemoryManager::New, nNumOfBytes, pszSourceFile, nSourceLine);
 		if (pAddress)
@@ -90,14 +90,14 @@ void *operator new(size_t nNumOfBytes, const char *pszSourceFile, int nSourceLin
 	}
 }
 
-void *operator new[](size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
+inline void *operator new[](size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
 {
 	// ANSI says: allocation requests of 0 bytes will still return a valid value
 	if (!nNumOfBytes)
 		nNumOfBytes = 1;
 
 	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for(;;) {
+	for (;;) {
 		// Try the allocation
 		void *pAddress = PLGeneral::MemoryManager::Allocator(PLGeneral::MemoryManager::New, nNumOfBytes, pszSourceFile, nSourceLine);
 		if (pAddress)
@@ -105,14 +105,14 @@ void *operator new[](size_t nNumOfBytes, const char *pszSourceFile, int nSourceL
 	}
 }
 
-void operator delete(void *pAddress, const char *pszSourceFile, int nSourceLine)
+inline void operator delete(void *pAddress, const char *pszSourceFile, int nSourceLine)
 {
 	// ANSI says: delete & delete[] allow null pointers (they do nothing)
 	if (pAddress)
 		PLGeneral::MemoryManager::Deallocator(PLGeneral::MemoryManager::Delete, pAddress, pszSourceFile, nSourceLine);
 }
 
-void operator delete[](void *pAddress, const char *pszSourceFile, int nSourceLine)
+inline void operator delete[](void *pAddress, const char *pszSourceFile, int nSourceLine)
 {
 	// ANSI says: delete & delete[] allow null pointers (they do nothing)
 	if (pAddress)

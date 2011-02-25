@@ -551,7 +551,7 @@ StringBuffer *StringBufferASCII::Delete(uint32 nPos, uint32 nCount)
 
 	// Characters are deleted by moving up the data following the region to delete (FAST!)
 	const uint32 nNewLength = m_nLength - nCount;
-	strncpy(&pStringBufferASCIIClone->m_pszString[nPos], pStringBufferASCIIClone->m_pszString + nPos + nCount, nNewLength - nPos);
+	memcpy(&pStringBufferASCIIClone->m_pszString[nPos], pStringBufferASCIIClone->m_pszString + nPos + nCount, nNewLength - nPos);
 	pStringBufferASCIIClone->m_pszString[nNewLength] = '\0';
 
 	// Set the new length
@@ -569,7 +569,7 @@ StringBuffer *StringBufferASCII::Append(const char szString[], uint32 nCount)
 	// Is it possible to just modify the current internal string in place? (FAST!)
 	if (nNewLength <= m_nMaxLength && GetRefCount() < 2) {
 		// Just modify the current internal string in place
-		strncpy(&m_pszString[m_nLength], szString, nCount);	// Append the new string
+		memcpy(&m_pszString[m_nLength], szString, nCount);	// Append the new string
 		m_pszString[nNewLength] = '\0';						// Set the terminating zero
 		SetNewStringLength(nNewLength);						// Set the new string length
 
@@ -624,9 +624,9 @@ StringBuffer *StringBufferASCII::Insert(const char szString[], uint32 nPos, uint
 		if (nLeftCharacters > 0) {
 			// Make space for the new string by moving everything to the right
 			// (in here, we KNOW that there's enough memory in the right to hold the string!)
-			strncpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters);
+			memcpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters);
 		}
-		strncpy(&m_pszString[nPos], szString, nCount);	// Append the new string at the now free space
+		memcpy(&m_pszString[nPos], szString, nCount);	// Append the new string at the now free space
 		m_pszString[nNewLength] = '\0';					// Set the terminating zero
 		SetNewStringLength(nNewLength);					// Set the new string length
 
@@ -794,12 +794,12 @@ StringBuffer *StringBufferASCII::Replace(const char szOld[], uint32 nOldLength, 
 
 		// Copy previous none substring characters
 		if (nSkipped) {
-			strncpy(pszNewStringT, pszString - nSkipped, nSkipped);
+			memcpy(pszNewStringT, pszString - nSkipped, nSkipped);
 			pszNewStringT += nSkipped;
 		}
 
 		// Insert new substring
-		strncpy(pszNewStringT, szNew, nNewLength);
+		memcpy(pszNewStringT, szNew, nNewLength);
 		pszNewStringT += nNewLength;
 		pszString += nOldLength;
 		nSkipped = 0;
@@ -808,7 +808,7 @@ StringBuffer *StringBufferASCII::Replace(const char szOld[], uint32 nOldLength, 
 	// Copy the rest of the old string to the new string
 	if (*pszString != '\0') {
 		uint32 i = static_cast<uint32>(pszNewString + nFinalLength - pszNewStringT);
-		strncpy(pszNewStringT, pszString, i);
+		memcpy(pszNewStringT, pszString, i);
 		pszNewStringT += i;
 	}
 
