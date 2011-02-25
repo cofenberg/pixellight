@@ -46,7 +46,7 @@ add_dependencies(PixelLight Samples)
 
 # "WhereIsTheLog.txt"-file
 install(FILES ${CMAKE_SOURCE_DIR}/Bin/PLSamples/WhereIsTheLog.txt
-	DESTINATION ${PL_INSTALL_SAMPLES}/	COMPONENT SDK
+	DESTINATION ${PL_INSTALL_SAMPLES}/Bin	COMPONENT SDK
 )
 
 # Microsoft Visual Studio Solution

@@ -51,7 +51,7 @@ add_dependencies(PixelLight Demos)
 
 # "WhereIsTheLog.txt"-file
 install(FILES ${CMAKE_SOURCE_DIR}/Bin/PLDemos/WhereIsTheLog.txt
-	DESTINATION ${PL_INSTALL_DEMOS}/	COMPONENT SDK
+	DESTINATION ${PL_INSTALL_DEMOS}/Bin	COMPONENT SDK
 )
 
 # Data
