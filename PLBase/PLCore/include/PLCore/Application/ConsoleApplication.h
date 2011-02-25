@@ -397,6 +397,7 @@ class ConsoleApplication {
 		*    The default implementation does the following tasks:
 		*    - Open log file according to parameter '--logfile' (default: <appname>.log)
 		*    - Set verbose mode according to parameter '--verbose'
+		*    - Write some general information into the log
 		*/
 		PLCORE_API virtual void OnInitLog();
 
@@ -476,7 +477,6 @@ class ConsoleApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Write some general information into the log
 		*    - Reset timing class
 		*/
 		PLCORE_API virtual void OnInit();

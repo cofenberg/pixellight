@@ -473,6 +473,46 @@ void ConsoleApplication::OnInitLog()
 				pLog->SetVerbose(true);
 		}
 	}
+
+	{ // Write some general information into the log
+		// Create the log header:
+		PL_LOG(Info, "Log-system started")
+		PL_LOG(Quiet, '\n')
+		PL_LOG(Info, "< " + Core::GetVersion().ToString() + " >")
+		PL_LOG(Info, "PLCore build: "__DATE__" "__TIME__"")
+		PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
+		PL_LOG(Info, "\nPLGeneral infomation:\n" + System::GetInstance()->GetInfo() + '\n')
+		PL_LOG(Quiet, '\n')
+
+		{ // Print out directory information:
+			// System directories
+			PL_LOG(Info, "System directories:");
+			PL_LOG(Info, "- Executable: " + System::GetInstance()->GetExecutableFilename());
+			PL_LOG(Info, "- Home:       " + System::GetInstance()->GetUserHomeDir());
+			PL_LOG(Info, "- Data:       " + System::GetInstance()->GetUserDataDir());
+			PL_LOG(Info, "- Current:    " + System::GetInstance()->GetCurrentDir());
+			PL_LOG(Quiet, '\n');
+
+			// PixelLight directories
+			PL_LOG(Info, "PixelLight directories:");
+			PL_LOG(Info, "- Runtime:    " + PLCore::Core::GetRuntimeDirectory());
+			PL_LOG(Quiet, '\n');
+
+			// Application context
+			PL_LOG(Info, "Application context:");
+			PL_LOG(Info, "- Executable: " + GetApplicationContext().GetExecutableFilename());
+			PL_LOG(Info, "- Startup:    " + GetApplicationContext().GetStartupDirectory());
+			PL_LOG(Info, "- AppDir:     " + GetApplicationContext().GetAppDirectory());
+			PL_LOG(Quiet, '\n');
+		}
+
+		// Print out the general system info:
+		PL_LOG(Info, String::Format("CPU: %d Mhz", System::GetInstance()->GetCPUMhz()))
+
+		// Start enumerate messages
+		PL_LOG(Quiet, "\n\n")
+		PL_LOG(Info, "Messages:")
+	}
 }
 
 /**
@@ -643,34 +683,8 @@ void ConsoleApplication::OnInitData()
 */
 void ConsoleApplication::OnInit()
 {
-	// Write some general information into the log
-
-	// Create the log header:
-	PL_LOG(Info, "Log-system started")
-	PL_LOG(Quiet, '\n')
-	PL_LOG(Info, "< " + Core::GetVersion().ToString() + " >")
-	PL_LOG(Info, "Build: "__DATE__" "__TIME__"")
-	PL_LOG(Quiet, '\n')
-
-	// Print out the general system info:
-	PL_LOG(Info, String::Format("CPU: %d Mhz", System::GetInstance()->GetCPUMhz()))
-
-	// Print out directory information:
-	PL_LOG(Info, "Current directory: " + System::GetInstance()->GetCurrentDir())
-
-	// Start enumerate messages
-	PL_LOG(Info, "\n\n")
-	PL_LOG(Info, "Messages:")
-
-	// Application start time
-	PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
-
-	// PLGeneral infomation
-	PL_LOG(Info, "\nPLGeneral infomation:\n" + System::GetInstance()->GetInfo() + '\n')
-
 	// Reset timing class
 	Timing::GetInstance()->Reset();
-	PL_LOG(Info, "\n\n")
 }
 
 /**

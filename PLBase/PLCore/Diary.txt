@@ -1,3 +1,10 @@
+>> 25.02.2011
+[CO]
+- "ConsoleApplication": Moved "Write some general information into the log"-step from "OnInit()" to "OnInitLog()". It was a little bit
+  confusing that initial information like "Log-system started" was written somewhere at the end of the initialization phase.
+
+
+
 >> 22.02.2011
 [CO]
 - "ConsoleApplication::OnInitPlugins()": The PixelLight runtime directory is now also scanned non-recursively for plugins. This is quite useful
