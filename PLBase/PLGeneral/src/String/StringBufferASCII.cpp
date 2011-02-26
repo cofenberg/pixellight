@@ -877,12 +877,12 @@ StringBuffer *StringBufferASCII::Replace(const wchar_t szOld[], uint32 nOldLengt
 
 		// Copy previous none substring characters
 		if (nSkipped) {
-			wcsncpy(pszNewStringT, pszString - nSkipped, nSkipped);
+			memcpy(pszNewStringT, pszString - nSkipped, nSkipped*sizeof(wchar_t));
 			pszNewStringT += nSkipped;
 		}
 
 		// Insert new substring
-		wcsncpy(pszNewStringT, szNew, nNewLength);
+		memcpy(pszNewStringT, szNew, nNewLength*sizeof(wchar_t));
 		pszNewStringT += nNewLength;
 		pszString += nOldLength;
 		nSkipped = 0;
@@ -891,7 +891,7 @@ StringBuffer *StringBufferASCII::Replace(const wchar_t szOld[], uint32 nOldLengt
 	// Copy the rest of the old string to the new string
 	if (*pszString != L'\0') {
 		const uint32 i = static_cast<uint32>(pszNewString + nFinalLength - pszNewStringT);
-		wcsncpy(pszNewStringT, pszString, i);
+		memcpy(pszNewStringT, pszString, i*sizeof(wchar_t));
 		pszNewStringT += i;
 	}
 

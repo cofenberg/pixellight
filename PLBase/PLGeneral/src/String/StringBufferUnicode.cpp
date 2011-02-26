@@ -552,7 +552,7 @@ StringBuffer *StringBufferUnicode::Delete(uint32 nPos, uint32 nCount)
 
 	// Characters are deleted by moving up the data following the region to delete (FAST!)
 	const uint32 nNewLength = m_nLength - nCount;
-	wcsncpy(&pStringBufferUnicodeClone->m_pszString[nPos], pStringBufferUnicodeClone->m_pszString + nPos + nCount, nNewLength - nPos);
+	memcpy(&pStringBufferUnicodeClone->m_pszString[nPos], pStringBufferUnicodeClone->m_pszString + nPos + nCount, (nNewLength - nPos)*sizeof(wchar_t));
 	pStringBufferUnicodeClone->m_pszString[nNewLength] = L'\0';
 
 	// Set the new length
@@ -601,9 +601,9 @@ StringBuffer *StringBufferUnicode::Append(const wchar_t szString[], uint32 nCoun
 	// Is it possible to just modify the current internal string in place? (FAST!)
 	if (nNewLength <= m_nMaxLength && GetRefCount() < 2) {
 		// Just modify the current internal string in place
-		wcsncpy(&m_pszString[m_nLength], szString, nCount);	// Append the new string
-		m_pszString[nNewLength] = L'\0';					// Set the terminating zero
-		SetNewStringLength(nNewLength);						// Set the new string length
+		memcpy(&m_pszString[m_nLength], szString, nCount*sizeof(wchar_t));	// Append the new string
+		m_pszString[nNewLength] = L'\0';									// Set the terminating zero
+		SetNewStringLength(nNewLength);										// Set the new string length
 
 		// Return this string buffer
 		return this;
@@ -636,7 +636,7 @@ StringBuffer *StringBufferUnicode::Insert(const char szString[], uint32 nPos, ui
 		if (nLeftCharacters > 0) {
 			// Make space for the new string by moving everything to the right
 			// (in here, we KNOW that there's enough memory in the right to hold the string!)
-			wcsncpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters);
+			memcpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters*sizeof(wchar_t));
 		}
 		mbstowcs(&m_pszString[nPos], szString, nCount);	// Append the new string at the now free space
 		m_pszString[nNewLength] = L'\0';				// Set the terminating zero
@@ -678,11 +678,11 @@ StringBuffer *StringBufferUnicode::Insert(const wchar_t szString[], uint32 nPos,
 		if (nLeftCharacters > 0) {
 			// Make space for the new string by moving everything to the right
 			// (in here, we KNOW that there's enough memory in the right to hold the string!)
-			wcsncpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters);
+			memcpy(&m_pszString[nPos + nCount], &m_pszString[nPos], nLeftCharacters*sizeof(wchar_t));
 		}
-		wcsncpy(&m_pszString[nPos], szString, nCount);	// Append the new string at the now free space
-		m_pszString[nNewLength] = L'\0';				// Set the terminating zero
-		SetNewStringLength(nNewLength);					// Set the new string length
+		memcpy(&m_pszString[nPos], szString, nCount*sizeof(wchar_t));	// Append the new string at the now free space
+		m_pszString[nNewLength] = L'\0';								// Set the terminating zero
+		SetNewStringLength(nNewLength);									// Set the new string length
 
 		// Return this string buffer
 		return this;
@@ -834,12 +834,12 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 
 		// Copy previous none substring characters
 		if (nSkipped) {
-			wcsncpy(pszNewStringT, pszString - nSkipped, nSkipped);
+			memcpy(pszNewStringT, pszString - nSkipped, nSkipped*sizeof(wchar_t));
 			pszNewStringT += nSkipped;
 		}
 
 		// Insert new substring
-		wcsncpy(pszNewStringT, pszNewUnicode, nNewLength);
+		memcpy(pszNewStringT, pszNewUnicode, nNewLength*sizeof(wchar_t));
 		pszNewStringT += nNewLength;
 		pszString += nOldLength;
 		nSkipped = 0;
@@ -848,7 +848,7 @@ StringBuffer *StringBufferUnicode::Replace(const char szOld[], uint32 nOldLength
 	// Copy the rest of the old string to the new string
 	if (*pszString != L'\0') {
 		const uint32 i = static_cast<uint32>(pszNewString + nFinalLength - pszNewStringT);
-		wcsncpy(pszNewStringT, pszString, i);
+		memcpy(pszNewStringT, pszString, i*sizeof(wchar_t));
 		pszNewStringT += i;
 	}
 
@@ -913,12 +913,12 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 
 		// Copy previous none substring characters
 		if (nSkipped) {
-			wcsncpy(pszNewStringT, pszString - nSkipped, nSkipped);
+			memcpy(pszNewStringT, pszString - nSkipped, nSkipped*sizeof(wchar_t));
 			pszNewStringT += nSkipped;
 		}
 
 		// Insert new substring
-		wcsncpy(pszNewStringT, szNew, nNewLength);
+		memcpy(pszNewStringT, szNew, nNewLength*sizeof(wchar_t));
 		pszNewStringT += nNewLength;
 		pszString += nOldLength;
 		nSkipped = 0;
@@ -927,7 +927,7 @@ StringBuffer *StringBufferUnicode::Replace(const wchar_t szOld[], uint32 nOldLen
 	// Copy the rest of the old string to the new string
 	if (*pszString != L'\0') {
 		const uint32 i = static_cast<uint32>(pszNewString + nFinalLength - pszNewStringT);
-		wcsncpy(pszNewStringT, pszString, i);
+		memcpy(pszNewStringT, pszString, i*sizeof(wchar_t));
 		pszNewStringT += i;
 	}
 

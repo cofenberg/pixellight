@@ -4,6 +4,7 @@
   (checked usual implementations of those functions). Within this class, it's guaranteed that the values are correct, so there's no security
   risk in using "memcpy". I know, the difference is not really measurable, but I always try to squish out everything possible out of such
   basic implementations.
+- StringBufferUnicode is now using "memcpy" instead of "wcsncpy"
 
 
 
