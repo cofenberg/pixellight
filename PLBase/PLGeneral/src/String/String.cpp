@@ -196,7 +196,7 @@ String String::FromUTF8(const char *pszUTF8, int nLength, uint32 nNumOfBytes)
 
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
 String::String() :
 	m_pStringBuffer(nullptr)
@@ -205,7 +205,7 @@ String::String() :
 
 /**
 *  @brief
-*    Constructor
+*    Character constructor
 */
 String::String(char nValue)
 {
@@ -337,6 +337,76 @@ String::String(const String &sString)
 		// Empty string
 		m_pStringBuffer = nullptr;
 	}
+}
+
+/**
+*  @brief
+*    Number constructor
+*/
+String::String(bool bValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = bValue;
+}
+
+String::String(int nValue)
+{
+	// Sadly, the useful "itoa" is a non-standard extension to the standard C
+	#ifdef WIN32
+		// Request an ASCII string buffer from the string buffer manager
+		// -> According to the "itoa"-documentation, this buffer should be 33 bytes long
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(33);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+
+			// And there the magic happens, number -> string :D
+			_itoa(nValue, static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, 10);
+
+			// Hm, _itoa doesn't tell us how many characters were actually written...
+			m_pStringBuffer->m_nLength = strlen(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+		}
+	#else
+		// [TODO] Check itoa under Linux
+		// Use the "portable", but less efficient way
+		m_pStringBuffer = nullptr;
+		*this = Format("%d", nValue);
+	#endif
+}
+
+String::String(uint16 nValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = nValue;
+}
+
+String::String(uint32 nValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = nValue;
+}
+
+String::String(uint64 nValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = nValue;
+}
+
+String::String(long nValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = nValue;
+}
+
+String::String(float fValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = fValue;
+}
+
+String::String(double fValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = fValue;
 }
 
 /**
@@ -2447,8 +2517,29 @@ String &String::operator =(wchar_t nValue)
 
 String &String::operator =(int nValue)
 {
-	// Set data
-	*this = Format("%d", nValue);
+	// Sadly, the useful "itoa" is a non-standard extension to the standard C
+	#ifdef WIN32
+		// Release old string buffer
+		if (m_pStringBuffer)
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
+
+		// Request an ASCII string buffer from the string buffer manager
+		// -> According to the "itoa"-documentation, this buffer should be 33 bytes long
+		m_pStringBuffer = StringBuffer::Manager.GetStringBufferASCII(33);
+		if (m_pStringBuffer) {
+			m_pStringBuffer->AddReference();
+
+			// And there the magic happens, number -> string :D
+			_itoa(nValue, static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, 10);
+
+			// Hm, _itoa doesn't tell us how many characters were actually written...
+			m_pStringBuffer->m_nLength = strlen(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+		}
+	#else
+		// [TODO] Check itoa under Linux
+		// Use the "portable", but less efficient way
+		*this = Format("%d", nValue);
+	#endif
 
 	// Return a reference to this instance
 	return *this;
@@ -2577,7 +2668,7 @@ String String::operator +(wchar_t nValue) const
 
 String String::operator +(int nValue) const
 {
-	return (GetFormat() == Unicode) ? *this + Format(L"%d", nValue) : *this + Format("%d", nValue);
+	return *this + String(nValue);
 }
 
 String String::operator +(uint16 nValue) const
@@ -2789,10 +2880,7 @@ String &String::operator +=(wchar_t nValue)
 
 String &String::operator +=(int nValue)
 {
-	if (GetFormat() == Unicode)
-		*this += Format(L"%d", nValue);
-	else
-		*this += Format("%d", nValue);
+	*this += String(nValue);
 	return *this;
 }
 

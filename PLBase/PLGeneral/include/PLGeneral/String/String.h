@@ -113,6 +113,13 @@ class String {
 		*
 		*  @return
 		*    New string
+		*
+		*  @remarks
+		*    If possible, try to avoid to use this method because it's usually considered to be "slow" due to
+		*    it's internal complexity. Therefore, write something like
+		*      String sMyString = String("The number ") + 42 + " is fantastic!";
+		*    instead of
+		*      String sMyString = String::Format("The number %d is fantastic!", 42);
 		*/
 		PLGENERAL_API static String Format(const char *pszFormat, ...);
 		PLGENERAL_API static String Format(const wchar_t *pszFormat, ...);
@@ -141,13 +148,13 @@ class String {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
 		PLGENERAL_API String();
 
 		/**
 		*  @brief
-		*    Constructor
+		*    Character constructor
 		*
 		*  @param[in] nValue
 		*    Single character to put into the string
@@ -180,6 +187,22 @@ class String {
 		*    String
 		*/
 		PLGENERAL_API String(const String &sString);
+
+		/**
+		*  @brief
+		*    Number constructor
+		*
+		*  @param[in] nValue
+		*    Number to put into the string
+		*/
+		PLGENERAL_API String(bool bValue);
+		PLGENERAL_API String(int nValue);
+		PLGENERAL_API String(uint16 nValue);
+		PLGENERAL_API String(uint32 nValue);
+		PLGENERAL_API String(uint64 nValue);
+		PLGENERAL_API String(long nValue);
+		PLGENERAL_API String(float fValue);
+		PLGENERAL_API String(double fValue);
 
 		/**
 		*  @brief

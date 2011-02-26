@@ -5,6 +5,17 @@
   risk in using "memcpy". I know, the difference is not really measurable, but I always try to squish out everything possible out of such
   basic implementations.
 - StringBufferUnicode is now using "memcpy" instead of "wcsncpy"
+- Added some more String constructors to make it easier and "more intiutive" to create a string out of a number
+- Had a look into "sprintf" (a variation is used within "String::Format()") and "itoa" (non-standard extension to the standard C). In certain
+  situations, "sprintf" has no chance to come near to the performance of "itoa" - which is obvious because "sprintf" is more universal and powerful.
+  The following example took 880 ms
+    for (int i=0; i<100000; i++)
+        String sMyString = String::Format("The number %d is fantastic!", 42);
+  while the following example took 129 ms
+    for (int i=0; i<100000; i++)
+        String sMyString = String("The number ") + 42 + " is fantastic!";
+  after using "itoa" in the internal String implementation. I think there's a notable performance difference in the second version which is worth to
+  talk about. :D
 
 
 
