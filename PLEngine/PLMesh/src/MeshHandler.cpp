@@ -442,7 +442,7 @@ void MeshHandler::DrawVertexNumbers(Font &cFont, const Color4 &cColor, const Mat
 			vV.x = pfVertex[Vector3::X];
 			vV.y = pfVertex[Vector3::Y];
 			vV.z = pfVertex[Vector3::Z];
-			cDrawHelpers.DrawText(cFont, String::Format("%d", i), cColor, vV, mWorldViewProjection, Font::CenterText);
+			cDrawHelpers.DrawText(cFont, i, cColor, vV, mWorldViewProjection, Font::CenterText);
 
 		}
 

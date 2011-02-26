@@ -77,7 +77,7 @@ Source::Source(PLSound::SoundManager &cSoundManager) : PLSound::Source(cSoundMan
 	alGenSources(1, &m_nSource);
 	ALuint nError = alGetError();
 	if (nError != AL_NO_ERROR)
-		PL_LOG(Error, String::Format("alGenSources: %s", alGetString(nError)))
+		PL_LOG(Error, String("alGenSources: ") + alGetString(nError))
 
 	// Init data
 	alSourcei(m_nSource, AL_LOOPING, m_bLooping);
@@ -113,7 +113,7 @@ bool Source::Load(PLSound::Buffer *pBuffer)
 			alSourcei(m_nSource, AL_BUFFER, static_cast<Buffer*>(pBuffer)->GetOpenALBuffer());
 			ALuint nError = alGetError();
 			if (nError != AL_NO_ERROR) {
-				PL_LOG(Error, String::Format("alSourcei: %s", alGetString(nError)))
+				PL_LOG(Error, String("alSourcei: ") + alGetString(nError))
 				Unload();
 
 				// Error!

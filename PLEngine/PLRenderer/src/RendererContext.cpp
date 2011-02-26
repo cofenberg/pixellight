@@ -148,11 +148,11 @@ void RendererContext::Update()
 	Profiling *pProfiling = Profiling::GetInstance();
 	if (pProfiling->IsActive()) {
 		if (m_pTextureManager)
-			pProfiling->Set("Renderer context", "Number of textures",  String::Format("%d", m_pTextureManager->GetNumOfElements()));
+			pProfiling->Set("Renderer context", "Number of textures", m_pTextureManager->GetNumOfElements());
 		if (m_pEffectManager)
-			pProfiling->Set("Renderer context", "Number of effects",   String::Format("%d", m_pEffectManager->GetNumOfElements()));
+			pProfiling->Set("Renderer context", "Number of effects", m_pEffectManager->GetNumOfElements());
 		if (m_pMaterialManager)
-			pProfiling->Set("Renderer context", "Number of materials", String::Format("%d", m_pMaterialManager->GetNumOfElements()));
+			pProfiling->Set("Renderer context", "Number of materials", m_pMaterialManager->GetNumOfElements());
 		pProfiling->Set("Renderer context", "Update time", String::Format("%.3g ms", cStopwatch.GetMilliseconds()));
 	}
 }

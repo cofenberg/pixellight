@@ -46,7 +46,7 @@ AnimationEvent::AnimationEvent(int nID, uint32 nFrame, AnimationEventManager *pM
 	m_nFrame(nFrame)
 {
 	if (pManager && !sName.GetLength())
-		SetName(String::Format("Event %d", pManager->GetNumOfElements()));
+		SetName(String("Event ") + pManager->GetNumOfElements());
 }
 
 /**

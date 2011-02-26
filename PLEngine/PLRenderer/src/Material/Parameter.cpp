@@ -299,7 +299,7 @@ PLGeneral::String Parameter::GetParameterString() const
 			return *static_cast<const PLGeneral::String*>(m_pValue);
 
 		case Parameters::Integer:
-			return PLGeneral::String::Format("%d", *static_cast<const int*>(m_pValue));
+			return PLGeneral::String(*static_cast<const int*>(m_pValue));
 
 		case Parameters::Integer2:
 			return PLGeneral::String::Format("%d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1]);

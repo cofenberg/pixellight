@@ -52,7 +52,7 @@ void ShaderToolsCg::AddCgContextReference()
 {
 	// Check Cg context
 	if (!m_nCgContexCounter && !m_pCgContext) {
-		PL_LOG(Info, PLGeneral::String::Format("Initialize Cg %d", CG_VERSION_NUM))
+		PL_LOG(Info, String("Initialize Cg ") + CG_VERSION_NUM)
 		m_pCgContext = cgCreateContext();
 		cgSetErrorCallback(CgErrorCallback);
 
@@ -74,7 +74,7 @@ void ShaderToolsCg::ReleaseCgContextReference()
 	// Check Cg context
 	m_nCgContexCounter--;
 	if (!m_nCgContexCounter && m_pCgContext) {
-		PL_LOG(Info, String::Format("De-initialize Cg %d", CG_VERSION_NUM))
+		PL_LOG(Info, String("De-initialize Cg ") + CG_VERSION_NUM)
 		cgSetErrorCallback(nullptr); // Just for sure :)
 		cgDestroyContext(m_pCgContext);
 		m_pCgContext = nullptr;
@@ -103,7 +103,7 @@ CGprogram ShaderToolsCg::CreateCgProgram(CGprofile pCgProfile, const String &sSo
 	CGprogram pCgProgram = cgCreateProgram(m_pCgContext, CG_SOURCE, sSourceCode.GetASCII(), pCgProfile, sEntry.GetLength() ? sEntry.GetASCII() : "main", nullptr);
 	if (!pCgProgram) {
 		// Error!
-		PL_LOG(Error, PLGeneral::String::Format("Can't create Cg program! Error: %s", cgGetErrorString(cgGetError())))
+		PL_LOG(Error, String("Can't create Cg program! Error: ") + cgGetErrorString(cgGetError()))
 	}
 
 	// Done

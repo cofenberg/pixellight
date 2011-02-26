@@ -396,7 +396,7 @@ bool SoundManager::Init()
 			// Done
 			return true;
 		} else {
-			PL_LOG(Error, String::Format("Error on FMOD initialization! (%s)", FMOD_ErrorString(FSOUND_GetError())))
+			PL_LOG(Error, String("Error on FMOD initialization! Error: ") + FMOD_ErrorString(FSOUND_GetError()))
 		}
 	} else {
 		PL_LOG(Error, String::Format("Invalid FMOD version! (v%.1f required!)", FMOD_VERSION))

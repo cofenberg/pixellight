@@ -775,12 +775,12 @@ bool MeshLoaderPLXml::ReadSkeleton(Mesh &cMesh, const XmlElement &cSkeletonEleme
 	// [TODO] Try to avoid skeleton name conflicts...
 	String sUsedName;
 //	if (!cMesh.GetSkeleton()) {
-//		sUsedName = cMesh.GetName() + "_" + sName;
+//		sUsedName = cMesh.GetName() + '_' + sName;
 //	} else 
 	if (cSkeletonManager.Get(sName)) {
 		uint32 i = 0;
 		do {
-			sUsedName = sName + '_' + String::Format("%d", i);
+			sUsedName = sName + '_' + i;
 			i++;
 		} while (cSkeletonManager.Get(sUsedName));
 	} else {
@@ -1150,7 +1150,7 @@ bool MeshLoaderPLXml::WriteMaterials(const Mesh &cMesh, XmlElement &cMeshElement
 			XmlElement *pMaterialElement = new XmlElement("Material");
 
 			// Write attribute
-			pMaterialElement->SetAttribute("ID", String::Format("%d", i));
+			pMaterialElement->SetAttribute("ID", i);
 
 			// Add value
 			XmlText *pValue = new XmlText(cMesh.GetMaterial(i)->GetName());
@@ -1203,7 +1203,7 @@ bool MeshLoaderPLXml::WriteMesh(Mesh &cMesh, XmlElement &cMeshElement) const
 		XmlElement *pWeightsElement = new XmlElement("Weights");
 
 		// Write number of weights attribute
-		pWeightsElement->SetAttribute("NumOfWeights", String::Format("%d", cMesh.GetWeights().GetNumOfElements()));
+		pWeightsElement->SetAttribute("NumOfWeights", cMesh.GetWeights().GetNumOfElements());
 
 		// Loop through all weights
 		for (uint32 i=0; i<cMesh.GetWeights().GetNumOfElements(); i++) {
@@ -1242,11 +1242,11 @@ bool MeshLoaderPLXml::WriteLODLevel(MeshLODLevel &cLODLevel, uint32 nID, XmlElem
 	XmlElement *pLODLevelElement = new XmlElement("LODLevel");
 
 	// Write attributes
-	pLODLevelElement->SetAttribute("ID", String::Format("%d", nID));
-	pLODLevelElement->SetAttribute("Distance", String::Format("%d", cLODLevel.GetLODDistance()));
+	pLODLevelElement->SetAttribute("ID", nID);
+	pLODLevelElement->SetAttribute("Distance", String(cLODLevel.GetLODDistance()));
 	if (cLODLevel.GetOctree()) {
-		pLODLevelElement->SetAttribute("OctreeSubdivide",	  String::Format("%d", cLODLevel.GetOctree()->GetSubdivide()));
-		pLODLevelElement->SetAttribute("OctreeMinGeometries", String::Format("%d", cLODLevel.GetOctree()->GetMinGeometries()));
+		pLODLevelElement->SetAttribute("OctreeSubdivide",	  cLODLevel.GetOctree()->GetSubdivide());
+		pLODLevelElement->SetAttribute("OctreeMinGeometries", cLODLevel.GetOctree()->GetMinGeometries());
 	} else {
 		pLODLevelElement->SetAttribute("OctreeSubdivide",	  "0");
 		pLODLevelElement->SetAttribute("OctreeMinGeometries", "0");
@@ -1289,7 +1289,7 @@ bool MeshLoaderPLXml::WriteIndexBuffer(IndexBuffer &cIndexBuffer, XmlElement &cL
 		case IndexBuffer::UShort:	pIndexBufferElement->SetAttribute("ElementType", "UShort");	break;
 		case IndexBuffer::UByte:	pIndexBufferElement->SetAttribute("ElementType", "UByte");	break;
 	}
-	pIndexBufferElement->SetAttribute("Elements", String::Format("%d", cIndexBuffer.GetNumOfElements()));
+	pIndexBufferElement->SetAttribute("Elements", cIndexBuffer.GetNumOfElements());
 
 	// Write index buffer
 	bool bResult = true; // No error by default
@@ -1300,17 +1300,17 @@ bool MeshLoaderPLXml::WriteIndexBuffer(IndexBuffer &cIndexBuffer, XmlElement &cL
 		switch (cIndexBuffer.GetElementType()) {
 			case IndexBuffer::UInt:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += String::Format("%d ", static_cast<uint32*>(pData)[i]);
+					sValue += static_cast<uint32*>(pData)[i];
 				break;
 
 			case IndexBuffer::UShort:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += String::Format("%d ", static_cast<uint16*>(pData)[i]);
+					sValue += static_cast<uint16*>(pData)[i];
 				break;
 
 			case IndexBuffer::UByte:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += String::Format("%d ", static_cast<uint8*>(pData)[i]);
+					sValue += static_cast<uint8*>(pData)[i];
 				break;
 		}
 
@@ -1338,12 +1338,12 @@ bool MeshLoaderPLXml::WriteGeometry(const Geometry &cGeometry, uint32 nID, XmlEl
 	XmlElement *pGeometryElement = new XmlElement("Geometry");
 
 	// Write attributes
-	pGeometryElement->SetAttribute("ID", String::Format("%d", nID));
+	pGeometryElement->SetAttribute("ID", nID);
 	if (cGeometry.GetName().GetLength())
 		pGeometryElement->SetAttribute("Name", cGeometry.GetName());
 	if (cGeometry.GetFlags())
-		pGeometryElement->SetAttribute("Flags", String::Format("%d", cGeometry.GetFlags()));
-	pGeometryElement->SetAttribute("Active", String::Format("%d", cGeometry.IsActive()));
+		pGeometryElement->SetAttribute("Flags", cGeometry.GetFlags());
+	pGeometryElement->SetAttribute("Active", cGeometry.IsActive());
 	switch (cGeometry.GetPrimitiveType()) {
 		case Primitive::PointList:		pGeometryElement->SetAttribute("PrimitiveType", "PointList");		break;
 		case Primitive::LineList:		pGeometryElement->SetAttribute("PrimitiveType", "LineList");		break;
@@ -1352,9 +1352,9 @@ bool MeshLoaderPLXml::WriteGeometry(const Geometry &cGeometry, uint32 nID, XmlEl
 		case Primitive::TriangleStrip:	pGeometryElement->SetAttribute("PrimitiveType", "TriangleStrip");	break;
 		case Primitive::TriangleFan:	pGeometryElement->SetAttribute("PrimitiveType", "TriangleFan");		break;
 	}
-	pGeometryElement->SetAttribute("Material", String::Format("%d", cGeometry.GetMaterial()));
-	pGeometryElement->SetAttribute("StartIndex", String::Format("%d", cGeometry.GetStartIndex()));
-	pGeometryElement->SetAttribute("IndexSize", String::Format("%d", cGeometry.GetIndexSize()));
+	pGeometryElement->SetAttribute("Material", cGeometry.GetMaterial());
+	pGeometryElement->SetAttribute("StartIndex", cGeometry.GetStartIndex());
+	pGeometryElement->SetAttribute("IndexSize", cGeometry.GetIndexSize());
 
 	// Link geometry element to parent
 	cGeometriesElement.LinkEndChild(*pGeometryElement);
@@ -1369,9 +1369,9 @@ bool MeshLoaderPLXml::WriteWeight(const Weight &cWeight, uint32 nID, XmlElement 
 	XmlElement *pWeightElement = new XmlElement("Weight");
 
 	// Write attributes
-	pWeightElement->SetAttribute("ID", String::Format("%d", nID));
-	pWeightElement->SetAttribute("Joint", String::Format("%d", cWeight.GetJoint()));
-	pWeightElement->SetAttribute("Bias", String::Format("%f", cWeight.GetBias()));
+	pWeightElement->SetAttribute("ID", nID);
+	pWeightElement->SetAttribute("Joint", cWeight.GetJoint());
+	pWeightElement->SetAttribute("Bias", String(cWeight.GetBias()));
 
 	// Link weight element to parent
 	cWeightsElement.LinkEndChild(*pWeightElement);
@@ -1387,15 +1387,15 @@ bool MeshLoaderPLXml::WriteVertexWeights(VertexWeights &cVertexWeights, uint32 n
 
 	// Write attributes
 	Array<uint32> &cWeights = cVertexWeights.GetWeights();
-	pVertexWeightsElement->SetAttribute("ID", String::Format("%d", nID));
-	pVertexWeightsElement->SetAttribute("NumOfWeights", String::Format("%d", cVertexWeights.GetWeights().GetNumOfElements()));
+	pVertexWeightsElement->SetAttribute("ID", nID);
+	pVertexWeightsElement->SetAttribute("NumOfWeights", cVertexWeights.GetWeights().GetNumOfElements());
 
 	// Write vertex weights
 	if (cVertexWeights.GetWeights().GetNumOfElements()) {
 		// Loop through all vertex weights
 		String sValue;
 		for (uint32 i=0; i<cVertexWeights.GetWeights().GetNumOfElements(); i++)
-			sValue += String::Format("%d ", cWeights.GetData()[i]);
+			sValue += cWeights.GetData()[i];
 
 		// Add value
 		XmlText *pValue = new XmlText(sValue);
@@ -1415,7 +1415,7 @@ bool MeshLoaderPLXml::WriteMorphTarget(MeshMorphTarget &cMorphTarget, uint32 nID
 	XmlElement *pMorphTargetElement = new XmlElement("MorphTarget");
 
 	// Write attributes
-	pMorphTargetElement->SetAttribute("ID", String::Format("%d", nID));
+	pMorphTargetElement->SetAttribute("ID", nID);
 	pMorphTargetElement->SetAttribute("Name", cMorphTarget.GetName());
 	pMorphTargetElement->SetAttribute("Relative", cMorphTarget.IsRelative());
 	pMorphTargetElement->SetAttribute("VertexIDs", cMorphTarget.GetVertexIDs().GetNumOfElements());
@@ -1467,7 +1467,7 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 	XmlElement *pVertexBufferElement = new XmlElement("VertexBuffer");
 
 	// Write attributes
-	pVertexBufferElement->SetAttribute("ID", String::Format("%d", nID));
+	pVertexBufferElement->SetAttribute("ID", nID);
 	pVertexBufferElement->SetAttribute("VertexAttributes", cVertexBuffer.GetNumOfVertexAttributes());
 	pVertexBufferElement->SetAttribute("Vertices", cVertexBuffer.GetNumOfElements());
 
@@ -1507,7 +1507,7 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 			XmlElement *pVertexElement = new XmlElement("Vertex");
 
 			// Write attributes
-			pVertexElement->SetAttribute("ID", String::Format("%d", nVertex));
+			pVertexElement->SetAttribute("ID", nVertex);
 
 			// Loop through all vertex attributes
 			for (uint32 nAttribute=0; nAttribute<cVertexBuffer.GetNumOfVertexAttributes(); nAttribute++) {
@@ -1518,7 +1518,7 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 				XmlElement *pElement = new XmlElement(lstElementType[pVertexAttribute->nType]);
 
 				// Write attributes
-				pElement->SetAttribute("ID", String::Format("%d", nAttribute));
+				pElement->SetAttribute("ID", nAttribute);
 
 				// Get the vertex data
 				const void *pData = cVertexBuffer.GetData(nVertex, pVertexAttribute->nSemantic, pVertexAttribute->nChannel);
@@ -1527,7 +1527,7 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 				String sValue;
 				switch (pVertexAttribute->nType) {
 					case VertexBuffer::RGBA:	sValue = cVertexBuffer.GetColor(nVertex, pVertexAttribute->nChannel).ToString();																												break;
-					case VertexBuffer::Float1:	sValue = String::Format("%f", *static_cast<const float*>(pData));																																break;
+					case VertexBuffer::Float1:	sValue = *static_cast<const float*>(pData);																																						break;
 					case VertexBuffer::Float2:	sValue = String::Format("%f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1]);																						break;
 					case VertexBuffer::Float3:	sValue = String::Format("%f %f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1], static_cast<const float*>(pData)[2]);												break;
 					case VertexBuffer::Float4:	sValue = String::Format("%f %f %f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1], static_cast<const float*>(pData)[2], static_cast<const float*>(pData)[3]);		break;
@@ -1568,7 +1568,7 @@ bool MeshLoaderPLXml::WriteVertexAttribute(const VertexBuffer::Attribute &cVerte
 	XmlElement *pVertexAttributeElement = new XmlElement("VertexAttribute");
 
 	// Write attributes
-	pVertexAttributeElement->SetAttribute("ID", String::Format("%d", nID));
+	pVertexAttributeElement->SetAttribute("ID", nID);
 	switch (cVertexAttribute.nSemantic) {
 		case VertexBuffer::Position:		pVertexAttributeElement->SetAttribute("Semantic", "Position");		break;
 		case VertexBuffer::BlendWeight:		pVertexAttributeElement->SetAttribute("Semantic", "BlendWeight");	break;
@@ -1581,7 +1581,7 @@ bool MeshLoaderPLXml::WriteVertexAttribute(const VertexBuffer::Attribute &cVerte
 		case VertexBuffer::Tangent:			pVertexAttributeElement->SetAttribute("Semantic", "Tangent");		break;
 		case VertexBuffer::Binormal:		pVertexAttributeElement->SetAttribute("Semantic", "Binormal");		break;
 	}
-	pVertexAttributeElement->SetAttribute("Channel", String::Format("%d", cVertexAttribute.nChannel));
+	pVertexAttributeElement->SetAttribute("Channel", cVertexAttribute.nChannel);
 	switch (cVertexAttribute.nType) {
 		case VertexBuffer::RGBA:	pVertexAttributeElement->SetAttribute("Type", "RGBA");		break;
 		case VertexBuffer::Float1:	pVertexAttributeElement->SetAttribute("Type", "Float1");	break;
@@ -1605,10 +1605,10 @@ bool MeshLoaderPLXml::WriteSkeleton(Skeleton &cSkeleton, uint32 nID, XmlElement 
 	XmlElement *pSkeletonElement = new XmlElement("Skeleton");
 
 	// Write attributes
-	pSkeletonElement->SetAttribute("ID", String::Format("%d", nID));
+	pSkeletonElement->SetAttribute("ID", nID);
 	pSkeletonElement->SetAttribute("Name", cSkeleton.GetName());
-	pSkeletonElement->SetAttribute("Joints", String::Format("%d", cSkeleton.GetNumOfElements()));
-	pSkeletonElement->SetAttribute("Frames", String::Format("%d", cSkeleton.GetFrameKeys().GetNumOfElements()));
+	pSkeletonElement->SetAttribute("Joints", cSkeleton.GetNumOfElements());
+	pSkeletonElement->SetAttribute("Frames", cSkeleton.GetFrameKeys().GetNumOfElements());
 
 	{ // Write joints
 		// Add joints
@@ -1623,10 +1623,10 @@ bool MeshLoaderPLXml::WriteSkeleton(Skeleton &cSkeleton, uint32 nID, XmlElement 
 			XmlElement *pJointElement = new XmlElement("Joint");
 
 			// Write attributes
-			pJointElement->SetAttribute("ID", String::Format("%d", i));
+			pJointElement->SetAttribute("ID", i);
 			pJointElement->SetAttribute("Name", pJoint->GetName());
-			pJointElement->SetAttribute("Parent", String::Format("%d", pJoint->GetParent()));
-			pJointElement->SetAttribute("AnimatedComponents", String::Format("%d", cSkeleton.GetJoints()[i].nAnimatedComponents));
+			pJointElement->SetAttribute("Parent", pJoint->GetParent());
+			pJointElement->SetAttribute("AnimatedComponents", cSkeleton.GetJoints()[i].nAnimatedComponents);
 
 			// Link joint element to parent
 			pJointsElement->LinkEndChild(*pJointElement);
@@ -1649,7 +1649,7 @@ bool MeshLoaderPLXml::WriteSkeleton(Skeleton &cSkeleton, uint32 nID, XmlElement 
 			XmlElement *pJointStateElement = new XmlElement("JointState");
 
 			// Write attributes
-			pJointStateElement->SetAttribute("ID", String::Format("%d", i));
+			pJointStateElement->SetAttribute("ID", i);
 			pJointStateElement->SetAttribute("Translation", pJoint->GetTranslation().ToString());
 			pJointStateElement->SetAttribute("Rotation", pJoint->GetRotation().ToString());
 			pJointStateElement->SetAttribute("TranslationJointSpace", pJoint->GetTranslationJointSpace().ToString());
@@ -1674,15 +1674,17 @@ bool MeshLoaderPLXml::WriteSkeleton(Skeleton &cSkeleton, uint32 nID, XmlElement 
 			XmlElement *pFrameKeyElement = new XmlElement("FrameKey");
 
 			// Write attributes
-			pFrameKeyElement->SetAttribute("ID", String::Format("%d", nFrameKey));
+			pFrameKeyElement->SetAttribute("ID", nFrameKey);
 
 			// Write keys
 			Array<float> &lstFrameKeysT = lstFrameKeys[nFrameKey].lstFrameKeys;
 			if (lstFrameKeysT.GetNumOfElements()) {
 				// Loop through all keys
 				String sValue;
-				for (uint32 i=0; i<lstFrameKeysT.GetNumOfElements(); i++)
-					sValue += String::Format("%f ", lstFrameKeysT.GetData()[i]);
+				for (uint32 i=0; i<lstFrameKeysT.GetNumOfElements(); i++) {
+					sValue += lstFrameKeysT.GetData()[i];
+					sValue += ' ';
+				}
 
 				// Add value
 				XmlText *pValue = new XmlText(sValue);
@@ -1710,7 +1712,7 @@ bool MeshLoaderPLXml::WriteAnchorPoints(Mesh &cMesh, XmlElement &cMeshElement) c
 	XmlElement *pAnchorPointsElement = new XmlElement("AnchorPoints");
 
 	// Write attributes
-	pAnchorPointsElement->SetAttribute("AnchorPoints", String::Format("%d", cMesh.GetAnchorPointManager().GetNumOfElements()));
+	pAnchorPointsElement->SetAttribute("AnchorPoints", "%d");
 
 	// Loop through all anchor points
 	for (uint32 i=0; i<cMesh.GetAnchorPointManager().GetNumOfElements(); i++) {
@@ -1722,8 +1724,8 @@ bool MeshLoaderPLXml::WriteAnchorPoints(Mesh &cMesh, XmlElement &cMeshElement) c
 
 		// Write attributes
 		pAnchorPointElement->SetAttribute("Name", pAnchorPoint->GetName());
-		pAnchorPointElement->SetAttribute("Type", String::Format("%d", pAnchorPoint->GetType()));
-		pAnchorPointElement->SetAttribute("ID", String::Format("%d", pAnchorPoint->GetID()));
+		pAnchorPointElement->SetAttribute("Type", pAnchorPoint->GetType());
+		pAnchorPointElement->SetAttribute("ID",   pAnchorPoint->GetID());
 
 		// Link anchor point element to parent
 		pAnchorPointsElement->LinkEndChild(*pAnchorPointElement);
@@ -1798,10 +1800,10 @@ bool MeshLoaderPLXml::WriteMorphTargetAnimation(Mesh &cMesh, uint32 nAnimation, 
 		XmlElement *pMorphTargetAnimationElement = new XmlElement("MorphTargetAnimation");
 
 		// Write attributes
-		pMorphTargetAnimationElement->SetAttribute("ID", String::Format("%d", nAnimation));
-		pMorphTargetAnimationElement->SetAttribute("Name", pAni->GetName());
-		pMorphTargetAnimationElement->SetAttribute("MorphTargets", String::Format("%d", pAni->GetMorphTargets().GetNumOfElements()));
-		pMorphTargetAnimationElement->SetAttribute("Frames", String::Format("%d", pAni->GetFrameKeys().GetNumOfElements()));
+		pMorphTargetAnimationElement->SetAttribute("ID",		   nAnimation);
+		pMorphTargetAnimationElement->SetAttribute("Name",		   pAni->GetName());
+		pMorphTargetAnimationElement->SetAttribute("MorphTargets", pAni->GetMorphTargets().GetNumOfElements());
+		pMorphTargetAnimationElement->SetAttribute("Frames",	   pAni->GetFrameKeys().GetNumOfElements());
 
 		{ // Write morph targets
 			// Add morph targets
@@ -1813,7 +1815,7 @@ bool MeshLoaderPLXml::WriteMorphTargetAnimation(Mesh &cMesh, uint32 nAnimation, 
 				XmlElement *pMorphTargetElement = new XmlElement("MorphTarget");
 
 				// Write attributes
-				pMorphTargetElement->SetAttribute("ID", String::Format("%d", i));
+				pMorphTargetElement->SetAttribute("ID", i);
 
 				// Add value
 				XmlText *pValue = new XmlText(pAni->GetMorphTargets()[i].sName);
@@ -1838,15 +1840,17 @@ bool MeshLoaderPLXml::WriteMorphTargetAnimation(Mesh &cMesh, uint32 nAnimation, 
 				XmlElement *pFrameKeyElement = new XmlElement("FrameKey");
 
 				// Write attributes
-				pFrameKeyElement->SetAttribute("ID", String::Format("%d", nFrameKey));
+				pFrameKeyElement->SetAttribute("ID", nFrameKey);
 
 				// Write keys
 				Array<float> &lstFrameKeysT = lstFrameKeys[nFrameKey].lstFrameKeys;
 				if (lstFrameKeysT.GetNumOfElements()) {
 					// Loop through all keys
 					String sValue;
-					for (uint32 i=0; i<lstFrameKeysT.GetNumOfElements(); i++)
-						sValue += String::Format("%f ", lstFrameKeysT.GetData()[i]);
+					for (uint32 i=0; i<lstFrameKeysT.GetNumOfElements(); i++) {
+						sValue += lstFrameKeysT.GetData()[i];
+						sValue += ' ';
+					}
 
 					// Add value
 					XmlText *pValue = new XmlText(sValue);

@@ -435,11 +435,11 @@ bool OpenGLExtensions::IsSupported(const char *pszExtension) const
 			String sConfig = "true";
 			if (!sConfig.GetLength() || sConfig.GetBool()) {
 				// Extension is supported!
-				PL_LOG(Info, String::Format("Use extension '%s'", pszExtension))
+				PL_LOG(Info, String("Use extension: ") + pszExtension)
 				return true;
 			}
 		} else {
-			PL_LOG(Info, String::Format("Extension '%s' not found (nothing critical)", pszExtension))
+			PL_LOG(Info, String("Extension '") + pszExtension + "' not found (nothing critical)")
 		}
 	}
 

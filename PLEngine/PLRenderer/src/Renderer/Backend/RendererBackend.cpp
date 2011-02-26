@@ -269,34 +269,34 @@ void RendererBackend::ShowRendererCapabilities() const
 {
 	PL_LOG(Info, " ")
 	PL_LOG(Info, "Renderer capabilities:")
-	PL_LOG(Info, String::Format("  MaxColorRenderTargets: %d",			m_sCapabilities.nMaxColorRenderTargets))
-	PL_LOG(Info, String::Format("  MaxTextureUnits: %d",				m_sCapabilities.nMaxTextureUnits))
-	PL_LOG(Info, String::Format("  MaxAnisotropy: %d",					m_sCapabilities.nMaxAnisotropy))
-	PL_LOG(Info, String::Format("  MaxTessellationFactor: %d",			m_sCapabilities.nMaxTessellationFactor))
-	PL_LOG(Info, String::Format("  MaxTextureBufferSize: %d",			m_sCapabilities.nMaxTextureBufferSize))
-	PL_LOG(Info, String::Format("  TextureBufferRectangle: %s",			GetBoolString(m_sCapabilities.bTextureBufferRectangle)))
-	PL_LOG(Info, String::Format("  MaxRectangleTextureBufferSize: %d",	m_sCapabilities.nMaxRectangleTextureBufferSize))
-	PL_LOG(Info, String::Format("  TextureBuffer3D: %s",				GetBoolString(m_sCapabilities.bTextureBuffer3D)))
-	PL_LOG(Info, String::Format("  Max3DTextureBufferSize: %d",			m_sCapabilities.nMax3DTextureBufferSize))
-	PL_LOG(Info, String::Format("  TextureBufferCube: %s",				GetBoolString(m_sCapabilities.bTextureBufferCube)))
-	PL_LOG(Info, String::Format("  MaxCubeTextureBufferSize: %d",		m_sCapabilities.nMaxCubeTextureBufferSize))
-	PL_LOG(Info, String::Format("  StencilWrap: %s",					GetBoolString(m_sCapabilities.bStencilWrap)))
-	PL_LOG(Info, String::Format("  TwoSidedStencils: %s",				GetBoolString(m_sCapabilities.bTwoSidedStencils)))
-	PL_LOG(Info, String::Format("  DepthBoundsTest: %s",				GetBoolString(m_sCapabilities.bDepthBoundsTest)))
-	PL_LOG(Info, String::Format("  PointSprite: %s",					GetBoolString(m_sCapabilities.bPointSprite)))
-	PL_LOG(Info, String::Format("  PointParameters: %s",				GetBoolString(m_sCapabilities.bPointParameters)))
-	PL_LOG(Info, String::Format("  OcclusionQuery: %s",					GetBoolString(m_sCapabilities.bOcclusionQuery)))
-	PL_LOG(Info, String::Format("  VertexBufferSecondaryColor: %s",		GetBoolString(m_sCapabilities.bVertexBufferSecondaryColor)))
+	PL_LOG(Info, String("  MaxColorRenderTargets: ")		 + m_sCapabilities.nMaxColorRenderTargets)
+	PL_LOG(Info, String("  MaxTextureUnits: ")				 + m_sCapabilities.nMaxTextureUnits)
+	PL_LOG(Info, String("  MaxAnisotropy: ")				 + m_sCapabilities.nMaxAnisotropy)
+	PL_LOG(Info, String("  MaxTessellationFactor: ")		 + m_sCapabilities.nMaxTessellationFactor)
+	PL_LOG(Info, String("  MaxTextureBufferSize: ")			 + m_sCapabilities.nMaxTextureBufferSize)
+	PL_LOG(Info, String("  TextureBufferRectangle: ")		 + GetBoolString(m_sCapabilities.bTextureBufferRectangle))
+	PL_LOG(Info, String("  MaxRectangleTextureBufferSize: ") + m_sCapabilities.nMaxRectangleTextureBufferSize)
+	PL_LOG(Info, String("  TextureBuffer3D: ")				 + GetBoolString(m_sCapabilities.bTextureBuffer3D))
+	PL_LOG(Info, String("  Max3DTextureBufferSize: ")		 + m_sCapabilities.nMax3DTextureBufferSize)
+	PL_LOG(Info, String("  TextureBufferCube: ")			 + GetBoolString(m_sCapabilities.bTextureBufferCube))
+	PL_LOG(Info, String("  MaxCubeTextureBufferSize: ")		 + m_sCapabilities.nMaxCubeTextureBufferSize)
+	PL_LOG(Info, String("  StencilWrap: ")					 + GetBoolString(m_sCapabilities.bStencilWrap))
+	PL_LOG(Info, String("  TwoSidedStencils: ")				 + GetBoolString(m_sCapabilities.bTwoSidedStencils))
+	PL_LOG(Info, String("  DepthBoundsTest: ")				 + GetBoolString(m_sCapabilities.bDepthBoundsTest))
+	PL_LOG(Info, String("  PointSprite: ")					 + GetBoolString(m_sCapabilities.bPointSprite))
+	PL_LOG(Info, String("  PointParameters: ")				 + GetBoolString(m_sCapabilities.bPointParameters))
+	PL_LOG(Info, String("  OcclusionQuery: ")				 + GetBoolString(m_sCapabilities.bOcclusionQuery))
+	PL_LOG(Info, String("  VertexBufferSecondaryColor: ")	 + GetBoolString(m_sCapabilities.bVertexBufferSecondaryColor))
 	PL_LOG(Info, " ")
 
 	// Fixed functions
 	FixedFunctions *pFixedFunctions = GetFixedFunctions();
 	if (pFixedFunctions) {
 		PL_LOG(Info, "Renderer fixed functions capabilities:")
-		PL_LOG(Info, String::Format("  MaxActiveLights: %d",		pFixedFunctions->GetCapabilities().nMaxActiveLights))
-		PL_LOG(Info, String::Format("  MaxClipPlanes: %d",			pFixedFunctions->GetCapabilities().nMaxClipPlanes))
-		PL_LOG(Info, String::Format("  VertexBufferFogCoord: %s",	GetBoolString(pFixedFunctions->GetCapabilities().bVertexBufferFogCoord)))
-		PL_LOG(Info, String::Format("  MaxVertexBufferStreams: %d",	pFixedFunctions->GetCapabilities().nMaxVertexBufferStreams))
+		PL_LOG(Info, String("  MaxActiveLights: ")			+ pFixedFunctions->GetCapabilities().nMaxActiveLights)
+		PL_LOG(Info, String("  MaxClipPlanes: ")			+ pFixedFunctions->GetCapabilities().nMaxClipPlanes)
+		PL_LOG(Info, String("  VertexBufferFogCoord: ")		+ GetBoolString(pFixedFunctions->GetCapabilities().bVertexBufferFogCoord))
+		PL_LOG(Info, String("  MaxVertexBufferStreams: ")	+ pFixedFunctions->GetCapabilities().nMaxVertexBufferStreams)
 		PL_LOG(Info, " ")
 	}
 }
@@ -505,28 +505,28 @@ void RendererBackend::Update()
 	// Update profiling
 	Profiling *pProfiling = Profiling::GetInstance();
 	if (pProfiling->IsActive()) {
-		String sAPI = GetAPI();
+		const String sAPI = GetAPI();
 		const Statistics &sS = m_sStatistics;
-		pProfiling->Set(sAPI, "Number of surfaces",				String::Format("%d",					GetNumOfSurfaces()));
-		pProfiling->Set(sAPI, "Number of resources",			String::Format("%d",					GetNumOfResources()));
-		pProfiling->Set(sAPI, "Render state changes",			String::Format("%d",					sS.nRenderStateChanges));
-		pProfiling->Set(sAPI, "Sampler state changes",			String::Format("%d",					sS.nSamplerStateChanges));
-		pProfiling->Set(sAPI, "Draw primitive calls",			String::Format("%d",					sS.nDrawPrimitivCalls));
-		pProfiling->Set(sAPI, "Current triangles",				String::Format("%d",					sS.nTriangles));
-		pProfiling->Set(sAPI, "Current vertices",				String::Format("%d",					sS.nVertices));
-		pProfiling->Set(sAPI, "Number of texture buffers",		String::Format("%d",					sS.nTextureBuffersNum));
-		float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
-		pProfiling->Set(sAPI, "Texture buffers memory",			String::Format("%g KB (%g MB)",			fTextureBuffersMemKB, fTextureBuffersMemKB/1024.0f));
-		pProfiling->Set(sAPI, "Texture buffer binds",			String::Format("%d",					sS.nTextureBufferBinds));
-		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				cStopwatch.GetMilliseconds()));
-		pProfiling->Set(sAPI, "Number of vertex buffers",		String::Format("%d",					sS.nVertexBufferNum));
-		float fVertexBufferMemKB = static_cast<float>(sS.nVertexBufferMem)/1024.0f;
-		pProfiling->Set(sAPI, "Vertex buffers memory",			String::Format("%g KB (%g MB)",			fVertexBufferMemKB, fVertexBufferMemKB/1024.0f));
-		pProfiling->Set(sAPI, "Vertex buffers update time",		String::Format("%.3f ms (%d locks)",	sS.nVertexBuffersSetupTime/1000.0f, sS.nVertexBufferLocks));
-		pProfiling->Set(sAPI, "Number of index buffers",		String::Format("%d",					sS.nIndexBufferNum));
-		float fIndexBufferMemKB = static_cast<float>(sS.nIndexBufferMem)/1024.0f;
-		pProfiling->Set(sAPI, "Index buffers memory",			String::Format("%g KB (%g MB)",			fIndexBufferMemKB, fIndexBufferMemKB/1024.0f));
-		pProfiling->Set(sAPI, "Index buffers update time",		String::Format("%.3f ms (%d locks)",	sS.nIndexBuffersSetupTime/1000.0f, sS.nIndexBufferLocks));
+		pProfiling->Set(sAPI, "Number of surfaces",			GetNumOfSurfaces());
+		pProfiling->Set(sAPI, "Number of resources",		GetNumOfResources());
+		pProfiling->Set(sAPI, "Render state changes",		sS.nRenderStateChanges);
+		pProfiling->Set(sAPI, "Sampler state changes",		sS.nSamplerStateChanges);
+		pProfiling->Set(sAPI, "Draw primitive calls",		sS.nDrawPrimitivCalls);
+		pProfiling->Set(sAPI, "Current triangles",			sS.nTriangles);
+		pProfiling->Set(sAPI, "Current vertices",			sS.nVertices);
+		pProfiling->Set(sAPI, "Number of texture buffers",	sS.nTextureBuffersNum);
+		const float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
+		pProfiling->Set(sAPI, "Texture buffers memory",		String::Format("%g KB (%g MB)",			fTextureBuffersMemKB, fTextureBuffersMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Texture buffer binds",		sS.nTextureBufferBinds);
+		pProfiling->Set(sAPI, "Rendering time",				String::Format("%.3f ms",				cStopwatch.GetMilliseconds()));
+		pProfiling->Set(sAPI, "Number of vertex buffers",	sS.nVertexBufferNum);
+		const float fVertexBufferMemKB = static_cast<float>(sS.nVertexBufferMem)/1024.0f;
+		pProfiling->Set(sAPI, "Vertex buffers memory",		String::Format("%g KB (%g MB)",			fVertexBufferMemKB, fVertexBufferMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Vertex buffers update time",	String::Format("%.3f ms (%d locks)",	sS.nVertexBuffersSetupTime/1000.0f, sS.nVertexBufferLocks));
+		pProfiling->Set(sAPI, "Number of index buffers",	sS.nIndexBufferNum);
+		const float fIndexBufferMemKB = static_cast<float>(sS.nIndexBufferMem)/1024.0f;
+		pProfiling->Set(sAPI, "Index buffers memory",		String::Format("%g KB (%g MB)",			fIndexBufferMemKB, fIndexBufferMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Index buffers update time",	String::Format("%.3f ms (%d locks)",	sS.nIndexBuffersSetupTime/1000.0f, sS.nIndexBufferLocks));
 	}
 }
 

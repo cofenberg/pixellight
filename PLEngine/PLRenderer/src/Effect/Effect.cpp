@@ -173,7 +173,7 @@ uint32 Effect::GetNumOfTechniques() const
 EffectTechnique *Effect::AddTechnique(int nTechnique)
 {
 	EffectTechnique *pTechnique = new EffectTechnique(*this);
-	pTechnique->SetName(String::Format("Technique_%d", m_lstTechnique.GetNumOfElements()));
+	pTechnique->SetName(String("Technique_") + m_lstTechnique.GetNumOfElements());
 	m_lstTechnique.AddAtIndex(pTechnique, nTechnique);
 	return pTechnique;
 }

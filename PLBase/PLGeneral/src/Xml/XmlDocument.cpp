@@ -283,10 +283,14 @@ String XmlDocument::GetErrorDesc(bool bLocation) const
 {
 	if (bLocation) {
 		String sString = m_sErrorDescription;
-		if (GetErrorRow() > 0)
-			sString += String::Format(" Row: %d", GetErrorRow());
-		if (GetErrorColumn() > 0)
-			sString += String::Format(" Column: %d", GetErrorColumn());
+		if (GetErrorRow() > 0) {
+			sString += " Row: ";
+			sString += GetErrorRow();
+		}
+		if (GetErrorColumn() > 0) {
+			sString += " Column: ";
+			sString += GetErrorColumn();
+		}
 		return sString;
 	} else {
 		return m_sErrorDescription;

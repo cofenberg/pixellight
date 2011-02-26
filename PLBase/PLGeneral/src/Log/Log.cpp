@@ -297,7 +297,7 @@ String Log::LogLevelToString(uint8 nLogLevel) const
 	if (!nLogLevel)
 		return "";
 	else if (nLogLevel > Debug)
-		return String::Format("Debug%d", nLogLevel-Debug);
+		return String("Debug") + (nLogLevel-Debug);
 	else
 		return g_sLogLevelToString[nLogLevel-1];
 }

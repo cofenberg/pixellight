@@ -77,7 +77,7 @@ String SystemWindows::ErrorCodeToString(DWORD nErrorCode)
 		// Done
 		return sError;
 	} else {
-		return String::Format("Unknown error code '%d'", nErrorCode);
+		return String("Unknown error code: ") + static_cast<uint32>(nErrorCode);
 	}
 }
 
@@ -285,7 +285,9 @@ String SystemWindows::GetOS() const
 					sVersion += "Server ";
 				if (CompareString(LOCALE_INVARIANT, NORM_IGNORECASE, TEXT("SERVERNT"), -1, szProductType, -1) == CSTR_EQUAL)
 					sVersion += "Advanced Server ";
-				sVersion += String::Format("%d.%d ", osvi.dwMajorVersion, osvi.dwMinorVersion);
+				sVersion += static_cast<uint32>(osvi.dwMajorVersion);
+				sVersion += '.';
+				sVersion += static_cast<uint32>(osvi.dwMinorVersion);
 			}
 
 			// Display service pack (if any) and build number
@@ -296,14 +298,14 @@ String SystemWindows::GetOS() const
 										 TEXT("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Hotfix\\Q246009"),
 										 0, KEY_QUERY_VALUE, &hKey);
 				if (lRet == ERROR_SUCCESS)
-					sVersion += String::Format("Service Pack 6a (Build %d)", osvi.dwBuildNumber & 0xFFFF);
+					sVersion += String("Service Pack 6a (Build ") + static_cast<uint32>(osvi.dwBuildNumber & 0xFFFF) + ')';
 				else { // Windows NT 4.0 prior to SP6a
-					sVersion += String::Format(TEXT("%s (Build %d)"), osvi.szCSDVersion, osvi.dwBuildNumber & 0xFFFF);
+					sVersion += String(osvi.szCSDVersion) + " (Build " + static_cast<uint32>(osvi.dwBuildNumber & 0xFFFF) + ')';
 				}
 
 				RegCloseKey(hKey);
 			} else { // Not Windows NT 4.0 
-				sVersion += String::Format(TEXT("%s (Build %d)"), osvi.szCSDVersion, osvi.dwBuildNumber & 0xFFFF);
+				sVersion += String(osvi.szCSDVersion) + " (Build " + static_cast<uint32>(osvi.dwBuildNumber & 0xFFFF) + ')';
 			}
 		break;
 

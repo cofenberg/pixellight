@@ -382,7 +382,7 @@ void World::ErrorHandler(int nErrNum, const char *pszMSG, va_list ap)
 			vsprintf(pszBuffer, pszMSG, ap);
 
 			// Log message
-			PL_LOG(Error, PLGeneral::String::Format("ODE error %d: ", nErrNum) + pszBuffer)
+			PL_LOG(Error, PLGeneral::String("ODE error ") + nErrNum + ": " + pszBuffer)
 
 			// Cleanup
 			delete [] pszBuffer;

@@ -122,7 +122,7 @@ bool GraphLoaderPL::Save(const Graph &cGraph, File &cFile)
 					pNeighbourElement->SetAttribute("Name", pNeighbour->GetName());
 					float fDistance = pNode->GetNeighbourDistance(nNeighbour);
 					if (fDistance >= 0.0f)
-						pNeighbourElement->SetAttribute("Distance", String::Format("%g", fDistance));
+						pNeighbourElement->SetAttribute("Distance", String(fDistance));
 					pNodeElement->LinkEndChild(*pNeighbourElement);
 				}
 			}

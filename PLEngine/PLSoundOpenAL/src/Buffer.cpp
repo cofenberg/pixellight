@@ -236,7 +236,7 @@ bool Buffer::LoadBuffer(const String &sFilename, bool bStream)
 						if (nError == AL_NO_ERROR)
 							return true; // Done
 						else
-							PL_LOG(Error, String::Format("alBufferData: %s", alGetString(nError)))
+							PL_LOG(Error, String("alBufferData: ") + alGetString(nError))
 					} else {
 						// Check whether this is a wav file
 						const String sExtension = Url(sFilename).GetExtension();
@@ -249,7 +249,7 @@ bool Buffer::LoadBuffer(const String &sFilename, bool bStream)
 								if (nError == AL_NO_ERROR)
 									return true; // Done
 								else
-									PL_LOG(Error, String::Format("alBufferData: %s", alGetString(nError)))
+									PL_LOG(Error, String("alBufferData: ") + alGetString(nError))
 							} else {
 								delete pFile;
 							}
@@ -264,7 +264,7 @@ bool Buffer::LoadBuffer(const String &sFilename, bool bStream)
 				m_nBuffer   = 0;
 				m_sFilename = "";
 			} else {
-				PL_LOG(Error, String::Format("alGenBuffers: %s", alGetString(nError)))
+				PL_LOG(Error, String("alGenBuffers: ") + alGetString(nError))
 			}
 		}
 	}
@@ -304,7 +304,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 					if (nError == AL_NO_ERROR)
 						return true; // Done
 					else
-						PL_LOG(Error, String::Format("alBufferData: %s", alGetString(nError)))
+						PL_LOG(Error, String("alBufferData: ") + alGetString(nError))
 				} else {
 					// Try to load wav
 					if (LoadWav(nData, nSize, lstBufferData, nFormat, nFreq)) {
@@ -314,7 +314,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 						if (nError == AL_NO_ERROR)
 							return true; // Done
 						else
-							PL_LOG(Error, String::Format("alBufferData: %s", alGetString(nError)))
+							PL_LOG(Error, String("alBufferData: ") + alGetString(nError))
 					}
 				}
 
@@ -322,7 +322,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 				alDeleteBuffers(1, &m_nBuffer);
 				m_nBuffer = 0;
 			} else {
-				PL_LOG(Error, String::Format("alGenBuffers: %s", alGetString(nError)))
+				PL_LOG(Error, String("alGenBuffers: ") + alGetString(nError))
 			}
 		}
 	}

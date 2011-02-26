@@ -316,7 +316,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 						// render targets ('aux' may cause troubles if not support correctly...)
 						String sAuxiliaryBuffers;
 						if (m_nMaxColorTargets-1)
-							sAuxiliaryBuffers = String::Format("aux=%d", m_nMaxColorTargets-1);
+							sAuxiliaryBuffers = String("aux=") + (m_nMaxColorTargets-1);
 
 						// Initialize the PBuffer now that we have a valid context
 						// that we can use during the p-buffer creation process

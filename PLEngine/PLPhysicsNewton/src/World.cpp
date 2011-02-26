@@ -174,9 +174,9 @@ World::World() :
 	m_pNewtonWorld = NewtonCreate();
 	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
 	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
-		PL_LOG(Info, String::Format("Created Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion()))
+		PL_LOG(Info, String("Created Newton Game Dynamics (version: ") + NewtonWorldGetVersion() + ") world")
 	#else
-		PL_LOG(Info, String::Format("Created Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion(m_pNewtonWorld)))
+		PL_LOG(Info, String("Created Newton Game Dynamics (version: ") + NewtonWorldGetVersion(m_pNewtonWorld) + ") world")
 	#endif
 
 	// Save the pointer to this PL physics world
@@ -236,9 +236,9 @@ World::~World()
 	NewtonDestroy(m_pNewtonWorld);
 	// [TODO] Remove this as soon as there's an up-to-date Linux version of Newton Game Dynamics available!
 	#if (NEWTON_MAJOR_VERSION == 2) && (NEWTON_MINOR_VERSION >= 28)
-		PL_LOG(Info, String::Format("Destroyed Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion()))
+		PL_LOG(Info, String("Destroyed Newton Game Dynamics (version: ") + NewtonWorldGetVersion() + ") world")
 	#else
-		PL_LOG(Info, String::Format("Destroyed Newton Game Dynamics (version: %d) world", NewtonWorldGetVersion(m_pNewtonWorld)))
+		PL_LOG(Info, String("Destroyed Newton Game Dynamics (version: ") + NewtonWorldGetVersion(m_pNewtonWorld) + ") world")
 	#endif
 }
 

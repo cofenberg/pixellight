@@ -524,15 +524,15 @@ void TextureAniLoaderPL::AddAniInfoManager(XmlElement &cElement, const AniInfoMa
 
 			// Start
 			if (pAnimation->GetStartFrame() != 0)
-				pAnimationElement->SetAttribute("Start", String::Format("%d", pAnimation->GetStartFrame()));
+				pAnimationElement->SetAttribute("Start", pAnimation->GetStartFrame());
 
 			// End
 			if (pAnimation->GetEndFrame() != 0)
-				pAnimationElement->SetAttribute("End", String::Format("%d", pAnimation->GetEndFrame()));
+				pAnimationElement->SetAttribute("End", pAnimation->GetEndFrame());
 
 			// Speed
 			if (pAnimation->GetSpeed() != 24.0f)
-				pAnimationElement->SetAttribute("Speed", String::Format("%g", pAnimation->GetSpeed()));
+				pAnimationElement->SetAttribute("Speed", String(pAnimation->GetSpeed()));
 
 			// Loop
 			if (pAnimation->GetFlags() & AnimationInfo::Loop)
@@ -553,10 +553,10 @@ void TextureAniLoaderPL::AddAniInfoManager(XmlElement &cElement, const AniInfoMa
 					XmlElement *pFrameInfoElement = new XmlElement("Frame");
 
 					// ID
-					pAnimationElement->SetAttribute("ID", String::Format("%d", nFrameID));
+					pAnimationElement->SetAttribute("ID", nFrameID);
 
 					// Speed
-					pAnimationElement->SetAttribute("Speed", String::Format("%g", pFrameInfo->GetSpeed()));
+					pAnimationElement->SetAttribute("Speed", String(pFrameInfo->GetSpeed()));
 
 					// Link frame information element
 					pAnimationElement->LinkEndChild(*pFrameInfoElement);
@@ -572,10 +572,10 @@ void TextureAniLoaderPL::AddAniInfoManager(XmlElement &cElement, const AniInfoMa
 					XmlElement *pEventElement = new XmlElement("Event");
 
 					// FrameID
-					pEventElement->SetAttribute("FrameID", String::Format("%d", pEvent->GetFrame()));
+					pEventElement->SetAttribute("FrameID", pEvent->GetFrame());
 
 					// ID
-					pEventElement->SetAttribute("ID", String::Format("%d", pEvent->GetID()));
+					pEventElement->SetAttribute("ID", pEvent->GetID());
 
 					// Link event element
 					pAnimationElement->LinkEndChild(*pEventElement);

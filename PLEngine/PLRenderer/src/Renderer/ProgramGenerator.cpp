@@ -155,8 +155,11 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 					for (uint32 i=0; i<nNumOfVertexShaderDefinitions; i++) {
 						// Get the flag definition
 						const char *pszDefinition = lstVertexShaderDefinitions[i];
-						if (pszDefinition)
-							sSourceCode += String::Format("#define %s\n", pszDefinition);
+						if (pszDefinition) {
+							sSourceCode += "#define ";
+							sSourceCode += pszDefinition;
+							sSourceCode += '\n';
+						}
 					}
 
 					// Add the shader source code
@@ -190,8 +193,11 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 						for (uint32 i=0; i<nNumOfFragmentShaderDefinitions; i++) {
 							// Get the flag definition
 							const char *pszDefinition = lstFragmentShaderDefinitions[i];
-							if (pszDefinition)
-								sSourceCode += String::Format("#define %s\n", pszDefinition);
+							if (pszDefinition) {
+								sSourceCode += "#define ";
+								sSourceCode += pszDefinition;
+								sSourceCode += '\n';
+							}
 						}
 
 						// Add the shader source code

@@ -351,7 +351,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								if (pElement->QueryIntAttribute("MinWidth", &nMinTextureBufferSize[Vector3::X]) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nMinTextureBufferSize[Vector3::X], nTempMinTextureBufferSize[Vector3::X], nMaxTextureBufferSize[Vector3::X], bRectangleTexture);
 									if (static_cast<uint32>(nMinTextureBufferSize[Vector3::X]) != nValue) {
-										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture width! %d will be used instead.", nMinTextureBufferSize[Vector3::X], nValue))
+										PL_LOG(Warning, '\'' + sFilename + "': " + nMinTextureBufferSize[Vector3::X] + " is an invalid texture width! " + nValue + " will be used instead.")
 										nMinTextureBufferSize[Vector3::X] = nValue;
 									}
 								}
@@ -360,7 +360,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								if (pElement->QueryIntAttribute("MinHeight", &nMinTextureBufferSize[Vector3::Y]) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nMinTextureBufferSize[Vector3::Y], nTempMinTextureBufferSize[Vector3::Y], nMaxTextureBufferSize[Vector3::Y], bRectangleTexture);
 									if (static_cast<uint32>(nMinTextureBufferSize[Vector3::Y]) != nValue) {
-										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture height! %d will be used instead.", nMinTextureBufferSize[Vector3::Y], nValue))
+										PL_LOG(Warning, '\'' + sFilename + "': " + nMinTextureBufferSize[Vector3::Y] + " is an invalid texture height! " + nValue + " will be used instead.")
 										nMinTextureBufferSize[Vector3::Y] = nValue;
 									}
 								}
@@ -369,7 +369,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								if (pElement->QueryIntAttribute("MinDepth", &nMinTextureBufferSize[Vector3::Z]) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nMinTextureBufferSize[Vector3::Z], nTempMinTextureBufferSize[Vector3::Z], nMaxTextureBufferSize[Vector3::Z], bRectangleTexture);
 									if (static_cast<uint32>(nMinTextureBufferSize[Vector3::Z]) != nValue) {
-										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture depth! %d will be used instead.", nMinTextureBufferSize[Vector3::Z], nValue))
+										PL_LOG(Warning, '\'' + sFilename + "': " + nMinTextureBufferSize[Vector3::Z] + " is an invalid texture depth! " + nValue + " will be used instead.")
 										nMinTextureBufferSize[Vector3::Z] = nValue;
 									}
 								}
@@ -385,7 +385,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								if (pElement->QueryIntAttribute("Width", &nForceWidth) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nForceWidth, nTempMinTextureBufferSize[Vector3::X], nMaxTextureBufferSize[Vector3::X], bRectangleTexture);
 									if (nForceWidth != static_cast<int>(nValue)) {
-										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture width! %d will be used instead.", nForceWidth, nValue))
+										PL_LOG(Warning, '\'' + sFilename + "': " + nForceWidth + " is an invalid texture width! " + nValue + " will be used instead.")
 										nForceWidth = nValue;
 									}
 								}
@@ -394,7 +394,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								if (pElement->QueryIntAttribute("Height", &nForceHeight) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nForceHeight, nTempMinTextureBufferSize[Vector3::Y], nMaxTextureBufferSize[Vector3::Y], bRectangleTexture);
 									if (nForceHeight != static_cast<int>(nValue)) {
-										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture height! %d will be used instead.", nForceHeight, nValue))
+										PL_LOG(Warning, '\'' + sFilename + "': " + nForceHeight + " is an invalid texture height! " + nValue + " will be used instead.")
 										nForceHeight = nValue;
 									}
 								}
@@ -403,7 +403,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 								if (pElement->QueryIntAttribute("Depth", &nForceDepth) == XmlBase::Success) {
 									uint32 nValue = GetCorrectTextureSize(nForceDepth, nTempMinTextureBufferSize[Vector3::Z], nMaxTextureBufferSize[Vector3::Z], bRectangleTexture);
 									if (nForceDepth != static_cast<int>(nValue)) {
-										PL_LOG(Warning, '\'' + sFilename + String::Format("': %d is an invalid texture depth! %d will be used instead.", nForceDepth, nValue))
+										PL_LOG(Warning, '\'' + sFilename + "': " + nForceDepth + " is an invalid texture depth! " + nValue + " will be used instead.")
 										nForceDepth = nValue;
 									}
 								}
@@ -513,7 +513,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 
 					// Check if the texture size is correct
 					if (nWidth > nMaxSize || nHeight > nMaxSize) {
-						PL_LOG(Warning, '\'' + sFilename + String::Format("': Rectangle texture size %dx%d isn't correct! (max: %dx%d)", nWidth, nHeight, nMaxSize, nMaxSize))
+						PL_LOG(Warning, '\'' + sFilename + "': Rectangle texture size " + nWidth + 'x' + nHeight + " isn't correct! (max: " + nMaxSize + 'x' + nMaxSize + ')')
 
 						// Correct texture size
 						if (nWidth > nMaxSize) {
@@ -552,9 +552,9 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						!Math::IsPowerOfTwo(m_vOriginalSize.x) || !Math::IsPowerOfTwo(m_vOriginalSize.y) || !Math::IsPowerOfTwo(m_vOriginalSize.z)) {
 						// Write a performance warning into the log if the original texture size is not optimal
 						if (m_vOriginalSize.z == 1)
-							PL_LOG(Warning, '\'' + sFilename + String::Format("': Texture size %dx%d isn't correct! (max: %dx%d)", m_vOriginalSize.x, m_vOriginalSize.y, nMaxSize, nMaxSize))
+							PL_LOG(Warning, '\'' + sFilename + "': Texture size " + m_vOriginalSize.x + 'x' + m_vOriginalSize.y + " isn't correct! (max: " + nMaxSize + 'x' + nMaxSize + ')')
 						else
-							PL_LOG(Warning, '\'' + sFilename + String::Format("': Texture size %dx%dx%d isn't correct! (max: %dx%dx%d)", m_vOriginalSize.x, m_vOriginalSize.y, m_vOriginalSize.z, nMaxSize, nMaxSize, nMaxSize))
+							PL_LOG(Warning, '\'' + sFilename + "': Texture size " + m_vOriginalSize.x + 'x' + m_vOriginalSize.y + 'x' + m_vOriginalSize.z + " isn't correct! (max: " + nMaxSize + 'x' + nMaxSize + 'x' + nMaxSize + ')')
 					}
 					if (nWidth > nMaxSize || nHeight > nMaxSize || nDepth > nMaxSize ||
 						!Math::IsPowerOfTwo(nWidth) || !Math::IsPowerOfTwo(nHeight) || !Math::IsPowerOfTwo(nDepth)) {
@@ -618,9 +618,9 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						nHeight != static_cast<uint32>(pImageBuffer->GetSize().y) ||
 						nDepth  != static_cast<uint32>(pImageBuffer->GetSize().z)) {
 						if (nDepth == 1)
-							PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%d to %dx%d", m_vOriginalSize.x, m_vOriginalSize.y, nWidth, nHeight))
+							PL_LOG(Debug, '\'' + sFilename + "': Scale texture dimension from " + m_vOriginalSize.x + 'x' + m_vOriginalSize.y + " to " + nWidth + 'x' + nHeight)
 						else
-							PL_LOG(Debug, '\'' + sFilename + String::Format("': Scale texture dimension from %dx%dx%d to %dx%dx%d", m_vOriginalSize.x, m_vOriginalSize.y, m_vOriginalSize.z, nWidth, nHeight, nDepth))
+							PL_LOG(Debug, '\'' + sFilename + "': Scale texture dimension from " + m_vOriginalSize.x + 'x' + m_vOriginalSize.y + 'x' + m_vOriginalSize.z + " to " + nWidth + 'x' + nHeight + 'x' + nDepth)
 
 						// Apply scale - we can scale by using another mipmap as base map :D
 						cImage.ApplyEffect(ImageEffects::Scale(Vector3i(nWidth, nHeight, nDepth), true));

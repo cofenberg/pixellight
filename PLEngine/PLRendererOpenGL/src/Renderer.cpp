@@ -151,9 +151,9 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 		// Show some OpenGL information
 		PL_LOG(Info, "OpenGL information")
-		PL_LOG(Info, String::Format("Version: %s",		 reinterpret_cast<const char*>(glGetString(GL_VERSION))))
-		PL_LOG(Info, String::Format("Vendor info: %s",	 reinterpret_cast<const char*>(glGetString(GL_VENDOR))))
-		PL_LOG(Info, String::Format("Renderer info: %s", reinterpret_cast<const char*>(glGetString(GL_RENDERER))))
+		PL_LOG(Info, String("Version: ")	   + reinterpret_cast<const char*>(glGetString(GL_VERSION)))
+		PL_LOG(Info, String("Vendor info: ")   + reinterpret_cast<const char*>(glGetString(GL_VENDOR)))
+		PL_LOG(Info, String("Renderer info: ") + reinterpret_cast<const char*>(glGetString(GL_RENDERER)))
 
 		// Show general OpenGL information
 		ShowGeneralOpenGLInformation();

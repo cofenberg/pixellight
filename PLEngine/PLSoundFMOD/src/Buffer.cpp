@@ -230,7 +230,7 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 
 		// Check if there was an error
 		if (bError)
-			PL_LOG(Error, String::Format("Couldn't load sound. Error: %s", FMOD_ErrorString(FSOUND_GetError())))
+			PL_LOG(Error, String("Couldn't load sound. Error: ") + FMOD_ErrorString(FSOUND_GetError()))
 		else {
 			// Done
 			return true;

@@ -179,7 +179,7 @@ bool EffectLoaderPL::Save(const Effect &cEffect, File &cFile)
 						// Shininess
 						const float fShininess = Tools::UInt32ToFloat(pFXPass->GetMaterialState(FixedFunctions::MaterialState::Shininess));
 						if (fShininess)
-							pEffectElement->SetAttribute("Shininess", String::Format("%g", fShininess));
+							pEffectElement->SetAttribute("Shininess", String(fShininess));
 
 						// Color
 						Color4 cColor = pFXPass->GetColor();
@@ -378,7 +378,7 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 
 					// Set pass name
 					sValue = pTechniqueElement->GetAttribute("Name");
-					pFXPass->SetName(sValue.GetLength() ? sValue : String::Format("Pass %d", pTechnique->GetNumOfPasses()-1));
+					pFXPass->SetName(sValue.GetLength() ? sValue : (String("Pass ") + (pTechnique->GetNumOfPasses()-1)));
 
 					// Iterate through all pass elements
 					const XmlElement *pFXPassElement = pTechniqueElement->GetFirstChildElement();

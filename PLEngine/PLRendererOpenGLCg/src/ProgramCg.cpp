@@ -319,7 +319,7 @@ void ProgramCg::BuildUniformInformation()
 							// array element by using "MyArray[1]" as uniform name to access the second array element
 							for (int i=0; i<nArrayDimension; i++) {
 								// Get the uniform name
-								const String sElementUniformName = sUniformName + String::Format("[%d]", i);
+								const String sElementUniformName = sUniformName + '[' + i + ']';
 
 								// Get the Cg parameter representing this array element
 								CGparameter pElementCgParameter = cgGetNamedParameter(pCgDomainProgram, sElementUniformName);
