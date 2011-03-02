@@ -1,3 +1,11 @@
+>> 02.03.2011
+[CO]
+- As noticed by a PixelLight user, the data type returned by "System::GetMicroseconds()" was "uint32" which is critical for the stored data
+  and "unsigned long" is commonly used instead. So, methods like "System::GetMicroseconds()" are now using "uint64" instead of "uint32".
+  It's really cool to get feedback on how to improve PixelLight, keep up providing feedback! :D
+
+
+
 >> 26.02.2011
 [CO]
 - StringBufferASCII is now using "memcpy" instead of "strncpy" because "memcpy" is usually slightly faster as "strncpy"

@@ -79,7 +79,7 @@ class Stopwatch {
 		*  @return
 		*    The ellapsed time in microseconds since Start()
 		*/
-		PLGENERAL_API uint32 Stop();
+		PLGENERAL_API uint64 Stop();
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class Stopwatch {
 		*  @return
 		*    Number of microseconds elapsed since the stopwatch was started
 		*/
-		PLGENERAL_API uint32 GetMicroseconds() const;
+		PLGENERAL_API uint64 GetMicroseconds() const;
 
 
 	//[-------------------------------------------------------]
@@ -150,8 +150,8 @@ class Stopwatch {
 	//[-------------------------------------------------------]
 	private:
 		bool   m_bRunning;	/**< Is the stopwatch currently running? */
-		uint32 m_nStart;	/**< Stopwatch start time (microseconds) */
-		uint32 m_nStop;		/**< Stopwatch stop time (microseconds) */
+		uint64 m_nStart;	/**< Stopwatch start time (microseconds) */
+		uint64 m_nStop;		/**< Stopwatch stop time (microseconds) */
 
 
 };

@@ -295,7 +295,7 @@ class SystemImpl {
 		*  @return
 		*    Number of milliseconds elapsed since the system was started
 		*/
-		virtual uint32 GetMilliseconds() const = 0;
+		virtual uint64 GetMilliseconds() const = 0;
 
 		/**
 		*  @brief
@@ -304,7 +304,7 @@ class SystemImpl {
 		*  @return
 		*    Number of microseconds elapsed since the system was started
 		*/
-		virtual uint32 GetMicroseconds() const = 0;
+		virtual uint64 GetMicroseconds() const = 0;
 
 		/**
 		*  @brief
@@ -313,7 +313,7 @@ class SystemImpl {
 		*  @param[in] nMilliseconds
 		*    Number of milliseconds to sleep
 		*/
-		virtual void Sleep(uint32 nMilliseconds) const = 0;
+		virtual void Sleep(uint64 nMilliseconds) const = 0;
 
 		/**
 		*  @brief

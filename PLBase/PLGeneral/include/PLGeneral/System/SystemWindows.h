@@ -113,9 +113,9 @@ class SystemWindows : public SystemImpl {
 		virtual void Exit(int nReturn);
 		virtual const Console &GetConsole() const;
 		virtual Time GetTime() const;
-		virtual uint32 GetMilliseconds() const;
-		virtual uint32 GetMicroseconds() const;
-		virtual void Sleep(uint32 nMilliseconds) const;
+		virtual uint64 GetMilliseconds() const;
+		virtual uint64 GetMicroseconds() const;
+		virtual void Sleep(uint64 nMilliseconds) const;
 		virtual void Yield() const;
 		virtual float GetPercentageOfUsedPhysicalMemory() const;
 		virtual uint64 GetTotalPhysicalMemory() const;

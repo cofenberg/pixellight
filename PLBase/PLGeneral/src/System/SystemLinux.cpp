@@ -334,21 +334,21 @@ Time SystemLinux::GetTime() const
 				static_cast<uint32>(now.tv_sec*1000+now.tv_usec/1000));
 }
 
-uint32 SystemLinux::GetMilliseconds() const
+uint64 SystemLinux::GetMilliseconds() const
 {
 	struct timeval now;
 	gettimeofday(&now, nullptr);
-	return static_cast<uint32>(now.tv_sec*1000 + now.tv_usec/1000);
+	return static_cast<uint64>(now.tv_sec*1000 + now.tv_usec/1000);
 }
 
-uint32 SystemLinux::GetMicroseconds() const
+uint64 SystemLinux::GetMicroseconds() const
 {
 	struct timeval now;
 	gettimeofday(&now, nullptr);
-	return static_cast<uint32>(now.tv_sec*1000000 + now.tv_usec);
+	return static_cast<uint64>(now.tv_sec*1000000 + now.tv_usec);
 }
 
-void SystemLinux::Sleep(uint32 nMilliseconds) const
+void SystemLinux::Sleep(uint64 nMilliseconds) const
 {
 	// [TODO] Obsolete function 'usleep'. POSIX.1-2001 declares usleep() function obsolete and POSIX.1-2008 removes it. Use the 'nanosleep' or 'setitimer' function.
 	usleep(nMilliseconds*1000);

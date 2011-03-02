@@ -118,7 +118,7 @@ void FileSystemTest::SpeedTest_CleanUp()
 
 void FileSystemTest::SpeedTest_OS_SmallFiles()
 {
-	uint32 nStart, nStop;
+	uint64 nStart, nStop;
 	StartTask("Small files [OS]");
 	Print("\n");
 	// Write files
@@ -141,7 +141,7 @@ void FileSystemTest::SpeedTest_OS_SmallFiles()
 		}
 	}
 	nStop = System::GetInstance()->GetMilliseconds();
-	Print("  Writing: %d\n", nStop - nStart);
+	Print("  Writing: %ld\n", nStop - nStart);
 
 	// Read files
 	nStart = System::GetInstance()->GetMilliseconds();
@@ -165,14 +165,14 @@ void FileSystemTest::SpeedTest_OS_SmallFiles()
 		}
 	}
 	nStop = System::GetInstance()->GetMilliseconds();
-	Print("  Reading: %d\n", nStop - nStart);
+	Print("  Reading: %ld\n", nStop - nStart);
 
 	EndTask(true);
 }
 
 void FileSystemTest::SpeedTest_FS_SmallFiles()
 {
-	uint32 nStart, nStop;
+	uint64 nStart, nStop;
 	StartTask("Small files [fs]");
 	Print("\n");
 
@@ -195,7 +195,7 @@ void FileSystemTest::SpeedTest_FS_SmallFiles()
 			}
 		}
 		nStop = System::GetInstance()->GetMilliseconds();
-		Print("  Writing: %d\n", nStop - nStart);
+		Print("  Writing: %ld\n", nStop - nStart);
 
 		// Read files
 		nStart = System::GetInstance()->GetMilliseconds();
@@ -214,14 +214,14 @@ void FileSystemTest::SpeedTest_FS_SmallFiles()
 			}
 		}
 		nStop = System::GetInstance()->GetMilliseconds();
-		Print("  Reading: %d\n", nStop - nStart);
+		Print("  Reading: %ld\n", nStop - nStart);
 		EndTask(true);
 	} else EndTask(false);
 }
 
 void FileSystemTest::SpeedTest_OS_BigFile()
 {
-	uint32 nStart, nStop;
+	uint64 nStart, nStop;
 	StartTask("Big file [OS]");
 	Print("\n");
 #ifdef WIN32
@@ -245,7 +245,7 @@ void FileSystemTest::SpeedTest_OS_BigFile()
 		return;
 	}
 	nStop = System::GetInstance()->GetMilliseconds();
-	Print("  Writing   : %d\n", nStop - nStart);
+	Print("  Writing   : %ld\n", nStop - nStart);
 
 	// Read byte wise
 	nStart = System::GetInstance()->GetMilliseconds();
@@ -262,7 +262,7 @@ void FileSystemTest::SpeedTest_OS_BigFile()
 		return;
 	}
 	nStop = System::GetInstance()->GetMilliseconds();
-	Print("  Reading   : %d\n", nStop - nStart);
+	Print("  Reading   : %ld\n", nStop - nStart);
 
 	// Write block
 	nStart = System::GetInstance()->GetMilliseconds();
@@ -276,7 +276,7 @@ void FileSystemTest::SpeedTest_OS_BigFile()
 		return;
 	}
 	nStop = System::GetInstance()->GetMilliseconds();
-	Print("  BlockWrite: %d\n", nStop - nStart);
+	Print("  BlockWrite: %ld\n", nStop - nStart);
 
 	// Read block
 	nStart = System::GetInstance()->GetMilliseconds();
@@ -290,14 +290,14 @@ void FileSystemTest::SpeedTest_OS_BigFile()
 		return;
 	}
 	nStop = System::GetInstance()->GetMilliseconds();
-	Print("  BlockRead : %d\n", nStop - nStart);
+	Print("  BlockRead : %ld\n", nStop - nStart);
 
 	EndTask(true);
 }
 
 void FileSystemTest::SpeedTest_FS_BigFile()
 {
-	uint32 nStart, nStop;
+	uint64 nStart, nStop;
 	StartTask("Big file [fs]");
 	Print("\n");
 
@@ -322,7 +322,7 @@ void FileSystemTest::SpeedTest_FS_BigFile()
 			return;
 		}
 		nStop = System::GetInstance()->GetMilliseconds();
-		Print("  Writing   : %d\n", nStop - nStart);
+		Print("  Writing   : %ld\n", nStop - nStart);
 
 		// Read byte wise
 		nStart = System::GetInstance()->GetMilliseconds();
@@ -339,7 +339,7 @@ void FileSystemTest::SpeedTest_FS_BigFile()
 			return;
 		}
 		nStop = System::GetInstance()->GetMilliseconds();
-		Print("  Reading   : %d\n", nStop - nStart);
+		Print("  Reading   : %ld\n", nStop - nStart);
 
 		// Write block
 		nStart = System::GetInstance()->GetMilliseconds();
@@ -355,7 +355,7 @@ void FileSystemTest::SpeedTest_FS_BigFile()
 			return;
 		}
 		nStop = System::GetInstance()->GetMilliseconds();
-		Print("  BlockWrite: %d\n", nStop - nStart);
+		Print("  BlockWrite: %ld\n", nStop - nStart);
 
 		// Read block
 		nStart = System::GetInstance()->GetMilliseconds();
@@ -370,7 +370,7 @@ void FileSystemTest::SpeedTest_FS_BigFile()
 			return;
 		}
 		nStop = System::GetInstance()->GetMilliseconds();
-		Print("  BlockRead : %d\n", nStop - nStart);
+		Print("  BlockRead : %ld\n", nStop - nStart);
 
 		EndTask(true);
 	} else EndTask(false);

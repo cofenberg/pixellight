@@ -62,13 +62,13 @@ void PerformanceTest::Test()
 		for (int i=0; i<20000; i++)
 			lstStrings.Add(sDummy);
 		cStopwatch.Stop();
-		Print("Array: Add 20000 elements with 0 initial slots and resize count 10: %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("Array: Add 20000 elements with 0 initial slots and resize count 10: %ld microseconds\n", cStopwatch.GetMicroseconds());
 	}
 	{
 		cStopwatch.Start();
 		lstStrings.Clear();
 		cStopwatch.Stop();
-		Print("Array: Clear (with 20000 elements): %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("Array: Clear (with 20000 elements): %ld microseconds\n", cStopwatch.GetMicroseconds());
 	}
 	{
 		String sDummy = "Dummy";
@@ -77,7 +77,7 @@ void PerformanceTest::Test()
 		for (int i=0; i<20000; i++)
 			lstStrings.Add(sDummy);
 		cStopwatch.Stop();
-		Print("Array: Add 20000 elements with 0 initial slots and resize count 1000: %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("Array: Add 20000 elements with 0 initial slots and resize count 1000: %ld microseconds\n", cStopwatch.GetMicroseconds());
 		lstStrings.Clear();
 	}
 	{
@@ -87,7 +87,7 @@ void PerformanceTest::Test()
 		for (int i=0; i<20000; i++)
 			lstStrings.Add(sDummy);
 		cStopwatch.Stop();
-		Print("Array: Add 20000 elements with 20000 initial slots: %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("Array: Add 20000 elements with 20000 initial slots: %ld microseconds\n", cStopwatch.GetMicroseconds());
 		lstStrings.Clear();
 	}
 	{
@@ -96,7 +96,7 @@ void PerformanceTest::Test()
 		for (int i=0; i<20000; i++)
 			lstStrings.Add(String::Format("%d_%d", i, rand() % 10000000));
 		cStopwatch.Stop();
-		Print("Array & String: Add 20000 random strings with 20000 initial slots: %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("Array & String: Add 20000 random strings with 20000 initial slots: %ld microseconds\n", cStopwatch.GetMicroseconds());
 	}
 
 // HashMap (is using lstStrings from above)
@@ -109,13 +109,13 @@ void PerformanceTest::Test()
 			mapStrings.Add(*pString, pString);
 		}
 		cStopwatch.Stop();
-		Print("HashMap: Add 20000 elements with 199 initial slots: %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("HashMap: Add 20000 elements with 199 initial slots: %ld microseconds\n", cStopwatch.GetMicroseconds());
 
 		{ // Clear
 			cStopwatch.Start();
 			mapStrings.Clear();
 			cStopwatch.Stop();
-			Print("HashMap: Clear (20000 elements): %d microseconds\n", cStopwatch.GetMicroseconds());
+			Print("HashMap: Clear (20000 elements): %ld microseconds\n", cStopwatch.GetMicroseconds());
 		}
 	}
 	{
@@ -126,14 +126,14 @@ void PerformanceTest::Test()
 			mapStrings.Add(*pString, pString);
 		}
 		cStopwatch.Stop();
-		Print("HashMap: Add 20000 elements with 30000 initial slots: %d microseconds\n", cStopwatch.GetMicroseconds());
+		Print("HashMap: Add 20000 elements with 30000 initial slots: %ld microseconds\n", cStopwatch.GetMicroseconds());
 
 		{ // Get
 			cStopwatch.Start();
 			for (int i=0; i<20000; i++)
 				mapStrings.Get(lstStrings[i]);
 			cStopwatch.Stop();
-			Print("HashMap: Get (20000 elements): %d microseconds\n", cStopwatch.GetMicroseconds());
+			Print("HashMap: Get (20000 elements): %ld microseconds\n", cStopwatch.GetMicroseconds());
 		}
 	}
 }

@@ -437,7 +437,7 @@ class Gui {
 		*  @return
 		*    Timeout (in milliseconds)
 		*/
-		PLGUI_API PLGeneral::uint32 GetHoverTime() const;
+		PLGUI_API PLGeneral::uint64 GetHoverTime() const;
 
 		/**
 		*  @brief
@@ -449,7 +449,7 @@ class Gui {
 		*  @remarks
 		*    If set to 0, hover events will be disabled completely.
 		*/
-		PLGUI_API void SetHoverTime(PLGeneral::uint32 nTimeout);
+		PLGUI_API void SetHoverTime(PLGeneral::uint64 nTimeout);
 
 
 	//[-------------------------------------------------------]
@@ -624,7 +624,7 @@ class Gui {
 		GuiImpl							 *m_pGuiImpl;				/**< Gui implementation, always valid! */
 		bool							  m_bShutdown;				/**< Has the GUI shut down? */
 		Theme							 *m_pTheme;					/**< Current theme */
-		PLGeneral::uint32				  m_nHoverTime;				/**< Time in milliseconds before a hove event shall occur */
+		PLGeneral::uint64				  m_nHoverTime;				/**< Time in milliseconds before a hove event shall occur */
 		FontManager						  m_cFontManager;			/**< Font manager */
 		CursorManager					  m_cCursorManager;			/**< Cursor manager */
 		ClipBoard						  m_cClipBoard;				/**< Clip board */

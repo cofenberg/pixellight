@@ -50,7 +50,7 @@ void Stopwatch::Start()
 *  @brief
 *    Stops the stopwatch
 */
-uint32 Stopwatch::Stop()
+uint64 Stopwatch::Stop()
 {
 	// Is the stopwatch currently running?
 	if (m_bRunning) {
@@ -66,7 +66,7 @@ uint32 Stopwatch::Stop()
 *  @brief
 *    Retrieves the number of microseconds since the stopwatch was started
 */
-uint32 Stopwatch::GetMicroseconds() const
+uint64 Stopwatch::GetMicroseconds() const
 {
 	return m_bRunning ? (System::GetInstance()->GetMicroseconds()-m_nStart) : (m_nStop-m_nStart);
 }

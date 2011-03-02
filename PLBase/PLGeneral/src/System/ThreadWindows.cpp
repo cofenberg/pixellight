@@ -146,12 +146,12 @@ bool ThreadWindows::Join()
 	return false;
 }
 
-bool ThreadWindows::Join(uint32 nTimeout)
+bool ThreadWindows::Join(uint64 nTimeout)
 {
 	// Check if the thread has been started
 	if (m_hThread) {
 		// Wait for thread to stop
-		if (WaitForSingleObject(m_hThread, nTimeout) == WAIT_OBJECT_0) {
+		if (WaitForSingleObject(m_hThread, static_cast<DWORD>(nTimeout)) == WAIT_OBJECT_0) {
 			// Release thread
 			CloseHandle(m_hThread);
 			m_hThread = nullptr;

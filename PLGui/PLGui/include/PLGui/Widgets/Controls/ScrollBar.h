@@ -219,7 +219,7 @@ class ScrollBar : public AbstractSlider {
 	protected:
 		// Options
 		EOrientation		m_nOrientation;		/**< Scrollbar orientation */
-		PLGeneral::uint32	m_nRepeatInterval;	/**< Interval (in ms) between repeated clicks */
+		PLGeneral::uint64	m_nRepeatInterval;	/**< Interval (in ms) between repeated clicks */
 
 		// Internal data
 		SScrollBarButton	m_sButtonMinus;		/**< Button 'minus' */

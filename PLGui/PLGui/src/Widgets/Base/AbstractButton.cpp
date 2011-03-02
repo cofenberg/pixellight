@@ -211,7 +211,7 @@ void AbstractButton::SetRepeat(bool bRepeat)
 *  @brief
 *    Get repeat delay
 */
-uint32 AbstractButton::GetRepeatDelay() const
+uint64 AbstractButton::GetRepeatDelay() const
 {
 	// Return repeat delay
 	return m_nRepeatDelay;
@@ -221,7 +221,7 @@ uint32 AbstractButton::GetRepeatDelay() const
 *  @brief
 *    Set repeat delay
 */
-void AbstractButton::SetRepeatDelay(uint32 nDelay)
+void AbstractButton::SetRepeatDelay(uint64 nDelay)
 {
 	// Set repeat delay
 	m_nRepeatDelay = nDelay;
@@ -231,7 +231,7 @@ void AbstractButton::SetRepeatDelay(uint32 nDelay)
 *  @brief
 *    Get repeat interval
 */
-uint32 AbstractButton::GetRepeatInterval() const
+uint64 AbstractButton::GetRepeatInterval() const
 {
 	// Return repeat interval
 	return m_nRepeatInterval;
@@ -241,7 +241,7 @@ uint32 AbstractButton::GetRepeatInterval() const
 *  @brief
 *    Set repeat interval
 */
-void AbstractButton::SetRepeatInterval(uint32 nInterval)
+void AbstractButton::SetRepeatInterval(uint64 nInterval)
 {
 	// Set eturn repeat interval
 	m_nRepeatInterval = nInterval;

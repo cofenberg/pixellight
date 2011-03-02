@@ -90,10 +90,10 @@ bool WorldUpdate::Lock()
 bool WorldUpdate::Update(float fTimeScaleFactor, float fMaxTimeDifference, float fSimulationSpeed, float fFrameRate)
 {
 	// Get the current time
-	const uint32 nTime = System::GetInstance()->GetMilliseconds();
+	const uint64 nTime = System::GetInstance()->GetMilliseconds();
 
 	// Get the number of milliseconds past since the last slice
-	const int32 nMilliseconds = nTime - m_nLastTime;
+	const int64 nMilliseconds = nTime - m_nLastTime;
 
 	// Get the number of seconds past since the last slice
 	float fSeconds = static_cast<float>(nMilliseconds)/1000.0f*fTimeScaleFactor;

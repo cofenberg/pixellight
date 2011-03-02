@@ -58,7 +58,7 @@ class ModTimeout : public Modifier {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, ModTimeout, "PLGui", PLGui::Modifier, "Modifier that closes the widget after a specific time")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute	(Timeout, int, 1000, ReadWrite, DirectValue, "Timeout in milliseconds", "")
+		pl_attribute	(Timeout, PLGeneral::uint64, 1000, ReadWrite, DirectValue, "Timeout in milliseconds", "")
 		pl_slot_0		(OnTimer, "Timer callback", "")
 	pl_class_end
 

@@ -726,7 +726,7 @@ void Gui::SetTheme(const String &sClass, const String &sOptions)
 *  @brief
 *    Get time after which a hove event occurs
 */
-uint32 Gui::GetHoverTime() const
+uint64 Gui::GetHoverTime() const
 {
 	// Return hover timeout
 	return m_nHoverTime;
@@ -736,7 +736,7 @@ uint32 Gui::GetHoverTime() const
 *  @brief
 *    Set time after which a hove event occurs
 */
-void Gui::SetHoverTime(uint32 nTimeout)
+void Gui::SetHoverTime(uint64 nTimeout)
 {
 	// Set hover timeout
 	m_nHoverTime = nTimeout;

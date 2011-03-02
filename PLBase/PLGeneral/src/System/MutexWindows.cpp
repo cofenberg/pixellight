@@ -65,10 +65,10 @@ bool MutexWindows::Lock()
 	return (m_hMutex && WaitForSingleObject(m_hMutex, INFINITE) == WAIT_OBJECT_0);
 }
 
-bool MutexWindows::TryLock(uint32 nTimeout)
+bool MutexWindows::TryLock(uint64 nTimeout)
 {
 	// Lock mutex
-	return (m_hMutex && WaitForSingleObject(m_hMutex, nTimeout) == WAIT_OBJECT_0);
+	return (m_hMutex && WaitForSingleObject(m_hMutex, static_cast<DWORD>(nTimeout)) == WAIT_OBJECT_0);
 }
 
 bool MutexWindows::Unlock()

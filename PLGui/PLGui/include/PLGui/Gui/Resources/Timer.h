@@ -140,9 +140,9 @@ class Timer {
 		*    Get timeout interval
 		*
 		*  @return
-		*    Timeout interval
+		*    Timeout interval in milliseconds
 		*/
-		PLGUI_API PLGeneral::uint32 GetTimeout() const;
+		PLGUI_API PLGeneral::uint64 GetTimeout() const;
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class Timer {
 		*  @note
 		*    - If the timer is already running it's stopped and started again
 		*/
-		PLGUI_API void Start(PLGeneral::uint32 nTimeout);
+		PLGUI_API void Start(PLGeneral::uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class Timer {
 		*  @note
 		*    - If the timer is already running it's stopped and started again
 		*/
-		PLGUI_API void StartOnce(PLGeneral::uint32 nTimeout);
+		PLGUI_API void StartOnce(PLGeneral::uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -195,7 +195,7 @@ class Timer {
 		TimerThread		  *m_pThread;	/**< Current timer thread */
 		bool			   m_bActive;	/**< Timer is active? */
 		bool			   m_bOnce;		/**< Timer is firing only once? */
-		PLGeneral::uint32  m_nTimeout;	/**< Timeout value */
+		PLGeneral::uint64  m_nTimeout;	/**< Timeout value */
 
 
 	//[-------------------------------------------------------]

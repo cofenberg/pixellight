@@ -490,11 +490,11 @@ struct Statistics {
 	PLGeneral::uint32 nTextureBufferBinds;			/**< Number of texture buffer bindings */
 	PLGeneral::uint32 nVertexBufferNum;				/**< Number of vertex buffers */
 	PLGeneral::uint64 nVertexBufferMem;				/**< Memory in bytes the vertex buffers require */
-	PLGeneral::uint32 nVertexBuffersSetupTime;		/**< Vertex buffers setup time (mircoseconds) */
+	PLGeneral::uint64 nVertexBuffersSetupTime;		/**< Vertex buffers setup time (mircoseconds) */
 	PLGeneral::uint32 nVertexBufferLocks;			/**< Number of vertex buffer locks */
 	PLGeneral::uint32 nIndexBufferNum;				/**< Number of index buffers */
 	PLGeneral::uint64 nIndexBufferMem;				/**< Memory in bytes the index buffers require */
-	PLGeneral::uint32 nIndexBuffersSetupTime;		/**< Index buffers setup time (microseconds) */
+	PLGeneral::uint64 nIndexBuffersSetupTime;		/**< Index buffers setup time (microseconds) */
 	PLGeneral::uint32 nIndexBufferLocks;			/**< Number of index buffer locks */
 };
 

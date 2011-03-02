@@ -82,7 +82,7 @@ ModBlend::~ModBlend()
 *  @brief
 *    Get blend animation time
 */
-uint32 ModBlend::GetBlendTime() const
+uint64 ModBlend::GetBlendTime() const
 {
 	// Return timeout
 	return m_nTimeout;
@@ -92,7 +92,7 @@ uint32 ModBlend::GetBlendTime() const
 *  @brief
 *    Set blend animation time
 */
-void ModBlend::SetBlendTime(uint32 nBlendTime)
+void ModBlend::SetBlendTime(uint64 nBlendTime)
 {
 	// Set timeout
 	if (nBlendTime > 0) {

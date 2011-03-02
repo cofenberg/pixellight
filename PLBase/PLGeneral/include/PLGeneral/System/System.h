@@ -355,7 +355,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Number of milliseconds elapsed since the system was started
 		*/
-		PLGENERAL_API uint32 GetMilliseconds() const;
+		PLGENERAL_API uint64 GetMilliseconds() const;
 
 		/**
 		*  @brief
@@ -364,7 +364,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Number of microseconds elapsed since the system was started
 		*/
-		PLGENERAL_API uint32 GetMicroseconds() const;
+		PLGENERAL_API uint64 GetMicroseconds() const;
 
 		/**
 		*  @brief
@@ -373,7 +373,7 @@ class System : public Singleton<System> {
 		*  @param[in] nMilliseconds
 		*    Number of milliseconds to sleep, should not be 0 because the behaviour is implementation dependent (use 'Yield()' instead)
 		*/
-		PLGENERAL_API void Sleep(uint32 nMilliseconds) const;
+		PLGENERAL_API void Sleep(uint64 nMilliseconds) const;
 
 		/**
 		*  @brief

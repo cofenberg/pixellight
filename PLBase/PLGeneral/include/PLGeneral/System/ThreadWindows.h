@@ -92,7 +92,7 @@ class ThreadWindows : public ThreadImpl {
 		virtual bool Start();
 		virtual bool Terminate();
 		virtual bool Join();
-		virtual bool Join(uint32 nTimeout);
+		virtual bool Join(uint64 nTimeout);
 		virtual Thread::EPriorityClass GetPriorityClass() const;
 		virtual bool SetPriorityClass(Thread::EPriorityClass nPriorityClass);
 		virtual Thread::EPriority GetPriority() const;

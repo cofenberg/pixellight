@@ -255,7 +255,7 @@ class Buffer : public Resource {
 		Usage::Enum		  m_nUsage;			/**< Usage flag */
 		bool			  m_bManaged;		/**< Is the buffer managed? */
 		PLGeneral::uint16 m_nLockCount;		/**< Lock count */
-		PLGeneral::uint32 m_nLockStartTime;	/**< Time where the buffer was locked */
+		PLGeneral::uint64 m_nLockStartTime;	/**< Time where the buffer was locked */
 
 
 	//[-------------------------------------------------------]

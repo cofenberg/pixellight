@@ -101,8 +101,8 @@ void ModTimeout::OnDetach(Widget &cWidget)
 void ModTimeout::OnShow()
 {
 	// Get and validate timeout (in milliseconds)
-	int nTimeout = Timeout.Get();
-	if (nTimeout <= 0) nTimeout = 100;
+	uint64 nTimeout = Timeout.Get();
+	if (nTimeout == 0) nTimeout = 100;
 
 	// Start timer
 	m_pTimer->StartOnce(nTimeout);

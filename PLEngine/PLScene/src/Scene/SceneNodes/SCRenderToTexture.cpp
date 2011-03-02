@@ -407,8 +407,8 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 
 		// Check FPS limitation
 		if (FPSLimit) {
-			uint32 nCurrentTime = System::GetInstance()->GetMilliseconds();
-			if (m_nFPSLimitLastTime && nCurrentTime-m_nFPSLimitLastTime < static_cast<uint32>(1000.0f/FPSLimit))
+			const uint64 nCurrentTime = System::GetInstance()->GetMilliseconds();
+			if (m_nFPSLimitLastTime && nCurrentTime-m_nFPSLimitLastTime < static_cast<uint64>(1000.0f/FPSLimit))
 				return; // Do not update
 			m_nFPSLimitLastTime = nCurrentTime;
 		}

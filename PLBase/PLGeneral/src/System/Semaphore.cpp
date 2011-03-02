@@ -93,7 +93,7 @@ bool Semaphore::Lock()
 *  @brief
 *    Locks the semaphore, but only wait until timeout
 */
-bool Semaphore::TryLock(uint32 nTimeout)
+bool Semaphore::TryLock(uint64 nTimeout)
 {
 	// Lock semaphore
 	if (m_pSemaphoreImpl->TryLock(nTimeout)) {

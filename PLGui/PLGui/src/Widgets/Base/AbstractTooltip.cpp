@@ -98,7 +98,7 @@ void AbstractTooltip::SetText(const String &sTooltip)
 *  @brief
 *    Get tooltip timeout
 */
-uint32 AbstractTooltip::GetTimeout() const
+uint64 AbstractTooltip::GetTimeout() const
 {
 	// Return timeout
 	return m_nTimeout;
@@ -108,7 +108,7 @@ uint32 AbstractTooltip::GetTimeout() const
 *  @brief
 *    Set tooltip timeout
 */
-void AbstractTooltip::SetTimeout(uint32 nTimeout)
+void AbstractTooltip::SetTimeout(uint64 nTimeout)
 {
 	// Set timeout
 	m_nTimeout = nTimeout;

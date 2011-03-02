@@ -86,7 +86,7 @@ class MyPicking : public PLEngine::MousePicking {
 	//[-------------------------------------------------------]
 	private:
 		Application				   *m_pApplication;						/**< Owner application, always valid! */
-		PLGeneral::uint32			m_nLastPickingTime;					/**< Last picking time */
+		PLGeneral::uint64			m_nLastPickingTime;					/**< Last picking time */
 		PLScene::SceneNodeHandler	m_cCurrentPickedSceneNodeHandler;	/**< Currently picked scene node */
 
 

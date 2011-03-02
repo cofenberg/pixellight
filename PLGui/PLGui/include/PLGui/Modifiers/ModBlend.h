@@ -85,7 +85,7 @@ class ModBlend : public Modifier {
 		*  @return
 		*    Time in millisenconds for the blend animation
 		*/
-		PLGUI_API PLGeneral::uint32 GetBlendTime() const;
+		PLGUI_API PLGeneral::uint64 GetBlendTime() const;
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class ModBlend : public Modifier {
 		*  @param[in] nBlendTime
 		*    Time in millisenconds for the blend animation
 		*/
-		PLGUI_API void SetBlendTime(PLGeneral::uint32 nBlendTime);
+		PLGUI_API void SetBlendTime(PLGeneral::uint64 nBlendTime);
 
 
 	//[-------------------------------------------------------]
@@ -127,7 +127,7 @@ class ModBlend : public Modifier {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32  m_nTimeout;		/**< Timeout for blend animation (in milliseconds) */
+		PLGeneral::uint64  m_nTimeout;		/**< Timeout for blend animation (in milliseconds) */
 		float			   m_fTrans;		/**< Current transparency (0.0f - 1.0f) */
 		float			   m_fTransDest;	/**< Destination transparency (0.0f - 1.0f) */
 		Timer			  *m_pTimer;		/**< Timer used for fading */

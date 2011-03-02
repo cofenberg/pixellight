@@ -1267,7 +1267,7 @@ bool SQCull::PerformQuery()
 		m_sStatistics.nNumOfVisibleSceneNodes = cVisContainer.m_lstNodes.GetNumOfElements();
 
 		// Get culling time
-		m_sStatistics.nCullTime = static_cast<uint32>(cStopwatch.GetMilliseconds());
+		m_sStatistics.nCullTime = static_cast<uint64>(cStopwatch.GetMilliseconds());
 
 		// Reset hierarchy pointer - just for sure :)
 		m_pHierarchy = nullptr;

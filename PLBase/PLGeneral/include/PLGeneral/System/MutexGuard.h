@@ -87,7 +87,7 @@ class MutexGuard {
 		*  @note
 		*    - 'nTimeout = 0' means: Return immediately if the mutex is already locked
 		*/
-		inline MutexGuard(Mutex &cMutex, uint32 nTimeout);
+		inline MutexGuard(Mutex &cMutex, uint64 nTimeout);
 
 		/**
 		*  @brief

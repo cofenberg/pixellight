@@ -92,7 +92,7 @@ void MyPicking::PerformPicking()
 			// If the left mouse button is currently down, do NOT perform new picking
 			if (!pButton->IsPressed()) {
 				// Get the current time data
-				const uint32 nPastTime = Timing::GetInstance()->GetPastTime();
+				const uint64 nPastTime = Timing::GetInstance()->GetPastTime();
 
 				// Perform mouse picking - do not make this test each frame because it may cost some performance
 				if ((nPastTime-m_nLastPickingTime) > 100) {

@@ -91,7 +91,7 @@ bool SemaphoreLinux::Lock()
 	return (m_hSemaphore > 0 && semop(m_hSemaphore, &op_semlock, 1) > 0);
 }
 
-bool SemaphoreLinux::TryLock(uint32 nTimeout)
+bool SemaphoreLinux::TryLock(uint64 nTimeout)
 {
 	// Setup control structure
 	struct sembuf op_semlock = { 0, -1, SEM_UNDO };

@@ -152,7 +152,7 @@ class ThreadImpl {
 		*  @return
 		*    'true' if the thread has been stopped
 		*/
-		virtual bool Join(uint32 nTimeout) = 0;
+		virtual bool Join(uint64 nTimeout) = 0;
 
 		/**
 		*  @brief

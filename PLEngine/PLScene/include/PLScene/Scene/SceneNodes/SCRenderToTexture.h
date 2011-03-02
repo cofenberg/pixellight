@@ -207,7 +207,7 @@ class SCRenderToTexture : public SceneContainer {
 		PLGeneral::String				  m_sPainter;				/**< Name of the used surface painter */
 		PLGeneral::String				  m_sSceneRenderer;			/**< Name of the used scene renderer, only used if the painter is derived of 'SPScene' */
 		PLGeneral::String				  m_sSceneName;				/**< Name of the scene to renderer, only used if the painter is derived of 'SPScene' */
-		PLGeneral::uint32				  m_nFPSLimitLastTime;		/**< Time when the last update was done */
+		PLGeneral::uint64				  m_nFPSLimitLastTime;		/**< Time when the last update was done */
 		PLRenderer::SurfaceTextureBuffer *m_pSurfaceTextureBuffer;	/**< Render to texture buffer, can be a null pointer */
 		PLRenderer::TextureHandler		 *m_pTextureHandler;		/**< The resulting texture (ALWAYS valid!) */
 

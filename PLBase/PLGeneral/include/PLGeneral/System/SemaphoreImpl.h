@@ -99,7 +99,7 @@ class SemaphoreImpl {
 		*  @note
 		*    - 'nTimeout = 0' means no timeout at all
 		*/
-		virtual bool TryLock(uint32 nTimeout) = 0;
+		virtual bool TryLock(uint64 nTimeout) = 0;
 
 		/**
 		*  @brief

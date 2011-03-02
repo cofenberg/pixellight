@@ -74,7 +74,7 @@ class TimerThread : public PLGeneral::Thread {
 		*  @param[in] bOnce
 		*    'true' if the timer shall fire only once, else 'false'
 		*/
-		PLGUI_API TimerThread(Timer &cTimer, PLGeneral::uint32 nTimeout, bool bOnce);
+		PLGUI_API TimerThread(Timer &cTimer, PLGeneral::uint64 nTimeout, bool bOnce);
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class TimerThread : public PLGeneral::Thread {
 	private:
 		Timer			  &m_cTimer;	/**< Timer to that this thread belongs */
 		PLGeneral::Mutex  *m_pMutex;	/**< Timer mutex (always valid!) */
-		PLGeneral::uint32  m_nTimeout;	/**< Timeout value */
+		PLGeneral::uint64  m_nTimeout;	/**< Timeout value */
 		bool			   m_bOnce;		/**< Timer is firing only once? */
 		volatile bool	   m_bShutdown;	/**< Shutdown thread? */
 

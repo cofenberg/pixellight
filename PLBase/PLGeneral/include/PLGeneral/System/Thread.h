@@ -236,7 +236,7 @@ class Thread : public ThreadFunction {
 		*  @return
 		*    'true' if the thread has been stopped
 		*/
-		PLGENERAL_API bool Join(uint32 nTimeout);
+		PLGENERAL_API bool Join(uint64 nTimeout);
 
 		/**
 		*  @brief

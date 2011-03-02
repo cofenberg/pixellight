@@ -45,7 +45,7 @@ namespace PLGui {
 *  @brief
 *    Constructor
 */
-TimerThread::TimerThread(Timer &cTimer, uint32 nTimeout, bool bOnce) :
+TimerThread::TimerThread(Timer &cTimer, uint64 nTimeout, bool bOnce) :
 	m_cTimer(cTimer),
 	m_pMutex(new Mutex()),
 	m_nTimeout(nTimeout),

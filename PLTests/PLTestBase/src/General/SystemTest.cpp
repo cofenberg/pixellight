@@ -77,11 +77,11 @@ void SystemTest::Test()
 	Print("\n");
 
 	// Print timer
-	Print("Timer: %u milliseconds  %u microseconds\n", pSystem->GetMilliseconds(), pSystem->GetMicroseconds());
+	Print("Timer: %ld milliseconds  %ld microseconds\n", pSystem->GetMilliseconds(), pSystem->GetMicroseconds());
 	Print("\n");
 
 	// Print timer
-	Print("Timer: %u milliseconds  %u microseconds\n", pSystem->GetMilliseconds(), pSystem->GetMicroseconds());
+	Print("Timer: %ld milliseconds  %ld microseconds\n", pSystem->GetMilliseconds(), pSystem->GetMicroseconds());
 	Print("\n");
 
 	// Print environment variables

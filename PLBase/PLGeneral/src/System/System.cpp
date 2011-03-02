@@ -289,7 +289,7 @@ Time System::GetTime() const
 *  @brief
 *    Returns the number of milliseconds since the system was started
 */
-uint32 System::GetMilliseconds() const
+uint64 System::GetMilliseconds() const
 {
 	// Call system function
 	return m_pSystemImpl->GetMilliseconds();
@@ -299,7 +299,7 @@ uint32 System::GetMilliseconds() const
 *  @brief
 *    Retrieves the number of microseconds since the system was started
 */
-uint32 System::GetMicroseconds() const
+uint64 System::GetMicroseconds() const
 {
 	// Call system function
 	return m_pSystemImpl->GetMicroseconds();
@@ -309,7 +309,7 @@ uint32 System::GetMicroseconds() const
 *  @brief
 *    Suspend the current thread for a specified time period
 */
-void System::Sleep(uint32 nMilliseconds) const
+void System::Sleep(uint64 nMilliseconds) const
 {
 	// Call system function
 	m_pSystemImpl->Sleep(nMilliseconds);

@@ -126,7 +126,7 @@ bool Timer::IsOnce() const
 *  @brief
 *    Get timeout interval
 */
-uint32 Timer::GetTimeout() const
+uint64 Timer::GetTimeout() const
 {
 	// Return timeout
 	return m_nTimeout;
@@ -136,7 +136,7 @@ uint32 Timer::GetTimeout() const
 *  @brief
 *    Start timer
 */
-void Timer::Start(uint32 nTimeout)
+void Timer::Start(uint64 nTimeout)
 {
 	// Stop timer
 	if (IsActive()) Stop();
@@ -158,7 +158,7 @@ void Timer::Start(uint32 nTimeout)
 *  @brief
 *    Start timer only once, not periodically
 */
-void Timer::StartOnce(uint32 nTimeout)
+void Timer::StartOnce(uint64 nTimeout)
 {
 	// Stop timer
 	if (IsActive()) Stop();

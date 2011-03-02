@@ -54,7 +54,7 @@ class AbstractTooltip : public Widget {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, AbstractTooltip, "PLGui", PLGui::Widget, "Base class for tooltip windows")
 		pl_attribute(Text,		PLGeneral::String,	"",		ReadWrite, GetSet,	"Tooltip text",											"")
-		pl_attribute(Timeout,	PLGeneral::uint32,	5000,	ReadWrite, GetSet,	"Time (in ms) after which the tooltip is blended out",	"")
+		pl_attribute(Timeout,	PLGeneral::uint64,	5000,	ReadWrite, GetSet,	"Time (in ms) after which the tooltip is blended out",	"")
 		pl_slot_0	(OnTimer,													"Timer callback",	"")
 	pl_class_end
 
@@ -110,7 +110,7 @@ class AbstractTooltip : public Widget {
 		*  @return
 		*    Timeout (in ms)
 		*/
-		PLGUI_API PLGeneral::uint32 GetTimeout() const;
+		PLGUI_API PLGeneral::uint64 GetTimeout() const;
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class AbstractTooltip : public Widget {
 		*  @param[in] nTimeout
 		*    Timeout (in ms)
 		*/
-		PLGUI_API void SetTimeout(PLGeneral::uint32 nTimeout);
+		PLGUI_API void SetTimeout(PLGeneral::uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class AbstractTooltip : public Widget {
 	//[-------------------------------------------------------]
 	protected:
 		PLGeneral::String	m_sTooltip;		/**< Tooltip text */
-		PLGeneral::uint32	m_nTimeout;		/**< Timeout (in ms) */
+		PLGeneral::uint64	m_nTimeout;		/**< Timeout (in ms) */
 		Timer				m_cTimer;		/**< Timer */
 
 

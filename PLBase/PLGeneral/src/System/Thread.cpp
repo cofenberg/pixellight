@@ -215,7 +215,7 @@ bool Thread::Join()
 *  @brief
 *    Waits until the thread has been stopped
 */
-bool Thread::Join(uint32 nTimeout)
+bool Thread::Join(uint64 nTimeout)
 {
 	// Call system implementation
 	return m_pThreadImpl->Join(nTimeout);

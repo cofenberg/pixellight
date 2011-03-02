@@ -116,7 +116,7 @@ class Timing : public Singleton<Timing> {
 		*    Normally the timing must be updated every frame. But if theres a frame
 		*    rate limitation it's not allowed to update the timing every frame!
 		*/
-		PLGENERAL_API bool CheckUpdate(uint32 *pnTimeToWait = nullptr) const;
+		PLGENERAL_API bool CheckUpdate(uint64 *pnTimeToWait = nullptr) const;
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - CheckUpdate()
 		*/
-		PLGENERAL_API bool Update(uint32 *pnTimeToWait = nullptr);
+		PLGENERAL_API bool Update(uint64 *pnTimeToWait = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Past time                                             ]
@@ -196,7 +196,7 @@ class Timing : public Singleton<Timing> {
 		*  @return
 		*    Past time in milliseconds since the application start
 		*/
-		PLGENERAL_API uint32 GetPastTime() const;
+		PLGENERAL_API uint64 GetPastTime() const;
 
 		/**
 		*  @brief
@@ -469,25 +469,25 @@ class Timing : public Singleton<Timing> {
 	//[-------------------------------------------------------]
 	private:
 		bool   m_bActive;						/**< Is the timing active? */
-		uint32 m_nTimeStart;					/**< The start system time */
-		uint32 m_nTimeNow;						/**< Current system time */
-		uint32 m_nTimeLast;						/**< System time of the last frame */
+		uint64 m_nTimeStart;					/**< The start system time */
+		uint64 m_nTimeNow;						/**< Current system time */
+		uint64 m_nTimeLast;						/**< System time of the last frame */
 		float  m_fTimeDifference;				/**< The past time since last frame (seconds) */
 		float  m_fTimeDifferenceNoCompensating;	/**< The past time since last frame without any compensating (seconds) */
 		float  m_fMaxTimeDifference;			/**< The maximum possible time difference (seconds) */
 		float  m_fFramesPerSecond;				/**< Current frames per second (FPS... hopefully not SPS... Seconds Per Frame ;) */
 		int	   m_nFramesSinceCheck;				/**< Number of frames since last FPS update */
 		uint32 m_nPastFrames;					/**< Number of past frames since timing start */
-		uint32 m_nLastFPSUpdateTime;			/**< The time were the last FPS update was done */
+		uint64 m_nLastFPSUpdateTime;			/**< The time were the last FPS update was done */
 		float  m_fFPSUpdateTimer;				/**< Timing for updating FPS (only each second) */
 		bool   m_bFreezed;						/**< Is the application currently freezed? */
-		uint32 m_nFreezeTime;					/**< The time were the application was frozen */
+		uint64 m_nFreezeTime;					/**< The time were the application was frozen */
 		bool   m_bPause;						/**< Is the timing paused? */
 		float  m_fTimeScaleFactor;				/**< Time scale factor */
 		bool   m_bSlowMotion;					/**< Is the slow motion modus activated? */
 		float  m_fSlowMotionFactor;				/**< The slow motion factor */
 		float  m_fCustomSlowMotionFactor;		/**< The custom slow motion factor */
-		uint32 m_nFPSLimitLastTime;				/**< Time were the last update was done */
+		uint64 m_nFPSLimitLastTime;				/**< Time were the last update was done */
 		float  m_fFPSLimit;						/**< FPS limitation */
 		float  m_fTimer;						/**< General timing */
 

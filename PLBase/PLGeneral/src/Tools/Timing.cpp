@@ -70,7 +70,7 @@ void Timing::Reset()
 *  @brief
 *    Checks whether the timing has to be updated or not
 */
-bool Timing::CheckUpdate(uint32 *pnTimeToWait) const
+bool Timing::CheckUpdate(uint64 *pnTimeToWait) const
 {
 	// By default we don't need to wait
 	if (pnTimeToWait)
@@ -78,7 +78,7 @@ bool Timing::CheckUpdate(uint32 *pnTimeToWait) const
 
 	// Is there a FPS limitation?
 	if (m_fFPSLimit) {
-		const uint32 nPastTime     = System::GetInstance()->GetMilliseconds()-m_nFPSLimitLastTime;
+		const uint64 nPastTime     = System::GetInstance()->GetMilliseconds()-m_nFPSLimitLastTime;
 		const uint32 nTimePerFrame = static_cast<uint32>(1000/m_fFPSLimit);
 		if (nPastTime < nTimePerFrame) {
 			if (pnTimeToWait)
@@ -97,7 +97,7 @@ bool Timing::CheckUpdate(uint32 *pnTimeToWait) const
 *  @brief
 *    Updates all time relevant stuff
 */
-bool Timing::Update(uint32 *pnTimeToWait)
+bool Timing::Update(uint64 *pnTimeToWait)
 {
 	// Is the timing currently freezed?
 	if (m_bFreezed)
@@ -206,7 +206,7 @@ void Timing::SetMaxTimeDifference(float fMaxTimeDifference)
 *  @brief
 *    Returns the past time in milliseconds since the application start
 */
-uint32 Timing::GetPastTime() const
+uint64 Timing::GetPastTime() const
 {
 	return System::GetInstance()->GetMilliseconds() - m_nTimeStart;
 }
@@ -286,7 +286,7 @@ void Timing::Freeze(bool bFreeze)
 		}
 	} else {
 		if (m_bFreezed) { // Update timing
-			const uint32 nTimeDifference = System::GetInstance()->GetMilliseconds() - m_nFreezeTime;
+			const uint64 nTimeDifference = System::GetInstance()->GetMilliseconds() - m_nFreezeTime;
 			m_nTimeLast			 += nTimeDifference;
 			m_nLastFPSUpdateTime += nTimeDifference;
 		}

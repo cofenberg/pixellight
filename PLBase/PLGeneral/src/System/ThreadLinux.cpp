@@ -149,7 +149,7 @@ bool ThreadLinux::Join()
 	return false;
 }
 
-bool ThreadLinux::Join(uint32 nTimeout)
+bool ThreadLinux::Join(uint64 nTimeout)
 {
 	// [TODO] We need a timed join here, which can be implemented e.g. like this:
 	//        http://www.opengroup.org/onlinepubs/000095399/xrat/xsh_chap02.html#tag_03_02_08_21

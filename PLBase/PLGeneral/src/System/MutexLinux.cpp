@@ -65,7 +65,7 @@ bool MutexLinux::Lock()
 	return !pthread_mutex_lock(&m_sMutex);
 }
 
-bool MutexLinux::TryLock(uint32 nTimeout)
+bool MutexLinux::TryLock(uint64 nTimeout)
 {
 	// Setup timeout structure
 	struct timespec timeout;

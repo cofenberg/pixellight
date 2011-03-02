@@ -107,7 +107,7 @@ class Semaphore {
 		*  @see
 		*    - Lock()
 		*/
-		PLGENERAL_API bool TryLock(uint32 nTimeout);
+		PLGENERAL_API bool TryLock(uint64 nTimeout);
 
 		/**
 		*  @brief

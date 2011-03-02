@@ -197,7 +197,7 @@ bool RenderApplication::Update(bool bForceUpdate)
 		return OnUpdate();
 	} else {
 		// Check if we're allowed to perform an update right now
-		uint32 nTimeToWait = 0;
+		uint64 nTimeToWait = 0;
 		if (Timing::GetInstance()->Update(&nTimeToWait)) {
 			// Call the application's update function
 			return OnUpdate();

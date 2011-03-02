@@ -120,7 +120,7 @@ class SQCull : public SceneQuery {
 		*    Several statistics of the culling process
 		*/
 		struct Statistics {
-			PLGeneral::uint32 nCullTime;						/**< Culling time of the specified algorihtm (in ms) */
+			PLGeneral::uint64 nCullTime;						/**< Culling time of the specified algorihtm (in ms) */
 			PLGeneral::uint32 nNumOfTraversedNodes;				/**< Number of traversed nodes */
 			PLGeneral::uint32 nNumOfOccluders;					/**< Number of used occluders */
 			PLGeneral::uint32 nNumOfQueryCulledNodes;			/**< Number of hierarchy nodes culled by the occlusion query */

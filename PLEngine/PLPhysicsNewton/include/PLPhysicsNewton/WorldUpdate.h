@@ -132,7 +132,7 @@ class WorldUpdate {
 	protected:
 		World			  *m_pWorld;			/**< Owner Newton world (always valid!) */
 		PLGeneral::uint32  m_nTotalNumOfSteps;	/**< Total number of performed physics steps */
-		PLGeneral::uint32  m_nLastTime;			/**< Time the last update was performed in milliseconds */
+		PLGeneral::uint64  m_nLastTime;			/**< Time the last update was performed in milliseconds */
 		float			   m_fTimeElapsed;		/**< Elapsed time in seconds */
 
 

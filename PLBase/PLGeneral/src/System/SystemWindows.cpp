@@ -102,7 +102,7 @@ SystemWindows::SystemWindows()
 	QueryPerformanceFrequency(&m_nPerformanceFrequency);
 
 	// Initalize the random generator
-	srand(GetMicroseconds());
+	srand(static_cast<unsigned int>(GetMicroseconds()));
 
 	// Allocate a global TLS index
 	g_nTlsIndex = TlsAlloc();
@@ -347,9 +347,9 @@ uint32 SystemWindows::GetCPUMhz() const
 	// 32 Bit assembler method
 	unsigned long nStartTicks = 0;
 	unsigned long nEndTicks   = 0;
-	uint32 nTimeStop;
+	uint64 nTimeStop;
 
-	uint32 nTimeStart = GetMilliseconds();
+	uint64 nTimeStart = GetMilliseconds();
 	do {
 		nTimeStop = GetMilliseconds();
 		// Rollover past 1
@@ -384,7 +384,7 @@ uint32 SystemWindows::GetCPUMhz() const
 	}
 
 	// Total tick count
-	unsigned long nTotalTicks = nEndTicks - nStartTicks;
+	const uint64 nTotalTicks = nEndTicks - nStartTicks;
 
 	// CPU Speed
 	return static_cast<uint32>(nTotalTicks / 1000000);
@@ -654,7 +654,7 @@ Time SystemWindows::GetTime() const
 				sTime.wMilliseconds);
 }
 
-uint32 SystemWindows::GetMilliseconds() const
+uint64 SystemWindows::GetMilliseconds() const
 {
 	// Get past time
 	LARGE_INTEGER nCurTime;
@@ -667,10 +667,10 @@ uint32 SystemWindows::GetMilliseconds() const
 		nNewTicks /= m_nPerformanceFrequency.QuadPart;
 
 	// Return past time
-	return static_cast<uint32>(nNewTicks);
+	return static_cast<uint64>(nNewTicks);
 }
 
-uint32 SystemWindows::GetMicroseconds() const
+uint64 SystemWindows::GetMicroseconds() const
 {
 	// Get past time
 	LARGE_INTEGER nCurTime;
@@ -681,12 +681,12 @@ uint32 SystemWindows::GetMicroseconds() const
 	dNewTicks *= static_cast<double>(1000000.0)/static_cast<double>(m_nPerformanceFrequency.QuadPart);
 
 	// Return past time
-	return static_cast<uint32>(dNewTicks);
+	return static_cast<uint64>(dNewTicks);
 }
 
-void SystemWindows::Sleep(uint32 nMilliseconds) const
+void SystemWindows::Sleep(uint64 nMilliseconds) const
 {
-	SleepEx(nMilliseconds, false);
+	SleepEx(static_cast<DWORD>(nMilliseconds), false);
 }
 
 void SystemWindows::Yield() const

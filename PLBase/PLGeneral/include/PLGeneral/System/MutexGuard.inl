@@ -51,7 +51,7 @@ MutexGuard::MutexGuard(Mutex &cMutex) :
 *  @brief
 *    Constructor
 */
-MutexGuard::MutexGuard(Mutex &cMutex, uint32 nTimeout) :
+MutexGuard::MutexGuard(Mutex &cMutex, uint64 nTimeout) :
 	m_pMutex(&cMutex)
 {
 	// Lock the given mutex, or at least try it!
