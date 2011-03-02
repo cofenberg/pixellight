@@ -930,6 +930,7 @@ class String {
 		PLGENERAL_API String &operator =(uint16   nValue);
 		PLGENERAL_API String &operator =(uint32   nValue);
 		PLGENERAL_API String &operator =(uint64   nValue);
+		PLGENERAL_API String &operator =(long     lValue);
 		PLGENERAL_API String &operator =(float    fValue);
 		PLGENERAL_API String &operator =(double   dValue);
 

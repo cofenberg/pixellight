@@ -2592,6 +2592,15 @@ String &String::operator =(uint64 nValue)
 	return *this;
 }
 
+String &String::operator =(long lValue)
+{
+	// Set data
+	*this = Format("%ld", lValue);
+
+	// Return a reference to this instance
+	return *this;
+}
+
 String &String::operator =(float fValue)
 {
 	// Set data
