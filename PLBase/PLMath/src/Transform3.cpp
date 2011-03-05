@@ -219,7 +219,8 @@ const Matrix3x4 &Transform3::GetInverseMatrix()
 
 		// First, calculate the determinant of the matrix
 		float fDet = mTrans.GetDeterminant();
-
+		/*
+		// [TODO] I think the assumption that det(A)=1 means that the matrix is orthogonal is wrong (although an orthogonal matrix has a determinant of 1), check it!
 		// If the determinant is one, we can use a faster technique
 		if (Math::AreEqual(fDet, 1.0f)) {
 			// P = [R T] -> inv(P) = [R' -R'*T] (R' = transposed)
@@ -232,7 +233,7 @@ const Matrix3x4 &Transform3::GetInverseMatrix()
 			m_mInvTrans.xw = -(mTrans.xx*mTrans.xw + mTrans.yx*mTrans.yw + mTrans.zx*mTrans.zw);
 			m_mInvTrans.yw = -(mTrans.xy*mTrans.xw + mTrans.yy*mTrans.yw + mTrans.zy*mTrans.zw);
 			m_mInvTrans.zw = -(mTrans.xz*mTrans.xw + mTrans.yz*mTrans.yw + mTrans.zz*mTrans.zw);
-		} else {
+		} else {*/
 			// Check for null to avoid division by null
 			if (fDet) {
 				// Calculate the inverse of the matrix using Cramers rule. Same as Matrix4x4,
@@ -245,7 +246,7 @@ const Matrix3x4 &Transform3::GetInverseMatrix()
 				// For sure, set identity matrix
 				m_mInvTrans.SetIdentity();
 			}
-		}
+	//	}
 
 		// Recalculation done
 		m_nInternalFlags &= ~RecalculateInverseTransformMatrix;
