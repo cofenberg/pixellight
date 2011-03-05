@@ -55,9 +55,12 @@ class StringBuffer;
 *    into another is quite performant because the internal string buffer is shared
 *    as long as a string doesn't change. As result comparing strings 'can' also be very fast
 *    and the internal string buffer can be ASCII OR Unicode in a quite flexible way.
+*
 *    As long as you DON'T save your source codes in an UTF8 format you can also use the ASCII
-*    extension Ansi. (characters: 128-256) But with an UTF8 format, this may cause serious problems
-*    and you should use Unicode instead ASCII for characters above 128 to avoid encoding troubles!
+*    extension Ansi, meaning characters between 128-256. But with an UTF8 format, this may cause
+*    serious problems and you should use Unicode instead ASCII for characters above 128 (using
+*    codepage based ASCII is not recommended) to avoid encoding troubles!
+*
 *    For best compatibility with other string techniques, this class is using pointers instead of
 *    [] references, so a null pointer is a valid parameter.
 *

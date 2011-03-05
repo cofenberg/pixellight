@@ -6,7 +6,7 @@
 \section{String class}
 Sequences of characters, also called \emph{strings}, are often used and frequently come with some nasty features like memory leaks, buffer overruns (security risk!) or even crash's if you are not careful. Also dealing with Unicode is normally not that much fun\ldots so we wrote a comfortable string class making our and especially your life much easier!
 
-The \emph{String}-class uses a \emph{copy on change}-technique - therefore copying one string into another one is quite fast because the internal string buffer is shared as long as a string doesn't change. As result comparing strings can also be very fast and the internal string buffer can be ASCII OR Unicode in a quite flexible way. As long as you DON'T save your source codes in an UTF8 format you can also use the ASCII extension Ansi. (characters: 128-256) But with an UTF8 format, this may cause serious problems and you should use Unicode instead ASCII for characters above 128 to avoid encoding troubles!
+The \emph{String}-class uses a \emph{copy on change}-technique - therefore copying one string into another one is quite fast because the internal string buffer is shared as long as a string doesn't change. As result comparing strings can also be very fast and the internal string buffer can be ASCII OR Unicode in a quite flexible way. As long as you DON'T save your source codes in an UTF8 format you can also use the ASCII extension Ansi, meaning characters between 128-256. But with an UTF8 format, this may cause serious problems and you should use Unicode instead ASCII for characters above 128\footnote{Using codepage based ASCII is not recommended} to avoid encoding troubles!
 
 Here's a short usage example how to use the \emph{String}-class and how do deal with ASCII/Unicode/UTF8:
 
@@ -84,6 +84,9 @@ sNewString = String::Format("Old string: %s", sOldString.GetASCII());
 // Even better because for example Unicode safe
 sNewString = "Old string: " + sOldString;
 \end{lstlisting}
+
+If possible, try to avoid to use this method because it's usually considered to be \emph{slow} due to it's internal complexity. Therefore, write something like
+\begin{quote}String sMyString = String("The number ") + 42 + " is fantastic!";\end{quote} instead of \begin{quote}String sMyString = String::Format("The number \%d is fantastic!", 42);\end{quote}
 
 
 \paragraph{Strings as function parameters}
