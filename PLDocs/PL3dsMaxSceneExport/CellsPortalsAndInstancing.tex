@@ -3,7 +3,7 @@
 
 Your scene should be divided into cells which are connected through portals. Each node of your scene MUST be within a cell, else the exporter will write a hint into the log and append this node at the root of the exported PixelLight scene. The spatial subdivision of your scene is defined by using the \emph{Autodesk 3ds Max} node names. \emph{cell\_Room1\_Table1}, \emph{cell\_Room1\_Wall2}, \emph{cell\_Room2\_Monster}, \emph{cell\_Room2\_Floor} -> This will result in two cells called \emph{Room1} and \emph{Room2}. Within \emph{Room1} are the nodes \emph{Table1} and \emph{Wall2}, within \emph{Room2} are the nodes \emph{Monster} and \emph{Floor}.
 
-The scene exporter will detect instanced meshes automatically. In this case, this mesh is ONLY saved once and then used for multiple nodes within your scene. This way the scene is exported faster, the exported scene will need less space on the hard-drive - but most important, the time to load this scene loading will be shorter and the scene will eat up less system \& GPU memory during runtime.
+The scene exporter will detect instanced meshes automatically. In this case, this mesh is ONLY saved once and then used for multiple nodes within your scene. This way the scene is exported faster, the exported scene will need less space on the hard-drive - but most important, the time to load this scene will be shorter and the scene will eat up less system \& GPU memory during runtime.
 
 \textbf{Use instancing whenever possible.}\footnote{There are \emph{Autodesk 3ds Max} scripts like \url{http://www.scriptspot.com/3ds-max/scripts/instance-replace} helping with instancing}
 
@@ -20,7 +20,7 @@ As result, there are two ways to create scene nodes:
 \textbf{cell\_<cell name>\_<node name>}
 \begin{itemize}
 \item{\emph{<cell name>} = Name of the cell the node is in}
-\item{\emph{<node name>} = Name of the resulting scene node within this cell. Each node within a cell should have an unique name. The exporter will write a warning into the log if nodes within a cell have same names and resolves the name conflicts automatically by adding a number. If the \emph{Autodesk 3ds Max} node has a mesh, this mesh will have the same name as the node itself. If there's already a mesh with the same name within the scene, the name conflict is resolved automatically and a warning is written into the log. If the mesh is instanced by \emph{Autodesk 3ds Max}, the mesh is only saved once.}
+\item{\emph{<node name>} = Name of the resulting scene node within this cell. Each node within a cell should have an unique name. The exporter will write a warning into the log if nodes within a celle have the same name and resolves the name conflicts automatically by adding a number. If the \emph{Autodesk 3ds Max} node has a mesh, this mesh will have the same name as the node itself. If there's already a mesh with the same name within the scene, the name conflict is resolved automatically and a warning is written into the log. If the mesh is instanced by \emph{Autodesk 3ds Max}, the mesh is only saved once.}
 \end{itemize}
 
 \textbf{2.}
