@@ -228,25 +228,7 @@ bool Version::operator !=(const Version &cVersion) const
 			m_sRelease	== cVersion.m_sRelease);
 }
 
-bool Version::operator >=(const Version &cVersion) const
-{
-	// Major
-	if (m_nMajor > cVersion.m_nMajor)
-		return true;
-	else if (m_nMajor == cVersion.m_nMajor) {
-		// Minor
-		if (m_nMinor > cVersion.m_nMinor)
-			return true;
-		else if (m_nMinor == cVersion.m_nMinor) {
-			// Patch
-			if (m_nPatch > cVersion.m_nPatch)
-				return true;
-		}
-	}
-	return false;
-}
-
-bool Version::operator <=(const Version &cVersion) const
+bool Version::operator <(const Version &cVersion) const
 {
 	// Major
 	if (m_nMajor < cVersion.m_nMajor)
@@ -282,7 +264,7 @@ bool Version::operator >(const Version &cVersion) const
 	return false;
 }
 
-bool Version::operator <(const Version &cVersion) const
+bool Version::operator <=(const Version &cVersion) const
 {
 	// Major
 	if (m_nMajor < cVersion.m_nMajor)
@@ -294,6 +276,24 @@ bool Version::operator <(const Version &cVersion) const
 		else if (m_nMinor == cVersion.m_nMinor) {
 			// Patch
 			if (m_nPatch < cVersion.m_nPatch)
+				return true;
+		}
+	}
+	return false;
+}
+
+bool Version::operator >=(const Version &cVersion) const
+{
+	// Major
+	if (m_nMajor > cVersion.m_nMajor)
+		return true;
+	else if (m_nMajor == cVersion.m_nMajor) {
+		// Minor
+		if (m_nMinor > cVersion.m_nMinor)
+			return true;
+		else if (m_nMinor == cVersion.m_nMinor) {
+			// Patch
+			if (m_nPatch > cVersion.m_nPatch)
 				return true;
 		}
 	}

@@ -1,6 +1,7 @@
 Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer
+- Change: PLMath: The operators <, >, <= and >= of Vector2i, Vector3i, Vector2, Vector3 and Vector4 are now using a lexicographical order
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 
 

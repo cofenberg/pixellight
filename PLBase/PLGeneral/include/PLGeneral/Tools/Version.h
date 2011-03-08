@@ -204,10 +204,10 @@ class Version {
 		//[-------------------------------------------------------]
 		PLGENERAL_API bool operator ==(const Version &cVersion) const;
 		PLGENERAL_API bool operator !=(const Version &cVersion) const;
-		PLGENERAL_API bool operator >=(const Version &cVersion) const;
-		PLGENERAL_API bool operator <=(const Version &cVersion) const;
-		PLGENERAL_API bool operator  >(const Version &cVersion) const;
 		PLGENERAL_API bool operator  <(const Version &cVersion) const;
+		PLGENERAL_API bool operator  >(const Version &cVersion) const;
+		PLGENERAL_API bool operator <=(const Version &cVersion) const;
+		PLGENERAL_API bool operator >=(const Version &cVersion) const;
 
 
 	//[-------------------------------------------------------]

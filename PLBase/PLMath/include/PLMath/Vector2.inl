@@ -121,24 +121,24 @@ inline bool Vector2::operator !=(const Vector2 &vV) const
 	return (x != vV.x ||y != vV.y);
 }
 
-inline bool Vector2::operator >(const Vector2 &vV) const
-{
-	return (x > vV.x && y > vV.y);
-}
-
 inline bool Vector2::operator <(const Vector2 &vV) const
 {
-	return (x < vV.x && y < vV.y);
+	return (x != vV.x) ? (x < vV.x) : (y < vV.y);
 }
 
-inline bool Vector2::operator >=(const Vector2 &vV) const
+inline bool Vector2::operator >(const Vector2 &vV) const
 {
-	return (x >= vV.x && y >= vV.y);
+	return (x != vV.x) ? (x > vV.x) : (y > vV.y);
 }
 
 inline bool Vector2::operator <=(const Vector2 &vV) const
 {
-	return (x <= vV.x && y <= vV.y);
+	return (x != vV.x) ? (x <= vV.x) : (y <= vV.y);
+}
+
+inline bool Vector2::operator >=(const Vector2 &vV) const
+{
+	return (x != vV.x) ? (x >= vV.x) : (y >= vV.y);
 }
 
 

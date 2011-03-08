@@ -150,38 +150,50 @@ inline bool Vector3i::operator !=(const Vector3i &vV) const
 
 /**
 *  @brief
-*    Compare operator
-*/
-inline bool Vector3i::operator >(const Vector3i &vV) const
-{
-	return (x > vV.x && y > vV.y && z > vV.z);
-}
-
-/**
-*  @brief
-*    Compare operator
+*    Compares two vectors lexicographically
 */
 inline bool Vector3i::operator <(const Vector3i &vV) const
 {
-	return (x < vV.x && y < vV.y && z < vV.z);
+	if (x != vV.x)
+		return (x < vV.x);
+	else
+		return (y != vV.y) ? (y < vV.y) : (z < vV.z);
 }
 
 /**
 *  @brief
-*    Compare operator
+*    Compares two vectors lexicographically
 */
-inline bool Vector3i::operator >=(const Vector3i &vV) const
+inline bool Vector3i::operator >(const Vector3i &vV) const
 {
-	return (x >= vV.x && y >= vV.y && z >= vV.z);
+	if (x != vV.x)
+		return (x > vV.x);
+	else
+		return (y != vV.y) ? (y > vV.y) : (z > vV.z);
 }
 
 /**
 *  @brief
-*    Compare operator
+*    Compares two vectors lexicographically
 */
 inline bool Vector3i::operator <=(const Vector3i &vV) const
 {
-	return (x <= vV.x && y <= vV.y && z <= vV.z);
+	if (x != vV.x)
+		return (x <= vV.x);
+	else
+		return (y != vV.y) ? (y <= vV.y) : (z <= vV.z);
+}
+
+/**
+*  @brief
+*    Compares two vectors lexicographically
+*/
+inline bool Vector3i::operator >=(const Vector3i &vV) const
+{
+	if (x != vV.x)
+		return (x >= vV.x);
+	else
+		return (y != vV.y) ? (y >= vV.y) : (z >= vV.z);
 }
 
 /**

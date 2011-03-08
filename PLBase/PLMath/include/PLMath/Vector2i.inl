@@ -137,38 +137,38 @@ inline bool Vector2i::operator !=(const Vector2i &vV) const
 
 /**
 *  @brief
-*    Compare operator
-*/
-inline bool Vector2i::operator >(const Vector2i &vV) const
-{
-	return (x > vV.x && y > vV.y);
-}
-
-/**
-*  @brief
-*    Compare operator
+*    Compare operator lexicographically
 */
 inline bool Vector2i::operator <(const Vector2i &vV) const
 {
-	return (x < vV.x && y < vV.y);
+	return (x != vV.x) ? (x < vV.x) : (y < vV.y);
 }
 
 /**
 *  @brief
-*    Compare operator
+*    Compare operator lexicographically
 */
-inline bool Vector2i::operator >=(const Vector2i &vV) const
+inline bool Vector2i::operator >(const Vector2i &vV) const
 {
-	return (x >= vV.x && y >= vV.y);
+	return (x != vV.x) ? (x > vV.x) : (y > vV.y);
 }
 
 /**
 *  @brief
-*    Compare operator
+*    Compare operator lexicographically
 */
 inline bool Vector2i::operator <=(const Vector2i &vV) const
 {
-	return (x <= vV.x && y <= vV.y);
+	return (x != vV.x) ? (x <= vV.x) : (y <= vV.y);
+}
+
+/**
+*  @brief
+*    Compare operator lexicographically
+*/
+inline bool Vector2i::operator >=(const Vector2i &vV) const
+{
+	return (x != vV.x) ? (x >= vV.x) : (y >= vV.y);
 }
 
 /**

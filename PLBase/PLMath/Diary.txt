@@ -1,4 +1,17 @@
-﻿>> 19.02.2011
+﻿>> 08.03.2011
+[CO]
+- Vector2i: After a discussion at the PixelLight forum at http://dev.pixellight.org/forum/viewtopic.php?f=3&t=3 the
+  implementation of the vector comparison operators was changed to a lexicographical order for n-dimensional vectors
+  as explained at for instance http://en.wikipedia.org/wiki/Ordered_vector_space .
+  Vector2i can now also be used correctly within e.g. "std::map" which is using the "operator <". That's also the reason
+  why the "operator <" is now the first of such comparison operators, and the "detailed" documentation can be found in here
+  while the other operators just refer to "operator <" for more information (those operators within PLGeneral::String
+  are ordered in the same way).
+- Same changes as in Vector2i done within Vector3i, Vector2, Vector3 and Vector4
+
+
+
+>> 19.02.2011
 [CO]
 - Added "Math::GetRandMinMaxFloat()"
 

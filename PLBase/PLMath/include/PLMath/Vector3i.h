@@ -211,51 +211,63 @@ class Vector3i {
 
 		/**
 		*  @brief
-		*    Compares two vectors
-		*
-		*  @param[in] vV
-		*    Vector to compare with
-		*
-		*  @return
-		*    'true' if ALL components of this vector are greater, else 'false'
-		*/
-		inline bool operator >(const Vector3i &vV) const;
-
-		/**
-		*  @brief
-		*    Compares two vectors
+		*    Compares two vectors lexicographically
 		*
 		*  @param[in] vV
 		*    Vector to compare with
 		*
 		*  @return
 		*    'true' if ALL components of this vector are less, else 'false'
+		*
+		*  @note
+		*    - A lexicographical order for 3-dimensional vectors is used (see http://en.wikipedia.org/wiki/Ordered_vector_space)
 		*/
 		inline bool operator <(const Vector3i &vV) const;
 
 		/**
 		*  @brief
-		*    Compares two vectors
+		*    Compares two vectors lexicographically
 		*
 		*  @param[in] vV
 		*    Vector to compare with
 		*
 		*  @return
-		*    'true' if ALL components of this vector are greater or equal, else 'false'
+		*    'true' if ALL components of this vector are greater, else 'false'
+		*
+		*  @see
+		*    - "operator <"
 		*/
-		inline bool operator >=(const Vector3i &vV) const;
+		inline bool operator >(const Vector3i &vV) const;
 
 		/**
 		*  @brief
-		*    Compares two vectors
+		*    Compares two vectors lexicographically
 		*
 		*  @param[in] vV
 		*    Vector to compare with
 		*
 		*  @return
 		*    'true' if ALL components of this vector are less or equal, else 'false'
+		*
+		*  @see
+		*    - "operator <"
 		*/
 		inline bool operator <=(const Vector3i &vV) const;
+
+		/**
+		*  @brief
+		*    Compares two vectors lexicographically
+		*
+		*  @param[in] vV
+		*    Vector to compare with
+		*
+		*  @return
+		*    'true' if ALL components of this vector are greater or equal, else 'false'
+		*
+		*  @see
+		*    - "operator <"
+		*/
+		inline bool operator >=(const Vector3i &vV) const;
 
 		/**
 		*  @brief

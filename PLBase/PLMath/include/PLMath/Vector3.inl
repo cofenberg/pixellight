@@ -127,24 +127,36 @@ inline bool Vector3::operator !=(const Vector3 &vV) const
 	return (x != vV.x || y != vV.y || z != vV.z);
 }
 
-inline bool Vector3::operator >(const Vector3 &vV) const
-{
-	return (x > vV.x && y > vV.y && z > vV.z);
-}
-
 inline bool Vector3::operator <(const Vector3 &vV) const
 {
-	return (x < vV.x && y < vV.y && z < vV.z);
+	if (x != vV.x)
+		return (x < vV.x);
+	else
+		return (y != vV.y) ? (y < vV.y) : (z < vV.z);
 }
 
-inline bool Vector3::operator >=(const Vector3 &vV) const
+inline bool Vector3::operator >(const Vector3 &vV) const
 {
-	return (x >= vV.x && y >= vV.y && z >= vV.z);
+	if (x != vV.x)
+		return (x > vV.x);
+	else
+		return (y != vV.y) ? (y > vV.y) : (z > vV.z);
 }
 
 inline bool Vector3::operator <=(const Vector3 &vV) const
 {
-	return (x <= vV.x && y <= vV.y && z <= vV.z);
+	if (x != vV.x)
+		return (x <= vV.x);
+	else
+		return (y != vV.y) ? (y <= vV.y) : (z <= vV.z);
+}
+
+inline bool Vector3::operator >=(const Vector3 &vV) const
+{
+	if (x != vV.x)
+		return (x >= vV.x);
+	else
+		return (y != vV.y) ? (y >= vV.y) : (z >= vV.z);
 }
 
 

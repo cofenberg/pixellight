@@ -133,24 +133,52 @@ inline bool Vector4::operator !=(const Vector4 &vV) const
 	return (x != vV.x || y != vV.y || z != vV.z || w != vV.w);
 }
 
-inline bool Vector4::operator >(const Vector4 &vV) const
-{
-	return (x > vV.x && y > vV.y && z > vV.z && w > vV.w);
-}
-
 inline bool Vector4::operator <(const Vector4 &vV) const
 {
-	return (x < vV.x && y < vV.y && z < vV.z && w < vV.w);
+	if (x != vV.x) {
+		return (x < vV.x);
+	} else {
+		if (y != vV.y)
+			return (y < vV.y);
+		else
+			return (z != vV.z) ? (z < vV.z) : (w < vV.w);
+	}
 }
 
-inline bool Vector4::operator >=(const Vector4 &vV) const
+inline bool Vector4::operator >(const Vector4 &vV) const
 {
-	return (x >= vV.x && y >= vV.y && z >= vV.z && w >= vV.w);
+	if (x != vV.x) {
+		return (x > vV.x);
+	} else {
+		if (y != vV.y)
+			return (y > vV.y);
+		else
+			return (z != vV.z) ? (z > vV.z) : (w > vV.w);
+	}
 }
 
 inline bool Vector4::operator <=(const Vector4 &vV) const
 {
-	return (x <= vV.x && y <= vV.y && z <= vV.z && w <= vV.w);
+	if (x != vV.x) {
+		return (x <= vV.x);
+	} else {
+		if (y != vV.y)
+			return (y <= vV.y);
+		else
+			return (z != vV.z) ? (z <= vV.z) : (w <= vV.w);
+	}
+}
+
+inline bool Vector4::operator >=(const Vector4 &vV) const
+{
+	if (x != vV.x) {
+		return (x >= vV.x);
+	} else {
+		if (y != vV.y)
+			return (y >= vV.y);
+		else
+			return (z != vV.z) ? (z >= vV.z) : (w >= vV.w);
+	}
 }
 
 
