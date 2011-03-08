@@ -41,6 +41,12 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Renderer;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -57,8 +63,11 @@ class ContextLinux : public Context {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cRenderer
+		*    The owner renderer
 		*/
-		ContextLinux();
+		ContextLinux(Renderer &cRenderer);
 
 		/**
 		*  @brief
@@ -99,6 +108,7 @@ class ContextLinux : public Context {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		Renderer 	*m_pRenderer;					/**< The owner renderer, always valid! */
 		Display     *m_pDisplay;					/**< X server display connection, a null pointer on error */
 		Window       m_hDummyNativeWindow;			/**< Native dummy window, always valid */
 		XVisualInfo *m_pDummyVisualInfo;

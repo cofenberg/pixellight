@@ -1,3 +1,15 @@
+>> 08.03.2011
+[CO]
+PLRendererOpenGL:
+- Linux: My OS OpenGL header automatically (!) included "glext.h", which was of course out-of-date... so, I was forced to define "GL_GLEXT_LEGACY" to
+  deactivate this include behaviour
+- Linux: "ContextLinux::SwapInterval()" was using "glXSwapIntervalSGI" without checking whether or not the extension is actually available
+- Linux: Wow, "glXSwapIntervalSGI" was used without been defined or initialized, I wonder why it worked at all...
+  ... at least for most people. This bug was found by a user which got an "libPLRendererOpenGL.so: undefined symbol: glXSwapIntervalSGI"
+  (PixelLight forum post: http://dev.pixellight.org/forum/viewtopic.php?f=6&t=5)
+
+
+
 >> 25.02.2011
 [CO]
 - Added "PLRenderer::Program::GetCompiledProgram()"

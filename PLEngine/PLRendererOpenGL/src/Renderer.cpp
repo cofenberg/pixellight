@@ -530,7 +530,7 @@ Context *Renderer::CreateContext()
 		return new ContextWindows(*this, m_nMultisampleAntialiasingSamples);
 	#endif
 	#ifdef LINUX
-		return new ContextLinux();
+		return new ContextLinux(*this);
 	#endif
 }
 

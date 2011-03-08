@@ -104,6 +104,8 @@ class OpenGLExtensions {
 		bool IsWGL_ARB_multisample() const;
 		bool IsWGL_ATI_pixel_format_float() const;
 		bool IsWGL_NV_float_buffer() const;
+		// GLX (Linux only)
+		bool IsGLX_SGI_swap_control() const;
 		// EXT
 		bool IsGL_EXT_compiled_vertex_array() const;
 		bool IsGL_EXT_draw_range_elements() const;
@@ -257,6 +259,8 @@ class OpenGLExtensions {
 		bool m_bWGL_ARB_multisample;
 		bool m_bWGL_ATI_pixel_format_float;
 		bool m_bWGL_NV_float_buffer;
+		// GLX (Linux only)
+		bool m_bGLX_SGI_swap_control;
 		// EXT
 		bool m_bGL_EXT_compiled_vertex_array;
 		bool m_bGL_EXT_draw_range_elements;

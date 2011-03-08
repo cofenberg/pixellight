@@ -1,6 +1,7 @@
 Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer
+- Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 
 
 Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)

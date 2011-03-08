@@ -70,6 +70,16 @@ namespace PLRendererOpenGL {
 #endif
 
 
+// GLX (Linux only)
+#ifdef LINUX
+	extern PFNGLXCREATEPBUFFERPROC	glXCreatePbuffer;
+	extern PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer;
+
+	// GLX_SGI_swap_control
+	extern PFNGLXSWAPINTERVALSGIPROC	glXSwapIntervalSGI;
+#endif
+
+
 // GL_EXT_compiled_vertex_array
 extern PFNGLLOCKARRAYSEXTPROC	glLockArraysEXT;
 extern PFNGLUNLOCKARRAYSEXTPROC	glUnlockArraysEXT;
@@ -306,13 +316,6 @@ extern PFNGLDRAWBUFFERSATIPROC	glDrawBuffersATI;
 // GL_AMD_vertex_shader_tessellator
 extern PFNGLTESSELLATIONFACTORAMDPROC	glTessellationFactorAMD;
 extern PFNGLTESSELLATIONMODEAMDPROC		glTessellationModeAMD;
-
-
-// GLX (Linux only)
-#ifdef LINUX
-	extern PFNGLXCREATEPBUFFERPROC	glXCreatePbuffer;
-	extern PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer;
-#endif
 
 
 //[-------------------------------------------------------]

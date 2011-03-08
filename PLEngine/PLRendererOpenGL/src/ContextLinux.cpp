@@ -26,6 +26,7 @@
 #include <PLGeneral/Log/Log.h>
 #include <PLGeneral/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
+#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/ContextLinux.h"
 
 
@@ -43,7 +44,8 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextLinux::ContextLinux() :
+ContextLinux::ContextLinux(Renderer &cRenderer) :
+	m_pRenderer(&cRenderer),
 	m_pDisplay(nullptr),
 	m_hDummyNativeWindow(NULL_HANDLE),
 	m_pDummyVisualInfo(nullptr),
@@ -60,7 +62,7 @@ ContextLinux::ContextLinux() :
 			GLX_GREEN_SIZE,	4, 
 			GLX_BLUE_SIZE,	4, 
 			GLX_DEPTH_SIZE,	16,
-			None };
+			0 };	// = "None"
 
 		m_pDummyVisualInfo = glXChooseVisual(m_pDisplay, DefaultScreen(m_pDisplay), nAttributeList);
 		if (m_pDummyVisualInfo) {
@@ -225,7 +227,8 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 
 void ContextLinux::SwapInterval(bool bEnabled)
 {
-	glXSwapIntervalSGI(bEnabled);
+	if (m_pRenderer->IsGLX_SGI_swap_control())
+		glXSwapIntervalSGI(bEnabled);
 }
 
 

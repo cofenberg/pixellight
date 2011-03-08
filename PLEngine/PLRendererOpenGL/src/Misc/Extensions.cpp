@@ -74,6 +74,16 @@ namespace PLRendererOpenGL {
 #endif
 
 
+// GLX (Linux only)
+#ifdef LINUX
+	PFNGLXCREATEPBUFFERPROC		glXCreatePbuffer	= nullptr;
+	PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer	= nullptr;
+
+	// GLX_SGI_swap_control
+	PFNGLXSWAPINTERVALSGIPROC	glXSwapIntervalSGI	= nullptr;
+#endif
+
+
 // GL_EXT_compiled_vertex_array
 PFNGLLOCKARRAYSEXTPROC		glLockArraysEXT		= nullptr;
 PFNGLUNLOCKARRAYSEXTPROC	glUnlockArraysEXT	= nullptr;
@@ -301,13 +311,6 @@ PFNGLTESSELLATIONFACTORAMDPROC	glTessellationFactorAMD	= nullptr;
 PFNGLTESSELLATIONMODEAMDPROC	glTessellationModeAMD	= nullptr;
 
 
-// GLX (Linux only)
-#ifdef LINUX
-	PFNGLXCREATEPBUFFERPROC		glXCreatePbuffer	= nullptr;
-	PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer	= nullptr;
-#endif
-
-
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
@@ -348,6 +351,8 @@ bool OpenGLExtensions::IsWGL_ARB_make_current_read()			const { return m_bWGL_ARB
 bool OpenGLExtensions::IsWGL_ARB_multisample()					const { return m_bWGL_ARB_multisample;				 }
 bool OpenGLExtensions::IsWGL_ATI_pixel_format_float()			const { return m_bWGL_ATI_pixel_format_float;		 }
 bool OpenGLExtensions::IsWGL_NV_float_buffer()					const { return m_bWGL_NV_float_buffer;				 }
+// GLX (Linux only)
+bool OpenGLExtensions::IsGLX_SGI_swap_control()					const { return m_bGLX_SGI_swap_control;				 }
 // EXT
 bool OpenGLExtensions::IsGL_EXT_compiled_vertex_array()			const { return m_bGL_EXT_compiled_vertex_array;		 }
 bool OpenGLExtensions::IsGL_EXT_draw_range_elements()			const { return m_bGL_EXT_draw_range_elements;		 }
@@ -536,6 +541,8 @@ void OpenGLExtensions::ResetExtensions()
 	m_bWGL_ARB_multisample					= false;
 	m_bWGL_ATI_pixel_format_float			= false;
 	m_bWGL_NV_float_buffer					= false;
+	// GLX (Linux only)
+	m_bGLX_SGI_swap_control					= false;
 	// EXT
 	m_bGL_EXT_compiled_vertex_array			= false;
 	m_bGL_EXT_draw_range_elements			= false;

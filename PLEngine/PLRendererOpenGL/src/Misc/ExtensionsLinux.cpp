@@ -107,6 +107,20 @@ bool OpenGLExtensions::Init()
 	// WGL_NV_float_buffer
 	m_bWGL_NV_float_buffer = IsSupported("GLX_NV_float_buffer");
 
+// GLX (Linux only)
+	// GLX_SGI_swap_control
+	if (IsSupported("GLX_SGI_swap_control")) {
+		glXSwapIntervalSGI = reinterpret_cast<PFNGLXSWAPINTERVALSGIPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXSwapIntervalSGI")));
+		if (!glXSwapIntervalSGI) {
+			PL_LOG(Info, "Couldn't use extension 'GLX_SGI_swap_control'!")
+			m_bGLX_SGI_swap_control = false;
+		} else {
+			m_bGLX_SGI_swap_control = true;
+		}
+	} else {
+		m_bGLX_SGI_swap_control = false;
+	}
+
 // EXT
 	// GL_EXT_compiled_vertex_array
 	if (IsSupported("GL_EXT_compiled_vertex_array")) {
