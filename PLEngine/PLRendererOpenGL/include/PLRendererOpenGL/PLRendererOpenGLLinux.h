@@ -31,8 +31,9 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/PLGeneralLinuxIncludes.h>
 #include <stddef.h>
-#include <GL/glx.h>
+#define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitily NOT ok (one reason is that "glext.h" is frequently extended)
 #include <GL/gl.h>
+#include <GL/glx.h>
 #include <GL/glu.h>
 #include "../../../../External/Recommended/OpenGL/glext.h"
 #include <X11/extensions/xf86vmode.h>
