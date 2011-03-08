@@ -158,8 +158,10 @@ void SNGun::NotifyUpdate()
 
 	// Move gun
 	m_fFrame += fDelta * 3.0f;
-	if (m_fFrame > 12.0f) m_fFrame = 12.0f;
-	if (m_fFrame <  0.0f) m_fFrame =  0.0f;
+	if (m_fFrame > 12.0f)
+		m_fFrame = 12.0f;
+	if (m_fFrame < 0.0f)
+		m_fFrame = 0.0f;
 	m_nFrame = static_cast<char>(m_fFrame);
 
 	// Create a projectile?

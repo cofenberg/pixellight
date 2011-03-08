@@ -327,12 +327,12 @@ void RawInputDevice::ProcessMouseData(unsigned short nFlags, unsigned long nButt
 			m_nOldX = nLastX;
 			m_nOldY = nLastY;
 		} else {
-			// Relative position
+			// Accumulate relative position
 			fX = pMouse->X.GetValue() + static_cast<float>(nLastX);
 			fY = pMouse->Y.GetValue() + static_cast<float>(nLastY);
 		}
 
-		// Set axis values
+		// Set new axis values
 		if (pMouse->X.GetValue() != fX)
 			pMouse->X.SetValue(fX, true);
 		if (pMouse->Y.GetValue() != fY)
