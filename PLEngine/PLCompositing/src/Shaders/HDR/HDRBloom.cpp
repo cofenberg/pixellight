@@ -106,7 +106,7 @@ HDRBloom::~HDRBloom()
 *    Calculates the bloom
 */
 void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const Color3 &cLuminanceConvert,
-							  float fKey, float fWhiteLevel, float fAverageLuminance, TextureBuffer *pHDRAverageLuminanceTextureBuffer, uint32 nBloomBlurPasses, float fDownscale)
+							  float fKey, float fWhiteLevel, float fAverageLuminance, TextureBuffer *pHDRAverageLuminanceTextureBuffer, uint32 nBloomBlurPasses, float fDownscale, bool bUseVertexTextureFetch)
 {
 	// Get the internal texture format to use
 	const TextureBuffer::EPixelFormat nInternalFormat = cOriginalTexture.GetFormat();
@@ -184,8 +184,11 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				if (bToneMapping) {
 					PL_ADD_FS_FLAG(m_cDownscaleProgramFlags, FS_TONE_MAPPING)
 					if (bAutomaticAverageLuminance) {
-						PL_ADD_VS_FLAG(m_cDownscaleProgramFlags, VS_AUTOMATIC_AVERAGE_LUMINANCE)
 						PL_ADD_FS_FLAG(m_cDownscaleProgramFlags, FS_AUTOMATIC_AVERAGE_LUMINANCE)
+						if (bUseVertexTextureFetch) {
+							PL_ADD_VS_FLAG(m_cDownscaleProgramFlags, VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF)
+							PL_ADD_FS_FLAG(m_cDownscaleProgramFlags, FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF)
+						}
 					}
 				}
 

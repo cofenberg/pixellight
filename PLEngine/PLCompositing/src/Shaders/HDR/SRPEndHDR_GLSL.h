@@ -28,7 +28,7 @@ static const PLGeneral::String sEndHDR_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 											// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 	varying highp vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component output\n\
 #else\n\
 	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
@@ -36,7 +36,7 @@ attribute highp vec4 VertexPosition;		// Clip space vertex position, lower/left 
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;						// Texture size in texel\n\
-#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 	uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
 #endif\n\
 \n\
@@ -50,7 +50,7 @@ void main()\n\
 	VertexTexCoordVS.xy = VertexPosition.zw*TextureSize;\n\
 \n\
 	// Get the average luminance by using vertex texture fetch so we have just 4 instead of xxxx average luminance texture accesses when doing this within the fragment shader\n\
-	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 		VertexTexCoordVS.z = texture2D(AverageLuminanceTexture, vec2(0.5f, 0.5f)).r;\n\
 	#endif\n\
 }";
@@ -62,7 +62,7 @@ static const PLGeneral::String sEndHDR_GLSL_FS = "\
 // #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
 \n\
 // Attributes\n\
-#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 	varying highp vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component input from vertex shader\n\
 #else\n\
 	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
@@ -73,7 +73,11 @@ static const PLGeneral::String sEndHDR_GLSL_FS = "\
 	uniform highp vec3			LuminanceConvert;			// Luminance convert\n\
 	uniform highp float			Key;						// Key, must be >=0\n\
 	uniform highp float			WhiteLevel;					// White level, must be >=0\n\
-	#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+		#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
+			uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+		#endif\n\
+	#else\n\
 		uniform highp float		AverageLuminance;			// User set average luminance\n\
 	#endif\n\
 #endif\n\
@@ -100,7 +104,11 @@ void main()\n\
 \n\
 	// Get the average luminance\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
-		#define averageLuminance VertexTexCoordVS.z\n\
+		#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
+			#define averageLuminance VertexTexCoordVS.z\n\
+		#else\n\
+			float averageLuminance = texture2D(AverageLuminanceTexture, vec2(0.5f, 0.5f)).r;\n\
+		#endif\n\
 	#else\n\
 		#define averageLuminance AverageLuminance\n\
 	#endif\n\

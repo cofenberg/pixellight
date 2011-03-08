@@ -212,7 +212,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						if (!m_pHDRBloom)
 							m_pHDRBloom = new HDRBloom(cRenderer);
 						m_pHDRBloom->CalculateBloom(sShaderLanguage, static_cast<TextureBufferRectangle&>(*pSurfaceTextureBuffer->GetTextureBuffer()), BloomBrightThreshold, bToneMapping, bAutomaticAverageLuminance,
-													LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale);
+													LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale, (GetFlags() & UseVertexTextureFetch) != 0);
 
 						// Show bloom texture (for debugging)
 						if (GetFlags() & ShowBloomTexture) {
@@ -238,8 +238,11 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					if (bToneMapping) {
 						PL_ADD_FS_FLAG(m_cProgramFlags, FS_TONE_MAPPING)
 						if (bAutomaticAverageLuminance) {
-							PL_ADD_VS_FLAG(m_cProgramFlags, VS_AUTOMATIC_AVERAGE_LUMINANCE)
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_AUTOMATIC_AVERAGE_LUMINANCE)
+							if (GetFlags() & UseVertexTextureFetch) {
+								PL_ADD_VS_FLAG(m_cProgramFlags, VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF)
+								PL_ADD_FS_FLAG(m_cProgramFlags, FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF)
+							}
 						}
 					}
 					if (bBloom)
@@ -313,8 +316,8 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								if (pGeneratedProgramUserData->pAverageLuminanceTexture) {
 									const int nTextureUnit = pGeneratedProgramUserData->pAverageLuminanceTexture->Set(pHDRAverageLuminanceTextureBuffer);
 									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Wrap);
+										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Wrap);
 										cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
 										cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
 										cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);

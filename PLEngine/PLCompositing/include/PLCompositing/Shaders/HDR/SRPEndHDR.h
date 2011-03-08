@@ -90,7 +90,8 @@ class SRPEndHDR : public SRPEnd {
 			NoBloom                     = 1<<4,	/**< Do not add bloom */
 			NoGammaCorrection           = 1<<5,	/**< Do not perform gamma correction */
 			WriteToOriginalSurface      = 1<<6,	/**< The result is drawn into the given original render surface (for example a render window) and there's no further need for an additional SRPEnd instance, if not set, the current render pipeline is continued */
-			ShowBloomTexture            = 1<<7	/**< Show the bloom texture (for debugging) */
+			ShowBloomTexture            = 1<<7,	/**< Show the bloom texture (for debugging) */
+			UseVertexTextureFetch       = 1<<8	/**< Allow the usage of vertex texture fetch (VTF) - results in usually slightly better performance but there may be driver issues */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SRPEnd::EFlags)
@@ -101,6 +102,7 @@ class SRPEndHDR : public SRPEnd {
 			pl_enum_value(NoGammaCorrection,			"Do not perform gamma correction")
 			pl_enum_value(WriteToOriginalSurface,		"The result is drawn into the given original render surface (for example a render window) and there's no further need for an additional SRPEnd instance, if not set, the current render pipeline is continued")
 			pl_enum_value(ShowBloomTexture,				"Show the bloom texture (for debugging)")
+			pl_enum_value(UseVertexTextureFetch,		"Allow the usage of vertex texture fetch (VTF) - results in usually slightly better performance but there may be driver issues")
 		pl_enum_end
 
 
@@ -151,7 +153,7 @@ class SRPEndHDR : public SRPEnd {
 		*    Vertex shader flags, flag names become to source code definitions
 		*/
 		enum EVertexShaderFlags {
-			VS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<0	/**< Perform light adaptation */
+			VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF = 1<<0	/**< Use automatic average luminance through vertex texture fetch (VTF) - results in usually slightly better performance */
 		};
 
 		/**
@@ -159,10 +161,11 @@ class SRPEndHDR : public SRPEnd {
 		*    Fragment shader flags, flag names become to source code definitions
 		*/
 		enum EFragmentShaderFlags {
-			FS_TONE_MAPPING					   = 1<<0,	/**< Perform tone mapping */
-				FS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<1,	/**< Perform light adaptation (FS_TONE_MAPPING must be set, too) */
-			FS_BLOOM						   = 1<<2,	/**< Add bloom */
-			FS_GAMMA_CORRECTION				   = 1<<3	/**< Perform gamma correction */
+			FS_TONE_MAPPING							   = 1<<0,	/**< Perform tone mapping */
+				FS_AUTOMATIC_AVERAGE_LUMINANCE		   = 1<<1,	/**< Use automatic average luminance through (FS_TONE_MAPPING must be set, too) */
+					FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF = 1<<2,	/**< Use automatic average luminance through vertex texture fetch (VTF) - results in usually slightly better performance (FS_AUTOMATIC_AVERAGE_LUMINANCE must be set, too) */
+			FS_BLOOM								   = 1<<3,	/**< Add bloom */
+			FS_GAMMA_CORRECTION						   = 1<<4	/**< Perform gamma correction */
 		};
 
 		/**

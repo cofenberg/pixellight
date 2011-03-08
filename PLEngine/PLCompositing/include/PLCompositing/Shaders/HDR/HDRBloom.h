@@ -117,12 +117,14 @@ class HDRBloom {
 		*    Number of blur passes
 		*  @param[in] fDownscale
 		*    Downscale factor
+		*  @param[in] bUseVertexTextureFetch
+		*    Allow the usage of vertex texture fetch (VTF) - results in usually slightly better performance but there may be driver issues
 		*
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
 		PLCOM_API void CalculateBloom(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const PLGraphics::Color3 &cLuminanceConvert,
-									  float fKey, float fWhiteLevel, float fAverageLuminance, PLRenderer::TextureBuffer *pHDRAverageLuminanceTextureBuffer, PLGeneral::uint32 nBloomBlurPasses, float fDownscale);
+									  float fKey, float fWhiteLevel, float fAverageLuminance, PLRenderer::TextureBuffer *pHDRAverageLuminanceTextureBuffer, PLGeneral::uint32 nBloomBlurPasses, float fDownscale, bool bUseVertexTextureFetch);
 
 		/**
 		*  @brief
@@ -146,7 +148,7 @@ class HDRBloom {
 		*    Vertex shader flags, flag names become to source code definitions
 		*/
 		enum EVertexShaderFlags {
-			VS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<0	/**< Perform light adaptation */
+			VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF = 1<<0	/**< Use automatic average luminance through vertex texture fetch (VTF) - results in usually slightly better performance */
 		};
 
 		/**
@@ -154,10 +156,11 @@ class HDRBloom {
 		*    Fragment shader flags, flag names become to source code definitions
 		*/
 		enum EFragmentShaderFlags {
-			FS_TONE_MAPPING					   = 1<<0,	/**< Perform tone mapping */
-				FS_AUTOMATIC_AVERAGE_LUMINANCE = 1<<1,	/**< Perform light adaptation (FS_TONE_MAPPING must be set, too) */
-			FS_BLOOM						   = 1<<2,	/**< Add bloom */
-			FS_GAMMA_CORRECTION				   = 1<<3	/**< Perform gamma correction */
+			FS_TONE_MAPPING							   = 1<<0,	/**< Perform tone mapping */
+				FS_AUTOMATIC_AVERAGE_LUMINANCE		   = 1<<1,	/**< Use automatic average luminance through (FS_TONE_MAPPING must be set, too) */
+					FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF = 1<<2,	/**< Use automatic average luminance through vertex texture fetch (VTF) - results in usually slightly better performance (FS_AUTOMATIC_AVERAGE_LUMINANCE must be set, too) */
+			FS_BLOOM								   = 1<<3,	/**< Add bloom */
+			FS_GAMMA_CORRECTION						   = 1<<4	/**< Perform gamma correction */
 		};
 
 		/**

@@ -1,3 +1,16 @@
+>> 08.03.2011
+[CO]
+- After installing "AMD Catalyst 11.2", I noticed that the Dungeon demo looked different when using Cg shaders, while GLSL shaders were still ok.
+  On a NVIDIA system, I noticed a similar issue, but with correctly working Cg shaders while the GLSL shaders produced the error. After looking into
+  the issue, I narrowed it down to the HDRBloom & SRPEndHDR classes - to the vertex texture fetch (VTF) used to read out the current automatically calculated
+  luminance of the image, to be exactly. When fetching the texel within the fragment shader everything is fine, but as soon as I use VTF to reduce the total
+  number of required texture accesses within the fragment shader, the resulting image is just wrong. It looks like the read luminance has always the same value
+  (but no compiler errors or something like that).
+  Right now, I have no glue whether this is a driver or Cg issue, or whether I do something wrong - which worked with previous GPU driver versions but not on
+  new ones. So, I just added a flag to SRPEndHDR controlling whether or not vertex texture fetch should be used, by default, it's disabled to avoid this issue.
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

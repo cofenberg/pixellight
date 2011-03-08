@@ -25,7 +25,7 @@ static const PLGeneral::String sEndHDR_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 		float3 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) + average luminance within the z component\n\
 	#else\n\
 		float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
@@ -36,7 +36,7 @@ struct VS_OUTPUT {\n\
 VS_OUTPUT main(float4 VertexPosition : POSITION	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 												// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
   , uniform int2	  TextureSize				// Texture size in texel\n\
-	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
   , uniform sampler2D AverageLuminanceTexture	// Automatic average luminance texture\n\
 	#endif\n\
 	)\n\
@@ -50,7 +50,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION	// Clip space vertex position, l
 	OUT.TexCoord.xy = VertexPosition.zw*TextureSize;\n\
 \n\
 	// Get the average luminance by using vertex texture fetch so we have just 4 instead of xxxx average luminance texture accesses when doing this within the fragment shader\n\
-	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 		OUT.TexCoord.z = tex2D(AverageLuminanceTexture, float2(0.5f, 0.5f)).r;\n\
 	#endif\n\
 \n\
@@ -64,7 +64,7 @@ static const PLGeneral::String sEndHDR_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 		float3 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) + average luminance within the z component\n\
 	#else\n\
 		float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
@@ -82,7 +82,11 @@ FS_OUTPUT main(VS_OUTPUT   IN						// Interpolated output from the vertex stage\
 	 , uniform float3      LuminanceConvert			// Luminance convert\n\
 	 , uniform float       Key						// Key, must be >=0\n\
 	 , uniform float       WhiteLevel				// White level, must be >=0\n\
-	#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
+		#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
+			, uniform sampler2D AverageLuminanceTexture	// Automatic average luminance texture\n\
+		#endif\n\
+	#else\n\
 	 , uniform float       AverageLuminance			// User set average luminance\n\
 	#endif\n\
 #endif\n\
@@ -108,7 +112,11 @@ FS_OUTPUT main(VS_OUTPUT   IN						// Interpolated output from the vertex stage\
 \n\
 	// Get the average luminance\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
-		#define averageLuminance IN.TexCoord.z\n\
+		#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
+			#define averageLuminance IN.TexCoord.z\n\
+		#else\n\
+			float averageLuminance = tex2D(AverageLuminanceTexture, float2(0.5f, 0.5f)).r;\n\
+		#endif\n\
 	#else\n\
 		#define averageLuminance AverageLuminance\n\
 	#endif\n\
