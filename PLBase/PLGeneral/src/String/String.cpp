@@ -373,6 +373,12 @@ String::String(int nValue)
 	#endif
 }
 
+String::String(uint8 nValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = nValue;
+}
+
 String::String(uint16 nValue) :
 	m_pStringBuffer(nullptr)
 {
@@ -2296,6 +2302,26 @@ int String::GetInt() const
 	return 0;
 }
 
+uint8 String::GetUInt8() const
+{
+	if (m_pStringBuffer) {
+		switch (m_pStringBuffer->GetFormat()) {
+			case ASCII:
+				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
+				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				return static_cast<uint8>(strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10));
+
+			case Unicode:
+				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
+				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				return static_cast<uint8>(wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10));
+		}
+	}
+
+	// Error!
+	return 0;
+}
+
 uint16 String::GetUInt16() const
 {
 	if (m_pStringBuffer) {
@@ -2545,6 +2571,20 @@ String &String::operator =(int nValue)
 	return *this;
 }
 
+String &String::operator =(uint8 nValue)
+{
+	// Set data
+	#ifdef WIN32
+		*this = Format("%I32u", static_cast<uint32>(nValue));
+	#else
+		// [TODO] Is this working correctly on Linux?
+		*this = Format("%u", static_cast<uint32>(nValue));
+	#endif
+
+	// Return a reference to this instance
+	return *this;
+}
+
 String &String::operator =(uint16 nValue)
 {
 	// Set data
@@ -2680,6 +2720,16 @@ String String::operator +(int nValue) const
 	return *this + String(nValue);
 }
 
+String String::operator +(uint8 nValue) const
+{
+	#ifdef WIN32
+		return (GetFormat() == Unicode) ? *this + Format(L"%I32u", static_cast<uint32>(nValue)) : *this + Format("%I32u", static_cast<uint32>(nValue));
+	#else
+		// [TODO] Is this working correctly on Linux?
+		return (GetFormat() == Unicode) ? *this + Format(L"%u", static_cast<uint32>(nValue)) : *this + Format("%u", static_cast<uint32>(nValue));
+	#endif
+}
+
 String String::operator +(uint16 nValue) const
 {
 	#ifdef WIN32
@@ -2768,6 +2818,16 @@ String operator +(wchar_t nValue, const String &sString)
 String operator +(int nValue, const String &sString)
 {
 	return (sString.GetFormat() == String::Unicode) ? String::Format(L"%d", nValue) + sString : String::Format("%d", nValue) + sString;
+}
+
+String operator +(uint8 nValue, const String &sString)
+{
+	#ifdef WIN32
+		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%I32u", static_cast<uint32>(nValue)) + sString : String::Format("%I32u", static_cast<uint32>(nValue)) + sString;
+	#else
+		// [TODO] Is this working correctly on Linux?
+		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%u", static_cast<uint32>(nValue)) + sString : String::Format("%u", static_cast<uint32>(nValue)) + sString;
+	#endif
 }
 
 String operator +(uint16 nValue, const String &sString)
@@ -2890,6 +2950,23 @@ String &String::operator +=(wchar_t nValue)
 String &String::operator +=(int nValue)
 {
 	*this += String(nValue);
+	return *this;
+}
+
+String &String::operator +=(uint8 nValue)
+{
+	#ifdef WIN32
+		if (GetFormat() == Unicode)
+			*this += Format(L"%I32u", static_cast<uint32>(nValue));
+		else
+			*this += Format("%I32u", static_cast<uint32>(nValue));
+	#else
+		// [TODO] Is this working correctly on Linux?
+		if (GetFormat() == Unicode)
+			*this += Format(L"%u", static_cast<uint32>(nValue));
+		else
+			*this += Format("%u", static_cast<uint32>(nValue));
+	#endif
 	return *this;
 }
 
