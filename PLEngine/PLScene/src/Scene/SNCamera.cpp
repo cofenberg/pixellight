@@ -368,7 +368,7 @@ Matrix3x4 &SNCamera::GetViewMatrix()
 {
 	// Calculate view matrix if required
 	if (m_bAutoUpdate && (m_nInternalCameraFlags & RecalculateViewMatrix)) {
-		// Calculate view
+		// Calculate view matrix
 		m_mView.View(CalculateViewRotation(), GetTransform().GetPosition());
 		if (GetFlags() & FlipY) {
 			Matrix3x4 mScale;

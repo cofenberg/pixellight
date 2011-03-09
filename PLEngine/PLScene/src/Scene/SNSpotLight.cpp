@@ -47,12 +47,6 @@ pl_implement_class(SNSpotLight)
 
 
 //[-------------------------------------------------------]
-//[ Private static data                                   ]
-//[-------------------------------------------------------]
-const Quaternion SNSpotLight::RotationOffset(-4.3711388e-008f, 0.0f, 1.0f, 0.0f);
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
 void SNSpotLight::SetRange(float fValue)
@@ -223,8 +217,8 @@ const Matrix3x4 &SNSpotLight::GetViewMatrix()
 {
 	// Calculate view matrix if required
 	if (m_nInternalLightFlags & RecalculateViewMatrix) {
-		// Calculate view with a 180 degree y offset (see SNSpotLight class documentation)
-		m_mView.View(GetTransform().GetRotation()*RotationOffset, GetTransform().GetPosition());
+		// Calculate view matrix
+		m_mView.View(CalculateViewRotation(), GetTransform().GetPosition());
 
 		// Recalculation done
 		m_nInternalLightFlags &= ~RecalculateViewMatrix;
@@ -276,9 +270,9 @@ const Array<Vector3> &SNSpotLight::GetFrustumVertices()
 		m_cFrustumVertices[6].SetXYZ( 1.0f,  1.0f,  1.0f);
 		m_cFrustumVertices[7].SetXYZ( 1.0f, -1.0f,  1.0f);
 
-		// Get world transform matrix with a 180 degree y offset (see SNSpotLight class documentation) and no scale
+		// Get world transform matrix
 		Matrix4x4 mWorld;
-		mWorld.FromQuatTrans(GetTransform().GetRotation()*RotationOffset, GetTransform().GetPosition());
+		mWorld.FromQuatTrans(CalculateViewRotation(), GetTransform().GetPosition());
 		mWorld *= GetProjectionMatrix().GetInverted();
 
 		// Project the vertices
@@ -307,6 +301,19 @@ void SNSpotLight::NotifyPositionRotation()
 	m_nInternalLightFlags |= RecalculateViewMatrix;
 	m_nInternalLightFlags |= RecalculateFrustum;
 	m_nInternalLightFlags |= RecalculateFrustumVertices;
+}
+
+/**
+*  @brief
+*    Calculates and returns the current view rotation
+*/
+Quaternion SNSpotLight::CalculateViewRotation() const
+{
+	// Static constant 180 degree y view rotation offset quaternion
+	const static Quaternion ViewRotationOffset(-4.3711388e-008f, 0.0f, 1.0f, 0.0f);
+
+	// Calculate view rotation with a 180 degree y offset (see SNSpotLight class documentation)
+	return GetTransform().GetRotation()*ViewRotationOffset;
 }
 
 
@@ -341,9 +348,9 @@ void SNSpotLight::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			// Get the view projection matrix
 			const Matrix4x4 &mViewProjection = pVisNode->GetViewProjectionMatrix();
 
-			// Get world transform matrix with a 180 degree y offset (see SNSpotLight class documentation) and no scale
+			// Get world transform matrix
 			Matrix4x4 mTransform;
-			mTransform.FromQuatTrans(GetTransform().GetRotation()*RotationOffset, GetTransform().GetPosition());
+			mTransform.FromQuatTrans(CalculateViewRotation(), GetTransform().GetPosition());
 
 			// Calculate the final render world space transform
 			Matrix4x4 mWorld = pVisNode->GetParent()->GetWorldMatrix();	// Start within 'container space', this is our origin

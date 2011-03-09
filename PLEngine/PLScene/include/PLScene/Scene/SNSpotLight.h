@@ -211,19 +211,21 @@ class SNSpotLight : public SNPointLight {
 		*/
 		void NotifyPositionRotation();
 
+		/**
+		*  @brief
+		*    Calculates and returns the current view rotation
+		*
+		*  @return
+		*    The current view rotation
+		*/
+		PLMath::Quaternion CalculateViewRotation() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
 		PLCore::EventHandler<> EventHandlerPositionRotation;
-
-
-	//[-------------------------------------------------------]
-	//[ Private static data                                   ]
-	//[-------------------------------------------------------]
-	private:
-		static const PLMath::Quaternion RotationOffset;	/**< 180 degree y rotation offset quaternion */
 
 
 	//[-------------------------------------------------------]
