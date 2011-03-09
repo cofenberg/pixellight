@@ -1,3 +1,11 @@
+>> 09.03.2011
+[CO]
+- BasicSceneApplication: Because there were some questions within the PL IRC chat room named #pixellight at the Efnet network
+  (e.g. irc.prison.net, efnet.demon.co.uk, irc.inet.tele.dk, irc.isdnet.fr) why "GetSceneRendererTool()" is not working when
+  used within the "OnCreateRootScene()" application-framework method, I added some more comments.
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

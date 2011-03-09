@@ -254,6 +254,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Function that is called to create the application's renderer context
 		*
 		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*    - Currently a 'RendererOpenGL' renderer context is created within the default implementation
 		*/
 		PL_API virtual void OnCreateRendererContext();
@@ -261,6 +262,9 @@ class RenderApplication : public PLGui::GuiApplication {
 		/**
 		*  @brief
 		*    Function that is called to create the application's surface painter
+		*
+		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*/
 		PL_API virtual void OnCreatePainter();
 
@@ -269,6 +273,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    Function that is called to initialize the application's virtual input controller
 		*
 		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*    - In the default implementation, an instance of VirtualStandardController is created
 		*/
 		PL_API virtual void OnCreateInputController();

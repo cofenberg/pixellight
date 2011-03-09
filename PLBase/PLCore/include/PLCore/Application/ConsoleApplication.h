@@ -398,6 +398,9 @@ class ConsoleApplication {
 		*    - Open log file according to parameter '--logfile' (default: <appname>.log)
 		*    - Set verbose mode according to parameter '--verbose'
 		*    - Write some general information into the log
+		*
+		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*/
 		PLCORE_API virtual void OnInitLog();
 
@@ -412,6 +415,7 @@ class ConsoleApplication {
 		*      - On '--version', call OnPrintVersion() and exit
 		*
 		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*    - To end the application here, use Application::Exit()
 		*/
 		PLCORE_API virtual void OnInitCmdLine();
@@ -427,6 +431,9 @@ class ConsoleApplication {
 		*    - If a config has been loaded or created:
 		*      - Read 'FirstRun' and call OnFirstRun() if set
 		*      - Read 'UsePixelLightRuntime' and update m_bUseRuntime accordingly
+		*
+		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*/
 		PLCORE_API virtual void OnInitConfig();
 
@@ -441,6 +448,9 @@ class ConsoleApplication {
 		*    - If UseRuntime is set to 'true':
 		*      - Scan for plugins in PixelLight runtime directory non-recursively
 		*      - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
+		*
+		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*/
 		PLCORE_API virtual void OnInitPlugins();
 
@@ -458,6 +468,9 @@ class ConsoleApplication {
 		*      - Set PixelLight runtime directory as base path in LoadableManager
 		*      - Scan for data packages in PixelLight runtime directory
 		*    - Get current language and load PixelLight localization file
+		*
+		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*/
 		PLCORE_API virtual void OnInitData();
 

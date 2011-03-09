@@ -262,6 +262,7 @@ class SceneApplication : public RenderApplication {
 		*    Function that is called to create the application's root scene
 		*
 		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*    - The default implementation creates a standard root scene
 		*/
 		PL_API virtual void OnCreateRootScene();

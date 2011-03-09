@@ -155,6 +155,10 @@ class BasicSceneApplication : public SceneApplication {
 		*    Use "GetSceneRendererTool()" for a simplified interface to the scene renderer. By writing for example
 		*    "GetSceneRendererTool().SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
 		*    one can usually (on standard scene renderer configurations) set directly a background bitmap.
+		*
+		*    This component is initialized within the application framework initialization function "Init()" that is called prior to "Main()".
+		*    As a result, using the returned component instance prior to the application-specific initialization routine "OnInit()" will not
+		*    work.
 		*/
 		PL_API SceneRendererTool &GetSceneRendererTool();
 
@@ -176,6 +180,11 @@ class BasicSceneApplication : public SceneApplication {
 		*
 		*  @return
 		*    Screenshot tool instance
+		*
+		*  @remarks
+		*    This component is initialized within the application framework initialization function "Init()" that is called prior to "Main()".
+		*    As a result, using the returned component instance prior to the application-specific initialization routine "OnInit()" will not
+		*    work.
 		*/
 		PL_API Screenshot &GetScreenshotTool();
 
@@ -212,6 +221,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Everything that SceneApplication::Init() does
+		*    - Initialize scene renderer tool
 		*    - Initialize screenshot tool
 		*    - Return and go on with Main()
 		*/
@@ -237,7 +247,9 @@ class BasicSceneApplication : public SceneApplication {
 		*    Scene container where the 'concrete scene' should be created in
 		*
 		*  @note
+		*    - Part of the application framework initialization function "Init()"
 		*    - The default implementation creates an controllable camera and a simple mesh scene node
+		*    - Called from within "SceneApplication::OnCreateRootScene()"
 		*/
 		PL_API virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
 
