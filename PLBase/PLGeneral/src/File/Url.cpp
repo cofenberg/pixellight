@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLGeneral/Container/Stack.h"
+#include "PLGeneral/String/RegEx.h"
 #include "PLGeneral/File/Url.h"
 
 
@@ -506,8 +507,8 @@ void Url::SetValue(const String &sUrl)
 		String sTemp = sUrl;
 
 		// Check for a protocol, like "http://"
-		String sProtocol;
-		const int nPos = sTemp.IndexOf("://");
+		String sProtocol, sRoot;
+		int nPos = sTemp.IndexOf("://");
 		if (nPos >= 2) { // the protocol name must be at least of length 2 (otherwise C:// is treated as a protocol)
 			// Token "://" has been found, now check the protocol
 			sProtocol = sUrl.GetSubstring(0, nPos);
@@ -520,11 +521,45 @@ void Url::SetValue(const String &sUrl)
 			sProtocol += "://";
 			sProtocol.ToLower();
 			sTemp = sTemp.GetSubstring(sProtocol.GetLength());
+		} else {
+			// UNC (Uniform Naming Convention aka Universal Naming Convention) support
+			// UNC = \\<host name>\<share name>[\<object name>]*
+			// Example of a UNC directory: "\\MY-PC\Users\Me\UNC_Test"
+			// There are three parts within UNC names, here's how they are "mapped" on the current URL class design:
+			// - Host/server name   -> Protocol      (from the above example: "\\MY-PC")
+			// - Share name         -> Root          (from the above example: "\Users")
+			// - Optional file path -> Path/filename (from the above example: "\Me\UNC_Test")
+			// Regular expression basing on a discussion at: http://channel9.msdn.com/forums/TechOff/132283-regex-UNC-share
+			static RegEx cRegEx("^"								// Start of string
+								"("								// Begin register 1
+								"\\\\\\\\"						// Two literal backslashes
+								"[^/\\\\\\]\\[\":;|<>+=,?* _]+"	// Host/server name -> protocol
+								"\\\\"							// One literal backslash
+								")"								// End register 1
+								"("								// Begin register 2
+								"[^/\\\\\\]\\[\":;|<>+=,?*]+"	// Share name -> Root
+								")"								// End register 2
+								"(("							// Begin register 3
+								"\\\\"							// One literal backslash
+								"[^\\\\/:*?\"<>|]+"				// Optional file path -> Path/filename
+								")*)"							// End register 3
+								"\\\\?"							// Optional terminating backslash
+								"$"								// End of string
+								);
+			if (cRegEx.Match(sTemp)) {
+				sProtocol	= cRegEx.GetResult(0);	// Host/server name   -> Protocol
+				sRoot		= cRegEx.GetResult(1);	// Share name         -> Root
+				sTemp		= cRegEx.GetResult(2);	// Optional file path -> Path/filename
+
+				// It's not allowed that there's a slash at the beginning of the path, we could
+				// make the regular expression even more complex, but the following works as well...
+				sRoot += sTemp.GetASCII()[0];
+				sTemp.Delete(0, 1);
+			}
 		}
 
 		// Check for file root ('/')
-		String sRoot;
-		if (sTemp[static_cast<uint32>(0)] == '/' || sTemp[static_cast<uint32>(0)] == '\\') {
+		if (!sRoot.GetLength() && (sTemp[static_cast<uint32>(0)] == '/' || sTemp[static_cast<uint32>(0)] == '\\')) {
 			// Root sign found
 			sRoot = sTemp[static_cast<uint32>(0)];
 			sTemp = sTemp.GetSubstring(1);

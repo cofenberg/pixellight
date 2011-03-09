@@ -1,3 +1,23 @@
+>> 09.03.2011
+[CO]
+- Url-class: Nearly over a year ago, a client reported that a client reported (jap :) that UNC (Uniform Naming Convention aka Universal
+  Naming Convention) support was not working. At this time, I never had heard of UNC before and there was not really time to look into it
+  in more detail - so, a hack on the client side had to do the job. Today, why ever, I was really curious what's the issue with UNC.
+  After looking what exactly UNC is all about (I usually don't have to do anything with network related stuff), I made some experiments
+  (also with "QUrl" from Qt) and figured out, that the only problem seemed to be within the "Url::SetValue()"-method while parsing the
+  given URL. After spending some hours to get into regular expressions again and looking for pitfalls that may occur, I added UNC parsing
+  support to the Url-class. Now, the following works for me
+    System::GetInstance()->SetCurrentDir("\\\\COFENBERG-PC\\Users\\COfenberg\\UNC_Test");
+  As well as
+    File cFile("\\\\COFENBERG-PC\\Users\\COfenberg\\UNC_Test\\Test.txt");
+    if (cFile.Open(File::FileRead|File::FileText)) {
+        String sText = cFile.GetS();	// -> sText = "Hello" :D
+    }
+  I don't know whether or not my change within "Url::SetValue()" is perfect... in general, I wanted to keep the required implementation change 
+  as compact as possible.
+
+
+
 >> 02.03.2011
 [CO]
 - As noticed by a PixelLight user, the data type returned by "System::GetMicroseconds()" was "uint32" which is critical for the stored data

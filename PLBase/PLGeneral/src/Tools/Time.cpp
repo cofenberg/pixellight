@@ -319,7 +319,7 @@ String Time::ToString() const
 void Time::FromString(const String &sString)
 {
 	// Parse string
-	RegEx cRegEx("(?<dow>\\w+)\\s(?<month>\\w+)\\s(?<day>\\w+)\\s(?<hour>\\w+):(?<min>\\w+):(?<sec>\\w+)\\s(?<year>\\w+)");
+	static RegEx cRegEx("(?<dow>\\w+)\\s(?<month>\\w+)\\s(?<day>\\w+)\\s(?<hour>\\w+):(?<min>\\w+):(?<sec>\\w+)\\s(?<year>\\w+)");
 	if (cRegEx.Match(sString)) {
 		// Read time
 		m_nYear		   = static_cast<uint16>(cRegEx.GetNameResult("year") .GetInt());
