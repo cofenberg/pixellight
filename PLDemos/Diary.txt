@@ -1,3 +1,15 @@
+>> 09.03.2011
+[CO]
+- Due to a user request within the PL IRC chat room, PLDemoSimpleScene now also shows how to configure the compositing system by
+  using the comfort scene renderer tool ("PLEngine::BasicSceneApplication::GetSceneRendererTool()"). I know, "scene renderer" and
+  "compositing" is currently used as a synonyme which is a little bit confusing. "Scene renderer" was the previous name of a system
+  that evolved over time into a full featured "realtime compositing system" which is no longer fixed on "scene rendering", although
+  there are a few compositing steps involving scene rendering (but that's no longer the one and only purpose of the system!). So, I
+  think the term "scene renderer" will vanish over the time completely because it no longer describes the system in the correct way
+  and leads to confusion as now already seen (and expected :).
+
+
+
 >> 22.02.2011
 [CO]
 - Added new demo "PLDemoSPARK_PL" showing how to use the new "SPARK_PL"-project within C++ projects

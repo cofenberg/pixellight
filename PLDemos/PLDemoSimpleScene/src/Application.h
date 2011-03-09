@@ -75,6 +75,13 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::ConsoleApplication functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnInit();
+
+
+	//[-------------------------------------------------------]
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:

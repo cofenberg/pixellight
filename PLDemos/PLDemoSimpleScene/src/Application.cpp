@@ -87,6 +87,28 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 
 
 //[-------------------------------------------------------]
+//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[-------------------------------------------------------]
+void Application::OnInit()
+{
+	// This method is call by the application framework when application should initialize itself.
+	// At this point, the core components of the application are ready to be used.
+
+	// Call base implementation
+	BasicSceneApplication::OnInit();
+
+	// Configure the compositing system by using the comfort scene renderer tool.
+	// We're setting the attribute "Flags" of the scene renderer step named "DeferredHBAO" to the value "Inactive" -
+	// this has the effect that the fillrate eating HBAO post processing effect is deactivated. Please note, that
+	// internally "just" the generic PixelLight RTTI is used. PixelLight itself doesn't offer such settings as
+	// "low graphics quality" because the framework can't decide automatically for you what is considered "low quality"
+	// within your application. We highly recommend to provide your end-user more abstract graphics settings as
+	// seen in, for example, many video games out there.
+	GetSceneRendererTool().SetPassAttribute("DeferredHBAO", "Flags", "Inactive");
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual PLGui::GuiApplication functions       ]
 //[-------------------------------------------------------]
 void Application::OnCreateMainWindow()
