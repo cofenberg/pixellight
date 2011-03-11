@@ -203,18 +203,18 @@ FunctionEnd
 Section -Prerequisites
   SetOutPath $INSTDIR\Prerequisites
 
-  ; Test if Microsoft Visual Studio Redistributables 2008 x86 SP1 installed
+  ; Test if Microsoft Visual Studio Redistributables 2010 x86 SP1 installed
   ; Returns -1 if there is no VC redistributables intstalled
   ; Basing on http://nsis.sourceforge.net/VC_8.0_Redistributables
 
-  ; Microsoft Visual C++ 2010  x86 Runtime - 10.0.31118
+  ; Microsoft Visual C++ 2010  x86 Runtime - 10.0.40219
   ClearErrors
-  ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1336F674-3182-320E-9874-30BD246E0251}" "Version"
+  ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{5D9ED403-94DE-3BA0-B1D6-71F4BDA412E6}" "Version"
   IfErrors 0 SkipRedist
 
-  ; Microsoft Visual C++ 2010  x86 Redistributable - 10.0.30319
+  ; Microsoft Visual C++ 2010  x86 Redistributable - 10.0.40219
   ClearErrors
-  ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{196BB40D-1578-3D01-B289-BEFC77A11A1E}" "Version"
+  ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
   IfErrors 0 SkipRedist
 
   ; No known Microsoft Visual Studio Redistributables found
