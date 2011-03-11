@@ -31,6 +31,7 @@
 #include <PLGeneral/Container/Pool.h>
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
+#include "PLCompositing/Shaders/Deferred/SRPDeferredGBufferMaterial.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferred.h"
 
 
@@ -42,8 +43,6 @@ namespace PLRenderer {
 	class Material;
 	class IndexBuffer;
 	class VertexBuffer;
-	class ProgramUniform;
-	class ProgramAttribute;
 	class SurfaceTextureBuffer;
 	class TextureBufferRectangle;
 }
@@ -164,27 +163,6 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	public:
 		/**
 		*  @brief
-		*    Texture filtering modes
-		*/
-		enum ETextureFiltering {
-			NoFiltering   = 0,	/**< No filtering */
-			Bilinear      = 1,	/**< Bilinear */
-			Anisotropic2  = 2,	/**< Anisotropic x2 */
-			Anisotropic4  = 4,	/**< Anisotropic x4 */
-			Anisotropic8  = 8,	/**< Anisotropic x8 */
-			Anisotropic16 = 16	/**< Anisotropic x16 */
-		};
-		pl_enum(ETextureFiltering)
-			pl_enum_value(NoFiltering,		"No filtering")
-			pl_enum_value(Bilinear,			"Bilinear")
-			pl_enum_value(Anisotropic2,		"Anisotropic x2")
-			pl_enum_value(Anisotropic4,		"Anisotropic x4")
-			pl_enum_value(Anisotropic8,		"Anisotropic x8")
-			pl_enum_value(Anisotropic16,	"Anisotropic x16")
-		pl_enum_end
-
-		/**
-		*  @brief
 		*    Scene renderer pass flags (SceneRendererPass flags extension)
 		*/
 		enum EFlags {
@@ -235,10 +213,10 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGBuffer, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering GBuffer (Geometry Buffer) fill")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
-		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,												"",											ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(TextureFiltering,	pl_enum_type(SRPDeferredGBufferMaterial::ETextureFiltering),	SRPDeferredGBufferMaterial::Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
 		// Overwritten SceneRendererPass variables
-		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",																																"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),											0,											ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -315,96 +293,6 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	private:
 		/**
 		*  @brief
-		*    Vertex shader flags, flag names become to source code definitions
-		*/
-		enum EVertexShaderFlags {
-			VS_TWOSIDED					= 1<<0,	/**< Two sided material */
-			VS_DISPLACEMENTMAP			= 1<<1,	/**< Displacement map */
-			VS_SECONDTEXTURECOORDINATE	= 1<<2,	/**< Second texture coordinate */
-			VS_TANGENT_BINORMAL			= 1<<3,	/**< Tangent and binormal vectors */
-			VS_VIEWSPACEPOSITION		= 1<<4	/**< Calculate viewspace position */
-		};
-
-		/**
-		*  @brief
-		*    Fragment shader flags, flag names become to source code definitions
-		*/
-		enum EFragmentShaderFlags {
-			FS_DIFFUSEMAP							= 1<<0,		/**< Take diffuse map into account */
-				FS_ALPHATEST						= 1<<1,		/**< Use alpha test to discard fragments (FS_DIFFUSEMAP must be defined!) */
-			FS_SPECULAR								= 1<<2,		/**< Use specular */
-				FS_SPECULARMAP						= 1<<3,		/**< Take specular map into account (FS_SPECULAR must be set, too) */
-			FS_NORMALMAP							= 1<<4,		/**< Take normal map into account */
-				FS_NORMALMAP_DXT5_XGXR				= 1<<5,		/**< DXT5 XGXR compressed normal map (FS_NORMALMAP must be defined and FS_NORMALMAP_LATC2 not!) */
-				FS_NORMALMAP_LATC2					= 1<<6,		/**< LATC2 compressed normal map (FS_NORMALMAP must be defined and FS_NORMALMAP_DXT5_XGXR not!) */
-				FS_DETAILNORMALMAP					= 1<<7,		/**< Take detail normal map into account (FS_NORMALMAP must be defined!) */
-					FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<8,		/**< DXT5 XGXR compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP must be defined and FS_DETAILNORMALMAP_LATC2 not!) */
-					FS_DETAILNORMALMAP_LATC2		= 1<<9,		/**< LATC2 compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP must be defined and FS_DETAILNORMALMAP_DXT5_XGXR not!) */
-			FS_PARALLAXMAPPING						= 1<<10,	/**< Perform parallax mapping */
-			FS_AMBIENTOCCLUSIONMAP					= 1<<11,	/**< Use ambient occlusion map */
-			FS_LIGHTMAP								= 1<<12,	/**< Use light map */
-			FS_EMISSIVEMAP							= 1<<13,	/**< Use emissive map */
-			FS_GLOW									= 1<<14,	/**< Use glow */
-				FS_GLOWMAP							= 1<<15,	/**< Use glow map (FS_GLOW must be defined!) */
-			FS_REFLECTION							= 1<<16,	/**< Use reflection */
-				FS_FRESNELREFLECTION				= 1<<17,	/**< Use fresnel reflection (FS_REFLECTION must be defined!) */
-				FS_REFLECTIVITYMAP					= 1<<18,	/**< Use reflectivity map (FS_REFLECTION and FS_FRESNELREFLECTION or FS_2DREFLECTIONMAP or FS_CUBEREFLECTIONMAP must be defined!) */
-				FS_2DREFLECTIONMAP					= 1<<19,	/**< Use 2D reflection mapping (FS_REFLECTION must be defined, can't be set together with FS_CUBEREFLECTIONMAP!) */
-				FS_CUBEREFLECTIONMAP				= 1<<20,	/**< Use cube reflection mapping (FS_REFLECTION must be defined, can't be set together with FS_2DREFLECTIONMAP!) */
-			FS_GAMMACORRECTION						= 1<<21		/**< Use gamma correction (sRGB to linear space) */
-		};
-
-		/**
-		*  @brief
-		*    Direct pointers to uniforms & attributes of a generated program
-		*/
-		struct GeneratedProgramUserData {
-			// Vertex shader attributes
-			PLRenderer::ProgramAttribute *pVertexPosition;
-			PLRenderer::ProgramAttribute *pVertexTexCoord0;
-			PLRenderer::ProgramAttribute *pVertexTexCoord1;
-			PLRenderer::ProgramAttribute *pVertexNormal;
-			PLRenderer::ProgramAttribute *pVertexTangent;
-			PLRenderer::ProgramAttribute *pVertexBinormal;
-			// Vertex shader uniforms
-			PLRenderer::ProgramUniform *pNormalScale;
-			PLRenderer::ProgramUniform *pEyePos;
-			PLRenderer::ProgramUniform *pWorldVP;
-			PLRenderer::ProgramUniform *pWorldV;
-			PLRenderer::ProgramUniform *pDisplacementMap;
-			PLRenderer::ProgramUniform *pDisplacementScaleBias;
-			// Fragment shader uniforms
-			PLRenderer::ProgramUniform *pDiffuseColor;
-			PLRenderer::ProgramUniform *pDiffuseMap;
-			PLRenderer::ProgramUniform *pAlphaReference;
-			PLRenderer::ProgramUniform *pSpecularColor;
-			PLRenderer::ProgramUniform *pSpecularExponent;
-			PLRenderer::ProgramUniform *pSpecularMap;
-			PLRenderer::ProgramUniform *pNormalMap;
-			PLRenderer::ProgramUniform *pNormalMapBumpiness;
-			PLRenderer::ProgramUniform *pDetailNormalMap;
-			PLRenderer::ProgramUniform *pDetailNormalMapBumpiness;
-			PLRenderer::ProgramUniform *pDetailNormalMapUVScale;
-			PLRenderer::ProgramUniform *pHeightMap;
-			PLRenderer::ProgramUniform *pParallaxScaleBias;
-			PLRenderer::ProgramUniform *pAmbientOcclusionMap;
-			PLRenderer::ProgramUniform *pAmbientOcclusionFactor;
-			PLRenderer::ProgramUniform *pLightMap;
-			PLRenderer::ProgramUniform *pLightMapColor;
-			PLRenderer::ProgramUniform *pEmissiveMap;
-			PLRenderer::ProgramUniform *pEmissiveMapColor;
-			PLRenderer::ProgramUniform *pGlowFactor;
-			PLRenderer::ProgramUniform *pGlowMap;
-			PLRenderer::ProgramUniform *pReflectionColor;
-			PLRenderer::ProgramUniform *pReflectivity;
-			PLRenderer::ProgramUniform *pReflectivityMap;
-			PLRenderer::ProgramUniform *pFresnelConstants;
-			PLRenderer::ProgramUniform *pReflectionMap;
-			PLRenderer::ProgramUniform *pViewSpaceToWorldSpace;
-		};
-
-		/**
-		*  @brief
 		*    Mesh batch
 		*/
 		struct MeshBatch {
@@ -433,31 +321,6 @@ class SRPDeferredGBuffer : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Makes a material to the currently used one
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cMaterial
-		*    Material to use
-		*
-		*  @return
-		*    Generated program user data, do NOT delete the memory the pointer points to
-		*/
-		GeneratedProgramUserData *MakeMaterialCurrent(PLRenderer::Renderer &cRenderer, const PLRenderer::Material &cMaterial);
-
-		/**
-		*  @brief
-		*    Sets correct texture filtering modes
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] nStage
-		*    Texture stage
-		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
-
-		/**
-		*  @brief
 		*    Draws a mesh batch
 		*
 		*  @param[in] cRenderer
@@ -467,7 +330,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*  @param[in] cMeshBatch
 		*    Mesh batch to use
 		*/
-		void DrawMeshBatch(PLRenderer::Renderer &cRenderer, GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const;
+		void DrawMeshBatch(PLRenderer::Renderer &cRenderer, SRPDeferredGBufferMaterial::GeneratedProgramUserData &cGeneratedProgramUserData, MeshBatch &cMeshBatch) const;
 
 		/**
 		*  @brief
@@ -486,19 +349,19 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::SurfaceTextureBuffer			 *m_pRenderTarget;			/**< Render target of the GBuffer, can be a null pointer */
-		PLRenderer::TextureBufferRectangle			 *m_pColorTarget1;			/**< Color target 1, can be a null pointer */
-		PLRenderer::TextureBufferRectangle			 *m_pColorTarget2;			/**< Color target 2, can be a null pointer */
-		PLRenderer::TextureBufferRectangle			 *m_pColorTarget3;			/**< Color target 3, can be a null pointer */
-		bool										  m_bColorTarget3Used;		/**< Was the RGB color target 3 actually used when filling the current GBuffer content? */
-		bool										  m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
-		PLRenderer::Surface							 *m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be a null pointer */
-		FullscreenQuad								 *m_pFullscreenQuad;		/**< Fullscreen quad instance, can be a null pointer */
-		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
-		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
-		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */
-		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be a null pointer */
-		PLRenderer::ProgramGenerator::Flags			  m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
+		PLRenderer::SurfaceTextureBuffer		*m_pRenderTarget;			/**< Render target of the GBuffer, can be a null pointer */
+		PLRenderer::TextureBufferRectangle		*m_pColorTarget1;			/**< Color target 1, can be a null pointer */
+		PLRenderer::TextureBufferRectangle		*m_pColorTarget2;			/**< Color target 2, can be a null pointer */
+		PLRenderer::TextureBufferRectangle		*m_pColorTarget3;			/**< Color target 3, can be a null pointer */
+		bool									 m_bColorTarget3Used;		/**< Was the RGB color target 3 actually used when filling the current GBuffer content? */
+		bool									 m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
+		PLRenderer::Surface						*m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be a null pointer */
+		FullscreenQuad							*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be a null pointer */
+		PLGeneral::Pool<PLRenderer::Material*>   m_lstMaterials;			/**< List of currently used materials */
+		PLGeneral::Pool<MeshBatch*>				 m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
+		PLGeneral::Pool<MeshBatch*>				 m_lstMeshBatches;			/**< List of currently used mesh batches */
+		PLRenderer::ProgramGenerator			*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
+		PLRenderer::ProgramGenerator::Flags		 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

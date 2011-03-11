@@ -229,6 +229,9 @@
     <ClCompile Include="src\SceneNodeModifiers\SNMPostProcessGlow.cpp">
       <Filter>SceneNodeModifiers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\Deferred\SRPDeferredGBufferMaterial.cpp">
+      <Filter>Shaders\Deferred</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -560,6 +563,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\SceneNodeModifiers\SNMPostProcessGlow.h">
       <Filter>SceneNodeModifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredGBufferMaterial.h">
+      <Filter>Shaders\Deferred</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

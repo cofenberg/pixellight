@@ -44,6 +44,7 @@ add_sources(
 	src/Shaders/General/SRPVolumetricFog.cpp
 	src/Shaders/Deferred/SRPDeferred.cpp
 	src/Shaders/Deferred/SRPDeferredGBuffer.cpp
+	src/Shaders/Deferred/SRPDeferredGBufferMaterial.cpp
 	src/Shaders/Deferred/SRPDeferredSSAO.cpp
 	src/Shaders/Deferred/SRPDeferredHBAO.cpp
 	src/Shaders/Deferred/SRPDeferredHDAO.cpp

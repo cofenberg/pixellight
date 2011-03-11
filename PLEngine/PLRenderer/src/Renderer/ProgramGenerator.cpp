@@ -98,6 +98,15 @@ ProgramGenerator::~ProgramGenerator()
 
 /**
 *  @brief
+*    Returns the used renderer
+*/
+Renderer &ProgramGenerator::GetRenderer() const
+{
+	return *m_pRenderer;
+}
+
+/**
+*  @brief
 *    Returns the name of the used shader language
 */
 String ProgramGenerator::GetShaderLanguage() const

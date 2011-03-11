@@ -243,6 +243,15 @@ class ProgramGenerator {
 
 		/**
 		*  @brief
+		*    Returns the used renderer
+		*
+		*  @return
+		*    The used renderer
+		*/
+		PLRENDERER_API Renderer &GetRenderer() const;
+
+		/**
+		*  @brief
 		*    Returns the name of the used shader language
 		*
 		*  @return
