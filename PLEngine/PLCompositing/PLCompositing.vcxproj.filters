@@ -232,6 +232,9 @@
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredGBufferMaterial.cpp">
       <Filter>Shaders\Deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\General\SRPDirectionalLightingShadersMaterial.cpp">
+      <Filter>Shaders\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -566,6 +569,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredGBufferMaterial.h">
       <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShadersMaterial.h">
+      <Filter>Shaders\General</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

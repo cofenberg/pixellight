@@ -40,6 +40,7 @@ add_sources(
 	src/FixedFunctions/SRPLightEffectsFixedFunctions.cpp
 	src/Shaders/General/SRPDiffuseOnlyShaders.cpp
 	src/Shaders/General/SRPDirectionalLightingShaders.cpp
+	src/Shaders/General/SRPDirectionalLightingShadersMaterial.cpp
 	src/Shaders/General/SRPLighting.cpp
 	src/Shaders/General/SRPVolumetricFog.cpp
 	src/Shaders/Deferred/SRPDeferred.cpp

@@ -239,123 +239,9 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Vertex shader flags, flag names become to source code definitions
-		*/
-		enum EVertexShaderFlags {
-			VS_TEXCOORD0				= 1<<0,	/**< Use texture coordinate 0 */
-			VS_TEXCOORD1				= 1<<1,	/**< Use texture coordinate 1 */
-			VS_NORMAL					= 1<<2,	/**< Use vertex normal */
-				VS_TWOSIDEDLIGHTING		= 1<<3,	/**< Two sided lighting possible? (VS_NORMAL should be defined!) */
-				VS_TANGENT_BINORMAL		= 1<<4,	/**< Use vertex tangent and binormal (VS_NORMAL should be defined!) */
-					VS_PARALLAXMAPPING	= 1<<5,	/**< Perform parallax mapping (VS_NORMAL and VS_TANGENT_BINORMAL should be defined!) */
-			VS_VIEWSPACEPOSITION		= 1<<6	/**< Calculate the view space position of the vertex (required for reflections and lighting) */
-		};
-
-		/**
-		*  @brief
-		*    Fragment shader flags, flag names become to source code definitions
-		*/
-		enum EFragmentShaderFlags {
-			FS_TEXCOORD0						= 1<<0,		/**< Use texture coordinate 0 */
-			FS_TEXCOORD1						= 1<<1,		/**< Use texture coordinate 1 */
-			FS_NORMAL							= 1<<2,		/**< Use vertex normal */
-				FS_TANGENT_BINORMAL				= 1<<3,		/**< Use vertex tangent and binormal (FS_NORMAL should be defined!) */
-					FS_PARALLAXMAPPING			= 1<<4,		/**< Perform parallax mapping (FS_NORMAL and FS_TANGENT_BINORMAL should be defined!) */
-			FS_GAMMACORRECTION					= 1<<5,		/**< Use gamma correction (sRGB to linear space) */
-			FS_DIFFUSEMAP						= 1<<6,		/**< Take diffuse map into account */
-				FS_ALPHATEST					= 1<<7,		/**< Use alpha test to discard fragments (FS_DIFFUSEMAP should be defined!) */
-			FS_DIFFUSERAMPMAP					= 1<<8,		/**< Use diffuse ramp map */
-			FS_AMBIENTOCCLUSIONMAP				= 1<<9,		/**< Use ambient occlusion map */
-			FS_LIGHTMAP							= 1<<10,	/**< Use light map */
-			FS_EMISSIVEMAP						= 1<<11,	/**< Use emissive map */
-			FS_REFLECTION						= 1<<12,	/**< Use reflection */
-				FS_FRESNELREFLECTION			= 1<<13,	/**< Use fresnel reflection (FS_REFLECTION should be defined!) */
-				FS_REFLECTIVITYMAP				= 1<<14,	/**< Use reflectivity map (FS_REFLECTION and FS_FRESNELREFLECTION or FS_2DREFLECTIONMAP or FS_CUBEREFLECTIONMAP should be defined!) */
-				FS_2DREFLECTIONMAP				= 1<<15,	/**< Use 2D reflection mapping (FS_REFLECTION should be defined, can't be set together with FS_CUBEREFLECTIONMAP!) */
-				FS_CUBEREFLECTIONMAP			= 1<<16,	/**< Use cube reflection mapping (FS_REFLECTION should be defined, can't be set together with FS_2DREFLECTIONMAP!) */
-			FS_NORMALMAP						= 1<<17,	/**< Take normal map into account */
-				FS_NORMALMAP_DXT5_XGXR			= 1<<18,	/**< DXT5 XGXR normal map (FS_NORMALMAP should be defined and FS_NORMALMAP_LATC2 not!) */
-				FS_NORMALMAP_LATC2				= 1<<19,	/**< LATC2 normal map (FS_NORMALMAP should be defined and FS_NORMALMAP_DXT5_XGXR not!) */
-				FS_DETAILNORMALMAP				= 1<<20,	/**< Take detail normal map into account (FS_NORMALMAP should be defined!) */
-				FS_DETAILNORMALMAP_DXT5_XGXR	= 1<<21,	/**< DXT5 XGXR compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined and FS_DETAILNORMALMAP_LATC2 not!) */
-				FS_DETAILNORMALMAP_LATC2		= 1<<22,	/**< LATC2 compressed detail normal map (FS_NORMALMAP & FS_DETAILNORMALMAP should be defined and FS_DETAILNORMALMAP_DXT5_XGXR not!) */
-			FS_LIGHTING							= 1<<23,	/**< Perform lighting */
-				FS_SPECULAR						= 1<<24,	/**< Use specular (FS_LIGHTING should be set, too) */
-					FS_SPECULARMAP				= 1<<25,	/**< Take specular map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
-					FS_SPECULARRAMPMAP			= 1<<26,	/**< Take specular ramp map into account (FS_LIGHTING and FS_SPECULAR should be set, too) */
-				FS_EDGERAMPMAP					= 1<<27,	/**< Use edge ramp map (FS_LIGHTING should be set, too) */
-			FS_GLOW								= 1<<28,	/**< Use glow (FS_DOF is not allowed to be set as well) */
-				FS_GLOWMAP						= 1<<29,	/**< Use glow map (FS_GLOW should be set, too) */
-			FS_DOF								= 1<<30		/**< Use depth of field (FS_GLOW is not allowed to be set as well) */
-		};
-
-		/**
-		*  @brief
-		*    Direct pointers to uniforms & attributes of a generated program
-		*/
-		struct GeneratedProgramUserData {
-			// Vertex shader attributes
-			PLRenderer::ProgramAttribute *pVertexPosition;
-			PLRenderer::ProgramAttribute *pVertexTexCoord0;
-			PLRenderer::ProgramAttribute *pVertexTexCoord1;
-			PLRenderer::ProgramAttribute *pVertexNormal;
-			PLRenderer::ProgramAttribute *pVertexTangent;
-			PLRenderer::ProgramAttribute *pVertexBinormal;
-			// Vertex shader uniforms
-			PLRenderer::ProgramUniform *pNormalScale;
-			PLRenderer::ProgramUniform *pObjectSpaceToViewSpaceMatrix;
-			PLRenderer::ProgramUniform *pObjectSpaceToClipSpaceMatrix;
-			PLRenderer::ProgramUniform *pEyePos;
-			// Fragment shader uniforms
-			PLRenderer::ProgramUniform *pAmbientColor;
-			PLRenderer::ProgramUniform *pDiffuseColor;
-			PLRenderer::ProgramUniform *pDiffuseMap;
-			PLRenderer::ProgramUniform *pAlphaReference;
-			PLRenderer::ProgramUniform *pDiffuseRampMap;
-			PLRenderer::ProgramUniform *pAmbientOcclusionMap;
-			PLRenderer::ProgramUniform *pAmbientOcclusionFactor;
-			PLRenderer::ProgramUniform *pLightMap;
-			PLRenderer::ProgramUniform *pLightMapColor;
-			PLRenderer::ProgramUniform *pEmissiveMap;
-			PLRenderer::ProgramUniform *pEmissiveMapColor;
-			PLRenderer::ProgramUniform *pReflectionColor;
-			PLRenderer::ProgramUniform *pReflectivity;
-			PLRenderer::ProgramUniform *pReflectivityMap;
-			PLRenderer::ProgramUniform *pFresnelConstants;
-			PLRenderer::ProgramUniform *pReflectionMap;
-			PLRenderer::ProgramUniform *pViewSpaceToWorldSpace;
-			PLRenderer::ProgramUniform *pNormalMap;
-			PLRenderer::ProgramUniform *pNormalMapBumpiness;
-			PLRenderer::ProgramUniform *pDetailNormalMap;
-			PLRenderer::ProgramUniform *pDetailNormalMapBumpiness;
-			PLRenderer::ProgramUniform *pDetailNormalMapUVScale;
-			PLRenderer::ProgramUniform *pHeightMap;
-			PLRenderer::ProgramUniform *pParallaxScaleBias;
-			PLRenderer::ProgramUniform *pLightDirection;
-			PLRenderer::ProgramUniform *pLightColor;
-			PLRenderer::ProgramUniform *pSpecularColor;
-			PLRenderer::ProgramUniform *pSpecularExponent;
-			PLRenderer::ProgramUniform *pSpecularMap;
-			PLRenderer::ProgramUniform *pSpecularRampMap;
-			PLRenderer::ProgramUniform *pEdgeRampMap;
-			PLRenderer::ProgramUniform *pGlow;
-			PLRenderer::ProgramUniform *pGlowMap;
-			PLRenderer::ProgramUniform *pDOFParams;
-		};
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
-		PLRenderer::RenderStates			*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
 		PLMath::Vector3						 m_vLightDirection;		/**< Normalized view space light direction vector */
 		PLGraphics::Color3					 m_cLightColor;			/**< Light color */
 		PLScene::SceneNodeHandler			 m_cLightNodeHandler;	/**< Scene node handler keeping a reference to the directional light scene node used for rendering the last time */
@@ -365,6 +251,9 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 		float m_fDOFFocalPlaneDepth;
 		float m_fDOFFarBlurDepth;
 		float m_fDOFBlurrinessCutoff;
+		// Material cache
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLRenderer::RenderStates			*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
 
 
 	//[-------------------------------------------------------]

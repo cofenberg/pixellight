@@ -260,6 +260,7 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\FullscreenQuad.cpp" />
     <ClCompile Include="src\PLCompositing.cpp" />
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredGBufferMaterial.cpp" />
+    <ClCompile Include="src\Shaders\General\SRPDirectionalLightingShadersMaterial.cpp" />
     <ClCompile Include="src\SRPBackground.cpp" />
     <ClCompile Include="src\SRPBackgroundBitmap.cpp" />
     <ClCompile Include="src\SRPBackgroundColorGradient.cpp" />
@@ -331,6 +332,7 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCompositing\PLCompositingLinux.h" />
     <ClInclude Include="include\PLCompositing\PLCompositingWindows.h" />
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredGBufferMaterial.h" />
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShadersMaterial.h" />
     <ClInclude Include="include\PLCompositing\SRPBackground.h" />
     <ClInclude Include="include\PLCompositing\SRPBackgroundBitmap.h" />
     <ClInclude Include="include\PLCompositing\SRPBackgroundColorGradient.h" />
