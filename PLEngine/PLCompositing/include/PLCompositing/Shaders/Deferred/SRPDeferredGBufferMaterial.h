@@ -167,7 +167,7 @@ class SRPDeferredGBufferMaterial {
 		*  @brief
 		*    Makes this material to the currently used one
 		*
-		*  @param[in]  nFlags
+		*  @param[in]  nRendererFlags
 		*    SRPDeferredGBuffer-flags to use
 		*  @param[in]  nTextureFiltering
 		*    Texture filtering
@@ -179,7 +179,7 @@ class SRPDeferredGBufferMaterial {
 		*  @return
 		*    Generated program user data, do NOT delete the memory the pointer points to
 		*/
-		GeneratedProgramUserData *MakeMaterialCurrent(PLGeneral::uint32 nFlags, ETextureFiltering nTextureFiltering, bool &bColorTarget3Used, bool &bColorTarget3AlphaUsed);
+		GeneratedProgramUserData *MakeMaterialCurrent(PLGeneral::uint32 nRendererFlags, ETextureFiltering nTextureFiltering, bool &bColorTarget3Used, bool &bColorTarget3AlphaUsed);
 
 
 	//[-------------------------------------------------------]
@@ -292,10 +292,10 @@ class SRPDeferredGBufferMaterial {
 		*  @brief
 		*    Synchronize this material cache with the owner
 		*
-		*  @param[in] nFlags
+		*  @param[in] nRendererFlags
 		*    SRPDeferredGBuffer-flags to use
 		*/
-		void Synchronize(PLGeneral::uint32 nFlags);
+		void Synchronize(PLGeneral::uint32 nRendererFlags);
 
 		/**
 		*  @brief
@@ -318,7 +318,8 @@ class SRPDeferredGBufferMaterial {
 		// General
 		PLRenderer::Material				*m_pMaterial;			/**< Owner material, always valid! */
 		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, always valid! */
-		PLGeneral::uint32					 m_nFlags;				/**< Used SRPDeferredGBuffer-flags */
+		PLGeneral::uint32					 m_nRendererFlags;		/**< Used SRPDeferredGBuffer-flags */
+		bool								 m_bSynchronized;		/**< Synchronized? */
 		// Generated program
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 		// Synchronized data

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SRPDirectionalLightingShadersMaterial.cpp      *
+ *  File: SRPLightingMaterial.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -30,12 +30,11 @@
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/RenderStates.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
-#include "PLCompositing/Shaders/General/SRPDirectionalLightingShaders.h"
-#include "PLCompositing/Shaders/General/SRPDirectionalLightingShadersMaterial.h"
+#include "PLCompositing/Shaders/General/SRPLighting.h"
+#include "PLCompositing/Shaders/General/SRPLightingMaterial.h"
 
 
 //[-------------------------------------------------------]
@@ -53,52 +52,51 @@ namespace PLCompositing {
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 // Material parameter
-const String SRPDirectionalLightingShadersMaterial::Glow							= "Glow";
-const String SRPDirectionalLightingShadersMaterial::GlowMap							= "GlowMap";
-const String SRPDirectionalLightingShadersMaterial::Opacity							= "Opacity";
-const String SRPDirectionalLightingShadersMaterial::SrcBlendFunc					= "SrcBlendFunc";
-const String SRPDirectionalLightingShadersMaterial::DstBlendFunc					= "DstBlendFunc";
-const String SRPDirectionalLightingShadersMaterial::TwoSided						= "TwoSided";
-const String SRPDirectionalLightingShadersMaterial::AlphaReference					= "AlphaReference";
-const String SRPDirectionalLightingShadersMaterial::DiffuseRampMap					= "DiffuseRampMap";
-const String SRPDirectionalLightingShadersMaterial::IndexOfRefraction				= "IndexOfRefraction";
-const String SRPDirectionalLightingShadersMaterial::FresnelReflectionPower			= "FresnelReflectionPower";
-const String SRPDirectionalLightingShadersMaterial::ReflectionColor					= "ReflectionColor";
-const String SRPDirectionalLightingShadersMaterial::Reflectivity					= "Reflectivity";
-const String SRPDirectionalLightingShadersMaterial::NormalMapBumpiness				= "NormalMapBumpiness";
-const String SRPDirectionalLightingShadersMaterial::DetailNormalMap					= "DetailNormalMap";
-const String SRPDirectionalLightingShadersMaterial::DetailNormalMapBumpiness		= "DetailNormalMapBumpiness";
-const String SRPDirectionalLightingShadersMaterial::DetailNormalMapUVScale			= "DetailNormalMapUVScale";
-const String SRPDirectionalLightingShadersMaterial::Parallax						= "Parallax";
-const String SRPDirectionalLightingShadersMaterial::SpecularColor					= "SpecularColor";
-const String SRPDirectionalLightingShadersMaterial::SpecularExponent				= "SpecularExponent";
-const String SRPDirectionalLightingShadersMaterial::SpecularRampMap					= "SpecularRampMap";
-const String SRPDirectionalLightingShadersMaterial::EdgeRampMap						= "EdgeRampMap";
+const String SRPLightingMaterial::TwoSided						= "TwoSided";
+const String SRPLightingMaterial::AlphaReference				= "AlphaReference";
+const String SRPLightingMaterial::DiffuseRampMap				= "DiffuseRampMap";
+const String SRPLightingMaterial::IndexOfRefraction				= "IndexOfRefraction";
+const String SRPLightingMaterial::FresnelReflectionPower		= "FresnelReflectionPower";
+const String SRPLightingMaterial::ReflectionColor				= "ReflectionColor";
+const String SRPLightingMaterial::Reflectivity					= "Reflectivity";
+const String SRPLightingMaterial::NormalMapBumpiness			= "NormalMapBumpiness";
+const String SRPLightingMaterial::DetailNormalMap				= "DetailNormalMap";
+const String SRPLightingMaterial::DetailNormalMapBumpiness		= "DetailNormalMapBumpiness";
+const String SRPLightingMaterial::DetailNormalMapUVScale		= "DetailNormalMapUVScale";
+const String SRPLightingMaterial::Parallax						= "Parallax";
+const String SRPLightingMaterial::SpecularColor					= "SpecularColor";
+const String SRPLightingMaterial::SpecularExponent				= "SpecularExponent";
+const String SRPLightingMaterial::SpecularRampMap				= "SpecularRampMap";
+const String SRPLightingMaterial::EdgeRampMap					= "EdgeRampMap";
 // Shader parameter
-const String SRPDirectionalLightingShadersMaterial::DiffuseColor					= "DiffuseColor";
-const String SRPDirectionalLightingShadersMaterial::LightMapColor					= "LightMapColor";
-const String SRPDirectionalLightingShadersMaterial::AmbientOcclusionFactor			= "AmbientOcclusionFactor";
-const String SRPDirectionalLightingShadersMaterial::EmissiveMapColor				= "EmissiveMapColor";
-const String SRPDirectionalLightingShadersMaterial::VertexPosition					= "VertexPosition";
-const String SRPDirectionalLightingShadersMaterial::VertexTexCoord0					= "VertexTexCoord0";
-const String SRPDirectionalLightingShadersMaterial::VertexTexCoord1					= "VertexTexCoord1";
-const String SRPDirectionalLightingShadersMaterial::VertexNormal					= "VertexNormal";
-const String SRPDirectionalLightingShadersMaterial::VertexTangent					= "VertexTangent";
-const String SRPDirectionalLightingShadersMaterial::VertexBinormal					= "VertexBinormal";
-const String SRPDirectionalLightingShadersMaterial::NormalScale						= "NormalScale";
-const String SRPDirectionalLightingShadersMaterial::ObjectSpaceToViewSpaceMatrix	= "ObjectSpaceToViewSpaceMatrix";
-const String SRPDirectionalLightingShadersMaterial::ObjectSpaceToClipSpaceMatrix	= "ObjectSpaceToClipSpaceMatrix";
-const String SRPDirectionalLightingShadersMaterial::EyePos							= "EyePos";
-const String SRPDirectionalLightingShadersMaterial::AmbientColor					= "AmbientColor";
-// const String SRPDirectionalLightingShadersMaterial::AlphaReference				= "AlphaReference";	// Already defined
-const String SRPDirectionalLightingShadersMaterial::FresnelConstants				= "FresnelConstants";
-const String SRPDirectionalLightingShadersMaterial::ViewSpaceToWorldSpace			= "ViewSpaceToWorldSpace";
-const String SRPDirectionalLightingShadersMaterial::ParallaxScaleBias				= "ParallaxScaleBias";
-const String SRPDirectionalLightingShadersMaterial::LightDirection					= "LightDirection";
-const String SRPDirectionalLightingShadersMaterial::LightColor						= "LightColor";
-// const String SRPDirectionalLightingShadersMaterial::Glow							= "Glow";	// Already defined
-// const String SRPDirectionalLightingShadersMaterial::GlowMap						= "GlowMap";	// Already defined
-const String SRPDirectionalLightingShadersMaterial::DOFParams						= "DOFParams";
+const String SRPLightingMaterial::DiffuseColor					= "DiffuseColor";
+const String SRPLightingMaterial::VertexPosition				= "VertexPosition";
+const String SRPLightingMaterial::VertexTexCoord0				= "VertexTexCoord0";
+const String SRPLightingMaterial::VertexNormal					= "VertexNormal";
+const String SRPLightingMaterial::VertexTangent					= "VertexTangent";
+const String SRPLightingMaterial::VertexBinormal				= "VertexBinormal";
+const String SRPLightingMaterial::NormalScale					= "NormalScale";
+const String SRPLightingMaterial::ObjectSpaceToViewSpaceMatrix	= "ObjectSpaceToViewSpaceMatrix";
+const String SRPLightingMaterial::ObjectSpaceToClipSpaceMatrix	= "ObjectSpaceToClipSpaceMatrix";
+const String SRPLightingMaterial::EyePos						= "EyePos";
+// const String SRPLightingMaterial::AlphaReference				= "AlphaReference";	// Already defined
+const String SRPLightingMaterial::FresnelConstants				= "FresnelConstants";
+const String SRPLightingMaterial::ViewSpaceToWorldSpace			= "ViewSpaceToWorldSpace";
+const String SRPLightingMaterial::ParallaxScaleBias				= "ParallaxScaleBias";
+const String SRPLightingMaterial::LightDirection				= "LightDirection";
+const String SRPLightingMaterial::LightPosition					= "LightPosition";
+const String SRPLightingMaterial::LightRadius					= "LightRadius";
+const String SRPLightingMaterial::ProjectivePointCubeMap		= "ProjectivePointCubeMap";
+const String SRPLightingMaterial::ViewSpaceToCubeMapSpace		= "ViewSpaceToCubeMapSpace";
+const String SRPLightingMaterial::ProjectiveSpotMap				= "ProjectiveSpotMap";
+const String SRPLightingMaterial::ViewSpaceToSpotMapSpace		= "ViewSpaceToSpotMapSpace";
+const String SRPLightingMaterial::SpotConeCos					= "SpotConeCos";
+const String SRPLightingMaterial::ShadowMap						= "ShadowMap";
+const String SRPLightingMaterial::ViewSpaceToShadowMapSpace		= "ViewSpaceToShadowMapSpace";
+const String SRPLightingMaterial::ViewSpaceToShadowCubeMapSpace	= "ViewSpaceToShadowCubeMapSpace";
+const String SRPLightingMaterial::InvLightRadius				= "InvLightRadius";
+const String SRPLightingMaterial::TexelSize						= "TexelSize";
+const String SRPLightingMaterial::LightColor					= "LightColor";
 
 
 //[-------------------------------------------------------]
@@ -108,22 +106,14 @@ const String SRPDirectionalLightingShadersMaterial::DOFParams						= "DOFParams"
 *  @brief
 *    Default constructor
 */
-SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(RenderStates &cRenderStates, Material &cMaterial, ProgramGenerator &cProgramGenerator) :
+SRPLightingMaterial::SRPLightingMaterial(Material &cMaterial, ProgramGenerator &cProgramGenerator) :
 	// General
-	m_pRenderStates(&cRenderStates),
 	m_pMaterial(&cMaterial),
 	m_pProgramGenerator(&cProgramGenerator),
 	m_nRendererFlags(0),
 	m_nEnvironmentFlags(0),
 	m_bSynchronized(false),	// [TODO] Invalidate if materal has been changed!
 	// Synchronized data
-		// Glow
-	m_fGlow(0.0f),
-	m_pGlowMap(nullptr),
-		// Opacity
-	m_fOpacity(1.0f),
-	m_nSrcBlendFunc(BlendFunc::SrcAlpha),
-	m_nDstBlendFunc(BlendFunc::InvSrcAlpha),
 		// Two sided
 	m_bTwoSided(false),
 		// Diffuse map and alpha reference
@@ -132,14 +122,6 @@ SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(Ren
 	m_pDiffuseMap(nullptr),
 		// Diffuse ramp map
 	m_pDiffuseRampMap(nullptr),
-		// Ambient map and light map require texture coordinate set 1
-	m_fAmbientOcclusionFactor(1.0f),
-	m_pAmbientOcclusionMap(nullptr),
-	m_cLightMapColor(Color3::White),
-	m_pLightMap(nullptr),
-		// Emissive map
-	m_cEmissiveMapColor(Color3::White),
-	m_pEmissiveMap(nullptr),
 		// Index of refraction and fresnel reflection power
 	m_fIndexOfRefraction(0.0f),
 	m_fFresnelReflectionPower(5.0f),
@@ -162,7 +144,7 @@ SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(Ren
 		// Parallax mapping settings
 	m_fParallax(0.04f),
 	m_pHeightMap(nullptr),
-		// Lighting and specular
+		// Specular
 	m_cSpecularColor(Color3::White),
 	m_pSpecularMap(nullptr),
 	m_fSpecularExponent(45.0f),
@@ -177,7 +159,7 @@ SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(Ren
 *  @brief
 *    Destructor
 */
-SRPDirectionalLightingShadersMaterial::~SRPDirectionalLightingShadersMaterial()
+SRPLightingMaterial::~SRPLightingMaterial()
 {
 }
 
@@ -185,7 +167,7 @@ SRPDirectionalLightingShadersMaterial::~SRPDirectionalLightingShadersMaterial()
 *  @brief
 *    Makes this material to the currently used one
 */
-SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalLightingShadersMaterial::MakeMaterialCurrent(uint32 nRendererFlags, uint32 nEnvironmentFlags, ETextureFiltering nTextureFiltering)
+SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterialCurrent(uint32 nRendererFlags, uint32 nEnvironmentFlags, ETextureFiltering nTextureFiltering, float fLightingIntensity)
 {
 	// Get the used renderer
 	Renderer &cRenderer = m_pProgramGenerator->GetRenderer();
@@ -209,7 +191,6 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 			// Vertex shader attributes
 			pGeneratedProgramUserData->pVertexPosition					= pProgram->GetAttribute(VertexPosition);
 			pGeneratedProgramUserData->pVertexTexCoord0					= pProgram->GetAttribute(VertexTexCoord0);
-			pGeneratedProgramUserData->pVertexTexCoord1					= pProgram->GetAttribute(VertexTexCoord1);
 			pGeneratedProgramUserData->pVertexNormal					= pProgram->GetAttribute(VertexNormal);
 			pGeneratedProgramUserData->pVertexTangent					= pProgram->GetAttribute(VertexTangent);
 			pGeneratedProgramUserData->pVertexBinormal					= pProgram->GetAttribute(VertexBinormal);
@@ -219,17 +200,10 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 			pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix	= pProgram->GetUniform(ObjectSpaceToClipSpaceMatrix);
 			pGeneratedProgramUserData->pEyePos							= pProgram->GetUniform(EyePos);
 			// Fragment shader uniforms
-			pGeneratedProgramUserData->pAmbientColor					= pProgram->GetUniform(AmbientColor);
 			pGeneratedProgramUserData->pDiffuseColor					= pProgram->GetUniform(DiffuseColor);
 			pGeneratedProgramUserData->pDiffuseMap						= pProgram->GetUniform(Material::DiffuseMap);
 			pGeneratedProgramUserData->pAlphaReference					= pProgram->GetUniform(AlphaReference);
 			pGeneratedProgramUserData->pDiffuseRampMap					= pProgram->GetUniform(DiffuseRampMap);
-			pGeneratedProgramUserData->pAmbientOcclusionMap				= pProgram->GetUniform(Material::AmbientOcclusionMap);
-			pGeneratedProgramUserData->pAmbientOcclusionFactor			= pProgram->GetUniform(AmbientOcclusionFactor);
-			pGeneratedProgramUserData->pLightMap						= pProgram->GetUniform(Material::LightMap);
-			pGeneratedProgramUserData->pLightMapColor					= pProgram->GetUniform(LightMapColor);
-			pGeneratedProgramUserData->pEmissiveMap						= pProgram->GetUniform(Material::EmissiveMap);
-			pGeneratedProgramUserData->pEmissiveMapColor				= pProgram->GetUniform(EmissiveMapColor);
 			pGeneratedProgramUserData->pReflectionColor					= pProgram->GetUniform(ReflectionColor);
 			pGeneratedProgramUserData->pReflectivity					= pProgram->GetUniform(Reflectivity);
 			pGeneratedProgramUserData->pReflectivityMap					= pProgram->GetUniform(Material::ReflectivityMap);
@@ -244,20 +218,29 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 			pGeneratedProgramUserData->pHeightMap						= pProgram->GetUniform(Material::HeightMap);
 			pGeneratedProgramUserData->pParallaxScaleBias				= pProgram->GetUniform(ParallaxScaleBias);
 			pGeneratedProgramUserData->pLightDirection					= pProgram->GetUniform(LightDirection);
+			pGeneratedProgramUserData->pLightPosition					= pProgram->GetUniform(LightPosition);
+			pGeneratedProgramUserData->pLightRadius						= pProgram->GetUniform(LightRadius);
+			pGeneratedProgramUserData->pProjectivePointCubeMap			= pProgram->GetUniform(ProjectivePointCubeMap);
+			pGeneratedProgramUserData->pViewSpaceToCubeMapSpace			= pProgram->GetUniform(ViewSpaceToCubeMapSpace);
+			pGeneratedProgramUserData->pProjectiveSpotMap				= pProgram->GetUniform(ProjectiveSpotMap);
+			pGeneratedProgramUserData->pViewSpaceToSpotMapSpace			= pProgram->GetUniform(ViewSpaceToSpotMapSpace);
+			pGeneratedProgramUserData->pSpotConeCos						= pProgram->GetUniform(SpotConeCos);
+			pGeneratedProgramUserData->pShadowMap						= pProgram->GetUniform(ShadowMap);
+			pGeneratedProgramUserData->pViewSpaceToShadowMapSpace		= pProgram->GetUniform(ViewSpaceToShadowMapSpace);
+			pGeneratedProgramUserData->pViewSpaceToShadowCubeMapSpace	= pProgram->GetUniform(ViewSpaceToShadowCubeMapSpace);
+			pGeneratedProgramUserData->pInvLightRadius					= pProgram->GetUniform(InvLightRadius);
+			pGeneratedProgramUserData->pTexelSize						= pProgram->GetUniform(TexelSize);
 			pGeneratedProgramUserData->pLightColor						= pProgram->GetUniform(LightColor);
 			pGeneratedProgramUserData->pSpecularColor					= pProgram->GetUniform(SpecularColor);
 			pGeneratedProgramUserData->pSpecularExponent				= pProgram->GetUniform(SpecularExponent);
 			pGeneratedProgramUserData->pSpecularMap						= pProgram->GetUniform(Material::SpecularMap);
 			pGeneratedProgramUserData->pSpecularRampMap					= pProgram->GetUniform(SpecularRampMap);
 			pGeneratedProgramUserData->pEdgeRampMap						= pProgram->GetUniform(EdgeRampMap);
-			pGeneratedProgramUserData->pGlow							= pProgram->GetUniform(Glow);
-			pGeneratedProgramUserData->pGlowMap							= pProgram->GetUniform(GlowMap);
-			pGeneratedProgramUserData->pDOFParams						= pProgram->GetUniform(DOFParams);
 		}
 
 		// Diffuse color
 		if (pGeneratedProgramUserData->pDiffuseColor)
-			pGeneratedProgramUserData->pDiffuseColor->Set(m_cDiffuseColor.r, m_cDiffuseColor.g, m_cDiffuseColor.b, m_fOpacity);
+			pGeneratedProgramUserData->pDiffuseColor->Set(m_cDiffuseColor.r*fLightingIntensity, m_cDiffuseColor.g*fLightingIntensity, m_cDiffuseColor.b*fLightingIntensity);
 
 		// Diffuse map
 		if (pGeneratedProgramUserData->pDiffuseMap) {
@@ -283,51 +266,6 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
-			}
-		}
-
-		// Ambient occlusion map
-		if (pGeneratedProgramUserData->pAmbientOcclusionMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pAmbientOcclusionMap->Set(m_pAmbientOcclusionMap);
-			if (nTextureUnit >= 0) {
-				// Setup sampler states
-				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
-				SetupTextureFiltering(cRenderer, nTextureUnit, nTextureFiltering);
-
-				// Set ambient occlusion factor
-				if (pGeneratedProgramUserData->pAmbientOcclusionFactor)
-					pGeneratedProgramUserData->pAmbientOcclusionFactor->Set(m_fAmbientOcclusionFactor);
-			}
-		}
-
-		// Light map
-		if (pGeneratedProgramUserData->pLightMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pLightMap->Set(m_pLightMap);
-			if (nTextureUnit >= 0) {
-				// Setup sampler states
-				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
-				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
-				SetupTextureFiltering(cRenderer, nTextureUnit, nTextureFiltering);
-
-				// Set light map color
-				if (pGeneratedProgramUserData->pLightMapColor)
-					pGeneratedProgramUserData->pLightMapColor->Set3(m_cLightMapColor);
-			}
-		}
-
-		// Emissive map
-		if (pGeneratedProgramUserData->pEmissiveMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pEmissiveMap->Set(m_pEmissiveMap);
-			if (nTextureUnit >= 0) {
-				// Setup sampler states
-				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-				SetupTextureFiltering(cRenderer, nTextureUnit, nTextureFiltering);
-
-				// Set emissive color
-				if (pGeneratedProgramUserData->pEmissiveMapColor)
-					pGeneratedProgramUserData->pEmissiveMapColor->Set3(m_cEmissiveMapColor);
 			}
 		}
 
@@ -415,9 +353,8 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 			}
 		}
 
-		// Parallax mapping
+		// Height map (for parallax mapping)
 		if (pGeneratedProgramUserData->pHeightMap) {
-			// Height map (for parallax mapping)
 			const int nTextureUnit = pGeneratedProgramUserData->pHeightMap->Set(m_pHeightMap);
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
@@ -474,43 +411,12 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
 			}
 		}
-
-		// Glow
-		if (m_cProgramFlags.GetFragmentShaderFlags() & FS_GLOW) {
-			// Set glow parameter - note, internally we flip the value because
-			// it's more handy because alpha is 1 by default = no glow
-			if (pGeneratedProgramUserData->pGlow)
-				pGeneratedProgramUserData->pGlow->Set(1.0f - m_fGlow);
-
-			// Set glow map
-			if (pGeneratedProgramUserData->pGlowMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pGlowMap->Set(m_pGlowMap);
-				if (nTextureUnit >= 0) {
-					// Setup sampler states
-					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
-					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
-					SetupTextureFiltering(cRenderer, nTextureUnit, nTextureFiltering);
-				}
-			}
-		}
-	}
-
-	// Transparent stuff only: Write into the alpha channel only for glowing stuff
-	if (m_nRendererFlags & SRPDirectionalLightingShaders::TransparentPass) {
-		// Setup color mask
-		cRenderer.SetColorMask(true, true, true, (m_cProgramFlags.GetFragmentShaderFlags() & FS_GLOW) != 0);
-
-		// Opacity
-		if (m_fOpacity < 1) {
-			cRenderer.SetRenderState(RenderState::SrcBlendFunc, m_nSrcBlendFunc);
-			cRenderer.SetRenderState(RenderState::DstBlendFunc, m_nDstBlendFunc);
-		}
 	}
 
 	// Two sided
 	if (m_bTwoSided) {
 		// We need to take care of two sided lighting
-		if (nEnvironmentFlags & EnvironmentVertexNormal) {
+		if (m_nEnvironmentFlags & EnvironmentVertexNormal) {
 			// Perform backface culling: For proper two sided lighting, we draw the
 			// geometry twice, the second time with flipped vertex normals
 			cRenderer.SetRenderState(RenderState::CullMode, Cull::CCW);
@@ -535,57 +441,50 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 *  @brief
 *    Synchronize this material cache with the owner
 */
-void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironmentFlags)
+void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironmentFlags)
 {
 	const Parameter *pParameter = nullptr;
 
 	// Backup the flags
-	m_nRendererFlags = nRendererFlags;
+	m_nRendererFlags    = nRendererFlags;
+	m_nEnvironmentFlags = nEnvironmentFlags;
 
 	// Reset the program flags
 	m_cProgramFlags.Reset();
 
-	{ // Glow
-		m_fGlow    = 0.0f;
-		m_pGlowMap = nullptr;
-		if (nEnvironmentFlags & EnvironmentGlowEnabled) {
-			pParameter = m_pMaterial->GetParameter(Glow);
-			if (pParameter) {
-				m_fGlow = pParameter->GetValue1f();
-
-				// Get glow map
-				if (m_fGlow) {
-					m_pGlowMap = (m_nRendererFlags & SRPDirectionalLightingShaders::NoGlowMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(GlowMap);
-					PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOW)
+	// Set fragment shader light properties
+	if (m_nEnvironmentFlags & EnvironmentDirectionalLight) {
+		PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIRECTIONAL)
+	} else {
+		if (m_nEnvironmentFlags & EnvironmentProjectivePointLight) {
+			PL_ADD_FS_FLAG(m_cProgramFlags, FS_PROJECTIVE_POINT)
+		} else {
+			if (m_nEnvironmentFlags & EnvironmentSpotLight) {
+				PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT)
+				if (m_nEnvironmentFlags & EnvironmentProjectiveSpotLight)
+					PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT_PROJECTIVE)
+				if (m_nEnvironmentFlags & EnvironmentSpotLightCone) {
+					PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT_CONE)
+					if (m_nEnvironmentFlags & EnvironmentSpotLightSmoothCone)
+						PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT_SMOOTHCONE)
 				}
 			}
 		}
 	}
 
-	{ // Opacity
-		const Parameter *pParameter = m_pMaterial->GetParameter(Opacity);
-		m_fOpacity      = pParameter ? pParameter->GetValue1f() : 1.0f;
-		m_nSrcBlendFunc = BlendFunc::SrcAlpha;
-		m_nDstBlendFunc = BlendFunc::InvSrcAlpha;
-		if (m_fOpacity < 1) {
-			// Get and set source blend function
-			pParameter = m_pMaterial->GetParameter(SrcBlendFunc);
-			if (pParameter) {
-				m_pRenderStates->SetAttribute(SrcBlendFunc, pParameter->GetParameterString());
-				m_nSrcBlendFunc = m_pRenderStates->Get(RenderState::SrcBlendFunc);
-			}
-
-			// Get and set destination blend function
-			pParameter = m_pMaterial->GetParameter(DstBlendFunc);
-			if (pParameter) {
-				m_pRenderStates->SetAttribute(DstBlendFunc, pParameter->GetParameterString());
-				m_nDstBlendFunc = m_pRenderStates->Get(RenderState::DstBlendFunc);
-			}
-		}
+	// Shadow mapping
+	if (m_nEnvironmentFlags & EnvironmentShadow) {
+		PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHADOWMAPPING)
+		if (!(m_nRendererFlags & SRPLighting::NoSoftShadow))
+			PL_ADD_FS_FLAG(m_cProgramFlags, FS_SOFTSHADOWMAPPING)
 	}
 
+	// Discard
+	if (!(m_nRendererFlags & SRPLighting::NoDiscard))
+		PL_ADD_FS_FLAG(m_cProgramFlags, FS_DISCARD)
+
 	// Normal
-	if (nEnvironmentFlags & EnvironmentVertexNormal) {
+	if (m_nEnvironmentFlags & EnvironmentVertexNormal) {
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_NORMAL)
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMAL)
 	}
@@ -595,7 +494,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 		m_bTwoSided = (pParameter && pParameter->GetValue1f() == 1.0f);
 		if (m_bTwoSided) {
 			// We need to take care of two sided lighting
-			if (nEnvironmentFlags & EnvironmentVertexNormal) {
+			if (m_nEnvironmentFlags & EnvironmentVertexNormal) {
 				// Perform backface culling: For proper two sided lighting, we draw the
 				// geometry twice, the second time with flipped vertex normals
 				PL_ADD_VS_FLAG(m_cProgramFlags, VS_TWOSIDEDLIGHTING)
@@ -604,7 +503,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 	}
 
 	// Use gamma correction?
-	if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoGammaCorrection))
+	if (!(m_nRendererFlags & SRPLighting::NoGammaCorrection))
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_GAMMACORRECTION)
 
 	{ // Diffuse map and alpha reference
@@ -613,7 +512,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 		if (pParameter)
 			pParameter->GetValue3f(m_cDiffuseColor.r, m_cDiffuseColor.g, m_cDiffuseColor.b);
 		m_fAlphaReference = 0.0f;
-		m_pDiffuseMap     = (!(nEnvironmentFlags & EnvironmentVertexTexCoord0) || (m_nRendererFlags & SRPDirectionalLightingShaders::NoDiffuseMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+		m_pDiffuseMap     = (!(m_nEnvironmentFlags & EnvironmentVertexTexCoord0) || (m_nRendererFlags & SRPLighting::NoDiffuseMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
 		if (m_pDiffuseMap) {
 			PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
@@ -622,77 +521,22 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 			if (m_pDiffuseMap->GetComponentsPerPixel() == 4) {
 				pParameter = m_pMaterial->GetParameter(AlphaReference);
 				m_fAlphaReference = pParameter ? pParameter->GetValue1f() : 0.5f;
-				if (m_fAlphaReference != 0.0f) {
+				if (m_fAlphaReference != 0.0f)
 					PL_ADD_FS_FLAG(m_cProgramFlags, FS_ALPHATEST)
-
-					// We need to take care of glow even if this material currently does not glow
-					if ((nEnvironmentFlags & EnvironmentGlowEnabled) && ((nEnvironmentFlags & EnvironmentDOFEnabled) || (nEnvironmentFlags & EnvironmentGlowEnabled)))
-						PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOW)
-				}
 			}
 		}
 	}
 
 	{ // Diffuse ramp map
-		m_pDiffuseRampMap = (!(nEnvironmentFlags & EnvironmentLightingEnabled) || (m_nRendererFlags & SRPDirectionalLightingShaders::NoDiffuseRampMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DiffuseRampMap);
+		m_pDiffuseRampMap = (m_nRendererFlags & SRPLighting::NoDiffuseRampMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DiffuseRampMap);
 		if (m_pDiffuseRampMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSERAMPMAP)
-	}
-
-	{ // Ambient map and light map require texture coordinate set 1
-		m_fAmbientOcclusionFactor = 1.0f;
-		m_pAmbientOcclusionMap	  = nullptr;
-		m_cLightMapColor		  = Color3::White;
-		m_pLightMap				  = nullptr;
-		if (nEnvironmentFlags & EnvironmentVertexTexCoord1) {
-			// Get ambient occlusion map
-			if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoAmbientOcclusionMap)) {
-				m_pAmbientOcclusionMap = m_pMaterial->GetParameterTextureBuffer(Material::AmbientOcclusionMap);
-				if (m_pAmbientOcclusionMap) {
-					PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD1)
-					PL_ADD_FS_FLAG(m_cProgramFlags, FS_AMBIENTOCCLUSIONMAP)
-
-					// Get ambient occlusion factor
-					pParameter = m_pMaterial->GetParameter(AmbientOcclusionFactor);
-					if (pParameter)
-						pParameter->GetValue1f(m_fAmbientOcclusionFactor);
-				}
-			}
-
-			// Get light map
-			if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoLightMap)) {
-				m_pLightMap = m_pMaterial->GetParameterTextureBuffer(Material::LightMap);
-				if (m_pLightMap) {
-					PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD1)
-					PL_ADD_FS_FLAG(m_cProgramFlags, FS_LIGHTMAP)
-
-					// Get light map color
-					pParameter = m_pMaterial->GetParameter(LightMapColor);
-					if (pParameter)
-						pParameter->GetValue3f(m_cLightMapColor.r, m_cLightMapColor.g, m_cLightMapColor.b);
-				}
-			}
-		}
-	}
-
-	{ // Emissive map
-		m_cEmissiveMapColor	= Color3::White;
-		m_pEmissiveMap		= (!(nEnvironmentFlags & EnvironmentVertexTexCoord0) || (m_nRendererFlags & SRPDirectionalLightingShaders::NoEmissiveMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
-		if (m_pEmissiveMap) {
-			PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
-			PL_ADD_FS_FLAG(m_cProgramFlags, FS_EMISSIVEMAP)
-
-			// Get emissive map color
-			pParameter = m_pMaterial->GetParameter(EmissiveMapColor);
-			if (pParameter)
-				pParameter->GetValue3f(m_cEmissiveMapColor.r, m_cEmissiveMapColor.g, m_cEmissiveMapColor.b);
-		}
 	}
 
 	{ // Index of refraction and fresnel reflection power
 		m_fIndexOfRefraction      = 0.0f;
 		m_fFresnelReflectionPower = 5.0f;
-		if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoFresnelReflection)) {
+		if (!(m_nRendererFlags & SRPLighting::NoFresnelReflection)) {
 			// IndexOfRefraction
 			pParameter = m_pMaterial->GetParameter(IndexOfRefraction);
 			if (pParameter)
@@ -712,7 +556,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 	}
 
 	{ // (2D/cube) reflection map
-		m_pReflectionMap   = (m_nRendererFlags & SRPDirectionalLightingShaders::NoReflectionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
+		m_pReflectionMap   = (m_nRendererFlags & SRPLighting::NoReflectionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
 		m_b2DReflectionMap = true;
 		if (m_pReflectionMap) {
 			if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D) {
@@ -735,7 +579,6 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 		m_fReflectivity    = 1.0f;
 		m_cReflectionColor = Color3::White;
 		if (m_bReflection) {
-			PL_ADD_VS_FLAG(m_cProgramFlags, VS_VIEWSPACEPOSITION)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTION)
 			if (m_fIndexOfRefraction > 0.0f)
 				PL_ADD_FS_FLAG(m_cProgramFlags, FS_FRESNELREFLECTION)
@@ -746,7 +589,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 				m_cReflectionColor = pParameter->GetValue3fv();
 
 			// Get reflectivity map
-			if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoReflectivityMap)) {
+			if (!(m_nRendererFlags & SRPLighting::NoReflectivityMap)) {
 				m_pReflectivityMap = m_pMaterial->GetParameterTextureBuffer(Material::ReflectivityMap);
 				if (m_pReflectivityMap)
 					PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTIVITYMAP)
@@ -760,7 +603,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 	}
 
 	{ // Normal map
-		m_pNormalMap		  = (!(nEnvironmentFlags & EnvironmentNormalMappingPossible) || (m_nRendererFlags & SRPDirectionalLightingShaders::NoNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::NormalMap);
+		m_pNormalMap          = (!(m_nEnvironmentFlags & EnvironmentNormalMappingPossible) || (m_nRendererFlags & SRPLighting::NoNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::NormalMap);
 		m_fNormalMapBumpiness = 1.0f;
 		if (m_pNormalMap) {
 			// Get normal map bumpiness
@@ -792,7 +635,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 	}
 
 	{ // Detail normal map
-		m_pDetailNormalMap          = (!m_pNormalMap || (m_nRendererFlags & SRPDirectionalLightingShaders::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DetailNormalMap);
+		m_pDetailNormalMap          = (!m_pNormalMap || (m_nRendererFlags & SRPLighting::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DetailNormalMap);
 		m_fDetailNormalMapBumpiness = 1.0f;
 		m_vDetailNormalMapUVScale.SetXY(4.0f, 4.0f);
 		if (m_pDetailNormalMap) {
@@ -829,7 +672,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 	{ // Parallax mapping settings
 		m_fParallax  = 0.04f;
 		m_pHeightMap = nullptr;
-		if (m_pNormalMap && !(m_nRendererFlags & SRPDirectionalLightingShaders::NoParallaxMapping)) {
+		if (m_pNormalMap && !(m_nRendererFlags & SRPLighting::NoParallaxMapping)) {
 			// Get parallax
 			pParameter = m_pMaterial->GetParameter(Parallax);
 			if (pParameter)
@@ -847,70 +690,48 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 		}
 	}
 
-	{ // Lighting and specular
+	{ // Specular
 		m_cSpecularColor    = Color3::White;
 		m_pSpecularMap      = nullptr;
 		m_fSpecularExponent = 45.0f;
-		if (nEnvironmentFlags & EnvironmentLightingEnabled) {
-			PL_ADD_VS_FLAG(m_cProgramFlags, VS_VIEWSPACEPOSITION)
-			PL_ADD_FS_FLAG(m_cProgramFlags, FS_LIGHTING)
+		if (!(m_nRendererFlags & SRPLighting::NoSpecular)) {
+			// First, get specular color - if it's 0, we don't have any specular at all
+			pParameter = m_pMaterial->GetParameter(SpecularColor);
+			if (pParameter)
+				m_cSpecularColor = pParameter->GetValue3fv();
+			if (m_cSpecularColor != 0.0f) {
+				PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULAR)
 
-			// Specular
-			if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoSpecular)) {
-				// First, get specular color - if it's 0, we don't have any specular at all
-				pParameter = m_pMaterial->GetParameter(SpecularColor);
+				// Get specular exponent
+				pParameter = m_pMaterial->GetParameter(SpecularExponent);
 				if (pParameter)
-					m_cSpecularColor = pParameter->GetValue3fv();
-				if (m_cSpecularColor != 0.0f) {
-					PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULAR)
+					pParameter->GetValue1f(m_fSpecularExponent);
 
-					// Get specular exponent
-					pParameter = m_pMaterial->GetParameter(SpecularExponent);
-					if (pParameter)
-						pParameter->GetValue1f(m_fSpecularExponent);
-
-					// Get the specular map
-					if (!(m_nRendererFlags & SRPDirectionalLightingShaders::NoSpecularMap)) {
-						m_pSpecularMap = m_pMaterial->GetParameterTextureBuffer(Material::SpecularMap);
-						if (m_pSpecularMap)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARMAP)
-					}
+				// Get the specular map
+				if (!(m_nRendererFlags & SRPLighting::NoSpecularMap)) {
+					m_pSpecularMap = m_pMaterial->GetParameterTextureBuffer(Material::SpecularMap);
+					if (m_pSpecularMap)
+						PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARMAP)
 				}
 			}
 		}
 	}
 
 	{ // Specular ramp map
-		m_pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (m_nRendererFlags & SRPDirectionalLightingShaders::NoSpecularRampMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(SpecularRampMap);
+		m_pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (m_nRendererFlags & SRPLighting::NoSpecularRampMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(SpecularRampMap);
 		if (m_pSpecularRampMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARRAMPMAP)
 	}
 
 	{ // Edge ramp map
-		m_pEdgeRampMap = (!(nEnvironmentFlags & EnvironmentLightingEnabled) || (m_nRendererFlags & SRPDirectionalLightingShaders::NoEdgeRampMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(EdgeRampMap);
+		m_pEdgeRampMap = (m_nRendererFlags & SRPLighting::NoEdgeRampMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(EdgeRampMap);
 		if (m_pEdgeRampMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_EDGERAMPMAP)
-	}
-
-	// Glow or DOF - or nothing of both?
-	if (m_cProgramFlags.GetFragmentShaderFlags() & FS_GLOW) {
-		if (m_pGlowMap) {
-			PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
-			PL_ADD_FS_FLAG(m_cProgramFlags, FS_GLOWMAP)
-		}
-	} else {
-		// Use DOF?
-		if (nEnvironmentFlags & EnvironmentDOFEnabled) {
-			PL_ADD_VS_FLAG(m_cProgramFlags, VS_VIEWSPACEPOSITION)
-			PL_ADD_FS_FLAG(m_cProgramFlags, FS_DOF)
-		}
 	}
 
 	// Fragment shader needs texture coordinate flags, too
 	if (m_cProgramFlags.GetVertexShaderFlags() & VS_TEXCOORD0)
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_TEXCOORD0)
-	if (m_cProgramFlags.GetVertexShaderFlags() & VS_TEXCOORD1)
-		PL_ADD_FS_FLAG(m_cProgramFlags, FS_TEXCOORD1)
 
 	// Synchronized!
 	m_bSynchronized = true;
@@ -920,7 +741,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 *  @brief
 *    Sets correct texture filtering modes
 */
-void SRPDirectionalLightingShadersMaterial::SetupTextureFiltering(Renderer &cRenderer, uint32 nStage, ETextureFiltering nTextureFiltering) const
+void SRPLightingMaterial::SetupTextureFiltering(Renderer &cRenderer, uint32 nStage, ETextureFiltering nTextureFiltering) const
 {
 	// Anisotropic filtering
 	if (nTextureFiltering > 1) {

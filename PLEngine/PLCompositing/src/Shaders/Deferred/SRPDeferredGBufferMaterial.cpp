@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <float.h>
-#include <PLMath/Matrix3x3.h>
 #include <PLRenderer/Material/Material.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLRenderer/Texture/TextureManager.h>
@@ -33,7 +32,6 @@
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
-#include <PLScene/Scene/SNCamera.h>
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBufferMaterial.h"
 
@@ -115,7 +113,8 @@ SRPDeferredGBufferMaterial::SRPDeferredGBufferMaterial(Material &cMaterial, Prog
 	// General
 	m_pMaterial(&cMaterial),
 	m_pProgramGenerator(&cProgramGenerator),
-	m_nFlags(0),
+	m_nRendererFlags(0),
+	m_bSynchronized(false),	// [TODO] Invalidate if materal has been changed!
 	// Synchronized data
 		// Two sided
 	m_bTwoSided(false),
@@ -185,14 +184,15 @@ SRPDeferredGBufferMaterial::~SRPDeferredGBufferMaterial()
 *  @brief
 *    Makes this material to the currently used one
 */
-SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial::MakeMaterialCurrent(uint32 nFlags, ETextureFiltering nTextureFiltering, bool &bColorTarget3Used, bool &bColorTarget3AlphaUsed)
+SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial::MakeMaterialCurrent(uint32 nRendererFlags, ETextureFiltering nTextureFiltering, bool &bColorTarget3Used, bool &bColorTarget3AlphaUsed)
 {
 	// Get the used renderer
 	Renderer &cRenderer = m_pProgramGenerator->GetRenderer();
 
 	// [TODO] Do this only when there's a change within the material!
 	// Synchronize this material cache with the owner
-	Synchronize(nFlags);
+//	if (m_nRendererFlags != nRendererFlags || !m_bSynchronized)
+		Synchronize(nRendererFlags);
 
 	// Get a program instance from the program generator using the given program flags
 	ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
@@ -466,17 +466,6 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 					}
 					SetupTextureFiltering(cRenderer, nTextureUnit, nTextureFiltering);
 				}
-
-				// Set the "ViewSpaceToWorldSpace" fragment shader parameter
-				if (pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
-					// [TODO] Add *SNCamera::GetInvViewMatrix()?
-					Matrix3x3 mRot;
-					if (SNCamera::GetCamera())
-						mRot = SNCamera::GetCamera()->GetViewMatrix().GetInverted();
-					else
-						mRot = Matrix3x3::Identity;
-					pGeneratedProgramUserData->pViewSpaceToWorldSpace->Set(mRot);
-				}
 			}
 		}
 	}
@@ -493,12 +482,12 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 *  @brief
 *    Synchronize this material cache with the owner
 */
-void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
+void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 {
 	const Parameter *pParameter = nullptr;
 
 	// Backup the flags
-	m_nFlags = nFlags;
+	m_nRendererFlags = nRendererFlags;
 
 	{ // Two sided
 		pParameter = m_pMaterial->GetParameter(TwoSided);
@@ -509,7 +498,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		m_fDisplacementScale = 0.1f;
 		m_fDisplacementBias  = 0.0f;
 		m_pDisplacementMap   = nullptr;
-		if (!(m_nFlags & SRPDeferredGBuffer::NoDisplacementMapping)) {
+		if (!(m_nRendererFlags & SRPDeferredGBuffer::NoDisplacementMapping)) {
 			// Get displacement scale
 			pParameter = m_pMaterial->GetParameter(DisplacementScale);
 			if (pParameter)
@@ -532,7 +521,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 	{ // Index of refraction and fresnel reflection power
 		m_fIndexOfRefraction      = 0.0f;
 		m_fFresnelReflectionPower = 5.0f;
-		if (!(m_nFlags & SRPDeferredGBuffer::NoFresnelReflection)) {
+		if (!(m_nRendererFlags & SRPDeferredGBuffer::NoFresnelReflection)) {
 			// IndexOfRefraction
 			pParameter = m_pMaterial->GetParameter(IndexOfRefraction);
 			if (pParameter)
@@ -552,7 +541,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 	}
 
 	{ // (2D/cube) reflection map
-		m_pReflectionMap   = (m_nFlags & SRPDeferredGBuffer::NoReflectionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
+		m_pReflectionMap   = (m_nRendererFlags & SRPDeferredGBuffer::NoReflectionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
 		m_b2DReflectionMap = true;
 		if (m_pReflectionMap) {
 			if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D)
@@ -579,7 +568,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 				m_cReflectionColor = pParameter->GetValue3fv();
 
 			// Get reflectivity map
-			if (!(m_nFlags & SRPDeferredGBuffer::NoReflectivityMap))
+			if (!(m_nRendererFlags & SRPDeferredGBuffer::NoReflectivityMap))
 				m_pReflectivityMap = m_pMaterial->GetParameterTextureBuffer(Material::ReflectivityMap);
 
 			// Get reflectivity 
@@ -592,7 +581,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 	{ // Parallax mapping settings
 		m_fParallax  = 0.04f;
 		m_pHeightMap = nullptr;
-		if (!(m_nFlags & SRPDeferredGBuffer::NoParallaxMapping)) {
+		if (!(m_nRendererFlags & SRPDeferredGBuffer::NoParallaxMapping)) {
 			// Get parallax
 			pParameter = m_pMaterial->GetParameter(Parallax);
 			if (pParameter)
@@ -610,15 +599,14 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 	{ // Glow
 		m_fGlowFactor = 0.0f;
 		m_pGlowMap    = nullptr;
-		if (!(m_nFlags & SRPDeferredGBuffer::NoGlow)) {
+		if (!(m_nRendererFlags & SRPDeferredGBuffer::NoGlow)) {
 			pParameter = m_pMaterial->GetParameter(Glow);
 			if (pParameter) {
 				m_fGlowFactor = pParameter->GetValue1f();
 
 				// Get glow map
-				if (m_fGlowFactor != 0.0f) {
-					m_pGlowMap = (m_nFlags & SRPDeferredGBuffer::NoGlowMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(GlowMap);
-				}
+				if (m_fGlowFactor != 0.0f)
+					m_pGlowMap = (m_nRendererFlags & SRPDeferredGBuffer::NoGlowMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(GlowMap);
 			}
 		}
 	}
@@ -628,7 +616,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		pParameter = m_pMaterial->GetParameter(AmbientOcclusionFactor);
 		if (pParameter)
 			pParameter->GetValue1f(m_fAmbientOcclusionFactor);
-		m_pAmbientOcclusionMap = (m_nFlags & SRPDeferredGBuffer::NoAmbientOcclusionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::AmbientOcclusionMap);
+		m_pAmbientOcclusionMap = (m_nRendererFlags & SRPDeferredGBuffer::NoAmbientOcclusionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::AmbientOcclusionMap);
 	}
 
 	{ // Diffuse map and alpha reference
@@ -637,7 +625,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		if (pParameter)
 			pParameter->GetValue3f(m_cDiffuseColor.r, m_cDiffuseColor.g, m_cDiffuseColor.b);
 		m_fAlphaReference = 0.0f;
-		m_pDiffuseMap     = (m_nFlags & SRPDeferredGBuffer::NoDiffuseMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+		m_pDiffuseMap     = (m_nRendererFlags & SRPDeferredGBuffer::NoDiffuseMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
 
 		// Enable/disable alpha test (fragments are thrown away inside the fragment shader using the 'discard' keyword)
 		if (m_pDiffuseMap && m_pDiffuseMap->GetComponentsPerPixel() == 4) {
@@ -652,7 +640,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		m_cSpecularColor	= Color3::White;
 		m_pSpecularMap		= nullptr;
 		m_fSpecularExponent = 45.0f;
-		if (!(m_nFlags & SRPDeferredGBuffer::NoSpecular)) {
+		if (!(m_nRendererFlags & SRPDeferredGBuffer::NoSpecular)) {
 			// First, get specular color - if it's 0, we don't have any specular at all
 			pParameter = m_pMaterial->GetParameter(SpecularColor);
 			if (pParameter)
@@ -661,7 +649,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		}
 		if (m_bSpecular) {
 			// Get the specular map
-			if (!(m_nFlags & SRPDeferredGBuffer::NoSpecularMap))
+			if (!(m_nRendererFlags & SRPDeferredGBuffer::NoSpecularMap))
 				m_pSpecularMap = m_pMaterial->GetParameterTextureBuffer(Material::SpecularMap);
 
 			// Get specular exponent
@@ -672,7 +660,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 	}
 
 	{ // Normal map
-		m_pNormalMap           = (m_nFlags & SRPDeferredGBuffer::NoNormalMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::NormalMap);
+		m_pNormalMap           = (m_nRendererFlags & SRPDeferredGBuffer::NoNormalMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::NormalMap);
 		m_fNormalMapBumpiness  = 1.0f;
 		m_bNormalMap_DXT5_xGxR = false;
 		m_bNormalMap_LATC2     = false;
@@ -701,7 +689,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 	}
 
 	{ // Detail normal map
-		m_pDetailNormalMap			 = (!m_pNormalMap || (m_nFlags & SRPDeferredGBuffer::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DetailNormalMap);
+		m_pDetailNormalMap			 = (!m_pNormalMap || (m_nRendererFlags & SRPDeferredGBuffer::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DetailNormalMap);
 		m_fDetailNormalMapBumpiness  = 1.0f;
 		m_vDetailNormalMapUVScale.SetXY(4.0f, 4.0f);
 		m_bDetailNormalMap_DXT5_xGxR = false;
@@ -740,7 +728,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		pParameter = m_pMaterial->GetParameter(LightMapColor);
 		if (pParameter)
 			pParameter->GetValue3f(m_cLightMapColor.r, m_cLightMapColor.g, m_cLightMapColor.b);
-		m_pLightMap = (m_nFlags & SRPDeferredGBuffer::NoLightMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::LightMap);
+		m_pLightMap = (m_nRendererFlags & SRPDeferredGBuffer::NoLightMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::LightMap);
 	}
 
 	{ // Emissive map
@@ -748,7 +736,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 		pParameter = m_pMaterial->GetParameter(EmissiveMapColor);
 		if (pParameter)
 			pParameter->GetValue3f(m_cEmissiveMapColor.r, m_cEmissiveMapColor.g, m_cEmissiveMapColor.b);
-		m_pEmissiveMap = (m_nFlags & SRPDeferredGBuffer::NoEmissiveMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
+		m_pEmissiveMap = (m_nRendererFlags & SRPDeferredGBuffer::NoEmissiveMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
 	}
 
 	// Reset the program flags
@@ -816,8 +804,11 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nFlags)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
 	}
 	// Use gamma correction?
-	if (!(m_nFlags & SRPDeferredGBuffer::NoGammaCorrection))
+	if (!(m_nRendererFlags & SRPDeferredGBuffer::NoGammaCorrection))
 		PL_ADD_FS_FLAG(m_cProgramFlags, FS_GAMMACORRECTION)
+
+	// Synchronized!
+	m_bSynchronized = true;
 }
 
 /**

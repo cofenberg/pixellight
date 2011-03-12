@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Matrix3x3.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
@@ -38,7 +39,7 @@
 #include <PLMesh/Mesh.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
-#include <PLScene/Scene/SceneNode.h>
+#include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
@@ -94,6 +95,15 @@ SRPDeferredGBuffer::SRPDeferredGBuffer() :
 */
 SRPDeferredGBuffer::~SRPDeferredGBuffer()
 {
+	/*
+	// [TODO] Just a first quick and dirty material cache experiment
+	{ // SRPDeferredGBuffer-material cache cleanup
+		Iterator<SRPDeferredGBufferMaterial*> lstIterator = m_lstMaterialCache.GetIterator();
+		while (lstIterator.HasNext())
+			delete lstIterator.Next();
+		m_lstMaterialCache.Clear();
+	}*/
+
 	// Destroy the render target of the GBuffer
 	if (m_pRenderTarget)
 		delete m_pRenderTarget;
@@ -312,6 +322,17 @@ void SRPDeferredGBuffer::DrawMeshBatch(Renderer &cRenderer, SRPDeferredGBufferMa
 		// Set object space eye position
 		if (cGeneratedProgramUserData.pEyePos)
 			cGeneratedProgramUserData.pEyePos->Set(pVisNode->GetInverseWorldMatrix()*(cMeshBatch.pCullQuery->GetVisContainer().GetWorldMatrix()*cMeshBatch.pCullQuery->GetCameraPosition()));
+
+		// Set the "ViewSpaceToWorldSpace" fragment shader parameter
+		if (cGeneratedProgramUserData.pViewSpaceToWorldSpace) {
+			// [TODO] Add *SNCamera::GetInvViewMatrix()?
+			Matrix3x3 mRot;
+			if (SNCamera::GetCamera())
+				mRot = SNCamera::GetCamera()->GetViewMatrix().GetInverted();
+			else
+				mRot = Matrix3x3::Identity;
+			cGeneratedProgramUserData.pViewSpaceToWorldSpace->Set(mRot);
+		}
 	}
 
 	// Bind index buffer
@@ -505,11 +526,19 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Get the current material
 					Material *pMaterial = cMaterialIterator.Next();
 
+					// SRPDeferredGBuffer-material caching!
+					// [TODO] Just a first quick and dirty material cache experiment
+					/*
+					SRPDeferredGBufferMaterial *pSRPDeferredGBufferMaterial = m_lstMaterialCache.Get(reinterpret_cast<uint64>(pMaterial));
+					if (!pSRPDeferredGBufferMaterial) {
+						pSRPDeferredGBufferMaterial = new SRPDeferredGBufferMaterial(*pMaterial, *m_pProgramGenerator);
+						m_lstMaterialCache.Add(reinterpret_cast<uint64>(pMaterial), pSRPDeferredGBufferMaterial);
+					}*/
+					SRPDeferredGBufferMaterial cSRPDeferredGBufferMaterial(*pMaterial, *m_pProgramGenerator);
+					SRPDeferredGBufferMaterial *pSRPDeferredGBufferMaterial = &cSRPDeferredGBufferMaterial;
+
 					// Make the material to the currently used one
-					// [TODO] Add SRPDeferredGBuffer-material caching!
-					SRPDeferredGBufferMaterial cSRPDeferredGBufferM(*pMaterial, *m_pProgramGenerator);
-					SRPDeferredGBufferMaterial *pSRPDeferredGBufferM = &cSRPDeferredGBufferM;
-					SRPDeferredGBufferMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = pSRPDeferredGBufferM->MakeMaterialCurrent(GetFlags(), TextureFiltering, m_bColorTarget3Used, m_bColorTarget3AlphaUsed);
+					SRPDeferredGBufferMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = pSRPDeferredGBufferMaterial->MakeMaterialCurrent(GetFlags(), TextureFiltering, m_bColorTarget3Used, m_bColorTarget3AlphaUsed);
 					if (pGeneratedProgramUserData) {
 						// Draw all mesh batches using this material
 						Iterator<MeshBatch*> cMeshBatchIterator = m_lstMeshBatches.GetIterator();

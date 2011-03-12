@@ -50,6 +50,7 @@
 #include <PLScene/Visibility/VisContainer.h>
 #include "PLCompositing/Shaders/ShadowMapping/SRPShadowMapping.h"
 #include "PLCompositing/Shaders/General/SRPDirectionalLightingShaders.h"
+#include "PLCompositing/Shaders/General/SRPLightingMaterial.h"
 #include "PLCompositing/Shaders/General/SRPLighting.h"
 
 
@@ -83,8 +84,8 @@ SRPLighting::SRPLighting() :
 	ShaderLanguage(this),
 	LightingIntensity(this),
 	Flags(this),
-	m_pProgramGenerator(nullptr),
-	m_pIgnoredLight(nullptr)
+	m_pIgnoredLight(nullptr),
+	m_pProgramGenerator(nullptr)
 {
 }
 
@@ -383,6 +384,17 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 
 	// Shadow mapping?
 	const bool bShadow = (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pSRPShadowMapping && (pSRPShadowMapping->GetCubeShadowRenderTarget() || pSRPShadowMapping->GetSpotShadowRenderTarget()));
+	TextureBuffer *pShadowMap = nullptr;
+	if (bShadow) {
+		// Get the shadow map
+		if (bSpot) {
+			if (pSRPShadowMapping->GetSpotShadowRenderTarget())
+				pShadowMap = pSRPShadowMapping->GetSpotShadowRenderTarget()->GetTextureBuffer();
+		} else {
+			if (pSRPShadowMapping->GetCubeShadowRenderTarget())
+				pShadowMap = pSRPShadowMapping->GetCubeShadowRenderTarget()->GetTextureBuffer();
+		}
+	}
 
 	// Get scene container
 	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
@@ -406,10 +418,33 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 	// For better readability, define whether or not normal mapping is possible with the given vertex data
 	const bool bNormalMappingPossible = bHasVertexBinormal;	// We don't need to check for all three vectors in here :D
 
+	// [TODO] Cleanup
+	uint32 nEnvironmentFlags = 0;
+	if (bHasVertexNormal)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentVertexNormal;
+	if (bHasVertexTexCoord0)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentVertexTexCoord0;
+	if (bNormalMappingPossible)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentNormalMappingPossible;
+	if (bDirectional)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentDirectionalLight;
+	if (bProjectivePoint)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentProjectivePointLight;
+	if (bSpot)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentSpotLight;
+	if (bProjectiveSpot)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentProjectiveSpotLight;
+	if (bSpotCone)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentSpotLightCone;
+	if (bSpotSmoothCone)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentSpotLightSmoothCone;
+	if (pShadowMap)
+		nEnvironmentFlags |= SRPLightingMaterial::EnvironmentShadow;
+
 	// Draw mesh
 	for (uint32 nMat=0; nMat<cMeshHandler.GetNumOfMaterials(); nMat++) {
 		// Get mesh material
-		const Material *pMaterial = cMeshHandler.GetMaterial(nMat);
+		Material *pMaterial = cMeshHandler.GetMaterial(nMat);
 		if (pMaterial) {
 			// Draw geometries
 			bool bTwoSided = false;
@@ -421,553 +456,16 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 					static const String sOpacity = "Opacity";
 					const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
 					if (!pParameter || pParameter->GetValue1f() >= 1.0f) {
-						// Reset the program flags
-						m_cProgramFlags.Reset();
-
-						// Set fragment shader light properties
-						if (bDirectional) {
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIRECTIONAL)
-						} else {
-							if (bProjectivePoint) {
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_PROJECTIVE_POINT)
-							} else {
-								if (bSpot) {
-									PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT)
-									if (bProjectiveSpot)
-										PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT_PROJECTIVE)
-									if (bSpotCone) {
-										PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT_CONE)
-										if (bSpotSmoothCone)
-											PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPOT_SMOOTHCONE)
-									}
-								}
-							}
-						}
-
-						// Shadow mapping
-						TextureBuffer *pShadowMap = nullptr;
-						if (bShadow) {
-							// Get the shadow map
-							if (bSpot) {
-								if (pSRPShadowMapping->GetSpotShadowRenderTarget())
-									pShadowMap = pSRPShadowMapping->GetSpotShadowRenderTarget()->GetTextureBuffer();
-							} else {
-								if (pSRPShadowMapping->GetCubeShadowRenderTarget())
-									pShadowMap = pSRPShadowMapping->GetCubeShadowRenderTarget()->GetTextureBuffer();
-							}
-							if (pShadowMap) {
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHADOWMAPPING)
-								if (!(GetFlags() & NoSoftShadow))
-									PL_ADD_FS_FLAG(m_cProgramFlags, FS_SOFTSHADOWMAPPING)
-							}
-						}
-
-						// Discard
-						if (!(GetFlags() & NoDiscard))
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DISCARD)
-
-						// Normal
-						if (bHasVertexNormal) {
-							PL_ADD_VS_FLAG(m_cProgramFlags, VS_NORMAL)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMAL)
-						}
-
-						{ // Two sided
-							static const String sTwoSided = "TwoSided";
-							pParameter = pMaterial->GetParameter(sTwoSided);
-							bTwoSided = (pParameter && pParameter->GetValue1f() == 1.0f);
-							if (bTwoSided) {
-								// We need to take care of two sided lighting
-								if (bHasVertexNormal) {
-									// Perform backface culling: For proper two sided lighting, we draw the
-									// geometry twice, the second time with flipped vertex normals
-									PL_ADD_VS_FLAG(m_cProgramFlags, VS_TWOSIDEDLIGHTING)
-									cRenderer.SetRenderState(RenderState::CullMode, Cull::CCW);
-								} else {
-									// No lighting means that we can go the easy way: Just don't perform backface culling
-									cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
-								}
-							} else {
-								// Usual backface culling
-								cRenderer.SetRenderState(RenderState::CullMode, Cull::CCW);
-							}
-						}
-
-						// Use gamma correction?
-						if (!(GetFlags() & NoGammaCorrection))
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_GAMMACORRECTION)
-
-						// Diffuse map and alpha reference
-						float fAlphaReference = 0.0f;
-						TextureBuffer *pDiffuseMap = (!bHasVertexTexCoord0 || (GetFlags() & NoDiffuseMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
-						if (pDiffuseMap) {
-							PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
-
-							// Get alpha reference
-							if (pDiffuseMap->GetComponentsPerPixel() == 4) {
-								static const String sAlphaReference = "AlphaReference";
-								pParameter = pMaterial->GetParameter(sAlphaReference);
-								fAlphaReference = pParameter ? pParameter->GetValue1f() : 0.5f;
-								if (fAlphaReference != 0.0f)
-									PL_ADD_FS_FLAG(m_cProgramFlags, FS_ALPHATEST)
-							}
-						}
-
-						// Diffuse ramp map
-						static const String sDiffuseRampMap = "DiffuseRampMap";
-						TextureBuffer *pDiffuseRampMap = (GetFlags() & NoDiffuseRampMap) ? nullptr : pMaterial->GetParameterTextureBuffer(sDiffuseRampMap);
-						if (pDiffuseRampMap)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSERAMPMAP)
-
-						// Get index of refraction and fresnel reflection power
-						float fIndexOfRefraction      = 0.0f;
-						float fFresnelReflectionPower = 5.0f;
-						if (!(GetFlags() & NoFresnelReflection)) {
-							// IndexOfRefraction
-							static const String sIndexOfRefraction = "IndexOfRefraction";
-							pParameter = pMaterial->GetParameter(sIndexOfRefraction);
-							if (pParameter)
-								fIndexOfRefraction = pParameter->GetValue1f();
-							if (fIndexOfRefraction > 0.0f) {
-								// FresnelReflectionPower
-								static const String sFresnelReflectionPower = "FresnelReflectionPower";
-								pParameter = pMaterial->GetParameter(sFresnelReflectionPower);
-								if (pParameter) {
-									fFresnelReflectionPower = pParameter->GetValue1f();
-
-									// Ensure that the value is always >0 to avoid NAN production
-									if (fFresnelReflectionPower < FLT_MIN)
-										fFresnelReflectionPower = FLT_MIN;
-								}
-							}
-						}
-
-						// Get (2D/cube) reflection map
-						TextureBuffer *pReflectionMap = (GetFlags() & NoReflectionMap) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
-						bool b2DReflectionMap = true;
-						if (pReflectionMap) {
-							if (pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D) {
-								b2DReflectionMap = true;
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_2DREFLECTIONMAP)
-							} else if (pReflectionMap->GetType() == TextureBuffer::TypeTextureBufferCube) {
-								b2DReflectionMap = false;
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
-							} else
-								pReflectionMap   = nullptr; // NOT supported!
-						}
-
-						// Figure out whether or not there's reflection on this material
-						const bool bReflection = (fIndexOfRefraction > 0.0f) || pReflectionMap;
-
-						// Get reflection parameters
-						TextureBuffer *pReflectivityMap = nullptr;
-						float fReflectivity = 1.0f;
-						Color3 cReflectionColor = Color3::White;
-						static const String sReflectionColor = "ReflectionColor";
-						static const String sReflectivity = "Reflectivity";
-						if (bReflection) {
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTION)
-							if (fIndexOfRefraction > 0.0f)
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_FRESNELREFLECTION)
-
-							// ReflectionColor
-							pParameter = pMaterial->GetParameter(sReflectionColor);
-							if (pParameter)
-								cReflectionColor = pParameter->GetValue3fv();
-
-							// Get reflectivity map
-							if (!(GetFlags() & NoReflectivityMap)) {
-								pReflectivityMap = pMaterial->GetParameterTextureBuffer(Material::ReflectivityMap);
-								if (pReflectivityMap)
-									PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTIVITYMAP)
-							}
-
-							// Get reflectivity 
-							pParameter = pMaterial->GetParameter(sReflectivity);
-							if (pParameter)
-								fReflectivity = pParameter->GetValue1f();
-						}
-
-						// Get normal map
-						TextureBuffer *pNormalMap = (!bNormalMappingPossible || (GetFlags() & NoNormalMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(Material::NormalMap);
-						float fNormalMapBumpiness = 1.0f;
-						static const String sNormalMapBumpiness = "NormalMapBumpiness";
-						if (pNormalMap) {
-							// Get normal map bumpiness
-							const Parameter *pNormalMapParameter = pMaterial->GetParameter(sNormalMapBumpiness);
-							if (pNormalMapParameter)
-								fNormalMapBumpiness = pNormalMapParameter->GetValue1f();
-							if (fNormalMapBumpiness != 0.0f) {
-								PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
-								PL_ADD_VS_FLAG(m_cProgramFlags, VS_TANGENT_BINORMAL)
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_TANGENT_BINORMAL)
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP)
-
-								// DXT5 xGxR normal map?
-								pNormalMapParameter = pMaterial->GetParameter(Material::NormalMap);
-								if (pNormalMapParameter) {
-									const Texture *pNormalMapTexture = pNormalMapParameter->GetValueTexture();
-									if (pNormalMapTexture) {
-										if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
-											PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
-										else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
-											PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_LATC2)
-									}
-								}
-							} else {
-								// The normal map has no longer an influence!
-								pNormalMap = nullptr;
-							}
-						}
-
-						// Get detail normal map
-						static const String sDetailNormalMap = "DetailNormalMap";
-						TextureBuffer *pDetailNormalMap = (!pNormalMap || (GetFlags() & NoDetailNormalMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sDetailNormalMap);
-						float fDetailNormalMapBumpiness = 1.0f;
-						Vector2 vDetailNormalMapUVScale(4.0f, 4.0f);
-						static const String sDetailNormalMapBumpiness = "DetailNormalMapBumpiness";
-						static const String sDetailNormalMapUVScale   = "DetailNormalMapUVScale";
-						if (pDetailNormalMap) {
-							// Get detail normal map bumpiness
-							const Parameter *pDetailNormalMapParameter = pMaterial->GetParameter(sDetailNormalMapBumpiness);
-							if (pDetailNormalMapParameter)
-								fDetailNormalMapBumpiness = pDetailNormalMapParameter->GetValue1f();
-							if (fDetailNormalMapBumpiness != 0.0f) {
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP)
-
-								// Get detail normal map uv scale
-								pDetailNormalMapParameter = pMaterial->GetParameter(sDetailNormalMapUVScale);
-								if (pDetailNormalMapParameter)
-									vDetailNormalMapUVScale = pDetailNormalMapParameter->GetValue2fv();
-
-								// DXT5 xGxR detail normal map?
-								pDetailNormalMapParameter = pMaterial->GetParameter(sDetailNormalMap);
-								if (pDetailNormalMapParameter) {
-									const Texture *pDetailNormalMapTexture = pDetailNormalMapParameter->GetValueTexture();
-									if (pDetailNormalMapTexture) {
-										if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
-											PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
-										else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
-											PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_LATC2)
-									}
-								}
-							} else {
-								// The detail normal map has no longer an influence!
-								pDetailNormalMap = nullptr;
-							}
-						}
-
-						// Get parallax mapping settings
-						float fParallax = 0.04f;
-						TextureBuffer *pHeightMap = nullptr;
-						if (pNormalMap && !(GetFlags() & NoParallaxMapping)) {
-							// Get parallax
-							static const String sParallax = "Parallax";
-							pParameter = pMaterial->GetParameter(sParallax);
-							if (pParameter)
-								pParameter->GetValue1f(fParallax);
-
-							// Get height map
-							if (fParallax != 0.0f)
-								pHeightMap = pMaterial->GetParameterTextureBuffer(Material::HeightMap);
-
-							// No height map = no parallax mapping possible
-							if (pHeightMap) {
-								PL_ADD_VS_FLAG(m_cProgramFlags, VS_PARALLAXMAPPING)
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_PARALLAXMAPPING)
-							}
-						}
-
-						// Specular
-						static const String sSpecularColor    = "SpecularColor";
-						static const String sSpecularExponent = "SpecularExponent";
-						Color3 cSpecularColor = Color3::White;
-						TextureBuffer *pSpecularMap = nullptr;
-						float fSpecularExponent = 45.0f;
-						if (!(GetFlags() & NoSpecular)) {
-							// First, get specular color - if it's 0, we don't have any specular at all
-							pParameter = pMaterial->GetParameter(sSpecularColor);
-							if (pParameter)
-								cSpecularColor = pParameter->GetValue3fv();
-							if (cSpecularColor != 0.0f) {
-								PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULAR)
-
-								// Get specular exponent
-								pParameter = pMaterial->GetParameter(sSpecularExponent);
-								if (pParameter)
-									pParameter->GetValue1f(fSpecularExponent);
-
-								// Get the specular map
-								if (!(GetFlags() & NoSpecularMap)) {
-									pSpecularMap = pMaterial->GetParameterTextureBuffer(Material::SpecularMap);
-									if (pSpecularMap)
-										PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARMAP)
-								}
-							}
-						}
-
-						// Specular ramp map
-						static const String sSpecularRampMap = "SpecularRampMap";
-						TextureBuffer *pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (GetFlags() & NoSpecularRampMap)) ? nullptr : pMaterial->GetParameterTextureBuffer(sSpecularRampMap);
-						if (pSpecularRampMap)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARRAMPMAP)
-
-						// Edge ramp map
-						static const String sEdgeRampMap = "EdgeRampMap";
-						TextureBuffer *pEdgeRampMap = (GetFlags() & NoEdgeRampMap) ? nullptr : pMaterial->GetParameterTextureBuffer(sEdgeRampMap);
-						if (pEdgeRampMap)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_EDGERAMPMAP)
-
-						// Fragment shader needs texture coordinate flags, too
-						if (m_cProgramFlags.GetVertexShaderFlags() & VS_TEXCOORD0)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_TEXCOORD0)
-
-						// Get a program instance from the program generator using the given program flags
-						ProgramGenerator::GeneratedProgram *pGeneratedProgram = m_pProgramGenerator->GetProgram(m_cProgramFlags);
-
-						// Make our program to the current one
-						if (pGeneratedProgram && cRenderer.SetProgram(pGeneratedProgram->pProgram)) {
-							// Set pointers to uniforms & attributes of a generated program if they are not set yet
-							static const String sDiffuseColor = "DiffuseColor";
-							GeneratedProgramUserData *pGeneratedProgramUserData = static_cast<GeneratedProgramUserData*>(pGeneratedProgram->pUserData);
-							if (!pGeneratedProgramUserData) {
-								pGeneratedProgram->pUserData = pGeneratedProgramUserData = new GeneratedProgramUserData;
-								Program *pProgram = pGeneratedProgram->pProgram;
-								// Vertex shader attributes
-								static const String sVertexPosition = "VertexPosition";
-								pGeneratedProgramUserData->pVertexPosition					= pProgram->GetAttribute(sVertexPosition);
-								static const String sVertexTexCoord0 = "VertexTexCoord0";
-								pGeneratedProgramUserData->pVertexTexCoord0					= pProgram->GetAttribute(sVertexTexCoord0);
-								static const String sVertexNormal = "VertexNormal";
-								pGeneratedProgramUserData->pVertexNormal					= pProgram->GetAttribute(sVertexNormal);
-								static const String sVertexTangent = "VertexTangent";
-								pGeneratedProgramUserData->pVertexTangent					= pProgram->GetAttribute(sVertexTangent);
-								static const String sVertexBinormal = "VertexBinormal";
-								pGeneratedProgramUserData->pVertexBinormal					= pProgram->GetAttribute(sVertexBinormal);
-								// Vertex shader uniforms
-								static const String sNormalScale = "NormalScale";
-								pGeneratedProgramUserData->pNormalScale						= pProgram->GetUniform(sNormalScale);
-								static const String sObjectSpaceToViewSpaceMatrix = "ObjectSpaceToViewSpaceMatrix";
-								pGeneratedProgramUserData->pObjectSpaceToViewSpaceMatrix	= pProgram->GetUniform(sObjectSpaceToViewSpaceMatrix);
-								static const String sObjectSpaceToClipSpaceMatrix = "ObjectSpaceToClipSpaceMatrix";
-								pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix	= pProgram->GetUniform(sObjectSpaceToClipSpaceMatrix);
-								static const String sEyePos = "EyePos";
-								pGeneratedProgramUserData->pEyePos							= pProgram->GetUniform(sEyePos);
-								// Fragment shader uniforms
-								pGeneratedProgramUserData->pDiffuseColor					= pProgram->GetUniform(sDiffuseColor);
-								pGeneratedProgramUserData->pDiffuseMap						= pProgram->GetUniform(Material::DiffuseMap);
-								static const String sAlphaReference = "AlphaReference";
-								pGeneratedProgramUserData->pAlphaReference					= pProgram->GetUniform(sAlphaReference);
-								pGeneratedProgramUserData->pDiffuseRampMap					= pProgram->GetUniform(sDiffuseRampMap);
-								pGeneratedProgramUserData->pReflectionColor					= pProgram->GetUniform(sReflectionColor);
-								pGeneratedProgramUserData->pReflectivity					= pProgram->GetUniform(sReflectivity);
-								pGeneratedProgramUserData->pReflectivityMap					= pProgram->GetUniform(Material::ReflectivityMap);
-								static const String sFresnelConstants = "FresnelConstants";
-								pGeneratedProgramUserData->pFresnelConstants				= pProgram->GetUniform(sFresnelConstants);
-								pGeneratedProgramUserData->pReflectionMap					= pProgram->GetUniform(Material::ReflectionMap);
-								static const String sViewSpaceToWorldSpace = "ViewSpaceToWorldSpace";
-								pGeneratedProgramUserData->pViewSpaceToWorldSpace			= pProgram->GetUniform(sViewSpaceToWorldSpace);
-								pGeneratedProgramUserData->pNormalMap						= pProgram->GetUniform(Material::NormalMap);
-								pGeneratedProgramUserData->pNormalMapBumpiness				= pProgram->GetUniform(sNormalMapBumpiness);
-								pGeneratedProgramUserData->pDetailNormalMap					= pProgram->GetUniform(sDetailNormalMap);
-								pGeneratedProgramUserData->pDetailNormalMapBumpiness		= pProgram->GetUniform(sDetailNormalMapBumpiness);
-								pGeneratedProgramUserData->pDetailNormalMapUVScale			= pProgram->GetUniform(sDetailNormalMapUVScale);
-								pGeneratedProgramUserData->pHeightMap						= pProgram->GetUniform(Material::HeightMap);
-								static const String sParallaxScaleBias = "ParallaxScaleBias";
-								pGeneratedProgramUserData->pParallaxScaleBias				= pProgram->GetUniform(sParallaxScaleBias);
-								static const String sLightDirection = "LightDirection";
-								pGeneratedProgramUserData->pLightDirection					= pProgram->GetUniform(sLightDirection);
-								static const String sLightPosition = "LightPosition";
-								pGeneratedProgramUserData->pLightPosition					= pProgram->GetUniform(sLightPosition);
-								static const String sLightRadius = "LightRadius";
-								pGeneratedProgramUserData->pLightRadius						= pProgram->GetUniform(sLightRadius);
-								static const String sProjectivePointCubeMap = "ProjectivePointCubeMap";
-								pGeneratedProgramUserData->pProjectivePointCubeMap			= pProgram->GetUniform(sProjectivePointCubeMap);
-								static const String sViewSpaceToCubeMapSpace = "ViewSpaceToCubeMapSpace";
-								pGeneratedProgramUserData->pViewSpaceToCubeMapSpace			= pProgram->GetUniform(sViewSpaceToCubeMapSpace);
-								static const String sProjectiveSpotMap = "ProjectiveSpotMap";
-								pGeneratedProgramUserData->pProjectiveSpotMap				= pProgram->GetUniform(sProjectiveSpotMap);
-								static const String sViewSpaceToSpotMapSpace = "ViewSpaceToSpotMapSpace";
-								pGeneratedProgramUserData->pViewSpaceToSpotMapSpace			= pProgram->GetUniform(sViewSpaceToSpotMapSpace);
-								static const String sSpotConeCos = "SpotConeCos";
-								pGeneratedProgramUserData->pSpotConeCos						= pProgram->GetUniform(sSpotConeCos);
-								static const String sShadowMap = "ShadowMap";
-								pGeneratedProgramUserData->pShadowMap						= pProgram->GetUniform(sShadowMap);
-								static const String sViewSpaceToShadowMapSpace = "ViewSpaceToShadowMapSpace";
-								pGeneratedProgramUserData->pViewSpaceToShadowMapSpace		= pProgram->GetUniform(sViewSpaceToShadowMapSpace);
-								static const String sViewSpaceToShadowCubeMapSpace = "ViewSpaceToShadowCubeMapSpace";
-								pGeneratedProgramUserData->pViewSpaceToShadowCubeMapSpace	= pProgram->GetUniform(sViewSpaceToShadowCubeMapSpace);
-								static const String sInvLightRadius = "InvLightRadius";
-								pGeneratedProgramUserData->pInvLightRadius					= pProgram->GetUniform(sInvLightRadius);
-								static const String sTexelSize = "TexelSize";
-								pGeneratedProgramUserData->pTexelSize						= pProgram->GetUniform(sTexelSize);
-								static const String sLightColor = "LightColor";
-								pGeneratedProgramUserData->pLightColor						= pProgram->GetUniform(sLightColor);
-								pGeneratedProgramUserData->pSpecularColor					= pProgram->GetUniform(sSpecularColor);
-								pGeneratedProgramUserData->pSpecularExponent				= pProgram->GetUniform(sSpecularExponent);
-								pGeneratedProgramUserData->pSpecularMap						= pProgram->GetUniform(Material::SpecularMap);
-								pGeneratedProgramUserData->pSpecularRampMap					= pProgram->GetUniform(sSpecularRampMap);
-								pGeneratedProgramUserData->pEdgeRampMap						= pProgram->GetUniform(sEdgeRampMap);
-							}
-
-							// Set object space to clip space matrix uniform
-							if (pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix)
-								pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(cVisNode.GetWorldViewProjectionMatrix());
-
-							// Set object space to view space matrix uniform
-							if (pGeneratedProgramUserData->pObjectSpaceToViewSpaceMatrix)
-								pGeneratedProgramUserData->pObjectSpaceToViewSpaceMatrix->Set(cVisNode.GetWorldViewMatrix());
-
-							// Diffuse color
-							if (pGeneratedProgramUserData->pDiffuseColor) {
-								pParameter = pMaterial->GetParameter(sDiffuseColor);
-								if (pParameter) {
-									float fDiffuseColor[3] = { 1.0f, 1.0f, 1.0f };
-									pParameter->GetValue3f(fDiffuseColor[0], fDiffuseColor[1], fDiffuseColor[2]);
-									pGeneratedProgramUserData->pDiffuseColor->Set(fDiffuseColor[0]*LightingIntensity, fDiffuseColor[1]*LightingIntensity, fDiffuseColor[2]*LightingIntensity);
-								} else {
-									pGeneratedProgramUserData->pDiffuseColor->Set(LightingIntensity, LightingIntensity, LightingIntensity);
-								}
-							}
-
-							// Diffuse map
-							if (pGeneratedProgramUserData->pDiffuseMap) {
-								const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(pDiffuseMap);
-								if (nTextureUnit >= 0) {
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-									SetupTextureFiltering(cRenderer, nTextureUnit);
-
-									// Set the "AlphaReference" fragment shader parameter
-									if (pGeneratedProgramUserData->pAlphaReference)
-										pGeneratedProgramUserData->pAlphaReference->Set(fAlphaReference);
-								}
-							}
-
-							// Diffuse ramp map
-							if (pGeneratedProgramUserData->pDiffuseRampMap) {
-								const int nTextureUnit = pGeneratedProgramUserData->pDiffuseRampMap->Set(pDiffuseRampMap);
-								if (nTextureUnit >= 0) {
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
-									// No filtering, please
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
-								}
-							}
-
-							// Set reflection parameters
-							if (bReflection) {
-								// Set the "ReflectionColor" fragment shader parameter
-								if (pGeneratedProgramUserData->pReflectionColor)
-									pGeneratedProgramUserData->pReflectionColor->Set(cReflectionColor);
-
-								// Set the "Reflectivity" fragment shader parameter
-								if (pGeneratedProgramUserData->pReflectivity)
-									pGeneratedProgramUserData->pReflectivity->Set(fReflectivity);
-
-								// Set the "ReflectivityMap" fragment shader parameter
-								if (pGeneratedProgramUserData->pReflectivityMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pReflectivityMap->Set(pReflectivityMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										SetupTextureFiltering(cRenderer, nTextureUnit);
-									}
-								}
-
-								// Use Fresnel reflection?
-								if (pGeneratedProgramUserData->pFresnelConstants) {
-									// Calculate the eta value
-									// [TODO] Make the "from material" also setable per material or global?
-									static const float AirIndexOfRefaction = 1.0f;
-									const float fEtaValue = AirIndexOfRefaction / fIndexOfRefraction; // "from material" -> "to material"
-
-									// Set the "FresnelConstants" fragment shader parameter
-									const float fR0 = Math::Saturate(Math::Pow(1.0f - fEtaValue, 2.0f) / Math::Pow(1.0f + fEtaValue, 2.0f));
-
-									// Set uniform
-									pGeneratedProgramUserData->pFresnelConstants->Set(fR0, fFresnelReflectionPower);
-								}
-
-								// Set the "ReflectionMap" fragment shader parameter
-								if (pGeneratedProgramUserData->pReflectionMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pReflectionMap->Set(pReflectionMap);
-									if (nTextureUnit >= 0) {
-										// Setup sampler states
-										if (b2DReflectionMap) {
-											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										} else {
-											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
-											cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
-										}
-										SetupTextureFiltering(cRenderer, nTextureUnit);
-									}
-								}
-
-								// Set the "ViewSpaceToWorldSpace" fragment shader parameter
-								if (pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
-									// [TODO] Add *SQCullQuery::GetInvViewMatrix()?
-									Matrix3x3 mRot = cCullQuery.GetViewMatrix().GetInverted();
-									pGeneratedProgramUserData->pViewSpaceToWorldSpace->Set(mRot);
-								}
-							}
-
-							// Normal map
-							if (pNormalMap) {
-								// Set normal map
-								if (pGeneratedProgramUserData->pNormalMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pNormalMap->Set(pNormalMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										SetupTextureFiltering(cRenderer, nTextureUnit);
-
-										// Set normal map bumpiness
-										if (pGeneratedProgramUserData->pNormalMapBumpiness)
-											pGeneratedProgramUserData->pNormalMapBumpiness->Set(fNormalMapBumpiness);
-									}
-								}
-
-								// Set detail normal map
-								if (pGeneratedProgramUserData->pDetailNormalMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pDetailNormalMap->Set(pDetailNormalMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										SetupTextureFiltering(cRenderer, nTextureUnit);
-
-										// Set detail normal map bumpiness and uv scale
-										if (pGeneratedProgramUserData->pDetailNormalMapBumpiness)
-											pGeneratedProgramUserData->pDetailNormalMapBumpiness->Set(fDetailNormalMapBumpiness);
-										if (pGeneratedProgramUserData->pDetailNormalMapUVScale)
-											pGeneratedProgramUserData->pDetailNormalMapUVScale->Set(vDetailNormalMapUVScale);
-									}
-								}
-							}
-
-							// Parallax mapping
-							if (m_cProgramFlags.GetVertexShaderFlags() & VS_PARALLAXMAPPING) {
-								// Set object space eye position
-								if (pGeneratedProgramUserData->pEyePos)
-									pGeneratedProgramUserData->pEyePos->Set(cVisNode.GetInverseWorldMatrix()*(cVisContainer.GetWorldMatrix()*cCullQuery.GetCameraPosition()));
-
-								// Height map (for parallax mapping)
-								if (pGeneratedProgramUserData->pHeightMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pHeightMap->Set(pHeightMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										SetupTextureFiltering(cRenderer, nTextureUnit);
-
-										// Set parallax scale bias
-										if (pGeneratedProgramUserData->pParallaxScaleBias)
-											pGeneratedProgramUserData->pParallaxScaleBias->Set(fParallax, -0.02f);
-									}
-								}
+						// [TODO] Material cache!
+						SRPLightingMaterial cSRPLightingMaterial(*pMaterial, *m_pProgramGenerator);
+						// [TODO] Correct texture filter
+						SRPLightingMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = cSRPLightingMaterial.MakeMaterialCurrent(GetFlags(), nEnvironmentFlags, SRPLightingMaterial::Anisotropic2, LightingIntensity);
+						if (pGeneratedProgramUserData) {
+							// Set the "ViewSpaceToWorldSpace" fragment shader parameter
+							if (pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
+								// [TODO] Add *SQCullQuery::GetInvViewMatrix()?
+								Matrix3x3 mRot = cCullQuery.GetViewMatrix().GetInverted();
+								pGeneratedProgramUserData->pViewSpaceToWorldSpace->Set(mRot);
 							}
 
 							// Directional light?
@@ -980,6 +478,18 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 									pGeneratedProgramUserData->pLightDirection->Set(vLightDirection);
 								}
 							} else {
+								// Set object space to clip space matrix uniform
+								if (pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix)
+									pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix->Set(cVisNode.GetWorldViewProjectionMatrix());
+
+								// Set object space to view space matrix uniform
+								if (pGeneratedProgramUserData->pObjectSpaceToViewSpaceMatrix)
+									pGeneratedProgramUserData->pObjectSpaceToViewSpaceMatrix->Set(cVisNode.GetWorldViewMatrix());
+
+								// Set object space eye position
+								if (pGeneratedProgramUserData->pEyePos)
+									pGeneratedProgramUserData->pEyePos->Set(cVisNode.GetInverseWorldMatrix()*(cVisContainer.GetWorldMatrix()*cCullQuery.GetCameraPosition()));
+
 								// Set the "LightPosition" fragment shader parameter
 								if (pGeneratedProgramUserData->pLightPosition)
 									pGeneratedProgramUserData->pLightPosition->Set(cLightVisNode.GetWorldViewMatrix().GetTranslation());
@@ -1100,7 +610,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 											if (bSpotSmoothCone) {
 												// Set spot light cone outer and inner angle in view space
 												pGeneratedProgramUserData->pSpotConeCos->Set(static_cast<float>(Math::Cos(static_cast<SNSpotLight&>(cLight).GetOuterAngle()*Math::DegToRad*0.5f)),
-																							 static_cast<float>(Math::Cos(static_cast<SNSpotLight&>(cLight).GetInnerAngle()*Math::DegToRad*0.5f)));
+																								static_cast<float>(Math::Cos(static_cast<SNSpotLight&>(cLight).GetInnerAngle()*Math::DegToRad*0.5f)));
 
 											} else {
 												// Set spot light cone outer angle in view space
@@ -1171,65 +681,17 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 							if (pGeneratedProgramUserData->pLightColor)
 								pGeneratedProgramUserData->pLightColor->Set(cLightColor);
 
-							// Specular
-							if (m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) {
-								// Set specular exponent and specular color
-								if (pGeneratedProgramUserData->pSpecularColor)
-									pGeneratedProgramUserData->pSpecularColor->Set(cSpecularColor);
-								if (pGeneratedProgramUserData->pSpecularExponent)
-									pGeneratedProgramUserData->pSpecularExponent->Set(fSpecularExponent);
-
-								// Set the "SpecularMap" fragment shader parameter
-								if (pGeneratedProgramUserData->pSpecularMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pSpecularMap->Set(pSpecularMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
-										SetupTextureFiltering(cRenderer, nTextureUnit);
-									}
-								}
-
-								// Specular ramp map
-								if (pGeneratedProgramUserData->pSpecularRampMap) {
-									const int nTextureUnit = pGeneratedProgramUserData->pSpecularRampMap->Set(pSpecularRampMap);
-									if (nTextureUnit >= 0) {
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
-										// No filtering, please
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
-										cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
-									}
-								}
-							}
-
-							// Set edge ramp map
-							if (pGeneratedProgramUserData->pEdgeRampMap) {
-								const int nTextureUnit = pGeneratedProgramUserData->pEdgeRampMap->Set(pEdgeRampMap);
-								if (nTextureUnit >= 0) {
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
-									// No filtering, please
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::None);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::None);
-									cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::None);
-								}
-							}
-
 							// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
 							if (pGeneratedProgramUserData->pVertexPosition)
 								pGeneratedProgramUserData->pVertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
 							if (pGeneratedProgramUserData->pVertexTexCoord0)
 								pGeneratedProgramUserData->pVertexTexCoord0->Set(&cVertexBuffer, PLRenderer::VertexBuffer::TexCoord, 0);
-							if (pGeneratedProgramUserData->pVertexNormal) {
+							if (pGeneratedProgramUserData->pVertexNormal)
 								pGeneratedProgramUserData->pVertexNormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Normal);
-								if (m_cProgramFlags.GetFragmentShaderFlags() & FS_NORMALMAP) {
-									if (pGeneratedProgramUserData->pVertexTangent)
-										pGeneratedProgramUserData->pVertexTangent->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Tangent);
-									if (pGeneratedProgramUserData->pVertexBinormal)
-										pGeneratedProgramUserData->pVertexBinormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Binormal);
-								}
-							}
+							if (pGeneratedProgramUserData->pVertexTangent)
+								pGeneratedProgramUserData->pVertexTangent->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Tangent);
+							if (pGeneratedProgramUserData->pVertexBinormal)
+								pGeneratedProgramUserData->pVertexBinormal->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Binormal);
 
 							// Two sided lighting?
 							if (pGeneratedProgramUserData->pNormalScale)

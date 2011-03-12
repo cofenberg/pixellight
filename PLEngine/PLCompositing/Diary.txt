@@ -1,6 +1,11 @@
 >> 12.03.2011
 [CO]
 - Added SRPDirectionalLightingShadersMaterial for the SRPDirectionalLightingShaders material interpretation
+- Added SRPLightingMaterial for the SRPLighting material interpretation
+-> Ok, I think a material interpretation class is really a good idea, it improves the code readability a lot. :D
+   Later, this approach may also make it easier to add e.g. Uniform Buffer Object (ARB_Uniform_Buffer_Object -
+   http://www.opengl.org/registry/specs/ARB/uniform_buffer_object.txt) support for faster material switching, but
+   right now, I'am happy when the material caching works.
 
 
 

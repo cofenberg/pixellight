@@ -42,6 +42,7 @@ add_sources(
 	src/Shaders/General/SRPDirectionalLightingShaders.cpp
 	src/Shaders/General/SRPDirectionalLightingShadersMaterial.cpp
 	src/Shaders/General/SRPLighting.cpp
+	src/Shaders/General/SRPLightingMaterial.cpp
 	src/Shaders/General/SRPVolumetricFog.cpp
 	src/Shaders/Deferred/SRPDeferred.cpp
 	src/Shaders/Deferred/SRPDeferredGBuffer.cpp

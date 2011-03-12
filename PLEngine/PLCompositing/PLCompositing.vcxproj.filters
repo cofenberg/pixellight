@@ -235,6 +235,9 @@
     <ClCompile Include="src\Shaders\General\SRPDirectionalLightingShadersMaterial.cpp">
       <Filter>Shaders\General</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\General\SRPLightingMaterial.cpp">
+      <Filter>Shaders\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -571,6 +574,9 @@
       <Filter>Shaders\Deferred</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShadersMaterial.h">
+      <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPLightingMaterial.h">
       <Filter>Shaders\General</Filter>
     </ClInclude>
   </ItemGroup>

@@ -360,8 +360,10 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		PLGeneral::Pool<PLRenderer::Material*>   m_lstMaterials;			/**< List of currently used materials */
 		PLGeneral::Pool<MeshBatch*>				 m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
 		PLGeneral::Pool<MeshBatch*>				 m_lstMeshBatches;			/**< List of currently used mesh batches */
-		PLRenderer::ProgramGenerator			*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
-		PLRenderer::ProgramGenerator::Flags		 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
+
+		// Material cache
+		PLRenderer::ProgramGenerator									   *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+//		PLGeneral::HashMap<PLGeneral::uint64, SRPDeferredGBufferMaterial*>  m_lstMaterialCache;	// [TODO] Just a first quick and dirty material cache experiment
 
 
 	//[-------------------------------------------------------]

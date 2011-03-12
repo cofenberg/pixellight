@@ -137,13 +137,29 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 	// For better readability, define whether or not normal mapping is possible with the given vertex data
 	const bool bNormalMappingPossible = bHasVertexBinormal;	// We don't need to check for all three vectors in here :D
 
+	// [TODO] Cleanup
+	uint32 nEnvironmentFlags = 0;
+	if (bHasVertexNormal)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentVertexNormal;
+	if (bHasVertexTexCoord0)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentVertexTexCoord0;
+	if (bHasVertexTexCoord1)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentVertexTexCoord1;
+	if (bNormalMappingPossible)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentNormalMappingPossible;
+	if (bLightingEnabled)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentLightingEnabled;
+	if (m_bGlowEnabled)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentGlowEnabled;
+	if (m_fDOFBlurrinessCutoff)
+		nEnvironmentFlags |= SRPDirectionalLightingShadersMaterial::EnvironmentDOFEnabled;
+
 	// Draw mesh
 	for (uint32 nMat=0; nMat<cMeshHandler.GetNumOfMaterials(); nMat++) {
 		// Get mesh material
 		Material *pMaterial = cMeshHandler.GetMaterial(nMat);
 		if (pMaterial) {
 			// Draw geometries
-			bool bTwoSided = false;
 			for (uint32 nGeo=0; nGeo<lstGeometries.GetNumOfElements(); nGeo++) {
 				// Is this geometry active and is it using the current used mesh material?
 				const Geometry &cGeometry = lstGeometries[nGeo];
@@ -155,7 +171,7 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 						// [TODO] Material cache!
 						SRPDirectionalLightingShadersMaterial cSRPDirectionalLightingShadersMaterial(*m_pRenderStates, *pMaterial, *m_pProgramGenerator);
 						// [TODO] Correct texture filter
-						SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = cSRPDirectionalLightingShadersMaterial.MakeMaterialCurrent(GetFlags(), SRPDirectionalLightingShadersMaterial::Anisotropic2, bLightingEnabled, m_bGlowEnabled, m_fDOFBlurrinessCutoff);
+						SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = cSRPDirectionalLightingShadersMaterial.MakeMaterialCurrent(GetFlags(), nEnvironmentFlags, SRPDirectionalLightingShadersMaterial::Anisotropic2);
 						if (pGeneratedProgramUserData) {
 							// Ambient color
 							if (pGeneratedProgramUserData->pAmbientColor)
