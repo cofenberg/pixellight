@@ -1,3 +1,12 @@
+>> 15.03.2011
+[CO]
+PLRendererD3D11:
+- After some discussion within the PixelLight forum at http://dev.pixellight.org/forum/viewtopic.php?f=3&t=8 I noticed that there's really interesting
+  in an up and running D3D11 renderer backend... and I wanted to have a look at the latest graphics API evolution of OpenGL/D3D11 anyway. I started the
+  PLRendererD3D11 project by using PLRendererNull as usual as start point.
+
+
+
 >> 08.03.2011
 [CO]
 PLRendererOpenGL:

@@ -165,6 +165,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSPARK_PL", "PLDemos\P
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6} = {C2CB2665-591E-4D26-A145-0DB8298CBDB6}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererD3D11", "PLEngine\PLRendererD3D11\PLRendererD3D11.vcxproj", "{0A965754-5BE1-459A-A284-D4826DC549AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1042,6 +1044,17 @@ Global
 		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|Win32.Build.0 = Release|Win32
 		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|x64.ActiveCfg = Release|x64
 		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|x64.Build.0 = Release|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Debug|Win32.Build.0 = Debug|Win32
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Debug|x64.ActiveCfg = Debug|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Debug|x64.Build.0 = Debug|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Hybrid|Win32.ActiveCfg = Release|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Hybrid|x64.ActiveCfg = Release|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Hybrid|x64.Build.0 = Release|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Release|Win32.ActiveCfg = Release|Win32
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Release|Win32.Build.0 = Release|Win32
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Release|x64.ActiveCfg = Release|x64
+		{0A965754-5BE1-459A-A284-D4826DC549AB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
