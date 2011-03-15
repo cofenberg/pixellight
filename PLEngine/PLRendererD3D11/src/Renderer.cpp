@@ -64,37 +64,70 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// There's no fixed functions support in D3D11
+	m_nD3DFeatureLevel(D3D_FEATURE_LEVEL_9_1),
+	m_pDXGIFactory1(nullptr),
+	m_pD3D11DeviceContext(nullptr),
+	m_pD3D11Device(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
 	// This renderer implementation has no shader support at all, so ignore sDefaultShaderLanguage
 
 	// Output log information
-	PL_LOG(Info, "Initialize null renderer")
+	PL_LOG(Info, "Initialize D3D11 renderer")
 
-	// Set Z buffer bits and stencil buffer bits capabilities
-	m_sCapabilities.nZBufferBits = nZBufferBits;
-	m_sCapabilities.nStencilBits = nStencilBits;
+	// Create a DXGI factory 1 instance
+	CreateDXGIFactory1(__uuidof(IDXGIFactory1), reinterpret_cast<void**>(&m_pDXGIFactory1));
+	if (m_pDXGIFactory1) {
+		// Get the first available adapter (video card)
+		IDXGIAdapter *pAdapter = nullptr;
+		if (SUCCEEDED(m_pDXGIFactory1->EnumAdapters(0, &pAdapter))) {
+			// Get a description of the adapter (video card) and write it into the log
+			DXGI_ADAPTER_DESC sAdapterDescription;
+			if (SUCCEEDED(pAdapter->GetDesc(&sAdapterDescription)))
+				PL_LOG(Info, String("Used D3D11 adapter (video card): ") + sAdapterDescription.Description)
 
-	// Init data
-	m_fDepthBoundsZMin = 0.0f;
-	m_fDepthBoundsZMax = 0.0f;
+			// Create the D3D11 device instance
+			UINT nDeviceFlags = D3D11_CREATE_DEVICE_SINGLETHREADED;
+			#ifdef _DEBUG
+				nDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+			#endif
+			if (SUCCEEDED(D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, 0, nDeviceFlags, nullptr, 0, D3D11_SDK_VERSION, &m_pD3D11Device, &m_nD3DFeatureLevel, &m_pD3D11DeviceContext))) {
+				// Setup the renderer capabilities
+				SetupCapabilities();
 
-	// Setup the renderer capabilities
-	SetupCapabilities();
+				// Set Z buffer bits and stencil buffer bits capabilities
+				m_sCapabilities.nZBufferBits = nZBufferBits;
+				m_sCapabilities.nStencilBits = nStencilBits;
 
-	// Allocate sampler states
-	m_ppnSamplerState = new uint32*[m_sCapabilities.nMaxTextureUnits];
-	for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++) {
-		m_ppnSamplerState[i] = new uint32[PLRenderer::Sampler::Number];
-		MemoryManager::Set(m_ppnSamplerState[i], -1, sizeof(uint32)*PLRenderer::Sampler::Number);
+				// Init data
+				m_fDepthBoundsZMin = 0.0f;
+				m_fDepthBoundsZMax = 0.0f;
+
+				// Allocate sampler states
+				m_ppnSamplerState = new uint32*[m_sCapabilities.nMaxTextureUnits];
+				for (uint32 i=0; i<m_sCapabilities.nMaxTextureUnits; i++) {
+					m_ppnSamplerState[i] = new uint32[PLRenderer::Sampler::Number];
+					MemoryManager::Set(m_ppnSamplerState[i], -1, sizeof(uint32)*PLRenderer::Sampler::Number);
+				}
+
+				// Allocate current stuff
+				m_ppCurrentTextureBuffer = new PLRenderer::TextureBuffer*[m_sCapabilities.nMaxTextureUnits];
+				MemoryManager::Set(m_ppCurrentTextureBuffer, 0, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
+
+				// Reset render
+				Reset();
+			} else {
+				// Error!
+				PL_LOG(Error, "D3D11: Failed to create the D3D11 device instance")
+			}
+		} else {
+			// Error!
+			PL_LOG(Error, "D3D11: Failed to receive the first available adapter")
+		}
+	} else {
+		// Error!
+		PL_LOG(Error, "D3D11: Failed to create a DXGI factory 1 instance")
 	}
-
-	// Allocate current stuff
-	m_ppCurrentTextureBuffer = new PLRenderer::TextureBuffer*[m_sCapabilities.nMaxTextureUnits];
-	MemoryManager::Set(m_ppCurrentTextureBuffer, 0, sizeof(PLRenderer::TextureBuffer**)*m_sCapabilities.nMaxTextureUnits);
-
-	// Reset render
-	Reset();
 }
 
 /**
@@ -104,7 +137,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 Renderer::~Renderer()
 {
 	// Output log information
-	PL_LOG(Info, "De-initialize null renderer")
+	PL_LOG(Info, "De-initialize D3D11 renderer")
 
 	// Destroy all renderer surfaces of this renderer
 	while (m_lstSurfaces.GetNumOfElements())
@@ -140,6 +173,18 @@ Renderer::~Renderer()
 		delete [] m_ppCurrentTextureBuffer;
 		m_ppCurrentTextureBuffer = nullptr;
 	}
+
+	// Release the D3D11 device
+	if (m_pD3D11Device)
+		m_pD3D11Device->Release();
+
+	// Release the D3D11 device context
+	if (m_pD3D11DeviceContext)
+		m_pD3D11DeviceContext->Release();
+
+	// Release the DXGI factory 1 instance
+	if (m_pDXGIFactory1)
+		m_pDXGIFactory1->Release();
 }
 
 
@@ -152,62 +197,184 @@ Renderer::~Renderer()
 */
 void Renderer::SetupCapabilities()
 {
-	// Maximum number of color render targets
-	m_sCapabilities.nMaxColorRenderTargets = 1;
+	// [TODO] Check those "?"-points
+	// The capabilities are depending on the feature level - data from: http://msdn.microsoft.com/en-us/library/ff476876%28v=vs.85%29.aspx
+	switch (m_nD3DFeatureLevel) {
+		case D3D_FEATURE_LEVEL_9_1:
+			PL_LOG(Info, "D3D: Using feature level: 9_1")
+			m_sCapabilities.nMaxColorRenderTargets			= 1;
+			m_sCapabilities.nMaxTextureUnits				= 16;	// ?Max Input Slots?
+			m_sCapabilities.nMaxAnisotropy					= 2;
+			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
+			m_sCapabilities.nMaxTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 2048;
+			m_sCapabilities.bTextureBuffer3D				= true;
+			m_sCapabilities.nMax3DTextureBufferSize			= 256;
+			m_sCapabilities.bTextureBufferCube				= true;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 512;
+			m_sCapabilities.bStencilWrap					= 0;	// ?
+			m_sCapabilities.bTwoSidedStencils				= 0;	// ?
+			m_sCapabilities.bDepthBoundsTest				= 0;	// ?
+			m_sCapabilities.bPointSprite					= 0;	// ?
+			m_sCapabilities.bPointParameters				= 0;	// ?
+			m_sCapabilities.bOcclusionQuery					= false;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;	// ?
+			m_sCapabilities.nZBufferBits					= 0;	// ?
+			m_sCapabilities.nStencilBits					= 0;	// ?
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;	// ?
+			break;
 
-	// Maximum number of texture units
-	m_sCapabilities.nMaxTextureUnits = 8;
+		case D3D_FEATURE_LEVEL_9_2:
+			PL_LOG(Info, "D3D: Using feature level: 9_2")
+			m_sCapabilities.nMaxColorRenderTargets			= 1;
+			m_sCapabilities.nMaxTextureUnits				= 16;	// ?Max Input Slots?
+			m_sCapabilities.nMaxAnisotropy					= 16;
+			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
+			m_sCapabilities.nMaxTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 2048;
+			m_sCapabilities.bTextureBuffer3D				= true;
+			m_sCapabilities.nMax3DTextureBufferSize			= 256;
+			m_sCapabilities.bTextureBufferCube				= true;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 512;
+			m_sCapabilities.bStencilWrap					= 0;	// ?
+			m_sCapabilities.bTwoSidedStencils				= 0;	// ?
+			m_sCapabilities.bDepthBoundsTest				= 0;	// ?
+			m_sCapabilities.bPointSprite					= 0;	// ?
+			m_sCapabilities.bPointParameters				= 0;	// ?
+			m_sCapabilities.bOcclusionQuery					= true;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;	// ?
+			m_sCapabilities.nZBufferBits					= 0;	// ?
+			m_sCapabilities.nStencilBits					= 0;	// ?
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;	// ?
+			break;
 
-	// Maximum anisotropy
-	m_sCapabilities.nMaxAnisotropy = 16;
+		case D3D_FEATURE_LEVEL_9_3:
+			PL_LOG(Info, "D3D: Using feature level: 9_3")
+			m_sCapabilities.nMaxColorRenderTargets			= 4;
+			m_sCapabilities.nMaxTextureUnits				= 16;	// ?Max Input Slots?
+			m_sCapabilities.nMaxAnisotropy					= 16;
+			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
+			m_sCapabilities.nMaxTextureBufferSize			= 4096;
+			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 4096;
+			m_sCapabilities.bTextureBuffer3D				= true;
+			m_sCapabilities.nMax3DTextureBufferSize			= 256;
+			m_sCapabilities.bTextureBufferCube				= true;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 4096;
+			m_sCapabilities.bStencilWrap					= 0;	// ?
+			m_sCapabilities.bTwoSidedStencils				= 0;	// ?
+			m_sCapabilities.bDepthBoundsTest				= 0;	// ?
+			m_sCapabilities.bPointSprite					= 0;	// ?
+			m_sCapabilities.bPointParameters				= 0;	// ?
+			m_sCapabilities.bOcclusionQuery					= true;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;	// ?
+			m_sCapabilities.nZBufferBits					= 0;	// ?
+			m_sCapabilities.nStencilBits					= 0;	// ?
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;	// ?
+			break;
 
-	// Maximum tessellation factor
-	m_sCapabilities.nMaxTessellationFactor = 1;
+		case D3D_FEATURE_LEVEL_10_0:
+			PL_LOG(Info, "D3D: Using feature level: 10_0")
+			m_sCapabilities.nMaxColorRenderTargets			= 8;
+			m_sCapabilities.nMaxTextureUnits				= 16;	// ?Max Input Slots?
+			m_sCapabilities.nMaxAnisotropy					= 16;
+			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
+			m_sCapabilities.nMaxTextureBufferSize			= 8192;
+			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 8192;
+			m_sCapabilities.bTextureBuffer3D				= true;
+			m_sCapabilities.nMax3DTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferCube				= true;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 8192;
+			m_sCapabilities.bStencilWrap					= 0;	// ?
+			m_sCapabilities.bTwoSidedStencils				= 0;	// ?
+			m_sCapabilities.bDepthBoundsTest				= 0;	// ?
+			m_sCapabilities.bPointSprite					= 0;	// ?
+			m_sCapabilities.bPointParameters				= 0;	// ?
+			m_sCapabilities.bOcclusionQuery					= true;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;	// ?
+			m_sCapabilities.nZBufferBits					= 0;	// ?
+			m_sCapabilities.nStencilBits					= 0;	// ?
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;	// ?
+			break;
 
-	// Maximum texture buffer size
-	m_sCapabilities.nMaxTextureBufferSize = 4096;
+		case D3D_FEATURE_LEVEL_10_1:
+			PL_LOG(Info, "D3D: Using feature level: 10_1")
+			m_sCapabilities.nMaxColorRenderTargets			= 8;
+			m_sCapabilities.nMaxTextureUnits				= 32;	// ?Max Input Slots?
+			m_sCapabilities.nMaxAnisotropy					= 16;
+			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
+			m_sCapabilities.nMaxTextureBufferSize			= 8192;
+			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 8192;
+			m_sCapabilities.bTextureBuffer3D				= true;
+			m_sCapabilities.nMax3DTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferCube				= true;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 8192;
+			m_sCapabilities.bStencilWrap					= 0;	// ?
+			m_sCapabilities.bTwoSidedStencils				= 0;	// ?
+			m_sCapabilities.bDepthBoundsTest				= 0;	// ?
+			m_sCapabilities.bPointSprite					= 0;	// ?
+			m_sCapabilities.bPointParameters				= 0;	// ?
+			m_sCapabilities.bOcclusionQuery					= true;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;	// ?
+			m_sCapabilities.nZBufferBits					= 0;	// ?
+			m_sCapabilities.nStencilBits					= 0;	// ?
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;	// ?
+			break;
 
-	// Rectangle texture buffers supported?
-	m_sCapabilities.bTextureBufferRectangle = true;
+		case D3D_FEATURE_LEVEL_11_0:
+			PL_LOG(Info, "D3D: Using feature level: 11_0")
+			m_sCapabilities.nMaxColorRenderTargets			= 8;
+			m_sCapabilities.nMaxTextureUnits				= 32;	// ?Max Input Slots?
+			m_sCapabilities.nMaxAnisotropy					= 16;
+			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
+			m_sCapabilities.nMaxTextureBufferSize			= 16384;
+			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 16384;
+			m_sCapabilities.bTextureBuffer3D				= true;
+			m_sCapabilities.nMax3DTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferCube				= true;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 8192;
+			m_sCapabilities.bStencilWrap					= 0;	// ?
+			m_sCapabilities.bTwoSidedStencils				= 0;	// ?
+			m_sCapabilities.bDepthBoundsTest				= 0;	// ?
+			m_sCapabilities.bPointSprite					= 0;	// ?
+			m_sCapabilities.bPointParameters				= 0;	// ?
+			m_sCapabilities.bOcclusionQuery					= true;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;	// ?
+			m_sCapabilities.nZBufferBits					= 0;	// ?
+			m_sCapabilities.nStencilBits					= 0;	// ?
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;	// ?
+			break;
 
-	// Maximum rectangle texture buffer size
-	m_sCapabilities.nMaxRectangleTextureBufferSize = 4096;
-
-	// 3D texture buffers supported?
-	m_sCapabilities.bTextureBuffer3D = 1;
-
-	// Maximum 3D texture buffer size
-	m_sCapabilities.nMax3DTextureBufferSize = 512;
-
-	// Cube texture buffers supported?
-	m_sCapabilities.bTextureBufferCube = 1;
-
-	// Maximum cube texture buffer size
-	m_sCapabilities.nMaxCubeTextureBufferSize = 2048;
-
-	// Stencil wrap supported?
-	m_sCapabilities.bStencilWrap = false;
-
-	// Two sided stencils supported?
-	m_sCapabilities.bTwoSidedStencils = false;
-
-	// Depth bounds test supported?
-	m_sCapabilities.bDepthBoundsTest = true;
-
-	// Point sprite supported?
-	m_sCapabilities.bPointSprite = true;
-
-	// Point parameters supported?
-	m_sCapabilities.bPointParameters = true;
-
-	// Occlusion query supported
-	m_sCapabilities.bOcclusionQuery = false;
-
-	// Vertex buffer secondary color supported?
-	m_sCapabilities.bVertexBufferSecondaryColor = true;
-
-	// Multisample antialiasing samples
-	m_sCapabilities.nMultisampleAntialiasingSamples = 0;
+		default:
+			// ?!
+			m_sCapabilities.nMaxColorRenderTargets			= 0;
+			m_sCapabilities.nMaxTextureUnits				= 0;
+			m_sCapabilities.nMaxAnisotropy					= 0;
+			m_sCapabilities.nMaxTessellationFactor			= 0;
+			m_sCapabilities.nMaxTextureBufferSize			= 0;
+			m_sCapabilities.bTextureBufferRectangle			= 0;
+			m_sCapabilities.nMaxRectangleTextureBufferSize	= 0;
+			m_sCapabilities.bTextureBuffer3D				= 0;
+			m_sCapabilities.nMax3DTextureBufferSize			= 0;
+			m_sCapabilities.bTextureBufferCube				= 0;
+			m_sCapabilities.nMaxCubeTextureBufferSize		= 0;
+			m_sCapabilities.bStencilWrap					= 0;
+			m_sCapabilities.bTwoSidedStencils				= 0;
+			m_sCapabilities.bDepthBoundsTest				= 0;
+			m_sCapabilities.bPointSprite					= 0;
+			m_sCapabilities.bPointParameters				= 0;
+			m_sCapabilities.bOcclusionQuery					= 0;
+			m_sCapabilities.bVertexBufferSecondaryColor		= 0;
+			m_sCapabilities.nZBufferBits					= 0;
+			m_sCapabilities.nStencilBits					= 0;
+			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;
+			break;
+	}
 
 	// Show renderer capabilities
 	ShowRendererCapabilities();
@@ -345,7 +512,7 @@ PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(Image &cImage, PLRe
 	if (!CheckTextureBuffer1D(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null 1D texture buffer
+	// Create the D3D11 1D texture buffer
 	return new TextureBuffer1D(*this, cImage, nInternalFormat, nFlags);
 }
 
@@ -355,7 +522,7 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 	if (!CheckTextureBuffer2D(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null 2D texture buffer
+	// Create the D3D11 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
 }
 
@@ -365,7 +532,7 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage,
 	if (!m_sCapabilities.bTextureBufferRectangle || !CheckTextureBufferRectangle(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null rectangle texture buffer
+	// Create the D3D11 rectangle texture buffer
 	return new TextureBufferRectangle(*this, cImage, nInternalFormat, nFlags);
 }
 
@@ -375,7 +542,7 @@ PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(Image &cImage, PLRe
 	if (!CheckTextureBuffer3D(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null 3D texture buffer
+	// Create the D3D11 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
 }
 
@@ -385,25 +552,25 @@ PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(Image &cImage, 
 	if (!CheckTextureBufferCube(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null cube texture buffer
+	// Create the D3D11 cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
 }
 
 PLRenderer::IndexBuffer *Renderer::CreateIndexBuffer()
 {
-	// Create the null index buffer
+	// Create the D3D11 index buffer
 	return new IndexBuffer(*this);
 }
 
 PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
-	// Create the null vertex buffer
+	// Create the D3D11 vertex buffer
 	return new VertexBuffer(*this);
 }
 
 PLRenderer::OcclusionQuery *Renderer::CreateOcclusionQuery()
 {
-	// Create the null occlusion query
+	// Create the D3D11 occlusion query
 	return new OcclusionQuery(*this);
 }
 

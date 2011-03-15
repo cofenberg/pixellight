@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
+#include "PLRendererD3D11/PLRendererD3D11.h"
 
 
 //[-------------------------------------------------------]
@@ -111,19 +112,23 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FontManager		   *m_pFontManager;		/**< D3D11 renderer font manager, always valid! */
-		PLGeneral::uint32	m_nViewPortX;
-		PLGeneral::uint32	m_nViewPortY;
-		PLGeneral::uint32	m_nViewPortWidth;
-		PLGeneral::uint32	m_nViewPortHeight;
-		float				m_fViewPortMinZ;
-		float				m_fViewPortMaxZ;
-		PLGeneral::uint32	m_nScissorRectX;
-		PLGeneral::uint32	m_nScissorRectY;
-		PLGeneral::uint32	m_nScissorRectWidth;
-		PLGeneral::uint32	m_nScissorRectHeight;
-		float				m_fDepthBoundsZMin;
-		float				m_fDepthBoundsZMax;
+		D3D_FEATURE_LEVEL	 m_nD3DFeatureLevel;	/**< The used feature level (Feature level overview: http://msdn.microsoft.com/en-us/library/ff476876%28v=vs.85%29.aspx) */
+		IDXGIFactory1		*m_pDXGIFactory1;		/**< DXGI factory 1 instance, null pointer on error */
+		ID3D11DeviceContext	*m_pD3D11DeviceContext;	/**< D3D11 device context */
+		ID3D11Device		*m_pD3D11Device;		/**< D3D11 device, null pointer on error */
+		FontManager			*m_pFontManager;		/**< D3D11 renderer font manager, always valid! */
+		PLGeneral::uint32	 m_nViewPortX;
+		PLGeneral::uint32	 m_nViewPortY;
+		PLGeneral::uint32	 m_nViewPortWidth;
+		PLGeneral::uint32	 m_nViewPortHeight;
+		float				 m_fViewPortMinZ;
+		float				 m_fViewPortMaxZ;
+		PLGeneral::uint32	 m_nScissorRectX;
+		PLGeneral::uint32	 m_nScissorRectY;
+		PLGeneral::uint32	 m_nScissorRectWidth;
+		PLGeneral::uint32	 m_nScissorRectHeight;
+		float				 m_fDepthBoundsZMin;
+		float				 m_fDepthBoundsZMax;
 
 
 	//[-------------------------------------------------------]

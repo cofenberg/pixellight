@@ -4,8 +4,8 @@ DirectX 11 - Microsoft DirectX SDK (June 2010)
 - Download from: http://msdn.microsoft.com/directx/
 - Here's what you need for the Windows platform and where to put the files:
 	- "External\_Windows_x86_32\DirectX11\include"
-		- "D3D11.h"
-		- ... [TODO] ...
+		- <Content of the Microsoft DirectX SDK "Include"-directory>
 	- "External\_Windows_x86_32\DirectX11\lib"
+		- "dxgi.lib"
 		- "d3d11.lib"
 		- "d3dx11.lib"

@@ -42,7 +42,7 @@ namespace PLRendererD3D11 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A null window renderer surface where we can render in
+*    A D3D11 window renderer surface where we can render in
 */
 class SurfaceWindow : public PLRenderer::SurfaceWindow {
 

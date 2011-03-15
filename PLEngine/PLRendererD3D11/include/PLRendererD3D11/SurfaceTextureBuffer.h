@@ -43,7 +43,7 @@ namespace PLRendererD3D11 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A null texture buffer renderer surface where we can render in
+*    A D3D11 texture buffer renderer surface where we can render in
 */
 class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 
