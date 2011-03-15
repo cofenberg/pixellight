@@ -12,6 +12,7 @@ add_custom_target(External-Optional)
 ## Projects
 ##################################################
 add_subdirectory(DirectX9)
+add_subdirectory(DirectX11)
 add_subdirectory(FMOD)
 add_subdirectory(FMODEx)
 add_subdirectory(PhysX)

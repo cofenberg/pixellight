@@ -1,0 +1,11 @@
+DirectX 11 - Microsoft DirectX SDK (June 2010)
+- Used by the renderer backend "PLRendererD3D11" (external Windows dependencies: DirectX 11)
+- We're sorry but due to legal issues we can't provide you with a downloadable package
+- Download from: http://msdn.microsoft.com/directx/
+- Here's what you need for the Windows platform and where to put the files:
+	- "External\_Windows_x86_32\DirectX11\include"
+		- "D3D11.h"
+		- ... [TODO] ...
+	- "External\_Windows_x86_32\DirectX11\lib"
+		- "d3d11.lib"
+		- "d3dx11.lib"
