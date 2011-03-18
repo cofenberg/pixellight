@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLGeneral/System/SystemWindows.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
@@ -64,10 +65,11 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// There's no fixed functions support in D3D11
-	m_nD3DFeatureLevel(D3D_FEATURE_LEVEL_9_1),
 	m_pDXGIFactory1(nullptr),
+	m_nD3DFeatureLevel(D3D_FEATURE_LEVEL_9_1),
 	m_pD3D11DeviceContext(nullptr),
 	m_pD3D11Device(nullptr),
+	m_pD3D11RenderTargetView(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
 	// This renderer implementation has no shader support at all, so ignore sDefaultShaderLanguage
@@ -75,23 +77,44 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	// Output log information
 	PL_LOG(Info, "Initialize D3D11 renderer")
 
-	// Create a DXGI factory 1 instance
-	CreateDXGIFactory1(__uuidof(IDXGIFactory1), reinterpret_cast<void**>(&m_pDXGIFactory1));
-	if (m_pDXGIFactory1) {
-		// Get the first available adapter (video card)
-		IDXGIAdapter *pAdapter = nullptr;
-		if (SUCCEEDED(m_pDXGIFactory1->EnumAdapters(0, &pAdapter))) {
-			// Get a description of the adapter (video card) and write it into the log
-			DXGI_ADAPTER_DESC sAdapterDescription;
-			if (SUCCEEDED(pAdapter->GetDesc(&sAdapterDescription)))
-				PL_LOG(Info, String("Used D3D11 adapter (video card): ") + sAdapterDescription.Description)
+	// Create the D3D11 device instance
+	UINT nDeviceFlags = D3D11_CREATE_DEVICE_SINGLETHREADED;
+	#ifdef _DEBUG
+		nDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+	#endif
+	HRESULT hResult = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, 0, nDeviceFlags, nullptr, 0, D3D11_SDK_VERSION, &m_pD3D11Device, &m_nD3DFeatureLevel, &m_pD3D11DeviceContext);
+	if (SUCCEEDED(hResult)) {
+		{ // Get the used DXGI factory 1 instance
+			// IDXGIDevice1
+			IDXGIDevice1 *pDXGIDevice1 = nullptr;
+			m_pD3D11Device->QueryInterface(__uuidof(IDXGIDevice1), reinterpret_cast<void **>(&pDXGIDevice1));
+			if (pDXGIDevice1) {
+				// IDXGIAdapter1
+				IDXGIAdapter1 *pDXGIAdapter1 = nullptr;
+				pDXGIDevice1->GetParent(__uuidof(IDXGIAdapter1), reinterpret_cast<void **>(&pDXGIAdapter1));
+				if (pDXGIAdapter1) {
+					// IDXGIFactory1
+					pDXGIAdapter1->GetParent(__uuidof(IDXGIFactory1), reinterpret_cast<void **>(&m_pDXGIFactory1));
 
-			// Create the D3D11 device instance
-			UINT nDeviceFlags = D3D11_CREATE_DEVICE_SINGLETHREADED;
-			#ifdef _DEBUG
-				nDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-			#endif
-			if (SUCCEEDED(D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, 0, nDeviceFlags, nullptr, 0, D3D11_SDK_VERSION, &m_pD3D11Device, &m_nD3DFeatureLevel, &m_pD3D11DeviceContext))) {
+					// Cleanup
+					pDXGIAdapter1->Release();
+					pDXGIDevice1->Release();
+				} else {
+					// Error!
+					pDXGIDevice1->Release();
+				}
+			}
+		}
+		if (m_pDXGIFactory1) {
+			// Get the first available adapter (video card)
+			IDXGIAdapter *pAdapter = nullptr;
+			hResult = m_pDXGIFactory1->EnumAdapters(0, &pAdapter);
+			if (SUCCEEDED(hResult)) {
+				// Get a description of the adapter (video card) and write it into the log
+				DXGI_ADAPTER_DESC sAdapterDescription;
+				if (SUCCEEDED(pAdapter->GetDesc(&sAdapterDescription)))
+					PL_LOG(Info, String("Used D3D11 adapter (video card): ") + sAdapterDescription.Description)
+
 				// Setup the renderer capabilities
 				SetupCapabilities();
 
@@ -118,15 +141,15 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 				Reset();
 			} else {
 				// Error!
-				PL_LOG(Error, "D3D11: Failed to create the D3D11 device instance")
+				PL_LOG(Error, "D3D11: Failed to receive the first available adapter: " + SystemWindows::ErrorCodeToString(hResult))
 			}
 		} else {
 			// Error!
-			PL_LOG(Error, "D3D11: Failed to receive the first available adapter")
+			PL_LOG(Error, "D3D11: Failed to receive the DXGI factory 1 instance of the used device: " + SystemWindows::ErrorCodeToString(hResult))
 		}
 	} else {
 		// Error!
-		PL_LOG(Error, "D3D11: Failed to create a DXGI factory 1 instance")
+		PL_LOG(Error, "D3D11: Failed to create the D3D11 device instance: " + SystemWindows::ErrorCodeToString(hResult))
 	}
 }
 
@@ -185,6 +208,42 @@ Renderer::~Renderer()
 	// Release the DXGI factory 1 instance
 	if (m_pDXGIFactory1)
 		m_pDXGIFactory1->Release();
+}
+
+/**
+*  @brief
+*    Returns the DXGI factory 1 instance
+*/
+IDXGIFactory1 *Renderer::GetDXGIFactory1() const
+{
+	return m_pDXGIFactory1;
+}
+
+/**
+*  @brief
+*    Returns the used feature level
+*/
+D3D_FEATURE_LEVEL Renderer::GetD3DFeatureLevel() const
+{
+	return m_nD3DFeatureLevel;
+}
+
+/**
+*  @brief
+*    Returns the used D3D11 device context
+*/
+ID3D11DeviceContext	*Renderer::GetD3D11DeviceContext() const
+{
+	return m_pD3D11DeviceContext;
+}
+
+/**
+*  @brief
+*    Returns the used D3D11 device
+*/
+ID3D11Device *Renderer::GetD3D11Device() const
+{
+	return m_pD3D11Device;
 }
 
 
@@ -630,6 +689,27 @@ bool Renderer::EndScene()
 	return true;
 }
 
+bool Renderer::SetViewport(const PLMath::Rectangle *pRectangle, float fMinZ, float fMaxZ)
+{
+	// Call base implementation
+	PLRenderer::RendererBackend::SetViewport(pRectangle);
+
+	// Set viewport and depth range
+	if (m_pD3D11DeviceContext) {
+		D3D11_VIEWPORT sD3D11Viewport;
+		sD3D11Viewport.TopLeftX	= m_cViewportRect.GetX();
+		sD3D11Viewport.TopLeftY	= m_cViewportRect.GetY();
+		sD3D11Viewport.Width	= m_cViewportRect.GetWidth();
+		sD3D11Viewport.Height	= m_cViewportRect.GetHeight();
+		sD3D11Viewport.MinDepth	= fMinZ;
+		sD3D11Viewport.MaxDepth	= fMaxZ;
+		m_pD3D11DeviceContext->RSSetViewports(1, &sD3D11Viewport);
+	}
+
+	// Done
+	return true;
+}
+
 bool Renderer::GetDepthBounds(float &fZMin, float &fZMax) const
 {
 	// Get data
@@ -673,7 +753,8 @@ bool Renderer::SetColorMask(bool bRed, bool bGreen, bool bBlue, bool bAlpha)
 
 bool Renderer::Clear(uint32 nFlags, const Color4 &cColor, float fZ, uint32 nStencil)
 {
-	// There's nothing we can clear :D
+	if (m_pD3D11DeviceContext && m_pD3D11RenderTargetView)
+		m_pD3D11DeviceContext->ClearRenderTargetView(m_pD3D11RenderTargetView, cColor.fColor);
 
 	// Done
 	return true;
@@ -685,43 +766,58 @@ bool Renderer::Clear(uint32 nFlags, const Color4 &cColor, float fZ, uint32 nSten
 //[-------------------------------------------------------]
 bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 {
-	// Check parameter
-	if (!m_lstSurfaces.IsElement(pSurface))
-		return false; // Error!
+	bool bResult = true; // No error by default
 
-	// Check face index
-	if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
-		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
-		if (pSurfaceTextureBuffer->GetTextureBuffer()) {
-			if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
-				if (nFace > 5)
-					return false; // Error!
+	// Is this surface already the current render target?
+	if (m_cCurrentSurface.GetSurface() != pSurface || m_nCurrentSurfaceFace != nFace) {
+		// Make the dummy rendering context to the current one?
+		if (pSurface) {
+			// Check parameter
+			if (!m_lstSurfaces.IsElement(pSurface))
+				return false; // Error!
+
+			// Check face index
+			if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
+				PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
+				if (pSurfaceTextureBuffer->GetTextureBuffer()) {
+					if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
+						if (nFace > 5)
+							return false; // Error!
+					} else {
+						if (nFace > 0)
+							return false; // Error!
+					}
+				} else {
+					// ??!
+					return false;
+				}
 			} else {
 				if (nFace > 0)
 					return false; // Error!
+
+				// Get the D3D11 render target view
+				m_pD3D11RenderTargetView = static_cast<SurfaceWindow*>(pSurface)->GetD3D11RenderTargetView();
 			}
+
+			// Make the surface to the current render target
+			if (m_cCurrentSurface.GetSurface())
+				UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
+			m_cCurrentSurface.SetSurface(pSurface);
+			bResult = MakeSurfaceCurrent(*pSurface, nFace);
+			if (bResult)
+				m_pD3D11DeviceContext->OMSetRenderTargets(1, &m_pD3D11RenderTargetView, nullptr);
 		} else {
-			// Error!?!
-			return false;
+			// There's currently no render target
+			m_pD3D11DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 		}
-	} else {
-		if (nFace > 0)
-			return false; // Error!
 	}
-
-	if (m_cCurrentSurface.GetSurface())
-		UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
-	m_cCurrentSurface.SetSurface(pSurface);
-
-	// Make the surface to the current render target
-	const bool bError = MakeSurfaceCurrent(*pSurface, nFace);
 
 	// Setup viewport and scissor rectangle
 	SetViewport();
 	SetScissorRect();
 
 	// Done
-	return bError;
+	return bResult;
 }
 
 bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nColorIndex, uint8 nFace)

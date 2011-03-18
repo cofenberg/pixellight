@@ -96,6 +96,48 @@ class Renderer : public PLRenderer::RendererBackend {
 		*/
 		virtual ~Renderer();
 
+		//[-------------------------------------------------------]
+		//[ D3D11 core                                            ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns the DXGI factory 1 instance
+		*
+		*  @return
+		*    The DXGI factory 1 instance, can be a null pointer
+		*/
+		IDXGIFactory1 *GetDXGIFactory1() const;
+
+		/**
+		*  @brief
+		*    Returns the used feature level
+		*
+		*  @return
+		*    Used feature level
+		*
+		*  @note
+		*    - Feature level overview: http://msdn.microsoft.com/en-us/library/ff476876%28v=vs.85%29.aspx
+		*/
+		D3D_FEATURE_LEVEL GetD3DFeatureLevel() const;
+
+		/**
+		*  @brief
+		*    Returns the used D3D11 device context
+		*
+		*  @return
+		*    Used D3D11 device context, can be a null pointer
+		*/
+		ID3D11DeviceContext	*GetD3D11DeviceContext() const;
+
+		/**
+		*  @brief
+		*    Returns the used D3D11 device
+		*
+		*  @return
+		*    Used D3D11 device, can be a null pointer
+		*/
+		ID3D11Device *GetD3D11Device() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -112,10 +154,13 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		D3D_FEATURE_LEVEL	 m_nD3DFeatureLevel;	/**< The used feature level (Feature level overview: http://msdn.microsoft.com/en-us/library/ff476876%28v=vs.85%29.aspx) */
-		IDXGIFactory1		*m_pDXGIFactory1;		/**< DXGI factory 1 instance, null pointer on error */
-		ID3D11DeviceContext	*m_pD3D11DeviceContext;	/**< D3D11 device context */
-		ID3D11Device		*m_pD3D11Device;		/**< D3D11 device, null pointer on error */
+		// D3D11 core
+		IDXGIFactory1			*m_pDXGIFactory1;			/**< DXGI factory 1 instance, null pointer on error */
+		D3D_FEATURE_LEVEL		 m_nD3DFeatureLevel;		/**< The used feature level (Feature level overview: http://msdn.microsoft.com/en-us/library/ff476876%28v=vs.85%29.aspx) */
+		ID3D11DeviceContext		*m_pD3D11DeviceContext;		/**< D3D11 device context */
+		ID3D11Device			*m_pD3D11Device;			/**< D3D11 device, null pointer on error */
+		ID3D11RenderTargetView	*m_pD3D11RenderTargetView;	/**< Current D3D11 render target view, can be a null pointer */
+		// Misc
 		FontManager			*m_pFontManager;		/**< D3D11 renderer font manager, always valid! */
 		PLGeneral::uint32	 m_nViewPortX;
 		PLGeneral::uint32	 m_nViewPortY;
@@ -171,6 +216,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		//[-------------------------------------------------------]
 		virtual bool BeginScene();
 		virtual bool EndScene();
+		virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
 		virtual bool GetDepthBounds(float &fZMin, float &fZMax) const;
 		virtual bool SetDepthBounds(float fZMin = 0.0f, float fZMax = 1.0f);
 		virtual void GetColorMask(bool &bRed, bool &bGreen, bool &bBlue, bool &bAlpha) const;

@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/SurfaceWindow.h>
+#include "PLRendererD3D11/PLRendererD3D11.h"
 
 
 //[-------------------------------------------------------]
@@ -62,6 +63,33 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*    Destructor
 		*/
 		virtual ~SurfaceWindow();
+
+		/**
+		*  @brief
+		*    Returns the DXGI swap chain
+		*
+		*  @return
+		*    The DXGI swap chain, can be a null pointer
+		*/
+		IDXGISwapChain *GetDXGISwapChain() const;
+
+		/**
+		*  @brief
+		*    Returns the D3D11 texture 2D back buffer
+		*
+		*  @return
+		*    The D3D11 texture 2D back buffer, can be a null pointer
+		*/
+		ID3D11Texture2D *GetD3D11Texture2DBackBuffer() const;
+
+		/**
+		*  @brief
+		*    Returns the D3D11 render target view
+		*
+		*  @return
+		*    The D3D11 render target view, can be a null pointer
+		*/
+		ID3D11RenderTargetView *GetD3D11RenderTargetView() const;
 
 
 	//[-------------------------------------------------------]
@@ -106,6 +134,16 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		virtual bool MakeCurrent(PLGeneral::uint8 nFace = 0);
 		virtual bool UnmakeCurrent();
 		virtual bool Present();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		IDXGISwapChain			*m_pDXGISwapChain;				/**< DXGI swap chain, can be a null pointer */
+		DXGI_SWAP_CHAIN_DESC	 m_sDXGISwapChainDescription;	/**< DXGI swap chain description */
+		ID3D11Texture2D			*m_pD3D11Texture2DBackBuffer;	/**< D3D11 texture 2D back buffer, can be a null pointer */
+		ID3D11RenderTargetView	*m_pD3D11RenderTargetView;		/**< D3D11 render target view, can be a null pointer */
 
 
 };
