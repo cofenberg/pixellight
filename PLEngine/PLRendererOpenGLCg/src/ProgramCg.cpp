@@ -464,7 +464,9 @@ String ProgramCg::GetCompiledProgram()
 {
 	// Get the Cg combined program - this also ensures that the program is linked
 	CGprogram pCgCombinedProgram = GetCgCombinedProgram();
-	if (pCgCombinedProgram) {
+
+	// Is there a Cg combined program? If so, is it compiled? (... when not using "cgIsProgramCompiled()", "cgGetProgramString()" may just crash in case the program is not compiled...)
+	if (pCgCombinedProgram && cgIsProgramCompiled(pCgCombinedProgram)) {
 		// Ask Cg for the string for the compiled program
 		return cgGetProgramString(pCgCombinedProgram, CG_COMPILED_PROGRAM);
 	} else {

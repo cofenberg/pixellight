@@ -2,6 +2,9 @@
 [CO]
 - PLRendererOpenGL & PLRendererOpenGLES: When there's an image without data, e.g. "glTexImage2D()" is called with nullptr instead of
   "ImageBuffer::GetData()" which creates internal image data although it's not required
+PLRendererOpenGLCg:
+- "ProgramCg::GetCompiledProgram()": ... when not using "cgIsProgramCompiled()", "cgGetProgramString()" may just crash in case the
+  program is not compiled... crashs are never a good thing, so I added a check...
 
 
 
