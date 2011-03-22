@@ -102,7 +102,6 @@ class ContextWindows : public Context {
 		virtual bool IsValid() const;
 		virtual void MakeDummyCurrent() const;
 		virtual bool QueryDisplayModes(PLGeneral::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList);
-		virtual void SwapInterval(bool bEnabled);
 
 
 	//[-------------------------------------------------------]

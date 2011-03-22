@@ -341,12 +341,6 @@ bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &ls
 	return true;
 }
 
-void ContextWindows::SwapInterval(bool bEnabled)
-{
-	if (m_pRenderer->IsWGL_EXT_swap_control()) 
-		wglSwapIntervalEXT(bEnabled);
-}
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

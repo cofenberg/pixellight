@@ -123,6 +123,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		::Window			m_nWindow;
 		XF86VidModeModeInfo	m_sDesktopModeBackup;	/**< Saved desktop-resolution before switching modes */
 	#endif
+		int	  m_nSwapInterval;		/**< The swap interval (vertical synchronisation), <0 means not yet set */
 		float m_fGammaBackup[3];	/**< Gamma settings at the time the render window was initialized */
 		bool  m_bGammaChanged;		/**< Was the gamma changed by using "SetGamma"? */
 

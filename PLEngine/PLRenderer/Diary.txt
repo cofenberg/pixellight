@@ -7,6 +7,7 @@ PLRendererOpenGLCg:
   program is not compiled... crashs are never a good thing, so I added a check...
 PLRenderer:
 - Added "Program::IsValid()"
+- Added "Renderer::GetSwapInterval()" and "Renderer::SetSwapInterval()"
 
 
 

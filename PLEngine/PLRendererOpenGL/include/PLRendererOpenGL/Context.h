@@ -89,15 +89,6 @@ class Context {
 		*/
 		virtual bool QueryDisplayModes(PLGeneral::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) = 0;
 
-		/**
-		*  @brief
-		*    Enables/disables VSync
-		*
-		*  @param[in] bEnabled
-		*    Use VSync?
-		*/
-		virtual void SwapInterval(bool bEnabled) = 0;
-
 
 	//[-------------------------------------------------------]
 	//[ Protected methods                                     ]

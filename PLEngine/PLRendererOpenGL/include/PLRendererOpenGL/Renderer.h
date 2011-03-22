@@ -213,15 +213,6 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 
 		/**
 		*  @brief
-		*    Enables/disables VSync
-		*
-		*  @param[in] bEnabled
-		*    Use VSync?
-		*/
-		void SwapInterval(bool bEnabled);
-
-		/**
-		*  @brief
 		*    Restores the device states
 		*/
 		void RestoreDeviceStates();
@@ -235,7 +226,6 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		FixedFunctions												*m_pFixedFunctions;					/**< Fixed functions interface implementation, can be a null pointer */
 		FontManager													*m_pFontManager;					/**< OpenGL renderer font manager, always valid! */
 		bool														 m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
-		bool														 m_bCurrentSwapInterval;			/**< Is swap interval currently enabled? */
 		PLGeneral::uint32											 m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
 		PLGeneral::String											 m_sDefaultShaderLanguage;			/**< Name of the default shader language to use */
 		PLGeneral::List<const PLCore::Class*>						 m_lstShaderLanguages;				/**< List of available shader language classes */
@@ -261,7 +251,6 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		virtual PLRenderer::FontManager &GetFontManager() const;
 		virtual void BackupDeviceObjects();
 		virtual void RestoreDeviceObjects();
-		virtual void Update();
 
 		//[-------------------------------------------------------]
 		//[ Create surface/resource                               ]

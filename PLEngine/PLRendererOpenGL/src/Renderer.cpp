@@ -82,7 +82,6 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this)),
 	m_bSceneRendering(false),
-	m_bCurrentSwapInterval(false),
 	m_nMultisampleAntialiasingSamples(nMultisampleAntialiasingSamples),
 	m_nTextureBufferTypes(nullptr),
 	m_ppPrevTextureBuffer(nullptr)
@@ -127,8 +126,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_sCapabilities.nStencilBits = nStencilBits;
 
 	// Init data
-	m_bSceneRendering      = false;
-	m_bCurrentSwapInterval = false;
+	m_bSceneRendering = false;
 
 	// The most important first: Create OpenGL render context
 	PL_LOG(Info, "Create OpenGL render context")
@@ -773,9 +771,6 @@ void Renderer::GeneralSettings()
 	glPixelStorei(GL_PACK_ROW_LENGTH,    0);
 	glPixelStorei(GL_PACK_SWAP_BYTES,    GL_FALSE);
 
-	// [TODO] Update enable/disable VSync
-	// SwapInterval(Config::GetInstance()->GetVar("PLScene::RendererConfig", "VSync").GetBool());
-
 	// Point parameters supported?
 	if (m_sCapabilities.bPointParameters) {
 		// [TEST]
@@ -861,17 +856,6 @@ GLuint Renderer::GetCombinedMinMipFilter(uint32 nStage)
 
 	// Fallback, should never get here!
 	return GL_NEAREST;
-}
-
-/**
-*  @brief
-*    Enables/disables VSync
-*/
-void Renderer::SwapInterval(bool bEnabled)
-{
-	if (m_pContext)
-		m_pContext->SwapInterval(bEnabled);
-	m_bCurrentSwapInterval = bEnabled;
 }
 
 /**
@@ -1090,17 +1074,6 @@ void Renderer::RestoreDeviceObjects()
 		// Restore device states
 		RestoreDeviceStates();
 	}
-}
-
-void Renderer::Update()
-{
-	// Call base implementation
-	PLRenderer::RendererBackend::Update();
-
-	// [TODO] Update enable/disable VSync
-//	bool bSwapInterval = Config::GetInstance()->GetVar("PLScene::RendererConfig", "VSync").GetBool();
-//	if (m_bCurrentSwapInterval != bSwapInterval)
-//		SwapInterval(bSwapInterval);
 }
 
 

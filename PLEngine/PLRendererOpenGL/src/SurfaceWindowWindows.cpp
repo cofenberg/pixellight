@@ -369,7 +369,16 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 
 bool SurfaceWindow::Present()
 {
-	return m_hDC && SwapBuffers(m_hDC) == TRUE;
+	// Swap interval (vertical synchronisation) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
+	if (m_nSwapInterval != static_cast<int>(cRenderer.GetSwapInterval())) {
+		m_nSwapInterval = cRenderer.GetSwapInterval();
+		if (cRenderer.IsWGL_EXT_swap_control()) 
+			wglSwapIntervalEXT(m_nSwapInterval);
+	}
+
+	// Swap buffers
+	return (m_hDC && SwapBuffers(m_hDC) == TRUE);
 }
 
 

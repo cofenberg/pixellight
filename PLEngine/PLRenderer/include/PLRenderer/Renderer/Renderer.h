@@ -844,6 +844,30 @@ class Renderer : public PLCore::Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
+		*    Returns the swap interval (vertical synchronisation)
+		*
+		*  @return
+		*    The swap interval
+		*
+		*  @note
+		*    - Please note that the swap interval is only a hint and can be overwritten by the driver settings!
+		*/
+		virtual PLGeneral::uint32 GetSwapInterval() const = 0;
+
+		/**
+		*  @brief
+		*    Sets the swap interval (vertical synchronisation)
+		*
+		*  @param[in] nSwapInterval
+		*    The swap interval, default value is 1
+		*
+		*  @see
+		*    - GetSwapInterval()
+		*/
+		virtual void SetSwapInterval(PLGeneral::uint32 nSwapInterval = 1) = 0;
+
+		/**
+		*  @brief
 		*    Begins a scene
 		*
 		*  @return

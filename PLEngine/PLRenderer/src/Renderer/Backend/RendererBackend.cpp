@@ -125,6 +125,7 @@ uint32 *RendererBackend::GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFor
 */
 RendererBackend::RendererBackend(EMode nMode) :
 	m_pDrawHelpers(nullptr),
+	m_nSwapInterval(1),
 	m_nMode(nMode),
 	m_pRendererContext(nullptr)
 {
@@ -667,6 +668,16 @@ int RendererBackend::GetSamplerState(uint32 nStage, Sampler::Enum nState) const
 //[-------------------------------------------------------]
 //[ Misc                                                  ]
 //[-------------------------------------------------------]
+uint32 RendererBackend::GetSwapInterval() const
+{
+	return m_nSwapInterval;
+}
+
+void RendererBackend::SetSwapInterval(uint32 nSwapInterval)
+{
+	m_nSwapInterval = nSwapInterval;
+}
+
 const Rectangle &RendererBackend::GetViewport(float *pfMinZ, float *pfMaxZ) const
 {
 	if (pfMinZ)

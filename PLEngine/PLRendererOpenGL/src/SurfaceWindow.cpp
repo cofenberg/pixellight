@@ -70,6 +70,7 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 	#ifdef LINUX
 		m_nWindow(NULL_HANDLE),
 	#endif
+		m_nSwapInterval(-1),
 		m_bGammaChanged(false)
 {
 	// Initialize gamma backup

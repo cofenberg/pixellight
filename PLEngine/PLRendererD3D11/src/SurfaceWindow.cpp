@@ -230,7 +230,7 @@ bool SurfaceWindow::UnmakeCurrent()
 
 bool SurfaceWindow::Present()
 {
-	return m_pDXGISwapChain ? SUCCEEDED(m_pDXGISwapChain->Present(0, 0)) : false;
+	return m_pDXGISwapChain ? SUCCEEDED(m_pDXGISwapChain->Present(GetRenderer().GetSwapInterval(), 0)) : false;
 }
 
 

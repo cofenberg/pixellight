@@ -62,7 +62,8 @@ SurfaceWindow::~SurfaceWindow()
 */
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
-	m_hSurface(nullptr)
+	m_hSurface(nullptr),
+	m_nSwapInterval(-1)
 {
 	// Init
 	Init();
@@ -179,6 +180,13 @@ bool SurfaceWindow::Present()
 {
 	// Get the OpenGL ES renderer
 	Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
+
+	// Swap interval (vertical synchronisation) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
+	if (m_nSwapInterval != static_cast<int>(cRendererOpenGLES.GetSwapInterval())) {
+		m_nSwapInterval = cRendererOpenGLES.GetSwapInterval();
+		if (cRendererOpenGLES.GetEGLDisplay())
+			eglSwapInterval(cRendererOpenGLES.GetEGLDisplay(), m_nSwapInterval);
+	}
 
 	// Swap buffers
 	return (cRendererOpenGLES.GetEGLDisplay() && m_hSurface && eglSwapBuffers(cRendererOpenGLES.GetEGLDisplay(), m_hSurface) == EGL_TRUE);

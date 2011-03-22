@@ -232,8 +232,17 @@ bool SurfaceWindow::Present()
 	// First check if there's a window
 	if (m_nWindow) {
 		// Get the Linux OpenGL render context
-		ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
+		ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
 		if (pContextLinux) {
+			// Swap interval (vertical synchronisation) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
+			if (m_nSwapInterval != static_cast<int>(cRenderer.GetSwapInterval())) {
+				m_nSwapInterval = cRenderer.GetSwapInterval();
+				if (cRenderer.IsGLX_SGI_swap_control())
+					glXSwapIntervalSGI(m_nSwapInterval);
+			}
+
+			// Swap buffers
 			glXSwapBuffers(pContextLinux->GetDisplay(), m_nWindow);
 		}
 

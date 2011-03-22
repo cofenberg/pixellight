@@ -225,12 +225,6 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 	return false;
 }
 
-void ContextLinux::SwapInterval(bool bEnabled)
-{
-	if (m_pRenderer->IsGLX_SGI_swap_control())
-		glXSwapIntervalSGI(bEnabled);
-}
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

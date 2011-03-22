@@ -261,6 +261,7 @@ class RendererBackend : public Renderer {
 		PLGeneral::Array<PLGeneral::uint32> m_cPLE_TPFWrapper;		/**< TextureBuffer::EPixelFormat */
 
 		// Misc
+		PLGeneral::uint32	m_nSwapInterval;		/**< Swap interval */
 		PLMath::Rectangle	m_cViewportRect;		/**< The current viewport */
 		float				m_fViewPortMinZ;		/**< Viewport min z */
 		float				m_fViewPortMaxZ;		/**< Viewport max z */
@@ -340,6 +341,8 @@ class RendererBackend : public Renderer {
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
+		PLRENDERER_API virtual PLGeneral::uint32 GetSwapInterval() const;
+		PLRENDERER_API virtual void SetSwapInterval(PLGeneral::uint32 nSwapInterval = 1);
 		PLRENDERER_API virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = nullptr, float *pfMaxZ = nullptr) const;
 		PLRENDERER_API virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
 		PLRENDERER_API virtual const PLMath::Rectangle &GetScissorRect() const;
