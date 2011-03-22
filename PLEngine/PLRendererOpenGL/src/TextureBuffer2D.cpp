@@ -131,7 +131,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						if (bUsePreCompressedData)
 							glCompressedTexImage2DARB(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, pImageBuffer->GetCompressedDataSize(), pImageBuffer->GetCompressedData());
 						else
-							glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->GetData());
+							glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 
 						// If compressed internal format, check whether all went fine
 						if (bCompressedFormat) {
@@ -142,12 +142,12 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 								m_nFormat = nImageFormat;
 								pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 								if (pAPIPixelFormat)
-									glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->GetData());
+									glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 							}
 						}
 					} else {
 						// No pre compressed image data can be used
-						gluBuild2DMipmaps(GL_TEXTURE_2D, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->GetData());
+						gluBuild2DMipmaps(GL_TEXTURE_2D, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 
 						// If compressed internal format, check whether all went fine
 						if (bCompressedFormat) {
@@ -158,7 +158,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 								m_nFormat = nImageFormat;
 								pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 								if (pAPIPixelFormat)
-									gluBuild2DMipmaps(GL_TEXTURE_2D, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->GetData());
+									gluBuild2DMipmaps(GL_TEXTURE_2D, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 							}
 						}
 					}
@@ -186,7 +186,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
 								glCompressedTexImage2DARB(GL_TEXTURE_2D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
 							else
-								glTexImage2D(GL_TEXTURE_2D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->GetData());
+								glTexImage2D(GL_TEXTURE_2D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 
 							// If compressed internal format, check whether all went fine
 							if (bCompressedFormat) {
@@ -197,7 +197,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 									m_nFormat = nImageFormat;
 									pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 									if (pAPIPixelFormat)
-										glTexImage2D(GL_TEXTURE_2D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->GetData());
+										glTexImage2D(GL_TEXTURE_2D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 								}
 							}
 						}

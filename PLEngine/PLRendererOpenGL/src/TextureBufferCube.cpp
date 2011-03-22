@@ -150,7 +150,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 									if (bUsePreCompressedData && pFaceImageBuffer->HasCompressedData())
 										glCompressedTexImage2DARB(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, pFaceImageBuffer->GetCompressedDataSize(), pFaceImageBuffer->GetCompressedData());
 									else
-										glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->GetData());
+										glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
 
 									// If compressed internal format, check whether all went fine
 									if (bCompressedFormat) {
@@ -161,12 +161,12 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 											m_nFormat = nImageFormat;
 											pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 											if (pAPIPixelFormat)
-												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->GetData());
+												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
 										}
 									}
 								} else {
 									// No pre compressed image data can be used
-									gluBuild2DMipmaps(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, *pAPIPixelFormat, m_nSize, m_nSize, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->GetData());
+									gluBuild2DMipmaps(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, *pAPIPixelFormat, m_nSize, m_nSize, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
 
 									// If compressed internal format, check whether all went fine
 									if (bCompressedFormat) {
@@ -177,7 +177,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 											m_nFormat = nImageFormat;
 											pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 											if (pAPIPixelFormat)
-												gluBuild2DMipmaps(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, *pAPIPixelFormat, m_nSize, m_nSize, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->GetData());
+												gluBuild2DMipmaps(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, *pAPIPixelFormat, m_nSize, m_nSize, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
 										}
 									}
 								}
@@ -200,7 +200,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 									if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
 										glCompressedTexImage2DARB(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
 									else
-										glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->GetData());
+										glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 
 									// If compressed internal format, check whether all went fine
 									if (bCompressedFormat) {
@@ -211,7 +211,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 											m_nFormat = nImageFormat;
 											pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 											if (pAPIPixelFormat)
-												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->GetData());
+												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 										}
 									}
 								}

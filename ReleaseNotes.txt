@@ -5,6 +5,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer
 - Change: PLMath: The operators <, >, <= and >= of Vector2i, Vector3i, Vector2, Vector3 and Vector4 are now using a lexicographical order
 - Change (Windows): The PL SDK now comes with the new "Microsoft Visual C++ 2010 SP1 Redistributable Package" and is build with MSVC 2010 SP1
+- Change: PLRendererOpenGL & PLRendererOpenGLES optimization: Passing "empty" images to the GPU no longer creates internal image data
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 
 

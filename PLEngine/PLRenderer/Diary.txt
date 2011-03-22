@@ -1,3 +1,10 @@
+>> 22.03.2011
+[CO]
+- PLRendererOpenGL & PLRendererOpenGLES: When there's an image without data, e.g. "glTexImage2D()" is called with nullptr instead of
+  "ImageBuffer::GetData()" which creates internal image data although it's not required
+
+
+
 >> 18.03.2011
 [CO]
 PLRendererD3D11:
