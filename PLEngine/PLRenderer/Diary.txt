@@ -5,6 +5,8 @@
 PLRendererOpenGLCg:
 - "ProgramCg::GetCompiledProgram()": ... when not using "cgIsProgramCompiled()", "cgGetProgramString()" may just crash in case the
   program is not compiled... crashs are never a good thing, so I added a check...
+PLRenderer:
+- Added "Program::IsValid()"
 
 
 

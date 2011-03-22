@@ -460,6 +460,15 @@ bool ProgramCg::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	return true;
 }
 
+bool ProgramCg::IsValid()
+{
+	// Get the Cg combined program - this also ensures that the program is linked
+	CGprogram pCgCombinedProgram = GetCgCombinedProgram();
+
+	// Is there a Cg combined program? If so, is it compiled?
+	return (pCgCombinedProgram && cgIsProgramCompiled(pCgCombinedProgram));
+}
+
 String ProgramCg::GetCompiledProgram()
 {
 	// Get the Cg combined program - this also ensures that the program is linked

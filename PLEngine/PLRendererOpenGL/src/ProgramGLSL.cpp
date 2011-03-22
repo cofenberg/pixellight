@@ -452,6 +452,15 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	return true;
 }
 
+bool ProgramGLSL::IsValid()
+{
+	// Get the OpenGL program - this also ensures that the program is linked
+	const GLuint nOpenGLProgram = GetOpenGLProgram();
+
+	// Is the OpenGL program linked?
+	return IsLinked();
+}
+
 String ProgramGLSL::GetCompiledProgram()
 {
 	// GL_ARB_get_program_binary extension required

@@ -63,6 +63,7 @@ namespace PLRenderer {
 *
 *  @note
 *    - While each program must have a vertex shader and a fragment shader, a geometry shader is optional
+*    - The program is using lazy evaluation, so the program is only compiled & linked when really required
 */
 class Program : public Resource {
 
@@ -160,6 +161,15 @@ class Program : public Resource {
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
 		*/
 		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader) = 0;
+
+		/**
+		*  @brief
+		*    Returns whether or not the program is valid (successfully compiled, linked and ready to be used)
+		*
+		*  @return
+		*    'true' if the program is valid, else 'false'
+		*/
+		virtual bool IsValid() = 0;
 
 		/**
 		*  @brief

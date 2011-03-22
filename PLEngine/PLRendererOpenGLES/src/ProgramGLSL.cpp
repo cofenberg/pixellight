@@ -392,6 +392,15 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 	return true;
 }
 
+bool ProgramGLSL::IsValid()
+{
+	// Get the OpenGL ES program - this also ensures that the program is linked
+	const GLuint nOpenGLESProgram = GetOpenGLESProgram();
+
+	// Is the OpenGL ES program linked?
+	return IsLinked();
+}
+
 String ProgramGLSL::GetCompiledProgram()
 {
 	// [TODO] How to retrieve the binary from the program object using OpenGL ES 2.0? I wasn't able to figure it out...
@@ -447,7 +456,7 @@ bool ProgramGLSL::MakeCurrent()
 	// Get the OpenGL ES program - this also ensures that the program is linked
 	const GLuint nOpenGLESProgram = GetOpenGLESProgram();
 
-	// Is the OpenGL program linked?
+	// Is the OpenGL ES program linked?
 	if (IsLinked()) {
 		// Make this to the currently used program
 		glUseProgram(nOpenGLESProgram);
