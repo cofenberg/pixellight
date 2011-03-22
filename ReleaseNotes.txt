@@ -7,7 +7,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change (Windows): The PL SDK now comes with the new "Microsoft Visual C++ 2010 SP1 Redistributable Package" and is build with MSVC 2010 SP1
 - Change: PLRendererOpenGL & PLRendererOpenGLES optimization: Passing "empty" images to the GPU no longer creates internal image data
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
-- Bugfix: The swap interval (vertical syncronisation) setting is now working (as long as it is not overwritten by the GPU driver)
+- Bugfix: The swap interval (vertical synchronisation) setting is now working (as long as it is not overwritten by the GPU driver)
 
 
 Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)
