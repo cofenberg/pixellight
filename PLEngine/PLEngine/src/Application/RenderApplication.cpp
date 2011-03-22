@@ -399,6 +399,9 @@ void RenderApplication::OnCreateRendererContext()
 		// Error!
 		PL_LOG(Error, "Can't create renderer context instance: " + sRenderer)
 	} else {
+		// Set the swap interval (vertical synchronisation)
+		m_pRendererContext->GetRenderer().SetSwapInterval(GetConfig().GetVar("PLEngine::RendererConfig", "SwapInterval").GetUInt32());
+
 		// Set texture manager settings
 		TextureManager &cTextureManager = m_pRendererContext->GetTextureManager();
 		cTextureManager.SetTextureQuality			(GetConfig().GetVar("PLEngine::RendererConfig", "TextureQuality").GetFloat());

@@ -104,7 +104,7 @@ RendererConfig::RendererConfig() :
 	DisplayColorBits(this),
 	DisplayFrequency(this),
 	// Misc
-	VSync(this),
+	SwapInterval(this),
 	UseExtensions(this),
 	TextureQuality(this),
 	TextureMipmaps(this),
@@ -140,7 +140,7 @@ RendererConfig::RendererConfig(const RendererConfig &cSource) :
 	DisplayColorBits(this),
 	DisplayFrequency(this),
 	// Misc
-	VSync(this),
+	SwapInterval(this),
 	UseExtensions(this),
 	TextureQuality(this),
 	TextureMipmaps(this),

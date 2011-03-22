@@ -1,3 +1,10 @@
+>> 22.03.2011
+[CO]
+- "PLEngine::RendererConfig": Changed "VSync" into "SwapInterval"
+  -> The swap interval (vertical syncronisation) setting is now working (as long as it is not overwritten by the GPU driver)
+
+
+
 >> 09.03.2011
 [CO]
 - BasicSceneApplication: Because there were some questions within the PL IRC chat room named #pixellight at the Efnet network
