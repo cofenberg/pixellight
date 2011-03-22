@@ -79,9 +79,8 @@ Texture *TextureCreatorBlank2D::Create(TextureManager &cTextureManager, Texture 
 	pTexture = CreateTexture(cTextureManager, pTexture);
 
 	// Create the image
-	Image cImage;
-	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-	pImageBuffer->CreateImage(DataByte, ColorRGB, Vector3i(Width, Height, 1));
+	Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(Width, Height, 1));
+	ImageBuffer *pImageBuffer = cImage.GetBuffer();
 
 	// Get the color
 	const Color4 &cColor = Color.Get();

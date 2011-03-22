@@ -101,9 +101,8 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 			pTexture = CreateTexture(cTextureManager, pTexture);
 
 			// Create the image
-			Image cImage;
-			pImageBuffer = cImage.CreatePart()->CreateMipmap();
-			pImageBuffer->CreateImage(DataByte, ColorGrayscale, Vector3i(XSize, YSize, ZSize));
+			Image cImage = Image::CreateImage(DataByte, ColorGrayscale, Vector3i(XSize, YSize, ZSize));
+			pImageBuffer = cImage.GetBuffer();
 
 			// Create the buffer
 			uint8 *pBuffer = pImageBuffer->GetData();

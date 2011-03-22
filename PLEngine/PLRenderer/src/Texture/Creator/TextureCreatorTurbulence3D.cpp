@@ -86,9 +86,8 @@ Texture *TextureCreatorTurbulence3D::Create(TextureManager &cTextureManager, Tex
 	const Vector3 &vScale = Scale.Get();
 
 	// Create the image
-	Image cImage;
-	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-	pImageBuffer->CreateImage(DataByte, ColorGrayscale, Vector3i(XSize, YSize, ZSize));
+	Image cImage = Image::CreateImage(DataByte, ColorGrayscale, Vector3i(XSize, YSize, ZSize));
+	ImageBuffer *pImageBuffer = cImage.GetBuffer();
 
 	// Create the buffer
 	uint8 *pTurbBuffer = pImageBuffer->GetData();

@@ -83,9 +83,8 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 			pTexture = CreateTexture(cTextureManager, pTexture);
 
 			// Create the image
-			Image cImage;
-			ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-			pImageBuffer->CreateImage(DataByte, ColorGrayscale, Vector3i(16, 16, 256));
+			Image cImage = Image::CreateImage(DataByte, ColorGrayscale, Vector3i(16, 16, 256));
+			ImageBuffer *pImageBuffer = cImage.GetBuffer();
 
 			const uint8 *src = p2DImageBuffer->GetData();
 			float avg[256];

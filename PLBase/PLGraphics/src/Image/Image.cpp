@@ -39,6 +39,22 @@ namespace PLGraphics {
 
 
 //[-------------------------------------------------------]
+//[ Public static functions                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Create image
+*/
+Image Image::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression)
+{
+	Image cImage;
+	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+	return cImage;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**

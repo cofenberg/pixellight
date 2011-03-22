@@ -35,17 +35,22 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLMath {
+	class Vector3i;
+}
+namespace PLGraphics {
+	class ImagePart;
+	class ImageBuffer;
+	class ImageEffect;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLGraphics {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class ImagePart;
-class ImageBuffer;
-class ImageEffect;
 
 
 //[-------------------------------------------------------]
@@ -54,8 +59,54 @@ class ImageEffect;
 /**
 *  @brief
 *    Image class
+*
+*  @remarks
+*  @verbatim
+*    Usage example:
+*
+*    // Allocate image
+*    Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 32, 1));
+*    ImageBuffer *pImageBuffer = cImage.GetBuffer();
+*
+*    // Fill image
+*    uint8 *pData = pImageBuffer->GetData();
+*    for (int i=0; i<pImageBuffer->GetSize().x*pImageBuffer->GetSize().y; i++, pData++)
+*        *pData = static_cast<uint8>(Math::GetRand() % 255);
+*  @endverbatim
 */
 class Image : public PLCore::Loadable {
+
+
+	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Create image
+		*
+		*  @param[in] nDataFormat
+		*    Desired data format
+		*  @param[in] nColorFormat
+		*    Desired color format
+		*  @param[in] vSize
+		*    Image size
+		*  @param[in] nCompression
+		*    Compression type
+		*
+		*  @remarks
+		*    Please note that a call to CreateImage() will not immediatly create the image buffer itself.
+		*    The image buffer is created on the first call to ImageBuffer::GetData() or ImageBuffer::GetCompressedData() respectively.
+		*
+		*    This is only an ease of use method doing nothing more than:
+		*  @verbatim
+		*    Usage example:
+		*    Image cImage;
+		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*  @endverbatim
+		*/
+		PLGRAPHICS_API static Image CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
 
 
 	//[-------------------------------------------------------]

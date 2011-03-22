@@ -306,9 +306,8 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 					const uint32 nHeight = 64;
 
 					// Create the image
-					Image cImage;
-					ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-					pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(nWidth, nHeight, 1));
+					Image cImage = Image::CreateImage(DataFloat, ColorRGBA, Vector3i(nWidth, nHeight, 1));
+					ImageBuffer *pImageBuffer = cImage.GetBuffer();
 
 					// Create the texture data
 					float *pfData = reinterpret_cast<float*>(pImageBuffer->GetData());

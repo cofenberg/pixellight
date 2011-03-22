@@ -466,9 +466,7 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			if (!m_pRenderTarget) {
 				m_pRenderTarget = cRenderer.CreateSurfaceTextureBufferRectangle(vRTSize, nInternalFormat, SurfaceTextureBuffer::NoMultisampleAntialiasing, 4);
 				{ // Create color target 1, 2 and 3
-					Image cImage;
-					ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-					pImageBuffer->CreateImage(DataFloat, ColorRGBA, Vector3i(vRTSize.x, vRTSize.y, 1));
+					Image cImage = Image::CreateImage(DataFloat, ColorRGBA, Vector3i(vRTSize.x, vRTSize.y, 1));
 					// [TODO] Currently, I just assume a real rectangle instance... find a better way!
 					m_pColorTarget1 = static_cast<TextureBufferRectangle*>(cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget));
 					m_pColorTarget2 = static_cast<TextureBufferRectangle*>(cRenderer.CreateTextureBufferRectangle(cImage, nInternalFormat, TextureBuffer::RenderTarget));
