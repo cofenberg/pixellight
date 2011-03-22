@@ -395,7 +395,7 @@ bool ProgramGLSL::SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader)
 bool ProgramGLSL::IsValid()
 {
 	// Get the OpenGL ES program - this also ensures that the program is linked
-	const GLuint nOpenGLESProgram = GetOpenGLESProgram();
+	GetOpenGLESProgram();
 
 	// Is the OpenGL ES program linked?
 	return IsLinked();

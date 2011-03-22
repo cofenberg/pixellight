@@ -89,12 +89,18 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 		m_pRenderTarget = cRenderer.CreateSurfaceTextureBuffer2D(Vector2i(64, 64), TextureBuffer::R8G8B8, SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing, nMaxColorTargets);
 		if (m_pRenderTarget && nMaxColorTargets > 1) {
 			// Set additional color render targets
-			if (nMaxColorTargets > 1 && !m_pColorTarget1)
-				m_pColorTarget1 = cRenderer.CreateTextureBuffer2D(Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 64, 1)), TextureBuffer::Unknown, TextureBuffer::RenderTarget);
-			if (nMaxColorTargets > 2 && !m_pColorTarget2)
-				m_pColorTarget2 = cRenderer.CreateTextureBuffer2D(Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 64, 1)), TextureBuffer::Unknown, TextureBuffer::RenderTarget);
-			if (nMaxColorTargets > 3 && !m_pColorTarget3)
-				m_pColorTarget3 = cRenderer.CreateTextureBuffer2D(Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 64, 1)), TextureBuffer::Unknown, TextureBuffer::RenderTarget);
+			if (nMaxColorTargets > 1 && !m_pColorTarget1) {
+				Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 64, 1));
+				m_pColorTarget1 = cRenderer.CreateTextureBuffer2D(cImage, TextureBuffer::Unknown, TextureBuffer::RenderTarget);
+			}
+			if (nMaxColorTargets > 2 && !m_pColorTarget2) {
+				Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 64, 1));
+				m_pColorTarget2 = cRenderer.CreateTextureBuffer2D(cImage, TextureBuffer::Unknown, TextureBuffer::RenderTarget);
+			}
+			if (nMaxColorTargets > 3 && !m_pColorTarget3) {
+				Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 64, 1));
+				m_pColorTarget3 = cRenderer.CreateTextureBuffer2D(cImage, TextureBuffer::Unknown, TextureBuffer::RenderTarget);
+			}
 		}
 	}
 
