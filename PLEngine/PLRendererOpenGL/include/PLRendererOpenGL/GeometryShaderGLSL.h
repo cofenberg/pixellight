@@ -92,7 +92,20 @@ class GeometryShaderGLSL : public PLRenderer::GeometryShader {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint m_nOpenGLGeometryShader;	/**< OpenGL geometry shader, always valid! */
+		EInputPrimitiveType	 m_nInputPrimitiveType;		/**< Input primitive type */
+		EOutputPrimitiveType m_nOutputPrimitiveType;	/**< Output primitive type */
+		PLGeneral::uint32	 m_nNumOfOutputVertices;	/**< Num of output vertices */
+		GLuint				 m_nOpenGLGeometryShader;	/**< OpenGL geometry shader, always valid! */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::GeometryShader functions   ]
+	//[-------------------------------------------------------]
+	public:
+		virtual EInputPrimitiveType GetInputPrimitiveType() const;
+		virtual EOutputPrimitiveType GetOutputPrimitiveType() const;
+		virtual PLGeneral::uint32 GetNumOfOutputVertices() const;
+		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLGeneral::uint32 nNumOfOutputVertices, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
 
 
 	//[-------------------------------------------------------]

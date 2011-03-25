@@ -97,7 +97,7 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 
 		// Set the geometry shader source code
 		if (m_pGeometryShader)
-			m_pGeometryShader->SetSourceCode(sGeometryShaderSourceCode);
+			m_pGeometryShader->SetSourceCode(sGeometryShaderSourceCode, GeometryShader::InputTriangles, GeometryShader::OutputTriangles, 6);
 
 		// Set the fragment shader source code
 		if (m_pFragmentShader)

@@ -404,12 +404,59 @@ bool ProgramGLSL::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 		// Attached within "ProgramGLSL::GetOpenGLProgram()" on demand
 		m_bGeometryShaderAttached = false;
 
-		// [TODO] Add methods
-		// This settings will be used as soon as the OpenGL program get's linked, after linking the program, they are fixed
-		glProgramParameteriEXT(m_nOpenGLProgram, GL_GEOMETRY_INPUT_TYPE_EXT,  GL_TRIANGLES);
-		glProgramParameteriEXT(m_nOpenGLProgram, GL_GEOMETRY_OUTPUT_TYPE_EXT, GL_TRIANGLE_STRIP);
-		GLint nTemp = 0;
-		glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES_EXT, &nTemp);
+		// Set the input primitive type
+		GLint nTemp;
+		switch (pGeometryShader->GetInputPrimitiveType()) {
+			case PLRenderer::GeometryShader::InputPoints:
+				nTemp = GL_POINTS;
+				break;
+
+			case PLRenderer::GeometryShader::InputLines:
+				nTemp = GL_LINES;
+				break;
+
+			case PLRenderer::GeometryShader::InputLinesAdjacency:
+				nTemp = GL_LINES_ADJACENCY_EXT;
+				break;
+
+			case PLRenderer::GeometryShader::InputTriangles:
+				nTemp = GL_TRIANGLES;
+				break;
+
+			case PLRenderer::GeometryShader::InputTrianglesAdjacency:
+				nTemp = GL_TRIANGLES_ADJACENCY_EXT;
+				break;
+
+			default:
+				nTemp = GL_TRIANGLES;
+				break;
+		}
+		glProgramParameteriEXT(m_nOpenGLProgram, GL_GEOMETRY_INPUT_TYPE_EXT, nTemp);
+
+		// Set the output primitive type
+		switch (pGeometryShader->GetOutputPrimitiveType()) {
+			case PLRenderer::GeometryShader::OutputPoints:
+				nTemp = GL_POINTS;
+				break;
+
+			case PLRenderer::GeometryShader::OutputLines:
+				nTemp = GL_LINE_STRIP;
+				break;
+
+			case PLRenderer::GeometryShader::OutputTriangles:
+				nTemp = GL_TRIANGLE_STRIP;
+				break;
+
+			default:
+				nTemp = GL_TRIANGLE_STRIP;
+				break;
+		}
+		glProgramParameteriEXT(m_nOpenGLProgram, GL_GEOMETRY_OUTPUT_TYPE_EXT, nTemp);
+
+		// Set the number of output vertices
+		nTemp = pGeometryShader->GetNumOfOutputVertices();
+		if (!nTemp)
+			glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES_EXT, &nTemp);	// Maximum possible number of output vertices should be used
 		glProgramParameteriEXT(m_nOpenGLProgram, GL_GEOMETRY_VERTICES_OUT_EXT, nTemp);
 
 		// Denote that a program relink is required

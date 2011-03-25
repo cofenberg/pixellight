@@ -101,9 +101,22 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		CGprofile		  m_pCgProfile;			/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
-		PLGeneral::String m_sEntry;				/**< User defined entry point */
-		CGprogram		  m_pCgGeometryProgram;	/**< Cg geometry program, can be a null pointer */
+		EInputPrimitiveType	 m_nInputPrimitiveType;		/**< Input primitive type */
+		EOutputPrimitiveType m_nOutputPrimitiveType;	/**< Output primitive type */
+		PLGeneral::uint32	 m_nNumOfOutputVertices;	/**< Num of output vertices */
+		CGprofile			 m_pCgProfile;				/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
+		PLGeneral::String	 m_sEntry;					/**< User defined entry point */
+		CGprogram			 m_pCgGeometryProgram;		/**< Cg geometry program, can be a null pointer */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::GeometryShader functions   ]
+	//[-------------------------------------------------------]
+	public:
+		virtual EInputPrimitiveType GetInputPrimitiveType() const;
+		virtual EOutputPrimitiveType GetOutputPrimitiveType() const;
+		virtual PLGeneral::uint32 GetNumOfOutputVertices() const;
+		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLGeneral::uint32 nNumOfOutputVertices, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
 
 
 	//[-------------------------------------------------------]

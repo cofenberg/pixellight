@@ -48,6 +48,33 @@ class GeometryShader : public Shader {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Input primitive type
+		*/
+		enum EInputPrimitiveType {
+			InputPoints             =  0,	/**< List of point primitives */
+			InputLines              =  1,	/**< List of line or line strip primitives */
+			InputLinesAdjacency     =  2,	/**< List of line with adjacency or line strip with adjacency primitives */
+			InputTriangles          =  3,	/**< List of triangle or triangle strip primitives */
+			InputTrianglesAdjacency =  4	/**< List of triangle with adjacency or triangle strip with adjacency primitives */
+		};
+
+		/**
+		*  @brief
+		*    Output primitive type
+		*/
+		enum EOutputPrimitiveType {
+			OutputPoints    =  0,	/**< A list of of point primitives */
+			OutputLines     =  1,	/**< A list of line primitives */
+			OutputTriangles =  2	/**< A list of triangle primitives */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -56,6 +83,71 @@ class GeometryShader : public Shader {
 		*    Destructor
 		*/
 		PLRENDERER_API virtual ~GeometryShader();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual GeometryShader functions               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the input primitive type
+		*
+		*  @return
+		*    The input primitive type
+		*/
+		virtual EInputPrimitiveType GetInputPrimitiveType() const = 0;
+
+		/**
+		*  @brief
+		*    Returns the output primitive type
+		*
+		*  @return
+		*    The output primitive type
+		*/
+		virtual EOutputPrimitiveType GetOutputPrimitiveType() const = 0;
+
+		/**
+		*  @brief
+		*    Returns the number of output vertices
+		*
+		*  @return
+		*    The number of output vertices, 0 if the maximum possible number of output vertices should be used
+		*/
+		virtual PLGeneral::uint32 GetNumOfOutputVertices() const = 0;
+
+		/**
+		*  @brief
+		*    Sets the geometry shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Geometry shader source code, usually blank ASCII code
+		*  @param[in] nInputPrimitiveType
+		*    Input primitive type, for "Shader::SetSourceCode()" "InputTriangles" is used as default
+		*  @param[in] nOutputPrimitiveType
+		*    Output primitive type, for "Shader::SetSourceCode()" "OutputTriangles" is used as default
+		*  @param[in] nNumOfOutputVertices
+		*    Number of output vertices, 0 if the maximum possible number of output vertices should be used, for "Shader::SetSourceCode()" "0" is used as default
+		*  @param[in] sProfile
+		*    Geometry shader profile to use, if empty string, a default profile will be used which usually
+		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    Extended version of "Shader::SetSourceCode()" for geometry shaders allowing also to specify
+		*    the input/output primitives and the number of generated vertices. Please note that not each
+		*    internal implementation may actually need this information, but it's highly recommended to
+		*    provide this information anyway to be able to switch the internal implementation (e.g. using
+		*    OpenGL instead of DirectX and/or Cg instead of HLSL/GLSL).
+		*
+		*  @see
+		*   - "Shader::SetSourceCode()" for additional information
+		*/
+		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLGeneral::uint32 nNumOfOutputVertices, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "") = 0;
 
 
 	//[-------------------------------------------------------]

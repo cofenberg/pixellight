@@ -67,8 +67,42 @@ GLuint GeometryShaderGLSL::GetOpenGLGeometryShader() const
 *    Constructor
 */
 GeometryShaderGLSL::GeometryShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRenderer::GeometryShader(cRenderer),
+	m_nInputPrimitiveType(InputTriangles),
+	m_nOutputPrimitiveType(OutputTriangles),
+	m_nNumOfOutputVertices(0),
 	m_nOpenGLGeometryShader(glCreateShaderObjectARB(GL_GEOMETRY_SHADER_EXT))
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLRenderer::GeometryShader functions   ]
+//[-------------------------------------------------------]
+GeometryShaderGLSL::EInputPrimitiveType GeometryShaderGLSL::GetInputPrimitiveType() const
+{
+	return m_nInputPrimitiveType;
+}
+
+GeometryShaderGLSL::EOutputPrimitiveType GeometryShaderGLSL::GetOutputPrimitiveType() const
+{
+	return m_nOutputPrimitiveType;
+}
+
+uint32 GeometryShaderGLSL::GetNumOfOutputVertices() const
+{
+	return m_nNumOfOutputVertices;
+}
+
+bool GeometryShaderGLSL::SetSourceCode(const String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sEntry)
+{
+	// Backup the input/output primitive type and the number of output vertices
+	m_nInputPrimitiveType  = nInputPrimitiveType;
+	m_nOutputPrimitiveType = nOutputPrimitiveType;
+	m_nNumOfOutputVertices = nNumOfOutputVertices;
+
+	// GLSL doesn't have profiles, so sProfile is just ignored
+	// GLSL doesn't have an user defined entry point, so sEntry is just ignored
+	return ShaderToolsGLSL::SetSourceCode(m_nOpenGLGeometryShader, sSourceCode);
 }
 
 

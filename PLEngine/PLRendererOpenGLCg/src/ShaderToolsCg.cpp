@@ -94,13 +94,14 @@ CGcontext ShaderToolsCg::GetCgContext()
 *  @brief
 *    Creates a Cg program
 */
-CGprogram ShaderToolsCg::CreateCgProgram(CGprofile pCgProfile, const String &sSourceCode, const String &sEntry)
+CGprogram ShaderToolsCg::CreateCgProgram(CGprofile pCgProfile, const String &sSourceCode, const String &sEntry, const String &sArguments)
 {
 	// Set optimal profile options - this will set implicit compiler arguments chosen based on the the available compiler arguments, GPU, and driver
 	cgGLSetOptimalOptions(pCgProfile);
 
 	// Create the program
-	CGprogram pCgProgram = cgCreateProgram(m_pCgContext, CG_SOURCE, sSourceCode.GetASCII(), pCgProfile, sEntry.GetLength() ? sEntry.GetASCII() : "main", nullptr);
+	const char *pszArguments[2] = { sArguments.GetLength() ? sArguments.GetASCII() : nullptr, nullptr };
+	CGprogram pCgProgram = cgCreateProgram(m_pCgContext, CG_SOURCE, sSourceCode.GetASCII(), pCgProfile, sEntry.GetLength() ? sEntry.GetASCII() : "main", pszArguments);
 	if (!pCgProgram) {
 		// Error!
 		PL_LOG(Error, String("Can't create Cg program! Error: ") + cgGetErrorString(cgGetError()))

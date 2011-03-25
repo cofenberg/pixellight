@@ -91,6 +91,8 @@ class ShaderToolsCg {
 		*    Shader source code, usually blank ASCII code
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
+		*  @param[in] sArguments
+		*    Optional arguments
 		*
 		*  @return
 		*    The creates Cg program, a null pointer on error
@@ -98,7 +100,7 @@ class ShaderToolsCg {
 		*  @note
 		*    - There must be at least one reference to the Cg context
 		*/
-		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLGeneral::String &sSourceCode, const PLGeneral::String &sEntry);
+		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLGeneral::String &sSourceCode, const PLGeneral::String &sEntry, const PLGeneral::String &sArguments = "");
 
 
 	//[-------------------------------------------------------]

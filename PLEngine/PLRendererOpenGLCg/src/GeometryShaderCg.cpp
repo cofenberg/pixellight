@@ -81,11 +81,148 @@ CGprogram GeometryShaderCg::GetCgGeometryProgram() const
 *    Constructor
 */
 GeometryShaderCg::GeometryShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::GeometryShader(cRenderer),
+	m_nInputPrimitiveType(InputTriangles),
+	m_nOutputPrimitiveType(OutputTriangles),
+	m_nNumOfOutputVertices(0),
 	m_pCgProfile(CG_PROFILE_UNKNOWN),
 	m_pCgGeometryProgram(nullptr)
 {
 	// Add a Cg context reference
 	ShaderToolsCg::AddCgContextReference();
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLRenderer::GeometryShader functions   ]
+//[-------------------------------------------------------]
+GeometryShaderCg::EInputPrimitiveType GeometryShaderCg::GetInputPrimitiveType() const
+{
+	return m_nInputPrimitiveType;
+}
+
+GeometryShaderCg::EOutputPrimitiveType GeometryShaderCg::GetOutputPrimitiveType() const
+{
+	return m_nOutputPrimitiveType;
+}
+
+uint32 GeometryShaderCg::GetNumOfOutputVertices() const
+{
+	return m_nNumOfOutputVertices;
+}
+
+bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sEntry)
+{
+	// Backup the input/output primitive type and the number of output vertices
+	m_nInputPrimitiveType  = nInputPrimitiveType;
+	m_nOutputPrimitiveType = nOutputPrimitiveType;
+	m_nNumOfOutputVertices = nNumOfOutputVertices;
+
+	// Destroy the previous Cg geometry program, if there's one
+	if (m_pCgGeometryProgram) {
+		cgDestroyProgram(m_pCgGeometryProgram);
+		m_pCgGeometryProgram = nullptr;
+	}
+
+	// Get the profile from a user given string
+	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "glslg"); // We're using a GLSL profile as default so ATI users have resonable shader support when using Cg
+
+	// On unknown or invalid profile, choose a fallback profile
+	if (m_pCgProfile == CG_PROFILE_UNKNOWN || (!cgGetProfileProperty(m_pCgProfile, CG_IS_GEOMETRY_PROFILE) && m_pCgProfile != CG_PROFILE_GLSLG)) {
+		m_pCgProfile = cgGLGetLatestProfile(CG_GL_GEOMETRY);
+		if (m_pCgProfile == CG_PROFILE_UNKNOWN && cgGLIsProfileSupported(CG_PROFILE_GLSLG))
+			m_pCgProfile = CG_PROFILE_GLSLG;
+	}
+
+	// Create the Cg geometry program
+	if (m_pCgProfile != CG_PROFILE_UNKNOWN) {
+		// Ok, the next thing is definitively no fun in Cg because it looks like there's no unified way to do it:
+		// Set the input/output primitive type and the number of output vertices
+		String sArguments;
+		switch (m_pCgProfile) {
+			// GLSL geometry shader
+			case CG_PROFILE_GLSLG:
+				// Can't be handled in here, have a look at "ProgramCg::GetCgCombinedProgram()"
+				// (... at least the Cg documentation doesn't list any GLSL geometry shader attributes, wasn't
+				// able to find any information on this topic in the internet either, so, I just "assume" that
+				// one has to use "glProgramParameteriEXT" ...)
+				break;
+
+			// NV_gpu_program4 geometry program
+			case CG_PROFILE_GP4GP:
+			// NV_gpu_program5 geometry program
+			case CG_PROFILE_GP5GP:
+			// ... as well as later coming profiles...
+			default:
+				// Set the input primitive type
+				switch (m_nInputPrimitiveType) {
+					case InputPoints:
+						sArguments += "-po POINT ";
+						break;
+
+					case InputLines:
+						sArguments += "-po LINE ";
+						break;
+
+					case InputLinesAdjacency:
+						sArguments += "-po LINE_ADJ ";
+						break;
+
+					case InputTriangles:
+						sArguments += "-po TRIANGLE ";
+						break;
+
+					case InputTrianglesAdjacency:
+						sArguments += "-po TRIANGLE_ADJ ";
+						break;
+
+					default:
+						sArguments += "-po TRIANGLE ";
+						break;
+				}
+
+				// Set the output primitive type
+				switch (m_nOutputPrimitiveType) {
+					case OutputPoints:
+						sArguments += "-po POINT_OUT ";
+						break;
+
+					case OutputLines:
+						sArguments += "-po LINE_OUT ";
+						break;
+
+					case OutputTriangles:
+						sArguments += "-po TRIANGLE_OUT ";
+						break;
+
+					default:
+						sArguments += "-po TRIANGLE_OUT ";
+						break;
+				}
+
+				// Set the number of output vertices
+				sArguments += "-po Vertices=";
+				sArguments += m_nNumOfOutputVertices;
+				break;
+		}
+
+		// Create the Cg geometry program
+		m_pCgGeometryProgram = ShaderToolsCg::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry, sArguments);
+	}
+
+	// Was the Cg program created successfully?
+	if (m_pCgGeometryProgram) {
+		// Backup the user defined entry point
+		m_sEntry = sEntry;
+
+		// Done
+		return true;
+	} else {
+		m_pCgProfile = CG_PROFILE_UNKNOWN;
+		m_sEntry     = "";
+
+		// Error!
+		return false;
+	}
 }
 
 
@@ -114,40 +251,8 @@ String GeometryShaderCg::GetEntry() const
 
 bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
 {
-	// Destroy the previous Cg geometry program, if there's one
-	if (m_pCgGeometryProgram) {
-		cgDestroyProgram(m_pCgGeometryProgram);
-		m_pCgGeometryProgram = nullptr;
-	}
-
-	// Get the profile from a user given string
-	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "glslg"); // We're using a GLSL profile as default so ATI users have resonable shader support when using Cg
-
-	// On unknown or invalid profile, choose a fallback profile
-	if (m_pCgProfile == CG_PROFILE_UNKNOWN || (!cgGetProfileProperty(m_pCgProfile, CG_IS_GEOMETRY_PROFILE) && m_pCgProfile != CG_PROFILE_GLSLG)) {
-		m_pCgProfile = cgGLGetLatestProfile(CG_GL_GEOMETRY);
-		if (m_pCgProfile == CG_PROFILE_UNKNOWN && cgGLIsProfileSupported(CG_PROFILE_GLSLG))
-			m_pCgProfile = CG_PROFILE_GLSLG;
-	}
-
-	// Create the Cg geometry program
-	if (m_pCgProfile != CG_PROFILE_UNKNOWN)
-		m_pCgGeometryProgram = ShaderToolsCg::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
-
-	// Was the Cg program created successfully?
-	if (m_pCgGeometryProgram) {
-		// Backup the user defined entry point
-		m_sEntry = sEntry;
-
-		// Done
-		return true;
-	} else {
-		m_pCgProfile = CG_PROFILE_UNKNOWN;
-		m_sEntry     = "";
-
-		// Error!
-		return false;
-	}
+	// Call the extended version of "Shader::SetSourceCode()" for geometry shaders with default settings
+	return SetSourceCode(sSourceCode, InputTriangles, OutputTriangles, 0, sProfile, sEntry);
 }
 
 

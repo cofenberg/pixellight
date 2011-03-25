@@ -32,6 +32,8 @@
 #include "PLRendererOpenGLCg/ProgramAttributeCg.h"
 #include "PLRendererOpenGLCg/ProgramUniformCg.h"
 #include "PLRendererOpenGLCg/ProgramCg.h"
+#include <GL/gl.h>
+#include "../../../../External/Recommended/OpenGL/glext.h"
 
 
 //[-------------------------------------------------------]
@@ -114,6 +116,80 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 					if (cgGLIsProgramLoaded(m_pCgCombinedProgram)) {
 						// Congratulations, the program is now linked!
 						m_bLinked = true;
+
+						// Geometry shader settings - optional
+						GeometryShaderCg *pGeometryShader = static_cast<GeometryShaderCg*>(m_cGeometryShaderHandler.GetResource());
+						if (pGeometryShader) {
+							// Ok, the next thing is definitively no fun in Cg because it looks like there's no unified way to do it:
+							// Set the input/output primitive type and the number of output vertices
+
+							// We're going to need "glProgramParameteriEXT" from "GL_EXT_geometry_shader4"
+							#ifdef WIN32
+								static PFNGLPROGRAMPARAMETERIEXTPROC glProgramParameteriEXT = reinterpret_cast<PFNGLPROGRAMPARAMETERIEXTPROC>(wglGetProcAddress("glProgramParameteriEXT"));
+							#endif
+							#ifdef LINUX
+								static PFNGLPROGRAMPARAMETERIEXTPROC glProgramParameteriEXT = reinterpret_cast<PFNGLPROGRAMPARAMETERIEXTPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glProgramParameteriEXT")));
+							#endif
+							if (glProgramParameteriEXT) {
+								// Get the OpenGL program ID associated with the Cg program
+								const GLuint nOpenGLProgram = cgGLGetProgramID(m_pCgCombinedProgram);
+
+								// Set the input primitive type
+								GLint nTemp;
+								switch (pGeometryShader->GetInputPrimitiveType()) {
+									case PLRenderer::GeometryShader::InputPoints:
+										nTemp = GL_POINTS;
+										break;
+
+									case PLRenderer::GeometryShader::InputLines:
+										nTemp = GL_LINES;
+										break;
+
+									case PLRenderer::GeometryShader::InputLinesAdjacency:
+										nTemp = GL_LINES_ADJACENCY_EXT;
+										break;
+
+									case PLRenderer::GeometryShader::InputTriangles:
+										nTemp = GL_TRIANGLES;
+										break;
+
+									case PLRenderer::GeometryShader::InputTrianglesAdjacency:
+										nTemp = GL_TRIANGLES_ADJACENCY_EXT;
+										break;
+
+									default:
+										nTemp = GL_TRIANGLES;
+										break;
+								}
+								glProgramParameteriEXT(nOpenGLProgram, GL_GEOMETRY_INPUT_TYPE_EXT, nTemp);
+
+								// Set the output primitive type
+								switch (pGeometryShader->GetOutputPrimitiveType()) {
+									case PLRenderer::GeometryShader::OutputPoints:
+										nTemp = GL_POINTS;
+										break;
+
+									case PLRenderer::GeometryShader::OutputLines:
+										nTemp = GL_LINE_STRIP;
+										break;
+
+									case PLRenderer::GeometryShader::OutputTriangles:
+										nTemp = GL_TRIANGLE_STRIP;
+										break;
+
+									default:
+										nTemp = GL_TRIANGLE_STRIP;
+										break;
+								}
+								glProgramParameteriEXT(nOpenGLProgram, GL_GEOMETRY_OUTPUT_TYPE_EXT, nTemp);
+
+								// Set the number of output vertices
+								nTemp = pGeometryShader->GetNumOfOutputVertices();
+								if (!nTemp)
+									glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES_EXT, &nTemp);	// Maximum possible number of output vertices should be used
+								glProgramParameteriEXT(nOpenGLProgram, GL_GEOMETRY_VERTICES_OUT_EXT, nTemp);
+							}
+						}
 					} else {
 						// Error, program link failed!
 						m_bLinkedFailed = true;
@@ -423,8 +499,6 @@ bool ProgramCg::SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader)
 
 		// Update the geometry shader resource handler
 		m_cGeometryShaderHandler.SetResource(pGeometryShader);
-
-		// [TODO] Add methods for geometry shader
 
 		// Denote that a program relink is required
 		RelinkRequired();
