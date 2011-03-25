@@ -7,7 +7,10 @@ include(${CMAKETOOLS_DIR}/External/Fetch.cmake)
 ## Fetch
 ##################################################
 
-# There are no public Newton sources...
+# Check if built file exists
+if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
+	# [TODO] Implement me
+endif()
 
 # Done
 external_fetch_done()
