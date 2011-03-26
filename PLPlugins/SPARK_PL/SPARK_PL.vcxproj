@@ -290,7 +290,7 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Extensions\Zones\SPK_Ring.cpp" />
     <ClCompile Include="src\Extensions\Zones\SPK_Sphere.cpp" />
     <ClCompile Include="src\PLSceneNodes\SNBasicDemo.cpp" />
-    <ClCompile Include="src\PLSceneNodes\SNFireDemo.cpp" />
+    <ClCompile Include="src\PLSceneNodes\SNFire.cpp" />
     <ClCompile Include="src\PLSceneNodes\SNGalaxyDemo.cpp" />
     <ClCompile Include="src\PLSceneNodes\SNGravitationDemo.cpp" />
     <ClCompile Include="src\PLSceneNodes\SNSystem.cpp" />
@@ -347,7 +347,7 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Ring.h" />
     <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Sphere.h" />
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNBasicDemo.h" />
-    <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNFireDemo.h" />
+    <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNFire.h" />
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNGalaxyDemo.h" />
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNGravitationDemo.h" />
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNSystem.h" />

@@ -11,9 +11,6 @@
     <ClCompile Include="src\PLSceneNodes\SNBasicDemo.cpp">
       <Filter>PLSceneNodes</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLSceneNodes\SNFireDemo.cpp">
-      <Filter>PLSceneNodes</Filter>
-    </ClCompile>
     <ClCompile Include="src\PLSceneNodes\SNGalaxyDemo.cpp">
       <Filter>PLSceneNodes</Filter>
     </ClCompile>
@@ -137,6 +134,9 @@
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLRenderer.cpp">
       <Filter>RenderingAPIs\PixelLight</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLSceneNodes\SNFire.cpp">
+      <Filter>PLSceneNodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SPARK_PL\SPARK_PL.h" />
@@ -152,9 +152,6 @@
       <Filter>PLSceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNBasicDemo.h">
-      <Filter>PLSceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNFireDemo.h">
       <Filter>PLSceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\SPARK_PL\SPK.h" />
@@ -304,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLBuffer.h">
       <Filter>RenderingAPIs\PixelLight</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNFire.h">
+      <Filter>PLSceneNodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

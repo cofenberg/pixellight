@@ -43,7 +43,7 @@ add_sources(
 	src/Extensions/Renderers/SPK_Oriented3DRendererInterface.cpp
 	src/Extensions/Renderers/SPK_QuadRendererInterface.cpp
 	src/PLSceneNodes/SNSystem.cpp
-	src/PLSceneNodes/SNFireDemo.cpp
+	src/PLSceneNodes/SNFire.cpp
 	src/PLSceneNodes/SNBasicDemo.cpp
 	src/PLSceneNodes/SNGalaxyDemo.cpp
 	src/PLSceneNodes/SNGravitationDemo.cpp

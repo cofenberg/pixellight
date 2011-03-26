@@ -1,4 +1,10 @@
-﻿>> 22.02.2011
+﻿>> 26.03.2011
+[CO]
+- Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
+
+
+
+>> 22.02.2011
 [CO]
 - Thought about multiple ways how the SPARK API can be used directly together with the SPARK_PL project. For renderer, physics and sound, we wrote
   adapters because there are several such APIs with similar interfaces. I'am really not sure that this approach is the right one for the

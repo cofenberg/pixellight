@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNFireDemo.h                                   *
+ *  File: SNFire.h                                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __SPARK_PL_SNFIREDEMO_H__
-#define __SPARK_PL_SNFIREDEMO_H__
+#ifndef __SPARK_PL_SNFIRE_H__
+#define __SPARK_PL_SNFIRE_H__
 #pragma once
 
 
@@ -42,18 +42,18 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Fire SPARK particle system demo scene node
+*    Fire SPARK particle system scene node
 *
 *  @note
 *    - Basing on "SPARK Fire Demo"
 */
-class SNFireDemo : public SNSystem {
+class SNFire : public SNSystem {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(SPARK_PL_RTTI_EXPORT, SNFireDemo, "SPARK_PL", SPARK_PL::SNSystem, "Fire SPARK particle system demo scene node")
+	pl_class(SPARK_PL_RTTI_EXPORT, SNFire, "SPARK_PL", SPARK_PL::SNSystem, "Fire SPARK particle system scene node")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 
@@ -66,13 +66,13 @@ class SNFireDemo : public SNSystem {
 		*  @brief
 		*    Default constructor
 		*/
-		SPARK_PL_API SNFireDemo();
+		SPARK_PL_API SNFire();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		SPARK_PL_API virtual ~SNFireDemo();
+		SPARK_PL_API virtual ~SNFire();
 
 
 	//[-------------------------------------------------------]
@@ -91,4 +91,4 @@ class SNFireDemo : public SNSystem {
 } // SPARK_PL
 
 
-#endif // __SPARK_PL_SNFIREDEMO_H__
+#endif // __SPARK_PL_SNFIRE_H__

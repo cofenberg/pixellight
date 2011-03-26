@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNFireDemo.cpp                                 *
+ *  File: SNFire.cpp                                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -28,7 +28,7 @@
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.h"
-#include "SPARK_PL/PLSceneNodes/SNFireDemo.h"
+#include "SPARK_PL/PLSceneNodes/SNFire.h"
 #include <SPK.h>
 
 
@@ -45,7 +45,7 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNFireDemo)
+pl_implement_class(SNFire)
 
 
 //[-------------------------------------------------------]
@@ -55,7 +55,7 @@ pl_implement_class(SNFireDemo)
 *  @brief
 *    Default constructor
 */
-SNFireDemo::SNFireDemo()
+SNFire::SNFire()
 {
 }
 
@@ -63,7 +63,7 @@ SNFireDemo::SNFireDemo()
 *  @brief
 *    Destructor
 */
-SNFireDemo::~SNFireDemo()
+SNFire::~SNFire()
 {
 }
 
@@ -71,7 +71,7 @@ SNFireDemo::~SNFireDemo()
 //[-------------------------------------------------------]
 //[ Private virtual PLScene::SceneNode functions          ]
 //[-------------------------------------------------------]
-void SNFireDemo::InitFunction()
+void SNFire::InitFunction()
 {
 	// Call base implementation
 	SNSystem::InitFunction();
