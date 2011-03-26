@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPicking", "PLDemoPick
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSPARK_PL", "PLDemoSPARK_PL\PLDemoSPARK_PLInternal.vcxproj", "{62F2E608-C1CD-465E-9823-780F71D820BA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemo_libRocket\PLDemo_libRocket_Internal.vcxproj", "{F5550B63-D9D0-4230-95BA-30E6C8DBB213}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -158,6 +160,14 @@ Global
 		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|Win32.Build.0 = Release|Win32
 		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|x64.ActiveCfg = Release|x64
 		{62F2E608-C1CD-465E-9823-780F71D820BA}.Release|x64.Build.0 = Release|x64
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Debug|Win32.Build.0 = Debug|Win32
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Debug|x64.ActiveCfg = Debug|x64
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Debug|x64.Build.0 = Debug|x64
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Release|Win32.ActiveCfg = Release|Win32
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Release|Win32.Build.0 = Release|Win32
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Release|x64.ActiveCfg = Release|x64
+		{F5550B63-D9D0-4230-95BA-30E6C8DBB213}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

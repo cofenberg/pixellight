@@ -24,7 +24,7 @@
 static const PLGeneral::String sVertexShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;			// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float2 VertexTextureCoordinate : TEXCOORD0;	// Vertex texture coordinate\n\
 	float4 VertexColor : COLOR;					// Vertex color\n\
 };\n\
@@ -56,7 +56,7 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,				// Object space vertex pos
 static const PLGeneral::String sFragmentShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;			// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float2 VertexTextureCoordinate : TEXCOORD0;	// Vertex texture coordinate\n\
 	float4 VertexColor : COLOR;					// Vertex color\n\
 };\n\
@@ -87,7 +87,7 @@ FS_OUTPUT main(VS_OUTPUT In,			// Vertex shader output as fragment shader input\
 static const PLGeneral::String sSceneVertexShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
 };\n\
 \n\
@@ -114,7 +114,7 @@ VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex posit
 static const PLGeneral::String sSceneFragmentShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
 };\n\
 \n\

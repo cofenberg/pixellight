@@ -36,7 +36,7 @@ uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space m
 // Programs\n\
 void main()\n\
 {\n\
-	// Calculate the clip space vertex position\n\
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);\n\
 \n\
 	// Pass through the vertex texture coordinate\n\

@@ -24,7 +24,7 @@
 static const PLGeneral::String sVertexShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float4 VertexColor    : COLOR;		// Vertex color\n\
 };\n\
 \n\
@@ -48,7 +48,7 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex posit
 
 // Cg geometry shader source code
 static const PLGeneral::String sGeometryShaderSourceCodeCg = "\
-TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space vertex positions from vertex shader\n\
+TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space vertex positions from vertex shader, lower/left is (-1,-1) and upper/right is (1,1)\n\
 				   AttribArray<float4> VertexColor    : COLOR)		// Vertex colors from vertex shader\n\
 {\n\
 	// Pass-thru\n\
@@ -69,7 +69,7 @@ TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space 
 static const PLGeneral::String sFragmentShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float4 VertexColor    : COLOR;		// Vertex color\n\
 };\n\
 \n\

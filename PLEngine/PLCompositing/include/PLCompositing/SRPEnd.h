@@ -57,7 +57,7 @@ class SRPEnd : public PLScene::SceneRendererPass {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPEnd, "PLCompositing", PLScene::SceneRendererPass, "Abstract finishing scene renderer pass")
+	pl_class(PLCOM_RTTI_EXPORT, SRPEnd, "PLCompositing", PLScene::SceneRendererPass, "Finishing scene renderer pass")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 

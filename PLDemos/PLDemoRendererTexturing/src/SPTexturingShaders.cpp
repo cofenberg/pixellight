@@ -30,11 +30,11 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
-#include <PLRenderer/Renderer/FragmentShader.h>
 #include "SPTexturingShaders.h"
 
 

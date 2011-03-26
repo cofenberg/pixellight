@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPluginMozilla", "PLPlugin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPARK_PL", "SPARK_PL\SPARK_PL.vcxproj", "{C2CB2665-591E-4D26-A145-0DB8298CBDB6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRocket_PL", "libRocket_PL\libRocket_PL.vcxproj", "{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -86,6 +88,14 @@ Global
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|Win32.Build.0 = Release|Win32
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|x64.ActiveCfg = Release|x64
 		{C2CB2665-591E-4D26-A145-0DB8298CBDB6}.Release|x64.Build.0 = Release|x64
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Debug|Win32.Build.0 = Debug|Win32
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Debug|x64.ActiveCfg = Debug|x64
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Debug|x64.Build.0 = Debug|x64
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|Win32.ActiveCfg = Release|Win32
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|Win32.Build.0 = Release|Win32
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|x64.ActiveCfg = Release|x64
+		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

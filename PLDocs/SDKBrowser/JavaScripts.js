@@ -147,6 +147,7 @@ shortcut("Dir_PLDemoSoundBasic", "Demos\\PLDemoSoundBasic\\");
 shortcut("Dir_PLDemoPostProcess", "Demos\\PLDemoPostProcess\\");
 shortcut("Dir_PLDemo2DGame", "Demos\\PLDemo2DGame\\");
 shortcut("Dir_PLDemoIngameGUI", "Demos\\PLDemoIngameGUI\\");
+shortcut("Dir_PLDemo_libRocket", "Demos\\PLDemo_libRocket\\");
 // Samples
 shortcut("Dir_Samples", "Samples\\");
 
@@ -168,6 +169,7 @@ shortcut("Exe_PLDemoSoundBasic", "Demos\\Bin\\PLDemoSoundBasic.exe");
 shortcut("Exe_PLDemoPostProcess", "Demos\\Bin\\PLDemoPostProcess.exe");
 shortcut("Exe_PLDemo2DGame", "Demos\\Bin\\PLDemo2DGame.exe");
 shortcut("Exe_PLDemoIngameGUI", "Demos\\Bin\\PLDemoIngameGUI.exe");
+shortcut("Exe_PLDemo_libRocket", "Demos\\Bin\\PLDemo_libRocket.exe");
 // Tools
 shortcut("Exe_PLViewer", "Tools\\Bin\\PLViewer\PLViewer.exe");
 

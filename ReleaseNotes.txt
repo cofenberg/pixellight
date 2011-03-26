@@ -1,4 +1,6 @@
 Changes in PixelLight 0.9.6-R1 (not yet released)
+- Feature: Added new plugin "libRocket_PL" which integrates the free open source HTML/CSS game interface middleware "libRocket" (http://librocket.com/) into PixelLight
+- Feature: Added new demo "PLDemo_libRocket" showing how to use the new "libRocket_PL"-project within C++ projects
 - Feature: In order to use vertex texture fetch within "PLCompositing::SRPEndHDR", one must now set the new "UseVertexTextureFetch"-flag (we had some VTF GPU driver issues)
 - Feature: "PLGeneral::Url": Added UNC (Uniform Naming Convention aka Universal Naming Convention) support
 - Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
@@ -8,6 +10,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: PLRendererOpenGL & PLRendererOpenGLES optimization: Passing "empty" images to the GPU no longer creates internal image data
 - Change: "PLRenderer::GeometryShader" input/output primitive type and the number of output vertices can now be set by the user
 - Change: Updated "Newton Game Dynamics" from "2.24"(Linux)/"2.28"(Windows) to "2.32" (first free open-source version of this physics library)
+- Change: "SPARK_PL": Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 - Bugfix: The swap interval (vertical synchronisation) setting is now working (as long as it is not overwritten by the GPU driver)
 

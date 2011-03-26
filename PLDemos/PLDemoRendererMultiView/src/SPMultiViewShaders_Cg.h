@@ -24,7 +24,7 @@
 static const PLGeneral::String sVertexShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
 };\n\
 \n\
@@ -51,7 +51,7 @@ VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex posit
 static const PLGeneral::String sFragmentShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
 };\n\
 \n\

@@ -40,7 +40,7 @@ void main()\n\
 	// Calculate the object space vertex position\n\
 	highp vec4 position = vec4(VertexPosition.xy*GlyphSizePenPosition.xy + GlyphSizePenPosition.zw, 0, 1);\n\
 \n\
-	// Calculate the clip space vertex position\n\
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*position;\n\
 \n\
 	// Set the normalized vertex texture coordinate\n\

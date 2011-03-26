@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLSound/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SPARK_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -128,7 +128,7 @@ copy build\debug\SPARK_PLD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLSound/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;SPARK_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -169,7 +169,7 @@ copy build\debug64\SPARK_PLD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLSound/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SPARK_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -219,7 +219,7 @@ copy build\release\SPARK_PL.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLSound/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;include/SPARK_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;SPARK_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>

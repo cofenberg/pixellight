@@ -1276,22 +1276,22 @@ class Renderer : public PLCore::Object {
 		*    Renders the specified geometric primitive, based on indexing into an array of vertices
 		*
 		*  @param[in] nType
-		*    Member of the primitive enumerated type, describing the type of primitive to render
+		*    Member of the primitive enumerated type, describing the type of primitive to render, e.g. "Primitive::TriangleList"
 		*  @param[in] nMinIndex
-		*    Minimum vertex index for vertices used during this call
+		*    Minimum vertex index for vertices used during this call, usually "0"
 		*  @param[in] nMaxIndex
-		*    Maximum vertex index for vertices used during this call
+		*    Maximum vertex index for vertices used during this call, usually "pVertexBuffer->GetNumOfElements() - 1" when "pVertexBuffer" is your currently used vertex buffer
 		*  @param[in] nStartIndex
-		*    Start vertex index for vertices used during this call
+		*    Start vertex index for vertices used during this call, usually "0"
 		*  @param[in] nNumVertices
-		*    Number of vertices used during this call
+		*    Number of vertices used during this call, usually "pIndexBuffer->GetNumOfElements()" when "pIndexBuffer" is your currently used index buffer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
 		*    - This method draws indexed primitives from the current set of data input streams
-		*    - The nMinIndex and nNumVertices parameters specify the range of vertex indices used for each DrawIndexedPrimitive()
+		*    - The nMinIndex and nMaxIndex parameters specify the range of vertex indices used for each DrawIndexedPrimitive()
 		*      call. These are used to optimize vertex processing of indexed primitives by processing a sequential range of
 		*      vertices prior to indexing into these vertices. It is invalid for any indices used during this call to reference
 		*      any vertices outside of this range.

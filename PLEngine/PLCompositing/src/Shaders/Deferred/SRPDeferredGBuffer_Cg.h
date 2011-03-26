@@ -24,7 +24,7 @@
 static const PLGeneral::String sDeferredGBuffer_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position    : POSITION;	// Clip space vertex position\n\
+	float4 Position    : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 #ifdef VS_SECONDTEXTURECOORDINATE\n\
 	float4 TexCoord	   : TEXCOORD0;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate\n\
 #else\n\
@@ -121,7 +121,7 @@ VS_OUTPUT main(float4 VertexPosition  : POSITION	// Object space vertex position
 static const PLGeneral::String sDeferredGBuffer_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position    : POSITION;	// Clip space vertex position\n\
+	float4 Position    : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 #if defined(FS_AMBIENTOCCLUSIONMAP) || defined(FS_LIGHTMAP)\n\
 	float4 TexCoord	   : TEXCOORD0;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate\n\
 #else\n\

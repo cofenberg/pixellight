@@ -41,7 +41,7 @@ uniform highp float InvRadius;	// World space inverse light radius\n\
 // Programs\n\
 void main()\n\
 {\n\
-	// Transform vertex to clip space\n\
+	// Transform vertex to clip space, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = WorldVP*VertexPosition;\n\
 \n\
 	// Calculate the world space light vector (the light position is the origin)\n\

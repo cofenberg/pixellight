@@ -39,6 +39,9 @@ add_subdirectory(PLDemoIngameGUI)
 if(PL_PLUGIN_ENGINE_SPARK)
 	add_subdirectory(PLDemoSPARK_PL)
 endif()
+if(PL_PLUGIN_ENGINE_LIBROCKET)
+	add_subdirectory(PLDemo_libRocket)
+endif()
 
 ##################################################
 ## Dependencies

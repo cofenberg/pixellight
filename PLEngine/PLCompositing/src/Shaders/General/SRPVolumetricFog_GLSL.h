@@ -44,7 +44,7 @@ uniform highp vec3  EyePos;							// World space space eye position\n\
 // Programs\n\
 void main()\n\
 {\n\
-	// Calculate the clip space vertex position\n\
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;\n\
 \n\
 #ifdef VS_TEXCOORD0\n\

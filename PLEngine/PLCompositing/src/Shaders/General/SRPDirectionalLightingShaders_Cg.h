@@ -24,7 +24,7 @@
 static const PLGeneral::String sDiffuseOnly_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position : POSITION;			// Clip space vertex position\n\
+	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 #if defined(VS_TEXCOORD0) && defined(VS_TEXCOORD1)\n\
 	float4 TexCoord : TEXCOORD0;		// Vertex texture coordinate 0 (xy) and 1 (zw)\n\
 #else\n\
@@ -129,7 +129,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION			// Object space vertex positio
 static const PLGeneral::String sDiffuseOnly_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position : POSITION;			// Clip space vertex position\n\
+	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 #if defined(FS_TEXCOORD0) && defined(FS_TEXCOORD1)\n\
 	float4 TexCoord : TEXCOORD0;		// Vertex texture coordinate 0 (xy) and 1 (zw)\n\
 #else\n\

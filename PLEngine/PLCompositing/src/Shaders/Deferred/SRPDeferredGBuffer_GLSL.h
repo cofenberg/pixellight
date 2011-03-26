@@ -75,7 +75,7 @@ void main()\n\
 	#define vertexPosition VertexPosition\n\
 #endif\n\
 \n\
-	// Transform vertex position to clip space\n\
+	// Transform vertex position to clip space, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = WorldVP*vertexPosition;\n\
 \n\
 	// Pass through the vertex texture coordinate\n\

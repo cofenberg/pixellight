@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Base/Keys.h>
@@ -101,50 +99,6 @@ void Application::OnCreateMainWindow()
 		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
 			pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
-	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RenderApplication functions ]
-//[-------------------------------------------------------]
-bool Application::OnUpdate()
-{
-	// One important word at the beginning: DON'T COPYCAT THIS!
-	// The following is 'just' a simple demonstration how the scene graph 'can' be used. It's
-	// definitely not good to update your scene nodes in the way you can see within this function.
-	// Its quite to intricate, inflexible and not performant. Use for example a scene node modifier
-	// added to your scene node (in this case 'the white light') for this job!
-
-	// Call base implementation
-	if (BasicSceneApplication::OnUpdate()) {
-		// Get the scene container with our 'concrete scene'
-		SceneContainer *pSceneContainer = GetScene();
-		if (pSceneContainer) {
-			// Get the scene node with the name 'Light' (our 'white light')
-			SceneNode *pLight = pSceneContainer->Get("Light");
-			if (pLight) {
-				// This variable is used for the light animation. Its just static you keep the implementation
-				// for a good demo overview completely within this function.
-				static float fLightTimer = 0.0f;
-
-				// We set the current light position using the RTTI class interface. This is quite comfortable
-				// and universal because you haven't to care about the concrete class type - just set the
-				// variable values. For performance critical situations it's recommened to avoid using this RTTI
-				// functions to set your variables and use the conrete provided class interfaces instead.
-				pLight->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
-					Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
-
-				// Update the light timer by using the time difference between the last and the current frame
-				fLightTimer += Timing::GetInstance()->GetTimeDifference();
-			}
-		}
-
-		// Done
-		return true;
-	} else {
-		// Not updated
-		return false;
 	}
 }
 

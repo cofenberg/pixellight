@@ -39,7 +39,7 @@ uniform highp float ColorFactor;					// Color factor\n\
 // Programs\n\
 void main()\n\
 {\n\
-	// Calculate the clip space vertex position\n\
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);\n\
 \n\
 	// Pass through the texture coordinate\n\
@@ -90,7 +90,7 @@ uniform highp mat4 ObjectSpaceToWorldSpaceMatrix;	// Object space to world space
 // Programs\n\
 void main()\n\
 {\n\
-	// Calculate the clip space vertex position\n\
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;\n\
 \n\
 	// Calculate the world space vertex normal\n\

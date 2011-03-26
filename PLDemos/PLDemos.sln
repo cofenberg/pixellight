@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPicking", "PLDemoPick
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSPARK_PL", "PLDemoSPARK_PL\PLDemoSPARK_PL.vcxproj", "{27E1AD32-58D8-440D-8FB2-ED60218EE304}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemo_libRocket\PLDemo_libRocket.vcxproj", "{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -158,6 +160,14 @@ Global
 		{27E1AD32-58D8-440D-8FB2-ED60218EE304}.Release|Win32.Build.0 = Release|Win32
 		{27E1AD32-58D8-440D-8FB2-ED60218EE304}.Release|x64.ActiveCfg = Release|x64
 		{27E1AD32-58D8-440D-8FB2-ED60218EE304}.Release|x64.Build.0 = Release|x64
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Debug|Win32.Build.0 = Debug|Win32
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Debug|x64.ActiveCfg = Debug|x64
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Debug|x64.Build.0 = Debug|x64
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Release|Win32.ActiveCfg = Release|Win32
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Release|Win32.Build.0 = Release|Win32
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Release|x64.ActiveCfg = Release|x64
+		{B843C51E-0C1F-44ED-9B21-7FB58BF5028E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

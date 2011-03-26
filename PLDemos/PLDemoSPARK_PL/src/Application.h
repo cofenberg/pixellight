@@ -82,13 +82,6 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::RenderApplication functions ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool OnUpdate();
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
