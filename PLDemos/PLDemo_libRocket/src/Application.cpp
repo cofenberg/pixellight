@@ -218,11 +218,18 @@ void Application::InitRocket()
 		Rocket::Core::Initialise();
 		Rocket::Controls::Initialise();
 
+		// Get the application directory - look out! We can't just assume that the current work directory
+		// is the same as were the executable is in. If we do so, for example starting the application by using
+		// a MS Windows menu shortcut will not work... and just changing the current work directory by using
+		// "PLGeneral::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
+		const String sAppDirectory = GetApplicationContext().GetAppDirectory();
+
+		// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
 		// Load the fonts
-		Rocket::Core::FontDatabase::LoadFontFace("Data/libRocket/Delicious-Roman.otf");
-		Rocket::Core::FontDatabase::LoadFontFace("Data/libRocket/Delicious-Bold.otf");
-		Rocket::Core::FontDatabase::LoadFontFace("Data/libRocket/Delicious-Italic.otf");
-		Rocket::Core::FontDatabase::LoadFontFace("Data/libRocket/Delicious-BoldItalic.otf");
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Roman.otf").GetASCII());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Bold.otf").GetASCII());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetASCII());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetASCII());
 
 		// Create and set the context
 		if (pMainWindow)
@@ -232,13 +239,15 @@ void Application::InitRocket()
 		Rocket::Debugger::Initialise(m_pRocketContext);
 
 		{ // Load the mouse cursor and release the caller's reference
-			Rocket::Core::ElementDocument *pElementDocumentCursor = m_pRocketContext->LoadMouseCursor("Data/libRocket/cursor.rml");
+			// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
+			Rocket::Core::ElementDocument *pElementDocumentCursor = m_pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetASCII());
 			if (pElementDocumentCursor)
 				pElementDocumentCursor->RemoveReference();
 		}
 
 		{ // Load the document and release the caller's reference
-			Rocket::Core::ElementDocument *pElementDocumentDocument = m_pRocketContext->LoadDocument("Data/libRocket/demo.rml");
+			// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
+			Rocket::Core::ElementDocument *pElementDocumentDocument = m_pRocketContext->LoadDocument((sAppDirectory + "/Data/libRocket/demo.rml").GetASCII());
 			if (pElementDocumentDocument) {
 				pElementDocumentDocument->Show();
 				pElementDocumentDocument->RemoveReference();

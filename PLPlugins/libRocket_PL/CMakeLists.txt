@@ -135,6 +135,15 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLRuntime"
 )
+if(WIN32)
+	# Copy the libRocket dlls so that the user can use everything "out of the box"
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../bin/RocketCore.dll "${PL_BIN_DIR}/PLRuntime"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../bin/RocketControls.dll "${PL_BIN_DIR}/PLRuntime"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../bin/RocketDebugger.dll "${PL_BIN_DIR}/PLRuntime"
+	)
+endif()
+
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
@@ -160,12 +169,42 @@ endif()
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/RocketDebugger.dll "${PL_BIN_DIR}/PLRuntime/"
 		)
 	endif()
+	if(LINUX)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1 "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1 "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1 "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1 "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1 "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1 "${PL_BIN_DIR}/PLRuntime"
+		)
+	endif()
 #endif()
 
-# Copy the libRocket libraries into the SDK so that the user can use everything "out of the box"
-add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_LIBRARIES} "${PL_BIN_DIR}/Lib"
-)
+# Copy the libRocket libraries so that the user can use everything "out of the box"
+if(WIN32)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/RocketCore.lib "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/RocketControls.lib "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/RocketDebugger.lib "${PL_BIN_DIR}/Lib"
+	)
+endif()
+if(LINUX)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1 "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1 "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1 "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1 "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1 "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1 "${PL_BIN_DIR}/Lib"
+	)
+endif()
 
 ##################################################
 ## Install
@@ -183,7 +222,43 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		PATTERN ".svn" EXCLUDE
 )
 
-# Copy the libRocket includes into the SDK so that the user can use everything "out of the box"
-install(DIRECTORY ${LIBROCKET_INCLUDE_DIRS}
+# Copy the libRocket stuff into the SDK so that the user can use everything "out of the box"
+install(DIRECTORY ${LIBROCKET_INCLUDE_DIRS}/Rocket
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		PATTERN ".svn" EXCLUDE
 )
+if(WIN32)
+	install(FILES	${PL_BIN_DIR}/PLRuntime/RocketCore.dll
+					${PL_BIN_DIR}/PLRuntime/RocketControls.dll
+					${PL_BIN_DIR}/PLRuntime/RocketDebugger.dll
+		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
+	)
+	install(FILES	${PL_BIN_DIR}/Lib/RocketCore.lib
+					${PL_BIN_DIR}/Lib/RocketControls.lib
+					${PL_BIN_DIR}/Lib/RocketDebugger.lib
+		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
+	)
+endif()
+if(LINUX)
+	install(FILES	${PL_BIN_DIR}/PLRuntime/libRocketCore.so
+					${PL_BIN_DIR}/PLRuntime/libRocketCore.so.1
+					${PL_BIN_DIR}/PLRuntime/libRocketCore.so.1.2.1
+					${PL_BIN_DIR}/PLRuntime/libRocketControls.so
+					${PL_BIN_DIR}/PLRuntime/libRocketControls.so.1
+					${PL_BIN_DIR}/PLRuntime/libRocketControls.so.1.2.1
+					${PL_BIN_DIR}/PLRuntime/libRocketDebugger.so
+					${PL_BIN_DIR}/PLRuntime/libRocketDebugger.so.1
+					${PL_BIN_DIR}/PLRuntime/libRocketDebugger.so.1.2.1
+		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
+	)
+	install(FILES	${PL_BIN_DIR}/PLRuntime/libRocketCore.so
+					${PL_BIN_DIR}/PLRuntime/libRocketCore.so.1
+					${PL_BIN_DIR}/PLRuntime/libRocketCore.so.1.2.1
+					${PL_BIN_DIR}/PLRuntime/libRocketControls.so
+					${PL_BIN_DIR}/PLRuntime/libRocketControls.so.1
+					${PL_BIN_DIR}/PLRuntime/libRocketControls.so.1.2.1
+					${PL_BIN_DIR}/PLRuntime/libRocketDebugger.so
+					${PL_BIN_DIR}/PLRuntime/libRocketDebugger.so.1
+					${PL_BIN_DIR}/PLRuntime/libRocketDebugger.so.1.2.1
+		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
+	)
+endif()

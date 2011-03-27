@@ -4,6 +4,8 @@
   integration was somewhat too easy. :D
   Building the PL SDK with libRocket support using CMake is not tested yet, the Linux support is not yet tested either... but there's still some
   time until the next planned PL SDK release. *g*
+- Tested it under Linux, "PLDemo_libRocket" starts but the window is positioned left top and the mouse cursor is limited to a small region of the window...
+- In the Windows PL SDK, the libRocket stuff is now at the correct place
 
 
 

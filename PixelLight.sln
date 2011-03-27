@@ -169,7 +169,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererD3D11", "PLEngine
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRocket_PL", "PLPlugins\libRocket_PL\libRocket_PL.vcxproj", "{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemos\PLDemo_libRocket\PLDemo_libRocket_Internal.vcxproj", "{F5550B63-D9D0-4230-95BA-30E6C8DBB213}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemos\PLDemo_libRocket\PLDemo_libRocketInternal.vcxproj", "{F5550B63-D9D0-4230-95BA-30E6C8DBB213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

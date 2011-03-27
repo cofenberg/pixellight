@@ -30,7 +30,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoPicking", "PLDemoPick
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoSPARK_PL", "PLDemoSPARK_PL\PLDemoSPARK_PLInternal.vcxproj", "{62F2E608-C1CD-465E-9823-780F71D820BA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemo_libRocket\PLDemo_libRocket_Internal.vcxproj", "{F5550B63-D9D0-4230-95BA-30E6C8DBB213}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemo_libRocket\PLDemo_libRocketInternal.vcxproj", "{F5550B63-D9D0-4230-95BA-30E6C8DBB213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
