@@ -189,6 +189,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		virtual PLRenderer::FontManager &GetFontManager() const;
 		virtual void BackupDeviceObjects();
 		virtual void RestoreDeviceObjects();
+		virtual const PLMath::Vector2 &GetTexelToPixelOffset() const;
 
 		//[-------------------------------------------------------]
 		//[ Create surface/resource                               ]

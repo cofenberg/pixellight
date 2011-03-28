@@ -286,6 +286,18 @@ class Renderer : public PLCore::Object {
 
 		/**
 		*  @brief
+		*    Returns the offset required to line up texel origins with pixels origins
+		*
+		*  @return
+		*    The pixel origin to texel origin offset, usually (0.0, 0.0) or (-0.5, -0.5)
+		*
+		*  @note
+		*    - OpenGL/D3D10/D3D11 have no offset while D3D9 has an offset of -0.5 (see http://msdn.microsoft.com/en-us/library/bb219690%28VS.85%29.aspx)
+		*/
+		virtual const PLMath::Vector2 &GetTexelToPixelOffset() const = 0;
+
+		/**
+		*  @brief
 		*    Updates the renderer
 		*
 		*  @note

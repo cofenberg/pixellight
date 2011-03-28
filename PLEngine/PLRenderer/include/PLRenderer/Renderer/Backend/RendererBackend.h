@@ -306,6 +306,7 @@ class RendererBackend : public Renderer {
 		PLRENDERER_API virtual const DisplayMode *GetDisplayMode(PLGeneral::uint32 nIndex) const;
 		PLRENDERER_API virtual const Capabilities &GetCapabilities() const;
 		PLRENDERER_API virtual const Statistics &GetStatistics() const;
+		PLRENDERER_API virtual const PLMath::Vector2 &GetTexelToPixelOffset() const;
 		PLRENDERER_API virtual void Update();
 		PLRENDERER_API virtual void Reset();
 

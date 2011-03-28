@@ -767,6 +767,13 @@ void Renderer::RestoreDeviceObjects()
 	PLRenderer::RendererBackend::RestoreDeviceObjects();
 }
 
+const Vector2 &Renderer::GetTexelToPixelOffset() const
+{
+	// Look out, texel offset ahead!
+	static const Vector2 vTexelOffset(-0.5f, -0.5f);
+	return vTexelOffset;
+}
+
 
 //[-------------------------------------------------------]
 //[ Create surface/resource                               ]

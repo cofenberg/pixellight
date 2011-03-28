@@ -282,12 +282,12 @@ void RenderInterfacePL::ReleaseTexture(Rocket::Core::TextureHandle texture)
 
 float RenderInterfacePL::GetHorizontalTexelOffset()
 {
-	return 0.0f;	// [TODO] Add such information within the PLRenderer-interface, OpenGL/D3D10/D3D11 have no offset while D3D9 has an offset of 0.5 (see http://msdn.microsoft.com/en-us/library/cc308049%28VS.85%29.aspx)
+	return -m_pRendererContext->GetRenderer().GetTexelToPixelOffset().x;
 }
 
 float RenderInterfacePL::GetVerticalTexelOffset()
 {
-	return 0.0f;	// [TODO] Add such information within the PLRenderer-interface, OpenGL/D3D10/D3D11 have no offset while D3D9 has an offset of 0.5 (see http://msdn.microsoft.com/en-us/library/cc308049%28VS.85%29.aspx)
+	return -m_pRendererContext->GetRenderer().GetTexelToPixelOffset().y;
 }
 
 

@@ -1,3 +1,12 @@
+>> 28.03.2011
+[CO]
+- Added "Renderer::GetTexelToPixelOffset()" returning the pixel origin to texel origin offset, usually (0.0, 0.0) or (-0.5, -0.5).
+  OpenGL/D3D10/D3D11 have no offset while D3D9 has an offset of -0.5 (see http://msdn.microsoft.com/en-us/library/bb219690%28VS.85%29.aspx)
+  -> The "libRocket"-interface requires this type of renderer API information and this is possibly not the only use case for this offset
+     information
+
+
+
 >> 25.03.2011
 [CO]
 - "GeometryShader" input/output primitive type and the number of output vertices can now be set by the user
