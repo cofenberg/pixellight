@@ -28,7 +28,7 @@ static const PLGeneral::String sDeferredHDAO_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 										// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -53,7 +53,7 @@ static const PLGeneral::String sDeferredHDAO_GLSL_FS = "\
 #define M_PI 3.14159265f\n\
 \n\
 // Attributes\n\
-varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
 uniform highp float			AORejectRadius;		// AO reject radius\n\

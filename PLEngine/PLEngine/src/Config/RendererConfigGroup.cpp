@@ -129,6 +129,7 @@ RendererConfig::~RendererConfig()
 *    Copy constructor
 */
 RendererConfig::RendererConfig(const RendererConfig &cSource) :
+	// General
 	Fullscreen(this),
 	ZBufferBits(this),
 	StencilBits(this),
