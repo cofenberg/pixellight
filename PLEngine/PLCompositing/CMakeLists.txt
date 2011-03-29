@@ -50,6 +50,7 @@ add_sources(
 	src/Shaders/Deferred/SRPDeferredSSAO.cpp
 	src/Shaders/Deferred/SRPDeferredHBAO.cpp
 	src/Shaders/Deferred/SRPDeferredHDAO.cpp
+	src/Shaders/Deferred/SRPDeferredSPAAO.cpp
 	src/Shaders/Deferred/SRPDeferredAmbient.cpp
 	src/Shaders/Deferred/SRPDeferredGlow.cpp
 	src/Shaders/Deferred/SRPDeferredDOF.cpp

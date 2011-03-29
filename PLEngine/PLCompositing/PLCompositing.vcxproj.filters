@@ -238,6 +238,9 @@
     <ClCompile Include="src\Shaders\General\SRPLightingMaterial.cpp">
       <Filter>Shaders\General</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\Deferred\SRPDeferredSPAAO.cpp">
+      <Filter>Shaders\Deferred</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -578,6 +581,15 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPLightingMaterial.h">
       <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredSPAAO.h">
+      <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\Deferred\SRPDeferredSPAAO_Cg.h">
+      <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\Deferred\SRPDeferredSPAAO_GLSL.h">
+      <Filter>Shaders\Deferred</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
