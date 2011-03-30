@@ -97,8 +97,8 @@ highp vec3 fetch_eye_pos(highp sampler2DRect texture, highp ivec2 textureResolut
 highp float doAmbientOcclusion(highp vec2 tcoord, highp vec2 uv, highp vec3 p, highp vec3 cnorm)\n\
 {\n\
 	highp vec3 diff = fetch_eye_pos(NormalDepthMap, Resolution, tcoord + uv, InvFocalLen) - p;\n\
-	const highp vec3 v = normalize(diff);\n\
-	const highp float d = length(diff)*Scale;\n\
+	highp vec3 v = normalize(diff);\n\
+	highp float d = length(diff)*Scale;\n\
 	return max(0.0f, dot(cnorm, v) - Bias)*(1.0f/(1.0f + d))*Intensity;\n\
 }\n\
 \n\
