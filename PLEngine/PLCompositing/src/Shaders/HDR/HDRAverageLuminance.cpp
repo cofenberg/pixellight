@@ -347,7 +347,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 		TextureBufferRectangle *pFinalTextureBufferRectangle = nullptr;
 
 		// Second step: Reduce to <4>x<4>
-		if (m_pRenderer->SetProgram(m_pDownsampleProgram)) {
+		if (m_pDownsampleLogRenderTarget && m_pRenderer->SetProgram(m_pDownsampleProgram)) {
 			const uint32 TextureScaleFactor = 2;
 
 			// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
