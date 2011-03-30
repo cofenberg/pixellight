@@ -45,6 +45,9 @@ namespace PLRendererOpenGL {
 bool ShaderToolsGLSL::SetSourceCode(GLuint nOpenGLShader, const String &sSourceCode)
 {
 	// Load the shader source
+	// [TODO] We REALLY need to add a GLSL version information, else we get on NVIDIA cards tons of warnings and errors when e.g. using the deferred renderer - think about this issue, after making the following change, all problems disappeared...
+//	const String sSourceCodeTest = String("#version 130\n") + String("#extension GL_ARB_texture_rectangle : enable\n") + sSourceCode;
+//	const char *pszSourceCode = sSourceCodeTest.GetASCII();
 	const char *pszSourceCode = sSourceCode.GetASCII();
 	glShaderSourceARB(nOpenGLShader, 1, &pszSourceCode, nullptr);
 
