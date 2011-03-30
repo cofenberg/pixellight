@@ -70,7 +70,7 @@ highp float FetchEyeZ(highp sampler2DRect normalDepthTexture, highp vec2 uv)\n\
 	return texture2DRect(normalDepthTexture, uv).b;\n\
 }\n\
 \n\
-highp float BlurFunction(highp sampler2DRect inputTexture, highp sampler2DRect normalDepthTexture, highp float blurFalloff, highp float sharpness, highp vec2 uv, highp vec2 uvInput, highp float r, highp float center_c, highp float center_d, inout highp float w_total)\n\
+highp float BlurFunction(highp sampler2DRect inputTexture, highp sampler2DRect normalDepthTexture, highp float blurFalloff, highp float sharpness, highp vec2 uv, highp vec2 uvInput, highp float r, highp float center_c, highp float center_d, highp inout float w_total)\n\
 {\n\
 	highp float c = texture2DRect(inputTexture, uvInput).r;\n\
 	highp float d = FetchEyeZ(normalDepthTexture, uv);\n\
