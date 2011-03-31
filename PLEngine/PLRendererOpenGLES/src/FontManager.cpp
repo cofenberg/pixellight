@@ -102,7 +102,7 @@ PLRenderer::Program *FontManager::GetProgram(GeneratedProgramUserData **ppGenera
 
 		// Create the program generator
 		#include "FontManager_GLSL.h"
-		m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "", sFragmentShaderSourceCodeGLSL, "");
+		m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "100", sFragmentShaderSourceCodeGLSL, "100");	// OpenGL ES 2.0 GLSL shader language 100
 	}
 
 	// If there's no program generator, we don't need to continue

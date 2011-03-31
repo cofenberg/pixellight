@@ -116,14 +116,51 @@ class Shader : public Resource {
 		*
 		*  @remarks
 		*    'sProfile' is not supported by each shader-API and is in general shader-API dependent. GLSL doesn't have such
-		*    profiles. Within Cg, a basic vertex profile may be "arbvp1" and a basic fragment profile "arbfp1". Cg also
-		*    provides GLSL profiles: "glslv" for vertex shader, "glslg" for geometry shader and "glslf" for fragment shader.
-		*    Please note that the profile is just a hint, if necessary, the implemenation is free to choose another profile.
+		*    profiles, just something named "version" - one has to directly write into the shader. But even when this information
+		*    is not used for compiling the GLSL shader, we highly recommend to provide GLSL version information in the form of e.g.
+		*    "130" for OpenGL 3.0 shaders ("#version 130"). Within Cg, a basic vertex profile may be "arbvp1" and a basic
+		*    fragment profile "arbfp1". Cg also provides GLSL profiles: "glslv" for vertex shader, "glslg" for geometry shader and
+		*    "glslf" for fragment shader.
+		*    Please note that the profile is just a hint, if necessary, the implementation is free to choose another profile.
 		*    In general, be carefully when explicitly setting a profile - when using Cg, and one of the shaders, a GPU program
 		*    is composed of, is a GLSL profile like "glslv", all other shaders must use GLSL profiles as well!
 		*
 		*   'sEntry' is not supported by each shader-API. GLSL doesn't have such an user defined entry point and the main
 		*   function must always be "main". Cg supports entry points with names other than "main".
+		*
+		*   Look out! When working with shaders you have to be prepared that a shader may work on one system, but fails to even
+		*   compile on another one. Sadly, even if there are e.g. official GLSL specifications, you CAN'T be sure that every
+		*   GPU driver is implementing them in detail. Here are some pitfalls which already produced some headaches...
+		*
+		*   When using GLSL, don't forget to provide the #version directive! Quote from
+		*     "The OpenGL® Shading Language - Language Version: 3.30 - Document Revision: 6 - 11-Mar-2010" Page 14
+		*       "Version 1.10 of the language does not require shaders to include this directive, and shaders that do not include
+		*        a #version directive will be treated as targeting version 1.10."
+		*   It looks like that AMD/ATI drivers ("AMD Catalyst™ 11.3") are NOT using just version 1.10 if there's no #version directive, but a higher
+		*   version... so don't trust your GPU driver when your GLSL code, using modern language features, also works for you without
+		*   #version directive, because it may not on other systems! OpenGL version and GLSL version can be a bit confusing, so
+		*   here's a version table:
+		*     GLSL #version    OpenGL version    Some comments
+		*     110              2.0
+		*     120              2.1
+		*     130              3.0               Precision qualifiers added
+		*                                        "attribute" deprecated; linkage between a vertex shader and OpenGL for per-vertex data -> use "in" instead
+		*                                        "varying"/"centroid varying" deprecated; linkage between a vertex shader and a fragment shader for interpolated data -> use "in"/"out" instead
+		*     140              3.1
+		*     150              3.2
+		*     330              3.3
+		*     400              4.0
+		*     410              4.1
+		*  #version must occur before any other statement in the program as stated within:
+		*    "The OpenGL® Shading Language - Language Version: 3.30 - Document Revision: 6 - 11-Mar-2010" Page 15
+		*      "The #version directive must occur in a shader before anything else, except for comments and white space."
+		*  ... sadly, this time NVIDIA (driver: "266.58 WHQL") is not implementing the specification in detail and while on AMD/ATI drivers ("AMD Catalyst™ 11.3")
+		*  you get the error message "error(#105) #version must occur before any other statement in the program" when breaking specification,
+		*  NVIDIA just accepts it without any error.
+		*
+		*  Enough on GLSL - now to Cg. Sadly, in general Cg is on AMD/ATI GPU's just poor due to the lack of modern profiles. When using Cg on none NVIDIA
+		*  GPU's you have virtually no other change then using the GLSL profiles in order to write shaders using modern features. While the concept of Cg is
+		*  fantastic, this lack of modern none NVIDIA profiles destroys many of Cg's advantages...
 		*/
 		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "") = 0;
 

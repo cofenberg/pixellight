@@ -20,11 +20,8 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code (the depreciated "attribute" and "varying" instead of "in" and "out" are used because some GPU drivers produced errors when using "in"/"out", beside this, we want to stay compatible to OpenGL ES 2.0)
+//  OpenGL 2.0 ("#version 110") GLSL vertex shader source code
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
-// GLSL preprocessor directives\n\
-#version 110\n\
-\n\
 // Attributes\n\
 attribute highp vec3 VertexPosition;	// Object space vertex position input, lower/left is (0,0) and upper/right is (1,1)\n\
 varying   highp vec2 VertexTexCoordVS;	// Normalized vertex texture coordinate output\n\
@@ -55,11 +52,8 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
-// GLSL preprocessor directives\n\
-#version 110\n\
-\n\
 // Attributes\n\
 varying highp vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate from vertex shader\n\
 \n\

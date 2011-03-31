@@ -20,11 +20,8 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code (the depreciated "attribute" and "varying" instead of "in" and "out" are used because some GPU drivers produced errors when using "in"/"out", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
-// GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
-\n\
 // Attributes\n\
 attribute highp vec3 VertexPosition;				// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
@@ -59,11 +56,8 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
-// GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
-\n\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
 	varying highp vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate input from vertex shader\n\

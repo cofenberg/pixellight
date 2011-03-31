@@ -116,21 +116,13 @@ void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							}
 
 							// Choose the shader source codes depending on the requested shader language
-							String sDeferredGodRays_VS;
-							String sDeferredGodRays_FS;
 							if (sShaderLanguage == "GLSL") {
 								#include "SRPDeferredGodRays_GLSL.h"
-								sDeferredGodRays_VS = sDeferredGodRays_GLSL_VS;
-								sDeferredGodRays_FS = sDeferredGodRays_GLSL_FS;
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_GLSL_VS, "130", sDeferredGodRays_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 							} else if (sShaderLanguage == "Cg") {
 								#include "SRPDeferredGodRays_Cg.h"
-								sDeferredGodRays_VS = sDeferredGodRays_Cg_VS;
-								sDeferredGodRays_FS = sDeferredGodRays_Cg_FS;
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_Cg_VS, "glslv", sDeferredGodRays_Cg_FS, "glslf", true);
 							}
-
-							// Create the program generator
-							if (sDeferredGodRays_VS.GetLength() && sDeferredGodRays_FS.GetLength())
-								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_VS, "glslv", sDeferredGodRays_FS, "glslf", true);
 						}
 
 						// If there's no program generator, we don't need to continue

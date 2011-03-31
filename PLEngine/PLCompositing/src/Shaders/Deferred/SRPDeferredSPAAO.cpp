@@ -129,21 +129,13 @@ void SRPDeferredSPAAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVert
 		}
 
 		// Choose the shader source codes depending on the requested shader language
-		String sDeferredSPAAO_VS;
-		String sDeferredSPAAO_FS;
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPDeferredSPAAO_GLSL.h"
-			sDeferredSPAAO_VS = sDeferredSPAAO_GLSL_VS;
-			sDeferredSPAAO_FS = sDeferredSPAAO_GLSL_FS;
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredSPAAO_GLSL_VS, "130", sDeferredSPAAO_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDeferredSPAAO_Cg.h"
-			sDeferredSPAAO_VS = sDeferredSPAAO_Cg_VS;
-			sDeferredSPAAO_FS = sDeferredSPAAO_Cg_FS;
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredSPAAO_Cg_VS, "glslv", sDeferredSPAAO_Cg_FS, "glslf", true);
 		}
-
-		// Create the program generator
-		if (sDeferredSPAAO_VS.GetLength() && sDeferredSPAAO_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredSPAAO_VS, "glslv", sDeferredSPAAO_FS, "glslf", true);
 	}
 
 	// If there's no program generator, we don't need to continue

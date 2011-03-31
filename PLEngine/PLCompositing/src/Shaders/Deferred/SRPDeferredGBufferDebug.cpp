@@ -105,21 +105,13 @@ void SRPDeferredGBufferDebug::Draw(Renderer &cRenderer, const SQCull &cCullQuery
 					}
 
 					// Choose the shader source codes depending on the requested shader language
-					String sDeferredGBufferDebug_VS;
-					String sDeferredGBufferDebug_FS;
 					if (sShaderLanguage == "GLSL") {
 						#include "SRPDeferredGBufferDebug_GLSL.h"
-						sDeferredGBufferDebug_VS = sDeferredGBufferDebug_GLSL_VS;
-						sDeferredGBufferDebug_FS = sDeferredGBufferDebug_GLSL_FS;
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBufferDebug_GLSL_VS, "130", sDeferredGBufferDebug_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 					} else if (sShaderLanguage == "Cg") {
 						#include "SRPDeferredGBufferDebug_Cg.h"
-						sDeferredGBufferDebug_VS = sDeferredGBufferDebug_Cg_VS;
-						sDeferredGBufferDebug_FS = sDeferredGBufferDebug_Cg_FS;
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBufferDebug_Cg_VS, "arbvp1", sDeferredGBufferDebug_Cg_FS, "arbfp1", true);
 					}
-
-					// Create the program generator
-					if (sDeferredGBufferDebug_VS.GetLength() && sDeferredGBufferDebug_FS.GetLength())
-						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBufferDebug_VS, "arbvp1", sDeferredGBufferDebug_FS, "arbfp1", true);
 				}
 
 				// If there's no program generator, we don't need to continue

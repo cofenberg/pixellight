@@ -143,21 +143,13 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					}
 
 					// Choose the shader source codes depending on the requested shader language
-					String sEndHDR_VS;
-					String sEndHDR_FS;
 					if (sShaderLanguage == "GLSL") {
 						#include "SRPEndHDR_GLSL.h"
-						sEndHDR_VS = sEndHDR_GLSL_VS;
-						sEndHDR_FS = sEndHDR_GLSL_FS;
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_GLSL_VS, "130", sEndHDR_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 					} else if (sShaderLanguage == "Cg") {
 						#include "SRPEndHDR_Cg.h"
-						sEndHDR_VS = sEndHDR_Cg_VS;
-						sEndHDR_FS = sEndHDR_Cg_FS;
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_Cg_VS, "glslv", sEndHDR_Cg_FS, "glslf", true);
 					}
-
-					// Create the program generator
-					if (sEndHDR_VS.GetLength() && sEndHDR_FS.GetLength())
-						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_VS, "glslv", sEndHDR_FS, "glslf", true);
 				}
 
 				// If there's no program generator, we don't need to continue

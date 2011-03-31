@@ -1,3 +1,42 @@
+>> 31.03.2011
+[CO]
+- I was wondering for some time now why on NVIDIA systems there were some issues when using GLSL. Finally I had the possibility and time to check this
+  issue in detail using the NVIDIA system at my university. It took me just a few minutes to figure it out that the issue had to do with the "#version"
+  directive of GLSL. I was aware that there's such a precompiler definition, and I already put it as comment into the GLSL shader codes as a reminder...
+  the reason to don't add a version information was to create one GLSL shader that can be used on e.g. OpenGL and OpenGL ES 2.0 at the same time. On my
+  ATI system this approach worked really well, but as mentioned this way was not working the same on NVIDIA systems... and after having a look into the
+  OpenGL specification I just noticed that the ATI driver handles this thing "wrong", meaning not according to the specification:
+    "The OpenGL® Shading Language - Language Version: 3.30 - Document Revision: 6 - 11-Mar-2010" Page 14: "Version 1.10 of the language does not require
+     shaders to include this directive, and shaders that do not include a #version directive will be treated as targeting version 1.10."
+  Ok, this means that one REALLY has to put the GLSL version into the shader source code... but I still try to keep some shaders OpenGL ES 2.0 usable by
+  adding the version definition at runtime. I think for the deferred renderer shaders I can but the version directly into the shaders and use more modern
+  GLSL language constructs because it will not really run on OpenGL ES 2.0 anyway.
+  In GLSL, "#version" must occur before any other statement in the program as stated within:
+    "The OpenGL® Shading Language - Language Version: 3.30 - Document Revision: 6 - 11-Mar-2010" Page 15: "The #version directive must occur in a shader
+     before anything else, except for comments and white space."
+  ... sadly, this time NVIDIA (driver: "266.58 WHQL") is not implementing the specification in detail and while on AMD/ATI drivers ("AMD Catalyst™ 11.3")
+  you get the error message "error(#105) #version must occur before any other statement in the program" when breaking specification, NVIDIA (driver: "266.58 WHQL")
+  just accepts it without any error.
+  ... and another one... "Order of Qualification" ...
+    "The OpenGL® Shading Language - Language Version: 3.30 - Document Revision: 6 - 11-Mar-2010" Page 52:
+    "4.7 Order of Qualification
+     When multiple qualifications are present, they must follow a strict order. This order is as follows.
+     invariant-qualifier interpolation-qualifier storage-qualifier precision-qualifier
+     storage-qualifier parameter-qualifier precision-qualifier"
+  NVIDIA (driver: "266.58 WHQL") did not yell at me when I wrote "in highp vec4 VertexPosition" while the AMD/ATI driver ("AMD Catalyst™ 11.3") throw a
+  "error(#132) Syntax error: 'in' parse error" at me which, according to the specification, was the right action.
+  ... such things REALLY make it hard to write shaders running on a broad range of GPU's! As for me, as mentioned, I "just" have an AMD/ATI graphics card and
+  no NVIDIA graphics card. At the moment, when I want to test everything on a NVIDIA system, I have to use the NVIDIA system at my university - either directly
+  within the university laboratory or via horrible slow remote control. So, I can't test each and every time when making a change within the PixelLight
+  codes. If any of you have a NVIDIA system and notice any strange behaviour, please tell me at once so that I can test and fix it!
+- Because "PLRenderer::ProgramGenerator" adds "#define" dynamically at runtime at the top of the shader, this is a break of the GLSL specification because
+  "#version" needs to be on the very top (see comments above). Therefore, "PLRenderer::ProgramGenerator" is required to also add "#version"... but I don't
+  think that's a real problem. For Cg, one already had to provide a "profile"... I extended this to GLSL so that "PLRenderer::ProgramGenerator" adds a GLSL
+  version if the current shader language is GLSL and profile, which is this case now contains the GLSL version, if not empty.
+- Added some important GLSL comments to "Shader::SetSourceCode()" so that I hopefully never again stumble over this GLSL version issue...
+
+
+
 >> 28.03.2011
 [CO]
 - Added "Renderer::GetTexelToPixelOffset()" returning the pixel origin to texel origin offset, usually (0.0, 0.0) or (-0.5, -0.5).

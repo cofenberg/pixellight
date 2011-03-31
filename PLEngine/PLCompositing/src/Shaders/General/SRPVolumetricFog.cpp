@@ -452,21 +452,14 @@ void SRPVolumetricFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		}
 
 		// Choose the shader source codes depending on the requested shader language
-		String sDiffuseOnly_VS;
-		String sDiffuseOnly_FS;
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPVolumetricFog_GLSL.h"
-			sDiffuseOnly_VS = sDiffuseOnly_GLSL_VS;
-			sDiffuseOnly_FS = sDiffuseOnly_GLSL_FS;
+			const String sProfile = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "100" : "110";
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_GLSL_VS, sProfile, sDiffuseOnly_GLSL_FS, sProfile, true);
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPVolumetricFog_Cg.h"
-			sDiffuseOnly_VS = sDiffuseOnly_Cg_VS;
-			sDiffuseOnly_FS = sDiffuseOnly_Cg_FS;
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_Cg_VS, "arbvp1", sDiffuseOnly_Cg_FS, "arbfp1", true);
 		}
-
-		// Create the program generator
-		if (sDiffuseOnly_VS.GetLength() && sDiffuseOnly_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_VS, "arbvp1", sDiffuseOnly_FS, "arbfp1", true);
 	}
 
 	// If there's no program generator, we don't need to continue

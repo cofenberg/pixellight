@@ -444,9 +444,9 @@ void SRPDeferredGlow::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 									#include "SRPDeferredGlow_GLSL.h"
 									sVertexShaderSourceCode	= sDeferredGlow_GLSL_VS;
 									if (GetFlags() & NoDiscard)
-										sFragmentShaderSourceCode = sDeferredGlow_GLSL_FS_Result;
+										sFragmentShaderSourceCode = "#version 130\n" + sDeferredGlow_GLSL_FS_Result;	// OpenGL 3.0
 									else
-										sFragmentShaderSourceCode = "#define FS_DISCARD\\n" + sDeferredGlow_GLSL_FS_Result;
+										sFragmentShaderSourceCode = "#version 130\n#define FS_DISCARD\\n" + sDeferredGlow_GLSL_FS_Result;	// OpenGL 3.0
 								} else if (sShaderLanguage == "Cg") {
 									#include "SRPDeferredGlow_Cg.h"
 									sVertexShaderSourceCode = sDeferredGlow_Cg_VS;

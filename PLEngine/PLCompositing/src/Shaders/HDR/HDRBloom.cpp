@@ -154,21 +154,13 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				}
 
 				// Choose the shader source codes depending on the requested shader language
-				String sHDRBloom_VS;
-				String sHDRBloom_FS;
 				if (sUsedShaderLanguage == "GLSL") {
 					#include "HDRBloom_GLSL.h"
-					sHDRBloom_VS = sHDRBloom_GLSL_VS;
-					sHDRBloom_FS = sHDRBloom_GLSL_FS_Downscale;
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_GLSL_VS, "130", sHDRBloom_GLSL_FS_Downscale, "130", true);
 				} else if (sUsedShaderLanguage == "Cg") {
 					#include "HDRBloom_Cg.h"
-					sHDRBloom_VS = sHDRBloom_Cg_VS;
-					sHDRBloom_FS = sHDRBloom_Cg_FS_Downscale;
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_Cg_VS, "glslv", sHDRBloom_Cg_FS_Downscale, "glslf", true);
 				}
-
-				// Create the downscale program generator
-				if (sHDRBloom_VS.GetLength() && sHDRBloom_FS.GetLength())
-					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_VS, "glslv", sHDRBloom_FS, "glslf", true);
 			}
 
 			// If there's no downscale program generator, we don't need to continue
@@ -316,7 +308,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					String sFragmentShaderSourceCode;
 					if (sUsedShaderLanguage == "GLSL") {
 						#include "HDRBloom_GLSL.h"
-						sVertexShaderSourceCode	  = sHDRBloom_GLSL_VS;
+						sVertexShaderSourceCode	  = "#version 130\n" + sHDRBloom_GLSL_VS;	// OpenGL 3.0
 						sFragmentShaderSourceCode = sHDRBloom_GLSL_FS;
 					} else if (sUsedShaderLanguage == "Cg") {
 						#include "HDRBloom_Cg.h"

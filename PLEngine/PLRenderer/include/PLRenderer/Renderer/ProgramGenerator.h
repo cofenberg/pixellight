@@ -220,15 +220,18 @@ class ProgramGenerator {
 		*  @param[in] sVertexShader
 		*    Vertex shader ("Über-Shader") source code to use, usually blank ASCII
 		*  @param[in] sVertexShaderProfile
-		*    Vertex shader profile to use (for example "arbvp1" or "glslv"), if empty string, a default profile will be used which usually
+		*    Vertex shader profile to use (for example "arbvp1" or "glslv" when using Cg, e.g. "130" when using GLSL), if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
 		*  @param[in] sFragmentShader
 		*    Fragment shader ("Über-Shader") source code to use, usually blank ASCII
 		*  @param[in] sFragmentShaderProfile
-		*    Fragment shader profile to use (for example "arbfp1" or "glslf"), if empty string, a default profile will be used which usually
+		*    Fragment shader profile to use (for example "arbfp1" or "glslf" when using Cg, e.g. "130" when using GLSL), if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
 		*  @param[in] bGLSLHacks
 		*    If the shader language is GLSL, and the used renderer not OpenGL ES 2.0, remove the precision qualifiers? (see ApplyGLSLHacks() documentation)
+		*
+		*  @note
+		*    - When using GLSL, the profile is the GLSL version to use
 		*/
 		PLRENDERER_API ProgramGenerator(Renderer &cRenderer, const PLGeneral::String &sShaderLanguage,
 										const PLGeneral::String &sVertexShader, const PLGeneral::String &sVertexShaderProfile,

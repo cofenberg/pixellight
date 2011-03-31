@@ -20,11 +20,8 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code (the depreciated "attribute" and "varying" instead of "in" and "out" are used because some GPU drivers produced errors when using "in"/"out", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDiffuseOnly_GLSL_VS = "\
-// GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
-\n\
 // In attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
@@ -102,11 +99,8 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated" (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated", "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDiffuseOnly_GLSL_FS_Part1 = "\
-// GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
-\n\
 // Attributes\n\
 #ifdef FS_TEXCOORD0\n\
 	varying highp vec2 VertexTexCoordVS;		// Vertex texture coordinate 0 from vertex shader\n\

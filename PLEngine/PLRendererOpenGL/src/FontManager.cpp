@@ -101,21 +101,13 @@ PLRenderer::Program *FontManager::GetProgram(GeneratedProgramUserData **ppGenera
 		const String sShaderLanguage = m_pRenderer->GetDefaultShaderLanguage();
 
 		// Choose the shader source codes depending on the requested shader language
-		String sVertexShaderSourceCode;
-		String sFragmentShaderSourceCode;
 		if (sShaderLanguage == "GLSL") {
 			#include "FontManager_GLSL.h"
-			sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
-			sFragmentShaderSourceCode = sFragmentShaderSourceCodeGLSL;
+			m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "110", sFragmentShaderSourceCodeGLSL, "110", true);	// OpenGL 2.0 ("#version 110")
 		} else if (sShaderLanguage == "Cg") {
 			#include "FontManager_Cg.h"
-			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
-			sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
+			m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeCg, "arbvp1", sFragmentShaderSourceCodeCg, "arbfp1", true);
 		}
-
-		// Create the program generator
-		if (sVertexShaderSourceCode.GetLength() && sFragmentShaderSourceCode.GetLength())
-			m_pProgramGenerator = new PLRenderer::ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCode, "arbvp1", sFragmentShaderSourceCode, "arbfp1", true);
 	}
 
 	// If there's no program generator, we don't need to continue

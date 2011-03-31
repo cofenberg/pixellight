@@ -119,21 +119,13 @@ void SRPDeferredEdgeAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								}
 
 								// Choose the shader source codes depending on the requested shader language
-								String sDeferredEdgeAA_VS;
-								String sDeferredEdgeAA_FS;
 								if (sShaderLanguage == "GLSL") {
 									#include "SRPDeferredEdgeAA_GLSL.h"
-									sDeferredEdgeAA_VS = sDeferredEdgeAA_GLSL_VS;
-									sDeferredEdgeAA_FS = sDeferredEdgeAA_GLSL_FS;
+									m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredEdgeAA_GLSL_VS, "130", sDeferredEdgeAA_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 								} else if (sShaderLanguage == "Cg") {
 									#include "SRPDeferredEdgeAA_Cg.h"
-									sDeferredEdgeAA_VS = sDeferredEdgeAA_Cg_VS;
-									sDeferredEdgeAA_FS = sDeferredEdgeAA_Cg_FS;
+									m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredEdgeAA_Cg_VS, "arbvp1", sDeferredEdgeAA_Cg_FS, "arbfp1", true);
 								}
-
-								// Create the program generator
-								if (sDeferredEdgeAA_VS.GetLength() && sDeferredEdgeAA_FS.GetLength())
-									m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredEdgeAA_VS, "arbvp1", sDeferredEdgeAA_FS, "arbfp1", true);
 							}
 
 							// If there's no program generator, we don't need to continue

@@ -107,21 +107,13 @@ void SRPDeferredAmbient::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						}
 
 						// Choose the shader source codes depending on the requested shader language
-						String sDeferredAmbient_VS;
-						String sDeferredAmbient_FS;
 						if (sShaderLanguage == "GLSL") {
 							#include "SRPDeferredAmbient_GLSL.h"
-							sDeferredAmbient_VS = sDeferredAmbient_GLSL_VS;
-							sDeferredAmbient_FS = sDeferredAmbient_GLSL_FS;
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_GLSL_VS, "130", sDeferredAmbient_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 						} else if (sShaderLanguage == "Cg") {
 							#include "SRPDeferredAmbient_Cg.h"
-							sDeferredAmbient_VS = sDeferredAmbient_Cg_VS;
-							sDeferredAmbient_FS = sDeferredAmbient_Cg_FS;
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_Cg_VS, "arbvp1", sDeferredAmbient_Cg_FS, "arbfp1", true);
 						}
-
-						// Create the program generator
-						if (sDeferredAmbient_VS.GetLength() && sDeferredAmbient_FS.GetLength())
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_VS, "arbvp1", sDeferredAmbient_FS, "arbfp1", true);
 					}
 
 					// If there's no program generator, we don't need to continue

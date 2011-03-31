@@ -519,15 +519,20 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 		// Get the shader language instance
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
-			// Get the definition
 			String sDefinition;
+
+			// When using GLSL, the profile is the GLSL version to use - #version must occur before any other statement in the program!
+			if (sShaderLanguage == "GLSL")
+				sDefinition += "#version 130\n";	// OpenGL 3.0
+
+			// Get the definition
 			switch (nType) {
 				 case 0:
-					 sDefinition = "#define FS_DEPTH_BLUR\\n";
+					 sDefinition += "#define FS_DEPTH_BLUR\\n";
 					 break;
 
 				 case 1:
-					 sDefinition = "#define FS_BLUR\\n";
+					 sDefinition += "#define FS_BLUR\\n";
 					 break;
 			}
 

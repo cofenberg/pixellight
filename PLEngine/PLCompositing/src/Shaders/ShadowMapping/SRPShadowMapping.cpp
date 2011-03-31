@@ -238,21 +238,13 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						}
 
 						// Choose the shader source codes depending on the requested shader language
-						String sSRPShadowMapping_VS;
-						String sSRPShadowMapping_FS;
 						if (sShaderLanguage == "GLSL") {
 							#include "SRPShadowMapping_GLSL.h"
-							sSRPShadowMapping_VS = sSRPShadowMapping_GLSL_VS;
-							sSRPShadowMapping_FS = sSRPShadowMapping_GLSL_FS;
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_GLSL_VS, "130", sSRPShadowMapping_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 						} else if (sShaderLanguage == "Cg") {
 							#include "SRPShadowMapping_Cg.h"
-							sSRPShadowMapping_VS = sSRPShadowMapping_Cg_VS;
-							sSRPShadowMapping_FS = sSRPShadowMapping_Cg_FS;
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_Cg_VS, "arbvp1", sSRPShadowMapping_Cg_FS, "arbfp1", true);
 						}
-
-						// Create the program generator
-						if (sSRPShadowMapping_VS.GetLength() && sSRPShadowMapping_FS.GetLength())
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_VS, "arbvp1", sSRPShadowMapping_FS, "arbfp1", true);
 					}
 
 					// If there's no program generator, we don't need to continue

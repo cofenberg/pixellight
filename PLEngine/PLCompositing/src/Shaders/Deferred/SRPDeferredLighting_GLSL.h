@@ -20,16 +20,13 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code
+// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredLighting_GLSL_VS = "\
-// GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
-\n\
 // Attributes\n\
-highp  in vec4 VertexPosition;				// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-highp  in vec2 VertexTexCoord0;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-highp out vec2 VertexTexCoordVS;			// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) output\n\
-highp out vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output\n\
+in  highp vec4 VertexPosition;				// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+in  highp vec2 VertexTexCoord0;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+out highp vec2 VertexTexCoordVS;			// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) output\n\
+out highp vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -48,17 +45,14 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code
+// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredLighting_GLSL_FS = "\
-// GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
-\n\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-highp in vec2 VertexTexCoordVS;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) input from vertex shader\n\
-highp in vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) input from vertex shader\n\
+in highp vec2 VertexTexCoordVS;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) input from vertex shader\n\
+in highp vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) input from vertex shader\n\
 \n\
 // Uniforms\n\
 #ifdef FS_DIRECTIONAL\n\

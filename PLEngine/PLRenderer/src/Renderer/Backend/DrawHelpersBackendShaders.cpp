@@ -508,21 +508,14 @@ ProgramGenerator *DrawHelpersBackendShaders::GetProgramGenerator()
 		}
 
 		// Choose the shader source codes depending on the requested shader language
-		String sVertexShaderSourceCode;
-		String sFragmentShaderSourceCode;
 		if (sShaderLanguage == "GLSL") {
 			#include "DrawHelpersBackendShaders_GLSL.h"
-			sVertexShaderSourceCode   = sVertexShaderSourceCodeGLSL;
-			sFragmentShaderSourceCode = sFragmentShaderSourceCodeGLSL;
+			const String sProfile = (m_pRenderer->GetAPI() == "OpenGL ES 2.0") ? "100" : "110";
+			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, sProfile, sFragmentShaderSourceCodeGLSL, sProfile, true);
 		} else if (sShaderLanguage == "Cg") {
 			#include "DrawHelpersBackendShaders_Cg.h"
-			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
-			sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
+			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeCg, "arbvp1", sFragmentShaderSourceCodeCg, "arbfp1", true);
 		}
-
-		// Create the program generator
-		if (sVertexShaderSourceCode.GetLength() && sFragmentShaderSourceCode.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCode, "arbvp1", sFragmentShaderSourceCode, "arbfp1", true);
 	}
 
 	// Return the program generator

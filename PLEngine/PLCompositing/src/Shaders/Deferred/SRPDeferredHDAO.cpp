@@ -96,21 +96,13 @@ void SRPDeferredHDAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 		}
 
 		// Choose the shader source codes depending on the requested shader language
-		String sDeferredHDAO_VS;
-		String sDeferredHDAO_FS;
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPDeferredHDAO_GLSL.h"
-			sDeferredHDAO_VS = sDeferredHDAO_GLSL_VS;
-			sDeferredHDAO_FS = sDeferredHDAO_GLSL_FS;
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHDAO_GLSL_VS, "130", sDeferredHDAO_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDeferredHDAO_Cg.h"
-			sDeferredHDAO_VS = sDeferredHDAO_Cg_VS;
-			sDeferredHDAO_FS = sDeferredHDAO_Cg_FS;
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHDAO_Cg_VS, "glslv", sDeferredHDAO_Cg_FS, "glslf", true);
 		}
-
-		// Create the program generator
-		if (sDeferredHDAO_VS.GetLength() && sDeferredHDAO_FS.GetLength())
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHDAO_VS, "glslv", sDeferredHDAO_FS, "glslf", true);
 	}
 
 	// If there's no program generator, we don't need to continue

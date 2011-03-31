@@ -20,15 +20,12 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code
+// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredHBAO_GLSL_VS = "\
-// GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
-\n\
 // Attributes\n\
-highp  in vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+in  highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-highp out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
+out highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -41,11 +38,8 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code
+// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredHBAO_GLSL_FS = "\
-// GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
-\n\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
@@ -53,7 +47,7 @@ static const PLGeneral::String sDeferredHBAO_GLSL_FS = "\
 #define M_PI 3.14159265f\n\
 \n\
 // Attributes\n\
-highp in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (1,1)\n\
+in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (1,1)\n\
 \n\
 // Uniforms\n\
 uniform highp int			NumSteps;			// Number of steps (for example 8)\n\

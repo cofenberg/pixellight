@@ -687,21 +687,13 @@ void SRPDeferredLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			}
 
 			// Choose the shader source codes depending on the requested shader language
-			String sDeferredLighting_VS;
-			String sDeferredLighting_FS;
 			if (sShaderLanguage == "GLSL") {
 				#include "SRPDeferredLighting_GLSL.h"
-				sDeferredLighting_VS = sDeferredLighting_GLSL_VS;
-				sDeferredLighting_FS = sDeferredLighting_GLSL_FS;
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredLighting_GLSL_VS, "130", sDeferredLighting_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
 			} else if (sShaderLanguage == "Cg") {
 				#include "SRPDeferredLighting_Cg.h"
-				sDeferredLighting_VS = sDeferredLighting_Cg_VS;
-				sDeferredLighting_FS = sDeferredLighting_Cg_FS;
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredLighting_Cg_VS, "arbvp1", sDeferredLighting_Cg_FS, "arbfp1", true);
 			}
-
-			// Create the program generator
-			if (sDeferredLighting_VS.GetLength() && sDeferredLighting_FS.GetLength())
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredLighting_VS, "arbvp1", sDeferredLighting_FS, "arbfp1", true);
 		}
 
 		// If there's no program generator, we don't need to continue

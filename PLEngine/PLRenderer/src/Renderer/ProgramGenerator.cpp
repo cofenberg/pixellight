@@ -157,8 +157,13 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 				// Create a new vertex shader instance
 				pVertexShader = pShaderLanguage->CreateVertexShader();
 				if (pVertexShader) {
-					// Add flag definitions to the shader source code
 					String sSourceCode;
+
+					// When using GLSL, the profile is the GLSL version to use - #version must occur before any other statement in the program!
+					if (m_sShaderLanguage == "GLSL" && m_sVertexShaderProfile.GetLength())
+						sSourceCode += "#version " + m_sVertexShaderProfile + '\n';
+
+					// Add flag definitions to the shader source code
 					const Array<const char *> &lstVertexShaderDefinitions = cFlags.GetVertexShaderDefinitions();
 					const uint32 nNumOfVertexShaderDefinitions = lstVertexShaderDefinitions.GetNumOfElements();
 					for (uint32 i=0; i<nNumOfVertexShaderDefinitions; i++) {
@@ -195,8 +200,13 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 					// Create a new fragment shader instance
 					pFragmentShader = pShaderLanguage->CreateFragmentShader();
 					if (pFragmentShader) {
-						// Add flag definitions to the shader source code
 						String sSourceCode;
+
+						// When using GLSL, the profile is the GLSL version to use - #version must occur before any other statement in the program!
+						if (m_sShaderLanguage == "GLSL" && m_sFragmentShaderProfile.GetLength())
+							sSourceCode += "#version " + m_sFragmentShaderProfile + '\n';
+
+						// Add flag definitions to the shader source code
 						const Array<const char *> &lstFragmentShaderDefinitions = cFlags.GetFragmentShaderDefinitions();
 						const uint32 nNumOfFragmentShaderDefinitions = lstFragmentShaderDefinitions.GetNumOfElements();
 						for (uint32 i=0; i<nNumOfFragmentShaderDefinitions; i++) {
