@@ -23,32 +23,32 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sDeferredGBuffer_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // In attributes\n\
-attribute highp vec4 VertexPosition;		// Object space vertex position\n\
-attribute highp vec2 VertexTexCoord0;		// Vertex texture coordinate\n\
+highp in vec4 VertexPosition;		// Object space vertex position\n\
+highp in vec2 VertexTexCoord0;		// Vertex texture coordinate\n\
 #ifdef VS_SECONDTEXTURECOORDINATE\n\
-	attribute highp vec2 VertexTexCoord1;	// Vertex ambient occlusion map and/or light map texture coordinate\n\
+	highp in vec2 VertexTexCoord1;	// Vertex ambient occlusion map and/or light map texture coordinate\n\
 #endif\n\
-attribute highp vec3 VertexNormal;			// Object space vertex normal\n\
+highp in vec3 VertexNormal;			// Object space vertex normal\n\
 #ifdef VS_TANGENT_BINORMAL\n\
-	attribute highp vec3 VertexTangent;		// Object space vertex tangent\n\
-	attribute highp vec3 VertexBinormal;	// Object space vertex tangent\n\
+	highp in vec3 VertexTangent;	// Object space vertex tangent\n\
+	highp in vec3 VertexBinormal;	// Object space vertex tangent\n\
 #endif\n\
 \n\
 // Out attributes\n\
 #ifdef VS_SECONDTEXTURECOORDINATE\n\
-	varying highp vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate output\n\
+	highp out vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate output\n\
 #else\n\
-	varying highp vec2 TexCoordVS;	// Vertex texture coordinate output\n\
+	highp out vec2 TexCoordVS;	// Vertex texture coordinate output\n\
 #endif\n\
-varying highp vec4 NormalDepthVS;	// View space vertex normal and view space linear depth [0...far plane] output\n\
-varying highp vec3 TangentVS;		// View space vertex tangent output\n\
-varying highp vec3 BinormalVS;		// View space vertex tangent output\n\
-varying highp vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point output\n\
+highp out vec4 NormalDepthVS;	// View space vertex normal and view space linear depth [0...far plane] output\n\
+highp out vec3 TangentVS;		// View space vertex tangent output\n\
+highp out vec3 BinormalVS;		// View space vertex tangent output\n\
+highp out vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point output\n\
 #ifdef VS_VIEWSPACEPOSITION\n\
-	varying highp vec3 PositionVS;	// View space vertex position output\n\
+	highp out vec3 PositionVS;	// View space vertex position output\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -114,25 +114,25 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL fragment shader source code
 static const PLGeneral::String sDeferredGBuffer_GLSL_FS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
 #if defined(FS_AMBIENTOCCLUSIONMAP) || defined(FS_LIGHTMAP)\n\
-	varying highp vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate from vertex shader\n\
+	highp in vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate from vertex shader\n\
 #else\n\
-	varying highp vec2 TexCoordVS;	// Vertex texture coordinate from vertex shader\n\
+	highp in vec2 TexCoordVS;	// Vertex texture coordinate from vertex shader\n\
 #endif\n\
-varying highp vec4 NormalDepthVS;	// View space vertex normal (normalize it to avoid interpolation artefacts!) and view space linear depth [0...far plane] from vertex shader\n\
+highp in vec4 NormalDepthVS;	// View space vertex normal (normalize it to avoid interpolation artefacts!) and view space linear depth [0...far plane] from vertex shader\n\
 #ifdef FS_NORMALMAP\n\
-	varying highp vec3 TangentVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
-	varying highp vec3 BinormalVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
+	highp in vec3 TangentVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
+	highp in vec3 BinormalVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
 #endif\n\
-varying highp vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
+highp in vec3 EyeVecVS;			// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
 #ifdef FS_REFLECTION\n\
-	varying highp vec3 PositionVS;	// View space vertex position from vertex shader\n\
+	highp in vec3 PositionVS;	// View space vertex position from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\

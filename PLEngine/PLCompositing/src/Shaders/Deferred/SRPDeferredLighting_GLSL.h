@@ -23,13 +23,13 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sDeferredLighting_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-attribute highp vec4 VertexPosition;				// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-attribute highp vec2 VertexTexCoord0;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   highp vec2 VertexTexCoordVS;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) output\n\
-varying   highp vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output\n\
+highp  in vec4 VertexPosition;				// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+highp  in vec2 VertexTexCoord0;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+highp out vec2 VertexTexCoordVS;			// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) output\n\
+highp out vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -48,14 +48,17 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL fragment shader source code
 static const PLGeneral::String sDeferredLighting_GLSL_FS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
+\n\
+// GLSL extensions\n\
+#extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-varying highp vec2 VertexTexCoordVS;			// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) input from vertex shader\n\
-varying highp vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) input from vertex shader\n\
+highp in vec2 VertexTexCoordVS;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) input from vertex shader\n\
+highp in vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) input from vertex shader\n\
 \n\
 // Uniforms\n\
 #ifdef FS_DIRECTIONAL\n\

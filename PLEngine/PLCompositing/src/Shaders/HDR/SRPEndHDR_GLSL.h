@@ -23,15 +23,15 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sEndHDR_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-attribute highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-											// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+highp in vec4 VertexPosition;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+										// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
 #ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	varying highp vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component output\n\
+	highp out vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component output\n\
 #else\n\
-	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	highp out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -56,16 +56,19 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code (the depreciated "varying" instead of "in" is used because some GPU drivers produced errors when using "in", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL fragment shader source code
 static const PLGeneral::String sEndHDR_GLSL_FS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
+\n\
+// GLSL extensions\n\
+#extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
 #ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	varying highp vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component input from vertex shader\n\
+	highp in vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component input from vertex shader\n\
 #else\n\
-	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+	highp in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\

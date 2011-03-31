@@ -23,12 +23,12 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sHDRAverageLuminance_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-attribute highp vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-										// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+highp  in vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+highp out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -47,12 +47,12 @@ void main()\n\
 // Downsample GLSL vertex shader source code
 static const PLGeneral::String sHDRAverageLuminance_GLSL_VS_Downsample = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-attribute highp vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-										// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+highp  in vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+highp out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -78,10 +78,13 @@ void main()\n\
 // Common GLSL fragment shader source code
 static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_Common = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
+\n\
+// GLSL extensions\n\
+#extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+highp in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp sampler2DRect	Texture;	// HDR texture\n\

@@ -23,14 +23,14 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sSRPShadowMapping_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-attribute highp vec4 VertexPosition;		// Object space vertex position input\n\
-varying   highp vec3 LightVecVS;\n\
+highp in  vec4 VertexPosition;			// Object space vertex position input\n\
+highp out vec3 LightVecVS;\n\
 #ifdef VS_TEXCOORD0\n\
-	attribute highp vec2 VertexTexCoord0;	// Vertex texture coordinate 0 input\n\
-	varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	highp in  vec2 VertexTexCoord0;		// Vertex texture coordinate 0 input\n\
+	highp out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -57,12 +57,12 @@ void main()\n\
 // GLSL fragment shader source code
 static const PLGeneral::String sSRPShadowMapping_GLSL_FS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-varying highp vec3 LightVecVS;\n\
+highp in vec3 LightVecVS;\n\
 #ifdef FS_ALPHATEST\n\
-	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+	highp in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\
