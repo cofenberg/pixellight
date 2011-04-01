@@ -80,10 +80,11 @@ SPTeapotShaders::SPTeapotShaders(Renderer &cRenderer) : SPTeapot(cRenderer),
 				sVertexShaderSourceCode   = "#version 100\n" + sVertexShaderSourceCodeGLSL;
 				sFragmentShaderSourceCode = "#version 100\n" + sFragmentShaderSourceCodeGLSL;
 			} else {
-				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
+				// Remove precision qualifiers so that we're able to use 120 (OpenGL 2.1 shaders) instead of 130 (OpenGL 3.0 shaders,
 				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
-				sVertexShaderSourceCode   = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL);
-				sFragmentShaderSourceCode = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL);
+				// -> In here we're using 120 instead of 110 because matrix casts are quite comfortable...
+				sVertexShaderSourceCode   = "#version 120\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL);
+				sFragmentShaderSourceCode = "#version 120\n" + Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL);
 			}
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTeapotShaders_Cg.h"

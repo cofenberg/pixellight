@@ -37,10 +37,10 @@ uniform highp vec2 WindowSizeInv;	// 1/(window size)\n\
 void main()\n\
 {\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position    = vec4(VertexPosition + Translation, 0, 1);\n\
+	gl_Position    = vec4(VertexPosition + Translation, 0.0, 1.0);\n\
 	gl_Position.xy *= WindowSizeInv;		// Change into 0..1 range\n\
-	gl_Position.y   = 1 - gl_Position.y;	// Flip y axis\n\
-	gl_Position.xy  = gl_Position.xy*2 - 1;	// Change into -1..1 range\n\
+	gl_Position.y   = 1.0 - gl_Position.y;	// Flip y axis\n\
+	gl_Position.xy  = gl_Position.xy*2.0 - 1.0;	// Change into -1..1 range\n\
 \n\
 	// Pass through the vertex texture coordinate\n\
 	VertexTexCoordVS = VertexTexCoord;\n\
@@ -66,6 +66,6 @@ void main()\n\
 	gl_FragColor = texture2D(TextureMap, VertexTexCoordVS)*VertexColorVS;\n\
 \n\
 	// Perform an alpha test to discard fragments - Reject pixels with an alpha of <=0\n\
-	if (gl_FragColor.a <= 0)\n\
+	if (gl_FragColor.a <= 0.0)\n\
 		discard; // Throw the fragment away and don't draw it!\n\
 }";

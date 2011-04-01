@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 2.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 3.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sLighting_GLSL_VS = "\
 // In attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
@@ -99,7 +99,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 2.0 and OpenGL ES 2.0) fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated", "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 3.0 and OpenGL ES 2.0) fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated", "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sLighting_GLSL_FS_Part1 = "\
 // Attributes\n\
 #ifdef FS_TEXCOORD0\n\

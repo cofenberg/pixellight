@@ -298,9 +298,8 @@ void SRPDiffuseOnlyShaders::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Get shader source codes
 					m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_GLSL_VS, "100", sDiffuseOnly_GLSL_FS, "100");
 				} else {
-					// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
-					// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
-					m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sDiffuseOnly_GLSL_VS), "110", Shader::RemovePrecisionQualifiersFromGLSL(sDiffuseOnly_GLSL_FS), "110");
+					// Remove precision qualifiers because they usually create some nasty driver issues!
+					m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sDiffuseOnly_GLSL_VS), "130", Shader::RemovePrecisionQualifiersFromGLSL(sDiffuseOnly_GLSL_FS), "130");	// OpenGL 3.0 (so we can use e.g. "isnan")
 				}
 			} else if (sShaderLanguage == "Cg") {
 				#include "SRPDiffuseOnlyShaders_Cg.h"

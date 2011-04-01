@@ -34,7 +34,7 @@ uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space m
 void main()\n\
 {\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);\n\
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1.0);\n\
 \n\
 	// Pass through the vertex color\n\
 	VertexColorVS = VertexColor;\n\
@@ -50,8 +50,8 @@ static const PLGeneral::String sGeometryShaderSourceCodeGLSL = "\
 #extension GL_EXT_geometry_shader4 : enable\n\
 \n\
 // Attributes\n\
-in  vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader\n\
-out vec4 VertexColorGS;		// Interpolated vertex color output\n\
+varying in  vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader\n\
+varying out vec4 VertexColorGS;		// Interpolated vertex color output\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -66,8 +66,8 @@ void main()\n\
 \n\
 	// Create a clone of the triangle with a shifted position and evil inverted colors\n\
 	for (int i=0; i<gl_VerticesIn; i++) {\n\
-		gl_Position = gl_PositionIn[i] + vec4(3, 2, 0, 0);\n\
-		VertexColorGS = 1 - VertexColorVS[i];\n\
+		gl_Position = gl_PositionIn[i] + vec4(3.0, 2.0, 0.0, 0.0);\n\
+		VertexColorGS = 1.0 - VertexColorVS[i];\n\
 		EmitVertex();\n\
 	}\n\
 }";

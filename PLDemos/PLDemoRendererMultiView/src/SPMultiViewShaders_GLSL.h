@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 2.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by hand
+// GLSL (OpenGL 2.1 and OpenGL ES 2.0) vertex shader source code, "#version" is added by hand
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;	// Object space vertex position input\n\
@@ -42,7 +42,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 2.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by hand
+// GLSL (OpenGL 2.1 and OpenGL ES 2.0) fragment shader source code, "#version" is added by hand
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
 varying highp vec3 VertexNormalVS;	// World space vertex normal input from vertex shader\n\
@@ -54,6 +54,6 @@ uniform highp vec3 LightDirection;	// World space light direction\n\
 void main()\n\
 {\n\
 	// Set fragment color by using primitiv directional lighting\n\
-	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0f, 1.0f);\n\
+	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0, 1.0);\n\
 	gl_FragColor = vec4(intensity, intensity, intensity, intensity);\n\
 }";
