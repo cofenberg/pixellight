@@ -71,8 +71,7 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 	if (pShaderLanguage) {
 		// Create the shader instances
 		m_pVertexShader   = pShaderLanguage->CreateVertexShader();
-		m_pGeometryShader = nullptr;
-//		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
+		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 
 		// Shader source code

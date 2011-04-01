@@ -23,9 +23,9 @@
 // GLSL vertex shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
-attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
-attribute lowp  vec4 VertexColor;		// Vertex color input\n\
-varying   lowp  vec4 VertexColorVS;		// Vertex color output\n\
+attribute vec3 VertexPosition;	// Object space vertex position input\n\
+attribute vec4 VertexColor;		// Vertex color input\n\
+varying   vec4 VertexColorVS;	// Vertex color output\n\
 \n\
 // Uniforms\n\
 uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
@@ -76,7 +76,7 @@ void main()\n\
 // GLSL fragment shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
-varying lowp vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
+varying vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
 \n\
 // Programs\n\
 void main()\n\
