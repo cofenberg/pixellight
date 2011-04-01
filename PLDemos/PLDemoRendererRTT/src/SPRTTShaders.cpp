@@ -127,14 +127,14 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			// Create a vertex shader instance
 			m_pSceneVertexShader = pShaderLanguage->CreateVertexShader();
 			if (m_pSceneVertexShader) {
-				// Set the vertex shader source code - I define a Cg profile, because if I don't and use Cg as shader language, MRT is not working (?)
+				// Set the vertex shader source code - I define a Cg profile because when using an GLSL Cg profile (which is the default), the shader is not working correctly on my AMD/ATI ("AMD Catalyst™ 11.3") system while it worked on the tested NVIDIA system...
 				m_pSceneVertexShader->SetSourceCode(sVertexShaderSourceCode, "arbvp1");
 			}
 
 			// Create a fragment shader instance
 			m_pSceneFragmentShader = pShaderLanguage->CreateFragmentShader();
 			if (m_pSceneFragmentShader) {
-				// Set the fragment shader source code - I define a Cg profile, because if I don't and use Cg as shader language, MRT is not working (?)
+				// Set the fragment shader source code - I define a Cg profile because when using an GLSL Cg profile (which is the default), the shader is not working correctly on my AMD/ATI ("AMD Catalyst™ 11.3") system while it worked on the tested NVIDIA system...
 				m_pSceneFragmentShader->SetSourceCode(sFragmentShaderSourceCode, "arbfp1");
 			}
 
@@ -168,14 +168,14 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			// Create a vertex shader instance
 			m_pVertexShader = pShaderLanguage->CreateVertexShader();
 			if (m_pVertexShader) {
-				// Set the vertex shader source code
+				// Set the vertex shader source code - I define a Cg profile because when using an GLSL Cg profile (which is the default), the shader is not working correctly on my AMD/ATI ("AMD Catalyst™ 11.3") system while it worked on the tested NVIDIA system...
 				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode, "arbvp1");
 			}
 
 			// Create a fragment shader instance
 			m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 			if (m_pFragmentShader) {
-				// Set the fragment shader source code
+				// Set the fragment shader source code - I define a Cg profile because when using an GLSL Cg profile (which is the default), the shader is not working correctly on my AMD/ATI ("AMD Catalyst™ 11.3") system while it worked on the tested NVIDIA system...
 				m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode, "arbfp1");
 			}
 
