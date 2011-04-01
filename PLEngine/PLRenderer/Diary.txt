@@ -10,6 +10,11 @@
   more detail (written in German at this time)
 - Added "Shader::RemovePrecisionQualifiersFromGLSL()" which is in fact the "PLRenderer::ProgramGenerator::ApplyGLSLHacks()", but this is no longer a
   hack - it's a feature *g*
+-> ... cool, it finally looks like that the GLSL shaders are now working properly on my AMD/ATI system as well as the NVIDIA system at my university.
+   While the NVIDIA driver is totally fixed on the given GLSL version and blames each and every single wrong set point (this is a good thing!!!),
+   the AMD/ATI driver isn't really that interested in the given GLSL version. Sadly, this means when I'am working with GLSL shaders, I can never be sure
+   whether or not I missed a GLSL version issue because the AMD/ATI driver probablity won't tell me what I've done wrong according to the selected
+   GLSL version. :/
 
 
 
