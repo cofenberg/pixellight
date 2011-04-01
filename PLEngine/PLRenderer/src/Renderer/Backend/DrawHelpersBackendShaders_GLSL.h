@@ -58,6 +58,10 @@ void main()\n\
 
 // GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
+\n\
+// GLSL extensions\n\
+#extension GL_ARB_texture_rectangle : enable // [TODO] Will this create problems when using OpenGL ES 2.0?\n\
+\n\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
 	varying highp vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate input from vertex shader\n\

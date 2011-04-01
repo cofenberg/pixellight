@@ -26,9 +26,9 @@ static const PLGeneral::String sDeferredDOF_GLSL_VS = "\
 #version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-in  highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -53,7 +53,7 @@ static const PLGeneral::String sDeferredDOF_GLSL_FS_DepthBlur = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp vec4			DOFParams;			// DOFParams coefficients\n\
@@ -98,7 +98,7 @@ static const PLGeneral::String sDeferredDOF_GLSL_FS_Downscale = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp sampler2DRect	Texture;	// Texture\n\
@@ -143,7 +143,7 @@ static const PLGeneral::String sDeferredDOF_GLSL_FS_Blur = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp vec2			UVScale;	// UV scale\n\
@@ -199,7 +199,7 @@ static const PLGeneral::String sDeferredDOF_GLSL_FS_Result = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp float			EffectWeight;	// Effect weight\n\
@@ -277,7 +277,7 @@ static const PLGeneral::String sDeferredDOF_GLSL_FS_Debug = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp sampler2DRect Texture;	// Texture\n\

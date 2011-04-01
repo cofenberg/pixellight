@@ -287,7 +287,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 		// Choose the shader source codes depending on the requested shader language
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPDirectionalLightingShaders_GLSL.h"
-			const String sProfile = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "100" : "110";
+			const String sProfile = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "100" : "130";
 			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_GLSL_VS, sProfile, sDiffuseOnly_GLSL_FS, sProfile, true);
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDirectionalLightingShaders_Cg.h"

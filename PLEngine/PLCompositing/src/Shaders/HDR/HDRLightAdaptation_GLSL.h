@@ -26,7 +26,7 @@ static const PLGeneral::String sHDRLightAdaptation_GLSL_VS = "\
 #version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-in highp vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+in vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 \n\
 // Programs\n\
 void main()\n\

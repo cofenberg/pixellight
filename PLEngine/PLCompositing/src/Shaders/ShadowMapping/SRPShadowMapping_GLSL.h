@@ -23,11 +23,11 @@
 // OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sSRPShadowMapping_GLSL_VS = "\
 // Attributes\n\
-in  highp vec4 VertexPosition;			// Object space vertex position input\n\
-out highp vec3 LightVecVS;\n\
+in  vec4 VertexPosition;		// Object space vertex position input\n\
+out vec3 LightVecVS;\n\
 #ifdef VS_TEXCOORD0\n\
-	in  highp vec2 VertexTexCoord0;		// Vertex texture coordinate 0 input\n\
-	out highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	in  vec2 VertexTexCoord0;	// Vertex texture coordinate 0 input\n\
+	out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -54,9 +54,9 @@ void main()\n\
 // OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sSRPShadowMapping_GLSL_FS = "\
 // Attributes\n\
-in highp vec3 LightVecVS;\n\
+in vec3 LightVecVS;\n\
 #ifdef FS_ALPHATEST\n\
-	in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+	in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\

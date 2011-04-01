@@ -26,10 +26,10 @@ static const PLGeneral::String sDeferredSSAO_GLSL_VS = "\
 #version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-in highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out highp vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-									// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+in vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+out vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+							// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;		// Texture size in texel\n\
@@ -56,8 +56,8 @@ static const PLGeneral::String sDeferredSSAO_GLSL_FS = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-								// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+in vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+							// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
 uniform highp float			BlurRadius;			// Blur radius\n\
@@ -73,7 +73,7 @@ highp float FetchEyeZ(highp sampler2DRect normalDepthTexture, highp vec2 uv)\n\
 	return texture2DRect(normalDepthTexture, uv).b;\n\
 }\n\
 \n\
-highp float BlurFunction(highp sampler2DRect inputTexture, highp sampler2DRect normalDepthTexture, highp float blurFalloff, highp float sharpness, highp vec2 uv, highp vec2 uvInput, highp float r, highp float center_c, highp float center_d, inout highp float w_total)\n\
+highp float BlurFunction(highp sampler2DRect inputTexture, highp sampler2DRect normalDepthTexture, highp float blurFalloff, highp float sharpness, highp vec2 uv, highp vec2 uvInput, highp float r, highp float center_c, highp float center_d, inout float w_total)\n\
 {\n\
 	highp float c = texture2DRect(inputTexture, uvInput).r;\n\
 	highp float d = FetchEyeZ(normalDepthTexture, uv);\n\

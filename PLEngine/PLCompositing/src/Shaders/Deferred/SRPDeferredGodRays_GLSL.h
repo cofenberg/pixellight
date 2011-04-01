@@ -23,9 +23,9 @@
 // OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredGodRays_GLSL_VS = "\
 // Attributes\n\
-in  highp vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform highp ivec2 TextureSize;	// Texture size in texel\n\
@@ -47,7 +47,7 @@ static const PLGeneral::String sDeferredGodRays_GLSL_FS = "\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform highp int			NumberOfSamples;	// Number of samples, must be >0\n\
