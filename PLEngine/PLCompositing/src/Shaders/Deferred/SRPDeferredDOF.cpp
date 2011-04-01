@@ -528,11 +528,11 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 			// Get the definition
 			switch (nType) {
 				 case 0:
-					 sDefinition += "#define FS_DEPTH_BLUR\\n";
+					 sDefinition += "#define FS_DEPTH_BLUR\n";
 					 break;
 
 				 case 1:
-					 sDefinition += "#define FS_BLUR\\n";
+					 sDefinition += "#define FS_BLUR\n";
 					 break;
 			}
 

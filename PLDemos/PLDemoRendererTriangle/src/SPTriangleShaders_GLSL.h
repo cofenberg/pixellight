@@ -20,11 +20,8 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code (the depreciated "attribute" and "varying" instead of "in" and "out" are used because some GPU drivers produced errors when using "in"/"out", beside this, we want to stay compatible to OpenGL ES 2.0)
+// GLSL vertex shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
-// GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
-\n\
 // Attributes\n\
 attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
 attribute lowp  vec4 VertexColor;		// Vertex color input\n\
@@ -44,17 +41,17 @@ void main()\n\
 }";
 
 
-// GLSL geometry shader source code (the depreciated "varying in" and "varying out" instead of "in" and "out" are used because some GPU drivers produced errors when using just "in"/"out")
+// GLSL geometry shader source code
 static const PLGeneral::String sGeometryShaderSourceCodeGLSL = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
-// GLSL settings\n\
+// GLSL extensions\n\
 #extension GL_EXT_geometry_shader4 : enable\n\
 \n\
 // Attributes\n\
-varying in  lowp vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader\n\
-varying out lowp vec4 VertexColorGS;	// Interpolated vertex color output\n\
+in  vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader\n\
+out vec4 VertexColorGS;		// Interpolated vertex color output\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -76,11 +73,8 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code
+// GLSL fragment shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
-// GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
-\n\
 // Attributes\n\
 varying lowp vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
 \n\
@@ -92,10 +86,10 @@ void main()\n\
 }";
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL_GS = "\
 // GLSL preprocessor directives\n\
-// #version 100	// OpenGL ES 2.0 requires 100, but modern OpenGL doesn't support 100, so we just don't define the version...\n\
+#version 130	// OpenGL 3.0\n\
 \n\
 // Attributes\n\
-varying lowp vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader\n\
+in vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader\n\
 \n\
 // Programs\n\
 void main()\n\

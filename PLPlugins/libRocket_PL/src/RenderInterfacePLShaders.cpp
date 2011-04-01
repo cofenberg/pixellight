@@ -74,8 +74,18 @@ RenderInterfacePLShaders::RenderInterfacePLShaders(RendererContext &cRendererCon
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
 			#include "RenderInterfacePLShaders_GLSL.h"
-			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
+
+			// Figure out the GLSL version to use
+			if (cRenderer.GetAPI() == "OpenGL ES 2.0") {
+				// Get shader source codes
+				sVertexShaderSourceCode   = "#version 100\n" + sVertexShaderSourceCodeGLSL;
+				sFragmentShaderSourceCode = "#version 100\n" + sFragmentShaderSourceCodeGLSL;
+			} else {
+				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
+				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
+				sVertexShaderSourceCode   = "#version 110\n" + ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
+				sFragmentShaderSourceCode = "#version 110\n" + ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
+			}
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "RenderInterfacePLShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

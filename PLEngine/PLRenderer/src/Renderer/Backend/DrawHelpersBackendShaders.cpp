@@ -510,8 +510,14 @@ ProgramGenerator *DrawHelpersBackendShaders::GetProgramGenerator()
 		// Choose the shader source codes depending on the requested shader language
 		if (sShaderLanguage == "GLSL") {
 			#include "DrawHelpersBackendShaders_GLSL.h"
-			const String sProfile = (m_pRenderer->GetAPI() == "OpenGL ES 2.0") ? "100" : "110";
-			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, sProfile, sFragmentShaderSourceCodeGLSL, sProfile, true);
+			if (m_pRenderer->GetAPI() == "OpenGL ES 2.0") {
+				// Create the program generator
+				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "100", sFragmentShaderSourceCodeGLSL, "100", true);
+			} else {
+				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
+				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
+				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL), "110", ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL), "110", true);
+			}
 		} else if (sShaderLanguage == "Cg") {
 			#include "DrawHelpersBackendShaders_Cg.h"
 			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeCg, "arbvp1", sFragmentShaderSourceCodeCg, "arbfp1", true);

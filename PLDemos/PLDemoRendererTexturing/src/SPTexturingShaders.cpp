@@ -34,7 +34,6 @@
 #include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
-#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "SPTexturingShaders.h"
 
 
@@ -76,9 +75,13 @@ SPTexturingShaders::SPTexturingShaders(Renderer &cRenderer) : SPTexturing(cRende
 		String sVertexShaderSourceCode;
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
+			// Figure out the GLSL version to use
+			const String sVersion = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "#version 100\n" : "#version 130\n";	// 130 = OpenGL 3.0 shaders (with this version, we can keep the precision qualifiers)
+
+			// Get shader source codes
 			#include "SPTexturingShaders_GLSL.h"
-			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
+			sVertexShaderSourceCode   = sVersion + sVertexShaderSourceCodeGLSL;
+			sFragmentShaderSourceCode = sVersion + sFragmentShaderSourceCodeGLSL;
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTexturingShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

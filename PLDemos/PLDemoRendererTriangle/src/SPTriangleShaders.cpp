@@ -34,7 +34,6 @@
 #include <PLRenderer/Renderer/GeometryShader.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
-#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include "SPTriangleShaders.h"
 
@@ -72,7 +71,8 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 	if (pShaderLanguage) {
 		// Create the shader instances
 		m_pVertexShader   = pShaderLanguage->CreateVertexShader();
-		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
+		m_pGeometryShader = nullptr;
+//		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 
 		// Shader source code
@@ -80,10 +80,14 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 		String sGeometryShaderSourceCode;
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
+			// Figure out the GLSL version to use
+			const String sVersion = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "#version 100\n" : "#version 130\n";	// 130 = OpenGL 3.0 shaders (with this version, we can keep the precision qualifiers)
+
+			// Get shader source codes
 			#include "SPTriangleShaders_GLSL.h"
-			sVertexShaderSourceCode   = ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-			sGeometryShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(sGeometryShaderSourceCodeGLSL);
-			sFragmentShaderSourceCode = ProgramGenerator::ApplyGLSLHacks(m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : sFragmentShaderSourceCodeGLSL);
+			sVertexShaderSourceCode   = sVersion + sVertexShaderSourceCodeGLSL;
+			sGeometryShaderSourceCode = sGeometryShaderSourceCodeGLSL;
+			sFragmentShaderSourceCode = m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : (sVersion + sFragmentShaderSourceCodeGLSL);
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTriangleShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;

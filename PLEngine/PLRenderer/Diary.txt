@@ -24,7 +24,12 @@
      invariant-qualifier interpolation-qualifier storage-qualifier precision-qualifier
      storage-qualifier parameter-qualifier precision-qualifier"
   NVIDIA (driver: "266.58 WHQL") did not yell at me when I wrote "in highp vec4 VertexPosition" while the AMD/ATI driver ("AMD Catalyst™ 11.3") throw a
-  "error(#132) Syntax error: 'in' parse error" at me which, according to the specification, was the right action.
+  "error(#132) Syntax error: 'in' parse error" at me which, according to the specification, was the right action... I changed it yesterday from
+  "highp in vec4 VertexPosition" (correct) into "in highp vec4 VertexPosition" (wrong) because the NVIDIA driver gave me a "error C7538: OpenGL does not
+  allow 'highp' after 'inout'" (I was not able to find this statement in the GLSL specification!). After looking into the GLSL specification again after all
+  this confusion, it looks like that the NVIDIA driver does it "wrong". I know that the precision qualifiers are for OpenGL ES 2.0 compatibilty
+  and (currently) have no effect when using OpenGL, but I wanted to use them anyway. Ok, in this situation (in/out/inout) I have no chance to make it working
+  using precision qualifiers on both, NVIDIA and AMD/ATI... so I just removed the precision qualifiers for this use cases... :/
   ... such things REALLY make it hard to write shaders running on a broad range of GPU's! As for me, as mentioned, I "just" have an AMD/ATI graphics card and
   no NVIDIA graphics card. At the moment, when I want to test everything on a NVIDIA system, I have to use the NVIDIA system at my university - either directly
   within the university laboratory or via horrible slow remote control. So, I can't test each and every time when making a change within the PixelLight
