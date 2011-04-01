@@ -42,9 +42,9 @@ static const PLGeneral::String sHDRLightAdaptation_GLSL_FS = "\
 #version 130	// OpenGL 3.0\n\
 \n\
 // Uniforms\n\
-uniform highp float		Factor;				// Interpolation factor\n\
-uniform highp sampler2D	PreviousTexture;	// Previous average luminance\n\
-uniform highp sampler2D	CurrentTexture;		// Current average luminance\n\
+uniform float		Factor;				// Interpolation factor\n\
+uniform sampler2D	PreviousTexture;	// Previous average luminance\n\
+uniform sampler2D	CurrentTexture;		// Current average luminance\n\
 \n\
 // Programs\n\
 void main()\n\

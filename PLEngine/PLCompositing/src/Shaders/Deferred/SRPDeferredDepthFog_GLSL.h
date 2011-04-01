@@ -28,7 +28,7 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -50,34 +50,34 @@ static const PLGeneral::String sDeferredDepthFog_GLSL_FS = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp float FarPlane;				// Far clipping plane (never 0!)\n\
-uniform lowp  vec4  FogColor;				// Fog color\n\
+uniform float FarPlane;					// Far clipping plane (never 0!)\n\
+uniform vec4  FogColor;					// Fog color\n\
 #ifdef FS_LINEAR_MODE\n\
-	uniform highp float	FogEnd;				// Fog end\n\
-	uniform highp float	FogRange;			// Fog end - fog start (never 0!)\n\
+	uniform float FogEnd;				// Fog end\n\
+	uniform float FogRange;				// Fog end - fog start (never 0!)\n\
 #else\n\
-	uniform highp float FogDensity;			// Fog density\n\
+	uniform float FogDensity;			// Fog density\n\
 #endif\n\
-uniform highp sampler2DRect NormalDepthMap;	// Normal depth texture\n\
+uniform sampler2DRect NormalDepthMap;	// Normal depth texture\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Get the depth\n\
-	highp float depth = texture2DRect(NormalDepthMap, VertexTexCoordVS).b/FarPlane;\n\
+	float depth = texture2DRect(NormalDepthMap, VertexTexCoordVS).b/FarPlane;\n\
 \n\
 	// Calculate the fog intensity [0...1] = [full fog...no fog]\n\
 	#define E 2.71828 // Natural logarithm\n\
 #ifdef FS_LINEAR_MODE\n\
-	highp float fogFactor = (FogEnd - depth)/FogRange;\n\
+	float fogFactor = (FogEnd - depth)/FogRange;\n\
 #elif defined FS_EXPONENTIAL_MODE\n\
 	// The pow parameters are safe, so no NAN can be produced in here\n\
-	highp float fogFactor = 1/pow(E, depth*FogDensity);\n\
+	float fogFactor = 1/pow(E, depth*FogDensity);\n\
 #elif defined FS_EXPONENTIAL2_MODE\n\
 	// The pow parameters are safe, so no NAN can be produced in here\n\
-	highp float fogFactor = 1/pow(E, depth*depth*FogDensity*FogDensity);\n\
+	float fogFactor = 1/pow(E, depth*depth*FogDensity*FogDensity);\n\
 #else\n\
-	highp float fogFactor = 0;\n\
+	float fogFactor = 0;\n\
 #endif\n\
 \n\
 	// Apply the fog color\n\

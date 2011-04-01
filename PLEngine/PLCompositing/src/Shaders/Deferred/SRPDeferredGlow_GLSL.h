@@ -31,7 +31,7 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -56,26 +56,26 @@ static const PLGeneral::String sDeferredGlow_GLSL_FS_Downscale = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp sampler2DRect	Texture;	// Texture\n\
+uniform sampler2DRect	Texture;	// Texture\n\
 \n\
 // Neighbor offset table\n\
-const lowp vec2 Offsets[16] = lowp vec2[16](\n\
-	lowp vec2( 1.5f, -1.5f), // 0\n\
-	lowp vec2( 1.5f, -0.5f), // 1\n\
-	lowp vec2( 1.5f,  0.5f), // 2\n\
-	lowp vec2( 1.5f,  1.5f), // 3\n\
-	lowp vec2( 0.5f, -1.5f), // 4\n\
-	lowp vec2( 0.5f, -0.5f), // 5\n\
-	lowp vec2( 0.5f,  0.5f), // 6\n\
-	lowp vec2( 0.5f,  1.5f), // 7\n\
-	lowp vec2(-0.5f, -1.5f), // 8\n\
-	lowp vec2(-0.5f, -0.5f), // 9\n\
-	lowp vec2(-0.5f,  0.5f), // 10\n\
-	lowp vec2(-0.5f,  1.5f), // 11\n\
-	lowp vec2(-1.5f, -1.5f), // 12\n\
-	lowp vec2(-1.5f, -0.5f), // 13\n\
-	lowp vec2(-1.5f,  0.5f), // 14\n\
-	lowp vec2(-1.5f,  1.5f)  // 15\n\
+const vec2 Offsets[16] = vec2[16](\n\
+	vec2( 1.5f, -1.5f), // 0\n\
+	vec2( 1.5f, -0.5f), // 1\n\
+	vec2( 1.5f,  0.5f), // 2\n\
+	vec2( 1.5f,  1.5f), // 3\n\
+	vec2( 0.5f, -1.5f), // 4\n\
+	vec2( 0.5f, -0.5f), // 5\n\
+	vec2( 0.5f,  0.5f), // 6\n\
+	vec2( 0.5f,  1.5f), // 7\n\
+	vec2(-0.5f, -1.5f), // 8\n\
+	vec2(-0.5f, -0.5f), // 9\n\
+	vec2(-0.5f,  0.5f), // 10\n\
+	vec2(-0.5f,  1.5f), // 11\n\
+	vec2(-1.5f, -1.5f), // 12\n\
+	vec2(-1.5f, -0.5f), // 13\n\
+	vec2(-1.5f,  0.5f), // 14\n\
+	vec2(-1.5f,  1.5f)  // 15\n\
 );\n\
 \n\
 // Programs\n\
@@ -83,7 +83,7 @@ void main()\n\
 {\n\
 	// Downscale\n\
 	gl_FragColor = vec4(0);\n\
-	for (highp int i=0; i<16; i++)\n\
+	for (int i=0; i<16; i++)\n\
 		gl_FragColor += texture2DRect(Texture, VertexTexCoordVS + Offsets[i]);\n\
 	gl_FragColor = gl_FragColor*(1.0f/16.0f);\n\
 }";
@@ -101,26 +101,26 @@ static const PLGeneral::String sDeferredGlow_GLSL_FS_Blur = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp vec2			UVScale;	// UV scale\n\
-uniform highp sampler2DRect	Texture;	// Texture\n\
+uniform vec2			UVScale;	// UV scale\n\
+uniform sampler2DRect	Texture;	// Texture\n\
 \n\
 // Neighbor offset table\n\
-const lowp vec2 Offsets[13] = lowp vec2[13](\n\
-	lowp vec2( 6,  6), // 0\n\
-	lowp vec2( 5,  5), // 1\n\
-	lowp vec2( 4,  4), // 2\n\
-	lowp vec2( 3,  3), // 3\n\
-	lowp vec2( 2,  2), // 4\n\
-	lowp vec2( 1,  1), // 5\n\
-	lowp vec2( 0,  0), // 6\n\
-	lowp vec2(-1, -1), // 7\n\
-	lowp vec2(-2, -2), // 8\n\
-	lowp vec2(-3, -3), // 9\n\
-	lowp vec2(-4, -4), // 10\n\
-	lowp vec2(-5, -5), // 11\n\
-	lowp vec2(-6, -6)  // 12\n\
+const vec2 Offsets[13] = vec2[13](\n\
+	vec2( 6,  6), // 0\n\
+	vec2( 5,  5), // 1\n\
+	vec2( 4,  4), // 2\n\
+	vec2( 3,  3), // 3\n\
+	vec2( 2,  2), // 4\n\
+	vec2( 1,  1), // 5\n\
+	vec2( 0,  0), // 6\n\
+	vec2(-1, -1), // 7\n\
+	vec2(-2, -2), // 8\n\
+	vec2(-3, -3), // 9\n\
+	vec2(-4, -4), // 10\n\
+	vec2(-5, -5), // 11\n\
+	vec2(-6, -6)  // 12\n\
 );\n\
-const lowp float Weights[13] = lowp float[13](\n\
+const float Weights[13] = float[13](\n\
 	0.002216f, // 0\n\
 	0.008764f, // 1\n\
 	0.026995f, // 2\n\
@@ -140,7 +140,7 @@ const lowp float Weights[13] = lowp float[13](\n\
 void main()\n\
 {\n\
 	gl_FragColor = vec4(0);\n\
-	for (highp int i=0; i<13; i++)\n\
+	for (int i=0; i<13; i++)\n\
 		gl_FragColor += texture2DRect(Texture, VertexTexCoordVS + Offsets[i]*UVScale)*Weights[i];\n\
 }";
 
@@ -154,17 +154,17 @@ static const PLGeneral::String sDeferredGlow_GLSL_FS_Result = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp float			GlowFactor;	// Glow factor\n\
-uniform highp sampler2DRect	Texture;	// Texture\n\
+uniform float			GlowFactor;	// Glow factor\n\
+uniform sampler2DRect	Texture;	// Texture\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Fetch the required texel data\n\
-	highp vec4 sample = texture2DRect(Texture, VertexTexCoordVS);\n\
+	vec4 sample = texture2DRect(Texture, VertexTexCoordVS);\n\
 \n\
 	// Calculate the resulting glow\n\
-	highp float glowFactor = sample.a*GlowFactor;\n\
+	float glowFactor = sample.a*GlowFactor;\n\
 	gl_FragColor = vec4(sample.rgb*glowFactor, glowFactor != 0);\n\
 \n\
 	// Use discard?\n\

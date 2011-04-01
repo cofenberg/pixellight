@@ -1,3 +1,14 @@
+>> 01.04.2011
+[CO]
+- Ok, I have enough of this GLSL precision qualifiers issues on NVIDIA systems... now I've receive a "error C1101: ambiguous overloaded function reference
+  "clamp(lowp float, float, float)"" while everything works on my AMD/ATI system. I removed the precision qualifiers from all none OpenGL ES 2.0
+  runnable shaders, and for those GLSL shaders targeting OpenGL as well as OpenGL ES 2.0, I will remove precision qualifiers from the shader source
+  code before passing it to OpenGL. It's just not worth all this issues and it's really sad that there are that many issues with the different
+  GPU driver implementations of precision qualifiers (which, as mentioned, on OpenGL have no real effect anyway... at least according to the
+  specification... but who cares about specifications anyway, beside me?!).
+
+
+
 >> 31.03.2011
 [CO]
 - I was wondering for some time now why on NVIDIA systems there were some issues when using GLSL. Finally I had the possibility and time to check this

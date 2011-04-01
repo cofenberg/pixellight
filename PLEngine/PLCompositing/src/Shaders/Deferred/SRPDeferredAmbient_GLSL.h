@@ -28,7 +28,7 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -50,17 +50,17 @@ static const PLGeneral::String sDeferredAmbient_GLSL_FS = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform lowp vec3		   AmbientColor;	// Ambient color\n\
-uniform lowp sampler2DRect AlbedoMap;		// Albedo texture\n\
+uniform vec3		   AmbientColor;	// Ambient color\n\
+uniform sampler2DRect AlbedoMap;		// Albedo texture\n\
 #ifdef FS_SELFILLUMINATION\n\
-	uniform lowp sampler2DRect SelfIlluminationMap;	// Self illumination texture\n\
+	uniform sampler2DRect SelfIlluminationMap;	// Self illumination texture\n\
 #endif\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Fetch the required texel data\n\
-	lowp vec4 sample = texture2DRect(AlbedoMap, VertexTexCoordVS);\n\
+	vec4 sample = texture2DRect(AlbedoMap, VertexTexCoordVS);\n\
 \n\
 	// Apply albedo and ambient color\n\
 #ifdef FS_ALBEDO\n\

@@ -28,7 +28,7 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -53,33 +53,33 @@ static const PLGeneral::String sDeferredHDAO_GLSL_FS = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
-uniform highp float			AORejectRadius;		// AO reject radius\n\
-uniform highp float			Contrast;			// Contrast\n\
-uniform highp float			AOAcceptRadius;		// AO accept radius\n\
+uniform float			AORejectRadius;		// AO reject radius\n\
+uniform float			Contrast;			// Contrast\n\
+uniform float			AOAcceptRadius;		// AO accept radius\n\
 #ifdef FS_NORMAL\n\
-	uniform highp float		NormalScale;		// Normal scale\n\
+	uniform float		NormalScale;		// Normal scale\n\
 #endif\n\
-uniform highp float			AcceptAngle;		// Accept angle\n\
-uniform highp int			NumRingGathers;\n\
-uniform highp int			NumRings;\n\
-uniform highp ivec2			Resolution;			// Resolution of the input texture data (for example 636 x 456)\n\
-uniform highp sampler2DRect	NormalDepthMap;		// RG=normal vector, B=linear view space length\n\
+uniform float			AcceptAngle;		// Accept angle\n\
+uniform int				NumRingGathers;\n\
+uniform int				NumRings;\n\
+uniform ivec2			Resolution;			// Resolution of the input texture data (for example 636 x 456)\n\
+uniform sampler2DRect	NormalDepthMap;		// RG=normal vector, B=linear view space length\n\
 \n\
 // Programs\n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
-highp vec3 decodeNormalVector(highp vec2 normal)\n\
+vec3 decodeNormalVector(vec2 normal)\n\
 {\n\
-	highp vec2 fenc = normal*4 - 2;\n\
-	highp float f = dot(fenc, fenc);\n\
-	highp float g = sqrt(1 - f/4);\n\
-	highp vec3 n;\n\
+	vec2 fenc = normal*4 - 2;\n\
+	float f = dot(fenc, fenc);\n\
+	float g = sqrt(1 - f/4);\n\
+	vec3 n;\n\
 	n.xy = fenc*g;\n\
 	n.z = 1 - f/2;\n\
 	return n;\n\
 }\n\
 \n\
 // Reconstructs view-space position (current surface point) using given parameters\n\
-highp vec3 uv_to_eye(highp vec2 uv, highp float eye_z, highp vec2 invFocalLen)\n\
+vec3 uv_to_eye(vec2 uv, float eye_z, vec2 invFocalLen)\n\
 {\n\
 	// Convert from texture space [0,1] range into [-1,1] clip space\n\
 	uv = uv*2 - 1;\n\
@@ -89,10 +89,10 @@ highp vec3 uv_to_eye(highp vec2 uv, highp float eye_z, highp vec2 invFocalLen)\n
 }\n\
 \n\
 // Reconstructs view-space position (current surface point) using a given texel\n\
-highp vec3 fetch_eye_pos(highp sampler2DRect texture, highp vec2 textureResolution, highp vec2 uv, highp vec2 invFocalLen)\n\
+vec3 fetch_eye_pos(sampler2DRect texture, vec2 textureResolution, vec2 uv, vec2 invFocalLen)\n\
 {\n\
 	// Fetch the linear view space depth at the given texel position\n\
-	highp float eye_z = texture2DRect(texture, uv*textureResolution).b;\n\
+	float eye_z = texture2DRect(texture, uv*textureResolution).b;\n\
 \n\
 	// Reconstructs view-space position using given parameters\n\
 	return uv_to_eye(uv, eye_z, invFocalLen);\n\
@@ -113,7 +113,7 @@ highp vec3 fetch_eye_pos(highp sampler2DRect texture, highp vec2 textureResoluti
 #define NUM_RING_4_GATHERS    (20)\n\
 \n\
 // Ring sample pattern\n\
-const highp vec2 g_f2HDAORingPattern[NUM_RING_4_GATHERS] = highp vec2[NUM_RING_4_GATHERS](\n\
+const vec2 g_f2HDAORingPattern[NUM_RING_4_GATHERS] = vec2[NUM_RING_4_GATHERS](\n\
 	// Ring 1\n\
 	vec2( 1, -1 ),\n\
 	vec2( 0,  1 ),\n\
@@ -144,7 +144,7 @@ const highp vec2 g_f2HDAORingPattern[NUM_RING_4_GATHERS] = highp vec2[NUM_RING_4
 );\n\
 \n\
 // Ring weights\n\
-const highp vec4 g_f4HDAORingWeight[NUM_RING_4_GATHERS] = highp vec4[NUM_RING_4_GATHERS](\n\
+const vec4 g_f4HDAORingWeight[NUM_RING_4_GATHERS] = vec4[NUM_RING_4_GATHERS](\n\
 	// Ring 1 (Sum = 5.30864)\n\
 	vec4( 1.00000, 0.50000, 0.44721, 0.70711 ),\n\
 	vec4( 0.50000, 0.44721, 0.70711, 1.00000 ),\n\
@@ -174,7 +174,7 @@ const highp vec4 g_f4HDAORingWeight[NUM_RING_4_GATHERS] = highp vec4[NUM_RING_4_
 	vec4( 0.23016, 0.22136, 0.19230, 0.19799 )\n\
 );\n\
 \n\
-const highp float g_fRingWeightsTotal[RING_4] = highp float[RING_4](\n\
+const float g_fRingWeightsTotal[RING_4] = float[RING_4](\n\
 	5.30864,\n\
 	11.39610,\n\
 	17.92677,\n\
@@ -182,7 +182,7 @@ const highp float g_fRingWeightsTotal[RING_4] = highp float[RING_4](\n\
 );\n\
 \n\
 #define NUM_NORMAL_LOADS (4)\n\
-const highp ivec2 g_i2NormalLoadPattern[NUM_NORMAL_LOADS] = highp ivec2[NUM_NORMAL_LOADS](\n\
+const ivec2 g_i2NormalLoadPattern[NUM_NORMAL_LOADS] = ivec2[NUM_NORMAL_LOADS](\n\
 	ivec2( 1,  8 ),\n\
 	ivec2( 8, -1 ),\n\
 	ivec2( 5,  4 ),\n\
@@ -191,18 +191,18 @@ const highp ivec2 g_i2NormalLoadPattern[NUM_NORMAL_LOADS] = highp ivec2[NUM_NORM
 \n\
 \n\
 // Helper function to gather samples\n\
-highp vec4 GatherZSamples(highp sampler2DRect Tex, highp vec2 f2TexCoord)\n\
+vec4 GatherZSamples(sampler2DRect Tex, vec2 f2TexCoord)\n\
 {\n\
-	highp vec4 f4Ret;\n\
+	vec4 f4Ret;\n\
 	f4Ret.x = texture2DRect(Tex, f2TexCoord + vec2(0, 1)).b;\n\
 	f4Ret.y = texture2DRect(Tex, f2TexCoord + vec2(1, 1)).b;\n\
 	f4Ret.z = texture2DRect(Tex, f2TexCoord + vec2(1, 0)).b;\n\
 	f4Ret.w = texture2DRect(Tex, f2TexCoord + vec2(0, 0)).b;\n\
 	return f4Ret;\n\
 }\n\
-highp vec4 GatherNZSamples(highp sampler2DRect Tex, highp vec2 f2TexCoord)\n\
+vec4 GatherNZSamples(sampler2DRect Tex, vec2 f2TexCoord)\n\
 {\n\
-	highp vec4 f4Ret;\n\
+	vec4 f4Ret;\n\
 	f4Ret.x = decodeNormalVector(texture2DRect(Tex, f2TexCoord + vec2(0, 1)).rg).z;\n\
 	f4Ret.y = decodeNormalVector(texture2DRect(Tex, f2TexCoord + vec2(1, 1)).rg).z;\n\
 	f4Ret.z = decodeNormalVector(texture2DRect(Tex, f2TexCoord + vec2(1, 0)).rg).z;\n\
@@ -212,16 +212,16 @@ highp vec4 GatherNZSamples(highp sampler2DRect Tex, highp vec2 f2TexCoord)\n\
 \n\
 \n\
 // Used as an early rejection test - based on normals\n\
-highp float NormalRejectionTest(highp sampler2DRect normalDepthMap, highp ivec2 i2ScreenCoord, highp ivec2 resolution, highp float acceptAngle)\n\
+float NormalRejectionTest(sampler2DRect normalDepthMap, ivec2 i2ScreenCoord, ivec2 resolution, float acceptAngle)\n\
 {\n\
-	highp vec3 f3N1;\n\
-	highp vec3 f3N2;\n\
-	highp float fSummedDot = 0;\n\
+	vec3 f3N1;\n\
+	vec3 f3N2;\n\
+	float fSummedDot = 0;\n\
 \n\
-	for (highp int iNormal=0; iNormal<NUM_NORMAL_LOADS; iNormal++) {\n\
-		highp ivec2 i2MirrorPattern		      = (g_i2NormalLoadPattern[iNormal] + ivec2(1, 1))*ivec2(-1, -1);\n\
-		highp ivec2 i2OffsetScreenCoord	      = i2ScreenCoord + g_i2NormalLoadPattern[iNormal];\n\
-		highp ivec2 i2MirrorOffsetScreenCoord = i2ScreenCoord + i2MirrorPattern;\n\
+	for (int iNormal=0; iNormal<NUM_NORMAL_LOADS; iNormal++) {\n\
+		ivec2 i2MirrorPattern		    = (g_i2NormalLoadPattern[iNormal] + ivec2(1, 1))*ivec2(-1, -1);\n\
+		ivec2 i2OffsetScreenCoord	    = i2ScreenCoord + g_i2NormalLoadPattern[iNormal];\n\
+		ivec2 i2MirrorOffsetScreenCoord = i2ScreenCoord + i2MirrorPattern;\n\
 \n\
 		// Clamp our test to screen coordinates\n\
 		i2OffsetScreenCoord.x	    = clamp(i2OffsetScreenCoord.x,	     0, resolution.x - 1);\n\
@@ -232,7 +232,7 @@ highp float NormalRejectionTest(highp sampler2DRect normalDepthMap, highp ivec2 
 		f3N1.zxy = decodeNormalVector(texture2DRect(normalDepthMap, i2OffsetScreenCoord).rg);\n\
 		f3N2.zxy = decodeNormalVector(texture2DRect(normalDepthMap, i2MirrorOffsetScreenCoord).rg);\n\
 \n\
-		highp float fDot = dot(f3N1, f3N2);\n\
+		float fDot = dot(f3N1, f3N2);\n\
 \n\
 		fSummedDot += (fDot > acceptAngle) ? 0.0f : (1.0f - (abs(fDot)*0.25f));\n\
 	}\n\
@@ -247,29 +247,29 @@ highp float NormalRejectionTest(highp sampler2DRect normalDepthMap, highp ivec2 
 void main()\n\
 {\n\
 	// Locals\n\
-	highp vec4 f4Occlusion = vec4(0);\n\
-	highp vec4 f4SampledZ[2];\n\
-	highp vec4 f4OffsetSampledZ[2];\n\
-	highp vec4 f4SampledNormalZ[2];\n\
-	highp vec4 f4Diff;\n\
-	highp vec4 f4Compare[2];\n\
-	highp vec2 f2KernelScale = vec2(Resolution.x/1024.0f, Resolution.y/768.0f);\n\
+	vec4 f4Occlusion = vec4(0);\n\
+	vec4 f4SampledZ[2];\n\
+	vec4 f4OffsetSampledZ[2];\n\
+	vec4 f4SampledNormalZ[2];\n\
+	vec4 f4Diff;\n\
+	vec4 f4Compare[2];\n\
+	vec2 f2KernelScale = vec2(Resolution.x/1024.0f, Resolution.y/768.0f);\n\
 \n\
 	// Test the normals to see if we should apply occlusion\n\
-	highp float fDot = NormalRejectionTest(NormalDepthMap, ivec2(VertexTexCoordVS), Resolution, AcceptAngle);\n\
+	float fDot = NormalRejectionTest(NormalDepthMap, ivec2(VertexTexCoordVS), Resolution, AcceptAngle);\n\
 	if (fDot > 0.5f) {\n\
 		// Sample the center pixel for camera Z\n\
-		highp vec4 sample = texture2DRect(NormalDepthMap, VertexTexCoordVS);\n\
-		highp float fCenterZ = sample.b;\n\
+		vec4 sample = texture2DRect(NormalDepthMap, VertexTexCoordVS);\n\
+		float fCenterZ = sample.b;\n\
 		#ifdef FS_NORMAL\n\
-			highp float fOffsetCenterZ = fCenterZ + decodeNormalVector(sample.rg).z*NormalScale;\n\
+			float fOffsetCenterZ = fCenterZ + decodeNormalVector(sample.rg).z*NormalScale;\n\
 		#endif\n\
 \n\
 		// Loop through each gather location, and compare with its mirrored location\n\
-		for (highp int iGather=0; iGather<NumRingGathers; iGather++) {\n\
-			highp vec2 f2TexCoord = VertexTexCoordVS + f2KernelScale*g_f2HDAORingPattern[iGather];\n\
-			highp vec2 f2MirrorScreenCoord = ((f2KernelScale*g_f2HDAORingPattern[iGather]) + vec2(1, 1))*vec2(-1, -1);\n\
-			highp vec2 f2MirrorTexCoord = VertexTexCoordVS + f2MirrorScreenCoord;\n\
+		for (int iGather=0; iGather<NumRingGathers; iGather++) {\n\
+			vec2 f2TexCoord = VertexTexCoordVS + f2KernelScale*g_f2HDAORingPattern[iGather];\n\
+			vec2 f2MirrorScreenCoord = ((f2KernelScale*g_f2HDAORingPattern[iGather]) + vec2(1, 1))*vec2(-1, -1);\n\
+			vec2 f2MirrorTexCoord = VertexTexCoordVS + f2MirrorScreenCoord;\n\
 \n\
 			// Sample\n\
 			f4SampledZ[0] = GatherZSamples(NormalDepthMap, f2TexCoord);\n\
@@ -334,9 +334,9 @@ void main()\n\
 \n\
 	// Finally calculate the HDAO occlusion value\n\
 	#ifdef FS_NORMAL\n\
-		highp float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(3*g_fRingWeightsTotal[NumRings- 1]));\n\
+		float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(3*g_fRingWeightsTotal[NumRings- 1]));\n\
 	#else\n\
-		highp float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(2*g_fRingWeightsTotal[NumRings - 1]));\n\
+		float fOcclusion = ((f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w)/(2*g_fRingWeightsTotal[NumRings - 1]));\n\
 	#endif\n\
 	gl_FragColor = vec4(1 - clamp(fOcclusion*Contrast, 0.0f, 1.0f));\n\
 }";

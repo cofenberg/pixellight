@@ -32,8 +32,8 @@ out vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0
 							// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;		// Texture size in texel\n\
-uniform highp ivec2 InputTextureSize;	// Input size in texel\n\
+uniform ivec2 TextureSize;		// Texture size in texel\n\
+uniform ivec2 InputTextureSize;	// Input size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -60,26 +60,26 @@ in vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0)
 							// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
-uniform highp float			BlurRadius;			// Blur radius\n\
-uniform highp float			BlurFalloff;		// Blur falloff\n\
-uniform highp float			Sharpness;			// Sharpness\n\
-uniform highp vec2			UVScale;			// UV scale\n\
-uniform highp sampler2DRect	InputTexture;		// Input texture\n\
-uniform highp sampler2DRect	NormalDepthTexture;	// RG=normal vector, B=linear view space length\n\
+uniform float			BlurRadius;			// Blur radius\n\
+uniform float			BlurFalloff;		// Blur falloff\n\
+uniform float			Sharpness;			// Sharpness\n\
+uniform vec2			UVScale;			// UV scale\n\
+uniform sampler2DRect	InputTexture;		// Input texture\n\
+uniform sampler2DRect	NormalDepthTexture;	// RG=normal vector, B=linear view space length\n\
 \n\
 // Programs\n\
-highp float FetchEyeZ(highp sampler2DRect normalDepthTexture, highp vec2 uv)\n\
+float FetchEyeZ(sampler2DRect normalDepthTexture, vec2 uv)\n\
 {\n\
 	return texture2DRect(normalDepthTexture, uv).b;\n\
 }\n\
 \n\
-highp float BlurFunction(highp sampler2DRect inputTexture, highp sampler2DRect normalDepthTexture, highp float blurFalloff, highp float sharpness, highp vec2 uv, highp vec2 uvInput, highp float r, highp float center_c, highp float center_d, inout float w_total)\n\
+float BlurFunction(sampler2DRect inputTexture, sampler2DRect normalDepthTexture, float blurFalloff, float sharpness, vec2 uv, vec2 uvInput, float r, float center_c, float center_d, inout float w_total)\n\
 {\n\
-	highp float c = texture2DRect(inputTexture, uvInput).r;\n\
-	highp float d = FetchEyeZ(normalDepthTexture, uv);\n\
+	float c = texture2DRect(inputTexture, uvInput).r;\n\
+	float d = FetchEyeZ(normalDepthTexture, uv);\n\
 \n\
-	highp float ddiff = d - center_d;\n\
-	highp float w = exp(-r*r*blurFalloff - ddiff*ddiff*sharpness);\n\
+	float ddiff = d - center_d;\n\
+	float w = exp(-r*r*blurFalloff - ddiff*ddiff*sharpness);\n\
 	w_total += w;\n\
 \n\
 	return w*c;\n\
@@ -88,11 +88,11 @@ highp float BlurFunction(highp sampler2DRect inputTexture, highp sampler2DRect n
 // Program entry point\n\
 void main()\n\
 {\n\
-	highp float b = 0.0f;\n\
-	highp float w_total = 0.0f;\n\
-	highp float center_c = texture2DRect(InputTexture, VertexTexCoordVS.zw).r;\n\
-	highp float center_d = FetchEyeZ(NormalDepthTexture, VertexTexCoordVS.xy);\n\
-	for (highp float r=-BlurRadius; r<=BlurRadius; r++)\n\
+	float b = 0.0f;\n\
+	float w_total = 0.0f;\n\
+	float center_c = texture2DRect(InputTexture, VertexTexCoordVS.zw).r;\n\
+	float center_d = FetchEyeZ(NormalDepthTexture, VertexTexCoordVS.xy);\n\
+	for (float r=-BlurRadius; r<=BlurRadius; r++)\n\
 		b += BlurFunction(InputTexture, NormalDepthTexture, BlurFalloff, Sharpness, VertexTexCoordVS.xy + r*UVScale, VertexTexCoordVS.zw + r*UVScale, r, center_c, center_d, w_total);\n\
 	gl_FragColor = vec4(b/w_total);\n\
 }";

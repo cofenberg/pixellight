@@ -29,7 +29,7 @@ out vec2 VertexTexCoordVS;				// Vertex texture coordinate, lower/left is (0,0) 
 out vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -56,52 +56,52 @@ in vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is 
 \n\
 // Uniforms\n\
 #ifdef FS_DIRECTIONAL\n\
-	uniform highp vec3 LightDirection;									// View space normalized light direction\n\
+	uniform vec3 LightDirection;								// View space normalized light direction\n\
 #else\n\
-	uniform highp vec3  LightPosition;									// View space light position\n\
-	uniform highp float	LightRadius;									// View space light radius\n\
+	uniform vec3  LightPosition;								// View space light position\n\
+	uniform float LightRadius;									// View space light radius\n\
 	#ifdef FS_PROJECTIVE_POINT\n\
-		uniform lowp  samplerCube ProjectivePointCubeMap;				// Cube map texture for projective point light\n\
-		uniform highp mat3        ViewSpaceToCubeMapSpace;				// View space to cube map space transform matrix\n\
+		uniform samplerCube ProjectivePointCubeMap;				// Cube map texture for projective point light\n\
+		uniform mat3        ViewSpaceToCubeMapSpace;			// View space to cube map space transform matrix\n\
 	#else\n\
 		#ifdef FS_SPOT\n\
-			uniform highp vec3 LightDirection;							// View space normalized light direction\n\
+			uniform vec3 LightDirection;						// View space normalized light direction\n\
 			#ifdef FS_PROJECTIVE_SPOT\n\
-				uniform lowp  sampler2D ProjectiveSpotMap;				// Texture for projective spot light\n\
-				uniform highp mat4      ViewSpaceToSpotMapSpace;		// View space to spot map space transform matrix\n\
+				uniform sampler2D ProjectiveSpotMap;			// Texture for projective spot light\n\
+				uniform mat4      ViewSpaceToSpotMapSpace;		// View space to spot map space transform matrix\n\
 			#endif\n\
 			#ifdef FS_SPOT_CONE\n\
 				#ifdef FS_SPOT_SMOOTHCONE\n\
-					uniform highp vec2  SpotConeCos;					// Cosinus of the outer and inner cone angle in view space\n\
+					uniform vec2  SpotConeCos;					// Cosinus of the outer and inner cone angle in view space\n\
 				#else\n\
-					uniform highp float SpotConeCos;					// Cosinus of the cone angle in view space\n\
+					uniform float SpotConeCos;					// Cosinus of the cone angle in view space\n\
 				#endif\n\
 			#endif\n\
 		#endif\n\
 	#endif\n\
 	#ifdef FS_SHADOWMAPPING\n\
 		#ifdef FS_SPOT\n\
-			uniform highp sampler2DShadow ShadowMap;					// 2D shadow map\n\
-			uniform highp mat4			  ViewSpaceToShadowMapSpace;	// View space to shadow map space transform matrix\n\
+			uniform sampler2DShadow ShadowMap;					// 2D shadow map\n\
+			uniform mat4			ViewSpaceToShadowMapSpace;	// View space to shadow map space transform matrix\n\
 		#else\n\
-			uniform highp samplerCube ShadowMap;						// Cube shadow map\n\
-			uniform highp mat3		  ViewSpaceToShadowCubeMapSpace;	// View space to shadow cube map space transform matrix\n\
-			uniform highp float		  InvLightRadius;					// 1/LightRadius\n\
+			uniform samplerCube ShadowMap;						// Cube shadow map\n\
+			uniform mat3		ViewSpaceToShadowCubeMapSpace;	// View space to shadow cube map space transform matrix\n\
+			uniform float		InvLightRadius;					// 1/LightRadius\n\
 		#endif\n\
 		#ifdef FS_SOFTSHADOWMAPPING\n\
-			uniform highp float TexelSize;								// Shadow map texel size\n\
+			uniform float TexelSize;							// Shadow map texel size\n\
 		#endif\n\
 	#endif\n\
 #endif\n\
-uniform lowp  vec3			LightColor;									// Light color\n\
-uniform highp vec2			InvFocalLen;								// 1/FocalLen (for example: 0.57771897 x 0.4142136)\n\
-uniform highp sampler2DRect RenderTargetTexture0;						// Render target texture 0\n\
-uniform highp sampler2DRect RenderTargetTexture1;						// Render target texture 1\n\
-uniform highp sampler2DRect RenderTargetTexture2;						// Render target texture 2\n\
+uniform vec3		  LightColor;								// Light color\n\
+uniform vec2		  InvFocalLen;								// 1/FocalLen (for example: 0.57771897 x 0.4142136)\n\
+uniform sampler2DRect RenderTargetTexture0;						// Render target texture 0\n\
+uniform sampler2DRect RenderTargetTexture1;						// Render target texture 1\n\
+uniform sampler2DRect RenderTargetTexture2;						// Render target texture 2\n\
 \n\
 // Programs\n\
 // Performs the Blinn-Phong lighting calculation\n\
-highp vec3 BlinnPhong(highp vec3 lightVector, highp vec3 lightColor, highp vec3 viewVector, highp vec3 normalVector, highp vec3 diffuseColor, highp vec3 specularColor, highp float specularExponent)\n\
+vec3 BlinnPhong(vec3 lightVector, vec3 lightColor, vec3 viewVector, vec3 normalVector, vec3 diffuseColor, vec3 specularColor, float specularExponent)\n\
 {\n\
 	// [TODO] There seem to be invalid normal vectors here (NAN)\n\
 	if (isnan(normalVector.x) || isnan(normalVector.y) || isnan(normalVector.z))\n\
@@ -112,14 +112,14 @@ highp vec3 BlinnPhong(highp vec3 lightVector, highp vec3 lightColor, highp vec3 
 		viewVector = vec3(0, 0, 1);\n\
 \n\
 	// Diffuse term\n\
-	highp vec3 diffuseLighting = clamp(dot(lightVector, normalVector), 0.0f, 1.0f)*diffuseColor*lightColor;\n\
+	vec3 diffuseLighting = clamp(dot(lightVector, normalVector), 0.0f, 1.0f)*diffuseColor*lightColor;\n\
 \n\
 	// Specular term\n\
 	#ifdef FS_NO_SPECULAR\n\
 		#define specularLighting 0\n\
 	#else\n\
 		// Calculate the half vector between the light vector and the view vector. This is cheaper then calculating the actual reflective vector.\n\
-		highp vec3 halfVector = normalize(lightVector + viewVector);\n\
+		vec3 halfVector = normalize(lightVector + viewVector);\n\
 \n\
 		// Ensure that the specular exponent is never ever <=0, else NANs may be produced by pow!\n\
 		#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
@@ -128,7 +128,7 @@ highp vec3 BlinnPhong(highp vec3 lightVector, highp vec3 lightColor, highp vec3 
 		#undef FLT_MIN\n\
 \n\
 		// Specular term\n\
-		highp vec3 specularLighting = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent)*specularColor*lightColor;\n\
+		vec3 specularLighting = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent)*specularColor*lightColor;\n\
 	#endif\n\
 \n\
 	// Final color\n\
@@ -137,15 +137,15 @@ highp vec3 BlinnPhong(highp vec3 lightVector, highp vec3 lightColor, highp vec3 
 \n\
 #ifdef FS_SOFTSHADOWMAPPING\n\
 	// Fake PCF (percentage-closer filtering)\n\
-	highp vec4 texPCF(highp sampler2DShadow map, highp vec4 location, highp vec2 offset)\n\
+	vec4 texPCF(sampler2DShadow map, vec4 location, vec2 offset)\n\
 	{\n\
 		return shadow2DProj(map, vec4(location.xy + location.w*offset, location.z, location.w));\n\
 	}\n\
 \n\
-	highp float texPCF(highp samplerCube map, highp vec3 location, highp vec3 offset)\n\
+	float texPCF(samplerCube map, vec3 location, vec3 offset)\n\
 	{\n\
 		// Get shadow map data\n\
-		highp vec4 shadowMap = textureCube(map, location + offset);\n\
+		vec4 shadowMap = textureCube(map, location + offset);\n\
 \n\
 		// Unpack\n\
 		return shadowMap.r/1 + shadowMap.g/256 + shadowMap.b/65536 + shadowMap.a/16777216;\n\
@@ -153,29 +153,29 @@ highp vec3 BlinnPhong(highp vec3 lightVector, highp vec3 lightColor, highp vec3 
 #endif\n\
 \n\
 #ifdef FS_SHADOWMAPPING\n\
-	highp float texPCF(highp samplerCube map, highp vec3 location)\n\
+	float texPCF(samplerCube map, vec3 location)\n\
 	{\n\
 		// Get shadow map data\n\
-		highp vec4 shadowMap = textureCube(map, location);\n\
+		vec4 shadowMap = textureCube(map, location);\n\
 \n\
 		// Unpack\n\
 		return shadowMap.r/1 + shadowMap.g/256 + shadowMap.b/65536 + shadowMap.a/16777216;\n\
 	}\n\
 #endif\n\
 \n\
-highp vec3 decodeNormalVector(highp vec2 normal)\n\
+vec3 decodeNormalVector(vec2 normal)\n\
 {\n\
-	highp vec2 fenc = normal*4 - 2;\n\
-	highp float f = dot(fenc, fenc);\n\
-	highp float g = sqrt(1 - f/4);\n\
-	highp vec3 n;\n\
+	vec2 fenc = normal*4 - 2;\n\
+	float f = dot(fenc, fenc);\n\
+	float g = sqrt(1 - f/4);\n\
+	vec3 n;\n\
 	n.xy = fenc*g;\n\
 	n.z = 1 - f/2;\n\
 	return n;\n\
 }\n\
 \n\
 // Reconstructs view-space position using given parameters\n\
-highp vec3 uv_to_eye(highp vec2 uv, highp float eye_z, highp vec2 invFocalLen)\n\
+vec3 uv_to_eye(vec2 uv, float eye_z, vec2 invFocalLen)\n\
 {\n\
 	// Convert from texture space [0,1] range into [-1,1] clip space\n\
 	uv = uv*2 - 1;\n\
@@ -189,14 +189,14 @@ highp vec3 uv_to_eye(highp vec2 uv, highp float eye_z, highp vec2 invFocalLen)\n
 void main()\n\
 {\n\
 	// Reconstruct view-space position (current surface point)\n\
-	highp vec4 sampleRT1 = texture2DRect(RenderTargetTexture1, VertexTexCoordVS);\n\
-	highp vec3 position  = uv_to_eye(VertexTexCoordNormalizedVS, sampleRT1.b, InvFocalLen);\n\
+	vec4 sampleRT1 = texture2DRect(RenderTargetTexture1, VertexTexCoordVS);\n\
+	vec3 position  = uv_to_eye(VertexTexCoordNormalizedVS, sampleRT1.b, InvFocalLen);\n\
 \n\
 	// Perform the lighting calculation in view space\n\
 #ifdef FS_DIRECTIONAL\n\
-	highp vec3 normal    = decodeNormalVector(sampleRT1.rg);\n\
-	highp vec4 sampleRT0 = texture2DRect(RenderTargetTexture0, VertexTexCoordVS);\n\
-	highp vec4 sampleRT2 = texture2DRect(RenderTargetTexture2, VertexTexCoordVS);\n\
+	vec3 normal    = decodeNormalVector(sampleRT1.rg);\n\
+	vec4 sampleRT0 = texture2DRect(RenderTargetTexture0, VertexTexCoordVS);\n\
+	vec4 sampleRT2 = texture2DRect(RenderTargetTexture2, VertexTexCoordVS);\n\
 	#ifdef FS_NO_ALBEDO\n\
 		sampleRT0.rgb = vec3(1);	// Set to default\n\
 	#endif\n\
@@ -212,10 +212,10 @@ void main()\n\
 	#define shadow 1\n\
 #else\n\
 	// Calculate the view space light vector pointing from the position to the light position\n\
-	highp vec3 lightVector = LightPosition - position;\n\
+	vec3 lightVector = LightPosition - position;\n\
 \n\
 	// Get the distance between the light and position\n\
-	highp float distance = length(lightVector);\n\
+	float distance = length(lightVector);\n\
 \n\
 	// If the position is outside of area of effect, discard position\n\
 	if (distance > LightRadius) {\n\
@@ -232,25 +232,25 @@ void main()\n\
 	#ifdef FS_SHADOWMAPPING\n\
 		#ifdef FS_SPOT\n\
 			// Calculate the shadow vector\n\
-			highp vec4 shadowVector = ViewSpaceToShadowMapSpace*vec4(position, 1);\n\
+			vec4 shadowVector = ViewSpaceToShadowMapSpace*vec4(position, 1);\n\
 \n\
 			// Shadow mapping\n\
 			#ifdef FS_SOFTSHADOWMAPPING\n\
 				// Fake PCF (percentage-closer filtering)\n\
-				highp float shadow = (texPCF(ShadowMap, shadowVector, vec2(-TexelSize,  TexelSize)).x +\n\
-									  texPCF(ShadowMap, shadowVector, vec2( TexelSize,  TexelSize)).x +\n\
-									  texPCF(ShadowMap, shadowVector, vec2(-TexelSize, -TexelSize)).x +\n\
-									  texPCF(ShadowMap, shadowVector, vec2( TexelSize, -TexelSize)).x) * 0.25f;\n\
+				float shadow = (texPCF(ShadowMap, shadowVector, vec2(-TexelSize,  TexelSize)).x +\n\
+								texPCF(ShadowMap, shadowVector, vec2( TexelSize,  TexelSize)).x +\n\
+								texPCF(ShadowMap, shadowVector, vec2(-TexelSize, -TexelSize)).x +\n\
+								texPCF(ShadowMap, shadowVector, vec2( TexelSize, -TexelSize)).x) * 0.25f;\n\
 			#else\n\
-				highp float shadow = shadow2DProj(ShadowMap, shadowVector).x;\n\
+				float shadow = shadow2DProj(ShadowMap, shadowVector).x;\n\
 			#endif\n\
 		#else\n\
 			// Shadow mapping\n\
-			highp vec3 shadowVector = ViewSpaceToShadowCubeMapSpace*(-lightVector*InvLightRadius);\n\
-			highp float shadowVecLength = length(shadowVector);\n\
+			vec3 shadowVector = ViewSpaceToShadowCubeMapSpace*(-lightVector*InvLightRadius);\n\
+			float shadowVecLength = length(shadowVector);\n\
 			#ifdef FS_SOFTSHADOWMAPPING\n\
 				// Shadowed?\n\
-				highp float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(TexelSize, TexelSize, TexelSize))) ? 0.16666667f : 0.0f;\n\
+				float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(TexelSize, TexelSize, TexelSize))) ? 0.16666667f : 0.0f;\n\
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize, -TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3( TexelSize, -TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
 				shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
@@ -259,10 +259,10 @@ void main()\n\
 				shadow = clamp(shadow, 0.0f, 1.0f);\n\
 			#else\n\
 				// Unpack\n\
-				highp float depthValue = texPCF(ShadowMap, shadowVector);\n\
+				float depthValue = texPCF(ShadowMap, shadowVector);\n\
 \n\
 				// Shadowed?\n\
-				highp float shadow = (shadowVecLength < depthValue) ? 1 : 0;\n\
+				float shadow = (shadowVecLength < depthValue) ? 1 : 0;\n\
 			#endif\n\
 		#endif\n\
 \n\
@@ -284,10 +284,10 @@ void main()\n\
 	// Get the light color (lightColor)\n\
 	#ifdef FS_PROJECTIVE_POINT\n\
 		// Calculate the cube map space vector ('-' -> The light is the source of the ray, not the surface!)\n\
-		highp vec3 cubeMapVector = ViewSpaceToCubeMapSpace*(-lightVector);\n\
+		vec3 cubeMapVector = ViewSpaceToCubeMapSpace*(-lightVector);\n\
 \n\
 		// Get cube map texture for projective point light\n\
-		lowp vec3 lightColor = textureCube(ProjectivePointCubeMap, cubeMapVector).rgb;\n\
+		vec3 lightColor = textureCube(ProjectivePointCubeMap, cubeMapVector).rgb;\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
 			lightColor = pow(lightColor, vec3(2.2f, 2.2f, 2.2f));\n\
@@ -296,14 +296,14 @@ void main()\n\
 		lightColor *= LightColor;\n\
 	#else\n\
 		// Start with the original light color\n\
-		lowp vec3 lightColor = LightColor;\n\
+		vec3 lightColor = LightColor;\n\
 \n\
 		// Add spot light\n\
 		#ifdef FS_SPOT\n\
 			// Projective spot map\n\
 			#ifdef FS_PROJECTIVE_SPOT\n\
 				// Calculate the projective spot map texture coordinate\n\
-				highp vec4 projectiveSpotMapUV = ViewSpaceToSpotMapSpace*(-vec4(position, 1));\n\
+				vec4 projectiveSpotMapUV = ViewSpaceToSpotMapSpace*(-vec4(position, 1));\n\
 \n\
 				// No back projection, please!\n\
 				if (projectiveSpotMapUV.z < 0) {\n\
@@ -317,7 +317,7 @@ void main()\n\
 				}\n\
 \n\
 				// Get the projective spot map texel data\n\
-				lowp vec3 projectiveSpotMapTexel = texture2DProj(ProjectiveSpotMap, projectiveSpotMapUV).rgb;\n\
+				vec3 projectiveSpotMapTexel = texture2DProj(ProjectiveSpotMap, projectiveSpotMapUV).rgb;\n\
 				// Perform sRGB to linear space conversion (gamma correction)\n\
 				#ifdef FS_GAMMACORRECTION\n\
 					projectiveSpotMapTexel = pow(projectiveSpotMapTexel, vec3(2.2f, 2.2f, 2.2f));\n\
@@ -329,12 +329,12 @@ void main()\n\
 			// Spot light with cone\n\
 			#ifdef FS_SPOT_CONE\n\
 				// Calculate the angle between the current position and the spot light\n\
-				highp float currentSpotConeCos = dot(normalize(position - LightPosition), LightDirection);\n\
+				float currentSpotConeCos = dot(normalize(position - LightPosition), LightDirection);\n\
 \n\
 				// Spot light with smooth cone\n\
 				#ifdef FS_SPOT_SMOOTHCONE\n\
 					// Get the current smooth spot cone attenuation\n\
-					highp float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
+					float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
 \n\
 					// Is the position completly outside the spot cone?\n\
 					if (currentSpotConeCosAttenuation <= 0) {\n\
@@ -366,9 +366,9 @@ void main()\n\
 	#endif\n\
 \n\
 	// Perform the lighting calculation in view space\n\
-	highp vec3 normal    = decodeNormalVector(sampleRT1.rg);\n\
-	highp vec4 sampleRT0 = texture2DRect(RenderTargetTexture0, VertexTexCoordVS);\n\
-	highp vec4 sampleRT2 = texture2DRect(RenderTargetTexture2, VertexTexCoordVS);\n\
+	vec3 normal    = decodeNormalVector(sampleRT1.rg);\n\
+	vec4 sampleRT0 = texture2DRect(RenderTargetTexture0, VertexTexCoordVS);\n\
+	vec4 sampleRT2 = texture2DRect(RenderTargetTexture2, VertexTexCoordVS);\n\
 	#ifdef FS_NO_ALBEDO\n\
 		sampleRT0.rgb = vec3(1);	// Set to default\n\
 	#endif\n\

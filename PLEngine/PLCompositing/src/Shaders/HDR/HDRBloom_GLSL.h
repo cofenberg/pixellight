@@ -32,9 +32,9 @@ in vec4 VertexPosition;			// Clip space vertex position, lower/left is (-1,-1) a
 #endif\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;						// Texture size in texel\n\
+uniform ivec2 TextureSize;							// Texture size in texel\n\
 #ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+	uniform sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
 #endif\n\
 \n\
 // Programs\n\
@@ -67,46 +67,46 @@ static const PLGeneral::String sHDRBloom_GLSL_FS_Downscale = "\
 \n\
 // Uniforms\n\
 #ifdef FS_TONE_MAPPING\n\
-	uniform highp vec3			LuminanceConvert;	// Luminance convert\n\
-	uniform highp float			Key;				// Key, must be >=0\n\
-	uniform highp float			WhiteLevel;			// White level, must be >=0\n\
+	uniform vec3			LuminanceConvert;	// Luminance convert\n\
+	uniform float			Key;				// Key, must be >=0\n\
+	uniform float			WhiteLevel;			// White level, must be >=0\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
 		#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-			uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+			uniform sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
 		#endif\n\
 	#else\n\
-		uniform highp float		AverageLuminance;	// User set average luminance\n\
+		uniform float		AverageLuminance;	// User set average luminance\n\
 	#endif\n\
 #endif\n\
-uniform highp float			BrightThreshold;		// Bright threshold\n\
-uniform highp sampler2DRect	HDRTexture;				// HDR texture\n\
+uniform float			BrightThreshold;		// Bright threshold\n\
+uniform sampler2DRect	HDRTexture;				// HDR texture\n\
 \n\
 // Neighbor offset table\n\
-const lowp vec2 Offsets[16] = lowp vec2[16](\n\
-	lowp vec2( 1.5f, -1.5f), // 0\n\
-	lowp vec2( 1.5f, -0.5f), // 1\n\
-	lowp vec2( 1.5f,  0.5f), // 2\n\
-	lowp vec2( 1.5f,  1.5f), // 3\n\
-	lowp vec2( 0.5f, -1.5f), // 4\n\
-	lowp vec2( 0.5f, -0.5f), // 5\n\
-	lowp vec2( 0.5f,  0.5f), // 6\n\
-	lowp vec2( 0.5f,  1.5f), // 7\n\
-	lowp vec2(-0.5f, -1.5f), // 8\n\
-	lowp vec2(-0.5f, -0.5f), // 9\n\
-	lowp vec2(-0.5f,  0.5f), // 10\n\
-	lowp vec2(-0.5f,  1.5f), // 11\n\
-	lowp vec2(-1.5f, -1.5f), // 12\n\
-	lowp vec2(-1.5f, -0.5f), // 13\n\
-	lowp vec2(-1.5f,  0.5f), // 14\n\
-	lowp vec2(-1.5f,  1.5f)  // 15\n\
+const vec2 Offsets[16] = vec2[16](\n\
+	vec2( 1.5f, -1.5f), // 0\n\
+	vec2( 1.5f, -0.5f), // 1\n\
+	vec2( 1.5f,  0.5f), // 2\n\
+	vec2( 1.5f,  1.5f), // 3\n\
+	vec2( 0.5f, -1.5f), // 4\n\
+	vec2( 0.5f, -0.5f), // 5\n\
+	vec2( 0.5f,  0.5f), // 6\n\
+	vec2( 0.5f,  1.5f), // 7\n\
+	vec2(-0.5f, -1.5f), // 8\n\
+	vec2(-0.5f, -0.5f), // 9\n\
+	vec2(-0.5f,  0.5f), // 10\n\
+	vec2(-0.5f,  1.5f), // 11\n\
+	vec2(-1.5f, -1.5f), // 12\n\
+	vec2(-1.5f, -0.5f), // 13\n\
+	vec2(-1.5f,  0.5f), // 14\n\
+	vec2(-1.5f,  1.5f)  // 15\n\
 );\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Downsample\n\
-	highp vec4 color = vec4(0);\n\
-	for (highp int i=0; i<16; i++)\n\
+	vec4 color = vec4(0);\n\
+	for (int i=0; i<16; i++)\n\
 		color += texture2DRect(HDRTexture, VertexTexCoordVS.xy + Offsets[i]);\n\
 	gl_FragColor = color*(1.0f/16.0f);\n\
 \n\
@@ -115,7 +115,7 @@ void main()\n\
 	// Perform tone mapping\n\
 #ifdef FS_TONE_MAPPING\n\
 	// Convert RGB to luminance\n\
-	highp float pixelLuminance = dot(gl_FragColor.rgb, LuminanceConvert);\n\
+	float pixelLuminance = dot(gl_FragColor.rgb, LuminanceConvert);\n\
 \n\
 	// Get the average luminance\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
@@ -129,9 +129,9 @@ void main()\n\
 	#endif\n\
 \n\
 	// Use the Reinhard global tone map operator to compute the scaled luminance\n\
-	highp float keyOverLuminance = (averageLuminance > 0.0f) ? Key/averageLuminance : 0.0f;\n\
+	float keyOverLuminance = (averageLuminance > 0.0f) ? Key/averageLuminance : 0.0f;\n\
 	// 'Photographic Tone Reproduction for Digital Images': Formula 2\n\
-	highp float scaledLuminance = keyOverLuminance*pixelLuminance;\n\
+	float scaledLuminance = keyOverLuminance*pixelLuminance;\n\
 	// 'Photographic Tone Reproduction for Digital Images': Formula 4\n\
 	scaledLuminance = (scaledLuminance*(1 + (scaledLuminance/pow(keyOverLuminance*WhiteLevel, 2)))) / (1 + scaledLuminance);\n\
 \n\
@@ -156,26 +156,26 @@ static const PLGeneral::String sHDRBloom_GLSL_FS = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp vec2			UVScale;	// UV scale\n\
-uniform highp sampler2DRect	HDRTexture;	// HDR texture\n\
+uniform vec2			UVScale;	// UV scale\n\
+uniform sampler2DRect	HDRTexture;	// HDR texture\n\
 \n\
 // Neighbor offset table\n\
-const lowp vec2 Offsets[13] = lowp vec2[13](\n\
-	lowp vec2( 6,  6), // 0\n\
-	lowp vec2( 5,  5), // 1\n\
-	lowp vec2( 4,  4), // 2\n\
-	lowp vec2( 3,  3), // 3\n\
-	lowp vec2( 2,  2), // 4\n\
-	lowp vec2( 1,  1), // 5\n\
-	lowp vec2( 0,  0), // 6\n\
-	lowp vec2(-1, -1), // 7\n\
-	lowp vec2(-2, -2), // 8\n\
-	lowp vec2(-3, -3), // 9\n\
-	lowp vec2(-4, -4), // 10\n\
-	lowp vec2(-5, -5), // 11\n\
-	lowp vec2(-6, -6)  // 12\n\
+const vec2 Offsets[13] = vec2[13](\n\
+	vec2( 6,  6), // 0\n\
+	vec2( 5,  5), // 1\n\
+	vec2( 4,  4), // 2\n\
+	vec2( 3,  3), // 3\n\
+	vec2( 2,  2), // 4\n\
+	vec2( 1,  1), // 5\n\
+	vec2( 0,  0), // 6\n\
+	vec2(-1, -1), // 7\n\
+	vec2(-2, -2), // 8\n\
+	vec2(-3, -3), // 9\n\
+	vec2(-4, -4), // 10\n\
+	vec2(-5, -5), // 11\n\
+	vec2(-6, -6)  // 12\n\
 );\n\
-const lowp float Weights[13] = lowp float[13](\n\
+const float Weights[13] = float[13](\n\
 	0.002216f, // 0\n\
 	0.008764f, // 1\n\
 	0.026995f, // 2\n\
@@ -195,6 +195,6 @@ const lowp float Weights[13] = lowp float[13](\n\
 void main()\n\
 {\n\
 	gl_FragColor = vec4(0);\n\
-	for (highp int i=0; i<13; i++)\n\
+	for (int i=0; i<13; i++)\n\
 		gl_FragColor += texture2DRect(HDRTexture, VertexTexCoordVS + Offsets[i]*UVScale)*Weights[i];\n\
 }";

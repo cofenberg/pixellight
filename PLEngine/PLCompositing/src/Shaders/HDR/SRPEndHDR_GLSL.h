@@ -32,9 +32,9 @@ in vec4 VertexPosition;			// Clip space vertex position, lower/left is (-1,-1) a
 #endif\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;						// Texture size in texel\n\
+uniform ivec2 TextureSize;							// Texture size in texel\n\
 #ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+	uniform sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
 #endif\n\
 \n\
 // Programs\n\
@@ -67,37 +67,37 @@ static const PLGeneral::String sEndHDR_GLSL_FS = "\
 \n\
 // Uniforms\n\
 #ifdef FS_TONE_MAPPING\n\
-	uniform highp vec3			LuminanceConvert;			// Luminance convert\n\
-	uniform highp float			Key;						// Key, must be >=0\n\
-	uniform highp float			WhiteLevel;					// White level, must be >=0\n\
+	uniform vec3			LuminanceConvert;				// Luminance convert\n\
+	uniform float			Key;							// Key, must be >=0\n\
+	uniform float			WhiteLevel;						// White level, must be >=0\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
 		#ifndef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-			uniform highp sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+			uniform sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
 		#endif\n\
 	#else\n\
-		uniform highp float		AverageLuminance;			// User set average luminance\n\
+		uniform float		AverageLuminance;				// User set average luminance\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_BLOOM\n\
-	uniform highp float			BloomFactor;				// Bloom factor\n\
-	uniform highp float			BloomDownscale;				// Bloom downscale\n\
-	uniform highp sampler2DRect	BloomTexture;				// Bloom texture\n\
+	uniform float			BloomFactor;					// Bloom factor\n\
+	uniform float			BloomDownscale;					// Bloom downscale\n\
+	uniform sampler2DRect	BloomTexture;					// Bloom texture\n\
 #endif\n\
 #ifdef FS_GAMMA_CORRECTION\n\
-	uniform highp float			InvGamma;					// Inversed gamma correction value, must be >0\n\
+	uniform float			InvGamma;						// Inversed gamma correction value, must be >0\n\
 #endif\n\
-uniform highp sampler2DRect		HDRTexture;					// HDR texture\n\
+uniform sampler2DRect		HDRTexture;						// HDR texture\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Fetch the required texel data\n\
-	highp vec4 sample = texture2DRect(HDRTexture, VertexTexCoordVS.xy);\n\
+	vec4 sample = texture2DRect(HDRTexture, VertexTexCoordVS.xy);\n\
 \n\
 	// Perform tone mapping\n\
 #ifdef FS_TONE_MAPPING\n\
 	// Convert RGB to luminance\n\
-	highp float pixelLuminance = dot(sample.rgb, LuminanceConvert);\n\
+	float pixelLuminance = dot(sample.rgb, LuminanceConvert);\n\
 \n\
 	// Get the average luminance\n\
 	#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE\n\
@@ -111,9 +111,9 @@ void main()\n\
 	#endif\n\
 \n\
 	// Use the Reinhard global tone map operator to compute the scaled luminance\n\
-	highp float keyOverLuminance = (averageLuminance > 0.0f) ? Key/averageLuminance : 0.0f;\n\
+	float keyOverLuminance = (averageLuminance > 0.0f) ? Key/averageLuminance : 0.0f;\n\
 	// 'Photographic Tone Reproduction for Digital Images': Formula 2\n\
-	highp float scaledLuminance = keyOverLuminance*pixelLuminance;\n\
+	float scaledLuminance = keyOverLuminance*pixelLuminance;\n\
 	// 'Photographic Tone Reproduction for Digital Images': Formula 4\n\
 	scaledLuminance = (scaledLuminance*(1 + (scaledLuminance/pow(keyOverLuminance*WhiteLevel, 2)))) / (1 + scaledLuminance);\n\
 \n\

@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-//  OpenGL 2.0 ("#version 110") GLSL vertex shader source code
+//  OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
-attribute highp vec3 VertexPosition;	// Object space vertex position input, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   highp vec2 VertexTexCoordVS;	// Normalized vertex texture coordinate output\n\
+attribute vec3 VertexPosition;		// Object space vertex position input, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec2 VertexTexCoordVS;	// Normalized vertex texture coordinate output\n\
 \n\
 // Uniforms\n\
-uniform highp vec4 GlyphSizePenPosition;			// Object space glyph size (xy) and object space pen position (zw) => scale & bias\n\
-uniform highp vec4 TextureCoordinateMinMax;			// The normalized minimum (xy) and maximum (zw) glyph texture coordinate inside the glyph texture atlas\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
+uniform vec4 GlyphSizePenPosition;			// Object space glyph size (xy) and object space pen position (zw) => scale & bias\n\
+uniform vec4 TextureCoordinateMinMax;		// The normalized minimum (xy) and maximum (zw) glyph texture coordinate inside the glyph texture atlas\n\
+uniform mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Calculate the object space vertex position\n\
-	highp vec4 position = vec4(VertexPosition.xy*GlyphSizePenPosition.xy + GlyphSizePenPosition.zw, 0, 1);\n\
+	vec4 position = vec4(VertexPosition.xy*GlyphSizePenPosition.xy + GlyphSizePenPosition.zw, 0, 1);\n\
 \n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*position;\n\
@@ -52,14 +52,14 @@ void main()\n\
 }";
 
 
-// OpenGL 2.0 ("#version 110") GLSL fragment shader source code
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
-varying highp vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate from vertex shader\n\
+varying vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform lowp sampler2D GlyphMap;	// Glyph atlas texture map\n\
-uniform lowp vec4	   Color;		// Text color\n\
+uniform sampler2D GlyphMap;	// Glyph atlas texture map\n\
+uniform vec4	  Color;	// Text color\n\
 \n\
 // Programs\n\
 void main()\n\

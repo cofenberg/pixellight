@@ -31,7 +31,7 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -55,8 +55,8 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
-uniform highp vec2  Size;			// Size [0..1]\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
+uniform vec2  Size;			// Size [0..1]\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -87,10 +87,10 @@ static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_Common = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp sampler2DRect	Texture;	// HDR texture\n\
+uniform sampler2DRect	Texture;	// HDR texture\n\
 \n\
 // Neighbor offset table\n\
-const highp vec2 Offsets[4] = highp vec2[4](\n\
+const vec2 Offsets[4] = vec2[4](\n\
 	vec2( 0,  0), // Center       0\n\
 	vec2( 1,  0), // Right        1\n\
 	vec2( 1,  1), // Bottom right 2\n\
@@ -101,8 +101,8 @@ const highp vec2 Offsets[4] = highp vec2[4](\n\
 // Downsample log GLSL fragment shader source code
 static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_DownsampleLog = "\
 // Uniforms\n\
-uniform highp vec3	LuminanceConvert;	// Convert RGB to luminance\n\
-uniform highp float	Epsilon;			// A small value to avoid undefined log(0)\n\
+uniform vec3	LuminanceConvert;	// Convert RGB to luminance\n\
+uniform float	Epsilon;			// A small value to avoid undefined log(0)\n\
 \n\
 // Downsample log main function\n\
 void main()\n\

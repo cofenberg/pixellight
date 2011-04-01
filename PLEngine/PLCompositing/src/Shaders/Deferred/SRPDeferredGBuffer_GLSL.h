@@ -50,14 +50,14 @@ out vec3 EyeVecVS;				// Tangent space vector pointing from the pixel to the eye
 \n\
 // Uniforms\n\
 #ifdef VS_TWOSIDED\n\
-	uniform highp float NormalScale;				// Normal scale (negative to flip normals)\n\
+	uniform float NormalScale;					// Normal scale (negative to flip normals)\n\
 #endif\n\
-uniform highp vec3 EyePos;							// Object space eye position\n\
-uniform highp mat4 WorldVP;							// World view projection matrix\n\
-uniform highp mat4 WorldV;							// World view matrix\n\
+uniform vec3 EyePos;							// Object space eye position\n\
+uniform mat4 WorldVP;							// World view projection matrix\n\
+uniform mat4 WorldV;							// World view matrix\n\
 #ifdef VS_DISPLACEMENTMAP\n\
-	uniform highp sampler2D DisplacementMap;		// Displacement map\n\
-	uniform highp vec2      DisplacementScaleBias;	// Displacement scale and bias\n\
+	uniform sampler2D DisplacementMap;			// Displacement map\n\
+	uniform vec2      DisplacementScaleBias;	// Displacement scale and bias\n\
 #endif\n\
 \n\
 // Programs\n\
@@ -132,81 +132,81 @@ in vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye po
 // Uniforms\n\
 uniform vec3 DiffuseColor;\n\
 #ifdef FS_DIFFUSEMAP\n\
-	uniform lowp sampler2D DiffuseMap;\n\
+	uniform sampler2D DiffuseMap;\n\
 	#ifdef FS_ALPHATEST\n\
-		uniform highp float AlphaReference;\n\
+		uniform float AlphaReference;\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_SPECULAR\n\
-	uniform lowp  vec3  SpecularColor;\n\
-	uniform highp float SpecularExponent;\n\
+	uniform vec3  SpecularColor;\n\
+	uniform float SpecularExponent;\n\
 	#ifdef FS_SPECULARMAP\n\
-		uniform lowp sampler2D SpecularMap;\n\
+		uniform sampler2D SpecularMap;\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_NORMALMAP\n\
-	uniform highp sampler2D NormalMap;\n\
-	uniform highp float     NormalMapBumpiness;\n\
+	uniform sampler2D NormalMap;\n\
+	uniform float     NormalMapBumpiness;\n\
 	#ifdef FS_DETAILNORMALMAP\n\
-		uniform highp sampler2D DetailNormalMap;\n\
-		uniform highp float     DetailNormalMapBumpiness;\n\
-		uniform highp vec2      DetailNormalMapUVScale;\n\
+		uniform sampler2D DetailNormalMap;\n\
+		uniform float     DetailNormalMapBumpiness;\n\
+		uniform vec2      DetailNormalMapUVScale;\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_PARALLAXMAPPING\n\
-	uniform highp sampler2D HeightMap;\n\
-	uniform highp vec2      ParallaxScaleBias;\n\
+	uniform sampler2D HeightMap;\n\
+	uniform vec2      ParallaxScaleBias;\n\
 #endif\n\
 #ifdef FS_AMBIENTOCCLUSIONMAP\n\
-	uniform highp sampler2D AmbientOcclusionMap;\n\
-	uniform highp float     AmbientOcclusionFactor;\n\
+	uniform sampler2D AmbientOcclusionMap;\n\
+	uniform float     AmbientOcclusionFactor;\n\
 #endif\n\
 #ifdef FS_LIGHTMAP\n\
-	uniform highp sampler2D LightMap;\n\
-	uniform highp vec3      LightMapColor;\n\
+	uniform sampler2D LightMap;\n\
+	uniform vec3      LightMapColor;\n\
 #endif\n\
 #ifdef FS_EMISSIVEMAP\n\
-	uniform highp sampler2D EmissiveMap;\n\
-	uniform highp vec3      EmissiveMapColor;\n\
+	uniform sampler2D EmissiveMap;\n\
+	uniform vec3      EmissiveMapColor;\n\
 #endif\n\
 #ifdef FS_GLOW\n\
-	uniform highp float GlowFactor;\n\
+	uniform float GlowFactor;\n\
 	#ifdef FS_GLOWMAP\n\
-		uniform lowp sampler2D GlowMap;\n\
+		uniform sampler2D GlowMap;\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_REFLECTION\n\
-	uniform lowp  vec3  ReflectionColor;\n\
-	uniform highp float Reflectivity;\n\
+	uniform vec3  ReflectionColor;\n\
+	uniform float Reflectivity;\n\
 	#ifdef FS_REFLECTIVITYMAP\n\
-		uniform lowp sampler2D ReflectivityMap;\n\
+		uniform sampler2D ReflectivityMap;\n\
 	#endif\n\
 	#ifdef FS_FRESNELREFLECTION\n\
-		uniform highp vec2 FresnelConstants; // x = R0 [0..1] and y = Power, always >0\n\
+		uniform vec2 FresnelConstants; // x = R0 [0..1] and y = Power, always >0\n\
 	#endif\n\
 	#ifdef FS_2DREFLECTIONMAP\n\
-		uniform lowp  sampler2D ReflectionMap;\n\
-		uniform highp mat3      ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
+		uniform sampler2D ReflectionMap;\n\
+		uniform mat3      ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
 	#elif defined(FS_CUBEREFLECTIONMAP)\n\
-		uniform lowp  samplerCube ReflectionMap;\n\
-		uniform highp mat3        ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
+		uniform samplerCube ReflectionMap;\n\
+		uniform mat3        ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
 	#endif\n\
 #endif\n\
 \n\
 // Programs\n\
 // Encodes a 3 component normal vector to a 2 component normal vector\n\
-highp vec2 encodeNormalVector(highp vec3 normal)\n\
+vec2 encodeNormalVector(vec3 normal)\n\
 {\n\
-	highp float p = sqrt(normal.z*8 + 8);\n\
+	float p = sqrt(normal.z*8 + 8);\n\
 	return vec2(normal.xy/p + 0.5f);\n\
 }\n\
 \n\
-highp float fresnel(highp vec3 light, highp vec3 normal, highp vec2 constants)\n\
+float fresnel(vec3 light, vec3 normal, vec2 constants)\n\
 {\n\
 	// Light and normal are assumed to be normalized\n\
 	// constants.x = R0 [0..1]\n\
 	// constants.y = Power, always >0\n\
-	highp float cosAngle = clamp(1 - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+	float cosAngle = clamp(1 - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
 	return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
 }\n\
 \n\
@@ -219,18 +219,18 @@ void main()\n\
 	// where the ray would hit the surface. The heightmap indicates how far to offset.\n\
 	// The approximation assumes that all heights in the height-map is equal, which of\n\
 	// course won't be the case, but if the bumpmap is fairly smooth it works well enough.\n\
-	highp vec3  eyeVec = normalize(EyeVecVS);\n\
-	highp float scale  = ParallaxScaleBias.x;\n\
-	highp float bias   = ParallaxScaleBias.y;\n\
-	highp float height = texture2D(HeightMap, TexCoordVS.xy).r;\n\
+	vec3  eyeVec = normalize(EyeVecVS);\n\
+	float scale  = ParallaxScaleBias.x;\n\
+	float bias   = ParallaxScaleBias.y;\n\
+	float height = texture2D(HeightMap, TexCoordVS.xy).r;\n\
 \n\
 	// First offset pass with offset limiting (no division through eyeVec.z)\n\
-	highp float offset = height*scale + bias;\n\
-	highp vec2 textureCoordinate = TexCoordVS.xy + offset*eyeVec.xy;\n\
+	float offset = height*scale + bias;\n\
+	vec2 textureCoordinate = TexCoordVS.xy + offset*eyeVec.xy;\n\
 \n\
 	// For better quality: Refine the parallax by making another lookup at where we ended\n\
 	// up in the first parallax computation, then averaging the results.\n\
-	highp float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5f;\n\
+	float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5f;\n\
 	offset = height2*scale + bias;\n\
 	textureCoordinate = TexCoordVS.xy + offset*eyeVec.xy;\n\
 #else\n\
@@ -272,7 +272,7 @@ void main()\n\
 	// Fetch normal texel data\n\
 	#if defined(FS_NORMALMAP_DXT5_XGXR) || defined(FS_NORMALMAP_LATC2)\n\
 		// Fetch the xy-components of the normal and reconstruct the z-component\n\
-		highp vec3 normal;\n\
+		vec3 normal;\n\
 		#ifdef FS_NORMALMAP_DXT5_XGXR\n\
 			normal.xy = texture2D(NormalMap, textureCoordinate).ag*2 - 1;\n\
 		#else\n\
@@ -280,7 +280,7 @@ void main()\n\
 		#endif\n\
 		normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
 	#else\n\
-		highp vec3 normal = texture2D(NormalMap, textureCoordinate).xyz*2 - 1;\n\
+		vec3 normal = texture2D(NormalMap, textureCoordinate).xyz*2 - 1;\n\
 	#endif\n\
 	normal.xy *= NormalMapBumpiness;\n\
 \n\
@@ -288,7 +288,7 @@ void main()\n\
 	#ifdef FS_DETAILNORMALMAP\n\
 		#if defined(FS_DETAILNORMALMAP_DXT5_XGXR) || defined(FS_DETAILNORMALMAP_LATC2)\n\
 			// Fetch the xy-components of the normal and reconstruct the z-component\n\
-			highp vec3 detailNormal;\n\
+			vec3 detailNormal;\n\
 			#ifdef FS_DETAILNORMALMAP_DXT5_XGXR\n\
 				detailNormal.xy = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ag*2 - 1;\n\
 			#else\n\
@@ -296,7 +296,7 @@ void main()\n\
 			#endif\n\
 			detailNormal.z = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
 		#else\n\
-			highp vec3 detailNormal = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2 - 1;\n\
+			vec3 detailNormal = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2 - 1;\n\
 		#endif\n\
 \n\
 		// Just add the detail normal to the standard normal\n\
@@ -306,7 +306,7 @@ void main()\n\
 	// Transform normal to view space\n\
 	normal = normalize(normal.x*TangentVS + normal.y*BinormalVS + normal.z*NormalDepthVS.rgb);\n\
 #else\n\
-	highp vec3 normal = normalize(NormalDepthVS.rgb);\n\
+	vec3 normal = normalize(NormalDepthVS.rgb);\n\
 #endif\n\
 	// [TODO] There seem to be invalid normal vectors here (NAN)\n\
 	if (isnan(normal.x) || isnan(normal.y) || isnan(normal.z))\n\
@@ -344,7 +344,7 @@ void main()\n\
 	// Light map color RGB\n\
 	#ifdef FS_LIGHTMAP\n\
 		// Get light map texel data\n\
-		highp vec3 lightMapTexel = texture2D(LightMap, TexCoordVS.zw).rgb;\n\
+		vec3 lightMapTexel = texture2D(LightMap, TexCoordVS.zw).rgb;\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
 			lightMapTexel = pow(lightMapTexel, vec3(2.2f, 2.2f, 2.2f));\n\
@@ -355,7 +355,7 @@ void main()\n\
 	// Emissive map color RGB\n\
 	#ifdef FS_EMISSIVEMAP\n\
 		// Get emissive map texel data\n\
-		highp vec3 emissiveMapTexel = texture2D(EmissiveMap, textureCoordinate).rgb;\n\
+		vec3 emissiveMapTexel = texture2D(EmissiveMap, textureCoordinate).rgb;\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
 			emissiveMapTexel = pow(emissiveMapTexel, vec3(2.2f, 2.2f, 2.2f));\n\
@@ -375,7 +375,7 @@ void main()\n\
 	// Reflection\n\
 	#ifdef FS_REFLECTION\n\
 		// Reflectivity = 0.0...1.0=no reflection...full reflection\n\
-		highp float reflectivity = Reflectivity;\n\
+		float reflectivity = Reflectivity;\n\
 		// Fresnel reflection\n\
 		#ifdef FS_FRESNELREFLECTION\n\
 			reflectivity *= fresnel(normalize(-PositionVS), normal, FresnelConstants);\n\
@@ -386,11 +386,11 @@ void main()\n\
 		#endif\n\
 \n\
 		// Reflection color\n\
-		highp vec3 reflectionColor = vec3(1);\n\
+		vec3 reflectionColor = vec3(1);\n\
 		#ifdef FS_2DREFLECTIONMAP\n\
 			// Spherical environment mapping\n\
-			highp vec3  r = ViewSpaceToWorldSpace*normalize(reflect(PositionVS, normal));\n\
-			highp float m = 2*sqrt(r.x*r.x + r.y*r.y + (r.z + 1)*(r.z + 1));\n\
+			vec3  r = ViewSpaceToWorldSpace*normalize(reflect(PositionVS, normal));\n\
+			float m = 2*sqrt(r.x*r.x + r.y*r.y + (r.z + 1)*(r.z + 1));\n\
 			#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
 			if (m < FLT_MIN)\n\
 				m = FLT_MIN;\n\

@@ -31,9 +31,9 @@ out vec3 LightVecVS;\n\
 #endif\n\
 \n\
 // Uniforms\n\
-uniform highp mat4  WorldVP;	// World view projection matrix\n\
-uniform highp mat4  WorldV;		// World view matrix\n\
-uniform highp float InvRadius;	// World space inverse light radius\n\
+uniform mat4  WorldVP;		// World view projection matrix\n\
+uniform mat4  WorldV;		// World view matrix\n\
+uniform float InvRadius;	// World space inverse light radius\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -61,8 +61,8 @@ in vec3 LightVecVS;\n\
 \n\
 // Uniforms\n\
 #ifdef FS_ALPHATEST\n\
-	uniform lowp sampler2D DiffuseMap;\n\
-	uniform lowp float    AlphaReference;\n\
+	uniform sampler2D DiffuseMap;\n\
+	uniform float    AlphaReference;\n\
 #endif\n\
 \n\
 // Programs\n\

@@ -28,7 +28,7 @@ in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) an
 out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
-uniform highp ivec2 TextureSize;	// Texture size in texel\n\
+uniform ivec2 TextureSize;	// Texture size in texel\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -50,18 +50,18 @@ static const PLGeneral::String sDeferredGBufferDebug_GLSL_FS = "\
 in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform highp float			NearPlane;	// Camera near plane distance\n\
-uniform highp float			Range;		// Distance between camera far and new plane (never 0!)\n\
-uniform highp sampler2DRect Map;		// Input texture containing the data to visualize\n\
+uniform float			NearPlane;	// Camera near plane distance\n\
+uniform float			Range;		// Distance between camera far and new plane (never 0!)\n\
+uniform sampler2DRect	Map;		// Input texture containing the data to visualize\n\
 \n\
 // Programs\n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
-highp vec3 decodeNormalVector(highp vec2 normal)\n\
+vec3 decodeNormalVector(vec2 normal)\n\
 {\n\
-	highp vec2 fenc = normal*4 - 2;\n\
-	highp float f = dot(fenc, fenc);\n\
-	highp float g = sqrt(1 - f/4);\n\
-	highp vec3 n;\n\
+	vec2 fenc = normal*4 - 2;\n\
+	float f = dot(fenc, fenc);\n\
+	float g = sqrt(1 - f/4);\n\
+	vec3 n;\n\
 	n.xy = fenc*g;\n\
 	n.z = 1 - f/2;\n\
 	return n;\n\
