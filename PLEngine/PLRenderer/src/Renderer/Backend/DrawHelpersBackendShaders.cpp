@@ -512,15 +512,15 @@ ProgramGenerator *DrawHelpersBackendShaders::GetProgramGenerator()
 			#include "DrawHelpersBackendShaders_GLSL.h"
 			if (m_pRenderer->GetAPI() == "OpenGL ES 2.0") {
 				// Create the program generator
-				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "100", sFragmentShaderSourceCodeGLSL, "100", true);
+				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "100", sFragmentShaderSourceCodeGLSL, "100");
 			} else {
 				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
 				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
-				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL), "110", ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL), "110", true);
+				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL), "110", Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL), "110");
 			}
 		} else if (sShaderLanguage == "Cg") {
 			#include "DrawHelpersBackendShaders_Cg.h"
-			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeCg, "arbvp1", sFragmentShaderSourceCodeCg, "arbfp1", true);
+			m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeCg, "arbvp1", sFragmentShaderSourceCodeCg, "arbfp1");
 		}
 	}
 

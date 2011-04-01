@@ -35,6 +35,26 @@ namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
+//[ Public static functions                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Removes precision qualifiers from the given GLSL shader source code
+*/
+String Shader::RemovePrecisionQualifiersFromGLSL(const String &sSourceCode)
+{
+	// Remove precision qualifiers
+	String sModifiedSourceCode = sSourceCode;
+	sModifiedSourceCode.Replace("lowp",    "");
+	sModifiedSourceCode.Replace("mediump", "");
+	sModifiedSourceCode.Replace("highp",   "");
+
+	// Done
+	return sModifiedSourceCode;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**

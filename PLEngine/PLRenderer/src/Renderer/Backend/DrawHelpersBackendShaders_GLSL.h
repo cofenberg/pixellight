@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute highp vec3 VertexPosition;				// Object space vertex position input\n\
@@ -56,7 +56,7 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
 \n\
 // GLSL extensions\n\

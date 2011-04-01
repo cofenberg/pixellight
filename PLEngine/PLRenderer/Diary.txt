@@ -6,6 +6,10 @@
   code before passing it to OpenGL. It's just not worth all this issues and it's really sad that there are that many issues with the different
   GPU driver implementations of precision qualifiers (which, as mentioned, on OpenGL have no real effect anyway... at least according to the
   specification... but who cares about specifications anyway, beside me?!).
+- Finally removed "PLRenderer::ProgramGenerator::ApplyGLSLHacks()"... again... see diary entries from "07.07.2010", "26.11.2010" and "01.12.2010" for
+  more detail (written in German at this time)
+- Added "Shader::RemovePrecisionQualifiersFromGLSL()" which is in fact the "PLRenderer::ProgramGenerator::ApplyGLSLHacks()", but this is no longer a
+  hack - it's a feature *g*
 
 
 

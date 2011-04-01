@@ -109,10 +109,10 @@ void SRPDeferredAmbient::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						// Choose the shader source codes depending on the requested shader language
 						if (sShaderLanguage == "GLSL") {
 							#include "SRPDeferredAmbient_GLSL.h"
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_GLSL_VS, "130", sDeferredAmbient_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_GLSL_VS, "130", sDeferredAmbient_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
 						} else if (sShaderLanguage == "Cg") {
 							#include "SRPDeferredAmbient_Cg.h"
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_Cg_VS, "arbvp1", sDeferredAmbient_Cg_FS, "arbfp1", true);
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredAmbient_Cg_VS, "arbvp1", sDeferredAmbient_Cg_FS, "arbfp1");
 						}
 					}
 

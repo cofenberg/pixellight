@@ -156,10 +156,10 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				// Choose the shader source codes depending on the requested shader language
 				if (sUsedShaderLanguage == "GLSL") {
 					#include "HDRBloom_GLSL.h"
-					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_GLSL_VS, "130", sHDRBloom_GLSL_FS_Downscale, "130", true);
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_GLSL_VS, "130", sHDRBloom_GLSL_FS_Downscale, "130");
 				} else if (sUsedShaderLanguage == "Cg") {
 					#include "HDRBloom_Cg.h"
-					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_Cg_VS, "glslv", sHDRBloom_Cg_FS_Downscale, "glslf", true);
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_Cg_VS, "glslv", sHDRBloom_Cg_FS_Downscale, "glslf");
 				}
 			}
 

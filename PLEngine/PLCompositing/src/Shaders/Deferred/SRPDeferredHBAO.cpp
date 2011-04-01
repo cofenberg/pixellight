@@ -133,10 +133,10 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 		// Choose the shader source codes depending on the requested shader language
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPDeferredHBAO_GLSL.h"
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_GLSL_VS, "130", sDeferredHBAO_GLSL_FS, "130", true);	// OpenGL 3.0 ("#version 130")
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_GLSL_VS, "130", sDeferredHBAO_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDeferredHBAO_Cg.h"
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_Cg_VS, "glslv", sDeferredHBAO_Cg_FS, "glslf", true);
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredHBAO_Cg_VS, "glslv", sDeferredHBAO_Cg_FS, "glslf");
 		}
 	}
 

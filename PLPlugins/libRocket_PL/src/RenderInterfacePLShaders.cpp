@@ -32,7 +32,6 @@
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
-#include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Texture/TextureHandler.h>
 #include "libRocket_PL/RenderInterfacePLShaders.h"
@@ -83,8 +82,8 @@ RenderInterfacePLShaders::RenderInterfacePLShaders(RendererContext &cRendererCon
 			} else {
 				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
 				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
-				sVertexShaderSourceCode   = "#version 110\n" + ProgramGenerator::ApplyGLSLHacks(sVertexShaderSourceCodeGLSL);
-				sFragmentShaderSourceCode = "#version 110\n" + ProgramGenerator::ApplyGLSLHacks(sFragmentShaderSourceCodeGLSL);
+				sVertexShaderSourceCode   = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL);
+				sFragmentShaderSourceCode = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL);
 			}
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "RenderInterfacePLShaders_Cg.h"

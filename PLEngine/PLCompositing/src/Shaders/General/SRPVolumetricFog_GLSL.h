@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDiffuseOnly_GLSL_VS = "\
+// GLSL (OpenGL 2.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+static const PLGeneral::String sVolumetricFog_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
@@ -58,8 +58,8 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDiffuseOnly_GLSL_FS = "\
+// GLSL (OpenGL 2.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+static const PLGeneral::String sVolumetricFog_GLSL_FS = "\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
 	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\

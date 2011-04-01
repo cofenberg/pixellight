@@ -49,6 +49,32 @@ class Shader : public Resource {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Removes precision qualifiers from the given GLSL shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Shader source code, usually blank ASCII code
+		*
+		*  @return
+		*    The modified GLSL shader source code
+		*
+		*  @remarks
+		*    From the "The OpenGL® Shading Language" specification "Language Version: 3.30, Document Revision: 6, 11-Mar-2010"
+		*        "Precision qualifiers are added for code portability with OpenGL ES, not for functionality. They have the
+		*         same syntax as in OpenGL ES, as described below, but they have no semantic meaning, which includes no
+		*         effect on the precision used to store or operate on variables."
+		*    Although the precision qualifiers "should" have no effect when not using OpenGL ES, we noticed that some NVIDIA GPU
+		*    drivers produced compiler errors when using precision qualifiers. Due this buggy behaviour, it's recommended to
+		*    remove the precision qualifiers before passing on the shader source code to OpenGL.
+		*/
+		static PLRENDERER_API PLGeneral::String RemovePrecisionQualifiersFromGLSL(const PLGeneral::String &sSourceCode);
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

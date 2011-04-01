@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sDiffuseOnly_Cg_VS = "\
+static const PLGeneral::String sLighting_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -103,7 +103,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION			// Object space vertex positio
 
 
 // Cg fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated"
-static const PLGeneral::String sDiffuseOnly_Cg_FS_Part1 = "\
+static const PLGeneral::String sLighting_Cg_FS_Part1 = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -332,7 +332,7 @@ FS_OUTPUT main(VS_OUTPUT In			// Vertex shader output as fragment shader input\n
 		, uniform sampler1D EdgeRampMap\n\
 	#endif\n\
 )";
-static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
+static const PLGeneral::String sLighting_Cg_FS_Part2 = "\
 {\n\
 	FS_OUTPUT Out;\n\
 \n\
@@ -680,4 +680,4 @@ static const PLGeneral::String sDiffuseOnly_Cg_FS_Part2 = "\
 	// Done\n\
 	return Out;\n\
 }";
-static const PLGeneral::String sDiffuseOnly_Cg_FS = sDiffuseOnly_Cg_FS_Part1 + sDiffuseOnly_Cg_FS_Part2;
+static const PLGeneral::String sLighting_Cg_FS = sLighting_Cg_FS_Part1 + sLighting_Cg_FS_Part2;

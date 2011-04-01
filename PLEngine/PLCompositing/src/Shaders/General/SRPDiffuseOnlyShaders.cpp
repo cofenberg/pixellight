@@ -26,6 +26,7 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/RenderStates.h>
+#include <PLRenderer/Renderer/Shader.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -293,11 +294,17 @@ void SRPDiffuseOnlyShaders::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			// Choose the shader source codes depending on the requested shader language
 			if (sShaderLanguage == "GLSL") {
 				#include "SRPDiffuseOnlyShaders_GLSL.h"
-				const String sProfile = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "100" : "130";
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_GLSL_VS, sProfile, sDiffuseOnly_GLSL_FS, sProfile, true);
+				if (cRenderer.GetAPI() == "OpenGL ES 2.0") {
+					// Get shader source codes
+					m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_GLSL_VS, "100", sDiffuseOnly_GLSL_FS, "100");
+				} else {
+					// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
+					// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
+					m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sDiffuseOnly_GLSL_VS), "110", Shader::RemovePrecisionQualifiersFromGLSL(sDiffuseOnly_GLSL_FS), "110");
+				}
 			} else if (sShaderLanguage == "Cg") {
 				#include "SRPDiffuseOnlyShaders_Cg.h"
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_Cg_VS, "arbvp1", sDiffuseOnly_Cg_FS, "arbfp1", true);
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDiffuseOnly_Cg_VS, "arbvp1", sDiffuseOnly_Cg_FS, "arbfp1");
 			}
 		}
 

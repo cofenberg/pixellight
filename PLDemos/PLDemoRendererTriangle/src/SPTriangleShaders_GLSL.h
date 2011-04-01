@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL vertex shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
+// GLSL (OpenGL 2.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by hand
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute vec3 VertexPosition;	// Object space vertex position input\n\
@@ -44,7 +44,7 @@ void main()\n\
 // GLSL geometry shader source code
 static const PLGeneral::String sGeometryShaderSourceCodeGLSL = "\
 // GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
+#version 110	// OpenGL 2.0\n\
 \n\
 // GLSL extensions\n\
 #extension GL_EXT_geometry_shader4 : enable\n\
@@ -73,7 +73,7 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
+// GLSL (OpenGL 2.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by hand
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
 varying vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
@@ -84,9 +84,12 @@ void main()\n\
 	// Fragment color = interpolated vertex color\n\
 	gl_FragColor = VertexColorVS;\n\
 }";
+
+
+// GLSL fragment shader source code, "#version" is added by hand
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL_GS = "\
 // GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
+#version 110	// OpenGL 2.0\n\
 \n\
 // Attributes\n\
 in vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader\n\

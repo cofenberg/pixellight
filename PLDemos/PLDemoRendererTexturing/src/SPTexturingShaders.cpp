@@ -75,13 +75,17 @@ SPTexturingShaders::SPTexturingShaders(Renderer &cRenderer) : SPTexturing(cRende
 		String sVertexShaderSourceCode;
 		String sFragmentShaderSourceCode;
 		if (pShaderLanguage->GetShaderLanguage() == "GLSL") {
-			// Figure out the GLSL version to use
-			const String sVersion = (cRenderer.GetAPI() == "OpenGL ES 2.0") ? "#version 100\n" : "#version 130\n";	// 130 = OpenGL 3.0 shaders (with this version, we can keep the precision qualifiers)
-
-			// Get shader source codes
 			#include "SPTexturingShaders_GLSL.h"
-			sVertexShaderSourceCode   = sVersion + sVertexShaderSourceCodeGLSL;
-			sFragmentShaderSourceCode = sVersion + sFragmentShaderSourceCodeGLSL;
+			if (cRenderer.GetAPI() == "OpenGL ES 2.0") {
+				// Get shader source codes
+				sVertexShaderSourceCode   = "#version 100\n" + sVertexShaderSourceCodeGLSL;
+				sFragmentShaderSourceCode = "#version 100\n" + sFragmentShaderSourceCodeGLSL;
+			} else {
+				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
+				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
+				sVertexShaderSourceCode   = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL);
+				sFragmentShaderSourceCode = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL);
+			}
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTexturingShaders_Cg.h"
 			sVertexShaderSourceCode   = sVertexShaderSourceCodeCg;
