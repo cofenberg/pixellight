@@ -337,10 +337,10 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Receives the decompressed data
 		*  @param[in]  pnSource
 		*    Compressed source data
-		*  @param[in]  nWidth
-		*    Width of the image, not allowed to be less than 4!
-		*  @param[in]  nHeight
-		*    Height of the image, not allowed to be less than 4!
+		*  @param[in]  nBlockWidth
+		*    Width of the block, not allowed to be above 4 pixel
+		*  @param[in]  nBlockHeight
+		*    Height of the block, not allowed to be above 4 pixel
 		*  @param[in]  nXOffset
 		*    Current x position offset inside the image
 		*  @param[in]  nYOffset
@@ -351,8 +351,11 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Index of the red color component
 		*  @param[in]  nBlueIndex
 		*    Index of the blue color component
+		*
+		*  @note
+		*    - Please note that in this method, there's no destination buffer overflow test, so correct the block size if required before calling this method!
 		*/
-		void DecodeDXTColorBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const;
+		void DecodeDXTColorBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const;
 
 		/**
 		*  @brief
@@ -362,16 +365,19 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Receives the decompressed data
 		*  @param[in]  pnSource
 		*    Compressed source data
-		*  @param[in]  nWidth
-		*    Width of the image, not allowed to be less than 4!
-		*  @param[in]  nHeight
-		*    Height of the image, not allowed to be less than 4!
+		*  @param[in]  nBlockWidth
+		*    Width of the block, not allowed to be above 4 pixel
+		*  @param[in]  nBlockHeight
+		*    Height of the block, not allowed to be above 4 pixel
 		*  @param[in]  nXOffset
 		*    Current x position offset inside the image
 		*  @param[in]  nYOffset
 		*    Current y position offset inside the image
+		*
+		*  @note
+		*    - Please note that in this method, there's no destination buffer overflow test, so correct the block size if required before calling this method!
 		*/
-		void DecodeDXT3AlphaBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset) const;
+		void DecodeDXT3AlphaBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const;
 
 		/**
 		*  @brief
@@ -381,16 +387,19 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Receives the decompressed data
 		*  @param[in]  pnSource
 		*    Compressed source data
-		*  @param[in]  nWidth
-		*    Width of the image, not allowed to be less than 4!
-		*  @param[in]  nHeight
-		*    Height of the image, not allowed to be less than 4!
+		*  @param[in]  nBlockWidth
+		*    Width of the block, not allowed to be above 4 pixel
+		*  @param[in]  nBlockHeight
+		*    Height of the block, not allowed to be above 4 pixel
 		*  @param[in]  nXOffset
 		*    Current x position offset inside the image
 		*  @param[in]  nYOffset
 		*    Current y position offset inside the image
+		*
+		*  @note
+		*    - Please note that in this method, there's no destination buffer overflow test, so correct the block size if required before calling this method!
 		*/
-		void DecodeDXT5AlphaBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset) const;
+		void DecodeDXT5AlphaBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const;
 
 
 	//[-------------------------------------------------------]

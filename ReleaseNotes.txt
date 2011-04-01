@@ -14,6 +14,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: "SPARK_PL": Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 - Bugfix: The swap interval (vertical synchronisation) setting is now working (as long as it is not overwritten by the GPU driver)
+- Bugfix: "PLGraphics:ImageData::Decompress()": There was an buffer overflow when decompressing images with none-multiple of 4 dimensions
 
 
 Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)

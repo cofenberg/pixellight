@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
 #include "PLGraphics/Image/ImagePalette.h"
 #include "PLGraphics/Image/ImageBuffer.h"
 #include "PLGraphics/Image/ImageData.h"
@@ -474,9 +475,9 @@ bool ImageData::Decompress()
 	// Get the number of components per pixel
 	const uint32 nComponentsPerPixel = ImageBuffer::GetComponentsPerPixel(m_nColorFormat);
 
-	// A block can not be smaller than 4 pixel
-	const int nWidth  = (m_vSize.x < 4) ? m_vSize.x : 4;
-	const int nHeight = (m_vSize.y < 4) ? m_vSize.y : 4;
+	// Get the block size which is not allowed to be above 4 pixel
+	const int nBlockWidth  = (m_vSize.x < 4) ? m_vSize.x : 4;
+	const int nBlockHeight = (m_vSize.y < 4) ? m_vSize.y : 4;
 
 	// Decompress
 	const uint8 *pCompressedData = m_pCompressedData;
@@ -489,8 +490,12 @@ bool ImageData::Decompress()
 					// Get the current destination block start
 					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
+					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+
 					// Decode the current DXT color block
-					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
 					pCompressedData += 8;
 				}
 			}
@@ -504,12 +509,16 @@ bool ImageData::Decompress()
 					// Get the current destination block start
 					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
+					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+
 					// Decode the current DXT3 alpha block
-					DecodeDXT3AlphaBlock(pnCurrentDestination + 3, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
+					DecodeDXT3AlphaBlock(pnCurrentDestination + 3, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
 					pCompressedData += 8;
 
 					// Decode the current DXT color block
-					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
 					pCompressedData += 8;
 				}
 			}
@@ -523,12 +532,16 @@ bool ImageData::Decompress()
 					// Get the current destination block start
 					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
+					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+
 					// Decode the current DXT5 alpha block
-					DecodeDXT5AlphaBlock(pnCurrentDestination + 3, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
+					DecodeDXT5AlphaBlock(pnCurrentDestination + 3, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
 					pCompressedData += 8;
 
 					// Decode the current DXT color block
-					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
 					pCompressedData += 8;
 				}
 			}
@@ -542,8 +555,12 @@ bool ImageData::Decompress()
 					// Get the current destination block start
 					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
+					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+
 					// Decode the current DXT5 alpha block
-					DecodeDXT5AlphaBlock(pnCurrentDestination, pCompressedData, nWidth, nHeight, 1, m_vSize.x);
+					DecodeDXT5AlphaBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, 1, m_vSize.x);
 					pCompressedData += 8;
 				}
 			}
@@ -557,9 +574,13 @@ bool ImageData::Decompress()
 					// Get the current destination block start
 					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
+					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+
 					// Decode the current DXT5 alpha block
-					DecodeDXT5AlphaBlock(pnCurrentDestination,     pCompressedData + 8, nWidth, nHeight, 2, m_vSize.x*2);
-					DecodeDXT5AlphaBlock(pnCurrentDestination + 1, pCompressedData,     nWidth, nHeight, 2, m_vSize.x*2);
+					DecodeDXT5AlphaBlock(pnCurrentDestination,     pCompressedData + 8, nCurrentBlockWidth, nCurrentBlockHeight, 2, m_vSize.x*2);
+					DecodeDXT5AlphaBlock(pnCurrentDestination + 1, pCompressedData,     nCurrentBlockWidth, nCurrentBlockHeight, 2, m_vSize.x*2);
 					pCompressedData += 16;
 				}
 			}
@@ -699,7 +720,7 @@ void ImageData::CalculateCompressedImageBufferSize()
 *  @brief
 *    Decodes a DXT color block
 */
-void ImageData::DecodeDXTColorBlock(uint8 *pnDestination, const uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const
+void ImageData::DecodeDXTColorBlock(uint8 *pnDestination, const uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const
 {
 	// This implementation is basing on code from Humus (http://www.humus.name)
 
@@ -729,10 +750,10 @@ void ImageData::DecodeDXTColorBlock(uint8 *pnDestination, const uint8 *pnSource,
 	}
 
 	pnSource += 4;
-	for (int y=0; y<nHeight; y++) {
+	for (int y=0; y<nBlockHeight; y++) {
 		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
 		uint32 nIndexes = pnSource[y];
-		for (int x=0; x<nWidth; x++) {
+		for (int x=0; x<nBlockWidth; x++) {
 			const uint32 nIndex = nIndexes & 0x3;
 			pnCurrentDestination[nRedIndex]  = nColors[nIndex][0];
 			pnCurrentDestination[1]          = nColors[nIndex][1];
@@ -748,14 +769,14 @@ void ImageData::DecodeDXTColorBlock(uint8 *pnDestination, const uint8 *pnSource,
 *  @brief
 *    Decodes a DXT3 alpha block
 */
-void ImageData::DecodeDXT3AlphaBlock(uint8 *pnDestination, const uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset) const
+void ImageData::DecodeDXT3AlphaBlock(uint8 *pnDestination, const uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const
 {
 	// This implementation is basing on code from Humus (http://www.humus.name)
 
-	for (int y=0; y<nHeight; y++) {
+	for (int y=0; y<nBlockHeight; y++) {
 		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
 		uint32 nAlpha = reinterpret_cast<const uint16*>(pnSource)[y];
-		for (int x=0; x<nWidth; x++) {
+		for (int x=0; x<nBlockWidth; x++) {
 			*pnCurrentDestination = (nAlpha & 0xF)*17;
 			nAlpha >>= 4;
 			pnCurrentDestination += nXOffset;
@@ -767,7 +788,7 @@ void ImageData::DecodeDXT3AlphaBlock(uint8 *pnDestination, const uint8 *pnSource
 *  @brief
 *    Decodes a DXT5 alpha block
 */
-void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource, int nWidth, int nHeight, int nXOffset, int nYOffset) const
+void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const
 {
 	// This implementation is basing on code from Humus (http://www.humus.name)
 
@@ -775,9 +796,9 @@ void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource
 	const uint8 a1 = pnSource[1];
 	uint64 nAlpha = *reinterpret_cast<const uint64*>(pnSource) >> 16;
 
-	for (int y=0; y<nHeight; y++) {
+	for (int y=0; y<nBlockHeight; y++) {
 		uint8 *pnCurrentDestination = pnDestination + nYOffset*y;
-		for (int x=0; x<nWidth; x++) {
+		for (int x=0; x<nBlockWidth; x++) {
 			const int k = static_cast<uint32>(nAlpha) & 0x7;
 			if (k == 0){
 				*pnCurrentDestination = a0;
@@ -794,8 +815,8 @@ void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource
 
 			pnCurrentDestination += nXOffset;
 		}
-		if (nWidth < 4)
-			nAlpha >>= (3*(4 - nWidth));
+		if (nBlockWidth < 4)
+			nAlpha >>= (3*(4 - nBlockWidth));
 	}
 }
 
