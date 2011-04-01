@@ -519,7 +519,7 @@ String ProgramGLSL::GetCompiledProgram()
 		if (IsLinked()) {
 			// Retrieve the binary length from the program object
 			GLint nBinaryLength = 0;
-			// [TODO] Check this! For me, this function just returns always 0? (Catalyst 11.2 - there are forum posts reporting similar problems, a driver issue?)
+			// [TODO] Check this! For me, this function just returns always 0? (Catalyst 11.3 - there are forum posts reporting similar problems, a driver issue... same on NVIDIA (driver: "266.58 WHQL")?)
 			glGetProgramivARB(nOpenGLProgram, GL_PROGRAM_BINARY_LENGTH, &nBinaryLength);
 			if (nBinaryLength) {
 				// Allocate enough memory for the binary
