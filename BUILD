@@ -81,7 +81,7 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 - nsis-2.46-setup.exe
 	- Used to create the Windows installer
 
-- doxygen-1.7.3-setup.exe
+- doxygen-1.7.4-setup.exe
 	- Doxygen (http://www.doxygen.org)
 	- Used to create the code documentations.
 
@@ -90,6 +90,10 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 	  Used from Doxygen to create diagrams.
 	- Ensure that the Graphviz binaries directory is correctly set in the PATH and/or DOT_PATH environment variables,
 	  otherwise Doxygen can't find Graphviz and as a result there will be no graphs within the generated document.
+
+- setup-2.9.3959.exe
+	- MiKTeX (http://miktex.org/)
+	- Used to create the LaTex documentations.
 
 - htmlhelp.exe
 	- MS HTML Help Workshop (http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp)
