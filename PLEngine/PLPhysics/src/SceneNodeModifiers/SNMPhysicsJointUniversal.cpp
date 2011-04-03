@@ -123,15 +123,18 @@ void SNMPhysicsJointUniversal::CreatePhysicsJoint()
 		const SNMPhysicsBody *pOwnerBody  = GetOwnerBodyModifier();
 		const SNMPhysicsBody *pTargetBody = GetTargetBodyModifier();
 
+		// Calculate the transform matrix that transform from the local owner scene node space into the physics world scene container
+		Matrix3x4 mTransform;
+		CalculateJointTransformMatrix(mTransform);
+
 		// Get the pin directions
-		const Matrix3x4 &mTrans = GetSceneNode().GetTransform().GetMatrix();
-		const Vector3 vPinDir1 = ((GetFlags() & LocalPinDirection) ? mTrans.RotateVector(m_vPinDir1) : m_vPinDir1).Normalize();
-		const Vector3 vPinDir2 = ((GetFlags() & LocalPinDirection) ? mTrans.RotateVector(m_vPinDir2) : m_vPinDir2).Normalize();
+		const Vector3 vPinDir1 = ((GetFlags() & LocalPinDirection) ? mTransform.RotateVector(m_vPinDir1) : m_vPinDir1).Normalize();
+		const Vector3 vPinDir2 = ((GetFlags() & LocalPinDirection) ? mTransform.RotateVector(m_vPinDir2) : m_vPinDir2).Normalize();
 
 		// Create the joint
 		m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointUniversal(pTargetBody ? pTargetBody->GetBody() : nullptr,
 																						pOwnerBody  ? pOwnerBody->GetBody()  : nullptr,
-																						mTrans*m_vPivotPoint,
+																						mTransform*m_vPivotPoint,
 																						vPinDir1,
 																						vPinDir2));
 	}

@@ -6,6 +6,7 @@
 - Added "SNMPhysicsJoint::LocalPinDirection"-flag. If this flag is set, the pin direction of a joint is considered to be in the local scene
   node space. If this new flag is not set, which is the default, the pin direction is considered to be in the scene container space. Usually
   this default behaviour is the more comfortable way (that's why I made it to the default one :).
+- Bugfix: If necessary, joint scene node modifiers need to transform the joint position and direction(s) into the physics world scene container
 
 
 

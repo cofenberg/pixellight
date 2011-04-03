@@ -32,18 +32,23 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLMath {
+	class Matrix3x4;
+}
+namespace PLPhysics {
+	class Joint;
+	class ElementHandler;
+	class SCPhysicsWorld;
+	class SNMPhysicsBody;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLPhysics {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class Joint;
-class ElementHandler;
-class SCPhysicsWorld;
-class SNMPhysicsBody;
 
 
 //[-------------------------------------------------------]
@@ -171,6 +176,15 @@ class SNMPhysicsJoint : public SNMPhysics {
 		*    Recreates the PL physics joint
 		*/
 		PLPHYSICS_API void RecreatePhysicsJoint();
+
+		/**
+		*  @brief
+		*    Calculates the transform matrix that transform from the local owner scene node space into the physics world scene container
+		*
+		*  @param[out] mTransform
+		*    Receives the result
+		*/
+		PLPHYSICS_API void CalculateJointTransformMatrix(PLMath::Matrix3x4 &mTransform) const;
 
 
 	//[-------------------------------------------------------]

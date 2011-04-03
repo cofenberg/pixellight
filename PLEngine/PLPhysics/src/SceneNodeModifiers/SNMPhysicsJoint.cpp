@@ -34,6 +34,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLMath;
 using namespace PLScene;
 namespace PLPhysics {
 
@@ -156,6 +157,26 @@ void SNMPhysicsJoint::RecreatePhysicsJoint()
 
 	// Create the physics joint
 	CreatePhysicsJoint();
+}
+
+/**
+*  @brief
+*    Calculates the transform matrix that transform from the local owner scene node space into the physics world scene container
+*/
+void SNMPhysicsJoint::CalculateJointTransformMatrix(Matrix3x4 &mTransform) const
+{
+	// Is the owner scene node directly within the physics world scene container? Are both containers valid?
+	SceneContainer *pThisSceneContainer = GetSceneNode().GetContainer();
+	if (m_pWorldContainer != pThisSceneContainer && m_pWorldContainer && pThisSceneContainer) {
+		// Get container transform matrix...
+		pThisSceneContainer->GetTransformMatrixTo(*m_pWorldContainer, mTransform);
+
+		// ... and do also apply the scene node transform matrix
+		mTransform *= GetSceneNode().GetTransform().GetMatrix();
+	} else {
+		// Just use directly the scene node transform matrix
+		mTransform = GetSceneNode().GetTransform().GetMatrix();
+	}
 }
 
 

@@ -108,14 +108,17 @@ void SNMPhysicsJointSlider::CreatePhysicsJoint()
 		const SNMPhysicsBody *pOwnerBody  = GetOwnerBodyModifier();
 		const SNMPhysicsBody *pTargetBody = GetTargetBodyModifier();
 
+		// Calculate the transform matrix that transform from the local owner scene node space into the physics world scene container
+		Matrix3x4 mTransform;
+		CalculateJointTransformMatrix(mTransform);
+
 		// Get the pin direction
-		const Matrix3x4 &mTrans = GetSceneNode().GetTransform().GetMatrix();
-		const Vector3 vPinDir = ((GetFlags() & LocalPinDirection) ? mTrans.RotateVector(m_vPinDir) : m_vPinDir).Normalize();
+		const Vector3 vPinDir = ((GetFlags() & LocalPinDirection) ? mTransform.RotateVector(m_vPinDir) : m_vPinDir).Normalize();
 
 		// Create the joint
 		m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointSlider(pTargetBody ? pTargetBody->GetBody() : nullptr,
 																					 pOwnerBody  ? pOwnerBody->GetBody()  : nullptr,
-																					 mTrans*m_vPivotPoint,
+																					 mTransform*m_vPivotPoint,
 																					 vPinDir));
 	}
 }
