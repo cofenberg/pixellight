@@ -12,6 +12,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: "PLRenderer::GeometryShader" input/output primitive type and the number of output vertices can now be set by the user
 - Change: Updated "Newton Game Dynamics" from "2.24"(Linux)/"2.28"(Windows) to "2.32" (first free open-source version of this physics library)
 - Change: "SPARK_PL": Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
+- Change: Performed some minor physics joint scene node modifier refactoring to enhance the usability
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 - Bugfix: The swap interval (vertical synchronisation) setting is now working (as long as it is not overwritten by the GPU driver)
 - Bugfix: "PLGraphics:ImageData::Decompress()": There was an buffer overflow when decompressing images with none-multiple of 4 dimensions

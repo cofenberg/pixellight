@@ -46,7 +46,7 @@ namespace PLPhysics {
 *    Physics up vector joint scene node modifier
 *
 *  @remarks
-*    This function creates an up vector joint. An up vector joint is a constraint that allows a body 
+*    This scene node modifier adds an up vector joint. An up vector joint is a constraint that allows a body 
 *    to translate freely in 3d space, but it only allows the body to rotate around the pin direction 
 *    vector. This could be use by the application to control a character with physics and collision.
 *    Since the up vector joint is a unuary constraint, there is not need to have user callback or 
@@ -54,7 +54,7 @@ namespace PLPhysics {
 *    on the force callback function of the rigid body owning the joint.
 *
 *  @note
-*    - This joint type has no parent
+*    - This joint type has no target
 */
 class SNMPhysicsJointUpVector : public SNMPhysicsJoint {
 
@@ -64,7 +64,7 @@ class SNMPhysicsJointUpVector : public SNMPhysicsJoint {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsJointUpVector, "PLPhysics", PLPhysics::SNMPhysicsJoint, "Physics up vector joint scene node modifier")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(PinDir,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	GetSet,	"The aligning vector in local space",	"")
+		pl_attribute(PinDir,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	GetSet,	"The aligning vector in scene container space if the 'LocalPinDirection'-flag is not set, else in local scene node space",	"")
 	pl_class_end
 
 

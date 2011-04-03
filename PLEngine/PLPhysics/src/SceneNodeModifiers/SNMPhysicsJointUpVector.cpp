@@ -90,13 +90,16 @@ SNMPhysicsJointUpVector::~SNMPhysicsJointUpVector()
 void SNMPhysicsJointUpVector::CreatePhysicsJoint()
 {
 	if (m_pWorldContainer && m_pWorldContainer->GetWorld()) {
-		// Get the parent and child physics bodies the joint is attached to
-		const SNMPhysicsBody *pParentBody = GetParentBodyModifier();
+		// Get the owner physics bodies the joint is attached to - we really just need the owner, there's no target!
+		const SNMPhysicsBody *pOwnerBody = GetOwnerBodyModifier();
 
 		// Create the joint
-		if (pParentBody && pParentBody->GetBody()) {
-			const Matrix3x4 &mTrans = GetSceneNode().GetTransform().GetMatrix();
-			m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointUpVector(*pParentBody->GetBody(), mTrans.RotateVector(m_vPinDir).Normalize()));
+		if (pOwnerBody && pOwnerBody->GetBody()) {
+			// Get the pin direction
+			const Vector3 vPinDir = ((GetFlags() & LocalPinDirection) ? GetSceneNode().GetTransform().GetMatrix().RotateVector(m_vPinDir) : m_vPinDir).Normalize();
+
+			// Create the joint
+			m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointUpVector(*pOwnerBody->GetBody(), vPinDir));
 		}
 	}
 }

@@ -1,3 +1,14 @@
+>> 03.04.2011
+[CO]
+- Renamed "SNMPhysicsJoint::GetParentBodyModifier()" into "SNMPhysicsJoint::GetOwnerBodyModifier()"
+- Renamed "SNMPhysicsJoint::GetChildBodyModifier()" into "SNMPhysicsJoint::GetTargetBodyModifier()"
+- Renamed "SNMPhysicsJoint::Child"-attribute into "SNMPhysicsJoint::Target"
+- Added "SNMPhysicsJoint::LocalPinDirection"-flag. If this flag is set, the pin direction of a joint is considered to be in the local scene
+  node space. If this new flag is not set, which is the default, the pin direction is considered to be in the scene container space. Usually
+  this default behaviour is the more comfortable way (that's why I made it to the default one :).
+
+
+
 >> 18.02.2011
 [CO]
 - "SNMPhysicsBody": There were several attributes which are candidates for more memory efficient flags (this change saved 32 bytes).

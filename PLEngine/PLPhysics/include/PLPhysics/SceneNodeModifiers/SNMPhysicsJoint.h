@@ -54,20 +54,38 @@ class SNMPhysicsBody;
 *    Abstract physics joint scene node modifier
 *
 *  @note
-*    - There MUST be already a 'Body'-modifier within the scene node else the joint has
-*      no effect. Further this body can NOT have an infinity (zero = static, the default value) mass.
-*      Internally, this physics body is used as the child body the joint is attached to.
+*    - There MUST already be a 'PLPhysics::SNMPhysicsBody'-modifier within the owner scene node, else the joint
+*      has no effect. Further the owner body can NOT have an infinity (zero = static, the default value) mass.
+*    - The scene node 'Target' MUST already exist, else the joint can not be attached to it!
 *    - By default joint disables collision with the linked bodies
-*    - The scene node 'Parent' MUST already exist, else the joint can not be attached to it!
 */
 class SNMPhysicsJoint : public SNMPhysics {
+
+
+	//[-------------------------------------------------------]
+	//[ Public definition                                     ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Scene node modifier flags
+		*/
+		enum EFlags {
+			LocalPinDirection  = 1<<2	/**< If this flag is set, the pin direction(s) of the joint is/are defined in local scene node space instead of scene container space */
+		};
+		pl_enum(EFlags)
+			pl_enum_base(SNMPhysics::EFlags)
+			pl_enum_value(LocalPinDirection,	"If this flag is set, the pin direction(s) of the joint is/are defined in local scene node space instead of scene container space")
+		pl_enum_end
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsJoint, "PLPhysics", PLPhysics::SNMPhysics, "Abstract physics joint scene node modifier")
-		pl_attribute(Child,	PLGeneral::String,	"",	ReadWrite,	GetSet,	"Name of the child scene node (which must have a 'SNMPhysicsBody' modifier!), can left undefined",	"")
+		pl_attribute(Target,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined",	"")
+		// Overwritten PLScene::SceneNodeModifier variables
+		pl_attribute(Flags,		pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																										"")
 	pl_class_end
 
 
@@ -75,8 +93,9 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API PLGeneral::String GetChild() const;
-		PLPHYSICS_API void SetChild(const PLGeneral::String &sValue);
+		PLPHYSICS_API PLGeneral::String GetTarget() const;
+		PLPHYSICS_API void SetTarget(const PLGeneral::String &sValue);
+		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -107,21 +126,25 @@ class SNMPhysicsJoint : public SNMPhysics {
 
 		/**
 		*  @brief
-		*    Returns the parent PL physics body scene node modifier the joint is attached to
+		*    Returns the owner PL physics body scene node modifier the joint is attached to
 		*
 		*  @return
-		*    The parent PL physics body scene node modifier, a null pointer if there's no such body
+		*    The owner PL physics body scene node modifier, a null pointer if there's no such body
+		*
+		*  @note
+		*    - The implementation is searching for the first "PLPhysics::SNMPhysicsBody" within the owner
+		*      scene node of this scene node modifier, this is the "owner" physics body
 		*/
-		PLPHYSICS_API SNMPhysicsBody *GetParentBodyModifier() const;
+		PLPHYSICS_API SNMPhysicsBody *GetOwnerBodyModifier() const;
 
 		/**
 		*  @brief
-		*    Returns the child PL physics body scene node modifier the joint is attached to
+		*    Returns the target PL physics body scene node modifier the joint is attached to
 		*
 		*  @return
-		*    The child PL physics body scene node modifier, a null pointer if there's no such body
+		*    The target PL physics body scene node modifier, a null pointer if there's no such body
 		*/
-		PLPHYSICS_API SNMPhysicsBody *GetChildBodyModifier() const;
+		PLPHYSICS_API SNMPhysicsBody *GetTargetBodyModifier() const;
 
 
 	//[-------------------------------------------------------]
@@ -165,7 +188,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String  m_sChild;			/**< Name of the child scene node (which must have a 'SNMPhysicsBody' modifier!), can left undefined */
+		PLGeneral::String  m_sTarget;			/**< Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined */
 		SCPhysicsWorld    *m_pWorldContainer;	/**< The PL physics world scene node container the physics joint is in, can be a null pointer */
 		ElementHandler    *m_pJointHandler;		/**< Holds the PL physics joint (ALWAYS valid!) */
 

@@ -104,16 +104,19 @@ SNMPhysicsJointHinge::~SNMPhysicsJointHinge()
 void SNMPhysicsJointHinge::CreatePhysicsJoint()
 {
 	if (m_pWorldContainer && m_pWorldContainer->GetWorld()) {
-		// Get the parent and child physics bodies the joint is attached to
-		const SNMPhysicsBody *pParentBody = GetParentBodyModifier();
-		const SNMPhysicsBody *pChildBody  = GetChildBodyModifier();
+		// Get the owner and target physics bodies the joint is attached to
+		const SNMPhysicsBody *pOwnerBody  = GetOwnerBodyModifier();
+		const SNMPhysicsBody *pTargetBody = GetTargetBodyModifier();
+
+		// Get the pin direction
+		const Matrix3x4 &mTrans = GetSceneNode().GetTransform().GetMatrix();
+		const Vector3 vPinDir = ((GetFlags() & LocalPinDirection) ? mTrans.RotateVector(m_vPinDir) : m_vPinDir).Normalize();
 
 		// Create the joint
-		const Matrix3x4 &mTrans = GetSceneNode().GetTransform().GetMatrix();
-		m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointHinge(pParentBody ? pParentBody->GetBody() : nullptr,
-																					pChildBody  ? pChildBody->GetBody()  : nullptr,
+		m_pJointHandler->SetElement(m_pWorldContainer->GetWorld()->CreateJointHinge(pTargetBody ? pTargetBody->GetBody() : nullptr,
+																					pOwnerBody  ? pOwnerBody->GetBody()  : nullptr,
 																					mTrans*m_vPivotPoint,
-																					mTrans.RotateVector(m_vPinDir).Normalize()));
+																					vPinDir));
 	}
 }
 

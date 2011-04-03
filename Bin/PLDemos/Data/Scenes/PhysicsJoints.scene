@@ -43,7 +43,7 @@
         </Node>
         <Node Class="PLScene::SNMesh" Position="-3.1 -0.8 -6" Scale="0.7 0.7 0.05" AABBMin="-1 -1 -1" AABBMax="1 1 1" Name="Shield" Mesh="Default">
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1" />
-            <Modifier Class="PLPhysics::SNMPhysicsJointHinge" Child="Stick" PivotPoint="-1 1 0" PinDir="1 0 0" />
+            <Modifier Class="PLPhysics::SNMPhysicsJointHinge" Target="Stick" PivotPoint="-1 1 0" PinDir="1 0 0" />
         </Node>
         <Node Class="PLPhysics::SNPhysicsMouseInteraction" />
         <Node Class="PLScene::SNLine" Name="PhysicsForceLine" Flags="Inactive" />

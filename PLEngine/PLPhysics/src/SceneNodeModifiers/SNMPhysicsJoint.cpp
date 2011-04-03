@@ -47,16 +47,31 @@ pl_implement_class(SNMPhysicsJoint)
 //[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
-String SNMPhysicsJoint::GetChild() const
+String SNMPhysicsJoint::GetTarget() const
 {
-	return m_sChild;
+	return m_sTarget;
 }
 
-void SNMPhysicsJoint::SetChild(const String &sValue)
+void SNMPhysicsJoint::SetTarget(const String &sValue)
 {
-	if (m_sChild != sValue) {
-		m_sChild = sValue;
+	if (m_sTarget != sValue) {
+		m_sTarget = sValue;
 		RecreatePhysicsJoint();
+	}
+}
+
+void SNMPhysicsJoint::SetFlags(uint32 nValue)
+{
+	if (GetFlags() != nValue) {
+		// Backup the previous local pin direction setting
+		const bool bPreviousLocalPinDirection = (GetFlags() & LocalPinDirection) != 0;
+
+		// Call base implementation
+		SNMPhysics::SetFlags(nValue);
+
+		// Local pin direction setting changed?
+		if (((nValue & LocalPinDirection) != 0) != bPreviousLocalPinDirection)
+			RecreatePhysicsJoint();
 	}
 }
 
@@ -84,20 +99,20 @@ Joint *SNMPhysicsJoint::GetJoint() const
 
 /**
 *  @brief
-*    Returns the parent PL physics body scene node modifier the joint is attached to
+*    Returns the owner PL physics body scene node modifier the joint is attached to
 */
-SNMPhysicsBody *SNMPhysicsJoint::GetParentBodyModifier() const
+SNMPhysicsBody *SNMPhysicsJoint::GetOwnerBodyModifier() const
 {
 	return reinterpret_cast<SNMPhysicsBody*>(GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody"));
 }
 
 /**
 *  @brief
-*    Returns the child PL physics body scene node modifier the joint is attached to
+*    Returns the target PL physics body scene node modifier the joint is attached to
 */
-SNMPhysicsBody *SNMPhysicsJoint::GetChildBodyModifier() const
+SNMPhysicsBody *SNMPhysicsJoint::GetTargetBodyModifier() const
 {
-	const SceneNode *pSceneNode = GetSceneNode().GetContainer()->Get(m_sChild);
+	const SceneNode *pSceneNode = GetSceneNode().GetContainer()->Get(m_sTarget);
 	return pSceneNode ? reinterpret_cast<SNMPhysicsBody*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBody")) : nullptr;
 }
 
@@ -110,7 +125,8 @@ SNMPhysicsBody *SNMPhysicsJoint::GetChildBodyModifier() const
 *    Constructor
 */
 SNMPhysicsJoint::SNMPhysicsJoint(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
-	Child(this),
+	Target(this),
+	Flags(this),
 	m_pWorldContainer(nullptr),
 	m_pJointHandler(new ElementHandler())
 {
