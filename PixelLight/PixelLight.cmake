@@ -26,7 +26,7 @@ set(CMAKETOOLS_TARGET_BITSIZE "32" CACHE STRING "Target bitsize")
 set(CMAKETOOLS_USE_SYSTEM_LIBS "0" CACHE BOOL "Use system libraries or build own external libraries?")
 
 # Repository URL (where to download the external pre-built packages from)
-set(PL_EXTERNAL_REPOSITORY "developer.pixellight.org/files/externals" CACHE STRING "External repository")
+set(PL_EXTERNAL_REPOSITORY "pixellight.sourceforge.net/externals" CACHE STRING "External repository")
 
 # User name for access to the repository
 set(PL_EXTERNAL_USER "" CACHE STRING "External repository user name")
