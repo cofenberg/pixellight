@@ -31,6 +31,7 @@
 #include <PLGeneral/String/String.h>
 #include <PLGeneral/Container/Array.h>
 #include <PLGeneral/Container/HashMap.h>
+#include "PLCore/Base/Event/Event.h"
 
 
 //[-------------------------------------------------------]
@@ -59,6 +60,13 @@ template <class AType> class ResourceManager {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Resource<AType>;
+
+
+	//[-------------------------------------------------------]
+	//[ Events                                                ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<AType&> EventResourceRemoved;	/**< Resource removed event, removed resource as parameter */
 
 
 	//[-------------------------------------------------------]

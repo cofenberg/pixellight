@@ -105,6 +105,9 @@ bool ResourceManager<AType>::Unload(AType &cResource)
 		// Is this a valid resource?
 		const AType *pResource = m_mapResources.Get(cResource.GetName());
 		if (pResource && &cResource == pResource) {
+			// Emit event
+			EventResourceRemoved.Emit(cResource);
+
 			// Remove the resource
 			if (m_pStandardResource == &cResource)
 				m_pStandardResource = nullptr;
@@ -475,6 +478,9 @@ bool ResourceManager<AType>::Remove(AType &cResource)
 	// Is this a valid resource?
 	const AType *pResource = m_mapResources.Get(cResource.GetName());
 	if (pResource && &cResource == pResource) {
+		// Emit event
+		EventResourceRemoved.Emit(cResource);
+
 		// Remove the resource
 		if (m_pStandardResource == &cResource)
 			m_pStandardResource = nullptr;
