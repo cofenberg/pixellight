@@ -252,8 +252,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 		}
 
 		// Set displacement map
-		if (pGeneratedProgramUserData->pDisplacementMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pDisplacementMap->Set(m_pDisplacementMap);
+		if (pGeneratedProgramUserData->pDisplacementMap && m_pDisplacementMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pDisplacementMap->Set(m_pDisplacementMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -270,9 +270,9 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 			pGeneratedProgramUserData->pDiffuseColor->Set(m_cDiffuseColor);
 
 		// Diffuse
-		if (pGeneratedProgramUserData->pDiffuseMap) {
+		if (pGeneratedProgramUserData->pDiffuseMap && m_pDiffuseMap) {
 			// Set the "DiffuseMap" fragment shader parameter
-			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(m_pDiffuseMap);
+			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(m_pDiffuseMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -293,8 +293,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 				pGeneratedProgramUserData->pSpecularExponent->Set(m_fSpecularExponent);
 
 			// Set the "SpecularMap" fragment shader parameter
-			if (pGeneratedProgramUserData->pSpecularMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pSpecularMap->Set(m_pSpecularMap);
+			if (pGeneratedProgramUserData->pSpecularMap && m_pSpecularMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pSpecularMap->Set(m_pSpecularMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -304,9 +304,9 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 		}
 
 		// Normal map
-		if (pGeneratedProgramUserData->pNormalMap) {
+		if (pGeneratedProgramUserData->pNormalMap && m_pNormalMap) {
 			{ // Set normal map
-				const int nTextureUnit = pGeneratedProgramUserData->pNormalMap->Set(m_pNormalMap);
+				const int nTextureUnit = pGeneratedProgramUserData->pNormalMap->Set(m_pNormalMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -319,9 +319,9 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 			}
 
 			// Detail normal map
-			if (pGeneratedProgramUserData->pDetailNormalMap) {
+			if (pGeneratedProgramUserData->pDetailNormalMap && m_pDetailNormalMap) {
 				{ // Set detail normal map
-					const int nTextureUnit = pGeneratedProgramUserData->pDetailNormalMap->Set(m_pDetailNormalMap);
+					const int nTextureUnit = pGeneratedProgramUserData->pDetailNormalMap->Set(m_pDetailNormalMap->GetValueTextureBuffer());
 					if (nTextureUnit >= 0) {
 						cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 						cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -338,8 +338,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 		}
 
 		// Set height map
-		if (pGeneratedProgramUserData->pHeightMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pHeightMap->Set(m_pHeightMap);
+		if (pGeneratedProgramUserData->pHeightMap && m_pHeightMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pHeightMap->Set(m_pHeightMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -352,8 +352,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 		}
 
 		// Set ambient occlusion map
-		if (pGeneratedProgramUserData->pAmbientOcclusionMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pAmbientOcclusionMap->Set(m_pAmbientOcclusionMap);
+		if (pGeneratedProgramUserData->pAmbientOcclusionMap && m_pAmbientOcclusionMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pAmbientOcclusionMap->Set(m_pAmbientOcclusionMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				// Setup sampler states
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
@@ -367,8 +367,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 		}
 
 		// Set light map
-		if (pGeneratedProgramUserData->pLightMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pLightMap->Set(m_pLightMap);
+		if (pGeneratedProgramUserData->pLightMap && m_pLightMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pLightMap->Set(m_pLightMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				// Setup sampler states
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
@@ -385,8 +385,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 		}
 
 		// Set emissive map
-		if (pGeneratedProgramUserData->pEmissiveMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pEmissiveMap->Set(m_pEmissiveMap);
+		if (pGeneratedProgramUserData->pEmissiveMap && m_pEmissiveMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pEmissiveMap->Set(m_pEmissiveMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				// Setup sampler states
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
@@ -408,8 +408,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 				pGeneratedProgramUserData->pGlowFactor->Set(m_fGlowFactor);
 
 			// Set glow map
-			if (pGeneratedProgramUserData->pGlowMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pGlowMap->Set(m_pGlowMap);
+			if (pGeneratedProgramUserData->pGlowMap && m_pGlowMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pGlowMap->Set(m_pGlowMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Setup sampler states
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
@@ -433,8 +433,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 				pGeneratedProgramUserData->pReflectivity->Set(m_fReflectivity);
 
 			// Set the "ReflectivityMap" fragment shader parameter
-			if (pGeneratedProgramUserData->pReflectivityMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pReflectivityMap->Set(m_pReflectivityMap);
+			if (pGeneratedProgramUserData->pReflectivityMap && m_pReflectivityMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pReflectivityMap->Set(m_pReflectivityMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -455,8 +455,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 			}
 
 			// Set the "ReflectionMap" fragment shader parameter
-			if (pGeneratedProgramUserData->pReflectionMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pReflectionMap->Set(m_pReflectionMap);
+			if (pGeneratedProgramUserData->pReflectionMap && m_pReflectionMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pReflectionMap->Set(m_pReflectionMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Setup sampler states
 					if (m_b2DReflectionMap) {
@@ -513,9 +513,12 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 
 			// Get displacement map
 			if (m_fDisplacementScale != 0.0f) {
-				m_pDisplacementMap = m_pMaterial->GetParameterTextureBuffer(DisplacementMap);
-				if (m_pDisplacementMap && m_pDisplacementMap->GetType() != TextureBuffer::TypeTextureBuffer2D)
-					m_pDisplacementMap = nullptr;
+				m_pDisplacementMap = m_pMaterial->GetParameter(DisplacementMap);
+				if (m_pDisplacementMap) {
+					TextureBuffer *pTextureBuffer = m_pDisplacementMap->GetValueTextureBuffer();
+					if (!pTextureBuffer || pTextureBuffer->GetType() != TextureBuffer::TypeTextureBuffer2D)
+						m_pDisplacementMap = nullptr;
+				}
 			}
 		}
 	}
@@ -543,20 +546,25 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 	}
 
 	{ // (2D/cube) reflection map
-		m_pReflectionMap   = (m_nRendererFlags & SRPDeferredGBuffer::NoReflectionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
+		m_pReflectionMap   = (m_nRendererFlags & SRPDeferredGBuffer::NoReflectionMap) ? nullptr : m_pMaterial->GetParameter(Material::ReflectionMap);
 		m_b2DReflectionMap = true;
 		if (m_pReflectionMap) {
-			if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D)
-				m_b2DReflectionMap = true;
-			else if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBufferCube)
-				m_b2DReflectionMap = false;
-			else
-				m_pReflectionMap   = nullptr; // NOT supported!
+			TextureBuffer *pTextureBuffer = m_pReflectionMap->GetValueTextureBuffer();
+			if (pTextureBuffer) {
+				if (pTextureBuffer->GetType() == TextureBuffer::TypeTextureBuffer2D)
+					m_b2DReflectionMap = true;
+				else if (pTextureBuffer->GetType() == TextureBuffer::TypeTextureBufferCube)
+					m_b2DReflectionMap = false;
+				else
+					m_pReflectionMap = nullptr; // NOT supported!
+			} else {
+				m_pReflectionMap = nullptr;
+			}
 		}
 	}
 
 	{ // Figure out whether or not there's reflection on this material
-		m_bReflection = (m_fIndexOfRefraction > 0.0f) || m_pReflectionMap;
+		m_bReflection = ((m_fIndexOfRefraction > 0.0f) || m_pReflectionMap);
 	}
 
 	{ // Reflection parameters
@@ -571,7 +579,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 
 			// Get reflectivity map
 			if (!(m_nRendererFlags & SRPDeferredGBuffer::NoReflectivityMap))
-				m_pReflectivityMap = m_pMaterial->GetParameterTextureBuffer(Material::ReflectivityMap);
+				m_pReflectivityMap = m_pMaterial->GetParameter(Material::ReflectivityMap);
 
 			// Get reflectivity 
 			pParameter = m_pMaterial->GetParameter(Reflectivity);
@@ -591,7 +599,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 
 			// Get height map
 			if (m_fParallax != 0.0f)
-				m_pHeightMap = m_pMaterial->GetParameterTextureBuffer(Material::HeightMap);
+				m_pHeightMap = m_pMaterial->GetParameter(Material::HeightMap);
 		}
 		// No height map = no parallax mapping possible
 		if (!m_pHeightMap)
@@ -608,7 +616,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 
 				// Get glow map
 				if (m_fGlowFactor != 0.0f)
-					m_pGlowMap = (m_nRendererFlags & SRPDeferredGBuffer::NoGlowMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(GlowMap);
+					m_pGlowMap = (m_nRendererFlags & SRPDeferredGBuffer::NoGlowMap) ? nullptr : m_pMaterial->GetParameter(GlowMap);
 			}
 		}
 	}
@@ -618,7 +626,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 		pParameter = m_pMaterial->GetParameter(AmbientOcclusionFactor);
 		if (pParameter)
 			pParameter->GetValue1f(m_fAmbientOcclusionFactor);
-		m_pAmbientOcclusionMap = (m_nRendererFlags & SRPDeferredGBuffer::NoAmbientOcclusionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::AmbientOcclusionMap);
+		m_pAmbientOcclusionMap = (m_nRendererFlags & SRPDeferredGBuffer::NoAmbientOcclusionMap) ? nullptr : m_pMaterial->GetParameter(Material::AmbientOcclusionMap);
 	}
 
 	{ // Diffuse map and alpha reference
@@ -627,10 +635,10 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 		if (pParameter)
 			pParameter->GetValue3f(m_cDiffuseColor.r, m_cDiffuseColor.g, m_cDiffuseColor.b);
 		m_fAlphaReference = 0.0f;
-		m_pDiffuseMap     = (m_nRendererFlags & SRPDeferredGBuffer::NoDiffuseMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+		m_pDiffuseMap     = (m_nRendererFlags & SRPDeferredGBuffer::NoDiffuseMap) ? nullptr : m_pMaterial->GetParameter(Material::DiffuseMap);
 
 		// Enable/disable alpha test (fragments are thrown away inside the fragment shader using the 'discard' keyword)
-		if (m_pDiffuseMap && m_pDiffuseMap->GetComponentsPerPixel() == 4) {
+		if (m_pDiffuseMap && m_pDiffuseMap->GetValueTextureBuffer() && m_pDiffuseMap->GetValueTextureBuffer()->GetComponentsPerPixel() == 4) {
 			// Get alpha reference
 			pParameter = m_pMaterial->GetParameter(AlphaReference);
 			m_fAlphaReference = pParameter ? pParameter->GetValue1f() : 0.5f;
@@ -652,7 +660,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 		if (m_bSpecular) {
 			// Get the specular map
 			if (!(m_nRendererFlags & SRPDeferredGBuffer::NoSpecularMap))
-				m_pSpecularMap = m_pMaterial->GetParameterTextureBuffer(Material::SpecularMap);
+				m_pSpecularMap = m_pMaterial->GetParameter(Material::SpecularMap);
 
 			// Get specular exponent
 			pParameter = m_pMaterial->GetParameter(SpecularExponent);
@@ -662,7 +670,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 	}
 
 	{ // Normal map
-		m_pNormalMap           = (m_nRendererFlags & SRPDeferredGBuffer::NoNormalMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::NormalMap);
+		m_pNormalMap           = (m_nRendererFlags & SRPDeferredGBuffer::NoNormalMap) ? nullptr : m_pMaterial->GetParameter(Material::NormalMap);
 		m_fNormalMapBumpiness  = 1.0f;
 		m_bNormalMap_DXT5_xGxR = false;
 		m_bNormalMap_LATC2     = false;
@@ -673,15 +681,12 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 				m_fNormalMapBumpiness = pNormalMapParameter->GetValue1f();
 			if (m_fNormalMapBumpiness != 0.0f) {
 				// DXT5 xGxR normal map?
-				pNormalMapParameter = m_pMaterial->GetParameter(Material::NormalMap);
-				if (pNormalMapParameter) {
-					const Texture *pNormalMapTexture = pNormalMapParameter->GetValueTexture();
-					if (pNormalMapTexture) {
-						if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
-							m_bNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
-						else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
-							m_bNormalMap_LATC2 = true;
-					}
+				const Texture *pNormalMapTexture = m_pNormalMap->GetValueTexture();
+				if (pNormalMapTexture) {
+					if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+						m_bNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+					else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+						m_bNormalMap_LATC2 = true;
 				}
 			} else {
 				// The normal map has no longer an influence!
@@ -691,7 +696,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 	}
 
 	{ // Detail normal map
-		m_pDetailNormalMap			 = (!m_pNormalMap || (m_nRendererFlags & SRPDeferredGBuffer::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DetailNormalMap);
+		m_pDetailNormalMap			 = (!m_pNormalMap || (m_nRendererFlags & SRPDeferredGBuffer::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameter(DetailNormalMap);
 		m_fDetailNormalMapBumpiness  = 1.0f;
 		m_vDetailNormalMapUVScale.SetXY(4.0f, 4.0f);
 		m_bDetailNormalMap_DXT5_xGxR = false;
@@ -708,15 +713,12 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 					m_vDetailNormalMapUVScale = pDetailNormalMapParameter->GetValue2fv();
 
 				// DXT5 xGxR detail normal map?
-				pDetailNormalMapParameter = m_pMaterial->GetParameter(DetailNormalMap);
-				if (pDetailNormalMapParameter) {
-					const Texture *pDetailNormalMapTexture = pDetailNormalMapParameter->GetValueTexture();
-					if (pDetailNormalMapTexture) {
-						if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
-							m_bDetailNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
-						else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
-							m_bDetailNormalMap_LATC2 = true;
-					}
+				const Texture *pDetailNormalMapTexture = m_pDetailNormalMap->GetValueTexture();
+				if (pDetailNormalMapTexture) {
+					if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+						m_bDetailNormalMap_DXT5_xGxR = true;	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+					else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+						m_bDetailNormalMap_LATC2 = true;
 				}
 			} else {
 				// The detail normal map has no longer an influence!
@@ -730,7 +732,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 		pParameter = m_pMaterial->GetParameter(LightMapColor);
 		if (pParameter)
 			pParameter->GetValue3f(m_cLightMapColor.r, m_cLightMapColor.g, m_cLightMapColor.b);
-		m_pLightMap = (m_nRendererFlags & SRPDeferredGBuffer::NoLightMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::LightMap);
+		m_pLightMap = (m_nRendererFlags & SRPDeferredGBuffer::NoLightMap) ? nullptr : m_pMaterial->GetParameter(Material::LightMap);
 	}
 
 	{ // Emissive map
@@ -738,7 +740,7 @@ void SRPDeferredGBufferMaterial::Synchronize(uint32 nRendererFlags)
 		pParameter = m_pMaterial->GetParameter(EmissiveMapColor);
 		if (pParameter)
 			pParameter->GetValue3f(m_cEmissiveMapColor.r, m_cEmissiveMapColor.g, m_cEmissiveMapColor.b);
-		m_pEmissiveMap = (m_nRendererFlags & SRPDeferredGBuffer::NoEmissiveMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::EmissiveMap);
+		m_pEmissiveMap = (m_nRendererFlags & SRPDeferredGBuffer::NoEmissiveMap) ? nullptr : m_pMaterial->GetParameter(Material::EmissiveMap);
 	}
 
 	// Reset the program flags
@@ -848,6 +850,20 @@ void SRPDeferredGBufferMaterial::NotifyParameterChanged(Parameter &cParameter)
 {
 	// The this cached material is now dirty!
 	m_bSynchronized = false;
+
+	// Look out! Some material parameters may have gone - so reset pointers
+	m_pDisplacementMap		= nullptr;
+	m_pReflectionMap		= nullptr;
+	m_pReflectivityMap		= nullptr;
+	m_pHeightMap			= nullptr;
+	m_pGlowMap				= nullptr;
+	m_pAmbientOcclusionMap	= nullptr;
+	m_pDiffuseMap			= nullptr;
+	m_pSpecularMap			= nullptr;
+	m_pNormalMap			= nullptr;
+	m_pDetailNormalMap		= nullptr;
+	m_pLightMap				= nullptr;
+	m_pEmissiveMap			= nullptr;
 }
 
 

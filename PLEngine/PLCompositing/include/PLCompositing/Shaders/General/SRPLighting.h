@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include <PLRenderer/Texture/TextureHandler.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLScene/Compositing/SceneRendererPass.h>
@@ -54,6 +55,7 @@ namespace PLScene {
 }
 namespace PLCompositing {
 	class SRPShadowMapping;
+	class SRPLightingMaterial;
 }
 
 
@@ -239,17 +241,6 @@ class SRPLighting : public PLScene::SceneRendererPass {
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLScene::SNLight					*m_pIgnoredLight;		/**< Do not render this light, it may have already been rendered by for instance "PLCompositing::SRPDirectionalLightingShaders", can be a null pointer */
-		PLRenderer::TextureHandler			 m_cSpotMapHandler;		/**< Texture handler for the default spot map */
-		PLRenderer::TextureHandler			 m_cCubeMapHandler;		/**< Texture handler for the default cube map */
-		// Material cache
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-
-
-	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -345,6 +336,35 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*/
 		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler,
 					  const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer, PLScene::SNLight &cLight, const PLScene::VisNode &cLightVisNode, SRPShadowMapping *pSRPShadowMapping);
+
+		/**
+		*  @brief
+		*    Called when a material is removed
+		*
+		*  @param[in] cMaterial
+		*    Removed material
+		*/
+		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Material&> EventHandlerMaterialRemoved;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLScene::SNLight					*m_pIgnoredLight;		/**< Do not render this light, it may have already been rendered by for instance "PLCompositing::SRPDirectionalLightingShaders", can be a null pointer */
+		PLRenderer::TextureHandler			 m_cSpotMapHandler;		/**< Texture handler for the default spot map */
+		PLRenderer::TextureHandler			 m_cCubeMapHandler;		/**< Texture handler for the default cube map */
+
+		// Material cache
+		PLRenderer::ProgramGenerator								*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLGeneral::HashMap<PLGeneral::uint64, SRPLightingMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
 
 
 	//[-------------------------------------------------------]

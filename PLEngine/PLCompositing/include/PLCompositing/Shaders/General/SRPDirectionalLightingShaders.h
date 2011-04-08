@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLScene/Scene/SceneNodeHandler.h>
 #include "PLCompositing/SRPDirectionalLighting.h"
@@ -44,6 +45,7 @@ namespace PLRenderer {
 }
 namespace PLCompositing {
 	class SNDirectionalLight;
+	class SRPDirectionalLightingShadersMaterial;
 }
 
 
@@ -239,6 +241,27 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when a material is removed
+		*
+		*  @param[in] cMaterial
+		*    Removed material
+		*/
+		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Material&> EventHandlerMaterialRemoved;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
@@ -251,9 +274,11 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 		float m_fDOFFocalPlaneDepth;
 		float m_fDOFFarBlurDepth;
 		float m_fDOFBlurrinessCutoff;
+
 		// Material cache
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-		PLRenderer::RenderStates			*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
+		PLRenderer::ProgramGenerator												  *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLRenderer::RenderStates													  *m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
+		PLGeneral::HashMap<PLGeneral::uint64, SRPDirectionalLightingShadersMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
 
 
 	//[-------------------------------------------------------]

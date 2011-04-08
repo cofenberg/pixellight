@@ -245,8 +245,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 			pGeneratedProgramUserData->pDiffuseColor->Set(m_cDiffuseColor.r*fLightingIntensity, m_cDiffuseColor.g*fLightingIntensity, m_cDiffuseColor.b*fLightingIntensity);
 
 		// Diffuse map
-		if (pGeneratedProgramUserData->pDiffuseMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(m_pDiffuseMap);
+		if (pGeneratedProgramUserData->pDiffuseMap && m_pDiffuseMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseMap->Set(m_pDiffuseMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -259,8 +259,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 		}
 
 		// Diffuse ramp map
-		if (pGeneratedProgramUserData->pDiffuseRampMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseRampMap->Set(m_pDiffuseRampMap);
+		if (pGeneratedProgramUserData->pDiffuseRampMap && m_pDiffuseRampMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pDiffuseRampMap->Set(m_pDiffuseRampMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
@@ -282,8 +282,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 				pGeneratedProgramUserData->pReflectivity->Set(m_fReflectivity);
 
 			// Set the "ReflectivityMap" fragment shader parameter
-			if (pGeneratedProgramUserData->pReflectivityMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pReflectivityMap->Set(m_pReflectivityMap);
+			if (pGeneratedProgramUserData->pReflectivityMap && m_pReflectivityMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pReflectivityMap->Set(m_pReflectivityMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -306,8 +306,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 			}
 
 			// Set the "ReflectionMap" fragment shader parameter
-			if (pGeneratedProgramUserData->pReflectionMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pReflectionMap->Set(m_pReflectionMap);
+			if (pGeneratedProgramUserData->pReflectionMap && m_pReflectionMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pReflectionMap->Set(m_pReflectionMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Setup sampler states
 					if (m_b2DReflectionMap) {
@@ -325,8 +325,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 		// Normal map
 		if (m_pNormalMap) {
 			// Set normal map
-			if (pGeneratedProgramUserData->pNormalMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pNormalMap->Set(m_pNormalMap);
+			if (pGeneratedProgramUserData->pNormalMap && m_pNormalMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pNormalMap->Set(m_pNormalMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -339,8 +339,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 			}
 
 			// Set detail normal map
-			if (pGeneratedProgramUserData->pDetailNormalMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pDetailNormalMap->Set(m_pDetailNormalMap);
+			if (pGeneratedProgramUserData->pDetailNormalMap && m_pDetailNormalMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pDetailNormalMap->Set(m_pDetailNormalMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -356,8 +356,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 		}
 
 		// Height map (for parallax mapping)
-		if (pGeneratedProgramUserData->pHeightMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pHeightMap->Set(m_pHeightMap);
+		if (pGeneratedProgramUserData->pHeightMap && m_pHeightMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pHeightMap->Set(m_pHeightMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -378,8 +378,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 				pGeneratedProgramUserData->pSpecularExponent->Set(m_fSpecularExponent);
 
 			// Set the "SpecularMap" fragment shader parameter
-			if (pGeneratedProgramUserData->pSpecularMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pSpecularMap->Set(m_pSpecularMap);
+			if (pGeneratedProgramUserData->pSpecularMap && m_pSpecularMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pSpecularMap->Set(m_pSpecularMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Wrap);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Wrap);
@@ -388,8 +388,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 			}
 
 			// Specular ramp map
-			if (pGeneratedProgramUserData->pSpecularRampMap) {
-				const int nTextureUnit = pGeneratedProgramUserData->pSpecularRampMap->Set(m_pSpecularRampMap);
+			if (pGeneratedProgramUserData->pSpecularRampMap && m_pSpecularRampMap) {
+				const int nTextureUnit = pGeneratedProgramUserData->pSpecularRampMap->Set(m_pSpecularRampMap->GetValueTextureBuffer());
 				if (nTextureUnit >= 0) {
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
@@ -402,8 +402,8 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 		}
 
 		// Set edge ramp map
-		if (pGeneratedProgramUserData->pEdgeRampMap) {
-			const int nTextureUnit = pGeneratedProgramUserData->pEdgeRampMap->Set(m_pEdgeRampMap);
+		if (pGeneratedProgramUserData->pEdgeRampMap && m_pEdgeRampMap) {
+			const int nTextureUnit = pGeneratedProgramUserData->pEdgeRampMap->Set(m_pEdgeRampMap->GetValueTextureBuffer());
 			if (nTextureUnit >= 0) {
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
 				cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
@@ -514,13 +514,13 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 		if (pParameter)
 			pParameter->GetValue3f(m_cDiffuseColor.r, m_cDiffuseColor.g, m_cDiffuseColor.b);
 		m_fAlphaReference = 0.0f;
-		m_pDiffuseMap     = (!(m_nEnvironmentFlags & EnvironmentVertexTexCoord0) || (m_nRendererFlags & SRPLighting::NoDiffuseMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::DiffuseMap);
+		m_pDiffuseMap     = (!(m_nEnvironmentFlags & EnvironmentVertexTexCoord0) || (m_nRendererFlags & SRPLighting::NoDiffuseMap)) ? nullptr : m_pMaterial->GetParameter(Material::DiffuseMap);
 		if (m_pDiffuseMap) {
 			PL_ADD_VS_FLAG(m_cProgramFlags, VS_TEXCOORD0)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSEMAP)
 
 			// Get alpha reference
-			if (m_pDiffuseMap->GetComponentsPerPixel() == 4) {
+			if (m_pDiffuseMap->GetValueTextureBuffer() && m_pDiffuseMap->GetValueTextureBuffer()->GetComponentsPerPixel() == 4) {
 				pParameter = m_pMaterial->GetParameter(AlphaReference);
 				m_fAlphaReference = pParameter ? pParameter->GetValue1f() : 0.5f;
 				if (m_fAlphaReference != 0.0f)
@@ -530,7 +530,7 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 	}
 
 	{ // Diffuse ramp map
-		m_pDiffuseRampMap = (m_nRendererFlags & SRPLighting::NoDiffuseRampMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DiffuseRampMap);
+		m_pDiffuseRampMap = (m_nRendererFlags & SRPLighting::NoDiffuseRampMap) ? nullptr : m_pMaterial->GetParameter(DiffuseRampMap);
 		if (m_pDiffuseRampMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_DIFFUSERAMPMAP)
 	}
@@ -558,23 +558,28 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 	}
 
 	{ // (2D/cube) reflection map
-		m_pReflectionMap   = (m_nRendererFlags & SRPLighting::NoReflectionMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::ReflectionMap);
+		m_pReflectionMap   = (m_nRendererFlags & SRPLighting::NoReflectionMap) ? nullptr : m_pMaterial->GetParameter(Material::ReflectionMap);
 		m_b2DReflectionMap = true;
 		if (m_pReflectionMap) {
-			if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBuffer2D) {
-				m_b2DReflectionMap = true;
-				PL_ADD_FS_FLAG(m_cProgramFlags, FS_2DREFLECTIONMAP)
-			} else if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBufferCube) {
-				m_b2DReflectionMap = false;
-				PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
+			TextureBuffer *pTextureBuffer = m_pReflectionMap->GetValueTextureBuffer();
+			if (pTextureBuffer) {
+				if (pTextureBuffer->GetType() == TextureBuffer::TypeTextureBuffer2D) {
+					m_b2DReflectionMap = true;
+					PL_ADD_FS_FLAG(m_cProgramFlags, FS_2DREFLECTIONMAP)
+				} else if (pTextureBuffer->GetType() == TextureBuffer::TypeTextureBufferCube) {
+					m_b2DReflectionMap = false;
+					PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
+				} else {
+					m_pReflectionMap = nullptr; // NOT supported!
+				}
 			} else {
-				m_pReflectionMap = nullptr; // NOT supported!
+				m_pReflectionMap = nullptr;
 			}
 		}
 	}
 
 	// Figure out whether or not there's reflection on this material
-	m_bReflection = (m_fIndexOfRefraction > 0.0f) || m_pReflectionMap;
+	m_bReflection = ((m_fIndexOfRefraction > 0.0f) || m_pReflectionMap);
 
 	{ // Reflection parameters
 		m_pReflectivityMap = nullptr;
@@ -592,7 +597,7 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 
 			// Get reflectivity map
 			if (!(m_nRendererFlags & SRPLighting::NoReflectivityMap)) {
-				m_pReflectivityMap = m_pMaterial->GetParameterTextureBuffer(Material::ReflectivityMap);
+				m_pReflectivityMap = m_pMaterial->GetParameter(Material::ReflectivityMap);
 				if (m_pReflectivityMap)
 					PL_ADD_FS_FLAG(m_cProgramFlags, FS_REFLECTIVITYMAP)
 			}
@@ -605,7 +610,7 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 	}
 
 	{ // Normal map
-		m_pNormalMap          = (!(m_nEnvironmentFlags & EnvironmentNormalMappingPossible) || (m_nRendererFlags & SRPLighting::NoNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(Material::NormalMap);
+		m_pNormalMap          = (!(m_nEnvironmentFlags & EnvironmentNormalMappingPossible) || (m_nRendererFlags & SRPLighting::NoNormalMap)) ? nullptr : m_pMaterial->GetParameter(Material::NormalMap);
 		m_fNormalMapBumpiness = 1.0f;
 		if (m_pNormalMap) {
 			// Get normal map bumpiness
@@ -619,15 +624,12 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 				PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP)
 
 				// DXT5 xGxR normal map?
-				pNormalMapParameter = m_pMaterial->GetParameter(Material::NormalMap);
-				if (pNormalMapParameter) {
-					const Texture *pNormalMapTexture = pNormalMapParameter->GetValueTexture();
-					if (pNormalMapTexture) {
-						if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
-						else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_LATC2)
-					}
+				const Texture *pNormalMapTexture = m_pNormalMap->GetValueTexture();
+				if (pNormalMapTexture) {
+					if (pNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+						PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+					else if (pNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+						PL_ADD_FS_FLAG(m_cProgramFlags, FS_NORMALMAP_LATC2)
 				}
 			} else {
 				// The normal map has no longer an influence!
@@ -637,7 +639,7 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 	}
 
 	{ // Detail normal map
-		m_pDetailNormalMap          = (!m_pNormalMap || (m_nRendererFlags & SRPLighting::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(DetailNormalMap);
+		m_pDetailNormalMap          = (!m_pNormalMap || (m_nRendererFlags & SRPLighting::NoDetailNormalMap)) ? nullptr : m_pMaterial->GetParameter(DetailNormalMap);
 		m_fDetailNormalMapBumpiness = 1.0f;
 		m_vDetailNormalMapUVScale.SetXY(4.0f, 4.0f);
 		if (m_pDetailNormalMap) {
@@ -654,15 +656,12 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 					m_vDetailNormalMapUVScale = pDetailNormalMapParameter->GetValue2fv();
 
 				// DXT5 xGxR detail normal map?
-				pDetailNormalMapParameter = m_pMaterial->GetParameter(DetailNormalMap);
-				if (pDetailNormalMapParameter) {
-					const Texture *pDetailNormalMapTexture = pDetailNormalMapParameter->GetValueTexture();
-					if (pDetailNormalMapTexture) {
-						if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
-						else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
-							PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_LATC2)
-					}
+				const Texture *pDetailNormalMapTexture = m_pDetailNormalMap->GetValueTexture();
+				if (pDetailNormalMapTexture) {
+					if (pDetailNormalMapTexture->GetCompressionHint() == Texture::DXT5_xGxR || pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2_XYSwizzle)
+						PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_DXT5_XGXR)	// We can use one and the same shader for DXT5_xGxR and LATC2_XYSwizzle :D
+					else if (pDetailNormalMapTexture->GetCompressionHint() == Texture::LATC2)
+						PL_ADD_FS_FLAG(m_cProgramFlags, FS_DETAILNORMALMAP_LATC2)
 				}
 			} else {
 				// The detail normal map has no longer an influence!
@@ -682,7 +681,7 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 
 			// Get height map
 			if (m_fParallax != 0.0f)
-				m_pHeightMap = m_pMaterial->GetParameterTextureBuffer(Material::HeightMap);
+				m_pHeightMap = m_pMaterial->GetParameter(Material::HeightMap);
 
 			// No height map = no parallax mapping possible
 			if (m_pHeightMap) {
@@ -711,7 +710,7 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 
 				// Get the specular map
 				if (!(m_nRendererFlags & SRPLighting::NoSpecularMap)) {
-					m_pSpecularMap = m_pMaterial->GetParameterTextureBuffer(Material::SpecularMap);
+					m_pSpecularMap = m_pMaterial->GetParameter(Material::SpecularMap);
 					if (m_pSpecularMap)
 						PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARMAP)
 				}
@@ -720,13 +719,13 @@ void SRPLightingMaterial::Synchronize(uint32 nRendererFlags, uint32 nEnvironment
 	}
 
 	{ // Specular ramp map
-		m_pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (m_nRendererFlags & SRPLighting::NoSpecularRampMap)) ? nullptr : m_pMaterial->GetParameterTextureBuffer(SpecularRampMap);
+		m_pSpecularRampMap = (!(m_cProgramFlags.GetFragmentShaderFlags() & FS_SPECULAR) || (m_nRendererFlags & SRPLighting::NoSpecularRampMap)) ? nullptr : m_pMaterial->GetParameter(SpecularRampMap);
 		if (m_pSpecularRampMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_SPECULARRAMPMAP)
 	}
 
 	{ // Edge ramp map
-		m_pEdgeRampMap = (m_nRendererFlags & SRPLighting::NoEdgeRampMap) ? nullptr : m_pMaterial->GetParameterTextureBuffer(EdgeRampMap);
+		m_pEdgeRampMap = (m_nRendererFlags & SRPLighting::NoEdgeRampMap) ? nullptr : m_pMaterial->GetParameter(EdgeRampMap);
 		if (m_pEdgeRampMap)
 			PL_ADD_FS_FLAG(m_cProgramFlags, FS_EDGERAMPMAP)
 	}
@@ -774,6 +773,18 @@ void SRPLightingMaterial::NotifyParameterChanged(Parameter &cParameter)
 {
 	// The this cached material is now dirty!
 	m_bSynchronized = false;
+
+	// Look out! Some material parameters may have gone - so reset pointers
+	m_pDiffuseMap		= nullptr;
+	m_pDiffuseRampMap	= nullptr;
+	m_pReflectionMap	= nullptr;
+	m_pReflectivityMap	= nullptr;
+	m_pNormalMap		= nullptr;
+	m_pDetailNormalMap	= nullptr;
+	m_pHeightMap		= nullptr;
+	m_pSpecularMap		= nullptr;
+	m_pSpecularRampMap	= nullptr;
+	m_pEdgeRampMap		= nullptr;
 }
 
 

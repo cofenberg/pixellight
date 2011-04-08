@@ -254,6 +254,7 @@ class Parameter {
 
 		// Texture
 		PLRENDERER_API Texture *GetValueTexture() const;
+		PLRENDERER_API TextureBuffer *GetValueTextureBuffer() const;
 		PLRENDERER_API TextureHandler *GetValueTextureHandler() const;
 		PLRENDERER_API bool SetValueTexture(Texture *pTexture);
 		PLRENDERER_API bool SetValueTexture(const PLGeneral::String &sFilename);

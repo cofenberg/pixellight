@@ -42,7 +42,6 @@ namespace PLRenderer {
 	class Renderer;
 	class Parameter;
 	class RenderStates;
-	class TextureBuffer;
 	class ProgramUniform;
 	class ProgramAttribute;
 	class ProgramGenerator;
@@ -374,7 +373,7 @@ class SRPDirectionalLightingShadersMaterial {
 		// Synchronized data
 			// Glow
 		float					   m_fGlow;
-		PLRenderer::TextureBuffer *m_pGlowMap;
+		PLRenderer::Parameter	  *m_pGlowMap;
 			// Opacity
 		float					   m_fOpacity;
 		PLGeneral::uint32		   m_nSrcBlendFunc;
@@ -384,47 +383,47 @@ class SRPDirectionalLightingShadersMaterial {
 			// Diffuse map and alpha reference
 		PLGraphics::Color3		   m_cDiffuseColor;
 		float					   m_fAlphaReference;
-		PLRenderer::TextureBuffer *m_pDiffuseMap;
+		PLRenderer::Parameter	  *m_pDiffuseMap;
 			// Diffuse ramp map
-		PLRenderer::TextureBuffer *m_pDiffuseRampMap;
+		PLRenderer::Parameter	  *m_pDiffuseRampMap;
 			// Ambient map and light map require texture coordinate set 1
 		float					   m_fAmbientOcclusionFactor;
-		PLRenderer::TextureBuffer *m_pAmbientOcclusionMap;
+		PLRenderer::Parameter	  *m_pAmbientOcclusionMap;
 		PLGraphics::Color3		   m_cLightMapColor;
-		PLRenderer::TextureBuffer *m_pLightMap;
+		PLRenderer::Parameter	  *m_pLightMap;
 			// Emissive map
 		PLGraphics::Color3		   m_cEmissiveMapColor;
-		PLRenderer::TextureBuffer *m_pEmissiveMap;
+		PLRenderer::Parameter	  *m_pEmissiveMap;
 			// Index of refraction and fresnel reflection power
 		float					   m_fIndexOfRefraction;
 		float					   m_fFresnelReflectionPower;
 			// (2D/cube) reflection map
-		PLRenderer::TextureBuffer *m_pReflectionMap;
+		PLRenderer::Parameter	  *m_pReflectionMap;
 		bool					   m_b2DReflectionMap;
 			// Figure out whether or not there's reflection on this material
 		bool					   m_bReflection;
 			// Reflection parameters
-		PLRenderer::TextureBuffer *m_pReflectivityMap;
+		PLRenderer::Parameter	  *m_pReflectivityMap;
 		float					   m_fReflectivity;
 		PLGraphics::Color3		   m_cReflectionColor;
 			// Normal map
-		PLRenderer::TextureBuffer *m_pNormalMap;
+		PLRenderer::Parameter	  *m_pNormalMap;
 		float					   m_fNormalMapBumpiness;
 			// Detail normal map
-		PLRenderer::TextureBuffer *m_pDetailNormalMap;
+		PLRenderer::Parameter	  *m_pDetailNormalMap;
 		float					   m_fDetailNormalMapBumpiness;
 		PLMath::Vector2			   m_vDetailNormalMapUVScale;
 			// Parallax mapping settings
 		float					   m_fParallax;
-		PLRenderer::TextureBuffer *m_pHeightMap;
+		PLRenderer::Parameter	  *m_pHeightMap;
 			// Lighting and specular
 		PLGraphics::Color3		   m_cSpecularColor;
-		PLRenderer::TextureBuffer *m_pSpecularMap;
+		PLRenderer::Parameter	  *m_pSpecularMap;
 		float					   m_fSpecularExponent;
 			// Specular ramp map
-		PLRenderer::TextureBuffer *m_pSpecularRampMap;
+		PLRenderer::Parameter	  *m_pSpecularRampMap;
 			// Edge ramp map
-		PLRenderer::TextureBuffer *m_pEdgeRampMap;
+		PLRenderer::Parameter	  *m_pEdgeRampMap;
 
 
 };

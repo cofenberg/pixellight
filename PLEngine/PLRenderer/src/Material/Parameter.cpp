@@ -1061,6 +1061,16 @@ Texture *Parameter::GetValueTexture() const
 	return (m_nType == Parameters::TextureBuffer) ? static_cast<const TextureHandler*>(m_pValue)->GetTexture() : nullptr;
 }
 
+TextureBuffer *Parameter::GetValueTextureBuffer() const
+{
+	if (m_nType == Parameters::TextureBuffer) {
+		Texture *pTexture = static_cast<const TextureHandler*>(m_pValue)->GetTexture();
+		return pTexture ? pTexture->GetTextureBuffer() : nullptr;
+	} else {
+		return nullptr;
+	}
+}
+
 TextureHandler *Parameter::GetValueTextureHandler() const
 {
 	return (m_nType == Parameters::TextureBuffer) ? static_cast<TextureHandler*>(m_pValue) : nullptr;

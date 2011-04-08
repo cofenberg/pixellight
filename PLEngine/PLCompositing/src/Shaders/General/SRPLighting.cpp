@@ -36,8 +36,8 @@
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Effect/EffectManager.h>
-#include <PLRenderer/Material/Material.h>
 #include <PLRenderer/Material/Parameter.h>
+#include <PLRenderer/Material/MaterialManager.h>
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
@@ -81,6 +81,7 @@ pl_implement_class(SRPLighting)
 *    Default constructor
 */
 SRPLighting::SRPLighting() :
+	EventHandlerMaterialRemoved(&SRPLighting::NotifyMaterialRemoved, this),
 	TextureFiltering(this),
 	ShaderLanguage(this),
 	LightingIntensity(this),
@@ -96,6 +97,13 @@ SRPLighting::SRPLighting() :
 */
 SRPLighting::~SRPLighting()
 {
+	{ // SRPLighting-material cache cleanup
+		Iterator<SRPLightingMaterial*> lstIterator = m_lstMaterialCache.GetIterator();
+		while (lstIterator.HasNext())
+			delete lstIterator.Next();
+		m_lstMaterialCache.Clear();
+	}
+
 	// Destroy the program generator
 	if (m_pProgramGenerator)
 		delete m_pProgramGenerator;
@@ -456,10 +464,16 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 					static const String sOpacity = "Opacity";
 					const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
 					if (!pParameter || pParameter->GetValue1f() >= 1.0f) {
-						// [TODO] Material cache!
-						SRPLightingMaterial cSRPLightingMaterial(*pMaterial, *m_pProgramGenerator);
+						// SRPLighting-material caching
+						SRPLightingMaterial *pSRPLightingMaterial = m_lstMaterialCache.Get(reinterpret_cast<uint64>(pMaterial));
+						if (!pSRPLightingMaterial) {
+							// The material is not yet cached
+							pSRPLightingMaterial = new SRPLightingMaterial(*pMaterial, *m_pProgramGenerator);
+							m_lstMaterialCache.Add(reinterpret_cast<uint64>(pMaterial), pSRPLightingMaterial);
+						}
+
 						// [TODO] Correct texture filter
-						SRPLightingMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = cSRPLightingMaterial.MakeMaterialCurrent(GetFlags(), nEnvironmentFlags, SRPLightingMaterial::Anisotropic2, LightingIntensity);
+						SRPLightingMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = pSRPLightingMaterial->MakeMaterialCurrent(GetFlags(), nEnvironmentFlags, SRPLightingMaterial::Anisotropic2, LightingIntensity);
 						if (pGeneratedProgramUserData) {
 							// Set the "ViewSpaceToWorldSpace" fragment shader parameter
 							if (pGeneratedProgramUserData->pViewSpaceToWorldSpace) {
@@ -732,6 +746,22 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 	}
 }
 
+/**
+*  @brief
+*    Called when a material is removed
+*/
+void SRPLighting::NotifyMaterialRemoved(Material &cMaterial)
+{
+	// Is this material cached?
+	const uint64 nMaterialID = reinterpret_cast<uint64>(&cMaterial);
+	SRPLightingMaterial *pSRPLightingMaterial = m_lstMaterialCache.Get(nMaterialID);
+	if (pSRPLightingMaterial) {
+		// Remove the material from the cache
+		m_lstMaterialCache.Remove(nMaterialID);
+		delete pSRPLightingMaterial;
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLScene::SceneRendererPass functions  ]
@@ -745,6 +775,9 @@ void SRPLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 	// Create the program generator if there's currently no instance of it
 	if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+		// If not already done: Connect event handler - if it's already connected to this event, nothing happens
+		cRenderer.GetRendererContext().GetMaterialManager().EventResourceRemoved.Connect(&EventHandlerMaterialRemoved);
+
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;

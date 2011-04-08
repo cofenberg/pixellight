@@ -32,8 +32,8 @@
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Effect/EffectManager.h>
-#include <PLRenderer/Material/Material.h>
 #include <PLRenderer/Material/Parameter.h>
+#include <PLRenderer/Material/MaterialManager.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
 #include <PLScene/Scene/SNLight.h>
@@ -71,6 +71,7 @@ pl_implement_class(SRPDirectionalLightingShaders)
 *    Default constructor
 */
 SRPDirectionalLightingShaders::SRPDirectionalLightingShaders() :
+	EventHandlerMaterialRemoved(&SRPDirectionalLightingShaders::NotifyMaterialRemoved, this),
 	ShaderLanguage(this),
 	Flags(this),
 	m_bGlowEnabled(false),
@@ -89,6 +90,13 @@ SRPDirectionalLightingShaders::SRPDirectionalLightingShaders() :
 */
 SRPDirectionalLightingShaders::~SRPDirectionalLightingShaders()
 {
+	{ // SRPDirectionalLightingShaders-material cache cleanup
+		Iterator<SRPDirectionalLightingShadersMaterial*> lstIterator = m_lstMaterialCache.GetIterator();
+		while (lstIterator.HasNext())
+			delete lstIterator.Next();
+		m_lstMaterialCache.Clear();
+	}
+
 	// Destroy render states 'translator'
 	delete m_pRenderStates;
 
@@ -104,6 +112,26 @@ SRPDirectionalLightingShaders::~SRPDirectionalLightingShaders()
 SNDirectionalLight *SRPDirectionalLightingShaders::GetUsedLight() const
 {
 	return reinterpret_cast<SNDirectionalLight*>(m_cLightNodeHandler.GetElement());
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when a material is removed
+*/
+void SRPDirectionalLightingShaders::NotifyMaterialRemoved(Material &cMaterial)
+{
+	// Is this material cached?
+	const uint64 nMaterialID = reinterpret_cast<uint64>(&cMaterial);
+	SRPDirectionalLightingShadersMaterial *pSRPDirectionalLightingShadersMaterial = m_lstMaterialCache.Get(nMaterialID);
+	if (pSRPDirectionalLightingShadersMaterial) {
+		// Remove the material from the cache
+		m_lstMaterialCache.Remove(nMaterialID);
+		delete pSRPDirectionalLightingShadersMaterial;
+	}
 }
 
 
@@ -169,10 +197,16 @@ void SRPDirectionalLightingShaders::DrawMesh(Renderer &cRenderer, const SQCull &
 					static const String sOpacity = "Opacity";
 					const Parameter *pParameter = pMaterial->GetParameter(sOpacity);
 					if ((GetFlags() & TransparentPass) ? (pParameter && pParameter->GetValue1f() < 1.0f) : (!pParameter || pParameter->GetValue1f() >= 1.0f)) {
-						// [TODO] Material cache!
-						SRPDirectionalLightingShadersMaterial cSRPDirectionalLightingShadersMaterial(*m_pRenderStates, *pMaterial, *m_pProgramGenerator);
+						// SRPDirectionalLightingShaders-material caching
+						SRPDirectionalLightingShadersMaterial *pSRPDirectionalLightingShadersMaterial = m_lstMaterialCache.Get(reinterpret_cast<uint64>(pMaterial));
+						if (!pSRPDirectionalLightingShadersMaterial) {
+							// The material is not yet cached
+							pSRPDirectionalLightingShadersMaterial = new SRPDirectionalLightingShadersMaterial(*m_pRenderStates, *pMaterial, *m_pProgramGenerator);
+							m_lstMaterialCache.Add(reinterpret_cast<uint64>(pMaterial), pSRPDirectionalLightingShadersMaterial);
+						}
+
 						// [TODO] Correct texture filter
-						SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = cSRPDirectionalLightingShadersMaterial.MakeMaterialCurrent(GetFlags(), nEnvironmentFlags, SRPDirectionalLightingShadersMaterial::Anisotropic2);
+						SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *pGeneratedProgramUserData = pSRPDirectionalLightingShadersMaterial->MakeMaterialCurrent(GetFlags(), nEnvironmentFlags, SRPDirectionalLightingShadersMaterial::Anisotropic2);
 						if (pGeneratedProgramUserData) {
 							// Ambient color
 							if (pGeneratedProgramUserData->pAmbientColor)
@@ -279,6 +313,9 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 
 	// Create the program generator if there's currently no instance of it
 	if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
+		// If not already done: Connect event handler - if it's already connected to this event, nothing happens
+		cRenderer.GetRendererContext().GetMaterialManager().EventResourceRemoved.Connect(&EventHandlerMaterialRemoved);
+
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
 			delete m_pProgramGenerator;

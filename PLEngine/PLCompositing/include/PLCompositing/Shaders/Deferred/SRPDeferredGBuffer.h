@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/Pool.h>
 #include <PLMath/Rectangle.h>
+#include <PLCore/Base/Event/EventHandler.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBufferMaterial.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferred.h"
@@ -344,6 +345,22 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*/
 		MeshBatch &GetFreeMeshBatch();
 
+		/**
+		*  @brief
+		*    Called when a material is removed
+		*
+		*  @param[in] cMaterial
+		*    Removed material
+		*/
+		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Material&> EventHandlerMaterialRemoved;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
@@ -363,7 +380,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 
 		// Material cache
 		PLRenderer::ProgramGenerator									   *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-//		PLGeneral::HashMap<PLGeneral::uint64, SRPDeferredGBufferMaterial*>  m_lstMaterialCache;	// [TODO] Just a first quick and dirty material cache experiment
+		PLGeneral::HashMap<PLGeneral::uint64, SRPDeferredGBufferMaterial*>  m_lstMaterialCache;		/**< List of cached materials */
 
 
 	//[-------------------------------------------------------]

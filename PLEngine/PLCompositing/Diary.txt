@@ -4,6 +4,8 @@
   better performance because it's entirely image space based and not rendering geometries over again.
 - "SRPLightingMaterial" & "SRPDirectionalLightingShadersMaterial" & "SRPDeferredGBufferMaterial" are now using the new 
   "PLRenderer::Material::EventParameterChanged"-event to make the cached material "dirty"
+- "SRPLighting" & "SRPDirectionalLightingShaders" & "SRPDeferredGBuffer" are now using a material cache to reduce required CPU time
+  (the material is interpreted only once, and not during every material switch)
 
 
 
