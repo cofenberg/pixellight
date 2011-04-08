@@ -399,9 +399,9 @@ void SRPVolumetricFog::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, c
 							// Set fog uniforms
 							if (pGeneratedProgramUserData->pFogPosition && pGeneratedProgramUserData->pFogInvRadius && pGeneratedProgramUserData->pEyePos && pGeneratedProgramUserData->pFogColor0 && pGeneratedProgramUserData->pFogColor1) {
 								// Adjusted inverse square fall-off function that falls to zero at the light radius
-								const float a0 = 0.2f;
-								const float a1 = a0 + 1.0f;
-								const float c  = Math::Sqrt(a1 / a0 - 1.0f);
+								static const float a0 = 0.2f;
+								static const float a1 = a0 + 1.0f;
+								static const float c  = Math::Sqrt(a1 / a0 - 1.0f);
 
 								// Set uniforms
 								pGeneratedProgramUserData->pFogPosition->Set(cSphereFogVisNode.GetWorldMatrix().GetTranslation());

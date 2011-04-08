@@ -1,3 +1,10 @@
+>> 08.04.2011
+[CO]
+- Added "SRPDeferredVolumetricFog" which is a special version of "SRPVolumetricFog" for deferred rendering -> "SRPDeferredVolumetricFog" comes with
+  better performance because it's entirely image space based and not rendering geometries over again.
+
+
+
 >> 29.03.2011
 [CO]
 - Added "SRPDeferredSPAAO" which is an implementation of the article "A Simple and Practical Approach to SSAO".

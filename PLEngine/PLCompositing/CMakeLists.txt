@@ -59,6 +59,7 @@ add_sources(
 	src/Shaders/Deferred/SRPDeferredDepthFog.cpp
 	src/Shaders/Deferred/SRPDeferredGodRays.cpp
 	src/Shaders/Deferred/SRPDeferredGBufferDebug.cpp
+	src/Shaders/Deferred/SRPDeferredVolumetricFog.cpp
 	src/Shaders/HDR/SRPEndHDR.cpp
 	src/Shaders/HDR/HDRBloom.cpp
 	src/Shaders/HDR/HDRLightAdaptation.cpp

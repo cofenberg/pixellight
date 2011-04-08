@@ -4,6 +4,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Feature: Added another SSAO algorithm "PLCompositing::SRPDeferredSPAAO" which comes with a good performance while still looking ok - it's now the default SSAO algorithm
 - Feature: In order to use vertex texture fetch within "PLCompositing::SRPEndHDR", one must now set the new "UseVertexTextureFetch"-flag (we had some VTF GPU driver issues)
 - Feature: "PLGeneral::Url": Added UNC (Uniform Naming Convention aka Universal Naming Convention) support
+- Feature: Added "PLCompositing::SRPDeferredVolumetricFog" which is a special version of "PLCompositing::SRPVolumetricFog" for deferred rendering (better performance)
 - Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer
 - Change: PLMath: The operators <, >, <= and >= of Vector2i, Vector3i, Vector2, Vector3 and Vector4 are now using a lexicographical order

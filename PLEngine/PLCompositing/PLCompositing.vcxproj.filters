@@ -241,6 +241,9 @@
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredSPAAO.cpp">
       <Filter>Shaders\Deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\Deferred\SRPDeferredVolumetricFog.cpp">
+      <Filter>Shaders\Deferred</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -589,6 +592,15 @@
       <Filter>Shaders\Deferred</Filter>
     </ClInclude>
     <ClInclude Include="src\Shaders\Deferred\SRPDeferredSPAAO_GLSL.h">
+      <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\Deferred\SRPDeferredVolumetricFog_Cg.h">
+      <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\Deferred\SRPDeferredVolumetricFog_GLSL.h">
+      <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredVolumetricFog.h">
       <Filter>Shaders\Deferred</Filter>
     </ClInclude>
   </ItemGroup>
