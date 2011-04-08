@@ -275,6 +275,9 @@ bool Parameter::SetName(const PLGeneral::String &sName)
 			// Set the new name
 			m_sName = sName;
 
+			// Inform the parameter manager about the change
+			m_pManager->OnParameterChange(*this);
+
 			// Done
 			return true;
 		}
@@ -407,6 +410,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 		switch (m_nType) {
 			case Parameters::String:
 				*static_cast<PLGeneral::String*>(m_pValue) = sValue;
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Integer:
@@ -416,6 +420,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 1)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Integer2:
@@ -425,6 +430,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 2)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Integer3:
@@ -434,6 +440,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 3)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Integer4:
@@ -443,6 +450,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 4)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float:
@@ -452,6 +460,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 1)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float2:
@@ -461,6 +470,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 2)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float3:
@@ -470,6 +480,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 3)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float4:
@@ -479,6 +490,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 4)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Double:
@@ -488,6 +500,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 1)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Double2:
@@ -497,6 +510,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 2)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Double3:
@@ -506,6 +520,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 3)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Double4:
@@ -515,6 +530,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 4)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float3x3:
@@ -524,6 +540,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 3*3)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float3x4:
@@ -533,6 +550,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 3*4)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Float4x4:
@@ -542,6 +560,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 4*4)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
 			case Parameters::Double4x4:
@@ -551,6 +570,7 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 					if (nIndex >= 4*4)
 						break;
 				}
+				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 		}
 
@@ -581,6 +601,7 @@ bool Parameter::SetValue1i(int nX)
 	if (m_nType != Parameters::Integer)
 		return false; // Error!
 	*static_cast<int*>(m_pValue) = nX;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -605,6 +626,7 @@ bool Parameter::SetValue2i(int nX, int nY)
 		return false; // Error!
 	static_cast<int*>(m_pValue)[0] = nX;
 	static_cast<int*>(m_pValue)[1] = nY;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -614,6 +636,7 @@ bool Parameter::SetValue2iv(const int nValue[])
 		return false; // Error!
 	static_cast<int*>(m_pValue)[0] = nValue[0];
 	static_cast<int*>(m_pValue)[1] = nValue[1];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -640,6 +663,7 @@ bool Parameter::SetValue3i(int nX, int nY, int nZ)
 	static_cast<int*>(m_pValue)[0] = nX;
 	static_cast<int*>(m_pValue)[1] = nY;
 	static_cast<int*>(m_pValue)[2] = nZ;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -650,6 +674,7 @@ bool Parameter::SetValue3iv(const int nValue[])
 	static_cast<int*>(m_pValue)[0] = nValue[0];
 	static_cast<int*>(m_pValue)[1] = nValue[1];
 	static_cast<int*>(m_pValue)[2] = nValue[2];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -678,6 +703,7 @@ bool Parameter::SetValue4i(int nX, int nY, int nZ, int nW)
 	static_cast<int*>(m_pValue)[1] = nY;
 	static_cast<int*>(m_pValue)[2] = nZ;
 	static_cast<int*>(m_pValue)[3] = nW;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -689,6 +715,7 @@ bool Parameter::SetValue4iv(const int nValue[])
 	static_cast<int*>(m_pValue)[1] = nValue[1];
 	static_cast<int*>(m_pValue)[2] = nValue[2];
 	static_cast<int*>(m_pValue)[3] = nValue[3];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -712,6 +739,7 @@ bool Parameter::SetValue1f(float fX)
 	if (m_nType != Parameters::Float)
 		return false; // Error!
 	*static_cast<float*>(m_pValue) = fX;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -736,6 +764,7 @@ bool Parameter::SetValue2f(float fX, float fY)
 		return false; // Error!
 	static_cast<float*>(m_pValue)[0] = fX;
 	static_cast<float*>(m_pValue)[1] = fY;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -745,6 +774,7 @@ bool Parameter::SetValue2fv(const float fValue[])
 		return false; // Error!
 	static_cast<float*>(m_pValue)[0] = fValue[0];
 	static_cast<float*>(m_pValue)[1] = fValue[1];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -771,6 +801,7 @@ bool Parameter::SetValue3f(float fX, float fY, float fZ)
 	static_cast<float*>(m_pValue)[0] = fX;
 	static_cast<float*>(m_pValue)[1] = fY;
 	static_cast<float*>(m_pValue)[2] = fZ;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -781,6 +812,7 @@ bool Parameter::SetValue3fv(const float fValue[])
 	static_cast<float*>(m_pValue)[0] = fValue[0];
 	static_cast<float*>(m_pValue)[1] = fValue[1];
 	static_cast<float*>(m_pValue)[2] = fValue[2];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -809,6 +841,7 @@ bool Parameter::SetValue4f(float fX, float fY, float fZ, float fW)
 	static_cast<float*>(m_pValue)[1] = fY;
 	static_cast<float*>(m_pValue)[2] = fZ;
 	static_cast<float*>(m_pValue)[3] = fW;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -820,6 +853,7 @@ bool Parameter::SetValue4fv(const float fValue[])
 	static_cast<float*>(m_pValue)[1] = fValue[1];
 	static_cast<float*>(m_pValue)[2] = fValue[2];
 	static_cast<float*>(m_pValue)[3] = fValue[3];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -838,6 +872,7 @@ bool Parameter::SetValue1d(double fX)
 	if (m_nType != Parameters::Double)
 		return false; // Error!
 	*static_cast<double*>(m_pValue) = fX;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -862,6 +897,7 @@ bool Parameter::SetValue2d(double fX, double fY)
 		return false; // Error!
 	static_cast<double*>(m_pValue)[0] = fX;
 	static_cast<double*>(m_pValue)[1] = fY;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -871,6 +907,7 @@ bool Parameter::SetValue2dv(const double fValue[])
 		return false; // Error!
 	static_cast<double*>(m_pValue)[0] = fValue[0];
 	static_cast<double*>(m_pValue)[1] = fValue[1];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -897,6 +934,7 @@ bool Parameter::SetValue3d(double fX, double fY, double fZ)
 	static_cast<double*>(m_pValue)[0] = fX;
 	static_cast<double*>(m_pValue)[1] = fY;
 	static_cast<double*>(m_pValue)[2] = fZ;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -907,6 +945,7 @@ bool Parameter::SetValue3dv(const double fValue[])
 	static_cast<double*>(m_pValue)[0] = fValue[0];
 	static_cast<double*>(m_pValue)[1] = fValue[1];
 	static_cast<double*>(m_pValue)[2] = fValue[2];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -935,6 +974,7 @@ bool Parameter::SetValue4d(double fX, double fY, double fZ, double fW)
 	static_cast<double*>(m_pValue)[1] = fY;
 	static_cast<double*>(m_pValue)[2] = fZ;
 	static_cast<double*>(m_pValue)[3] = fW;
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -946,6 +986,7 @@ bool Parameter::SetValue4dv(const double fValue[])
 	static_cast<double*>(m_pValue)[1] = fValue[1];
 	static_cast<double*>(m_pValue)[2] = fValue[2];
 	static_cast<double*>(m_pValue)[3] = fValue[3];
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -961,6 +1002,7 @@ bool Parameter::SetValueFloat3x3(const float fValue[])
 	if (m_nType != Parameters::Float3x3)
 		return false; // Error!
 	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*3*3);
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -976,6 +1018,7 @@ bool Parameter::SetValueFloat3x4(const float fValue[])
 	if (m_nType != Parameters::Float3x4)
 		return false; // Error!
 	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*3*4);
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -991,6 +1034,7 @@ bool Parameter::SetValueMatrixfv(const float fValue[])
 	if (m_nType != Parameters::Float4x4)
 		return false; // Error!
 	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*4*4);
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -1006,6 +1050,7 @@ bool Parameter::SetValueMatrixdv(const double fValue[])
 	if (m_nType != Parameters::Double4x4)
 		return false; // Error!
 	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(double)*4*4);
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -1026,6 +1071,7 @@ bool Parameter::SetValueTexture(Texture *pTexture)
 	if (m_nType != Parameters::TextureBuffer)
 		return false; // Error!
 	static_cast<TextureHandler*>(m_pValue)->SetResource(pTexture);
+	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
 
@@ -1036,9 +1082,11 @@ bool Parameter::SetValueTexture(const PLGeneral::String &sFilename)
 	TextureHandler *pTextureHandler = static_cast<TextureHandler*>(m_pValue);
 	if (!pTextureHandler->GetResource() || pTextureHandler->GetResource()->GetFilename() != sFilename) {
 		pTextureHandler->Load(m_pManager->GetRendererContext().GetTextureManager(), sFilename);
-		return pTextureHandler->GetResource() != nullptr; // Done
+		m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
+		return (pTextureHandler->GetResource() != nullptr); // Done
 	} else {
 		// Done
+		m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 		return true;
 	}
 }
@@ -1063,66 +1111,100 @@ Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, co
 
 		case Parameters::Integer:
 			m_pValue = new int;
+			*static_cast<int*>(m_pValue) = 0;
 			break;
 
 		case Parameters::Integer2:
 			m_pValue = new int[2];
+			static_cast<int*>(m_pValue)[0] = 0;
+			static_cast<int*>(m_pValue)[1] = 0;
 			break;
 
 		case Parameters::Integer3:
 			m_pValue = new int[3];
+			static_cast<int*>(m_pValue)[0] = 0;
+			static_cast<int*>(m_pValue)[1] = 0;
+			static_cast<int*>(m_pValue)[3] = 0;
 			break;
 
 		case Parameters::Integer4:
 			m_pValue = new int[4];
+			static_cast<int*>(m_pValue)[0] = 0;
+			static_cast<int*>(m_pValue)[1] = 0;
+			static_cast<int*>(m_pValue)[2] = 0;
+			static_cast<int*>(m_pValue)[3] = 0;
 			break;
 
 		case Parameters::Float:
 			m_pValue = new float;
+			*static_cast<float*>(m_pValue) = 0.0f;
 			break;
 
 		case Parameters::Float2:
 			m_pValue = new float[2];
+			static_cast<float*>(m_pValue)[0] = 0.0f;
+			static_cast<float*>(m_pValue)[1] = 0.0f;
 			break;
 
 		case Parameters::Float3:
 			m_pValue = new float[3];
+			static_cast<float*>(m_pValue)[0] = 0.0f;
+			static_cast<float*>(m_pValue)[1] = 0.0f;
+			static_cast<float*>(m_pValue)[2] = 0.0f;
 			break;
 
 		case Parameters::Float4:
 			m_pValue = new float[4];
+			static_cast<float*>(m_pValue)[0] = 0.0f;
+			static_cast<float*>(m_pValue)[1] = 0.0f;
+			static_cast<float*>(m_pValue)[2] = 0.0f;
+			static_cast<float*>(m_pValue)[3] = 0.0f;
 			break;
 
 		case Parameters::Double:
 			m_pValue = new double;
+			*static_cast<double*>(m_pValue) = 0.0;
 			break;
 
 		case Parameters::Double2:
 			m_pValue = new double[2];
+			static_cast<double*>(m_pValue)[0] = 0.0;
+			static_cast<double*>(m_pValue)[1] = 0.0;
 			break;
 
 		case Parameters::Double3:
 			m_pValue = new double[3];
+			static_cast<double*>(m_pValue)[0] = 0.0;
+			static_cast<double*>(m_pValue)[1] = 0.0;
+			static_cast<double*>(m_pValue)[2] = 0.0;
 			break;
 
 		case Parameters::Double4:
 			m_pValue = new double[4];
+			static_cast<double*>(m_pValue)[0] = 0.0;
+			static_cast<double*>(m_pValue)[1] = 0.0;
+			static_cast<double*>(m_pValue)[2] = 0.0;
+			static_cast<double*>(m_pValue)[3] = 0.0;
 			break;
 
 		case Parameters::Float3x3:
 			m_pValue = new float[3*3];
+			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(float)*3*3);
 			break;
 
 		case Parameters::Float3x4:
 			m_pValue = new float[3*4];
+			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(float)*3*4);
 			break;
 
 		case Parameters::Float4x4:
 			m_pValue = new float[4*4];
+			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(float)*4*4);
 			break;
 
 		case Parameters::Double4x4:
 			m_pValue = new double[4*4];
+			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(double)*4*4);
 			break;
 
 		case Parameters::TextureBuffer:
@@ -1133,6 +1215,9 @@ Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, co
 			m_pValue = nullptr;
 			break;
 	}
+
+	// A new parameter was added - inform the parameter manager about the change
+	m_pManager->OnParameterChange(*this);
 }
 
 /**
@@ -1141,6 +1226,10 @@ Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, co
 */
 Parameter::~Parameter()
 {
+	// The parameter is in the process of getting killed - inform the parameter manager about the change
+	m_pManager->OnParameterChange(*this);
+
+	// Cleanup
 	if (m_pValue) {
 		// Cast pointer if required (MUST be one of this types!)
 		switch (m_nType) {

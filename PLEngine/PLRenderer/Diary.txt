@@ -1,3 +1,10 @@
+>> 08.04.2011
+[CO]
+- "Parameter::Parameter()" sets the value by default to zero
+- Added "ParameterManager::OnParameterChange()" which is called when a parameter has been changed (created, destroyed, value changed)
+
+
+
 >> 01.04.2011
 [CO]
 - Ok, I have enough of this GLSL precision qualifiers issues on NVIDIA systems... now I've receive a "error C1101: ambiguous overloaded function reference

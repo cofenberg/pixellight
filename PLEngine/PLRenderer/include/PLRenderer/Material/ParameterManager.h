@@ -68,6 +68,7 @@ class ParameterManager : public Parameters {
 	//[-------------------------------------------------------]
 	friend class Effect;
 	friend class Material;
+	friend class Parameter;
 
 
 	//[-------------------------------------------------------]
@@ -193,7 +194,7 @@ class ParameterManager : public Parameters {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ParameterManager functions             ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -204,6 +205,18 @@ class ParameterManager : public Parameters {
 		*    'true' if all went fine, else 'false'
 		*/
 		PLRENDERER_API virtual bool ReloadTextures() const;
+
+		/**
+		*  @brief
+		*    Called when a parameter has been changed (created, destroyed, value changed)
+		*
+		*  @param[in] cParameter
+		*    Changed parameter
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLRENDERER_API virtual void OnParameterChange(Parameter &cParameter) const;
 
 
 	//[-------------------------------------------------------]

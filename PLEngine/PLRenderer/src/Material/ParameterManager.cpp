@@ -249,7 +249,7 @@ ParameterManager::~ParameterManager()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ParameterManager functions             ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -291,6 +291,14 @@ bool ParameterManager::ReloadTextures() const
 
 	// Done
 	return bResult;
+}
+
+/**
+*  @brief
+*    Called when a parameter has been changed (created, destroyed, value changed)
+*/
+void ParameterManager::OnParameterChange(Parameter &cParameter) const
+{
 }
 
 
