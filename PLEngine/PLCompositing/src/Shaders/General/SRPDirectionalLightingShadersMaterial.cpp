@@ -109,13 +109,14 @@ const String SRPDirectionalLightingShadersMaterial::DOFParams						= "DOFParams"
 *    Default constructor
 */
 SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(RenderStates &cRenderStates, Material &cMaterial, ProgramGenerator &cProgramGenerator) :
+	EventHandlerParameterChanged(&SRPDirectionalLightingShadersMaterial::NotifyParameterChanged, this),
 	// General
 	m_pRenderStates(&cRenderStates),
 	m_pMaterial(&cMaterial),
 	m_pProgramGenerator(&cProgramGenerator),
 	m_nRendererFlags(0),
 	m_nEnvironmentFlags(0),
-	m_bSynchronized(false),	// [TODO] Invalidate if materal has been changed!
+	m_bSynchronized(false),
 	// Synchronized data
 		// Glow
 	m_fGlow(0.0f),
@@ -171,6 +172,8 @@ SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(Ren
 		// Edge ramp map
 	m_pEdgeRampMap(nullptr)
 {
+	// Connect event handler
+	m_pMaterial->EventParameterChanged.Connect(&EventHandlerParameterChanged);
 }
 
 /**
@@ -191,8 +194,7 @@ SRPDirectionalLightingShadersMaterial::GeneratedProgramUserData *SRPDirectionalL
 	Renderer &cRenderer = m_pProgramGenerator->GetRenderer();
 
 	// Synchronize this material cache with the owner
-	// [TODO] Only synchronize if required!
-//	if (m_nRendererFlags != nRendererFlags || m_nEnvironmentFlags != nEnvironmentFlags || !m_bSynchronized)
+	if (m_nRendererFlags != nRendererFlags || m_nEnvironmentFlags != nEnvironmentFlags || !m_bSynchronized)
 		Synchronize(nRendererFlags, nEnvironmentFlags);
 
 	// Get a program instance from the program generator using the given program flags
@@ -941,6 +943,16 @@ void SRPDirectionalLightingShadersMaterial::SetupTextureFiltering(Renderer &cRen
 		cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
 		cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
 	}
+}
+
+/**
+*  @brief
+*    Called when a parameter has been changed (created, destroyed, value changed)
+*/
+void SRPDirectionalLightingShadersMaterial::NotifyParameterChanged(Parameter &cParameter)
+{
+	// The this cached material is now dirty!
+	m_bSynchronized = false;
 }
 
 

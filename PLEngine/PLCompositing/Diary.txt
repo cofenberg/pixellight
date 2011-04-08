@@ -2,6 +2,8 @@
 [CO]
 - Added "SRPDeferredVolumetricFog" which is a special version of "SRPVolumetricFog" for deferred rendering -> "SRPDeferredVolumetricFog" comes with
   better performance because it's entirely image space based and not rendering geometries over again.
+- "SRPLightingMaterial" & "SRPDirectionalLightingShadersMaterial" & "SRPDeferredGBufferMaterial" are now using the new 
+  "PLRenderer::Material::EventParameterChanged"-event to make the cached material "dirty"
 
 
 

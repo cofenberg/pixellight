@@ -107,12 +107,13 @@ const String SRPLightingMaterial::LightColor					= "LightColor";
 *    Default constructor
 */
 SRPLightingMaterial::SRPLightingMaterial(Material &cMaterial, ProgramGenerator &cProgramGenerator) :
+	EventHandlerParameterChanged(&SRPLightingMaterial::NotifyParameterChanged, this),
 	// General
 	m_pMaterial(&cMaterial),
 	m_pProgramGenerator(&cProgramGenerator),
 	m_nRendererFlags(0),
 	m_nEnvironmentFlags(0),
-	m_bSynchronized(false),	// [TODO] Invalidate if materal has been changed!
+	m_bSynchronized(false),
 	// Synchronized data
 		// Two sided
 	m_bTwoSided(false),
@@ -153,6 +154,8 @@ SRPLightingMaterial::SRPLightingMaterial(Material &cMaterial, ProgramGenerator &
 		// Edge ramp map
 	m_pEdgeRampMap(nullptr)
 {
+	// Connect event handler
+	m_pMaterial->EventParameterChanged.Connect(&EventHandlerParameterChanged);
 }
 
 /**
@@ -173,8 +176,7 @@ SRPLightingMaterial::GeneratedProgramUserData *SRPLightingMaterial::MakeMaterial
 	Renderer &cRenderer = m_pProgramGenerator->GetRenderer();
 
 	// Synchronize this material cache with the owner
-	// [TODO] Only synchronize if required!
-//	if (m_nRendererFlags != nRendererFlags || m_nEnvironmentFlags != nEnvironmentFlags || !m_bSynchronized)
+	if (m_nRendererFlags != nRendererFlags || m_nEnvironmentFlags != nEnvironmentFlags || !m_bSynchronized)
 		Synchronize(nRendererFlags, nEnvironmentFlags);
 
 	// Get a program instance from the program generator using the given program flags
@@ -762,6 +764,16 @@ void SRPLightingMaterial::SetupTextureFiltering(Renderer &cRenderer, uint32 nSta
 		cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
 		cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
 	}
+}
+
+/**
+*  @brief
+*    Called when a parameter has been changed (created, destroyed, value changed)
+*/
+void SRPLightingMaterial::NotifyParameterChanged(Parameter &cParameter)
+{
+	// The this cached material is now dirty!
+	m_bSynchronized = false;
 }
 
 

@@ -245,9 +245,13 @@ bool Material::AddMaterial(Material &cMaterial)
 {
 	MaterialHandler *pMaterialHandler = new MaterialHandler();
 	pMaterialHandler->SetResource(&cMaterial);
-	if (m_lstMaterials.Add(pMaterialHandler))
-		return true; // Done
-	else {
+	if (m_lstMaterials.Add(pMaterialHandler)) {
+		// Connect event handler
+		cMaterial.EventParameterChanged.Connect(&EventHandlerParameterChanged);
+
+		// Done
+		return true;
+	} else {
 		// Cleanup
 		delete pMaterialHandler;
 
@@ -272,8 +276,15 @@ Material *Material::GetMaterial(uint32 nIndex) const
 */
 bool Material::RemoveMaterial(uint32 nIndex)
 {
+	// Get the material handler
 	MaterialHandler *pMaterialHandler = m_lstMaterials.Get(nIndex);
 	if (pMaterialHandler) {
+		// Disconnect event handler
+		Material *pMaterial = pMaterialHandler->GetResource();
+		if (pMaterial)
+			pMaterial->EventParameterChanged.Disconnect(&EventHandlerParameterChanged);
+
+		// Remove the material from the list
 		m_lstMaterials.RemoveAtIndex(nIndex);
 		delete pMaterialHandler;
 
@@ -291,8 +302,20 @@ bool Material::RemoveMaterial(uint32 nIndex)
 */
 bool Material::RemoveAllMaterials()
 {
-	for (uint32 i=0; i<m_lstMaterials.GetNumOfElements(); i++)
-		delete m_lstMaterials.Get(i);
+	// Loop through all material handlers
+	for (uint32 i=0; i<m_lstMaterials.GetNumOfElements(); i++) {
+		// Get the material handler
+		MaterialHandler *pMaterialHandler = m_lstMaterials.Get(i);
+		if (pMaterialHandler) {
+			// Disconnect event handler
+			Material *pMaterial = pMaterialHandler->GetResource();
+			if (pMaterial)
+				pMaterial->EventParameterChanged.Disconnect(&EventHandlerParameterChanged);
+
+			// Destroy the material handler
+			delete pMaterialHandler;
+		}
+	}
 	m_lstMaterials.Clear();
 
 	// Done
@@ -379,9 +402,22 @@ bool Material::SetupPass(uint32 nIndex) const
 *    Constructor
 */
 Material::Material(MaterialManager &cManager, const String &sName) : PLCore::Resource<Material>(sName, &cManager),
+	EventHandlerParameterChanged(&Material::NotifyParameterChanged, this),
 	m_pParameterManager(new ParameterManager(cManager.GetRendererContext())),
 	m_pFXHandler(nullptr)
 {
+	// Connect event handler
+	m_pParameterManager->EventParameterChanged.Connect(&EventHandlerParameterChanged);
+}
+
+/**
+*  @brief
+*    Called when a parameter has been changed (created, destroyed, value changed)
+*/
+void Material::NotifyParameterChanged(Parameter &cParameter)
+{
+	// Emit event (=> pass on the event)
+	EventParameterChanged.Emit(cParameter);
 }
 
 

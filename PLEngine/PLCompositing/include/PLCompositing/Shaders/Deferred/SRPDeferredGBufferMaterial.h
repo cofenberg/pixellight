@@ -40,6 +40,7 @@
 namespace PLRenderer {
 	class Material;
 	class Renderer;
+	class Parameter;
 	class TextureBuffer;
 	class ProgramUniform;
 	class ProgramAttribute;
@@ -309,6 +310,22 @@ class SRPDeferredGBufferMaterial {
 		*    Texture filtering
 		*/
 		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage, ETextureFiltering nTextureFiltering) const;
+
+		/**
+		*  @brief
+		*    Called when a parameter has been changed (created, destroyed, value changed)
+		*
+		*  @param[in] cParameter
+		*    The changed parameter
+		*/
+		void NotifyParameterChanged(PLRenderer::Parameter &cParameter);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Parameter&> EventHandlerParameterChanged;
 
 
 	//[-------------------------------------------------------]

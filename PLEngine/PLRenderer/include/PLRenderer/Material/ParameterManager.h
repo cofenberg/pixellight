@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/Event.h>
 #include "PLRenderer/Renderer/Parameters.h"
 
 
@@ -69,6 +70,13 @@ class ParameterManager : public Parameters {
 	friend class Effect;
 	friend class Material;
 	friend class Parameter;
+
+
+	//[-------------------------------------------------------]
+	//[ Events                                                ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<Parameter&> EventParameterChanged;	/**< Parameter changed (created, destroyed, value changed) event, changed parameter as parameter */
 
 
 	//[-------------------------------------------------------]
@@ -214,7 +222,7 @@ class ParameterManager : public Parameters {
 		*    Changed parameter
 		*
 		*  @note
-		*    - The default implementation is empty
+		*    - The default implementation just emits the "EventParameterChanged"-event
 		*/
 		PLRENDERER_API virtual void OnParameterChange(Parameter &cParameter) const;
 

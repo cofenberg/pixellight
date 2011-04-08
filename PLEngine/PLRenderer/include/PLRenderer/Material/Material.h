@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Resource.h>
+#include <PLCore/Base/Event/Event.h>
 #include <PLMath/Vector3.h>
 #include "PLRenderer/PLRenderer.h"
 
@@ -93,6 +94,13 @@ class Material : public PLCore::Resource<Material> {
 		PLRENDERER_API static const PLGeneral::String NormalMap;			/**< 'NormalMap' string */
 		PLRENDERER_API static const PLGeneral::String SpecularMap;			/**< 'SpecularMap' string */
 		PLRENDERER_API static const PLGeneral::String HeightMap;			/**< 'HeightMap' string (other usual name: 'bump map') */
+
+
+	//[-------------------------------------------------------]
+	//[ Events                                                ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<Parameter&> EventParameterChanged;	/**< Parameter changed (created, destroyed, value changed) event, changed parameter as parameter */
 
 
 	//[-------------------------------------------------------]
@@ -308,6 +316,22 @@ class Material : public PLCore::Resource<Material> {
 		*    Resource name to set
 		*/
 		Material(MaterialManager &cManager, const PLGeneral::String &sName);
+
+		/**
+		*  @brief
+		*    Called when a parameter has been changed (created, destroyed, value changed)
+		*
+		*  @param[in] cParameter
+		*    The changed parameter
+		*/
+		void NotifyParameterChanged(Parameter &cParameter);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<Parameter&> EventHandlerParameterChanged;
 
 
 	//[-------------------------------------------------------]

@@ -110,11 +110,12 @@ const String SRPDeferredGBufferMaterial::ViewSpaceToWorldSpace		= "ViewSpaceToWo
 *    Default constructor
 */
 SRPDeferredGBufferMaterial::SRPDeferredGBufferMaterial(Material &cMaterial, ProgramGenerator &cProgramGenerator) :
+	EventHandlerParameterChanged(&SRPDeferredGBufferMaterial::NotifyParameterChanged, this),
 	// General
 	m_pMaterial(&cMaterial),
 	m_pProgramGenerator(&cProgramGenerator),
 	m_nRendererFlags(0),
-	m_bSynchronized(false),	// [TODO] Invalidate if materal has been changed!
+	m_bSynchronized(false),
 	// Synchronized data
 		// Two sided
 	m_bTwoSided(false),
@@ -170,6 +171,8 @@ SRPDeferredGBufferMaterial::SRPDeferredGBufferMaterial(Material &cMaterial, Prog
 	m_cEmissiveMapColor(Color3::White),
 	m_pEmissiveMap(nullptr)
 {
+	// Connect event handler
+	m_pMaterial->EventParameterChanged.Connect(&EventHandlerParameterChanged);
 }
 
 /**
@@ -189,9 +192,8 @@ SRPDeferredGBufferMaterial::GeneratedProgramUserData *SRPDeferredGBufferMaterial
 	// Get the used renderer
 	Renderer &cRenderer = m_pProgramGenerator->GetRenderer();
 
-	// [TODO] Do this only when there's a change within the material!
 	// Synchronize this material cache with the owner
-//	if (m_nRendererFlags != nRendererFlags || !m_bSynchronized)
+	if (m_nRendererFlags != nRendererFlags || !m_bSynchronized)
 		Synchronize(nRendererFlags);
 
 	// Get a program instance from the program generator using the given program flags
@@ -836,6 +838,16 @@ void SRPDeferredGBufferMaterial::SetupTextureFiltering(Renderer &cRenderer, uint
 		cRenderer.SetSamplerState(nStage, Sampler::MinFilter, TextureFiltering::None);
 		cRenderer.SetSamplerState(nStage, Sampler::MipFilter, TextureFiltering::None);
 	}
+}
+
+/**
+*  @brief
+*    Called when a parameter has been changed (created, destroyed, value changed)
+*/
+void SRPDeferredGBufferMaterial::NotifyParameterChanged(Parameter &cParameter)
+{
+	// The this cached material is now dirty!
+	m_bSynchronized = false;
 }
 
 

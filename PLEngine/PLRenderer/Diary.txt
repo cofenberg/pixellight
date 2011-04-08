@@ -2,6 +2,8 @@
 [CO]
 - "Parameter::Parameter()" sets the value by default to zero
 - Added "ParameterManager::OnParameterChange()" which is called when a parameter has been changed (created, destroyed, value changed)
+- Added "ParameterManager::EventParameterChanged"-event which is called when a parameter has been changed (created, destroyed, value changed)
+- Added "Material::EventParameterChanged"-event which is called when a parameter has been changed (created, destroyed, value changed)
 
 
 

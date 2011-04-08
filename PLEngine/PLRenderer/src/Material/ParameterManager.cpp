@@ -299,6 +299,8 @@ bool ParameterManager::ReloadTextures() const
 */
 void ParameterManager::OnParameterChange(Parameter &cParameter) const
 {
+	// Emit event
+	EventParameterChanged.Emit(cParameter);
 }
 
 
