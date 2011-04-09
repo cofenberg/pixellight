@@ -178,6 +178,18 @@ class Program : public Resource {
 		*  @return
 		*    The compiled program
 		*
+		*  @remarks
+		*  @verbatim
+		*    Usage example writing the compiled program into a text file:
+		*
+		*    PLGeneral::File cFile("d:\\CompiledProgram.txt");
+		*    if (cFile.Open(PLGeneral::File::FileCreate|PLGeneral::File::FileWrite)) {
+		*        const PLGeneral::String sProgram = pMyProgram->GetCompiledProgram();
+		*        cFile.Write(sProgram.GetASCII(), sProgram.GetLength(), 1);
+		*        cFile.Close();
+		*    }
+		*  @endverbatim
+		*
 		*  @note
 		*    - The compiled program depends on the used shader language, it's also possible
 		*      that an implementation is not able to return a compiled program
