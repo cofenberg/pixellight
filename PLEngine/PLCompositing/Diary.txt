@@ -1,3 +1,10 @@
+>> 10.04.2011
+[CO]
+- There were some OpenGL GLSL issues when using GLSL 1.30... there are still old GPU drivers out there, and sometimes (e.g. some Notebooks!) it's not
+  that trivial to update the GPU driver... so I now try to use the lowest possible GLSL version... started to update the GLSL shader source codes...
+
+
+
 >> 08.04.2011
 [CO]
 - Added "SRPDeferredVolumetricFog" which is a special version of "SRPVolumetricFog" for deferred rendering -> "SRPDeferredVolumetricFog" comes with

@@ -239,7 +239,7 @@ void SRPDeferredVolumetricFog::RendererSetup(Renderer &cRenderer, SRPDeferredGBu
 						// Choose the shader source codes depending on the requested shader language
 						if (sShaderLanguage == "GLSL") {
 							#include "SRPDeferredVolumetricFog_GLSL.h"
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredVolumetricFog_GLSL_VS, "130", sDeferredVolumetricFog_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredVolumetricFog_GLSL_VS, "110", sDeferredVolumetricFog_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
 						} else if (sShaderLanguage == "Cg") {
 							#include "SRPDeferredVolumetricFog_Cg.h"
 							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredVolumetricFog_Cg_VS, "arbvp1", sDeferredVolumetricFog_Cg_FS, "arbfp1");

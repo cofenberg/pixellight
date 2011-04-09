@@ -20,12 +20,12 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.1 ("#version 120") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredEdgeAA_GLSL_VS = "\
 // Attributes\n\
-in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform ivec2 TextureSize;	// Texture size in texel\n\
@@ -34,20 +34,20 @@ uniform ivec2 TextureSize;	// Texture size in texel\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
+	VertexTexCoordVS = VertexPosition.zw*vec2(TextureSize);\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.1 ("#version 120") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredEdgeAA_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform float	MinGradient;			// Minumum gradient\n\
@@ -60,27 +60,27 @@ uniform sampler2DRect NormalDepthMap;	// Normal depth texture\n\
 \n\
 // Neighbor offset table\n\
 const vec2 Offsets[9] = vec2[9](\n\
-	vec2( 0,  0), // Center       0\n\
-	vec2(-1, -1), // Top left     1\n\
-	vec2( 0, -1), // Top          2\n\
-	vec2( 1, -1), // Top right    3\n\
-	vec2( 1,  0), // Right        4\n\
-	vec2( 1,  1), // Bottom right 5\n\
-	vec2( 0,  1), // Bottom       6\n\
-	vec2(-1,  1), // Bottom left  7\n\
-	vec2(-1,  0)  // Left         8\n\
+	vec2( 0.0,  0.0), // Center       0\n\
+	vec2(-1.0, -1.0), // Top left     1\n\
+	vec2( 0.0, -1.0), // Top          2\n\
+	vec2( 1.0, -1.0), // Top right    3\n\
+	vec2( 1.0,  0.0), // Right        4\n\
+	vec2( 1.0,  1.0), // Bottom right 5\n\
+	vec2( 0.0,  1.0), // Bottom       6\n\
+	vec2(-1.0,  1.0), // Bottom left  7\n\
+	vec2(-1.0,  0.0)  // Left         8\n\
 );\n\
 \n\
 // Programs\n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
 vec3 decodeNormalVector(vec2 normal)\n\
 {\n\
-	vec2 fenc = normal*4 - 2;\n\
+	vec2 fenc = normal*4.0 - 2.0;\n\
 	float f = dot(fenc, fenc);\n\
-	float g = sqrt(1 - f/4);\n\
+	float g = sqrt(1.0 - f/4.0);\n\
 	vec3 n;\n\
 	n.xy = fenc*g;\n\
-	n.z = 1 - f/2;\n\
+	n.z = 1.0 - f/2.0;\n\
 	return n;\n\
 }\n\
 \n\
@@ -124,7 +124,7 @@ void main()\n\
 	// minimum gradient. It is not resolution dependent. The constant\n\
 	// number here would change based on how the depth values are stored\n\
 	// and how sensitive the edge detection should be.\n\
-	vec4 depthResults = step(minDeltas*25.0f, maxDeltas);\n\
+	vec4 depthResults = step(minDeltas*25.0, maxDeltas);\n\
 \n\
 	// Compute change in the cosine of the angle between normals\n\
 	deltas1.x = dot(normal[1], normal[0]);\n\
@@ -142,13 +142,13 @@ void main()\n\
 	// linear function of the angle, so to have the flagging be\n\
 	// independent of the angles involved, an arccos function would be\n\
 	// required.\n\
-	vec4 normalResults = step(0.4f, deltas1);\n\
+	vec4 normalResults = step(0.4, deltas1);\n\
 	normalResults = max(normalResults, depthResults);\n\
-	float w = (normalResults.x + normalResults.y + normalResults.z + normalResults.w)*0.25f; // 0=no aa, 1=full aa\n\
-	if (w <= 0) {\n\
+	float w = (normalResults.x + normalResults.y + normalResults.z + normalResults.w)*0.25; // 0=no aa, 1=full aa\n\
+	if (w <= 0.0) {\n\
 		// Early escape: No anti-aliasing required\n\
 		#ifdef FS_SHOW_EDGESONLY\n\
-			gl_FragColor = 0;\n\
+			gl_FragColor = 0.0;\n\
 		#else\n\
 			gl_FragColor = texture2DRect(FrontMap, VertexTexCoordVS);\n\
 		#endif\n\
@@ -160,20 +160,20 @@ void main()\n\
 \n\
 	// Perform anti-aliasing\n\
 	#ifdef FS_SHOW_EDGES\n\
-		gl_FragColor = vec4(EdgeColor, 1);\n\
+		gl_FragColor = vec4(EdgeColor, 1.0);\n\
 	#else\n\
 		// Smoothed color\n\
 		#ifdef FS_MORE_SAMPLES\n\
-			gl_FragColor = 0;\n\
+			gl_FragColor = 0.0;\n\
 			for (int i=0; i<9; i++)\n\
 				gl_FragColor += texture2DRect(FrontMap, VertexTexCoordVS + Offsets[i]*w);\n\
-			gl_FragColor /= 9;\n\
+			gl_FragColor /= 9.0;\n\
 		#else\n\
 			vec4 s0 = texture2DRect(FrontMap, VertexTexCoordVS + Offsets[2]*w);\n\
 			vec4 s1 = texture2DRect(FrontMap, VertexTexCoordVS + Offsets[4]*w);\n\
 			vec4 s2 = texture2DRect(FrontMap, VertexTexCoordVS + Offsets[6]*w);\n\
 			vec4 s3 = texture2DRect(FrontMap, VertexTexCoordVS + Offsets[8]*w);\n\
-			gl_FragColor = (s0 + s1 + s2 + s3)/4.0f;\n\
+			gl_FragColor = (s0 + s1 + s2 + s3)/4.0;\n\
 		#endif\n\
 	#endif\n\
 }";

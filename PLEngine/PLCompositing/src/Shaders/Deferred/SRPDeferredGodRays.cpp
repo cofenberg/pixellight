@@ -118,7 +118,7 @@ void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							// Choose the shader source codes depending on the requested shader language
 							if (sShaderLanguage == "GLSL") {
 								#include "SRPDeferredGodRays_GLSL.h"
-								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_GLSL_VS, "130", sDeferredGodRays_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_GLSL_VS, "110", sDeferredGodRays_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
 							} else if (sShaderLanguage == "Cg") {
 								#include "SRPDeferredGodRays_Cg.h"
 								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGodRays_Cg_VS, "glslv", sDeferredGodRays_Cg_FS, "glslf");

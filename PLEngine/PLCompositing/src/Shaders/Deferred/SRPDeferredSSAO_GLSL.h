@@ -23,13 +23,13 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sDeferredSSAO_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
+#version 110	// OpenGL 2.0\n\
 \n\
 // Attributes\n\
-in vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-							// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+									// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
 uniform ivec2 TextureSize;		// Texture size in texel\n\
@@ -39,25 +39,25 @@ uniform ivec2 InputTextureSize;	// Input size in texel\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS.xy = VertexPosition.zw*TextureSize;\n\
-	VertexTexCoordVS.zw = VertexPosition.zw*InputTextureSize;\n\
+	VertexTexCoordVS.xy = VertexPosition.zw*vec2(TextureSize);\n\
+	VertexTexCoordVS.zw = VertexPosition.zw*vec2(InputTextureSize);\n\
 }";
 
 
 // GLSL vertex shader source code
 static const PLGeneral::String sDeferredSSAO_GLSL_FS = "\
 // GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
+#version 110	// OpenGL 2.0\n\
 \n\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-							// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+varying vec4 VertexTexCoordVS;	// xy = Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
+								// zw = Vertex input texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\
 // Uniforms\n\
 uniform float			BlurRadius;			// Blur radius\n\
@@ -88,11 +88,12 @@ float BlurFunction(sampler2DRect inputTexture, sampler2DRect normalDepthTexture,
 // Program entry point\n\
 void main()\n\
 {\n\
-	float b = 0.0f;\n\
-	float w_total = 0.0f;\n\
+	float b = 0.0;\n\
+	float w_total = 0.0;\n\
 	float center_c = texture2DRect(InputTexture, VertexTexCoordVS.zw).r;\n\
 	float center_d = FetchEyeZ(NormalDepthTexture, VertexTexCoordVS.xy);\n\
 	for (float r=-BlurRadius; r<=BlurRadius; r++)\n\
 		b += BlurFunction(InputTexture, NormalDepthTexture, BlurFalloff, Sharpness, VertexTexCoordVS.xy + r*UVScale, VertexTexCoordVS.zw + r*UVScale, r, center_c, center_d, w_total);\n\
-	gl_FragColor = vec4(b/w_total);\n\
+	float value = b/w_total;\n\
+	gl_FragColor = vec4(value, value, value, value);\n\
 }";

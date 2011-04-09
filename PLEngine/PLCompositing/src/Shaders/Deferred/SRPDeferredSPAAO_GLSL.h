@@ -20,31 +20,31 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.1 ("#version 120") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredSPAAO_GLSL_VS = "\
 // Attributes\n\
-in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
 	VertexTexCoordVS = VertexPosition.zw;\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.1 ("#version 120") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredSPAAO_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (1,1)\n\
+varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (1,1)\n\
 \n\
 // Uniforms\n\
 uniform float			SampleRadius;		// The sampling radius\n\
@@ -61,12 +61,12 @@ uniform sampler2DRect	NormalDepthMap;		// RG=normal vector, B=linear view space 
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
 vec3 decodeNormalVector(vec2 normal)\n\
 {\n\
-	vec2 fenc = normal*4 - 2;\n\
+	vec2 fenc = normal*4.0 - 2.0;\n\
 	float f = dot(fenc, fenc);\n\
-	float g = sqrt(1 - f/4);\n\
+	float g = sqrt(1.0 - f/4.0);\n\
 	vec3 n;\n\
 	n.xy = fenc*g;\n\
-	n.z = 1 - f/2;\n\
+	n.z = 1.0 - f/2.0;\n\
 	return n;\n\
 }\n\
 \n\
@@ -74,7 +74,7 @@ vec3 decodeNormalVector(vec2 normal)\n\
 vec3 uv_to_eye(vec2 uv, float eye_z, vec2 invFocalLen)\n\
 {\n\
 	// Convert from texture space [0,1] range into [-1,1] clip space\n\
-	uv = uv*2 - 1;\n\
+	uv = uv*2.0 - 1.0;\n\
 \n\
 	// Reconstructs view-space position\n\
 	return vec3(uv * invFocalLen * eye_z, eye_z);\n\
@@ -84,7 +84,7 @@ vec3 uv_to_eye(vec2 uv, float eye_z, vec2 invFocalLen)\n\
 vec3 fetch_eye_pos(sampler2DRect texture, ivec2 textureResolution, vec2 uv, vec2 invFocalLen)\n\
 {\n\
 	// Fetch the linear view space depth at the given texel position\n\
-	float eye_z = texture2DRect(texture, uv*textureResolution).b;\n\
+	float eye_z = texture2DRect(texture, uv*vec2(textureResolution)).b;\n\
 \n\
 	// Reconstructs view-space position using given parameters\n\
 	return uv_to_eye(uv, eye_z, invFocalLen);\n\
@@ -96,7 +96,7 @@ float doAmbientOcclusion(vec2 tcoord, vec2 uv, vec3 p, vec3 cnorm)\n\
 	vec3 diff = fetch_eye_pos(NormalDepthMap, Resolution, tcoord + uv, InvFocalLen) - p;\n\
 	vec3 v = normalize(diff);\n\
 	float d = length(diff)*Scale;\n\
-	return max(0.0f, dot(cnorm, v) - Bias)*(1.0f/(1.0f + d))*Intensity;\n\
+	return max(0.0, dot(cnorm, v) - Bias)*(1.0/(1.0 + d))*Intensity;\n\
 }\n\
 \n\
 \n\
@@ -112,7 +112,7 @@ const vec2 vec[4] = vec2[4](\n\
 void main()\n\
 {\n\
 	// Fetch the required texel data\n\
-	vec4 sample = texture2DRect(NormalDepthMap, VertexTexCoordVS*Resolution);\n\
+	vec4 sample = texture2DRect(NormalDepthMap, VertexTexCoordVS*vec2(Resolution));\n\
 \n\
 	// Reconstruct view-space position\n\
 	vec3 p = uv_to_eye(VertexTexCoordVS, sample.b, InvFocalLen);\n\
@@ -122,20 +122,21 @@ void main()\n\
 	n.z = -n.z; // If this is not done, we get wrong results\n\
 \n\
 	// Locals\n\
-	vec2 rand = normalize(texture2D(RandomNormalsMap, Resolution*VertexTexCoordVS/RandomSize).xy*2.0f - 1.0f);	// Returns a random normal vector\n\
-	float ao = 0.0f;\n\
+	vec2 rand = normalize(texture2D(RandomNormalsMap, vec2(Resolution)*VertexTexCoordVS/float(RandomSize)).xy*2.0 - 1.0);	// Returns a random normal vector\n\
+	float ao = 0.0;\n\
 	float rad = SampleRadius/p.z;\n\
 \n\
 	// SSAO calculation\n\
 	int iterations = 4;\n\
 	for (int j=0; j<iterations; j++) {\n\
 		vec2 coord1 = reflect(vec[j], rand)*rad;\n\
-		vec2 coord2 = vec2(coord1.x*0.707f - coord1.y*0.707f, coord1.x*0.707f + coord1.y*0.707f);\n\
-		ao += doAmbientOcclusion(VertexTexCoordVS, coord1*0.25f, p, n);\n\
-		ao += doAmbientOcclusion(VertexTexCoordVS, coord2*0.5f,  p, n);\n\
-		ao += doAmbientOcclusion(VertexTexCoordVS, coord1*0.75f, p, n);\n\
-		ao += doAmbientOcclusion(VertexTexCoordVS, coord2,       p, n);\n\
+		vec2 coord2 = vec2(coord1.x*0.707 - coord1.y*0.707, coord1.x*0.707 + coord1.y*0.707);\n\
+		ao += doAmbientOcclusion(VertexTexCoordVS, coord1*0.25, p, n);\n\
+		ao += doAmbientOcclusion(VertexTexCoordVS, coord2*0.5,  p, n);\n\
+		ao += doAmbientOcclusion(VertexTexCoordVS, coord1*0.75, p, n);\n\
+		ao += doAmbientOcclusion(VertexTexCoordVS, coord2,      p, n);\n\
 	}\n\
-	ao /= iterations*4.0;\n\
-	gl_FragColor = vec4(1 - clamp(ao, 0.0f, 1.0f));\n\
+	ao /= float(iterations)*4.0;\n\
+	ao = 1.0 - clamp(ao, 0.0, 1.0);\n\
+	gl_FragColor = vec4(ao, ao, ao, ao);\n\
 }";

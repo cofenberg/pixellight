@@ -131,7 +131,7 @@ void SRPDeferredSPAAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVert
 		// Choose the shader source codes depending on the requested shader language
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPDeferredSPAAO_GLSL.h"
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredSPAAO_GLSL_VS, "130", sDeferredSPAAO_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredSPAAO_GLSL_VS, "120", sDeferredSPAAO_GLSL_FS, "120");	// OpenGL 2.1 ("#version 120")
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDeferredSPAAO_Cg.h"
 			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredSPAAO_Cg_VS, "glslv", sDeferredSPAAO_Cg_FS, "glslf");

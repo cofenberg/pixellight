@@ -20,12 +20,12 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredGodRays_GLSL_VS = "\
 // Attributes\n\
-in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform ivec2 TextureSize;	// Texture size in texel\n\
@@ -34,20 +34,20 @@ uniform ivec2 TextureSize;	// Texture size in texel\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
+	VertexTexCoordVS = VertexPosition.zw*vec2(TextureSize);\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredGodRays_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform int				NumberOfSamples;	// Number of samples, must be >0\n\
@@ -66,13 +66,13 @@ void main()\n\
 	vec2 deltaTexUV = texUV - LightPosition;\n\
 \n\
 	// Divide by number of samples and scale by control factor\n\
-	deltaTexUV *= 1.0f/NumberOfSamples*Density;\n\
+	deltaTexUV *= 1.0/float(NumberOfSamples)*Density;\n\
 \n\
 	// Store initial sample\n\
 	vec3 color = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
 \n\
 	// Set up illumination decay factor\n\
-	float illuminationDecay = 1;\n\
+	float illuminationDecay = 1.0;\n\
 \n\
 	// Evaluate summation\n\
 	for (int i=0; i<NumberOfSamples; i++) {\n\
@@ -97,10 +97,10 @@ void main()\n\
 \n\
 	// Use discard?\n\
 #ifdef FS_DISCARD\n\
-	if (resultingColor.r == 0 && resultingColor.g == 0 && resultingColor.b == 0)\n\
+	if (resultingColor.r == 0.0 && resultingColor.g == 0.0 && resultingColor.b == 0.0)\n\
 		discard;\n\
 #endif\n\
 \n\
 	// Set fragment color\n\
-	gl_FragColor = vec4(resultingColor, 1.0f);\n\
+	gl_FragColor = vec4(resultingColor, 1.0);\n\
 }";

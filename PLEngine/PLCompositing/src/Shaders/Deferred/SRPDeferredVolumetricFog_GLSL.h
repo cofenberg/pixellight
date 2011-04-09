@@ -20,31 +20,31 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredVolumetricFog_GLSL_VS = "\
 // Attributes\n\
-in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the vertex texture coordinate\n\
 	VertexTexCoordVS = VertexPosition.zw;\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredVolumetricFog_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (1,1)\n\
+varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader, lower/left is (0,0) and upper/right is (1,1)\n\
 \n\
 // Uniforms\n\
 uniform vec3           FogPosition;		// View space fog position\n\
@@ -59,12 +59,12 @@ uniform sampler2DRect  NormalDepthMap;	// Normal depth texture\n\
 // Decodes a 2 component normal vector to a 3 component normal vector\n\
 vec3 decodeNormalVector(vec2 normal)\n\
 {\n\
-	vec2 fenc = normal*4 - 2;\n\
+	vec2 fenc = normal*4.0 - 2.0;\n\
 	float f = dot(fenc, fenc);\n\
-	float g = sqrt(1 - f/4);\n\
+	float g = sqrt(1.0 - f/4.0);\n\
 	vec3 n;\n\
 	n.xy = fenc*g;\n\
-	n.z = 1 - f/2;\n\
+	n.z = 1.0 - f/2.0;\n\
 	return n;\n\
 }\n\
 \n\
@@ -72,7 +72,7 @@ vec3 decodeNormalVector(vec2 normal)\n\
 vec3 uv_to_eye(vec2 uv, float eye_z, vec2 invFocalLen)\n\
 {\n\
 	// Convert from texture space [0,1] range into [-1,1] clip space\n\
-	uv = uv*2 - 1;\n\
+	uv = uv*2.0 - 1.0;\n\
 \n\
 	// Reconstructs view-space position\n\
 	return vec3(uv * invFocalLen * eye_z, eye_z);\n\
@@ -82,7 +82,7 @@ vec3 uv_to_eye(vec2 uv, float eye_z, vec2 invFocalLen)\n\
 vec3 fetch_eye_pos(sampler2DRect texture, ivec2 textureResolution, vec2 uv, vec2 invFocalLen)\n\
 {\n\
 	// Fetch the linear view space depth at the given texel position\n\
-	float eye_z = texture2DRect(texture, uv*textureResolution).b;\n\
+	float eye_z = texture2DRect(texture, uv*vec2(textureResolution)).b;\n\
 \n\
 	// Reconstructs view-space position using given parameters\n\
 	return uv_to_eye(uv, eye_z, invFocalLen);\n\
@@ -98,8 +98,14 @@ void main()\n\
 	// Calculate the fog factor\n\
 	vec3 fogPosition = (FogPosition - viewSpacePos)*FogInvRadius;\n\
 	viewSpacePos = -viewSpacePos*FogInvRadius;\n\
-	float k  = clamp(dot(fogPosition, viewSpacePos)/dot(viewSpacePos, viewSpacePos), 0.0f, 1.0f);\n\
-	vec4  pl = vec4(k*viewSpacePos - fogPosition, 1.0f);\n\
-	gl_FragColor.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, 0.0f, 1.0f);\n\
-	gl_FragColor.a = 1.0f;\n\
+	float value = dot(viewSpacePos, viewSpacePos);\n\
+	if (value == 0.0)\n\
+		value = 0.000001;	// Do never ever divide through zero, this may lead to uggly blocks!\n\
+	float k  = clamp(dot(fogPosition, viewSpacePos)/value, 0.0, 1.0);\n\
+	vec4  pl = vec4(k*viewSpacePos - fogPosition, 1.0);\n\
+	value = dot(pl, pl);\n\
+	if (value == 0.0)\n\
+		value = 0.000001;	// Do never ever divide through zero, this may lead to uggly blocks!\n\
+	gl_FragColor.rgb = clamp(FogColor0/value - FogColor1, 0.0, 1.0);\n\
+	gl_FragColor.a = 1.0;\n\
 }";

@@ -523,7 +523,7 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 
 			// When using GLSL, the profile is the GLSL version to use - #version must occur before any other statement in the program!
 			if (sShaderLanguage == "GLSL")
-				sDefinition += "#version 130\n";	// OpenGL 3.0
+				sDefinition += "#version 110\n";	// OpenGL 2.0
 
 			// Get the definition
 			switch (nType) {

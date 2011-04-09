@@ -20,12 +20,12 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredDepthFog_GLSL_VS = "\
 // Attributes\n\
-in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+varying   vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 \n\
 // Uniforms\n\
 uniform ivec2 TextureSize;	// Texture size in texel\n\
@@ -34,20 +34,20 @@ uniform ivec2 TextureSize;	// Texture size in texel\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexPosition.zw*TextureSize;\n\
+	VertexTexCoordVS = VertexPosition.zw*vec2(TextureSize);\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredDepthFog_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
-in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
 uniform float FarPlane;					// Far clipping plane (never 0!)\n\
@@ -72,14 +72,14 @@ void main()\n\
 	float fogFactor = (FogEnd - depth)/FogRange;\n\
 #elif defined FS_EXPONENTIAL_MODE\n\
 	// The pow parameters are safe, so no NAN can be produced in here\n\
-	float fogFactor = 1/pow(E, depth*FogDensity);\n\
+	float fogFactor = 1.0/pow(E, depth*FogDensity);\n\
 #elif defined FS_EXPONENTIAL2_MODE\n\
 	// The pow parameters are safe, so no NAN can be produced in here\n\
-	float fogFactor = 1/pow(E, depth*depth*FogDensity*FogDensity);\n\
+	float fogFactor = 1.0/pow(E, depth*depth*FogDensity*FogDensity);\n\
 #else\n\
-	float fogFactor = 0;\n\
+	float fogFactor = 0.0;\n\
 #endif\n\
 \n\
 	// Apply the fog color\n\
-	gl_FragColor = (1 - clamp(fogFactor, 0.0f, 1.0f))*FogColor;\n\
+	gl_FragColor = (1.0 - clamp(fogFactor, 0.0, 1.0))*FogColor;\n\
 }";

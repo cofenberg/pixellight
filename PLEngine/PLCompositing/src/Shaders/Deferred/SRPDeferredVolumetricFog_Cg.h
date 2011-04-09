@@ -110,9 +110,15 @@ FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
 	// Calculate the fog factor\n\
 	float3 fogPosition = (FogPosition - viewSpacePos)*FogInvRadius;\n\
 	viewSpacePos = -viewSpacePos*FogInvRadius;\n\
-	float  k  = clamp(dot(fogPosition, viewSpacePos)/dot(viewSpacePos, viewSpacePos), 0.0f, 1.0f);\n\
+	float value = dot(viewSpacePos, viewSpacePos);\n\
+	if (value == 0.0f)\n\
+		value = 0.000001f;	// Do never ever divide through zero, this may lead to uggly blocks!\n\
+	float  k  = clamp(dot(fogPosition, viewSpacePos)/value, 0.0f, 1.0f);\n\
 	float4 pl = float4(k*viewSpacePos - fogPosition, 1.0f);\n\
-	OUT.Color0.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, 0.0f, 1.0f);\n\
+	value = dot(pl, pl);\n\
+	if (value == 0.0f)\n\
+		value = 0.000001f;	// Do never ever divide through zero, this may lead to uggly blocks!\n\
+	OUT.Color0.rgb = clamp(FogColor0/value - FogColor1, 0.0f, 1.0f);\n\
 	OUT.Color0.a = 1;\n\
 \n\
 	// Done\n\
