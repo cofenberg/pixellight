@@ -1,3 +1,9 @@
+>> 10.04.2011
+[CO]
+- Added "TextureBuffer::IsDepthFormat()" which returns whether or not a texture buffer format is a depth buffer format
+
+
+
 >> 08.04.2011
 [CO]
 - "Parameter::Parameter()" sets the value by default to zero

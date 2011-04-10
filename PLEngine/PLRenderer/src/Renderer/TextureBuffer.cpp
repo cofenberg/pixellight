@@ -175,6 +175,20 @@ bool TextureBuffer::IsCompressedFormat(EPixelFormat nFormat)
 
 /**
 *  @brief
+*    Returns whether or not the given texture buffer format is a depth buffer format
+*/
+bool TextureBuffer::IsDepthFormat(EPixelFormat nFormat)
+{
+	switch (nFormat) {
+		case D16:	return false;
+		case D24:	return false;
+		case D32:	return false;
+		default:	return false;
+	}
+}
+
+/**
+*  @brief
 *    If the given texture buffer format is compressed, a proper uncompressed texture buffer format will be returned
 */
 TextureBuffer::EPixelFormat TextureBuffer::GetUncompressedFormat(EPixelFormat nFormat)
@@ -183,11 +197,11 @@ TextureBuffer::EPixelFormat TextureBuffer::GetUncompressedFormat(EPixelFormat nF
 	if (IsCompressedFormat(nFormat)) {
 		// Return a proper uncompressed format
 		switch (nFormat) {
-			case DXT1:			return R8G8B8;
-			case DXT3:			return R8G8B8A8;
-			case DXT5:			return R8G8B8A8;
-			case LATC1:			return L8;
-			case LATC2:			return L8A8;
+			case DXT1:	return R8G8B8;
+			case DXT3:	return R8G8B8A8;
+			case DXT5:	return R8G8B8A8;
+			case LATC1:	return L8;
+			case LATC2:	return L8A8;
 		}
 	}
 
@@ -381,6 +395,15 @@ TextureBuffer::EPixelFormat TextureBuffer::GetFormat() const
 bool TextureBuffer::IsCompressedFormat() const
 {
 	return IsCompressedFormat(m_nFormat);
+}
+
+/**
+*  @brief
+*    Returns whether or not the used texture buffer format is a depth buffer format
+*/
+bool TextureBuffer::IsDepthFormat() const
+{
+	return IsDepthFormat(m_nFormat);
 }
 
 /**

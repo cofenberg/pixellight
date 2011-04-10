@@ -150,6 +150,18 @@ class TextureBuffer : public Resource {
 
 		/**
 		*  @brief
+		*    Returns whether or not the given texture buffer format is a depth buffer format
+		*
+		*  @param[in] nFormat
+		*    Texture buffer pixel format
+		*
+		*  @return
+		*    'true' if the texture buffer format is a depth buffer format, else 'false'
+		*/
+		PLRENDERER_API static bool IsDepthFormat(EPixelFormat nFormat);
+
+		/**
+		*  @brief
 		*    If the given texture buffer format is compressed, a proper uncompressed texture buffer format will be returned
 		*
 		*  @param[in] nFormat
@@ -245,6 +257,18 @@ class TextureBuffer : public Resource {
 		*    'true' if the used texture buffer format is compressed, else 'false'
 		*/
 		PLRENDERER_API bool IsCompressedFormat() const;
+
+		/**
+		*  @brief
+		*    Returns whether or not the used texture buffer format is a depth buffer format
+		*
+		*  @param[in] nFormat
+		*    Texture buffer pixel format
+		*
+		*  @return
+		*    'true' if the used texture buffer format is a depth buffer format, else 'false'
+		*/
+		PLRENDERER_API bool IsDepthFormat() const;
 
 		/**
 		*  @brief
