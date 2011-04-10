@@ -123,7 +123,7 @@ class EulerAngles {
 		*    where fAngleZ > 0 indicates a counterclockwise rotation in the xy-plane (if you look along -z)
 		*  @param[out] qRotation
 		*    Resulting rotation quaternion
-		*  @param[out] nOrder
+		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
 		PLMATH_API static void ToQuaternion(float fAngleX, float fAngleY, float fAngleZ, Quaternion &qRotation, EOrder nOrder = XYZs);
@@ -140,7 +140,7 @@ class EulerAngles {
 		*    Will receive the rotation angle around the y axis (in radian)
 		*  @param[out] fAngleZ
 		*    Will receive the rotation angle around the z axis (in radian)
-		*  @param[out] nOrder
+		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
 		PLMATH_API static void FromQuaternion(const Quaternion &qRotation, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
@@ -160,7 +160,7 @@ class EulerAngles {
 		*    where fAngleZ > 0 indicates a counterclockwise rotation in the xy-plane (if you look along -z)
 		*  @param[out] mRot
 		*    Resulting rotation matrix
-		*  @param[out] nOrder
+		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
 		PLMATH_API static void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x3 &mRot, EOrder nOrder = XYZs);
@@ -179,7 +179,7 @@ class EulerAngles {
 		*    Will receive the rotation angle around the y axis (in radian)
 		*  @param[out] fAngleZ
 		*    Will receive the rotation angle around the z axis (in radian)
-		*  @param[out] nOrder
+		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
 		PLMATH_API static void FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
