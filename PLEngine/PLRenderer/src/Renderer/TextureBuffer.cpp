@@ -180,9 +180,9 @@ bool TextureBuffer::IsCompressedFormat(EPixelFormat nFormat)
 bool TextureBuffer::IsDepthFormat(EPixelFormat nFormat)
 {
 	switch (nFormat) {
-		case D16:	return false;
-		case D24:	return false;
-		case D32:	return false;
+		case D16:	return true;
+		case D24:	return true;
+		case D32:	return true;
 		default:	return false;
 	}
 }
