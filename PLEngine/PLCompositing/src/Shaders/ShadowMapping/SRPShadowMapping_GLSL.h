@@ -20,14 +20,14 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sSRPShadowMapping_GLSL_VS = "\
 // Attributes\n\
-in  vec4 VertexPosition;		// Object space vertex position input\n\
-out vec3 LightVecVS;\n\
+attribute vec4 VertexPosition;		// Object space vertex position input\n\
+varying   vec3 LightVecVS;\n\
 #ifdef VS_TEXCOORD0\n\
-	in  vec2 VertexTexCoord0;	// Vertex texture coordinate 0 input\n\
-	out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	varying vec2 VertexTexCoord0;	// Vertex texture coordinate 0 input\n\
+	varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -51,12 +51,12 @@ void main()\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sSRPShadowMapping_GLSL_FS = "\
 // Attributes\n\
-in vec3 LightVecVS;\n\
+varying vec3 LightVecVS;\n\
 #ifdef FS_ALPHATEST\n\
-	in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+	varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -78,6 +78,6 @@ void main()\n\
 	#endif\n\
 \n\
 	// + '0.005' => Set polygon offset to avoid nasty shadow artefacts\n\
-	vec4 pack = vec4(1.0f, 256.0f, 65536.0, 16777216.0f);\n\
-	gl_FragColor = pack * (length(LightVecVS) + 0.005f);\n\
+	vec4 pack = vec4(1.0, 256.0, 65536.0, 16777216.0);\n\
+	gl_FragColor = pack * (length(LightVecVS) + 0.005);\n\
 }";

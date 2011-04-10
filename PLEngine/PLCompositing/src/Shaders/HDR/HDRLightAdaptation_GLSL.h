@@ -23,23 +23,23 @@
 // GLSL vertex shader source code
 static const PLGeneral::String sHDRLightAdaptation_GLSL_VS = "\
 // GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
+#version 110	// OpenGL 2.0\n\
 \n\
 // Attributes\n\
-in vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+attribute vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 }";
 
 
 // GLSL fragment shader source code
 static const PLGeneral::String sHDRLightAdaptation_GLSL_FS = "\
 // GLSL preprocessor directives\n\
-#version 130	// OpenGL 3.0\n\
+#version 110	// OpenGL 2.0\n\
 \n\
 // Uniforms\n\
 uniform float		Factor;				// Interpolation factor\n\
@@ -50,9 +50,10 @@ uniform sampler2D	CurrentTexture;		// Current average luminance\n\
 void main()\n\
 {\n\
 	// Get the previous and current average luminance\n\
-	float previouAverageLuminance = texture2D(PreviousTexture, vec2(0.5f, 0.5f)).r;\n\
-	float currentAverageLuminance = texture2D(CurrentTexture,  vec2(0.5f, 0.5f)).r;\n\
+	float previouAverageLuminance = texture2D(PreviousTexture, vec2(0.5, 0.5)).r;\n\
+	float currentAverageLuminance = texture2D(CurrentTexture,  vec2(0.5, 0.5)).r;\n\
 \n\
 	// Adapt the luminance using Pattanaik's technique\n\
-	gl_FragColor = vec4(mix(previouAverageLuminance, currentAverageLuminance, Factor));\n\
+	float value = mix(previouAverageLuminance, currentAverageLuminance, Factor);\n\
+	gl_FragColor = vec4(value, value, value, value);\n\
 }";

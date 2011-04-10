@@ -156,7 +156,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 				// Choose the shader source codes depending on the requested shader language
 				if (sUsedShaderLanguage == "GLSL") {
 					#include "HDRBloom_GLSL.h"
-					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_GLSL_VS, "130", sHDRBloom_GLSL_FS_Downscale, "130");
+					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_GLSL_VS, "120", sHDRBloom_GLSL_FS_Downscale, "120");	// OpenGL 2.1 ("#version 120")
 				} else if (sUsedShaderLanguage == "Cg") {
 					#include "HDRBloom_Cg.h"
 					m_pDownscaleProgramGenerator = new ProgramGenerator(*m_pRenderer, sUsedShaderLanguage, sHDRBloom_Cg_VS, "glslv", sHDRBloom_Cg_FS_Downscale, "glslf");
@@ -308,7 +308,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					String sFragmentShaderSourceCode;
 					if (sUsedShaderLanguage == "GLSL") {
 						#include "HDRBloom_GLSL.h"
-						sVertexShaderSourceCode	  = "#version 130\n" + sHDRBloom_GLSL_VS;	// OpenGL 3.0
+						sVertexShaderSourceCode	  = "#version 120\n" + sHDRBloom_GLSL_VS;	// OpenGL 2.1 ("#version 120")
 						sFragmentShaderSourceCode = sHDRBloom_GLSL_FS;
 					} else if (sUsedShaderLanguage == "Cg") {
 						#include "HDRBloom_Cg.h"

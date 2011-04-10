@@ -240,7 +240,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						// Choose the shader source codes depending on the requested shader language
 						if (sShaderLanguage == "GLSL") {
 							#include "SRPShadowMapping_GLSL.h"
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_GLSL_VS, "130", sSRPShadowMapping_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
+							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_GLSL_VS, "110", sSRPShadowMapping_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
 						} else if (sShaderLanguage == "Cg") {
 							#include "SRPShadowMapping_Cg.h"
 							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_Cg_VS, "arbvp1", sSRPShadowMapping_Cg_FS, "arbfp1");

@@ -94,7 +94,7 @@ FS_OUTPUT main(VS_OUTPUT IN\n\
 	#endif\n\
 \n\
 	// + '0.005' => Set polygon offset to avoid nasty shadow artefacts\n\
-	float4 pack = {1.0f, 256.0f, 65536.0, 16777216.0f};\n\
+	float4 pack = {1.0f, 256.0f, 65536.0f, 16777216.0f};\n\
 	OUT.Color0 = pack * (length(IN.LightVec) + 0.005f);\n\
 \n\
 	return OUT;\n\

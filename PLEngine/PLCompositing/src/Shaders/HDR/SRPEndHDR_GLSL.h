@@ -20,49 +20,49 @@
 \*********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sEndHDR_GLSL_VS = "\
 // Attributes\n\
-in vec4 VertexPosition;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-								// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
+attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
 #ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	out vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component output\n\
+	varying vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component output, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 #else\n\
-	out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 #endif\n\
 \n\
 // Uniforms\n\
-uniform ivec2 TextureSize;							// Texture size in texel\n\
+uniform ivec2 TextureSize;						// Texture size in texel\n\
 #ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	uniform sampler2D	AverageLuminanceTexture;	// Automatic average luminance texture\n\
+	uniform sampler2D AverageLuminanceTexture;	// Automatic average luminance texture\n\
 #endif\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
 \n\
 	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS.xy = VertexPosition.zw*TextureSize;\n\
+	VertexTexCoordVS.xy = VertexPosition.zw*vec2(TextureSize);\n\
 \n\
 	// Get the average luminance by using vertex texture fetch so we have just 4 instead of xxxx average luminance texture accesses when doing this within the fragment shader\n\
 	#ifdef VS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-		VertexTexCoordVS.z = texture2D(AverageLuminanceTexture, vec2(0.5f, 0.5f)).r;\n\
+		VertexTexCoordVS.z = texture2D(AverageLuminanceTexture, vec2(0.5, 0.5)).r;\n\
 	#endif\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sEndHDR_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
 #ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
-	in vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component input from vertex shader\n\
+	varying vec3 VertexTexCoordVS;	// Vertex texture coordinate 0 + average luminance within the z component input from vertex shader, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 #else\n\
-	in vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader\n\
+	varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -104,21 +104,21 @@ void main()\n\
 		#ifdef FS_AUTOMATIC_AVERAGE_LUMINANCE_VTF\n\
 			#define averageLuminance VertexTexCoordVS.z\n\
 		#else\n\
-			float averageLuminance = texture2D(AverageLuminanceTexture, vec2(0.5f, 0.5f)).r;\n\
+			float averageLuminance = texture2D(AverageLuminanceTexture, vec2(0.5, 0.5)).r;\n\
 		#endif\n\
 	#else\n\
 		#define averageLuminance AverageLuminance\n\
 	#endif\n\
 \n\
 	// Use the Reinhard global tone map operator to compute the scaled luminance\n\
-	float keyOverLuminance = (averageLuminance > 0.0f) ? Key/averageLuminance : 0.0f;\n\
+	float keyOverLuminance = (averageLuminance > 0.0) ? Key/averageLuminance : 0.0;\n\
 	// 'Photographic Tone Reproduction for Digital Images': Formula 2\n\
 	float scaledLuminance = keyOverLuminance*pixelLuminance;\n\
 	// 'Photographic Tone Reproduction for Digital Images': Formula 4\n\
-	scaledLuminance = (scaledLuminance*(1 + (scaledLuminance/pow(keyOverLuminance*WhiteLevel, 2)))) / (1 + scaledLuminance);\n\
+	scaledLuminance = (scaledLuminance*(1.0 + (scaledLuminance/pow(keyOverLuminance*WhiteLevel, 2.0)))) / (1.0 + scaledLuminance);\n\
 \n\
 	// Set LDR color\n\
-	gl_FragColor = vec4(clamp(sample.rgb*scaledLuminance, 0.0f, 1.0f), sample.a);\n\
+	gl_FragColor = vec4(clamp(sample.rgb*scaledLuminance, vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0)), sample.a);\n\
 #else\n\
 	// Just copy over the color\n\
 	gl_FragColor = sample;\n\
@@ -126,11 +126,11 @@ void main()\n\
 \n\
 	// Add bloom\n\
 #ifdef FS_BLOOM\n\
-	gl_FragColor = clamp(gl_FragColor + texture2DRect(BloomTexture, VertexTexCoordVS.xy/BloomDownscale)*BloomFactor, 0.0f, 1.0f);\n\
+	gl_FragColor = clamp(gl_FragColor + texture2DRect(BloomTexture, VertexTexCoordVS.xy/BloomDownscale)*BloomFactor, 0.0, 1.0);\n\
 #endif\n\
 \n\
 	// Perform gamma correction (linear space -> sRGB space)\n\
 #ifdef FS_GAMMA_CORRECTION\n\
-	gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(InvGamma));\n\
+	gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(InvGamma, InvGamma, InvGamma));\n\
 #endif\n\
 }";

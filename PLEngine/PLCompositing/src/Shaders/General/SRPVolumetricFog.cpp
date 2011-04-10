@@ -460,7 +460,7 @@ void SRPVolumetricFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sVolumetricFog_GLSL_VS, "100", sVolumetricFog_GLSL_FS, "100");
 			} else {
 				// Remove precision qualifiers because they usually create some nasty driver issues!
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sVolumetricFog_GLSL_VS), "130", Shader::RemovePrecisionQualifiersFromGLSL(sVolumetricFog_GLSL_FS), "130");	// OpenGL 3.0 (so we can use e.g. "isnan")
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sVolumetricFog_GLSL_VS), "110", Shader::RemovePrecisionQualifiersFromGLSL(sVolumetricFog_GLSL_FS), "110");	// OpenGL 2.0 ("#version 110")
 			}
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPVolumetricFog_Cg.h"

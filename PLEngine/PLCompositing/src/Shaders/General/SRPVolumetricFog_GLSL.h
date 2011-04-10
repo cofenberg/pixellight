@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sVolumetricFog_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
@@ -58,7 +58,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sVolumetricFog_GLSL_FS = "\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
@@ -90,8 +90,8 @@ void main()\n\
 #endif\n\
 \n\
 	// Calculate the fog factor\n\
-	float k  = clamp(dot(FogPositionVS, VertexPositionVS)/dot(VertexPositionVS, VertexPositionVS), 0.0f, 1.0f);\n\
+	float k  = clamp(dot(FogPositionVS, VertexPositionVS)/dot(VertexPositionVS, VertexPositionVS), 0.0, 1.0);\n\
 	vec4  pl = vec4(k*VertexPositionVS - FogPositionVS, 1.0);\n\
-	gl_FragColor.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, 0.0f, 1.0f);\n\
-	gl_FragColor.a = 1;\n\
+	gl_FragColor.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0));\n\
+	gl_FragColor.a = 1.0;\n\
 }";
