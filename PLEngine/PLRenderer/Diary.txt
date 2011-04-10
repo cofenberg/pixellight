@@ -1,6 +1,10 @@
 >> 10.04.2011
 [CO]
 - Added "TextureBuffer::IsDepthFormat()" which returns whether or not a texture buffer format is a depth buffer format
+PLRendererOpenGL:
+- Ouch! When using a depth buffer texture format (D16, D24, D32) "FrameBufferObject::Initialize()" was also adding a color buffer, fixed that. The interesting
+  thing is that my ATI driver never told me "Incomplete attachment frame buffer object" while the NVIDIA sytem, I'am using for testing, told me at once that
+  there's something wrong...
 
 
 

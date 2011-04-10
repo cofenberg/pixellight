@@ -96,16 +96,19 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			GLint nFrameBufferT;
 			glGetIntegerv(GL_FRAMEBUFFER_BINDING_EXT, &nFrameBufferT);
 
-			// Get API pixel format
-			const uint32 *pAPIPixelFormat = cRenderer.GetAPIPixelFormat(nTextureFormat);
+			// Create color buffer?
+			if (!PLRenderer::TextureBuffer::IsDepthFormat(nTextureFormat)) {
+				// Get API pixel format
+				const uint32 *pAPIPixelFormat = cRenderer.GetAPIPixelFormat(nTextureFormat);
 
-			// Create color buffer
-			glGenRenderbuffersEXT(1, &m_nColorBufferIndex);
-			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, m_nColorBufferIndex);
-			if (nMultisampleAntialiasingSamples)
-				glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, nMultisampleAntialiasingSamples, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
-			else
-				glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
+				// Create color buffer
+				glGenRenderbuffersEXT(1, &m_nColorBufferIndex);
+				glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, m_nColorBufferIndex);
+				if (nMultisampleAntialiasingSamples)
+					glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, nMultisampleAntialiasingSamples, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
+				else
+					glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
+			}
 
 			// Create depth&stencil buffer
 			GLuint nDepth = 0;
