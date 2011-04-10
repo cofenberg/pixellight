@@ -20,9 +20,6 @@
     <Filter Include="Base\Func">
       <UniqueIdentifier>{99e2606f-1637-4bb8-8b2b-30a56c45fb39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Tools">
-      <UniqueIdentifier>{d22a8a7c-57b8-41bb-a914-2f5d85bca8cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base\Type">
       <UniqueIdentifier>{35518b44-865c-47eb-bf6e-e5588a97f08d}</UniqueIdentifier>
     </Filter>
@@ -31,6 +28,9 @@
     </Filter>
     <Filter Include="Base\TypeInfo">
       <UniqueIdentifier>{32ad1b67-9e2a-4066-823c-41d831ff714b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{d22a8a7c-57b8-41bb-a914-2f5d85bca8cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -98,10 +98,10 @@
       <Filter>Base\Func</Filter>
     </ClCompile>
     <ClCompile Include="src\Base\Tools\ParamsParser.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Base\Tools\ParamsParserXml.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Base\Var\DynVar.cpp">
       <Filter>Base\Var</Filter>
@@ -113,40 +113,40 @@
       <Filter>Base\TypeInfo</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\Chunk.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\ChunkLoader.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\ChunkLoaderPL.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\Loadable.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\LoadableManager.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\LoadableType.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\Loader.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\Localization.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\LocalizationGroup.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\LocalizationLoader.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\LocalizationLoaderPL.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\LocalizationText.cpp">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,22 +268,22 @@
       <Filter>Base\Func</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Tools\CompileError.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Tools\IntegralType.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Tools\NullType.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Tools\ParamsParser.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Tools\ParamsParserXml.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Tools\Trait.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Type\DefaultValue.h">
       <Filter>Base\Type</Filter>
@@ -319,49 +319,49 @@
       <Filter>Base\TypeInfo</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\Chunk.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\ChunkLoader.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\ChunkLoaderPL.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\Loadable.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LoadableManager.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LoadableType.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\Loader.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\Localization.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LocalizationGroup.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LocalizationLoader.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LocalizationLoaderPL.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LocalizationText.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\Resource.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\ResourceHandler.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\ResourceManager.h">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -426,13 +426,13 @@
       <Filter>Base\TypeInfo</Filter>
     </None>
     <None Include="include\PLCore\Tools\Resource.inl">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </None>
     <None Include="include\PLCore\Tools\ResourceHandler.inl">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </None>
     <None Include="include\PLCore\Tools\ResourceManager.inl">
-      <Filter>Base\Tools</Filter>
+      <Filter>Tools</Filter>
     </None>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />

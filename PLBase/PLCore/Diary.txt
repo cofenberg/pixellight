@@ -1,3 +1,9 @@
+>> 10.04.2011
+[CO]
+- "ConsoleApplication::OnInitData()" is now using English as the default language instead of the current system locale, this makes things more predictable
+
+
+
 >> 08.04.2011
 [CO]
 - Added "ResourceManager::EventResourceRemoved"-event which is called when a resource is going to be removed

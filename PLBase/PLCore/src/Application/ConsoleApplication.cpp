@@ -664,8 +664,8 @@ void ConsoleApplication::OnInitData()
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");
 	if (!sLanguage.GetLength()) {
-		// Use the current program locale language
-		sLanguage = System::GetInstance()->GetLocaleLanguage();
+		// Use always English instead of the current program locale language so that we have a known default behaviour
+		sLanguage = "English";
 	}
 
 	// Setup localization system

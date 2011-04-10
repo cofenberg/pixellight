@@ -15,6 +15,8 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: Updated "Newton Game Dynamics" from "2.24"(Linux)/"2.28"(Windows) to "2.32" (first free open-source version of this physics library)
 - Change: "SPARK_PL": Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
 - Change: Performed some minor physics joint scene node modifier refactoring to enhance the usability
+- Change: "PLCore::ConsoleApplication::OnInitData()" is now using English as the default language instead of the current system locale, this makes things more predictable
+- Bugfix: Added "Data/Misc/PixelLight_English.loc" to "Standard.zip" to fix the log message "[Error]: Can't open the file 'Data/Misc/PixelLight_English.loc' to load in the loadable 'Localization'!"
 - Bugfix: Fixed some problems with the GLSL shaders when using a NVIDIA graphics card
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 - Bugfix: The swap interval (vertical synchronisation) setting is now working (as long as it is not overwritten by the GPU driver)

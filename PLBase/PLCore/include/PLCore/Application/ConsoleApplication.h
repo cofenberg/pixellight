@@ -467,7 +467,7 @@ class ConsoleApplication {
 		*    - If UseRuntime is set to 'true':
 		*      - Set PixelLight runtime directory as base path in LoadableManager
 		*      - Scan for data packages in PixelLight runtime directory
-		*    - Get current language and load PixelLight localization file
+		*    - Get current language and load PixelLight localization file, if no language is defined, English is used as default
 		*
 		*  @note
 		*    - Part of the application framework initialization function "Init()"
