@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sLighting_GLSL_VS = "\
 // In attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
@@ -99,7 +99,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated", "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated", "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sLighting_GLSL_FS_Part1 = "\
 // Attributes\n\
 #ifdef FS_TEXCOORD0\n\
@@ -218,8 +218,8 @@ uniform lowp vec3 LightColor;	// Light color\n\
 		// Light and normal are assumed to be normalized\n\
 		// constants.x = R0 [0..1]\n\
 		// constants.y = Power, always >0\n\
-		highp float cosAngle = clamp(1.0f - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
-		return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
+		highp float cosAngle = clamp(1.0 - dot(light, normal), 0.0, 1.0); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+		return constants.x + (1.0 - constants.x) * pow(cosAngle, constants.y);\n\
 	}\n\
 #endif\n\
 \n\
@@ -228,14 +228,14 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 {\n\
 	// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 	if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
-		normalVector = vec3(0, 0, 1);\n\
+		normalVector = vec3(0.0, 0.0, 1.0);\n\
 	if (lightVector.x != lightVector.x || lightVector.y != lightVector.y || lightVector.z != lightVector.z)\n\
-		lightVector = vec3(0, 0, 1);\n\
+		lightVector = vec3(0.0, 0.0, 1.0);\n\
 	if (viewVector.x != viewVector.x || viewVector.y != viewVector.y || viewVector.z != viewVector.z)\n\
-		viewVector = vec3(0, 0, 1);\n\
+		viewVector = vec3(0.0, 0.0, 1.0);\n\
 \n\
 	// Diffuse term\n\
-	highp float diffuse = clamp(dot(lightVector, normalVector), 0.0f, 1.0f);\n\
+	highp float diffuse = clamp(dot(lightVector, normalVector), 0.0, 1.0);\n\
 	#ifdef FS_DIFFUSERAMPMAP\n\
 		diffuse *= texture1D(DiffuseRampMap, diffuse).x;\n\
 	#endif\n\
@@ -247,26 +247,26 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		highp vec3 halfVector = normalize(lightVector + viewVector);\n\
 \n\
 		// Ensure that the specular exponent is never ever <=0, else NANs may be produced by pow!\n\
-		#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
+		#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
 		if (specularExponent < FLT_MIN)\n\
 			specularExponent = FLT_MIN;\n\
 		#undef FLT_MIN\n\
 \n\
 		// Specular term\n\
-		highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent);\n\
+		highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0, 1.0), specularExponent);\n\
 		lowp vec3 specularLighting = specular*specularColor*lightColor;\n\
 		#ifdef FS_SPECULARRAMPMAP\n\
 			specularLighting *= texture1D(SpecularRampMap, specular).x;\n\
 		#endif\n\
 	#else\n\
-		#define specularLighting vec3(0, 0, 0)\n\
+		#define specularLighting vec3(0.0, 0.0, 0.0)\n\
 	#endif\n\
 \n\
 	// Edge detection\n\
 	#ifdef FS_EDGERAMPMAP\n\
-		lowp float edge = texture1D(EdgeRampMap, max(0, dot(viewVector, normalVector))).x;\n\
+		lowp float edge = texture1D(EdgeRampMap, max(0.0, dot(viewVector, normalVector))).x;\n\
 	#else\n\
-		#define edge 1\n\
+		#define edge 1.0\n\
 	#endif\n\
 \n\
 	// Final color\n\
@@ -286,7 +286,7 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		highp vec4 shadowMap = textureCube(map, location + offset);\n\
 \n\
 		// Unpack\n\
-		return shadowMap.r/1 + shadowMap.g/256 + shadowMap.b/65536 + shadowMap.a/16777216;\n\
+		return shadowMap.r/1.0 + shadowMap.g/256.0 + shadowMap.b/65536.0 + shadowMap.a/16777216.0;\n\
 	}\n\
 #endif\n\
 \n\
@@ -297,7 +297,7 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		highp vec4 shadowMap = textureCube(map, location);\n\
 \n\
 		// Unpack\n\
-		return shadowMap.r/1 + shadowMap.g/256 + shadowMap.b/65536 + shadowMap.a/16777216;\n\
+		return shadowMap.r/1.0 + shadowMap.g/256.0 + shadowMap.b/65536.0 + shadowMap.a/16777216.0;\n\
 	}\n\
 #endif";
 static const PLGeneral::String sLighting_GLSL_FS_Part2 = "\
@@ -325,7 +325,7 @@ void main()\n\
 \n\
 		// For better quality: Refine the parallax by making another lookup at where we ended\n\
 		// up in the first parallax computation, then averaging the results.\n\
-		lowp float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5f;\n\
+		lowp float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5;\n\
 		offset = height2*scale + bias;\n\
 		TexCoord0 = TexCoord0 + offset*eyeVec.xy;\n\
 	#endif\n\
@@ -339,7 +339,7 @@ void main()\n\
 				discard; // Throw the fragment away and don't draw it!\n\
 		#endif\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, vec3(2.2f, 2.2f, 2.2f));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		lowp vec3 diffuseColor = diffuseMapTexel.rgb*DiffuseColor;\n\
 	#else\n\
@@ -354,13 +354,13 @@ void main()\n\
 				// Fetch the xy-components of the normal and reconstruct the z-component\n\
 				lowp vec3 normal;\n\
 				#ifdef FS_NORMALMAP_DXT5_XGXR\n\
-					normal.xy = texture2D(NormalMap, TexCoord0).ag*2 - 1;\n\
+					normal.xy = texture2D(NormalMap, TexCoord0).ag*2.0 - 1.0;\n\
 				#else\n\
-					normal.xy = texture2D(NormalMap, TexCoord0).ra*2 - 1;\n\
+					normal.xy = texture2D(NormalMap, TexCoord0).ra*2.0 - 1.0;\n\
 				#endif\n\
-				normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+				normal.z = sqrt(clamp(1.0 - normal.x*normal.x - normal.y*normal.y, 0.0, 1.0));\n\
 			#else\n\
-				lowp vec3 normal = texture2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
+				lowp vec3 normal = texture2D(NormalMap, TexCoord0).xyz*2.0 - 1.0;\n\
 			#endif\n\
 			normal.xy *= NormalMapBumpiness;\n\
 \n\
@@ -370,13 +370,13 @@ void main()\n\
 					// Fetch the xy-components of the normal and reconstruct the z-component\n\
 					lowp vec3 detailNormal;\n\
 					#ifdef FS_DETAILNORMALMAP_DXT5_XGXR\n\
-						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2 - 1;\n\
+						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2.0 - 1.0;\n\
 					#else\n\
-						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ra*2 - 1;\n\
+						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ra*2.0 - 1.0;\n\
 					#endif\n\
-					detailNormal.z = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
+					detailNormal.z = sqrt(clamp(1.0 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0, 1.0));\n\
 				#else\n\
-					lowp detailNormal = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2 - 1;\n\
+					lowp detailNormal = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2.0 - 1.0;\n\
 				#endif\n\
 \n\
 				// Just add the detail normal to the standard normal\n\
@@ -390,10 +390,10 @@ void main()\n\
 		#endif\n\
 		// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 		if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)\n\
-			normal = vec3(0, 0, 1); // I had situations with invalid normal vectors...\n\
+			normal = vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
 	#else\n\
 		// Define a dummy normal so, when using reflections, we get at least some 'kind of reflection' effect\n\
-		#define normal vec3(0, 0, 1)\n\
+		#define normal vec3(0.0, 0.0, 1.0)\n\
 	#endif\n\
 \n\
 	// Apply reflection - modifies the diffuse color\n\
@@ -410,16 +410,16 @@ void main()\n\
 		#endif\n\
 \n\
 		// Reflection color\n\
-		lowp vec3 reflectionColor = vec3(1, 1, 1);\n\
+		lowp vec3 reflectionColor = vec3(1.0, 1.0, 1.0);\n\
 		#ifdef FS_2DREFLECTIONMAP\n\
 			// Spherical environment mapping\n\
 			highp vec3  r = ViewSpaceToWorldSpace*normalize(reflect(VertexPositionVS, normal));\n\
-			highp float m = 2*sqrt(r.x*r.x + r.y*r.y + (r.z + 1)*(r.z + 1));\n\
-			#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
+			highp float m = 2.0*sqrt(r.x*r.x + r.y*r.y + (r.z + 1.0)*(r.z + 1.0));\n\
+			#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
 			if (m < FLT_MIN)\n\
 				m = FLT_MIN;\n\
 			#undef FLT_MIN\n\
-			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5f, 1 - (r.y/m + 0.5f))).rgb;\n\
+			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
 		#elif defined(FS_CUBEREFLECTIONMAP)\n\
 			// Cubic environment mapping\n\
 			// There's no need to normalize the reflection vector when using cube maps\n\
@@ -427,7 +427,7 @@ void main()\n\
 		#endif\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			reflectionColor = pow(reflectionColor, vec3(2.2f, 2.2f, 2.2f));\n\
+			reflectionColor = pow(reflectionColor, vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Apply reflection color\n\
 		reflectionColor *= ReflectionColor;\n\
@@ -447,8 +447,8 @@ void main()\n\
 			#define specularExponent SpecularExponent\n\
 		#endif\n\
 	#else\n\
-		#define specularColor vec3(0, 0, 0)\n\
-		#define specularExponent 0\n\
+		#define specularColor vec3(0.0, 0.0, 0.0)\n\
+		#define specularExponent 0.0\n\
 	#endif\n\
 \n\
 	// Perform the lighting calculation in view space\n\
@@ -458,7 +458,7 @@ void main()\n\
 		lowp vec3 lightingColor = BlinnPhong(LightDirection, LightColor, normalize(-position), normal, diffuseColor, specularColor, specularExponent);\n\
 \n\
 		// Not shadowed by default\n\
-		#define shadow 1\n\
+		#define shadow 1.0\n\
 	#else\n\
 		// Calculate the view space light vector pointing from the position to the light position\n\
 		highp vec3 lightVector = LightPosition - position;\n\
@@ -472,7 +472,7 @@ void main()\n\
 			#ifdef FS_DISCARD\n\
 				discard;\n\
 			#else\n\
-				gl_FragColor = vec4(0, 0, 0, 0);\n\
+				gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);\n\
 				return;\n\
 			#endif\n\
 		}\n\
@@ -481,7 +481,7 @@ void main()\n\
 		#ifdef FS_SHADOWMAPPING\n\
 			#ifdef FS_SPOT\n\
 				// Calculate the shadow vector\n\
-				highp vec4 shadowVector = ViewSpaceToShadowMapSpace*vec4(position, 1);\n\
+				highp vec4 shadowVector = ViewSpaceToShadowMapSpace*vec4(position, 1.0);\n\
 \n\
 				// Shadow mapping\n\
 				#ifdef FS_SOFTSHADOWMAPPING\n\
@@ -489,7 +489,7 @@ void main()\n\
 					highp float shadow = (texPCF(ShadowMap, shadowVector, vec2(-TexelSize,  TexelSize)).x +\n\
 										  texPCF(ShadowMap, shadowVector, vec2( TexelSize,  TexelSize)).x +\n\
 										  texPCF(ShadowMap, shadowVector, vec2(-TexelSize, -TexelSize)).x +\n\
-										  texPCF(ShadowMap, shadowVector, vec2( TexelSize, -TexelSize)).x) * 0.25f;\n\
+										  texPCF(ShadowMap, shadowVector, vec2( TexelSize, -TexelSize)).x) * 0.25;\n\
 				#else\n\
 					highp float shadow = shadow2DProj(ShadowMap, shadowVector).x;\n\
 				#endif\n\
@@ -499,35 +499,35 @@ void main()\n\
 				highp float shadowVecLength = length(shadowVector);\n\
 				#ifdef FS_SOFTSHADOWMAPPING\n\
 					// Shadowed?\n\
-					highp float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(TexelSize, TexelSize, TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize, -TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3( TexelSize, -TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3( TexelSize, -TexelSize,  TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize,  TexelSize))) ? 0.16666667f : 0.0f;\n\
-					shadow = clamp(shadow, 0.0f, 1.0f);\n\
+					highp float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(TexelSize, TexelSize, TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3( TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3( TexelSize, -TexelSize,  TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, vec3(-TexelSize,  TexelSize,  TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow = clamp(shadow, 0.0, 1.0);\n\
 				#else\n\
 					// Unpack\n\
 					highp float depthValue = texPCF(ShadowMap, shadowVector);\n\
 \n\
 					// Shadowed?\n\
-					highp float shadow = (shadowVecLength < depthValue) ? 1 : 0;\n\
+					highp float shadow = (shadowVecLength < depthValue) ? 1.0 : 0.0;\n\
 				#endif\n\
 			#endif\n\
 \n\
 			// Is the position completely shadowed?\n\
-			if (shadow <= 0) {\n\
+			if (shadow <= 0.0) {\n\
 				// Early escape: Not influcenced by the light\n\
 				#ifdef FS_DISCARD\n\
 					discard;\n\
 				#else\n\
-					gl_FragColor = vec4(0, 0, 0, 0);\n\
+					gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);\n\
 					return;\n\
 				#endif\n\
 			}\n\
 		#else\n\
 			// Not shadowed by default\n\
-			#define shadow 1\n\
+			#define shadow 1.0\n\
 		#endif\n\
 \n\
 		// Get the light color (lightColor)\n\
@@ -539,7 +539,7 @@ void main()\n\
 			lowp vec3 lightColor = textureCube(ProjectivePointCubeMap, cubeMapVector).rgb;\n\
 			// Perform sRGB to linear space conversion (gamma correction)\n\
 			#ifdef FS_GAMMACORRECTION\n\
-				lightColor = pow(lightColor, vec3(2.2f, 2.2f, 2.2f));\n\
+				lightColor = pow(lightColor, vec3(2.2, 2.2, 2.2));\n\
 			#endif\n\
 			// Apply light color\n\
 			lightColor *= LightColor;\n\
@@ -552,15 +552,15 @@ void main()\n\
 				// Projective spot map\n\
 				#ifdef FS_SPOT_PROJECTIVE\n\
 					// Calculate the projective spot map texture coordinate\n\
-					highp vec4 projectiveSpotMapUV = ViewSpaceToSpotMapSpace*(-vec4(position, 1));\n\
+					highp vec4 projectiveSpotMapUV = ViewSpaceToSpotMapSpace*(-vec4(position, 1.0));\n\
 \n\
 					// No back projection, please!\n\
-					if (projectiveSpotMapUV.z < 0) {\n\
+					if (projectiveSpotMapUV.z < 0.0) {\n\
 						// Early escape: Not influcenced by the light\n\
 						#ifdef FS_DISCARD\n\
 							discard;\n\
 						#else\n\
-							gl_FragColor = vec4(0, 0, 0, 0);\n\
+							gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);\n\
 							return;\n\
 						#endif\n\
 					}\n\
@@ -569,7 +569,7 @@ void main()\n\
 					lowp vec3 projectiveSpotMapTexel = texture2DProj(ProjectiveSpotMap, projectiveSpotMapUV).rgb;\n\
 					// Perform sRGB to linear space conversion (gamma correction)\n\
 					#ifdef FS_GAMMACORRECTION\n\
-						projectiveSpotMapTexel = pow(projectiveSpotMapTexel, vec3(2.2f, 2.2f, 2.2f));\n\
+						projectiveSpotMapTexel = pow(projectiveSpotMapTexel, vec3(2.2, 2.2, 2.2));\n\
 					#endif\n\
 					// Modulate the color of the light using the projective spot map texel data\n\
 					lightColor *= projectiveSpotMapTexel;\n\
@@ -586,12 +586,12 @@ void main()\n\
 						highp float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
 \n\
 						// Is the position completly outside the spot cone?\n\
-						if (currentSpotConeCosAttenuation <= 0) {\n\
+						if (currentSpotConeCosAttenuation <= 0.0) {\n\
 							// Early escape: The position is outside the light cone and therefore not influcenced by the light\n\
 							#ifdef FS_DISCARD\n\
 								discard;\n\
 							#else\n\
-								gl_FragColor = vec4(0, 0, 0, 0);\n\
+								gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);\n\
 								return;\n\
 							#endif\n\
 						}\n\
@@ -605,7 +605,7 @@ void main()\n\
 							#ifdef FS_DISCARD\n\
 								discard;\n\
 							#else\n\
-								gl_FragColor = vec4(0, 0, 0, 0);\n\
+								gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);\n\
 								return;\n\
 							#endif\n\
 						}\n\
@@ -618,11 +618,11 @@ void main()\n\
 		lowp vec3 lightingColor = BlinnPhong(normalize(lightVector), lightColor, -normalize(position), normal, diffuseColor, specularColor, specularExponent);\n\
 \n\
 		// Apply attenuation\n\
-		lightingColor *= clamp(1.0f - distance/LightRadius, 0.0f, 1.0f);\n\
+		lightingColor *= clamp(1.0 - distance/LightRadius, 0.0, 1.0);\n\
 	#endif\n\
 \n\
 	// Calculate the fragment color\n\
-	gl_FragColor = vec4(lightingColor*shadow, 1.0f);\n\
+	gl_FragColor = vec4(lightingColor*shadow, 1.0);\n\
 \n\
 }";
 static const PLGeneral::String sLighting_GLSL_FS = sLighting_GLSL_FS_Part1 + sLighting_GLSL_FS_Part2;

@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDiffuseOnly_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;		// Object space vertex position input\n\
@@ -45,7 +45,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDiffuseOnly_GLSL_FS = "\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
@@ -72,7 +72,7 @@ void main()\n\
 			discard; // Throw the fragment away and don't draw it!\n\
 	#endif\n\
 	#ifdef FS_GAMMACORRECTION\n\
-		gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(2.2f, 2.2f, 2.2f));	// Perform sRGB to linear space conversion (gamma correction)\n\
+		gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 	#endif\n\
 	gl_FragColor *= DiffuseColor;\n\
 #else\n\

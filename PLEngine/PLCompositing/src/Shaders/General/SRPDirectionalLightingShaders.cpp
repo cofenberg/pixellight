@@ -330,7 +330,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDirectionalLighting_GLSL_VS, "100", sDirectionalLighting_GLSL_FS, "100");
 			} else {
 				// Remove precision qualifiers because they usually create some nasty driver issues!
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sDirectionalLighting_GLSL_VS), "130", Shader::RemovePrecisionQualifiersFromGLSL(sDirectionalLighting_GLSL_FS), "130");	// OpenGL 3.0 (so we can use e.g. "isnan")
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sDirectionalLighting_GLSL_VS), "120", Shader::RemovePrecisionQualifiersFromGLSL(sDirectionalLighting_GLSL_FS), "120");	// OpenGL 2.1 ("#version 120")
 			}
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDirectionalLightingShaders_Cg.h"

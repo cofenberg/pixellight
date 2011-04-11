@@ -792,7 +792,7 @@ void SRPLighting::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sLighting_GLSL_VS, "100", sLighting_GLSL_FS, "100");
 			} else {
 				// Remove precision qualifiers because they usually create some nasty driver issues!
-				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sLighting_GLSL_VS), "130", Shader::RemovePrecisionQualifiersFromGLSL(sLighting_GLSL_FS), "130");	// OpenGL 3.0 (so we can use e.g. "isnan")
+				m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sLighting_GLSL_VS), "120", Shader::RemovePrecisionQualifiersFromGLSL(sLighting_GLSL_FS), "120");	// OpenGL 2.1 ("#version 120")
 			}
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPLighting_Cg.h"

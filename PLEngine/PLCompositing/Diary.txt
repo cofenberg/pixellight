@@ -3,6 +3,7 @@
 - Removed the usage of "isnan" within the GLSL shaders so that I have a change to use lower shader versions to enhance compatibility, especially with out-of-date
   graphics drivers. It looks like that according to the IEEE standard NaN != NaN so that this test can also be done without the shader language build in "isnan".
   (had a look into the NAN-issue, again... but right now, I don't have many hours available...)
+- Continued migration to lower GLSL versions for enhanced compatibility
 
 
 

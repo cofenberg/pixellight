@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDirectionalLighting_GLSL_VS = "\
 // In attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
@@ -122,7 +122,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 3.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDirectionalLighting_GLSL_FS = "\
 // Attributes\n\
 #if defined(FS_TEXCOORD0) && defined(FS_TEXCOORD1)\n\
@@ -237,8 +237,8 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 		// Light and normal are assumed to be normalized\n\
 		// constants.x = R0 [0..1]\n\
 		// constants.y = Power, always >0\n\
-		highp float cosAngle = clamp(1.0f - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
-		return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
+		highp float cosAngle = clamp(1.0 - dot(light, normal), 0.0, 1.0); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+		return constants.x + (1.0 - constants.x) * pow(cosAngle, constants.y);\n\
 	}\n\
 #endif\n\
 \n\
@@ -248,14 +248,14 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 	{\n\
 		// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 		if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
-			normalVector = vec3(0, 0, 1);\n\
+			normalVector = vec3(0.0, 0.0, 1.0);\n\
 		if (lightVector.x != lightVector.x || lightVector.y != lightVector.y || lightVector.z != lightVector.z)\n\
-			lightVector = vec3(0, 0, 1);\n\
+			lightVector = vec3(0.0, 0.0, 1.0);\n\
 		if (viewVector.x != viewVector.x || viewVector.y != viewVector.y || viewVector.z != viewVector.z)\n\
-			viewVector = vec3(0, 0, 1);\n\
+			viewVector = vec3(0.0, 0.0, 1.0);\n\
 \n\
 		// Diffuse term\n\
-		highp float diffuse = clamp(dot(lightVector, normalVector), 0.0f, 1.0f);\n\
+		highp float diffuse = clamp(dot(lightVector, normalVector), 0.0, 1.0);\n\
 		#ifdef FS_DIFFUSERAMPMAP\n\
 			diffuse *= texture1D(DiffuseRampMap, diffuse).x;\n\
 		#endif\n\
@@ -267,26 +267,26 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 			highp vec3 halfVector = normalize(lightVector + viewVector);\n\
 \n\
 			// Ensure that the specular exponent is never ever <=0, else NANs may be produced by pow!\n\
-			#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
+			#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
 			if (specularExponent < FLT_MIN)\n\
 				specularExponent = FLT_MIN;\n\
 			#undef FLT_MIN\n\
 \n\
 			// Specular term\n\
-			highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0f, 1.0f), specularExponent);\n\
+			highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0, 1.0), specularExponent);\n\
 			lowp vec3 specularLighting = specular*specularColor*lightColor;\n\
 			#ifdef FS_SPECULARRAMPMAP\n\
 				specularLighting *= texture1D(SpecularRampMap, specular).x;\n\
 			#endif\n\
 		#else\n\
-			#define specularLighting vec3(0, 0, 0)\n\
+			#define specularLighting vec3(0.0, 0.0, 0.0)\n\
 		#endif\n\
 \n\
 		// Edge detection\n\
 		#ifdef FS_EDGERAMPMAP\n\
-			lowp float edge = texture1D(EdgeRampMap, max(0, dot(viewVector, normalVector))).x;\n\
+			lowp float edge = texture1D(EdgeRampMap, max(0.0, dot(viewVector, normalVector))).x;\n\
 		#else\n\
-			#define edge 1\n\
+			#define edge 1.0\n\
 		#endif\n\
 \n\
 		// Final color\n\
@@ -325,7 +325,7 @@ void main()\n\
 \n\
 		// For better quality: Refine the parallax by making another lookup at where we ended\n\
 		// up in the first parallax computation, then averaging the results.\n\
-		lowp float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5f;\n\
+		lowp float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5;\n\
 		offset = height2*scale + bias;\n\
 		TexCoord0 = TexCoord0 + offset*eyeVec.xy;\n\
 	#endif\n\
@@ -341,22 +341,22 @@ void main()\n\
 	#ifdef FS_LIGHTMAP\n\
 		lowp vec3 lightMapColor = texture2D(LightMap, TexCoord1).rgb;\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			lightMapColor = pow(lightMapColor, vec3(2.2f, 2.2f, 2.2f));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			lightMapColor = pow(lightMapColor, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		lightMapColor *= LightMapColor;\n\
 	#else\n\
-		#define lightMapColor vec3(0, 0, 0)\n\
+		#define lightMapColor vec3(0.0, 0.0, 0.0)\n\
 	#endif\n\
 \n\
 	// Get the emissive color\n\
 	#ifdef FS_EMISSIVEMAP\n\
 		lowp vec3 emissiveColor = texture2D(EmissiveMap, TexCoord0).rgb;\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			emissiveColor = pow(emissiveColor, vec3(2.2f, 2.2f, 2.2f));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			emissiveColor = pow(emissiveColor, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		emissiveColor *= EmissiveMapColor;\n\
 	#else\n\
-		#define emissiveColor vec3(0, 0, 0)\n\
+		#define emissiveColor vec3(0.0, 0.0, 0.0)\n\
 	#endif\n\
 \n\
 	// Get the diffuse color\n\
@@ -368,7 +368,7 @@ void main()\n\
 				discard; // Throw the fragment away and don't draw it!\n\
 		#endif\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, vec3(2.2f, 2.2f, 2.2f));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		lowp vec3 diffuseColor = diffuseMapTexel.rgb*DiffuseColor.rgb;\n\
 	#else\n\
@@ -383,13 +383,13 @@ void main()\n\
 				// Fetch the xy-components of the normal and reconstruct the z-component\n\
 				lowp vec3 normal;\n\
 				#ifdef FS_NORMALMAP_DXT5_XGXR\n\
-					normal.xy = texture2D(NormalMap, TexCoord0).ag*2 - 1;\n\
+					normal.xy = texture2D(NormalMap, TexCoord0).ag*2.0 - 1.0;\n\
 				#else\n\
-					normal.xy = texture2D(NormalMap, TexCoord0).ra*2 - 1;\n\
+					normal.xy = texture2D(NormalMap, TexCoord0).ra*2.0 - 1.0;\n\
 				#endif\n\
-				normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+				normal.z = sqrt(clamp(1.0 - normal.x*normal.x - normal.y*normal.y, 0.0, 1.0));\n\
 			#else\n\
-				lowp vec3 normal = texture2D(NormalMap, TexCoord0).xyz*2 - 1;\n\
+				lowp vec3 normal = texture2D(NormalMap, TexCoord0).xyz*2.0 - 1.0;\n\
 			#endif\n\
 			normal.xy *= NormalMapBumpiness;\n\
 \n\
@@ -399,13 +399,13 @@ void main()\n\
 					// Fetch the xy-components of the normal and reconstruct the z-component\n\
 					lowp vec3 detailNormal;\n\
 					#ifdef FS_DETAILNORMALMAP_DXT5_XGXR\n\
-						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2 - 1;\n\
+						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ag*2.0 - 1.0;\n\
 					#else\n\
-						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ra*2 - 1;\n\
+						detailNormal.xy = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).ra*2.0 - 1.0;\n\
 					#endif\n\
-					detailNormal.z = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
+					detailNormal.z = sqrt(clamp(1.0 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0, 1.0));\n\
 				#else\n\
-					lowp detailNormal = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2 - 1;\n\
+					lowp detailNormal = texture2D(DetailNormalMap, TexCoord0*DetailNormalMapUVScale).xyz*2.0 - 1.0;\n\
 				#endif\n\
 \n\
 				// Just add the detail normal to the standard normal\n\
@@ -418,10 +418,10 @@ void main()\n\
 			lowp vec3 normal = normalize(VertexNormalVS);\n\
 		#endif\n\
 		if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)	// IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
-			normal = vec3(0, 0, 1); // I had situations with invalid normal vectors...\n\
+			normal = vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
 	#else\n\
 		// Define a dummy normal so, when using reflections, we get at least some 'kind of reflection' effect\n\
-		#define normal vec3(0, 0, 1)\n\
+		#define normal vec3(0.0, 0.0, 1.0)\n\
 	#endif\n\
 \n\
 	// Apply reflection - modifies the diffuse color\n\
@@ -438,16 +438,16 @@ void main()\n\
 		#endif\n\
 \n\
 		// Reflection color\n\
-		lowp vec3 reflectionColor = vec3(1, 1, 1);\n\
+		lowp vec3 reflectionColor = vec3(1.0, 1.0, 1.0);\n\
 		#ifdef FS_2DREFLECTIONMAP\n\
 			// Spherical environment mapping\n\
 			highp vec3  r = ViewSpaceToWorldSpace*normalize(reflect(VertexPositionVS, normal));\n\
-			highp float m = 2*sqrt(r.x*r.x + r.y*r.y + (r.z + 1)*(r.z + 1));\n\
-			#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
+			highp float m = 2.0*sqrt(r.x*r.x + r.y*r.y + (r.z + 1.0)*(r.z + 1.0));\n\
+			#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
 			if (m < FLT_MIN)\n\
 				m = FLT_MIN;\n\
 			#undef FLT_MIN\n\
-			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5f, 1 - (r.y/m + 0.5f))).rgb;\n\
+			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
 		#elif defined(FS_CUBEREFLECTIONMAP)\n\
 			// Cubic environment mapping\n\
 			// There's no need to normalize the reflection vector when using cube maps\n\
@@ -455,7 +455,7 @@ void main()\n\
 		#endif\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			reflectionColor = pow(reflectionColor, vec3(2.2f, 2.2f, 2.2f));\n\
+			reflectionColor = pow(reflectionColor, vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Apply reflection color\n\
 		reflectionColor *= ReflectionColor;\n\
@@ -477,14 +477,14 @@ void main()\n\
 				#define specularExponent SpecularExponent\n\
 			#endif\n\
 		#else\n\
-			#define specularColor vec3(0, 0, 0)\n\
-			#define specularExponent 0\n\
+			#define specularColor vec3(0.0, 0.0, 0.0)\n\
+			#define specularExponent 0.0\n\
 		#endif\n\
 \n\
 		// Perform the Blinn-Phong lighting calculation\n\
 		lowp vec3 lightingColor = BlinnPhong(LightDirection, LightColor, normalize(-VertexPositionVS), normal, diffuseColor, specularColor, specularExponent);\n\
 	#else\n\
-		#define lightingColor 0\n\
+		#define lightingColor 0.0\n\
 	#endif\n\
 \n\
 	// Set initial alpha value - may be overwritten by special build in glow or DOF post processing data\n\
@@ -492,7 +492,7 @@ void main()\n\
 \n\
 	#ifdef FS_GLOW\n\
 		#ifdef FS_GLOWMAP\n\
-			alphaValue = 1 - ((1 - Glow)*texture2D(GlowMap, TexCoord0)).r;\n\
+			alphaValue = 1.0 - ((1.0 - Glow)*texture2D(GlowMap, TexCoord0)).r;\n\
 		#else\n\
 			alphaValue = Glow;\n\
 		#endif\n\
@@ -511,11 +511,11 @@ void main()\n\
 			f = (f - DOFParams.y)/(DOFParams.z - DOFParams.y);\n\
 \n\
 			// Clamp the far blur to a maximum blurriness\n\
-			f = clamp(f, 0.0f, DOFParams.w);\n\
+			f = clamp(f, 0.0, DOFParams.w);\n\
 		}\n\
 \n\
 		// Scale and bias into [0, 1] range\n\
-		alphaValue = clamp(f*0.5f + 0.5f, 0.0f, 1.0f);\n\
+		alphaValue = clamp(f*0.5 + 0.5, 0.0, 1.0);\n\
 	#endif\n\
 \n\
 	// Calculate the fragment color\n\

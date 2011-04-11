@@ -432,7 +432,7 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// Choose the shader source codes depending on the requested shader language
 		if (sShaderLanguage == "GLSL") {
 			#include "SRPDeferredGBuffer_GLSL.h"
-			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBuffer_GLSL_VS, "130", sDeferredGBuffer_GLSL_FS, "130");	// OpenGL 3.0 ("#version 130")
+			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBuffer_GLSL_VS, "120", sDeferredGBuffer_GLSL_FS, "120");	// OpenGL 2.1 ("#version 120")
 		} else if (sShaderLanguage == "Cg") {
 			#include "SRPDeferredGBuffer_Cg.h"
 			m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDeferredGBuffer_Cg_VS, "arbvp1", sDeferredGBuffer_Cg_FS, "arbfp1");
