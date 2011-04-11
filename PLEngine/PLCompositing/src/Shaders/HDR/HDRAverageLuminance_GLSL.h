@@ -112,7 +112,7 @@ void main()\n\
 	for (int i=0; i<4; i++) {\n\
 		// If, for any reason, there's an invalid value it would mess up everything... so, security is really a must have in here!\n\
 		float value = log(dot(texture2DRect(Texture, VertexTexCoordVS + Offsets[i]).rgb, LuminanceConvert) + Epsilon);\n\
-		if (!isnan(value))\n\
+		if (value == value)	// IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 			luminance += value;\n\
 	}\n\
 \n\

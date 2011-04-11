@@ -308,8 +308,8 @@ void main()\n\
 #else\n\
 	vec3 normal = normalize(NormalDepthVS.rgb);\n\
 #endif\n\
-	// [TODO] There seem to be invalid normal vectors here (NAN)\n\
-	if (isnan(normal.x) || isnan(normal.y) || isnan(normal.z))\n\
+	// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
+	if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)\n\
 		normal = vec3(0, 0, 1); // I had situations with invalid normal vectors...\n\
 	// RG encoded normal vector\n\
 	gl_FragData[1].rg = encodeNormalVector(normal);\n\

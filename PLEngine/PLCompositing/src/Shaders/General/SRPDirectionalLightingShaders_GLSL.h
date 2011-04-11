@@ -246,12 +246,12 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 	// Performs the Blinn-Phong lighting calculation\n\
 	lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 viewVector, highp vec3 normalVector, lowp vec3 diffuseColor, lowp vec3 specularColor, lowp float specularExponent)\n\
 	{\n\
-		// [TODO] There seem to be invalid normal vectors here (NAN)\n\
-		if (isnan(normalVector.x) || isnan(normalVector.y) || isnan(normalVector.z))\n\
+		// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
+		if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
 			normalVector = vec3(0, 0, 1);\n\
-		if (isnan(lightVector.x) || isnan(lightVector.y) || isnan(lightVector.z))\n\
+		if (lightVector.x != lightVector.x || lightVector.y != lightVector.y || lightVector.z != lightVector.z)\n\
 			lightVector = vec3(0, 0, 1);\n\
-		if (isnan(viewVector.x) || isnan(viewVector.y) || isnan(viewVector.z))\n\
+		if (viewVector.x != viewVector.x || viewVector.y != viewVector.y || viewVector.z != viewVector.z)\n\
 			viewVector = vec3(0, 0, 1);\n\
 \n\
 		// Diffuse term\n\
@@ -417,7 +417,7 @@ void main()\n\
 		#else\n\
 			lowp vec3 normal = normalize(VertexNormalVS);\n\
 		#endif\n\
-		if (isnan(normal.x) || isnan(normal.y) || isnan(normal.z))\n\
+		if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)	// IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 			normal = vec3(0, 0, 1); // I had situations with invalid normal vectors...\n\
 	#else\n\
 		// Define a dummy normal so, when using reflections, we get at least some 'kind of reflection' effect\n\

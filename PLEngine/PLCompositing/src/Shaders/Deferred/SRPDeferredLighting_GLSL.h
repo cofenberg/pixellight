@@ -103,12 +103,12 @@ uniform sampler2DRect RenderTargetTexture2;						// Render target texture 2\n\
 // Performs the Blinn-Phong lighting calculation\n\
 vec3 BlinnPhong(vec3 lightVector, vec3 lightColor, vec3 viewVector, vec3 normalVector, vec3 diffuseColor, vec3 specularColor, float specularExponent)\n\
 {\n\
-	// [TODO] There seem to be invalid normal vectors here (NAN)\n\
-	if (isnan(normalVector.x) || isnan(normalVector.y) || isnan(normalVector.z))\n\
+	// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
+	if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
 		normalVector = vec3(0, 0, 1);\n\
-	if (isnan(lightVector.x) || isnan(lightVector.y) || isnan(lightVector.z))\n\
+	if (lightVector.x != lightVector.x || lightVector.y != lightVector.y || lightVector.z != lightVector.z)\n\
 		lightVector = vec3(0, 0, 1);\n\
-	if (isnan(viewVector.x) || isnan(viewVector.y) || isnan(viewVector.z))\n\
+	if (viewVector.x != viewVector.x || viewVector.y != viewVector.y || viewVector.z != viewVector.z)\n\
 		viewVector = vec3(0, 0, 1);\n\
 \n\
 	// Diffuse term\n\
