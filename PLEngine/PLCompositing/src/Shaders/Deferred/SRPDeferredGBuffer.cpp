@@ -74,10 +74,10 @@ pl_implement_class(SRPDeferredGBuffer)
 *    Default constructor
 */
 SRPDeferredGBuffer::SRPDeferredGBuffer() :
-	EventHandlerMaterialRemoved(&SRPDeferredGBuffer::NotifyMaterialRemoved, this),
 	ShaderLanguage(this),
 	TextureFiltering(this),
 	Flags(this),
+	EventHandlerMaterialRemoved(&SRPDeferredGBuffer::NotifyMaterialRemoved, this),
 	m_pRenderTarget(nullptr),
 	m_pColorTarget1(nullptr),
 	m_pColorTarget2(nullptr),

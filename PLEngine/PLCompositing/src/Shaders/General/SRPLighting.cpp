@@ -81,11 +81,11 @@ pl_implement_class(SRPLighting)
 *    Default constructor
 */
 SRPLighting::SRPLighting() :
-	EventHandlerMaterialRemoved(&SRPLighting::NotifyMaterialRemoved, this),
 	TextureFiltering(this),
 	ShaderLanguage(this),
 	LightingIntensity(this),
 	Flags(this),
+	EventHandlerMaterialRemoved(&SRPLighting::NotifyMaterialRemoved, this),
 	m_pIgnoredLight(nullptr),
 	m_pProgramGenerator(nullptr)
 {

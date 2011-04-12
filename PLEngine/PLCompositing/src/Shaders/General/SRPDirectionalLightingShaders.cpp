@@ -71,9 +71,9 @@ pl_implement_class(SRPDirectionalLightingShaders)
 *    Default constructor
 */
 SRPDirectionalLightingShaders::SRPDirectionalLightingShaders() :
-	EventHandlerMaterialRemoved(&SRPDirectionalLightingShaders::NotifyMaterialRemoved, this),
 	ShaderLanguage(this),
 	Flags(this),
+	EventHandlerMaterialRemoved(&SRPDirectionalLightingShaders::NotifyMaterialRemoved, this),
 	m_bGlowEnabled(false),
 	m_fDOFNearBlurDepth(0.0f),
 	m_fDOFFocalPlaneDepth(0.0f),
