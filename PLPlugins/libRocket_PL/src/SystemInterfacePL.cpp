@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
 #include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Localization.h>
 #include "libRocket_PL/SystemInterfacePL.h"
 
 
@@ -32,6 +33,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 namespace libRocket_PL {
 
 
@@ -40,9 +42,10 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Constructor
 */
-SystemInterfacePL::SystemInterfacePL()
+SystemInterfacePL::SystemInterfacePL(const String &sLocalizationGroup) :
+	m_sLocalizationGroup(sLocalizationGroup)
 {
 }
 
@@ -63,6 +66,31 @@ float SystemInterfacePL::GetElapsedTime()
 	// "PLGeneral::Timing::GetPastTime()" returns the past time in milliseconds since the application start
 	// - but this method must return the number of seconds elapsed since the start of the application...
 	return Timing::GetInstance()->GetPastTime()*0.001f;
+}
+
+int SystemInterfacePL::TranslateString(Rocket::Core::String& translated, const Rocket::Core::String& input)
+{
+	// Empty string
+	if (input.Length()) {
+		// Norm the string to make it translatable
+		String sInput = String::FromUTF8(input.CString());
+		sInput.Replace('\r', ' ');	// Remove all carriage returns (CR, '\r', 0x0D, 13 in decimal)
+		sInput.Replace('\n', ' ');	// Remove all line feed (LF, '\n', 0x0A, 10 in decimal)
+		sInput.Trim();				// Remove all whitespace (tabs and spaces) at the beginning and the end of the string
+
+		// Translate the string
+		const String sOutput = Localization::GetInstance()->Get(sInput, m_sLocalizationGroup);
+
+		// Return "1" for "we translated the string", else "0"
+		if (sInput != sOutput) {
+			translated = sOutput.GetUTF8();
+			return 1;
+		}
+	}
+
+	// Return "1" for "we translated the string", else "0"
+	translated = input;
+	return 0;
 }
 
 bool SystemInterfacePL::LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message)

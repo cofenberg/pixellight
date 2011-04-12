@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Rocket/Core/SystemInterface.h>
+#include <PLGeneral/String/String.h>
 #include "libRocket_PL/libRocket_PL.h"
 
 
@@ -54,9 +55,12 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] sLocalizationGroup
+		*    Localization group the texts to translate are in
 		*/
-		LIBROCKET_PL_API SystemInterfacePL();
+		LIBROCKET_PL_API SystemInterfacePL(const PLGeneral::String &sLocalizationGroup = "PixelLight");
 
 		/**
 		*  @brief
@@ -70,6 +74,7 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 	//[-------------------------------------------------------]
 	public:
 		LIBROCKET_PL_API virtual float GetElapsedTime();
+		LIBROCKET_PL_API virtual int TranslateString(Rocket::Core::String& translated, const Rocket::Core::String& input);
 		LIBROCKET_PL_API virtual bool LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message);
 
 
@@ -97,6 +102,13 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 		*    Reference to this instance
 		*/
 		SystemInterfacePL &operator =(const SystemInterfacePL &cSource);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::String m_sLocalizationGroup;	/**< Localization group the texts to translate are in */
 
 
 };
