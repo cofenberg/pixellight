@@ -206,14 +206,8 @@ void Application::InitRocket()
 	// Get the scene context
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
-		// Get the widget of the main window
-		Widget *pMainWindow = GetMainWindow();
-
 		// Create and set the render interface
-		if (pMainWindow)
-			m_pRocketRenderInterface = new libRocket_PL::RenderInterfacePLShaders(pSceneContext->GetRendererContext(), pMainWindow->GetSize().x, pMainWindow->GetSize().y);
-		else
-			m_pRocketRenderInterface = new libRocket_PL::RenderInterfacePLShaders(pSceneContext->GetRendererContext(), 640, 480);
+		m_pRocketRenderInterface = new libRocket_PL::RenderInterfacePLShaders(pSceneContext->GetRendererContext());
 		Rocket::Core::SetRenderInterface(m_pRocketRenderInterface);
 
 		// Create and set the file interface
@@ -240,12 +234,15 @@ void Application::InitRocket()
 		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetUTF8());
 		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetUTF8());
 
-		// Create and set the context
-		if (pMainWindow)
-			m_pRocketContext = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(pMainWindow->GetSize().x, pMainWindow->GetSize().y));
-		else
-			m_pRocketContext = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(640, 480));
-		Rocket::Debugger::Initialise(m_pRocketContext);
+		{ // Create and set the context
+			// Get the widget of the main window
+			Widget *pMainWindow = GetMainWindow();
+			if (pMainWindow)
+				m_pRocketContext = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(pMainWindow->GetSize().x, pMainWindow->GetSize().y));
+			else
+				m_pRocketContext = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(640, 480));
+			Rocket::Debugger::Initialise(m_pRocketContext);
+		}
 
 		{ // Load the mouse cursor and release the caller's reference
 			Rocket::Core::ElementDocument *pElementDocumentCursor = m_pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetUTF8());

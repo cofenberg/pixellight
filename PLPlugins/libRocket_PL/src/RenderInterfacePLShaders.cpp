@@ -53,7 +53,7 @@ namespace libRocket_PL {
 *  @brief
 *    Constructor
 */
-RenderInterfacePLShaders::RenderInterfacePLShaders(RendererContext &cRendererContext, uint32 nWindowWidth, uint32 nWindowHeight) : RenderInterfacePL(cRendererContext, nWindowWidth, nWindowHeight),
+RenderInterfacePLShaders::RenderInterfacePLShaders(RendererContext &cRendererContext) : RenderInterfacePL(cRendererContext),
 	m_pVertexShader(nullptr),
 	m_pFragmentShader(nullptr),
 	m_pProgram(nullptr)

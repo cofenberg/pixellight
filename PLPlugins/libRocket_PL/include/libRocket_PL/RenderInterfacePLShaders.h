@@ -67,12 +67,8 @@ class RenderInterfacePLShaders : public RenderInterfacePL {
 		*
 		*  @param[in] cRendererContext
 		*    The used renderer context
-		*  @param[in] nWindowWidth
-		*    Window width
-		*  @param[in] nWindowHeight
-		*    Window height
 		*/
-		LIBROCKET_PL_API RenderInterfacePLShaders(PLRenderer::RendererContext &cRendererContext, PLGeneral::uint32 nWindowWidth, PLGeneral::uint32 nWindowHeight);
+		LIBROCKET_PL_API RenderInterfacePLShaders(PLRenderer::RendererContext &cRendererContext);
 
 		/**
 		*  @brief

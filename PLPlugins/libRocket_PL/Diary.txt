@@ -3,6 +3,7 @@
 - Implemented "Rocket::Core::FileInterface"
 - libRocket is using UTF-8 encoding, took this into account within the implementation
 - Implemented "Rocket::Core::SystemInterface::TranslateString"
+- Removed window width and height within the RenderInterfacePL constructor
 
 
 
