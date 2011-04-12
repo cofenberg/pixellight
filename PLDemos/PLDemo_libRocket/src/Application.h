@@ -45,6 +45,9 @@ namespace Rocket {
 namespace libRocket_PL {
 	class MessageFilterRocket;
 }
+namespace PLMath {
+	class Vector2i;
+}
 
 
 //[-------------------------------------------------------]
@@ -78,6 +81,15 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Called when the size was changed
+		*
+		*  @param[in] vSize
+		*    New size
+		*/
+		void NotifySize(const PLMath::Vector2i &vSize);
+
 		/**
 		*  @brief
 		*    Called when a key is pressed down
@@ -127,6 +139,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
+		PLCore::EventHandler<const PLMath::Vector2i&>			   EventHandlerSize;
 		PLCore::EventHandler<PLGeneral::uint32, PLGeneral::uint32> EventHandlerKeyDown;
 
 

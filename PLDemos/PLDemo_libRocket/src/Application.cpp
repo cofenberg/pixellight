@@ -61,6 +61,7 @@ using namespace PLScene;
 *    Constructor
 */
 Application::Application() :
+	EventHandlerSize(&Application::NotifySize,		 this),
 	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
 	m_pRocketContext(nullptr),
 	m_pRocketRenderInterface(nullptr),
@@ -86,6 +87,17 @@ Application::~Application()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the size was changed
+*/
+void Application::NotifySize(const Vector2i &vSize)
+{
+	// Set new libRocket context dimension
+	if (m_pRocketContext)
+		m_pRocketContext->SetDimensions(Rocket::Core::Vector2i(vSize.x, vSize.y));
+}
+
 /**
 *  @brief
 *    Called when a key is pressed down
@@ -158,6 +170,7 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
+		pWidget->EventSize.Connect(&EventHandlerSize);
 		pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
 		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
