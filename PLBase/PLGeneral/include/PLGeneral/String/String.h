@@ -885,10 +885,14 @@ class String {
 
 		/**
 		*  @brief
-		*    Removes line endings ("\r\n" or "\n")
+		*    Removes line endings ("\r" or "\n") at the end of the string
 		*
 		*  @return
 		*    Reference to this string
+		*
+		*  @note
+		*    - Carriage return = CR = '\r' = 0x0D = 13 in decimal
+		*    - Line feed = LF = '\n' = 0x0A = 10 in decimal
 		*/
 		PLGENERAL_API String &RemoveLineEndings();
 

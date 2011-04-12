@@ -2069,13 +2069,13 @@ String &String::Trim()
 
 /**
 *  @brief
-*    Removes line endings ("\r\n" or "\n")
+*    Removes line endings ("\r" or "\n") at the end of the string
 */
 String &String::RemoveLineEndings()
 {
 	// Is this string empty?
 	if (m_pStringBuffer) {
-		// Delete whitespace at the end of the string
+		// Remove line endings at the end of the string
 		SetStringBuffer(m_pStringBuffer->RemoveLineEndings());
 	}
 
