@@ -11,6 +11,7 @@ add_sources(
 	src/RenderInterfacePL.cpp
 	src/RenderInterfacePLShaders.cpp
 	src/SystemInterfacePL.cpp
+	src/FileInterfacePL.cpp
 	src/SRPlibRocket.cpp
 	src/MessageFilterRocket.cpp
 )

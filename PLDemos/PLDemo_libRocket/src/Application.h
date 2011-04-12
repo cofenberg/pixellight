@@ -37,6 +37,7 @@
 namespace Rocket {
 	namespace Core {
 		class Context;
+		class FileInterface;
 		class RenderInterface;
 		class SystemInterface;
 	}
@@ -136,6 +137,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		Rocket::Core::Context				*m_pRocketContext;			/**< libRocket context, can be a null pointer */
 		Rocket::Core::RenderInterface		*m_pRocketRenderInterface;	/**< libRocket render interface, can be a null pointer */
 		Rocket::Core::SystemInterface		*m_pRocketSystemInterface;	/**< libRocket system interface, can be a null pointer */
+		Rocket::Core::FileInterface			*m_pRocketFileInterface;	/**< libRocket file interface, can be a null pointer */
 		libRocket_PL::MessageFilterRocket	*m_pMessageFilterRocket;	/**< Message filter that feeds PLGui messages into libRocket, can be a null pointer */
 
 

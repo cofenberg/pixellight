@@ -27,6 +27,7 @@
 #include <Rocket/Controls.h>
 #include <Rocket/Debugger.h>
 #include <libRocket_PL/SRPlibRocket.h>
+#include <libRocket_PL/FileInterfacePL.h>
 #include <libRocket_PL/SystemInterfacePL.h>
 #include <libRocket_PL/MessageFilterRocket.h>
 #include <libRocket_PL/RenderInterfacePLShaders.h>
@@ -64,6 +65,7 @@ Application::Application() :
 	m_pRocketContext(nullptr),
 	m_pRocketRenderInterface(nullptr),
 	m_pRocketSystemInterface(nullptr),
+	m_pRocketFileInterface(nullptr),
 	m_pMessageFilterRocket(nullptr)
 {
 	// Set application name and title
@@ -115,6 +117,10 @@ void Application::OnDeInit()
 		m_pRocketContext = nullptr;
 	}
 	Rocket::Core::Shutdown();
+	if (m_pRocketFileInterface) {
+		delete m_pRocketFileInterface;
+		m_pRocketFileInterface = nullptr;
+	}
 	if (m_pRocketSystemInterface) {
 		delete m_pRocketSystemInterface;
 		m_pRocketSystemInterface = nullptr;
@@ -209,6 +215,10 @@ void Application::InitRocket()
 		else
 			m_pRocketRenderInterface = new libRocket_PL::RenderInterfacePLShaders(pSceneContext->GetRendererContext(), 640, 480);
 		Rocket::Core::SetRenderInterface(m_pRocketRenderInterface);
+
+		// Create and set the file interface
+		m_pRocketFileInterface = new libRocket_PL::FileInterfacePL();
+		Rocket::Core::SetFileInterface(m_pRocketFileInterface);
 
 		// Create and set the system interface
 		m_pRocketSystemInterface = new libRocket_PL::SystemInterfacePL();

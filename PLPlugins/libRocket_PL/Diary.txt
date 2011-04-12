@@ -1,4 +1,10 @@
-﻿>> 27.03.2011
+﻿>> 12.04.2011
+[CO]
+- Implemented "Rocket::Core::FileInterface"
+
+
+
+>> 27.03.2011
 [CO]
 - Implemented the rendering & system & interaction interfaces of libRocket... looks like libRocket is now running within PixelLight. WOW, this
   integration was somewhat too easy. :D
