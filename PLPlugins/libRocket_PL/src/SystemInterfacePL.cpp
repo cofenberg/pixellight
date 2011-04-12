@@ -104,7 +104,7 @@ bool SystemInterfacePL::LogMessage(Rocket::Core::Log::Type type, const Rocket::C
 	}
 
 	// Print into the PL log
-	Log::GetInstance()->Output(nPLLogLevel, message.CString());
+	Log::GetInstance()->Output(nPLLogLevel, String::FromUTF8(message.CString()));
 
 	// Return "false" to break into the debugger
 	return false;

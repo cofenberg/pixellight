@@ -200,7 +200,7 @@ void RenderInterfacePL::SetScissorRegion(int x, int y, int width, int height)
 bool RenderInterfacePL::LoadTexture(Rocket::Core::TextureHandle& texture_handle, Rocket::Core::Vector2i& texture_dimensions, const Rocket::Core::String& source)
 {
 	// Load the texture
-	Texture *pTexture = m_pRendererContext->GetTextureManager().LoadResource(source.CString());
+	Texture *pTexture = m_pRendererContext->GetTextureManager().LoadResource(String::FromUTF8(source.CString()));
 	if (pTexture && pTexture->GetTextureBuffer() && pTexture->GetTextureBuffer()->GetType() == TextureBuffer::TypeTextureBuffer2D) {
 		{ // Get the texture dimension
 			TextureBuffer2D *pTextureBuffer2D = static_cast<TextureBuffer2D*>(pTexture->GetTextureBuffer());

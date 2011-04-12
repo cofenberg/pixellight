@@ -68,7 +68,7 @@ Rocket::Core::FileHandle FileInterfacePL::Open(const Rocket::Core::String& path)
 		// Because absolute filenames can be accessed fastest by the file system, we first give
 		// the file system an absolute filename which is hopefully the correct one... if
 		// not, we must search the file which is quite slow...
-		String sUrl = path.CString();
+		String sUrl = String::FromUTF8(path.CString());
 		Url cUrl(sUrl);
 		if (cUrl.IsAbsolute()) {
 			// The given filename is already absolute! :)

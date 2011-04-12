@@ -234,12 +234,11 @@ void Application::InitRocket()
 		// "PLGeneral::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
 		const String sAppDirectory = GetApplicationContext().GetAppDirectory();
 
-		// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
 		// Load the fonts
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Roman.otf").GetASCII());
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Bold.otf").GetASCII());
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetASCII());
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetASCII());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Roman.otf").GetUTF8());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Bold.otf").GetUTF8());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetUTF8());
+		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetUTF8());
 
 		// Create and set the context
 		if (pMainWindow)
@@ -249,15 +248,13 @@ void Application::InitRocket()
 		Rocket::Debugger::Initialise(m_pRocketContext);
 
 		{ // Load the mouse cursor and release the caller's reference
-			// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
-			Rocket::Core::ElementDocument *pElementDocumentCursor = m_pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetASCII());
+			Rocket::Core::ElementDocument *pElementDocumentCursor = m_pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetUTF8());
 			if (pElementDocumentCursor)
 				pElementDocumentCursor->RemoveReference();
 		}
 
 		{ // Load the document and release the caller's reference
-			// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
-			Rocket::Core::ElementDocument *pElementDocumentDocument = m_pRocketContext->LoadDocument((sAppDirectory + "/Data/libRocket/demo.rml").GetASCII());
+			Rocket::Core::ElementDocument *pElementDocumentDocument = m_pRocketContext->LoadDocument((sAppDirectory + "/Data/libRocket/demo.rml").GetUTF8());
 			if (pElementDocumentDocument) {
 				pElementDocumentDocument->Show();
 				pElementDocumentDocument->RemoveReference();
