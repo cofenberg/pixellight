@@ -8,6 +8,7 @@
     <ClCompile Include="src\SRPlibRocket.cpp" />
     <ClCompile Include="src\MessageFilterRocket.cpp" />
     <ClCompile Include="src\FileInterfacePL.cpp" />
+    <ClCompile Include="src\libRocketAdapter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libRocket_PL\libRocket_PL.h" />
@@ -21,6 +22,7 @@
     <ClInclude Include="include\libRocket_PL\SRPlibRocket.h" />
     <ClInclude Include="include\libRocket_PL\MessageFilterRocket.h" />
     <ClInclude Include="include\libRocket_PL\FileInterfacePL.h" />
+    <ClInclude Include="include\libRocket_PL\libRocketAdapter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

@@ -252,6 +252,7 @@ copy build\release64\libRocket_PL64.lib ..\..\Bin\Lib\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\FileInterfacePL.cpp" />
+    <ClCompile Include="src\libRocketAdapter.cpp" />
     <ClCompile Include="src\libRocket_PL.cpp" />
     <ClCompile Include="src\MessageFilterRocket.cpp" />
     <ClCompile Include="src\RenderInterfacePL.cpp" />
@@ -261,6 +262,7 @@ copy build\release64\libRocket_PL64.lib ..\..\Bin\Lib\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libRocket_PL\FileInterfacePL.h" />
+    <ClInclude Include="include\libRocket_PL\libRocketAdapter.h" />
     <ClInclude Include="include\libRocket_PL\libRocket_PL.h" />
     <ClInclude Include="include\libRocket_PL\libRocket_PLLinux.h" />
     <ClInclude Include="include\libRocket_PL\libRocket_PLWindows.h" />

@@ -34,19 +34,8 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace Rocket {
-	namespace Core {
-		class Context;
-		class FileInterface;
-		class RenderInterface;
-		class SystemInterface;
-	}
-}
 namespace libRocket_PL {
-	class MessageFilterRocket;
-}
-namespace PLMath {
-	class Vector2i;
+	class libRocketAdapter;
 }
 
 
@@ -83,15 +72,6 @@ class Application : public PLEngine::BasicSceneApplication {
 	private:
 		/**
 		*  @brief
-		*    Called when the size was changed
-		*
-		*  @param[in] vSize
-		*    New size
-		*/
-		void NotifySize(const PLMath::Vector2i &vSize);
-
-		/**
-		*  @brief
 		*    Called when a key is pressed down
 		*
 		*  @param[in] nKey
@@ -125,21 +105,9 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Initializes libRocket
-		*/
-		void InitRocket();
-
-
-	//[-------------------------------------------------------]
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<const PLMath::Vector2i&>			   EventHandlerSize;
 		PLCore::EventHandler<PLGeneral::uint32, PLGeneral::uint32> EventHandlerKeyDown;
 
 
@@ -147,11 +115,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rocket::Core::Context				*m_pRocketContext;			/**< libRocket context, can be a null pointer */
-		Rocket::Core::RenderInterface		*m_pRocketRenderInterface;	/**< libRocket render interface, can be a null pointer */
-		Rocket::Core::SystemInterface		*m_pRocketSystemInterface;	/**< libRocket system interface, can be a null pointer */
-		Rocket::Core::FileInterface			*m_pRocketFileInterface;	/**< libRocket file interface, can be a null pointer */
-		libRocket_PL::MessageFilterRocket	*m_pMessageFilterRocket;	/**< Message filter that feeds PLGui messages into libRocket, can be a null pointer */
+		libRocket_PL::libRocketAdapter *m_pRocketAdapter;	/**< libRocket adapter instance, can be a null pointer */
 
 
 };

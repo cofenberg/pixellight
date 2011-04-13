@@ -8,6 +8,7 @@ define_project(libRocket_PL)
 ##################################################
 add_sources(
 	src/libRocket_PL.cpp
+	src/libRocketAdapter.cpp
 	src/RenderInterfacePL.cpp
 	src/RenderInterfacePLShaders.cpp
 	src/SystemInterfacePL.cpp
