@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RenderInterfacePLShaders.h                     *
+ *  File: FileInterfacePL.h                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,25 +20,16 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_RENDERINTERFACE_SHADERS_H__
-#define __LIBROCKET_PL_RENDERINTERFACE_SHADERS_H__
+#ifndef __LIBROCKET_PL_FILEINTERFACE_H__
+#define __LIBROCKET_PL_FILEINTERFACE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "libRocket_PL/RenderInterfacePL.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declaration                                   ]
-//[-------------------------------------------------------]
-namespace PLRenderer {
-	class Program;
-	class VertexShader;
-	class FragmentShader;
-}
+#include <Rocket/Core/FileInterface.h>
+#include "libRocket_PL/libRocket_PL.h"
 
 
 //[-------------------------------------------------------]
@@ -52,9 +43,9 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A render interface for Rocket into PixelLight using shaders
+*    A file interface for Rocket into PixelLight
 */
-class RenderInterfacePLShaders : public RenderInterfacePL {
+class FileInterfacePL : public Rocket::Core::FileInterface {
 
 
 	//[-------------------------------------------------------]
@@ -63,32 +54,26 @@ class RenderInterfacePLShaders : public RenderInterfacePL {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cRendererContext
-		*    The used renderer context
+		*    Default constructor
 		*/
-		LIBROCKET_PL_API RenderInterfacePLShaders(PLRenderer::RendererContext &cRendererContext);
+		LIBROCKET_PL_API FileInterfacePL();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		LIBROCKET_PL_API virtual ~RenderInterfacePLShaders();
+		LIBROCKET_PL_API virtual ~FileInterfacePL();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual RenderInterfacePL functions            ]
-	//[-------------------------------------------------------]
-	public:
-		LIBROCKET_PL_API virtual bool ConfigureRenderSystem();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Rocket::Core::RenderInterface functions ]
+	//[ Public virtual Rocket::Core::FileInterface functions  ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual void RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation);
+		LIBROCKET_PL_API virtual Rocket::Core::FileHandle Open(const Rocket::Core::String& path);
+		LIBROCKET_PL_API virtual void Close(Rocket::Core::FileHandle file);
+		LIBROCKET_PL_API virtual size_t Read(void* buffer, size_t size, Rocket::Core::FileHandle file);
+		LIBROCKET_PL_API virtual bool Seek(Rocket::Core::FileHandle file, long offset, int origin);
+		LIBROCKET_PL_API virtual size_t Tell(Rocket::Core::FileHandle file);
 
 
 	//[-------------------------------------------------------]
@@ -102,7 +87,7 @@ class RenderInterfacePLShaders : public RenderInterfacePL {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		RenderInterfacePLShaders(const RenderInterfacePLShaders &cSource);
+		FileInterfacePL(const FileInterfacePL &cSource);
 
 		/**
 		*  @brief
@@ -114,16 +99,7 @@ class RenderInterfacePLShaders : public RenderInterfacePL {
 		*  @return
 		*    Reference to this instance
 		*/
-		RenderInterfacePLShaders &operator =(const RenderInterfacePLShaders &cSource);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLRenderer::VertexShader	*m_pVertexShader;	/**< Vertex shader, can be a null pointer */
-		PLRenderer::FragmentShader	*m_pFragmentShader;	/**< Fragment shader, can be a null pointer */
-		PLRenderer::Program			*m_pProgram;		/**< GPU program, can be a null pointer */
+		FileInterfacePL &operator =(const FileInterfacePL &cSource);
 
 
 };
@@ -135,4 +111,4 @@ class RenderInterfacePLShaders : public RenderInterfacePL {
 } // libRocket_PL
 
 
-#endif // __LIBROCKET_PL_RENDERINTERFACE_SHADERS_H__
+#endif // __LIBROCKET_PL_FILEINTERFACE_H__

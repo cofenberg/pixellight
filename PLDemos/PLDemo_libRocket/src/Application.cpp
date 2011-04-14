@@ -24,15 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Rocket/Core.h>
-#include <Rocket/Controls.h>
-#include <Rocket/Debugger.h>
-#include <libRocket_PL/SRPlibRocket.h>
-#include <libRocket_PL/SystemInterfacePL.h>
-#include <libRocket_PL/MessageFilterRocket.h>
-#include <libRocket_PL/RenderInterfacePLShaders.h>
+#include <libRocket_PL/libRocketAdapter.h>
 #include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Widget.h>
 #include <PLScene/Scene/SPScene.h>
@@ -61,10 +55,7 @@ using namespace PLScene;
 */
 Application::Application() :
 	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	m_pRocketContext(nullptr),
-	m_pRocketRenderInterface(nullptr),
-	m_pRocketSystemInterface(nullptr),
-	m_pMessageFilterRocket(nullptr)
+	m_pRocketAdapter(nullptr)
 {
 	// Set application name and title
 	SetName("PLDemo_libRocket");
@@ -91,9 +82,10 @@ Application::~Application()
 void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	// Check whether the escape key was pressed
-	if (nKey == PLGUIKEY_ESCAPE)
+	if (nKey == PLGUIKEY_ESCAPE) {
 		// Shut down the application
 		Exit(0);
+		}
 }
 
 
@@ -102,26 +94,10 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 //[-------------------------------------------------------]
 void Application::OnDeInit()
 {
-	// Remove message filter that feeds PLGui messages into libRocket
-	if (m_pMessageFilterRocket) {
-		// PLGui destroys automatically the "m_pMessageFilterRocket"-instance
-		Gui::GetSystemGui()->RemoveMessageFilter(m_pMessageFilterRocket);
-		m_pMessageFilterRocket = nullptr;
-	}
-
-	// De-initialize libRocket
-	if (m_pRocketContext) {
-		m_pRocketContext->RemoveReference();
-		m_pRocketContext = nullptr;
-	}
-	Rocket::Core::Shutdown();
-	if (m_pRocketSystemInterface) {
-		delete m_pRocketSystemInterface;
-		m_pRocketSystemInterface = nullptr;
-	}
-	if (m_pRocketRenderInterface) {
-		delete m_pRocketRenderInterface;
-		m_pRocketRenderInterface = nullptr;
+	// Destroy the libRocket adapter instance
+	if (m_pRocketAdapter) {
+		delete m_pRocketAdapter;
+		m_pRocketAdapter = nullptr;
 	}
 
 	// Call base implementation
@@ -136,8 +112,48 @@ void Application::OnInit()
 	// Call base implementation
 	BasicSceneApplication::OnInit();
 
-	// Initialize libRocket
-	InitRocket();
+	// Get the scene context
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		// Create the libRocket adapter instance
+		m_pRocketAdapter = new libRocket_PL::libRocketAdapter(pSceneContext->GetRendererContext(), GetMainWindow());
+		Rocket::Core::Context *pRocketContext = m_pRocketAdapter->GetRocketContext();
+		if (pRocketContext) {
+			// Get the application directory - look out! We can't just assume that the current work directory
+			// is the same as were the executable is in. If we do so, for example starting the application by using
+			// a MS Windows menu shortcut will not work... and just changing the current work directory by using
+			// "PLGeneral::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
+			const String sAppDirectory = GetApplicationContext().GetAppDirectory();
+
+			// Load the fonts
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Roman.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Bold.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetUTF8());
+
+			{ // Load the mouse cursor and release the caller's reference
+				Rocket::Core::ElementDocument *pElementDocumentCursor = pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetUTF8());
+				if (pElementDocumentCursor)
+					pElementDocumentCursor->RemoveReference();
+			}
+
+			{ // Load the document and release the caller's reference
+				Rocket::Core::ElementDocument *pElementDocumentDocument = pRocketContext->LoadDocument((sAppDirectory + "/Data/libRocket/demo.rml").GetUTF8());
+				if (pElementDocumentDocument) {
+					pElementDocumentDocument->Show();
+					pElementDocumentDocument->RemoveReference();
+				}
+			}
+
+			// Add libRocket scene renderer pass instance
+			SceneRenderer *pSceneRenderer = GetSceneRendererTool().GetSceneRenderer();
+			if (pSceneRenderer) {
+				libRocket_PL::SRPlibRocket *pSRPlibRocket = m_pRocketAdapter->CreateSRPlibRocketInstance();
+				if (pSRPlibRocket)
+					pSceneRenderer->Add(*reinterpret_cast<SceneRendererPass*>(pSRPlibRocket));
+			}
+		}
+	}
 }
 
 
@@ -185,86 +201,4 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 	// Set scene container
 	SetScene(&cContainer);
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Initializes libRocket
-*/
-void Application::InitRocket()
-{
-	// Get the scene context
-	SceneContext *pSceneContext = GetSceneContext();
-	if (pSceneContext) {
-		// Get the widget of the main window
-		Widget *pMainWindow = GetMainWindow();
-
-		// Create and set the render interface
-		if (pMainWindow)
-			m_pRocketRenderInterface = new libRocket_PL::RenderInterfacePLShaders(pSceneContext->GetRendererContext(), pMainWindow->GetSize().x, pMainWindow->GetSize().y);
-		else
-			m_pRocketRenderInterface = new libRocket_PL::RenderInterfacePLShaders(pSceneContext->GetRendererContext(), 640, 480);
-		Rocket::Core::SetRenderInterface(m_pRocketRenderInterface);
-
-		// Create and set the system interface
-		m_pRocketSystemInterface = new libRocket_PL::SystemInterfacePL();
-		Rocket::Core::SetSystemInterface(m_pRocketSystemInterface);
-
-		// Initialize libRocket
-		Rocket::Core::Initialise();
-		Rocket::Controls::Initialise();
-
-		// Get the application directory - look out! We can't just assume that the current work directory
-		// is the same as were the executable is in. If we do so, for example starting the application by using
-		// a MS Windows menu shortcut will not work... and just changing the current work directory by using
-		// "PLGeneral::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
-		const String sAppDirectory = GetApplicationContext().GetAppDirectory();
-
-		// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
-		// Load the fonts
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Roman.otf").GetASCII());
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Bold.otf").GetASCII());
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetASCII());
-		Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetASCII());
-
-		// Create and set the context
-		if (pMainWindow)
-			m_pRocketContext = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(pMainWindow->GetSize().x, pMainWindow->GetSize().y));
-		else
-			m_pRocketContext = Rocket::Core::CreateContext("main", Rocket::Core::Vector2i(640, 480));
-		Rocket::Debugger::Initialise(m_pRocketContext);
-
-		{ // Load the mouse cursor and release the caller's reference
-			// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
-			Rocket::Core::ElementDocument *pElementDocumentCursor = m_pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetASCII());
-			if (pElementDocumentCursor)
-				pElementDocumentCursor->RemoveReference();
-		}
-
-		{ // Load the document and release the caller's reference
-			// [TODO] Hm, passing ASCII isn't that good... any other reasonable option?
-			Rocket::Core::ElementDocument *pElementDocumentDocument = m_pRocketContext->LoadDocument((sAppDirectory + "/Data/libRocket/demo.rml").GetASCII());
-			if (pElementDocumentDocument) {
-				pElementDocumentDocument->Show();
-				pElementDocumentDocument->RemoveReference();
-			}
-		}
-
-		// Add message filter that feeds PLGui messages from the content widget of the main window into libRocket
-		m_pMessageFilterRocket = new libRocket_PL::MessageFilterRocket(*m_pRocketContext);
-		// [TODO] Currently, when using an target widget, some events like mouse wheel or key are send from another widget than the content widget...
-//		m_pMessageFilterRocket = new libRocket_PL::MessageFilterRocket(*m_pRocketContext, GetMainWindow() ? GetMainWindow()->GetContentWidget() : nullptr);
-		Gui::GetSystemGui()->AddMessageFilter(m_pMessageFilterRocket);
-
-		// Add libRocket scene renderer pass instance
-		SceneRenderer *pSceneRenderer = GetSceneRendererTool().GetSceneRenderer();
-		if (pSceneRenderer) {
-			libRocket_PL::SRPlibRocket *pSRPlibRocket = new libRocket_PL::SRPlibRocket(*m_pRocketContext, *(static_cast<libRocket_PL::RenderInterfacePL*>(m_pRocketRenderInterface)));
-			pSceneRenderer->Add(*pSRPlibRocket);
-		}
-	}
 }

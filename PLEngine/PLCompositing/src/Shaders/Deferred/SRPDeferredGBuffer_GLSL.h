@@ -20,32 +20,32 @@
 *********************************************************/
 
 
-// OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.1 ("#version 120") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredGBuffer_GLSL_VS = "\
 // In attributes\n\
-in vec4 VertexPosition;			// Object space vertex position\n\
-in vec2 VertexTexCoord0;		// Vertex texture coordinate\n\
+attribute vec4 VertexPosition;		// Object space vertex position\n\
+attribute vec2 VertexTexCoord0;		// Vertex texture coordinate\n\
 #ifdef VS_SECONDTEXTURECOORDINATE\n\
-	in vec2 VertexTexCoord1;	// Vertex ambient occlusion map and/or light map texture coordinate\n\
+	attribute vec2 VertexTexCoord1;	// Vertex ambient occlusion map and/or light map texture coordinate\n\
 #endif\n\
-in vec3 VertexNormal;			// Object space vertex normal\n\
+attribute vec3 VertexNormal;		// Object space vertex normal\n\
 #ifdef VS_TANGENT_BINORMAL\n\
-	in vec3 VertexTangent;		// Object space vertex tangent\n\
-	in vec3 VertexBinormal;		// Object space vertex tangent\n\
+	attribute vec3 VertexTangent;	// Object space vertex tangent\n\
+	attribute vec3 VertexBinormal;	// Object space vertex tangent\n\
 #endif\n\
 \n\
 // Out attributes\n\
 #ifdef VS_SECONDTEXTURECOORDINATE\n\
-	out vec4 TexCoordVS;		// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate output\n\
+	varying vec4 TexCoordVS;		// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate output\n\
 #else\n\
-	out vec2 TexCoordVS;		// Vertex texture coordinate output\n\
+	varying vec2 TexCoordVS;		// Vertex texture coordinate output\n\
 #endif\n\
-out vec4 NormalDepthVS;			// View space vertex normal and view space linear depth [0...far plane] output\n\
-out vec3 TangentVS;				// View space vertex tangent output\n\
-out vec3 BinormalVS;			// View space vertex tangent output\n\
-out vec3 EyeVecVS;				// Tangent space vector pointing from the pixel to the eye point output\n\
+varying vec4 NormalDepthVS;			// View space vertex normal and view space linear depth [0...far plane] output\n\
+varying vec3 TangentVS;				// View space vertex tangent output\n\
+varying vec3 BinormalVS;			// View space vertex tangent output\n\
+varying vec3 EyeVecVS;				// Tangent space vector pointing from the pixel to the eye point output\n\
 #ifdef VS_VIEWSPACEPOSITION\n\
-	out vec3 PositionVS;		// View space vertex position output\n\
+	varying vec3 PositionVS;		// View space vertex position output\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -65,9 +65,9 @@ void main()\n\
 {\n\
 #ifdef VS_DISPLACEMENTMAP\n\
 	// Sample displacement map\n\
-	float displacement = texture(DisplacementMap, vec4(VertexTexCoord0, 0, 0)).r;\n\
+	float displacement = texture(DisplacementMap, vec4(VertexTexCoord0, 0.0, 0.0)).r;\n\
 	displacement = (displacement*DisplacementScaleBias.x) + DisplacementScaleBias.y;\n\
-	vec4 vertexPosition = vec4(VertexPosition.xyz + displacement*VertexNormal, 1);\n\
+	vec4 vertexPosition = vec4(VertexPosition.xyz + displacement*VertexNormal, 1.0);\n\
 #else\n\
 	#define vertexPosition VertexPosition\n\
 #endif\n\
@@ -111,22 +111,22 @@ void main()\n\
 }";
 
 
-// OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
+// OpenGL 2.1 ("#version 120") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLGeneral::String sDeferredGBuffer_GLSL_FS = "\
 // Attributes\n\
 #if defined(FS_AMBIENTOCCLUSIONMAP) || defined(FS_LIGHTMAP)\n\
-	in vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate from vertex shader\n\
+	varying vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate from vertex shader\n\
 #else\n\
-	in vec2 TexCoordVS;	// Vertex texture coordinate from vertex shader\n\
+	varying vec2 TexCoordVS;	// Vertex texture coordinate from vertex shader\n\
 #endif\n\
-in vec4 NormalDepthVS;	// View space vertex normal (normalize it to avoid interpolation artefacts!) and view space linear depth [0...far plane] from vertex shader\n\
+varying vec4 NormalDepthVS;		// View space vertex normal (normalize it to avoid interpolation artefacts!) and view space linear depth [0...far plane] from vertex shader\n\
 #ifdef FS_NORMALMAP\n\
-	in vec3 TangentVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
-	in vec3 BinormalVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
+	varying vec3 TangentVS;		// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
+	varying vec3 BinormalVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
 #endif\n\
-in vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
+varying vec3 EyeVecVS;			// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
 #ifdef FS_REFLECTION\n\
-	in vec3 PositionVS;	// View space vertex position from vertex shader\n\
+	varying vec3 PositionVS;	// View space vertex position from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -197,8 +197,8 @@ uniform vec3 DiffuseColor;\n\
 // Encodes a 3 component normal vector to a 2 component normal vector\n\
 vec2 encodeNormalVector(vec3 normal)\n\
 {\n\
-	float p = sqrt(normal.z*8 + 8);\n\
-	return vec2(normal.xy/p + 0.5f);\n\
+	float p = sqrt(normal.z*8.0 + 8.0);\n\
+	return vec2(normal.xy/p + vec2(0.5, 0.5));\n\
 }\n\
 \n\
 float fresnel(vec3 light, vec3 normal, vec2 constants)\n\
@@ -206,8 +206,8 @@ float fresnel(vec3 light, vec3 normal, vec2 constants)\n\
 	// Light and normal are assumed to be normalized\n\
 	// constants.x = R0 [0..1]\n\
 	// constants.y = Power, always >0\n\
-	float cosAngle = clamp(1 - dot(light, normal), 0.0f, 1.0f); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
-	return constants.x + (1 - constants.x) * pow(cosAngle, constants.y);\n\
+	float cosAngle = clamp(1.0 - dot(light, normal), 0.0, 1.0); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+	return constants.x + (1.0 - constants.x) * pow(cosAngle, constants.y);\n\
 }\n\
 \n\
 // Program entry point\n\
@@ -230,7 +230,7 @@ void main()\n\
 \n\
 	// For better quality: Refine the parallax by making another lookup at where we ended\n\
 	// up in the first parallax computation, then averaging the results.\n\
-	float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5f;\n\
+	float height2 = (height + texture2D(HeightMap, textureCoordinate).r)*0.5;\n\
 	offset = height2*scale + bias;\n\
 	textureCoordinate = TexCoordVS.xy + offset*eyeVec.xy;\n\
 #else\n\
@@ -247,7 +247,7 @@ void main()\n\
 	#endif\n\
 	// Perform sRGB to linear space conversion (gamma correction)\n\
 	#ifdef FS_GAMMACORRECTION\n\
-		gl_FragData[0].rgb = pow(gl_FragData[0].rgb, vec3(2.2f, 2.2f, 2.2f));\n\
+		gl_FragData[0].rgb = pow(gl_FragData[0].rgb, vec3(2.2, 2.2, 2.2));\n\
 	#endif\n\
 	// Apply diffuse color\n\
 	gl_FragData[0].rgb *= DiffuseColor;\n\
@@ -263,7 +263,7 @@ void main()\n\
 	#ifdef FS_AMBIENTOCCLUSIONMAP\n\
 		gl_FragData[0].a = texture2D(AmbientOcclusionMap, TexCoordVS.zw).r*AmbientOcclusionFactor;\n\
 	#else\n\
-		gl_FragData[0].a = 1;\n\
+		gl_FragData[0].a = 1.0;\n\
 	#endif\n\
 #endif\n\
 \n\
@@ -274,13 +274,13 @@ void main()\n\
 		// Fetch the xy-components of the normal and reconstruct the z-component\n\
 		vec3 normal;\n\
 		#ifdef FS_NORMALMAP_DXT5_XGXR\n\
-			normal.xy = texture2D(NormalMap, textureCoordinate).ag*2 - 1;\n\
+			normal.xy = texture2D(NormalMap, textureCoordinate).ag*2.0 - 1.0;\n\
 		#else\n\
-			normal.xy = texture2D(NormalMap, textureCoordinate).ra*2 - 1;\n\
+			normal.xy = texture2D(NormalMap, textureCoordinate).ra*2.0 - 1.0;\n\
 		#endif\n\
-		normal.z = sqrt(clamp(1 - normal.x*normal.x - normal.y*normal.y, 0.0f, 1.0f));\n\
+		normal.z = sqrt(clamp(1.0 - normal.x*normal.x - normal.y*normal.y, 0.0, 1.0));\n\
 	#else\n\
-		vec3 normal = texture2D(NormalMap, textureCoordinate).xyz*2 - 1;\n\
+		vec3 normal = texture2D(NormalMap, textureCoordinate).xyz*2.0 - 1.0;\n\
 	#endif\n\
 	normal.xy *= NormalMapBumpiness;\n\
 \n\
@@ -290,13 +290,13 @@ void main()\n\
 			// Fetch the xy-components of the normal and reconstruct the z-component\n\
 			vec3 detailNormal;\n\
 			#ifdef FS_DETAILNORMALMAP_DXT5_XGXR\n\
-				detailNormal.xy = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ag*2 - 1;\n\
+				detailNormal.xy = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ag*2.0 - 1.0;\n\
 			#else\n\
-				detailNormal.xy = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ra*2 - 1;\n\
+				detailNormal.xy = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).ra*2.0 - 1.0;\n\
 			#endif\n\
-			detailNormal.z = sqrt(clamp(1 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0f, 1.0f));\n\
+			detailNormal.z = sqrt(clamp(1.0 - detailNormal.x*detailNormal.x - detailNormal.y*detailNormal.y, 0.0, 1.0));\n\
 		#else\n\
-			vec3 detailNormal = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2 - 1;\n\
+			vec3 detailNormal = texture2D(DetailNormalMap, textureCoordinate*DetailNormalMapUVScale).xyz*2.0 - 1.0;\n\
 		#endif\n\
 \n\
 		// Just add the detail normal to the standard normal\n\
@@ -308,9 +308,9 @@ void main()\n\
 #else\n\
 	vec3 normal = normalize(NormalDepthVS.rgb);\n\
 #endif\n\
-	// [TODO] There seem to be invalid normal vectors here (NAN)\n\
-	if (isnan(normal.x) || isnan(normal.y) || isnan(normal.z))\n\
-		normal = vec3(0, 0, 1); // I had situations with invalid normal vectors...\n\
+	// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
+	if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)\n\
+		normal = vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
 	// RG encoded normal vector\n\
 	gl_FragData[1].rg = encodeNormalVector(normal);\n\
 \n\
@@ -323,7 +323,7 @@ void main()\n\
 	// mapping system!\n\
 //	gl_FragData[1].b -= normal.z*(height*ParallaxScaleBias.x + ParallaxScaleBias.y);\n\
 #endif\n\
-	gl_FragData[1].a = 1; // Currently unused\n\
+	gl_FragData[1].a = 1.0; // Currently unused\n\
 \n\
 	// RT2: Specular color RGB + specular exponent\n\
 #ifdef FS_SPECULAR\n\
@@ -336,18 +336,18 @@ void main()\n\
 		gl_FragData[2].a   = SpecularExponent;\n\
 	#endif\n\
 #else\n\
-	gl_FragData[2] = vec4(0);\n\
+	gl_FragData[2] = vec4(0.0, 0.0, 0.0, 0.0);\n\
 #endif\n\
 \n\
 	// RT3: Light accumulation RGB\n\
-	gl_FragData[3] = vec4(0);\n\
+	gl_FragData[3] = vec4(0.0, 0.0, 0.0, 0.0);\n\
 	// Light map color RGB\n\
 	#ifdef FS_LIGHTMAP\n\
 		// Get light map texel data\n\
 		vec3 lightMapTexel = texture2D(LightMap, TexCoordVS.zw).rgb;\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			lightMapTexel = pow(lightMapTexel, vec3(2.2f, 2.2f, 2.2f));\n\
+			lightMapTexel = pow(lightMapTexel, vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Add color\n\
 		gl_FragData[3].rgb += lightMapTexel*LightMapColor;\n\
@@ -358,7 +358,7 @@ void main()\n\
 		vec3 emissiveMapTexel = texture2D(EmissiveMap, textureCoordinate).rgb;\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			emissiveMapTexel = pow(emissiveMapTexel, vec3(2.2f, 2.2f, 2.2f));\n\
+			emissiveMapTexel = pow(emissiveMapTexel, vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Add color\n\
 		gl_FragData[3].rgb += emissiveMapTexel*EmissiveMapColor;\n\
@@ -386,16 +386,16 @@ void main()\n\
 		#endif\n\
 \n\
 		// Reflection color\n\
-		vec3 reflectionColor = vec3(1);\n\
+		vec3 reflectionColor = vec3(1.0, 1.0, 1.0);\n\
 		#ifdef FS_2DREFLECTIONMAP\n\
 			// Spherical environment mapping\n\
 			vec3  r = ViewSpaceToWorldSpace*normalize(reflect(PositionVS, normal));\n\
-			float m = 2*sqrt(r.x*r.x + r.y*r.y + (r.z + 1)*(r.z + 1));\n\
-			#define FLT_MIN 1.175494351e-38F // Minimum positive value\n\
+			float m = 2.0*sqrt(r.x*r.x + r.y*r.y + (r.z + 1.0)*(r.z + 1.0));\n\
+			#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
 			if (m < FLT_MIN)\n\
 				m = FLT_MIN;\n\
 			#undef FLT_MIN\n\
-			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5f, 1 - (r.y/m + 0.5f))).rgb;\n\
+			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
 		#elif defined(FS_CUBEREFLECTIONMAP)\n\
 			// Cubic environment mapping\n\
 			// There's no need to normalize the reflection vector when using cube maps\n\
@@ -403,7 +403,7 @@ void main()\n\
 		#endif\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			reflectionColor = pow(reflectionColor, vec3(2.2f, 2.2f, 2.2f));\n\
+			reflectionColor = pow(reflectionColor, vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Apply reflection color\n\
 		reflectionColor *= ReflectionColor;\n\

@@ -522,7 +522,7 @@ class StringBuffer {
 
 		/**
 		*  @brief
-		*    Removes line endings ("\r\n" or "\n")
+		*    Removes line endings ("\r" or "\n") at the end of the string
 		*
 		*  @return
 		*    This string buffer if nothing was changed, else new string buffer, (without any initial reference)

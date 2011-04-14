@@ -722,7 +722,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 				if (pTextureBuffer->GetType() == TextureBuffer::TypeTextureBuffer2D) {
 					m_b2DReflectionMap = true;
 					PL_ADD_FS_FLAG(m_cProgramFlags, FS_2DREFLECTIONMAP)
-				} else if (m_pReflectionMap->GetType() == TextureBuffer::TypeTextureBufferCube) {
+				} else if (pTextureBuffer->GetType() == TextureBuffer::TypeTextureBufferCube) {
 					m_b2DReflectionMap = false;
 					PL_ADD_FS_FLAG(m_cProgramFlags, FS_CUBEREFLECTIONMAP)
 				} else {

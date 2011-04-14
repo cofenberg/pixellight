@@ -185,8 +185,11 @@ void RenderInterfacePL::EnableScissorRegion(bool enable)
 {
 	m_bScissorRegion = enable;
 	m_pRendererContext->GetRenderer().SetRenderState(RenderState::ScissorTestEnable, m_bScissorRegion);
-	if (m_bScissorRegion)
+	if (m_bScissorRegion) {
+		if (!m_bScissorRegionInitialized)
+			m_cScissorRegion = m_pRendererContext->GetRenderer().GetViewport();
 		m_pRendererContext->GetRenderer().SetScissorRect(&m_cScissorRegion);
+	}
 }
 
 void RenderInterfacePL::SetScissorRegion(int x, int y, int width, int height)
@@ -200,7 +203,7 @@ void RenderInterfacePL::SetScissorRegion(int x, int y, int width, int height)
 bool RenderInterfacePL::LoadTexture(Rocket::Core::TextureHandle& texture_handle, Rocket::Core::Vector2i& texture_dimensions, const Rocket::Core::String& source)
 {
 	// Load the texture
-	Texture *pTexture = m_pRendererContext->GetTextureManager().LoadResource(source.CString());
+	Texture *pTexture = m_pRendererContext->GetTextureManager().LoadResource(String::FromUTF8(source.CString()));
 	if (pTexture && pTexture->GetTextureBuffer() && pTexture->GetTextureBuffer()->GetType() == TextureBuffer::TypeTextureBuffer2D) {
 		{ // Get the texture dimension
 			TextureBuffer2D *pTextureBuffer2D = static_cast<TextureBuffer2D*>(pTexture->GetTextureBuffer());
@@ -320,10 +323,10 @@ RenderInterfacePL::RenderInterfacePL(const RenderInterfacePL &cSource) :
 *  @brief
 *    Constructor
 */
-RenderInterfacePL::RenderInterfacePL(RendererContext &cRendererContext, uint32 nWindowWidth, uint32 nWindowHeight) :
+RenderInterfacePL::RenderInterfacePL(RendererContext &cRendererContext) :
 	m_pRendererContext(&cRendererContext),
-	m_bScissorRegion(false),
-	m_cScissorRegion(0.0f, 0.0f, static_cast<float>(nWindowWidth), static_cast<float>(nWindowHeight))
+	m_bScissorRegionInitialized(false),
+	m_bScissorRegion(false)
 {
 }
 

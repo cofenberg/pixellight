@@ -34,15 +34,8 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace Rocket {
-	namespace Core {
-		class Context;
-		class RenderInterface;
-		class SystemInterface;
-	}
-}
 namespace libRocket_PL {
-	class MessageFilterRocket;
+	class libRocketAdapter;
 }
 
 
@@ -112,17 +105,6 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Initializes libRocket
-		*/
-		void InitRocket();
-
-
-	//[-------------------------------------------------------]
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
@@ -133,10 +115,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rocket::Core::Context				*m_pRocketContext;			/**< libRocket context, can be a null pointer */
-		Rocket::Core::RenderInterface		*m_pRocketRenderInterface;	/**< libRocket render interface, can be a null pointer */
-		Rocket::Core::SystemInterface		*m_pRocketSystemInterface;	/**< libRocket system interface, can be a null pointer */
-		libRocket_PL::MessageFilterRocket	*m_pMessageFilterRocket;	/**< Message filter that feeds PLGui messages into libRocket, can be a null pointer */
+		libRocket_PL::libRocketAdapter *m_pRocketAdapter;	/**< libRocket adapter instance, can be a null pointer */
 
 
 };

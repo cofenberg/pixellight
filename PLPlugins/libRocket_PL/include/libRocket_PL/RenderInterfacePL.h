@@ -154,12 +154,8 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*
 		*  @param[in] cRendererContext
 		*    The used renderer context
-		*  @param[in] nWindowWidth
-		*    Window width
-		*  @param[in] nWindowHeight
-		*    Window height
 		*/
-		LIBROCKET_PL_API RenderInterfacePL(PLRenderer::RendererContext &cRendererContext, PLGeneral::uint32 nWindowWidth, PLGeneral::uint32 nWindowHeight);
+		LIBROCKET_PL_API RenderInterfacePL(PLRenderer::RendererContext &cRendererContext);
 
 		/**
 		*  @brief
@@ -178,9 +174,10 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::RendererContext *m_pRendererContext;	/**< Render context, always valid! */
-		bool						 m_bScissorRegion;		/**< Scissor region enabled? */
-		PLMath::Rectangle			 m_cScissorRegion;		/**< Scissor region, only used if 'm_bScissorRegion' is 'true' */
+		PLRenderer::RendererContext *m_pRendererContext;			/**< Render context, always valid! */
+		bool						 m_bScissorRegionInitialized;	/**< Scissor region initialized? */
+		bool						 m_bScissorRegion;				/**< Scissor region enabled? */
+		PLMath::Rectangle			 m_cScissorRegion;				/**< Scissor region, only used if 'm_bScissorRegion' is 'true' */
 
 
 };
