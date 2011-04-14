@@ -252,12 +252,12 @@ const XmlAttribute *XmlElement::GetFirstAttribute() const
 */
 XmlAttribute *XmlElement::GetLastAttribute()
 {
-	return m_cAttributeSet.GetFirst();
+	return m_cAttributeSet.GetLast();
 }
 
 const XmlAttribute *XmlElement::GetLastAttribute() const
 {
-	return m_cAttributeSet.GetFirst();
+	return m_cAttributeSet.GetLast();
 }
 
 /**

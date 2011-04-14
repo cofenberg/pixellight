@@ -23,6 +23,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Bugfix: "PLGraphics:ImageData::Decompress()": There was an buffer overflow when decompressing images with none-multiple of 4 dimensions
 - Bugfix: If necessary, joint scene node modifiers need to transform the joint position and direction(s) into the physics world scene container
 - Bugfix: PLRendererOpenGL: When using a depth buffer texture format (D16, D24, D32) "FrameBufferObject::Initialize()" was also adding a color buffer, fixed that
+- Bugfix (ID: 3286541): "PLGeneral::XmlElement::GetLastAttribute()" was returning the first instead of the last attribute
 
 
 Changes in PixelLight 0.9.5-R1 (released on February 23, 2011)

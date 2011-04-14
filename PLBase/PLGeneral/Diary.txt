@@ -1,3 +1,10 @@
+>> 15.04.2011
+[CO]
+- Premier: First entry within the tracker ("Bugs"-category) at http://sourceforge.net/tracker/?group_id=507544
+  -> Bugfix (ID: 3286541): "PLGeneral::XmlElement::GetLastAttribute()" was returning the first instead of the last attribute
+
+
+
 >> 09.03.2011
 [CO]
 - Url-class: Nearly over a year ago, a client reported that a client reported (jap :) that UNC (Uniform Naming Convention aka Universal
