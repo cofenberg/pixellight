@@ -1,4 +1,11 @@
-﻿>> 08.03.2011
+﻿>> 15.04.2011
+[CO]
+- Igh! The destructor of Matrix3x3 & Matrix3x4 & Matrix4x4 was virtual. This caused the addition of a virtual table which resulted in
+  +4 bytes in a 32 bit build. This was a relic of the previous RTTI.
+
+
+
+>> 08.03.2011
 [CO]
 - Vector2i: After a discussion at the PixelLight forum at http://dev.pixellight.org/forum/viewtopic.php?f=3&t=3 the
   implementation of the vector comparison operators was changed to a lexicographical order for n-dimensional vectors
