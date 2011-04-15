@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
+#include <PLGeneral/String/String.h>
 #include <PLRenderer/Renderer/ProgramUniformBlock.h>
 
 
@@ -64,8 +65,10 @@ class ProgramUniformBlockCg : public PLRenderer::ProgramUniformBlock {
 		*
 		*  @param[in] pCgParameter
 		*    Cg program parameter, must be valid!
+		*  @param[in] sShaderLanguage
+		*    The name of the shader language the uniform block is using (for example "GLSL" or "Cg")
 		*/
-		ProgramUniformBlockCg(CGparameter pCgParameter);
+		ProgramUniformBlockCg(CGparameter pCgParameter, const PLGeneral::String &sShaderLanguage);
 
 		/**
 		*  @brief
@@ -78,15 +81,20 @@ class ProgramUniformBlockCg : public PLRenderer::ProgramUniformBlock {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		CGparameter m_pCgParameter;	/**< Cg program parameter, always valid! */
+		PLGeneral::String  m_sShaderLanguage;	/**< The name of the shader language the uniform block is using (for example "GLSL" or "Cg") */
+		CGparameter		   m_pCgParameter;		/**< Cg program parameter, always valid! */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::ProgramUniformBlock functions ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool SetUniformBuffer(PLRenderer::UniformBuffer *pUniformBuffer, PLGeneral::uint32 nBindingPoint);
 		virtual PLGeneral::uint32 GetIndex() const;
 		virtual PLGeneral::uint32 GetSize() const;
+		virtual PLGeneral::uint32 GetUniformOffset(const PLGeneral::String &sUniformName) const;
+		virtual PLGeneral::uint32 GetUniformSize(const PLGeneral::String &sUniformName) const;
+		virtual PLGeneral::uint32 GetUniformNumOfArrayElements(const PLGeneral::String &sUniformName) const;
 
 
 };

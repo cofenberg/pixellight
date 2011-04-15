@@ -77,6 +77,8 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_EXT_framebuffer_object(this),
 	GL_EXT_framebuffer_multisample(this),
 	GL_EXT_framebuffer_blit(this),
+	GL_EXT_geometry_shader4(this),
+	GL_EXT_transform_feedback(this),
 	// ARB
 	GL_ARB_texture_float(this),
 	GL_ARB_color_buffer_float(this),

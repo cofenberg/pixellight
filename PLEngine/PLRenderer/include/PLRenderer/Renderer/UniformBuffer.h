@@ -71,6 +71,25 @@ class UniformBuffer : public Buffer {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual UniformBuffer functions                ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the name of the shader language the uniform buffer is using
+		*
+		*  @return
+		*    The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg")
+		*
+		*  @remarks
+		*    In theory, the uniform buffer is independent of the used shader language because it's just a buffer.
+		*    In pratice, e.g. the Cg shader language comes with it's own way how to create and use uniform buffers,
+		*    that's the only reason PixelLight connects an uniform buffer with a shader language.
+		*/
+		virtual PLGeneral::String GetShaderLanguage() const = 0;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:

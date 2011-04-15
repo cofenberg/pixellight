@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/UniformBuffer.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -62,7 +61,25 @@ class UniformBuffer : public PLRenderer::UniformBuffer {
 		*  @brief
 		*    Destructor
 		*/
-		PLRENDEREROPENGL_API virtual ~UniformBuffer();
+		virtual ~UniformBuffer();
+
+		/**
+		*  @brief
+		*    Returns the dynamic data (none UBO)
+		*
+		*  @return
+		*    Dynamic data, can be a null pointer (if no UBO if used!)
+		*/
+		void *GetDynamicData() const;
+
+		/**
+		*  @brief
+		*    Returns the OpenGL uniform buffer
+		*
+		*  @return
+		*    The OpenGL uniform buffer, 0 on error
+		*/
+		PLGeneral::uint32 GetOpenGLUniformBuffer() const;
 
 
 	//[-------------------------------------------------------]
@@ -75,35 +92,59 @@ class UniformBuffer : public PLRenderer::UniformBuffer {
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer
+		*  @param[in] sShaderLanguage
+		*    The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg")
 		*/
-		PLRENDEREROPENGL_API UniformBuffer(PLRenderer::Renderer &cRenderer);
+		UniformBuffer(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage);
+
+		/**
+		*  @brief
+		*    Makes this uniform buffer to the renderers current uniform buffer
+		*
+		*  @return
+		*   'true' if all went fine, else 'false'
+		*/
+		bool MakeCurrent();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32 m_nUniformBuffer;	/**< OpenGL buffer buffer (VBO) */
+		PLGeneral::String  m_sShaderLanguage;	/**< The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg") */
+		PLGeneral::uint32  m_nUniformBuffer;	/**< OpenGL uniform buffer (UBO) */
+		void			  *m_pData;				/**< Dynamic buffer, can be a null pointer (none UBO) */
+		void			  *m_pLockedData;		/**< Locked data, can be a null pointer */
+		bool			   m_bLockReadOnly;		/**< Read only lock? */
+		bool			   m_bUpdateUBO;		/**< Do we need to update the UBO? */
+		PLGeneral::uint32  m_nUsageAPI;			/**< API usage setting */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::UniformBuffer functions    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLGeneral::String GetShaderLanguage() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Buffer functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDEREROPENGL_API virtual bool IsAllocated() const;
-		PLRENDEREROPENGL_API virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
-		PLRENDEREROPENGL_API virtual bool Clear();
-		PLRENDEREROPENGL_API virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
-		PLRENDEREROPENGL_API virtual void *GetData();
-		PLRENDEREROPENGL_API virtual bool Unlock();
+		virtual bool IsAllocated() const;
+		virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
+		virtual bool Clear();
+		virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		virtual void *GetData();
+		virtual bool Unlock();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLRenderer::Resource functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		PLRENDEREROPENGL_API virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		PLRENDEREROPENGL_API virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
 
 
 };

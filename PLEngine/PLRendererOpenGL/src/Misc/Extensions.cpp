@@ -155,6 +155,15 @@ PFNGLBLITFRAMEBUFFEREXTPROC						glBlitFramebufferEXT						= nullptr;
 // GL_EXT_geometry_shader4
 PFNGLPROGRAMPARAMETERIEXTPROC					glProgramParameteriEXT						= nullptr;
 
+// GL_EXT_transform_feedback
+PFNGLBEGINTRANSFORMFEEDBACKEXTPROC				glBeginTransformFeedbackEXT					= nullptr;
+PFNGLENDTRANSFORMFEEDBACKEXTPROC				glEndTransformFeedbackEXT					= nullptr;
+PFNGLBINDBUFFERRANGEEXTPROC						glBindBufferRangeEXT						= nullptr;
+PFNGLBINDBUFFEROFFSETEXTPROC					glBindBufferOffsetEXT						= nullptr;
+PFNGLBINDBUFFERBASEEXTPROC						glBindBufferBaseEXT							= nullptr;
+PFNGLTRANSFORMFEEDBACKVARYINGSEXTPROC			glTransformFeedbackVaryingsEXT				= nullptr;
+PFNGLGETTRANSFORMFEEDBACKVARYINGEXTPROC			glGetTransformFeedbackVaryingEXT			= nullptr;
+
 // GL_ARB_color_buffer_float
 PFNGLCLAMPCOLORARBPROC			glClampColorARB				= nullptr;
 
@@ -383,6 +392,7 @@ bool OpenGLExtensions::IsGL_EXT_framebuffer_object()			const { return m_bGL_EXT_
 bool OpenGLExtensions::IsGL_EXT_framebuffer_multisample()		const { return m_bGL_EXT_framebuffer_multisample;	 }
 bool OpenGLExtensions::IsGL_EXT_framebuffer_blit()				const { return m_bGL_EXT_framebuffer_blit;			 }
 bool OpenGLExtensions::IsGL_EXT_geometry_shader4()				const { return m_bGL_EXT_geometry_shader4;			 }
+bool OpenGLExtensions::IsGL_EXT_transform_feedback()			const { return m_bGL_EXT_transform_feedback;		 }
 // ARB
 bool OpenGLExtensions::IsGL_ARB_texture_float()					const { return m_bGL_ARB_texture_float;				 }
 bool OpenGLExtensions::IsGL_ARB_color_buffer_float()			const { return m_bGL_ARB_color_buffer_float;		 }
@@ -574,6 +584,7 @@ void OpenGLExtensions::ResetExtensions()
 	m_bGL_EXT_framebuffer_multisample		= false;
 	m_bGL_EXT_framebuffer_blit				= false;
 	m_bGL_EXT_geometry_shader4				= false;
+	m_bGL_EXT_transform_feedback			= false;
 	// ARB
 	m_bGL_ARB_texture_float					= false;
 	m_bGL_ARB_color_buffer_float			= false;

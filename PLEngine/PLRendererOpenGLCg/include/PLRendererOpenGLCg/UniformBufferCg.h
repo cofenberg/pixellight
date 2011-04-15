@@ -28,7 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRendererOpenGL/UniformBuffer.h>
+#include <Cg/cg.h>
+#include <PLRenderer/Renderer/UniformBuffer.h>
 
 
 //[-------------------------------------------------------]
@@ -44,7 +45,7 @@ namespace PLRendererOpenGLCg {
 *  @brief
 *    OpenGL Cg uniform buffer
 */
-class UniformBufferCg : public PLRendererOpenGL::UniformBuffer {
+class UniformBufferCg : public PLRenderer::UniformBuffer {
 
 
 	//[-------------------------------------------------------]
@@ -63,27 +64,88 @@ class UniformBufferCg : public PLRendererOpenGL::UniformBuffer {
 		*/
 		virtual ~UniformBufferCg();
 
+		/**
+		*  @brief
+		*    Returns the dynamic data (none UBO)
+		*
+		*  @return
+		*    Dynamic data, can be a null pointer (if no UBO if used!)
+		*/
+		void *GetDynamicData() const;
+
+		/**
+		*  @brief
+		*    Returns the Cg buffer
+		*
+		*  @return
+		*    The Cg buffer, can be a null pointer
+		*/
+		CGbuffer GetCgBuffer() const;
+
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer
+		*  @param[in] sShaderLanguage
+		*    The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg")
 		*/
-		UniformBufferCg(PLRenderer::Renderer &cRenderer);
+		UniformBufferCg(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage);
+
+		/**
+		*  @brief
+		*    Makes this uniform buffer to the renderers current uniform buffer
+		*
+		*  @return
+		*   'true' if all went fine, else 'false'
+		*/
+		bool MakeCurrent();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLGeneral::String  m_sShaderLanguage;	/**< The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg") */
+		CGbuffer		   m_pCgBuffer;			/**< Cg buffer, can be a null pointer */
+		void			  *m_pData;				/**< Dynamic buffer, can be a null pointer (none UBO) */
+		void			  *m_pLockedData;		/**< Locked data, can be a null pointer */
+		bool			   m_bLockReadOnly;		/**< Read only lock? */
+		bool			   m_bUpdateUBO;		/**< Do we need to update the UBO? */
+		CGbufferusage	   m_nUsageAPI;			/**< API usage setting */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::UniformBuffer functions    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLGeneral::String GetShaderLanguage() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Buffer functions           ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool IsAllocated() const;
 		virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
 		virtual bool Clear();
+		virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		virtual void *GetData();
+		virtual bool Unlock();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLRenderer::Resource functions      ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
 
 
 };

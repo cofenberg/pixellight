@@ -83,6 +83,8 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_EXT_framebuffer_object,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_framebuffer_multisample,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_framebuffer_blit,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_EXT_geometry_shader4,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_EXT_transform_feedback,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		// ARB
 		pl_attribute(GL_ARB_texture_float,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_color_buffer_float,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")

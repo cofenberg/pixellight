@@ -85,8 +85,9 @@ PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
 
 PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
 {
-	// Is the OpenGL extension GL_ARB_uniform_buffer_object available?
-	return static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_uniform_buffer_object() ? new UniformBuffer(*m_pRenderer) : nullptr;
+	// Are the OpenGL extensions GL_ARB_uniform_buffer_object and GL_EXT_transform_feedback available?
+	Renderer *pRenderer = static_cast<Renderer*>(m_pRenderer);
+	return (pRenderer->IsGL_ARB_uniform_buffer_object() && pRenderer->IsGL_EXT_transform_feedback()) ? new UniformBuffer(*m_pRenderer, GLSL) : nullptr;
 }
 
 

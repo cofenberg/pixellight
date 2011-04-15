@@ -74,7 +74,7 @@ PLRenderer::Program *ShaderLanguageCg::CreateProgram()
 
 PLRenderer::UniformBuffer *ShaderLanguageCg::CreateUniformBuffer()
 {
-	return new UniformBufferCg(*m_pRenderer);
+	return new UniformBufferCg(*m_pRenderer, Cg);
 }
 
 

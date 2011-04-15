@@ -1,3 +1,11 @@
+>> 16.04.2011
+[CO]
+PLRendererOpenGL:
+- Added support for the OpenGL extension "GL_EXT_transform_feedback", currently only used for the binding point of "GL_ARB_uniform_buffer_object"
+  (but transform feedback support is planned!)
+
+
+
 >> 15.04.2011
 [CO]
 - "PLRendererOpenGLCg::ProgramCg" was emitting the "EventDirty"-event when the program destructor was called while "PLRendererOpenGL::ProgramGLSL" was not,

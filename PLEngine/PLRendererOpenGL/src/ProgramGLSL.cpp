@@ -371,7 +371,7 @@ void ProgramGLSL::BuildUniformBlockInformation()
 						glGetActiveUniformBlockiv(nOpenGLProgram, nUniformBlockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &nUniformBlockSize);
 
 						// Create a new program uniform block instance
-						ProgramUniformBlockGLSL *pProgramUniformBlock = new ProgramUniformBlockGLSL(nOpenGLProgram, nUniformBlockIndex, nUniformBlockSize);
+						ProgramUniformBlockGLSL *pProgramUniformBlock = new ProgramUniformBlockGLSL(nOpenGLProgram, nUniformBlockIndex, nUniformBlockSize, ShaderLanguageGLSL::GLSL);
 
 						// Register the new program uniform block
 						m_lstUniformBlocks.Add(pProgramUniformBlock);

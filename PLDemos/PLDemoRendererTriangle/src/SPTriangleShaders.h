@@ -37,6 +37,7 @@
 namespace PLRenderer {
 	class Program;
 	class VertexShader;
+	class UniformBuffer;
 	class GeometryShader;
 	class FragmentShader;
 }
@@ -91,6 +92,7 @@ class SPTriangleShaders : public SPTriangle {
 		PLRenderer::GeometryShader	*m_pGeometryShader;	/**< Geometry shader, optional, can be a null pointer */
 		PLRenderer::FragmentShader	*m_pFragmentShader;	/**< Fragment shader, can be a null pointer */
 		PLRenderer::Program			*m_pProgram;		/**< GPU program, can be a null pointer */
+		PLRenderer::UniformBuffer	*m_pUniformBuffer;	/**< Uniform buffer, can be a null pointer */
 
 
 	//[-------------------------------------------------------]

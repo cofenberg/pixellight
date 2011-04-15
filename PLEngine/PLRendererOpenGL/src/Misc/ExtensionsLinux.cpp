@@ -369,6 +369,25 @@ bool OpenGLExtensions::Init()
 		m_bGL_EXT_geometry_shader4 = false;
 	}
 
+	// GL_EXT_transform_feedback
+	if (IsSupported("GL_EXT_transform_feedback")) {
+		glBeginTransformFeedbackEXT		 = reinterpret_cast<PFNGLBEGINTRANSFORMFEEDBACKEXTPROC>		(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBeginTransformFeedbackEXT")));
+		glEndTransformFeedbackEXT		 = reinterpret_cast<PFNGLENDTRANSFORMFEEDBACKEXTPROC>		(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glEndTransformFeedbackEXT")));
+		glBindBufferRangeEXT			 = reinterpret_cast<PFNGLBINDBUFFERRANGEEXTPROC>			(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBindBufferRangeEXT")));
+		glBindBufferOffsetEXT			 = reinterpret_cast<PFNGLBINDBUFFEROFFSETEXTPROC>			(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBindBufferOffsetEXT")));
+		glBindBufferBaseEXT				 = reinterpret_cast<PFNGLBINDBUFFERBASEEXTPROC>				(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBindBufferBaseEXT")));
+		glTransformFeedbackVaryingsEXT	 = reinterpret_cast<PFNGLTRANSFORMFEEDBACKVARYINGSEXTPROC>	(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glTransformFeedbackVaryingsEXT")));
+		glGetTransformFeedbackVaryingEXT = reinterpret_cast<PFNGLGETTRANSFORMFEEDBACKVARYINGEXTPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetTransformFeedbackVaryingEXT")));
+		if (!glBeginTransformFeedbackEXT || !glEndTransformFeedbackEXT || !glBindBufferRangeEXT || !glBindBufferOffsetEXT || !glBindBufferBaseEXT || !glTransformFeedbackVaryingsEXT || !glGetTransformFeedbackVaryingEXT) {
+			PL_LOG(Info, "Couldn't use extension 'GL_EXT_transform_feedback'!")
+			m_bGL_EXT_transform_feedback = false;
+		} else {
+			m_bGL_EXT_transform_feedback = true;
+		}
+	} else {
+		m_bGL_EXT_transform_feedback = false;
+	}
+
 
 // ARB
 	// GL_ARB_texture_float

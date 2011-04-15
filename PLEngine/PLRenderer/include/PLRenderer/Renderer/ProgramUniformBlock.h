@@ -33,6 +33,17 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class String;
+}
+namespace PLRenderer {
+	class UniformBuffer;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
@@ -54,6 +65,26 @@ class ProgramUniformBlock {
 	public:
 		/**
 		*  @brief
+		*    Sets the uniform buffer feeding this uniform block with data
+		*
+		*  @param[in] pUniformBuffer
+		*    The uniform buffer feeding this uniform block with data, can be a null pointer
+		*  @param[in] nBindingPoint
+		*    Binding point to use
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe the number of bytes within the given uniform buffer
+		*    is less than the number of bytes within this uniform block or there's a shader language mismatch)
+		*
+		*  @remarks
+		*    The binding point is somewhat similar a texture unit. The total number of binding points
+		*    which can be used at the same time during rendering are limited to e.g. 45 (just an example!)
+		*    binding points.
+		*/
+		virtual bool SetUniformBuffer(UniformBuffer *pUniformBuffer, PLGeneral::uint32 nBindingPoint) = 0;
+
+		/**
+		*  @brief
 		*    Returns the uniform block index
 		*
 		*  @return
@@ -69,6 +100,36 @@ class ProgramUniformBlock {
 		*    The uniform block data size (in bytes)
 		*/
 		virtual PLGeneral::uint32 GetSize() const = 0;
+
+		/**
+		*  @brief
+		*    Returns the offset (in bytes) of an uniform inside the uniform block
+		*
+		*  @param[in] sUniformName
+		*    Name of the uniform
+		*
+		*  @return
+		*    The offset (in bytes) of an uniform inside the uniform block
+		*/
+		virtual PLGeneral::uint32 GetUniformOffset(const PLGeneral::String &sUniformName) const = 0;
+
+		/**
+		*  @brief
+		*    Returns the size (in bytes) of an uniform inside the uniform block
+		*
+		*  @return
+		*    The size (in bytes) of an uniform inside the uniform block
+		*/
+		virtual PLGeneral::uint32 GetUniformSize(const PLGeneral::String &sUniformName) const = 0;
+
+		/**
+		*  @brief
+		*    Returns the number of array elements of an uniform inside the uniform block
+		*
+		*  @return
+		*    The number of array elements of an uniform inside the uniform block, 1 for none array uniforms
+		*/
+		virtual PLGeneral::uint32 GetUniformNumOfArrayElements(const PLGeneral::String &sUniformName) const = 0;
 
 
 	//[-------------------------------------------------------]

@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/String/String.h>
 #include <PLRenderer/Renderer/ProgramUniformBlock.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 
@@ -68,8 +69,10 @@ class ProgramUniformBlockGLSL : public PLRenderer::ProgramUniformBlock {
 		*    Uniform block index, must be valid!
 		*  @param[in] nUniformBlockSize
 		*    Uniform block size, must be valid!
+		*  @param[in] sShaderLanguage
+		*    The name of the shader language the uniform block is using (for example "GLSL" or "Cg")
 		*/
-		ProgramUniformBlockGLSL(GLuint nOpenGLProgram, GLuint nUniformBlockIndex, GLint nUniformBlockSize);
+		ProgramUniformBlockGLSL(GLuint nOpenGLProgram, GLuint nUniformBlockIndex, GLint nUniformBlockSize, const PLGeneral::String &sShaderLanguage);
 
 		/**
 		*  @brief
@@ -82,17 +85,23 @@ class ProgramUniformBlockGLSL : public PLRenderer::ProgramUniformBlock {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint m_nOpenGLProgram;			/**< OpenGL program, always valid! */
-		GLint  m_nUniformBlockIndex;		/**< OpenGL uniform block index */
-		GLint  m_nOpenGLUniformBlockSize;	/**< OpenGL uniform block size */
+		PLGeneral::String  m_sShaderLanguage;			/**< The name of the shader language the uniform block is using (for example "GLSL" or "Cg") */
+		GLuint			   m_nOpenGLProgram;			/**< OpenGL program, always valid! */
+		GLint			   m_nUniformBlockIndex;		/**< OpenGL uniform block index */
+		GLint			   m_nOpenGLUniformBlockSize;	/**< OpenGL uniform block size */
+		int				   m_nBindingPoint;				/**< Used binding point, <0 means not yet assigned */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::ProgramUniformBlock functions ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool SetUniformBuffer(PLRenderer::UniformBuffer *pUniformBuffer, PLGeneral::uint32 nBindingPoint);
 		virtual PLGeneral::uint32 GetIndex() const;
 		virtual PLGeneral::uint32 GetSize() const;
+		virtual PLGeneral::uint32 GetUniformOffset(const PLGeneral::String &sUniformName) const;
+		virtual PLGeneral::uint32 GetUniformSize(const PLGeneral::String &sUniformName) const;
+		virtual PLGeneral::uint32 GetUniformNumOfArrayElements(const PLGeneral::String &sUniformName) const;
 
 
 };

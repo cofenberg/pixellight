@@ -151,6 +151,14 @@ extern PFNGLBLITFRAMEBUFFEREXTPROC						glBlitFramebufferEXT;
 // GL_EXT_geometry_shader4
 extern PFNGLPROGRAMPARAMETERIEXTPROC					glProgramParameteriEXT;
 
+// GL_EXT_transform_feedback
+extern PFNGLBEGINTRANSFORMFEEDBACKEXTPROC				glBeginTransformFeedbackEXT;
+extern PFNGLENDTRANSFORMFEEDBACKEXTPROC					glEndTransformFeedbackEXT;
+extern PFNGLBINDBUFFERRANGEEXTPROC						glBindBufferRangeEXT;
+extern PFNGLBINDBUFFEROFFSETEXTPROC						glBindBufferOffsetEXT;
+extern PFNGLBINDBUFFERBASEEXTPROC						glBindBufferBaseEXT;
+extern PFNGLTRANSFORMFEEDBACKVARYINGSEXTPROC			glTransformFeedbackVaryingsEXT;
+extern PFNGLGETTRANSFORMFEEDBACKVARYINGEXTPROC			glGetTransformFeedbackVaryingEXT;
 
 // GL_ARB_color_buffer_float
 extern PFNGLCLAMPCOLORARBPROC			glClampColorARB;

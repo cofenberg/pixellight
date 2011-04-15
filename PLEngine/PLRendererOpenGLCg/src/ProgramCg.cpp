@@ -481,7 +481,7 @@ void ProgramCg::BuildUniformBlockInformation()
 						const String sUniformBlockName = cgGetParameterName(pCgParameter);
 
 						// Register the new program uniform block
-						ProgramUniformBlockCg *pProgramUniformBlock = new ProgramUniformBlockCg(pCgParameter);
+						ProgramUniformBlockCg *pProgramUniformBlock = new ProgramUniformBlockCg(pCgParameter, ShaderLanguageCg::Cg);
 						m_lstUniformBlocks.Add(pProgramUniformBlock);
 						m_mapUniformBlocks.Add(sUniformBlockName, pProgramUniformBlock);
 					}

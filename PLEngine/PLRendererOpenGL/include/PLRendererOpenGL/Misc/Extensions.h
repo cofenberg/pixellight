@@ -128,6 +128,7 @@ class OpenGLExtensions {
 		bool IsGL_EXT_framebuffer_multisample() const;
 		bool IsGL_EXT_framebuffer_blit() const;
 		bool IsGL_EXT_geometry_shader4() const;
+		bool IsGL_EXT_transform_feedback() const;
 		// ARB
 		bool IsGL_ARB_texture_float() const;
 		bool IsGL_ARB_color_buffer_float() const;
@@ -284,6 +285,7 @@ class OpenGLExtensions {
 		bool m_bGL_EXT_framebuffer_multisample;
 		bool m_bGL_EXT_framebuffer_blit;
 		bool m_bGL_EXT_geometry_shader4;
+		bool m_bGL_EXT_transform_feedback;
 		// ARB
 		bool m_bGL_ARB_texture_float;
 		bool m_bGL_ARB_color_buffer_float;
