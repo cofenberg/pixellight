@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguage.h                               *
+ *  File: UniformBuffer.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDERER_SHADERLANGUAGE_H__
-#define __PLRENDERER_SHADERLANGUAGE_H__
+#ifndef __PLRENDERER_UNIFORMBUFFER_H__
+#define __PLRENDERER_UNIFORMBUFFER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Object.h>
-#include "PLRenderer/PLRenderer.h"
+#include "PLRenderer/Renderer/Buffer.h"
 
 
 //[-------------------------------------------------------]
@@ -39,89 +38,36 @@ namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class Program;
-class VertexShader;
-class UniformBuffer;
-class GeometryShader;
-class FragmentShader;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract shader language class
+*    Abstract renderer uniform buffer (UBO, aka "constant buffer") resource
 */
-class ShaderLanguage : public PLCore::Object {
+class UniformBuffer : public Buffer {
 
 
 	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLRENDERER_RTTI_EXPORT, ShaderLanguage, "PLRenderer", PLCore::Object, "Abstract shader language class")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual ShaderLanguage functions               ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Returns the name of the shader language
-		*
-		*  @return
-		*    The name of the shader language (for example "GLSL" or "Cg")
+		*    Destructor
 		*/
-		virtual PLGeneral::String GetShaderLanguage() const = 0;
+		PLRENDERER_API virtual ~UniformBuffer();
 
 		/**
 		*  @brief
-		*    Creates a vertex shader
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
 		*
 		*  @return
-		*    The created vertex shader, a null pointer on error
+		*    Reference to this object
 		*/
-		virtual VertexShader *CreateVertexShader() = 0;
-
-		/**
-		*  @brief
-		*    Creates a geometry shader
-		*
-		*  @return
-		*    The created geometry shader, a null pointer on error
-		*/
-		virtual GeometryShader *CreateGeometryShader() = 0;
-
-		/**
-		*  @brief
-		*    Creates a fragment shader
-		*
-		*  @return
-		*    The created fragment shader, a null pointer on error
-		*/
-		virtual FragmentShader *CreateFragmentShader() = 0;
-
-		/**
-		*  @brief
-		*    Creates a program
-		*
-		*  @return
-		*    The created program, a null pointer on error
-		*/
-		virtual Program *CreateProgram() = 0;
-
-		/**
-		*  @brief
-		*    Creates an uniform buffer
-		*
-		*  @return
-		*    The created uniform buffer, a null pointer on error
-		*/
-		virtual UniformBuffer *CreateUniformBuffer() = 0;
+		PLRENDERER_API UniformBuffer &operator =(const UniformBuffer &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -130,15 +76,12 @@ class ShaderLanguage : public PLCore::Object {
 	protected:
 		/**
 		*  @brief
-		*    Constructor
+		*    Contructor
+		*
+		*  @param[in] cRenderer
+		*    Owner renderer
 		*/
-		PLRENDERER_API ShaderLanguage();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLRENDERER_API virtual ~ShaderLanguage();
+		PLRENDERER_API UniformBuffer(Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -152,19 +95,14 @@ class ShaderLanguage : public PLCore::Object {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		ShaderLanguage(const ShaderLanguage &cSource);
+		UniformBuffer(const UniformBuffer &cSource);
 
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		ShaderLanguage &operator =(const ShaderLanguage &cSource);
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Buffer functions                       ]
+	//[-------------------------------------------------------]
+	public:
+		PLRENDERER_API virtual void *GetData();
 
 
 };
@@ -176,4 +114,4 @@ class ShaderLanguage : public PLCore::Object {
 } // PLRenderer
 
 
-#endif // __PLRENDERER_SHADERLANGUAGE_H__
+#endif // __PLRENDERER_UNIFORMBUFFER_H__

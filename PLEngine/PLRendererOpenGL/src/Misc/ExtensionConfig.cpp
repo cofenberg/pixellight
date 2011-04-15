@@ -100,6 +100,7 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_ARB_get_program_binary(this),
 	GL_ARB_texture_rectangle(this),
 	GL_ARB_multisample(this),
+	GL_ARB_uniform_buffer_object(this),
 	// ATI
 	GL_ATI_separate_stencil(this),
 	GL_ATI_draw_buffers(this),

@@ -267,9 +267,11 @@ copy build\release64\PLRendererOpenGLCg64.dll ..\..\Bin\PLRuntime\Plugins\PLRend
     <ClCompile Include="src\PLRendererOpenGLCg.cpp" />
     <ClCompile Include="src\ProgramAttributeCg.cpp" />
     <ClCompile Include="src\ProgramCg.cpp" />
+    <ClCompile Include="src\ProgramUniformBlockCg.cpp" />
     <ClCompile Include="src\ProgramUniformCg.cpp" />
     <ClCompile Include="src\ShaderLanguageCg.cpp" />
     <ClCompile Include="src\ShaderToolsCg.cpp" />
+    <ClCompile Include="src\UniformBufferCg.cpp" />
     <ClCompile Include="src\VertexShaderCg.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -277,9 +279,11 @@ copy build\release64\PLRendererOpenGLCg64.dll ..\..\Bin\PLRuntime\Plugins\PLRend
     <ClInclude Include="include\PLRendererOpenGLCg\GeometryShaderCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramAttributeCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramCg.h" />
+    <ClInclude Include="include\PLRendererOpenGLCg\ProgramUniformBlockCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramUniformCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ShaderLanguageCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ShaderToolsCg.h" />
+    <ClInclude Include="include\PLRendererOpenGLCg\UniformBufferCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\VertexShaderCg.h" />
   </ItemGroup>
   <ItemGroup>

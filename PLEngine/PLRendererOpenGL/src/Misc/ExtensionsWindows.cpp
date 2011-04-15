@@ -694,6 +694,23 @@ bool OpenGLExtensions::Init()
 	// GL_ARB_multisample
 	m_bGL_ARB_multisample = IsSupported("GL_ARB_multisample");
 
+	// GL_ARB_uniform_buffer_object
+	if (IsSupported("GL_ARB_uniform_buffer_object")) {
+		glGetUniformIndices         = reinterpret_cast<PFNGLGETUNIFORMINDICESPROC>        (wglGetProcAddress("glGetUniformIndices"));
+		glGetActiveUniformsiv       = reinterpret_cast<PFNGLGETACTIVEUNIFORMSIVPROC>      (wglGetProcAddress("glGetActiveUniformsiv"));
+		glGetUniformBlockIndex      = reinterpret_cast<PFNGLGETUNIFORMBLOCKINDEXPROC>     (wglGetProcAddress("glGetUniformBlockIndex"));
+		glGetActiveUniformBlockiv   = reinterpret_cast<PFNGLGETACTIVEUNIFORMBLOCKIVPROC>  (wglGetProcAddress("glGetActiveUniformBlockiv"));
+		glGetActiveUniformBlockName = reinterpret_cast<PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC>(wglGetProcAddress("glGetActiveUniformBlockName"));
+		glUniformBlockBinding       = reinterpret_cast<PFNGLUNIFORMBLOCKBINDINGPROC>      (wglGetProcAddress("glUniformBlockBinding"));
+		if (!glGetUniformIndices || !glGetActiveUniformsiv || !glGetUniformBlockIndex || !glGetActiveUniformBlockiv || !glGetActiveUniformBlockName || !glUniformBlockBinding) {
+			PL_LOG(Info, "Couldn't use extension 'GL_ARB_uniform_buffer_object'!")
+			m_bGL_ARB_uniform_buffer_object = false;
+		} else {
+			m_bGL_ARB_uniform_buffer_object = true;
+		}
+	} else {
+		m_bGL_ARB_uniform_buffer_object = false;
+	}
 
 // ATI
 	// GL_ATI_separate_stencil 

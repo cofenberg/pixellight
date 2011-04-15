@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguageGLSL.h                           *
+ *  File: ProgramUniformBlockCg.h                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,29 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGLES_SHADERLANGUAGEGLSL_H__
-#define __PLRENDEREROPENGLES_SHADERLANGUAGEGLSL_H__
+#ifndef __PLRENDEREROPENGLCG_PROGRAMUNIFORMBLOCKCG_H__
+#define __PLRENDEREROPENGLCG_PROGRAMUNIFORMBLOCKCG_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/ShaderLanguage.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRenderer {
-	class Renderer;
-}
+#include <Cg/cgGL.h>
+#include <PLRenderer/Renderer/ProgramUniformBlock.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGLES {
+namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
@@ -50,34 +43,15 @@ namespace PLRendererOpenGLES {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Build in OpenGL ES GLSL shader language
+*    OpenGL Cg renderer program uniform block
 */
-class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
+class ProgramUniformBlockCg : public PLRenderer::ProgramUniformBlock {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
-
-
-	//[-------------------------------------------------------]
-	//[ Public static data                                    ]
-	//[-------------------------------------------------------]
-	public:
-		static const PLGeneral::String GLSL;	/**< 'GLSL' string */
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
-		virtual PLRenderer::VertexShader *CreateVertexShader();
-		virtual PLRenderer::GeometryShader *CreateGeometryShader();
-		virtual PLRenderer::FragmentShader *CreateFragmentShader();
-		virtual PLRenderer::Program *CreateProgram();
-		virtual PLRenderer::UniformBuffer *CreateUniformBuffer();
+	friend class ProgramCg;
 
 
 	//[-------------------------------------------------------]
@@ -88,23 +62,31 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cRenderer
-		*    The used renderer
+		*  @param[in] pCgParameter
+		*    Cg program parameter, must be valid!
 		*/
-		ShaderLanguageGLSL(PLRenderer::Renderer &cRenderer);
+		ProgramUniformBlockCg(CGparameter pCgParameter);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ShaderLanguageGLSL();
+		virtual ~ProgramUniformBlockCg();
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer *m_pRenderer;	/**< The used renderer, always valid! */
+		CGparameter m_pCgParameter;	/**< Cg program parameter, always valid! */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::ProgramUniformBlock functions ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLGeneral::uint32 GetIndex() const;
+		virtual PLGeneral::uint32 GetSize() const;
 
 
 };
@@ -113,7 +95,7 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGLES
+} // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGLES_SHADERLANGUAGEGLSL_H__
+#endif // __PLRENDEREROPENGLCG_PROGRAMUNIFORMBLOCKCG_H__

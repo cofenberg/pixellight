@@ -106,6 +106,7 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_ARB_get_program_binary,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_texture_rectangle,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_ARB_uniform_buffer_object,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		// ATI
 		pl_attribute(GL_ATI_separate_stencil,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ATI_draw_buffers,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")

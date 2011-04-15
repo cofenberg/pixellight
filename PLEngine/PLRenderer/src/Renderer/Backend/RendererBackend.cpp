@@ -515,26 +515,34 @@ void RendererBackend::Update()
 	if (pProfiling->IsActive()) {
 		const String sAPI = GetAPI();
 		const Statistics &sS = m_sStatistics;
-		pProfiling->Set(sAPI, "Number of surfaces",			GetNumOfSurfaces());
-		pProfiling->Set(sAPI, "Number of resources",		GetNumOfResources());
-		pProfiling->Set(sAPI, "Render state changes",		sS.nRenderStateChanges);
-		pProfiling->Set(sAPI, "Sampler state changes",		sS.nSamplerStateChanges);
-		pProfiling->Set(sAPI, "Draw primitive calls",		sS.nDrawPrimitivCalls);
-		pProfiling->Set(sAPI, "Current triangles",			sS.nTriangles);
-		pProfiling->Set(sAPI, "Current vertices",			sS.nVertices);
-		pProfiling->Set(sAPI, "Number of texture buffers",	sS.nTextureBuffersNum);
+		pProfiling->Set(sAPI, "Number of surfaces",				GetNumOfSurfaces());
+		pProfiling->Set(sAPI, "Number of resources",			GetNumOfResources());
+		pProfiling->Set(sAPI, "Render state changes",			sS.nRenderStateChanges);
+		pProfiling->Set(sAPI, "Sampler state changes",			sS.nSamplerStateChanges);
+		pProfiling->Set(sAPI, "Draw primitive calls",			sS.nDrawPrimitivCalls);
+		pProfiling->Set(sAPI, "Current triangles",				sS.nTriangles);
+		pProfiling->Set(sAPI, "Current vertices",				sS.nVertices);
+		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				cStopwatch.GetMilliseconds()));
+		// Texture buffers
+		pProfiling->Set(sAPI, "Number of texture buffers",		sS.nTextureBuffersNum);
 		const float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
-		pProfiling->Set(sAPI, "Texture buffers memory",		String::Format("%g KB (%g MB)",			fTextureBuffersMemKB, fTextureBuffersMemKB/1024.0f));
-		pProfiling->Set(sAPI, "Texture buffer binds",		sS.nTextureBufferBinds);
-		pProfiling->Set(sAPI, "Rendering time",				String::Format("%.3f ms",				cStopwatch.GetMilliseconds()));
-		pProfiling->Set(sAPI, "Number of vertex buffers",	sS.nVertexBufferNum);
+		pProfiling->Set(sAPI, "Texture buffers memory",			String::Format("%g KB (%g MB)",			fTextureBuffersMemKB, fTextureBuffersMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Texture buffer binds",			sS.nTextureBufferBinds);
+		// Vertex buffers
+		pProfiling->Set(sAPI, "Number of vertex buffers",		sS.nVertexBufferNum);
 		const float fVertexBufferMemKB = static_cast<float>(sS.nVertexBufferMem)/1024.0f;
-		pProfiling->Set(sAPI, "Vertex buffers memory",		String::Format("%g KB (%g MB)",			fVertexBufferMemKB, fVertexBufferMemKB/1024.0f));
-		pProfiling->Set(sAPI, "Vertex buffers update time",	String::Format("%.3f ms (%d locks)",	sS.nVertexBuffersSetupTime/1000.0f, sS.nVertexBufferLocks));
-		pProfiling->Set(sAPI, "Number of index buffers",	sS.nIndexBufferNum);
+		pProfiling->Set(sAPI, "Vertex buffers memory",			String::Format("%g KB (%g MB)",			fVertexBufferMemKB, fVertexBufferMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Vertex buffers update time",		String::Format("%.3f ms (%d locks)",	sS.nVertexBuffersSetupTime/1000.0f, sS.nVertexBufferLocks));
+		// Index buffers
+		pProfiling->Set(sAPI, "Number of index buffers",		sS.nIndexBufferNum);
 		const float fIndexBufferMemKB = static_cast<float>(sS.nIndexBufferMem)/1024.0f;
-		pProfiling->Set(sAPI, "Index buffers memory",		String::Format("%g KB (%g MB)",			fIndexBufferMemKB, fIndexBufferMemKB/1024.0f));
-		pProfiling->Set(sAPI, "Index buffers update time",	String::Format("%.3f ms (%d locks)",	sS.nIndexBuffersSetupTime/1000.0f, sS.nIndexBufferLocks));
+		pProfiling->Set(sAPI, "Index buffers memory",			String::Format("%g KB (%g MB)",			fIndexBufferMemKB, fIndexBufferMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Index buffers update time",		String::Format("%.3f ms (%d locks)",	sS.nIndexBuffersSetupTime/1000.0f, sS.nIndexBufferLocks));
+		// Uniform buffers
+		pProfiling->Set(sAPI, "Number of uniform buffers",		sS.nUniformBufferNum);
+		const float fUniformBufferMemKB = static_cast<float>(sS.nUniformBufferMem)/1024.0f;
+		pProfiling->Set(sAPI, "Uniform buffers memory",			String::Format("%g KB (%g MB)",			fUniformBufferMemKB, fUniformBufferMemKB/1024.0f));
+		pProfiling->Set(sAPI, "Uniform buffers update time",	String::Format("%.3f ms (%d locks)",	sS.nUniformBuffersSetupTime/1000.0f, sS.nUniformBufferLocks));
 	}
 }
 

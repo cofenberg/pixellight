@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/ProgramGLSL.h"
+#include "PLRendererOpenGL/UniformBuffer.h"
 #include "PLRendererOpenGL/VertexShaderGLSL.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
@@ -80,6 +81,12 @@ PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
 	return static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_shader_objects() ? new ProgramGLSL(*m_pRenderer) : nullptr;
+}
+
+PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
+{
+	// Is the OpenGL extension GL_ARB_uniform_buffer_object available?
+	return static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_uniform_buffer_object() ? new UniformBuffer(*m_pRenderer) : nullptr;
 }
 
 

@@ -306,6 +306,15 @@ extern PFNGLGETPROGRAMBINARYPROC		glGetProgramBinary;
 extern PFNGLPROGRAMBINARYPROC			glProgramBinary;
 extern PFNGLPROGRAMPARAMETERIPROC		glProgramParameteri;
 
+// GL_ARB_uniform_buffer_object
+extern PFNGLGETUNIFORMINDICESPROC			glGetUniformIndices;
+extern PFNGLGETACTIVEUNIFORMSIVPROC			glGetActiveUniformsiv;
+extern PFNGLGETACTIVEUNIFORMNAMEPROC		glGetActiveUniformName;
+extern PFNGLGETUNIFORMBLOCKINDEXPROC		glGetUniformBlockIndex;
+extern PFNGLGETACTIVEUNIFORMBLOCKIVPROC		glGetActiveUniformBlockiv;
+extern PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC	glGetActiveUniformBlockName;
+extern PFNGLUNIFORMBLOCKBINDINGPROC			glUniformBlockBinding;
+
 // GL_ATI_separate_stencil
 extern PFNGLSTENCILOPSEPARATEATIPROC	glStencilOpSeparateATI;
 extern PFNGLSTENCILFUNCSEPARATEATIPROC	glStencilFuncSeparateATI;

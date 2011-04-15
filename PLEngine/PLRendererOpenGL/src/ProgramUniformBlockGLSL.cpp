@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguageGLSL.cpp                         *
+ *  File: ProgramUniformBlockGLSL.cpp                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,59 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGLES/ProgramGLSL.h"
-#include "PLRendererOpenGLES/VertexShaderGLSL.h"
-#include "PLRendererOpenGLES/FragmentShaderGLSL.h"
-#include "PLRendererOpenGLES/ShaderLanguageGLSL.h"
+#include "PLRendererOpenGL/ProgramUniformBlockGLSL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGLES {
-
-
-//[-------------------------------------------------------]
-//[ Public static data                                    ]
-//[-------------------------------------------------------]
-const String ShaderLanguageGLSL::GLSL = "GLSL";
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLRenderer::ShaderLanguage functions   ]
-//[-------------------------------------------------------]
-String ShaderLanguageGLSL::GetShaderLanguage() const
-{
-	return GLSL;
-}
-
-PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
-{
-	return new VertexShaderGLSL(*m_pRenderer);
-}
-
-PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
-{
-	// OpenGL ES 2.0 has no support for geometry shaders
-	return nullptr;
-}
-
-PLRenderer::FragmentShader *ShaderLanguageGLSL::CreateFragmentShader()
-{
-	return new FragmentShaderGLSL(*m_pRenderer);
-}
-
-PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
-{
-	return new ProgramGLSL(*m_pRenderer);
-}
-
-PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
-{
-	// OpenGL ES 2.0 has no support for uniform buffers
-	return nullptr;
-}
+namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
@@ -85,8 +40,10 @@ PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
 *  @brief
 *    Constructor
 */
-ShaderLanguageGLSL::ShaderLanguageGLSL(PLRenderer::Renderer &cRenderer) :
-	m_pRenderer(&cRenderer)
+ProgramUniformBlockGLSL::ProgramUniformBlockGLSL(GLuint nOpenGLProgram, GLuint nUniformBlockIndex, GLint nUniformBlockSize) :
+	m_nOpenGLProgram(nOpenGLProgram),
+	m_nUniformBlockIndex(nUniformBlockIndex),
+	m_nOpenGLUniformBlockSize(nUniformBlockSize)
 {
 }
 
@@ -94,12 +51,26 @@ ShaderLanguageGLSL::ShaderLanguageGLSL(PLRenderer::Renderer &cRenderer) :
 *  @brief
 *    Destructor
 */
-ShaderLanguageGLSL::~ShaderLanguageGLSL()
+ProgramUniformBlockGLSL::~ProgramUniformBlockGLSL()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLRenderer::ProgramUniformBlock functions ]
+//[-------------------------------------------------------]
+uint32 ProgramUniformBlockGLSL::GetIndex() const
+{
+	return m_nUniformBlockIndex;
+}
+
+uint32 ProgramUniformBlockGLSL::GetSize() const
+{
+	return m_nOpenGLUniformBlockSize;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGLES
+} // PLRendererOpenGL

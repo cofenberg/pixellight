@@ -480,22 +480,30 @@ struct Capabilities {
 *    Renderer statistics
 */
 struct Statistics {
-	PLGeneral::uint32 nRenderStateChanges;			/**< Number of render (internal API) state changes */
-	PLGeneral::uint32 nSamplerStateChanges;			/**< Number of sampler (internal API) state changes */
-	PLGeneral::uint32 nDrawPrimitivCalls;			/**< Number of draw primitiv calls */
-	PLGeneral::uint32 nVertices;					/**< Number of rendered vertices */
-	PLGeneral::uint32 nTriangles;					/**< Number of rendered triangles */
-	PLGeneral::uint32 nTextureBuffersNum;			/**< Number of texture buffers */
-	PLGeneral::uint64 nTextureBuffersMem;			/**< Memory in bytes the texture buffers require */
-	PLGeneral::uint32 nTextureBufferBinds;			/**< Number of texture buffer bindings */
-	PLGeneral::uint32 nVertexBufferNum;				/**< Number of vertex buffers */
-	PLGeneral::uint64 nVertexBufferMem;				/**< Memory in bytes the vertex buffers require */
-	PLGeneral::uint64 nVertexBuffersSetupTime;		/**< Vertex buffers setup time (mircoseconds) */
-	PLGeneral::uint32 nVertexBufferLocks;			/**< Number of vertex buffer locks */
-	PLGeneral::uint32 nIndexBufferNum;				/**< Number of index buffers */
-	PLGeneral::uint64 nIndexBufferMem;				/**< Memory in bytes the index buffers require */
-	PLGeneral::uint64 nIndexBuffersSetupTime;		/**< Index buffers setup time (microseconds) */
-	PLGeneral::uint32 nIndexBufferLocks;			/**< Number of index buffer locks */
+	PLGeneral::uint32 nRenderStateChanges;		/**< Number of render (internal API) state changes */
+	PLGeneral::uint32 nSamplerStateChanges;		/**< Number of sampler (internal API) state changes */
+	PLGeneral::uint32 nDrawPrimitivCalls;		/**< Number of draw primitiv calls */
+	PLGeneral::uint32 nVertices;				/**< Number of rendered vertices */
+	PLGeneral::uint32 nTriangles;				/**< Number of rendered triangles */
+	// Texture buffers
+	PLGeneral::uint32 nTextureBuffersNum;		/**< Number of texture buffers */
+	PLGeneral::uint64 nTextureBuffersMem;		/**< Memory in bytes the texture buffers require */
+	PLGeneral::uint32 nTextureBufferBinds;		/**< Number of texture buffer bindings */
+	// Vertex buffers
+	PLGeneral::uint32 nVertexBufferNum;			/**< Number of vertex buffers */
+	PLGeneral::uint64 nVertexBufferMem;			/**< Memory in bytes the vertex buffers require */
+	PLGeneral::uint64 nVertexBuffersSetupTime;	/**< Vertex buffers setup time (mircoseconds) */
+	PLGeneral::uint32 nVertexBufferLocks;		/**< Number of vertex buffer locks */
+	// Index buffers
+	PLGeneral::uint32 nIndexBufferNum;			/**< Number of index buffers */
+	PLGeneral::uint64 nIndexBufferMem;			/**< Memory in bytes the index buffers require */
+	PLGeneral::uint64 nIndexBuffersSetupTime;	/**< Index buffers setup time (microseconds) */
+	PLGeneral::uint32 nIndexBufferLocks;		/**< Number of index buffer locks */
+	// Uniform buffers
+	PLGeneral::uint32 nUniformBufferNum;		/**< Number of uniform buffers */
+	PLGeneral::uint64 nUniformBufferMem;		/**< Memory in bytes the uniform buffers require */
+	PLGeneral::uint64 nUniformBuffersSetupTime;	/**< Uniform buffers setup time (microseconds) */
+	PLGeneral::uint32 nUniformBufferLocks;		/**< Number of uniform buffer locks */
 };
 
 

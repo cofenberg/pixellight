@@ -56,12 +56,6 @@ class ShaderLanguageCg : public PLRendererOpenGL::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class Renderer;
-
-
-	//[-------------------------------------------------------]
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
@@ -88,6 +82,7 @@ class ShaderLanguageCg : public PLRendererOpenGL::ShaderLanguage {
 		virtual PLRenderer::GeometryShader *CreateGeometryShader();
 		virtual PLRenderer::FragmentShader *CreateFragmentShader();
 		virtual PLRenderer::Program *CreateProgram();
+		virtual PLRenderer::UniformBuffer *CreateUniformBuffer();
 
 
 	//[-------------------------------------------------------]

@@ -447,6 +447,18 @@ PLRenderer::ProgramUniform *ProgramGLSL::GetUniform(const String &sName)
 	return m_mapUniforms.Get(sName);
 }
 
+const Array<PLRenderer::ProgramUniformBlock*> &ProgramGLSL::GetUniformBlocks()
+{
+	// There's no uniform block support in OpenGL ES 2.0, this is just a dummy so the interface can return "something"
+	return m_lstUniformBlocks;
+}
+
+PLRenderer::ProgramUniformBlock *ProgramGLSL::GetUniformBlock(const String &sName)
+{
+	// There's no uniform block support in OpenGL ES 2.0
+	return nullptr;
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLRenderer::Program functions       ]

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguageGLSL.h                           *
+ *  File: UniformBuffer.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,29 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGLES_SHADERLANGUAGEGLSL_H__
-#define __PLRENDEREROPENGLES_SHADERLANGUAGEGLSL_H__
+#ifndef __PLRENDEREROPENGL_UNIFORMBUFFER_H__
+#define __PLRENDEREROPENGL_UNIFORMBUFFER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/ShaderLanguage.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRenderer {
-	class Renderer;
-}
+#include <PLRenderer/Renderer/UniformBuffer.h>
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererOpenGLES {
+namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
@@ -50,61 +43,67 @@ namespace PLRendererOpenGLES {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Build in OpenGL ES GLSL shader language
+*    OpenGL uniform buffer
 */
-class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
+class UniformBuffer : public PLRenderer::UniformBuffer {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
+	friend class ShaderLanguageGLSL;
 
 
 	//[-------------------------------------------------------]
-	//[ Public static data                                    ]
-	//[-------------------------------------------------------]
-	public:
-		static const PLGeneral::String GLSL;	/**< 'GLSL' string */
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
-		virtual PLRenderer::VertexShader *CreateVertexShader();
-		virtual PLRenderer::GeometryShader *CreateGeometryShader();
-		virtual PLRenderer::FragmentShader *CreateFragmentShader();
-		virtual PLRenderer::Program *CreateProgram();
-		virtual PLRenderer::UniformBuffer *CreateUniformBuffer();
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLRENDEREROPENGL_API virtual ~UniformBuffer();
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
 		*
 		*  @param[in] cRenderer
-		*    The used renderer
+		*    Owner renderer
 		*/
-		ShaderLanguageGLSL(PLRenderer::Renderer &cRenderer);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~ShaderLanguageGLSL();
+		PLRENDEREROPENGL_API UniformBuffer(PLRenderer::Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
-		PLRenderer::Renderer *m_pRenderer;	/**< The used renderer, always valid! */
+	protected:
+		PLGeneral::uint32 m_nUniformBuffer;	/**< OpenGL buffer buffer (VBO) */
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::Buffer functions           ]
+	//[-------------------------------------------------------]
+	public:
+		PLRENDEREROPENGL_API virtual bool IsAllocated() const;
+		PLRENDEREROPENGL_API virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
+		PLRENDEREROPENGL_API virtual bool Clear();
+		PLRENDEREROPENGL_API virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		PLRENDEREROPENGL_API virtual void *GetData();
+		PLRENDEREROPENGL_API virtual bool Unlock();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLRenderer::Resource functions      ]
+	//[-------------------------------------------------------]
+	protected:
+		PLRENDEREROPENGL_API virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
+		PLRENDEREROPENGL_API virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
 
 
 };
@@ -113,7 +112,7 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGLES
+} // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGLES_SHADERLANGUAGEGLSL_H__
+#endif // __PLRENDEREROPENGL_UNIFORMBUFFER_H__

@@ -42,7 +42,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract renderer index buffer resource
+*    Abstract renderer index buffer (IBO) resource
 */
 class IndexBuffer : public Buffer {
 

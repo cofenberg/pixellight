@@ -1,6 +1,7 @@
 Changes in PixelLight 0.9.6-R1 (not yet released)
 - Feature: Added new plugin "libRocket_PL" which integrates the free open source HTML/CSS game interface middleware "libRocket" (http://librocket.com/) into PixelLight
 - Feature: Added new demo "PLDemo_libRocket" showing how to use the new "libRocket_PL"-project within C++ projects
+- Feature: PLRenderer: Added "uniform buffer" (UBO, aka "constant buffer") support
 - Feature: Added another SSAO algorithm "PLCompositing::SRPDeferredSPAAO" which comes with a good performance while still looking ok - it's now the default SSAO algorithm
 - Feature: In order to use vertex texture fetch within "PLCompositing::SRPEndHDR", one must now set the new "UseVertexTextureFetch"-flag (we had some VTF GPU driver issues)
 - Feature: "PLGeneral::Url": Added UNC (Uniform Naming Convention aka Universal Naming Convention) support

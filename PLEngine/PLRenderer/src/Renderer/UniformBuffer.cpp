@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguageGLSL.cpp                         *
+ *  File: UniformBuffer.cpp                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,58 +23,63 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGLES/ProgramGLSL.h"
-#include "PLRendererOpenGLES/VertexShaderGLSL.h"
-#include "PLRendererOpenGLES/FragmentShaderGLSL.h"
-#include "PLRendererOpenGLES/ShaderLanguageGLSL.h"
+#include "PLRenderer/Renderer/UniformBuffer.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLRendererOpenGLES {
+namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
-//[ Public static data                                    ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
-const String ShaderLanguageGLSL::GLSL = "GLSL";
+/**
+*  @brief
+*    Destructor
+*/
+UniformBuffer::~UniformBuffer()
+{
+}
+
+/**
+*  @brief
+*    Copy operator
+*/
+UniformBuffer &UniformBuffer::operator =(const UniformBuffer &cSource)
+{
+	// Lock the source buffer
+	if (const_cast<UniformBuffer&>(cSource).Lock(Lock::ReadOnly)) {
+		// Clear old uniform buffer
+		Clear();
+
+		// Copy
+		Allocate(cSource.GetNumOfElements(), cSource.GetUsage(), cSource.IsManaged());
+		if (Lock(Lock::WriteOnly)) {
+			MemoryManager::Copy(GetData(), const_cast<UniformBuffer&>(cSource).GetData(), cSource.GetSize());
+			Unlock();
+		}
+
+		// Unlock the source buffer
+		const_cast<UniformBuffer&>(cSource).Unlock();
+	}
+
+	// Done
+	return *this;
+}
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLRenderer::ShaderLanguage functions   ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
-String ShaderLanguageGLSL::GetShaderLanguage() const
+/**
+*  @brief
+*    Constructor
+*/
+UniformBuffer::UniformBuffer(Renderer &cRenderer) : Buffer(cRenderer, TypeUniformBuffer)
 {
-	return GLSL;
-}
-
-PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
-{
-	return new VertexShaderGLSL(*m_pRenderer);
-}
-
-PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
-{
-	// OpenGL ES 2.0 has no support for geometry shaders
-	return nullptr;
-}
-
-PLRenderer::FragmentShader *ShaderLanguageGLSL::CreateFragmentShader()
-{
-	return new FragmentShaderGLSL(*m_pRenderer);
-}
-
-PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
-{
-	return new ProgramGLSL(*m_pRenderer);
-}
-
-PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
-{
-	// OpenGL ES 2.0 has no support for uniform buffers
-	return nullptr;
 }
 
 
@@ -83,23 +88,25 @@ PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Copy constructor
 */
-ShaderLanguageGLSL::ShaderLanguageGLSL(PLRenderer::Renderer &cRenderer) :
-	m_pRenderer(&cRenderer)
+UniformBuffer::UniformBuffer(const UniformBuffer &cSource) : Buffer(cSource.GetRenderer(), TypeUniformBuffer)
 {
+	// No implementation because the copy constructor is never used
 }
 
-/**
-*  @brief
-*    Destructor
-*/
-ShaderLanguageGLSL::~ShaderLanguageGLSL()
+
+//[-------------------------------------------------------]
+//[ Public virtual Buffer functions                       ]
+//[-------------------------------------------------------]
+void *UniformBuffer::GetData()
 {
+	// We need this dummy default implementation because this function is used within this file!
+	return nullptr;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGLES
+} // PLRenderer

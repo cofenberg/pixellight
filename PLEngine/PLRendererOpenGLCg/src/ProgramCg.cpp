@@ -31,6 +31,7 @@
 #include "PLRendererOpenGLCg/ShaderToolsCg.h"
 #include "PLRendererOpenGLCg/ProgramAttributeCg.h"
 #include "PLRendererOpenGLCg/ProgramUniformCg.h"
+#include "PLRendererOpenGLCg/ProgramUniformBlockCg.h"
 #include "PLRendererOpenGLCg/ProgramCg.h"
 #include <GL/gl.h>
 #include "../../../../External/Recommended/OpenGL/glext.h"
@@ -243,7 +244,8 @@ ProgramCg::ProgramCg(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 	m_bLinked(false),
 	m_bLinkedFailed(false),
 	m_bAttributeInformationBuild(false),
-	m_bUniformInformationBuild(false)
+	m_bUniformInformationBuild(false),
+	m_bUniformBlockInformationBuild(false)
 {
 }
 
@@ -263,6 +265,9 @@ void ProgramCg::RelinkRequired()
 
 		// Destroy the uniform information
 		DestroyUniformInformation();
+
+		// Destroy the uniform block information
+		DestroyUniformBlockInformation();
 
 		// Destroy the Cg combined program
 		if (m_pCgCombinedProgram) {
@@ -447,6 +452,73 @@ void ProgramCg::DestroyUniformInformation()
 	m_bUniformInformationBuild = false;
 }
 
+/**
+*  @brief
+*    Builds the uniform block information
+*/
+void ProgramCg::BuildUniformBlockInformation()
+{
+	// Uniform block information already build?
+	if (!m_bUniformBlockInformationBuild) {
+		// Get the Cg combined program - this also ensures that the program is linked
+		CGprogram pCgCombinedProgram = GetCgCombinedProgram();
+
+		// Is the program linked?
+		if (m_bLinked) {
+			// Iterate through all Cg programs of the Cg combined program
+			const int nNumOfProgramDomains = cgGetNumProgramDomains(pCgCombinedProgram);
+			for (int nDomain=0; nDomain<nNumOfProgramDomains; nDomain++) {
+				// Get the Cg program of the current domain
+				CGprogram pCgDomainProgram = cgGetProgramDomainProgram(pCgCombinedProgram, nDomain);
+
+				// Iterate through all Cg parameters of the Cg vertex program
+				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
+				while (pCgParameter) {
+					// Is this an uniform block? ... please note that I wasn't able to figure how how one can enumerate all uniform blocks within Cg, I wasn't
+					// able to find helpful information about this topic within the Cg documentation or the internet... so this is the result of try and error...
+					if (cgGetParameterVariability(pCgParameter) == CG_UNIFORM && cgGetParameterType(pCgParameter) == CG_STRUCT && String(cgGetParameterSemantic(pCgParameter)).IsSubstring("BUFFER[")) {
+						// Get the name of the uniform block
+						const String sUniformBlockName = cgGetParameterName(pCgParameter);
+
+						// Register the new program uniform block
+						ProgramUniformBlockCg *pProgramUniformBlock = new ProgramUniformBlockCg(pCgParameter);
+						m_lstUniformBlocks.Add(pProgramUniformBlock);
+						m_mapUniformBlocks.Add(sUniformBlockName, pProgramUniformBlock);
+					}
+
+					// Next Cg parameter, please
+					pCgParameter = cgGetNextParameter(pCgParameter);
+				}
+			}
+
+			// The uniform block information build is now build
+			m_bUniformBlockInformationBuild = true;
+		}
+	}
+}
+
+/**
+*  @brief
+*    Destroys the uniform block information
+*/
+void ProgramCg::DestroyUniformBlockInformation()
+{
+	// Is there anything to destroy?
+	const uint32 nNumOfUniformBlocks = m_lstUniformBlocks.GetNumOfElements();
+	if (nNumOfUniformBlocks) {
+		// Destroy the uniform block instances
+		for (uint32 i=0; i<nNumOfUniformBlocks; i++)
+			delete static_cast<ProgramUniformBlockCg*>(m_lstUniformBlocks[i]);
+
+		// Clear the uniform block list and hash map
+		m_lstUniformBlocks.Clear();
+		m_mapUniformBlocks.Clear();
+	}
+
+	// Currently, there's no uniform block information build
+	m_bUniformBlockInformationBuild = false;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Program functions          ]
@@ -596,6 +668,26 @@ PLRenderer::ProgramUniform *ProgramCg::GetUniform(const String &sName)
 
 	// Return the requested uniform
 	return m_mapUniforms.Get(sName);
+}
+
+const Array<PLRenderer::ProgramUniformBlock*> &ProgramCg::GetUniformBlocks()
+{
+	// Build the uniform block information, if required
+	if (!m_bUniformBlockInformationBuild)
+		BuildUniformBlockInformation();
+
+	// Return the list of all uniform blocks
+	return m_lstUniformBlocks;
+}
+
+PLRenderer::ProgramUniformBlock *ProgramCg::GetUniformBlock(const String &sName)
+{
+	// Build the uniform block information, if required
+	if (!m_bUniformBlockInformationBuild)
+		BuildUniformBlockInformation();
+
+	// Return the requested uniform block
+	return m_mapUniformBlocks.Get(sName);
 }
 
 

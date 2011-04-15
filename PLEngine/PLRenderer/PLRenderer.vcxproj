@@ -254,6 +254,8 @@ copy build\release64\PLRenderer64.lib ..\..\Bin\Lib\
   <ItemGroup>
     <ClCompile Include="src\PLRenderer.cpp" />
     <ClCompile Include="src\RendererContext.cpp" />
+    <ClCompile Include="src\Renderer\ProgramUniformBlock.cpp" />
+    <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\SPDefault.cpp" />
     <ClCompile Include="src\SPPreview.cpp" />
     <ClCompile Include="src\Texture\AniInfo.cpp" />
@@ -349,6 +351,8 @@ copy build\release64\PLRenderer64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLRenderer\PLRendererLinux.h" />
     <ClInclude Include="include\PLRenderer\PLRendererWindows.h" />
     <ClInclude Include="include\PLRenderer\RendererContext.h" />
+    <ClInclude Include="include\PLRenderer\Renderer\ProgramUniformBlock.h" />
+    <ClInclude Include="include\PLRenderer\Renderer\UniformBuffer.h" />
     <ClInclude Include="include\PLRenderer\SPDefault.h" />
     <ClInclude Include="include\PLRenderer\SPPreview.h" />
     <ClInclude Include="include\PLRenderer\Texture\AniInfo.h" />

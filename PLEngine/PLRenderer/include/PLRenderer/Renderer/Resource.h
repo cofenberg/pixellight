@@ -70,19 +70,20 @@ class Resource {
 		*    Resource types
 		*/
 		enum EType {
-			TypeIndexBuffer            =  0,	/**< Index buffer */
-			TypeVertexBuffer           =  1,	/**< Vertex buffer */
-			TypeTextureBuffer1D        =  2,	/**< 1D texture buffer */
-			TypeTextureBuffer2D        =  3,	/**< 2D texture buffer */
-			TypeTextureBufferRectangle =  4,	/**< Rectangle texture buffer */
-			TypeTextureBuffer3D        =  5,	/**< 3D texture buffer */
-			TypeTextureBufferCube      =  6,	/**< Cube texture buffer */
-			TypeOcclusionQuery         =  7,	/**< Occlusion query */
-			TypeVertexShader           =  8,	/**< Vertex shader */
-			TypeGeometryShader         =  9,	/**< Geometry shader */
-			TypeFragmentShader         = 10,	/**< Fragment shader */
-			TypeProgram                = 11,	/**< Program */
-			TypeFont                   = 12		/**< Font */
+			TypeIndexBuffer            =  0,	/**< Index buffer (IBO) */
+			TypeVertexBuffer           =  1,	/**< Vertex buffer (VBO) */
+			TypeUniformBuffer          =  2,	/**< Uniform buffer (UBO) */
+			TypeTextureBuffer1D        =  3,	/**< 1D texture buffer */
+			TypeTextureBuffer2D        =  4,	/**< 2D texture buffer */
+			TypeTextureBufferRectangle =  5,	/**< Rectangle texture buffer */
+			TypeTextureBuffer3D        =  6,	/**< 3D texture buffer */
+			TypeTextureBufferCube      =  7,	/**< Cube texture buffer */
+			TypeOcclusionQuery         =  8,	/**< Occlusion query */
+			TypeVertexShader           =  9,	/**< Vertex shader */
+			TypeGeometryShader         = 10,	/**< Geometry shader */
+			TypeFragmentShader         = 11,	/**< Fragment shader */
+			TypeProgram                = 12,	/**< Program */
+			TypeFont                   = 13		/**< Font */
 		};
 
 

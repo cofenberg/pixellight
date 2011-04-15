@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderLanguageGLSL.cpp                         *
+ *  File: ProgramUniformBlock.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,58 +23,32 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGLES/ProgramGLSL.h"
-#include "PLRendererOpenGLES/VertexShaderGLSL.h"
-#include "PLRendererOpenGLES/FragmentShaderGLSL.h"
-#include "PLRendererOpenGLES/ShaderLanguageGLSL.h"
+#include "PLRenderer/Renderer/ProgramUniformBlock.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-namespace PLRendererOpenGLES {
+namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
-//[ Public static data                                    ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
-const String ShaderLanguageGLSL::GLSL = "GLSL";
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLRenderer::ShaderLanguage functions   ]
-//[-------------------------------------------------------]
-String ShaderLanguageGLSL::GetShaderLanguage() const
+/**
+*  @brief
+*    Constructor
+*/
+ProgramUniformBlock::ProgramUniformBlock()
 {
-	return GLSL;
 }
 
-PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
+/**
+*  @brief
+*    Destructor
+*/
+ProgramUniformBlock::~ProgramUniformBlock()
 {
-	return new VertexShaderGLSL(*m_pRenderer);
-}
-
-PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
-{
-	// OpenGL ES 2.0 has no support for geometry shaders
-	return nullptr;
-}
-
-PLRenderer::FragmentShader *ShaderLanguageGLSL::CreateFragmentShader()
-{
-	return new FragmentShaderGLSL(*m_pRenderer);
-}
-
-PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
-{
-	return new ProgramGLSL(*m_pRenderer);
-}
-
-PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
-{
-	// OpenGL ES 2.0 has no support for uniform buffers
-	return nullptr;
 }
 
 
@@ -83,23 +57,25 @@ PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Copy constructor
 */
-ShaderLanguageGLSL::ShaderLanguageGLSL(PLRenderer::Renderer &cRenderer) :
-	m_pRenderer(&cRenderer)
+ProgramUniformBlock::ProgramUniformBlock(const ProgramUniformBlock &cSource)
 {
+	// No implementation because the copy constructor is never used
 }
 
 /**
 *  @brief
-*    Destructor
+*    Copy operator
 */
-ShaderLanguageGLSL::~ShaderLanguageGLSL()
+ProgramUniformBlock &ProgramUniformBlock::operator =(const ProgramUniformBlock &cSource)
 {
+	// No implementation because the copy operator is never used
+	return *this;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererOpenGLES
+} // PLRenderer

@@ -152,6 +152,7 @@ class OpenGLExtensions {
 		bool IsGL_ARB_get_program_binary() const;
 		bool IsGL_ARB_texture_rectangle() const;
 		bool IsGL_ARB_multisample() const;
+		bool IsGL_ARB_uniform_buffer_object() const;
 		// ATI
 		bool IsGL_ATI_separate_stencil() const;
 		bool IsGL_ATI_draw_buffers() const;
@@ -307,6 +308,7 @@ class OpenGLExtensions {
 		bool m_bGL_ARB_get_program_binary;
 		bool m_bGL_ARB_texture_rectangle;
 		bool m_bGL_ARB_multisample;
+		bool m_bGL_ARB_uniform_buffer_object;
 		// ATI
 		bool m_bGL_ATI_separate_stencil;
 		bool m_bGL_ATI_draw_buffers;

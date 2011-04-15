@@ -55,7 +55,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Renderer vertex buffer resource
+*    Renderer vertex buffer (VBO) resource
 *
 *  @note
 *    - If for instance fog coordinates (Capabilities::bVertexBufferFogCoord) are not supported by the

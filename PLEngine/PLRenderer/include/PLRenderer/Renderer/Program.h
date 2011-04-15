@@ -45,6 +45,7 @@ namespace PLRenderer {
 	class GeometryShader;
 	class FragmentShader;
 	class ProgramAttribute;
+	class ProgramUniformBlock;
 }
 
 
@@ -237,6 +238,27 @@ class Program : public Resource {
 		*    Uniform (can be a null pointer, if no uniform with that name could be found)
 		*/
 		virtual ProgramUniform *GetUniform(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Get uniform blocks
+		*
+		*  @return
+		*    List of uniform blocks
+		*/
+		virtual const PLGeneral::Array<ProgramUniformBlock*> &GetUniformBlocks() = 0;
+
+		/**
+		*  @brief
+		*    Get uniform block
+		*
+		*  @param[in] sName
+		*    Uniform block name
+		*
+		*  @return
+		*    Uniform block (can be a null pointer, if no uniform block with that name could be found)
+		*/
+		virtual ProgramUniformBlock *GetUniformBlock(const PLGeneral::String &sName) = 0;
 
 
 	//[-------------------------------------------------------]

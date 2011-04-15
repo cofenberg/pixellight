@@ -289,6 +289,15 @@ PFNGLGETPROGRAMBINARYPROC	glGetProgramBinary	= nullptr;
 PFNGLPROGRAMBINARYPROC		glProgramBinary		= nullptr;
 PFNGLPROGRAMPARAMETERIPROC	glProgramParameteri	= nullptr;
 
+// GL_ARB_uniform_buffer_object
+PFNGLGETUNIFORMINDICESPROC			glGetUniformIndices			= nullptr;
+PFNGLGETACTIVEUNIFORMSIVPROC		glGetActiveUniformsiv		= nullptr;
+PFNGLGETACTIVEUNIFORMNAMEPROC		glGetActiveUniformName		= nullptr;
+PFNGLGETUNIFORMBLOCKINDEXPROC		glGetUniformBlockIndex		= nullptr;
+PFNGLGETACTIVEUNIFORMBLOCKIVPROC	glGetActiveUniformBlockiv	= nullptr;
+PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC	glGetActiveUniformBlockName	= nullptr;
+PFNGLUNIFORMBLOCKBINDINGPROC		glUniformBlockBinding		= nullptr;
+
 // GL_NV_occlusion_query
 PFNGLGENOCCLUSIONQUERIESNVPROC		glGenOcclusionQueriesNV		= nullptr;
 PFNGLDELETEOCCLUSIONQUERIESNVPROC	glDeleteOcclusionQueriesNV	= nullptr;
@@ -297,7 +306,6 @@ PFNGLBEGINOCCLUSIONQUERYNVPROC		glBeginOcclusionQueryNV		= nullptr;
 PFNGLENDOCCLUSIONQUERYNVPROC		glEndOcclusionQueryNV		= nullptr;
 PFNGLGETOCCLUSIONQUERYIVNVPROC		glGetOcclusionQueryivNV		= nullptr;
 PFNGLGETOCCLUSIONQUERYUIVNVPROC		glGetOcclusionQueryuivNV	= nullptr;
-
 
 // GL_ATI_separate_stencil
 PFNGLSTENCILOPSEPARATEATIPROC	glStencilOpSeparateATI		= nullptr;
@@ -399,6 +407,7 @@ bool OpenGLExtensions::IsGL_ARB_vertex_shader()					const { return m_bGL_ARB_ver
 bool OpenGLExtensions::IsGL_ARB_get_program_binary()			const { return m_bGL_ARB_get_program_binary;		 }
 bool OpenGLExtensions::IsGL_ARB_texture_rectangle()				const { return m_bGL_ARB_texture_rectangle;			 }
 bool OpenGLExtensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
+bool OpenGLExtensions::IsGL_ARB_uniform_buffer_object()			const { return m_bGL_ARB_uniform_buffer_object;		 }
 // ATI
 bool OpenGLExtensions::IsGL_ATI_separate_stencil()				const { return m_bGL_ATI_separate_stencil;			 }
 bool OpenGLExtensions::IsGL_ATI_draw_buffers()					const { return m_bGL_ATI_draw_buffers;				 }
@@ -589,6 +598,7 @@ void OpenGLExtensions::ResetExtensions()
 	m_bGL_ARB_get_program_binary			= false;
 	m_bGL_ARB_texture_rectangle				= false;
 	m_bGL_ARB_multisample					= false;
+	m_bGL_ARB_uniform_buffer_object			= false;
 	// ATI
 	m_bGL_ATI_separate_stencil				= false;
 	m_bGL_ATI_draw_buffers					= false;
@@ -719,6 +729,36 @@ void OpenGLExtensions::ShowGeneralOpenGLInformation() const
 			// Cleanup
 			delete [] pCompressedFormat;
 		}
+	}
+
+	if (m_bGL_ARB_uniform_buffer_object) {
+		PL_LOG(Info, "GL_ARB_uniform_buffer_object information:")
+		glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &nTemp);
+		PL_LOG(Info, String::Format("  Maximum number of vertex uniform buffers per program = %d", nTemp))
+		glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &nTemp);
+		PL_LOG(Info, String::Format("  Maximum number of fragment uniform buffers per program = %d", nTemp))
+		glGetIntegerv(GL_MAX_GEOMETRY_UNIFORM_BLOCKS, &nTemp);
+		PL_LOG(Info, String::Format("  Maximum number of geometry uniform buffers per program = %d", nTemp))
+		glGetIntegerv(GL_MAX_COMBINED_UNIFORM_BLOCKS, &nTemp);
+		PL_LOG(Info, String::Format("  Maximum number of uniform buffers per program = %d", nTemp))
+		glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &nTemp);
+		PL_LOG(Info, String::Format("  Maximum number of uniform buffer binding points on the context = %d", nTemp))
+		glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &nTemp);
+		PL_LOG(Info, String::Format("  Max size in basic machine units of a uniform block = %d", nTemp))
+		glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &nTemp);
+		PL_LOG(Info, String::Format("  Number of words for vertex shader uniform variables in default uniform block = %d", nTemp))
+		glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, &nTemp);
+		PL_LOG(Info, String::Format("  Number of words for fragment shader uniform variables in default uniform block = %d", nTemp))
+		glGetIntegerv(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS, &nTemp);
+		PL_LOG(Info, String::Format("  Number of words for geometry shader uniform variables in default uniform block = %d", nTemp))
+		glGetIntegerv(GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS, &nTemp);
+		PL_LOG(Info, String::Format("  Number of words for vertex shader uniform variables in all uniform blocks (including default) = %d", nTemp))
+		glGetIntegerv(GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS, &nTemp);
+		PL_LOG(Info, String::Format("  Number of words for fragment shader uniform variables in all uniform blocks (including default) = %d", nTemp))
+		glGetIntegerv(GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS, &nTemp);
+		PL_LOG(Info, String::Format("  Number of words for geometry shader uniform variables in all uniform blocks (including default) = %d", nTemp))
+		glGetIntegerv(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT, &nTemp);
+		PL_LOG(Info, String::Format("  Minimum required alignment for uniform buffer sizes and offsets = %d", nTemp))
 	}
 }
 

@@ -130,6 +130,12 @@
     <ClCompile Include="src\Misc\pbuffer.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
+    <ClCompile Include="src\ProgramUniformBlockGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UniformBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h">
@@ -254,6 +260,12 @@
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\Misc\pbuffer.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
