@@ -118,6 +118,9 @@
     <PostBuildEvent>
       <Command>copy build\debug\libRocket_PLD.dll ..\..\Bin\PLRuntime\
 copy build\debug\libRocket_PLD.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\PLRuntime\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -156,7 +159,9 @@ copy build\debug\libRocket_PLD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\libRocket_PLD64.dll ..\..\Bin\PLRuntime\
 copy build\debug64\libRocket_PLD64.lib ..\..\Bin\Lib\
-</Command>
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\PLRuntime\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -203,7 +208,9 @@ copy build\debug64\libRocket_PLD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\libRocket_PL.dll ..\..\Bin\PLRuntime\
 copy build\release\libRocket_PL.lib ..\..\Bin\Lib\
-</Command>
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\PLRuntime\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -247,7 +254,9 @@ copy build\release\libRocket_PL.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\libRocket_PL64.dll ..\..\Bin\PLRuntime\
 copy build\release64\libRocket_PL64.lib ..\..\Bin\Lib\
-</Command>
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\PLRuntime\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\PLRuntime\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

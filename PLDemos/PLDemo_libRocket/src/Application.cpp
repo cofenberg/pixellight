@@ -85,7 +85,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 	if (nKey == PLGUIKEY_ESCAPE) {
 		// Shut down the application
 		Exit(0);
-		}
+	}
 }
 
 
