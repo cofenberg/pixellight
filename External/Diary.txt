@@ -1,3 +1,9 @@
+>> 17.04.2011
+[CO]
+- Autodesk 3ds Max 2012 externals added
+
+
+
 >> 26.03.2011
 [CO]
 - Added free open source HTML/CSS game interface middleware "libRocket" (http://librocket.com/)
