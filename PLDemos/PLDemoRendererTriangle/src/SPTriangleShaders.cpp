@@ -169,7 +169,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 	// CPU side of the unform buffer
 	struct {
 		Matrix4x4 mObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix
-		Color4    vColor;							// Object color
+		Color4    cColor;							// Object color
 	} cUniformBuffer;
 
 	{ // Calculate the object space to clip space matrix
@@ -204,7 +204,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 	}
 
 	// Set the object color
-	cUniformBuffer.vColor.SetRGBA(0.2f, 1.0f, 1.0f, 1.0f);
+	cUniformBuffer.cColor.SetRGBA(0.2f, 1.0f, 1.0f, 1.0f);
 
 	// Use uniform buffer to deliver the uniform block package at once to the GPU?
 	// (please note that the data remains on the GPU side, so there's no need to
@@ -239,7 +239,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 				pProgramUniform->Set(cUniformBuffer.mObjectSpaceToClipSpaceMatrix);
 			pProgramUniform = m_pProgram->GetUniform("Color");
 			if (pProgramUniform)
-				pProgramUniform->Set(cUniformBuffer.vColor);
+				pProgramUniform->Set(cUniformBuffer.cColor);
 		}
 
 		// No back face culling, please. Else we can only see one 'side' of the triangle

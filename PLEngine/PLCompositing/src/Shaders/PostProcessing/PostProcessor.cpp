@@ -29,7 +29,6 @@
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/SamplerStates.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/SurfaceTextureBuffer.h>
 #include <PLRenderer/Material/Material.h>
@@ -235,9 +234,6 @@ bool PostProcessor::BeginProcessing(Renderer &cRenderer, SurfaceTextureBuffer &c
 		// Begin 2D mode
 		m_nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
 		cRenderer.SetRenderState(RenderState::FixedFillMode, Fill::Solid);
-		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-		if (pFixedFunctions)
-			pFixedFunctions->ResetTransformStates();
 		cRenderer.GetDrawHelpers().Begin2DMode(0.0f, static_cast<float>(vSize.y), static_cast<float>(vSize.x), 0.0f);
 
 		// Done
@@ -401,14 +397,8 @@ bool PostProcessor::Process(const PostProcess &cPostProcess)
 			// Get the effect and set some general shader parameters
 			Effect *pEffect = pMaterial->GetEffect();
 			if (pEffect) {
-				FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-				if (pFixedFunctions) {
-					// WorldVP
-					const Matrix4x4 &mProjection = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
-					const Matrix4x4 &mView		 = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
-					const Matrix4x4 &mWorld		 = pFixedFunctions->GetTransformState(FixedFunctions::Transform::World);
-					pEffect->GetParameterManager().SetParameterMatrixfv("WorldVP", mProjection*mView*mWorld);
-				}
+				// WorldVP
+				pEffect->GetParameterManager().SetParameterMatrixfv("WorldVP", cRenderer.GetDrawHelpers().GetObjectSpaceToClipSpaceMatrix());
 			}
 
 			// Loop through all material passes
