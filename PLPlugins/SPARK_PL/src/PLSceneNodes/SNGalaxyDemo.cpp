@@ -27,7 +27,7 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRendererFixedFunctions.h"
 #include "SPARK_PL/PLSceneNodes/SNGalaxyDemo.h"
 #include <SPK.h>
 
@@ -80,7 +80,7 @@ void SNGalaxyDemo::InitFunction()
 	Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 	// Renderers
-	SPK_PLQuadRenderer *pParticleRenderer = SPK_PLQuadRenderer::Create(cRenderer);
+	SPK_PLQuadRenderer *pParticleRenderer = SPK_PLQuadRendererFixedFunctions::Create(cRenderer);
 	pParticleRenderer->setTexturingMode(SPK::TEXTURE_2D);
 	pParticleRenderer->SetTexture(GetSceneContext()->GetRendererContext().GetTextureManager().LoadResource("Data/Textures/SPARK/Flare.dds"));
 	pParticleRenderer->setScale(0.05f, 0.05f);

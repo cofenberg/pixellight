@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPK_PLLineRenderer.cpp                         *
+ *  File: SPK_PLQuadRendererShaders.cpp                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,29 +23,26 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
-PL_WARNING_PUSH
-PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
-	// [HACK] There are missing forward declarations within the SPARK headers...
-	namespace SPK {
-		class Group;
-	}
-	#include <Core/SPK_Group.h>
-PL_WARNING_POP
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLBuffer.h"
-#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineRenderer.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRendererShaders.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLRenderer;
 namespace SPARK_PL {
 
 
 //[-------------------------------------------------------]
-//[ Protected definitions                                 ]
+//[ Public static functions                               ]
 //[-------------------------------------------------------]
-const std::string SPK_PLLineRenderer::PLBufferName("SPK_PLLineRenderer_Buffer");
+SPK_PLQuadRendererShaders *SPK_PLQuadRendererShaders::Create(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY)
+{
+	SPK_PLQuadRendererShaders *pSPK_PLQuadRendererShaders = new SPK_PLQuadRendererShaders(cRenderer, fScaleX, fScaleY);
+	registerObject(pSPK_PLQuadRendererShaders);
+	return pSPK_PLQuadRendererShaders;
+}
 
 
 //[-------------------------------------------------------]
@@ -53,38 +50,32 @@ const std::string SPK_PLLineRenderer::PLBufferName("SPK_PLLineRenderer_Buffer");
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Destructor of SPK_PLLineRenderer
+*    Constructor of SPK_PLQuadRendererShaders
 */
-SPK_PLLineRenderer::~SPK_PLLineRenderer()
+SPK_PLQuadRendererShaders::SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY) : SPK_PLQuadRenderer(cRenderer, fScaleX, fScaleY)
 {
 }
 
-
-//[-------------------------------------------------------]
-//[ Public virtual SPK::BufferHandler functions           ]
-//[-------------------------------------------------------]
-void SPK_PLLineRenderer::createBuffers(const SPK::Group &group)
-{
-	// Create the SPK_PLBuffer instance
-	m_pSPK_PLBuffer = static_cast<SPK_PLBuffer*>(group.createBuffer(PLBufferName, PLBufferCreator(GetPLRenderer(), 14, 0, SPK::TEXTURE_NONE), 0U, false));
-}
-
-void SPK_PLLineRenderer::destroyBuffers(const SPK::Group &group)
-{
-	group.destroyBuffer(PLBufferName);
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor of SPK_PLLineRenderer
+*    Destructor of SPK_PLQuadRendererShaders
 */
-SPK_PLLineRenderer::SPK_PLLineRenderer(PLRenderer::Renderer &cRenderer, float fLength, float fWidth) : SPK_PLRenderer(cRenderer), SPK::LineRendererInterface(fLength, fWidth),
-	m_pSPK_PLBuffer(nullptr)
+SPK_PLQuadRendererShaders::~SPK_PLQuadRendererShaders()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual SPK::Renderer functions                ]
+//[-------------------------------------------------------]
+void SPK_PLQuadRendererShaders::render(const SPK::Group &group)
+{
+	if (prepareBuffers(group)) {
+		// Is there a valid m_pSPK_PLBuffer instance?
+		if (m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
+			// [TODO] Implement me
+		}
+	}
 }
 
 

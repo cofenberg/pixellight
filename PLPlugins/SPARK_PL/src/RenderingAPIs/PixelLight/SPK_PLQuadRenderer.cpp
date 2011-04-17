@@ -26,7 +26,6 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Texture/TextureHandler.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLBuffer.h"
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.h"
@@ -43,7 +42,7 @@ namespace SPARK_PL {
 
 
 //[-------------------------------------------------------]
-//[ Private definitions                                   ]
+//[ Protected definitions                                 ]
 //[-------------------------------------------------------]
 const uint32	  SPK_PLQuadRenderer::NumOfVerticesPerParticle = 4;
 const uint32	  SPK_PLQuadRenderer::NumOfIndicesPerParticle  = 6;
@@ -51,35 +50,8 @@ const std::string SPK_PLQuadRenderer::PLBufferName("SPK_PLQuadRenderer_Buffer");
 
 
 //[-------------------------------------------------------]
-//[ Public static functions                               ]
-//[-------------------------------------------------------]
-SPK_PLQuadRenderer *SPK_PLQuadRenderer::Create(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY)
-{
-	SPK_PLQuadRenderer *pSPK_PLQuadRenderer = new SPK_PLQuadRenderer(cRenderer, fScaleX, fScaleY);
-	registerObject(pSPK_PLQuadRenderer);
-	return pSPK_PLQuadRenderer;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor of SPK_PLQuadRenderer
-*/
-SPK_PLQuadRenderer::SPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY) : SPK_PLRenderer(cRenderer), QuadRendererInterface(fScaleX, fScaleY), Oriented3DRendererInterface(),
-	m_pSPK_PLBuffer(nullptr),
-	m_pTextureHandler(new TextureHandler()),
-	m_nTextureBlending(FixedFunctions::TextureEnvironment::Modulate),
-	m_nCurrentVertexSize(0),
-	m_pfCurrentPosition(nullptr),
-	m_pfCurrentTexCoord(nullptr),
-	m_pCurrentVertexBuffer(nullptr),
-	m_nCurrentVertex(0)
-{
-}
-
 /**
 *  @brief
 *    Destructor of SPK_PLQuadRenderer
@@ -105,131 +77,6 @@ Texture *SPK_PLQuadRenderer::GetTexture() const
 void SPK_PLQuadRenderer::SetTexture(Texture *pTexture)
 {
 	m_pTextureHandler->SetResource(pTexture);
-}
-
-/**
-*  @brief
-*    Gets the texture blending function of this SPK_PLQuadRenderer
-*/
-FixedFunctions::TextureEnvironment::Enum SPK_PLQuadRenderer::GetTextureBlending() const
-{
-	return m_nTextureBlending;
-}
-
-/**
-*  @brief
-*    Sets the texture blending function of this SPK_PLQuadRenderer
-*/
-void SPK_PLQuadRenderer::SetTextureBlending(FixedFunctions::TextureEnvironment::Enum nTextureBlending)
-{
-	m_nTextureBlending = nTextureBlending;
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual SPK::Renderer functions                ]
-//[-------------------------------------------------------]
-void SPK_PLQuadRenderer::render(const SPK::Group &group)
-{
-	if (prepareBuffers(group)) {
-		// Is there a valid m_pSPK_PLBuffer instance?
-		if (m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
-			// Setup render states
-			InitBlending();
-			InitRenderingHints();
-			void (SPK_PLQuadRenderer::*pRenderParticle)(const SPK::Particle&);	// Pointer to the right render method
-			switch (texturingMode) {
-				case SPK::TEXTURE_2D:
-					m_pTextureHandler->Bind();
-					if (group.getModel()->isEnabled(SPK::PARAM_TEXTURE_INDEX))
-						pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render2DAtlasRot : &SPK_PLQuadRenderer::Render2DAtlas;
-					else
-						pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render2DRot : &SPK_PLQuadRenderer::Render2D;
-
-					{ // Get the fixed functions interface
-						FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-						if (pFixedFunctions)
-							pFixedFunctions->SetTextureStageState(0, FixedFunctions::TextureStage::ColorTexEnv, GetTextureBlending());
-					}
-					break;
-
-				case SPK::TEXTURE_3D:
-					m_pTextureHandler->Bind();
-					pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render3DRot : &SPK_PLQuadRenderer::Render3D;
-
-					{ // Get the fixed functions interface
-						FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-						if (pFixedFunctions)
-							pFixedFunctions->SetTextureStageState(0, FixedFunctions::TextureStage::ColorTexEnv, GetTextureBlending());
-					}
-					break;
-
-				case SPK::TEXTURE_NONE:
-					GetPLRenderer().SetTextureBuffer();
-					pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render2DRot : &SPK_PLQuadRenderer::Render2D;
-					break;
-
-				default:
-					pRenderParticle = nullptr;
-					break;
-			}
-
-			// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
-			VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
-			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
-				// Get the inverse of the current view matrix
-				FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-				const Matrix4x4 &mView   = pFixedFunctions ? pFixedFunctions->GetTransformState(FixedFunctions::Transform::View)  : Matrix4x4::Identity;
-				const Matrix4x4 &mWorld  = pFixedFunctions ? pFixedFunctions->GetTransformState(FixedFunctions::Transform::World) : Matrix4x4::Identity;
-				const Matrix4x4 mViewInv = (mView*mWorld).GetInverted();
-
-				// Get current vertex buffer data
-				m_nCurrentVertexSize	= pVertexBuffer->GetVertexSize();
-				m_pfCurrentPosition		= static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
-				m_pfCurrentTexCoord		= static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
-				m_pCurrentVertexBuffer	= pVertexBuffer;
-				m_nCurrentVertex		= 0;
-
-				// Calculate the current orientation
-				const bool bGlobalOrientation = precomputeOrientation3D(
-					group,
-					SPK::Vector3D(-mViewInv.fM[8],  -mViewInv.fM[9],  -mViewInv.fM[10]),
-					SPK::Vector3D( mViewInv.fM[4],   mViewInv.fM[5],   mViewInv.fM[6]),
-					SPK::Vector3D( mViewInv.fM[12],  mViewInv.fM[13],  mViewInv.fM[14]));
-				if (pRenderParticle) {
-					if (bGlobalOrientation) {
-						computeGlobalOrientation3D();
-						for (size_t i=0; i<group.getNbParticles(); i++)
-							(this->*pRenderParticle)(group.getParticle(i));
-					} else {
-						for (size_t i=0; i<group.getNbParticles(); i++) {
-							const SPK::Particle &cParticle = group.getParticle(i);
-							computeSingleOrientation3D(cParticle);
-							(this->*pRenderParticle)(cParticle);
-						}
-					}
-				}
-
-				// Unlock the vertex buffer
-				pVertexBuffer->Unlock();
-			}
-
-			// Get the fixed functions interface
-			FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-			if (pFixedFunctions) {
-				// Make the index buffer to the current renderer index buffer
-				IndexBuffer *pIndexBuffer = m_pSPK_PLBuffer->GetIndexBuffer();
-				if (pIndexBuffer)
-					GetPLRenderer().SetIndexBuffer(pIndexBuffer);
-
-				// Make the vertex buffer to the current renderer vertex buffer
-				pFixedFunctions->SetVertexBuffer(pVertexBuffer);
-
-				// Draw
-				GetPLRenderer().DrawIndexedPrimitives(Primitive::TriangleList, 0, group.getNbParticles()*NumOfVerticesPerParticle-1, 0, group.getNbParticles()*NumOfIndicesPerParticle);
-			}
-		}
-	}
 }
 
 
@@ -372,8 +219,23 @@ void SPK_PLQuadRenderer::destroyBuffers(const SPK::Group &group)
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor of SPK_PLQuadRenderer
+*/
+SPK_PLQuadRenderer::SPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY) : SPK_PLRenderer(cRenderer), QuadRendererInterface(fScaleX, fScaleY), Oriented3DRendererInterface(),
+	m_pSPK_PLBuffer(nullptr),
+	m_pTextureHandler(new TextureHandler()),
+	m_nCurrentVertexSize(0),
+	m_pfCurrentPosition(nullptr),
+	m_pfCurrentTexCoord(nullptr),
+	m_pCurrentVertexBuffer(nullptr),
+	m_nCurrentVertex(0)
+{
+}
+
 inline void SPK_PLQuadRenderer::CallColorAndVertex(const SPK::Particle &cParticle)
 {
 	const float x = cParticle.position().x;

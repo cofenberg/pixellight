@@ -27,7 +27,7 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRendererFixedFunctions.h"
 #include "SPARK_PL/PLSceneNodes/SNFire.h"
 #include <SPK.h>
 
@@ -81,7 +81,7 @@ void SNFire::InitFunction()
 
 	// Inits Particle Engine
 	// Renderers
-	SPK_PLQuadRenderer *pFireRenderer = SPK_PLQuadRenderer::Create(cRenderer);
+	SPK_PLQuadRenderer *pFireRenderer = SPK_PLQuadRendererFixedFunctions::Create(cRenderer);
 	pFireRenderer->setScale(0.3f,0.3f);
 	pFireRenderer->setTexturingMode(SPK::TEXTURE_2D);
 	pFireRenderer->SetTexture(GetSceneContext()->GetRendererContext().GetTextureManager().LoadResource("Data/Textures/SPARK/Fire2.dds"));
@@ -89,7 +89,7 @@ void SNFire::InitFunction()
 	pFireRenderer->enableRenderingHint(SPK::DEPTH_WRITE, false);
 	pFireRenderer->setAtlasDimensions(2, 2);
 
-	SPK_PLQuadRenderer *pSmokeRenderer = SPK_PLQuadRenderer::Create(cRenderer);
+	SPK_PLQuadRenderer *pSmokeRenderer = SPK_PLQuadRendererFixedFunctions::Create(cRenderer);
 	pSmokeRenderer->setScale(0.3f, 0.3f);
 	pSmokeRenderer->setTexturingMode(SPK::TEXTURE_2D);
 	pSmokeRenderer->SetTexture(GetSceneContext()->GetRendererContext().GetTextureManager().LoadResource("Data/Textures/SPARK/Explosion.dds"));

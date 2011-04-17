@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPK_PLLineRenderer.h                           *
+ *  File: SPK_PLLineRendererFixedFunctions.h             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,20 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __SPARK_PL_LINERENDERER_H__
-#define __SPARK_PL_LINERENDERER_H__
+#ifndef __SPARK_PL_LINERENDERER_FIXEDFUNCTIONS_H__
+#define __SPARK_PL_LINERENDERER_FIXEDFUNCTIONS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
-PL_WARNING_PUSH
-PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
-	#include <Extensions/Renderers/SPK_LineRendererInterface.h>
-PL_WARNING_POP
-#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLRenderer.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineRenderer.h"
 
 
 //[-------------------------------------------------------]
@@ -43,34 +38,43 @@ namespace SPARK_PL {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class SPK_PLBuffer;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    An abstract Renderer drawing particles as PixelLight lines
-*
-*  @remarks
-*    The length of the lines is function of the Particle velocity and is defined in the universe space
-*    while the width is fixed and defines in the screen space (in pixels).<br>
-*    <br>
-*    Below are the parameters of Particle that are used in this Renderer (others have no effects) :
-*    <ul>
-*    <li>SPK::PARAM_RED</li>
-*    <li>SPK::PARAM_GREEN</li>
-*    <li>SPK::PARAM_BLUE</li>
-*    <li>SPK::PARAM_ALPHA (only if blending is enabled)</li>
-*    </ul>
+*    A Renderer drawing particles as PixelLight lines using fixed functions
 *
 *  @note
 *    - Basing on "SPK::GL::GLLineRenderer" (this includes most of the comments)
 */
-class SPK_PLLineRenderer : public SPK_PLRenderer, public SPK::LineRendererInterface {
+class SPK_PLLineRendererFixedFunctions : public SPK_PLLineRenderer {
+
+
+	//[-------------------------------------------------------]
+	//[ SPARK macro                                           ]
+	//[-------------------------------------------------------]
+	SPK_IMPLEMENT_REGISTERABLE(SPK_PLLineRendererFixedFunctions)
+
+
+	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Creates and registers a new SPK_PLLineRendererFixedFunctions
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fLength
+		*    The length multiplier of this SPK_PLLineRendererFixedFunctions
+		*  @param[in] fWidth
+		*    The width of this SPK_PLLineRendererFixedFunctions in pixels
+		*
+		*  @return
+		*    A new registered SPK_PLLineRendererFixedFunctions
+		*/
+		SPARK_PL_API static SPK_PLLineRendererFixedFunctions *Create(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -79,49 +83,29 @@ class SPK_PLLineRenderer : public SPK_PLRenderer, public SPK::LineRendererInterf
 	public:
 		/**
 		*  @brief
-		*    Destructor of SPK_PLLineRenderer
-		*/
-		SPARK_PL_API virtual ~SPK_PLLineRenderer();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual SPK::BufferHandler functions           ]
-	//[-------------------------------------------------------]
-	public:
-		SPARK_PL_API virtual void createBuffers(const SPK::Group &group);
-		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group);
-
-
-	//[-------------------------------------------------------]
-	//[ Protected definitions                                 ]
-	//[-------------------------------------------------------]
-	protected:
-		static const std::string PLBufferName;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Constructor of SPK_PLLineRenderer
+		*    Constructor of SPK_PLLineRendererFixedFunctions
 		*
 		*  @param[in] cRenderer
 		*    PixelLight renderer to use
 		*  @param[in] fLength
-		*    The length multiplier of this SPK_PLLineRenderer
+		*    The length multiplier of this SPK_PLLineRendererFixedFunctions
 		*  @param[in] fWidth
-		*    The width of this SPK_PLLineRenderer in pixels
+		*    The width of this SPK_PLLineRendererFixedFunctions in pixels
 		*/
-		SPK_PLLineRenderer(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
+		SPK_PLLineRendererFixedFunctions(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
+
+		/**
+		*  @brief
+		*    Destructor of SPK_PLLineRendererFixedFunctions
+		*/
+		SPARK_PL_API virtual ~SPK_PLLineRendererFixedFunctions();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Public virtual SPK::Renderer functions                ]
 	//[-------------------------------------------------------]
-	protected:
-		SPK_PLBuffer *m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
+	public:
+		SPARK_PL_API virtual void render(const SPK::Group &group);
 
 
 };
@@ -133,4 +117,4 @@ class SPK_PLLineRenderer : public SPK_PLRenderer, public SPK::LineRendererInterf
 } // SPARK_PL
 
 
-#endif	// __SPARK_PL_LINERENDERER_H__
+#endif	// __SPARK_PL_LINERENDERER_FIXEDFUNCTIONS_H__
