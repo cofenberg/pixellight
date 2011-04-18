@@ -100,7 +100,6 @@ class Image : public PLCore::Loadable {
 		*
 		*    This is only an ease of use method doing nothing more than:
 		*  @verbatim
-		*    Usage example:
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
