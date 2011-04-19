@@ -77,6 +77,7 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 		virtual PLRenderer::GeometryShader *CreateGeometryShader();
 		virtual PLRenderer::FragmentShader *CreateFragmentShader();
 		virtual PLRenderer::Program *CreateProgram();
+		virtual PLRenderer::UniformBuffer *CreateUniformBuffer();
 
 
 	//[-------------------------------------------------------]

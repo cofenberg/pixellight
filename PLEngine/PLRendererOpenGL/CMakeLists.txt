@@ -13,6 +13,7 @@ add_sources(
 	src/Context.cpp
 	src/VertexBuffer.cpp
 	src/IndexBuffer.cpp
+	src/UniformBuffer.cpp
 	src/TextureBuffer1D.cpp
 	src/TextureBuffer2D.cpp
 	src/TextureBufferRectangle.cpp
@@ -31,6 +32,7 @@ add_sources(
 	src/ProgramGLSL.cpp
 	src/ProgramAttributeGLSL.cpp
 	src/ProgramUniformGLSL.cpp
+	src/ProgramUniformBlockGLSL.cpp
 	src/ShaderToolsGLSL.cpp
 	src/FontManager.cpp
 	src/FontTexture.cpp

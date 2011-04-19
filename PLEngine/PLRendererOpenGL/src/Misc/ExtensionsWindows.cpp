@@ -388,6 +388,25 @@ bool OpenGLExtensions::Init()
 		m_bGL_EXT_geometry_shader4 = false;
 	}
 
+	// GL_EXT_transform_feedback
+	if (IsSupported("GL_EXT_transform_feedback")) {
+		glBeginTransformFeedbackEXT		 = reinterpret_cast<PFNGLBEGINTRANSFORMFEEDBACKEXTPROC>		(wglGetProcAddress("glBeginTransformFeedbackEXT"));
+		glEndTransformFeedbackEXT		 = reinterpret_cast<PFNGLENDTRANSFORMFEEDBACKEXTPROC>		(wglGetProcAddress("glEndTransformFeedbackEXT"));
+		glBindBufferRangeEXT			 = reinterpret_cast<PFNGLBINDBUFFERRANGEEXTPROC>			(wglGetProcAddress("glBindBufferRangeEXT"));
+		glBindBufferOffsetEXT			 = reinterpret_cast<PFNGLBINDBUFFEROFFSETEXTPROC>			(wglGetProcAddress("glBindBufferOffsetEXT"));
+		glBindBufferBaseEXT				 = reinterpret_cast<PFNGLBINDBUFFERBASEEXTPROC>				(wglGetProcAddress("glBindBufferBaseEXT"));
+		glTransformFeedbackVaryingsEXT	 = reinterpret_cast<PFNGLTRANSFORMFEEDBACKVARYINGSEXTPROC>	(wglGetProcAddress("glTransformFeedbackVaryingsEXT"));
+		glGetTransformFeedbackVaryingEXT = reinterpret_cast<PFNGLGETTRANSFORMFEEDBACKVARYINGEXTPROC>(wglGetProcAddress("glGetTransformFeedbackVaryingEXT"));
+		if (!glBeginTransformFeedbackEXT || !glEndTransformFeedbackEXT || !glBindBufferRangeEXT || !glBindBufferOffsetEXT || !glBindBufferBaseEXT || !glTransformFeedbackVaryingsEXT || !glGetTransformFeedbackVaryingEXT) {
+			PL_LOG(Info, "Couldn't use extension 'GL_EXT_transform_feedback'!")
+			m_bGL_EXT_transform_feedback = false;
+		} else {
+			m_bGL_EXT_transform_feedback = true;
+		}
+	} else {
+		m_bGL_EXT_transform_feedback = false;
+	}
+
 
 // ARB
 	// GL_ARB_texture_float
@@ -694,6 +713,23 @@ bool OpenGLExtensions::Init()
 	// GL_ARB_multisample
 	m_bGL_ARB_multisample = IsSupported("GL_ARB_multisample");
 
+	// GL_ARB_uniform_buffer_object
+	if (IsSupported("GL_ARB_uniform_buffer_object")) {
+		glGetUniformIndices         = reinterpret_cast<PFNGLGETUNIFORMINDICESPROC>        (wglGetProcAddress("glGetUniformIndices"));
+		glGetActiveUniformsiv       = reinterpret_cast<PFNGLGETACTIVEUNIFORMSIVPROC>      (wglGetProcAddress("glGetActiveUniformsiv"));
+		glGetUniformBlockIndex      = reinterpret_cast<PFNGLGETUNIFORMBLOCKINDEXPROC>     (wglGetProcAddress("glGetUniformBlockIndex"));
+		glGetActiveUniformBlockiv   = reinterpret_cast<PFNGLGETACTIVEUNIFORMBLOCKIVPROC>  (wglGetProcAddress("glGetActiveUniformBlockiv"));
+		glGetActiveUniformBlockName = reinterpret_cast<PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC>(wglGetProcAddress("glGetActiveUniformBlockName"));
+		glUniformBlockBinding       = reinterpret_cast<PFNGLUNIFORMBLOCKBINDINGPROC>      (wglGetProcAddress("glUniformBlockBinding"));
+		if (!glGetUniformIndices || !glGetActiveUniformsiv || !glGetUniformBlockIndex || !glGetActiveUniformBlockiv || !glGetActiveUniformBlockName || !glUniformBlockBinding) {
+			PL_LOG(Info, "Couldn't use extension 'GL_ARB_uniform_buffer_object'!")
+			m_bGL_ARB_uniform_buffer_object = false;
+		} else {
+			m_bGL_ARB_uniform_buffer_object = true;
+		}
+	} else {
+		m_bGL_ARB_uniform_buffer_object = false;
+	}
 
 // ATI
 	// GL_ATI_separate_stencil 

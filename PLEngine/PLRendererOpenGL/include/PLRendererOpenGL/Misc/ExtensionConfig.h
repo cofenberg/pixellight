@@ -83,6 +83,8 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_EXT_framebuffer_object,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_framebuffer_multisample,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_framebuffer_blit,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_EXT_geometry_shader4,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_EXT_transform_feedback,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		// ARB
 		pl_attribute(GL_ARB_texture_float,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_color_buffer_float,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
@@ -106,6 +108,7 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_ARB_get_program_binary,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_texture_rectangle,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		pl_attribute(GL_ARB_uniform_buffer_object,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		// ATI
 		pl_attribute(GL_ATI_separate_stencil,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ATI_draw_buffers,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")

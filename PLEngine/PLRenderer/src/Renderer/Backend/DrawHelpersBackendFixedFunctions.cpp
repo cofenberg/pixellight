@@ -87,6 +87,9 @@ void DrawHelpersBackendFixedFunctions::Begin2DMode(float fX1, float fY1, float f
 	m_fVirtualScreen[2] = fX2;
 	m_fVirtualScreen[3] = fY2;
 
+	// Set orthogonal projection matrix
+	m_mObjectSpaceToClipSpace.OrthoOffCenter(fX1, fX2, fY1, fY2, -1.0f, 1.0f);
+
 	// Fixed functions
 	FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
 	if (pFixedFunctions) {
@@ -94,12 +97,8 @@ void DrawHelpersBackendFixedFunctions::Begin2DMode(float fX1, float fY1, float f
 		m_m2DModeProjBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
 		m_m2DModeViewBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
 
-		// Set orthogonal projection matrix
-		Matrix4x4 mProj;
-		mProj.OrthoOffCenter(fX1, fX2, fY1, fY2, -1.0f, 1.0f);
-
 		// Set identity view matrix
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProj);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, m_mObjectSpaceToClipSpace);
 		pFixedFunctions->SetTransformState(FixedFunctions::Transform::View, Matrix4x4::Identity);
 	}
 

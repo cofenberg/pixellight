@@ -49,9 +49,17 @@ add_sources(
 	src/PLSceneNodes/SNGravitationDemo.cpp
 	src/RenderingAPIs/PixelLight/SPK_PLBuffer.cpp
 	src/RenderingAPIs/PixelLight/SPK_PLLineRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLLineRendererFixedFunctions.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLLineRendererShaders.cpp
 	src/RenderingAPIs/PixelLight/SPK_PLLineTrailRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLLineTrailRendererFixedFunctions.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLLineTrailRendererShaders.cpp
 	src/RenderingAPIs/PixelLight/SPK_PLPointRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLPointRendererFixedFunctions.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLPointRendererShaders.cpp
 	src/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLQuadRendererFixedFunctions.cpp
+	src/RenderingAPIs/PixelLight/SPK_PLQuadRendererShaders.cpp
 	src/RenderingAPIs/PixelLight/SPK_PLRenderer.cpp
 )
 

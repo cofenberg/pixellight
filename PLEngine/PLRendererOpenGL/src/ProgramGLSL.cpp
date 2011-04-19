@@ -31,6 +31,7 @@
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 #include "PLRendererOpenGL/ProgramAttributeGLSL.h"
 #include "PLRendererOpenGL/ProgramUniformGLSL.h"
+#include "PLRendererOpenGL/ProgramUniformBlockGLSL.h"
 #include "PLRendererOpenGL/ProgramGLSL.h"
 
 
@@ -50,11 +51,8 @@ namespace PLRendererOpenGL {
 */
 ProgramGLSL::~ProgramGLSL()
 {
-	// Destroy the attribute information
-	DestroyAttributeInformation();
-
-	// Destroy the uniform information
-	DestroyUniformInformation();
+	// Call the relink method, this automatically destroys the used resources
+	RelinkRequired();
 
 	// Destroy the OpenGL program
 	glDeleteObjectARB(m_nOpenGLProgram);
@@ -145,7 +143,8 @@ ProgramGLSL::ProgramGLSL(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 	m_bGeometryShaderAttached(false),
 	m_bFragmentShaderAttached(false),
 	m_bAttributeInformationBuild(false),
-	m_bUniformInformationBuild(false)
+	m_bUniformInformationBuild(false),
+	m_bUniformBlockInformationBuild(false)
 {
 }
 
@@ -165,6 +164,9 @@ void ProgramGLSL::RelinkRequired()
 
 		// Destroy the uniform information
 		DestroyUniformInformation();
+
+		// Destroy the uniform block information
+		DestroyUniformBlockInformation();
 
 		// The program is now dirty
 		EventDirty.Emit(this);
@@ -337,6 +339,111 @@ void ProgramGLSL::DestroyUniformInformation()
 
 	// Currently, there's no uniform information build
 	m_bUniformInformationBuild = false;
+}
+
+/**
+*  @brief
+*    Builds the uniform block information
+*/
+void ProgramGLSL::BuildUniformBlockInformation()
+{
+	// Uniform block information already build?
+	if (!m_bUniformBlockInformationBuild) {
+		// Get the OpenGL program - this also ensures that the program is linked
+		const GLuint nOpenGLProgram = GetOpenGLProgram();
+
+		// Is the program linked?
+		if (m_bLinked) {
+			// [TODO] GLSL uniform block enumeration doesn't work in the way I expected when reading http://www.opengl.org/registry/specs/ARB/uniform_buffer_object.txt
+			{ // Somewhat of a hack...
+				static const int nMaxNameLength = 256;
+				char szName[nMaxNameLength];
+
+				// Iterate over all uniform blocks
+				GLuint nUniformBlockIndex = 0;
+				GLsizei nCurrentNameLength = 0;	// The actual number of characters written into pszName, excluding the null terminator
+				do {
+					// Get the current uniform block
+					nCurrentNameLength = 0;
+					glGetActiveUniformBlockName(nOpenGLProgram, nUniformBlockIndex, nMaxNameLength, &nCurrentNameLength, szName);
+					if (nCurrentNameLength) {
+						GLint nUniformBlockSize = 0;
+						glGetActiveUniformBlockiv(nOpenGLProgram, nUniformBlockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &nUniformBlockSize);
+
+						// Create a new program uniform block instance
+						ProgramUniformBlockGLSL *pProgramUniformBlock = new ProgramUniformBlockGLSL(nOpenGLProgram, nUniformBlockIndex, nUniformBlockSize, ShaderLanguageGLSL::GLSL);
+
+						// Register the new program uniform block
+						m_lstUniformBlocks.Add(pProgramUniformBlock);
+						m_mapUniformBlocks.Add(String(szName, true, nCurrentNameLength), pProgramUniformBlock);
+
+						// Next!
+						nUniformBlockIndex++;
+					}
+				} while (nCurrentNameLength);
+			}
+			/*
+			{ // My first attempt
+				// Get the number of active uniform blocks
+				GLint nNumOfActiveUniformBlocks = 0;
+				glGetObjectParameterivARB(nOpenGLProgram, GL_ACTIVE_UNIFORM_BLOCKS, &nNumOfActiveUniformBlocks);
+				nNumOfActiveUniformBlocks = 1;
+				if (nNumOfActiveUniformBlocks) {
+					// Get the length of the longest active uniform block name, including a null terminator
+					GLint nMaxNameLength = 0;
+					glGetObjectParameterivARB(nOpenGLProgram, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, &nMaxNameLength);
+					if (nMaxNameLength) {
+						// Allocate the name buffer
+						char *pszName = new char[nMaxNameLength];
+
+						// Iterate over all uniform blocks
+						for (int i=0; i<nNumOfActiveUniformBlocks; i++) {
+							// Get the current uniform block
+							GLsizei nCurrentNameLength = 0;	// The actual number of characters written into pszName, excluding the null terminator
+							glGetActiveUniformBlockName(nOpenGLProgram, i, nMaxNameLength, &nCurrentNameLength, pszName);
+							GLint nUniformBlockSize = 0;
+							glGetActiveUniformBlockiv(nOpenGLProgram, i, GL_UNIFORM_BLOCK_DATA_SIZE, &nUniformBlockSize);
+
+							// Create a new program uniform block instance
+							ProgramUniformBlockGLSL *pProgramUniformBlock = new ProgramUniformBlockGLSL(nOpenGLProgram, glGetUniformBlockIndex(nOpenGLProgram, pszName), nUniformBlockSize);
+
+							// Register the new program uniform block
+							m_lstUniformBlocks.Add(pProgramUniformBlock);
+							m_mapUniformBlocks.Add(String(pszName, true, nCurrentNameLength), pProgramUniformBlock);
+						}
+
+						// Destroy the name buffer
+						delete [] pszName;
+					}
+				}
+			}*/
+
+			// The uniform block information build is now build
+			m_bUniformBlockInformationBuild = true;
+		}
+	}
+}
+
+/**
+*  @brief
+*    Destroys the uniform block information
+*/
+void ProgramGLSL::DestroyUniformBlockInformation()
+{
+	// Is there anything to destroy?
+	const uint32 nNumOfUniformBlocks = m_lstUniformBlocks.GetNumOfElements();
+	if (nNumOfUniformBlocks) {
+		// Destroy the uniform block instances
+		for (uint32 i=0; i<nNumOfUniformBlocks; i++)
+			delete static_cast<ProgramUniformBlockGLSL*>(m_lstUniformBlocks[i]);
+
+		// Clear the uniform block list and hash map
+		m_lstUniformBlocks.Clear();
+		m_mapUniformBlocks.Clear();
+	}
+
+	// Currently, there's no uniform block information build
+	m_bUniformBlockInformationBuild = false;
 }
 
 
@@ -585,6 +692,26 @@ PLRenderer::ProgramUniform *ProgramGLSL::GetUniform(const String &sName)
 
 	// Return the requested uniform
 	return m_mapUniforms.Get(sName);
+}
+
+const Array<PLRenderer::ProgramUniformBlock*> &ProgramGLSL::GetUniformBlocks()
+{
+	// Build the uniform block information, if required
+	if (!m_bUniformBlockInformationBuild)
+		BuildUniformBlockInformation();
+
+	// Return the list of all uniform blocks
+	return m_lstUniformBlocks;
+}
+
+PLRenderer::ProgramUniformBlock *ProgramGLSL::GetUniformBlock(const String &sName)
+{
+	// Build the uniform block information, if required
+	if (!m_bUniformBlockInformationBuild)
+		BuildUniformBlockInformation();
+
+	// Return the requested uniform block
+	return m_mapUniformBlocks.Get(sName);
 }
 
 

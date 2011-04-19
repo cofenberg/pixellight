@@ -31,7 +31,8 @@ struct VS_OUTPUT {\n\
 // Programs\n\
 VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input\n\
 			   float4   VertexColor    : COLOR,			// Vertex color input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix\n\
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix\n\
+	   uniform float4   Color)							// Object color\n\
 {\n\
 	VS_OUTPUT Out;\n\
 \n\
@@ -39,7 +40,38 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex posit
 	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));\n\
 \n\
 	// Pass through the vertex color\n\
-	Out.VertexColor = VertexColor;\n\
+	Out.VertexColor = VertexColor*Color;\n\
+\n\
+	// Done\n\
+	return Out;\n\
+}";
+
+// Cg vertex shader source code - uniform buffer version
+static const PLGeneral::String sVertexShaderSourceCodeCg_UniformBuffer = "\
+// Vertex output\n\
+struct VS_OUTPUT {\n\
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float4 VertexColor    : COLOR;		// Vertex color\n\
+};\n\
+\n\
+// Uniforms\n\
+typedef struct {\n\
+	float4x4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
+	float4   Color;							// Object color\n\
+} UniformBlockStruct;\n\
+\n\
+// Programs\n\
+VS_OUTPUT main(float3             VertexPosition : POSITION,	// Object space vertex position input\n\
+			   float4             VertexColor    : COLOR,		// Vertex color input\n\
+	   uniform UniformBlockStruct UniformBlock   : BUFFER[0])	// Uniform block\n\
+{\n\
+	VS_OUTPUT Out;\n\
+\n\
+	// Calculate the clip space vertex position... Lookout! We need to transpose the matrix for Cg, I just swap the parameters in here for this!\n\
+	Out.VertexPosition = mul(float4(VertexPosition, 1), UniformBlock.ObjectSpaceToClipSpaceMatrix);\n\
+\n\
+	// Pass through the vertex color\n\
+	Out.VertexColor = VertexColor*UniformBlock.Color;\n\
 \n\
 	// Done\n\
 	return Out;\n\

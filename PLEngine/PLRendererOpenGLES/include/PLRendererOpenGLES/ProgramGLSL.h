@@ -152,6 +152,7 @@ class ProgramGLSL : public PLRenderer::Program {
 		bool																	m_bUniformInformationBuild;		/**< Uniform information already build? */
 		PLGeneral::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;					/**< List of uniforms */
 		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniform*>		m_mapUniforms;					/**< Hash map of names -> uniforms */
+		PLGeneral::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;				/**< List of uniform blocks - There's no uniform block support in OpenGL ES 2.0, this is just a dummy so the interface can return "something" */
 
 
 	//[-------------------------------------------------------]
@@ -171,6 +172,8 @@ class ProgramGLSL : public PLRenderer::Program {
 		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLGeneral::String &sName);
 		virtual const PLGeneral::Array<PLRenderer::ProgramUniform*> &GetUniforms();
 		virtual PLRenderer::ProgramUniform *GetUniform(const PLGeneral::String &sName);
+		virtual const PLGeneral::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
+		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLGeneral::String &sName);
 
 
 	//[-------------------------------------------------------]

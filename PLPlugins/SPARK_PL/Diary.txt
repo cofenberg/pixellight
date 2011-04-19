@@ -1,4 +1,11 @@
-﻿>> 26.03.2011
+﻿>> 17.04.2011
+[CO]
+- As usual when dealing with rendering, there are now special classes for legacy fixed functions and shaders rendering. The previous implementation
+  was using fixed functions. The shader based versions are not yet implemented.
+
+
+
+>> 26.03.2011
 [CO]
 - Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
 

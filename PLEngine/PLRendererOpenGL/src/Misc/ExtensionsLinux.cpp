@@ -101,6 +101,24 @@ bool OpenGLExtensions::Init()
 	// WGL_ARB_multisample
 	m_bWGL_ARB_multisample = IsSupported("GLX_ARB_multisample");
 
+	// GL_ARB_uniform_buffer_object
+	if (IsSupported("GL_ARB_uniform_buffer_object")) {
+		glGetUniformIndices         = reinterpret_cast<PFNGLGETUNIFORMINDICESPROC>        (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetUniformIndices")));
+		glGetActiveUniformsiv       = reinterpret_cast<PFNGLGETACTIVEUNIFORMSIVPROC>      (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetActiveUniformsiv")));
+		glGetUniformBlockIndex      = reinterpret_cast<PFNGLGETUNIFORMBLOCKINDEXPROC>     (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetUniformBlockIndex")));
+		glGetActiveUniformBlockiv   = reinterpret_cast<PFNGLGETACTIVEUNIFORMBLOCKIVPROC>  (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetActiveUniformBlockiv")));
+		glGetActiveUniformBlockName = reinterpret_cast<PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetActiveUniformBlockName")));
+		glUniformBlockBinding       = reinterpret_cast<PFNGLUNIFORMBLOCKBINDINGPROC>      (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glUniformBlockBinding")));
+		if (!glGetUniformIndices || !glGetActiveUniformsiv || !glGetUniformBlockIndex || !glGetActiveUniformBlockiv || !glGetActiveUniformBlockName || !glUniformBlockBinding) {
+			PL_LOG(Info, "Couldn't use extension 'GL_ARB_uniform_buffer_object'!")
+			m_bGL_ARB_uniform_buffer_object = false;
+		} else {
+			m_bGL_ARB_uniform_buffer_object = true;
+		}
+	} else {
+		m_bGL_ARB_uniform_buffer_object = false;
+	}
+
 	// WGL_ATI_pixel_format_float
 	m_bWGL_ATI_pixel_format_float = IsSupported("GLX_ATI_pixel_format_float");
 
@@ -349,6 +367,25 @@ bool OpenGLExtensions::Init()
 		}
 	} else {
 		m_bGL_EXT_geometry_shader4 = false;
+	}
+
+	// GL_EXT_transform_feedback
+	if (IsSupported("GL_EXT_transform_feedback")) {
+		glBeginTransformFeedbackEXT		 = reinterpret_cast<PFNGLBEGINTRANSFORMFEEDBACKEXTPROC>		(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBeginTransformFeedbackEXT")));
+		glEndTransformFeedbackEXT		 = reinterpret_cast<PFNGLENDTRANSFORMFEEDBACKEXTPROC>		(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glEndTransformFeedbackEXT")));
+		glBindBufferRangeEXT			 = reinterpret_cast<PFNGLBINDBUFFERRANGEEXTPROC>			(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBindBufferRangeEXT")));
+		glBindBufferOffsetEXT			 = reinterpret_cast<PFNGLBINDBUFFEROFFSETEXTPROC>			(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBindBufferOffsetEXT")));
+		glBindBufferBaseEXT				 = reinterpret_cast<PFNGLBINDBUFFERBASEEXTPROC>				(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glBindBufferBaseEXT")));
+		glTransformFeedbackVaryingsEXT	 = reinterpret_cast<PFNGLTRANSFORMFEEDBACKVARYINGSEXTPROC>	(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glTransformFeedbackVaryingsEXT")));
+		glGetTransformFeedbackVaryingEXT = reinterpret_cast<PFNGLGETTRANSFORMFEEDBACKVARYINGEXTPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glGetTransformFeedbackVaryingEXT")));
+		if (!glBeginTransformFeedbackEXT || !glEndTransformFeedbackEXT || !glBindBufferRangeEXT || !glBindBufferOffsetEXT || !glBindBufferBaseEXT || !glTransformFeedbackVaryingsEXT || !glGetTransformFeedbackVaryingEXT) {
+			PL_LOG(Info, "Couldn't use extension 'GL_EXT_transform_feedback'!")
+			m_bGL_EXT_transform_feedback = false;
+		} else {
+			m_bGL_EXT_transform_feedback = true;
+		}
+	} else {
+		m_bGL_EXT_transform_feedback = false;
 	}
 
 

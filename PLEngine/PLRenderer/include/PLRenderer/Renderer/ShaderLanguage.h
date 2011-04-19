@@ -43,6 +43,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 class Program;
 class VertexShader;
+class UniformBuffer;
 class GeometryShader;
 class FragmentShader;
 
@@ -112,6 +113,15 @@ class ShaderLanguage : public PLCore::Object {
 		*    The created program, a null pointer on error
 		*/
 		virtual Program *CreateProgram() = 0;
+
+		/**
+		*  @brief
+		*    Creates an uniform buffer
+		*
+		*  @return
+		*    The created uniform buffer, a null pointer on error
+		*/
+		virtual UniformBuffer *CreateUniformBuffer() = 0;
 
 
 	//[-------------------------------------------------------]

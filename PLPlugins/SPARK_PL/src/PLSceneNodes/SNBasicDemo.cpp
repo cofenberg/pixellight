@@ -27,8 +27,8 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLPointRenderer.h"
-#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRenderer.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLPointRendererFixedFunctions.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRendererFixedFunctions.h"
 #include "SPARK_PL/PLSceneNodes/SNBasicDemo.h"
 #include <SPK.h>
 
@@ -110,7 +110,7 @@ void SNBasicDemo::InitFunction()
 
 	// We use point sprites only if it is available and if point parameters are available as well
 	if (cRenderer.GetCapabilities().bPointSprite && cRenderer.GetCapabilities().bPointParameters) {
-		SPK_PLPointRenderer *pPointRenderer = SPK_PLPointRenderer::Create(cRenderer);
+		SPK_PLPointRenderer *pPointRenderer = SPK_PLPointRendererFixedFunctions::Create(cRenderer);
 		pPointRenderer->setType(SPK::POINT_SPRITE);
 		pPointRenderer->SetTexture(GetSceneContext()->GetRendererContext().GetTextureManager().LoadResource("Data/Textures/SPARK/Point.dds"));
 		pPointRenderer->EnableWorldSize(true);
@@ -119,7 +119,7 @@ void SNBasicDemo::InitFunction()
 
 	// We use quads
 	} else {
-		SPK_PLQuadRenderer *pQuadRenderer = SPK_PLQuadRenderer::Create(cRenderer);
+		SPK_PLQuadRenderer *pQuadRenderer = SPK_PLQuadRendererFixedFunctions::Create(cRenderer);
 		pQuadRenderer->setTexturingMode(SPK::TEXTURE_2D);
 		pQuadRenderer->SetTexture(GetSceneContext()->GetRendererContext().GetTextureManager().LoadResource("Data/Textures/SPARK/Point.dds"));
 		pQuadRenderer->setScale(0.05f, 0.05f);

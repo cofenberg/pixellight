@@ -22,13 +22,14 @@
 \item{Multiple output windows}
 \item{Render to texture (RTT, also rendering to floating-point for HDR buffer is possible)}
 \item{Multiple render targets for rendering into different textures at the same time (MRT)}
-\item{Primitives are drawn through vertex and index buffers for maximum performance}
+\item{Primitives are drawn through vertex buffers (VBO) and index buffers (IBO) for maximum performance}
 \item{Vertex streaming for combining the data of different vertex buffers}
 \item{1D, 2D (and rectangle), 3D and cube textures}
 \item{Mipmaps and texture compression support\footnote{DXT1 (BC1), DXT3 (BC2), DXT5 (BC3), LATC1 (3DC+/ATI1N/BC4) and LATC2 (3DC/ATI2N/BC5)}. These can be created automatically on the fly or used from given dds data, for instance, for maximum control and best loading times.}
 \item{Abstract GPU program interface with support for vertex, geometry and fragment shaders}
 \item{The OpenGL renderer backend has a build in GPU program interface implementation for GLSL\footnote{OpenGL Shading Language, also known as GLslang}}
 \item{The OpenGL renderer backend has an optional GPU program interface implementation for Cg (\url{http://developer.nvidia.com/object/cg_toolkit.html}) via plugin}
+\item{\emph{Uniform buffer} (UBO, aka \emph{constant buffer}) support}
 \item{Fonts and draw helpers so it's easy to draw lines, images and so on}
 \item{Interface for fixed functions to support legacy graphics cards without, or just limited shader support}
 \item{A lot of standard functions like stencil, blend, fog, point sprites, anisotropic texture filtering and much more not worth to be mentioned in here because it's just standard must have stuff}

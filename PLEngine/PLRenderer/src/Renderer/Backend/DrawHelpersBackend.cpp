@@ -89,6 +89,11 @@ void DrawHelpersBackend::Set2DZValue(float fZValue)
 	m_fZValue2D = fZValue;
 }
 
+const Matrix4x4 &DrawHelpersBackend::GetObjectSpaceToClipSpaceMatrix() const
+{
+	return m_mObjectSpaceToClipSpace;
+}
+
 void DrawHelpersBackend::DrawText(Font &cFont, const String &sText, const Color4 &cColor, const Vector2 &vPosition, uint32 nFlags, const Vector2 &vScale, const Vector2 &vBias)
 {
 	// Is there any text to draw?

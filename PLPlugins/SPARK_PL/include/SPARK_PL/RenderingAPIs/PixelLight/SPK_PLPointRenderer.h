@@ -33,7 +33,6 @@ PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	#include <Extensions/Renderers/SPK_PointRendererInterface.h>
 PL_WARNING_POP
-#include <PLRenderer/Renderer/FixedFunctions.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLRenderer.h"
 
 
@@ -60,7 +59,7 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A Renderer drawing drawing particles as PixelLight points
+*    An abstract Renderer drawing drawing particles as PixelLight points
 *
 *  @remarks
 *    PixelLight points can be configured to render them in 3 different ways :
@@ -88,45 +87,9 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 
 
 	//[-------------------------------------------------------]
-	//[ SPARK macro                                           ]
-	//[-------------------------------------------------------]
-	SPK_IMPLEMENT_REGISTERABLE(SPK_PLPointRenderer)
-
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Creates and registers a new SPK_PLPointRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*  @param[in] fSize
-		*    The size of the points
-		*
-		*  @return
-		*    A new registered SPK_PLPointRenderer
-		*/
-		SPARK_PL_API static SPK_PLPointRenderer *Create(PLRenderer::Renderer &cRenderer, float fSize = 1.0f);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		/** 
-		*  @brief
-		*    Constructor of SPK_PLPointRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*  @param[in] fSize
-		*    The size of the points
-		*/
-		SPARK_PL_API SPK_PLPointRenderer(PLRenderer::Renderer &cRenderer, float fSize = 1.0f);
-
 		/**
 		*  @brief
 		*    Destructor of SPK_PLPointRenderer
@@ -201,34 +164,6 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 		*/
 		SPARK_PL_API void SetTexture(PLRenderer::Texture *pTexture);
 
-		/**
-		*  @brief
-		*    Gets the texture blending function of this SPK_PLPointRenderer
-		*
-		*  @return
-		*    The texture blending function of this SPK_PLPointRenderer
-		*/
-		SPARK_PL_API PLRenderer::FixedFunctions::TextureEnvironment::Enum GetTextureBlending() const;
-
-		/**
-		*  @brief
-		*    Sets the texture blending function of this SPK_PLPointRenderer
-		*
-		*  @param[in] nTextureBlending
-		*    The texture blending function of this SPK_PLPointRenderer
-		*
-		*  @remarks
-		*    The texture blending function is one of the PixelLight texture blending functions.
-		*/
-		SPARK_PL_API void SetTextureBlending(PLRenderer::FixedFunctions::TextureEnvironment::Enum nTextureBlending);
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual SPK::Renderer functions                ]
-	//[-------------------------------------------------------]
-	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
-
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SPK::PointRendererInterface functions  ]
@@ -246,9 +181,20 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
+		/** 
+		*  @brief
+		*    Constructor of SPK_PLPointRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fSize
+		*    The size of the points
+		*/
+		SPK_PLPointRenderer(PLRenderer::Renderer &cRenderer, float fSize = 1.0f);
+
 		/**
 		*  @brief
 		*    Enables the use of point parameters
@@ -272,9 +218,9 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
+	//[ Protected definitions                                 ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		static const float		 PointSizeCurrent;
 		static const float		 PointSizeMin;
 		static const float		 PointSizeMax;
@@ -282,14 +228,13 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
-		SPK_PLBuffer										 *m_pSPK_PLBuffer;		/**< Used SPK_PLBuffer instance, can be a null pointer */
-		PLRenderer::TextureHandler							 *m_pTextureHandler;	/**< Texture handler, always valid! */
-		PLRenderer::FixedFunctions::TextureEnvironment::Enum  m_nTextureBlending;	/**< The texture blending function of this SPK_PLRenderer */
-		bool												  m_bWorldSize;			/**< 'true' to enable universe size, 'false' to use screen size */
-		float												  m_fPixelPerUnit;		/**< Conversion ratio between pixels and universe units, if negative, the required data is calculated on the fly (default) */
+	protected:
+		SPK_PLBuffer				*m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
+		PLRenderer::TextureHandler	*m_pTextureHandler;	/**< Texture handler, always valid! */
+		bool						 m_bWorldSize;		/**< 'true' to enable universe size, 'false' to use screen size */
+		float						 m_fPixelPerUnit;	/**< Conversion ratio between pixels and universe units, if negative, the required data is calculated on the fly (default) */
 
 
 };

@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// GLSL (OpenGL 2.0 and OpenGL ES 2.0) vertex shader source code, "#version" is added by hand
+// GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
 static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute vec3 VertexPosition;	// Object space vertex position input\n\
@@ -29,6 +29,7 @@ varying   vec4 VertexColorVS;	// Vertex color output\n\
 \n\
 // Uniforms\n\
 uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
+uniform highp vec4 Color;							// Object color\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -37,11 +38,39 @@ void main()\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1.0);\n\
 \n\
 	// Pass through the vertex color\n\
-	VertexColorVS = VertexColor;\n\
+	VertexColorVS = VertexColor*Color;\n\
 }";
 
 
-// GLSL geometry shader source code
+// GLSL (OpenGL 2.0 ("#version 110")) vertex shader source code, "#version" is added by hand - uniform buffer version
+static const PLGeneral::String sVertexShaderSourceCodeGLSL_UniformBuffer = "\
+// GLSL extensions\n\
+#extension GL_ARB_uniform_buffer_object : enable\n\
+\n\
+// Attributes\n\
+attribute vec3 VertexPosition;	// Object space vertex position input\n\
+attribute vec4 VertexColor;		// Vertex color input\n\
+varying   vec4 VertexColorVS;	// Vertex color output\n\
+\n\
+// Uniforms\n\
+layout(std140) uniform UniformBlock\n\
+{\n\
+	highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
+	highp vec4 Color;							// Object color\n\
+};\n\
+\n\
+// Programs\n\
+void main()\n\
+{\n\
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1.0);\n\
+\n\
+	// Pass through the vertex color\n\
+	VertexColorVS = VertexColor*Color;\n\
+}";
+
+
+// GLSL (OpenGL 2.0 ("#version 110")) geometry shader source code
 static const PLGeneral::String sGeometryShaderSourceCodeGLSL = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
@@ -73,7 +102,7 @@ void main()\n\
 }";
 
 
-// GLSL (OpenGL 2.0 and OpenGL ES 2.0) fragment shader source code, "#version" is added by hand
+// GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
 varying vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
@@ -86,7 +115,7 @@ void main()\n\
 }";
 
 
-// GLSL fragment shader source code, "#version" is added by hand
+// GLSL (OpenGL 2.0 ("#version 110")) fragment shader source code, "#version" is added by hand
 static const PLGeneral::String sFragmentShaderSourceCodeGLSL_GS = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\

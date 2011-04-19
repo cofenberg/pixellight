@@ -56,12 +56,6 @@ class ShaderLanguageGLSL : public ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class Renderer;
-
-
-	//[-------------------------------------------------------]
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
@@ -88,6 +82,7 @@ class ShaderLanguageGLSL : public ShaderLanguage {
 		virtual PLRenderer::GeometryShader *CreateGeometryShader();
 		virtual PLRenderer::FragmentShader *CreateFragmentShader();
 		virtual PLRenderer::Program *CreateProgram();
+		virtual PLRenderer::UniformBuffer *CreateUniformBuffer();
 
 
 	//[-------------------------------------------------------]

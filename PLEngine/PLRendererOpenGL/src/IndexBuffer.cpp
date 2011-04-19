@@ -64,9 +64,9 @@ bool IndexBuffer::MakeCurrent()
 	if (m_nIndexBuffer) {
 		glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, m_nIndexBuffer);
 
-		// Do we need to update the VBO?
-		if (m_bUpdateVBO && m_pData) {
-			m_bUpdateVBO = false;
+		// Do we need to update the IBO?
+		if (m_bUpdateIBO && m_pData) {
+			m_bUpdateIBO = false;
 
 			// Upload new data
 			glBufferSubDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0, m_nSize, m_pData);
@@ -81,7 +81,7 @@ bool IndexBuffer::MakeCurrent()
 
 /**
 *  @brief
-*    Returns the dynamic data (none VBO)
+*    Returns the dynamic data (none IBO)
 */
 void *IndexBuffer::GetDynamicData() const
 {
@@ -101,7 +101,7 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 	m_pData(nullptr),
 	m_pLockedData(nullptr),
 	m_bLockReadOnly(false),
-	m_bUpdateVBO(false),
+	m_bUpdateIBO(false),
 	m_nUsageAPI(0)
 {
 	// Update renderer statistics
@@ -198,10 +198,10 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	m_bManaged   = bManaged;
 
 	// Create the index buffer
-	bool bVBO = false;
+	bool bIBO = false;
 	if (nUsage != PLRenderer::Usage::Software && static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
-		// Use VBO
-		bVBO = true;
+		// Use IBO
+		bIBO = true;
 		if (!m_nIndexBuffer)
 			glGenBuffersARB(1, &m_nIndexBuffer);
 		GLint nElementArrayBufferBackup;
@@ -223,13 +223,13 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 		}
 	}
 
-	// No VBO or managed?
-	if (!bVBO || bManaged) {
+	// No IBO or managed?
+	if (!bIBO || bManaged) {
 		if (!m_pData)
 			m_pData = new uint8[m_nSize];
-		m_bUpdateVBO = true;
+		m_bUpdateIBO = true;
 	} else {
-		m_bUpdateVBO = false;
+		m_bUpdateIBO = false;
 	}
 
 	// Restore old data if required
@@ -280,7 +280,7 @@ bool IndexBuffer::Clear()
 		m_nSize		 = 0;
 		m_nUsage	 = PLRenderer::Usage::Unknown;
 		m_nUsageAPI  = 0;
-		m_bUpdateVBO = false;
+		m_bUpdateIBO = false;
 	}
 
 	// Done
@@ -353,7 +353,7 @@ bool IndexBuffer::Unlock()
 	// Unlock the index buffer
 	if (m_pData) {
 		if (m_nIndexBuffer && !m_bLockReadOnly)
-			m_bUpdateVBO = true;
+			m_bUpdateIBO = true;
 	} else {
 		if (m_nIndexBuffer) {
 			// Make this index buffer to the current one
@@ -417,7 +417,7 @@ void IndexBuffer::RestoreDeviceData(uint8 **ppBackup)
 			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, m_nIndexBuffer);
 			glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, m_nSize, nullptr, m_nUsageAPI);
 			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, nElementArrayBufferBackup);
-			m_bUpdateVBO = true;
+			m_bUpdateIBO = true;
 		}
 	}
 }

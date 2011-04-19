@@ -69,7 +69,7 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Rocket <-> PixelLight
+*    libRocket <-> PixelLight
 */
 class libRocketAdapter {
 

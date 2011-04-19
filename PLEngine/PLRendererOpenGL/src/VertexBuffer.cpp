@@ -260,7 +260,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// Get API dependent usage
-	 	if (nUsage == PLRenderer::Usage::Static)
+		if (nUsage == PLRenderer::Usage::Static)
 			m_nUsageAPI = GL_STATIC_DRAW_ARB;
 		else if (nUsage == PLRenderer::Usage::Dynamic)
 			m_nUsageAPI = GL_DYNAMIC_DRAW_ARB;

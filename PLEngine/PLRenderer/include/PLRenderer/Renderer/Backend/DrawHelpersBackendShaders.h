@@ -210,11 +210,10 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLMath::Matrix4x4					 m_mObjectSpaceToClipSpace;	/**< 2D mode object space to clip space matrix */
-		PLMath::Matrix4x4					 m_m2DModeProjBackup;		/**< Projection matrix backup (fixed functions backwards support) */
-		PLMath::Matrix4x4					 m_m2DModeViewBackup;		/**< View matrix backup (fixed functions backwards support) */
-		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
-		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
+		PLMath::Matrix4x4					 m_m2DModeProjBackup;	/**< Projection matrix backup (fixed functions backwards support) */
+		PLMath::Matrix4x4					 m_m2DModeViewBackup;	/**< View matrix backup (fixed functions backwards support) */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 };

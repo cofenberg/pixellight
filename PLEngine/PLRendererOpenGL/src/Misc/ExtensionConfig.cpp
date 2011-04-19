@@ -77,6 +77,8 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_EXT_framebuffer_object(this),
 	GL_EXT_framebuffer_multisample(this),
 	GL_EXT_framebuffer_blit(this),
+	GL_EXT_geometry_shader4(this),
+	GL_EXT_transform_feedback(this),
 	// ARB
 	GL_ARB_texture_float(this),
 	GL_ARB_color_buffer_float(this),
@@ -100,6 +102,7 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_ARB_get_program_binary(this),
 	GL_ARB_texture_rectangle(this),
 	GL_ARB_multisample(this),
+	GL_ARB_uniform_buffer_object(this),
 	// ATI
 	GL_ATI_separate_stencil(this),
 	GL_ATI_draw_buffers(this),

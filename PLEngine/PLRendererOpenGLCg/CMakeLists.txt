@@ -15,7 +15,9 @@ add_sources(
 	src/ProgramCg.cpp
 	src/ProgramAttributeCg.cpp
 	src/ProgramUniformCg.cpp
+	src/ProgramUniformBlockCg.cpp
 	src/ShaderToolsCg.cpp
+	src/UniformBufferCg.cpp
 )
 
 ##################################################

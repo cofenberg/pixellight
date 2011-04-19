@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLRendererOpenGLCg/ProgramCg.h"
 #include "PLRendererOpenGLCg/VertexShaderCg.h"
+#include "PLRendererOpenGLCg/UniformBufferCg.h"
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
 #include "PLRendererOpenGLCg/FragmentShaderCg.h"
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
@@ -69,6 +70,11 @@ PLRenderer::FragmentShader *ShaderLanguageCg::CreateFragmentShader()
 PLRenderer::Program *ShaderLanguageCg::CreateProgram()
 {
 	return new ProgramCg(*m_pRenderer);
+}
+
+PLRenderer::UniformBuffer *ShaderLanguageCg::CreateUniformBuffer()
+{
+	return new UniformBufferCg(*m_pRenderer, Cg);
 }
 
 

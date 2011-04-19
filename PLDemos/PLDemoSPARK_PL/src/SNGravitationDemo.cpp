@@ -26,7 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SceneContext.h>
-#include <SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRenderer.h>
+#include <SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRendererFixedFunctions.h>
 #include <SPARK_PL/SPK.h>
 #include "SNGravitationDemo.h"
 
@@ -119,7 +119,7 @@ void SNGravitationDemo::InitFunction()
 
 	// Renderers
 	static const uint32 NumberOfSegments = 32;
-	SPARK_PL::SPK_PLLineTrailRenderer *pTrailRenderer = SPARK_PL::SPK_PLLineTrailRenderer::Create(cRenderer);
+	SPARK_PL::SPK_PLLineTrailRenderer *pTrailRenderer = SPARK_PL::SPK_PLLineTrailRendererFixedFunctions::Create(cRenderer);
 	pTrailRenderer->setBlending(SPK::BLENDING_ADD);
 	pTrailRenderer->SetDuration(2.0f);
 	pTrailRenderer->SetNumOfSamples(NumberOfSegments);

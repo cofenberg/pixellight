@@ -1,11 +1,13 @@
 Changes in PixelLight 0.9.6-R1 (not yet released)
 - Feature: Added new plugin "libRocket_PL" which integrates the free open source HTML/CSS game interface middleware "libRocket" (http://librocket.com/) into PixelLight
 - Feature: Added new demo "PLDemo_libRocket" showing how to use the new "libRocket_PL"-project within C++ projects
+- Feature: PLRenderer: Added uniform buffer (UBO, aka constant buffer) support, have a look at the PLDemoRendererTriangle demo project for an example how it can be used
 - Feature: Added another SSAO algorithm "PLCompositing::SRPDeferredSPAAO" which comes with a good performance while still looking ok - it's now the default SSAO algorithm
 - Feature: In order to use vertex texture fetch within "PLCompositing::SRPEndHDR", one must now set the new "UseVertexTextureFetch"-flag (we had some VTF GPU driver issues)
 - Feature: "PLGeneral::Url": Added UNC (Uniform Naming Convention aka Universal Naming Convention) support
 - Feature: Added "PLCompositing::SRPDeferredVolumetricFog" which is a special version of "PLCompositing::SRPVolumetricFog" for deferred rendering (better performance)
 - Feature: PLCompositing: "SRPLighting" & "SRPDirectionalLightingShaders" & "SRPDeferredGBuffer" are now using a material cache to reduce required CPU time (better performance)
+- Feature: Autodesk 3ds Max 2012 scene exporter added
 - Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer
 - Change: PLMath: The operators <, >, <= and >= of Vector2i, Vector3i, Vector2, Vector3 and Vector4 are now using a lexicographical order
@@ -14,10 +16,11 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Change: "PLRenderer::GeometryShader" input/output primitive type and the number of output vertices can now be set by the user
 - Change: Updated "Newton Game Dynamics" from "2.24"(Linux)/"2.28"(Windows) to "2.32" (first free open-source version of this physics library)
 - Change: "SPARK_PL": Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"
+- Change: "SPARK_PL": Separated renderer classes for fixed functions (was already implemented) and shaders (to be implemented)
 - Change: Performed some minor physics joint scene node modifier refactoring to enhance the usability
 - Change: "PLCore::ConsoleApplication::OnInitData()" is now using English as the default language instead of the current system locale, this makes things more predictable
 - Bugfix: Added "Data/Misc/PixelLight_English.loc" to "Standard.zip" to fix the log message "[Error]: Can't open the file 'Data/Misc/PixelLight_English.loc' to load in the loadable 'Localization'!"
-- Bugfix: Fixed some problems with the GLSL shaders when using a NVIDIA graphics card
+- Bugfix: Fixed some problems with the GLSL shaders when using a NVIDIA graphics card or ATI graphics drivers from around 2009
 - Bugfix: Linux: PLRendererOpenGL: "glXSwapIntervalSGI" was used without been defined, initialized or checked...
 - Bugfix: The swap interval (vertical synchronisation) setting is now working (as long as it is not overwritten by the GPU driver)
 - Bugfix: "PLGraphics:ImageData::Decompress()": There was an buffer overflow when decompressing images with none-multiple of 4 dimensions

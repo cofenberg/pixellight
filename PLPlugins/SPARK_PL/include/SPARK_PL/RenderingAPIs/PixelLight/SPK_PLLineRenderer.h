@@ -53,7 +53,7 @@ class SPK_PLBuffer;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A Renderer drawing particles as PixelLight lines
+*    An abstract Renderer drawing particles as PixelLight lines
 *
 *  @remarks
 *    The length of the lines is function of the Particle velocity and is defined in the universe space
@@ -74,61 +74,14 @@ class SPK_PLLineRenderer : public SPK_PLRenderer, public SPK::LineRendererInterf
 
 
 	//[-------------------------------------------------------]
-	//[ SPARK macro                                           ]
-	//[-------------------------------------------------------]
-	SPK_IMPLEMENT_REGISTERABLE(SPK_PLLineRenderer)
-
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Creates and registers a new SPK_PLLineRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*  @param[in] fLength
-		*    The length multiplier of this SPK_PLLineRenderer
-		*  @param[in] fWidth
-		*    The width of this SPK_PLLineRenderer in pixels
-		*
-		*  @return
-		*    A new registered SPK_PLLineRenderer
-		*/
-		SPARK_PL_API static SPK_PLLineRenderer *Create(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Constructor of SPK_PLLineRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*  @param[in] fLength
-		*    The length multiplier of this SPK_PLLineRenderer
-		*  @param[in] fWidth
-		*    The width of this SPK_PLLineRenderer in pixels
-		*/
-		SPARK_PL_API SPK_PLLineRenderer(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
-
-		/**
-		*  @brief
 		*    Destructor of SPK_PLLineRenderer
 		*/
 		SPARK_PL_API virtual ~SPK_PLLineRenderer();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual SPK::Renderer functions                ]
-	//[-------------------------------------------------------]
-	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
 
 
 	//[-------------------------------------------------------]
@@ -140,16 +93,34 @@ class SPK_PLLineRenderer : public SPK_PLRenderer, public SPK::LineRendererInterf
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
+	//[ Protected definitions                                 ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		static const std::string PLBufferName;
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
+		/**
+		*  @brief
+		*    Constructor of SPK_PLLineRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fLength
+		*    The length multiplier of this SPK_PLLineRenderer
+		*  @param[in] fWidth
+		*    The width of this SPK_PLLineRenderer in pixels
+		*/
+		SPK_PLLineRenderer(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
 		SPK_PLBuffer *m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
 
 

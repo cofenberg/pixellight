@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/FixedFunctions.h>
+#include <PLGeneral/PLGeneral.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	// [HACK] There are missing forward declarations within the SPARK headers...
@@ -50,6 +50,7 @@ namespace SPK {
 }
 namespace PLRenderer {
 	class Texture;
+	class VertexBuffer;
 	class TextureHandler;
 }
 namespace SPARK_PL {
@@ -68,7 +69,7 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A Renderer drawing particles as PixelLight quads
+*    An abstract Renderer drawing particles as PixelLight quads
 *
 *  @remarks
 *    The orientation of the quads depends on the orientation parameters set.
@@ -92,49 +93,9 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 
 
 	//[-------------------------------------------------------]
-	//[ SPARK macro                                           ]
-	//[-------------------------------------------------------]
-	SPK_IMPLEMENT_REGISTERABLE(SPK_PLQuadRenderer)
-
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Creates and registers a new SPK_PLQuadRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*  @param[in] fScaleX
-		*    The scale of the width of the quad
-		*  @param[in] fScaleY
-		*    The scale of the height of the quad
-		*
-		*  @return
-		*    A new registered SPK_PLQuadRenderer
-		*/
-		SPARK_PL_API static SPK_PLQuadRenderer *Create(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Constructor of SPK_PLQuadRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*  @param[in] fScaleX
-		*    The scale of the width of the quad
-		*  @param[in] fScaleY
-		*    The scale of the height of the quad
-		*/
-		SPARK_PL_API SPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
-
 		/**
 		*  @brief
 		*    Destructor of SPK_PLQuadRenderer
@@ -159,34 +120,6 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 		*/
 		SPARK_PL_API void SetTexture(PLRenderer::Texture *pTexture);
 
-		/**
-		*  @brief
-		*    Gets the texture blending function of this SPK_PLQuadRenderer
-		*
-		*  @return
-		*    The texture blending function of this SPK_PLQuadRenderer
-		*/
-		SPARK_PL_API PLRenderer::FixedFunctions::TextureEnvironment::Enum GetTextureBlending() const;
-
-		/**
-		*  @brief
-		*    Sets the texture blending function of this SPK_PLQuadRenderer
-		*
-		*  @param[in] nTextureBlending
-		*    The texture blending function of this SPK_PLQuadRenderer
-		*
-		*  @remarks
-		*    The texture blending function is one of the PixelLight texture blending functions.
-		*/
-		SPARK_PL_API void SetTextureBlending(PLRenderer::FixedFunctions::TextureEnvironment::Enum nTextureBlending);
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual SPK::Renderer functions                ]
-	//[-------------------------------------------------------]
-	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
-
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SPK::QuadRendererInterface functions   ]
@@ -204,18 +137,31 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
+	//[ Protected definitions                                 ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		static const PLGeneral::uint32 NumOfVerticesPerParticle;	/**< Number of vertices per particle */
 		static const PLGeneral::uint32 NumOfIndicesPerParticle;		/**< Number of indices per particle */
 		static const std::string	   PLBufferName;
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
+		/**
+		*  @brief
+		*    Constructor of SPK_PLQuadRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fScaleX
+		*    The scale of the width of the quad
+		*  @param[in] fScaleY
+		*    The scale of the height of the quad
+		*/
+		SPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
+
 		// Some internal helpers
 		inline void CallColorAndVertex(const SPK::Particle &cParticle);	// PixelLight calls for color and position
 		inline void CallTexture2DAtlas(const SPK::Particle &cParticle);	// PixelLight calls for 2D atlas texturing 
@@ -229,12 +175,11 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
-		SPK_PLBuffer										 *m_pSPK_PLBuffer;		/**< Used SPK_PLBuffer instance, can be a null pointer */
-		PLRenderer::TextureHandler							 *m_pTextureHandler;	/**< Texture handler, always valid! */
-		PLRenderer::FixedFunctions::TextureEnvironment::Enum  m_nTextureBlending;	/**< The texture blending function of this SPK_PLRenderer */
+	protected:
+		SPK_PLBuffer				*m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
+		PLRenderer::TextureHandler	*m_pTextureHandler;	/**< Texture handler, always valid! */
 
 		// Curent vertex buffer data - not nice, but more performant as passing them around all over the place
 		PLGeneral::uint32		  m_nCurrentVertexSize;

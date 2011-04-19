@@ -76,6 +76,7 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_EXPORTER_3DSMAX_2009			"1" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'?")
 	set (PL_EXPORTER_3DSMAX_2010			"1" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'?")
 	set (PL_EXPORTER_3DSMAX_2011			"1" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'?")
+	set (PL_EXPORTER_3DSMAX_2012			"1" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'?")
 else()
 	# Minimal build
 	set (PL_PLUGIN_DATABASE_NULL 			"1" CACHE BOOL "Build plugin 'PLDatabaseNull'?")
@@ -116,6 +117,7 @@ else()
 	set (PL_EXPORTER_3DSMAX_2009			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'?")
 	set (PL_EXPORTER_3DSMAX_2010			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'?")
 	set (PL_EXPORTER_3DSMAX_2011			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'?")
+	set (PL_EXPORTER_3DSMAX_2012			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'?")
 endif()
 
 # Project suffix

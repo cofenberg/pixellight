@@ -31,6 +31,7 @@ add_sources(
 	src/Renderer/Buffer.cpp
 	src/Renderer/VertexBuffer.cpp
 	src/Renderer/IndexBuffer.cpp
+	src/Renderer/UniformBuffer.cpp
 	src/Renderer/TextureBuffer.cpp
 	src/Renderer/TextureBuffer1D.cpp
 	src/Renderer/TextureBuffer2D.cpp
@@ -53,6 +54,7 @@ add_sources(
 	src/Renderer/ProgramGenerator.cpp
 	src/Renderer/ProgramAttribute.cpp
 	src/Renderer/ProgramUniform.cpp
+	src/Renderer/ProgramUniformBlock.cpp
 	src/Renderer/Font.cpp
 	src/Renderer/FontTexture.cpp
 	src/Renderer/FontManager.cpp

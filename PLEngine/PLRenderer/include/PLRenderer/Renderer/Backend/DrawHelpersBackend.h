@@ -73,6 +73,7 @@ class DrawHelpersBackend : public DrawHelpers {
 		PLRENDERER_API virtual bool Get2DMode(float &fX1, float &fY1, float &fX2, float &fY2) const;
 		PLRENDERER_API virtual float Get2DZValue() const;
 		PLRENDERER_API virtual void Set2DZValue(float fZValue = 0.0f);
+		PLRENDERER_API virtual const PLMath::Matrix4x4 &GetObjectSpaceToClipSpaceMatrix() const;
 		PLRENDERER_API virtual void DrawText(Font &cFont, const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector2 &vPosition, PLGeneral::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero);
 		PLRENDERER_API virtual void DrawText(Font &cFont, const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vPosition, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, PLGeneral::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero);
 		PLRENDERER_API virtual float GetTextWidth(Font &cFont, const PLGeneral::String &sText) const;
@@ -111,9 +112,10 @@ class DrawHelpersBackend : public DrawHelpers {
 		Renderer	 *m_pRenderer;			/**< Renderer instance to use, always valid! */
 		VertexBuffer *m_pTempVertexBuffer;	/**< Vertex buffer for drawing, can be a null pointer */
 		// 2D mode variables
-		bool			  m_b2DMode;			/**< Are we currently in the 2D mode? */
-		float			  m_fVirtualScreen[4];	/**< The virtual screen size */
-		float			  m_fZValue2D;			/**< Z-value for 2D mode */
+		bool			  m_b2DMode;					/**< Are we currently in the 2D mode? */
+		float			  m_fVirtualScreen[4];			/**< The virtual screen size */
+		float			  m_fZValue2D;					/**< Z-value for 2D mode */
+		PLMath::Matrix4x4 m_mObjectSpaceToClipSpace;	/**< 2D mode object space to clip space matrix */
 
 
 };

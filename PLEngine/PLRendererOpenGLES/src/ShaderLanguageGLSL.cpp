@@ -71,6 +71,12 @@ PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
 	return new ProgramGLSL(*m_pRenderer);
 }
 
+PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
+{
+	// OpenGL ES 2.0 has no support for uniform buffers
+	return nullptr;
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

@@ -55,7 +55,7 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A Renderer drawing particles as line trails defined by the positions of particles over time
+*    An abstract Renderer drawing particles as line trails defined by the positions of particles over time
 *
 *  @remarks
 *    The trail coordinates are computed in a procedural manner over time.<br>
@@ -85,41 +85,9 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 
 
 	//[-------------------------------------------------------]
-	//[ SPARK macro                                           ]
-	//[-------------------------------------------------------]
-	SPK_IMPLEMENT_REGISTERABLE(SPK_PLLineTrailRenderer)
-
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Creates and registers a new SPK_PLLineTrailRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*
-		*  @return
-		*    A new registered SPK_PLLineTrailRenderer
-		*/
-		SPARK_PL_API static SPK_PLLineTrailRenderer *Create(PLRenderer::Renderer &cRenderer);
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Default constructor of SPK_PLLineTrailRenderer
-		*
-		*  @param[in] cRenderer
-		*    PixelLight renderer to use
-		*/
-		SPK_PLLineTrailRenderer(PLRenderer::Renderer &cRenderer);
-
 		/**
 		*  @brief
 		*    Destructor of SPK_PLLineTrailRenderer
@@ -225,13 +193,6 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual SPK::Renderer functions                ]
-	//[-------------------------------------------------------]
-	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
-
-
-	//[-------------------------------------------------------]
 	//[ Public virtual SPK::BufferHandler functions           ]
 	//[-------------------------------------------------------]
 	public:
@@ -247,9 +208,9 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
+	//[ Protected definitions                                 ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		static const std::string VertexBufferName;
 		static const std::string ColorBufferName;
 		static const std::string ValueBufferName;
@@ -257,9 +218,18 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
+		/**
+		*  @brief
+		*    Constructor of SPK_PLLineTrailRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*/
+		SPK_PLLineTrailRenderer(PLRenderer::Renderer &cRenderer);
+
 		/**
 		*  @brief
 		*    Inits a given particle
@@ -273,9 +243,9 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		SPK_PLBuffer	  *m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
 		PLGeneral::uint32  m_nNumOfSamples;	/**< The number of samples to construct the trails */
 		float			   m_fWidth;		/**< The width of trails in pixels */

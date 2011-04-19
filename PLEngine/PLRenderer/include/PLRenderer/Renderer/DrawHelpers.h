@@ -162,6 +162,14 @@ class DrawHelpers {
 		*/
 		virtual void Set2DZValue(float fZValue = 0.0f) = 0;
 
+		/**
+		*  @brief
+		*    Returns the 2D mode object space to clip space matrix
+		*
+		*  @return
+		*    2D mode object space to clip space matrix
+		*/
+		virtual const PLMath::Matrix4x4 &GetObjectSpaceToClipSpaceMatrix() const = 0;
 
 		//[-------------------------------------------------------]
 		//[ Text                                                  ]

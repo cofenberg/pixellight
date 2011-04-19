@@ -53,7 +53,6 @@ class ProgramCg : public PLRendererOpenGL::Program {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Renderer;
 	friend class ShaderLanguageCg;
 
 
@@ -132,27 +131,43 @@ class ProgramCg : public PLRendererOpenGL::Program {
 		*/
 		void DestroyUniformInformation();
 
+		/**
+		*  @brief
+		*    Builds the uniform block information
+		*/
+		void BuildUniformBlockInformation();
+
+		/**
+		*  @brief
+		*    Destroys the uniform block information
+		*/
+		void DestroyUniformBlockInformation();
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		// Program
-		CGprogram																m_pCgCombinedProgram;			/**< Cg combined program, can be a null pointer */
-		bool																	m_bLinked;						/**< Is the Cg combined program currently linked? */
-		bool																	m_bLinkedFailed;				/**< Cg combined program link failed? */
+		CGprogram																m_pCgCombinedProgram;				/**< Cg combined program, can be a null pointer */
+		bool																	m_bLinked;							/**< Is the Cg combined program currently linked? */
+		bool																	m_bLinkedFailed;					/**< Cg combined program link failed? */
 		// Shaders
-		PLRenderer::ResourceHandler												m_cVertexShaderHandler;			/**< Vertex shader resource handler */
-		PLRenderer::ResourceHandler												m_cGeometryShaderHandler;		/**< Geometry shader resource handler */
-		PLRenderer::ResourceHandler												m_cFragmentShaderHandler;		/**< Fragment shader resource handler */
+		PLRenderer::ResourceHandler												m_cVertexShaderHandler;				/**< Vertex shader resource handler */
+		PLRenderer::ResourceHandler												m_cGeometryShaderHandler;			/**< Geometry shader resource handler */
+		PLRenderer::ResourceHandler												m_cFragmentShaderHandler;			/**< Fragment shader resource handler */
 		// Attributes
-		bool																	m_bAttributeInformationBuild;	/**< Attribute information already build? */
-		PLGeneral::Array<PLRenderer::ProgramAttribute*>							m_lstAttributes;				/**< List of attributes */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramAttribute*>	m_mapAttributes;				/**< Hash map of names -> attributes */
+		bool																	m_bAttributeInformationBuild;		/**< Attribute information already build? */
+		PLGeneral::Array<PLRenderer::ProgramAttribute*>							m_lstAttributes;					/**< List of attributes */
+		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramAttribute*>	m_mapAttributes;					/**< Hash map of names -> attributes */
 		// Uniforms
-		bool																	m_bUniformInformationBuild;		/**< Uniform information already build? */
-		PLGeneral::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;					/**< List of uniforms */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniform*>		m_mapUniforms;					/**< Hash map of names -> uniforms */
+		bool																	m_bUniformInformationBuild;			/**< Uniform information already build? */
+		PLGeneral::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;						/**< List of uniforms */
+		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniform*>		m_mapUniforms;						/**< Hash map of names -> uniforms */
+		// Uniform blocks
+		bool																	m_bUniformBlockInformationBuild;	/**< Uniform block information already build? */
+		PLGeneral::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;					/**< List of uniform blocks */
+		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;					/**< Hash map of names -> uniform blocks */
 
 
 	//[-------------------------------------------------------]
@@ -172,6 +187,8 @@ class ProgramCg : public PLRendererOpenGL::Program {
 		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLGeneral::String &sName);
 		virtual const PLGeneral::Array<PLRenderer::ProgramUniform*> &GetUniforms();
 		virtual PLRenderer::ProgramUniform *GetUniform(const PLGeneral::String &sName);
+		virtual const PLGeneral::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
+		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLGeneral::String &sName);
 
 
 	//[-------------------------------------------------------]

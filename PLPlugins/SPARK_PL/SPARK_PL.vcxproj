@@ -296,9 +296,17 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\PLSceneNodes\SNSystem.cpp" />
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLBuffer.cpp" />
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineRenderer.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererFixedFunctions.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders.cpp" />
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineTrailRenderer.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineTrailRendererFixedFunctions.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineTrailRendererShaders.cpp" />
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLPointRenderer.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLPointRendererFixedFunctions.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLPointRendererShaders.cpp" />
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLQuadRenderer.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLQuadRendererFixedFunctions.cpp" />
+    <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLQuadRendererShaders.cpp" />
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLRenderer.cpp" />
     <ClCompile Include="src\SPARK_PL.cpp" />
   </ItemGroup>
@@ -353,9 +361,17 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNSystem.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLBuffer.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineRenderer.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineRendererFixedFunctions.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineTrailRenderer.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineTrailRendererFixedFunctions.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineTrailRendererShaders.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLPointRenderer.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLPointRendererFixedFunctions.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLPointRendererShaders.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLQuadRenderer.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLQuadRendererFixedFunctions.h" />
+    <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLQuadRendererShaders.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLRenderer.h" />
     <ClInclude Include="include\SPARK_PL\SPARK_PL.h" />
     <ClInclude Include="include\SPARK_PL\SPARK_PLLinux.h" />
