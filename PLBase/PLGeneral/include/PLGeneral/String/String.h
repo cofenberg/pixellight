@@ -1017,9 +1017,7 @@ class String {
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 // Include the string buffer header if we are in debug mode so we can inspect the string in a quite comfortable way
-#ifdef _DEBUG
-	#include "PLGeneral/String/StringBuffer.h"
-#endif
+#include "PLGeneral/String/StringBuffer.h"
 
 
 #endif // __PLGENERAL_STRING_H__

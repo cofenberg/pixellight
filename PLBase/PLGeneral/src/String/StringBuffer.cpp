@@ -47,9 +47,7 @@ StringBufferManager StringBuffer::Manager;
 */
 StringBuffer::StringBuffer(uint32 nLength, uint32 nMaxLength, uint8 nType) :
 	m_nRefCount(0),
-#ifdef _DEBUG
 	m_nType(nType),
-#endif
 	m_nLength(nLength),
 	m_nMaxLength(nMaxLength)
 {

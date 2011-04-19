@@ -538,9 +538,7 @@ class StringBuffer {
 		uint32 m_nRefCount;		/**< Reference count - the "RefCount"-template isn't used because the string buffer manager requires some "special" access to this reference counter */
 		uint32 m_nLength;		/**< Length of the string (excluding the terminating zero, NEVER 0!) */
 		uint32 m_nMaxLength;	/**< Maximum available length of the string (excluding the terminating zero, NEVER 0!) */
-		#ifdef _DEBUG
-			uint8 m_nType;	/**< String buffer type for variable inspection in debug mode */
-		#endif
+		uint8 m_nType;			/**< String buffer type for variable inspection in debug mode */
 
 
 };
@@ -556,11 +554,9 @@ class StringBuffer {
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 // Include the string buffer implementation headers if we are in debug mode so we can inspect the string in a quite comfortable way
-#ifdef _DEBUG
-	#include "PLGeneral/String/StringBufferUTF8.h"
-	#include "PLGeneral/String/StringBufferASCII.h"
-	#include "PLGeneral/String/StringBufferUnicode.h"
-#endif
+#include "PLGeneral/String/StringBufferUTF8.h"
+#include "PLGeneral/String/StringBufferASCII.h"
+#include "PLGeneral/String/StringBufferUnicode.h"
 
 
 #endif // __PLGENERAL_STRINGBUFFER_H__

@@ -1,3 +1,9 @@
+>> 19.04.2011
+[CO]
+- Removed "_DEBUG" preprocessor tests within the String and String Buffer class
+
+
+
 >> 15.04.2011
 [CO]
 - Premier: First entry within the tracker ("Bugs"-category) at http://sourceforge.net/tracker/?group_id=507544
