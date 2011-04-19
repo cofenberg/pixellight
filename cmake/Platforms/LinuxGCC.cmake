@@ -33,6 +33,15 @@ set(LINUX_COMPILE_DEFS
 	PIC														# Position-independent code
 	_REENTRANT												# Reentrant code
 )
+
+if ((NOT CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+	message(STATUS "setting x64 build define")
+	set(LINUX_COMPILE_DEFS
+		${LINUX_COMPILE_DEFS}
+		X64_ARCHITECTURE										# We are building for a 64Bit architecture
+	)
+endif()
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################
 	## Debug 

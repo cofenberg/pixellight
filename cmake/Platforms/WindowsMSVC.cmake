@@ -58,6 +58,15 @@ set(WIN32_COMPILE_DEFS
 	_UNICODE												# Use unicode
 	_CRT_SECURE_NO_DEPRECATE								# Disable CRT deprecation warnings
 )
+
+if ((NOT CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+	message(STATUS "setting x64 build define")
+	set(WIN32_COMPILE_DEFS
+		${WIN32_COMPILE_DEFS}
+		X64_ARCHITECTURE										# We are building for a 64Bit architecture
+	)
+endif()
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################
 	## Debug 
@@ -89,6 +98,7 @@ set(WIN32_COMPILE_FLAGS
 	/MP														# Multi-processor Compilation
 	/fp:precise												# Floating Point Model: Precise
 )
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################
 	## Debug 
