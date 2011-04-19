@@ -1,3 +1,11 @@
+>> 19.04.2011
+[CO]
+- "Image": Added a data parameter to the ease of use method "CreateImage()" so that one can directly write
+    Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 32, 1), CompressionNone, pnMyImageData).Save("MyImage.tga");
+  to write down the RGB byte image data given by "pnMyImageData" into a 64x32 tga image.
+
+
+
 >> 01.04.2011
 [CO]
 - Bugfix within "ImageData::Decompress()": Ouch! If there was e.g. an image of dimension 303x433 (none-multiple of 4 dimension) which should be

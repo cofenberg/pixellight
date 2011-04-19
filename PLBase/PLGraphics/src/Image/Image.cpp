@@ -45,11 +45,18 @@ namespace PLGraphics {
 *  @brief
 *    Create image
 */
-Image Image::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression)
+Image Image::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression, const uint8 *pnData)
 {
+	// Create and allocate the image instance
 	Image cImage;
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+
+	// Fill the image with provided data?
+	if (pnData && pImageBuffer->GetData())
+		MemoryManager::Copy(pImageBuffer->GetData(), pnData, pImageBuffer->GetDataSize());
+
+	// Return the created image
 	return cImage;
 }
 

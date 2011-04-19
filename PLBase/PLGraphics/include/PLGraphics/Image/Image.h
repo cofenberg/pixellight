@@ -93,19 +93,28 @@ class Image : public PLCore::Loadable {
 		*    Image size
 		*  @param[in] nCompression
 		*    Compression type
+		*  @param[in] pnData
+		*    If not a null pointer, data to copy into the created image, must have enough bytes to fill the whole image!
 		*
 		*  @remarks
 		*    Please note that a call to CreateImage() will not immediatly create the image buffer itself.
 		*    The image buffer is created on the first call to ImageBuffer::GetData() or ImageBuffer::GetCompressedData() respectively.
+		*
+		*    Usage example: Write down the RGB byte image data given by "pnMyImageData" into a 64x32 tga image:
+		*  @verbatim
+		*    Image::CreateImage(DataByte, ColorRGB, Vector3i(64, 32, 1), CompressionNone, pnMyImageData).Save("MyImage.tga");
+		*  @endverbatim
 		*
 		*    This is only an ease of use method doing nothing more than:
 		*  @verbatim
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    if (pnData && pImageBuffer->GetData())
+		*        PLGeneral::MemoryManager::Copy(pImageBuffer->GetData(), pnData, pImageBuffer->GetDataSize());
 		*  @endverbatim
 		*/
-		PLGRAPHICS_API static Image CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
+		PLGRAPHICS_API static Image CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, const PLGeneral::uint8 *pnData = nullptr);
 
 
 	//[-------------------------------------------------------]
