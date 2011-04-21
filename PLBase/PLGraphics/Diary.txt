@@ -5,6 +5,9 @@
 - ... and added instead an own "Image::CreateImageAndCopyData()" method to make it clear within the method name what this method is going to do with
   the given data parameter. Sorry for the long method name, but when dealing with data pointers one has to be really careful to avoid misuse - especially
   considering the coming new "features"...
+- Added "ImageBuffer::CopyData()" and "ImageBuffer::TakeoverData()"
+- Added ease of use method "Image::CreateImageAndTakeoverData()" method, a variant of "Image::CreateImageAndCopyData()" which is taking over the given data
+  and is destroying it when it's no longer used.
 
 
 

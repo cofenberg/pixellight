@@ -288,6 +288,24 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 
 		/**
 		*  @brief
+		*    Copy provided image data into this image data
+		*
+		*  @param[in] pnData
+		*    Data to copy into this image data, must have enough bytes to fill the whole image! The given pointer must be valid!
+		*/
+		void CopyData(const PLGeneral::uint8 *pnData);
+
+		/**
+		*  @brief
+		*    Let this image data takeover provided image data
+		*
+		*  @param[in] pnData
+		*    Pointer to the image data to be taken over by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
+		*/
+		void TakeoverData(PLGeneral::uint8 *pnData);
+
+		/**
+		*  @brief
 		*    Create image buffer
 		*
 		*  @remarks

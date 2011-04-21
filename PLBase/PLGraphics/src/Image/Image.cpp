@@ -67,9 +67,26 @@ Image Image::CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColor
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
 
-	// Fill the image with provided data?
-	if (pnData && pImageBuffer->GetData())
-		MemoryManager::Copy(pImageBuffer->GetData(), pnData, pImageBuffer->GetDataSize());
+	// Copy the provided data
+	pImageBuffer->CopyData(pnData);
+
+	// Return the created image
+	return cImage;
+}
+
+/**
+*  @brief
+*    Create image and takeover given image data
+*/
+Image Image::CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression, uint8 *pnData)
+{
+	// Create and allocate the image instance
+	Image cImage;
+	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+
+	// Take over the provided data
+	pImageBuffer->TakeoverData(pnData);
 
 	// Return the created image
 	return cImage;

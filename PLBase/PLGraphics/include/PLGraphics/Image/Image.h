@@ -130,11 +130,49 @@ class Image : public PLCore::Loadable {
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
-		*    if (pnData && pImageBuffer->GetData())
-		*        PLGeneral::MemoryManager::Copy(pImageBuffer->GetData(), pnData, pImageBuffer->GetDataSize());
+		*    pImageBuffer->CopyData(pnData);
 		*  @endverbatim
+		*
+		*  @note
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
 		PLGRAPHICS_API static Image CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, const PLGeneral::uint8 *pnData = nullptr);
+
+		/**
+		*  @brief
+		*    Create image and takeover given image data
+		*
+		*  @param[in] nDataFormat
+		*    Desired data format
+		*  @param[in] nColorFormat
+		*    Desired color format
+		*  @param[in] vSize
+		*    Image size
+		*  @param[in] nCompression
+		*    Compression type
+		*  @param[in] pnData
+		*    If not a null pointer, pointer to the image data to be taken over by the created image, must have enough bytes to fill the whole image!
+		*
+		*  @remarks
+		*    Usage example: Write down the RGB byte image data given by "pnMyImageData" into a 64x32 tga image:
+		*  @verbatim
+		*    Image::CreateImageAndTakeoverData(DataByte, ColorRGB, Vector3i(64, 32, 1), CompressionNone, pnMyImageData).Save("MyImage.tga");
+		*  @endverbatim
+		*    Please note that within the example above, "pnMyImageData" is no longer valid after the shown line because the given data was destroyed
+		*    by the image instance!
+		*
+		*    This is only an ease of use method doing nothing more than:
+		*  @verbatim
+		*    Image cImage;
+		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    pImageBuffer->TakeoverData(pnData);
+		*  @endverbatim
+		*
+		*  @note
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
+		*/
+		PLGRAPHICS_API static Image CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLGeneral::uint8 *pnData = nullptr);
 
 
 	//[-------------------------------------------------------]

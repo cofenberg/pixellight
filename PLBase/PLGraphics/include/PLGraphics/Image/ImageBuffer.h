@@ -376,6 +376,9 @@ class ImageBuffer {
 		*  @remarks
 		*    If the image contains no uncompressed data, but compressed image data is available the data,
 		*    will be decompressed automatically and stored in the decompressed image buffer this method returns.
+		*
+		*  @note
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never write over the data buffer boundings!
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetData();
@@ -404,6 +407,9 @@ class ImageBuffer {
 		*
 		*  @return
 		*    Pointer to compressed image data, a null pointer on error
+		*
+		*  @note
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never write over the data buffer boundings!
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetCompressedData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetCompressedData();
@@ -446,6 +452,31 @@ class ImageBuffer {
 		*/
 		PLGRAPHICS_API const ImagePalette *GetPalette() const;
 		PLGRAPHICS_API ImagePalette *GetPalette();
+
+		/**
+		*  @brief
+		*    Copy provided image data into this image buffer
+		*
+		*  @param[in] pnData
+		*    Data to copy into this image buffer, must have enough bytes to fill the whole image! If null pointer, this method does nothing.
+		*
+		*  @note
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
+		*/
+		PLGRAPHICS_API void CopyData(const PLGeneral::uint8 *pnData);
+
+		/**
+		*  @brief
+		*    Let this image buffer takeover provided image data
+		*
+		*  @param[in] pnData
+		*    Pointer to the image data to be taken over by this image buffer, must have enough bytes to fill the whole image buffer! If null pointer, this method does nothing.
+		*
+		*  @note
+		*    - "Takeover" means that this image buffer will destroy the provided data when it's no longer used!
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
+		*/
+		PLGRAPHICS_API void TakeoverData(PLGeneral::uint8 *pnData);
 
 
 	//[-------------------------------------------------------]

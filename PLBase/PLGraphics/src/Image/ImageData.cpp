@@ -623,6 +623,42 @@ ImagePalette *ImageData::GetPalette()
 
 /**
 *  @brief
+*    Copy provided image data into this image data
+*/
+void ImageData::CopyData(const uint8 *pnData)
+{
+	// Make sure that buffer is created
+	if (!m_pData) {
+		// Create buffer
+		CreateBuffer();
+	}
+
+	// Invalidate compressed image buffer, because uncompressed data is going to be modified
+	DestroyCompressedBuffer();
+
+	// Copy over the provided data
+	MemoryManager::Copy(m_pData, pnData, m_nDataSize);
+}
+
+/**
+*  @brief
+*    Let this image data takeover provided image data
+*/
+void ImageData::TakeoverData(uint8 *pnData)
+{
+	// Invalidate uncompressed image buffer, because we're getting brand new data
+	DestroyBuffer();
+
+	// Invalidate compressed image buffer, because we're getting brand new data
+	DestroyCompressedBuffer();
+
+	// Just takeover the given image data pointer. Within the method comments the user was informed
+	// that the provided image data is destroyed automatically when it's no longer used.
+	m_pData = pnData;
+}
+
+/**
+*  @brief
 *    Create image buffer
 */
 void ImageData::CreateBuffer()

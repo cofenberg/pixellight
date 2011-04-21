@@ -573,6 +573,40 @@ ImagePalette *ImageBuffer::GetPalette()
 	return m_pImageData->GetPalette();
 }
 
+/**
+*  @brief
+*    Copy provided image data into this image buffer
+*/
+void ImageBuffer::CopyData(const uint8 *pnData)
+{
+	// Valid image data pointer given?
+	if (pnData) {
+		// Image is going to be changed, so make image data unique
+		if (m_pImageData->GetRefCount() > 1)
+			MakeBufferUnique();
+
+		// Get copy data
+		return m_pImageData->CopyData(pnData);
+	}
+}
+
+/**
+*  @brief
+*    Let this image buffer takeover provided image data
+*/
+void ImageBuffer::TakeoverData(uint8 *pnData)
+{
+	// Valid image data pointer given?
+	if (pnData) {
+		// Image is going to be changed, so make image data unique
+		if (m_pImageData->GetRefCount() > 1)
+			MakeBufferUnique();
+
+		// Get takeover data
+		return m_pImageData->TakeoverData(pnData);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
