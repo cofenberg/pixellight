@@ -1,3 +1,11 @@
+>> 22.04.2011
+[CO]
+PLRendererOpenGL:
+- "gl_PointSize" in GLSL and "PSIZE" in Cg had no effect because "GL_VERTEX_PROGRAM_POINT_SIZE_ARB" was not enabled
+  (see from http://www.opengl.org/registry/specs/ARB/vertex_program.txt -> "(42) How does PointSize work with vertex programs?" for more information)
+
+
+
 >> 16.04.2011
 [CO]
 PLRendererOpenGL:
