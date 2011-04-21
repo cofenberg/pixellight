@@ -204,13 +204,13 @@ class ImageBuffer {
 		*    Create image
 		*
 		*  @param[in] nDataFormat
-		*    Desired data format
+		*    Desired data format (for example "DataByte")
 		*  @param[in] nColorFormat
-		*    Desired color format
+		*    Desired color format (for example "ColorRGB")
 		*  @param[in] vSize
-		*    Image size
+		*    Image size (for example "PLMath::Vector3i(64, 32, 1)")
 		*  @param[in] nCompression
-		*    Compression type
+		*    Compression type (for example "CompressionNone")
 		*
 		*  @remarks
 		*    Please note that a call to CreateImage() will not immediatly create the image buffer itself.

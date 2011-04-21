@@ -241,16 +241,11 @@ bool RenderInterfacePL::GenerateTexture(Rocket::Core::TextureHandle& texture_han
 		pTexture = cTextureManager.Create(sTextureName);
 		if (pTexture) {
 			// Create the image
-			Image cImage = Image::CreateImage(DataByte, ColorRGBA, Vector3i(source_dimensions.x, source_dimensions.y, 1));
-			ImageBuffer *pImageBuffer = cImage.GetBuffer();
-			if (pImageBuffer) {
-				// [TODO] Add "shared image data" feature to the PLGraphics::Image class? (in here, we only want to pass the given image data to the GPU as texture...)
-				// Fill the image
-				MemoryManager::Copy(pImageBuffer->GetData(), source, pImageBuffer->GetDataSize());
+			// [TODO] Add "shared image data" feature to the PLGraphics::Image class? (in here, we only want to pass the given image data to the GPU as texture...)
+			Image cImage = Image::CreateImage(DataByte, ColorRGBA, Vector3i(source_dimensions.x, source_dimensions.y, 1), CompressionNone, source);
 
-				// Create the 2D texture buffer
-				pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(m_pRendererContext->GetRenderer().CreateTextureBuffer2D(cImage)));
-			}
+			// Create the 2D texture buffer
+			pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(m_pRendererContext->GetRenderer().CreateTextureBuffer2D(cImage)));
 		}
 	}
 

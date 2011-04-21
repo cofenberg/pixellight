@@ -566,10 +566,8 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				pImageData[nElement+2] = static_cast<uint8>(b);
 			}
 
-			// Create the image
-			Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(128, 128, 1));
-			ImageBuffer *pImageBuffer = cImage.GetBuffer();
-			MemoryManager::Copy(pImageBuffer->GetData(), &pLightmap->imageBits[0][0][0], pImageBuffer->GetDataSize());
+			// Create the image and copy over the lightmap data
+			Image cImage = Image::CreateImage(DataByte, ColorRGB, Vector3i(128, 128, 1), CompressionNone, &pLightmap->imageBits[0][0][0]);
 
 			// Create the texture
 			pTex = cRendererContext.GetTextureManager().Create(sLName);
