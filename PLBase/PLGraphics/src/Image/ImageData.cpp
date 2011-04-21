@@ -177,21 +177,15 @@ void ImageData::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, 
 void ImageData::Clear()
 {
 	// Destroy image data
-	if (m_pData)
-		delete [] m_pData;
-	m_pData		= nullptr;
+	DestroyBuffer();
 	m_nDataSize = 0;
 
 	// Destroy compressed image data
-	if (m_pCompressedData)
-		delete [] m_pCompressedData;
-	m_pCompressedData = nullptr;
+	DestroyCompressedBuffer();
 	m_nCompressedSize = 0;
 
 	// Destroy palette
-	if (m_pPalette)
-		delete m_pPalette;
-	m_pPalette = nullptr;
+	SetPalette(nullptr);
 
 	// Reset image data
 	m_nDataFormat	= DataByte;
