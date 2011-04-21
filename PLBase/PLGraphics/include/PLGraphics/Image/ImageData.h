@@ -65,14 +65,14 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	public:
+	private:
 		/**
 		*  @brief
 		*    Constructor
 		*/
-		PLGRAPHICS_API ImageData();
+		ImageData();
 
 		/**
 		*  @brief
@@ -81,13 +81,13 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		PLGRAPHICS_API ImageData(const ImageData &cSource);
+		ImageData(const ImageData &cSource);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API virtual ~ImageData();
+		virtual ~ImageData();
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Reference to this object
 		*/
-		PLGRAPHICS_API ImageData &operator =(const ImageData &cSource);
+		ImageData &operator =(const ImageData &cSource);
 
 		/**
 		*  @brief
@@ -118,13 +118,13 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Please note that a call to Create() will not immediatly create the image buffer itself.
 		*    The image buffer is created on the first call to GetData() or GetCompressedData() respectively.
 		*/
-		PLGRAPHICS_API void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
+		void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
 
 		/**
 		*  @brief
 		*    Clear data
 		*/
-		PLGRAPHICS_API void Clear();
+		void Clear();
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    Only 2D and 3D test images are allowed here. For images containing more than
 		*    one image buffer, you have to use Image::CreateTestImage().
 		*/
-		PLGRAPHICS_API void CreateTestImage(ETestImage nTestImage = TestImage2DSimple);
+		void CreateTestImage(ETestImage nTestImage = TestImage2DSimple);
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Data format
 		*/
-		PLGRAPHICS_API EDataFormat GetDataFormat() const;
+		EDataFormat GetDataFormat() const;
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Color format
 		*/
-		PLGRAPHICS_API EColorFormat GetColorFormat() const;
+		EColorFormat GetColorFormat() const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Compression type
 		*/
-		PLGRAPHICS_API ECompression GetCompression() const;
+		ECompression GetCompression() const;
 
 		/**
 		*  @brief
@@ -176,7 +176,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @remarks
 		*    This will invalidate the compressed image data buffer
 		*/
-		PLGRAPHICS_API void SetCompression(ECompression nCompression);
+		void SetCompression(ECompression nCompression);
 
 		/**
 		*  @brief
@@ -185,7 +185,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Size of image
 		*/
-		PLGRAPHICS_API PLMath::Vector3i GetSize() const;
+		PLMath::Vector3i GetSize() const;
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    'true' if image data is available, else 'false'
 		*/
-		PLGRAPHICS_API bool HasData() const;
+		bool HasData() const;
 
 		/**
 		*  @brief
@@ -203,7 +203,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Size of image data in bytes
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetDataSize() const;
+		PLGeneral::uint32 GetDataSize() const;
 
 		/**
 		*  @brief
@@ -216,8 +216,8 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    If the image contains no uncompressed data, but compressed image data is available the data,
 		*    will be decompressed automatically and stored in the decompressed image buffer this method returns.
 		*/
-		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
-		PLGRAPHICS_API PLGeneral::uint8 *GetData();
+		const PLGeneral::uint8 *GetData() const;
+		PLGeneral::uint8 *GetData();
 
 		/**
 		*  @brief
@@ -226,7 +226,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    'true' if compressed image data is available, else 'false'
 		*/
-		PLGRAPHICS_API bool HasCompressedData() const;
+		bool HasCompressedData() const;
 
 		/**
 		*  @brief
@@ -235,7 +235,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Size of compressed image data in bytes
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetCompressedDataSize() const;
+		PLGeneral::uint32 GetCompressedDataSize() const;
 
 		/**
 		*  @brief
@@ -244,8 +244,8 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Pointer to compressed image data, a null pointer on error
 		*/
-		PLGRAPHICS_API const PLGeneral::uint8 *GetCompressedData() const;
-		PLGRAPHICS_API PLGeneral::uint8 *GetCompressedData();
+		const PLGeneral::uint8 *GetCompressedData() const;
+		PLGeneral::uint8 *GetCompressedData();
 
 		/**
 		*  @brief
@@ -255,7 +255,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    If the image contains uncompressed image data, the data will be
 		*    compressed and stored in the compressed image buffer.
 		*/
-		PLGRAPHICS_API bool Compress();
+		bool Compress();
 
 		/**
 		*  @brief
@@ -265,7 +265,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    If the image contains compressed image data, the data will be
 		*    decompressed and stored in the decompressed image buffer.
 		*/
-		PLGRAPHICS_API bool Decompress();
+		bool Decompress();
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @param[in] pPalette
 		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
-		PLGRAPHICS_API void SetPalette(ImagePalette *pPalette);
+		void SetPalette(ImagePalette *pPalette);
 
 		/**
 		*  @brief
@@ -283,14 +283,9 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
-		PLGRAPHICS_API const ImagePalette *GetPalette() const;
-		PLGRAPHICS_API ImagePalette *GetPalette();
+		const ImagePalette *GetPalette() const;
+		ImagePalette *GetPalette();
 
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
 		/**
 		*  @brief
 		*    Create image buffer

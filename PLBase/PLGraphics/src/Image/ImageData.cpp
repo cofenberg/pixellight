@@ -38,7 +38,7 @@ namespace PLGraphics {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -627,10 +627,6 @@ ImagePalette *ImageData::GetPalette()
 	return m_pPalette;
 }
 
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
 /**
 *  @brief
 *    Create image buffer
