@@ -585,7 +585,7 @@ void ImageBuffer::CopyData(const uint8 *pnData)
 		if (m_pImageData->GetRefCount() > 1)
 			MakeBufferUnique();
 
-		// Get copy data
+		// Copy data
 		return m_pImageData->CopyData(pnData);
 	}
 }
@@ -602,8 +602,25 @@ void ImageBuffer::TakeoverData(uint8 *pnData)
 		if (m_pImageData->GetRefCount() > 1)
 			MakeBufferUnique();
 
-		// Get takeover data
+		// Takeover data
 		return m_pImageData->TakeoverData(pnData);
+	}
+}
+
+/**
+*  @brief
+*    Let this image buffer share provided image data
+*/
+void ImageBuffer::ShareData(uint8 *pnData)
+{
+	// Valid image data pointer given?
+	if (pnData) {
+		// Image is going to be changed, so make image data unique
+		if (m_pImageData->GetRefCount() > 1)
+			MakeBufferUnique();
+
+		// Share data
+		return m_pImageData->ShareData(pnData);
 	}
 }
 

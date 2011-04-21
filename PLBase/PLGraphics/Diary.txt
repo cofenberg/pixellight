@@ -6,8 +6,18 @@
   the given data parameter. Sorry for the long method name, but when dealing with data pointers one has to be really careful to avoid misuse - especially
   considering the coming new "features"...
 - Added "ImageBuffer::CopyData()" and "ImageBuffer::TakeoverData()"
-- Added ease of use method "Image::CreateImageAndTakeoverData()" method, a variant of "Image::CreateImageAndCopyData()" which is taking over the given data
+- Added ease of use method "Image::CreateImageAndTakeoverData()", a variant of "Image::CreateImageAndCopyData()" which is taking over the given data
   and is destroying it when it's no longer used.
+- Added "ImageBuffer::ShareData()"
+- Added ease of use method "Image::CreateImageAndShareData()", a variant of "Image::CreateImageAndCopyData()" and "Image::CreateImageAndTakeoverData()"
+  which is just sharing the provided image data while the user keeps the ownership. Juggling with data pointers is error prone, but just allowing to copy given
+  data internally is not always efficient enough. For instance, if you just want to save your data into an image by using the image class and then continue
+  working on the data without using the image class. So I've added some more data handling methods and used descriptive, but therefore also longer, method names
+  and extensive comments to reduce potential misuse.
+=> It's now possible to copy, takeover and share user provided image data:
+   - Copy:     Just duplicates the user provided data but leave the responsibility of the original provided image data up to the user
+   - Takeover: The user gives the ownership of the provided image data to the image which destroys the data when it's no longer used
+   - Share:    The image will use the given user provided data directly but doesn't destroy it because the user keeps the ownership
 
 
 

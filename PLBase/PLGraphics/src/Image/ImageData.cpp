@@ -50,6 +50,7 @@ ImageData::ImageData() :
 	m_nCompression(CompressionNone),
 	m_pData(nullptr),
 	m_nDataSize(0),
+	m_bDataShared(false),
 	m_pCompressedData(nullptr),
 	m_nCompressedSize(0),
 	m_pPalette(nullptr)
@@ -67,6 +68,7 @@ ImageData::ImageData(const ImageData &cSource) :
 	m_vSize(cSource.m_vSize),
 	m_pData(nullptr),
 	m_nDataSize(cSource.m_nDataSize),
+	m_bDataShared(false),
 	m_pCompressedData(nullptr),
 	m_nCompressedSize(cSource.m_nCompressedSize),
 	m_pPalette(nullptr)
@@ -114,6 +116,7 @@ ImageData &ImageData::operator =(const ImageData &cSource)
 	m_vSize				= cSource.m_vSize;
 	m_pData				= nullptr;
 	m_nDataSize			= cSource.m_nDataSize;
+	m_bDataShared		= false;
 	m_pCompressedData	= nullptr;
 	m_nCompressedSize	= cSource.m_nCompressedSize;
 	m_pPalette			= nullptr;
@@ -636,7 +639,7 @@ void ImageData::CopyData(const uint8 *pnData)
 	// Invalidate compressed image buffer, because uncompressed data is going to be modified
 	DestroyCompressedBuffer();
 
-	// Copy over the provided data
+	// Copy over the provided data, no matter whether or not m_pData points to shared data
 	MemoryManager::Copy(m_pData, pnData, m_nDataSize);
 }
 
@@ -655,6 +658,24 @@ void ImageData::TakeoverData(uint8 *pnData)
 	// Just takeover the given image data pointer. Within the method comments the user was informed
 	// that the provided image data is destroyed automatically when it's no longer used.
 	m_pData = pnData;
+}
+
+/**
+*  @brief
+*    Let this image data share provided image data
+*/
+void ImageData::ShareData(uint8 *pnData)
+{
+	// Invalidate uncompressed image buffer, because we're getting brand new data
+	DestroyBuffer();
+
+	// Invalidate compressed image buffer, because we're getting brand new data
+	DestroyCompressedBuffer();
+
+	// Just share the given image data pointer. Within the method comments the user was informed
+	// about the consequences and potential risks in sharing image data.
+	m_pData       = pnData;
+	m_bDataShared = true;
 }
 
 /**
@@ -692,7 +713,13 @@ void ImageData::DestroyBuffer()
 {
 	// Destroy image data
 	if (m_pData) {
-		delete [] m_pData;
+		// Do we own the image data?
+		if (m_bDataShared)
+			m_bDataShared = false;
+		else
+			delete [] m_pData;
+
+		// Reset data pointer
 		m_pData = nullptr;
 	}
 }

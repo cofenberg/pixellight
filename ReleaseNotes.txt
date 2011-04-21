@@ -7,6 +7,7 @@ Changes in PixelLight 0.9.6-R1 (not yet released)
 - Feature: "PLGeneral::Url": Added UNC (Uniform Naming Convention aka Universal Naming Convention) support
 - Feature: Added "PLCompositing::SRPDeferredVolumetricFog" which is a special version of "PLCompositing::SRPVolumetricFog" for deferred rendering (better performance)
 - Feature: PLCompositing: "SRPLighting" & "SRPDirectionalLightingShaders" & "SRPDeferredGBuffer" are now using a material cache to reduce required CPU time (better performance)
+- Feature: Added methods to "PLGraphics::Image" to make it possible to copy, takeover and share user provided image data
 - Feature: Autodesk 3ds Max 2012 scene exporter added
 - Change: Updated from "Cg Toolkit 3.0 - November 2010" to "Cg Toolkit 3.0 - February 2011"
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer

@@ -240,9 +240,8 @@ bool RenderInterfacePL::GenerateTexture(Rocket::Core::TextureHandle& texture_han
 		// Create the texture right now!
 		pTexture = cTextureManager.Create(sTextureName);
 		if (pTexture) {
-			// Create the image
-			// [TODO] Add "shared image data" feature to the PLGraphics::Image class? (in here, we only want to pass the given image data to the GPU as texture...)
-			Image cImage = Image::CreateImageAndCopyData(DataByte, ColorRGBA, Vector3i(source_dimensions.x, source_dimensions.y, 1), CompressionNone, source);
+			// Create the image by just sharing the image data provided by libRocket
+			Image cImage = Image::CreateImageAndShareData(DataByte, ColorRGBA, Vector3i(source_dimensions.x, source_dimensions.y, 1), CompressionNone, const_cast<Rocket::Core::byte*>(source));	// In here, the image will not manipulate the provided data, so the const cast is ok
 
 			// Create the 2D texture buffer
 			pTexture->SetTextureBuffer(reinterpret_cast<TextureBuffer*>(m_pRendererContext->GetRenderer().CreateTextureBuffer2D(cImage)));

@@ -61,6 +61,11 @@ namespace PLGraphics {
 *    Image class
 *
 *  @remarks
+*    It's possible to copy, takeover and share user provided image data:
+*    - Copy:     Just duplicates the user provided data but leave the responsibility of the original provided image data up to the user
+*    - Takeover: The user gives the ownership of the provided image data to the image which destroys the data when it's no longer used
+*    - Share:    The image will use the given user provided data directly but doesn't destroy it because the user keeps the ownership
+*
 *  @verbatim
 *    Usage example:
 *
@@ -173,6 +178,44 @@ class Image : public PLCore::Loadable {
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
 		PLGRAPHICS_API static Image CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLGeneral::uint8 *pnData = nullptr);
+
+		/**
+		*  @brief
+		*    Create image and share given image data
+		*
+		*  @param[in] nDataFormat
+		*    Desired data format
+		*  @param[in] nColorFormat
+		*    Desired color format
+		*  @param[in] vSize
+		*    Image size
+		*  @param[in] nCompression
+		*    Compression type
+		*  @param[in] pnData
+		*    If not a null pointer, pointer to the image data to be shared by the created image, must have enough bytes to fill the whole image!
+		*
+		*  @remarks
+		*    Usage example: Write down the RGB byte image data given by "pnMyImageData" into a 64x32 tga image:
+		*  @verbatim
+		*    Image::CreateImageAndShareData(DataByte, ColorRGB, Vector3i(64, 32, 1), CompressionNone, pnMyImageData).Save("MyImage.tga");
+		*  @endverbatim
+		*    The shown example is quite efficient because in here, the image instance is just an image data wrapper to pass and process user
+		*    provided image data within PixelLight without duplicating the data.
+		*
+		*    This is only an ease of use method doing nothing more than:
+		*  @verbatim
+		*    Image cImage;
+		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    pImageBuffer->ShareData(pnData);
+		*  @endverbatim
+		*
+		*  @note
+		*    - Please be aware that your provided image data must stay valid during the lifetime of the image instance (and potential image copies!)
+		*    - While this method is quite efficient, it's also quite error prone, so be really careful when using this method
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
+		*/
+		PLGRAPHICS_API static Image CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLGeneral::uint8 *pnData = nullptr);
 
 
 	//[-------------------------------------------------------]

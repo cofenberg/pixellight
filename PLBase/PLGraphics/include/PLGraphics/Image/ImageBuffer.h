@@ -378,7 +378,7 @@ class ImageBuffer {
 		*    will be decompressed automatically and stored in the decompressed image buffer this method returns.
 		*
 		*  @note
-		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never write over the data buffer boundings!
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never read or write over the data buffer boundings!
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetData();
@@ -409,7 +409,7 @@ class ImageBuffer {
 		*    Pointer to compressed image data, a null pointer on error
 		*
 		*  @note
-		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never write over the data buffer boundings!
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never read or write over the data buffer boundings!
 		*/
 		PLGRAPHICS_API const PLGeneral::uint8 *GetCompressedData() const;
 		PLGRAPHICS_API PLGeneral::uint8 *GetCompressedData();
@@ -477,6 +477,21 @@ class ImageBuffer {
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
 		PLGRAPHICS_API void TakeoverData(PLGeneral::uint8 *pnData);
+
+		/**
+		*  @brief
+		*    Let this image buffer share provided image data
+		*
+		*  @param[in] pnData
+		*    Pointer to the image data to be shared by this image buffer, must have enough bytes to fill the whole image buffer! If null pointer, this method does nothing.
+		*
+		*  @note
+		*    - "Share" means that this image buffer will not destroy the provided data when it's no longer used!
+		*    - Please be aware that your provided image data must stay valid during the lifetime of the image buffer instance (and potential image buffer copies!)
+		*    - While this method is quite efficient, it's also quite error prone, so be really careful when using this method
+		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
+		*/
+		PLGRAPHICS_API void ShareData(PLGeneral::uint8 *pnData);
 
 
 	//[-------------------------------------------------------]

@@ -306,6 +306,15 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 
 		/**
 		*  @brief
+		*    Let this image data share provided image data
+		*
+		*  @param[in] pnData
+		*    Pointer to the image data to be shared by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
+		*/
+		void ShareData(PLGeneral::uint8 *pnData);
+
+		/**
+		*  @brief
 		*    Create image buffer
 		*
 		*  @remarks
@@ -425,6 +434,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		PLMath::Vector3i	 m_vSize;				/**< Size of the image */
 		PLGeneral::uint8	*m_pData;				/**< Uncompressed image data, can be a null pointer */
 		PLGeneral::uint32	 m_nDataSize;			/**< Size of uncompressed image data in bytes */
+		bool				 m_bDataShared;			/**< If 'true', the uncompressed image data is just shared and this image data instance is not allowed to deleted it (the user keeps the image data ownership) */
 		PLGeneral::uint8	*m_pCompressedData;		/**< Compressed image data, can be a null pointer */
 		PLGeneral::uint32	 m_nCompressedSize;		/**< Size of compressed image data in bytes */
 		ImagePalette		*m_pPalette;			/**< Color palette, can be a null pointer */

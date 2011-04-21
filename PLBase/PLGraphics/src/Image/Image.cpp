@@ -85,8 +85,26 @@ Image Image::CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nC
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
 
-	// Take over the provided data
+	// Takeover the provided data
 	pImageBuffer->TakeoverData(pnData);
+
+	// Return the created image
+	return cImage;
+}
+
+/**
+*  @brief
+*    Create image and share given image data
+*/
+Image Image::CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression, uint8 *pnData)
+{
+	// Create and allocate the image instance
+	Image cImage;
+	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+
+	// Share the provided data
+	pImageBuffer->ShareData(pnData);
 
 	// Return the created image
 	return cImage;
