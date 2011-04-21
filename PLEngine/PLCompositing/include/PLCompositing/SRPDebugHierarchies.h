@@ -43,7 +43,7 @@ namespace PLCompositing {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract scene renderer pass drawing scene container hierachies for 'debugging'
+*    Scene renderer pass drawing scene container hierachies for 'debugging'
 */
 class SRPDebugHierarchies : public SRPDebug {
 
@@ -51,16 +51,17 @@ class SRPDebugHierarchies : public SRPDebug {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugHierarchies, "PLCompositing", PLCompositing::SRPDebug, "Abstract scene renderer pass drawing scene container hierachies for 'debugging'")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugHierarchies, "PLCompositing", PLCompositing::SRPDebug, "Scene renderer pass drawing scene container hierachies for 'debugging'")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(LineWidth,	float,				1.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
 		pl_attribute(LineColor,	PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Line color",												"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	protected:
+	public:
 		/**
 		*  @brief
 		*    Default constructor
@@ -72,6 +73,29 @@ class SRPDebugHierarchies : public SRPDebug {
 		*    Destructur
 		*/
 		PLCOM_API virtual ~SRPDebugHierarchies();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Draws recursive
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cCullQuery
+		*    Cull query to use
+		*/
+		void DrawRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneRendererPass functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
 
 
 };

@@ -287,7 +287,6 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\SRPLightEffects.cpp" />
     <ClCompile Include="src\SRPPostProcessing.cpp" />
     <ClCompile Include="src\FixedFunctions\SRPDebugContainerScissorRectanglesFixedFunctions.cpp" />
-    <ClCompile Include="src\FixedFunctions\SRPDebugHierarchiesFixedFunctions.cpp" />
     <ClCompile Include="src\FixedFunctions\SRPDebugWireframesFixedFunctions.cpp" />
     <ClCompile Include="src\FixedFunctions\SRPDiffuseOnlyFixedFunctions.cpp" />
     <ClCompile Include="src\FixedFunctions\SRPDirectionalLightingFixedFunctions.cpp" />
@@ -362,7 +361,6 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCompositing\SRPLightEffects.h" />
     <ClInclude Include="include\PLCompositing\SRPPostProcessing.h" />
     <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDebugContainerScissorRectanglesFixedFunctions.h" />
-    <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDebugHierarchiesFixedFunctions.h" />
     <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDebugWireframesFixedFunctions.h" />
     <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDiffuseOnlyFixedFunctions.h" />
     <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDirectionalLightingFixedFunctions.h" />

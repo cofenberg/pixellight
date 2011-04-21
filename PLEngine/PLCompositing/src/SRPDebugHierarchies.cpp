@@ -23,12 +23,24 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Tools/Tools.h>
+#include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Effect/EffectManager.h>
+#include <PLScene/Scene/SceneContainer.h>
+#include <PLScene/Scene/SceneHierarchy.h>
+#include <PLScene/Visibility/SQCull.h>
+#include <PLScene/Visibility/VisPortal.h>
+#include <PLScene/Visibility/VisContainer.h>
 #include "PLCompositing/SRPDebugHierarchies.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
+using namespace PLGraphics;
+using namespace PLRenderer;
+using namespace PLScene;
 namespace PLCompositing {
 
 
@@ -39,7 +51,7 @@ pl_implement_class(SRPDebugHierarchies)
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -57,6 +69,82 @@ SRPDebugHierarchies::SRPDebugHierarchies() :
 */
 SRPDebugHierarchies::~SRPDebugHierarchies()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Draws recursive
+*/
+void SRPDebugHierarchies::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
+{
+	// Get scene container
+	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
+
+	// Set the new scissor rectangle
+	cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
+
+	{ // Render all visible scene nodes of this scene container
+		Iterator<VisNode*> cIterator = cVisContainer.GetVisNodes().GetEndIterator();
+		while (cIterator.HasPrevious()) {
+			// Get visibility node and scene node
+			const VisNode   *pVisNode   = cIterator.Previous();
+				  SceneNode *pSceneNode = pVisNode->GetSceneNode();
+			if (pSceneNode) {
+				// Is this scene node a portal?
+				if (pVisNode->IsPortal()) {
+					// Get the target cell visibility container
+					const VisContainer *pVisCell = static_cast<const VisPortal*>(pVisNode)->GetTargetVisContainer();
+					if (pVisCell) {
+						// Draw the target cell
+						if (pVisCell->GetCullQuery())
+							DrawRec(cRenderer, *pVisCell->GetCullQuery());
+
+						// Set the previous scissor rectangle
+						cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
+					}
+
+				// Is this scene node a container? We do not need to check for cells because we will
+				// NEVER receive cells from SQCull directly, they are ONLY visible through portals! (see above)
+				} else if (pVisNode->IsContainer()) {
+					// Draw this container without special processing
+					if (static_cast<const VisContainer*>(pVisNode)->GetCullQuery())
+						DrawRec(cRenderer, *static_cast<const VisContainer*>(pVisNode)->GetCullQuery());
+
+					// Set the previous scissor rectangle
+					cRenderer.SetScissorRect(&cVisContainer.GetProjection().cRectangle);
+
+				// This must just be a quite boring scene node :)
+				} else {
+					// Ignore it :)
+				}
+			}
+		}
+	}
+
+	// Draw the hierachie of the scene container
+	cCullQuery.GetSceneContainer().GetHierarchyInstance()->Draw(cRenderer, LineColor.Get(), cVisContainer.GetWorldViewProjectionMatrix(), 1.0f);
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneRendererPass functions  ]
+//[-------------------------------------------------------]
+void SRPDebugHierarchies::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
+{
+	// Reset all render states to default
+	cRenderer.GetRendererContext().GetEffectManager().Use();
+	cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+	cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+	cRenderer.SetRenderState(RenderState::BlendEnable,		 (LineColor.Get().a < 1.0f));
+	cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
+	cRenderer.SetRenderState(RenderState::LineWidth,		 Tools::FloatToUInt32(LineWidth));
+
+	// Draw recursive from back to front
+	DrawRec(cRenderer, cCullQuery);
 }
 
 

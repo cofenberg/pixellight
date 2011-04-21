@@ -1,3 +1,10 @@
+>> 21.04.2011
+[CO]
+- Moved the content from "SRPDebugHierarchiesFixedFunctions" into "SRPDebugHierarchies" because a special fixed functions or shader implementation is no longer
+  required (the internally used draw helpers deal for us with this issue)
+
+
+
 >> 17.04.2011
 [CO]
 - Removed usage of fixed functions stuff within "PostProcessor"

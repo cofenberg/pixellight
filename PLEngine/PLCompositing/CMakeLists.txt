@@ -32,7 +32,6 @@ add_sources(
 	src/SRPDebugSceneNodeNames.cpp
 	src/SRPDebugContainerScissorRectangles.cpp
 	src/FixedFunctions/SRPDebugContainerScissorRectanglesFixedFunctions.cpp
-	src/FixedFunctions/SRPDebugHierarchiesFixedFunctions.cpp
 	src/FixedFunctions/SRPDebugWireframesFixedFunctions.cpp
 	src/FixedFunctions/SRPDiffuseOnlyFixedFunctions.cpp
 	src/FixedFunctions/SRPDirectionalLightingFixedFunctions.cpp
