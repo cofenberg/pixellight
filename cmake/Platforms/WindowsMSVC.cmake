@@ -60,10 +60,10 @@ set(WIN32_COMPILE_DEFS
 )
 
 if ((NOT CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
-	message(STATUS "setting x64 build define")
+	message(STATUS "Setting x64 build preprocessor definitions")
 	set(WIN32_COMPILE_DEFS
 		${WIN32_COMPILE_DEFS}
-		X64_ARCHITECTURE										# We are building for a 64Bit architecture
+		X64_ARCHITECTURE									# We are building for a 64Bit architecture
 	)
 endif()
 

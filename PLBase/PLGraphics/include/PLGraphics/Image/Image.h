@@ -62,7 +62,7 @@ namespace PLGraphics {
 *
 *  @remarks
 *    It's possible to copy, takeover and share user provided image data:
-*    - Copy:     Just duplicates the user provided data but leave the responsibility of the original provided image data up to the user
+*    - Copy:     Just duplicates the user provided data but leaves the responsibility of the original provided image data up to the user
 *    - Takeover: The user gives the ownership of the provided image data to the image which destroys the data when it's no longer used
 *    - Share:    The image will use the given user provided data directly but doesn't destroy it because the user keeps the ownership
 *
