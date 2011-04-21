@@ -1,6 +1,10 @@
 >> 21.04.2011
 [CO]
 - "ImageData" had public methods, but this class is considered to be only used inside "ImageBuffer" => made those methods private to avoid misuse
+- Removed data parameter added two days ago within "Image::CreateImage()"...
+- ... and added instead an own "Image::CreateImageAndCopyData()" method to make it clear within the method name what this method is going to do with
+  the given data parameter. Sorry for the long method name, but when dealing with data pointers one has to be really careful to avoid misuse - especially
+  considering the coming new "features"...
 
 
 
