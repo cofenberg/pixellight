@@ -134,11 +134,10 @@ void SNSystem::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 SPK_PLPointRenderer *SNSystem::CreateSPK_PLPointRenderer(PLRenderer::Renderer &cRenderer, float fSize)
 {
 	SPK_PLPointRenderer *pSPK_PLPointRenderer = nullptr;
-	// [TODO] Implement shaders version
-//	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
+	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
 		pSPK_PLPointRenderer = SPK_PLPointRendererFixedFunctions::Create(cRenderer, fSize);
-//	else
-//		pSPK_PLPointRenderer = SPK_PLPointRendererShaders::Create(cRenderer, ShaderLanguage, fSize);
+	else
+		pSPK_PLPointRenderer = SPK_PLPointRendererShaders::Create(cRenderer, ShaderLanguage, fSize);
 	m_lstSPK_PLRenderer.Add(pSPK_PLPointRenderer);
 	return pSPK_PLPointRenderer;
 }

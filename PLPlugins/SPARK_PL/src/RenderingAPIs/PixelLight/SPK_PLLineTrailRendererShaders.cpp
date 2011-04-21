@@ -272,7 +272,7 @@ void SPK_PLLineTrailRendererShaders::render(const SPK::Group &group)
 
 		// Make our program to the current one
 		if (GetPLRenderer().SetProgram(m_pProgram)) {
-			// Set the "ObjectSpaceToClipSpaceMatrixProgramUniform" fragment shader parameter
+			// Set the "ObjectSpaceToClipSpaceMatrix" fragment shader parameter
 			if (m_pObjectSpaceToClipSpaceMatrixProgramUniform)
 				m_pObjectSpaceToClipSpaceMatrixProgramUniform->Set(m_mWorldViewProjection);
 

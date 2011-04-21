@@ -1,6 +1,7 @@
 ﻿>> 21.04.2011
 [CO]
 - Implemented "SPK_PLLineRendererShaders" and "SPK_PLLineTrailRendererShaders"
+- Implemented "SPK_PLQuadRendererShaders"
 - Implemented "SPK_PLPointRendererShaders"
 
 

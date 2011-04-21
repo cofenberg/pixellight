@@ -76,8 +76,7 @@ SPK_PLQuadRendererShaders::SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRend
 {
 	// Get the shader language to use
 	if (!m_sShaderLanguage.GetLength())
-		m_sShaderLanguage = "Cg";
-//		m_sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
+		m_sShaderLanguage = cRenderer.GetDefaultShaderLanguage();
 
 	// Create the GPU program right now?
 	if (!m_pProgram || m_pProgram->GetShaderLanguage() != m_sShaderLanguage) {
@@ -202,7 +201,7 @@ void SPK_PLQuadRendererShaders::render(const SPK::Group &group)
 
 		// Make our program to the current one
 		if (GetPLRenderer().SetProgram(m_pProgram)) {
-			// Set the "ObjectSpaceToClipSpaceMatrixProgramUniform" fragment shader parameter
+			// Set the "ObjectSpaceToClipSpaceMatrix" fragment shader parameter
 			if (m_pObjectSpaceToClipSpaceMatrixProgramUniform)
 				m_pObjectSpaceToClipSpaceMatrixProgramUniform->Set(m_mWorldViewProjection);
 
