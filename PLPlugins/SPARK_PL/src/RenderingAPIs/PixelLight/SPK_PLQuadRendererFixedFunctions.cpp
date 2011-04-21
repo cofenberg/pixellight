@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Tools/Tools.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Texture/TextureHandler.h>
@@ -33,6 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 using namespace PLMath;
 using namespace PLRenderer;
 namespace SPARK_PL {
@@ -93,103 +95,55 @@ void SPK_PLQuadRendererFixedFunctions::SetTextureBlending(FixedFunctions::Textur
 //[-------------------------------------------------------]
 void SPK_PLQuadRendererFixedFunctions::render(const SPK::Group &group)
 {
-	if (prepareBuffers(group)) {
-		// Is there a valid m_pSPK_PLBuffer instance?
-		if (m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
-			// Setup render states
-			InitBlending();
-			InitRenderingHints();
-			void (SPK_PLQuadRendererFixedFunctions::*pRenderParticle)(const SPK::Particle&);	// Pointer to the right render method
+	// Is there a valid m_pSPK_PLBuffer instance?
+	if (prepareBuffers(group) && m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
+		// Update the vertex buffer
+		UpdateVertexBuffer(group);
+
+		// Setup render states
+		InitBlending();
+		GetPLRenderer().SetRenderState(RenderState::ZEnable,      isRenderingHintEnabled(SPK::DEPTH_TEST));
+		GetPLRenderer().SetRenderState(RenderState::ZWriteEnable, isRenderingHintEnabled(SPK::DEPTH_WRITE));
+
+		// Get the fixed functions interface
+		FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
+		if (pFixedFunctions) {
+			// Setup texture
 			switch (texturingMode) {
 				case SPK::TEXTURE_2D:
 					m_pTextureHandler->Bind();
-					if (group.getModel()->isEnabled(SPK::PARAM_TEXTURE_INDEX))
-						pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRendererFixedFunctions::Render2DAtlasRot : &SPK_PLQuadRendererFixedFunctions::Render2DAtlas;
-					else
-						pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRendererFixedFunctions::Render2DRot : &SPK_PLQuadRendererFixedFunctions::Render2D;
-
-					{ // Get the fixed functions interface
-						FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-						if (pFixedFunctions)
-							pFixedFunctions->SetTextureStageState(0, FixedFunctions::TextureStage::ColorTexEnv, m_nTextureBlending);
-					}
+					pFixedFunctions->SetTextureStageState(0, FixedFunctions::TextureStage::ColorTexEnv, m_nTextureBlending);
 					break;
 
 				case SPK::TEXTURE_3D:
 					m_pTextureHandler->Bind();
-					pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRendererFixedFunctions::Render3DRot : &SPK_PLQuadRendererFixedFunctions::Render3D;
-
-					{ // Get the fixed functions interface
-						FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-						if (pFixedFunctions)
-							pFixedFunctions->SetTextureStageState(0, FixedFunctions::TextureStage::ColorTexEnv, m_nTextureBlending);
-					}
+					pFixedFunctions->SetTextureStageState(0, FixedFunctions::TextureStage::ColorTexEnv, m_nTextureBlending);
 					break;
 
 				case SPK::TEXTURE_NONE:
 					GetPLRenderer().SetTextureBuffer();
-					pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRendererFixedFunctions::Render2DRot : &SPK_PLQuadRendererFixedFunctions::Render2D;
-					break;
-
-				default:
-					pRenderParticle = nullptr;
 					break;
 			}
 
-			// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
-			VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
-			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
-				// Get the inverse of the current view matrix
-				FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-				const Matrix4x4 &mView   = pFixedFunctions ? pFixedFunctions->GetTransformState(FixedFunctions::Transform::View)  : Matrix4x4::Identity;
-				const Matrix4x4 &mWorld  = pFixedFunctions ? pFixedFunctions->GetTransformState(FixedFunctions::Transform::World) : Matrix4x4::Identity;
-				const Matrix4x4 mViewInv = (mView*mWorld).GetInverted();
-
-				// Get current vertex buffer data
-				m_nCurrentVertexSize	= pVertexBuffer->GetVertexSize();
-				m_pfCurrentPosition		= static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
-				m_pfCurrentTexCoord		= static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
-				m_pCurrentVertexBuffer	= pVertexBuffer;
-				m_nCurrentVertex		= 0;
-
-				// Calculate the current orientation
-				const bool bGlobalOrientation = precomputeOrientation3D(
-					group,
-					SPK::Vector3D(-mViewInv.fM[8],  -mViewInv.fM[9],  -mViewInv.fM[10]),
-					SPK::Vector3D( mViewInv.fM[4],   mViewInv.fM[5],   mViewInv.fM[6]),
-					SPK::Vector3D( mViewInv.fM[12],  mViewInv.fM[13],  mViewInv.fM[14]));
-				if (pRenderParticle) {
-					if (bGlobalOrientation) {
-						computeGlobalOrientation3D();
-						for (size_t i=0; i<group.getNbParticles(); i++)
-							(this->*pRenderParticle)(group.getParticle(i));
-					} else {
-						for (size_t i=0; i<group.getNbParticles(); i++) {
-							const SPK::Particle &cParticle = group.getParticle(i);
-							computeSingleOrientation3D(cParticle);
-							(this->*pRenderParticle)(cParticle);
-						}
-					}
-				}
-
-				// Unlock the vertex buffer
-				pVertexBuffer->Unlock();
+			// Alpha test
+			if (isRenderingHintEnabled(SPK::ALPHA_TEST)) {
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable,    true);
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestFunction,  Compare::GreaterEqual);
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestReference, Tools::FloatToUInt32(getAlphaTestThreshold()));
+			} else {
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
 			}
 
-			// Get the fixed functions interface
-			FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-			if (pFixedFunctions) {
-				// Make the index buffer to the current renderer index buffer
-				IndexBuffer *pIndexBuffer = m_pSPK_PLBuffer->GetIndexBuffer();
-				if (pIndexBuffer)
-					GetPLRenderer().SetIndexBuffer(pIndexBuffer);
+			// Make the index buffer to the current renderer index buffer
+			IndexBuffer *pIndexBuffer = m_pSPK_PLBuffer->GetIndexBuffer();
+			if (pIndexBuffer)
+				GetPLRenderer().SetIndexBuffer(pIndexBuffer);
 
-				// Make the vertex buffer to the current renderer vertex buffer
-				pFixedFunctions->SetVertexBuffer(pVertexBuffer);
+			// Make the vertex buffer to the current renderer vertex buffer
+			pFixedFunctions->SetVertexBuffer(m_pSPK_PLBuffer->GetVertexBuffer());
 
-				// Draw
-				GetPLRenderer().DrawIndexedPrimitives(Primitive::TriangleList, 0, group.getNbParticles()*NumOfVerticesPerParticle-1, 0, group.getNbParticles()*NumOfIndicesPerParticle);
-			}
+			// Draw
+			GetPLRenderer().DrawIndexedPrimitives(Primitive::TriangleList, 0, group.getNbParticles()*NumOfVerticesPerParticle-1, 0, group.getNbParticles()*NumOfIndicesPerParticle);
 		}
 	}
 }

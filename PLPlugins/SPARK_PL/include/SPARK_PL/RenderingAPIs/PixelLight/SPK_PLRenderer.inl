@@ -99,6 +99,15 @@ inline void SPK_PLRenderer::SetWorldViewProjectionMatrix(const PLMath::Matrix4x4
 	m_mWorldViewProjection = mWorldViewProjection;
 }
 
+/**
+*  @brief
+*    Sets the inverse world view matrix used for rendering
+*/
+inline void SPK_PLRenderer::SetWorldViewInverse(const PLMath::Matrix4x4 &mWorldViewInverse)
+{
+	m_mWorldViewInverse = mWorldViewInverse;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPK_PLLineRendererShaders_GLSL.h               *
+ *  File: SPK_PLQuadRendererShaders_GLSL.h               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,9 +21,11 @@
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLGeneral::String sSPK_PLLineRendererShaders_GLSL_VS = "\
+static const PLGeneral::String sSPK_PLQuadRendererShaders_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
+attribute highp vec2 VertexTexCoord;	// Vertex texture coordinate input\n\
+varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate output\n\
 attribute lowp  vec4 VertexColor;		// Vertex color input\n\
 varying   lowp  vec4 VertexColorVS;		// Vertex color output\n\
 \n\
@@ -36,19 +38,26 @@ void main()\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1.0);\n\
 \n\
+	// Pass through the vertex texture coordinate\n\
+	VertexTexCoordVS = VertexTexCoord;\n\
+\n\
 	// Pass through the vertex color\n\
 	VertexColorVS = VertexColor;\n\
 }";
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLGeneral::String sSPK_PLLineRendererShaders_GLSL_FS = "\
+static const PLGeneral::String sSPK_PLQuadRendererShaders_GLSL_FS = "\
 // Attributes\n\
-varying lowp vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
+varying highp vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate input from vertex shader\n\
+varying lowp  vec4 VertexColorVS;		// Interpolated vertex color input from vertex shader\n\
+\n\
+// Uniforms\n\
+uniform lowp sampler2D TextureMap;	// Texture map\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
-	// Just set the output color\n\
-	gl_FragColor = VertexColorVS;\n\
+	// Fragment color = fetched interpolated texel color multiplicated with the per vertex color\n\
+	gl_FragColor = texture2D(TextureMap, VertexTexCoordVS)*VertexColorVS;\n\
 }";

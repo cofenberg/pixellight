@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPK_PLLineRendererShaders_Cg.h                 *
+ *  File: SPK_PLQuadRendererShaders_Cg.h                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,15 +21,17 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sSPK_PLLineRendererShaders_Cg_VS = "\
+static const PLGeneral::String sSPK_PLQuadRendererShaders_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 Color    : COLOR;	// Vertex color\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord : TEXCOORD0;	// Vertex texture coordinate 0\n\
+	float4 Color    : COLOR;		// Vertex color\n\
 };\n\
 \n\
 // Programs\n\
 VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input\n\
+			   float2   VertexTexCoord : TEXCOORD0,		// Vertex texture coordinate input\n\
 			   float4   VertexColor    : COLOR,			// Vertex color input\n\
 	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix\n\
 {\n\
@@ -37,6 +39,9 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex posit
 \n\
 	// Calculate the clip space vertex position\n\
 	Out.Position = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1.0f));\n\
+\n\
+	// Pass through the vertex texture coordinate\n\
+	Out.TexCoord = VertexTexCoord;\n\
 \n\
 	// Pass through the vertex color\n\
 	Out.Color = VertexColor;\n\
@@ -47,11 +52,12 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex posit
 
 
 // Cg fragment shader source code
-static const PLGeneral::String sSPK_PLLineRendererShaders_Cg_FS = "\
+static const PLGeneral::String sSPK_PLQuadRendererShaders_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 Color    : COLOR;	// Vertex color\n\
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float2 TexCoord : TEXCOORD0;	// Vertex texture coordinate 0\n\
+	float4 Color    : COLOR;		// Vertex color\n\
 };\n\
 \n\
 // Fragment output\n\
@@ -60,12 +66,13 @@ struct FS_OUTPUT {\n\
 };\n\
 \n\
 // Programs\n\
-FS_OUTPUT main(VS_OUTPUT In)	// Vertex shader output as fragment shader input\n\
+FS_OUTPUT main(VS_OUTPUT In,			// Vertex shader output as fragment shader input\n\
+	   uniform sampler2D TextureMap)	// Texture map\n\
 {\n\
 	FS_OUTPUT Out;\n\
 \n\
-	// Just set the output color\n\
-	Out.Color0 = In.Color;\n\
+	// Fragment color = fetched interpolated texel color multiplicated with the per vertex color\n\
+	Out.Color0 = tex2D(TextureMap, In.TexCoord)*In.Color;\n\
 \n\
 	// Done\n\
 	return Out;\n\

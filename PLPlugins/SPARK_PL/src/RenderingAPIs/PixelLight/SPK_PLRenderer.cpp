@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Tools.h>
 #include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLRenderer.h"
 
 
@@ -96,32 +95,6 @@ void SPK_PLRenderer::InitBlending() const
 	} else {
 		m_pRenderer->SetRenderState(RenderState::BlendEnable, false);
 	}
-}
-
-/**
-*  @brief
-*    Inits the rendering hints of this SPK_PLRenderer
-*/
-void SPK_PLRenderer::InitRenderingHints() const
-{
-	// Get the fixed functions interface
-	FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
-	if (pFixedFunctions) {
-		// Alpha test
-		if (isRenderingHintEnabled(SPK::ALPHA_TEST)) {
-			pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable,    true);
-			pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestFunction,  Compare::GreaterEqual);
-			pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestReference, Tools::FloatToUInt32(getAlphaTestThreshold()));
-		} else {
-			pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
-		}
-	}
-
-	// Depth test
-	m_pRenderer->SetRenderState(RenderState::ZEnable, isRenderingHintEnabled(SPK::DEPTH_TEST));
-
-	// Depth write
-	m_pRenderer->SetRenderState(RenderState::ZWriteEnable, isRenderingHintEnabled(SPK::DEPTH_WRITE));
 }
 
 

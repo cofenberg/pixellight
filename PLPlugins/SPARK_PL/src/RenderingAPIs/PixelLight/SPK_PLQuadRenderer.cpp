@@ -236,6 +236,66 @@ SPK_PLQuadRenderer::SPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fS
 {
 }
 
+void SPK_PLQuadRenderer::UpdateVertexBuffer(const SPK::Group &group)
+{
+	// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
+	VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
+	if (pVertexBuffer->Lock(Lock::WriteOnly)) {
+		// Get particle renderer to use
+		void (SPK_PLQuadRenderer::*pRenderParticle)(const SPK::Particle&);	// Pointer to the right render method
+		switch (texturingMode) {
+			case SPK::TEXTURE_2D:
+				if (group.getModel()->isEnabled(SPK::PARAM_TEXTURE_INDEX))
+					pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render2DAtlasRot : &SPK_PLQuadRenderer::Render2DAtlas;
+				else
+					pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render2DRot : &SPK_PLQuadRenderer::Render2D;
+				break;
+
+			case SPK::TEXTURE_3D:
+				pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render3DRot : &SPK_PLQuadRenderer::Render3D;
+				break;
+
+			case SPK::TEXTURE_NONE:
+				pRenderParticle = group.getModel()->isEnabled(SPK::PARAM_ANGLE) ? &SPK_PLQuadRenderer::Render2DRot : &SPK_PLQuadRenderer::Render2D;
+				break;
+
+			default:
+				pRenderParticle = nullptr;
+				break;
+		}
+
+		// Get current vertex buffer data
+		m_nCurrentVertexSize	= pVertexBuffer->GetVertexSize();
+		m_pfCurrentPosition		= static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
+		m_pfCurrentTexCoord		= static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
+		m_pCurrentVertexBuffer	= pVertexBuffer;
+		m_nCurrentVertex		= 0;
+
+		// Calculate the current orientation
+		const bool bGlobalOrientation = precomputeOrientation3D(
+			group,
+			SPK::Vector3D(-m_mWorldViewInverse.fM[8],  -m_mWorldViewInverse.fM[9],  -m_mWorldViewInverse.fM[10]),
+			SPK::Vector3D( m_mWorldViewInverse.fM[4],   m_mWorldViewInverse.fM[5],   m_mWorldViewInverse.fM[6]),
+			SPK::Vector3D( m_mWorldViewInverse.fM[12],  m_mWorldViewInverse.fM[13],  m_mWorldViewInverse.fM[14]));
+		if (pRenderParticle) {
+			if (bGlobalOrientation) {
+				computeGlobalOrientation3D();
+				for (size_t i=0; i<group.getNbParticles(); i++)
+					(this->*pRenderParticle)(group.getParticle(i));
+			} else {
+				for (size_t i=0; i<group.getNbParticles(); i++) {
+					const SPK::Particle &cParticle = group.getParticle(i);
+					computeSingleOrientation3D(cParticle);
+					(this->*pRenderParticle)(cParticle);
+				}
+			}
+		}
+
+		// Unlock the vertex buffer
+		pVertexBuffer->Unlock();
+	}
+}
+
 inline void SPK_PLQuadRenderer::CallColorAndVertex(const SPK::Particle &cParticle)
 {
 	const float x = cParticle.position().x;

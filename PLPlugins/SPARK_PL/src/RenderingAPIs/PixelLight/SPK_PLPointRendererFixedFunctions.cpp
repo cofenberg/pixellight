@@ -129,7 +129,8 @@ void SPK_PLPointRendererFixedFunctions::render(const SPK::Group &group)
 
 		// Setup render states
 		InitBlending();
-		InitRenderingHints();
+		GetPLRenderer().SetRenderState(RenderState::ZEnable,      isRenderingHintEnabled(SPK::DEPTH_TEST));
+		GetPLRenderer().SetRenderState(RenderState::ZWriteEnable, isRenderingHintEnabled(SPK::DEPTH_WRITE));
 		switch(type) {
 			case SPK::POINT_SQUARE:
 				GetPLRenderer().SetTextureBuffer();
@@ -166,6 +167,15 @@ void SPK_PLPointRendererFixedFunctions::render(const SPK::Group &group)
 		// Get the fixed functions interface
 		FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
 		if (pFixedFunctions) {
+			// Alpha test
+			if (isRenderingHintEnabled(SPK::ALPHA_TEST)) {
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable,    true);
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestFunction,  Compare::GreaterEqual);
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestReference, Tools::FloatToUInt32(getAlphaTestThreshold()));
+			} else {
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
+			}
+
 			// Make the vertex buffer to the current renderer vertex buffer
 			pFixedFunctions->SetVertexBuffer(pVertexBuffer);
 

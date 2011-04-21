@@ -112,6 +112,9 @@ void SNSystem::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		for (uint32 i=0; i<m_lstSPK_PLRenderer.GetNumOfElements(); i++) {
 			// Set the world view projection matrix used for rendering
 			m_lstSPK_PLRenderer[i]->SetWorldViewProjectionMatrix(pVisNode->GetWorldViewProjectionMatrix());
+
+			// Set the inverse world view matrix used for rendering
+			m_lstSPK_PLRenderer[i]->SetWorldViewInverse(pVisNode->GetWorldViewMatrix().GetInverted());
 		}
 
 		// Draw the SPARK particle system
@@ -131,10 +134,11 @@ void SNSystem::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 SPK_PLPointRenderer *SNSystem::CreateSPK_PLPointRenderer(PLRenderer::Renderer &cRenderer, float fSize)
 {
 	SPK_PLPointRenderer *pSPK_PLPointRenderer = nullptr;
-	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
+	// [TODO] Implement shaders version
+//	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
 		pSPK_PLPointRenderer = SPK_PLPointRendererFixedFunctions::Create(cRenderer, fSize);
-	else
-		pSPK_PLPointRenderer = SPK_PLPointRendererShaders::Create(cRenderer, ShaderLanguage, fSize);
+//	else
+//		pSPK_PLPointRenderer = SPK_PLPointRendererShaders::Create(cRenderer, ShaderLanguage, fSize);
 	m_lstSPK_PLRenderer.Add(pSPK_PLPointRenderer);
 	return pSPK_PLPointRenderer;
 }

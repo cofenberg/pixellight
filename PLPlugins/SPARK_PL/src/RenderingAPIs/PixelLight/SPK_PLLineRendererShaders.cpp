@@ -128,14 +128,14 @@ SPK_PLLineRendererShaders::SPK_PLLineRendererShaders(PLRenderer::Renderer &cRend
 			m_pVertexShader = pShaderLanguage->CreateVertexShader();
 			if (m_pVertexShader) {
 				// Set the vertex shader source code
-				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode, "arbvp1");
 			}
 
 			// Create a fragment shader instance
 			m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
 			if (m_pFragmentShader) {
 				// Set the fragment shader source code
-				m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+				m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode, "arbfp1");
 			}
 
 			// Create a program instance
@@ -179,64 +179,63 @@ SPK_PLLineRendererShaders::~SPK_PLLineRendererShaders()
 //[-------------------------------------------------------]
 void SPK_PLLineRendererShaders::render(const SPK::Group &group)
 {
-	if (prepareBuffers(group)) {
-		// Is there a valid m_pSPK_PLBuffer instance?
-		if (m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
-			// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
-			VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
-			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
-				// Vertex buffer data
-				const uint32 nVertexSize = pVertexBuffer->GetVertexSize();
-				float *pfPosition = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
+	// Is there a valid m_pSPK_PLBuffer instance?
+	if (prepareBuffers(group) && m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
+		// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
+		VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
+		if (pVertexBuffer->Lock(Lock::WriteOnly)) {
+			// Vertex buffer data
+			const uint32 nVertexSize = pVertexBuffer->GetVertexSize();
+			float *pfPosition = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
 
-				// Fill the vertex buffer with the current data
-				for (size_t i=0, nCurrentVertex=0; i<group.getNbParticles(); i++) {
-					// Get the particle
-					const SPK::Particle &cParticle = group.getParticle(i);
+			// Fill the vertex buffer with the current data
+			for (size_t i=0, nCurrentVertex=0; i<group.getNbParticles(); i++) {
+				// Get the particle
+				const SPK::Particle &cParticle = group.getParticle(i);
 
-					// Copy over the particle position into the vertex data
-					pfPosition[0] = cParticle.position().x;
-					pfPosition[1] = cParticle.position().y;
-					pfPosition[2] = cParticle.position().z;
-					pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
-					// Copy over the particle color into the vertex data
-					pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
-					nCurrentVertex++;	// Next, please!
+				// Copy over the particle position into the vertex data
+				pfPosition[0] = cParticle.position().x;
+				pfPosition[1] = cParticle.position().y;
+				pfPosition[2] = cParticle.position().z;
+				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
+				// Copy over the particle color into the vertex data
+				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				nCurrentVertex++;	// Next, please!
 
-					// Copy over the particle position into the vertex data
-					pfPosition[0] = cParticle.position().x + cParticle.velocity().x*length;
-					pfPosition[1] = cParticle.position().y + cParticle.velocity().y*length;
-					pfPosition[2] = cParticle.position().z + cParticle.velocity().z*length;
-					pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
-					// Copy over the particle color into the vertex data
-					pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
-					nCurrentVertex++;	// Next, please!
-				}
-
-				// Unlock the vertex buffer
-				pVertexBuffer->Unlock();
+				// Copy over the particle position into the vertex data
+				pfPosition[0] = cParticle.position().x + cParticle.velocity().x*length;
+				pfPosition[1] = cParticle.position().y + cParticle.velocity().y*length;
+				pfPosition[2] = cParticle.position().z + cParticle.velocity().z*length;
+				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
+				// Copy over the particle color into the vertex data
+				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				nCurrentVertex++;	// Next, please!
 			}
 
-			// Setup render states
-			InitBlending();
-			InitRenderingHints();
-			GetPLRenderer().SetRenderState(RenderState::LineWidth, Tools::FloatToUInt32(width));
+			// Unlock the vertex buffer
+			pVertexBuffer->Unlock();
+		}
 
-			// Make our program to the current one
-			if (GetPLRenderer().SetProgram(m_pProgram)) {
-				// Set the "ObjectSpaceToClipSpaceMatrixProgramUniform" fragment shader parameter
-				if (m_pObjectSpaceToClipSpaceMatrixProgramUniform)
-					m_pObjectSpaceToClipSpaceMatrixProgramUniform->Set(m_mWorldViewProjection);
+		// Setup render states
+		InitBlending();
+		GetPLRenderer().SetRenderState(RenderState::ZEnable,      isRenderingHintEnabled(SPK::DEPTH_TEST));
+		GetPLRenderer().SetRenderState(RenderState::ZWriteEnable, isRenderingHintEnabled(SPK::DEPTH_WRITE));
+		GetPLRenderer().SetRenderState(RenderState::LineWidth,    Tools::FloatToUInt32(width));
 
-				// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-				if (m_pPositionProgramAttribute)
-					m_pPositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
-				if (m_pColorProgramAttribute)
-					m_pColorProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Color);
+		// Make our program to the current one
+		if (GetPLRenderer().SetProgram(m_pProgram)) {
+			// Set the "ObjectSpaceToClipSpaceMatrixProgramUniform" fragment shader parameter
+			if (m_pObjectSpaceToClipSpaceMatrixProgramUniform)
+				m_pObjectSpaceToClipSpaceMatrixProgramUniform->Set(m_mWorldViewProjection);
 
-				// Draw
-				GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, group.getNbParticles() << 1);
-			}
+			// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+			if (m_pPositionProgramAttribute)
+				m_pPositionProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+			if (m_pColorProgramAttribute)
+				m_pColorProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Color);
+
+			// Draw
+			GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, group.getNbParticles() << 1);
 		}
 	}
 }
