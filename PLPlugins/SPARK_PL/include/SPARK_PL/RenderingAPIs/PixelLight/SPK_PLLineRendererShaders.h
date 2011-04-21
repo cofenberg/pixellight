@@ -28,7 +28,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineRenderer.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class Program;
+	class VertexShader;
+	class FragmentShader;
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -66,6 +79,8 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 		*
 		*  @param[in] cRenderer
 		*    PixelLight renderer to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*  @param[in] fLength
 		*    The length multiplier of this SPK_PLLineRendererShaders
 		*  @param[in] fWidth
@@ -74,7 +89,7 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 		*  @return
 		*    A new registered SPK_PLLineRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLLineRendererShaders *Create(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
+		SPARK_PL_API static SPK_PLLineRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fLength = 1.0f, float fWidth = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -87,12 +102,14 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 		*
 		*  @param[in] cRenderer
 		*    PixelLight renderer to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*  @param[in] fLength
 		*    The length multiplier of this SPK_PLLineRendererShaders
 		*  @param[in] fWidth
 		*    The width of this SPK_PLLineRendererShaders in pixels
 		*/
-		SPK_PLLineRendererShaders(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
+		SPK_PLLineRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fLength = 1.0f, float fWidth = 1.0f);
 
 		/**
 		*  @brief
@@ -106,6 +123,40 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 	//[-------------------------------------------------------]
 	public:
 		SPARK_PL_API virtual void render(const SPK::Group &group);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when a program became dirty
+		*
+		*  @param[in] pProgram
+		*    Program which became dirty
+		*/
+		void OnDirty(PLRenderer::Program *pProgram);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::String				 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	*m_pPositionProgramAttribute;					/**< Position program attribute, can be a null pointer */
+		PLRenderer::ProgramAttribute	*m_pColorProgramAttribute;						/**< Color program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		*m_pObjectSpaceToClipSpaceMatrixProgramUniform;	/**< Object space to clip space matrix program uniform, can be a null pointer */
 
 
 };

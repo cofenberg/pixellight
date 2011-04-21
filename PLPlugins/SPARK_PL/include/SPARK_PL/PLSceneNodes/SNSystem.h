@@ -38,6 +38,13 @@
 namespace SPK {
 	class System;
 }
+namespace SPARK_PL {
+	class SPK_PLRenderer;
+	class SPK_PLQuadRenderer;
+	class SPK_PLLineRenderer;
+	class SPK_PLPointRenderer;
+	class SPK_PLLineTrailRenderer;
+}
 
 
 //[-------------------------------------------------------]
@@ -66,12 +73,14 @@ class SNSystem : public PLScene::SceneNode {
 		*/
 		enum EFlags {
 			UpdateInvisible = 1<<10,	/**< Do also update the particle system if it's currently not visible */
-			NoAutomaticAABB = 1<<11		/**< Do not automatically update the axis aligned bounding box */
+			NoAutomaticAABB = 1<<11,	/**< Do not automatically update the axis aligned bounding box */
+			NoShaders       = 1<<12		/**< Do not use shaders, use fixed functions instead (not recommended) */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneNode::EFlags)
 			pl_enum_value(UpdateInvisible,	"Do also update the particle system if it's currently not visible")
 			pl_enum_value(NoAutomaticAABB,	"Do not automatically update the axis aligned bounding box")
+			pl_enum_value(NoShaders,		"Do not use shaders, use fixed functions instead (not recommended)")
 		pl_enum_end
 
 
@@ -79,8 +88,9 @@ class SNSystem : public PLScene::SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(SPARK_PL_RTTI_EXPORT, SNSystem, "SPARK_PL", PLScene::SceneNode, "Abstract SPARK particle system scene node base class")
+		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		// Overwritten PLScene::SceneNode variables
-		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
 	pl_class_end
 
 
@@ -106,6 +116,69 @@ class SNSystem : public PLScene::SceneNode {
 	//[-------------------------------------------------------]
 	public:
 		SPARK_PL_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Creates and registers a new SPK_PLPointRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fSize
+		*    The size of the points
+		*
+		*  @return
+		*    A new registered SPK_PLPointRenderer
+		*/
+		SPARK_PL_API SPK_PLPointRenderer *CreateSPK_PLPointRenderer(PLRenderer::Renderer &cRenderer, float fSize = 1.0f);
+
+		/**
+		*  @brief
+		*    Creates and registers a new SPK_PLQuadRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fScaleX
+		*    The scale of the width of the quad
+		*  @param[in] fScaleY
+		*    The scale of the height of the quad
+		*
+		*  @return
+		*    A new registered SPK_PLQuadRenderer
+		*/
+		SPARK_PL_API SPK_PLQuadRenderer *CreateSPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
+
+		/**
+		*  @brief
+		*    Creates and registers a new SPK_PLLineRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*  @param[in] fLength
+		*    The length multiplier of this SPK_PLLineRenderer
+		*  @param[in] fWidth
+		*    The width of this SPK_PLLineRenderer in pixels
+		*
+		*  @return
+		*    A new registered SPK_PLLineRenderer
+		*/
+		SPARK_PL_API SPK_PLLineRenderer *CreateSPK_PLLineRenderer(PLRenderer::Renderer &cRenderer, float fLength = 1.0f, float fWidth = 1.0f);
+
+		/**
+		*  @brief
+		*    Creates and registers a new SPK_PLLineTrailRenderer
+		*
+		*  @param[in] cRenderer
+		*    PixelLight renderer to use
+		*
+		*  @return
+		*    A new registered SPK_PLLineTrailRenderer
+		*/
+		SPARK_PL_API SPK_PLLineTrailRenderer *CreateSPK_PLLineTrailRenderer(PLRenderer::Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -153,7 +226,8 @@ class SNSystem : public PLScene::SceneNode {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		SPK::System	*m_pParticleSystem;	/**< SPARK particle system, can be a null pointer */
+		SPK::System						  *m_pParticleSystem;	/**< SPARK particle system, can be a null pointer */
+		PLGeneral::Array<SPK_PLRenderer*>  m_lstSPK_PLRenderer;	/**< Used SPK_PLRenderer instances */
 
 
 	//[-------------------------------------------------------]

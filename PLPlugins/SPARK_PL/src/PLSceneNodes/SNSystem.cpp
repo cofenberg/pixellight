@@ -34,6 +34,14 @@ PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	#include <SPK.h>
 PL_WARNING_POP
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLPointRendererShaders.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLPointRendererFixedFunctions.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRendererShaders.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLQuadRendererFixedFunctions.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineRendererShaders.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineRendererFixedFunctions.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRendererShaders.h"
+#include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRendererFixedFunctions.h"
 #include "SPARK_PL/PLSceneNodes/SNSystem.h"
 
 
@@ -61,6 +69,7 @@ pl_implement_class(SNSystem)
 *    Default constructor
 */
 SNSystem::SNSystem() :
+	ShaderLanguage(this),
 	Flags(this),
 	EventHandlerUpdate(&SNSystem::NotifyUpdate, this),
 	m_pParticleSystem(nullptr),
@@ -79,6 +88,10 @@ SNSystem::~SNSystem()
 	// Cleanup
 	if (m_pParticleSystem)
 		delete m_pParticleSystem;
+
+	// Destroy all used SPK_PLRenderer instances
+	for (uint32 i=0; i<m_lstSPK_PLRenderer.GetNumOfElements(); i++)
+		delete m_lstSPK_PLRenderer[i];
 }
 
 
@@ -91,15 +104,84 @@ void SNSystem::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		// Get the fixed functions interface
 		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 		if (pFixedFunctions) {
-			cRenderer.GetRendererContext().GetEffectManager().Use();
-
 			// Set the current world matrix
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, pVisNode->GetWorldMatrix());
-
-			// Draw the SPARK particle system
-			m_pParticleSystem->render();
 		}
+
+		// Update all used SPK_PLRenderer instances
+		for (uint32 i=0; i<m_lstSPK_PLRenderer.GetNumOfElements(); i++) {
+			// Set the world view projection matrix used for rendering
+			m_lstSPK_PLRenderer[i]->SetWorldViewProjectionMatrix(pVisNode->GetWorldViewProjectionMatrix());
+		}
+
+		// Draw the SPARK particle system
+		cRenderer.GetRendererContext().GetEffectManager().Use();
+		m_pParticleSystem->render();
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Creates and registers a new SPK_PLPointRenderer
+*/
+SPK_PLPointRenderer *SNSystem::CreateSPK_PLPointRenderer(PLRenderer::Renderer &cRenderer, float fSize)
+{
+	SPK_PLPointRenderer *pSPK_PLPointRenderer = nullptr;
+	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
+		pSPK_PLPointRenderer = SPK_PLPointRendererFixedFunctions::Create(cRenderer, fSize);
+	else
+		pSPK_PLPointRenderer = SPK_PLPointRendererShaders::Create(cRenderer, ShaderLanguage, fSize);
+	m_lstSPK_PLRenderer.Add(pSPK_PLPointRenderer);
+	return pSPK_PLPointRenderer;
+}
+
+/**
+*  @brief
+*    Creates and registers a new SPK_PLQuadRenderer
+*/
+SPK_PLQuadRenderer *SNSystem::CreateSPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY)
+{
+	SPK_PLQuadRenderer *pSPK_PLQuadRenderer = nullptr;
+	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
+		pSPK_PLQuadRenderer = SPK_PLQuadRendererFixedFunctions::Create(cRenderer, fScaleX, fScaleY);
+	else
+		pSPK_PLQuadRenderer = SPK_PLQuadRendererShaders::Create(cRenderer, ShaderLanguage, fScaleX, fScaleY);
+	m_lstSPK_PLRenderer.Add(pSPK_PLQuadRenderer);
+	return pSPK_PLQuadRenderer;
+}
+
+/**
+*  @brief
+*    Creates and registers a new SPK_PLLineRenderer
+*/
+SPK_PLLineRenderer *SNSystem::CreateSPK_PLLineRenderer(PLRenderer::Renderer &cRenderer, float fLength, float fWidth)
+{
+	SPK_PLLineRenderer *pSPK_PLLineRenderer = nullptr;
+	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
+		pSPK_PLLineRenderer = SPK_PLLineRendererFixedFunctions::Create(cRenderer, fLength, fWidth);
+	else
+		pSPK_PLLineRenderer = SPK_PLLineRendererShaders::Create(cRenderer, ShaderLanguage, fLength, fWidth);
+	m_lstSPK_PLRenderer.Add(pSPK_PLLineRenderer);
+	return pSPK_PLLineRenderer;
+}
+
+/**
+*  @brief
+*    Creates and registers a new SPK_PLLineTrailRenderer
+*/
+SPK_PLLineTrailRenderer *SNSystem::CreateSPK_PLLineTrailRenderer(PLRenderer::Renderer &cRenderer)
+{
+	SPK_PLLineTrailRenderer *pSPK_PLLineTrailRenderer = nullptr;
+	if ((GetFlags() & NoShaders) || !cRenderer.GetDefaultShaderLanguage().GetLength())
+		pSPK_PLLineTrailRenderer = SPK_PLLineTrailRendererFixedFunctions::Create(cRenderer);
+	else
+		pSPK_PLLineTrailRenderer = SPK_PLLineTrailRendererShaders::Create(cRenderer, ShaderLanguage);
+	m_lstSPK_PLRenderer.Add(pSPK_PLLineTrailRenderer);
+	return pSPK_PLLineTrailRenderer;
 }
 
 

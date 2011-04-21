@@ -68,11 +68,13 @@ class SPK_PLPointRendererShaders : public SPK_PLPointRenderer {
 		*    PixelLight renderer to use
 		*  @param[in] fSize
 		*    The size of the points
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*
 		*  @return
 		*    A new registered SPK_PLPointRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLPointRendererShaders *Create(PLRenderer::Renderer &cRenderer, float fSize = 1.0f);
+		SPARK_PL_API static SPK_PLPointRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fSize = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -87,8 +89,10 @@ class SPK_PLPointRendererShaders : public SPK_PLPointRenderer {
 		*    PixelLight renderer to use
 		*  @param[in] fSize
 		*    The size of the points
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*/
-		SPK_PLPointRendererShaders(PLRenderer::Renderer &cRenderer, float fSize = 1.0f);
+		SPK_PLPointRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fSize = 1.0f);
 
 		/**
 		*  @brief
@@ -102,6 +106,13 @@ class SPK_PLPointRendererShaders : public SPK_PLPointRenderer {
 	//[-------------------------------------------------------]
 	public:
 		SPARK_PL_API virtual void render(const SPK::Group &group);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::String m_sShaderLanguage;	/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
 
 
 };

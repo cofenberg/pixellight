@@ -49,9 +49,9 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
-SPK_PLPointRendererShaders *SPK_PLPointRendererShaders::Create(PLRenderer::Renderer &cRenderer, float fSize)
+SPK_PLPointRendererShaders *SPK_PLPointRendererShaders::Create(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fSize)
 {
-	SPK_PLPointRendererShaders *pSPK_PLPointRendererShaders = new SPK_PLPointRendererShaders(cRenderer, fSize);
+	SPK_PLPointRendererShaders *pSPK_PLPointRendererShaders = new SPK_PLPointRendererShaders(cRenderer, sShaderLanguage, fSize);
 	registerObject(pSPK_PLPointRendererShaders);
 	return pSPK_PLPointRendererShaders;
 }
@@ -60,7 +60,8 @@ SPK_PLPointRendererShaders *SPK_PLPointRendererShaders::Create(PLRenderer::Rende
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-SPK_PLPointRendererShaders::SPK_PLPointRendererShaders(PLRenderer::Renderer &cRenderer, float fSize) : SPK_PLPointRenderer(cRenderer, fSize)
+SPK_PLPointRendererShaders::SPK_PLPointRendererShaders(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fSize) : SPK_PLPointRenderer(cRenderer, fSize),
+	m_sShaderLanguage(sShaderLanguage)
 {
 }
 

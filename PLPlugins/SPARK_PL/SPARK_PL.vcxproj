@@ -377,6 +377,8 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\SPARK_PL\SPARK_PLLinux.h" />
     <ClInclude Include="include\SPARK_PL\SPARK_PLWindows.h" />
     <ClInclude Include="include\SPARK_PL\SPK.h" />
+    <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders_Cg.h" />
+    <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders_GLSL.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

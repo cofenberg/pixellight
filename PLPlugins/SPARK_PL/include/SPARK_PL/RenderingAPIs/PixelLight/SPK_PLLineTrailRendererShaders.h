@@ -28,7 +28,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRenderer.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class Program;
+	class VertexShader;
+	class FragmentShader;
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -66,11 +79,13 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 		*
 		*  @param[in] cRenderer
 		*    PixelLight renderer to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*
 		*  @return
 		*    A new registered SPK_PLLineTrailRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLLineTrailRendererShaders *Create(PLRenderer::Renderer &cRenderer);
+		SPARK_PL_API static SPK_PLLineTrailRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "");
 
 
 	//[-------------------------------------------------------]
@@ -83,8 +98,10 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 		*
 		*  @param[in] cRenderer
 		*    PixelLight renderer to use
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*/
-		SPK_PLLineTrailRendererShaders(PLRenderer::Renderer &cRenderer);
+		SPK_PLLineTrailRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "");
 
 		/**
 		*  @brief
@@ -98,6 +115,40 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 	//[-------------------------------------------------------]
 	public:
 		SPARK_PL_API virtual void render(const SPK::Group &group);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when a program became dirty
+		*
+		*  @param[in] pProgram
+		*    Program which became dirty
+		*/
+		void OnDirty(PLRenderer::Program *pProgram);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::String				 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	*m_pPositionProgramAttribute;					/**< Position program attribute, can be a null pointer */
+		PLRenderer::ProgramAttribute	*m_pColorProgramAttribute;						/**< Color program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		*m_pObjectSpaceToClipSpaceMatrixProgramUniform;	/**< Object space to clip space matrix program uniform, can be a null pointer */
 
 
 };

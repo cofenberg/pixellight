@@ -353,6 +353,12 @@
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLLineTrailRendererFixedFunctions.h">
       <Filter>RenderingAPIs\PixelLight</Filter>
     </ClInclude>
+    <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders_Cg.h">
+      <Filter>RenderingAPIs\PixelLight</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders_GLSL.h">
+      <Filter>RenderingAPIs\PixelLight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

@@ -26,7 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SceneContext.h>
-#include <SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRendererFixedFunctions.h>
+#include <SPARK_PL/RenderingAPIs/PixelLight/SPK_PLLineTrailRenderer.h>
 #include <SPARK_PL/SPK.h>
 #include "SNGravitationDemo.h"
 
@@ -119,11 +119,11 @@ void SNGravitationDemo::InitFunction()
 
 	// Renderers
 	static const uint32 NumberOfSegments = 32;
-	SPARK_PL::SPK_PLLineTrailRenderer *pTrailRenderer = SPARK_PL::SPK_PLLineTrailRendererFixedFunctions::Create(cRenderer);
-	pTrailRenderer->setBlending(SPK::BLENDING_ADD);
-	pTrailRenderer->SetDuration(2.0f);
-	pTrailRenderer->SetNumOfSamples(NumberOfSegments);
-	pTrailRenderer->enableRenderingHint(SPK::DEPTH_WRITE, false);
+	SPARK_PL::SPK_PLLineTrailRenderer *pSPK_PLLineTrailRenderer = CreateSPK_PLLineTrailRenderer(cRenderer);
+	pSPK_PLLineTrailRenderer->setBlending(SPK::BLENDING_ADD);
+	pSPK_PLLineTrailRenderer->SetDuration(2.0f);
+	pSPK_PLLineTrailRenderer->SetNumOfSamples(NumberOfSegments);
+	pSPK_PLLineTrailRenderer->enableRenderingHint(SPK::DEPTH_WRITE, false);
 
 	// Create the SPARK particle models
 	SPK::Model *pMassModel = SPK::Model::create();
@@ -147,7 +147,7 @@ void SNGravitationDemo::InitFunction()
 	// Create the SPARK particle groups
 	m_pParticleGroup = SPK::Group::create(m_pParticleModel, 4100);
 	m_pParticleGroup->addEmitter(pParticleEmitter);
-	m_pParticleGroup->setRenderer(pTrailRenderer);
+	m_pParticleGroup->setRenderer(pSPK_PLLineTrailRenderer);
 	m_pParticleGroup->enableAABBComputing(true);
 
 	m_pMassGroup = SPK::Group::create(pMassModel, NumOfPointMasses);

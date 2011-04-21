@@ -1,4 +1,10 @@
-﻿>> 17.04.2011
+﻿>> 21.04.2011
+[CO]
+- SPARK_PL: Implemented "SPK_PLLineRendererShaders" and "SPK_PLLineTrailRendererShaders"
+
+
+
+>> 17.04.2011
 [CO]
 - As usual when dealing with rendering, there are now special classes for legacy fixed functions and shaders rendering. The previous implementation
   was using fixed functions. The shader based versions are not yet implemented.

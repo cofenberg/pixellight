@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 using namespace PLRenderer;
 namespace SPARK_PL {
 
@@ -37,9 +38,9 @@ namespace SPARK_PL {
 //[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
-SPK_PLQuadRendererShaders *SPK_PLQuadRendererShaders::Create(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY)
+SPK_PLQuadRendererShaders *SPK_PLQuadRendererShaders::Create(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fScaleX, float fScaleY)
 {
-	SPK_PLQuadRendererShaders *pSPK_PLQuadRendererShaders = new SPK_PLQuadRendererShaders(cRenderer, fScaleX, fScaleY);
+	SPK_PLQuadRendererShaders *pSPK_PLQuadRendererShaders = new SPK_PLQuadRendererShaders(cRenderer, sShaderLanguage, fScaleX, fScaleY);
 	registerObject(pSPK_PLQuadRendererShaders);
 	return pSPK_PLQuadRendererShaders;
 }
@@ -52,7 +53,8 @@ SPK_PLQuadRendererShaders *SPK_PLQuadRendererShaders::Create(PLRenderer::Rendere
 *  @brief
 *    Constructor of SPK_PLQuadRendererShaders
 */
-SPK_PLQuadRendererShaders::SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, float fScaleX, float fScaleY) : SPK_PLQuadRenderer(cRenderer, fScaleX, fScaleY)
+SPK_PLQuadRendererShaders::SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fScaleX, float fScaleY) : SPK_PLQuadRenderer(cRenderer, fScaleX, fScaleY),
+	m_sShaderLanguage(sShaderLanguage)
 {
 }
 

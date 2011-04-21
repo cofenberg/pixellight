@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/Types.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
@@ -132,6 +133,15 @@ class SPK_PLRenderer : public SPK::Renderer {
 		*/
 		inline void SetBlendingFunctions(PLRenderer::BlendFunc::Enum nSrcBlending, PLRenderer::BlendFunc::Enum nDestBlending);
 
+		/**
+		*  @brief
+		*    Sets the world view projection matrix used for rendering
+		*
+		*  @param[in] mWorldViewProjection
+		*    The world view projection matrix used for rendering
+		*/
+		inline void SetWorldViewProjectionMatrix(const PLMath::Matrix4x4 &mWorldViewProjection);
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SPK::Renderer functions                ]
@@ -164,6 +174,13 @@ class SPK_PLRenderer : public SPK::Renderer {
 		*    Inits the rendering hints of this SPK_PLRenderer
 		*/
 		SPARK_PL_API void InitRenderingHints() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLMath::Matrix4x4 m_mWorldViewProjection;	/**< The world view projection matrix used for rendering */
 
 
 	//[-------------------------------------------------------]

@@ -90,6 +90,15 @@ inline void SPK_PLRenderer::SetBlendingFunctions(PLRenderer::BlendFunc::Enum nSr
 	m_nDestBlending = nDestBlending;
 }
 
+/**
+*  @brief
+*    Sets the world view projection matrix used for rendering
+*/
+inline void SPK_PLRenderer::SetWorldViewProjectionMatrix(const PLMath::Matrix4x4 &mWorldViewProjection)
+{
+	m_mWorldViewProjection = mWorldViewProjection;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

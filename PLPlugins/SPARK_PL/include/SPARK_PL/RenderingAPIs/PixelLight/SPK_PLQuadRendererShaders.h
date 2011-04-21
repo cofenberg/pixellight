@@ -68,11 +68,13 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 		*    The scale of the width of the quad
 		*  @param[in] fScaleY
 		*    The scale of the height of the quad
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*
 		*  @return
 		*    A new registered SPK_PLQuadRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLQuadRendererShaders *Create(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
+		SPARK_PL_API static SPK_PLQuadRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fScaleX = 1.0f, float fScaleY = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -89,8 +91,10 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 		*    The scale of the width of the quad
 		*  @param[in] fScaleY
 		*    The scale of the height of the quad
+		*  @param[in] sShaderLanguage
+		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*/
-		SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
+		SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fScaleX = 1.0f, float fScaleY = 1.0f);
 
 		/**
 		*  @brief
@@ -104,6 +108,13 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 	//[-------------------------------------------------------]
 	public:
 		SPARK_PL_API virtual void render(const SPK::Group &group);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::String m_sShaderLanguage;	/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
 
 
 };
