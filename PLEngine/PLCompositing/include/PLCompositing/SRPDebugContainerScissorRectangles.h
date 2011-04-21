@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGraphics/Color/Color4.h>
 #include "PLCompositing/SRPDebug.h"
 
 
@@ -42,7 +43,7 @@ namespace PLCompositing {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract scene renderer pass drawing just simple container scissor rectangles
+*    Scene renderer pass drawing just simple container scissor rectangles
 */
 class SRPDebugContainerScissorRectangles : public SRPDebug {
 
@@ -50,14 +51,17 @@ class SRPDebugContainerScissorRectangles : public SRPDebug {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugContainerScissorRectangles, "PLCompositing", PLCompositing::SRPDebug, "Abstract scene renderer pass drawing just simple container scissor rectangles")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugContainerScissorRectangles, "PLCompositing", PLCompositing::SRPDebug, "Scene renderer pass drawing just simple container scissor rectangles")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_attribute(LineWidth,	float,				2.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
+		pl_attribute(LineColor,	PLGraphics::Color4,	PLGraphics::Color4(0.8f, 0.8f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Line color",												"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	protected:
+	public:
 		/**
 		*  @brief
 		*    Default constructor
@@ -69,6 +73,29 @@ class SRPDebugContainerScissorRectangles : public SRPDebug {
 		*    Destructur
 		*/
 		PLCOM_API virtual ~SRPDebugContainerScissorRectangles();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Draws recursive
+		*
+		*  @param[in] cRenderer
+		*    Renderer to use
+		*  @param[in] cCullQuery
+		*    Cull query to use
+		*/
+		void DrawRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLScene::SceneRendererPass functions  ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
 
 
 };

@@ -126,7 +126,7 @@ void SRPDebugHierarchies::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 	}
 
 	// Draw the hierachie of the scene container
-	cCullQuery.GetSceneContainer().GetHierarchyInstance()->Draw(cRenderer, LineColor.Get(), cVisContainer.GetWorldViewProjectionMatrix(), 1.0f);
+	cCullQuery.GetSceneContainer().GetHierarchyInstance()->Draw(cRenderer, LineColor.Get(), cVisContainer.GetWorldViewProjectionMatrix(), LineWidth.Get());
 }
 
 
@@ -141,7 +141,6 @@ void SRPDebugHierarchies::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
 	cRenderer.SetRenderState(RenderState::BlendEnable,		 (LineColor.Get().a < 1.0f));
 	cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
-	cRenderer.SetRenderState(RenderState::LineWidth,		 Tools::FloatToUInt32(LineWidth));
 
 	// Draw recursive from back to front
 	DrawRec(cRenderer, cCullQuery);

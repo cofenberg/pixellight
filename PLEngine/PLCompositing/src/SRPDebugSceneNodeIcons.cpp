@@ -182,10 +182,10 @@ void SRPDebugSceneNodeIcons::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 
 	// Draw recursive from back to front
-	const uint32 nFixedFillModeT = cRenderer.GetRenderState(RenderState::FixedFillMode);
+	const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);
 	cRenderer.SetRenderState(RenderState::FixedFillMode, Fill::Solid);
 	DrawRec(cRenderer, cCullQuery);
-	cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeT);
+	cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
 }
 
 

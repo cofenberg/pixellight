@@ -103,9 +103,6 @@
     <ClCompile Include="src\SRPPostProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FixedFunctions\SRPDebugContainerScissorRectanglesFixedFunctions.cpp">
-      <Filter>FixedFunctions</Filter>
-    </ClCompile>
     <ClCompile Include="src\FixedFunctions\SRPDebugWireframesFixedFunctions.cpp">
       <Filter>FixedFunctions</Filter>
     </ClCompile>
@@ -320,9 +317,6 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\SRPPostProcessing.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDebugContainerScissorRectanglesFixedFunctions.h">
-      <Filter>FixedFunctions</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCompositing\FixedFunctions\SRPDebugWireframesFixedFunctions.h">
       <Filter>FixedFunctions</Filter>
