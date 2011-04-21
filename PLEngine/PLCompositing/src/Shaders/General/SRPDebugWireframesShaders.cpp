@@ -257,8 +257,16 @@ void SRPDebugWireframesShaders::Draw(Renderer &cRenderer, const SQCull &cCullQue
 				String sFragmentShaderSourceCode;
 				if (sUsedShaderLanguage == "GLSL") {
 					#include "SRPDebugWireframesShaders_GLSL.h"
-					sVertexShaderSourceCode   = sDebugWireframes_GLSL_VS;
-					sFragmentShaderSourceCode = sDebugWireframes_GLSL_FS;
+					if (cRenderer.GetAPI() == "OpenGL ES 2.0") {
+						// Get shader source codes
+						sVertexShaderSourceCode   = "#version 100\n" + sDebugWireframes_GLSL_VS;
+						sFragmentShaderSourceCode = "#version 100\n" + sDebugWireframes_GLSL_FS;
+					} else {
+						// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
+						// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
+						sVertexShaderSourceCode   = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sDebugWireframes_GLSL_VS);
+						sFragmentShaderSourceCode = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sDebugWireframes_GLSL_FS);
+					}
 				} else if (sUsedShaderLanguage == "Cg") {
 					#include "SRPDebugWireframesShaders_Cg.h"
 					sVertexShaderSourceCode   = sDebugWireframes_Cg_VS;
