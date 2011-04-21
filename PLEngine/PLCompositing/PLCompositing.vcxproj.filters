@@ -238,6 +238,9 @@
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredVolumetricFog.cpp">
       <Filter>Shaders\Deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\General\SRPDebugWireframesShaders.cpp">
+      <Filter>Shaders\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -590,6 +593,15 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredVolumetricFog.h">
       <Filter>Shaders\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugWireframesShaders.h">
+      <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\General\SRPDebugWireframesShaders_Cg.h">
+      <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\General\SRPDebugWireframesShaders_GLSL.h">
+      <Filter>Shaders\General</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

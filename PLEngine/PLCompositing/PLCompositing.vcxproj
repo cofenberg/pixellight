@@ -262,6 +262,7 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredGBufferMaterial.cpp" />
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredSPAAO.cpp" />
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredVolumetricFog.cpp" />
+    <ClCompile Include="src\Shaders\General\SRPDebugWireframesShaders.cpp" />
     <ClCompile Include="src\Shaders\General\SRPDirectionalLightingShadersMaterial.cpp" />
     <ClCompile Include="src\Shaders\General\SRPLightingMaterial.cpp" />
     <ClCompile Include="src\SRPBackground.cpp" />
@@ -335,6 +336,7 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredGBufferMaterial.h" />
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredSPAAO.h" />
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredVolumetricFog.h" />
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugWireframesShaders.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShadersMaterial.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPLightingMaterial.h" />
     <ClInclude Include="include\PLCompositing\SRPBackground.h" />
@@ -406,6 +408,8 @@ copy build\release64\PLCompositing64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDiffuseOnlyShaders.h" />
     <ClInclude Include="src\Shaders\Deferred\SRPDeferredVolumetricFog_Cg.h" />
     <ClInclude Include="src\Shaders\Deferred\SRPDeferredVolumetricFog_GLSL.h" />
+    <ClInclude Include="src\Shaders\General\SRPDebugWireframesShaders_Cg.h" />
+    <ClInclude Include="src\Shaders\General\SRPDebugWireframesShaders_GLSL.h" />
     <ClInclude Include="src\Shaders\General\SRPDiffuseOnlyShaders_Cg.h" />
     <ClInclude Include="src\Shaders\General\SRPDiffuseOnlyShaders_GLSL.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShaders.h" />

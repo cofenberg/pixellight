@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SRPDebugWireframesFixedFunctions.cpp           *
+ *  File: SRPDebugWireframesShaders.cpp                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -25,8 +25,13 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Tools.h>
 #include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
-#include <PLRenderer/Renderer/FixedFunctions.h>
+#include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/FragmentShader.h>
+#include <PLRenderer/Renderer/ProgramUniform.h>
+#include <PLRenderer/Renderer/ShaderLanguage.h>
+#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
@@ -34,7 +39,7 @@
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
 #include <PLScene/Visibility/VisContainer.h>
-#include "PLCompositing/FixedFunctions/SRPDebugWireframesFixedFunctions.h"
+#include "PLCompositing/Shaders/General/SRPDebugWireframesShaders.h"
 
 
 //[-------------------------------------------------------]
@@ -50,7 +55,7 @@ namespace PLCompositing {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SRPDebugWireframesFixedFunctions)
+pl_implement_class(SRPDebugWireframesShaders)
 
 
 //[-------------------------------------------------------]
@@ -60,7 +65,15 @@ pl_implement_class(SRPDebugWireframesFixedFunctions)
 *  @brief
 *    Default constructor
 */
-SRPDebugWireframesFixedFunctions::SRPDebugWireframesFixedFunctions()
+SRPDebugWireframesShaders::SRPDebugWireframesShaders() :
+	ShaderLanguage(this),
+	EventHandlerDirty(&SRPDebugWireframesShaders::OnDirty, this),
+	m_pVertexShader(nullptr),
+	m_pFragmentShader(nullptr),
+	m_pProgram(nullptr),
+	m_pPositionProgramAttribute(nullptr),
+	m_pObjectSpaceToClipSpaceMatrixProgramUniform(nullptr),
+	m_pColorProgramUniform(nullptr)
 {
 }
 
@@ -68,8 +81,15 @@ SRPDebugWireframesFixedFunctions::SRPDebugWireframesFixedFunctions()
 *  @brief
 *    Destructor
 */
-SRPDebugWireframesFixedFunctions::~SRPDebugWireframesFixedFunctions()
+SRPDebugWireframesShaders::~SRPDebugWireframesShaders()
 {
+	// Destroy shaders
+	if (m_pProgram)
+		delete m_pProgram;
+	if (m_pFragmentShader)
+		delete m_pFragmentShader;
+	if (m_pVertexShader)
+		delete m_pVertexShader;
 }
 
 
@@ -80,11 +100,8 @@ SRPDebugWireframesFixedFunctions::~SRPDebugWireframesFixedFunctions()
 *  @brief
 *    Draws recursive
 */
-void SRPDebugWireframesFixedFunctions::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery) const
+void SRPDebugWireframesShaders::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery) const
 {
-	// Get the fixed functions interface (when we're in here, we know that it must exist!)
-	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-
 	// Get scene container
 	SceneContainer &cSceneContainer = cCullQuery.GetSceneContainer();
 	const VisContainer &cVisContainer = cCullQuery.GetVisContainer();
@@ -103,9 +120,6 @@ void SRPDebugWireframesFixedFunctions::DrawRec(Renderer &cRenderer, const SQCull
 		const VisNode   *pVisNode   = cIterator.Next();
 			  SceneNode *pSceneNode = pVisNode->GetSceneNode();
 		if (pSceneNode) {
-			// Set the current world matrix
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, pVisNode->GetWorldMatrix());
-
 			// Is this scene node a portal?
 			if (pVisNode->IsPortal()) {
 				// Get the target cell visibility container
@@ -145,7 +159,7 @@ void SRPDebugWireframesFixedFunctions::DrawRec(Renderer &cRenderer, const SQCull
 *  @brief
 *    Draws a mesh
 */
-void SRPDebugWireframesFixedFunctions::DrawMesh(Renderer &cRenderer, const VisNode &cVisNode, const MeshHandler &cMeshHandler) const
+void SRPDebugWireframesShaders::DrawMesh(Renderer &cRenderer, const VisNode &cVisNode, const MeshHandler &cMeshHandler) const
 {
 	// Check for draw distance limitation
 	if ((MaxDrawDistance <= 0.0f || cVisNode.GetSquaredDistanceToCamera() <= MaxDrawDistance*MaxDrawDistance) && cMeshHandler.GetVertexBuffer()) {
@@ -158,11 +172,16 @@ void SRPDebugWireframesFixedFunctions::DrawMesh(Renderer &cRenderer, const VisNo
 					  IndexBuffer	  *pIndexBuffer  = pLODLevel->GetIndexBuffer();
 				const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
 
-				// Bind buffers
+				// Bind index buffer
 				cRenderer.SetIndexBuffer(pIndexBuffer);
-				FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-				if (pFixedFunctions)
-					pFixedFunctions->SetVertexBuffer(cMeshHandler.GetVertexBuffer());
+
+				// Set the "ObjectSpaceToClipSpaceMatrixProgramUniform" fragment shader parameter
+				if (m_pObjectSpaceToClipSpaceMatrixProgramUniform)
+					m_pObjectSpaceToClipSpaceMatrixProgramUniform->Set(cVisNode.GetWorldViewProjectionMatrix());
+
+				// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+				if (m_pPositionProgramAttribute)
+					m_pPositionProgramAttribute->Set(cMeshHandler.GetVertexBuffer(), PLRenderer::VertexBuffer::Position);
 
 				// Draw geometries
 				for (uint32 nGeo=0; nGeo<lstGeometries.GetNumOfElements(); nGeo++) {
@@ -184,29 +203,112 @@ void SRPDebugWireframesFixedFunctions::DrawMesh(Renderer &cRenderer, const VisNo
 	}
 }
 
+/**
+*  @brief
+*    Called when a program became dirty
+*/
+void SRPDebugWireframesShaders::OnDirty(Program *pProgram)
+{
+	// Get attributes and uniforms
+	if (pProgram == m_pProgram) {
+		m_pPositionProgramAttribute						= m_pProgram->GetAttribute("VertexPosition");
+		m_pObjectSpaceToClipSpaceMatrixProgramUniform	= m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
+		m_pColorProgramUniform							= m_pProgram->GetUniform("Color");
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLScene::SceneRendererPass functions  ]
 //[-------------------------------------------------------]
-void SRPDebugWireframesFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
+void SRPDebugWireframesShaders::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
 	// Check current fill mode
 	if (cRenderer.GetRenderState(RenderState::FixedFillMode) == Fill::Solid) {
-		// Fixed functions support required
-		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
-		if (pFixedFunctions) {
+		// Get the shader language to use
+		String sUsedShaderLanguage = ShaderLanguage;
+		if (!sUsedShaderLanguage.GetLength())
+			sUsedShaderLanguage = cRenderer.GetDefaultShaderLanguage();
+
+		// Create the GPU program right now?
+		if (!m_pProgram || m_pProgram->GetShaderLanguage() != sUsedShaderLanguage) {
+			// If there's an previous instance of the program, destroy it first
+			if (m_pProgram) {
+				delete m_pProgram;
+				m_pProgram = nullptr;
+			}
+			if (m_pFragmentShader) {
+				delete m_pFragmentShader;
+				m_pFragmentShader = nullptr;
+			}
+			if (m_pVertexShader) {
+				delete m_pVertexShader;
+				m_pVertexShader = nullptr;
+			}
+			m_pPositionProgramAttribute						= nullptr;
+			m_pObjectSpaceToClipSpaceMatrixProgramUniform	= nullptr;
+			m_pColorProgramUniform							= nullptr;
+
+			// Get the shader language instance
+			PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sUsedShaderLanguage);
+			if (pShaderLanguage) {
+				// Shader source code
+				String sVertexShaderSourceCode;
+				String sFragmentShaderSourceCode;
+				if (sUsedShaderLanguage == "GLSL") {
+					#include "SRPDebugWireframesShaders_GLSL.h"
+					sVertexShaderSourceCode   = sDebugWireframes_GLSL_VS;
+					sFragmentShaderSourceCode = sDebugWireframes_GLSL_FS;
+				} else if (sUsedShaderLanguage == "Cg") {
+					#include "SRPDebugWireframesShaders_Cg.h"
+					sVertexShaderSourceCode   = sDebugWireframes_Cg_VS;
+					sFragmentShaderSourceCode = sDebugWireframes_Cg_FS;
+				}
+
+				// Create a vertex shader instance
+				m_pVertexShader = pShaderLanguage->CreateVertexShader();
+				if (m_pVertexShader) {
+					// Set the vertex shader source code
+					m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+				}
+
+				// Create a fragment shader instance
+				m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
+				if (m_pFragmentShader) {
+					// Set the fragment shader source code
+					m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+				}
+
+				// Create a program instance
+				m_pProgram = pShaderLanguage->CreateProgram();
+				if (m_pProgram) {
+					// Assign the created vertex and fragment shaders to the program
+					m_pProgram->SetVertexShader(m_pVertexShader);
+					m_pProgram->SetFragmentShader(m_pFragmentShader);
+
+					// Add our nark which will inform us as soon as the program gets dirty
+					m_pProgram->EventDirty.Connect(&EventHandlerDirty);
+
+					// Get attributes and uniforms
+					OnDirty(m_pProgram);
+				}
+			}
+		}
+
+		// Make our program to the current one
+		cRenderer.GetRendererContext().GetEffectManager().Use();
+		if (cRenderer.SetProgram(m_pProgram)) {
 			// Setup renderer states
-			cRenderer.GetRendererContext().GetEffectManager().Use();
 			const bool bUseDepth = (GetFlags() & UseDepth) != 0;
 			cRenderer.SetRenderState(RenderState::ZEnable,			 bUseDepth);
 			cRenderer.SetRenderState(RenderState::ZWriteEnable,		 bUseDepth);
 			cRenderer.SetRenderState(RenderState::BlendEnable,		 (LineColor.Get().a < 1.0f));
 			cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 			cRenderer.SetRenderState(RenderState::LineWidth,		 Tools::FloatToUInt32(LineWidth));
-			pFixedFunctions->SetColor(LineColor.Get());
 
-			// Set the initial world matrix
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, cCullQuery.GetSceneContainer().GetTransform().GetMatrix());
+			// Set the "Color" fragment shader parameter
+			if (m_pColorProgramUniform)
+				m_pColorProgramUniform->Set(LineColor.Get());
 
 			// Draw recursive from front to back
 			const uint32 nFixedFillModeBackup = cRenderer.GetRenderState(RenderState::FixedFillMode);

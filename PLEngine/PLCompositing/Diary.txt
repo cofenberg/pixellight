@@ -4,6 +4,7 @@
   required (the internally used draw helpers deal for us with this issue)
 - Moved the content from "SRPDebugContainerScissorRectanglesFixedFunctions" into "SRPDebugContainerScissorRectangles" because a special fixed functions or shader
   implementation is no longer required (the internally used draw helpers deal for us with this issue)
+- Added "SRPDebugWireframesShaders"
 
 
 
