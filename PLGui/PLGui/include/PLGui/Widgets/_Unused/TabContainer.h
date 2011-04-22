@@ -143,7 +143,7 @@ class TabContainer : public WindowContainer {
 		*  @param[in] nWidth
 		*    Tab width
 		*
-		*  @notes
+		*  @note
 		*    - If side is SideTop or SideBottom and StaticTabSize is *not* set, tabs have a floating size.
 		*      In that case, the width set by nWidth is the maximum size that a tab can have.
 		*    - If side is SideLeft or SideRight, or StaticTabSize is set, tabs have a static size.

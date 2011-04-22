@@ -262,9 +262,6 @@ class TextureBuffer : public Resource {
 		*  @brief
 		*    Returns whether or not the used texture buffer format is a depth buffer format
 		*
-		*  @param[in] nFormat
-		*    Texture buffer pixel format
-		*
 		*  @return
 		*    'true' if the used texture buffer format is a depth buffer format, else 'false'
 		*/
