@@ -75,12 +75,12 @@ class SNBitmap : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNBitmap, "PLScene", PLScene::SceneNode, "Abstract bitmap scene node")
-		pl_attribute(Material,		PLGeneral::String,		"Data/Effects/DefaultBitmap.plfx",			ReadWrite,	GetSet,	"Material to use",											"Type='Material Effect Image TextureAni'")
-		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Bitmap color",												"")
-		pl_attribute(TexelStart,	PLMath::Vector2,		PLMath::Vector2(0.0f, 0.0f),				ReadWrite,	GetSet,	"Bitmap texture source rectangle (0..1) start coordinate",	"")
-		pl_attribute(TexelEnd,		PLMath::Vector2,		PLMath::Vector2(1.0f, 1.0f),				ReadWrite,	GetSet,	"Bitmap texture source rectangle (0..1) end coordinate",	"")
+		pl_attribute(Material,		PLGeneral::String,		"Data/Effects/DefaultBitmap.plfx",	ReadWrite,	GetSet,	"Material to use",											"Type='Material Effect Image TextureAni'")
+		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4::White,			ReadWrite,	GetSet,	"Bitmap color",												"")
+		pl_attribute(TexelStart,	PLMath::Vector2,		PLMath::Vector2::Zero,				ReadWrite,	GetSet,	"Bitmap texture source rectangle (0..1) start coordinate",	"")
+		pl_attribute(TexelEnd,		PLMath::Vector2,		PLMath::Vector2::One,				ReadWrite,	GetSet,	"Bitmap texture source rectangle (0..1) end coordinate",	"")
 		// Overwritten SceneNode variables
-		pl_attribute(Flags,			pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,	"Flags",													"")
+		pl_attribute(Flags,			pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",													"")
 	pl_class_end
 
 

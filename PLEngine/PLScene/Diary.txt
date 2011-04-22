@@ -1,3 +1,9 @@
+>> 22.04.2011
+[CO]
+- "SNBitmap3D" is now using "PLRenderer::DrawHelpers::DrawImage()" and is therefore finally fixed functions independent
+
+
+
 >> 17.02.2011
 [CO]
 - Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin project.

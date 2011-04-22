@@ -32,15 +32,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRenderer {
-	class IndexBuffer;
-	class VertexBuffer;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScene {
@@ -66,7 +57,7 @@ class SNBitmap3D : public SNBitmap {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNBitmap3D, "PLScene", PLScene::SNBitmap, "3D bitmap scene node")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(PositionOffset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Position offset (scene node space)",	"")
+		pl_attribute(PositionOffset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	GetSet,	"Position offset (scene node space)",	"")
 	pl_class_end
 
 
@@ -76,10 +67,6 @@ class SNBitmap3D : public SNBitmap {
 	public:
 		PLS_API const PLMath::Vector3 &GetPositionOffset() const;
 		PLS_API void SetPositionOffset(const PLMath::Vector3 &vValue);
-		PLS_API virtual void SetColor(const PLGraphics::Color4 &cValue);		// From SNBitmap
-		PLS_API virtual void SetTexelStart(const PLMath::Vector2 &vValue);	// From SNBitmap
-		PLS_API virtual void SetTexelEnd(const PLMath::Vector2 &vValue);		// From SNBitmap
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);				// From SceneNode
 
 
 	//[-------------------------------------------------------]
@@ -105,24 +92,6 @@ class SNBitmap3D : public SNBitmap {
 	private:
 		/**
 		*  @brief
-		*    Create the bitmap shape
-		*
-		*  @note
-		*    - Creates the index and vertex buffer
-		*/
-		void CreateShape();
-
-		/**
-		*  @brief
-		*    Updates texture coordinates and color of the vertex buffer
-		*
-		*  @note
-		*    - Vertex buffer MUST be valid AND locked!
-		*/
-		void UpdateTextureCoordinatesAndColor();
-
-		/**
-		*  @brief
 		*    Draws the bitmap shape
 		*
 		*  @param[in] cRenderer
@@ -137,12 +106,7 @@ class SNBitmap3D : public SNBitmap {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLMath::Vector3				 m_vPositionOffset;				/**< Position offset (scene node space) */
-		PLRenderer::IndexBuffer		*m_pIndexBuffer;				/**< Index buffer, can be a null pointer */
-		PLRenderer::VertexBuffer	*m_pVertexBuffer;				/**< Vertex buffer, can be a null pointer */
-		bool						 m_bUpdatePositionOffset;		/**< Update the position data of the vertex buffer? */
-		bool						 m_bUpdateTextureCoordinates;	/**< Update the texture coordinate data of the vertex buffer? */
-		bool						 m_bUpdateColor;				/**< Update the color data of the vertex buffer? */
+		PLMath::Vector3 m_vPositionOffset;	/**< Position offset (scene node space) */
 
 
 	//[-------------------------------------------------------]
