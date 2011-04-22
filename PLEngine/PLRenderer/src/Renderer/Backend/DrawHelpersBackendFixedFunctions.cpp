@@ -236,6 +236,125 @@ void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, 
 	}
 }
 
+void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, SamplerStates &cSamplerStates, const Vector3 &vPos, const Matrix4x4 &mObjectSpaceToClipSpace, const Vector2 &vSize,
+												 const Color4 &cColor, float fAlphaReference, const Vector2 &vTextureCoordinate, const Vector2 &vTextureCoordinateSize, const Matrix4x4 &mTexture)
+{
+	// Create vertex buffer
+	if (CreateTempBuffes()) {
+		// Get the image size
+		Vector2 vImageSize = vSize;
+		if (vImageSize.IsNull()) {
+			switch (cTextureBuffer.GetType()) {
+				case Resource::TypeTextureBuffer2D:
+					vImageSize.x = static_cast<float>(static_cast<TextureBuffer2D&>(cTextureBuffer).GetSize().x);
+					vImageSize.y = static_cast<float>(static_cast<TextureBuffer2D&>(cTextureBuffer).GetSize().y);
+					break;
+
+				case Resource::TypeTextureBufferRectangle:
+					vImageSize.x = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().x);
+					vImageSize.y = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().y);
+					break;
+
+				default:
+					return;	// Error, must be 2D or rectangle!
+			}
+		}
+
+		// Setup the vertex buffer
+		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
+			// Vertex 0
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vImageSize.x;
+			pfVertex[1] = vPos.y + vImageSize.y;
+			pfVertex[2] = vPos.z;
+			m_pTempVertexBuffer->SetColor(0, cColor);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::TexCoord));
+			pfVertex[0] = vTextureCoordinate.x + vTextureCoordinateSize.x;
+			pfVertex[1] = vTextureCoordinate.y;
+
+			// Vertex 1
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y + vImageSize.y;
+			pfVertex[2] = vPos.z;
+			m_pTempVertexBuffer->SetColor(1, cColor);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::TexCoord));
+			pfVertex[0] = vTextureCoordinate.x;
+			pfVertex[1] = vTextureCoordinate.y;
+
+			// Vertex 2
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vImageSize.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = vPos.z;
+			m_pTempVertexBuffer->SetColor(2, cColor);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::TexCoord));
+			pfVertex[0] = vTextureCoordinate.x + vTextureCoordinateSize.x;
+			pfVertex[1] = vTextureCoordinate.y + vTextureCoordinateSize.y;
+
+			// Vertex 3
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = vPos.z;
+			m_pTempVertexBuffer->SetColor(3, cColor);
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::TexCoord));
+			pfVertex[0] = vTextureCoordinate.x;
+			pfVertex[1] = vTextureCoordinate.y + vTextureCoordinateSize.y;
+
+			// Unlock the vertex buffer
+			m_pTempVertexBuffer->Unlock();
+		}
+
+		// Fixed functions
+		FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
+		if (pFixedFunctions) {
+			// Backup matrices
+			const Matrix4x4 mProjectionBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
+			const Matrix4x4 mViewBackup       = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
+			const Matrix4x4 mWorldBackup      = pFixedFunctions->GetTransformState(FixedFunctions::Transform::World);
+
+			// Set transform - we just receive one final matrix from the user, so set projection and view to identity, and world to the given matrix
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, Matrix4x4::Identity);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       Matrix4x4::Identity);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World,      mObjectSpaceToClipSpace);
+
+			// Setup alpha test
+			if (fAlphaReference < 1.0f) {
+				// Alpha test is enabled
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable,    true);
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestFunction,  Compare::GreaterEqual);
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestReference, Tools::FloatToUInt32(fAlphaReference));
+			} else {
+				// Alpha test is disabled
+				pFixedFunctions->SetRenderState(FixedFunctions::RenderState::AlphaTestEnable, false);
+			}
+
+			// Set vertex buffer
+			pFixedFunctions->SetVertexBuffer(m_pTempVertexBuffer);
+
+			// Set the texture buffer
+			static const int TextureUnit = 0;
+			m_pRenderer->SetTextureBuffer(TextureUnit, &cTextureBuffer);
+
+			// Set texture matrix
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Texture0, mTexture);
+
+			// Set sampler states
+			for (uint32 nState=0; nState<Sampler::Number; nState++)
+				m_pRenderer->SetSamplerState(TextureUnit, static_cast<Sampler::Enum>(nState), cSamplerStates.Get(static_cast<Sampler::Enum>(nState)));
+
+			// Draw image
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+			// Restore matrices
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjectionBackup);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World,      mWorldBackup);
+		}
+	}
+}
+
 void DrawHelpersBackendFixedFunctions::DrawPoint(const Color4 &cColor, const Vector2 &vPosition, float fSize)
 {
 	// Create vertex buffer

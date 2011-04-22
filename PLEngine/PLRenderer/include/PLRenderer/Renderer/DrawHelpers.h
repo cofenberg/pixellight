@@ -282,6 +282,38 @@ class DrawHelpers {
 		virtual void DrawImage(TextureBuffer &cTextureBuffer, SamplerStates &cSamplerStates, const PLMath::Vector2 &vPos, const PLMath::Vector2 &vSize = PLMath::Vector2::Zero, const PLGraphics::Color4 &cColor = PLGraphics::Color4::White,
 							   float fAlphaReference = 1.0f, const PLMath::Vector2 &vTextureCoordinate = PLMath::Vector2::Zero, const PLMath::Vector2 &vTextureCoordinateSize = PLMath::Vector2::One, const PLMath::Matrix4x4 &mTexture = PLMath::Matrix4x4::Identity) = 0;
 
+		/**
+		*  @brief
+		*    Draws an image using a given 3D position
+		*
+		*  @param[in] cTextureBuffer
+		*    Texture buffer holding the image to draw
+		*  @param[in] cSamplerStates
+		*    Sampler states
+		*  @param[in] vPos
+		*    Image position
+		*  @param[in] mObjectSpaceToClipSpace
+		*    Object space to clip space matrix
+		*  @param[in] vSize
+		*    Image size
+		*  @param[in] cColor
+		*    Color to use
+		*  @param[in] fAlphaReference
+		*    Alpha test reference value (0-1), all texels below the value will be discarded, if >= 1, no alpha test will be performed
+		*  @param[in] vTextureCoordinate
+		*    Normalized texture coordinate (0..1)
+		*  @param[in] vTextureCoordinateSize
+		*    Normalized texture coordinate size (0..1)
+		*  @param[in] mTexture
+		*    Texture matrix
+		*
+		*  @note
+		*    - The image is drawn on the x/y plane and 'looks' into the positive z axis
+		*    - If vSize = (0 0), the image size is used
+		*/
+		virtual void DrawImage(TextureBuffer &cTextureBuffer, SamplerStates &cSamplerStates, const PLMath::Vector3 &vPos, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vSize = PLMath::Vector2::Zero, const PLGraphics::Color4 &cColor = PLGraphics::Color4::White,
+							   float fAlphaReference = 1.0f, const PLMath::Vector2 &vTextureCoordinate = PLMath::Vector2::Zero, const PLMath::Vector2 &vTextureCoordinateSize = PLMath::Vector2::One, const PLMath::Matrix4x4 &mTexture = PLMath::Matrix4x4::Identity) = 0;
+
 
 		//[-------------------------------------------------------]
 		//[ Primitive                                             ]
