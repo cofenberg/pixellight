@@ -1,3 +1,6 @@
+Changes in PixelLight 0.9.7-R1 (not yet released)
+
+
 Changes in PixelLight 0.9.6-R1 (released on April 23, 2011)
 - Feature: Added new plugin "libRocket_PL" which integrates the free open source HTML/CSS game interface middleware "libRocket" (http://librocket.com/) into PixelLight
 - Feature: Added new demo "PLDemo_libRocket" showing how to use the new "libRocket_PL"-project within C++ projects
