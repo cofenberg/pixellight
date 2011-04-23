@@ -128,6 +128,7 @@ shortcut("Dir_PLPhysics", "include\\PLPhysics\\");
 shortcut("Dir_PLEngine", "include\\PLEngine\\");
 shortcut("Dir_PLParticleGroups", "include\\PLParticleGroups\\");
 shortcut("Dir_SPARK_PL", "include\\SPARK_PL\\");
+shortcut("Dir_libRocket_PL", "include\\libRocket_PL\\");
 // Demos
 shortcut("Dir_Demos", "Demos\\");
 shortcut("Dir_Demos_Bin", "Demos\\Bin\\");
