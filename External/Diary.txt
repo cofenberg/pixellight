@@ -1,3 +1,11 @@
+>> 26.04.2011
+[CO]
+- Added Lua
+- Added Python
+- Added V8 (JavaScript engine)
+
+
+
 >> 17.04.2011
 [CO]
 - Autodesk 3ds Max 2012 externals added

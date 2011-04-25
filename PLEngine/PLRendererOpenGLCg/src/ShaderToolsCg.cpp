@@ -136,4 +136,4 @@ void ShaderToolsCg::CgErrorCallback()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // OpenGL
+} // PLRendererOpenGLCg

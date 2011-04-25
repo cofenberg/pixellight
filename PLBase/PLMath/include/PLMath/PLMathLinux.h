@@ -41,24 +41,16 @@
 	#endif
 
 	// To export explicit template instanciations
-	#define PLMATHAPI_TEMPLATE
-
-	// To export RTTI elements
-//	#define PLMATH_RTTI_EXPORT 1
+	#define PLMATH_TEMPLATE
 #else
 	// To import classes, methods and variables
 	#define PLMATH_API
 
 	// To import explicit template instanciations
-	#define PLMATHAPI_TEMPLATE extern
-
-	// To import RTTI elements
-//	#define PLMATH_RTTI_EXPORT 0
+	#define PLMATH_TEMPLATE extern
 #endif
 
-
-// [DEBUG]
-// To export RTTI elements
+// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLMATH_RTTI_EXPORT 1
 
 

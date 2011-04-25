@@ -1,0 +1,11 @@
+﻿>> 26.04.2011
+[CO]
+- Compiled 32 bit versions of Lua, Python and V8 (JavaScript engine) for Windows and Linux. Configurated everything so that the script
+  projects can be compiled and are able to run.
+  Next stop: Concrete script implementations :D
+
+
+
+>> 25.04.2011
+[CO]
+- Started the PLScript project. As usual there's a null backend and I'll implement backends for Lua, JavaScript and Python in parallel.

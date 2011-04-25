@@ -36,7 +36,7 @@
 	#define PLMATH_API __declspec(dllexport)
 
 	// To export explicit template instanciations
-	#define PLMATHAPI_TEMPLATE
+	#define PLMATH_TEMPLATE
 
 	// To export RTTI elements
 	#define PLMATH_RTTI_EXPORT 1
@@ -45,7 +45,7 @@
 	#define PLMATH_API __declspec(dllimport)
 
 	// To import explicit template instanciations
-	#define PLMATHAPI_TEMPLATE extern
+	#define PLMATH_TEMPLATE extern
 
 	// To import RTTI elements
 	#define PLMATH_RTTI_EXPORT 0

@@ -105,4 +105,4 @@ void ShaderToolsGLSL::WriteProgramInformationIntoLog(GLuint nOpenGLESProgram)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // OpenGL
+} // PLRendererOpenGLES
