@@ -414,7 +414,7 @@ uint32 FileLinux::GetSize() const
 	// Check file pointer
 	if (m_pFile) {
 		// Get file size
-		const int32 nPos = Tell();
+		const int32 nPos = ftell(m_pFile);
 		fseek(m_pFile, 0, SEEK_END);
 		const int32 nSize = ftell(m_pFile);
 		fseek(m_pFile, nPos, SEEK_SET);

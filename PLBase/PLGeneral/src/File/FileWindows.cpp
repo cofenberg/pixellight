@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <io.h>
 #include <stdio.h>
 #include "PLGeneral/PLGeneralWindowsIncludes.h"
 #include "PLGeneral/File/FileSearchWindows.h"
@@ -435,12 +436,17 @@ uint32 FileWindows::GetSize() const
 {
 	// Check file pointer
 	if (m_pFile) {
+		/* // Without using special Windows API functions the implementaton of this method would be:
 		// Get file size
-		const int32 nPos = Tell();
+		const int32 nPos = ftell(m_pFile);
 		fseek(m_pFile, 0, SEEK_END);
 		const int32 nSize = ftell(m_pFile);
 		fseek(m_pFile, nPos, SEEK_SET);
 		return nSize;
+		*/
+
+		// Get the file descriptor associated with our stream and then request the length of the file
+		return _filelength(_fileno(m_pFile));
 	} else {
 		// Error!
 		return 0;
