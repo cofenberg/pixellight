@@ -188,6 +188,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "40Script", "PLSamples\40Scr
 		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptAngelScript", "PLBase\PLScriptAngelScript\PLScriptAngelScript.vcxproj", "{384D6889-29E9-4996-A142-0F1A8BE5513A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1174,6 +1176,17 @@ Global
 		{C2C34ED6-8009-4EC5-A654-98F813E5283C}.Release|Win32.ActiveCfg = Release|Win32
 		{C2C34ED6-8009-4EC5-A654-98F813E5283C}.Release|Win32.Build.0 = Release|Win32
 		{C2C34ED6-8009-4EC5-A654-98F813E5283C}.Release|x64.ActiveCfg = Release|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|Win32.Build.0 = Debug|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|x64.ActiveCfg = Debug|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|x64.Build.0 = Debug|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Hybrid|Win32.ActiveCfg = Release|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Hybrid|x64.ActiveCfg = Release|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Hybrid|x64.Build.0 = Release|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|Win32.ActiveCfg = Release|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|Win32.Build.0 = Release|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|x64.ActiveCfg = Release|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

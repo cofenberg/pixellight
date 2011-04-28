@@ -1,3 +1,9 @@
+>> 28.04.2011
+[CO]
+- Added AngelScript
+
+
+
 >> 26.04.2011
 [CO]
 - Added Lua

@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptPython", "..\PLScri
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptV8", "..\PLScriptV8\PLScriptV8.vcxproj", "{2FA707BB-2C35-409D-81A9-C00976786D0F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptAngelScript", "..\PLScriptAngelScript\PLScriptAngelScript.vcxproj", "{384D6889-29E9-4996-A142-0F1A8BE5513A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +60,14 @@ Global
 		{2FA707BB-2C35-409D-81A9-C00976786D0F}.Release|Win32.Build.0 = Release|Win32
 		{2FA707BB-2C35-409D-81A9-C00976786D0F}.Release|x64.ActiveCfg = Release|x64
 		{2FA707BB-2C35-409D-81A9-C00976786D0F}.Release|x64.Build.0 = Release|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|Win32.Build.0 = Debug|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|x64.ActiveCfg = Debug|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Debug|x64.Build.0 = Debug|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|Win32.ActiveCfg = Release|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|Win32.Build.0 = Release|Win32
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|x64.ActiveCfg = Release|x64
+		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

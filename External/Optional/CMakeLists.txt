@@ -34,6 +34,7 @@ add_subdirectory(libRocket)
 add_subdirectory(Lua)
 add_subdirectory(V8)
 add_subdirectory(Python)
+add_subdirectory(AngelScript)
 
 ##################################################
 ## Dependencies

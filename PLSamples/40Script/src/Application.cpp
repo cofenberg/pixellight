@@ -100,4 +100,11 @@ void Application::Main()
 		Script *pScript = pScriptManager->Create("Python");
 		delete pScript;
 	}
+
+	// AngelScript
+	if (pScriptManager->IsSupported("AngelScript")) {
+		System::GetInstance()->GetConsole().Print("Using AngelScript script language\n");
+		Script *pScript = pScriptManager->Create("AngelScript");
+		delete pScript;
+	}
 }

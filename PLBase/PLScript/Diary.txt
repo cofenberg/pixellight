@@ -1,4 +1,12 @@
-﻿>> 26.04.2011
+﻿>> 28.04.2011
+[CO]
+- As requested within the PixelLight forum at: http://dev.pixellight.org/forum/viewtopic.php?f=3&t=45
+  ... I'll also added a script backend for AngelScript (like the others, just a skeleton right now!). Ok, four script languages should really
+  be enough to get a good script interface.
+
+
+
+>> 26.04.2011
 [CO]
 - Compiled 32 bit versions of Lua, Python and V8 (JavaScript engine) for Windows and Linux. Configurated everything so that the script
   projects can be compiled and are able to run.
