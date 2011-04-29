@@ -2,6 +2,10 @@
 [CO]
 - Moved "OpenFile()" from "Loader" into "LoadableManager" because it's kind of universal
 - Moved "LoadStringFromFile()" from "PLRenderer::EffectPass" into "LoadableManager" because it's kind of universal
+- "SignatureString": "PLGeneral::String GetSignatureID()" constructed internally the signature string on every call. But during runtime, this
+  must only be done once and then the signature can just be reused. So, the internal signature string is now static to enhance performance. I
+  double-checked the change, used the debugger a few times on it to see and think through the performed steps and tested the existing PixelLight
+  projects as well. It looks like that this change has no side effects.
 
 
 
