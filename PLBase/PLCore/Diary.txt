@@ -1,3 +1,9 @@
+>> 29.04.2011
+[CO]
+- Moved "OpenFile()" from "Loader" into "LoadableManager" because it's kind of universal
+
+
+
 >> 10.04.2011
 [CO]
 - "ConsoleApplication::OnInitData()" is now using English as the default language instead of the current system locale, this makes things more predictable

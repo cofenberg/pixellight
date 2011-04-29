@@ -369,6 +369,22 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*/
 		PLCORE_API bool ScanPackages(const PLGeneral::String &sPath, const PLGeneral::String &sExtension = "*.zip");
 
+		/**
+		*  @brief
+		*    Opens a file by using base directories
+		*
+		*  @param[in] cFile
+		*    File object
+		*  @param[in] sFilename
+		*    Filename of the file to open
+		*  @param[in] bCreate
+		*    Create the file if it doesn't exist?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLCORE_API bool OpenFile(PLGeneral::File &cFile, const PLGeneral::String &sFilename, bool bCreate = false) const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]

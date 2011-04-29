@@ -65,34 +65,8 @@ Rocket::Core::FileHandle FileInterfacePL::Open(const Rocket::Core::String& path)
 		// Create the file object
 		File *pFile = new File();
 
-		// Because absolute filenames can be accessed fastest by the file system, we first give
-		// the file system an absolute filename which is hopefully the correct one... if
-		// not, we must search the file which is quite slow...
-		String sUrl = String::FromUTF8(path.CString());
-		Url cUrl(sUrl);
-		if (cUrl.IsAbsolute()) {
-			// The given filename is already absolute! :)
-			pFile->Assign(sUrl);
-		} else {
-			// Loop through all base directories
-			for (uint32 nBaseDir=0; nBaseDir<LoadableManager::GetInstance()->GetNumOfBaseDirs() && !pFile->IsFile(); nBaseDir++) {
-				String sBaseDir = LoadableManager::GetInstance()->GetBaseDir(nBaseDir);
-
-				// Construct absolute filename and check file
-				String sAbsFilename = sBaseDir + sUrl;
-				pFile->Assign(sAbsFilename);
-
-				// Is this a correct file?
-				if (!pFile->IsFile()) {
-					// Try to open the file directly
-					sAbsFilename = sBaseDir + sUrl;
-					pFile->Assign(sAbsFilename);
-				}
-			}
-		}
-
 		// Try to open the file
-		if (pFile->Open(File::FileRead))
+		if (LoadableManager::GetInstance()->OpenFile(*pFile, String::FromUTF8(path.CString()), false))
 			return reinterpret_cast<Rocket::Core::FileHandle>(pFile); // Return opend file object
 
 		// Cleanup on error
