@@ -419,7 +419,7 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 		ShaderLanguage *pShaderLanguage = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
 			// Load in the shader source code
-			const String sShaderSourceCode = LoadStringFromFile(sFilename);
+			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
 				m_pVertexShader = pShaderLanguage->CreateVertexShader();
@@ -463,7 +463,7 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 		ShaderLanguage *pShaderLanguage = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
 			// Load in the shader source code
-			const String sShaderSourceCode = LoadStringFromFile(sFilename);
+			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
 				m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
@@ -549,29 +549,6 @@ EffectPass::~EffectPass()
 		delete m_pVertexShader;
 	if (m_pFragmentShader)
 		delete m_pFragmentShader;
-}
-
-/**
-*  @brief
-*    Loads in a string by using a file
-*/
-String EffectPass::LoadStringFromFile(const String &sFilename) const
-{
-	// Open the file
-	File cFile;
-	if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
-		// Load in the file, we also take care of the terminating zero (\0)
-		const uint32 nFileSize = cFile.GetSize();
-		char *pData = new char[nFileSize + 1];
-		cFile.Read(pData, nFileSize, 1);
-		pData[nFileSize] = '\0';
-
-		// The string class takes over the control of the memory
-		return String(pData, false, nFileSize);
-	}
-
-	// Error!
-	return "";
 }
 
 

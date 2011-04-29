@@ -1,6 +1,7 @@
 >> 29.04.2011
 [CO]
 - Moved "OpenFile()" from "Loader" into "LoadableManager" because it's kind of universal
+- Moved "LoadStringFromFile()" from "PLRenderer::EffectPass" into "LoadableManager" because it's kind of universal
 
 
 

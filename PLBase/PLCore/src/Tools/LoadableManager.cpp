@@ -448,6 +448,21 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead);
 }
 
+/**
+*  @brief
+*    Loads in a string by using a file
+*/
+String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFormat nFormat) const
+{
+	// Open the file
+	File cFile;
+	if (OpenFile(cFile, sFilename, false))
+		return cFile.GetContentAsString();
+
+	// Error!
+	return "";
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

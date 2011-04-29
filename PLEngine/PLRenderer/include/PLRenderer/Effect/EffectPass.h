@@ -313,18 +313,6 @@ class EffectPass {
 		*/
 		~EffectPass();
 
-		/**
-		*  @brief
-		*    Loads in a string by using a file
-		*
-		*  @param[in] sFilename
-		*    Name of the file to read the string from
-		*
-		*  @return
-		*    The read string, empty string on error
-		*/
-		PLGeneral::String LoadStringFromFile(const PLGeneral::String &sFilename) const;
-
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
