@@ -410,6 +410,22 @@ class File : public FileObject {
 		*/
 		PLGENERAL_API const uint8 *GetMemoryBuffer() const;
 
+		/**
+		*  @brief
+		*    Returns the complete content of the file as string
+		*
+		*  @param[in] nFormat
+		*    String format, "String::ASCII" or "String::Unicode" (not recommended!)
+		*
+		*  @return
+		*    The complete file content as string, empty string on error or if the file is just empty
+		*
+		*  @note
+		*    - It's not recommended to read in Unicode by using this method because internally
+		*      wchar_t is used and this data type has not the same size on every platform
+		*/
+		PLGENERAL_API String GetContentAsString(String::EFormat nFormat = String::ASCII);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]

@@ -1,3 +1,9 @@
+>> 29.04.2011
+[CO]
+- Added "File::GetContentAsString()"
+
+
+
 >> 28.04.2011
 [CO]
 - "FileWindows::GetSize()" is now using the MS Windows API functions "_filelength" and "_fileno"

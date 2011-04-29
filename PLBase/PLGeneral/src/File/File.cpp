@@ -456,6 +456,36 @@ const uint8 *File::GetMemoryBuffer() const
 	return m_pMemBuf;
 }
 
+/**
+*  @brief
+*    Returns the complete content of the file as string
+*/
+String File::GetContentAsString(String::EFormat nFormat)
+{
+	// Get the file size
+	const uint32 nFileSize = GetSize();
+
+	// ASCII or Unicode?
+	if (nFormat == String::ASCII) {
+		// We also take care of the terminating zero (\0)
+		char *pData = new char[nFileSize + 1];
+		Read(pData, nFileSize, 1);
+		pData[nFileSize] = '\0';
+
+		// The string class takes over the control of the memory
+		return String(pData, false, nFileSize);
+	} else {
+		// We also take care of the terminating zero (\0)
+		const uint32 nNumOfCharacters = nFileSize/sizeof(wchar_t);
+		wchar_t *pData = new wchar_t[nNumOfCharacters + 1];
+		Read(pData, nFileSize, 1);
+		pData[nFileSize] = L'\0';
+
+		// The string class takes over the control of the memory
+		return String(pData, false, nFileSize);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
