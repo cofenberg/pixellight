@@ -118,4 +118,5 @@ void Application::Main()
 	// Run some scripts
 	DoCalculation("Data/Scripts/Calculate.as", 42.0f, 5.0f);
 	DoCalculation("Data/Scripts/Calculate.lua", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Calculate.js", 42.0f, 5.0f);
 }

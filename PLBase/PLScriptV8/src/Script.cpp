@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <v8.h>
+#include <PLGeneral/Log/Log.h>
 #include "PLScriptV8/Script.h"
 
 
@@ -49,32 +49,6 @@ pl_implement_class(Script)
 */
 Script::Script()
 {
-	// [TODO] This is just a very first test code so we're linking against the V8 library
-	// Create a stack-allocated handle scope
-	v8::HandleScope cHandleScope;
-
-	// Create a new context
-	v8::Persistent<v8::Context> cContext = v8::Context::New();
-
-	// Enter the created context for compiling and running the hello world script
-	v8::Context::Scope cContextScope(cContext);
-
-	// Create a string containing the JavaScript source code
-	v8::Handle<v8::String> cSource = v8::String::New("'Hello' + ', World!'");
-
-	// Compile the source code
-	v8::Handle<v8::Script> cScript = v8::Script::Compile(cSource);
-
-	// Run the script to get the result
-	v8::Handle<v8::Value> cResult = cScript->Run();
-
-	// Dispose the persistent context
-	cContext.Dispose();
-
-	// Convert the result to an ASCII string and print it
-	v8::String::AsciiValue cAscii(cResult);
-	char *pszTest = *cAscii;
-	int ii = 0;
 }
 
 /**
@@ -83,6 +57,8 @@ Script::Script()
 */
 Script::~Script()
 {
+	// Clear the script
+	Clear();
 }
 
 
@@ -96,10 +72,29 @@ String Script::GetSourceCode() const
 
 bool Script::SetSourceCode(const String &sSourceCode)
 {
+	// Clear the previous script
+	Clear();
+
 	// Backup the given source code
 	m_sSourceCode = sSourceCode;
 
-	// [TODO] Implement me
+	// Create a stack-allocated handle scope
+	v8::HandleScope cHandleScope;
+
+	// Create a new context
+	m_cV8Context = v8::Context::New();
+
+	// Enter the created context for compiling and running the hello world script
+	v8::Context::Scope cContextScope(m_cV8Context);
+
+	// Create a string containing the JavaScript source code
+	v8::Handle<v8::String> cSource = v8::String::New(sSourceCode);
+
+	// Compile the source code
+	v8::Handle<v8::Script> cScript = v8::Script::Compile(cSource);
+
+	// Run the script to get the result
+	v8::Handle<v8::Value> cResult = cScript->Run();
 
 	// Done
 	return true;
@@ -107,7 +102,25 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
-	// [TODO] Implement me
+	// Create a stack-allocated handle scope
+	v8::HandleScope cHandleScope;
+
+	// Enter the created context for compiling and running the hello world script
+	v8::Context::Scope cContextScope(m_cV8Context);
+
+	// Get the V8 function
+	v8::Handle<v8::Value> cV8Value = m_cV8Context->Global()->Get(v8::String::New(sFunctionName));
+	if (cV8Value->IsFunction()) {
+		// Backup the name of the current function (we may need it for error log output)
+		m_sCurrentFunction = sFunctionName;
+
+		// Clear the V8 arguments list
+		m_lstArguments.Clear();
+	} else {
+		// Error!
+		m_sCurrentFunction = "";
+		LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found");
+	}
 
 	// Done
 	return true;
@@ -115,32 +128,50 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 
 void Script::PushArgument(uint8 nValue)
 {
-	// [TODO] Implement me
+	m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(uint16 nValue)
 {
-	// [TODO] Implement me
+	m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(uint32 nValue)
 {
-	// [TODO] Implement me
+	m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(float fValue)
 {
-	// [TODO] Implement me
+	m_lstArguments.Add(fValue);
 }
 
 void Script::PushArgument(double fValue)
 {
-	// [TODO] Implement me
+	m_lstArguments.Add(fValue);
 }
 
 bool Script::EndCall()
 {
-	// [TODO] Implement me
+	// Create a stack-allocated handle scope
+	v8::HandleScope cHandleScope;
+
+	// Enter the created context for compiling and running the hello world script
+	v8::Context::Scope cContextScope(m_cV8Context);
+
+	// Get the V8 function
+	v8::Handle<v8::Function> cV8Function = v8::Handle<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
+	if (cV8Function->IsFunction()) {
+		if (m_lstArguments.GetNumOfElements()) {
+			v8::Handle<v8::Value> *pcArguments = new v8::Handle<v8::Value>[m_lstArguments.GetNumOfElements()]();
+			for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
+				pcArguments[i] = v8::Number::New(m_lstArguments[i]);
+			m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), m_lstArguments.GetNumOfElements(), pcArguments);
+			delete [] pcArguments;
+		} else {
+			m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), 0, nullptr);
+		}
+	}
 
 	// Done
 	return true;
@@ -148,32 +179,27 @@ bool Script::EndCall()
 
 void Script::GetReturn(uint8 &nValue)
 {
-	// [TODO] Implement me
-	nValue = 0;
+	nValue = m_cV8CurrentResult->IsUint32() ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
 void Script::GetReturn(uint16 &nValue)
 {
-	// [TODO] Implement me
-	nValue = 0;
+	nValue = m_cV8CurrentResult->IsUint32() ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
 void Script::GetReturn(uint32 &nValue)
 {
-	// [TODO] Implement me
-	nValue = 0;
+	nValue = m_cV8CurrentResult->IsUint32() ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
 void Script::GetReturn(float &fValue)
 {
-	// [TODO] Implement me
-	fValue = 0.0f;
+	fValue = m_cV8CurrentResult->IsNumber() ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
 }
 
 void Script::GetReturn(double &fValue)
 {
-	// [TODO] Implement me
-	fValue = 0.0;
+	fValue = m_cV8CurrentResult->IsNumber() ? m_cV8CurrentResult->NumberValue() : 0.0;
 }
 
 
@@ -197,6 +223,17 @@ Script &Script::operator =(const Script &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
+}
+
+/**
+*  @brief
+*    Clears the script
+*/
+void Script::Clear()
+{
+	// Dispose the persistent context
+	if (!m_cV8Context.IsEmpty())
+		m_cV8Context.Dispose();
 }
 
 
