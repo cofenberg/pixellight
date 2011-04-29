@@ -33,6 +33,9 @@
     <ClInclude Include="include\PLScriptPython\PythonContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLScriptPython\Python.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

@@ -54,6 +54,7 @@ class Script : public PLScript::Script {
 	pl_class(PLSCRIPTV8_RTTI_EXPORT, Script, "PLScriptV8", PLScript::Script, "V8 (JavaScript engine, http://code.google.com/p/v8/) script implementation")
 		pl_properties
 			pl_property("Language", "JavaScript")
+			pl_property("Formats",  "js,JS")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
@@ -74,6 +75,26 @@ class Script : public PLScript::Script {
 		*    Destructor
 		*/
 		PLSCRIPTV8_API virtual ~Script();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLScript::Script functions             ]
+	//[-------------------------------------------------------]
+	public:
+		PLSCRIPTV8_API virtual PLGeneral::String GetSourceCode() const;
+		PLSCRIPTV8_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTV8_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint8 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint16 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint32 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(float fValue);
+		PLSCRIPTV8_API virtual void PushArgument(double fValue);
+		PLSCRIPTV8_API virtual bool EndCall();
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint8 &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint16 &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint32 &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(float &fValue);
+		PLSCRIPTV8_API virtual void GetReturn(double &fValue);
 
 
 	//[-------------------------------------------------------]
@@ -100,6 +121,14 @@ class Script : public PLScript::Script {
 		*    Reference to this instance
 		*/
 		Script &operator =(const Script &cSource);
+
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLGeneral::String m_sSourceCode;	/**< Script source code */
 
 
 };

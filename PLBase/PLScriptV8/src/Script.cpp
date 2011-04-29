@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 namespace PLScriptV8 {
 
 
@@ -82,6 +83,97 @@ Script::Script()
 */
 Script::~Script()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLScript::Script functions             ]
+//[-------------------------------------------------------]
+String Script::GetSourceCode() const
+{
+	return m_sSourceCode;
+}
+
+bool Script::SetSourceCode(const String &sSourceCode)
+{
+	// Backup the given source code
+	m_sSourceCode = sSourceCode;
+
+	// [TODO] Implement me
+
+	// Done
+	return true;
+}
+
+bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
+{
+	// [TODO] Implement me
+
+	// Done
+	return true;
+}
+
+void Script::PushArgument(uint8 nValue)
+{
+	// [TODO] Implement me
+}
+
+void Script::PushArgument(uint16 nValue)
+{
+	// [TODO] Implement me
+}
+
+void Script::PushArgument(uint32 nValue)
+{
+	// [TODO] Implement me
+}
+
+void Script::PushArgument(float fValue)
+{
+	// [TODO] Implement me
+}
+
+void Script::PushArgument(double fValue)
+{
+	// [TODO] Implement me
+}
+
+bool Script::EndCall()
+{
+	// [TODO] Implement me
+
+	// Done
+	return true;
+}
+
+void Script::GetReturn(uint8 &nValue)
+{
+	// [TODO] Implement me
+	nValue = 0;
+}
+
+void Script::GetReturn(uint16 &nValue)
+{
+	// [TODO] Implement me
+	nValue = 0;
+}
+
+void Script::GetReturn(uint32 &nValue)
+{
+	// [TODO] Implement me
+	nValue = 0;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	// [TODO] Implement me
+	fValue = 0.0f;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	// [TODO] Implement me
+	fValue = 0.0;
 }
 
 

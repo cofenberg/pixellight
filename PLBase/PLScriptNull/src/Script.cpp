@@ -29,6 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 namespace PLScriptNull {
 
 
@@ -55,6 +56,97 @@ Script::Script()
 */
 Script::~Script()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLScript::Script functions             ]
+//[-------------------------------------------------------]
+String Script::GetSourceCode() const
+{
+	return m_sSourceCode;
+}
+
+bool Script::SetSourceCode(const String &sSourceCode)
+{
+	// Backup the given source code
+	m_sSourceCode = sSourceCode;
+
+	// Nothing to do in here
+
+	// Done
+	return true;
+}
+
+bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
+{
+	// Nothing to do in here
+
+	// Done
+	return true;
+}
+
+void Script::PushArgument(uint8 nValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(uint16 nValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(uint32 nValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(float fValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(double fValue)
+{
+	// Nothing to do in here
+}
+
+bool Script::EndCall()
+{
+	// Nothing to do in here
+
+	// Done
+	return true;
+}
+
+void Script::GetReturn(uint8 &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
+}
+
+void Script::GetReturn(uint16 &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
+}
+
+void Script::GetReturn(uint32 &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	// Nothing to do in here
+	fValue = 0.0f;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	// Nothing to do in here
+	fValue = 0.0;
 }
 
 

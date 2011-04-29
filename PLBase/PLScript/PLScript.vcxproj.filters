@@ -33,6 +33,9 @@
     <ClInclude Include="include\PLScript\ScriptManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLScript\FuncScriptPtr.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

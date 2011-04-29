@@ -13,6 +13,9 @@
     <ClCompile Include="src\PLScriptLua.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LuaContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScriptLua\Script.h">
@@ -25,6 +28,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptLua\PLScriptLuaWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptLua\LuaContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

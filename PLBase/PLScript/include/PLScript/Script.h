@@ -45,6 +45,11 @@ namespace PLScript {
 *  @brief
 *    Abstract script base class
 *
+*  @remarks
+*    Each script should have the followig properties:
+*    - "Language": Shader language (for example: "JavaScript")
+*    - "Formats":  File format extensions this script can load in (for example: "js")
+*
 *  @note
 *    - [TODO] Script support is currently under construction
 */
@@ -57,12 +62,14 @@ class Script : public PLCore::Object {
 	pl_class(PLSCRIPT_RTTI_EXPORT, Script, "PLScript", PLCore::Object, "Abstract script base class")
 		pl_properties
 			pl_property("Language", "Unknown")
+			pl_property("Formats",  "Unknown")
 		pl_properties_end
+		pl_attribute(Name,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Name of this script, optional but recommended for better debugging",	"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -70,6 +77,64 @@ class Script : public PLCore::Object {
 		*    Destructor
 		*/
 		PLSCRIPT_API virtual ~Script();
+
+		/**
+		*  @brief
+		*    Returns the name of the script language the script is using
+		*
+		*  @return
+		*    The name of the script language the script is using (for example "Lua" or "JavaScript")
+		*/
+		PLSCRIPT_API PLGeneral::String GetScriptLanguage() const;
+
+		/**
+		*  @brief
+		*    Returns a list of file formats this script supports
+		*
+		*  @param[out] lstFormats
+		*    List of file formats this script supports (the given list is not cleared before new entries are added)
+		*/
+		PLSCRIPT_API void GetFormats(PLGeneral::Array<PLGeneral::String> &lstFormats) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Script functions                       ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the script source code
+		*
+		*  @return
+		*    The script source code
+		*/
+		virtual PLGeneral::String GetSourceCode() const = 0;
+
+		/**
+		*  @brief
+		*    Sets the script source code
+		*
+		*  @param[in] sSourceCode
+		*    Script source code, usually blank ASCII code
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode) = 0;
+
+		// [TODO] Comment those methods when done
+		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
+		virtual void PushArgument(PLGeneral::uint8 nValue) = 0;
+		virtual void PushArgument(PLGeneral::uint16 nValue) = 0;
+		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
+		virtual void PushArgument(float fValue) = 0;
+		virtual void PushArgument(double fValue) = 0;
+		virtual bool EndCall() = 0;
+		virtual void GetReturn(PLGeneral::uint8 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::uint16 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::uint32 &nValue) = 0;
+		virtual void GetReturn(float &fValue) = 0;
+		virtual void GetReturn(double &fValue) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -81,6 +146,27 @@ class Script : public PLCore::Object {
 		*    Constructor
 		*/
 		PLSCRIPT_API Script();
+
+		/**
+		*  @brief
+		*    Write a string into the log
+		*
+		*  @param[in] nLogLevel
+		*    Log level
+		*  @param[in] sText
+		*    Text which should be written into the log
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    The text is written to the log only if the current
+		*    log level is greater or equal to the specified value.
+		*    This method is an extension of "PLGeneral::Log::Output()"
+		*    which also adds the name of the script to the given
+		*    text.
+		*/
+		PLSCRIPT_API bool LogOutput(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText);
 
 
 	//[-------------------------------------------------------]

@@ -260,6 +260,7 @@ copy build\release64\PLScript64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLScript\FuncScriptPtr.h" />
     <ClInclude Include="include\PLScript\Script.h" />
     <ClInclude Include="include\PLScript\PLScript.h" />
     <ClInclude Include="include\PLScript\PLScriptLinux.h" />

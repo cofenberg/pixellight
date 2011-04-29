@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AngelScriptContext.h                           *
+ *  File: LuaContext.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,28 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTANGELSCRIPT_ANGELSCRIPTCONTEXT_H__
-#define __PLSCRIPTANGELSCRIPT_ANGELSCRIPTCONTEXT_H__
+#ifndef __PLSCRIPTLUA_LUACONTEXT_H__
+#define __PLSCRIPTLUA_LUACONTEXT_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class asIScriptEngine;
-struct asSMessageInfo;
+#include <PLGeneral/PLGeneral.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScriptAngelScript {
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
@@ -49,9 +42,9 @@ namespace PLScriptAngelScript {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Static AngelScript context
+*    Static Lua context
 */
-class AngelScriptContext {
+class LuaContext {
 
 
 	//[-------------------------------------------------------]
@@ -62,55 +55,26 @@ class AngelScriptContext {
 		*  @brief
 		*    Adds a context reference
 		*
-		*  @return
-		*    AngelScript engine instance, null pointer on error
-		*
 		*  @note
-		*    - If this is the first reference, the internal AngelScript context is created automatically
+		*    - If this is the first reference, the internal Lua context is created automatically
 		*/
-		static asIScriptEngine *AddContextReference();
+		static void AddContextReference();
 
 		/**
 		*  @brief
 		*    Releases a context reference
 		*
 		*  @note
-		*    - If this is the last reference, the internal AngelScript context is destroyed automatically
+		*    - If this is the last reference, the internal Lua context is destroyed automatically
 		*/
 		static void ReleaseContextReference();
-
-		/**
-		*  @brief
-		*    Returns an unique name that can be used as AngelScript module name
-		*
-		*  @return
-		*    Unique name
-		*/
-		static PLGeneral::String GetUniqueName();
-
-
-	//[-------------------------------------------------------]
-	//[ Private static AngelScript callback functions         ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Internal AngelScript message callback function
-		*
-		*  @param[in] pASMessageInfo
-		*    Message information
-		*  @param[in] pParam
-		*    Message parameter
-		*/
-		static void ASMessageCallback(const asSMessageInfo *pASMessageInfo, void *pParam);
 
 
 	//[-------------------------------------------------------]
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static PLGeneral::uint32  m_nContexCounter;		/**< AngelScript context counter */
-		static asIScriptEngine	 *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer */
+		static PLGeneral::uint32 m_nContexCounter;	/**< Lua context counter */
 
 
 };
@@ -119,7 +83,7 @@ class AngelScriptContext {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScriptAngelScript
+} // PLScriptLua
 
 
-#endif // __PLSCRIPTANGELSCRIPT_ANGELSCRIPTCONTEXT_H__
+#endif // __PLSCRIPTLUA_LUACONTEXT_H__

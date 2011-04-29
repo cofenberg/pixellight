@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PythonContext.cpp                              *
+ *  File: LuaContext.cpp                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,22 +23,24 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+extern "C" {
+	#include <lua.h>
+}
 #include <PLGeneral/Log/Log.h>
-#include "PLScriptPython/Python.h"
-#include "PLScriptPython/PythonContext.h"
+#include "PLScriptLua/LuaContext.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLScriptPython {
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-uint32 PythonContext::m_nContexCounter = 0;
+uint32 LuaContext::m_nContexCounter = 0;
 
 
 //[-------------------------------------------------------]
@@ -48,13 +50,11 @@ uint32 PythonContext::m_nContexCounter = 0;
 *  @brief
 *    Adds a context reference
 */
-void PythonContext::AddContextReference()
+void LuaContext::AddContextReference()
 {
 	// Check context
-	if (!m_nContexCounter) {
-		PL_LOG(Info, "Initialize Python")
-		Py_Initialize();
-	}
+	if (!m_nContexCounter)
+		PL_LOG(Info, String("Initialize ") + LUA_RELEASE)
 	m_nContexCounter++;
 }
 
@@ -62,18 +62,16 @@ void PythonContext::AddContextReference()
 *  @brief
 *    Releases a context reference
 */
-void PythonContext::ReleaseContextReference()
+void LuaContext::ReleaseContextReference()
 {
 	// Check context
 	m_nContexCounter--;
-	if (!m_nContexCounter) {
-		PL_LOG(Info, "De-initialize Python")
-		Py_Finalize();
-	}
+	if (!m_nContexCounter)
+		PL_LOG(Info, String("De-initialize" ) + LUA_RELEASE)
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScriptPython
+} // PLScriptAngelScript

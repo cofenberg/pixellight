@@ -93,6 +93,18 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 
 		/**
 		*  @brief
+		*    Returns the name of a script language by it's filename extension
+		*
+		*  @param[in] sExtension
+		*    Script language filename extension to check (e.g. "js")
+		*
+		*  @return
+		*    Script language, empty string on error (possibly not supported filename extension)
+		*/
+		PLSCRIPT_API PLGeneral::String GetScriptLanguageByExtension(const PLGeneral::String &sExtension);
+
+		/**
+		*  @brief
 		*    Checks whether or not a given script language is supported
 		*
 		*  @param[in] sScriptLanguage
@@ -114,6 +126,21 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*    The created script instance, null pointer on error
 		*/
 		PLSCRIPT_API Script *Create(const PLGeneral::String &sScriptLanguage);
+
+		/**
+		*  @brief
+		*    Creates a script instance by using a given filename
+		*
+		*  @param[in] sFilename
+		*    Script filename
+		*
+		*  @return
+		*    The created script instance, null pointer on error (Unknown filename extension? File not found? Error within the script?)
+		*
+		*  @note
+		*    - Convenience method
+		*/
+		PLSCRIPT_API Script *CreateFromFile(const PLGeneral::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -169,9 +196,10 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<const PLCore::Class*>						m_lstNewClasses;		/**< New classes to register as soon as required */
-		PLGeneral::Array<PLGeneral::String>							m_lstScriptLanguages;	/**< List of script languages */
-		PLGeneral::HashMap<PLGeneral::String, const PLCore::Class*> m_mapScriptLanguages;	/**< Map of script languages (key = class name) */
+		PLGeneral::Array<const PLCore::Class*>						m_lstNewClasses;					/**< New classes to register as soon as required */
+		PLGeneral::Array<PLGeneral::String>							m_lstScriptLanguages;				/**< List of script languages */
+		PLGeneral::HashMap<PLGeneral::String, const PLCore::Class*> m_mapScriptLanguages;				/**< Map of script languages (key = class name) */
+		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String>	m_mapScriptLanguagesByExtension;	/**< Map of script languages by extension (key = extension) */
 
 
 };

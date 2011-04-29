@@ -27,6 +27,7 @@
 #include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLScript/Script.h>
+#include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
 #include "Application.h"
 
@@ -35,6 +36,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLScript;
 
 
@@ -63,12 +65,45 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Performs a calculation by using a script
+*/
+float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond)
+{
+	float fResult = 0.0f;
+
+	// Create the script instance
+	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
+	if (pScript) {
+		// Get the typed dynamic parameters
+		Params<float, float, float> cParams(fFirst, fSecond);
+
+		// Call the script function
+		FuncScriptPtr<float, float, float>(pScript, "calculate").Call(cParams);
+
+		// Get the result
+		fResult = cParams.Return;
+
+		// Print message
+		System::GetInstance()->GetConsole().Print(pScript->GetScriptLanguage() + " script language: '" + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
+
+		// Cleanup
+		delete pScript;
+	}
+
+	// Done
+	return fResult;
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual ConsoleApplication functions          ]
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// [TODO] Script support is currently under construction
-
 	// Get the instance of the script manager singleton
 	ScriptManager *pScriptManager = ScriptManager::GetInstance();
 
@@ -80,31 +115,7 @@ void Application::Main()
 		System::GetInstance()->GetConsole().Print('\n');
 	}
 
-	// Lua
-	if (pScriptManager->IsSupported("Lua")) {
-		System::GetInstance()->GetConsole().Print("Using Lua script language\n");
-		Script *pScript = pScriptManager->Create("Lua");
-		delete pScript;
-	}
-
-	// JavaScript
-	if (pScriptManager->IsSupported("JavaScript")) {
-		System::GetInstance()->GetConsole().Print("Using JavaScript script language\n");
-		Script *pScript = pScriptManager->Create("JavaScript");
-		delete pScript;
-	}
-
-	// Python
-	if (pScriptManager->IsSupported("Python")) {
-		System::GetInstance()->GetConsole().Print("Using Python script language\n");
-		Script *pScript = pScriptManager->Create("Python");
-		delete pScript;
-	}
-
-	// AngelScript
-	if (pScriptManager->IsSupported("AngelScript")) {
-		System::GetInstance()->GetConsole().Print("Using AngelScript script language\n");
-		Script *pScript = pScriptManager->Create("AngelScript");
-		delete pScript;
-	}
+	// Run some scripts
+	DoCalculation("Data/Scripts/Calculate.as", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Calculate.lua", 42.0f, 5.0f);
 }

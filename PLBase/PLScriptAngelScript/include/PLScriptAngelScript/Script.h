@@ -33,6 +33,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class asIScriptModule;
+class asIScriptEngine;
+class asIScriptContext;
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScriptAngelScript {
@@ -54,6 +62,7 @@ class Script : public PLScript::Script {
 	pl_class(PLSCRIPTANGELSCRIPT_RTTI_EXPORT, Script, "PLScriptAngelScript", PLScript::Script, "AngelScript (http://www.angelcode.com/angelscript/) script implementation")
 		pl_properties
 			pl_property("Language", "AngelScript")
+			pl_property("Formats",  "as,AS")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
@@ -74,6 +83,26 @@ class Script : public PLScript::Script {
 		*    Destructor
 		*/
 		PLSCRIPTANGELSCRIPT_API virtual ~Script();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLScript::Script functions             ]
+	//[-------------------------------------------------------]
+	public:
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetSourceCode() const;
+		PLSCRIPTANGELSCRIPT_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);
+		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint8 &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint16 &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint32 &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float &fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double &fValue);
 
 
 	//[-------------------------------------------------------]
@@ -101,11 +130,22 @@ class Script : public PLScript::Script {
 		*/
 		Script &operator =(const Script &cSource);
 
+		/**
+		*  @brief
+		*    Clears the script
+		*/
+		void Clear();
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		PLGeneral::String  m_sSourceCode;			/**< Script source code */
+		asIScriptEngine   *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer, managed by AngelScriptContext */
+		asIScriptModule   *m_pAngelScriptModule;	/**< AngelScript module instance, can be a null pointer */
+		asIScriptContext  *m_pAngelScriptContext;	/**< AngelScript context instance, can be a null pointer */
+		PLGeneral::uint32  m_nCurrentArgument;		/**< Current argument, used during function call */
 
 
 };

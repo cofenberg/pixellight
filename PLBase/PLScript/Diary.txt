@@ -1,4 +1,16 @@
-﻿>> 28.04.2011
+﻿>> 29.04.2011
+[CO]
+- Added "GetScriptLanguage()", "GetSourceCode()" and "SetSourceCode()" to "Script" (similar to "PLRenderer::Shader")
+- Added "FuncScriptPtr" which is a version of "PLCore::FuncFunPtr"/"PLCore::FuncMemPtr" for script functions. This means that script functions
+  can be called in the same way as all other functions/methods (e.g. RTTI methods) can be called. This template is using
+  the "Script" methods "BeginCall()", "PushArgument()", "EndCall()" and "GetReturn()" to call script functions. Calling Lua and AngelScript
+  functions is already implemented and working. Those mentioned script function calling methods are currently public although it's not recommended
+  to call them without using "FuncScriptPtr", but currently I see no change to hide those methods from the user. But this is just my first attempt to
+  get things up and running... next stop: Implementing the same for Python and JavaScript. (calling C/C++ methods from scripts will follow as well)
+
+
+
+>> 28.04.2011
 [CO]
 - As requested within the PixelLight forum at: http://dev.pixellight.org/forum/viewtopic.php?f=3&t=45
   ... I'll also added a script backend for AngelScript (like the others, just a skeleton right now!). Ok, four script languages should really

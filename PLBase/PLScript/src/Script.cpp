@@ -23,12 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Log/Log.h>
 #include "PLScript/Script.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 namespace PLScript {
 
 
@@ -39,7 +41,7 @@ pl_implement_class(Script)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -47,6 +49,36 @@ pl_implement_class(Script)
 */
 Script::~Script()
 {
+}
+
+/**
+*  @brief
+*    Returns the name of the script language the script is using
+*/
+String Script::GetScriptLanguage() const
+{
+	return GetClass() ? GetClass()->GetProperties().Get("Language") : "";
+}
+
+/**
+*  @brief
+*    Returns a list of file formats this script supports
+*/
+void Script::GetFormats(Array<String> &lstFormats) const
+{
+	const String sFormats = GetClass()->GetProperties().Get("Formats");
+	if (sFormats.GetLength()) {
+		Tokenizer cTokenizer;
+		cTokenizer.Start(sFormats);
+		cTokenizer.SetDelimiters(" ,\t\r\n");
+		cTokenizer.SetSingleChars("");
+		String sToken = cTokenizer.GetNextToken();
+		while (sToken.GetLength()) {
+			lstFormats.Add(sToken);
+			sToken = cTokenizer.GetNextToken();
+		}
+		cTokenizer.Stop();
+	}
 }
 
 
@@ -57,8 +89,18 @@ Script::~Script()
 *  @brief
 *    Constructor
 */
-Script::Script()
+Script::Script() :
+	Name(this)
 {
+}
+
+/**
+*  @brief
+*    Write a string into the log
+*/
+bool Script::LogOutput(uint8 nLogLevel, const String &sText)
+{
+	return Log::GetInstance()->Output(nLogLevel, (Name.Get().GetLength() ? ("Script '" + Name.Get() + "': ") : "Script: ") + sText);
 }
 
 
@@ -69,7 +111,8 @@ Script::Script()
 *  @brief
 *    Copy constructor
 */
-Script::Script(const Script &cSource)
+Script::Script(const Script &cSource) :
+	Name(this)
 {
 	// No implementation because the copy constructor is never used
 }

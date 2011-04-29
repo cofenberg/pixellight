@@ -60,6 +60,7 @@ class Script : public PLScript::Script {
 	pl_class(PLSCRIPTLUA_RTTI_EXPORT, Script, "PLScriptLua", PLScript::Script, "Lua (http://www.lua.org/) script implementation")
 		pl_properties
 			pl_property("Language", "Lua")
+			pl_property("Formats",  "lua,LUA")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
@@ -80,6 +81,26 @@ class Script : public PLScript::Script {
 		*    Destructor
 		*/
 		PLSCRIPTLUA_API virtual ~Script();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLScript::Script functions             ]
+	//[-------------------------------------------------------]
+	public:
+		PLSCRIPTLUA_API virtual PLGeneral::String GetSourceCode() const;
+		PLSCRIPTLUA_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTLUA_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
+		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint8 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint16 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint32 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(float fValue);
+		PLSCRIPTLUA_API virtual void PushArgument(double fValue);
+		PLSCRIPTLUA_API virtual bool EndCall();
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint8 &nValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint16 &nValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint32 &nValue);
+		PLSCRIPTLUA_API virtual void GetReturn(float &fValue);
+		PLSCRIPTLUA_API virtual void GetReturn(double &fValue);
 
 
 	//[-------------------------------------------------------]
@@ -107,12 +128,54 @@ class Script : public PLScript::Script {
 		*/
 		Script &operator =(const Script &cSource);
 
+		/**
+		*  @brief
+		*    Reports Lua errors
+		*
+		*  @note
+		*    - Do only call this method if m_pLuaState is valid and there was in fact an error
+		*/
+		void ReportErrors();
+
+		/**
+		*  @brief
+		*    Clears the script
+		*/
+		void Clear();
+
+
+	//[-------------------------------------------------------]
+	//[ Private static Lua callback functions                 ]
+	//[-------------------------------------------------------]
+	private:
+		/*
+		*  @brief
+		*    Lua memory allocation
+		*
+		*  @param[in] pUserData
+		*    User data
+		*  @param[in] pPointer
+		*    A pointer to the block being allocated/reallocated/freed
+		*  @param[in] nOriginalBlockSize
+		*    The original size of the block
+		*  @param[in] nNewBlockSize
+		*    The new size of the block
+		*
+		*  @return
+		*    Pointer to the allocated memory, can be a null pointer
+		*/
+		static void *LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOriginalBlockSize, size_t nNewBlockSize);
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		lua_State *m_pLuaState;	/**< Lua state, always valid! */
+		PLGeneral::String  m_sSourceCode;		/**< Script source code */
+		lua_State		  *m_pLuaState;			/**< Lua state, can be a null pointer */
+		PLGeneral::String  m_sCurrentFunction;	/**< Name of the current function */
+		bool			   m_bFunctionResult;	/**< Has the current function a result? */
+		PLGeneral::uint32  m_nCurrentArgument;	/**< Current argument, used during function call */
 
 
 };

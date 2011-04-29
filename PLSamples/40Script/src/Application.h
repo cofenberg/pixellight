@@ -59,6 +59,27 @@ class Application : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Performs a calculation by using a script
+		*
+		*  @param[in] sScriptFilename
+		*    Filename of the script to use
+		*  @param[in] fFirst
+		*    First number
+		*  @param[in] fSecond
+		*    Second number
+		*
+		*  @return
+		*    The result
+		*/
+		float DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond);
+
+
+	//[-------------------------------------------------------]
 	//[ Private virtual ConsoleApplication functions          ]
 	//[-------------------------------------------------------]
 	private:

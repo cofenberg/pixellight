@@ -23,8 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/File/Url.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/ClassManager.h>
+#include <PLCore/Tools/LoadableManager.h>
+#include "PLScript/Script.h"
 #include "PLScript/ScriptManager.h"
 
 
@@ -51,6 +54,15 @@ const Array<String> &ScriptManager::GetScriptLanguages()
 
 /**
 *  @brief
+*/
+String ScriptManager::GetScriptLanguageByExtension(const String &sExtension)
+{
+	RegisterClasses();
+	return m_mapScriptLanguagesByExtension.Get(sExtension);
+}
+
+/**
+*  @brief
 *    Checks whether or not a given script language is supported
 */
 bool ScriptManager::IsSupported(const String &sScriptLanguage)
@@ -73,6 +85,30 @@ Script *ScriptManager::Create(const String &sScriptLanguage)
 
 	// Error!
 	return nullptr;
+}
+
+/**
+*  @brief
+*    Creates a script instance by using a given filename
+*/
+Script *ScriptManager::CreateFromFile(const String &sFilename)
+{
+	// Create the script instance by using the extension of the given filename to detect the script language
+	Script *pScript = Create(GetScriptLanguageByExtension(Url(sFilename).GetExtension()));
+	if (pScript) {
+		// Get the script source code
+		const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
+
+		// Set the script source code
+		if (!sSourceCode.GetLength() || !pScript->SetSourceCode(sSourceCode)) {
+			// Error! Destroy the created script instance...
+			delete pScript;
+			pScript = nullptr;
+		}
+	}
+
+	// Done
+	return pScript;
 }
 
 
@@ -141,6 +177,21 @@ void ScriptManager::RegisterClasses()
 				if (sLanguage.GetLength() && !m_mapScriptLanguages.Get(sLanguage)) {
 					m_lstScriptLanguages.Add(sLanguage);
 					m_mapScriptLanguages.Add(sLanguage, pClass);
+
+					// Parse formats
+					const String sFormats = pClass->GetProperties().Get("Formats");
+					if (sFormats.GetLength()) {
+						Tokenizer cTokenizer;
+						cTokenizer.Start(sFormats);
+						cTokenizer.SetDelimiters(" ,\t\r\n");
+						cTokenizer.SetSingleChars("");
+						String sToken = cTokenizer.GetNextToken();
+						while (sToken.GetLength()) {
+							m_mapScriptLanguagesByExtension.Add(sToken, sLanguage);
+							sToken = cTokenizer.GetNextToken();
+						}
+						cTokenizer.Stop();
+					}
 				}
 			}
 		}

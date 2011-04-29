@@ -38,8 +38,8 @@ namespace PLScriptAngelScript {
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-uint32			 AngelScriptContext::m_nContexCounter  = 0;
-asIScriptEngine	*AngelScriptContext::m_pASScriptEngine = nullptr;
+uint32			 AngelScriptContext::m_nContexCounter     = 0;
+asIScriptEngine	*AngelScriptContext::m_pAngelScriptEngine = nullptr;
 
 
 //[-------------------------------------------------------]
@@ -49,22 +49,25 @@ asIScriptEngine	*AngelScriptContext::m_pASScriptEngine = nullptr;
 *  @brief
 *    Adds a context reference
 */
-void AngelScriptContext::AddContextReference()
+asIScriptEngine *AngelScriptContext::AddContextReference()
 {
 	// Check context
 	if (!m_nContexCounter) {
 		PL_LOG(Info, String("Initialize AngelScript ") + ANGELSCRIPT_VERSION_STRING)
 
 		// Create the script engine
-		m_pASScriptEngine= asCreateScriptEngine(ANGELSCRIPT_VERSION);
-		if (m_pASScriptEngine) {
+		m_pAngelScriptEngine= asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		if (m_pAngelScriptEngine) {
 			// The script compiler will write any compiler messages to the callback
-			m_pASScriptEngine->SetMessageCallback(asFUNCTION(ASMessageCallback), 0, asCALL_CDECL);
+			m_pAngelScriptEngine->SetMessageCallback(asFUNCTION(ASMessageCallback), 0, asCALL_CDECL);
 		} else {
 			PL_LOG(Error, "Failed to create script engine")
 		}
 	}
 	m_nContexCounter++;
+
+	// Return the AngelScript engine instance
+	return m_pAngelScriptEngine;
 }
 
 /**
@@ -75,13 +78,23 @@ void AngelScriptContext::ReleaseContextReference()
 {
 	// Check context
 	m_nContexCounter--;
-	if (!m_nContexCounter && m_pASScriptEngine) {
-		PL_LOG(Info, "De-initialize AngelScript")
+	if (!m_nContexCounter && m_pAngelScriptEngine) {
+		PL_LOG(Info, String("De-initialize AngelScript ") + ANGELSCRIPT_VERSION_STRING)
 
 		// Release the script engine
-		m_pASScriptEngine->Release();
-		m_pASScriptEngine = nullptr;
+		m_pAngelScriptEngine->Release();
+		m_pAngelScriptEngine = nullptr;
 	}
+}
+
+/**
+*  @brief
+*    Returns an unique name that can be used as AngelScript module name
+*/
+String AngelScriptContext::GetUniqueName()
+{
+	static uint32 nCounter = 0;
+	return nCounter++;
 }
 
 
@@ -95,7 +108,7 @@ void AngelScriptContext::ReleaseContextReference()
 void AngelScriptContext::ASMessageCallback(const asSMessageInfo *pASMessageInfo, void *pParam)
 {
 	// Check the message type
-	Log::LogLevel nLogLevel = Log::Info;
+	uint8 nLogLevel = Log::Info;
 	switch (pASMessageInfo->type) {
 		case asMSGTYPE_ERROR:
 			nLogLevel = Log::Error;
