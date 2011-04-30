@@ -78,14 +78,32 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 	// Create the script instance
 	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
 	if (pScript) {
-		// Get the typed dynamic parameters
-		Params<float, float, float> cParams(fFirst, fSecond);
+		float fFactor = 0.0f;
 
-		// Call the script function
-		FuncScriptPtr<float, float, float>(pScript, "calculate").Call(cParams);
+		{ // Call the script function "getFactor"
+			// Get the typed dynamic parameters
+			Params<float> cParams;
 
-		// Get the result
-		fResult = cParams.Return;
+			// Call the script function
+			FuncScriptPtr<float>(pScript, "getFactor").Call(cParams);
+
+			// Get the result
+			fFactor = cParams.Return;
+		}
+
+		// Call the script function "setFactor"
+		FuncScriptPtr<void, float>(pScript, "setFactor").Call(Params<void, float>(fFactor + 1.0f));
+
+		{ // Call the script function "calculate"
+			// Get the typed dynamic parameters
+			Params<float, float, float> cParams(fFirst, fSecond);
+
+			// Call the script function
+			FuncScriptPtr<float, float, float>(pScript, "calculate").Call(cParams);
+
+			// Get the result
+			fResult = cParams.Return;
+		}
 
 		// Print message
 		System::GetInstance()->GetConsole().Print(pScript->GetScriptLanguage() + " script language: '" + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
@@ -116,7 +134,7 @@ void Application::Main()
 	}
 
 	// Run some scripts
-	DoCalculation("Data/Scripts/Calculate.as", 42.0f, 5.0f);
 	DoCalculation("Data/Scripts/Calculate.lua", 42.0f, 5.0f);
 	DoCalculation("Data/Scripts/Calculate.js", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Calculate.as", 42.0f, 5.0f);
 }

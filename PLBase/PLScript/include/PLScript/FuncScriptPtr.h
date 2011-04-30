@@ -169,7 +169,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 				m_pScript->PushArgument(t13);
 				m_pScript->PushArgument(t14);
 				m_pScript->PushArgument(t15);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -301,7 +301,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 				m_pScript->PushArgument(t12);
 				m_pScript->PushArgument(t13);
 				m_pScript->PushArgument(t14);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -429,7 +429,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 				m_pScript->PushArgument(t11);
 				m_pScript->PushArgument(t12);
 				m_pScript->PushArgument(t13);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -553,7 +553,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 				m_pScript->PushArgument(t10);
 				m_pScript->PushArgument(t11);
 				m_pScript->PushArgument(t12);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -673,7 +673,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 				m_pScript->PushArgument(t9);
 				m_pScript->PushArgument(t10);
 				m_pScript->PushArgument(t11);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -789,7 +789,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 				m_pScript->PushArgument(t8);
 				m_pScript->PushArgument(t9);
 				m_pScript->PushArgument(t10);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -901,7 +901,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public PLCor
 				m_pScript->PushArgument(t7);
 				m_pScript->PushArgument(t8);
 				m_pScript->PushArgument(t9);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1009,7 +1009,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public PLCore::F
 				m_pScript->PushArgument(t6);
 				m_pScript->PushArgument(t7);
 				m_pScript->PushArgument(t8);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1113,7 +1113,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public PLCore::Func<
 				m_pScript->PushArgument(t5);
 				m_pScript->PushArgument(t6);
 				m_pScript->PushArgument(t7);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1213,7 +1213,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public PLCore::Func<void
 				m_pScript->PushArgument(t4);
 				m_pScript->PushArgument(t5);
 				m_pScript->PushArgument(t6);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1309,7 +1309,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public PLCore::Func<void, T0
 				m_pScript->PushArgument(t3);
 				m_pScript->PushArgument(t4);
 				m_pScript->PushArgument(t5);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1401,7 +1401,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public PLCore::Func<void, T0, T1
 				m_pScript->PushArgument(t2);
 				m_pScript->PushArgument(t3);
 				m_pScript->PushArgument(t4);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1489,7 +1489,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public PLCore::Func<void, T0, T1, T2
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
 				m_pScript->PushArgument(t3);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1573,7 +1573,7 @@ class FuncScriptPtr<void, T0, T1, T2> : public PLCore::Func<void, T0, T1, T2> {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1653,7 +1653,7 @@ class FuncScriptPtr<void, T0, T1> : public PLCore::Func<void, T0, T1> {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
@@ -1729,7 +1729,7 @@ class FuncScriptPtr<void, T0> : public PLCore::Func<void, T0> {
 		virtual void operator ()(_T0 t0) {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
 				m_pScript->PushArgument(t0);
-				m_pScript->EndCall()
+				m_pScript->EndCall();
 			}
 		}
 
