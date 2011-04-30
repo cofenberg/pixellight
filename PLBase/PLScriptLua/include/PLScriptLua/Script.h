@@ -87,6 +87,8 @@ class Script : public PLScript::Script {
 	//[ Public virtual PLScript::Script functions             ]
 	//[-------------------------------------------------------]
 	public:
+		PLSCRIPTLUA_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc);
+		PLSCRIPTLUA_API virtual bool RemoveAllDynamicFunctions();
 		PLSCRIPTLUA_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTLUA_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
 		PLSCRIPTLUA_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
@@ -168,16 +170,43 @@ class Script : public PLScript::Script {
 		*/
 		static void *LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOriginalBlockSize, size_t nNewBlockSize);
 
+		/*
+		*  @brief
+		*    Lua function callback
+		*
+		*  @param[in] pLuaState
+		*    Lua state
+		*
+		*  @return
+		*    Number of parameters to return to Lua
+		*/
+		static int LuaFunctionCallback(lua_State *pLuaState);
+
+
+	//[-------------------------------------------------------]
+	//[ Private structures                                    ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A dynamic function
+		*/
+		struct DynamicFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+		};
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String  m_sSourceCode;		/**< Script source code */
-		lua_State		  *m_pLuaState;			/**< Lua state, can be a null pointer */
-		PLGeneral::String  m_sCurrentFunction;	/**< Name of the current function */
-		bool			   m_bFunctionResult;	/**< Has the current function a result? */
-		PLGeneral::uint32  m_nCurrentArgument;	/**< Current argument, used during function call */
+		PLGeneral::String					m_sSourceCode;			/**< Script source code */
+		lua_State						   *m_pLuaState;			/**< Lua state, can be a null pointer */
+		PLGeneral::String					m_sCurrentFunction;		/**< Name of the current function */
+		bool								m_bFunctionResult;		/**< Has the current function a result? */
+		PLGeneral::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
+		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;	/**< List of dynamic functions */
 
 
 };

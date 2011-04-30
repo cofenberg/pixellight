@@ -31,6 +31,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScriptV8 {
 
 
@@ -65,6 +66,20 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+{
+	// [TODO] Implement me
+
+	// Done
+	return true;
+}
+
+bool Script::RemoveAllDynamicFunctions()
+{
+	// [TODO] Implement me
+	return true;
+}
+
 String Script::GetSourceCode() const
 {
 	return m_sSourceCode;
@@ -78,23 +93,28 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	// Backup the given source code
 	m_sSourceCode = sSourceCode;
 
-	// Create a stack-allocated handle scope
-	v8::HandleScope cHandleScope;
+	// Is there source code?
+	if (m_sSourceCode.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
 
-	// Create a new context
-	m_cV8Context = v8::Context::New();
+		// Create a new context
+		m_cV8Context = v8::Context::New();
 
-	// Enter the created context for compiling and running the hello world script
-	v8::Context::Scope cContextScope(m_cV8Context);
+		// Enter the created context for compiling and running the hello world script
+		v8::Context::Scope cContextScope(m_cV8Context);
 
-	// Create a string containing the JavaScript source code
-	v8::Handle<v8::String> cSource = v8::String::New(sSourceCode);
+		// Create a string containing the JavaScript source code
+		v8::Handle<v8::String> cSource = v8::String::New(sSourceCode);
 
-	// Compile the source code
-	v8::Handle<v8::Script> cScript = v8::Script::Compile(cSource);
+		// Compile the source code
+		v8::Handle<v8::Script> cScript = v8::Script::Compile(cSource);
 
-	// Run the script to get the result
-	v8::Handle<v8::Value> cResult = cScript->Run();
+		// Run the script to get the result
+		v8::Handle<v8::Value> cResult = cScript->Run();
+	} else {
+		// No script at all - done
+	}
 
 	// Done
 	return true;

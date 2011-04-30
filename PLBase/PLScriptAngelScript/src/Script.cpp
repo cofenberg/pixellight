@@ -76,6 +76,22 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+{
+	// [TODO] Implement me
+
+	// Done
+	return true;
+}
+
+bool Script::RemoveAllDynamicFunctions()
+{
+	// [TODO] Implement me
+
+	// Done
+	return true;
+}
+
 String Script::GetSourceCode() const
 {
 	return m_sSourceCode;
@@ -134,6 +150,9 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				}
 			}
 		}
+	} else {
+		// No script at all - done
+		return true;
 	}
 
 	// Error!

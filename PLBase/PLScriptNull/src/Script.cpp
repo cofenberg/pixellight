@@ -30,6 +30,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScriptNull {
 
 
@@ -62,6 +63,22 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+{
+	// Nothing to do in here
+
+	// Done
+	return true;
+}
+
+bool Script::RemoveAllDynamicFunctions()
+{
+	// Nothing to do in here
+
+	// Done
+	return true;
+}
+
 String Script::GetSourceCode() const
 {
 	return m_sSourceCode;

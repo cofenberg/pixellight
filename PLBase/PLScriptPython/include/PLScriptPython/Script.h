@@ -81,6 +81,8 @@ class Script : public PLScript::Script {
 	//[ Public virtual PLScript::Script functions             ]
 	//[-------------------------------------------------------]
 	public:
+		PLSCRIPTPYTHON_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc);
+		PLSCRIPTPYTHON_API virtual bool RemoveAllDynamicFunctions();
 		PLSCRIPTPYTHON_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTPYTHON_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
 		PLSCRIPTPYTHON_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);

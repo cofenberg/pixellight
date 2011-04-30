@@ -1,4 +1,14 @@
-﻿>> 29.04.2011
+﻿>> 30.04.2011
+[CO]
+- Added script support for functors/functoids so that it's possible to call C++ functions or member methods from inside scripts...
+  as well as other script functions because the functors are hiding this detail.
+  The method "Script::AddDynamicFunction()" is used to register functors while "Script::RemoveAllDynamicFunctions()" can be used to remove
+  all registerd functors. The Lua implementation is already working. Please note that this is still highly experimental and I don't know
+  whether or not the script interfaces are completly changed later.
+
+
+
+>> 29.04.2011
 [CO]
 - Added "GetScriptLanguage()", "GetSourceCode()" and "SetSourceCode()" to "Script" (similar to "PLRenderer::Shader")
 - Added "FuncScriptPtr" which is a version of "PLCore::FuncFunPtr"/"PLCore::FuncMemPtr" for script functions. This means that script functions

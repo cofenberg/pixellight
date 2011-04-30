@@ -103,6 +103,35 @@ class Script : public PLCore::Object {
 	public:
 		/**
 		*  @brief
+		*    Adds a dynamic function to the script
+		*
+		*  @param[in] sFunction
+		*    Function name used inside the script to call the dynamic function
+		*  @param[in] cDynFunc
+		*    Dynamic function
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe a script is already set?)
+		*
+		*  @note
+		*    - If there's already a set script ("SetSourceCode()") this method will return an error
+		*/
+		virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc) = 0;
+
+		/**
+		*  @brief
+		*    Removes all dynamic functions from the script
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe a script is already set?)
+		*
+		*  @note
+		*    - If there's already a set script ("SetSourceCode()") this method will return an error
+		*/
+		virtual bool RemoveAllDynamicFunctions() = 0;
+
+		/**
+		*  @brief
 		*    Returns the script source code
 		*
 		*  @return
@@ -115,7 +144,7 @@ class Script : public PLCore::Object {
 		*    Sets the script source code
 		*
 		*  @param[in] sSourceCode
-		*    Script source code, usually blank ASCII code
+		*    Script source code, usually blank ASCII code, empty string to set to script at all
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

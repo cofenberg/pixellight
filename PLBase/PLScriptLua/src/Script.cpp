@@ -37,6 +37,7 @@ extern "C" {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScriptLua {
 
 
@@ -71,6 +72,9 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
+	// Remove all dynamic functions
+	RemoveAllDynamicFunctions();
+
 	// Release a context reference
 	LuaContext::ReleaseContextReference();
 }
@@ -79,6 +83,43 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Error!
+		return false;
+	} else {
+		// Add the dynamic function
+		DynamicFunction *psDynamicFunction = new DynamicFunction;
+		psDynamicFunction->sFunction = sFunction;
+		psDynamicFunction->pDynFunc  = cDynFunc.Clone();
+		m_lstDynamicFunctions.Add(psDynamicFunction);
+
+		// Done
+		return true;
+	}
+}
+
+bool Script::RemoveAllDynamicFunctions()
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Error!
+		return false;
+	} else {
+		// Destroy the dynamic functions
+		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+			delete m_lstDynamicFunctions[i]->pDynFunc;
+			delete m_lstDynamicFunctions[i];
+		}
+		m_lstDynamicFunctions.Clear();
+
+		// Done
+		return true;
+	}
+}
+
 String Script::GetSourceCode() const
 {
 	return m_sSourceCode;
@@ -92,40 +133,57 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	// Backup the given source code
 	m_sSourceCode = sSourceCode;
 
-	// Create the Lua state
-	m_pLuaState = lua_open();
-	if (m_pLuaState) {
-		// [TODO] Check this
-		// Setup Lua memory allocation
-//		lua_setallocf(m_pLuaState, Script::LuaMemoryAllocation, nullptr);
+	// Is there source code?
+	if (m_sSourceCode.GetLength()) {
+		// Create the Lua state
+		m_pLuaState = lua_open();
+		if (m_pLuaState) {
+			// [TODO] Check this
+			// Setup Lua memory allocation
+	//		lua_setallocf(m_pLuaState, Script::LuaMemoryAllocation, nullptr);
 
-		// Open all standard Lua libraries into the given state
-		luaL_openlibs(m_pLuaState);
+			// Open all standard Lua libraries into the given state
+			luaL_openlibs(m_pLuaState);
 
-		// Load the script
-		const int nResult = luaL_loadbuffer(m_pLuaState, sSourceCode.GetASCII(), sSourceCode.GetLength(), Name.Get());
-		if (!nResult && !lua_pcall(m_pLuaState, 0, 0, 0)) {
-			// Done
-			return true;
-		} else {
-			// Error!
+			// Add the dynamic functions
+			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+				// Get the dynamic function
+				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
 
-			// Write a log mesage
-			String sErrorDescription;
-			switch (nResult) {
-				case LUA_ERRSYNTAX:
-					sErrorDescription = " (Syntax error during pre-compilation)";
-					break;
-
-				case LUA_ERRMEM:
-					sErrorDescription = " (Memory allocation error)";
-					break;
+				// Store a pointer to the dynamic function in the c-closure
+				lua_pushinteger(m_pLuaState, reinterpret_cast<lua_Integer>(psDynamicFunction));
+				lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);
+				lua_setglobal(m_pLuaState, psDynamicFunction->sFunction);
 			}
-			LogOutput(Log::Error, "Failed to compile the script" + sErrorDescription);
 
-			// Report Lua errors
-			ReportErrors();
+			// Load the script
+			const int nResult = luaL_loadbuffer(m_pLuaState, sSourceCode.GetASCII(), sSourceCode.GetLength(), Name.Get());
+			if (!nResult && !lua_pcall(m_pLuaState, 0, 0, 0)) {
+				// Done
+				return true;
+			} else {
+				// Error!
+
+				// Write a log mesage
+				String sErrorDescription;
+				switch (nResult) {
+					case LUA_ERRSYNTAX:
+						sErrorDescription = " (Syntax error during pre-compilation)";
+						break;
+
+					case LUA_ERRMEM:
+						sErrorDescription = " (Memory allocation error)";
+						break;
+				}
+				LogOutput(Log::Error, "Failed to compile the script" + sErrorDescription);
+
+				// Report Lua errors
+				ReportErrors();
+			}
 		}
+	} else {
+		// No script at all - done
+		return true;
 	}
 
 	// Error!
@@ -350,6 +408,31 @@ void *Script::LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOrigi
 	} else {
 		delete [] pPointer;
 		return nullptr;
+	}
+}
+
+/*
+*  @brief
+*    Lua function callback
+*/
+int Script::LuaFunctionCallback(lua_State *pLuaState)
+{
+	// Get the number of arguments Lua gave to us
+	String sParams;
+	const int nNumOfArguments = lua_gettop(pLuaState);
+	for (int i=1; i<=nNumOfArguments; i++)
+		sParams += String("Param") + i + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
+
+	// Get the dynamic function
+	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(lua_tointeger(pLuaState, lua_upvalueindex(1)));
+	const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+	if (sReturn.GetLength()) {
+		// The function returns one argument
+		lua_pushstring(pLuaState, sReturn);
+		return 1;
+	} else {
+		// The function returns nothing
+		return 0;
 	}
 }
 

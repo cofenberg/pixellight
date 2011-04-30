@@ -23,9 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/File/Url.h>
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include <PLScript/Script.h>
 #include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
@@ -75,15 +77,15 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 {
 	float fResult = 0.0f;
 
-	// Create the script instance
-	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
-	if (pScript) {
-		float fFactor = 0.0f;
+	// Get the script source code
+	const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sScriptFilename);
+	if (sSourceCode.GetLength()) {
+		// Create the script instance by using the extension of the given filename to detect the script language
+		Script *pScript = ScriptManager::GetInstance()->Create(ScriptManager::GetInstance()->GetScriptLanguageByExtension(Url(sScriptFilename).GetExtension()));
+		if (pScript) {
+			// Print the name of the used script language
+			System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
 
-		// Print the name of the used script language
-		System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
-
-		{ // Some functor fun
 			// Functor pointing to the static method "Application::StaticMethod"
 			Functor<int, int> cStaticMethod(StaticMethod);
 
@@ -93,48 +95,72 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 			// Functor pointing to the script function "scriptFunction"
 			Functor<int, int> cScriptFunction(new FuncScriptPtr<int, int>(pScript, "scriptFunction"));
 
-			// Call functors - as you can see, there's no difference whether it's a static method, a member method or a script function
-			const int  nValue				 = 42;
-			const int  nStaticMethodResult   = cStaticMethod(nValue);
-			const int  nMethodResult         = cMethod(nValue);
-			const int  nScriptFunctionResult = cScriptFunction(nValue);
-			const bool bFunctorResultsEqual  = (nStaticMethodResult == nValue && nMethodResult == nValue && nScriptFunctionResult == nValue);
-			System::GetInstance()->GetConsole().Print(String("Same functor behaviour: ") + (bFunctorResultsEqual ? "Yes" : "No") + '\n');
+			// Tell our script about those functors so that we can use them within the script...
+			pScript->AddDynamicFunction("cppFunction",       cStaticMethod);
+			pScript->AddDynamicFunction("cppMethod",         cMethod);
+			pScript->AddDynamicFunction("cppScriptFunction", cScriptFunction);	// Jap, possible! *g*
+
+			// Set the script source code
+			if (pScript->SetSourceCode(sSourceCode)) {
+				float fFactor = 0.0f;
+
+				{ // Some functor fun
+					// Call functors - as you can see, there's no difference whether it's a static method, a member method or a script function
+					const int  nValue				 = 42;
+					const int  nFunctionResult		 = cStaticMethod(nValue);
+					const int  nMethodResult		 = cMethod(nValue);
+					const int  nScriptFunctionResult = cScriptFunction(nValue);
+					const bool bFunctorResultsEqual  = (nFunctionResult == nValue && nMethodResult == nValue && nScriptFunctionResult == nValue);
+					System::GetInstance()->GetConsole().Print(String("Same functor behaviour: ") + (bFunctorResultsEqual ? "Yes" : "No") + '\n');
+
+					{ // Call the script function "callCpp"
+						// Get the typed dynamic parameters
+						Params<int, int> cParams(nValue);
+
+						// Call the script function
+						FuncScriptPtr<int, int>(pScript, "callCpp").Call(cParams);
+
+						// Get and check result
+						const bool bEqual = (cParams.Return == (nFunctionResult + nMethodResult + nScriptFunctionResult));
+						System::GetInstance()->GetConsole().Print(String("Dynamic function behaviour as expected: ") + (bEqual ? "Yes" : "No") + '\n');
+					}
+				}
+
+				{ // Call the script function "getFactor"
+					// Get the typed dynamic parameters
+					Params<float> cParams;
+
+					// Call the script function
+					FuncScriptPtr<float>(pScript, "getFactor").Call(cParams);
+
+					// Get the result
+					fFactor = cParams.Return;
+				}
+
+				// Call the script function "setFactor"
+				FuncScriptPtr<void, float>(pScript, "setFactor").Call(Params<void, float>(fFactor + 1.0f));
+
+				{ // Call the script function "calculate"
+					// Get the typed dynamic parameters
+					Params<float, float, float> cParams(fFirst, fSecond);
+
+					// Call the script function
+					FuncScriptPtr<float, float, float>(pScript, "calculate").Call(cParams);
+
+					// Get the result
+					fResult = cParams.Return;
+				}
+
+				// Print message
+				System::GetInstance()->GetConsole().Print('\'' + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
+			}
+
+			// Cleanup
+			delete pScript;
+
+			// Print new line
+			System::GetInstance()->GetConsole().Print("--\n\n");
 		}
-
-		{ // Call the script function "getFactor"
-			// Get the typed dynamic parameters
-			Params<float> cParams;
-
-			// Call the script function
-			FuncScriptPtr<float>(pScript, "getFactor").Call(cParams);
-
-			// Get the result
-			fFactor = cParams.Return;
-		}
-
-		// Call the script function "setFactor"
-		FuncScriptPtr<void, float>(pScript, "setFactor").Call(Params<void, float>(fFactor + 1.0f));
-
-		{ // Call the script function "calculate"
-			// Get the typed dynamic parameters
-			Params<float, float, float> cParams(fFirst, fSecond);
-
-			// Call the script function
-			FuncScriptPtr<float, float, float>(pScript, "calculate").Call(cParams);
-
-			// Get the result
-			fResult = cParams.Return;
-		}
-
-		// Print message
-		System::GetInstance()->GetConsole().Print('\'' + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
-
-		// Print new line
-		System::GetInstance()->GetConsole().Print("--\n\n");
-
-		// Cleanup
-		delete pScript;
 	}
 
 	// Done

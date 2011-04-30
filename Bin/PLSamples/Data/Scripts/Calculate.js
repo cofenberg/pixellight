@@ -12,6 +12,13 @@ function scriptFunction(a)
 	return a;
 }
 
+function callCpp(a)
+{
+	return a;
+	// [TODO]
+//	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
+}
+
 function getFactor()
 {
 	return g_Factor;

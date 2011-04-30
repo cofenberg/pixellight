@@ -11,6 +11,10 @@ function scriptFunction(a)
 	return a
 end
 
+function callCpp(a)
+	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
+end
+
 function getFactor()
 	return g_Factor
 end
