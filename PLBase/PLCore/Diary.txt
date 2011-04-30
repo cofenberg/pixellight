@@ -1,3 +1,9 @@
+>> 30.04.2011
+[CO]
+- "Functor"-Templates: Added "Clone()"-Implementation
+
+
+
 >> 29.04.2011
 [CO]
 - Moved "OpenFile()" from "Loader" into "LoadableManager" because it's kind of universal
