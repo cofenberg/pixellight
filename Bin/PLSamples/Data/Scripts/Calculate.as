@@ -7,6 +7,11 @@ float g_Factor = 1;
 //[-------------------------------------------------------]
 //[ Functions                                             ]
 //[-------------------------------------------------------]
+int scriptFunction(int a)
+{
+	return a;
+}
+
 float getFactor()
 {
 	return g_Factor;

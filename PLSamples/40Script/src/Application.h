@@ -78,6 +78,35 @@ class Application : public PLCore::ConsoleApplication {
 		*/
 		float DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond);
 
+		/**
+		*  @brief
+		*    A method
+		*
+		*  @param[in] nFirst
+		*    First number
+		*
+		*  @return
+		*    The result
+		*/
+		int Method(int nFirst);
+
+
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A static method
+		*
+		*  @param[in] nFirst
+		*    First number
+		*
+		*  @return
+		*    The result
+		*/
+		static int StaticMethod(int nFirst);
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual ConsoleApplication functions          ]

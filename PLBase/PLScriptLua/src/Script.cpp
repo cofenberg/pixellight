@@ -161,6 +161,15 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
+void Script::PushArgument(int nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushinteger(m_pLuaState, nValue);
+		m_nCurrentArgument++;
+	}
+}
+
 void Script::PushArgument(uint8 nValue)
 {
 	// Is there a Lua state?
@@ -240,6 +249,20 @@ bool Script::EndCall()
 
 	// Error!
 	return false;
+}
+
+void Script::GetReturn(int &nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isnumber(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		nValue = lua_tointeger(m_pLuaState, -1);
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		nValue = 0;
+	}
 }
 
 void Script::GetReturn(uint8 &nValue)

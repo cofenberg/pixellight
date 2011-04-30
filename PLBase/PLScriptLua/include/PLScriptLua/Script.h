@@ -90,12 +90,14 @@ class Script : public PLScript::Script {
 		PLSCRIPTLUA_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTLUA_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
 		PLSCRIPTLUA_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
+		PLSCRIPTLUA_API virtual void PushArgument(int nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint8 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint16 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(float fValue);
 		PLSCRIPTLUA_API virtual void PushArgument(double fValue);
 		PLSCRIPTLUA_API virtual bool EndCall();
+		PLSCRIPTLUA_API virtual void GetReturn(int &nValue);
 		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint8 &nValue);
 		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint16 &nValue);
 		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint32 &nValue);

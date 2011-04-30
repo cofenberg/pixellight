@@ -80,6 +80,28 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 	if (pScript) {
 		float fFactor = 0.0f;
 
+		// Print the name of the used script language
+		System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
+
+		{ // Some functor fun
+			// Functor pointing to the static method "Application::StaticMethod"
+			Functor<int, int> cStaticMethod(StaticMethod);
+
+			// Functor pointing to the member method "Application::Method"
+			Functor<int, int> cMethod(&Application::Method, this);
+
+			// Functor pointing to the script function "scriptFunction"
+			Functor<int, int> cScriptFunction(new FuncScriptPtr<int, int>(pScript, "scriptFunction"));
+
+			// Call functors - as you can see, there's no difference whether it's a static method, a member method or a script function
+			const int  nValue				 = 42;
+			const int  nStaticMethodResult   = cStaticMethod(nValue);
+			const int  nMethodResult         = cMethod(nValue);
+			const int  nScriptFunctionResult = cScriptFunction(nValue);
+			const bool bFunctorResultsEqual  = (nStaticMethodResult == nValue && nMethodResult == nValue && nScriptFunctionResult == nValue);
+			System::GetInstance()->GetConsole().Print(String("Same functor behaviour: ") + (bFunctorResultsEqual ? "Yes" : "No") + '\n');
+		}
+
 		{ // Call the script function "getFactor"
 			// Get the typed dynamic parameters
 			Params<float> cParams;
@@ -106,7 +128,10 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 		}
 
 		// Print message
-		System::GetInstance()->GetConsole().Print(pScript->GetScriptLanguage() + " script language: '" + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
+		System::GetInstance()->GetConsole().Print('\'' + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
+
+		// Print new line
+		System::GetInstance()->GetConsole().Print("--\n\n");
 
 		// Cleanup
 		delete pScript;
@@ -114,6 +139,28 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 
 	// Done
 	return fResult;
+}
+
+/**
+*  @brief
+*    A method
+*/
+int Application::Method(int nFirst)
+{
+	return nFirst;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private static functions                              ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    A static method
+*/
+int Application::StaticMethod(int nFirst)
+{
+	return nFirst;
 }
 
 

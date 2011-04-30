@@ -124,12 +124,14 @@ class Script : public PLCore::Object {
 
 		// [TODO] Comment those methods when done
 		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
+		virtual void PushArgument(int nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint8 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint16 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
 		virtual void PushArgument(float fValue) = 0;
 		virtual void PushArgument(double fValue) = 0;
 		virtual bool EndCall() = 0;
+		virtual void GetReturn(int &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint8 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint16 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint32 &nValue) = 0;

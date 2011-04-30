@@ -7,6 +7,10 @@ g_Factor = 1
 --[-------------------------------------------------------]
 --[ Functions                                             ]
 --[-------------------------------------------------------]
+function scriptFunction(a)
+	return a
+end
+
 function getFactor()
 	return g_Factor
 end

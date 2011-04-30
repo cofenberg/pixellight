@@ -7,6 +7,11 @@ var g_Factor = 1;
 //[-------------------------------------------------------]
 //[ Functions                                             ]
 //[-------------------------------------------------------]
+function scriptFunction(a)
+{
+	return a;
+}
+
 function getFactor()
 {
 	return g_Factor;

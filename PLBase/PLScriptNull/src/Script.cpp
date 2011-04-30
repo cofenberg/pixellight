@@ -86,6 +86,11 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return true;
 }
 
+void Script::PushArgument(int nValue)
+{
+	// Nothing to do in here
+}
+
 void Script::PushArgument(uint8 nValue)
 {
 	// Nothing to do in here
@@ -117,6 +122,12 @@ bool Script::EndCall()
 
 	// Done
 	return true;
+}
+
+void Script::GetReturn(int &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
 }
 
 void Script::GetReturn(uint8 &nValue)

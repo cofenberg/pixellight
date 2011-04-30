@@ -186,6 +186,12 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
+void Script::PushArgument(int nValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgDWord(m_nCurrentArgument++, nValue);
+}
+
 void Script::PushArgument(uint8 nValue)
 {
 	if (m_pAngelScriptContext)
@@ -249,6 +255,11 @@ bool Script::EndCall()
 
 	// Error!
 	return false;
+}
+
+void Script::GetReturn(int &nValue)
+{
+	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
 }
 
 void Script::GetReturn(uint8 &nValue)
