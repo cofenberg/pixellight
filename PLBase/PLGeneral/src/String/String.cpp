@@ -417,6 +417,16 @@ String::String(double fValue) :
 
 /**
 *  @brief
+*    Pointer constructor
+*/
+String::String(void *pValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = reinterpret_cast<uint_ptr>(pValue);
+}
+
+/**
+*  @brief
 *    Internal copy constructor
 */
 String::String(StringBuffer *pStringBuffer)

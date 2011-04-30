@@ -210,6 +210,15 @@ class String {
 
 		/**
 		*  @brief
+		*    Pointer constructor
+		*
+		*  @param[in] pValue
+		*    Pointer to put into the string
+		*/
+		PLGENERAL_API String(void *pValue);
+
+		/**
+		*  @brief
 		*    Internal copy constructor
 		*
 		*  @param[in] pStringBuffer

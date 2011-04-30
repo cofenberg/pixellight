@@ -1,3 +1,9 @@
+>> 30.04.2011
+[CO]
+- "String": Added pointer constructor "String(void *pValue)"
+
+
+
 >> 29.04.2011
 [CO]
 - Added "File::GetContentAsString()"
