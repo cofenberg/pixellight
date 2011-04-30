@@ -39,14 +39,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-DynFunc::DynFunc()
-{
-}
-
-/**
-*  @brief
 *    Destructor
 */
 DynFunc::~DynFunc()
@@ -121,6 +113,38 @@ DynFunc *DynFunc::Clone() const
 {
 	// No function
 	return nullptr;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Default constructor
+*/
+DynFunc::DynFunc()
+{
+}
+
+/**
+*  @brief
+*    Copy constructor
+*/
+DynFunc::DynFunc(const DynFunc &cDynFunc)
+{
+	// No implementation because the copy constructor is never used
+}
+
+/**
+*  @brief
+*    Copy operator
+*
+*/
+DynFunc &DynFunc::operator =(const DynFunc &cDynFunc)
+{
+	// No implementation because the copy operator is never used
+	return *this;
 }
 
 

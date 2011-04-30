@@ -1,6 +1,7 @@
 >> 30.04.2011
 [CO]
 - "Functor"-Templates: Added "Clone()"-Implementation
+- "DynFunc": Added protected copy constructor and copy operator to avoid misuse, made the default constructor protected as well to avoid confusion
 
 
 

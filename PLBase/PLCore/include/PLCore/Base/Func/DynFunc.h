@@ -71,12 +71,6 @@ class DynFunc {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*/
-		PLCORE_API DynFunc();
-
-		/**
-		*  @brief
 		*    Destructor
 		*/
 		PLCORE_API virtual ~DynFunc();
@@ -148,6 +142,38 @@ class DynFunc {
 		*    Copy of this functoid (can be a null pointer!)
 		*/
 		PLCORE_API virtual DynFunc *Clone() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		PLCORE_API DynFunc();
+
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cDynFunc
+		*    Source to copy from
+		*/
+		PLCORE_API DynFunc(const DynFunc &cDynFunc);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cDynFunc
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		PLCORE_API DynFunc &operator =(const DynFunc &cDynFunc);
 
 
 };
