@@ -136,6 +136,30 @@ class DynFunc {
 
 		/**
 		*  @brief
+		*    Call function with return as string
+		*
+		*  @param[in] sParams
+		*    Parameters as string
+		*
+		*  @return
+		*    Return of the function as string, empty string if there's no return
+		*/
+		PLCORE_API virtual PLGeneral::String CallWithReturn(const PLGeneral::String &sParams);
+
+		/**
+		*  @brief
+		*    Call function with return as string
+		*
+		*  @param[in] cElement
+		*    Parameters as XML
+		*
+		*  @return
+		*    Return of the function as string, empty string if there's no return
+		*/
+		PLCORE_API virtual PLGeneral::String CallWithReturn(const PLGeneral::XmlElement &cElement);
+
+		/**
+		*  @brief
 		*    Clone function object
 		*
 		*  @return

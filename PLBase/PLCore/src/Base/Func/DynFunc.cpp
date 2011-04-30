@@ -107,6 +107,26 @@ void DynFunc::Call(const XmlElement &cElement)
 
 /**
 *  @brief
+*    Call function with return as string
+*/
+String DynFunc::CallWithReturn(const String &sParams)
+{
+	// No function
+	return "";
+}
+
+/**
+*  @brief
+*    Call function with return as string
+*/
+String DynFunc::CallWithReturn(const XmlElement &cElement)
+{
+	// No function
+	return "";
+}
+
+/**
+*  @brief
 *    Clone function object
 */
 DynFunc *DynFunc::Clone() const
