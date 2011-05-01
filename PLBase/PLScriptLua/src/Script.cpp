@@ -421,7 +421,7 @@ int Script::LuaFunctionCallback(lua_State *pLuaState)
 	String sParams;
 	const int nNumOfArguments = lua_gettop(pLuaState);
 	for (int i=1; i<=nNumOfArguments; i++)
-		sParams += String("Param") + i + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
+		sParams += String("Param") + (i-1) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
 
 	// Get the dynamic function
 	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(lua_tointeger(pLuaState, lua_upvalueindex(1)));

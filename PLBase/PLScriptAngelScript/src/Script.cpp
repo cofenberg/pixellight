@@ -67,6 +67,9 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
+	// Remove all dynamic functions
+	RemoveAllDynamicFunctions();
+
 	// Release context reference
 	if (m_pAngelScriptEngine)
 		AngelScriptContext::ReleaseContextReference();
@@ -78,18 +81,39 @@ Script::~Script()
 //[-------------------------------------------------------]
 bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
 {
-	// [TODO] Implement me
+	// Is there already a AngelScript engine instance?
+	if (m_pAngelScriptEngine) {
+		// Error!
+		return false;
+	} else {
+		// Add the dynamic function
+		DynamicFunction *psDynamicFunction = new DynamicFunction;
+		psDynamicFunction->sFunction = sFunction;
+		psDynamicFunction->pDynFunc  = cDynFunc.Clone();
+		m_lstDynamicFunctions.Add(psDynamicFunction);
 
-	// Done
-	return true;
+		// Done
+		return true;
+	}
 }
 
 bool Script::RemoveAllDynamicFunctions()
 {
-	// [TODO] Implement me
+	// Is there already a AngelScript engine instance?
+	if (m_pAngelScriptEngine) {
+		// Error!
+		return false;
+	} else {
+		// Destroy the dynamic functions
+		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+			delete m_lstDynamicFunctions[i]->pDynFunc;
+			delete m_lstDynamicFunctions[i];
+		}
+		m_lstDynamicFunctions.Clear();
 
-	// Done
-	return true;
+		// Done
+		return true;
+	}
 }
 
 String Script::GetSourceCode() const
@@ -113,6 +137,46 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 		// Get a AngelScript module instance
 		if (m_pAngelScriptEngine) {
+			// Add the dynamic functions
+			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+				// Get the dynamic function
+				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+
+				// Get the AngelScript function declaration
+				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(psDynamicFunction->sFunction, psDynamicFunction->pDynFunc->GetSignature());
+
+				// Register global AngelScript function
+				const int nFunctionID = m_pAngelScriptEngine->RegisterGlobalFunction(sFunctionDeclaration, asFUNCTION(AngelScriptFunctionCallback), asCALL_GENERIC);
+				if (nFunctionID < 0) {
+					// Error!
+					String sErrorDescription;
+					switch (nFunctionID) {
+						case asNOT_SUPPORTED:
+							sErrorDescription = " (The calling convention is not supported)";
+							break;
+
+						case asWRONG_CALLING_CONV:
+							sErrorDescription = " (The function's calling convention doesn't match callConv)";
+							break;
+
+						case asINVALID_DECLARATION:
+							sErrorDescription = " (The function declaration is invalid)";
+							break;
+
+						case asNAME_TAKEN:
+							sErrorDescription = " (The function name is already used elsewhere)";
+							break;
+					}
+					LogOutput(Log::Error, "Failed to register the global AngelScript function '" + sFunctionDeclaration + '\'');
+				} else {
+					// Put a pointer to the dynamic function into the user data of the registered AngelScript function
+					asIScriptFunction *pAngelScriptFunction = m_pAngelScriptEngine->GetFunctionDescriptorById(nFunctionID);
+					if (pAngelScriptFunction)
+						pAngelScriptFunction->SetUserData(psDynamicFunction);
+				}
+			}
+
+			// Get the AngelScript module
 			m_pAngelScriptModule = m_pAngelScriptEngine->GetModule(AngelScriptContext::GetUniqueName().GetASCII(), asGM_ALWAYS_CREATE);
 			if (m_pAngelScriptModule) {
 				// Add script section
@@ -173,11 +237,8 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 			//		cout << "Failed to set the line callback function." << endl;
 		}
 		if (m_pAngelScriptContext) {
-			// Construct the function declaration
-			String sFunctionDeclaration = sFunctionSignature;	// Get the signature of the given dynamic parameters (e.g. "void(int,float)")
-			const int nIndex = sFunctionDeclaration.IndexOf("(");
-			if (nIndex > -1)
-				sFunctionDeclaration.Insert(' ' + sFunctionName, nIndex);
+			// Get the AngelScript function declaration
+			const String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunctionName, sFunctionSignature);
 
 			// Find the function ID for the function we want to execute
 			const int nFunctionID = m_pAngelScriptModule->GetFunctionIdByDecl(sFunctionDeclaration);
@@ -192,7 +253,19 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 					return true;
 				} else {
 					// Error!
-					LogOutput(Log::Error, "Failed to prepare the context");
+					String sErrorDescription;
+					switch (nResult) {
+						case asCONTEXT_ACTIVE:
+							// If your're here, you may have tried to call a script function by using PixelLights functors,
+							// AngelScript can only run one function per script context call...
+							sErrorDescription = " (The context is still active or suspended)";
+							break;
+
+						case asNO_FUNCTION:
+							sErrorDescription = " (The function id doesn't exist)";
+							break;
+					}
+					LogOutput(Log::Error, "Failed to prepare the context for the function '" + sFunctionDeclaration + "'" + sErrorDescription);
 				}
 			} else {
 				// Error!
@@ -308,6 +381,97 @@ void Script::GetReturn(double &fValue)
 
 
 //[-------------------------------------------------------]
+//[ Private static AngelScript callback functions         ]
+//[-------------------------------------------------------]
+/*
+*  @brief
+*    AngelScript function callback
+*/
+void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
+{
+	// Get the dynamic function
+	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(pAngelScriptGeneric->GetFunctionUserData());
+
+	// Get the number of arguments AngelScript gave to us and transform the arguments into a functor parameters string
+	String sParams;
+	const int nNumOfArguments = pAngelScriptGeneric->GetArgCount();
+	for (int i=0; i<nNumOfArguments; i++) {
+		String sValue;
+		switch (pAngelScriptGeneric->GetArgTypeId(i)) {
+			case asTYPEID_BOOL:		sValue = pAngelScriptGeneric->GetArgByte(i);						break;
+			case asTYPEID_INT8:		sValue = pAngelScriptGeneric->GetArgByte(i);						break;
+			case asTYPEID_INT16:	sValue = pAngelScriptGeneric->GetArgWord(i);						break;
+			case asTYPEID_INT32:	sValue = static_cast<uint32>(pAngelScriptGeneric->GetArgDWord(i));	break;
+			case asTYPEID_INT64:	sValue = pAngelScriptGeneric->GetArgQWord(i);						break;
+			case asTYPEID_UINT8:	sValue = pAngelScriptGeneric->GetArgByte(i);						break;
+			case asTYPEID_UINT16:	sValue = pAngelScriptGeneric->GetArgWord(i);						break;
+			case asTYPEID_UINT32:	sValue = static_cast<uint32>(pAngelScriptGeneric->GetArgDWord(i));	break;
+			case asTYPEID_UINT64:	sValue = pAngelScriptGeneric->GetArgQWord(i);						break;
+			case asTYPEID_FLOAT:	sValue = pAngelScriptGeneric->GetArgFloat(i);						break;
+			case asTYPEID_DOUBLE:	sValue = pAngelScriptGeneric->GetArgDouble(i);						break;
+
+			/*
+			// [TODO] Support the following?
+			virtual void   *GetArgAddress(asUINT arg) = 0;
+			virtual void   *GetArgObject(asUINT arg) = 0;
+			enum asETypeIdFlags
+			{
+				asTYPEID_OBJHANDLE      = 0x40000000,
+				asTYPEID_HANDLETOCONST  = 0x20000000,
+				asTYPEID_MASK_OBJECT    = 0x1C000000,
+				asTYPEID_APPOBJECT      = 0x04000000,
+				asTYPEID_SCRIPTOBJECT   = 0x08000000,
+			*/
+
+			default:
+				// Do nothing
+				break;
+		}
+
+		// Add to functor parameters
+		sParams += String("Param") + i + "=\"" + sValue + "\" ";
+	}
+
+	// Call the functor
+	const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+
+	// Process the functor return
+	if (sReturn.GetLength()) {
+		switch (pAngelScriptGeneric->GetReturnTypeId()) {
+			case asTYPEID_BOOL:		pAngelScriptGeneric->SetReturnByte(sReturn.GetBool());		break;
+			case asTYPEID_INT8:		pAngelScriptGeneric->SetReturnByte(sReturn.GetInt());		break;
+			case asTYPEID_INT16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetInt());		break;
+			case asTYPEID_INT32:	pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());		break;
+			case asTYPEID_INT64:	pAngelScriptGeneric->SetReturnQWord(sReturn.GetInt());		break;
+			case asTYPEID_UINT8:	pAngelScriptGeneric->SetReturnByte(sReturn.GetUInt8());		break;
+			case asTYPEID_UINT16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetUInt16());	break;
+			case asTYPEID_UINT32:	pAngelScriptGeneric->SetReturnDWord(sReturn.GetUInt32());	break;
+			case asTYPEID_UINT64:	pAngelScriptGeneric->SetReturnQWord(sReturn.GetUInt64());	break;
+			case asTYPEID_FLOAT:	pAngelScriptGeneric->SetReturnFloat(sReturn.GetFloat());	break;
+			case asTYPEID_DOUBLE:	pAngelScriptGeneric->SetReturnDouble(sReturn.GetDouble());	break;
+
+			/*
+			// [TODO] Support the following?
+			virtual int     SetReturnAddress(void *addr) = 0;
+			virtual int     SetReturnObject(void *obj) = 0;
+			enum asETypeIdFlags
+			{
+				asTYPEID_OBJHANDLE      = 0x40000000,
+				asTYPEID_HANDLETOCONST  = 0x20000000,
+				asTYPEID_MASK_OBJECT    = 0x1C000000,
+				asTYPEID_APPOBJECT      = 0x04000000,
+				asTYPEID_SCRIPTOBJECT   = 0x08000000,
+			*/
+
+			default:
+				// Do nothing
+				break;
+		}
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -350,6 +514,19 @@ void Script::Clear()
 		m_pAngelScriptModule->GetEngine()->DiscardModule(m_pAngelScriptModule->GetName());
 		m_pAngelScriptModule = nullptr;
 	}
+}
+
+/**
+*  @brief
+*    Gets a AngelScript function declaration
+*/
+String Script::GetAngelScriptFunctionDeclaration(const String &sFunctionName, const String &sFunctionSignature) const
+{
+	String sFunctionDeclaration = sFunctionSignature;
+	const int nIndex = sFunctionDeclaration.IndexOf("(");
+	if (nIndex > -1)
+		sFunctionDeclaration.Insert(' ' + sFunctionName, nIndex);
+	return sFunctionDeclaration;
 }
 
 

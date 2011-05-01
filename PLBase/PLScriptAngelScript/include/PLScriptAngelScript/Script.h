@@ -37,6 +37,7 @@
 //[-------------------------------------------------------]
 class asIScriptModule;
 class asIScriptEngine;
+class asIScriptGeneric;
 class asIScriptContext;
 
 
@@ -110,6 +111,20 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private static AngelScript callback functions         ]
+	//[-------------------------------------------------------]
+	private:
+		/*
+		*  @brief
+		*    AngelScript function callback
+		*
+		*  @param[in] pAngelScriptGeneric
+		*    AngelScript generic
+		*/
+		static void AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -140,16 +155,45 @@ class Script : public PLScript::Script {
 		*/
 		void Clear();
 
+		/**
+		*  @brief
+		*    Gets a AngelScript function declaration
+		*
+		*  @param[in] sFunctionName
+		*    Name of the function
+		*  @param[in] sFunctionSignature
+		*    Signature of the given dynamic parameters (e.g. "void(int,float)")
+		*
+		*  @return
+		*    AngelScript function declaration (e.g. "void MyFunction(int,float)")
+		*/
+		PLGeneral::String GetAngelScriptFunctionDeclaration(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private structures                                    ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A dynamic function
+		*/
+		struct DynamicFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+		};
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String  m_sSourceCode;			/**< Script source code */
-		asIScriptEngine   *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer, managed by AngelScriptContext */
-		asIScriptModule   *m_pAngelScriptModule;	/**< AngelScript module instance, can be a null pointer */
-		asIScriptContext  *m_pAngelScriptContext;	/**< AngelScript context instance, can be a null pointer */
-		PLGeneral::uint32  m_nCurrentArgument;		/**< Current argument, used during function call */
+		PLGeneral::String					m_sSourceCode;			/**< Script source code */
+		asIScriptEngine					   *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer, managed by AngelScriptContext */
+		asIScriptModule					   *m_pAngelScriptModule;	/**< AngelScript module instance, can be a null pointer */
+		asIScriptContext				   *m_pAngelScriptContext;	/**< AngelScript context instance, can be a null pointer */
+		PLGeneral::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
+		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;	/**< List of dynamic functions */
 
 
 };

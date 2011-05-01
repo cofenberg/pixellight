@@ -14,9 +14,7 @@ int scriptFunction(int a)
 
 int callCpp(int a)
 {
-	return a;
-	// [TODO]
-//	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
+	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
 }
 
 float getFactor()

@@ -1,4 +1,10 @@
-﻿>> 30.04.2011
+﻿>> 01.05.2011
+[CO]
+- AngelScript backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+
+
+
+>> 30.04.2011
 [CO]
 - Added script support for functors/functoids so that it's possible to call C++ functions or member methods from inside scripts...
   as well as other script functions because the functors are hiding this detail.
