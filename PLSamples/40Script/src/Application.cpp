@@ -96,8 +96,8 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 			Functor<int, int> cScriptFunction(new FuncScriptPtr<int, int>(pScript, "scriptFunction"));
 
 			// Tell our script about those functors so that we can use them within the script...
-			pScript->AddDynamicFunction("cppFunction",       cStaticMethod);
-			pScript->AddDynamicFunction("cppMethod",         cMethod);
+			pScript->AddDynamicFunction("cppFunction", cStaticMethod);
+			pScript->AddDynamicFunction("cppMethod",   cMethod);
 
 			// The following is possible as well: Script is calling C++, C++ is calling script... *g*
 			pScript->AddDynamicFunction("cppScriptFunction", cScriptFunction);
@@ -216,4 +216,5 @@ void Application::Main()
 	DoCalculation("Data/Scripts/Calculate.lua", 42.0f, 5.0f);
 	DoCalculation("Data/Scripts/Calculate.js", 42.0f, 5.0f);
 	DoCalculation("Data/Scripts/Calculate.as", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Calculate.py", 42.0f, 5.0f);
 }

@@ -157,7 +157,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			}
 
 			// Load the script
-			const int nResult = luaL_loadbuffer(m_pLuaState, sSourceCode.GetASCII(), sSourceCode.GetLength(), Name.Get());
+			const int nResult = luaL_loadbuffer(m_pLuaState, sSourceCode, sSourceCode.GetLength(), Name.Get());
 			if (!nResult && !lua_pcall(m_pLuaState, 0, 0, 0)) {
 				// Done
 				return true;

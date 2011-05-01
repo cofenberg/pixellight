@@ -1,6 +1,7 @@
 ﻿>> 01.05.2011
 [CO]
 - AngelScript backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+- Python backend: Calling Python functions is working
 
 
 

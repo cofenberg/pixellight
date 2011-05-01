@@ -177,10 +177,10 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			}
 
 			// Get the AngelScript module
-			m_pAngelScriptModule = m_pAngelScriptEngine->GetModule(AngelScriptContext::GetUniqueName().GetASCII(), asGM_ALWAYS_CREATE);
+			m_pAngelScriptModule = m_pAngelScriptEngine->GetModule(AngelScriptContext::GetUniqueName(), asGM_ALWAYS_CREATE);
 			if (m_pAngelScriptModule) {
 				// Add script section
-				if (m_pAngelScriptModule->AddScriptSection(Name.Get(), sSourceCode.GetASCII(), sSourceCode.GetLength()) >= 0) {
+				if (m_pAngelScriptModule->AddScriptSection(Name.Get(), sSourceCode, sSourceCode.GetLength()) >= 0) {
 					// Compile the script
 					const int nResult = m_pAngelScriptModule->Build();
 					if (nResult >= 0) {

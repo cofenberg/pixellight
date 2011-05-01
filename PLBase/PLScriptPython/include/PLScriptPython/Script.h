@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLScriptPython/Python.h"
 #include <PLScript/Script.h>
 #include "PLScriptPython/PLScriptPython.h"
 
@@ -126,12 +127,30 @@ class Script : public PLScript::Script {
 		*/
 		Script &operator =(const Script &cSource);
 
+		/**
+		*  @brief
+		*    Clears the script
+		*/
+		void Clear();
+
+		/**
+		*  @brief
+		*    Increases the number of arguments
+		*/
+		void IncreaseNumOfArguments();
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sSourceCode;	/**< Script source code */
+		PLGeneral::String  m_sSourceCode;			/**< Script source code */
+		PyObject		  *m_pPythonModule;			/**< Python module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject		  *m_pPythonDirectory;		/**< Python directory of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject		  *m_pPythonFunction;		/**< Current Python function, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject		  *m_pPythonTuple;			/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
+		PLGeneral::uint32  m_nCurrentArgument;		/**< Current argument, used during function call */
+		PyObject		  *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
 
 
 };

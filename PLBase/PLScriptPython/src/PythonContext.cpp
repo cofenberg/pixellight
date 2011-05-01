@@ -54,6 +54,9 @@ void PythonContext::AddContextReference()
 	if (!m_nContexCounter) {
 		PL_LOG(Info, "Initialize Python")
 		Py_Initialize();
+
+		// [TODO] Setup the Python search path by using "PySys_SetPath()"?
+
 	}
 	m_nContexCounter++;
 }
