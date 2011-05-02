@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Type/Type.h"
 #include "PLCore/Base/Func/DynFunc.h"
 #include "PLCore/Base/Func/DynParams.h"
 
@@ -67,6 +68,16 @@ String DynFunc::GetSignature() const
 {
 	// No function
 	return "";
+}
+
+/**
+*  @brief
+*    Get the return type ID
+*/
+int DynFunc::GetReturnTypeID() const
+{
+	// No function
+	return Type<void>::TypeID;
 }
 
 /**

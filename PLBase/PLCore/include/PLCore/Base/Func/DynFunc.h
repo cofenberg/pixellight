@@ -100,6 +100,15 @@ class DynFunc {
 
 		/**
 		*  @brief
+		*    Get the return type ID
+		*
+		*  @return
+		*    Return type ID (e.g. "TypeNull" for "void()" or "TypeInt" for "int()")
+		*/
+		PLCORE_API virtual int GetReturnTypeID() const;
+
+		/**
+		*  @brief
 		*    Call function
 		*
 		*  @param[in] cParams

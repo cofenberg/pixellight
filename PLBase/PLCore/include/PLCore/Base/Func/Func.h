@@ -99,6 +99,11 @@ class Func : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -306,6 +311,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -508,6 +518,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -707,6 +722,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -904,6 +924,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1099,6 +1124,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1292,6 +1322,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1479,6 +1514,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1664,6 +1704,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1847,6 +1892,11 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2028,6 +2078,11 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2207,6 +2262,11 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2376,6 +2436,11 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			return Signature<R, T0, T1, T2, T3>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2543,6 +2608,11 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			return Signature<R, T0, T1, T2>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2708,6 +2778,11 @@ class Func<R, T0, T1> : public DynFunc {
 			return Signature<R, T0, T1>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2871,6 +2946,11 @@ class Func<R, T0> : public DynFunc {
 			return Signature<R, T0>::GetSignatureID();
 		}
 
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -3031,6 +3111,11 @@ class Func<R> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<R>::GetSignatureID();
+		}
+
+		virtual int GetReturnTypeID() const
+		{
+			return Type<R>::TypeID;
 		}
 
 		virtual void Call(DynParams &cParams)
