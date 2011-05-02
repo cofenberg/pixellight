@@ -5,7 +5,7 @@ var g_Factor = 1;
 
 
 //[-------------------------------------------------------]
-//[ Functions                                             ]
+//[ Global functions                                      ]
 //[-------------------------------------------------------]
 function scriptFunction(a)
 {
@@ -15,7 +15,7 @@ function scriptFunction(a)
 function callCpp(a)
 {
 	return a;
-	// [TODO]
+	// [TODO] Implement calling C stuff from JavaScript
 //	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
 }
 

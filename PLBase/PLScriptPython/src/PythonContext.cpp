@@ -54,8 +54,12 @@ void PythonContext::AddContextReference()
 	if (!m_nContexCounter) {
 		PL_LOG(Info, "Initialize Python")
 		Py_Initialize();
+		if (!Py_IsInitialized())
+			PL_LOG(Error, "Failed to initialize Python")
 
 		// [TODO] Setup the Python search path by using "PySys_SetPath()"?
+
+		// [TODO] Use Py_SetProgramName?
 
 	}
 	m_nContexCounter++;

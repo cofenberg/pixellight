@@ -5,15 +5,13 @@ g_Factor = 1
 
 
 #[-------------------------------------------------------]
-#[ Functions                                             ]
+#[ Global functions                                      ]
 #[-------------------------------------------------------]
 def scriptFunction(a):
 	return a
 
 def callCpp(a):
-	return a
-	# [TODO]
-#	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
+	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
 
 def getFactor():
 	return g_Factor

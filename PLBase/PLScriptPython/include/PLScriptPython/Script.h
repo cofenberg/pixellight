@@ -103,6 +103,25 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private static Python callback functions              ]
+	//[-------------------------------------------------------]
+	private:
+		/*
+		*  @brief
+		*    Python function callback
+		*
+		*  @param[in] pPythonSelf
+		*    Python self object
+		*  @param[in] pPythonArguments
+		*    Python tuple object representing all arguments
+		*
+		*  @return
+		*    Python result object, null pointer if an exception was set
+		*/
+		static PyObject *PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPythonArguments);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -141,16 +160,32 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private structures                                    ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A dynamic function
+		*/
+		struct DynamicFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String  m_sSourceCode;			/**< Script source code */
-		PyObject		  *m_pPythonModule;			/**< Python module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject		  *m_pPythonDirectory;		/**< Python directory of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject		  *m_pPythonFunction;		/**< Current Python function, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject		  *m_pPythonTuple;			/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
-		PLGeneral::uint32  m_nCurrentArgument;		/**< Current argument, used during function call */
-		PyObject		  *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
+		PLGeneral::String					m_sSourceCode;				/**< Script source code */
+		PyObject						   *m_pPythonModule;			/**< Python module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject						   *m_pPythonDirectory;			/**< Python directory of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject						   *m_pPythonFunction;			/**< Current Python function, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject						   *m_pPythonTuple;				/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
+		PLGeneral::uint32					m_nCurrentArgument;			/**< Current argument, used during function call */
+		PyObject						   *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
+		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;		/**< List of dynamic functions */
+		PyMethodDef						   *m_pPythonTableOfFunctions;	/**< Python table of functions, can be a null pointer */
 
 
 };
