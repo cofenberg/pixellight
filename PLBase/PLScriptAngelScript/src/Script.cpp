@@ -123,11 +123,11 @@ String Script::GetSourceCode() const
 
 bool Script::SetSourceCode(const String &sSourceCode)
 {
-	// Backup the given source code
-	m_sSourceCode = sSourceCode;
-
 	// Clear the previous script
 	Clear();
+
+	// Backup the given source code
+	m_sSourceCode = sSourceCode;
 
 	// Is there source code?
 	if (m_sSourceCode.GetLength()) {
@@ -503,6 +503,9 @@ Script &Script::operator =(const Script &cSource)
 */
 void Script::Clear()
 {
+	// Reset the source code
+	m_sSourceCode = "";
+
 	// Release the AngelScript context instance
 	if (m_pAngelScriptContext) {
 		m_pAngelScriptContext->Release();
@@ -514,6 +517,9 @@ void Script::Clear()
 		m_pAngelScriptModule->GetEngine()->DiscardModule(m_pAngelScriptModule->GetName());
 		m_pAngelScriptModule = nullptr;
 	}
+
+	// Reset the current argument
+	m_nCurrentArgument = 0;
 }
 
 /**

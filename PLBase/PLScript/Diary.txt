@@ -1,6 +1,11 @@
 ﻿>> 02.05.2011
 [CO]
 - Python backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+- V8 (JavaScript) backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+-> The Lua, Python, AngelScript and JavaScript backends are now equal in the implemented behaviour. It's possible to call script functions
+   from the C++ side, and it's also possible to call C++ functions from the script side. I'am quite sure that this isn't everything one
+   requires when working with script engines, but it's a start. I have to take a break for a couple of days due to university stuff, then
+   I continue working on PLScript.
 
 
 

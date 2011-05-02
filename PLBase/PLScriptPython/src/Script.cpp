@@ -163,7 +163,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 					// Create the new Python function object
 					PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psDynamicFunction, nullptr, nullptr));
 
-					// Add the new Python function
+					// Add the new Python function - "PyModule_AddObject()" steals the reference to "pPythonFunction" so that we don't need to use "Py_DECREF" on our Python function
 					if (PyModule_AddObject(m_pPythonModule, psDynamicFunction->sFunction, pPythonFunction) == -1) {
 						// Error!
 						LogOutput(Log::Error, "Failed to add the function '" + psDynamicFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');

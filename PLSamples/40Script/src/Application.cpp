@@ -102,7 +102,7 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 			// The following is possible as well: Script is calling C++, C++ is calling script... *g*
 			pScript->AddDynamicFunction("cppScriptFunction", cScriptFunction);
 			// ... although it depends on the used internal script API whether or not it actually works without issues. With
-			// the Lua and Python API there are no issues, but AngelScript can't run another AngelScript while one is already running.
+			// the Lua, Python and V8 (JavaScript) API there are no issues, but AngelScript can't run another AngelScript while one is already running.
 			// But using this way, one can e.g. call an AngelScript function from inside a Lua script function...
 			// But in general, to be on the safe side, don't do such crazy things... although, hm... *g*
 

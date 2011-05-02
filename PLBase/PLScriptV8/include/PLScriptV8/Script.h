@@ -103,6 +103,23 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private static V8 callback functions                  ]
+	//[-------------------------------------------------------]
+	private:
+		/*
+		*  @brief
+		*    V8 function callback
+		*
+		*  @param[in] vV8Arguments
+		*    V8 arguments
+		*
+		*  @return
+		*    V8 function result
+		*/
+		static v8::Handle<v8::Value> V8FunctionCallback(const v8::Arguments &vV8Arguments);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -135,14 +152,29 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private structures                                    ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A dynamic function
+		*/
+		struct DynamicFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sSourceCode;		/**< Script source code */
-		v8::Persistent<v8::Context> m_cV8Context;		/**< V8 context */
-		PLGeneral::String			m_sCurrentFunction;	/**< Name of the current function */
-		v8::Handle<v8::Value>		m_cV8CurrentResult;	/**< Current V8 function */
-		PLGeneral::Array<double>	m_lstArguments;		/**< Current V8 arguments */
+		PLGeneral::String					m_sSourceCode;			/**< Script source code */
+		v8::Persistent<v8::Context>			m_cV8Context;			/**< V8 context */
+		PLGeneral::String					m_sCurrentFunction;		/**< Name of the current function */
+		v8::Handle<v8::Value>				m_cV8CurrentResult;		/**< Current V8 function */
+		PLGeneral::Array<double>			m_lstArguments;			/**< Current V8 arguments */
+		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;	/**< List of dynamic functions */
 
 
 };

@@ -14,9 +14,7 @@ function scriptFunction(a)
 
 function callCpp(a)
 {
-	return a;
-	// [TODO] Implement calling C stuff from JavaScript
-//	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
+	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
 }
 
 function getFactor()

@@ -60,6 +60,9 @@ Script::~Script()
 {
 	// Clear the script
 	Clear();
+
+	// Remove all dynamic functions
+	RemoveAllDynamicFunctions();
 }
 
 
@@ -68,16 +71,39 @@ Script::~Script()
 //[-------------------------------------------------------]
 bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
 {
-	// [TODO] Implement me
+	// Is there a V8 context?
+	if (m_cV8Context.IsEmpty()) {
+		// Add the dynamic function
+		DynamicFunction *psDynamicFunction = new DynamicFunction;
+		psDynamicFunction->sFunction = sFunction;
+		psDynamicFunction->pDynFunc  = cDynFunc.Clone();
+		m_lstDynamicFunctions.Add(psDynamicFunction);
 
-	// Done
-	return true;
+		// Done
+		return true;
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 bool Script::RemoveAllDynamicFunctions()
 {
-	// [TODO] Implement me
-	return true;
+	// Is there a V8 context?
+	if (m_cV8Context.IsEmpty()) {
+		// Destroy the dynamic functions
+		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+			delete m_lstDynamicFunctions[i]->pDynFunc;
+			delete m_lstDynamicFunctions[i];
+		}
+		m_lstDynamicFunctions.Clear();
+
+		// Done
+		return true;
+	} else {
+		// Error!
+		return false;
+	}
 }
 
 String Script::GetSourceCode() const
@@ -98,8 +124,29 @@ bool Script::SetSourceCode(const String &sSourceCode)
 		// Create a stack-allocated handle scope
 		v8::HandleScope cHandleScope;
 
-		// Create a new context
-		m_cV8Context = v8::Context::New();
+		// Are there any dynamic functions?
+		if (m_lstDynamicFunctions.GetNumOfElements()) {
+			// Create a template for the global object and set the
+			// built-in global functions.
+			v8::Handle<v8::ObjectTemplate> cV8Globals = v8::ObjectTemplate::New();
+
+			// Add the dynamic functions
+			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+				// Get the dynamic function
+				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+
+				// Add V8 function
+				v8::Local<v8::ObjectTemplate> cV8Function = v8::ObjectTemplate::New();
+				cV8Function->SetCallAsFunctionHandler(V8FunctionCallback, v8::External::New(psDynamicFunction));
+				cV8Globals->Set(v8::String::New(psDynamicFunction->sFunction), cV8Function);
+			}
+
+			// Create a new context
+			m_cV8Context = v8::Context::New(nullptr, cV8Globals);
+		} else {
+			// Create a new context
+			m_cV8Context = v8::Context::New();
+		}
 
 		// Enter the created context for compiling and running the hello world script
 		v8::Context::Scope cContextScope(m_cV8Context);
@@ -122,84 +169,101 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
-	// Create a stack-allocated handle scope
-	v8::HandleScope cHandleScope;
+	// Is there a V8 context?
+	if (!m_cV8Context.IsEmpty()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
 
-	// Enter the created context for compiling and running the hello world script
-	v8::Context::Scope cContextScope(m_cV8Context);
+		// Enter the created context for compiling and running the hello world script
+		v8::Context::Scope cContextScope(m_cV8Context);
 
-	// Get the V8 function
-	v8::Handle<v8::Value> cV8Value = m_cV8Context->Global()->Get(v8::String::New(sFunctionName));
-	if (cV8Value->IsFunction()) {
-		// Backup the name of the current function (we may need it for error log output)
-		m_sCurrentFunction = sFunctionName;
+		// Get the V8 function
+		v8::Handle<v8::Value> cV8Value = m_cV8Context->Global()->Get(v8::String::New(sFunctionName));
+		if (cV8Value->IsFunction()) {
+			// Backup the name of the current function (we may need it for error log output)
+			m_sCurrentFunction = sFunctionName;
 
-		// Clear the V8 arguments list
-		m_lstArguments.Clear();
-	} else {
-		// Error!
-		m_sCurrentFunction = "";
-		LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found");
+			// Clear the V8 arguments list
+			m_lstArguments.Clear();
+		} else {
+			// Error!
+			m_sCurrentFunction = "";
+			LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found");
+		}
+
+		// Done
+		return true;
 	}
 
-	// Done
-	return true;
+	// Error!
+	return false;
 }
 
 void Script::PushArgument(int nValue)
 {
-	m_lstArguments.Add(nValue);
+	if (m_sCurrentFunction.GetLength())
+		m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(uint8 nValue)
 {
-	m_lstArguments.Add(nValue);
+	if (m_sCurrentFunction.GetLength())
+		m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(uint16 nValue)
 {
-	m_lstArguments.Add(nValue);
+	if (m_sCurrentFunction.GetLength())
+		m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(uint32 nValue)
 {
-	m_lstArguments.Add(nValue);
+	if (m_sCurrentFunction.GetLength())
+		m_lstArguments.Add(nValue);
 }
 
 void Script::PushArgument(float fValue)
 {
-	m_lstArguments.Add(fValue);
+	if (m_sCurrentFunction.GetLength())
+		m_lstArguments.Add(fValue);
 }
 
 void Script::PushArgument(double fValue)
 {
-	m_lstArguments.Add(fValue);
+	if (m_sCurrentFunction.GetLength())
+		m_lstArguments.Add(fValue);
 }
 
 bool Script::EndCall()
 {
-	// Create a stack-allocated handle scope
-	v8::HandleScope cHandleScope;
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
 
-	// Enter the created context for compiling and running the hello world script
-	v8::Context::Scope cContextScope(m_cV8Context);
+		// Enter the created context for compiling and running the hello world script
+		v8::Context::Scope cContextScope(m_cV8Context);
 
-	// Get the V8 function
-	v8::Handle<v8::Function> cV8Function = v8::Handle<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
-	if (cV8Function->IsFunction()) {
-		if (m_lstArguments.GetNumOfElements()) {
-			v8::Handle<v8::Value> *pcArguments = new v8::Handle<v8::Value>[m_lstArguments.GetNumOfElements()]();
-			for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
-				pcArguments[i] = v8::Number::New(m_lstArguments[i]);
-			m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), m_lstArguments.GetNumOfElements(), pcArguments);
-			delete [] pcArguments;
-		} else {
-			m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), 0, nullptr);
+		// Get the V8 function
+		v8::Handle<v8::Function> cV8Function = v8::Handle<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
+		if (cV8Function->IsFunction()) {
+			if (m_lstArguments.GetNumOfElements()) {
+				v8::Handle<v8::Value> *pcArguments = new v8::Handle<v8::Value>[m_lstArguments.GetNumOfElements()]();
+				for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
+					pcArguments[i] = v8::Number::New(m_lstArguments[i]);
+				m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), m_lstArguments.GetNumOfElements(), pcArguments);
+				delete [] pcArguments;
+			} else {
+				m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), 0, nullptr);
+			}
 		}
+
+		// Done
+		return true;
 	}
 
-	// Done
-	return true;
+	// Error!
+	return false;
 }
 
 void Script::GetReturn(int &nValue)
@@ -234,6 +298,50 @@ void Script::GetReturn(double &fValue)
 
 
 //[-------------------------------------------------------]
+//[ Private static V8 callback functions                  ]
+//[-------------------------------------------------------]
+/*
+*  @brief
+*    V8 function callback
+*/
+v8::Handle<v8::Value> Script::V8FunctionCallback(const v8::Arguments &vV8Arguments)
+{
+	// Get the dynamic function
+	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(v8::External::Unwrap(vV8Arguments.Data()));
+	if (psDynamicFunction) {
+		// V8 arguments to parameter string
+		String sParams;
+		for (int i=0; i<vV8Arguments.Length(); i++)
+			sParams += String("Param") + i + "=\"" + *v8::String::AsciiValue(vV8Arguments[i]->ToString()) + "\" ";
+
+		// Call the functor
+		const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+
+		// Process the functor return
+		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+			case TypeBool:		return v8::Boolean::New(sReturn.GetBool());
+			case TypeDouble:	return v8::Number ::New(sReturn.GetDouble());
+			case TypeFloat:		return v8::Number ::New(sReturn.GetFloat());
+			case TypeInt:		return v8::Integer::New(sReturn.GetInt());
+			case TypeInt16:		return v8::Integer::New(sReturn.GetInt());
+			case TypeInt32:		return v8::Int32  ::New(sReturn.GetInt());
+			case TypeInt64:		return v8::Integer::New(sReturn.GetInt());	// [TODO] TypeInt64 is currently handled just as int
+			case TypeInt8:		return v8::Integer::New(sReturn.GetInt());
+			case TypeString:	return v8::String ::New(sReturn);
+			case TypeUInt16:	return v8::Integer::New(sReturn.GetUInt16());
+			case TypeUInt32:	return v8::Uint32 ::New(sReturn.GetUInt32());
+			case TypeUInt64:	return v8::Integer::New(static_cast<uint32>(sReturn.GetUInt64()));	// [TODO] TypeUInt64 is currently handled just as int
+			case TypeUInt8:		return v8::Integer::New(sReturn.GetUInt8());
+			default:			return v8::Handle<v8::Value>();// TypeVoid, TypeNull, TypeObjectPtr, -1
+		}
+	}
+
+	// Error!
+	return v8::Handle<v8::Value>();
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -261,9 +369,18 @@ Script &Script::operator =(const Script &cSource)
 */
 void Script::Clear()
 {
+	// Reset the source code
+	m_sSourceCode = "";
+
 	// Dispose the persistent context
 	if (!m_cV8Context.IsEmpty())
 		m_cV8Context.Dispose();
+
+	// Reset the name of the current function
+	m_sCurrentFunction = "";
+
+	// Clear the V8 arguments list
+	m_lstArguments.Clear();
 }
 
 

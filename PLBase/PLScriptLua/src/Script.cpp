@@ -483,6 +483,9 @@ void Script::Clear()
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
+		// Reset the source code
+		m_sSourceCode = "";
+
 		// Verify the stack and write a warning into the log if the script stack is not empty
 		if (lua_gettop(m_pLuaState))
 			LogOutput(Log::Warning, "Script termination, but the stack is not empty");
@@ -490,6 +493,11 @@ void Script::Clear()
 		// Close the Lua state
 		lua_close(m_pLuaState);
 		m_pLuaState = nullptr;
+
+		// Reset states
+		m_sCurrentFunction = "";
+		m_bFunctionResult  = false;
+		m_nCurrentArgument = 0;
 	}
 }
 
