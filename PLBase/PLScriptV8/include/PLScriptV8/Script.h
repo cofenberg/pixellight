@@ -44,7 +44,7 @@ namespace PLScriptV8 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    V8 (JavaScript engine, http://code.google.com/p/v8/) script implementation
+*    V8 (ECMA-262 compliant JavaScript engine, see http://code.google.com/p/v8/) script implementation
 */
 class Script : public PLScript::Script {
 
@@ -52,7 +52,7 @@ class Script : public PLScript::Script {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPTV8_RTTI_EXPORT, Script, "PLScriptV8", PLScript::Script, "V8 (JavaScript engine, http://code.google.com/p/v8/) script implementation")
+	pl_class(PLSCRIPTV8_RTTI_EXPORT, Script, "PLScriptV8", PLScript::Script, "V8 (ECMA-262 compliant JavaScript engine, see http://code.google.com/p/v8/) script implementation")
 		pl_properties
 			pl_property("Language", "JavaScript")
 			pl_property("Formats",  "js,JS")
@@ -150,6 +150,29 @@ class Script : public PLScript::Script {
 		*/
 		void Clear();
 
+		/**
+		*  @brief
+		*    Write a string into the log
+		*
+		*  @param[in] nLogLevel
+		*    Log level
+		*  @param[in] sText
+		*    Text which should be written into the log
+		*  @param[in] cTryCatch
+		*    "v8::TryCatch" instance
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    The text is written to the log only if the current
+		*    log level is greater or equal to the specified value.
+		*    This method is an extension of "PLGeneral::Log::Output()"
+		*    which also adds the name of the script to the given
+		*    text and the "v8::TryCatch" line and expection.
+		*/
+		bool LogOutputTryCatch(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText, const v8::TryCatch &cTryCatch);
+
 
 	//[-------------------------------------------------------]
 	//[ Private structures                                    ]
@@ -172,7 +195,7 @@ class Script : public PLScript::Script {
 		PLGeneral::String					m_sSourceCode;			/**< Script source code */
 		v8::Persistent<v8::Context>			m_cV8Context;			/**< V8 context */
 		PLGeneral::String					m_sCurrentFunction;		/**< Name of the current function */
-		v8::Handle<v8::Value>				m_cV8CurrentResult;		/**< Current V8 function */
+		v8::Local<v8::Value>				m_cV8CurrentResult;		/**< Current V8 function */
 		PLGeneral::Array<double>			m_lstArguments;			/**< Current V8 arguments */
 		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;	/**< List of dynamic functions */
 

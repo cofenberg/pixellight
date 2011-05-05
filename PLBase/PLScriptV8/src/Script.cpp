@@ -128,7 +128,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 		if (m_lstDynamicFunctions.GetNumOfElements()) {
 			// Create a template for the global object and set the
 			// built-in global functions.
-			v8::Handle<v8::ObjectTemplate> cV8Globals = v8::ObjectTemplate::New();
+			v8::Local<v8::ObjectTemplate> cV8Globals = v8::ObjectTemplate::New();
 
 			// Add the dynamic functions
 			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
@@ -138,7 +138,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				// Add V8 function
 				v8::Local<v8::ObjectTemplate> cV8Function = v8::ObjectTemplate::New();
 				cV8Function->SetCallAsFunctionHandler(V8FunctionCallback, v8::External::New(psDynamicFunction));
-				cV8Globals->Set(v8::String::New(psDynamicFunction->sFunction), cV8Function);
+				cV8Globals->Set(v8::String::New(psDynamicFunction->sFunction), cV8Function, v8::ReadOnly);
 			}
 
 			// Create a new context
@@ -152,13 +152,25 @@ bool Script::SetSourceCode(const String &sSourceCode)
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Create a string containing the JavaScript source code
-		v8::Handle<v8::String> cSource = v8::String::New(sSourceCode);
-
-		// Compile the source code
-		v8::Handle<v8::Script> cScript = v8::Script::Compile(cSource);
-
-		// Run the script to get the result
-		v8::Handle<v8::Value> cResult = cScript->Run();
+		v8::Local<v8::String> cSource = v8::String::New(sSourceCode);
+		if (cSource.IsEmpty()) {
+			// Error!
+			LogOutput(Log::Error, "Failed to generate string source");
+		} else {
+			// Compile the source code
+			v8::TryCatch cTryCatch;
+			v8::Local<v8::Script> cScript = v8::Script::Compile(cSource);
+			if (cScript.IsEmpty()) {
+				// Error!
+				LogOutputTryCatch(Log::Error, "Failed to compile the script", cTryCatch);
+			} else {
+				// Run the script to get the result
+				if (cScript->Run().IsEmpty()) {
+					// Error!
+					LogOutputTryCatch(Log::Error, "Failed to run the script", cTryCatch);
+				}
+			}
+		}
 	} else {
 		// No script at all - done
 	}
@@ -178,7 +190,7 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Get the V8 function
-		v8::Handle<v8::Value> cV8Value = m_cV8Context->Global()->Get(v8::String::New(sFunctionName));
+		v8::Local<v8::Value> cV8Value = m_cV8Context->Global()->Get(v8::String::New(sFunctionName));
 		if (cV8Value->IsFunction()) {
 			// Backup the name of the current function (we may need it for error log output)
 			m_sCurrentFunction = sFunctionName;
@@ -245,10 +257,10 @@ bool Script::EndCall()
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Get the V8 function
-		v8::Handle<v8::Function> cV8Function = v8::Handle<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
+		v8::Local<v8::Function> cV8Function = v8::Local<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
 		if (cV8Function->IsFunction()) {
 			if (m_lstArguments.GetNumOfElements()) {
-				v8::Handle<v8::Value> *pcArguments = new v8::Handle<v8::Value>[m_lstArguments.GetNumOfElements()]();
+				v8::Local<v8::Value> *pcArguments = new v8::Local<v8::Value>[m_lstArguments.GetNumOfElements()]();
 				for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
 					pcArguments[i] = v8::Number::New(m_lstArguments[i]);
 				m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), m_lstArguments.GetNumOfElements(), pcArguments);
@@ -332,12 +344,12 @@ v8::Handle<v8::Value> Script::V8FunctionCallback(const v8::Arguments &vV8Argumen
 			case TypeUInt32:	return v8::Uint32 ::New(sReturn.GetUInt32());
 			case TypeUInt64:	return v8::Integer::New(static_cast<uint32>(sReturn.GetUInt64()));	// [TODO] TypeUInt64 is currently handled just as int
 			case TypeUInt8:		return v8::Integer::New(sReturn.GetUInt8());
-			default:			return v8::Handle<v8::Value>();// TypeVoid, TypeNull, TypeObjectPtr, -1
+			default:			return v8::Local<v8::Value>();// TypeVoid, TypeNull, TypeObjectPtr, -1
 		}
 	}
 
 	// Error!
-	return v8::Handle<v8::Value>();
+	return v8::Local<v8::Value>();
 }
 
 
@@ -381,6 +393,19 @@ void Script::Clear()
 
 	// Clear the V8 arguments list
 	m_lstArguments.Clear();
+}
+
+/**
+*  @brief
+*    Write a string into the log
+*/
+bool Script::LogOutputTryCatch(uint8 nLogLevel, const String &sText, const v8::TryCatch &cTryCatch)
+{
+	// Get the error description
+	const String sErrorDescription = cTryCatch.HasCaught() ? (String(" (Line ") + cTryCatch.Message()->GetLineNumber() + " \"" + String::FromUTF8(*v8::String::Utf8Value(cTryCatch.Exception()))) + "\")": "";
+
+	// Call the base implementation
+	return PLScript::Script::LogOutput(nLogLevel, sText + sErrorDescription);
 }
 
 
