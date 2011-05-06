@@ -127,6 +127,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScene", "PLEngine\PLScene\PLScene.vcxproj", "{2791052D-4680-4288-8F9C-77D8FF3C4469}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLEngine", "PLEngine\PLEngine\PLEngine.vcxproj", "{CC92EBB3-44C5-429C-992C-CF71C8C69D29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCompositing", "PLEngine\PLCompositing\PLCompositing.vcxproj", "{A4EFCE15-1178-484A-A59F-343AE41DDD52}"
 EndProject

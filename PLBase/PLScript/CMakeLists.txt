@@ -16,6 +16,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript)
 add_sources(
 	src/PLScript.cpp
 	src/Script.cpp
+	src/ScriptBinding.cpp
 	src/ScriptManager.cpp
 )
 

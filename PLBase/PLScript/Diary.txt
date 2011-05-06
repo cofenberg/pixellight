@@ -1,4 +1,12 @@
-﻿>> 02.05.2011
+﻿>> 06.05.2011
+[CO]
+- Added "ScriptBinding" which is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
+  derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class instance to a script - but usually
+  it's useful to have such an abstract base class...
+
+
+
+>> 02.05.2011
 [CO]
 - Python backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
 - V8 (JavaScript) backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"

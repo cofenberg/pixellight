@@ -1,3 +1,10 @@
+>> 06.05.2011
+[CO]
+- Added "ScriptBindingTiming" which is intended to bind some stuff from "PLGeneral::Timing" to scripts
+- Added "SNMScript", a scene node modifier which redirects the update event into a script
+
+
+
 >> 22.03.2011
 [CO]
 - "PLEngine::RendererConfig": Changed "VSync" into "SwapInterval"

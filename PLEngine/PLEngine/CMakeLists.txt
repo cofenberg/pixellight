@@ -28,6 +28,7 @@ add_sources(
 	src/Picking/MousePicking.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
+	src/Script/SNMScript.cpp
 	src/PLEngine.cpp
 )
 
@@ -37,9 +38,10 @@ add_sources(
 add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScript/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLGui/PLGui/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLInput/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
@@ -60,8 +62,9 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
-	PLGraphics
+	PLScript
 	PLMath
+	PLGraphics
 	PLGui
 	PLInput
 	PLRenderer
@@ -147,7 +150,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLGraphics PLCore PLMath PLGui PLInput PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLScript PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
 add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
