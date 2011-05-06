@@ -4,6 +4,8 @@
   derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class instance to a script - but usually
   it's useful to have such an abstract base class...
 - "Script::AddDynamicFunction()": Added namespace as last optional parameter (backend implementations will follow)
+- Added "Script::AddBinding()" which adds a script binding to connect the given RTTI class instance with this script (currently only RTTI
+  methods are used)
 
 
 

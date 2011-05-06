@@ -96,6 +96,17 @@ class Script : public PLCore::Object {
 		*/
 		PLSCRIPT_API void GetFormats(PLGeneral::Array<PLGeneral::String> &lstFormats) const;
 
+		/**
+		*  @brief
+		*    Adds a script binding to connect the given RTTI class instance with this script
+		*
+		*  @param[in] cObject
+		*    RTTI class instance, must stay valid as long as this script lives
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
+		*/
+		PLSCRIPT_API void AddBinding(PLCore::Object &cObject, const PLGeneral::String &sNamespace = "");
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Script functions                       ]

@@ -31,6 +31,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScript {
 
 
@@ -78,6 +79,28 @@ void Script::GetFormats(Array<String> &lstFormats) const
 			sToken = cTokenizer.GetNextToken();
 		}
 		cTokenizer.Stop();
+	}
+}
+
+/**
+*  @brief
+*    Adds a script binding to connect the given RTTI class instance with this script
+*/
+void Script::AddBinding(Object &cObject, const String &sNamespace)
+{
+	// Get a list of all RTTI methods of the given RTTI class instance
+	const List<DynFunc*> lstMethods = cObject.GetMethods();
+
+	// Add all methods to this script
+	Iterator<DynFunc*> cIterator = lstMethods.GetIterator();
+	while (cIterator.HasNext()) {
+		// Get the dynamic function
+		DynFunc *pDynFunc = cIterator.Next();
+
+		// Get the function descriptor
+		const FuncDesc *pFuncDesc = pDynFunc->GetDesc();
+		if (pFuncDesc)
+			AddDynamicFunction(pFuncDesc->GetName(), *pDynFunc, sNamespace);
 	}
 }
 
