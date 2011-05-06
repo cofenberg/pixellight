@@ -82,7 +82,7 @@ class Script : public PLScript::Script {
 	//[ Public virtual PLScript::Script functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPTV8_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc);
+		PLSCRIPTV8_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
 		PLSCRIPTV8_API virtual bool RemoveAllDynamicFunctions();
 		PLSCRIPTV8_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTV8_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
@@ -185,6 +185,7 @@ class Script : public PLScript::Script {
 		struct DynamicFunction {
 			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
 			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
 
 

@@ -83,7 +83,7 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
@@ -92,8 +92,9 @@ bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc
 	} else {
 		// Add the dynamic function
 		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction = sFunction;
-		psDynamicFunction->pDynFunc  = cDynFunc.Clone();
+		psDynamicFunction->sFunction  = sFunction;
+		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
+		psDynamicFunction->sNamespace = sNamespace;
 		m_lstDynamicFunctions.Add(psDynamicFunction);
 
 		// Done
@@ -150,10 +151,28 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				// Get the dynamic function
 				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
 
-				// Store a pointer to the dynamic function in the c-closure
-				lua_pushinteger(m_pLuaState, reinterpret_cast<lua_Integer>(psDynamicFunction));
-				lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);
-				lua_setglobal(m_pLuaState, psDynamicFunction->sFunction);
+				// Is the function within a namespace? (= Lua table)
+				if (psDynamicFunction->sNamespace.GetLength()) {
+					// [TODO] Create and set Lua table
+
+					// Table key
+					lua_pushstring(m_pLuaState, psDynamicFunction->sFunction);			// Push the function name onto the Lua stack
+
+					// Table value: Store a pointer to the dynamic function in the c-closure
+					lua_pushlightuserdata(m_pLuaState, psDynamicFunction);				// Push a pointer to the dynamic function onto the Lua stack
+					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);		// Push the function pointer onto the Lua stack
+
+					// This function pops both the key and the value from the stack
+					lua_settable(m_pLuaState, -3);
+
+					// Pop the table from the Lua stack
+					lua_pop(m_pLuaState, 1);
+				} else {
+					// Store a pointer to the dynamic function in the c-closure
+					lua_pushlightuserdata(m_pLuaState, psDynamicFunction);
+					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);
+					lua_setglobal(m_pLuaState, psDynamicFunction->sFunction);
+				}
 			}
 
 			// Load the script
@@ -424,11 +443,28 @@ int Script::LuaFunctionCallback(lua_State *pLuaState)
 		sParams += String("Param") + (i-1) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
 
 	// Get the dynamic function
-	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(lua_tointeger(pLuaState, lua_upvalueindex(1)));
+	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(lua_touserdata(pLuaState, lua_upvalueindex(1)));
 	const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
 	if (sReturn.GetLength()) {
+		// Process the functor return
+		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+			case TypeBool:		lua_pushinteger(pLuaState, sReturn.GetBool());		break;
+			case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());	break;
+			case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());		break;
+			case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
+			case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
+			case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
+			case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;	// [TODO] TypeInt64 is currently handled just as long
+			case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
+			case TypeString:	lua_pushstring (pLuaState, sReturn);				break;
+			case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());	break;
+			case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());	break;
+			case TypeUInt64:	lua_pushinteger(pLuaState, sReturn.GetUInt64());	break;	// [TODO] TypeUInt64 is currently handled just as long
+			case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());		break;
+			default:			lua_pushstring (pLuaState, sReturn);				break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
+		}
+
 		// The function returns one argument
-		lua_pushstring(pLuaState, sReturn);
 		return 1;
 	} else {
 		// The function returns nothing

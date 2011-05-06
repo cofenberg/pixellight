@@ -63,7 +63,7 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Nothing to do in here
 

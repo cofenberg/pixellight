@@ -109,6 +109,8 @@ class Script : public PLCore::Object {
 		*    Function name used inside the script to call the dynamic function
 		*  @param[in] cDynFunc
 		*    Dynamic function
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe a script is already set?)
@@ -116,7 +118,7 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc) = 0;
+		virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief

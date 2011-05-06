@@ -79,7 +79,7 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc)
+bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there already a AngelScript engine instance?
 	if (m_pAngelScriptEngine) {
@@ -88,8 +88,9 @@ bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc
 	} else {
 		// Add the dynamic function
 		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction = sFunction;
-		psDynamicFunction->pDynFunc  = cDynFunc.Clone();
+		psDynamicFunction->sFunction  = sFunction;
+		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
+		psDynamicFunction->sNamespace = sNamespace;
 		m_lstDynamicFunctions.Add(psDynamicFunction);
 
 		// Done
