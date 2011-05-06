@@ -135,7 +135,7 @@ bool SNMPositionMoveToTarget::GetTargetPosition(Vector3 &vPos) const
 
 /**
 *  @brief
-*    Called when the scene node needs to be updated
+*    Called when the scene node modifier needs to be updated
 */
 void SNMPositionMoveToTarget::NotifyUpdate()
 {

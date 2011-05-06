@@ -94,7 +94,7 @@ class SNMRotationLinearAnimation : public SNMTransform {
 	private:
 		/**
 		*  @brief
-		*    Called when the scene node needs to be updated
+		*    Called when the scene node modifier needs to be updated
 		*/
 		void NotifyUpdate();
 
