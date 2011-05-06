@@ -153,14 +153,15 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 				// Is the function within a namespace? (= Lua table)
 				if (psDynamicFunction->sNamespace.GetLength()) {
-					// [TODO] Create and set Lua table
+					// Create a nested Lua table
+					CreateNestedTable(m_pLuaState, psDynamicFunction->sNamespace);
 
 					// Table key
-					lua_pushstring(m_pLuaState, psDynamicFunction->sFunction);			// Push the function name onto the Lua stack
+					lua_pushstring(m_pLuaState, psDynamicFunction->sFunction);		// Push the function name onto the Lua stack
 
 					// Table value: Store a pointer to the dynamic function in the c-closure
-					lua_pushlightuserdata(m_pLuaState, psDynamicFunction);				// Push a pointer to the dynamic function onto the Lua stack
-					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);		// Push the function pointer onto the Lua stack
+					lua_pushlightuserdata(m_pLuaState, psDynamicFunction);			// Push a pointer to the dynamic function onto the Lua stack
+					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);	// Push the function pointer onto the Lua stack
 
 					// This function pops both the key and the value from the stack
 					lua_settable(m_pLuaState, -3);
@@ -535,6 +536,69 @@ void Script::Clear()
 		m_bFunctionResult  = false;
 		m_nCurrentArgument = 0;
 	}
+}
+
+/**
+*  @brief
+*    Creates a nested Lua table
+*/
+bool Script::CreateNestedTable(lua_State *pLuaState, const String &sTableName)
+{
+	// Loop through all components within the given nested Lua table name
+	uint32 nPartBegin = 0;
+	while (nPartBegin<=sTableName.GetLength()) {
+		// Find the next "." within the given nested Lua table name
+		int nPartEnd = sTableName.IndexOf(".", nPartBegin);
+		if (nPartEnd < 0)
+			nPartEnd = sTableName.GetLength();
+
+		// Get the current Lua table name
+		const String sSubTableName = sTableName.GetSubstring(nPartBegin, nPartEnd - nPartBegin);
+
+		// Each table must have a name!
+		if (!sSubTableName.GetLength())
+			return false;	// Error!
+
+		// Does the Lua table already exist within the current Lua table?
+		if (nPartBegin) {
+			// We're already within a Lua table
+			lua_pushstring(pLuaState, sSubTableName);
+			lua_gettable(pLuaState, -2);
+			if (!lua_isnil(pLuaState, -1))
+				lua_remove(pLuaState, -2);
+		} else {
+			// Currently we're in global space
+			lua_pushstring(pLuaState, sSubTableName);
+			lua_gettable(pLuaState, LUA_GLOBALSINDEX);
+		}
+
+		// Lua table found?
+		if (lua_isnil(pLuaState, -1)) {
+			// Nope, create a new one
+
+			// Pop nil from the Lua stack
+			lua_pop(pLuaState, 1);
+
+			// Create new Lua table on the Lua stack
+			lua_newtable(pLuaState);
+			lua_pushstring(pLuaState, sSubTableName);
+			lua_pushvalue(pLuaState, -2);	// Pushes a copy of the element at the given valid index onto the stack
+			if (nPartBegin) {
+				// We're already within a Lua table
+				lua_settable(pLuaState, -4);
+				lua_remove(pLuaState, -2);
+			} else {
+				// Currently we're in global space
+				lua_settable(pLuaState, LUA_GLOBALSINDEX);
+			}
+		}
+
+		// Skip "."
+		nPartBegin = nPartEnd + 1;
+	}
+
+	// Done
+	return true;
 }
 
 

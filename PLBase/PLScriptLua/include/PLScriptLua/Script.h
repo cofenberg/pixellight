@@ -108,6 +108,41 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private static Lua callback functions                 ]
+	//[-------------------------------------------------------]
+	private:
+		/*
+		*  @brief
+		*    Lua memory allocation
+		*
+		*  @param[in] pUserData
+		*    User data
+		*  @param[in] pPointer
+		*    A pointer to the block being allocated/reallocated/freed
+		*  @param[in] nOriginalBlockSize
+		*    The original size of the block
+		*  @param[in] nNewBlockSize
+		*    The new size of the block
+		*
+		*  @return
+		*    Pointer to the allocated memory, can be a null pointer
+		*/
+		static void *LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOriginalBlockSize, size_t nNewBlockSize);
+
+		/*
+		*  @brief
+		*    Lua function callback
+		*
+		*  @param[in] pLuaState
+		*    Lua state
+		*
+		*  @return
+		*    Number of parameters to return to Lua
+		*/
+		static int LuaFunctionCallback(lua_State *pLuaState);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -147,40 +182,24 @@ class Script : public PLScript::Script {
 		*/
 		void Clear();
 
-
-	//[-------------------------------------------------------]
-	//[ Private static Lua callback functions                 ]
-	//[-------------------------------------------------------]
-	private:
-		/*
+		/**
 		*  @brief
-		*    Lua memory allocation
-		*
-		*  @param[in] pUserData
-		*    User data
-		*  @param[in] pPointer
-		*    A pointer to the block being allocated/reallocated/freed
-		*  @param[in] nOriginalBlockSize
-		*    The original size of the block
-		*  @param[in] nNewBlockSize
-		*    The new size of the block
-		*
-		*  @return
-		*    Pointer to the allocated memory, can be a null pointer
-		*/
-		static void *LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOriginalBlockSize, size_t nNewBlockSize);
-
-		/*
-		*  @brief
-		*    Lua function callback
+		*    Creates a nested Lua table
 		*
 		*  @param[in] pLuaState
 		*    Lua state
+		*  @param[in] sTableName
+		*    Lua table name (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
+		*
+		*  @note
+		*    - Creates all required subtables
+		*    - Leaves the deepest table on the Lua stack
+		*    - Already existing Lua tables are not overwritten
 		*
 		*  @return
-		*    Number of parameters to return to Lua
+		*    'true' if all went fine, else 'false' (error within the given Lua table name?)
 		*/
-		static int LuaFunctionCallback(lua_State *pLuaState);
+		bool CreateNestedTable(lua_State *pLuaState, const PLGeneral::String &sTableName);
 
 
 	//[-------------------------------------------------------]

@@ -6,6 +6,7 @@
 - "Script::AddDynamicFunction()": Added namespace as last optional parameter (backend implementations will follow)
 - Added "Script::AddBinding()" which adds a script binding to connect the given RTTI class instance with this script (currently only RTTI
   methods are used)
+- Implemented "PLScriptLua::Script::AddDynamicFunction()" namespace by using Lua tables
 
 
 
