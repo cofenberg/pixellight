@@ -213,7 +213,7 @@ String Screenshot::GetScreenshotFilename(const String &sExtension) const
 		uint32 nIndex = 0;
 		do {
 			// Get a screenshot name
-			const String sFilename = String::Format("Screenshot_%d.", nIndex) + sExtension;
+			const String sFilename = String("Screenshot_") + nIndex + '.' + sExtension;
 
 			// Is there already a file with this name?
 			File cFile(sDirectory + "/_Screenshots/" + sFilename);
