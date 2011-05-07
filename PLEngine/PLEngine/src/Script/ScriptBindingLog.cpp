@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.cpp                        *
+ *  File: ScriptBindingLog.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include "PLEngine/Script/ScriptBindingTiming.h"
+#include <PLGeneral/Log/Log.h>
+#include "PLEngine/Script/ScriptBindingLog.h"
 
 
 //[-------------------------------------------------------]
@@ -37,20 +37,40 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingTiming)
+pl_implement_class(ScriptBindingLog)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-float ScriptBindingTiming::GetTimeDifference()
+void ScriptBindingLog::OutputAlways(String sText)
 {
-	return Timing::GetInstance()->GetTimeDifference();
+	Log::GetInstance()->Output(Log::Always, sText);
 }
 
-float ScriptBindingTiming::GetFramesPerSecond()
+void ScriptBindingLog::OutputCritical(String sText)
 {
-	return Timing::GetInstance()->GetFramesPerSecond();
+	Log::GetInstance()->Output(Log::Critical, sText);
+}
+
+void ScriptBindingLog::OutputError(String sText)
+{
+	Log::GetInstance()->Output(Log::Error, sText);
+}
+
+void ScriptBindingLog::OutputWarning(String sText)
+{
+	Log::GetInstance()->Output(Log::Warning, sText);
+}
+
+void ScriptBindingLog::OutputInfo(String sText)
+{
+	Log::GetInstance()->Output(Log::Info, sText);
+}
+
+void ScriptBindingLog::OutputDebug(String sText)
+{
+	Log::GetInstance()->Output(Log::Debug, sText);
 }
 
 
@@ -61,9 +81,13 @@ float ScriptBindingTiming::GetFramesPerSecond()
 *  @brief
 *    Constructor
 */
-ScriptBindingTiming::ScriptBindingTiming() :
-	MethodGetTimeDifference(this),
-	MethodGetFramesPerSecond(this)
+ScriptBindingLog::ScriptBindingLog() :
+	MethodOutputAlways(this),
+	MethodOutputCritical(this),
+	MethodOutputError(this),
+	MethodOutputWarning(this),
+	MethodOutputInfo(this),
+	MethodOutputDebug(this)
 {
 }
 
@@ -71,7 +95,7 @@ ScriptBindingTiming::ScriptBindingTiming() :
 *  @brief
 *    Destructor
 */
-ScriptBindingTiming::~ScriptBindingTiming()
+ScriptBindingLog::~ScriptBindingLog()
 {
 }
 

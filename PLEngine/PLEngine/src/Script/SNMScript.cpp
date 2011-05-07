@@ -30,6 +30,11 @@
 #include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
 #include <PLScene/Scene/SceneContext.h>
+
+// [TODO] This is just a first test
+#include "PLEngine/Script/ScriptBindingTiming.h"
+#include "PLEngine/Script/ScriptBindingLog.h"
+
 #include "PLEngine/Script/SNMScript.h"
 
 
@@ -74,6 +79,11 @@ void SNMScript::SetScript(const String &sValue)
 			// Create the script instance by using the extension of the given filename to detect the script language
 			m_pScript = ScriptManager::GetInstance()->Create(ScriptManager::GetInstance()->GetScriptLanguageByExtension(Url(m_sScript).GetExtension()));
 			if (m_pScript) {
+
+				// [TODO] This is just a first test
+				m_pScript->AddBinding(*m_pScriptBindingTiming, "PL.Timing");
+				m_pScript->AddBinding(*m_pScriptBindingLog, "PL.Log");
+
 				// Set the script source code
 				if (m_pScript->SetSourceCode(sSourceCode)) {
 					// Done
@@ -97,6 +107,9 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	EventHandlerUpdate(&SNMScript::NotifyUpdate, this),
 	m_pScript(nullptr)
 {
+	// [TODO] This is just a first test
+	m_pScriptBindingTiming = new ScriptBindingTiming();
+	m_pScriptBindingLog = new ScriptBindingLog();
 }
 
 /**
@@ -105,6 +118,10 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 */
 SNMScript::~SNMScript()
 {
+	// [TODO] This is just a first test
+	delete m_pScriptBindingTiming;
+	delete m_pScriptBindingLog;
+
 	// Destroy the used script
 	if (m_pScript)
 		delete m_pScript;
@@ -140,6 +157,21 @@ void SNMScript::NotifyUpdate()
 	if (m_pScript && UpdateFunction.Get().GetLength()) {
 		// Call the update script function
 		FuncScriptPtr<void>(m_pScript, UpdateFunction.Get()).Call(Params<void>());
+
+		// [TODO] This is just a first test
+		{ // Call the script function "getFactor"
+			// Get the typed dynamic parameters
+			Params<float> cParams;
+
+			// Call the script function
+			FuncScriptPtr<float>(m_pScript, "getFactor").Call(cParams);
+
+			// Get the result
+			float fFactor = cParams.Return;
+			float td = Timing::GetInstance()->GetTimeDifference();
+			float t = 0;
+		}
+
 	}
 }
 

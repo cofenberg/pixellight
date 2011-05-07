@@ -75,6 +75,9 @@
     <ClCompile Include="src\Script\ScriptBindingTiming.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="src\Script\ScriptBindingLog.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
@@ -132,6 +135,9 @@
       <Filter>Script</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\Script\ScriptBindingTiming.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Script\ScriptBindingLog.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>

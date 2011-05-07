@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.h                          *
+ *  File: ScriptBindingLog.h                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
-#define __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
+#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_LOG_H__
+#define __PLENGINE_SCRIPT_SCRIPTBINDING_LOG_H__
 #pragma once
 
 
@@ -43,21 +43,25 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Timing script binding class
+*    Log script binding class
 *
 *  @note
 *    - [TODO] Script support is currently under construction
 */
-class ScriptBindingTiming : public PLScript::ScriptBinding {
+class ScriptBindingLog : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptBindingTiming, "PLEngine", PLScript::ScriptBinding, "Timing script binding class")
+	pl_class(PL_RTTI_EXPORT, ScriptBindingLog, "PLEngine", PLScript::ScriptBinding, "Log script binding class")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
-		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
+		pl_method_1(OutputAlways,   void, PLGeneral::String, "Writes the given string into the log ('always' log level)",   "")
+		pl_method_1(OutputCritical, void, PLGeneral::String, "Writes the given string into the log ('critical' log level)", "")
+		pl_method_1(OutputError,    void, PLGeneral::String, "Writes the given string into the log ('error' log level)",    "")
+		pl_method_1(OutputWarning,  void, PLGeneral::String, "Writes the given string into the log ('warning' log level)",  "")
+		pl_method_1(OutputInfo,     void, PLGeneral::String, "Writes the given string into the log ('info' log level)",     "")
+		pl_method_1(OutputDebug,    void, PLGeneral::String, "Writes the given string into the log ('debug' log level)",    "")
 	pl_class_end
 
 
@@ -65,8 +69,12 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API float GetTimeDifference();
-		PL_API float GetFramesPerSecond();
+		PL_API void OutputAlways(PLGeneral::String sText);
+		PL_API void OutputCritical(PLGeneral::String sText);
+		PL_API void OutputError(PLGeneral::String sText);
+		PL_API void OutputWarning(PLGeneral::String sText);
+		PL_API void OutputInfo(PLGeneral::String sText);
+		PL_API void OutputDebug(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -77,13 +85,13 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API ScriptBindingTiming();
+		PL_API ScriptBindingLog();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ScriptBindingTiming();
+		PL_API virtual ~ScriptBindingLog();
 
 
 };
@@ -95,4 +103,4 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 } // PLEngine
 
 
-#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
+#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_LOG_H__

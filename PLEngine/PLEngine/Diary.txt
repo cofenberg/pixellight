@@ -1,3 +1,10 @@
+>> 08.05.2011
+[CO]
+- Added "ScriptBindingLog" which is intended to bind some stuff from "PLGeneral::Log" to scripts - but just like "ScriptBindingTiming"
+  at the moment only experimental
+
+
+
 >> 06.05.2011
 [CO]
 - Added "ScriptBindingTiming" which is intended to bind some stuff from "PLGeneral::Timing" to scripts
