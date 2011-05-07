@@ -24,6 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <angelscript.h>
+#include <../../src/add_on/scriptstring/scriptstring.h>
+#include <../../src/add_on/scriptarray/scriptarray.h>
+#include <../../src/add_on/scriptmath/scriptmath.h>
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptAngelScript/AngelScriptContext.h"
 
@@ -56,10 +59,15 @@ asIScriptEngine *AngelScriptContext::AddContextReference()
 		PL_LOG(Info, String("Initialize AngelScript ") + ANGELSCRIPT_VERSION_STRING)
 
 		// Create the script engine
-		m_pAngelScriptEngine= asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		m_pAngelScriptEngine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		if (m_pAngelScriptEngine) {
 			// The script compiler will write any compiler messages to the callback
 			m_pAngelScriptEngine->SetMessageCallback(asFUNCTION(ASMessageCallback), 0, asCALL_CDECL);
+
+			// Register some standard AngelScript addons
+			RegisterScriptString(m_pAngelScriptEngine);
+			RegisterScriptArray(m_pAngelScriptEngine, false);
+			RegisterScriptMath(m_pAngelScriptEngine);
 		} else {
 			PL_LOG(Error, "Failed to create script engine")
 		}

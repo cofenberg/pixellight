@@ -22,3 +22,6 @@ def setFactor(a):
 
 def calculate(a, b):
 	return a * b * g_Factor
+
+def returnMyString(s):
+	return cppStringFunction(s)

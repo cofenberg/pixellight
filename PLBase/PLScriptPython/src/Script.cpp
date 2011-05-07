@@ -330,6 +330,18 @@ void Script::PushArgument(double fValue)
 	}
 }
 
+void Script::PushArgument(const String &sString)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyString_FromString(sString));
+	}
+}
+
 bool Script::EndCall()
 {
 	// Is there a current Python function?
@@ -381,6 +393,11 @@ void Script::GetReturn(float &fValue)
 void Script::GetReturn(double &fValue)
 {
 	fValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
+}
+
+void Script::GetReturn(String &sValue)
+{
+	sValue = m_pPythonFunctionResult ? PyString_AsString(m_pPythonFunctionResult) : "";
 }
 
 

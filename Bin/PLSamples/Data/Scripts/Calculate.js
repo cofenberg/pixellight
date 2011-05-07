@@ -31,3 +31,8 @@ function calculate(a, b)
 {
 	return a * b * g_Factor;
 }
+
+function returnMyString(s)
+{
+	return cppStringFunction(s);
+}

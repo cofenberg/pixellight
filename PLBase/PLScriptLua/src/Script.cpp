@@ -293,6 +293,15 @@ void Script::PushArgument(double fValue)
 	}
 }
 
+void Script::PushArgument(const String &sString)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushstring(m_pLuaState, sString);
+		m_nCurrentArgument++;
+	}
+}
+
 bool Script::EndCall()
 {
 	// Is there a Lua state?
@@ -410,6 +419,20 @@ void Script::GetReturn(double &fValue)
 	} else {
 		// Error!
 		fValue = 0.0;
+	}
+}
+
+void Script::GetReturn(String &sValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isstring(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a string");
+		sValue = lua_tostring(m_pLuaState, -1);
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		sValue = "";
 	}
 }
 

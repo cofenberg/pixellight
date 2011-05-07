@@ -31,3 +31,8 @@ float calculate(float a, float b)
 {
 	return a * b * g_Factor;
 }
+
+string returnMyString(string s)
+{
+	return cppStringFunction(s);
+}

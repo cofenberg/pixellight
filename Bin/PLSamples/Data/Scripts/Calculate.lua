@@ -26,3 +26,7 @@ end
 function calculate(a, b)
 	return a * b * g_Factor
 end
+
+function returnMyString(s)
+	return cppStringFunction(s)
+end

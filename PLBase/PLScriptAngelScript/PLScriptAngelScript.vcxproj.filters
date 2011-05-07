@@ -5,6 +5,18 @@
       <UniqueIdentifier>{6d9a54e5-5a3d-423d-8aa3-6fa80c2ec05d}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
+    <Filter Include="Source Files\add_on">
+      <UniqueIdentifier>{c4241a4b-a599-4803-95c2-2bb947b44e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\add_on\scriptmath">
+      <UniqueIdentifier>{76d93626-f1f1-4e73-9b29-0909a7a04e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\add_on\scriptstring">
+      <UniqueIdentifier>{c8d20f1f-86fe-4473-b2ac-5e3a8289a193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\add_on\scriptarray">
+      <UniqueIdentifier>{eee91ab6-f87a-4ae8-842c-0b3b73c1038c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Script.cpp">
@@ -15,6 +27,18 @@
     </ClCompile>
     <ClCompile Include="src\AngelScriptContext.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptmath\scriptmath.cpp">
+      <Filter>Source Files\add_on\scriptmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring_utils.cpp">
+      <Filter>Source Files\add_on\scriptstring</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring.cpp">
+      <Filter>Source Files\add_on\scriptstring</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptarray\scriptarray.cpp">
+      <Filter>Source Files\add_on\scriptarray</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +56,15 @@
     </ClInclude>
     <ClInclude Include="include\PLScriptAngelScript\AngelScriptContext.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptmath\scriptmath.h">
+      <Filter>Source Files\add_on\scriptmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring.h">
+      <Filter>Source Files\add_on\scriptstring</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptarray\scriptarray.h">
+      <Filter>Source Files\add_on\scriptarray</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -306,6 +306,21 @@ void Script::PushArgument(double fValue)
 	}
 }
 
+void Script::PushArgument(const String &sString)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::String::New(sString)));
+	}
+}
+
 bool Script::EndCall()
 {
 	if (m_sCurrentFunction.GetLength()) {
@@ -367,6 +382,11 @@ void Script::GetReturn(float &fValue)
 void Script::GetReturn(double &fValue)
 {
 	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? m_cV8CurrentResult->NumberValue() : 0.0;
+}
+
+void Script::GetReturn(String &sValue)
+{
+	sValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsString()) ? *v8::String::AsciiValue(m_cV8CurrentResult->ToString()) : "";
 }
 
 

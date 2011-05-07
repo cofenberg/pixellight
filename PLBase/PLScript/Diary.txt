@@ -13,6 +13,10 @@
 -> Right now my candidates for the "recommended PixelLight script language" are JavaScript and Lua. Lua is quite compact while JavaScript is a web-standard which
    could be somewhat beneficial for PixelLight, especially regarding to the browser plugin. AngelScript looks somethat unfinished although I like the API in
    general. Python is just a monster. *g*
+- "Script": Added string versions of "PushArgument()" and "GetReturn()". Adding support for this within PLScriptAngelScript was some hard work because unlike
+  JavaScript (V8), Python and Lua, within AngelScript strings are just "add_on" and not everything is documented as detailed as I wished for and I wasn't able
+  to find real help via google as well. So I had to guess, review the AngelScript source codes and perform some debugging... I really hope that I didn't miss
+  anything...
 
 
 

@@ -101,6 +101,7 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(int &nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint8 &nValue);
@@ -108,6 +109,7 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint32 &nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float &fValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double &fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -163,11 +165,13 @@ class Script : public PLScript::Script {
 		*    Name of the function
 		*  @param[in] sFunctionSignature
 		*    Signature of the given dynamic parameters (e.g. "void(int,float)")
+		*  @param[in] bCppToAngelScript
+		*    Return a C++ to AngelScript function declaration
 		*
 		*  @return
 		*    AngelScript function declaration (e.g. "void MyFunction(int,float)")
 		*/
-		PLGeneral::String GetAngelScriptFunctionDeclaration(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) const;
+		PLGeneral::String GetAngelScriptFunctionDeclaration(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, bool bCppToAngelScript) const;
 
 
 	//[-------------------------------------------------------]

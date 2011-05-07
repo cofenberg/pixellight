@@ -133,6 +133,11 @@ void Script::PushArgument(double fValue)
 	// Nothing to do in here
 }
 
+void Script::PushArgument(const String &sString)
+{
+	// Nothing to do in here
+}
+
 bool Script::EndCall()
 {
 	// Nothing to do in here
@@ -175,6 +180,12 @@ void Script::GetReturn(double &fValue)
 {
 	// Nothing to do in here
 	fValue = 0.0;
+}
+
+void Script::GetReturn(String &sValue)
+{
+	// Nothing to do in here
+	sValue = "";
 }
 
 

@@ -89,6 +89,9 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 			// Functor pointing to the static method "Application::StaticMethod"
 			Functor<int, int> cStaticMethod(StaticMethod);
 
+			// Functor pointing to the static method "Application::StaticStringMethod"
+			Functor<String, String> cStaticStringMethod(StaticStringMethod);
+
 			// Functor pointing to the member method "Application::Method"
 			Functor<int, int> cMethod(&Application::Method, this);
 
@@ -97,7 +100,8 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 
 			// Tell our script about those functors so that we can use them within the script...
 			pScript->AddDynamicFunction("cppFunction", cStaticMethod, "FirstNamespace.SecondNamespace");
-			pScript->AddDynamicFunction("cppMethod",   cMethod);
+			pScript->AddDynamicFunction("cppStringFunction", cStaticStringMethod);
+			pScript->AddDynamicFunction("cppMethod", cMethod);
 
 			// The following is possible as well: Script is calling C++, C++ is calling script... *g*
 			pScript->AddDynamicFunction("cppScriptFunction", cScriptFunction);
@@ -157,6 +161,17 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 					fResult = cParams.Return;
 				}
 
+				{ // Call the script function "returnMyString"
+					// Get the typed dynamic parameters
+					Params<String, String> cParams("MyString");
+
+					// Call the script function
+					FuncScriptPtr<String, String>(pScript, "returnMyString").Call(cParams);
+
+					// Check the result
+					System::GetInstance()->GetConsole().Print(String("Got my string: ") + (cParams.Return == "MyString" ? "Yes" : "No") + '\n');
+				}
+
 				// Print message
 				System::GetInstance()->GetConsole().Print('\'' + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
 			}
@@ -193,6 +208,15 @@ int Application::Method(int nFirst)
 int Application::StaticMethod(int nFirst)
 {
 	return nFirst;
+}
+
+/**
+*  @brief
+*    A static string method
+*/
+String Application::StaticStringMethod(String sFirst)
+{
+	return sFirst;
 }
 
 

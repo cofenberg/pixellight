@@ -107,6 +107,18 @@ class Application : public PLCore::ConsoleApplication {
 		*/
 		static int StaticMethod(int nFirst);
 
+		/**
+		*  @brief
+		*    A static string method
+		*
+		*  @param[in] sFirst
+		*    First string
+		*
+		*  @return
+		*    The result
+		*/
+		static PLGeneral::String StaticStringMethod(PLGeneral::String sFirst);
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual ConsoleApplication functions          ]

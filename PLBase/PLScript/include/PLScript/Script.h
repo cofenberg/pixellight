@@ -172,6 +172,7 @@ class Script : public PLCore::Object {
 		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
 		virtual void PushArgument(float fValue) = 0;
 		virtual void PushArgument(double fValue) = 0;
+		virtual void PushArgument(const PLGeneral::String &sString) = 0;
 		virtual bool EndCall() = 0;
 		virtual void GetReturn(int &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint8 &nValue) = 0;
@@ -179,6 +180,7 @@ class Script : public PLCore::Object {
 		virtual void GetReturn(PLGeneral::uint32 &nValue) = 0;
 		virtual void GetReturn(float &fValue) = 0;
 		virtual void GetReturn(double &fValue) = 0;
+		virtual void GetReturn(PLGeneral::String &sValue) = 0;
 
 
 	//[-------------------------------------------------------]

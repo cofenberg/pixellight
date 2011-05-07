@@ -264,11 +264,18 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PL
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptarray\scriptarray.cpp" />
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptmath\scriptmath.cpp" />
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring.cpp" />
+    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring_utils.cpp" />
     <ClCompile Include="src\AngelScriptContext.cpp" />
     <ClCompile Include="src\Script.cpp" />
     <ClCompile Include="src\PLScriptAngelScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptarray\scriptarray.h" />
+    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptmath\scriptmath.h" />
+    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring.h" />
     <ClInclude Include="include\PLScriptAngelScript\AngelScriptContext.h" />
     <ClInclude Include="include\PLScriptAngelScript\Script.h" />
     <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScript.h" />

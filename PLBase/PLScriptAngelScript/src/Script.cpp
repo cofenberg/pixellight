@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <angelscript.h>
+#include <../../src/add_on/scriptstring/scriptstring.h>
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptAngelScript/AngelScriptContext.h"
 #include "PLScriptAngelScript/Script.h"
@@ -156,7 +157,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				}
 
 				// Get the AngelScript function declaration
-				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunction, psDynamicFunction->pDynFunc->GetSignature());
+				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunction, psDynamicFunction->pDynFunc->GetSignature(), true);
 
 				// Register global AngelScript function
 				const int nFunctionID = m_pAngelScriptEngine->RegisterGlobalFunction(sFunctionDeclaration, asFUNCTION(AngelScriptFunctionCallback), asCALL_GENERIC);
@@ -251,7 +252,7 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 		}
 		if (m_pAngelScriptContext) {
 			// Get the AngelScript function declaration
-			const String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunctionName, sFunctionSignature);
+			const String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunctionName, sFunctionSignature, false);
 
 			// Find the function ID for the function we want to execute
 			const int nFunctionID = m_pAngelScriptModule->GetFunctionIdByDecl(sFunctionDeclaration);
@@ -327,6 +328,15 @@ void Script::PushArgument(double fValue)
 		m_pAngelScriptContext->SetArgDouble(m_nCurrentArgument++, fValue);
 }
 
+void Script::PushArgument(const String &sString)
+{
+	if (m_pAngelScriptContext) {
+		CScriptString *pCScriptString = new CScriptString(sString.GetASCII(), sString.GetLength());
+		m_pAngelScriptContext->SetArgObject(m_nCurrentArgument++, pCScriptString);
+		pCScriptString->Release();	// Destroy our CScriptString instance
+	}
+}
+
 bool Script::EndCall()
 {
 	if (m_pAngelScriptContext) {
@@ -392,6 +402,20 @@ void Script::GetReturn(double &fValue)
 	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDouble() : 0;
 }
 
+void Script::GetReturn(String &sValue)
+{
+	// Ensure that we always return a well defined result, even if something went wrong
+	sValue = "";
+
+	// There must be a valid AngelScript engine and context instance
+	if (m_pAngelScriptEngine && m_pAngelScriptContext) {
+		// Get the current AngelScript function and check the function return type
+		asIScriptFunction *pAngelScriptFunction = m_pAngelScriptContext->GetFunction();
+		if (pAngelScriptFunction && pAngelScriptFunction->GetReturnTypeId() == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
+			sValue = m_pAngelScriptContext ? static_cast<std::string*>(m_pAngelScriptContext->GetReturnObject())->c_str() : "";
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private static AngelScript callback functions         ]
@@ -410,7 +434,8 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 	const int nNumOfArguments = pAngelScriptGeneric->GetArgCount();
 	for (int i=0; i<nNumOfArguments; i++) {
 		String sValue;
-		switch (pAngelScriptGeneric->GetArgTypeId(i)) {
+		const int nAngelScriptArgTypeId = pAngelScriptGeneric->GetArgTypeId(i);
+		switch (nAngelScriptArgTypeId) {
 			case asTYPEID_BOOL:		sValue = pAngelScriptGeneric->GetArgByte(i);						break;
 			case asTYPEID_INT8:		sValue = pAngelScriptGeneric->GetArgByte(i);						break;
 			case asTYPEID_INT16:	sValue = pAngelScriptGeneric->GetArgWord(i);						break;
@@ -422,22 +447,12 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 			case asTYPEID_UINT64:	sValue = pAngelScriptGeneric->GetArgQWord(i);						break;
 			case asTYPEID_FLOAT:	sValue = pAngelScriptGeneric->GetArgFloat(i);						break;
 			case asTYPEID_DOUBLE:	sValue = pAngelScriptGeneric->GetArgDouble(i);						break;
-
-			/*
-			// [TODO] Support the following?
-			virtual void   *GetArgAddress(asUINT arg) = 0;
-			virtual void   *GetArgObject(asUINT arg) = 0;
-			enum asETypeIdFlags
-			{
-				asTYPEID_OBJHANDLE      = 0x40000000,
-				asTYPEID_HANDLETOCONST  = 0x20000000,
-				asTYPEID_MASK_OBJECT    = 0x1C000000,
-				asTYPEID_APPOBJECT      = 0x04000000,
-				asTYPEID_SCRIPTOBJECT   = 0x08000000,
-			*/
-
 			default:
-				// Do nothing
+				// Is it a string?
+				if (nAngelScriptArgTypeId == pAngelScriptGeneric->GetEngine()->GetTypeIdByDecl("string"))
+					sValue = static_cast<std::string*>(pAngelScriptGeneric->GetArgObject(i))->c_str();
+				else
+					; // Do nothing
 				break;
 		}
 
@@ -450,35 +465,21 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 
 	// Process the functor return
 	if (sReturn.GetLength()) {
-		switch (pAngelScriptGeneric->GetReturnTypeId()) {
-			case asTYPEID_BOOL:		pAngelScriptGeneric->SetReturnByte(sReturn.GetBool());		break;
-			case asTYPEID_INT8:		pAngelScriptGeneric->SetReturnByte(sReturn.GetInt());		break;
-			case asTYPEID_INT16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetInt());		break;
-			case asTYPEID_INT32:	pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());		break;
-			case asTYPEID_INT64:	pAngelScriptGeneric->SetReturnQWord(sReturn.GetInt());		break;
-			case asTYPEID_UINT8:	pAngelScriptGeneric->SetReturnByte(sReturn.GetUInt8());		break;
-			case asTYPEID_UINT16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetUInt16());	break;
-			case asTYPEID_UINT32:	pAngelScriptGeneric->SetReturnDWord(sReturn.GetUInt32());	break;
-			case asTYPEID_UINT64:	pAngelScriptGeneric->SetReturnQWord(sReturn.GetUInt64());	break;
-			case asTYPEID_FLOAT:	pAngelScriptGeneric->SetReturnFloat(sReturn.GetFloat());	break;
-			case asTYPEID_DOUBLE:	pAngelScriptGeneric->SetReturnDouble(sReturn.GetDouble());	break;
-
-			/*
-			// [TODO] Support the following?
-			virtual int     SetReturnAddress(void *addr) = 0;
-			virtual int     SetReturnObject(void *obj) = 0;
-			enum asETypeIdFlags
-			{
-				asTYPEID_OBJHANDLE      = 0x40000000,
-				asTYPEID_HANDLETOCONST  = 0x20000000,
-				asTYPEID_MASK_OBJECT    = 0x1C000000,
-				asTYPEID_APPOBJECT      = 0x04000000,
-				asTYPEID_SCRIPTOBJECT   = 0x08000000,
-			*/
-
-			default:
-				// Do nothing
-				break;
+		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+			case TypeBool:		pAngelScriptGeneric->SetReturnByte(sReturn.GetBool());												break;
+			case TypeDouble:	pAngelScriptGeneric->SetReturnDouble(sReturn.GetDouble());											break;
+			case TypeFloat:		pAngelScriptGeneric->SetReturnFloat(sReturn.GetFloat());											break;
+			case TypeInt:		pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());												break;
+			case TypeInt16:		pAngelScriptGeneric->SetReturnWord(sReturn.GetInt());												break;
+			case TypeInt32:		pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());												break;
+			case TypeInt64:		pAngelScriptGeneric->SetReturnQWord(sReturn.GetInt());												break;	// [TODO] TypeInt64 is currently handled just as int
+			case TypeInt8:		pAngelScriptGeneric->SetReturnByte(sReturn.GetInt());												break;
+			case TypeString:	pAngelScriptGeneric->SetReturnAddress(new CScriptString(sReturn.GetASCII(), sReturn.GetLength()));	break;	// AngelScript takes over the control of the allocated object
+			case TypeUInt16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetUInt16());											break;
+			case TypeUInt32:	pAngelScriptGeneric->SetReturnDWord(sReturn.GetUInt32());											break;
+			case TypeUInt64:	pAngelScriptGeneric->SetReturnQWord(sReturn.GetUInt64());											break;
+			case TypeUInt8:		pAngelScriptGeneric->SetReturnByte(sReturn.GetUInt8());												break;
+			default:																												break;
 		}
 	}
 }
@@ -539,12 +540,32 @@ void Script::Clear()
 *  @brief
 *    Gets a AngelScript function declaration
 */
-String Script::GetAngelScriptFunctionDeclaration(const String &sFunctionName, const String &sFunctionSignature) const
+String Script::GetAngelScriptFunctionDeclaration(const String &sFunctionName, const String &sFunctionSignature, bool bCppToAngelScript) const
 {
+	// Start with the PixelLight function signature (e.g. "void(int,float)")
 	String sFunctionDeclaration = sFunctionSignature;
-	const int nIndex = sFunctionDeclaration.IndexOf("(");
-	if (nIndex > -1)
+
+	// Find the index of the "("
+	int nIndex = sFunctionDeclaration.IndexOf("(");
+	if (nIndex > -1) {
+
+		// [HACK] AngelScript really don't like something like "string MyFunction(string)", it want's "string @MyFunction(const string &)"!
+		// I assume that "@" means "AngelScript, take over the control of the given memory". I wasn't able to find the documentation about
+		// the AngelScript function declaration syntax, just "scriptstring.cpp" as example.
+		if (bCppToAngelScript && sFunctionDeclaration.IndexOf("string") > -1) {
+			String sParameters = sFunctionDeclaration.GetSubstring(nIndex);	// Find the parameters part in the string
+			sParameters.Replace("string", "const string &");				// Change parameters
+			sFunctionDeclaration.Delete(nIndex);							// Remove parameters from original function declaration
+			sFunctionDeclaration.Replace("string", "string @");				// Change return
+			sFunctionDeclaration += sParameters;							// Construct new function declaration
+			nIndex = sFunctionDeclaration.IndexOf("(");						// Update the "(" index
+		}
+
+		// Create the AngelScript function declaration (e.g. "void MyFunction(int,float)")
 		sFunctionDeclaration.Insert(' ' + sFunctionName, nIndex);
+	}
+
+	// Return the AngelScript function declaration (e.g. "void MyFunction(int,float)")
 	return sFunctionDeclaration;
 }
 

@@ -93,6 +93,7 @@ class Script : public PLScript::Script {
 		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTV8_API virtual void PushArgument(float fValue);
 		PLSCRIPTV8_API virtual void PushArgument(double fValue);
+		PLSCRIPTV8_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTV8_API virtual bool EndCall();
 		PLSCRIPTV8_API virtual void GetReturn(int &nValue);
 		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint8 &nValue);
@@ -100,6 +101,7 @@ class Script : public PLScript::Script {
 		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint32 &nValue);
 		PLSCRIPTV8_API virtual void GetReturn(float &fValue);
 		PLSCRIPTV8_API virtual void GetReturn(double &fValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::String &sValue);
 
 
 	//[-------------------------------------------------------]
