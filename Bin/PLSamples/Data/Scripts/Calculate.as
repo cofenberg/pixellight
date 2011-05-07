@@ -14,7 +14,7 @@ int scriptFunction(int a)
 
 int callCpp(int a)
 {
-	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
+	return FirstNamespace_SecondNamespace_cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
 }
 
 float getFactor()

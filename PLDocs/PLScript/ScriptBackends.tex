@@ -31,6 +31,11 @@ This chapter deals with the different script backends shipping with the PixelLig
 \item Used dll's: \emph{PLScriptAngelScript.dll} and \emph{angelscript.dll}
 \end{itemize}
 
+Here's a list of some general notes:
+\begin{itemize}
+\item It looks like that AngelScript (2.20.2) has currently no support for namespaces... so right now, an ugly hack is used: e.g. \emph{PL.Timing.GetTimeDifference()} is written within scripts as \emph{PL\_Timing\_GetTimeDifference()}
+\end{itemize}
+
 
 
 
@@ -49,4 +54,9 @@ This chapter deals with the different script backends shipping with the PixelLig
 \item Python 2.7.1 backend\footnote{Python can be downloaded from \url{http://www.python.org/}}
 \item PixelLight component name: PLScriptPython
 \item Used dll's: \emph{PLScriptPython.dll} and \emph{python27.dll}
+\end{itemize}
+
+Here's a list of some general notes:
+\begin{itemize}
+\item Currently when using namespaces, an ugly hack is used: e.g. \emph{PL.Timing.GetTimeDifference()} is written within scripts as \emph{PL['Timing']['GetTimeDifference']()}
 \end{itemize}

@@ -14,7 +14,7 @@ function scriptFunction(a)
 
 function callCpp(a)
 {
-	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
+	return FirstNamespace.SecondNamespace.cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
 }
 
 function getFactor()

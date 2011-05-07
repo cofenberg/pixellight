@@ -3,6 +3,16 @@
 - Implemented "PLScriptPython::Script::AddDynamicFunction()" namespace by using Python dictionaries... probably not the best solution but for
   now I just want to have it up and running to get an idea of concepts multiple scripting languages are sharing. Maybe I'll replace "namespace"
   later by "module".
+- Implemented "PLScriptV8::Script::AddDynamicFunction()" namespace by using V8 object template
+- Implemented "PLScriptAngelScript::Script::AddDynamicFunction()" namespace. It looks like that AngelScript (2.20.2) has currently no support
+  for namespaces... so right now I'am doing an ugly hack: e.g. "PL.Timing.GetTimeDifference()" is written within scripts as "PL_Timing_GetTimeDifference()". :/
+-> Ok, the namespace support for global functions is now implemented within all script backends... although I'am really not happy with the current
+   AngelScript solution (e.g. "PL_Timing_GetTimeDifference()" instead of "PL.Timing.GetTimeDifference()") and Python solution
+   e.g. "PL[’Timing’][’GetTimeDifference’]()" instead of "PL.Timing.GetTimeDifference()"). It's really time consuming to do the research into multiple script
+   API's at the same time and on those two issues I already spend several hours without a decent solution. So, if there's someone who knows a better solution...
+-> Right now my candidates for the "recommended PixelLight script language" are JavaScript and Lua. Lua is quite compact while JavaScript is a web-standard which
+   could be somewhat beneficial for PixelLight, especially regarding to the browser plugin. AngelScript looks somethat unfinished although I like the API in
+   general. Python is just a monster. *g*
 
 
 

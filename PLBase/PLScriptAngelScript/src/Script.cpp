@@ -143,8 +143,20 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				// Get the dynamic function
 				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
 
+				// [TODO] It looks like that AngelScript (2.20.2) has currently no support for namespaces... so right now I'am doing
+				// an ugly hack: e.g. "PL.Timing.GetTimeDifference()" is written within scripts as "PL_Timing_GetTimeDifference()"
+				String sFunction;
+				if (psDynamicFunction->sNamespace.GetLength()) {
+					sFunction = psDynamicFunction->sNamespace;
+					sFunction.Replace('.', '_');
+					sFunction += '_';
+					sFunction += psDynamicFunction->sFunction;
+				} else {
+					sFunction = psDynamicFunction->sFunction;
+				}
+
 				// Get the AngelScript function declaration
-				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(psDynamicFunction->sFunction, psDynamicFunction->pDynFunc->GetSignature());
+				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunction, psDynamicFunction->pDynFunc->GetSignature());
 
 				// Register global AngelScript function
 				const int nFunctionID = m_pAngelScriptEngine->RegisterGlobalFunction(sFunctionDeclaration, asFUNCTION(AngelScriptFunctionCallback), asCALL_GENERIC);

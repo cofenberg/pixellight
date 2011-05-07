@@ -96,7 +96,7 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 			Functor<int, int> cScriptFunction(new FuncScriptPtr<int, int>(pScript, "scriptFunction"));
 
 			// Tell our script about those functors so that we can use them within the script...
-			pScript->AddDynamicFunction("cppFunction", cStaticMethod);
+			pScript->AddDynamicFunction("cppFunction", cStaticMethod, "FirstNamespace.SecondNamespace");
 			pScript->AddDynamicFunction("cppMethod",   cMethod);
 
 			// The following is possible as well: Script is calling C++, C++ is calling script... *g*

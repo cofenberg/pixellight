@@ -12,7 +12,7 @@ function scriptFunction(a)
 end
 
 function callCpp(a)
-	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
+	return FirstNamespace.SecondNamespace.cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
 end
 
 function getFactor()

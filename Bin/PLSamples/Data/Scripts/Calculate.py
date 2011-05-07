@@ -11,7 +11,7 @@ def scriptFunction(a):
 	return a
 
 def callCpp(a):
-	return cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
+	return FirstNamespace['SecondNamespace']['cppFunction'](a) + cppMethod(a) + cppScriptFunction(a)
 
 def getFactor():
 	return g_Factor

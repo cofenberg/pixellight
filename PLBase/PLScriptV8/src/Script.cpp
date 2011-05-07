@@ -127,9 +127,11 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 		// Are there any dynamic functions?
 		if (m_lstDynamicFunctions.GetNumOfElements()) {
-			// Create a template for the global object and set the
-			// built-in global functions.
-			v8::Local<v8::ObjectTemplate> cV8Globals = v8::ObjectTemplate::New();
+			// Global V8 namespace
+			V8Namespace cV8Namespace;
+
+			// Create a template for the global object and set the built-in global functions
+			cV8Namespace.cV8ObjectTemplate = v8::ObjectTemplate::New();
 
 			// Add the dynamic functions
 			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
@@ -141,11 +143,11 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				cV8Function->SetCallAsFunctionHandler(V8FunctionCallback, v8::External::New(psDynamicFunction));
 
 				// Add V8 function
-				cV8Globals->Set(v8::String::New(psDynamicFunction->sFunction), cV8Function, v8::ReadOnly);
+				AddV8Function(cV8Namespace, psDynamicFunction->sFunction, cV8Function, psDynamicFunction->sNamespace);
 			}
 
 			// Create a new context
-			m_cV8Context = v8::Context::New(nullptr, cV8Globals);
+			m_cV8Context = v8::Context::New(nullptr, cV8Namespace.cV8ObjectTemplate);
 		} else {
 			// Create a new context
 			m_cV8Context = v8::Context::New();
@@ -266,6 +268,8 @@ bool Script::EndCall()
 		v8::Local<v8::Function> cV8Function = v8::Local<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
 		if (cV8Function->IsFunction()) {
 			v8::TryCatch cTryCatch;
+
+			// Call the V8 function
 			if (m_lstArguments.GetNumOfElements()) {
 				v8::Local<v8::Value> *pcArguments = new v8::Local<v8::Value>[m_lstArguments.GetNumOfElements()]();
 				for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
@@ -417,6 +421,51 @@ bool Script::LogOutputTryCatch(uint8 nLogLevel, const String &sText, const v8::T
 
 	// Call the base implementation
 	return Script::LogOutput(nLogLevel, sText + sErrorDescription);
+}
+
+/**
+*  @brief
+*    Adds a V8 function
+*/
+void Script::AddV8Function(V8Namespace &cV8Namespace, const String &sFunction, v8::Local<v8::ObjectTemplate> cV8Function, const String &sNamespace) const
+{
+	// Is the given namespace empty?
+	if (sNamespace.GetLength()) {
+		// Nope, the target namespace is not yet reached...
+
+		// Find the next "." within the given nested V8 namespace name
+		int nPartEnd = sNamespace.IndexOf(".");
+		if (nPartEnd < 0)
+			nPartEnd = sNamespace.GetLength();
+
+		// Get the current V8 namespace name
+		const String sSubsNamespaceName = sNamespace.GetSubstring(0, nPartEnd);
+
+		// Is there already a V8 namespace object with the given name?
+		V8Namespace &cSubsV8Namespace = cV8Namespace.mapNamespaces.Get(sSubsNamespaceName);
+		if (&cSubsV8Namespace == &HashMap<String, V8Namespace >::Null) {
+			// New V8 namespace
+			V8Namespace cNewV8Namespace;
+
+			// Create the V8 namespace object
+			cNewV8Namespace.cV8ObjectTemplate = v8::ObjectTemplate::New();
+
+			// Add the V8 namespace object to the current V8 object
+			cV8Namespace.cV8ObjectTemplate->Set(v8::String::New(sSubsNamespaceName), cNewV8Namespace.cV8ObjectTemplate, v8::ReadOnly);
+
+			// Go down the rabbit hole...
+			AddV8Function(cNewV8Namespace, sFunction, cV8Function, sNamespace.GetSubstring(nPartEnd + 1));
+
+			// Add V8 namespace
+			cV8Namespace.mapNamespaces.Add(sSubsNamespaceName, cNewV8Namespace);
+		} else {
+			// Go down the rabbit hole...
+			AddV8Function(cSubsV8Namespace, sFunction, cV8Function, sNamespace.GetSubstring(nPartEnd + 1));
+		}
+	} else {
+		// Jap, now add the given V8 function object to the current V8 object
+		cV8Namespace.cV8ObjectTemplate->Set(v8::String::New(sFunction), cV8Function, v8::ReadOnly);
+	}
 }
 
 

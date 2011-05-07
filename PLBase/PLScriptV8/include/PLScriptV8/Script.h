@@ -120,6 +120,32 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private structures                                    ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A dynamic function
+		*/
+		struct DynamicFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		};
+
+		/**
+		*  @brief
+		*    V8 namespace
+		*/
+		class V8Namespace {
+			public:
+				v8::Local<v8::ObjectTemplate>						cV8ObjectTemplate;	/**< V8 object template representing this namespace */
+				PLGeneral::HashMap<PLGeneral::String, V8Namespace > mapNamespaces;		/**< Map of nested namespaces */
+				bool operator ==(const V8Namespace &cOther) { return false; }
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -173,20 +199,20 @@ class Script : public PLScript::Script {
 		*/
 		bool LogOutputTryCatch(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText, const v8::TryCatch &cTryCatch);
 
-
-	//[-------------------------------------------------------]
-	//[ Private structures                                    ]
-	//[-------------------------------------------------------]
-	private:
 		/**
 		*  @brief
-		*    A dynamic function
+		*    Adds a V8 function
+		*
+		*  @param[in] cV8Namespace
+		*    Current V8 namespace
+		*  @param[in] sFunction
+		*    Name of the function
+		*  @param[in] cV8Function
+		*    V8 function to add
+		*  @param[in] sNamespace
+		*    Namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*/
-		struct DynamicFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
-			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
-			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
-		};
+		void AddV8Function(V8Namespace &cV8Namespace, const PLGeneral::String &sFunction, v8::Local<v8::ObjectTemplate> cV8Function, const PLGeneral::String &sNamespace) const;
 
 
 	//[-------------------------------------------------------]
