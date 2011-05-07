@@ -52,7 +52,7 @@ pl_implement_class(Script)
 */
 Script::Script() :
 	m_pPythonModule(nullptr),
-	m_pPythonDirectory(nullptr),
+	m_pPythonDictionary(nullptr),
 	m_pPythonFunction(nullptr),
 	m_pPythonTuple(nullptr),
 	m_nCurrentArgument(0),
@@ -142,45 +142,45 @@ bool Script::SetSourceCode(const String &sSourceCode)
 		// Create an empty Python module (results in borrowed reference, don't use Py_DECREF on it)
 		m_pPythonModule = PyImport_AddModule(sModuleName);
 		if (m_pPythonModule) {
-			// Are there any dynamic functions?
-			if (m_lstDynamicFunctions.GetNumOfElements()) {
-				// Allocate the Python table of functions
-				m_pPythonTableOfFunctions = new PyMethodDef[m_lstDynamicFunctions.GetNumOfElements()];
+			// Get the dictionary of our module (results in borrowed reference, don't use Py_DECREF on it)
+			m_pPythonDictionary = PyModule_GetDict(m_pPythonModule);
+			if (m_pPythonDictionary) {
+				// Are there any dynamic functions?
+				if (m_lstDynamicFunctions.GetNumOfElements()) {
+					// Allocate the Python table of functions
+					m_pPythonTableOfFunctions = new PyMethodDef[m_lstDynamicFunctions.GetNumOfElements()];
 
-				// Add the dynamic functions
-				for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-					// Get the dynamic function
-					DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+					// Add the dynamic functions
+					for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
+						// Get the dynamic function
+						DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
 
-					// Get the current Python method definition
-					PyMethodDef *pPythonMethodDefinition = &m_pPythonTableOfFunctions[i];
+						// Get the current Python method definition
+						PyMethodDef *pPythonMethodDefinition = &m_pPythonTableOfFunctions[i];
 
-					// Setup the current Python method definition
-					pPythonMethodDefinition->ml_name  = psDynamicFunction->sFunction;	// The name of the built-in function/method
-					pPythonMethodDefinition->ml_meth  = PythonFunctionCallback;			// The C function that implements it
-					pPythonMethodDefinition->ml_flags = METH_VARARGS;					// Combination of METH_xxx flags, which mostly describe the args expected by the C func
-					pPythonMethodDefinition->ml_doc   = nullptr;						// The __doc__ attribute, or NULL
+						// Setup the current Python method definition
+						pPythonMethodDefinition->ml_name  = psDynamicFunction->sFunction;	// The name of the built-in function/method
+						pPythonMethodDefinition->ml_meth  = PythonFunctionCallback;			// The C function that implements it
+						pPythonMethodDefinition->ml_flags = METH_VARARGS;					// Combination of METH_xxx flags, which mostly describe the args expected by the C func
+						pPythonMethodDefinition->ml_doc   = nullptr;						// The __doc__ attribute, or NULL
 
-					// Create the new Python function object
-					PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psDynamicFunction, nullptr, nullptr));
+						// Create the new Python function object
+						PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psDynamicFunction, nullptr, nullptr));
 
-					// Add the new Python function - "PyModule_AddObject()" steals the reference to "pPythonFunction" so that we don't need to use "Py_DECREF" on our Python function
-					if (PyModule_AddObject(m_pPythonModule, psDynamicFunction->sFunction, pPythonFunction) == -1) {
-						// Error!
-						LogOutput(Log::Error, "Failed to add the function '" + psDynamicFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');
+						// Add the new Python function
+						if (!AddPythonFunction(m_pPythonDictionary, psDynamicFunction->sFunction, pPythonFunction, psDynamicFunction->sNamespace)) {
+							// Error!
+							LogOutput(Log::Error, "Failed to add the function '" + psDynamicFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');
+						}
+
+						// Remove our reference from the Python function object
+						Py_DECREF(pPythonFunction);
 					}
 				}
-			}
 
-			// Get the directory of our module (results in borrowed reference, don't use Py_DECREF on it)
-			m_pPythonDirectory = PyModule_GetDict(m_pPythonModule);
-			if (m_pPythonDirectory) {
-				// "Run" the Python script within the directory in order to set the source code (results in new reference, use Py_DECREF on the result)
-				PyObject *pPythonResult = PyRun_String(sSourceCode, file_input, m_pPythonDirectory, m_pPythonDirectory);
+				// "Run" the Python script within the dictionary in order to set the source code (results in new reference, use Py_DECREF on the result)
+				PyObject *pPythonResult = PyRun_String(sSourceCode, file_input, m_pPythonDictionary, m_pPythonDictionary);
 				if (pPythonResult) {
-
-					// [TODO] Error handling in case there was an error within the given script code
-
 					// Remove our reference from the Python result object
 					Py_DECREF(pPythonResult);
 
@@ -188,21 +188,21 @@ bool Script::SetSourceCode(const String &sSourceCode)
 					return true;
 				} else {
 					// Error!
-					LogOutput(Log::Error, "Failed to run the new Python module with the name '" + sModuleName + "\' in order to set the source code");
+					LogOutputWithErrorDescription(Log::Error, "Failed to run the new Python module with the name '" + sModuleName + "\' in order to set the source code", GetPythonErrorDescription());
 				}
 			} else {
 				// Error!
-				LogOutput(Log::Error, "Failed to get the directory of the new empty Python module with the name '" + sModuleName + '\'');
+				LogOutput(Log::Error, "Failed to get the dictionary of the new empty Python module with the name '" + sModuleName + '\'');
 			}
 		} else {
 			// Error!
 			LogOutput(Log::Error, "Failed to create a new empty Python module with the name '" + sModuleName + '\'');
 		}
 
-		// "m_pPythonModule", "m_pPythonDirectory" and "m_pPythonFunction" are borrowed references, don't use Py_DECREF on them
-		m_pPythonModule    = nullptr;
-		m_pPythonDirectory = nullptr;
-		m_pPythonFunction  = nullptr;
+		// "m_pPythonModule", "m_pPythonDictionary" and "m_pPythonFunction" are borrowed references, don't use Py_DECREF on them
+		m_pPythonModule     = nullptr;
+		m_pPythonDictionary = nullptr;
+		m_pPythonFunction   = nullptr;
 	} else {
 		// No script at all - done
 		return true;
@@ -214,10 +214,10 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
-	// Is there a Python module directory?
-	if (m_pPythonDirectory) {
+	// Is there a Python module dictionary?
+	if (m_pPythonDictionary) {
 		// Request the Python function (results in borrowed reference, don't use Py_DECREF on it)
-		m_pPythonFunction = PyDict_GetItemString(m_pPythonDirectory, sFunctionName);
+		m_pPythonFunction = PyDict_GetItemString(m_pPythonDictionary, sFunctionName);
 		if (m_pPythonFunction) {
 			// Functions must be callable
 			if (PyCallable_Check(m_pPythonFunction)) {
@@ -251,7 +251,7 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 		}
 	} else {
 		// Error!
-		LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found because there's no Python module directory");
+		LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found because there's no Python module dictionary");
 	}
 
 	// Error!
@@ -336,6 +336,17 @@ bool Script::EndCall()
 	if (m_pPythonFunction) {
 		// Call the Python function (results in new reference, use Py_DECREF on the result)
 		m_pPythonFunctionResult = PyObject_CallObject(m_pPythonFunction, m_pPythonTuple);
+		if (!m_pPythonFunctionResult) {
+			// Give some log error output
+			PyObject *pPythonFunctionName = PyObject_GetAttrString(m_pPythonFunction, "__name__");
+			if (pPythonFunctionName)
+				LogOutputWithErrorDescription(Log::Error, String("The call of the function '") + PyString_AsString(pPythonFunctionName) + "' failed", GetPythonErrorDescription());
+			else
+				LogOutputWithErrorDescription(Log::Error, "Function call failed", GetPythonErrorDescription());
+
+			// Error!
+			return false;
+		}
 	}
 
 	// Done
@@ -441,7 +452,7 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 */
 Script::Script(const Script &cSource) :
 	m_pPythonModule(nullptr),
-	m_pPythonDirectory(nullptr),
+	m_pPythonDictionary(nullptr),
 	m_pPythonFunction(nullptr),
 	m_pPythonTuple(nullptr),
 	m_nCurrentArgument(0),
@@ -463,6 +474,54 @@ Script &Script::operator =(const Script &cSource)
 
 /**
 *  @brief
+*    Returns a string containing the Python error description
+*/
+String Script::GetPythonErrorDescription() const
+{
+	String sErrorDescription;
+
+	// Was there an Python error at all?
+	if (PyErr_Occurred()) {
+		PyObject *pPythonErrorType, *pPythonErrorValue, *pPythonTraceback;
+		PyErr_Fetch(&pPythonErrorType, &pPythonErrorValue, &pPythonTraceback);
+		if(pPythonErrorValue) {
+			// Get a string representation of the Python object (results in new reference, use Py_DECREF on the result)
+			PyObject *pPythonString = PyObject_Str(pPythonErrorValue);
+
+			// Get the line number Python object from the trackback Python object
+			if (pPythonTraceback) {
+				PyObject *pPythonLineNumber = PyObject_GetAttrString(pPythonTraceback, "tb_lineno");
+				if (pPythonLineNumber)
+					sErrorDescription += String("Line ") + PyInt_AsLong(pPythonLineNumber) + ' ';
+			}
+
+			// Get the error description string
+			sErrorDescription += String('\"') + PyString_AS_STRING(pPythonString) + '\"';
+
+			// Remove our reference from the Python string object
+			Py_DECREF(pPythonString);
+		}
+		Py_XDECREF(pPythonErrorValue);
+		Py_XDECREF(pPythonErrorType);
+		Py_XDECREF(pPythonTraceback);
+	}
+
+	// Return the error description
+	return sErrorDescription;
+}
+
+/**
+*  @brief
+*    Write a string into the log
+*/
+bool Script::LogOutputWithErrorDescription(uint8 nLogLevel, const String &sText, const String &sErrorDescription)
+{
+	// Call the base implementation
+	return sErrorDescription.GetLength() ? Script::LogOutput(nLogLevel, sText + " (" + sErrorDescription + ')') : Script::LogOutput(nLogLevel, sText);
+}
+
+/**
+*  @brief
 *    Clears the script
 */
 void Script::Clear()
@@ -475,10 +534,10 @@ void Script::Clear()
 		// Reset the source code
 		m_sSourceCode = "";
 
-		// "m_pPythonModule", "m_pPythonDirectory" and "m_pPythonFunction" are borrowed references, don't use Py_DECREF on them
-		m_pPythonModule    = nullptr;
-		m_pPythonDirectory = nullptr;
-		m_pPythonFunction  = nullptr;
+		// "m_pPythonModule", "m_pPythonDictionary" and "m_pPythonFunction" are borrowed references, don't use Py_DECREF on them
+		m_pPythonModule     = nullptr;
+		m_pPythonDictionary = nullptr;
+		m_pPythonFunction   = nullptr;
 
 		// Reset the current number of arguments
 		m_nCurrentArgument = 0;
@@ -517,6 +576,70 @@ void Script::IncreaseNumOfArguments()
 		_PyTuple_Resize(&m_pPythonTuple, m_nCurrentArgument);
 	else
 		m_pPythonTuple = PyTuple_New(m_nCurrentArgument);
+}
+
+/**
+*  @brief
+*    Adds a Python function
+*/
+bool Script::AddPythonFunction(PyObject *pPythonDictionary, const String &sFunction, PyObject *pPythonFunction, const String &sNamespace) const
+{
+	// Is the given namespace empty?
+	if (sNamespace.GetLength()) {
+		// Nope, the target namespace is not yet reached...
+
+		// Find the next "." within the given nested Python namespace name
+		int nPartEnd = sNamespace.IndexOf(".");
+		if (nPartEnd < 0)
+			nPartEnd = sNamespace.GetLength();
+
+		// Get the current Python namespace name
+		const String sSubsNamespaceName = sNamespace.GetSubstring(0, nPartEnd);
+
+		// Is there already a Python dictionary object with the given name?
+		// Request the Python dictionary (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pNestedPythonDictionary = PyDict_GetItemString(pPythonDictionary, sSubsNamespaceName);
+		if (pNestedPythonDictionary) {
+			// There's already an Python object with the given name - Must be a Python dictionary object...
+			if (PyDict_Check(pNestedPythonDictionary)) {
+				// Go down the rabbit hole...
+				return AddPythonFunction(pNestedPythonDictionary, sFunction, pPythonFunction, sNamespace.GetSubstring(nPartEnd + 1));
+			} else {
+				// Error!
+				return false;
+			}
+		} else {
+			// Create the Python dictionary object (results in new reference, use Py_DECREF on the result)
+			PyObject *pNestedPythonDictionary = PyDict_New();
+
+			// Add the new Python dictionary object to the current one
+			if (PyDict_SetItemString(pPythonDictionary, sSubsNamespaceName, pNestedPythonDictionary) == -1) {
+				// Remove our reference from the Python dictionary object
+				Py_DECREF(pNestedPythonDictionary);
+
+				// Error!
+				return false;
+			}
+
+			// Go down the rabbit hole...
+			const bool bResult = AddPythonFunction(pNestedPythonDictionary, sFunction, pPythonFunction, sNamespace.GetSubstring(nPartEnd + 1));
+
+			// Remove our reference from the Python dictionary object
+			Py_DECREF(pNestedPythonDictionary);
+
+			// Done
+			return bResult;
+		}
+	} else {
+		// Jap, now add the given Python function object to the current Python dictionary object
+		if (PyDict_SetItemString(pPythonDictionary, sFunction, pPythonFunction) == -1) {
+			// Error!
+			return false;
+		}
+	}
+
+	// Done
+	return true;
 }
 
 

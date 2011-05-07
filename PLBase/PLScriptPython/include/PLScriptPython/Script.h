@@ -148,6 +148,39 @@ class Script : public PLScript::Script {
 
 		/**
 		*  @brief
+		*    Returns a string containing the Python error description
+		*
+		*  @return
+		*    A string containing the Python error description, empty string if there
+		*    wasn't an error or there was an error in receiving the error description
+		*/
+		PLGeneral::String GetPythonErrorDescription() const;
+
+		/**
+		*  @brief
+		*    Write a string into the log
+		*
+		*  @param[in] nLogLevel
+		*    Log level
+		*  @param[in] sText
+		*    Text which should be written into the log
+		*  @param[in] sErrorDescription
+		*    Error description
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    The text is written to the log only if the current
+		*    log level is greater or equal to the specified value.
+		*    This method is an extension of "PLGeneral::Log::Output()"
+		*    which also adds the name of the script to the given
+		*    text and the "sErrorDescription" content.
+		*/
+		bool LogOutputWithErrorDescription(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText, const PLGeneral::String &sErrorDescription);
+
+		/**
+		*  @brief
 		*    Clears the script
 		*/
 		void Clear();
@@ -157,6 +190,24 @@ class Script : public PLScript::Script {
 		*    Increases the number of arguments
 		*/
 		void IncreaseNumOfArguments();
+
+		/**
+		*  @brief
+		*    Adds a Python function
+		*
+		*  @param[in] pPythonDictionary
+		*    Python dictionary were to add the function to
+		*  @param[in] sFunction
+		*    Name of the function
+		*  @param[in] pPythonFunction
+		*    Python function object
+		*  @param[in] sNamespace
+		*    Namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool AddPythonFunction(PyObject *pPythonDictionary, const PLGeneral::String &sFunction, PyObject *pPythonFunction, const PLGeneral::String &sNamespace) const;
 
 
 	//[-------------------------------------------------------]
@@ -180,7 +231,7 @@ class Script : public PLScript::Script {
 	private:
 		PLGeneral::String					m_sSourceCode;				/**< Script source code */
 		PyObject						   *m_pPythonModule;			/**< Python module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject						   *m_pPythonDirectory;			/**< Python directory of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject						   *m_pPythonDictionary;		/**< Python dictionary of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
 		PyObject						   *m_pPythonFunction;			/**< Current Python function, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
 		PyObject						   *m_pPythonTuple;				/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
 		PLGeneral::uint32					m_nCurrentArgument;			/**< Current argument, used during function call */

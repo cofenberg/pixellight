@@ -1,4 +1,12 @@
-﻿>> 06.05.2011
+﻿>> 07.05.2011
+[CO]
+- Implemented "PLScriptPython::Script::AddDynamicFunction()" namespace by using Python dictionaries... probably not the best solution but for
+  now I just want to have it up and running to get an idea of concepts multiple scripting languages are sharing. Maybe I'll replace "namespace"
+  later by "module".
+
+
+
+>> 06.05.2011
 [CO]
 - Added "ScriptBinding" which is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
   derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class instance to a script - but usually

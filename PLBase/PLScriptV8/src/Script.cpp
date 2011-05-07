@@ -406,7 +406,7 @@ bool Script::LogOutputTryCatch(uint8 nLogLevel, const String &sText, const v8::T
 	const String sErrorDescription = cTryCatch.HasCaught() ? (String(" (Line ") + cTryCatch.Message()->GetLineNumber() + " \"" + String::FromUTF8(*v8::String::Utf8Value(cTryCatch.Exception()))) + "\")": "";
 
 	// Call the base implementation
-	return PLScript::Script::LogOutput(nLogLevel, sText + sErrorDescription);
+	return Script::LogOutput(nLogLevel, sText + sErrorDescription);
 }
 
 
