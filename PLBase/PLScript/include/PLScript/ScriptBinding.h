@@ -44,6 +44,11 @@ namespace PLScript {
 /**
 *  @brief
 *    Abstract script binding class
+*
+*  @remarks
+*    This is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
+*    derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class
+*    instance to a script - but usually it's useful to have such an abstract base class.
 */
 class ScriptBinding : public PLCore::Object {
 

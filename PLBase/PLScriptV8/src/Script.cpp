@@ -153,7 +153,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			m_cV8Context = v8::Context::New();
 		}
 
-		// Enter the created context for compiling and running the hello world script
+		// Enter our V8 context
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Create a string containing the JavaScript source code
@@ -191,7 +191,7 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 		// Create a stack-allocated handle scope
 		v8::HandleScope cHandleScope;
 
-		// Enter the created context for compiling and running the hello world script
+		// Enter our V8 context
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Get the V8 function
@@ -201,7 +201,7 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 			m_sCurrentFunction = sFunctionName;
 
 			// Clear the V8 arguments list
-			m_lstArguments.Clear();
+			m_lstV8Arguments.Clear();
 		} else {
 			// Error!
 			m_sCurrentFunction = "";
@@ -218,38 +218,92 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 
 void Script::PushArgument(int nValue)
 {
-	if (m_sCurrentFunction.GetLength())
-		m_lstArguments.Add(nValue);
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Integer::New(nValue)));
+	}
 }
 
 void Script::PushArgument(uint8 nValue)
 {
-	if (m_sCurrentFunction.GetLength())
-		m_lstArguments.Add(nValue);
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Integer::New(nValue)));
+	}
 }
 
 void Script::PushArgument(uint16 nValue)
 {
-	if (m_sCurrentFunction.GetLength())
-		m_lstArguments.Add(nValue);
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Integer::New(nValue)));
+	}
 }
 
 void Script::PushArgument(uint32 nValue)
 {
-	if (m_sCurrentFunction.GetLength())
-		m_lstArguments.Add(nValue);
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Uint32::New(nValue)));
+	}
 }
 
 void Script::PushArgument(float fValue)
 {
-	if (m_sCurrentFunction.GetLength())
-		m_lstArguments.Add(fValue);
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Number::New(fValue)));
+	}
 }
 
 void Script::PushArgument(double fValue)
 {
-	if (m_sCurrentFunction.GetLength())
-		m_lstArguments.Add(fValue);
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Number::New(fValue)));
+	}
 }
 
 bool Script::EndCall()
@@ -258,7 +312,7 @@ bool Script::EndCall()
 		// Create a stack-allocated handle scope
 		v8::HandleScope cHandleScope;
 
-		// Enter the created context for compiling and running the hello world script
+		// Enter our V8 context
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Clear the current result
@@ -270,15 +324,7 @@ bool Script::EndCall()
 			v8::TryCatch cTryCatch;
 
 			// Call the V8 function
-			if (m_lstArguments.GetNumOfElements()) {
-				v8::Local<v8::Value> *pcArguments = new v8::Local<v8::Value>[m_lstArguments.GetNumOfElements()]();
-				for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
-					pcArguments[i] = v8::Number::New(m_lstArguments[i]);
-				m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), m_lstArguments.GetNumOfElements(), pcArguments);
-				delete [] pcArguments;
-			} else {
-				m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), 0, nullptr);
-			}
+			m_cV8CurrentResult = v8::Persistent<v8::Value>::New(cV8Function->Call(m_cV8Context->Global(), m_lstV8Arguments.GetNumOfElements(), m_lstV8Arguments.GetData()));
 
 			// Error?
 			if (m_cV8CurrentResult.IsEmpty())
@@ -407,7 +453,7 @@ void Script::Clear()
 	m_sCurrentFunction = "";
 
 	// Clear the V8 arguments list
-	m_lstArguments.Clear();
+	m_lstV8Arguments.Clear();
 }
 
 /**
