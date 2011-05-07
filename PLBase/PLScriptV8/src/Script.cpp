@@ -136,9 +136,11 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				// Get the dynamic function
 				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
 
-				// Add V8 function
+				// Create V8 function
 				v8::Local<v8::ObjectTemplate> cV8Function = v8::ObjectTemplate::New();
 				cV8Function->SetCallAsFunctionHandler(V8FunctionCallback, v8::External::New(psDynamicFunction));
+
+				// Add V8 function
 				cV8Globals->Set(v8::String::New(psDynamicFunction->sFunction), cV8Function, v8::ReadOnly);
 			}
 
@@ -257,9 +259,13 @@ bool Script::EndCall()
 		// Enter the created context for compiling and running the hello world script
 		v8::Context::Scope cContextScope(m_cV8Context);
 
+		// Clear the current result
+		m_cV8CurrentResult.Clear();
+
 		// Get the V8 function
 		v8::Local<v8::Function> cV8Function = v8::Local<v8::Function>::Cast(m_cV8Context->Global()->Get(v8::String::New(m_sCurrentFunction)));
 		if (cV8Function->IsFunction()) {
+			v8::TryCatch cTryCatch;
 			if (m_lstArguments.GetNumOfElements()) {
 				v8::Local<v8::Value> *pcArguments = new v8::Local<v8::Value>[m_lstArguments.GetNumOfElements()]();
 				for (uint32 i=0; i<m_lstArguments.GetNumOfElements(); i++)
@@ -269,10 +275,14 @@ bool Script::EndCall()
 			} else {
 				m_cV8CurrentResult = cV8Function->Call(m_cV8Context->Global(), 0, nullptr);
 			}
+
+			// Error?
+			if (m_cV8CurrentResult.IsEmpty())
+				LogOutputTryCatch(Log::Error, "Failed to call the function '" + m_sCurrentFunction + '\'', cTryCatch);
 		}
 
 		// Done
-		return true;
+		return !m_cV8CurrentResult.IsEmpty();
 	}
 
 	// Error!
@@ -281,32 +291,32 @@ bool Script::EndCall()
 
 void Script::GetReturn(int &nValue)
 {
-	nValue = m_cV8CurrentResult->IsUint32() ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
 void Script::GetReturn(uint8 &nValue)
 {
-	nValue = m_cV8CurrentResult->IsUint32() ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
 void Script::GetReturn(uint16 &nValue)
 {
-	nValue = m_cV8CurrentResult->IsUint32() ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
 void Script::GetReturn(uint32 &nValue)
 {
-	nValue = m_cV8CurrentResult->IsUint32() ? m_cV8CurrentResult->Uint32Value() : 0;
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
 void Script::GetReturn(float &fValue)
 {
-	fValue = m_cV8CurrentResult->IsNumber() ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
+	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
 }
 
 void Script::GetReturn(double &fValue)
 {
-	fValue = m_cV8CurrentResult->IsNumber() ? m_cV8CurrentResult->NumberValue() : 0.0;
+	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? m_cV8CurrentResult->NumberValue() : 0.0;
 }
 
 
