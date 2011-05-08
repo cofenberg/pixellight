@@ -31,6 +31,10 @@ add_subdirectory(ODE)
 add_subdirectory(OpenGLES)
 add_subdirectory(Cg)
 add_subdirectory(libRocket)
+add_subdirectory(Lua)
+add_subdirectory(V8)
+add_subdirectory(Python)
+add_subdirectory(AngelScript)
 
 ##################################################
 ## Dependencies

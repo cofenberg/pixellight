@@ -1,3 +1,9 @@
+>> 25.04.2011
+[CO]
+- PLScript documentation added
+
+
+
 >> 10.04.2011
 [CO]
 - PLGeneral-docu: Removed out-of-date statement "and the structure member alignment to 8"

@@ -369,6 +369,41 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*/
 		PLCORE_API bool ScanPackages(const PLGeneral::String &sPath, const PLGeneral::String &sExtension = "*.zip");
 
+		/**
+		*  @brief
+		*    Opens a file by using base directories
+		*
+		*  @param[in] cFile
+		*    File object
+		*  @param[in] sFilename
+		*    Filename of the file to open
+		*  @param[in] bCreate
+		*    Create the file if it doesn't exist?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLCORE_API bool OpenFile(PLGeneral::File &cFile, const PLGeneral::String &sFilename, bool bCreate = false) const;
+
+		/**
+		*  @brief
+		*    Loads in a string by using a file
+		*
+		*  @param[in] sFilename
+		*    Name of the file to read the string from
+		*  @param[in] nFormat
+		*    String format, "PLGeneral::String::ASCII" or "PLGeneral::String::Unicode" (not recommended!)
+		*
+		*  @return
+		*    The read string, empty string on error or if the file is just empty
+		*
+		*  @note
+		*    - The file is opened by using base directories
+		*    - It's not recommended to read in Unicode by using this method because internally
+		*      wchar_t is used and this data type has not the same size on every platform
+		*/
+		PLCORE_API PLGeneral::String LoadStringFromFile(const PLGeneral::String &sFilename, PLGeneral::String::EFormat nFormat = PLGeneral::String::ASCII) const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]

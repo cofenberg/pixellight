@@ -214,6 +214,88 @@ void DrawHelpersBackendShaders::DrawImage(TextureBuffer &cTextureBuffer, Sampler
 	}
 }
 
+void DrawHelpersBackendShaders::DrawImage(TextureBuffer &cTextureBuffer, SamplerStates &cSamplerStates, const Vector3 &vPos, const Matrix4x4 &mObjectSpaceToClipSpace, const Vector2 &vSize,
+										  const Color4 &cColor, float fAlphaReference, const Vector2 &vTextureCoordinate, const Vector2 &vTextureCoordinateSize, const Matrix4x4 &mTexture)
+{
+	// Create vertex buffer
+	if (CreateTempBuffes()) {
+		// Get the image size
+		Vector2 vImageSize = vSize;
+		if (vImageSize.IsNull()) {
+			switch (cTextureBuffer.GetType()) {
+				case Resource::TypeTextureBuffer2D:
+					vImageSize.x = static_cast<float>(static_cast<TextureBuffer2D&>(cTextureBuffer).GetSize().x);
+					vImageSize.y = static_cast<float>(static_cast<TextureBuffer2D&>(cTextureBuffer).GetSize().y);
+					break;
+
+				case Resource::TypeTextureBufferRectangle:
+					vImageSize.x = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().x);
+					vImageSize.y = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().y);
+					break;
+
+				default:
+					return;	// Error, must be 2D or rectangle!
+			}
+		}
+
+		// Get texture scale - rectangle textures use non-normalized texture coordinates
+		float fTextureCoordinateScaleX = 1.0f;
+		float fTextureCoordinateScaleY = 1.0f;
+		if (cTextureBuffer.GetType() == Resource::TypeTextureBufferRectangle) {
+			fTextureCoordinateScaleX = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().x);
+			fTextureCoordinateScaleY = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().y);
+		}
+
+		// Setup the vertex buffer
+		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
+			// Vertex 0
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vImageSize.x;
+			pfVertex[1] = vPos.y + vImageSize.y;
+			pfVertex[2] = vPos.z;
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::TexCoord));
+			pfVertex[0] = (vTextureCoordinate.x + vTextureCoordinateSize.x)*fTextureCoordinateScaleX;
+			pfVertex[1] = vTextureCoordinate.y*fTextureCoordinateScaleY;
+
+			// Vertex 1
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y + vImageSize.y;
+			pfVertex[2] = vPos.z;
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::TexCoord));
+			pfVertex[0] = vTextureCoordinate.x*fTextureCoordinateScaleX;
+			pfVertex[1] = vTextureCoordinate.y*fTextureCoordinateScaleY;
+
+			// Vertex 2
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vImageSize.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = vPos.z;
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::TexCoord));
+			pfVertex[0] = (vTextureCoordinate.x + vTextureCoordinateSize.x)*fTextureCoordinateScaleX;
+			pfVertex[1] = (vTextureCoordinate.y + vTextureCoordinateSize.y)*fTextureCoordinateScaleY;
+
+			// Vertex 3
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = vPos.z;
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::TexCoord));
+			pfVertex[0] = vTextureCoordinate.x*fTextureCoordinateScaleX;
+			pfVertex[1] = (vTextureCoordinate.y + vTextureCoordinateSize.y)*fTextureCoordinateScaleY;
+
+			// Unlock the vertex buffer
+			m_pTempVertexBuffer->Unlock();
+		}
+
+		// Use the image GPU program
+		if (UseImageProgram(*m_pTempVertexBuffer, cColor, mObjectSpaceToClipSpace, cTextureBuffer, cSamplerStates, fAlphaReference, mTexture)) {
+			// Draw image
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+		}
+	}
+}
+
 void DrawHelpersBackendShaders::DrawPoint(const Color4 &cColor, const Vector2 &vPosition, float fSize)
 {
 	// Create vertex buffer

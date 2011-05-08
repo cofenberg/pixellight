@@ -169,7 +169,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 		*  @remarks
 		*    Wrap a member function pointer
 		*/
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pMemFunc, pObject))
 		{
@@ -242,12 +242,17 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 
 
 };
@@ -292,7 +297,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pMemFunc, pObject))
 		{
@@ -339,8 +344,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -383,7 +393,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pMemFunc, pObject))
 		{
@@ -432,8 +442,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -475,7 +490,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pMemFunc, pObject))
 		{
@@ -522,8 +537,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 				return (*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -565,7 +585,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pMemFunc, pObject))
 		{
@@ -614,8 +634,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -656,7 +681,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pMemFunc, pObject))
 		{
@@ -703,8 +728,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -745,7 +775,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pMemFunc, pObject))
 		{
@@ -794,8 +824,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 
@@ -836,7 +871,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pMemFunc, pObject))
 		{
@@ -883,8 +918,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -924,7 +964,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pMemFunc, pObject))
 		{
@@ -973,8 +1013,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 
@@ -1014,7 +1059,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pMemFunc, pObject))
 		{
@@ -1061,8 +1106,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1101,7 +1151,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pMemFunc, pObject))
 		{
@@ -1150,8 +1200,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 
@@ -1190,7 +1245,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pMemFunc, pObject))
 		{
@@ -1237,8 +1292,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1276,7 +1336,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pMemFunc, pObject))
 		{
@@ -1325,8 +1385,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1363,7 +1428,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pMemFunc, pObject))
 		{
@@ -1410,8 +1475,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1448,7 +1518,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pMemFunc, pObject))
 		{
@@ -1497,8 +1567,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1534,7 +1609,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pMemFunc, pObject))
 		{
@@ -1581,8 +1656,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1618,7 +1698,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7>(pMemFunc, pObject))
 		{
@@ -1667,8 +1747,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1703,7 +1788,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7>(pMemFunc, pObject))
 		{
@@ -1750,8 +1835,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1786,7 +1876,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6>(pMemFunc, pObject))
 		{
@@ -1835,8 +1925,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1870,7 +1965,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5, T6>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6>(pMemFunc, pObject))
 		{
@@ -1917,8 +2012,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -1952,7 +2052,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5>(pMemFunc, pObject))
 		{
@@ -2001,8 +2101,13 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2035,7 +2140,7 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4, T5>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5>(pMemFunc, pObject))
 		{
@@ -2082,8 +2187,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5>* >(m_pFunc))(t0, t1, t2, t3, t4, t5);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2116,7 +2226,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4>(pMemFunc, pObject))
 		{
@@ -2165,8 +2275,13 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2198,7 +2313,7 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3, T4>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4>(pMemFunc, pObject))
 		{
@@ -2245,8 +2360,13 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 				(*static_cast<Func<void, T0, T1, T2, T3, T4>* >(m_pFunc))(t0, t1, t2, t3, t4);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2278,7 +2398,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3>(pMemFunc, pObject))
 		{
@@ -2327,8 +2447,13 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2359,7 +2484,7 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2, T3>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2, T3>(pMemFunc, pObject))
 		{
@@ -2406,8 +2531,13 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 				(*static_cast<Func<void, T0, T1, T2, T3>* >(m_pFunc))(t0, t1, t2, t3);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2438,7 +2568,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2>(pMemFunc, pObject))
 		{
@@ -2487,8 +2617,13 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2518,7 +2653,7 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1, T2>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1, T2>(pMemFunc, pObject))
 		{
@@ -2565,8 +2700,13 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 				(*static_cast<Func<void, T0, T1, T2>* >(m_pFunc))(t0, t1, t2);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2596,7 +2736,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1>(pMemFunc, pObject))
 		{
@@ -2645,8 +2785,13 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2675,7 +2820,7 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0, T1>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0, T1>(pMemFunc, pObject))
 		{
@@ -2722,8 +2867,13 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 				(*static_cast<Func<void, T0, T1>* >(m_pFunc))(t0, t1);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2752,7 +2902,7 @@ class Functor<R, T0> : public Func<R, T0> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0>(pMemFunc, pObject))
 		{
@@ -2801,8 +2951,13 @@ class Functor<R, T0> : public Func<R, T0> {
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2831,7 +2986,7 @@ class Functor<void, T0> : public Func<void, T0> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, T0>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void, T0>(pMemFunc, pObject))
 		{
@@ -2878,8 +3033,13 @@ class Functor<void, T0> : public Func<void, T0> {
 				(*static_cast<Func<void, T0>* >(m_pFunc))(t0);
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2907,7 +3067,7 @@ class Functor<R> : public Func<R> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R>(pMemFunc, pObject))
 		{
@@ -2956,8 +3116,13 @@ class Functor<R> : public Func<R> {
 				return DefaultValue<R>::Default();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 /**
@@ -2983,7 +3148,7 @@ class Functor<void> : public Func<void> {
 		{
 		}
 
-        template <class CLASS>
+		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void>(pMemFunc, pObject))
 		{
@@ -3030,8 +3195,13 @@ class Functor<void> : public Func<void> {
 				(*static_cast<Func<void>* >(m_pFunc))();
 		}
 
+		virtual DynFunc *Clone() const
+		{
+			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
+		}
+
 	private:
-		DynFunc *m_pFunc;	/**< Pointer to wrapped function object */
+		DynFunc *m_pFunc;	/**< Pointer to wrapped function object, can be a null pointer */
 };
 
 

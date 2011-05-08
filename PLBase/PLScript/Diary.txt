@@ -1,0 +1,94 @@
+﻿>> 07.05.2011
+[CO]
+- Implemented "PLScriptPython::Script::AddDynamicFunction()" namespace by using Python dictionaries... probably not the best solution but for
+  now I just want to have it up and running to get an idea of concepts multiple scripting languages are sharing. Maybe I'll replace "namespace"
+  later by "module".
+- Implemented "PLScriptV8::Script::AddDynamicFunction()" namespace by using V8 object template
+- Implemented "PLScriptAngelScript::Script::AddDynamicFunction()" namespace. It looks like that AngelScript (2.20.2) has currently no support
+  for namespaces... so right now I'am doing an ugly hack: e.g. "PL.Timing.GetTimeDifference()" is written within scripts as "PL_Timing_GetTimeDifference()". :/
+-> Ok, the namespace support for global functions is now implemented within all script backends... although I'am really not happy with the current
+   AngelScript solution (e.g. "PL_Timing_GetTimeDifference()" instead of "PL.Timing.GetTimeDifference()") and Python solution
+   e.g. "PL[’Timing’][’GetTimeDifference’]()" instead of "PL.Timing.GetTimeDifference()"). It's really time consuming to do the research into multiple script
+   API's at the same time and on those two issues I already spend several hours without a decent solution. So, if there's someone who knows a better solution...
+-> Right now my candidates for the "recommended PixelLight script language" are JavaScript and Lua. Lua is quite compact while JavaScript is a web-standard which
+   could be somewhat beneficial for PixelLight, especially regarding to the browser plugin. AngelScript looks somethat unfinished although I like the API in
+   general. Python is just a monster. *g*
+- "Script": Added string versions of "PushArgument()" and "GetReturn()". Adding support for this within PLScriptAngelScript was some hard work because unlike
+  JavaScript (V8), Python and Lua, within AngelScript strings are just "add_on" and not everything is documented as detailed as I wished for and I wasn't able
+  to find real help via google as well. So I had to guess, review the AngelScript source codes and perform some debugging... I really hope that I didn't miss
+  anything...
+
+
+
+>> 06.05.2011
+[CO]
+- Added "ScriptBinding" which is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
+  derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class instance to a script - but usually
+  it's useful to have such an abstract base class...
+- "Script::AddDynamicFunction()": Added namespace as last optional parameter (backend implementations will follow)
+- Added "Script::AddBinding()" which adds a script binding to connect the given RTTI class instance with this script (currently only RTTI
+  methods are used)
+- Implemented "PLScriptLua::Script::AddDynamicFunction()" namespace by using Lua tables
+
+
+
+>> 02.05.2011
+[CO]
+- Python backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+- V8 (JavaScript) backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+-> The Lua, Python, AngelScript and JavaScript backends are now equal in the implemented behaviour. It's possible to call script functions
+   from the C++ side, and it's also possible to call C++ functions from the script side. I'am quite sure that this isn't everything one
+   requires when working with script engines, but it's a start. I have to take a break for a couple of days due to university stuff, then
+   I continue working on PLScript.
+
+
+
+>> 01.05.2011
+[CO]
+- AngelScript backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+- Python backend: Calling Python functions is working
+
+
+
+>> 30.04.2011
+[CO]
+- Added script support for functors/functoids so that it's possible to call C++ functions or member methods from inside scripts...
+  as well as other script functions because the functors are hiding this detail.
+  The method "Script::AddDynamicFunction()" is used to register functors while "Script::RemoveAllDynamicFunctions()" can be used to remove
+  all registerd functors. The Lua implementation is already working. Please note that this is still highly experimental and I don't know
+  whether or not the script interfaces are completly changed later.
+
+
+
+>> 29.04.2011
+[CO]
+- Added "GetScriptLanguage()", "GetSourceCode()" and "SetSourceCode()" to "Script" (similar to "PLRenderer::Shader")
+- Added "FuncScriptPtr" which is a version of "PLCore::FuncFunPtr"/"PLCore::FuncMemPtr" for script functions. This means that script functions
+  can be called in the same way as all other functions/methods (e.g. RTTI methods) can be called. This template is using
+  the "Script" methods "BeginCall()", "PushArgument()", "EndCall()" and "GetReturn()" to call script functions. Calling Lua and AngelScript
+  functions is already implemented and working. Those mentioned script function calling methods are currently public although it's not recommended
+  to call them without using "FuncScriptPtr", but currently I see no change to hide those methods from the user. But this is just my first attempt to
+  get things up and running... next stop: Implementing the same for Python and JavaScript. (calling C/C++ methods from scripts will follow as well)
+- Calling JavaScript functions is working... although the implementation is currently somewhat poor... having some issues getting into the V8-API...
+
+
+
+>> 28.04.2011
+[CO]
+- As requested within the PixelLight forum at: http://dev.pixellight.org/forum/viewtopic.php?f=3&t=45
+  ... I'll also added a script backend for AngelScript (like the others, just a skeleton right now!). Ok, four script languages should really
+  be enough to get a good script interface.
+
+
+
+>> 26.04.2011
+[CO]
+- Compiled 32 bit versions of Lua, Python and V8 (JavaScript engine) for Windows and Linux. Configurated everything so that the script
+  projects can be compiled and are able to run.
+  Next stop: Concrete script implementations :D
+
+
+
+>> 25.04.2011
+[CO]
+- Started the PLScript project. As usual there's a null backend and I'll implement backends for Lua, JavaScript and Python in parallel.

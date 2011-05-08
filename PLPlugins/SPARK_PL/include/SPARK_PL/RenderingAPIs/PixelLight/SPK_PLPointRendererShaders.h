@@ -28,7 +28,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include "SPARK_PL/RenderingAPIs/PixelLight/SPK_PLPointRenderer.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRenderer {
+	class Program;
+	class VertexShader;
+	class FragmentShader;
+	class ProgramUniform;
+	class ProgramAttribute;
+}
 
 
 //[-------------------------------------------------------]
@@ -109,10 +122,39 @@ class SPK_PLPointRendererShaders : public SPK_PLPointRenderer {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when a program became dirty
+		*
+		*  @param[in] pProgram
+		*    Program which became dirty
+		*/
+		void OnDirty(PLRenderer::Program *pProgram);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sShaderLanguage;	/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLGeneral::String				 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramAttribute	*m_pPositionProgramAttribute;					/**< Position program attribute, can be a null pointer */
+		PLRenderer::ProgramAttribute	*m_pColorProgramAttribute;						/**< Color program attribute, can be a null pointer */
+		PLRenderer::ProgramUniform		*m_pObjectSpaceToClipSpaceMatrixProgramUniform;	/**< Object space to clip space matrix program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		*m_pPointParametersProgramUniform;				/**< Point parameters program uniform, can be a null pointer */
+		PLRenderer::ProgramUniform		*m_pTextureMapProgramUniform;					/**< Texture map program uniform, can be a null pointer */
 
 
 };

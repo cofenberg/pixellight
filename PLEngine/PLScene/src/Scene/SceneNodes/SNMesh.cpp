@@ -242,7 +242,7 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 								if (pLoader->CanLoad()) {
 									// Open the file
 									File cFile;
-									if (pLoader->OpenFile(cFile, sFilename, false)) {
+									if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
 										// Get method name
 										static const String sLoad = "Load";
 										static const String sLoadParams = "LoadParams";

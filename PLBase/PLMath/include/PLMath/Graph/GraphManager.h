@@ -39,7 +39,7 @@
 namespace PLMath{
 	class GraphManager;
 }
-PLMATHAPI_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphManager>;
+PLMATH_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphManager>;
 
 
 //[-------------------------------------------------------]

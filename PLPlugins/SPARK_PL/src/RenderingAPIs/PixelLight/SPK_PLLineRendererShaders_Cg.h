@@ -24,22 +24,22 @@
 static const PLGeneral::String sSPK_PLLineRendererShaders_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position    : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 VertexColor : COLOR;		// Vertex color\n\
+	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float4 Color    : COLOR;	// Vertex color\n\
 };\n\
 \n\
 // Programs\n\
-VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input\n\
+VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input\n\
 			   float4   VertexColor    : COLOR,			// Vertex color input\n\
 	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix\n\
 {\n\
 	VS_OUTPUT Out;\n\
 \n\
 	// Calculate the clip space vertex position\n\
-	Out.Position = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);\n\
+	Out.Position = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1.0f));\n\
 \n\
 	// Pass through the vertex color\n\
-	Out.VertexColor = VertexColor;\n\
+	Out.Color = VertexColor;\n\
 \n\
 	// Done\n\
 	return Out;\n\
@@ -50,8 +50,8 @@ VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex posit
 static const PLGeneral::String sSPK_PLLineRendererShaders_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
-	float4 Position    : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 VertexColor : COLOR;		// Vertex color\n\
+	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
+	float4 Color    : COLOR;	// Vertex color\n\
 };\n\
 \n\
 // Fragment output\n\
@@ -65,7 +65,7 @@ FS_OUTPUT main(VS_OUTPUT In)	// Vertex shader output as fragment shader input\n\
 	FS_OUTPUT Out;\n\
 \n\
 	// Just set the output color\n\
-	Out.Color0 = In.VertexColor;\n\
+	Out.Color0 = In.Color;\n\
 \n\
 	// Done\n\
 	return Out;\n\

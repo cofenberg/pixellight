@@ -404,6 +404,65 @@ bool LoadableManager::ScanPackages(const String &sPath, const String &sExtension
 	return false;
 }
 
+/**
+*  @brief
+*    Opens a file by using base directories
+*/
+bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreate) const
+{
+	// Because absolute filenames can be accessed fastest by the file system, we first give
+	// the file system an absolute filename which is hopefully the correct one... if
+	// not, we must search the file which is quite slow...
+	const Url cUrl(sFilename);
+	if (cUrl.IsAbsolute()) {
+		// The given filename is already absolute! :)
+		cFile.Assign(cUrl);
+	} else {
+		// Are there any base directories?
+		const uint32 nNumOfBaseDirs = m_lstBaseDirs.GetNumOfElements();
+		if (nNumOfBaseDirs) {
+			// Reset file
+			cFile.Assign("");
+
+			// Loop through all base directories
+			bool bFileFound = false;
+			for (uint32 nBaseDir=0; nBaseDir<nNumOfBaseDirs && !bFileFound; nBaseDir++) {
+				// Try to open the file directly
+				const String sAbsFilename = m_lstBaseDirs[nBaseDir] + sFilename;
+				cFile.Assign(sAbsFilename);
+
+				// File found?
+				bFileFound = cFile.IsFile();
+
+				// Create the file?
+				if (bCreate && !bFileFound)
+					bFileFound = cFile.Create();
+			}
+		} else {
+			// Try to open the file directly
+			cFile.Assign(cUrl);
+		}
+	}
+
+	// Check if the file has been found
+	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead);
+}
+
+/**
+*  @brief
+*    Loads in a string by using a file
+*/
+String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFormat nFormat) const
+{
+	// Open the file
+	File cFile;
+	if (OpenFile(cFile, sFilename, false))
+		return cFile.GetContentAsString();
+
+	// Error!
+	return "";
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

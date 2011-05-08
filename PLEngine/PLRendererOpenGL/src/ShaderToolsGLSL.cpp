@@ -92,4 +92,4 @@ void ShaderToolsGLSL::WriteInformationIntoLog(GLuint nOpenGLObject)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // OpenGL
+} // PLRendererOpenGL

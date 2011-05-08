@@ -419,7 +419,7 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 		ShaderLanguage *pShaderLanguage = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
 			// Load in the shader source code
-			const String sShaderSourceCode = LoadStringFromFile(sFilename);
+			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
 				m_pVertexShader = pShaderLanguage->CreateVertexShader();
@@ -463,7 +463,7 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 		ShaderLanguage *pShaderLanguage = m_pTechnique->GetEffect().GetEffectManager().GetRendererContext().GetRenderer().GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
 			// Load in the shader source code
-			const String sShaderSourceCode = LoadStringFromFile(sFilename);
+			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
 				m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
@@ -549,62 +549,6 @@ EffectPass::~EffectPass()
 		delete m_pVertexShader;
 	if (m_pFragmentShader)
 		delete m_pFragmentShader;
-}
-
-/**
-*  @brief
-*    Loads in a string by using a file
-*/
-String EffectPass::LoadStringFromFile(const String &sFilename) const
-{
-	// Because absolute filenames can be accessed fastest by the file system, we first give
-	// the file system an absolute filename which is hopefully the correct one... if
-	// not, we must search the file which is quite slow...
-	File cFile;
-	const Url cUrl(sFilename);
-	if (cUrl.IsAbsolute()) {
-		// The given filename is already absolute! :)
-		cFile.Assign(cUrl);
-	} else {
-		// Get the loadable manager instance
-		LoadableManager *pLoadableManager = LoadableManager::GetInstance();
-
-		// Are there any base directories?
-		const uint32 nNumOfBaseDirs = pLoadableManager->GetNumOfBaseDirs();
-		if (nNumOfBaseDirs) {
-			// Reset file
-			cFile.Assign("");
-
-			// Loop through all base directories
-			bool bFileFound = false;
-			for (uint32 nBaseDir=0; nBaseDir<nNumOfBaseDirs && !bFileFound; nBaseDir++) {
-				// Try to open the file directly
-				const String sAbsFilename = pLoadableManager->GetBaseDir(nBaseDir) + sFilename;
-				cFile.Assign(sAbsFilename);
-
-				// File found?
-				bFileFound = cFile.IsFile();
-			}
-		} else {
-			// Try to open the file directly
-			cFile.Assign(cUrl);
-		}
-	}
-
-	// Check if the file has been found
-	if (cFile.Open(File::FileRead)) {
-		// Load in the file, we also take care of the terminating zero (\0)
-		const uint32 nFileSize = cFile.GetSize();
-		char *pData = new char[nFileSize + 1];
-		cFile.Read(pData, nFileSize, 1);
-		pData[nFileSize] = '\0';
-
-		// The string class takes over the control of the memory
-		return String(pData, false, nFileSize);
-	}
-
-	// Error!
-	return "";
 }
 
 

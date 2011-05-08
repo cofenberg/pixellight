@@ -127,6 +127,8 @@ class XmlTextRenderer {
 		*
 		*  @param[in] cGraphics
 		*    Graphics object into which to render
+		*  @param[in] vSize
+		*    Current section size
 		*/
 		PLXMLTEXT_API void Init(PLGui::Graphics &cGraphics, const PLMath::Vector2i &vSize);
 

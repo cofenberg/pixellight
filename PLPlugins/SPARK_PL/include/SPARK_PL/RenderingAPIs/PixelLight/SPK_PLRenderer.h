@@ -142,6 +142,15 @@ class SPK_PLRenderer : public SPK::Renderer {
 		*/
 		inline void SetWorldViewProjectionMatrix(const PLMath::Matrix4x4 &mWorldViewProjection);
 
+		/**
+		*  @brief
+		*    Sets the inverse world view matrix used for rendering
+		*
+		*  @param[in] mWorldViewInverse
+		*    The inverse world view matrix used for rendering
+		*/
+		inline void SetWorldViewInverse(const PLMath::Matrix4x4 &mWorldViewInverse);
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SPK::Renderer functions                ]
@@ -169,18 +178,13 @@ class SPK_PLRenderer : public SPK::Renderer {
 		*/
 		SPARK_PL_API void InitBlending() const;
 
-		/**
-		*  @brief
-		*    Inits the rendering hints of this SPK_PLRenderer
-		*/
-		SPARK_PL_API void InitRenderingHints() const;
-
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
 		PLMath::Matrix4x4 m_mWorldViewProjection;	/**< The world view projection matrix used for rendering */
+		PLMath::Matrix4x4 m_mWorldViewInverse;		/**< The inverse world view matrix used for rendering */
 
 
 	//[-------------------------------------------------------]

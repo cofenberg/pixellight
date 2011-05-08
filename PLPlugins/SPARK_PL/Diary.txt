@@ -1,6 +1,8 @@
 ﻿>> 21.04.2011
 [CO]
-- SPARK_PL: Implemented "SPK_PLLineRendererShaders" and "SPK_PLLineTrailRendererShaders"
+- Implemented "SPK_PLLineRendererShaders" and "SPK_PLLineTrailRendererShaders"
+- Implemented "SPK_PLQuadRendererShaders"
+- Implemented "SPK_PLPointRendererShaders"
 
 
 

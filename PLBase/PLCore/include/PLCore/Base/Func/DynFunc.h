@@ -71,12 +71,6 @@ class DynFunc {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*/
-		PLCORE_API DynFunc();
-
-		/**
-		*  @brief
 		*    Destructor
 		*/
 		PLCORE_API virtual ~DynFunc();
@@ -103,6 +97,15 @@ class DynFunc {
 		*    Signature as string
 		*/
 		PLCORE_API virtual PLGeneral::String GetSignature() const;
+
+		/**
+		*  @brief
+		*    Get the return type ID
+		*
+		*  @return
+		*    Return type ID (e.g. "TypeNull" for "void()" or "TypeInt" for "int()")
+		*/
+		PLCORE_API virtual int GetReturnTypeID() const;
 
 		/**
 		*  @brief
@@ -142,12 +145,68 @@ class DynFunc {
 
 		/**
 		*  @brief
+		*    Call function with return as string
+		*
+		*  @param[in] sParams
+		*    Parameters as string
+		*
+		*  @return
+		*    Return of the function as string, empty string if there's no return
+		*/
+		PLCORE_API virtual PLGeneral::String CallWithReturn(const PLGeneral::String &sParams);
+
+		/**
+		*  @brief
+		*    Call function with return as string
+		*
+		*  @param[in] cElement
+		*    Parameters as XML
+		*
+		*  @return
+		*    Return of the function as string, empty string if there's no return
+		*/
+		PLCORE_API virtual PLGeneral::String CallWithReturn(const PLGeneral::XmlElement &cElement);
+
+		/**
+		*  @brief
 		*    Clone function object
 		*
 		*  @return
 		*    Copy of this functoid (can be a null pointer!)
 		*/
 		PLCORE_API virtual DynFunc *Clone() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		PLCORE_API DynFunc();
+
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cDynFunc
+		*    Source to copy from
+		*/
+		PLCORE_API DynFunc(const DynFunc &cDynFunc);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cDynFunc
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		PLCORE_API DynFunc &operator =(const DynFunc &cDynFunc);
 
 
 };

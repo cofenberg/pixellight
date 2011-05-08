@@ -23,12 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/String/Tokenizer.h>
-#include "PLCore/Tools/LoadableManager.h"
-#include "PLCore/Tools/LoadableType.h"
 #include "PLCore/Tools/Loader.h"
 
 
@@ -151,53 +145,6 @@ bool Loader::CanSave() const
 {
 	const Class *pClass = GetClass();
 	return pClass ? pClass->GetProperties().Get("Save").GetBool() : false;
-}
-
-/**
-*  @brief
-*    Opens a file
-*/
-bool Loader::OpenFile(File &cFile, const String &sUrl, bool bCreate) const
-{
-	// Because absolute filenames can be accessed fastest by the file system, we first give
-	// the file system an absolute filename which is hopefully the correct one... if
-	// not, we must search the file which is quite slow...
-	const Url cUrl(sUrl);
-	if (cUrl.IsAbsolute()) {
-		// The given filename is already absolute! :)
-		cFile.Assign(cUrl);
-	} else {
-		// Get the loadable manager instance
-		LoadableManager *pLoadableManager = LoadableManager::GetInstance();
-
-		// Are there any base directories?
-		const uint32 nNumOfBaseDirs = pLoadableManager->GetNumOfBaseDirs();
-		if (nNumOfBaseDirs) {
-			// Reset file
-			cFile.Assign("");
-
-			// Loop through all base directories
-			bool bFileFound = false;
-			for (uint32 nBaseDir=0; nBaseDir<nNumOfBaseDirs && !bFileFound; nBaseDir++) {
-				// Try to open the file directly
-				const String sAbsFilename = pLoadableManager->GetBaseDir(nBaseDir) + sUrl;
-				cFile.Assign(sAbsFilename);
-
-				// File found?
-				bFileFound = cFile.IsFile();
-
-				// Create the file?
-				if (bCreate && !bFileFound)
-					bFileFound = cFile.Create();
-			}
-		} else {
-			// Try to open the file directly
-			cFile.Assign(cUrl);
-		}
-	}
-
-	// Check if the file has been found
-	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead);
 }
 
 

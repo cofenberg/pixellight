@@ -85,7 +85,7 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 						if (pLoader->CanLoad()) {
 							// Open the file
 							File cFile;
-							if (pLoader->OpenFile(cFile, sFilename, false)) {
+							if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
 								// Because 'm_sAbsFilename' is reset before loading within the Unload()-function,
 								// and 'sFilename' can be a reference to this string, we need to duplicate the string!
 								const String sFilenameT = String(sFilename);
@@ -138,7 +138,7 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 
 /**
 *  @brief
-*    Loads the loadable from a file given by a pointer
+*    Loads the loadable from a file given by a reference
 */
 bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 {
@@ -223,7 +223,7 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 						if (pLoader->CanSave()) {
 							// Open the file
 							File cFile;
-							if (pLoader->OpenFile(cFile, sFilename, true)) {
+							if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, true)) {
 								// Get method name
 								static const String sSave = "Save";
 								static const String sSaveParams = "SaveParams";
@@ -261,7 +261,7 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 
 /**
 *  @brief
-*    Saves the loadable to a file given by pointer
+*    Saves the loadable to a file given by reference
 */
 bool Loadable::Save(File &cFile, const String &sParams, const String &sMethod)
 {

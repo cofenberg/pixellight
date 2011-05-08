@@ -1,3 +1,35 @@
+>> 02.05.2011
+[CO]
+- "DynFunc": Added "GetReturnTypeID()" to make it possible to figure out the return type (e.g. "TypeNull" for "void()" or "TypeInt" for "int()")
+  of a dynamic function
+
+
+
+>> 30.04.2011
+[CO]
+- "Functor"-Templates: Added "Clone()"-Implementation
+- "DynFunc": Added protected copy constructor and copy operator to avoid misuse, made the default constructor protected as well to avoid confusion
+- "DynFunc": Added "PLGeneral::String" and "PLGeneral::XmlElement" parameter versions of "CallWithReturn()". When using
+  "DynFunc::Call(const PLGeneral::String &sParams)" or "DynFunc::Call(const PLGeneral::XmlElement &sParams)" there's absolutely no chance to get any
+  function return values because there's no type information. Currently I'am using "DynFunc::Call(const PLGeneral::String &sParams)" within the work
+  in progress PLScript to let a script call a given C++ function/method and really need at least a string representation of the result which I can give
+  back to the script API. I really hope that those "CallWithReturn()" template methods don't backfire... right now it appears that there are no side
+  effects during template instantiation. I could have added the string return directly into the already existing methods, but I wasn't comfortable
+  with that.
+
+
+
+>> 29.04.2011
+[CO]
+- Moved "OpenFile()" from "Loader" into "LoadableManager" because it's kind of universal
+- Moved "LoadStringFromFile()" from "PLRenderer::EffectPass" into "LoadableManager" because it's kind of universal
+- "SignatureString": "PLGeneral::String GetSignatureID()" constructed internally the signature string on every call. But during runtime, this
+  must only be done once and then the signature can just be reused. So, the internal signature string is now static to enhance performance. I
+  double-checked the change, used the debugger a few times on it to see and think through the performed steps and tested the existing PixelLight
+  projects as well. It looks like that this change has no side effects.
+
+
+
 >> 10.04.2011
 [CO]
 - "ConsoleApplication::OnInitData()" is now using English as the default language instead of the current system locale, this makes things more predictable

@@ -781,6 +781,19 @@ void Renderer::GeneralSettings()
 		glPointParameterfARB(GL_POINT_FADE_THRESHOLD_SIZE_ARB, 60.0f);
 	}
 
+	// If there are vertex shaders, enable point size writing for them
+	// => If this is not done, "gl_PointSize" in GLSL and "PSIZE" in Cg have no effect
+	//    while the fixed functions point size attenuation has no effect either...
+	// The following comes from http://www.opengl.org/registry/specs/ARB/vertex_program.txt
+	// "(42) How does PointSize work with vertex programs?
+	//       RESOLVED:  If VERTEX_PROGRAM_POINT_SIZE_ARB is disabled, the size of
+	//       points is determined by the PointSize state and is not attenuated, even
+	//       if EXT_point_parameters is supported.  If enabled, the point size is the
+	//       point size result value, and is clamped to implementation-dependent
+	//       point size limits during point rasterization."
+	if (IsGL_ARB_vertex_program())
+		glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_ARB);
+
 	// No value clamping when using shaders, PLEASE!
 	if (IsGL_ARB_color_buffer_float()) {
 		glClampColorARB(GL_CLAMP_VERTEX_COLOR_ARB,   GL_FIXED_ONLY_ARB);

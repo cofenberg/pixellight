@@ -216,6 +216,15 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 		*/
 		void EnablePointParameter(float fSize, bool bDistance) const;
 
+		/**
+		*  @brief
+		*    Setup common render states
+		*
+		*  @param[in] group
+		*    SPK::Group instance provided by SPARK
+		*/
+		void SetupCommonRenderStates(const SPK::Group &group);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected definitions                                 ]

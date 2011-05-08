@@ -200,22 +200,6 @@ class Loader : public Object {
 		*/
 		PLCORE_API bool CanSave() const;
 
-		/**
-		*  @brief
-		*    Opens a file
-		*
-		*  @param[in] cFile
-		*    File object
-		*  @param[in] sFilename
-		*    Filename of the file to open
-		*  @param[in] bCreate
-		*    Create the file if it doesn't exist?
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		PLCORE_API bool OpenFile(PLGeneral::File &cFile, const PLGeneral::String &sFilename, bool bCreate = false) const;
-
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]

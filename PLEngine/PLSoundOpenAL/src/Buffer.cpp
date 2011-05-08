@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/Log/Log.h>
 #include <PLCore/Tools/LoadableManager.h>
@@ -124,33 +123,8 @@ File *Buffer::OpenFile() const
 		// Create the file object
 		File *pFile = new File();
 
-		// Because absolute filenames can be accessed fastest by the file system, we first give
-		// the file system an absolute filename which is hopefully the correct one... if
-		// not, we must search the file which is quite slow...
-		const Url cUrl(m_sFilename);
-		if (cUrl.IsAbsolute()) {
-			// The given filename is already absolute! :)
-			pFile->Assign(m_sFilename);
-		} else {
-			// Loop through all base directories
-			for (uint32 nBaseDir=0; nBaseDir<LoadableManager::GetInstance()->GetNumOfBaseDirs() && !pFile->IsFile(); nBaseDir++) {
-				const String sBaseDir = LoadableManager::GetInstance()->GetBaseDir(nBaseDir);
-
-				// Construct absolute filename and check file
-				String sAbsFilename = sBaseDir + m_sFilename;
-				pFile->Assign(sAbsFilename);
-
-				// Is this a correct file?
-				if (!pFile->IsFile()) {
-					// Try to open the file directly
-					sAbsFilename = sBaseDir + m_sFilename;
-					pFile->Assign(sAbsFilename);
-				}
-			}
-		}
-
 		// Try to open the file
-		if (pFile->Open(File::FileRead))
+		if (LoadableManager::GetInstance()->OpenFile(*pFile, m_sFilename, false))
 			return pFile; // Return opend file object
 
 		// Cleanup on error

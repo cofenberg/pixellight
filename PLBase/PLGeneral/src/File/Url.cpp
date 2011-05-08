@@ -489,7 +489,7 @@ String Url::GetNextPath(uint32 &nPathPos) const
 void Url::SetValue(const String &sUrl)
 {
 	// Parse the URL according to the following regular expression:
-	//   ({Name} '://')? '/'? ({Letter} (':/' | ':\'))? ({Name} ('/' | '\'))* {Name}?
+	//   ({Name} '://')? '/'? ({Letter} (':/' | ':\'))? ({Name} ('/' | '\')+)* {Name}?
 	//   Where {Name} is any string without '/', '\' and ':'
 	//   and   {Letter} is ['a'..'z', A'..'Z']
 
@@ -587,18 +587,17 @@ void Url::SetValue(const String &sUrl)
 
 			// Check name
 			const String sName = (nSlash >= 0) ? sTemp.GetSubstring(0, nSlash) : sTemp;
-			if (!IsName(sName)) {
-				// Error in path string found
-				return;
-			}
-
-			// Compose path
-			if (nSlash >= 0) {
-				// Add to path
-				sPath += sName + '/';
+			if (IsName(sName)) {
+				// Compose path
+				if (nSlash >= 0) {
+					// Add to path
+					sPath += sName + '/';
+				} else {
+					// Get filename
+					sFilename = sTemp;
+				}
 			} else {
-				// Get filename
-				sFilename = sTemp;
+				// Ignore empty names - removing duplicate slashes is ok
 			}
 
 			// Get next part

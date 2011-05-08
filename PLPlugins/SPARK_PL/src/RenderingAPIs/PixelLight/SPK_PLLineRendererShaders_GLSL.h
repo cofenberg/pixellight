@@ -23,7 +23,7 @@
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
 static const PLGeneral::String sSPK_PLLineRendererShaders_GLSL_VS = "\
 // Attributes\n\
-attribute highp vec4 VertexPosition;	// Object space vertex position input\n\
+attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
 attribute lowp  vec4 VertexColor;		// Vertex color input\n\
 varying   lowp  vec4 VertexColorVS;		// Vertex color output\n\
 \n\
@@ -34,7 +34,7 @@ uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space m
 void main()\n\
 {\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;\n\
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1.0);\n\
 \n\
 	// Pass through the vertex color\n\
 	VertexColorVS = VertexColor;\n\
@@ -44,7 +44,7 @@ void main()\n\
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
 static const PLGeneral::String sSPK_PLLineRendererShaders_GLSL_FS = "\
 // Attributes\n\
-varying vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
+varying lowp vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
 \n\
 // Programs\n\
 void main()\n\

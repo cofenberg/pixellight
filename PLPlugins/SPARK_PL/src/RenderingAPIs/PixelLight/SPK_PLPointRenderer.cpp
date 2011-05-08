@@ -26,6 +26,7 @@
 #include <PLGeneral/Tools/Tools.h>
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/Renderer.h>
+#include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Texture/TextureHandler.h>
 #include <PLScene/Scene/SNCamera.h>
 PL_WARNING_PUSH
@@ -193,10 +194,10 @@ void SPK_PLPointRenderer::EnablePointParameter(float fSize, bool bDistance) cons
 		const float fSqrtC = PointSizeCurrent/(fSize*fPixelPerUnit);
 		GetPLRenderer().SetRenderState(RenderState::PointScaleA, Tools::FloatToUInt32(0.0f));			// A = 0
 		GetPLRenderer().SetRenderState(RenderState::PointScaleB, Tools::FloatToUInt32(0.0f));			// B = 0
-		GetPLRenderer().SetRenderState(RenderState::PointScaleC, Tools::FloatToUInt32(fSqrtC*fSqrtC));	// C = (PointSizeCurrent/(size*fPixelPerUnit))�
+		GetPLRenderer().SetRenderState(RenderState::PointScaleC, Tools::FloatToUInt32(fSqrtC*fSqrtC));	// C = (PointSizeCurrent/(size*fPixelPerUnit))^2
 	} else {
 		const float fSqrtA = PointSizeCurrent/fSize;
-		GetPLRenderer().SetRenderState(RenderState::PointScaleA, Tools::FloatToUInt32(fSqrtA*fSqrtA));	// A = (PointSizeCurrent/size)�
+		GetPLRenderer().SetRenderState(RenderState::PointScaleA, Tools::FloatToUInt32(fSqrtA*fSqrtA));	// A = (PointSizeCurrent/size)^2
 		GetPLRenderer().SetRenderState(RenderState::PointScaleB, Tools::FloatToUInt32(0.0f));			// B = 0
 		GetPLRenderer().SetRenderState(RenderState::PointScaleC, Tools::FloatToUInt32(0.0f));			// C = 0
 	}
@@ -206,6 +207,67 @@ void SPK_PLPointRenderer::EnablePointParameter(float fSize, bool bDistance) cons
 	GetPLRenderer().SetRenderState(RenderState::PointSizeMin,	  Tools::FloatToUInt32(PointSizeMin));
 	GetPLRenderer().SetRenderState(RenderState::PointSizeMax,	  Tools::FloatToUInt32(PointSizeMax));
 	GetPLRenderer().SetRenderState(RenderState::PointScaleEnable, true);
+}
+
+/**
+*  @brief
+*    Setup common render states
+*/
+void SPK_PLPointRenderer::SetupCommonRenderStates(const SPK::Group &group)
+{
+	// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
+	VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
+	if (pVertexBuffer->Lock(Lock::WriteOnly)) {
+		// Vertex buffer data
+		const uint32 nVertexSize = pVertexBuffer->GetVertexSize();
+		float *pfPosition = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
+
+		// Fill the vertex buffer with the current data
+		for (size_t i=0; i<group.getNbParticles(); i++) {
+			// Get the particle
+			const SPK::Particle &cParticle = group.getParticle(i);
+
+			// Copy over the particle position into the vertex data
+			pfPosition[0] = cParticle.position().x;
+			pfPosition[1] = cParticle.position().y;
+			pfPosition[2] = cParticle.position().z;
+			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
+
+			// Copy over the particle color into the vertex data
+			pVertexBuffer->SetColor(i, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), group.getModel()->isEnabled(SPK::PARAM_ALPHA) ? cParticle.getParamCurrentValue(SPK::PARAM_ALPHA) : 1.0f));
+		}
+
+		// Unlock the vertex buffer
+		pVertexBuffer->Unlock();
+	}
+
+	// Setup render states
+	InitBlending();
+	GetPLRenderer().SetRenderState(RenderState::ZEnable,      isRenderingHintEnabled(SPK::DEPTH_TEST));
+	GetPLRenderer().SetRenderState(RenderState::ZWriteEnable, isRenderingHintEnabled(SPK::DEPTH_WRITE));
+	switch(type) {
+		case SPK::POINT_SQUARE:
+			GetPLRenderer().SetRenderState(RenderState::PointSpriteEnable, false);
+			// [TODO] Currently, GL_POINT_SMOOTH is not supported by PLRenderer
+			// glDisable(GL_POINT_SMOOTH);
+			break;
+
+		case SPK::POINT_SPRITE:
+			GetPLRenderer().SetRenderState(RenderState::PointSpriteEnable, true);
+			break;
+
+		case SPK::POINT_CIRCLE:
+			GetPLRenderer().SetRenderState(RenderState::PointSpriteEnable, false);
+			// [TODO] Currently, GL_POINT_SMOOTH is not supported by PLRenderer
+			// glEnable(GL_POINT_SMOOTH);
+			break;
+	}
+	if (m_bWorldSize) {
+		EnablePointParameter(size, true);
+	} else {
+		GetPLRenderer().SetRenderState(RenderState::PointScaleEnable, false);
+		GetPLRenderer().SetRenderState(RenderState::PointSize,		  Tools::FloatToUInt32(size));
+	}
 }
 
 

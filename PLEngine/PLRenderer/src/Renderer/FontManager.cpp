@@ -120,34 +120,9 @@ Font *FontManager::CreateFontTexture(const String &sFilename, uint32 nSize, uint
 {
 	Font *pFont = nullptr;
 
-	// Because absolute filenames can be accessed fastest by the file system, we first give
-	// the file system an absolute filename which is hopefully the correct one... if
-	// not, we must search the file which is quite slow...
-	File cFile;
-	Url cUrl(sFilename);
-	if (cUrl.IsAbsolute()) {
-		// The given filename is already absolute! :)
-		cFile.Assign(sFilename);
-	} else {
-		// Loop through all base directories
-		for (uint32 nBaseDir=0; nBaseDir<LoadableManager::GetInstance()->GetNumOfBaseDirs() && !cFile.IsFile(); nBaseDir++) {
-			String sBaseDir = LoadableManager::GetInstance()->GetBaseDir(nBaseDir);
-
-			// Construct absolute filename and check file
-			String sAbsFilename = sBaseDir + sFilename;
-			cFile.Assign(sAbsFilename);
-
-			// Is this a correct file?
-			if (!cFile.IsFile()) {
-				// Try to open the file directly
-				sAbsFilename = sBaseDir + sFilename;
-				cFile.Assign(sAbsFilename);
-			}
-		}
-	}
-
 	// Try to open the file
-	if (cFile.Open(File::FileRead)) {
+	File cFile;
+	if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
 		// Create the font
 		pFont = CreateFontTexture(cFile, nSize, nResolution);
 	} else {

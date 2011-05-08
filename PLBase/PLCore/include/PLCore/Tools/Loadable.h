@@ -111,7 +111,7 @@ class Loadable {
 
 		/**
 		*  @brief
-		*    Loads the loadable from a file given by a pointer
+		*    Loads the loadable from a file given by a reference
 		*
 		*  @param[in] cFile
 		*    File to load from, must be opened and readable
@@ -149,7 +149,7 @@ class Loadable {
 
 		/**
 		*  @brief
-		*    Saves the loadable to a file given by pointer
+		*    Saves the loadable to a file given by reference
 		*
 		*  @param[in] cFile
 		*    File to save into, must be opened and writable

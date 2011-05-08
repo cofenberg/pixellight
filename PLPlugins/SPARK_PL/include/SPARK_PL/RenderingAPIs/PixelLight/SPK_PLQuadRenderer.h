@@ -163,6 +163,7 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 		SPK_PLQuadRenderer(PLRenderer::Renderer &cRenderer, float fScaleX = 1.0f, float fScaleY = 1.0f);
 
 		// Some internal helpers
+		void UpdateVertexBuffer(const SPK::Group &group);
 		inline void CallColorAndVertex(const SPK::Particle &cParticle);	// PixelLight calls for color and position
 		inline void CallTexture2DAtlas(const SPK::Particle &cParticle);	// PixelLight calls for 2D atlas texturing 
 		inline void CallTexture3D(const SPK::Particle &cParticle);		// PixelLight calls for 3D texturing

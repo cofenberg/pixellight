@@ -80,58 +80,57 @@ SPK_PLLineRendererFixedFunctions::~SPK_PLLineRendererFixedFunctions()
 //[-------------------------------------------------------]
 void SPK_PLLineRendererFixedFunctions::render(const SPK::Group &group)
 {
-	if (prepareBuffers(group)) {
-		// Is there a valid m_pSPK_PLBuffer instance?
-		if (m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
-			// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
-			VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
-			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
-				// Vertex buffer data
-				const uint32 nVertexSize = pVertexBuffer->GetVertexSize();
-				float *pfPosition = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
+	// Is there a valid m_pSPK_PLBuffer instance?
+	if (prepareBuffers(group) && m_pSPK_PLBuffer && m_pSPK_PLBuffer->GetVertexBuffer()) {
+		// Get the vertex buffer instance from m_pSPK_PLBuffer and lock it
+		VertexBuffer *pVertexBuffer = m_pSPK_PLBuffer->GetVertexBuffer();
+		if (pVertexBuffer->Lock(Lock::WriteOnly)) {
+			// Vertex buffer data
+			const uint32 nVertexSize = pVertexBuffer->GetVertexSize();
+			float *pfPosition = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position));
 
-				// Fill the vertex buffer with the current data
-				for (size_t i=0, nCurrentVertex=0; i<group.getNbParticles(); i++) {
-					// Get the particle
-					const SPK::Particle &cParticle = group.getParticle(i);
+			// Fill the vertex buffer with the current data
+			for (size_t i=0, nCurrentVertex=0; i<group.getNbParticles(); i++) {
+				// Get the particle
+				const SPK::Particle &cParticle = group.getParticle(i);
 
-					// Copy over the particle position into the vertex data
-					pfPosition[0] = cParticle.position().x;
-					pfPosition[1] = cParticle.position().y;
-					pfPosition[2] = cParticle.position().z;
-					pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
-					// Copy over the particle color into the vertex data
-					pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
-					nCurrentVertex++;	// Next, please!
+				// Copy over the particle position into the vertex data
+				pfPosition[0] = cParticle.position().x;
+				pfPosition[1] = cParticle.position().y;
+				pfPosition[2] = cParticle.position().z;
+				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
+				// Copy over the particle color into the vertex data
+				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				nCurrentVertex++;	// Next, please!
 
-					// Copy over the particle position into the vertex data
-					pfPosition[0] = cParticle.position().x + cParticle.velocity().x*length;
-					pfPosition[1] = cParticle.position().y + cParticle.velocity().y*length;
-					pfPosition[2] = cParticle.position().z + cParticle.velocity().z*length;
-					pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
-					// Copy over the particle color into the vertex data
-					pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
-					nCurrentVertex++;	// Next, please!
-				}
-
-				// Unlock the vertex buffer
-				pVertexBuffer->Unlock();
+				// Copy over the particle position into the vertex data
+				pfPosition[0] = cParticle.position().x + cParticle.velocity().x*length;
+				pfPosition[1] = cParticle.position().y + cParticle.velocity().y*length;
+				pfPosition[2] = cParticle.position().z + cParticle.velocity().z*length;
+				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
+				// Copy over the particle color into the vertex data
+				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				nCurrentVertex++;	// Next, please!
 			}
 
-			// Setup render states
-			InitBlending();
-			InitRenderingHints();
-			GetPLRenderer().SetRenderState(RenderState::LineWidth, Tools::FloatToUInt32(width));
+			// Unlock the vertex buffer
+			pVertexBuffer->Unlock();
+		}
 
-			// Get the fixed functions interface
-			FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
-			if (pFixedFunctions) {
-				// Make the vertex buffer to the current renderer vertex buffer
-				pFixedFunctions->SetVertexBuffer(pVertexBuffer);
+		// Setup render states
+		InitBlending();
+		GetPLRenderer().SetRenderState(RenderState::ZEnable,      isRenderingHintEnabled(SPK::DEPTH_TEST));
+		GetPLRenderer().SetRenderState(RenderState::ZWriteEnable, isRenderingHintEnabled(SPK::DEPTH_WRITE));
+		GetPLRenderer().SetRenderState(RenderState::LineWidth,    Tools::FloatToUInt32(width));
 
-				// Draw
-				GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, group.getNbParticles() << 1);
-			}
+		// Get the fixed functions interface
+		FixedFunctions *pFixedFunctions = GetPLRenderer().GetFixedFunctions();
+		if (pFixedFunctions) {
+			// Make the vertex buffer to the current renderer vertex buffer
+			pFixedFunctions->SetVertexBuffer(pVertexBuffer);
+
+			// Draw
+			GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, group.getNbParticles() << 1);
 		}
 	}
 }

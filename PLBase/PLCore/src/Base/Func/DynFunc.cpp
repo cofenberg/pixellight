@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Type/Type.h"
 #include "PLCore/Base/Func/DynFunc.h"
 #include "PLCore/Base/Func/DynParams.h"
 
@@ -37,14 +38,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-DynFunc::DynFunc()
-{
-}
-
 /**
 *  @brief
 *    Destructor
@@ -75,6 +68,16 @@ String DynFunc::GetSignature() const
 {
 	// No function
 	return "";
+}
+
+/**
+*  @brief
+*    Get the return type ID
+*/
+int DynFunc::GetReturnTypeID() const
+{
+	// No function
+	return Type<void>::TypeID;
 }
 
 /**
@@ -115,12 +118,64 @@ void DynFunc::Call(const XmlElement &cElement)
 
 /**
 *  @brief
+*    Call function with return as string
+*/
+String DynFunc::CallWithReturn(const String &sParams)
+{
+	// No function
+	return "";
+}
+
+/**
+*  @brief
+*    Call function with return as string
+*/
+String DynFunc::CallWithReturn(const XmlElement &cElement)
+{
+	// No function
+	return "";
+}
+
+/**
+*  @brief
 *    Clone function object
 */
 DynFunc *DynFunc::Clone() const
 {
 	// No function
 	return nullptr;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Default constructor
+*/
+DynFunc::DynFunc()
+{
+}
+
+/**
+*  @brief
+*    Copy constructor
+*/
+DynFunc::DynFunc(const DynFunc &cDynFunc)
+{
+	// No implementation because the copy constructor is never used
+}
+
+/**
+*  @brief
+*    Copy operator
+*
+*/
+DynFunc &DynFunc::operator =(const DynFunc &cDynFunc)
+{
+	// No implementation because the copy operator is never used
+	return *this;
 }
 
 
