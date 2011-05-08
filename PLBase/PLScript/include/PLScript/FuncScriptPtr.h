@@ -82,7 +82,7 @@ class FuncScriptPtr : public PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8,
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -152,7 +152,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -217,7 +217,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -285,7 +285,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -348,7 +348,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -414,7 +414,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -475,7 +475,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -539,7 +539,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -598,7 +598,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -660,7 +660,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -717,7 +717,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public PLC
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -777,7 +777,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -832,7 +832,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public PLCore::
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -890,7 +890,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public PLCor
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -943,7 +943,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public PLCore::Func
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -999,7 +999,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public PLCore::F
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1050,7 +1050,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public PLCore::Func<R, 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1104,7 +1104,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public PLCore::Func<
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1153,7 +1153,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public PLCore::Func<R, T0, 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1205,7 +1205,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public PLCore::Func<void
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5, T6>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1252,7 +1252,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public PLCore::Func<R, T0, T1, 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4, T5>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1302,7 +1302,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public PLCore::Func<void, T0
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4, T5>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1347,7 +1347,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public PLCore::Func<R, T0, T1, T2, 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3, T4>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1395,7 +1395,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public PLCore::Func<void, T0, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3, T4>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1438,7 +1438,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public PLCore::Func<R, T0, T1, T2, T3> 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2, T3>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1484,7 +1484,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public PLCore::Func<void, T0, T1, T2
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2, T3>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1525,7 +1525,7 @@ class FuncScriptPtr<R, T0, T1, T2> : public PLCore::Func<R, T0, T1, T2> {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1, T2>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1569,7 +1569,7 @@ class FuncScriptPtr<void, T0, T1, T2> : public PLCore::Func<void, T0, T1, T2> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1, T2>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1608,7 +1608,7 @@ class FuncScriptPtr<R, T0, T1> : public PLCore::Func<R, T0, T1> {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0, T1>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				if (m_pScript->EndCall()) {
@@ -1650,7 +1650,7 @@ class FuncScriptPtr<void, T0, T1> : public PLCore::Func<void, T0, T1> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0, T1>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->EndCall();
@@ -1687,7 +1687,7 @@ class FuncScriptPtr<R, T0> : public PLCore::Func<R, T0> {
 		}
 
 		virtual _R operator ()(_T0 t0) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R, T0>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
@@ -1727,7 +1727,7 @@ class FuncScriptPtr<void, T0> : public PLCore::Func<void, T0> {
 		}
 
 		virtual void operator ()(_T0 t0) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void, T0>::GetSignature())) {
 				m_pScript->PushArgument(t0);
 				m_pScript->EndCall();
 			}
@@ -1762,7 +1762,7 @@ class FuncScriptPtr<R> : public PLCore::Func<R> {
 		}
 
 		virtual _R operator ()() {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R>::GetSignature())) {
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
 					m_pScript->GetReturn(r);
@@ -1798,7 +1798,7 @@ class FuncScriptPtr<void> : public PLCore::Func<void> {
 		}
 
 		virtual void operator ()() {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, GetSignature()))
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<void>::GetSignature()))
 				m_pScript->EndCall();
 		}
 

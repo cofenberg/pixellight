@@ -1,7 +1,7 @@
 #ifndef SCRIPTARRAY_H
 #define SCRIPTARRAY_H
 
-#include <angelscript.h>
+#include <AngelScript/angelscript.h>
 
 BEGIN_AS_NAMESPACE
 

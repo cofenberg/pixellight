@@ -24,9 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 extern "C" {
-	#include <lua.h>
-	#include <lualib.h>
-	#include <lauxlib.h>
+	#include <Lua/lua.h>
+	#include <Lua/lualib.h>
+	#include <Lua/lauxlib.h>
 }
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptLua/LuaContext.h"
