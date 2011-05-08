@@ -1,3 +1,21 @@
+>> 08.05.2011
+[CO]
+- A while ago, Stephan reported me an issue with double slashes within filenames - finally I found some time to have a look into it.
+  Something like "PLGeneral::File("e:\\1//Test.jpg").Exists()" failes. Because I wasn't sure whether or not this behaviour is "correct"
+  (the filename looks kinda messy) I first tested the same with boost by writing "boost::filesystem::exists("e:\\1//Test.jpg")" and with
+  Qt by writing "QFile("e:\\1//Test.jpg").exists()" and "QUrl("e:\\1//Test.jpg").isValid()". For boost and Qt a filename like
+  "e:\\1//Test.jpg" is totally fine.  	
+  Next I tried to find a description which behaviour is "correct". As usual, found first information at Wikipedia:
+    "http://en.wikipedia.org/wiki/URL_normalization" (from 2011-05-08)
+      "Removing duplicate slashes Paths which include two adjacent slashes should be converted to one. Example:
+       http://www.example.com/foo//bar.html → http://www.example.com/foo/bar.html "
+  I wasn't able to find this in standards like RFC 3986 (http://tools.ietf.org/html/rfc3986#section-6) - but I was searching only a few
+  minutes. After this research I "assume" that removing duplicate slashes is fine, at least this way there's within PixelLight the same
+  behaviour as in boost or Qt.
+  -> Made a minor change within the "Url::SetValue()" implementation.
+
+
+
 >> 30.04.2011
 [CO]
 - "String": Added pointer constructor "String(void *pValue)"
