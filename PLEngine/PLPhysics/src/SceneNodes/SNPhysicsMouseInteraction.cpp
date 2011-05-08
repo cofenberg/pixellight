@@ -200,9 +200,15 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
-					if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
+					//if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow())
+					{
 						// Get current mouse cursor position inside the widget
-						if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
+						//if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos))
+						{
+						    float fX = m_pController->MouseX.GetValue();
+						    float fY = m_pController->MouseY.GetValue();
+						    m_vPickingMousePos.y = fY;
+						    m_vPickingMousePos.x = fX;
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
@@ -277,9 +283,15 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
-					if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
+					//if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow())
+					{
 						// Get current mouse cursor position inside the widget
-						if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
+						//if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos))
+						{
+						    float fX = m_pController->MouseX.GetValue();
+						    float fY = m_pController->MouseY.GetValue();
+						    m_vPickingMousePos.y = fY;
+						    m_vPickingMousePos.x = fX;
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
