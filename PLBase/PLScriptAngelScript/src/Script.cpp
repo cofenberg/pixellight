@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <angelscript.h>
-#include <../../src/add_on/scriptstring/scriptstring.h>
+#include <../../../../Optional/AngelScript/add_on/scriptstring/scriptstring.h>
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptAngelScript/AngelScriptContext.h"
 #include "PLScriptAngelScript/Script.h"

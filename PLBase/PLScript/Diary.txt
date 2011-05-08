@@ -1,4 +1,12 @@
-﻿>> 07.05.2011
+﻿>> 08.05.2011
+[CO]
+- The AngelScript add on source codes are now within "External\Optional\AngelScript\add_on" directory instead within the to download external package. CMake told
+  me that it wasn't able to find those add on source codes... because it was checking BEFORE downloading and extracting the external package. Maybe it's
+  possible to change the CMake script... but that's somewhat too dangerous for me and usually really time consuming to get it right.
+
+
+
+>> 07.05.2011
 [CO]
 - Implemented "PLScriptPython::Script::AddDynamicFunction()" namespace by using Python dictionaries... probably not the best solution but for
   now I just want to have it up and running to get an idea of concepts multiple scripting languages are sharing. Maybe I'll replace "namespace"

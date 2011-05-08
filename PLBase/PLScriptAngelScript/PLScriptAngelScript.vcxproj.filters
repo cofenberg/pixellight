@@ -28,17 +28,17 @@
     <ClCompile Include="src\AngelScriptContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptmath\scriptmath.cpp">
+    <ClCompile Include="..\..\External\Optional\AngelScript\add_on\scriptarray\scriptarray.cpp">
+      <Filter>Source Files\add_on\scriptarray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\Optional\AngelScript\add_on\scriptmath\scriptmath.cpp">
       <Filter>Source Files\add_on\scriptmath</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring_utils.cpp">
+    <ClCompile Include="..\..\External\Optional\AngelScript\add_on\scriptstring\scriptstring_utils.cpp">
       <Filter>Source Files\add_on\scriptstring</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring.cpp">
+    <ClCompile Include="..\..\External\Optional\AngelScript\add_on\scriptstring\scriptstring.cpp">
       <Filter>Source Files\add_on\scriptstring</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptarray\scriptarray.cpp">
-      <Filter>Source Files\add_on\scriptarray</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,14 +57,14 @@
     <ClInclude Include="include\PLScriptAngelScript\AngelScriptContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptmath\scriptmath.h">
+    <ClInclude Include="..\..\External\Optional\AngelScript\add_on\scriptarray\scriptarray.h">
+      <Filter>Source Files\add_on\scriptarray</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Optional\AngelScript\add_on\scriptmath\scriptmath.h">
       <Filter>Source Files\add_on\scriptmath</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptstring\scriptstring.h">
+    <ClInclude Include="..\..\External\Optional\AngelScript\add_on\scriptstring\scriptstring.h">
       <Filter>Source Files\add_on\scriptstring</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\_Windows_x86_32\AngelScript\src\add_on\scriptarray\scriptarray.h">
-      <Filter>Source Files\add_on\scriptarray</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
