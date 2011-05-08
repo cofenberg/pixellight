@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <v8.h>
+#include <V8/v8.h>
 #include <PLScript/Script.h>
 #include "PLScriptV8/PLScriptV8.h"
 
@@ -221,12 +221,12 @@ class Script : public PLScript::Script {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String							m_sSourceCode;			/**< Script source code */
-		v8::Persistent<v8::Context>					m_cV8Context;			/**< V8 context */
-		PLGeneral::String							m_sCurrentFunction;		/**< Name of the current function */
-		v8::Persistent<v8::Value>					m_cV8CurrentResult;		/**< Current V8 function */
-		PLGeneral::Array<v8::Persistent<v8::Value>>	m_lstV8Arguments;		/**< Current V8 arguments */
-		PLGeneral::Array<DynamicFunction*>			m_lstDynamicFunctions;	/**< List of dynamic functions */
+		PLGeneral::String							 m_sSourceCode;			/**< Script source code */
+		v8::Persistent<v8::Context>					 m_cV8Context;			/**< V8 context */
+		PLGeneral::String							 m_sCurrentFunction;	/**< Name of the current function */
+		v8::Persistent<v8::Value>					 m_cV8CurrentResult;	/**< Current V8 function */
+		PLGeneral::Array<v8::Persistent<v8::Value> > m_lstV8Arguments;		/**< Current V8 arguments */
+		PLGeneral::Array<DynamicFunction*>			 m_lstDynamicFunctions;	/**< List of dynamic functions */
 
 
 };

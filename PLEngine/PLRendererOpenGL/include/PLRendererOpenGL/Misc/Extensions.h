@@ -151,6 +151,7 @@ class OpenGLExtensions {
 		bool IsGL_ARB_shader_objects() const;
 		bool IsGL_ARB_vertex_shader() const;
 		bool IsGL_ARB_get_program_binary() const;
+		bool IsGL_ARB_texture_non_power_of_two() const;
 		bool IsGL_ARB_texture_rectangle() const;
 		bool IsGL_ARB_multisample() const;
 		bool IsGL_ARB_uniform_buffer_object() const;
@@ -308,6 +309,7 @@ class OpenGLExtensions {
 		bool m_bGL_ARB_shader_objects;
 		bool m_bGL_ARB_vertex_shader;
 		bool m_bGL_ARB_get_program_binary;
+		bool m_bGL_ARB_texture_non_power_of_two;
 		bool m_bGL_ARB_texture_rectangle;
 		bool m_bGL_ARB_multisample;
 		bool m_bGL_ARB_uniform_buffer_object;

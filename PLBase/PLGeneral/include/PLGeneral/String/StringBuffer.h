@@ -538,7 +538,7 @@ class StringBuffer {
 		uint32 m_nRefCount;		/**< Reference count - the "RefCount"-template isn't used because the string buffer manager requires some "special" access to this reference counter */
 		uint32 m_nLength;		/**< Length of the string (excluding the terminating zero, NEVER 0!) */
 		uint32 m_nMaxLength;	/**< Maximum available length of the string (excluding the terminating zero, NEVER 0!) */
-		uint8 m_nType;			/**< String buffer type for variable inspection in debug mode */
+		uint8  m_nType;			/**< String buffer type for variable inspection in debug mode */
 
 
 };

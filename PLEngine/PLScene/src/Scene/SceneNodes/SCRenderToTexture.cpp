@@ -349,7 +349,7 @@ void SCRenderToTexture::CreateSurfaceTexture()
 		m_pSurfaceTextureBuffer = cRenderer.CreateSurfaceTextureBufferCube(m_nWidth, nFormat, m_nSurfaceFlags);
 	} else {
 		// If possible, we use a standard 2D texture buffer
-		if (Math::IsPowerOfTwo(m_nWidth) && Math::IsPowerOfTwo(m_nHeight))
+		if (cRenderer.GetCapabilities().bTextureBufferNonPowerOfTwo || (Math::IsPowerOfTwo(m_nWidth) && Math::IsPowerOfTwo(m_nHeight)))
 			m_pSurfaceTextureBuffer = cRenderer.CreateSurfaceTextureBuffer2D(Vector2i(m_nWidth, m_nHeight), nFormat, m_nSurfaceFlags);
 		else
 			m_pSurfaceTextureBuffer = cRenderer.CreateSurfaceTextureBufferRectangle(Vector2i(m_nWidth, m_nHeight), nFormat, m_nSurfaceFlags);

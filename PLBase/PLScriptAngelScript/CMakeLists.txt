@@ -10,10 +10,10 @@ add_sources(
 	src/PLScriptAngelScript.cpp
 	src/Script.cpp
 	src/AngelScriptContext.cpp
-	${ANGELSCRIPT_INCLUDE_DIRS}/../../src/add_on/scriptstring/scriptstring.cpp
-	${ANGELSCRIPT_INCLUDE_DIRS}/../../src/add_on/scriptstring/scriptstring_utils.cpp
-	${ANGELSCRIPT_INCLUDE_DIRS}/../../src/add_on/scriptarray/scriptarray.cpp
-	${ANGELSCRIPT_INCLUDE_DIRS}/../../src/add_on/scriptmath/scriptmath.cpp
+	../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring.cpp
+	../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring_utils.cpp
+	../../../External/Optional/AngelScript/add_on/scriptarray/scriptarray.cpp
+	../../../External/Optional/AngelScript/add_on/scriptmath/scriptmath.cpp
 )
 
 ##################################################

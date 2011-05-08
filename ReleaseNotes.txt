@@ -1,4 +1,5 @@
 Changes in PixelLight 0.9.7-R1 (not yet released)
+- Feature: Added support for non power of two textures (NPOT)
 
 
 Changes in PixelLight 0.9.6-R1 (released on April 23, 2011)

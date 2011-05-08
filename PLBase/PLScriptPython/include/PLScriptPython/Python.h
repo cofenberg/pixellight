@@ -31,10 +31,10 @@
 // Ensure that we never need a debug version of Python
 #ifdef _DEBUG
 	#undef _DEBUG
-	#include <Python.h>
+	#include <Python/Python.h>
 	#define _DEBUG
 #else
-	#include <Python.h>
+	#include <Python/Python.h>
 #endif
 
 

@@ -305,6 +305,11 @@ class RendererBackend : public Renderer {
 		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfDisplayModes() const;
 		PLRENDERER_API virtual const DisplayMode *GetDisplayMode(PLGeneral::uint32 nIndex) const;
 		PLRENDERER_API virtual const Capabilities &GetCapabilities() const;
+		PLRENDERER_API virtual bool IsValidTextureBuffer1DSize(int nSize) const;
+		PLRENDERER_API virtual bool IsValidTextureBuffer2DSize(int nSize) const;
+		PLRENDERER_API virtual bool IsValidTextureBufferRectangleSize(int nSize) const;
+		PLRENDERER_API virtual bool IsValidTextureBuffer3DSize(int nSize) const;
+		PLRENDERER_API virtual bool IsValidTextureBufferCubeSize(int nSize) const;
 		PLRENDERER_API virtual const Statistics &GetStatistics() const;
 		PLRENDERER_API virtual const PLMath::Vector2 &GetTexelToPixelOffset() const;
 		PLRENDERER_API virtual void Update();

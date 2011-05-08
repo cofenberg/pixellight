@@ -455,7 +455,8 @@ struct Capabilities {
 	PLGeneral::uint16 nMaxAnisotropy;					/**< Maximum anisotropy */
 	PLGeneral::uint8  nMaxTessellationFactor;			/**< Maximum tessellation factor (inclusive) */
 	PLGeneral::uint16 nMaxTextureBufferSize;			/**< Maximum texture buffer size */
-	bool              bTextureBufferRectangle;			/**< Rectangle texture buffers supported? (no power of 2) */
+	bool              bTextureBufferNonPowerOfTwo;		/**< Non power of two (NPOT) texture buffers supported? (no power of two restriction for all texture buffer types) */
+	bool              bTextureBufferRectangle;			/**< Rectangle texture buffers supported? (special non power of two texture buffer type, comes with special limitations) */
 	PLGeneral::uint16 nMaxRectangleTextureBufferSize;	/**< Maximum rectangle texture buffer size */
 	bool              bTextureBuffer3D;					/**< 3D texture buffers supported? */
 	PLGeneral::uint16 nMax3DTextureBufferSize;			/**< Maximum 3D texture buffer size */

@@ -26,7 +26,7 @@
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptPython/PythonContext.h"
 #include "PLScriptPython/Script.h"
-#include <graminit.h>	// Python parse-mode flags (e.g. "file_input")
+#include <Python/graminit.h>	// Python parse-mode flags (e.g. "file_input")
 
 
 //[-------------------------------------------------------]
@@ -509,7 +509,7 @@ String Script::GetPythonErrorDescription() const
 			if (pPythonTraceback) {
 				PyObject *pPythonLineNumber = PyObject_GetAttrString(pPythonTraceback, "tb_lineno");
 				if (pPythonLineNumber)
-					sErrorDescription += String("Line ") + PyInt_AsLong(pPythonLineNumber) + ' ';
+					sErrorDescription += String("Line ") + static_cast<int>(PyInt_AsLong(pPythonLineNumber)) + ' ';
 			}
 
 			// Get the error description string

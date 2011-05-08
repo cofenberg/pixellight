@@ -707,6 +707,9 @@ bool OpenGLExtensions::Init()
 		m_bGL_ARB_get_program_binary = false;
 	}
 
+	// GL_ARB_texture_non_power_of_two
+	m_bGL_ARB_texture_non_power_of_two = IsSupported("GL_ARB_texture_non_power_of_two");
+
 	// GL_ARB_texture_rectangle
 	m_bGL_ARB_texture_rectangle = IsSupported("GL_ARB_texture_rectangle");
 

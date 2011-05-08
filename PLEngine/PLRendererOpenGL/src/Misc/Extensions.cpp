@@ -415,6 +415,7 @@ bool OpenGLExtensions::IsGL_ARB_draw_buffers()					const { return m_bGL_ARB_draw
 bool OpenGLExtensions::IsGL_ARB_shader_objects()				const { return m_bGL_ARB_shader_objects;			 }
 bool OpenGLExtensions::IsGL_ARB_vertex_shader()					const { return m_bGL_ARB_vertex_shader;				 }
 bool OpenGLExtensions::IsGL_ARB_get_program_binary()			const { return m_bGL_ARB_get_program_binary;		 }
+bool OpenGLExtensions::IsGL_ARB_texture_non_power_of_two()		const { return m_bGL_ARB_texture_non_power_of_two;	 }
 bool OpenGLExtensions::IsGL_ARB_texture_rectangle()				const { return m_bGL_ARB_texture_rectangle;			 }
 bool OpenGLExtensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
 bool OpenGLExtensions::IsGL_ARB_uniform_buffer_object()			const { return m_bGL_ARB_uniform_buffer_object;		 }
@@ -607,6 +608,7 @@ void OpenGLExtensions::ResetExtensions()
 	m_bGL_ARB_shader_objects				= false;
 	m_bGL_ARB_vertex_shader					= false;
 	m_bGL_ARB_get_program_binary			= false;
+	m_bGL_ARB_texture_non_power_of_two		= false;
 	m_bGL_ARB_texture_rectangle				= false;
 	m_bGL_ARB_multisample					= false;
 	m_bGL_ARB_uniform_buffer_object			= false;
