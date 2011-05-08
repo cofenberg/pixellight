@@ -100,6 +100,7 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	GL_ARB_shader_objects(this),
 	GL_ARB_vertex_shader(this),
 	GL_ARB_get_program_binary(this),
+	GL_ARB_texture_non_power_of_two(this),
 	GL_ARB_texture_rectangle(this),
 	GL_ARB_multisample(this),
 	GL_ARB_uniform_buffer_object(this),

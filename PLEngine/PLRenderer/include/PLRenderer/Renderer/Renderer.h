@@ -277,6 +277,85 @@ class Renderer : public PLCore::Object {
 
 		/**
 		*  @brief
+		*    Returns whether or not the given size is valid for a 1D texture buffer
+		*
+		*  @param[in] nSize
+		*    Size to check
+		*
+		*  @return
+		*    'true' if the given size is valid, else 'false'
+		*
+		*  @note
+		*    - A size is valid if nSize<=GetCapabilities().nMaxTextureBufferSize and nSize>0 and
+		*      the size is a power of two (or GetCapabilities().bTextureBufferNonPowerOfTwo is "true")
+		*/
+		virtual bool IsValidTextureBuffer1DSize(int nSize) const = 0;
+
+		/**
+		*  @brief
+		*    Returns whether or not the given size is valid for a 2D texture buffer
+		*
+		*  @param[in] nSize
+		*    Size to check
+		*
+		*  @return
+		*    'true' if the given size is valid, else 'false'
+		*
+		*  @note
+		*    - A size is valid if nSize<=GetCapabilities().nMaxTextureBufferSize and nSize>0 and
+		*      the size is a power of two (or GetCapabilities().bTextureBufferNonPowerOfTwo is "true")
+		*/
+		virtual bool IsValidTextureBuffer2DSize(int nSize) const = 0;
+
+		/**
+		*  @brief
+		*    Returns whether or not the given size is valid for a rectangle texture buffer
+		*
+		*  @param[in] nSize
+		*    Size to check
+		*
+		*  @return
+		*    'true' if the given size is valid, else 'false'
+		*
+		*  @note
+		*    - A size is valid if nSize<=GetCapabilities().nMaxRectangleTextureBufferSize and nSize>0
+		*/
+		virtual bool IsValidTextureBufferRectangleSize(int nSize) const = 0;
+
+		/**
+		*  @brief
+		*    Returns whether or not the given size is valid for a 3D texture buffer
+		*
+		*  @param[in] nSize
+		*    Size to check
+		*
+		*  @return
+		*    'true' if the given size is valid, else 'false'
+		*
+		*  @note
+		*    - A size is valid if nSize<=GetCapabilities().nMax3DTextureBufferSize and nSize>0 and
+		*      the size is a power of two (or GetCapabilities().bTextureBufferNonPowerOfTwo is "true")
+		*/
+		virtual bool IsValidTextureBuffer3DSize(int nSize) const = 0;
+
+		/**
+		*  @brief
+		*    Returns whether or not the given size is valid for a cube texture buffer
+		*
+		*  @param[in] nSize
+		*    Size to check
+		*
+		*  @return
+		*    'true' if the given size is valid, else 'false'
+		*
+		*  @note
+		*    - A size is valid if nSize<=GetCapabilities().nMaxCubeTextureBufferSize and nSize>0 and
+		*      the size is a power of two (or GetCapabilities().bTextureBufferNonPowerOfTwo is "true")
+		*/
+		virtual bool IsValidTextureBufferCubeSize(int nSize) const = 0;
+
+		/**
+		*  @brief
 		*    Returns the renderer statistics
 		*
 		*  @return
@@ -609,7 +688,8 @@ class Renderer : public PLCore::Object {
 		*
 		*  @remarks
 		*    Please note that it's up to the implementation to decide whether there's a special TextureBufferRectangle implementation
-		*    which can deal with non-power-of-two texture data, or if TextureBuffer2D can deal with non-power-of-two texture as well.
+		*    which can deal with non-power-of-two texture data, or if TextureBuffer2D etc. can deal with non-power-of-two texture as well.
+		*    (Capabilities::bTextureBufferNonPowerOfTwo = true)
 		*    For instance, OpenGL ES 2.0 has no special "rectangle"/"non-power-of-two" textures. GL_TEXTURE_2D can also be used with
 		*    non-power-of-two texture data, but non-power-of-two textures have restrictions on the allowed texture wrap modes and filters
 		*    (the texture wrap mode must be GL_CLAMP_TO_EDGE and the minification filter must be GL_NEAREST or GL_LINEAR). As a result, usually

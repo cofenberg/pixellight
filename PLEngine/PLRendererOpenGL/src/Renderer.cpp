@@ -706,6 +706,9 @@ void Renderer::SetupCapabilities()
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nGLTemp);
 	m_sCapabilities.nMaxTextureBufferSize = static_cast<uint16>(nGLTemp);
 
+	// Non power of two texture buffers supported?
+	m_sCapabilities.bTextureBufferNonPowerOfTwo = IsGL_ARB_texture_non_power_of_two();
+
 	// Rectangle texture buffers supported?
 	// GL_EXT_texture_rectangle, GL_NV_texture_rectangle and GL_ARB_texture_rectangle ONLY differ within their name :)
 	m_sCapabilities.bTextureBufferRectangle = (IsGL_EXT_texture_rectangle() || IsGL_NV_texture_rectangle() || IsGL_ARB_texture_rectangle());
@@ -1110,9 +1113,7 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
 {
 	// Check maximum render targets and dimension
-	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets &&
-		vSize.x && vSize.y && vSize.x <= m_sCapabilities.nMaxTextureBufferSize && vSize.y <= m_sCapabilities.nMaxTextureBufferSize &&
-		Math::IsPowerOfTwo(vSize.x) && Math::IsPowerOfTwo(vSize.y)) {
+	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && IsValidTextureBuffer2DSize(vSize.x) && IsValidTextureBuffer2DSize(vSize.y)) {
 		// Create and register renderer surface
 		uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
 		if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps)
@@ -1132,8 +1133,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
 {
 	// Check maximum render targets and dimension
-	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && vSize.x && vSize.y &&
-		vSize.x <= m_sCapabilities.nMaxRectangleTextureBufferSize && vSize.y <= m_sCapabilities.nMaxRectangleTextureBufferSize) {
+	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && IsValidTextureBufferRectangleSize(vSize.x) && IsValidTextureBufferRectangleSize(vSize.y)) {
 		// Create and register renderer surface
 		uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
 		if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps)
@@ -1153,7 +1153,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
 {
 	// Valid dimension?
-	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize))
+	if (!IsValidTextureBufferCubeSize(nSize))
 		return nullptr; // Error!
 
 	// Create and register renderer surface

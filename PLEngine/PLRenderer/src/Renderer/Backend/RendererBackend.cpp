@@ -275,6 +275,7 @@ void RendererBackend::ShowRendererCapabilities() const
 	PL_LOG(Info, String("  MaxAnisotropy: ")				 + m_sCapabilities.nMaxAnisotropy)
 	PL_LOG(Info, String("  MaxTessellationFactor: ")		 + m_sCapabilities.nMaxTessellationFactor)
 	PL_LOG(Info, String("  MaxTextureBufferSize: ")			 + m_sCapabilities.nMaxTextureBufferSize)
+	PL_LOG(Info, String("  TextureBufferNonPowerOfTwo: ")	 + GetBoolString(m_sCapabilities.bTextureBufferNonPowerOfTwo))
 	PL_LOG(Info, String("  TextureBufferRectangle: ")		 + GetBoolString(m_sCapabilities.bTextureBufferRectangle))
 	PL_LOG(Info, String("  MaxRectangleTextureBufferSize: ") + m_sCapabilities.nMaxRectangleTextureBufferSize)
 	PL_LOG(Info, String("  TextureBuffer3D: ")				 + GetBoolString(m_sCapabilities.bTextureBuffer3D))
@@ -316,8 +317,7 @@ bool RendererBackend::CheckTextureBuffer1D(Image &cImage, TextureBuffer::EPixelF
 				if (pImageBuffer->GetSize().y != 1)
 					return false; // Error!
 			}
-			if (nSize <= m_sCapabilities.nMaxTextureBufferSize && nSize > 0 && Math::IsPowerOfTwo(nSize))
-				return true; // Valid
+			return IsValidTextureBuffer1DSize(nSize);
 		}
 	}
 
@@ -329,79 +329,36 @@ bool RendererBackend::CheckTextureBuffer2D(Image &cImage, TextureBuffer::EPixelF
 {
 	// Get the first image buffer
 	const ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer) {
-		// Valid image width?
-		const uint32 nWidth = pImageBuffer->GetSize().x;
-		if (nWidth && nWidth <= m_sCapabilities.nMaxTextureBufferSize && Math::IsPowerOfTwo(nWidth)) {
-			// Valid image height?
-			const uint32 nHeight = pImageBuffer->GetSize().y;
-			if (nHeight && nHeight <= m_sCapabilities.nMaxTextureBufferSize && Math::IsPowerOfTwo(nHeight))
-				return true; // Valid
-		}
-	}
 
-	// Error!
-	return false;
+	// Check image buffer dimension
+	return (pImageBuffer && IsValidTextureBuffer2DSize(pImageBuffer->GetSize().x) && IsValidTextureBuffer2DSize(pImageBuffer->GetSize().y));
 }
 
 bool RendererBackend::CheckTextureBufferRectangle(Image &cImage, TextureBuffer::EPixelFormat nInternalFormat) const
 {
 	// Get the first image buffer
 	const ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer) {
-		// Valid image width?
-		const uint32 nWidth = pImageBuffer->GetSize().x;
-		if (nWidth && nWidth <= m_sCapabilities.nMaxRectangleTextureBufferSize) {
-			// Valid image height?
-			const uint32 nHeight = pImageBuffer->GetSize().y;
-			if (nHeight && nHeight <= m_sCapabilities.nMaxRectangleTextureBufferSize)
-				return true; // Valid
-		}
-	}
 
-	// Error!
-	return false;
+	// Check image buffer dimension
+	return (pImageBuffer && IsValidTextureBufferRectangleSize(pImageBuffer->GetSize().x) && IsValidTextureBufferRectangleSize(pImageBuffer->GetSize().y));
 }
 
 bool RendererBackend::CheckTextureBuffer3D(Image &cImage, TextureBuffer::EPixelFormat nInternalFormat) const
 {
 	// Get the first image buffer
 	const ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer) {
-		// Valid image width?
-		const uint32 nWidth =  pImageBuffer->GetSize().x;
-		if (nWidth && nWidth <= m_sCapabilities.nMaxTextureBufferSize && Math::IsPowerOfTwo(nWidth)) {
-			// Valid image height?
-			const uint32 nHeight =  pImageBuffer->GetSize().y;
-			if (nHeight && nHeight <= m_sCapabilities.nMaxTextureBufferSize && Math::IsPowerOfTwo(nHeight)) {
-				// Valid image depth?
-				const uint32 nDepth =  pImageBuffer->GetSize().z;
-				if (nDepth && nDepth <= m_sCapabilities.nMaxTextureBufferSize && Math::IsPowerOfTwo(nDepth))
-					return true; // Valid
-			}
-		}
-	}
 
-	// Error!
-	return false;
+	// Check image buffer dimension
+	return (pImageBuffer && IsValidTextureBuffer3DSize(pImageBuffer->GetSize().x) && IsValidTextureBuffer3DSize(pImageBuffer->GetSize().y) && IsValidTextureBuffer3DSize(pImageBuffer->GetSize().z));
 }
 
 bool RendererBackend::CheckTextureBufferCube(Image &cImage, TextureBuffer::EPixelFormat nInternalFormat) const
 {
 	// Get the first image buffer
 	const ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer) {
-		const uint32 nSize = pImageBuffer->GetSize().x;
-		if (nSize && static_cast<int>(nSize) == pImageBuffer->GetSize().y &&
-			nSize <= m_sCapabilities.nMaxCubeTextureBufferSize && Math::IsPowerOfTwo(nSize)) {
 
-			// Valid
-			return true;
-		}
-	}
-
-	// Error!
-	return false;
+	// Check image buffer dimension
+	return (pImageBuffer && pImageBuffer->GetSize().x == pImageBuffer->GetSize().y && IsValidTextureBufferCubeSize(pImageBuffer->GetSize().x));
 }
 
 
@@ -471,6 +428,31 @@ const DisplayMode *RendererBackend::GetDisplayMode(uint32 nIndex) const
 const Capabilities &RendererBackend::GetCapabilities() const
 {
 	return m_sCapabilities;
+}
+
+bool RendererBackend::IsValidTextureBuffer1DSize(int nSize) const
+{
+	return (nSize <= m_sCapabilities.nMaxTextureBufferSize && nSize > 0 && (GetCapabilities().bTextureBufferNonPowerOfTwo || Math::IsPowerOfTwo(nSize)));
+}
+
+bool RendererBackend::IsValidTextureBuffer2DSize(int nSize) const
+{
+	return (nSize <= m_sCapabilities.nMaxTextureBufferSize && nSize > 0 && (GetCapabilities().bTextureBufferNonPowerOfTwo || Math::IsPowerOfTwo(nSize)));
+}
+
+bool RendererBackend::IsValidTextureBufferRectangleSize(int nSize) const
+{
+	return (nSize <= m_sCapabilities.nMaxRectangleTextureBufferSize && nSize > 0);
+}
+
+bool RendererBackend::IsValidTextureBuffer3DSize(int nSize) const
+{
+	return (nSize <= m_sCapabilities.nMax3DTextureBufferSize && nSize > 0 && (GetCapabilities().bTextureBufferNonPowerOfTwo || Math::IsPowerOfTwo(nSize)));
+}
+
+bool RendererBackend::IsValidTextureBufferCubeSize(int nSize) const
+{
+	return (nSize <= m_sCapabilities.nMaxCubeTextureBufferSize && nSize > 0 && (GetCapabilities().bTextureBufferNonPowerOfTwo || Math::IsPowerOfTwo(nSize)));
 }
 
 const Statistics &RendererBackend::GetStatistics() const

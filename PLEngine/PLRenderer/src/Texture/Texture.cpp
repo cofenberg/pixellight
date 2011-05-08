@@ -549,7 +549,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 
 					// Check if the texture size is correct
 					if (m_vOriginalSize.x > static_cast<int>(nMaxSize) || m_vOriginalSize.y > static_cast<int>(nMaxSize) || m_vOriginalSize.z > static_cast<int>(nMaxSize) ||
-						!Math::IsPowerOfTwo(m_vOriginalSize.x) || !Math::IsPowerOfTwo(m_vOriginalSize.y) || !Math::IsPowerOfTwo(m_vOriginalSize.z)) {
+						(!cRenderer.GetCapabilities().bTextureBufferNonPowerOfTwo && (!Math::IsPowerOfTwo(m_vOriginalSize.x) || !Math::IsPowerOfTwo(m_vOriginalSize.y) || !Math::IsPowerOfTwo(m_vOriginalSize.z)))) {
 						// Write a performance warning into the log if the original texture size is not optimal
 						if (m_vOriginalSize.z == 1)
 							PL_LOG(Warning, '\'' + sFilename + "': Texture size " + m_vOriginalSize.x + 'x' + m_vOriginalSize.y + " isn't correct! (max: " + nMaxSize + 'x' + nMaxSize + ')')
@@ -557,7 +557,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 							PL_LOG(Warning, '\'' + sFilename + "': Texture size " + m_vOriginalSize.x + 'x' + m_vOriginalSize.y + 'x' + m_vOriginalSize.z + " isn't correct! (max: " + nMaxSize + 'x' + nMaxSize + 'x' + nMaxSize + ')')
 					}
 					if (nWidth > nMaxSize || nHeight > nMaxSize || nDepth > nMaxSize ||
-						!Math::IsPowerOfTwo(nWidth) || !Math::IsPowerOfTwo(nHeight) || !Math::IsPowerOfTwo(nDepth)) {
+						(!cRenderer.GetCapabilities().bTextureBufferNonPowerOfTwo && (!Math::IsPowerOfTwo(nWidth) || !Math::IsPowerOfTwo(nHeight) || !Math::IsPowerOfTwo(nDepth)))) {
 						// Correct texture size
 						bool bTextureFit;
 						if (nTextureFitLower == 2)
@@ -568,7 +568,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 							bTextureFit = static_cast<TextureManager*>(GetManager())->GetTextureFit();
 
 						// Check width
-						if (!Math::IsPowerOfTwo(nWidth)) {
+						if (!cRenderer.GetCapabilities().bTextureBufferNonPowerOfTwo && !Math::IsPowerOfTwo(nWidth)) {
 							if (bAllowResizeWidth)
 								nWidth = Math::GetNearestPowerOfTwo(nWidth, bTextureFit);
 							else
@@ -582,7 +582,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						}
 
 						// Check height
-						if (!Math::IsPowerOfTwo(nHeight)) {
+						if (!cRenderer.GetCapabilities().bTextureBufferNonPowerOfTwo && !Math::IsPowerOfTwo(nHeight)) {
 							if (bAllowResizeHeight)
 								nHeight = Math::GetNearestPowerOfTwo(nHeight, bTextureFit);
 							else
@@ -596,7 +596,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						}
 
 						// Check depth
-						if (!Math::IsPowerOfTwo(nDepth)) {
+						if (!cRenderer.GetCapabilities().bTextureBufferNonPowerOfTwo && !Math::IsPowerOfTwo(nDepth)) {
 							if (bAllowResizeDepth)
 								nDepth = Math::GetNearestPowerOfTwo(nDepth, bTextureFit);
 							else

@@ -1,3 +1,15 @@
+>> 08.05.2011
+[CO]
+- Added "Capabilities::bTextureBufferNonPowerOfTwo", if it's "true" there are no power of two restrictions for all texture buffer types (yeah! :)
+- "Renderer": Added "IsValidTextureBuffer1DSize()" & "IsValidTextureBuffer2DSize()" & "IsValidTextureBufferRectangleSize()" & "IsValidTextureBuffer3DSize()" &
+  "IsValidTextureBufferCubeSize()" to make validating a texture buffer size more comfortable. Modern graphics APIs/extensions and GPUs have finally removed nearly all
+  limitations from the texture buffers, except for maximum size of course. The renderer interface and PixelLight in general must stay compatible with legacy stuff so
+  there are multiple test methods instead of just one for all texture buffer types.
+PLRendererOpenGL:
+- If "GL_ARB_texture_non_power_of_two" is available "Capabilities::bTextureBufferNonPowerOfTwo" is set to "true"
+
+
+
 >> 22.04.2011
 [CO]
 - Added a version of "DrawHelpers::DrawImage()" with an 3D image position and an object space to clip space matrix as parameters

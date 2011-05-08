@@ -266,6 +266,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 2;
 			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
 			m_sCapabilities.nMaxTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 2048;
 			m_sCapabilities.bTextureBuffer3D				= true;
@@ -291,6 +292,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 16;
 			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
 			m_sCapabilities.nMaxTextureBufferSize			= 2048;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 2048;
 			m_sCapabilities.bTextureBuffer3D				= true;
@@ -316,6 +318,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 16;
 			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
 			m_sCapabilities.nMaxTextureBufferSize			= 4096;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 4096;
 			m_sCapabilities.bTextureBuffer3D				= true;
@@ -341,6 +344,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 16;
 			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
 			m_sCapabilities.nMaxTextureBufferSize			= 8192;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 8192;
 			m_sCapabilities.bTextureBuffer3D				= true;
@@ -366,6 +370,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 16;
 			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
 			m_sCapabilities.nMaxTextureBufferSize			= 8192;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 8192;
 			m_sCapabilities.bTextureBuffer3D				= true;
@@ -391,6 +396,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 16;
 			m_sCapabilities.nMaxTessellationFactor			= 0;	// ?
 			m_sCapabilities.nMaxTextureBufferSize			= 16384;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.bTextureBufferRectangle			= true;	// Nonpowers-of-2 conditionally
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 16384;
 			m_sCapabilities.bTextureBuffer3D				= true;
@@ -416,6 +422,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nMaxAnisotropy					= 0;
 			m_sCapabilities.nMaxTessellationFactor			= 0;
 			m_sCapabilities.nMaxTextureBufferSize			= 0;
+			m_sCapabilities.bTextureBufferNonPowerOfTwo		= 0;
 			m_sCapabilities.bTextureBufferRectangle			= 0;
 			m_sCapabilities.nMaxRectangleTextureBufferSize	= 0;
 			m_sCapabilities.bTextureBuffer3D				= 0;
@@ -516,9 +523,7 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
 {
 	// Check maximum render targets and dimension
-	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && vSize.x && vSize.y &&
-		vSize.x <= m_sCapabilities.nMaxTextureBufferSize && vSize.y <= m_sCapabilities.nMaxTextureBufferSize &&
-		Math::IsPowerOfTwo(vSize.x) && Math::IsPowerOfTwo(vSize.y)) {
+	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && IsValidTextureBuffer2DSize(vSize.x) && IsValidTextureBuffer2DSize(vSize.y)) {
 		// Create and register renderer surface
 		PLRenderer::TextureBuffer *pTextureBuffer = new TextureBuffer2D(*this, vSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
 		PLRenderer::SurfaceTextureBuffer *pRendererSurface = new SurfaceTextureBuffer(*this, *pTextureBuffer, nFlags, nMaxColorTargets);
@@ -553,7 +558,7 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
 {
 	// Valid dimension?
-	if (nSize > m_sCapabilities.nMaxCubeTextureBufferSize || nSize < 1 || !Math::IsPowerOfTwo(nSize))
+	if (!IsValidTextureBufferCubeSize(nSize))
 		return nullptr; // Error!
 
 	// Create and register renderer surface
