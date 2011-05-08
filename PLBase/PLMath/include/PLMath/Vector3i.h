@@ -39,6 +39,12 @@ namespace PLMath {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Vector2i;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -118,6 +124,17 @@ class Vector3i {
 		*    Z component
 		*/
 		inline Vector3i(int nX, int nY, int nZ);
+
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] vVector
+		*    2D vector to copy the x and y values from
+		*  @param[in] nZ
+		*    Z component
+		*/
+		PLMATH_API Vector3i(const Vector2i &vVector, int nZ);
 
 		/**
 		*  @brief

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/RegEx.h>
+#include "PLMath/Vector2i.h"
 #include "PLMath/Vector3i.h"
 
 
@@ -47,6 +48,20 @@ const Vector3i Vector3i::NegativeUnitX(-1,  0,  0);
 const Vector3i Vector3i::NegativeUnitY( 0, -1,  0);
 const Vector3i Vector3i::NegativeUnitZ( 0,  0, -1);
 
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+Vector3i::Vector3i(const Vector2i &vVector, int nZ) :
+	x(vVector.x),
+	y(vVector.y),
+	z(nZ)
+{
+}
 
 /**
 *  @brief
