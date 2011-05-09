@@ -236,6 +236,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						// Use the default texture
 						const Texture *pTexture = GetTextureManager().Get(TextureManager::Default);
 						if (pTexture && pTexture->GetTextureBuffer()) {
+							// This texture is just sharing a texture buffer, so when this texture get's destroyed the texture buffer stays alive
 							m_bShareTextureBuffer = true;
 							pTexture->GetTextureBuffer()->AddHandler(*m_pTextureBufferHandler);
 
