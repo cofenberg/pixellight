@@ -186,7 +186,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptPython", "PLBase\PL
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptV8", "PLBase\PLScriptV8\PLScriptV8.vcxproj", "{2FA707BB-2C35-409D-81A9-C00976786D0F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "40Script", "PLSamples\40Script\40ScriptInternal.vcxproj", "{C2C34ED6-8009-4EC5-A654-98F813E5283C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "41ScriptFunctors", "PLSamples\41ScriptFunctors\41ScriptFunctorsInternal.vcxproj", "{C2C34ED6-8009-4EC5-A654-98F813E5283C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
 	EndProjectSection
