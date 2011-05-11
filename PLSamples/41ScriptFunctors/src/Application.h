@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_01_H__
-#define __PLSAMPLE_01_H__
+#ifndef __PLSAMPLE_41_SCRIPTFUNCTORS_H__
+#define __PLSAMPLE_41_SCRIPTFUNCTORS_H__
 #pragma once
 
 
@@ -130,4 +130,4 @@ class Application : public PLCore::ConsoleApplication {
 };
 
 
-#endif // __PLSAMPLE_01_H__
+#endif // __PLSAMPLE_41_SCRIPTFUNCTORS_H__
