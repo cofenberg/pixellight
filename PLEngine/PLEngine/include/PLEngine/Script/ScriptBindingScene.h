@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.h                          *
+ *  File: ScriptBindingScene.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
-#define __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
+#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
+#define __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
 #pragma once
 
 
@@ -43,21 +43,23 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Timing script binding class
+*    Scene script binding class
 *
 *  @note
 *    - [TODO] Script support is currently under construction
 */
-class ScriptBindingTiming : public PLScript::ScriptBinding {
+class ScriptBindingScene : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptBindingTiming, "PLEngine", PLScript::ScriptBinding, "Timing script binding class")
+	pl_class(PL_RTTI_EXPORT, ScriptBindingScene, "PLEngine", PLScript::ScriptBinding, "Scene script binding class")
+		pl_properties
+			pl_property("Namespace", "PL.Scene")
+		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
-		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
+		pl_method_1(Get, void, PLGeneral::String, "Returns the scene node with the given name",   "")
 	pl_class_end
 
 
@@ -65,8 +67,7 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API float GetTimeDifference();
-		PL_API float GetFramesPerSecond();
+		PL_API void Get(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -77,13 +78,13 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API ScriptBindingTiming();
+		PL_API ScriptBindingScene();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ScriptBindingTiming();
+		PL_API virtual ~ScriptBindingScene();
 
 
 };
@@ -95,4 +96,4 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 } // PLEngine
 
 
-#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
+#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__

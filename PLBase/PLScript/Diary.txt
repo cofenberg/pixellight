@@ -1,4 +1,12 @@
-﻿>> 08.05.2011
+﻿>> 11.05.2011
+[CO]
+- The "ScriptManager" creates now instances of all found "ScriptBinding" classes
+- Added "Script::AddBindings()" to bind all available "ScriptBinding" instances at once
+- By default, "ScriptManager::Create()" and "ScriptManager::CreateFromFile()" binds all available "ScriptBinding" instances at once
+
+
+
+>> 08.05.2011
 [CO]
 - The AngelScript add on source codes are now within "External\Optional\AngelScript\add_on" directory instead within the to download external package. CMake told
   me that it wasn't able to find those add on source codes... because it was checking BEFORE downloading and extracting the external package. Maybe it's

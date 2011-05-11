@@ -258,6 +258,9 @@ copy build\release64\PLScript64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Script.cpp" />
     <ClCompile Include="src\PLScript.cpp" />
     <ClCompile Include="src\ScriptBinding.cpp" />
+    <ClCompile Include="src\ScriptBindingLog.cpp" />
+    <ClCompile Include="src\ScriptBindingSystemConsole.cpp" />
+    <ClCompile Include="src\ScriptBindingTiming.cpp" />
     <ClCompile Include="src\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +270,9 @@ copy build\release64\PLScript64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLScript\PLScriptLinux.h" />
     <ClInclude Include="include\PLScript\PLScriptWindows.h" />
     <ClInclude Include="include\PLScript\ScriptBinding.h" />
+    <ClInclude Include="include\PLScript\ScriptBindingLog.h" />
+    <ClInclude Include="include\PLScript\ScriptBindingSystemConsole.h" />
+    <ClInclude Include="include\PLScript\ScriptBindingTiming.h" />
     <ClInclude Include="include\PLScript\ScriptManager.h" />
   </ItemGroup>
   <ItemGroup>

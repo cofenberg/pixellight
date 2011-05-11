@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBinding.h                                *
+ *  File: ScriptBindingTiming.h                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_H__
-#define __PLSCRIPT_SCRIPTBINDING_H__
+#ifndef __PLSCRIPT_SCRIPTBINDING_TIMING_H__
+#define __PLSCRIPT_SCRIPTBINDING_TIMING_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Object.h>
+#include <PLScript/ScriptBinding.h>
 #include "PLScript/PLScript.h"
 
 
@@ -43,27 +43,33 @@ namespace PLScript {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract script binding class
+*    Timing script binding class
 *
-*  @remarks
-*    This is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
-*    derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class
-*    instance to a script - but usually it's useful to have such an abstract base class.
-*
-*    Each script binding should have the followig property:
-*    - "Namespace": Namespace to use inside scripts (for example: "PL.Log")
+*  @note
+*    - [TODO] Script support is currently under construction
 */
-class ScriptBinding : public PLCore::Object {
+class ScriptBindingTiming : public ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBinding, "PLScript", PLCore::Object, "Abstract script binding class")
+	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingTiming, "PLScript", PLScript::ScriptBinding, "Timing script binding class")
 		pl_properties
-			pl_property("Namespace", "")
+			pl_property("Namespace", "PL.Timing")
 		pl_properties_end
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
+		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
 	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI methods                                   ]
+	//[-------------------------------------------------------]
+	public:
+		PLSCRIPT_API float GetTimeDifference();
+		PLSCRIPT_API float GetFramesPerSecond();
 
 
 	//[-------------------------------------------------------]
@@ -72,41 +78,15 @@ class ScriptBinding : public PLCore::Object {
 	public:
 		/**
 		*  @brief
-		*    Destructor
-		*/
-		PLSCRIPT_API virtual ~ScriptBinding();
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptBinding();
+		PLSCRIPT_API ScriptBindingTiming();
 
 		/**
 		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
+		*    Destructor
 		*/
-		PLSCRIPT_API ScriptBinding(const ScriptBinding &cSource);
-
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		PLSCRIPT_API ScriptBinding &operator =(const ScriptBinding &cSource);
+		PLSCRIPT_API virtual ~ScriptBindingTiming();
 
 
 };
@@ -118,4 +98,4 @@ class ScriptBinding : public PLCore::Object {
 } // PLScript
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_H__
+#endif // __PLSCRIPT_SCRIPTBINDING_TIMING_H__

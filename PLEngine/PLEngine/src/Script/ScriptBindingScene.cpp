@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingLog.cpp                           *
+ *  File: ScriptBindingScene.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include "PLEngine/Script/ScriptBindingLog.h"
+#include "PLEngine/Script/ScriptBindingScene.h"
 
 
 //[-------------------------------------------------------]
@@ -37,40 +36,14 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingLog)
+pl_implement_class(ScriptBindingScene)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-void ScriptBindingLog::OutputAlways(String sText)
+void ScriptBindingScene::Get(String sText)
 {
-	Log::GetInstance()->Output(Log::Always, sText);
-}
-
-void ScriptBindingLog::OutputCritical(String sText)
-{
-	Log::GetInstance()->Output(Log::Critical, sText);
-}
-
-void ScriptBindingLog::OutputError(String sText)
-{
-	Log::GetInstance()->Output(Log::Error, sText);
-}
-
-void ScriptBindingLog::OutputWarning(String sText)
-{
-	Log::GetInstance()->Output(Log::Warning, sText);
-}
-
-void ScriptBindingLog::OutputInfo(String sText)
-{
-	Log::GetInstance()->Output(Log::Info, sText);
-}
-
-void ScriptBindingLog::OutputDebug(String sText)
-{
-	Log::GetInstance()->Output(Log::Debug, sText);
 }
 
 
@@ -81,13 +54,8 @@ void ScriptBindingLog::OutputDebug(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBindingLog::ScriptBindingLog() :
-	MethodOutputAlways(this),
-	MethodOutputCritical(this),
-	MethodOutputError(this),
-	MethodOutputWarning(this),
-	MethodOutputInfo(this),
-	MethodOutputDebug(this)
+ScriptBindingScene::ScriptBindingScene() :
+	MethodGet(this)
 {
 }
 
@@ -95,7 +63,7 @@ ScriptBindingLog::ScriptBindingLog() :
 *  @brief
 *    Destructor
 */
-ScriptBindingLog::~ScriptBindingLog()
+ScriptBindingScene::~ScriptBindingScene()
 {
 }
 
