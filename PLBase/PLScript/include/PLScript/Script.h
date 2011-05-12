@@ -107,6 +107,15 @@ class Script : public PLCore::Object {
 		*/
 		PLSCRIPT_API void AddBinding(PLCore::Object &cObject, const PLGeneral::String &sNamespace = "");
 
+		/**
+		*  @brief
+		*    Add all script bindings to this script
+		*
+		*  @remarks
+		*    Iterates over all available script binding instances and adds them to this script.
+		*/
+		PLSCRIPT_API void AddBindings();
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Script functions                       ]

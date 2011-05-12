@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Application.h                                  *
+ *  File: ScriptBindingScene.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_01_H__
-#define __PLSAMPLE_01_H__
+#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
+#define __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLScript/ScriptBinding.h>
+#include "PLEngine/PLEngine.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -36,9 +43,31 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Application class
+*    Scene script binding class
+*
+*  @note
+*    - [TODO] Script support is currently under construction
 */
-class Application : public PLCore::ConsoleApplication {
+class ScriptBindingScene : public PLScript::ScriptBinding {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PL_RTTI_EXPORT, ScriptBindingScene, "PLEngine", PLScript::ScriptBinding, "Scene script binding class")
+		pl_properties
+			pl_property("Namespace", "PL.Scene")
+		pl_properties_end
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_1(Get, void, PLGeneral::String, "Returns the scene node with the given name",   "")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI methods                                   ]
+	//[-------------------------------------------------------]
+	public:
+		PL_API void Get(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -49,85 +78,22 @@ class Application : public PLCore::ConsoleApplication {
 		*  @brief
 		*    Constructor
 		*/
-		Application();
+		PL_API ScriptBindingScene();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~Application();
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Performs a calculation by using a script
-		*
-		*  @param[in] sScriptFilename
-		*    Filename of the script to use
-		*  @param[in] fFirst
-		*    First number
-		*  @param[in] fSecond
-		*    Second number
-		*
-		*  @return
-		*    The result
-		*/
-		float DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond);
-
-		/**
-		*  @brief
-		*    A method
-		*
-		*  @param[in] nFirst
-		*    First number
-		*
-		*  @return
-		*    The result
-		*/
-		int Method(int nFirst);
-
-
-	//[-------------------------------------------------------]
-	//[ Private static functions                              ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    A static method
-		*
-		*  @param[in] nFirst
-		*    First number
-		*
-		*  @return
-		*    The result
-		*/
-		static int StaticMethod(int nFirst);
-
-		/**
-		*  @brief
-		*    A static string method
-		*
-		*  @param[in] sFirst
-		*    First string
-		*
-		*  @return
-		*    The result
-		*/
-		static PLGeneral::String StaticStringMethod(PLGeneral::String sFirst);
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual ConsoleApplication functions          ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void Main();
+		PL_API virtual ~ScriptBindingScene();
 
 
 };
 
 
-#endif // __PLSAMPLE_01_H__
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLEngine
+
+
+#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__

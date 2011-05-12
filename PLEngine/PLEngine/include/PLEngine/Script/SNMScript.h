@@ -39,11 +39,6 @@
 namespace PLScript {
 	class Script;
 }
-// [TODO] This is just a first test
-namespace PLEngine {
-	class ScriptBindingTiming;
-	class ScriptBindingLog;
-}
 
 
 //[-------------------------------------------------------]
@@ -134,10 +129,6 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	private:
 		PLGeneral::String  m_sScript;	/**< Script to use */
 		PLScript::Script  *m_pScript;	/**< Used script instance, can be a null pointer */
-
-		// [TODO] This is just a first test
-		PLEngine::ScriptBindingTiming *m_pScriptBindingTiming;
-		PLEngine::ScriptBindingLog *m_pScriptBindingLog;
 
 
 };

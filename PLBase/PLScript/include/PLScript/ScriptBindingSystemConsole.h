@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingLog.h                             *
+ *  File: ScriptBindingSystemConsole.h                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_LOG_H__
-#define __PLENGINE_SCRIPT_SCRIPTBINDING_LOG_H__
+#ifndef __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
+#define __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
 #pragma once
 
 
@@ -29,13 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScript/ScriptBinding.h>
-#include "PLEngine/PLEngine.h"
+#include "PLScript/PLScript.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLScript {
 
 
 //[-------------------------------------------------------]
@@ -43,25 +43,23 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Log script binding class
+*    System console script binding class
 *
 *  @note
 *    - [TODO] Script support is currently under construction
 */
-class ScriptBindingLog : public PLScript::ScriptBinding {
+class ScriptBindingSystemConsole : public ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptBindingLog, "PLEngine", PLScript::ScriptBinding, "Log script binding class")
+	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingSystemConsole, "PLScript", PLScript::ScriptBinding, "System console script binding class")
+		pl_properties
+			pl_property("Namespace", "PL.System.Console")
+		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(OutputAlways,   void, PLGeneral::String, "Writes the given string into the log ('always' log level)",   "")
-		pl_method_1(OutputCritical, void, PLGeneral::String, "Writes the given string into the log ('critical' log level)", "")
-		pl_method_1(OutputError,    void, PLGeneral::String, "Writes the given string into the log ('error' log level)",    "")
-		pl_method_1(OutputWarning,  void, PLGeneral::String, "Writes the given string into the log ('warning' log level)",  "")
-		pl_method_1(OutputInfo,     void, PLGeneral::String, "Writes the given string into the log ('info' log level)",     "")
-		pl_method_1(OutputDebug,    void, PLGeneral::String, "Writes the given string into the log ('debug' log level)",    "")
+		pl_method_1(Print, void, PLGeneral::String, "Prints the given string into the system console",   "")
 	pl_class_end
 
 
@@ -69,12 +67,7 @@ class ScriptBindingLog : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API void OutputAlways(PLGeneral::String sText);
-		PL_API void OutputCritical(PLGeneral::String sText);
-		PL_API void OutputError(PLGeneral::String sText);
-		PL_API void OutputWarning(PLGeneral::String sText);
-		PL_API void OutputInfo(PLGeneral::String sText);
-		PL_API void OutputDebug(PLGeneral::String sText);
+		PLSCRIPT_API void Print(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -85,13 +78,13 @@ class ScriptBindingLog : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API ScriptBindingLog();
+		PLSCRIPT_API ScriptBindingSystemConsole();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ScriptBindingLog();
+		PLSCRIPT_API virtual ~ScriptBindingSystemConsole();
 
 
 };
@@ -100,7 +93,7 @@ class ScriptBindingLog : public PLScript::ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScript
 
 
-#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_LOG_H__
+#endif // __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__

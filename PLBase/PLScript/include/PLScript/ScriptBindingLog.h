@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBinding.h                                *
+ *  File: ScriptBindingLog.h                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_H__
-#define __PLSCRIPT_SCRIPTBINDING_H__
+#ifndef __PLSCRIPT_SCRIPTBINDING_LOG_H__
+#define __PLSCRIPT_SCRIPTBINDING_LOG_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Object.h>
+#include <PLScript/ScriptBinding.h>
 #include "PLScript/PLScript.h"
 
 
@@ -43,27 +43,41 @@ namespace PLScript {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract script binding class
+*    Log script binding class
 *
-*  @remarks
-*    This is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
-*    derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class
-*    instance to a script - but usually it's useful to have such an abstract base class.
-*
-*    Each script binding should have the followig property:
-*    - "Namespace": Namespace to use inside scripts (for example: "PL.Log")
+*  @note
+*    - [TODO] Script support is currently under construction
 */
-class ScriptBinding : public PLCore::Object {
+class ScriptBindingLog : public ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBinding, "PLScript", PLCore::Object, "Abstract script binding class")
+	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingLog, "PLScript", PLScript::ScriptBinding, "Log script binding class")
 		pl_properties
-			pl_property("Namespace", "")
+			pl_property("Namespace", "PL.Log")
 		pl_properties_end
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_1(OutputAlways,   void, PLGeneral::String, "Writes the given string into the log ('always' log level)",   "")
+		pl_method_1(OutputCritical, void, PLGeneral::String, "Writes the given string into the log ('critical' log level)", "")
+		pl_method_1(OutputError,    void, PLGeneral::String, "Writes the given string into the log ('error' log level)",    "")
+		pl_method_1(OutputWarning,  void, PLGeneral::String, "Writes the given string into the log ('warning' log level)",  "")
+		pl_method_1(OutputInfo,     void, PLGeneral::String, "Writes the given string into the log ('info' log level)",     "")
+		pl_method_1(OutputDebug,    void, PLGeneral::String, "Writes the given string into the log ('debug' log level)",    "")
 	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI methods                                   ]
+	//[-------------------------------------------------------]
+	public:
+		PLSCRIPT_API void OutputAlways(PLGeneral::String sText);
+		PLSCRIPT_API void OutputCritical(PLGeneral::String sText);
+		PLSCRIPT_API void OutputError(PLGeneral::String sText);
+		PLSCRIPT_API void OutputWarning(PLGeneral::String sText);
+		PLSCRIPT_API void OutputInfo(PLGeneral::String sText);
+		PLSCRIPT_API void OutputDebug(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -72,41 +86,15 @@ class ScriptBinding : public PLCore::Object {
 	public:
 		/**
 		*  @brief
-		*    Destructor
-		*/
-		PLSCRIPT_API virtual ~ScriptBinding();
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptBinding();
+		PLSCRIPT_API ScriptBindingLog();
 
 		/**
 		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
+		*    Destructor
 		*/
-		PLSCRIPT_API ScriptBinding(const ScriptBinding &cSource);
-
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		PLSCRIPT_API ScriptBinding &operator =(const ScriptBinding &cSource);
+		PLSCRIPT_API virtual ~ScriptBindingLog();
 
 
 };
@@ -118,4 +106,4 @@ class ScriptBinding : public PLCore::Object {
 } // PLScript
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_H__
+#endif // __PLSCRIPT_SCRIPTBINDING_LOG_H__

@@ -43,6 +43,7 @@ namespace PLCore {
 }
 namespace PLScript {
 	class Script;
+	class ScriptBinding;
 	class ScriptManager;
 }
 
@@ -117,15 +118,26 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 
 		/**
 		*  @brief
+		*    Returns a list of all script binding instances
+		*
+		*  @return
+		*    List of all script binding instances
+		*/
+		PLSCRIPT_API const PLGeneral::Array<ScriptBinding*> &GetScriptBindings();
+
+		/**
+		*  @brief
 		*    Creates a script instance
 		*
 		*  @param[in] sScriptLanguage
 		*    Script language to use
+		*  @param[in] bAddBindings
+		*    If 'true', add all available script bindings automatically (see "Script::AddBindings()")
 		*
 		*  @return
 		*    The created script instance, null pointer on error
 		*/
-		PLSCRIPT_API Script *Create(const PLGeneral::String &sScriptLanguage);
+		PLSCRIPT_API Script *Create(const PLGeneral::String &sScriptLanguage, bool bAddBindings = true);
 
 		/**
 		*  @brief
@@ -133,6 +145,8 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*
 		*  @param[in] sFilename
 		*    Script filename
+		*  @param[in] bAddBindings
+		*    If 'true', add all available script bindings automatically (see "Script::AddBindings()")
 		*
 		*  @return
 		*    The created script instance, null pointer on error (Unknown filename extension? File not found? Error within the script?)
@@ -140,7 +154,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @note
 		*    - Convenience method
 		*/
-		PLSCRIPT_API Script *CreateFromFile(const PLGeneral::String &sFilename);
+		PLSCRIPT_API Script *CreateFromFile(const PLGeneral::String &sFilename, bool bAddBindings = true);
 
 
 	//[-------------------------------------------------------]
@@ -197,9 +211,12 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::Array<const PLCore::Class*>						m_lstNewClasses;					/**< New classes to register as soon as required */
+		// Script languages
 		PLGeneral::Array<PLGeneral::String>							m_lstScriptLanguages;				/**< List of script languages */
 		PLGeneral::HashMap<PLGeneral::String, const PLCore::Class*> m_mapScriptLanguages;				/**< Map of script languages (key = class name) */
 		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String>	m_mapScriptLanguagesByExtension;	/**< Map of script languages by extension (key = extension) */
+		// Script bindings
+		PLGeneral::Array<ScriptBinding*>							m_lstScriptBindings;				/**< List of script bindings */
 
 
 };

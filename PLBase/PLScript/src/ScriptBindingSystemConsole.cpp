@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMScript.cpp                                  *
+ *  File: ScriptBindingSystemConsole.cpp                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,49 +23,30 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/Script.h>
-#include <PLScript/FuncScriptPtr.h>
-#include <PLScript/ScriptManager.h>
-#include <PLScene/Scene/SceneContext.h>
-#include "PLEngine/Script/SNMScript.h"
+#include <PLGeneral/System/System.h>
+#include <PLGeneral/System/Console.h>
+#include "PLScript/ScriptBindingSystemConsole.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
-using namespace PLScript;
-using namespace PLScene;
-namespace PLEngine {
+namespace PLScript {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMScript)
+pl_implement_class(ScriptBindingSystemConsole)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
+//[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-String SNMScript::GetScript() const
+void ScriptBindingSystemConsole::Print(String sText)
 {
-	return m_sScript;
-}
-
-void SNMScript::SetScript(const String &sValue)
-{
-	if (m_sScript != sValue) {
-		m_sScript = sValue;
-
-		// Destroy the used script
-		if (m_pScript)
-			delete m_pScript;
-
-		// Create the script instance
-		m_pScript = ScriptManager::GetInstance()->CreateFromFile(m_sScript);
-	}
+	System::GetInstance()->GetConsole().Print(sText);
 }
 
 
@@ -76,11 +57,8 @@ void SNMScript::SetScript(const String &sValue)
 *  @brief
 *    Constructor
 */
-SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
-	Script(this),
-	UpdateFunction(this),
-	EventHandlerUpdate(&SNMScript::NotifyUpdate, this),
-	m_pScript(nullptr)
+ScriptBindingSystemConsole::ScriptBindingSystemConsole() :
+	MethodPrint(this)
 {
 }
 
@@ -88,48 +66,12 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 *  @brief
 *    Destructor
 */
-SNMScript::~SNMScript()
+ScriptBindingSystemConsole::~ScriptBindingSystemConsole()
 {
-	// Destroy the used script
-	if (m_pScript)
-		delete m_pScript;
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected virtual SceneNodeModifier functions         ]
-//[-------------------------------------------------------]
-void SNMScript::OnActivate(bool bActivate)
-{
-	// Connect/disconnect event handler
-	SceneContext *pSceneContext = GetSceneContext();
-	if (pSceneContext) {
-		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
-		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
-	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when the scene node modifier needs to be updated
-*/
-void SNMScript::NotifyUpdate()
-{
-	// Is there a script and script function?
-	if (m_pScript && UpdateFunction.Get().GetLength()) {
-		// Call the update script function
-		FuncScriptPtr<void>(m_pScript, UpdateFunction.Get()).Call(Params<void>());
-	}
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScript

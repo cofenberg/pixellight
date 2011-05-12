@@ -52,8 +52,8 @@ using namespace PLScript;
 Application::Application() : PLCore::ConsoleApplication()
 {
 	// Set application name and title
-	SetName("40Script");
-	SetTitle(PLT("PLSample 40 - Script"));
+	SetName("41ScriptFunctors");
+	SetTitle(PLT("PLSample 41 - Script functors"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 

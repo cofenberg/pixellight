@@ -1,35 +1,23 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLScript)
-
-##################################################
-## Prerequisites
-##################################################
-
-# Create 'Plugins/PLScript' directory
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript)
+define_project(40ScriptHelloWorld NOSUFFIX)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/PLScript.cpp
-	src/Script.cpp
-	src/ScriptManager.cpp
-	src/ScriptBinding.cpp
-	src/ScriptBindingLog.cpp
-	src/ScriptBindingTiming.cpp
-	src/ScriptBindingSystemConsole.cpp
+	src/Main.cpp
+	src/Application.cpp
 )
 
 ##################################################
 ## Include directories
 ##################################################
 add_include_directories(
-	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScript/include
 )
 
 ##################################################
@@ -45,14 +33,12 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
+	PLScript
 )
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
-add_compile_defs(
-	PLSCRIPT_EXPORTS
-)
 if(WIN32)
 	##################################################
 	## Win32
@@ -110,49 +96,43 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore)
-add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLScript)
+add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
 ##################################################
 
-# Dynamic library
+# Executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLRuntime"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/PLSamples"
 )
-if(LINUX)
-	# Create relative symbolic links
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
-	)
-endif()
-
-# Import library
-if(WIN32)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} "${PL_BIN_DIR}/Lib"
-	)
-endif()
 
 ##################################################
 ## Install
 ##################################################
 
-# Library
+# Executable
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
-	ARCHIVE DESTINATION ${PL_INSTALL_LIB}		COMPONENT SDK
+	RUNTIME DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK
 )
 
-# Include files
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
-	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		PATTERN ".svn" EXCLUDE
+# Source files
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+	DESTINATION ${PL_INSTALL_SAMPLES} 				COMPONENT SDK
+	PATTERN "build" EXCLUDE
+	PATTERN "enc_temp_folder" EXCLUDE
+	PATTERN ".svn" EXCLUDE
+	PATTERN "*.ncb" EXCLUDE
+	PATTERN "*.suo" EXCLUDE
+	PATTERN "*.user" EXCLUDE
+	PATTERN "CMakeLists.txt" EXCLUDE
+	PATTERN "40ScriptHelloWorldInternal.sln" EXCLUDE
+	PATTERN "40ScriptHelloWorldInternal.vcxproj" EXCLUDE
+	PATTERN "40ScriptHelloWorldInternal.vcxproj.filters" EXCLUDE
 )

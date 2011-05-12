@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include "PLScript/ScriptManager.h"
 #include "PLScript/Script.h"
 
 
@@ -101,6 +102,20 @@ void Script::AddBinding(Object &cObject, const String &sNamespace)
 		const FuncDesc *pFuncDesc = pDynFunc->GetDesc();
 		if (pFuncDesc)
 			AddDynamicFunction(pFuncDesc->GetName(), *pDynFunc, sNamespace);
+	}
+}
+
+/**
+*  @brief
+*    Add all script bindings to this script
+*/
+void Script::AddBindings()
+{
+	// Get a list of all script binding instances
+	const Array<ScriptBinding*> &lstScriptBindings = ScriptManager::GetInstance()->GetScriptBindings();
+	for (uint32 i=0; i<lstScriptBindings.GetNumOfElements(); i++) {
+		Object *pScriptBinding = reinterpret_cast<Object*>(lstScriptBindings[i]);
+		AddBinding(*pScriptBinding, pScriptBinding->GetClass()->GetProperties().Get("Namespace"));
 	}
 }
 

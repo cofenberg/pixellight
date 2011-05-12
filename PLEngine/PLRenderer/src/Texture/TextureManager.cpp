@@ -161,11 +161,10 @@ bool TextureManager::ReloadTextures()
 */
 Texture *TextureManager::CreateTexture(const String &sName, TextureBuffer &cTextureBuffer)
 {
-	// Create
+	// Create the texture instance
 	Texture *pTexture = new Texture(*this, sName);
 
-	// Create the renderer texture resource
-	pTexture->m_pTextureBufferHandler = new ResourceHandler();
+	// The new texture is just sharing the given texture buffer, so when the new texture get's destroyed the given texture buffer stays alive
 	cTextureBuffer.AddHandler(*pTexture->m_pTextureBufferHandler);
 	pTexture->m_bShareTextureBuffer = true;
 

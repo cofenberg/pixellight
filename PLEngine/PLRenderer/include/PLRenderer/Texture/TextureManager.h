@@ -212,8 +212,11 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @return
 		*    Pointer to the new texture, a null pointer on error
 		*
-		*  @note
-		*    - The texture will only 'share' the texture buffer, it will NOT delete by itself!
+		*  @remarks
+		*    A texture wraps up a texture buffer for more comfortable usage within high-level components. In rare situations
+		*    one texture buffer needs to be referenced by multiple textures - this is what this method is used for. When creating
+		*    a texture with this method, the given texture buffer is just shared and therefore not automatically destroyed
+		*    when the texture gets destroyed. If possible, try to avoid using this method because it's somewhat ugly!
 		*/
 		PLRENDERER_API Texture *CreateTexture(const PLGeneral::String &sName, TextureBuffer &cTextureBuffer);
 

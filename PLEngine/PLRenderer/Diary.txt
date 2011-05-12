@@ -1,3 +1,12 @@
+>> 09.05.2011
+[CO]
+- Bugfix: "TextureManager::CreateTexture()" set a new instance of "ResourceHandler" which was totally wrong because there were already an instance.
+  Thank you "jacky" for pointing this out within the PixelLight forum at http://dev.pixellight.org/forum/viewtopic.php?f=6&t=47
+  This whole "m_bShareTextureBuffer" looks somewhat messy, but right now I don't dare to refactor something in here because I'am currently working on totally different
+  stuff.
+
+
+
 >> 08.05.2011
 [CO]
 - Added "Capabilities::bTextureBufferNonPowerOfTwo", if it's "true" there are no power of two restrictions for all texture buffer types (yeah! :)

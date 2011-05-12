@@ -1,3 +1,10 @@
+>> 11.05.2011
+[CO]
+- Renamed "40Script" into "41ScriptFunctors"
+- Added "40ScriptHelloWorld"
+
+
+
 >> 26.04.2011
 [CO]
 - Added "40Script"

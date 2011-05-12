@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.h                          *
+ *  File: Application.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
-#define __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
+#ifndef __PLSAMPLE_41_SCRIPTFUNCTORS_H__
+#define __PLSAMPLE_41_SCRIPTFUNCTORS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
-#include "PLEngine/PLEngine.h"
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLEngine {
+#include <PLCore/Application/ConsoleApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -43,30 +36,9 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Timing script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
+*    Application class
 */
-class ScriptBindingTiming : public PLScript::ScriptBinding {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptBindingTiming, "PLEngine", PLScript::ScriptBinding, "Timing script binding class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
-		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		PL_API float GetTimeDifference();
-		PL_API float GetFramesPerSecond();
+class Application : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
@@ -77,22 +49,85 @@ class ScriptBindingTiming : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API ScriptBindingTiming();
+		Application();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ScriptBindingTiming();
+		virtual ~Application();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Performs a calculation by using a script
+		*
+		*  @param[in] sScriptFilename
+		*    Filename of the script to use
+		*  @param[in] fFirst
+		*    First number
+		*  @param[in] fSecond
+		*    Second number
+		*
+		*  @return
+		*    The result
+		*/
+		float DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond);
+
+		/**
+		*  @brief
+		*    A method
+		*
+		*  @param[in] nFirst
+		*    First number
+		*
+		*  @return
+		*    The result
+		*/
+		int Method(int nFirst);
+
+
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A static method
+		*
+		*  @param[in] nFirst
+		*    First number
+		*
+		*  @return
+		*    The result
+		*/
+		static int StaticMethod(int nFirst);
+
+		/**
+		*  @brief
+		*    A static string method
+		*
+		*  @param[in] sFirst
+		*    First string
+		*
+		*  @return
+		*    The result
+		*/
+		static PLGeneral::String StaticStringMethod(PLGeneral::String sFirst);
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual ConsoleApplication functions          ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void Main();
 
 
 };
 
 
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-} // PLEngine
-
-
-#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_TIMING_H__
+#endif // __PLSAMPLE_41_SCRIPTFUNCTORS_H__

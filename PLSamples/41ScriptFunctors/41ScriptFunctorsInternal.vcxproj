@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>40Script</ProjectName>
+    <ProjectName>41ScriptFunctors</ProjectName>
     <ProjectGuid>{C2C34ED6-8009-4EC5-A654-98F813E5283C}</ProjectGuid>
-    <RootNamespace>40Script</RootNamespace>
+    <RootNamespace>41ScriptFunctors</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -75,7 +75,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\40ScriptD.exe ..\..\Bin\PLSamples\</Command>
+      <Command>copy build\debug\41ScriptFunctorsD.exe ..\..\Bin\PLSamples\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,7 +113,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\40Script.exe ..\..\Bin\PLSamples\</Command>
+      <Command>copy build\release\41ScriptFunctors.exe ..\..\Bin\PLSamples\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

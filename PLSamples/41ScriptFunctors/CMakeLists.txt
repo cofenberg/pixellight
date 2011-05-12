@@ -1,7 +1,7 @@
 ##################################################
 ## Project
 ##################################################
-define_project(40Script NOSUFFIX)
+define_project(41ScriptFunctors NOSUFFIX)
 
 ##################################################
 ## Source files
@@ -132,7 +132,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	PATTERN "*.suo" EXCLUDE
 	PATTERN "*.user" EXCLUDE
 	PATTERN "CMakeLists.txt" EXCLUDE
-	PATTERN "40ScriptInternal.sln" EXCLUDE
-	PATTERN "40ScriptInternal.vcxproj" EXCLUDE
-	PATTERN "40ScriptInternal.vcxproj.filters" EXCLUDE
+	PATTERN "41ScriptFunctorsInternal.sln" EXCLUDE
+	PATTERN "41ScriptFunctorsInternal.vcxproj" EXCLUDE
+	PATTERN "41ScriptFunctorsInternal.vcxproj.filters" EXCLUDE
 )
