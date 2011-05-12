@@ -1,3 +1,9 @@
+>> 12.05.2011
+[CO]
+- Added "GetNumOfParameters()" and "GetParameterTypeID()" to "DynFunc" to make it possible to request some more information about the dynamic function
+
+
+
 >> 02.05.2011
 [CO]
 - "DynFunc": Added "GetReturnTypeID()" to make it possible to figure out the return type (e.g. "TypeNull" for "void()" or "TypeInt" for "int()")

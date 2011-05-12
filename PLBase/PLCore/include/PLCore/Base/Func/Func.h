@@ -104,6 +104,34 @@ class Func : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 16;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				case 14:	return Type<T14>::TypeID;
+				case 15:	return Type<T15>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -205,6 +233,34 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 16;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				case 14:	return Type<T14>::TypeID;
+				case 15:	return Type<T15>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -316,6 +372,33 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 15;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				case 14:	return Type<T14>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -414,6 +497,33 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 15;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				case 14:	return Type<T14>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -523,6 +633,32 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 14;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -620,6 +756,32 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 14;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -727,6 +889,31 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 13;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -823,6 +1010,31 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 13;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -929,6 +1141,30 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 12;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1024,6 +1260,30 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 12;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -1129,6 +1389,29 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 11;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1223,6 +1506,29 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 11;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -1327,6 +1633,28 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 10;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				case 7:		return Type<T7>::TypeID;
+				case 8:		return Type<T8>::TypeID;
+				case 9:		return Type<T9>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1418,6 +1746,28 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 10;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				case 7:		return Type<T7>::TypeID;
+				case 8:		return Type<T8>::TypeID;
+				case 9:		return Type<T9>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -1519,6 +1869,27 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 9;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				case 7:		return Type<T7>::TypeID;
+				case 8:		return Type<T8>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1609,6 +1980,27 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 9;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				case 7:		return Type<T7>::TypeID;
+				case 8:		return Type<T8>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -1709,6 +2101,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 8;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				case 7:		return Type<T7>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1798,6 +2210,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 8;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				case 7:		return Type<T7>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -1897,6 +2329,25 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 7;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -1985,6 +2436,25 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 7;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				case 6:		return Type<T6>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -2083,6 +2553,24 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 6;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2170,6 +2658,24 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 6;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				case 5:		return Type<T5>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -2267,6 +2773,23 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 5;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2349,6 +2872,23 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 5;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				case 4:		return Type<T4>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -2441,6 +2981,22 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 4;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2522,6 +3078,22 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 4;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				case 3:		return Type<T3>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -2613,6 +3185,21 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 3;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2693,6 +3280,21 @@ class Func<void, T0, T1, T2> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 3;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				case 2:		return Type<T2>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -2783,6 +3385,20 @@ class Func<R, T0, T1> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 2;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -2862,6 +3478,20 @@ class Func<void, T0, T1> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0, T1>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 2;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				case 1:		return Type<T1>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -2951,6 +3581,19 @@ class Func<R, T0> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 1;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -3030,6 +3673,19 @@ class Func<void, T0> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void, T0>::GetSignatureID();
+		}
+
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 1;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0>::TypeID;
+				default:	return Type<InvalidType<int> >::TypeID;
+			}
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -3118,6 +3774,16 @@ class Func<R> : public DynFunc {
 			return Type<R>::TypeID;
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 0;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			return Type<InvalidType<int> >::TypeID;
+		}
+
 		virtual void Call(DynParams &cParams)
 		{
 			// Check signature
@@ -3191,6 +3857,11 @@ class Func<void> : public DynFunc {
 		virtual PLGeneral::String GetSignature() const
 		{
 			return Signature<void>::GetSignatureID();
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			return Type<InvalidType<int> >::TypeID;
 		}
 
 		virtual void Call(DynParams &cParams)

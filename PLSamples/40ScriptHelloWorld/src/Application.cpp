@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLScript/Script.h>
 #include <PLScript/FuncScriptPtr.h>
