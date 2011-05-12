@@ -537,6 +537,70 @@ void Script::ReportErrors()
 
 /**
 *  @brief
+*    Writes the current Lua stack content into the log
+*/
+void Script::LuaStackDump()
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Get the number of elements on the Lua stack
+		const int nNumOfStackElements = lua_gettop(m_pLuaState);
+
+		// Write this number into the log
+		LogOutput(Log::Info, String("Number of elements on the Lua stack: ") + nNumOfStackElements);
+
+		// Iterate through the Lua stack
+		for (int i=1; i<=nNumOfStackElements; i++) {
+			const int nLuaType = lua_type(m_pLuaState, i);
+			String sValue;
+			switch (nLuaType) {
+				case LUA_TNIL:
+					sValue = "nil";
+					break;
+
+				case LUA_TNUMBER:
+					sValue = lua_tonumber(m_pLuaState, i);
+					break;
+
+				case LUA_TBOOLEAN:
+					sValue = lua_toboolean(m_pLuaState, i) ? "true" : "false";
+					break;
+
+				case LUA_TSTRING:
+					sValue = lua_tostring(m_pLuaState, i);
+					break;
+
+				case LUA_TTABLE:
+					sValue = "Table";
+					break;
+
+				case LUA_TFUNCTION:
+					sValue = "Function";
+					break;
+
+				case LUA_TUSERDATA:
+					sValue = "User data";
+					break;
+
+				case LUA_TTHREAD:
+					sValue = "Thread";
+					break;
+
+				case LUA_TLIGHTUSERDATA:
+					sValue = "Light user data";
+					break;
+
+				default:
+					sValue = "?";
+					break;
+			}
+			LogOutput(Log::Info, String("Lua stack element ") + (i-1) + ": \"" + sValue + "\" (Lua type name: \"" + lua_typename(m_pLuaState, nLuaType) + "\")");
+		}
+	}
+}
+
+/**
+*  @brief
 *    Clears the script
 */
 void Script::Clear()
@@ -547,8 +611,10 @@ void Script::Clear()
 		m_sSourceCode = "";
 
 		// Verify the stack and write a warning into the log if the script stack is not empty
-		if (lua_gettop(m_pLuaState))
+		if (lua_gettop(m_pLuaState)) {
 			LogOutput(Log::Warning, "Script termination, but the stack is not empty");
+			LuaStackDump();
+		}
 
 		// Close the Lua state
 		lua_close(m_pLuaState);

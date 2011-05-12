@@ -1,4 +1,10 @@
-﻿>> 11.05.2011
+﻿>> 12.05.2011
+[CO]
+- Added "PLScriptLua::Script::LuaStackDump()" which writes the current Lua stack content into the log
+
+
+
+>> 11.05.2011
 [CO]
 - The "ScriptManager" creates now instances of all found "ScriptBinding" classes
 - Added "Script::AddBindings()" to bind all available "ScriptBinding" instances at once

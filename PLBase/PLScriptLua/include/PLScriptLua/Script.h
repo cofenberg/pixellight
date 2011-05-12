@@ -180,6 +180,15 @@ class Script : public PLScript::Script {
 
 		/**
 		*  @brief
+		*    Writes the current Lua stack content into the log
+		*
+		*  @note
+		*    - For debugging
+		*/
+		void LuaStackDump();
+
+		/**
+		*  @brief
 		*    Clears the script
 		*/
 		void Clear();
