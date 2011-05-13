@@ -47,7 +47,7 @@ namespace PLScript {
 *
 *  @remarks
 *    Each script should have the followig properties:
-*    - "Language": Shader language (for example: "JavaScript" or "Lua")
+*    - "Language": Script language (for example: "JavaScript" or "Lua")
 *    - "Formats":  File format extensions this script can load in (for example: "js" or "lua")
 *
 *    Supported script features:
