@@ -76,8 +76,8 @@ void Application::SayHello(const PLGeneral::String &sScriptFilename)
 	// Create the script instance
 	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
 	if (pScript) {
-		// Call the script function "sayHello"
-		FuncScriptPtr<void>(pScript, "sayHello").Call(Params<void>());
+		// Call the script function "SayHello"
+		FuncScriptPtr<void>(pScript, "SayHello").Call(Params<void>());
 
 		// Cleanup
 		delete pScript;

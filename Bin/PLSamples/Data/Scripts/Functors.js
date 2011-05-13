@@ -1,38 +1,38 @@
 //[-------------------------------------------------------]
 //[ Global variables                                      ]
 //[-------------------------------------------------------]
-float g_Factor = 1;
+var g_Factor = 1;
 
 
 //[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
-int scriptFunction(int a)
+function ScriptFunction(a)
 {
 	return a;
 }
 
-int callCpp(int a)
+function CallCpp(a)
 {
-	return FirstNamespace_SecondNamespace_cppFunction(a) + cppMethod(a) + cppScriptFunction(a);
+	return FirstNamespace.SecondNamespace.CppFunction(a) + CppMethod(a) + CppScriptFunction(a);
 }
 
-float getFactor()
+function GetFactor()
 {
 	return g_Factor;
 }
 
-void setFactor(float a)
+function SetFactor(a)
 {
 	g_Factor = a;
 }
 
-float calculate(float a, float b)
+function Calculate(a, b)
 {
 	return a * b * g_Factor;
 }
 
-string returnMyString(string s)
+function ReturnMyString(s)
 {
-	return cppStringFunction(s);
+	return CppStringFunction(s);
 }

@@ -7,27 +7,27 @@ g_Factor = 1
 --[-------------------------------------------------------]
 --[ Global functions                                      ]
 --[-------------------------------------------------------]
-function scriptFunction(a)
+function ScriptFunction(a)
 	return a
 end
 
-function callCpp(a)
-	-- "FirstNamespace.SecondNamespace.cppFunction(a)" is an equivalent for "FirstNamespace["SecondNamespace"]["cppFunction"](a)"
-	return FirstNamespace.SecondNamespace.cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
+function CallCpp(a)
+	-- "FirstNamespace.SecondNamespace.CppFunction(a)" is an equivalent for "FirstNamespace["SecondNamespace"]["CppFunction"](a)"
+	return FirstNamespace.SecondNamespace.CppFunction(a) + CppMethod(a) + CppScriptFunction(a)
 end
 
-function getFactor()
+function GetFactor()
 	return g_Factor
 end
 
-function setFactor(a)
+function SetFactor(a)
 	g_Factor = a
 end
 
-function calculate(a, b)
+function Calculate(a, b)
 	return a * b * g_Factor
 end
 
-function returnMyString(s)
-	return cppStringFunction(s)
+function ReturnMyString(s)
+	return CppStringFunction(s)
 end

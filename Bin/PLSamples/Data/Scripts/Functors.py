@@ -7,21 +7,21 @@ g_Factor = 1
 #[-------------------------------------------------------]
 #[ Global functions                                      ]
 #[-------------------------------------------------------]
-def scriptFunction(a):
+def ScriptFunction(a):
 	return a
 
-def callCpp(a):
-	return FirstNamespace['SecondNamespace']['cppFunction'](a) + cppMethod(a) + cppScriptFunction(a)
+def CallCpp(a):
+	return FirstNamespace['SecondNamespace']['CppFunction'](a) + CppMethod(a) + CppScriptFunction(a)
 
-def getFactor():
+def GetFactor():
 	return g_Factor
 
-def setFactor(a):
+def SetFactor(a):
 	global g_Factor	# If this isn't done, g_Factor is used as local variable when assigning a new value to it
 	g_Factor = a
 
-def calculate(a, b):
+def Calculate(a, b):
 	return a * b * g_Factor
 
-def returnMyString(s):
-	return cppStringFunction(s)
+def ReturnMyString(s):
+	return CppStringFunction(s)

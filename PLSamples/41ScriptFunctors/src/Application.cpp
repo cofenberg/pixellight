@@ -95,16 +95,16 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 			// Functor pointing to the member method "Application::Method"
 			Functor<int, int> cMethod(&Application::Method, this);
 
-			// Functor pointing to the script function "scriptFunction"
-			Functor<int, int> cScriptFunction(new FuncScriptPtr<int, int>(pScript, "scriptFunction"));
+			// Functor pointing to the script function "ScriptFunction"
+			Functor<int, int> cScriptFunction(new FuncScriptPtr<int, int>(pScript, "ScriptFunction"));
 
 			// Tell our script about those functors so that we can use them within the script...
-			pScript->AddGlobalFunction("cppFunction", cStaticMethod, "FirstNamespace.SecondNamespace");
-			pScript->AddGlobalFunction("cppStringFunction", cStaticStringMethod);
-			pScript->AddGlobalFunction("cppMethod", cMethod);
+			pScript->AddGlobalFunction("CppFunction", cStaticMethod, "FirstNamespace.SecondNamespace");
+			pScript->AddGlobalFunction("CppStringFunction", cStaticStringMethod);
+			pScript->AddGlobalFunction("CppMethod", cMethod);
 
 			// The following is possible as well: Script is calling C++, C++ is calling script... *g*
-			pScript->AddGlobalFunction("cppScriptFunction", cScriptFunction);
+			pScript->AddGlobalFunction("CppScriptFunction", cScriptFunction);
 			// ... although it depends on the used internal script API whether or not it actually works without issues. With
 			// the Lua, Python and V8 (JavaScript) API there are no issues, but AngelScript can't run another AngelScript while one is already running.
 			// But using this way, one can e.g. call an AngelScript function from inside a Lua script function...
@@ -123,12 +123,12 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 					const bool bFunctorResultsEqual  = (nFunctionResult == nValue && nMethodResult == nValue && nScriptFunctionResult == nValue);
 					System::GetInstance()->GetConsole().Print(String("Same functor behaviour: ") + (bFunctorResultsEqual ? "Yes" : "No") + '\n');
 
-					{ // Call the script function "callCpp"
+					{ // Call the script function "CallCpp"
 						// Get the typed dynamic parameters
 						Params<int, int> cParams(nValue);
 
 						// Call the script function
-						FuncScriptPtr<int, int>(pScript, "callCpp").Call(cParams);
+						FuncScriptPtr<int, int>(pScript, "CallCpp").Call(cParams);
 
 						// Get and check result
 						const bool bEqual = (cParams.Return == (nFunctionResult + nMethodResult + nScriptFunctionResult));
@@ -136,19 +136,19 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 					}
 				}
 
-				{ // Call the script function "getFactor"
+				{ // Call the script function "GetFactor"
 					// Get the typed dynamic parameters
 					Params<float> cParams;
 
 					// Call the script function
-					FuncScriptPtr<float>(pScript, "getFactor").Call(cParams);
+					FuncScriptPtr<float>(pScript, "GetFactor").Call(cParams);
 
 					// Get the result
 					fFactor = cParams.Return;
 				}
 
-				// Call the script function "setFactor"
-				FuncScriptPtr<void, float>(pScript, "setFactor").Call(Params<void, float>(fFactor + 1.0f));
+				// Call the script function "SetFactor"
+				FuncScriptPtr<void, float>(pScript, "SetFactor").Call(Params<void, float>(fFactor + 1.0f));
 
 				{ // Global variable usage example
 					{ // Enumerate all global variables
@@ -183,23 +183,23 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 					}
 				}
 
-				{ // Call the script function "calculate"
+				{ // Call the script function "Calculate"
 					// Get the typed dynamic parameters
 					Params<float, float, float> cParams(fFirst, fSecond);
 
 					// Call the script function
-					FuncScriptPtr<float, float, float>(pScript, "calculate").Call(cParams);
+					FuncScriptPtr<float, float, float>(pScript, "Calculate").Call(cParams);
 
 					// Get the result
 					fResult = cParams.Return;
 				}
 
-				{ // Call the script function "returnMyString"
+				{ // Call the script function "ReturnMyString"
 					// Get the typed dynamic parameters
 					Params<String, String> cParams("MyString");
 
 					// Call the script function
-					FuncScriptPtr<String, String>(pScript, "returnMyString").Call(cParams);
+					FuncScriptPtr<String, String>(pScript, "ReturnMyString").Call(cParams);
 
 					// Check the result
 					System::GetInstance()->GetConsole().Print(String("Got my string: ") + (cParams.Return == "MyString" ? "Yes" : "No") + '\n');
@@ -270,8 +270,8 @@ void Application::Main()
 	}
 
 	// Run some scripts
-	DoCalculation("Data/Scripts/Calculate.lua", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Calculate.js", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Calculate.as", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Calculate.py", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.lua", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.js", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.as", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.py", 42.0f, 5.0f);
 }
