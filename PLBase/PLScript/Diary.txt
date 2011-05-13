@@ -1,4 +1,12 @@
-﻿>> 12.05.2011
+﻿>> 13.05.2011
+[CO]
+- "Script:" Added support for global variables. At first I thought about adding "GetGlobalVariable()" & "SetGlobalVariable()" versions
+  for the supported primitive data types - but this would result in a total copy'n'past overkill within the internal implementations. Those
+  string methods should do the job (the internal implementations try to don't change the script variable type).
+
+
+
+>> 12.05.2011
 [CO]
 - Added "PLScriptLua::Script::LuaStackDump()" which writes the current Lua stack content into the log
 

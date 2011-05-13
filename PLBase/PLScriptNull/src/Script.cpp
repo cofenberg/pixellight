@@ -95,6 +95,29 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
+bool Script::IsGlobalVariable(const String &sName)
+{
+	// Nothing to do in here
+	return false;
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	// Nothing to do in here
+	return TypeInvalid;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	// Nothing to do in here
+	return "";
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// Nothing to do in here
+}
+
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
 	// Nothing to do in here

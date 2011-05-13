@@ -237,6 +237,124 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+bool Script::IsGlobalVariable(const String &sName)
+{
+	return m_pAngelScriptModule ? (m_pAngelScriptModule->GetGlobalVarIndexByName(sName) >= 0) : false;
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	// There must be a valid AngelScript engine and module instance
+	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
+		// Get the index of the global variable
+		const int nGlobalVarIndex = m_pAngelScriptModule->GetGlobalVarIndexByName(sName);
+
+		// Get the type of the global variable
+		int nGlobalVarTypeID = asTYPEID_VOID;
+		if (m_pAngelScriptModule->GetGlobalVar(nGlobalVarIndex, nullptr, &nGlobalVarTypeID, nullptr) >= 0) {
+			// Process the global variable depending on it's type
+			switch (nGlobalVarTypeID) {
+				case asTYPEID_BOOL:		return TypeBool;
+				case asTYPEID_INT8:		return TypeInt8;
+				case asTYPEID_INT16:	return TypeInt16;
+				case asTYPEID_INT32:	return TypeInt32;
+				case asTYPEID_INT64:	return TypeInt64;
+				case asTYPEID_UINT8:	return TypeUInt8;
+				case asTYPEID_UINT16:	return TypeUInt16;
+				case asTYPEID_UINT32:	return TypeUInt32;
+				case asTYPEID_UINT64:	return TypeUInt64;
+				case asTYPEID_FLOAT:	return TypeFloat;
+				case asTYPEID_DOUBLE:	return TypeDouble;
+
+				default:
+					if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
+						return TypeString;
+					break;
+			}
+		}
+	}
+
+	// Error!
+	return TypeInvalid;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	// There must be a valid AngelScript engine and module instance
+	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
+		// Get the index of the global variable
+		const int nGlobalVarIndex = m_pAngelScriptModule->GetGlobalVarIndexByName(sName);
+
+		// Get the type of the global variable
+		int nGlobalVarTypeID = asTYPEID_VOID;
+		if (m_pAngelScriptModule->GetGlobalVar(nGlobalVarIndex, nullptr, &nGlobalVarTypeID, nullptr) >= 0) {
+			// Get the address of the global variable
+			void *pGlobalVarAddress = m_pAngelScriptModule->GetAddressOfGlobalVar(nGlobalVarIndex);
+			if (pGlobalVarAddress) {
+				// Process the global variable depending on it's type
+				switch (nGlobalVarTypeID) {
+					case asTYPEID_BOOL:		return *((bool*)  pGlobalVarAddress);
+					case asTYPEID_INT8:		return *((int8*)  pGlobalVarAddress);
+					case asTYPEID_INT16:	return *((int16*) pGlobalVarAddress);
+					case asTYPEID_INT32:	return *((int32*) pGlobalVarAddress);
+					case asTYPEID_INT64:	return *((int64*) pGlobalVarAddress);
+					case asTYPEID_UINT8:	return *((uint8 *)pGlobalVarAddress);
+					case asTYPEID_UINT16:	return *((uint16*)pGlobalVarAddress);
+					case asTYPEID_UINT32:	return *((uint32*)pGlobalVarAddress);
+					case asTYPEID_UINT64:	return *((uint64*)pGlobalVarAddress);
+					case asTYPEID_FLOAT:	return *((float *)pGlobalVarAddress);
+					case asTYPEID_DOUBLE:	return *((double*)pGlobalVarAddress);
+
+					default:
+						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
+							return ((std::string*)pGlobalVarAddress)->c_str();
+						break;
+				}
+			}
+		}
+	}
+
+	// Error!
+	return "";
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// There must be a valid AngelScript engine and module instance
+	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
+		// Get the index of the global variable
+		const int nGlobalVarIndex = m_pAngelScriptModule->GetGlobalVarIndexByName(sName);
+
+		// Get the type of the global variable
+		int nGlobalVarTypeID = asTYPEID_VOID;
+		if (m_pAngelScriptModule->GetGlobalVar(nGlobalVarIndex, nullptr, &nGlobalVarTypeID, nullptr) >= 0) {
+			// Get the address of the global variable
+			void *pGlobalVarAddress = m_pAngelScriptModule->GetAddressOfGlobalVar(nGlobalVarIndex);
+			if (pGlobalVarAddress) {
+				// Process the global variable depending on it's type
+				switch (nGlobalVarTypeID) {
+					case asTYPEID_BOOL:		*((bool*)  pGlobalVarAddress) = sValue.GetBool();	break;
+					case asTYPEID_INT8:		*((int8*)  pGlobalVarAddress) = sValue.GetInt();	break;
+					case asTYPEID_INT16:	*((int16*) pGlobalVarAddress) = sValue.GetInt();	break;
+					case asTYPEID_INT32:	*((int32*) pGlobalVarAddress) = sValue.GetInt();	break;
+					case asTYPEID_INT64:	*((int64*) pGlobalVarAddress) = sValue.GetInt64();	break;
+					case asTYPEID_UINT8:	*((uint8 *)pGlobalVarAddress) = sValue.GetUInt8();	break;
+					case asTYPEID_UINT16:	*((uint16*)pGlobalVarAddress) = sValue.GetUInt16();	break;
+					case asTYPEID_UINT32:	*((uint32*)pGlobalVarAddress) = sValue.GetUInt32();	break;
+					case asTYPEID_UINT64:	*((uint64*)pGlobalVarAddress) = sValue.GetUInt64();	break;
+					case asTYPEID_FLOAT:	*((float *)pGlobalVarAddress) = sValue.GetFloat();	break;
+					case asTYPEID_DOUBLE:	*((double*)pGlobalVarAddress) = sValue.GetDouble();	break;
+
+					default:
+						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
+							*((std::string*)pGlobalVarAddress) = sValue;
+						break;
+				}
+			}
+		}
+	}
+}
+
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
 	// There must be a valid AngelScript engine and module instance
@@ -472,7 +590,7 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 			case TypeInt:		pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());												break;
 			case TypeInt16:		pAngelScriptGeneric->SetReturnWord(sReturn.GetInt());												break;
 			case TypeInt32:		pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());												break;
-			case TypeInt64:		pAngelScriptGeneric->SetReturnQWord(sReturn.GetInt());												break;	// [TODO] TypeInt64 is currently handled just as int
+			case TypeInt64:		pAngelScriptGeneric->SetReturnQWord(sReturn.GetInt64());											break;
 			case TypeInt8:		pAngelScriptGeneric->SetReturnByte(sReturn.GetInt());												break;
 			case TypeString:	pAngelScriptGeneric->SetReturnAddress(new CScriptString(sReturn.GetASCII(), sReturn.GetLength()));	break;	// AngelScript takes over the control of the allocated object
 			case TypeUInt16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetUInt16());											break;

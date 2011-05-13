@@ -184,6 +184,97 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
+bool Script::IsGlobalVariable(const String &sName)
+{
+	return (GetGlobalVariableType(sName) != TypeInvalid);
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	// Is there a V8 context?
+	if (!m_cV8Context.IsEmpty()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Get the V8 object
+		v8::Local<v8::Object> cV8Object = v8::Local<v8::Object>::Cast(m_cV8Context->Global()->Get(v8::String::New(sName)));
+		if (!cV8Object.IsEmpty()) {
+			if (cV8Object->IsBoolean())
+				return TypeBool;
+			else if (cV8Object->IsInt32())
+				return TypeInt32;
+			else if (cV8Object->IsUint32())
+				return TypeUInt32;
+			else if (cV8Object->IsNumber())
+				return TypeDouble;
+			else if (cV8Object->IsString())
+				return TypeString;
+		}
+	}
+
+	// Error!
+	return TypeInvalid;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	// Is there a V8 context?
+	if (!m_cV8Context.IsEmpty()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Get the V8 object
+		v8::Local<v8::Object> cV8Object = v8::Local<v8::Object>::Cast(m_cV8Context->Global()->Get(v8::String::New(sName)));
+		if (!cV8Object.IsEmpty())
+			return *v8::String::AsciiValue(cV8Object->ToString());
+	}
+
+	// Error!
+	return "";
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// Get the type of the global variable (because we don't want to change it's type)
+	const ETypeID nType = GetGlobalVariableType(sName);
+	if (nType != TypeInvalid) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Get the value to set
+		switch (nType) {
+			case TypeBool:
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Boolean::New(sValue.GetBool()));
+				break;
+
+			case TypeInt32:
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Int32::New(sValue.GetInt()));
+				break;
+
+			case TypeUInt32:
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Uint32::New(sValue.GetUInt32()));
+				break;
+
+			case TypeDouble:
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Number::New(sValue.GetDouble()));
+				break;
+
+			case TypeString:
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::String::New(sValue));
+				break;
+		}
+	}
+}
+
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
 	// Is there a V8 context?

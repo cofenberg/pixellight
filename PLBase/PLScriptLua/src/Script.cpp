@@ -210,6 +210,99 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+bool Script::IsGlobalVariable(const String &sName)
+{
+	bool bGlobalVariable = false;
+
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Push the global variable onto the Lua state stack
+		lua_getglobal(m_pLuaState, sName);
+
+		// Check the type of the global variable
+		bGlobalVariable = (lua_isnumber(m_pLuaState, -1) || lua_isstring(m_pLuaState, -1));
+
+		// Pop the global variable from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+	}
+
+	// Done
+	return bGlobalVariable;
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	ETypeID nType = TypeInvalid;
+
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Push the global variable onto the Lua state stack
+		lua_getglobal(m_pLuaState, sName);
+
+		// Check the type of the global variable
+		if (lua_isboolean(m_pLuaState, -1))
+			nType = TypeBool;
+		else if (lua_isnumber(m_pLuaState, -1))
+			nType = TypeDouble;
+		else if (lua_isstring(m_pLuaState, -1))
+			nType = TypeString;
+
+		// Pop the global variable from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+	}
+
+	// Done
+	return nType;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	String sValue;
+
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Push the global variable onto the Lua state stack
+		lua_getglobal(m_pLuaState, sName);
+
+		// Get the value of the global variable as string
+		sValue = lua_tostring(m_pLuaState, -1);
+
+		// Pop the global variable from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+	}
+
+	// Done
+	return sValue;
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Get the type of the global variable (because we don't want to change it's type)
+		const ETypeID nType = GetGlobalVariableType(sName);
+		if (nType != TypeInvalid) {
+			// Push the value of the global variable onto the Lua stack
+			switch (nType) {
+				case TypeBool:
+					lua_pushboolean(m_pLuaState, sValue.GetBool());
+					break;
+
+				case TypeDouble:
+					lua_pushnumber(m_pLuaState, sValue.GetDouble());
+					break;
+
+				case TypeString:
+					lua_pushstring(m_pLuaState, sValue);
+					break;
+			}
+
+			// Push the name of the global variable onto the Lua stack - this sets the global variable
+			lua_setglobal(m_pLuaState, sName);
+		}
+	}
+}
+
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
 	// Is there a Lua state?

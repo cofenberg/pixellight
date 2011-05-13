@@ -94,6 +94,18 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual bool RemoveAllDynamicFunctions();
 		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTANGELSCRIPT_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+
+		//[-------------------------------------------------------]
+		//[ Global variables                                      ]
+		//[-------------------------------------------------------]
+		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
+		PLSCRIPTANGELSCRIPT_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+
+		//[-------------------------------------------------------]
+		//[ Global function call                                  ]
+		//[-------------------------------------------------------]
 		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(int nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint8 nValue);

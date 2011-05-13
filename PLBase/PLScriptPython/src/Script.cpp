@@ -212,6 +212,68 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+bool Script::IsGlobalVariable(const String &sName)
+{
+	return m_pPythonModule ? (PyObject_HasAttrString(m_pPythonModule, sName) != 0) : false;
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	// Is there a Python module?
+	if (m_pPythonModule) {
+		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
+		if (pPythonAttribute) {
+			if (PyString_Check(pPythonAttribute))
+				return TypeString;
+			else if (PyInt_Check(pPythonAttribute))
+				return TypeInt32;
+			else if (PyFloat_Check(pPythonAttribute))
+				return TypeFloat;
+		}
+	}
+
+	// Error!
+	return TypeInvalid;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	// Is there a Python module?
+	if (m_pPythonModule) {
+		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
+		if (pPythonAttribute) {
+			if (PyString_Check(pPythonAttribute))
+				return PyString_AsString(pPythonAttribute);
+			else if (PyInt_Check(pPythonAttribute))
+				return PyInt_AsLong(pPythonAttribute);
+			else if (PyFloat_Check(pPythonAttribute))
+				return PyFloat_AsDouble(pPythonAttribute);
+		}
+	}
+
+	// Error!
+	return "";
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// Is there a Python module?
+	if (m_pPythonModule) {
+		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
+		if (pPythonAttribute) {
+			if (PyString_Check(pPythonAttribute))
+				PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(sValue));
+			else if (PyInt_Check(pPythonAttribute))
+				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(sValue.GetInt()));
+			else if (PyFloat_Check(pPythonAttribute))
+				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(sValue.GetDouble()));
+		}
+	}
+}
+
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
 	// Is there a Python module dictionary?

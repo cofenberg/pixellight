@@ -50,6 +50,10 @@ namespace PLScript {
 *    - "Language": Shader language (for example: "JavaScript")
 *    - "Formats":  File format extensions this script can load in (for example: "js")
 *
+*    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64
+*    Please note that not each script language/API may make such a detailed data type distinction.
+*    Because strings are fundamental within scripts, PLGeneral::String is supported as well.
+*
 *  @note
 *    - [TODO] Script support is currently under construction
 */
@@ -173,6 +177,59 @@ class Script : public PLCore::Object {
 		*/
 		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode) = 0;
 
+		//[-------------------------------------------------------]
+		//[ Global variables                                      ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns whether or not the given name belongs to a global variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*
+		*  @return
+		*    'true' if the given name belongs to a global variable, else 'false'
+		*/
+		virtual bool IsGlobalVariable(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Returns the type a gobal variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*
+		*  @return
+		*    The type of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
+		*/
+		virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Returns the current value of a gobal variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*
+		*  @return
+		*    The current value of the global variable
+		*/
+		virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Sets the current value of a gobal variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*  @param[in] sValue
+		*    New value of the global variable
+		*/
+		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue) = 0;
+
+		//[-------------------------------------------------------]
+		//[ Global function call                                  ]
+		//[-------------------------------------------------------]
 		// [TODO] Comment those methods when done
 		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
 		virtual void PushArgument(int nValue) = 0;

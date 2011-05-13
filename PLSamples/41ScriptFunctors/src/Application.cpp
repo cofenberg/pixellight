@@ -150,6 +150,31 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 				// Call the script function "setFactor"
 				FuncScriptPtr<void, float>(pScript, "setFactor").Call(Params<void, float>(fFactor + 1.0f));
 
+				{ // Global variable usage example
+					// Check whether or not "g_Factor" is a global variable
+					if (pScript->IsGlobalVariable("g_Factor")) {
+						// Get the type of the global variable
+						ETypeID nType = pScript->GetGlobalVariableType("g_Factor");
+
+						// Get the current value of the global variable
+						String sOriginalValue = pScript->GetGlobalVariable("g_Factor");
+						System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" is \"" + sOriginalValue + "\"\n");
+
+						// Set the current value of the global variable
+						pScript->SetGlobalVariable("g_Factor", "42");
+
+						// Get the current value of the global variable
+						String sValue = pScript->GetGlobalVariable("g_Factor");
+						if (sValue == "42")
+							System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" was changed successfully\n");
+
+						// Reset the original value
+						pScript->SetGlobalVariable("g_Factor", sOriginalValue);
+					} else {
+						System::GetInstance()->GetConsole().Print("There's no global variable with the name \"g_Factor\"\n");
+					}
+				}
+
 				{ // Call the script function "calculate"
 					// Get the typed dynamic parameters
 					Params<float, float, float> cParams(fFirst, fSecond);
