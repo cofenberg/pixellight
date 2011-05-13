@@ -39,10 +39,10 @@ using namespace PLGeneral;
 //[-------------------------------------------------------]
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
-pl_module("41ScriptFunctors")
+pl_module("42ScriptFunctors")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("PixelLight Sample 41 - Script functors")
+	pl_module_description("PixelLight Sample 42 - Script functors")
 pl_module_end
 
 
