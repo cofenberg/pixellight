@@ -49,7 +49,7 @@ using namespace PLScript;
 *  @brief
 *    Constructor
 */
-Application::Application() : PLCore::ConsoleApplication()
+Application::Application() : ConsoleApplication()
 {
 	// Set application name and title
 	SetName("42ScriptFunctors");
@@ -73,7 +73,7 @@ Application::~Application()
 *  @brief
 *    Performs a calculation by using a script
 */
-float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond)
+float Application::DoCalculation(const String &sScriptFilename, float fFirst, float fSecond)
 {
 	float fResult = 0.0f;
 
@@ -150,39 +150,6 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 				// Call the script function "SetFactor"
 				FuncScriptPtr<void, float>(pScript, "SetFactor").Call(Params<void, float>(fFactor + 1.0f));
 
-				{ // Global variable usage example
-					{ // Enumerate all global variables
-						// Get a list of all global variables
-						const Array<String> &lstGlobalVariables = pScript->GetGlobalVariables();
-						System::GetInstance()->GetConsole().Print(String("Number of global variables: ") + lstGlobalVariables.GetNumOfElements() + '\n');
-						for (uint32 i=0; i<lstGlobalVariables.GetNumOfElements(); i++)
-							System::GetInstance()->GetConsole().Print(String("- Global variable ") + i + ": \"" + lstGlobalVariables[i] + "\"\n");
-					}
-
-					// Check whether or not "g_Factor" is a global variable
-					if (pScript->IsGlobalVariable("g_Factor")) {
-						// Get the type of the global variable
-						ETypeID nType = pScript->GetGlobalVariableType("g_Factor");
-
-						// Get the current value of the global variable
-						String sOriginalValue = pScript->GetGlobalVariable("g_Factor");
-						System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" is \"" + sOriginalValue + "\"\n");
-
-						// Set the current value of the global variable
-						pScript->SetGlobalVariable("g_Factor", "42");
-
-						// Get the current value of the global variable
-						String sValue = pScript->GetGlobalVariable("g_Factor");
-						if (sValue == "42")
-							System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" was changed successfully\n");
-
-						// Reset the original value
-						pScript->SetGlobalVariable("g_Factor", sOriginalValue);
-					} else {
-						System::GetInstance()->GetConsole().Print("There's no global variable with the name \"g_Factor\"\n");
-					}
-				}
-
 				{ // Call the script function "Calculate"
 					// Get the typed dynamic parameters
 					Params<float, float, float> cParams(fFirst, fSecond);
@@ -258,20 +225,9 @@ String Application::StaticStringMethod(String sFirst)
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// Get the instance of the script manager singleton
-	ScriptManager *pScriptManager = ScriptManager::GetInstance();
-
-	{ // Get a list of supported script languages
-		const Array<String> &lstScriptLanguages = pScriptManager->GetScriptLanguages();
-		System::GetInstance()->GetConsole().Print("Supported script languages:\n");
-		for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++)
-			System::GetInstance()->GetConsole().Print("- " + lstScriptLanguages[i] + '\n');
-		System::GetInstance()->GetConsole().Print('\n');
-	}
-
 	// Run some scripts
 	DoCalculation("Data/Scripts/Functors.lua", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Functors.js", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Functors.as", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Functors.py", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.js",  42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.as",  42.0f, 5.0f);
+	DoCalculation("Data/Scripts/Functors.py",  42.0f, 5.0f);
 }
