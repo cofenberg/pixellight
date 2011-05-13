@@ -45,6 +45,7 @@ namespace PLCore {
 *    Type IDs
 */
 enum ETypeID {
+	TypeInvalid = -1,
 	TypeNull = 0,
 	TypeVoid,
 	TypeBool,

@@ -124,7 +124,7 @@ class DynFunc {
 		*    Index of the parameter to return the type ID from
 		*
 		*  @return
-		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "Type<InvalidType<int> >::TypeID" on error
+		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
 		*/
 		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
 

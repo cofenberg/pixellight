@@ -128,7 +128,7 @@ class Func : public DynFunc {
 				case 13:	return Type<T13>::TypeID;
 				case 14:	return Type<T14>::TypeID;
 				case 15:	return Type<T15>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -259,7 +259,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 				case 13:	return Type<T13>::TypeID;
 				case 14:	return Type<T14>::TypeID;
 				case 15:	return Type<T15>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -395,7 +395,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 				case 12:	return Type<T12>::TypeID;
 				case 13:	return Type<T13>::TypeID;
 				case 14:	return Type<T14>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -522,7 +522,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 				case 12:	return Type<T12>::TypeID;
 				case 13:	return Type<T13>::TypeID;
 				case 14:	return Type<T14>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -655,7 +655,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 				case 11:	return Type<T11>::TypeID;
 				case 12:	return Type<T12>::TypeID;
 				case 13:	return Type<T13>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -780,7 +780,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 				case 11:	return Type<T11>::TypeID;
 				case 12:	return Type<T12>::TypeID;
 				case 13:	return Type<T13>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -910,7 +910,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 				case 10:	return Type<T10>::TypeID;
 				case 11:	return Type<T11>::TypeID;
 				case 12:	return Type<T12>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1033,7 +1033,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 				case 10:	return Type<T10>::TypeID;
 				case 11:	return Type<T11>::TypeID;
 				case 12:	return Type<T12>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1161,7 +1161,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 				case 9:		return Type<T9> ::TypeID;
 				case 10:	return Type<T10>::TypeID;
 				case 11:	return Type<T11>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1282,7 +1282,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 				case 9:		return Type<T9> ::TypeID;
 				case 10:	return Type<T10>::TypeID;
 				case 11:	return Type<T11>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1408,7 +1408,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				case 8:		return Type<T8> ::TypeID;
 				case 9:		return Type<T9> ::TypeID;
 				case 10:	return Type<T10>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1527,7 +1527,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				case 8:		return Type<T8> ::TypeID;
 				case 9:		return Type<T9> ::TypeID;
 				case 10:	return Type<T10>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1651,7 +1651,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				case 7:		return Type<T7>::TypeID;
 				case 8:		return Type<T8>::TypeID;
 				case 9:		return Type<T9>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1766,7 +1766,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				case 7:		return Type<T7>::TypeID;
 				case 8:		return Type<T8>::TypeID;
 				case 9:		return Type<T9>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1886,7 +1886,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				case 6:		return Type<T6>::TypeID;
 				case 7:		return Type<T7>::TypeID;
 				case 8:		return Type<T8>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -1999,7 +1999,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				case 6:		return Type<T6>::TypeID;
 				case 7:		return Type<T7>::TypeID;
 				case 8:		return Type<T8>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2117,7 +2117,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				case 5:		return Type<T5>::TypeID;
 				case 6:		return Type<T6>::TypeID;
 				case 7:		return Type<T7>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2228,7 +2228,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				case 5:		return Type<T5>::TypeID;
 				case 6:		return Type<T6>::TypeID;
 				case 7:		return Type<T7>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2344,7 +2344,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				case 4:		return Type<T4>::TypeID;
 				case 5:		return Type<T5>::TypeID;
 				case 6:		return Type<T6>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2453,7 +2453,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				case 4:		return Type<T4>::TypeID;
 				case 5:		return Type<T5>::TypeID;
 				case 6:		return Type<T6>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2567,7 +2567,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				case 3:		return Type<T3>::TypeID;
 				case 4:		return Type<T4>::TypeID;
 				case 5:		return Type<T5>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2674,7 +2674,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				case 3:		return Type<T3>::TypeID;
 				case 4:		return Type<T4>::TypeID;
 				case 5:		return Type<T5>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2786,7 +2786,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 				case 2:		return Type<T2>::TypeID;
 				case 3:		return Type<T3>::TypeID;
 				case 4:		return Type<T4>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2887,7 +2887,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 				case 2:		return Type<T2>::TypeID;
 				case 3:		return Type<T3>::TypeID;
 				case 4:		return Type<T4>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -2993,7 +2993,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 				case 1:		return Type<T1>::TypeID;
 				case 2:		return Type<T2>::TypeID;
 				case 3:		return Type<T3>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3092,7 +3092,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 				case 1:		return Type<T1>::TypeID;
 				case 2:		return Type<T2>::TypeID;
 				case 3:		return Type<T3>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3196,7 +3196,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 				case 0:		return Type<T0>::TypeID;
 				case 1:		return Type<T1>::TypeID;
 				case 2:		return Type<T2>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3293,7 +3293,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 				case 0:		return Type<T0>::TypeID;
 				case 1:		return Type<T1>::TypeID;
 				case 2:		return Type<T2>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3395,7 +3395,7 @@ class Func<R, T0, T1> : public DynFunc {
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
 				case 1:		return Type<T1>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3490,7 +3490,7 @@ class Func<void, T0, T1> : public DynFunc {
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
 				case 1:		return Type<T1>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3590,7 +3590,7 @@ class Func<R, T0> : public DynFunc {
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3684,7 +3684,7 @@ class Func<void, T0> : public DynFunc {
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
-				default:	return Type<InvalidType<int> >::TypeID;
+				default:	return TypeInvalid;
 			}
 		}
 
@@ -3781,7 +3781,7 @@ class Func<R> : public DynFunc {
 
 		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
 		{
-			return Type<InvalidType<int> >::TypeID;
+			return TypeInvalid;
 		}
 
 		virtual void Call(DynParams &cParams)
@@ -3861,7 +3861,7 @@ class Func<void> : public DynFunc {
 
 		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
 		{
-			return Type<InvalidType<int> >::TypeID;
+			return TypeInvalid;
 		}
 
 		virtual void Call(DynParams &cParams)

@@ -1,3 +1,9 @@
+>> 13.05.2011
+[CO]
+- "PLCoreDefinitions.h": Added "TypeInvalid"
+
+
+
 >> 12.05.2011
 [CO]
 - Added "GetNumOfParameters()" and "GetParameterTypeID()" to "DynFunc" to make it possible to request some more information about the dynamic function
