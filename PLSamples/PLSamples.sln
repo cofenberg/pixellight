@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "42ScriptFunctors", "42Scrip
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "41ScriptGlobalVariables", "41ScriptGlobalVariables\41ScriptGlobalVariables.vcxproj", "{96AACFEF-4579-4252-A28F-258A77E4C3DB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "43ScriptBindings", "43ScriptBindings\43ScriptBindings.vcxproj", "{F9060FDE-C491-4FFC-AF78-FC0F557D635C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -65,6 +67,12 @@ Global
 		{96AACFEF-4579-4252-A28F-258A77E4C3DB}.Release|Win32.ActiveCfg = Release|Win32
 		{96AACFEF-4579-4252-A28F-258A77E4C3DB}.Release|Win32.Build.0 = Release|Win32
 		{96AACFEF-4579-4252-A28F-258A77E4C3DB}.Release|x64.ActiveCfg = Release|Win32
+		{F9060FDE-C491-4FFC-AF78-FC0F557D635C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F9060FDE-C491-4FFC-AF78-FC0F557D635C}.Debug|Win32.Build.0 = Debug|Win32
+		{F9060FDE-C491-4FFC-AF78-FC0F557D635C}.Debug|x64.ActiveCfg = Debug|Win32
+		{F9060FDE-C491-4FFC-AF78-FC0F557D635C}.Release|Win32.ActiveCfg = Release|Win32
+		{F9060FDE-C491-4FFC-AF78-FC0F557D635C}.Release|Win32.Build.0 = Release|Win32
+		{F9060FDE-C491-4FFC-AF78-FC0F557D635C}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -50,6 +50,10 @@ namespace PLScript {
 *    derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class
 *    instance to a script - but usually it's useful to have such an abstract base class.
 *
+*    Usually the RTTI script binding class instance methods will be available to the script as simple
+*    global functions. So, this has nothing to do with using OOP within scripts. It's just adding global
+*    functions to scripts.
+*
 *    Each script binding should have the followig property:
 *    - "Namespace": Namespace to use inside scripts (for example: "PL.Log")
 */

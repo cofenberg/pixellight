@@ -2,6 +2,7 @@
 [CO]
 - Renamed "41ScriptFunctors" into "42ScriptFunctors" (no, the reason for this rename wasn't the 42 itself)
 - Added "41ScriptGlobalVariables"
+- Added "43ScriptBindings"
 
 
 
