@@ -64,7 +64,7 @@ class Application : public PLCore::ConsoleApplication {
 	private:
 		/**
 		*  @brief
-		*     Calls the hello world script
+		*    Calls the hello world script
 		*
 		*  @param[in] sScriptFilename
 		*    Filename of the script to use
@@ -73,7 +73,7 @@ class Application : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual ConsoleApplication functions          ]
+	//[ Private virtual PLCore::ConsoleApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void Main();

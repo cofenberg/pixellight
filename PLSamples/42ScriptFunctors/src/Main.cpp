@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
- *      PixelLight Sample 40 - Script
- *      Simple 'Hello Script World'-Application using the PixelLight application framework
+ *      PixelLight Sample 42 - Script functors
+ *      Simple 'C++ calls script, script calls C++'-Application using the PixelLight application framework
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *

@@ -47,7 +47,7 @@ using namespace PLScript;
 *  @brief
 *    Constructor
 */
-Application::Application() : PLCore::ConsoleApplication()
+Application::Application() : ConsoleApplication()
 {
 	// Set application name and title
 	SetName("40ScriptHelloWorld");
@@ -71,7 +71,7 @@ Application::~Application()
 *  @brief
 *    Calls the hello world script
 */
-void Application::SayHello(const PLGeneral::String &sScriptFilename)
+void Application::SayHello(const String &sScriptFilename)
 {
 	// Create the script instance
 	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
@@ -86,15 +86,12 @@ void Application::SayHello(const PLGeneral::String &sScriptFilename)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual ConsoleApplication functions          ]
+//[ Private virtual PLCore::ConsoleApplication functions  ]
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// Get the instance of the script manager singleton
-	ScriptManager *pScriptManager = ScriptManager::GetInstance();
-
 	{ // Get a list of supported script languages
-		const Array<String> &lstScriptLanguages = pScriptManager->GetScriptLanguages();
+		const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
 		System::GetInstance()->GetConsole().Print("Supported script languages:\n");
 		for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++)
 			System::GetInstance()->GetConsole().Print("- " + lstScriptLanguages[i] + '\n');

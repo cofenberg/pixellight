@@ -46,7 +46,7 @@ using namespace PLScript;
 *  @brief
 *    Constructor
 */
-Application::Application() : PLCore::ConsoleApplication()
+Application::Application() : ConsoleApplication()
 {
 	// Set application name and title
 	SetName("41ScriptGlobalVariables");
