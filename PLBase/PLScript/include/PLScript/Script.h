@@ -47,8 +47,14 @@ namespace PLScript {
 *
 *  @remarks
 *    Each script should have the followig properties:
-*    - "Language": Shader language (for example: "JavaScript")
-*    - "Formats":  File format extensions this script can load in (for example: "js")
+*    - "Language": Shader language (for example: "JavaScript" or "Lua")
+*    - "Formats":  File format extensions this script can load in (for example: "js" or "lua")
+*
+*    Supported script features:
+*    - Global variables
+*    - Global functions
+*      - C++ -> script
+*      - Script -> C++
 *
 *    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64
 *    Please note that not each script language/API may make such a detailed data type distinction.
@@ -237,24 +243,82 @@ class Script : public PLCore::Object {
 		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue) = 0;
 
 		//[-------------------------------------------------------]
-		//[ Global function call                                  ]
+		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		// [TODO] Comment those methods when done
+		/**
+		*  @brief
+		*    Starts a function call
+		*
+		*  @param[in] sFunctionName
+		*    Name of the function to call
+		*  @param[in] sFunctionSignature
+		*    Signature of the function to call (e.g. "void(int,float)")
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*/
 		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
-		virtual void PushArgument(int nValue) = 0;
+
+		/**
+		*  @brief
+		*    Pushes an argument required for the current function call
+		*
+		*  @param[in] nValue
+		*    Argument value
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*/
+		virtual void PushArgument(bool bValue) = 0;
+		virtual void PushArgument(float fValue) = 0;
+		virtual void PushArgument(double fValue) = 0;
+		virtual void PushArgument(PLGeneral::int8 nValue) = 0;
+		virtual void PushArgument(PLGeneral::int16 nValue) = 0;
+		virtual void PushArgument(PLGeneral::int32 nValue) = 0;
+		virtual void PushArgument(PLGeneral::int64 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint8 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint16 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
-		virtual void PushArgument(float fValue) = 0;
-		virtual void PushArgument(double fValue) = 0;
+		virtual void PushArgument(PLGeneral::uint64 nValue) = 0;
 		virtual void PushArgument(const PLGeneral::String &sString) = 0;
+
+		/**
+		*  @brief
+		*    Ends a function call
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*    - This actually performs the prepared function call
+		*/
 		virtual bool EndCall() = 0;
-		virtual void GetReturn(int &nValue) = 0;
+
+		/**
+		*  @brief
+		*    Returns the result of a function call
+		*
+		*  @param[out] nValue
+		*    Receives the result of a function call
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*/
+		virtual void GetReturn(bool &bValue) = 0;
+		virtual void GetReturn(float &fValue) = 0;
+		virtual void GetReturn(double &fValue) = 0;
+		virtual void GetReturn(PLGeneral::int8 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::int16 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::int32 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::int64 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint8 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint16 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint32 &nValue) = 0;
-		virtual void GetReturn(float &fValue) = 0;
-		virtual void GetReturn(double &fValue) = 0;
+		virtual void GetReturn(PLGeneral::uint64 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::String &sValue) = 0;
 
 

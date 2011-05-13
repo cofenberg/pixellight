@@ -28,7 +28,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <V8/v8.h>
+#include <PLGeneral/PLGeneral.h>
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4127) // "conditional expression is constant" (within "v8.h")
+	#include <V8/v8.h>
+PL_WARNING_POP
 #include <PLScript/Script.h>
 #include "PLScriptV8/PLScriptV8.h"
 
@@ -97,23 +101,33 @@ class Script : public PLScript::Script {
 		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue);
 
 		//[-------------------------------------------------------]
-		//[ Global function call                                  ]
+		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
 		PLSCRIPTV8_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
-		PLSCRIPTV8_API virtual void PushArgument(int nValue);
+		PLSCRIPTV8_API virtual void PushArgument(bool bValue);
+		PLSCRIPTV8_API virtual void PushArgument(float fValue);
+		PLSCRIPTV8_API virtual void PushArgument(double fValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int8 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int16 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int32 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int64 nValue);
 		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint8 nValue);
 		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint16 nValue);
 		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(float fValue);
-		PLSCRIPTV8_API virtual void PushArgument(double fValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTV8_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTV8_API virtual bool EndCall();
-		PLSCRIPTV8_API virtual void GetReturn(int &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(bool &bValue);
+		PLSCRIPTV8_API virtual void GetReturn(float &fValue);
+		PLSCRIPTV8_API virtual void GetReturn(double &fValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int8 &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int16 &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int32 &nValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int64 &nValue);
 		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint8 &nValue);
 		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint16 &nValue);
 		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(float &fValue);
-		PLSCRIPTV8_API virtual void GetReturn(double &fValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint64 &nValue);
 		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::String &sValue);
 
 

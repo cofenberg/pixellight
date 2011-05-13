@@ -105,23 +105,33 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue);
 
 		//[-------------------------------------------------------]
-		//[ Global function call                                  ]
+		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
 		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(int nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(bool bValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int64 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint8 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint16 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(int &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(bool &bValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float &fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double &fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int8 &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int16 &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int32 &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int64 &nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint8 &nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint16 &nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float &fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double &fValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint64 &nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::String &sValue);
 
 

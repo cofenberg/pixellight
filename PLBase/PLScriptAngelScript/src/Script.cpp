@@ -24,7 +24,11 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <AngelScript/angelscript.h>
-#include <../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring.h>
+#include <PLGeneral/PLGeneral.h>
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4530) // "C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
+	#include <../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring.h>
+PL_WARNING_POP
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptAngelScript/AngelScriptContext.h"
 #include "PLScriptAngelScript/Script.h"
@@ -353,17 +357,17 @@ void Script::SetGlobalVariable(const String &sName, const String &sValue)
 			if (pGlobalVarAddress) {
 				// Process the global variable depending on it's type
 				switch (nGlobalVarTypeID) {
-					case asTYPEID_BOOL:		*((bool*)  pGlobalVarAddress) = sValue.GetBool();	break;
-					case asTYPEID_INT8:		*((int8*)  pGlobalVarAddress) = sValue.GetInt();	break;
-					case asTYPEID_INT16:	*((int16*) pGlobalVarAddress) = sValue.GetInt();	break;
-					case asTYPEID_INT32:	*((int32*) pGlobalVarAddress) = sValue.GetInt();	break;
-					case asTYPEID_INT64:	*((int64*) pGlobalVarAddress) = sValue.GetInt64();	break;
-					case asTYPEID_UINT8:	*((uint8 *)pGlobalVarAddress) = sValue.GetUInt8();	break;
-					case asTYPEID_UINT16:	*((uint16*)pGlobalVarAddress) = sValue.GetUInt16();	break;
-					case asTYPEID_UINT32:	*((uint32*)pGlobalVarAddress) = sValue.GetUInt32();	break;
-					case asTYPEID_UINT64:	*((uint64*)pGlobalVarAddress) = sValue.GetUInt64();	break;
-					case asTYPEID_FLOAT:	*((float *)pGlobalVarAddress) = sValue.GetFloat();	break;
-					case asTYPEID_DOUBLE:	*((double*)pGlobalVarAddress) = sValue.GetDouble();	break;
+					case asTYPEID_BOOL:		*((bool*)  pGlobalVarAddress) = sValue.GetBool();						break;
+					case asTYPEID_INT8:		*((int8*)  pGlobalVarAddress) = static_cast<int8>(sValue.GetInt());		break;
+					case asTYPEID_INT16:	*((int16*) pGlobalVarAddress) = static_cast<int16>(sValue.GetInt());	break;
+					case asTYPEID_INT32:	*((int32*) pGlobalVarAddress) = sValue.GetInt();						break;
+					case asTYPEID_INT64:	*((int64*) pGlobalVarAddress) = sValue.GetInt64();						break;
+					case asTYPEID_UINT8:	*((uint8 *)pGlobalVarAddress) = sValue.GetUInt8();						break;
+					case asTYPEID_UINT16:	*((uint16*)pGlobalVarAddress) = sValue.GetUInt16();						break;
+					case asTYPEID_UINT32:	*((uint32*)pGlobalVarAddress) = sValue.GetUInt32();						break;
+					case asTYPEID_UINT64:	*((uint64*)pGlobalVarAddress) = sValue.GetUInt64();						break;
+					case asTYPEID_FLOAT:	*((float *)pGlobalVarAddress) = sValue.GetFloat();						break;
+					case asTYPEID_DOUBLE:	*((double*)pGlobalVarAddress) = sValue.GetDouble();						break;
 
 					default:
 						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
@@ -430,10 +434,46 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
-void Script::PushArgument(int nValue)
+void Script::PushArgument(bool bValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgByte(m_nCurrentArgument++, bValue);
+}
+
+void Script::PushArgument(float fValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgFloat(m_nCurrentArgument++, fValue);
+}
+
+void Script::PushArgument(double fValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgDouble(m_nCurrentArgument++, fValue);
+}
+
+void Script::PushArgument(int8 nValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgByte(m_nCurrentArgument++, nValue);
+}
+
+void Script::PushArgument(int16 nValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgWord(m_nCurrentArgument++, nValue);
+}
+
+void Script::PushArgument(int32 nValue)
 {
 	if (m_pAngelScriptContext)
 		m_pAngelScriptContext->SetArgDWord(m_nCurrentArgument++, nValue);
+}
+
+void Script::PushArgument(int64 nValue)
+{
+	if (m_pAngelScriptContext)
+		m_pAngelScriptContext->SetArgQWord(m_nCurrentArgument++, nValue);
 }
 
 void Script::PushArgument(uint8 nValue)
@@ -454,16 +494,10 @@ void Script::PushArgument(uint32 nValue)
 		m_pAngelScriptContext->SetArgDWord(m_nCurrentArgument++, nValue);
 }
 
-void Script::PushArgument(float fValue)
+void Script::PushArgument(uint64 nValue)
 {
 	if (m_pAngelScriptContext)
-		m_pAngelScriptContext->SetArgFloat(m_nCurrentArgument++, fValue);
-}
-
-void Script::PushArgument(double fValue)
-{
-	if (m_pAngelScriptContext)
-		m_pAngelScriptContext->SetArgDouble(m_nCurrentArgument++, fValue);
+		m_pAngelScriptContext->SetArgQWord(m_nCurrentArgument++, nValue);
 }
 
 void Script::PushArgument(const String &sString)
@@ -510,9 +544,39 @@ bool Script::EndCall()
 	return false;
 }
 
-void Script::GetReturn(int &nValue)
+void Script::GetReturn(bool &bValue)
+{
+	bValue = m_pAngelScriptContext ? (m_pAngelScriptContext->GetReturnByte() != 0) : false;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnFloat() : 0;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDouble() : 0;
+}
+
+void Script::GetReturn(int8 &nValue)
+{
+	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnByte() : 0;
+}
+
+void Script::GetReturn(int16 &nValue)
+{
+	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnWord() : 0;
+}
+
+void Script::GetReturn(int32 &nValue)
 {
 	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
+}
+
+void Script::GetReturn(int64 &nValue)
+{
+	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnQWord() : 0;
 }
 
 void Script::GetReturn(uint8 &nValue)
@@ -530,14 +594,9 @@ void Script::GetReturn(uint32 &nValue)
 	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(uint64 &nValue)
 {
-	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnFloat() : 0;
-}
-
-void Script::GetReturn(double &fValue)
-{
-	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDouble() : 0;
+	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnQWord() : 0;
 }
 
 void Script::GetReturn(String &sValue)
@@ -608,10 +667,10 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 			case TypeDouble:	pAngelScriptGeneric->SetReturnDouble(sReturn.GetDouble());											break;
 			case TypeFloat:		pAngelScriptGeneric->SetReturnFloat(sReturn.GetFloat());											break;
 			case TypeInt:		pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());												break;
-			case TypeInt16:		pAngelScriptGeneric->SetReturnWord(sReturn.GetInt());												break;
+			case TypeInt16:		pAngelScriptGeneric->SetReturnWord(static_cast<asWORD>(sReturn.GetInt()));							break;
 			case TypeInt32:		pAngelScriptGeneric->SetReturnDWord(sReturn.GetInt());												break;
 			case TypeInt64:		pAngelScriptGeneric->SetReturnQWord(sReturn.GetInt64());											break;
-			case TypeInt8:		pAngelScriptGeneric->SetReturnByte(sReturn.GetInt());												break;
+			case TypeInt8:		pAngelScriptGeneric->SetReturnByte(static_cast<asBYTE>(sReturn.GetInt()));							break;
 			case TypeString:	pAngelScriptGeneric->SetReturnAddress(new CScriptString(sReturn.GetASCII(), sReturn.GetLength()));	break;	// AngelScript takes over the control of the allocated object
 			case TypeUInt16:	pAngelScriptGeneric->SetReturnWord(sReturn.GetUInt16());											break;
 			case TypeUInt32:	pAngelScriptGeneric->SetReturnDWord(sReturn.GetUInt32());											break;

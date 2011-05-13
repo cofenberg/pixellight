@@ -12,6 +12,7 @@ function scriptFunction(a)
 end
 
 function callCpp(a)
+	-- "FirstNamespace.SecondNamespace.cppFunction(a)" is an equivalent for "FirstNamespace["SecondNamespace"]["cppFunction"](a)"
 	return FirstNamespace.SecondNamespace.cppFunction(a) + cppMethod(a) + cppScriptFunction(a)
 end
 

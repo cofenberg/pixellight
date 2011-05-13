@@ -369,11 +369,66 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
-void Script::PushArgument(int nValue)
+void Script::PushArgument(bool bValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushboolean(m_pLuaState, bValue);
+		m_nCurrentArgument++;
+	}
+}
+
+void Script::PushArgument(float fValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushnumber(m_pLuaState, fValue);
+		m_nCurrentArgument++;
+	}
+}
+
+void Script::PushArgument(double fValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushnumber(m_pLuaState, fValue);
+		m_nCurrentArgument++;
+	}
+}
+
+void Script::PushArgument(int8 nValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
 		lua_pushinteger(m_pLuaState, nValue);
+		m_nCurrentArgument++;
+	}
+}
+
+void Script::PushArgument(int16 nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushinteger(m_pLuaState, nValue);
+		m_nCurrentArgument++;
+	}
+}
+
+void Script::PushArgument(int32 nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		lua_pushinteger(m_pLuaState, nValue);
+		m_nCurrentArgument++;
+	}
+}
+
+void Script::PushArgument(int64 nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// [TODO] There's no int64 support in Lua (?)
+		lua_pushinteger(m_pLuaState, static_cast<lua_Integer>(nValue));
 		m_nCurrentArgument++;
 	}
 }
@@ -405,20 +460,12 @@ void Script::PushArgument(uint32 nValue)
 	}
 }
 
-void Script::PushArgument(float fValue)
+void Script::PushArgument(uint64 nValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		lua_pushnumber(m_pLuaState, fValue);
-		m_nCurrentArgument++;
-	}
-}
-
-void Script::PushArgument(double fValue)
-{
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		lua_pushnumber(m_pLuaState, fValue);
+		// [TODO] There's no uint64 support in Lua (?)
+		lua_pushinteger(m_pLuaState, static_cast<lua_Integer>(nValue));
 		m_nCurrentArgument++;
 	}
 }
@@ -468,12 +515,97 @@ bool Script::EndCall()
 	return false;
 }
 
-void Script::GetReturn(int &nValue)
+void Script::GetReturn(bool &bValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isboolean(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a boolean");
+		bValue = (lua_toboolean(m_pLuaState, -1) != 0);
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		bValue = false;
+	}
+}
+
+void Script::GetReturn(float &fValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
 		if (!lua_isnumber(m_pLuaState, -1))
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		fValue = static_cast<float>(lua_tonumber(m_pLuaState, -1));
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		fValue = 0.0f;
+	}
+}
+
+void Script::GetReturn(double &fValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isnumber(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		fValue = lua_tonumber(m_pLuaState, -1);
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		fValue = 0.0;
+	}
+}
+
+void Script::GetReturn(int8 &nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isnumber(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		nValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		nValue = 0;
+	}
+}
+
+void Script::GetReturn(int16 &nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isnumber(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		nValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		nValue = 0;
+	}
+}
+
+void Script::GetReturn(int32 &nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isnumber(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		nValue = lua_tointeger(m_pLuaState, -1);
+		lua_pop(m_pLuaState, 1);
+	} else {
+		// Error!
+		nValue = 0;
+	}
+}
+
+void Script::GetReturn(int64 &nValue)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		if (!lua_isnumber(m_pLuaState, -1))
+			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
+		// [TODO] There's no int64 support in Lua (?)
 		nValue = lua_tointeger(m_pLuaState, -1);
 		lua_pop(m_pLuaState, 1);
 	} else {
@@ -524,31 +656,18 @@ void Script::GetReturn(uint32 &nValue)
 	}
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(uint64 &nValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
 		if (!lua_isnumber(m_pLuaState, -1))
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		fValue = static_cast<float>(lua_tonumber(m_pLuaState, -1));
+		// [TODO] There's no uint64 support in Lua (?)
+		nValue = lua_tointeger(m_pLuaState, -1);
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		fValue = 0.0f;
-	}
-}
-
-void Script::GetReturn(double &fValue)
-{
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
-			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		fValue = lua_tonumber(m_pLuaState, -1);
-		lua_pop(m_pLuaState, 1);
-	} else {
-		// Error!
-		fValue = 0.0;
+		nValue = 0;
 	}
 }
 
@@ -602,20 +721,20 @@ int Script::LuaFunctionCallback(lua_State *pLuaState)
 	if (sReturn.GetLength()) {
 		// Process the functor return
 		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
-			case TypeBool:		lua_pushinteger(pLuaState, sReturn.GetBool());		break;
-			case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());	break;
-			case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());		break;
-			case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
-			case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
-			case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
-			case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;	// [TODO] TypeInt64 is currently handled just as long
-			case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());		break;
-			case TypeString:	lua_pushstring (pLuaState, sReturn);				break;
-			case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());	break;
-			case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());	break;
-			case TypeUInt64:	lua_pushinteger(pLuaState, sReturn.GetUInt64());	break;	// [TODO] TypeUInt64 is currently handled just as long
-			case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());		break;
-			default:			lua_pushstring (pLuaState, sReturn);				break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
+			case TypeBool:		lua_pushboolean(pLuaState, sReturn.GetBool());								break;
+			case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());							break;
+			case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());								break;
+			case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
+			case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
+			case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
+			case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;	// [TODO] TypeInt64 is currently handled just as long
+			case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
+			case TypeString:	lua_pushstring (pLuaState, sReturn);										break;
+			case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());							break;
+			case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());							break;
+			case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(sReturn.GetUInt64()));	break;	// [TODO] TypeUInt64 is currently handled just as long
+			case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());								break;
+			default:			lua_pushstring (pLuaState, sReturn);										break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
 		}
 
 		// The function returns one argument

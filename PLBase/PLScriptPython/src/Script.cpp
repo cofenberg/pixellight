@@ -30,6 +30,13 @@
 
 
 //[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4127) // "conditional expression is constant" (within "Py_XDECREF()" and "Py_DECREF()")
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
@@ -340,7 +347,43 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
-void Script::PushArgument(int nValue)
+void Script::PushArgument(bool bValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(bValue));
+	}
+}
+
+void Script::PushArgument(float fValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
+	}
+}
+
+void Script::PushArgument(double fValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
+	}
+}
+
+void Script::PushArgument(int8 nValue)
 {
 	// Is there a current Python function?
 	if (m_pPythonFunction) {
@@ -349,6 +392,43 @@ void Script::PushArgument(int nValue)
 
 		// Set the current tuple item
 		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(nValue));
+	}
+}
+
+void Script::PushArgument(int16 nValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(nValue));
+	}
+}
+
+void Script::PushArgument(int32 nValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(nValue));
+	}
+}
+
+void Script::PushArgument(int64 nValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		// [TODO] There's no int64 support in Python (?)
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(static_cast<long>(nValue)));
 	}
 }
 
@@ -388,7 +468,7 @@ void Script::PushArgument(uint32 nValue)
 	}
 }
 
-void Script::PushArgument(float fValue)
+void Script::PushArgument(uint64 nValue)
 {
 	// Is there a current Python function?
 	if (m_pPythonFunction) {
@@ -396,19 +476,8 @@ void Script::PushArgument(float fValue)
 		IncreaseNumOfArguments();
 
 		// Set the current tuple item
-		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
-	}
-}
-
-void Script::PushArgument(double fValue)
-{
-	// Is there a current Python function?
-	if (m_pPythonFunction) {
-		// Increases the number of arguments
-		IncreaseNumOfArguments();
-
-		// Set the current tuple item
-		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
+		// [TODO] There's no uint64 support in Python (?)
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(static_cast<long>(nValue)));
 	}
 }
 
@@ -451,8 +520,39 @@ bool Script::EndCall()
 	return true;
 }
 
-void Script::GetReturn(int &nValue)
+void Script::GetReturn(bool &bValue)
 {
+	bValue = m_pPythonFunctionResult ? (PyInt_AsLong(m_pPythonFunctionResult) != 0): false;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	fValue = m_pPythonFunctionResult ? static_cast<float>(PyFloat_AsDouble(m_pPythonFunctionResult)) : 0.0f;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	fValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
+}
+
+void Script::GetReturn(int8 &nValue)
+{
+	nValue = m_pPythonFunctionResult ? static_cast<uint8>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+}
+
+void Script::GetReturn(int16 &nValue)
+{
+	nValue = m_pPythonFunctionResult ? static_cast<uint16>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+}
+
+void Script::GetReturn(int32 &nValue)
+{
+	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
+}
+
+void Script::GetReturn(int64 &nValue)
+{
+	// [TODO] There's no int64 support in Python (?)
 	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
@@ -471,14 +571,10 @@ void Script::GetReturn(uint32 &nValue)
 	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(uint64 &nValue)
 {
-	fValue = m_pPythonFunctionResult ? static_cast<float>(PyFloat_AsDouble(m_pPythonFunctionResult)) : 0.0f;
-}
-
-void Script::GetReturn(double &fValue)
-{
-	fValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
+	// [TODO] There's no uint64 support in Python (?)
+	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
 void Script::GetReturn(String &sValue)
@@ -535,7 +631,7 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 			case TypeString:	return PyString_FromString(sReturn);
 			case TypeUInt16:	return PyInt_FromLong	  (sReturn.GetUInt16());
 			case TypeUInt32:	return PyInt_FromLong	  (sReturn.GetUInt32());
-			case TypeUInt64:	return PyInt_FromLong	  (sReturn.GetUInt64());	// [TODO] TypeUInt64 is currently handled just as long
+			case TypeUInt64:	return PyInt_FromLong	  (static_cast<long>(sReturn.GetUInt64()));	// [TODO] TypeUInt64 is currently handled just as long
 			case TypeUInt8:		return PyInt_FromLong	  (sReturn.GetUInt8());
 			default:			return Py_None;// TypeVoid, TypeNull, TypeObjectPtr, -1
 		}
@@ -753,3 +849,9 @@ bool Script::AddPythonFunction(PyObject *pPythonDictionary, const String &sFunct
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScriptPython
+
+
+//[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_POP

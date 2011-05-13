@@ -340,7 +340,52 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
-void Script::PushArgument(int nValue)
+void Script::PushArgument(bool bValue)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Boolean::New(bValue)));
+	}
+}
+
+void Script::PushArgument(float fValue)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Number::New(fValue)));
+	}
+}
+
+void Script::PushArgument(double fValue)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Number::New(fValue)));
+	}
+}
+
+void Script::PushArgument(int8 nValue)
 {
 	// Is there currently a function to feed with arguments?
 	if (m_sCurrentFunction.GetLength()) {
@@ -352,6 +397,52 @@ void Script::PushArgument(int nValue)
 
 		// Add argument
 		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Integer::New(nValue)));
+	}
+}
+
+void Script::PushArgument(int16 nValue)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Integer::New(nValue)));
+	}
+}
+
+void Script::PushArgument(int32 nValue)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Int32::New(nValue)));
+	}
+}
+
+void Script::PushArgument(int64 nValue)
+{
+	// Is there currently a function to feed with arguments?
+	if (m_sCurrentFunction.GetLength()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Add argument
+		// [TODO] There's no int64 support in v8 (?)
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Int32::New(static_cast<int32_t>(nValue))));
 	}
 }
 
@@ -400,7 +491,7 @@ void Script::PushArgument(uint32 nValue)
 	}
 }
 
-void Script::PushArgument(float fValue)
+void Script::PushArgument(uint64 nValue)
 {
 	// Is there currently a function to feed with arguments?
 	if (m_sCurrentFunction.GetLength()) {
@@ -411,22 +502,8 @@ void Script::PushArgument(float fValue)
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Add argument
-		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Number::New(fValue)));
-	}
-}
-
-void Script::PushArgument(double fValue)
-{
-	// Is there currently a function to feed with arguments?
-	if (m_sCurrentFunction.GetLength()) {
-		// Create a stack-allocated handle scope
-		v8::HandleScope cHandleScope;
-
-		// Enter our V8 context
-		v8::Context::Scope cContextScope(m_cV8Context);
-
-		// Add argument
-		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Number::New(fValue)));
+		// [TODO] There's no uint64 support in v8 (?)
+		m_lstV8Arguments.Add(v8::Persistent<v8::Value>::New(v8::Uint32::New(static_cast<int32_t>(nValue))));
 	}
 }
 
@@ -478,9 +555,40 @@ bool Script::EndCall()
 	return false;
 }
 
-void Script::GetReturn(int &nValue)
+void Script::GetReturn(bool &bValue)
+{
+	bValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsBoolean()) ? m_cV8CurrentResult->BooleanValue() : false;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? m_cV8CurrentResult->NumberValue() : 0.0;
+}
+
+void Script::GetReturn(int8 &nValue)
 {
 	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
+}
+
+void Script::GetReturn(int16 &nValue)
+{
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
+}
+
+void Script::GetReturn(int32 &nValue)
+{
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
+}
+
+void Script::GetReturn(int64 &nValue)
+{
+	// [TODO] There's no int64 support in v8 (?)
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
 void Script::GetReturn(uint8 &nValue)
@@ -498,14 +606,10 @@ void Script::GetReturn(uint32 &nValue)
 	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(uint64 &nValue)
 {
-	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
-}
-
-void Script::GetReturn(double &fValue)
-{
-	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? m_cV8CurrentResult->NumberValue() : 0.0;
+	// [TODO] There's no uint64 support in v8 (?)
+	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
 void Script::GetReturn(String &sValue)

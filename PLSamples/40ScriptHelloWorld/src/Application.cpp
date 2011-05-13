@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/System/System.h>
+#include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLScript/Script.h>
 #include <PLScript/FuncScriptPtr.h>
