@@ -53,8 +53,8 @@ namespace PLScript {
 *    Supported script features:
 *    - Global variables
 *    - Global functions
-*      - C++ -> script
-*      - Script -> C++
+*      - C++ calls script
+*      - Script calls C++ (with namespace support)
 *
 *    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64
 *    Please note that not each script language/API may make such a detailed data type distinction.
@@ -114,6 +114,9 @@ class Script : public PLCore::Object {
 		*    RTTI class instance, must stay valid as long as this script lives
 		*  @param[in] sNamespace
 		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
+		*
+		*  @note
+		*    - The added RTTI class instance methods will be available to the script as simple global functions
 		*/
 		PLSCRIPT_API void AddBinding(PLCore::Object &cObject, const PLGeneral::String &sNamespace = "");
 
@@ -123,6 +126,9 @@ class Script : public PLCore::Object {
 		*
 		*  @remarks
 		*    Iterates over all available script binding instances and adds them to this script.
+		*
+		*  @note
+		*    - The added RTTI class instance methods will be available to the script as simple global functions
 		*/
 		PLSCRIPT_API void AddBindings();
 
@@ -131,12 +137,15 @@ class Script : public PLCore::Object {
 	//[ Public virtual Script functions                       ]
 	//[-------------------------------------------------------]
 	public:
+		//[-------------------------------------------------------]
+		//[ Global functions                                      ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Adds a dynamic function to the script
+		*    Adds a global function to the script
 		*
 		*  @param[in] sFunction
-		*    Function name used inside the script to call the dynamic function
+		*    Function name used inside the script to call the global function
 		*  @param[in] cDynFunc
 		*    Dynamic function
 		*  @param[in] sNamespace
@@ -148,11 +157,11 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
-		*    Removes all dynamic functions from the script
+		*    Removes all global functions from the script
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe a script is already set?)
@@ -160,8 +169,11 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool RemoveAllDynamicFunctions() = 0;
+		virtual bool RemoveAllGlobalFunctions() = 0;
 
+		//[-------------------------------------------------------]
+		//[ Script source code                                    ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Returns the script source code

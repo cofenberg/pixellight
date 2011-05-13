@@ -86,8 +86,15 @@ class Script : public PLScript::Script {
 	//[ Public virtual PLScript::Script functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPTV8_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTV8_API virtual bool RemoveAllDynamicFunctions();
+		//[-------------------------------------------------------]
+		//[ Global functions                                      ]
+		//[-------------------------------------------------------]
+		PLSCRIPTV8_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual bool RemoveAllGlobalFunctions();
+
+		//[-------------------------------------------------------]
+		//[ Script source code                                    ]
+		//[-------------------------------------------------------]
 		PLSCRIPTV8_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTV8_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
 
@@ -154,10 +161,10 @@ class Script : public PLScript::Script {
 	private:
 		/**
 		*  @brief
-		*    A dynamic function
+		*    A global function
 		*/
-		struct DynamicFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+		struct GlobalFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
 			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
 			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
@@ -253,7 +260,7 @@ class Script : public PLScript::Script {
 		PLGeneral::String							 m_sCurrentFunction;	/**< Name of the current function */
 		v8::Persistent<v8::Value>					 m_cV8CurrentResult;	/**< Current V8 function */
 		PLGeneral::Array<v8::Persistent<v8::Value> > m_lstV8Arguments;		/**< Current V8 arguments */
-		PLGeneral::Array<DynamicFunction*>			 m_lstDynamicFunctions;	/**< List of dynamic functions */
+		PLGeneral::Array<GlobalFunction*>			 m_lstGlobalFunctions;	/**< List of global functions */
 		PLGeneral::Array<PLGeneral::String>			 m_lstGlobalVariables;	/**< List of all global variables */
 
 

@@ -82,8 +82,15 @@ class Script : public PLScript::Script {
 	//[ Public virtual PLScript::Script functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPTPYTHON_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual bool RemoveAllDynamicFunctions();
+		//[-------------------------------------------------------]
+		//[ Global functions                                      ]
+		//[-------------------------------------------------------]
+		PLSCRIPTPYTHON_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual bool RemoveAllGlobalFunctions();
+
+		//[-------------------------------------------------------]
+		//[ Script source code                                    ]
+		//[-------------------------------------------------------]
 		PLSCRIPTPYTHON_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTPYTHON_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
 
@@ -241,10 +248,10 @@ class Script : public PLScript::Script {
 	private:
 		/**
 		*  @brief
-		*    A dynamic function
+		*    A global function
 		*/
-		struct DynamicFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+		struct GlobalFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
 			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
 			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
@@ -261,7 +268,7 @@ class Script : public PLScript::Script {
 		PyObject						   *m_pPythonTuple;				/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
 		PLGeneral::uint32					m_nCurrentArgument;			/**< Current argument, used during function call */
 		PyObject						   *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
-		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;		/**< List of dynamic functions */
+		PLGeneral::Array<GlobalFunction*>   m_lstGlobalFunctions;		/**< List of global functions */
 		PyMethodDef						   *m_pPythonTableOfFunctions;	/**< Python table of functions, can be a null pointer */
 		PLGeneral::Array<PLGeneral::String> m_lstGlobalVariables;		/**< List of all global variables */
 

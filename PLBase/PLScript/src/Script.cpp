@@ -101,7 +101,7 @@ void Script::AddBinding(Object &cObject, const String &sNamespace)
 		// Get the function descriptor
 		const FuncDesc *pFuncDesc = pDynFunc->GetDesc();
 		if (pFuncDesc)
-			AddDynamicFunction(pFuncDesc->GetName(), *pDynFunc, sNamespace);
+			AddGlobalFunction(pFuncDesc->GetName(), *pDynFunc, sNamespace);
 	}
 }
 

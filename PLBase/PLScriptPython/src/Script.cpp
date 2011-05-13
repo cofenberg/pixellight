@@ -79,8 +79,8 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
-	// Remove all dynamic functions
-	RemoveAllDynamicFunctions();
+	// Remove all global functions
+	RemoveAllGlobalFunctions();
 
 	// Release a context reference
 	PythonContext::ReleaseContextReference();
@@ -90,38 +90,38 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
+bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Error!
 		return false;
 	} else {
-		// Add the dynamic function
-		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction  = sFunction;
-		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
-		psDynamicFunction->sNamespace = sNamespace;
-		m_lstDynamicFunctions.Add(psDynamicFunction);
+		// Add the global function
+		GlobalFunction *psGlobalFunction = new GlobalFunction;
+		psGlobalFunction->sFunction  = sFunction;
+		psGlobalFunction->pDynFunc   = cDynFunc.Clone();
+		psGlobalFunction->sNamespace = sNamespace;
+		m_lstGlobalFunctions.Add(psGlobalFunction);
 
 		// Done
 		return true;
 	}
 }
 
-bool Script::RemoveAllDynamicFunctions()
+bool Script::RemoveAllGlobalFunctions()
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Error!
 		return false;
 	} else {
-		// Destroy the dynamic functions
-		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-			delete m_lstDynamicFunctions[i]->pDynFunc;
-			delete m_lstDynamicFunctions[i];
+		// Destroy the global functions
+		for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+			delete m_lstGlobalFunctions[i]->pDynFunc;
+			delete m_lstGlobalFunctions[i];
 		}
-		m_lstDynamicFunctions.Clear();
+		m_lstGlobalFunctions.Clear();
 
 		// Done
 		return true;
@@ -152,32 +152,32 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			// Get the dictionary of our module (results in borrowed reference, don't use Py_DECREF on it)
 			m_pPythonDictionary = PyModule_GetDict(m_pPythonModule);
 			if (m_pPythonDictionary) {
-				// Are there any dynamic functions?
-				if (m_lstDynamicFunctions.GetNumOfElements()) {
+				// Are there any global functions?
+				if (m_lstGlobalFunctions.GetNumOfElements()) {
 					// Allocate the Python table of functions
-					m_pPythonTableOfFunctions = new PyMethodDef[m_lstDynamicFunctions.GetNumOfElements()];
+					m_pPythonTableOfFunctions = new PyMethodDef[m_lstGlobalFunctions.GetNumOfElements()];
 
-					// Add the dynamic functions
-					for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-						// Get the dynamic function
-						DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+					// Add the global functions
+					for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+						// Get the global function
+						GlobalFunction *psGlobalFunction = m_lstGlobalFunctions[i];
 
 						// Get the current Python method definition
 						PyMethodDef *pPythonMethodDefinition = &m_pPythonTableOfFunctions[i];
 
 						// Setup the current Python method definition
-						pPythonMethodDefinition->ml_name  = psDynamicFunction->sFunction;	// The name of the built-in function/method
+						pPythonMethodDefinition->ml_name  = psGlobalFunction->sFunction;	// The name of the built-in function/method
 						pPythonMethodDefinition->ml_meth  = PythonFunctionCallback;			// The C function that implements it
 						pPythonMethodDefinition->ml_flags = METH_VARARGS;					// Combination of METH_xxx flags, which mostly describe the args expected by the C func
 						pPythonMethodDefinition->ml_doc   = nullptr;						// The __doc__ attribute, or NULL
 
 						// Create the new Python function object
-						PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psDynamicFunction, nullptr, nullptr));
+						PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psGlobalFunction, nullptr, nullptr));
 
 						// Add the new Python function
-						if (!AddPythonFunction(m_pPythonDictionary, psDynamicFunction->sFunction, pPythonFunction, psDynamicFunction->sNamespace)) {
+						if (!AddPythonFunction(m_pPythonDictionary, psGlobalFunction->sFunction, pPythonFunction, psGlobalFunction->sNamespace)) {
 							// Error!
-							LogOutput(Log::Error, "Failed to add the function '" + psDynamicFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');
+							LogOutput(Log::Error, "Failed to add the function '" + psGlobalFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');
 						}
 
 						// Remove our reference from the Python function object
@@ -592,9 +592,9 @@ void Script::GetReturn(String &sValue)
 */
 PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPythonArguments)
 {
-	// Get the dynamic function and ensure that the Python arguments are in fact a tuple
-	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(PyCapsule_GetPointer(pPythonSelf, nullptr));
-	if (psDynamicFunction && PyTuple_Check(pPythonArguments)) {
+	// Get the global function and ensure that the Python arguments are in fact a tuple
+	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(PyCapsule_GetPointer(pPythonSelf, nullptr));
+	if (psGlobalFunction && PyTuple_Check(pPythonArguments)) {
 		// Get the number of arguments Python gave to us
 		String sParams;
 		const Py_ssize_t nNumOfArguments = PyTuple_Size(pPythonArguments);
@@ -616,10 +616,10 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 		}
 
 		// Call the functor
-		const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+		const String sReturn = psGlobalFunction->pDynFunc->CallWithReturn(sParams);
 
 		// Process the functor return
-		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+		switch (psGlobalFunction->pDynFunc->GetReturnTypeID()) {
 			case TypeBool:		return PyInt_FromLong	  (sReturn.GetBool());
 			case TypeDouble:	return PyFloat_FromDouble (sReturn.GetDouble());
 			case TypeFloat:		return PyFloat_FromDouble (sReturn.GetFloat());

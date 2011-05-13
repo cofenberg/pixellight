@@ -61,24 +61,24 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
-	// Remove all dynamic functions
-	RemoveAllDynamicFunctions();
+	// Remove all global functions
+	RemoveAllGlobalFunctions();
 }
 
 
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
+bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a V8 context?
 	if (m_cV8Context.IsEmpty()) {
-		// Add the dynamic function
-		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction  = sFunction;
-		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
-		psDynamicFunction->sNamespace = sNamespace;
-		m_lstDynamicFunctions.Add(psDynamicFunction);
+		// Add the global function
+		GlobalFunction *psGlobalFunction = new GlobalFunction;
+		psGlobalFunction->sFunction  = sFunction;
+		psGlobalFunction->pDynFunc   = cDynFunc.Clone();
+		psGlobalFunction->sNamespace = sNamespace;
+		m_lstGlobalFunctions.Add(psGlobalFunction);
 
 		// Done
 		return true;
@@ -88,16 +88,16 @@ bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc
 	}
 }
 
-bool Script::RemoveAllDynamicFunctions()
+bool Script::RemoveAllGlobalFunctions()
 {
 	// Is there a V8 context?
 	if (m_cV8Context.IsEmpty()) {
-		// Destroy the dynamic functions
-		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-			delete m_lstDynamicFunctions[i]->pDynFunc;
-			delete m_lstDynamicFunctions[i];
+		// Destroy the global functions
+		for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+			delete m_lstGlobalFunctions[i]->pDynFunc;
+			delete m_lstGlobalFunctions[i];
 		}
-		m_lstDynamicFunctions.Clear();
+		m_lstGlobalFunctions.Clear();
 
 		// Done
 		return true;
@@ -125,25 +125,25 @@ bool Script::SetSourceCode(const String &sSourceCode)
 		// Create a stack-allocated handle scope
 		v8::HandleScope cHandleScope;
 
-		// Are there any dynamic functions?
-		if (m_lstDynamicFunctions.GetNumOfElements()) {
+		// Are there any global functions?
+		if (m_lstGlobalFunctions.GetNumOfElements()) {
 			// Global V8 namespace
 			V8Namespace cV8Namespace;
 
 			// Create a template for the global object and set the built-in global functions
 			cV8Namespace.cV8ObjectTemplate = v8::ObjectTemplate::New();
 
-			// Add the dynamic functions
-			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-				// Get the dynamic function
-				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+			// Add the global functions
+			for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+				// Get the global function
+				GlobalFunction *psGlobalFunction = m_lstGlobalFunctions[i];
 
 				// Create V8 function
 				v8::Local<v8::ObjectTemplate> cV8Function = v8::ObjectTemplate::New();
-				cV8Function->SetCallAsFunctionHandler(V8FunctionCallback, v8::External::New(psDynamicFunction));
+				cV8Function->SetCallAsFunctionHandler(V8FunctionCallback, v8::External::New(psGlobalFunction));
 
 				// Add V8 function
-				AddV8Function(cV8Namespace, psDynamicFunction->sFunction, cV8Function, psDynamicFunction->sNamespace);
+				AddV8Function(cV8Namespace, psGlobalFunction->sFunction, cV8Function, psGlobalFunction->sNamespace);
 			}
 
 			// Create a new context
@@ -627,19 +627,19 @@ void Script::GetReturn(String &sValue)
 */
 v8::Handle<v8::Value> Script::V8FunctionCallback(const v8::Arguments &vV8Arguments)
 {
-	// Get the dynamic function
-	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(v8::External::Unwrap(vV8Arguments.Data()));
-	if (psDynamicFunction) {
+	// Get the global function
+	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(v8::External::Unwrap(vV8Arguments.Data()));
+	if (psGlobalFunction) {
 		// V8 arguments to parameter string
 		String sParams;
 		for (int i=0; i<vV8Arguments.Length(); i++)
 			sParams += String("Param") + i + "=\"" + *v8::String::AsciiValue(vV8Arguments[i]->ToString()) + "\" ";
 
 		// Call the functor
-		const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+		const String sReturn = psGlobalFunction->pDynFunc->CallWithReturn(sParams);
 
 		// Process the functor return
-		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+		switch (psGlobalFunction->pDynFunc->GetReturnTypeID()) {
 			case TypeBool:		return v8::Boolean::New(sReturn.GetBool());
 			case TypeDouble:	return v8::Number ::New(sReturn.GetDouble());
 			case TypeFloat:		return v8::Number ::New(sReturn.GetFloat());

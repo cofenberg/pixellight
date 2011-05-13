@@ -72,8 +72,8 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
-	// Remove all dynamic functions
-	RemoveAllDynamicFunctions();
+	// Remove all global functions
+	RemoveAllGlobalFunctions();
 
 	// Release a context reference
 	LuaContext::ReleaseContextReference();
@@ -83,38 +83,38 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
+bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
 		// Error!
 		return false;
 	} else {
-		// Add the dynamic function
-		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction  = sFunction;
-		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
-		psDynamicFunction->sNamespace = sNamespace;
-		m_lstDynamicFunctions.Add(psDynamicFunction);
+		// Add the global function
+		GlobalFunction *psGlobalFunction = new GlobalFunction;
+		psGlobalFunction->sFunction  = sFunction;
+		psGlobalFunction->pDynFunc   = cDynFunc.Clone();
+		psGlobalFunction->sNamespace = sNamespace;
+		m_lstGlobalFunctions.Add(psGlobalFunction);
 
 		// Done
 		return true;
 	}
 }
 
-bool Script::RemoveAllDynamicFunctions()
+bool Script::RemoveAllGlobalFunctions()
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
 		// Error!
 		return false;
 	} else {
-		// Destroy the dynamic functions
-		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-			delete m_lstDynamicFunctions[i]->pDynFunc;
-			delete m_lstDynamicFunctions[i];
+		// Destroy the global functions
+		for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+			delete m_lstGlobalFunctions[i]->pDynFunc;
+			delete m_lstGlobalFunctions[i];
 		}
-		m_lstDynamicFunctions.Clear();
+		m_lstGlobalFunctions.Clear();
 
 		// Done
 		return true;
@@ -146,21 +146,21 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			// Open all standard Lua libraries into the given state
 			luaL_openlibs(m_pLuaState);
 
-			// Add the dynamic functions
-			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-				// Get the dynamic function
-				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+			// Add the global functions
+			for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+				// Get the global function
+				GlobalFunction *psGlobalFunction = m_lstGlobalFunctions[i];
 
 				// Is the function within a namespace? (= Lua table)
-				if (psDynamicFunction->sNamespace.GetLength()) {
+				if (psGlobalFunction->sNamespace.GetLength()) {
 					// Create a nested Lua table
-					CreateNestedTable(m_pLuaState, psDynamicFunction->sNamespace);
+					CreateNestedTable(m_pLuaState, psGlobalFunction->sNamespace);
 
 					// Table key
-					lua_pushstring(m_pLuaState, psDynamicFunction->sFunction);		// Push the function name onto the Lua stack
+					lua_pushstring(m_pLuaState, psGlobalFunction->sFunction);		// Push the function name onto the Lua stack
 
-					// Table value: Store a pointer to the dynamic function in the c-closure
-					lua_pushlightuserdata(m_pLuaState, psDynamicFunction);			// Push a pointer to the dynamic function onto the Lua stack
+					// Table value: Store a pointer to the global function in the c-closure
+					lua_pushlightuserdata(m_pLuaState, psGlobalFunction);			// Push a pointer to the global function onto the Lua stack
 					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);	// Push the function pointer onto the Lua stack
 
 					// This function pops both the key and the value from the stack
@@ -169,10 +169,10 @@ bool Script::SetSourceCode(const String &sSourceCode)
 					// Pop the table from the Lua stack
 					lua_pop(m_pLuaState, 1);
 				} else {
-					// Store a pointer to the dynamic function in the c-closure
-					lua_pushlightuserdata(m_pLuaState, psDynamicFunction);
+					// Store a pointer to the global function in the c-closure
+					lua_pushlightuserdata(m_pLuaState, psGlobalFunction);
 					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);
-					lua_setglobal(m_pLuaState, psDynamicFunction->sFunction);
+					lua_setglobal(m_pLuaState, psGlobalFunction->sFunction);
 				}
 			}
 
@@ -715,12 +715,12 @@ int Script::LuaFunctionCallback(lua_State *pLuaState)
 	for (int i=1; i<=nNumOfArguments; i++)
 		sParams += String("Param") + (i-1) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
 
-	// Get the dynamic function
-	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(lua_touserdata(pLuaState, lua_upvalueindex(1)));
-	const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+	// Get the global function
+	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(lua_touserdata(pLuaState, lua_upvalueindex(1)));
+	const String sReturn = psGlobalFunction->pDynFunc->CallWithReturn(sParams);
 	if (sReturn.GetLength()) {
 		// Process the functor return
-		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+		switch (psGlobalFunction->pDynFunc->GetReturnTypeID()) {
 			case TypeBool:		lua_pushboolean(pLuaState, sReturn.GetBool());								break;
 			case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());							break;
 			case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());								break;

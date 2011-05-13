@@ -72,8 +72,8 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
-	// Remove all dynamic functions
-	RemoveAllDynamicFunctions();
+	// Remove all global functions
+	RemoveAllGlobalFunctions();
 
 	// Release context reference
 	if (m_pAngelScriptEngine)
@@ -84,38 +84,38 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
+bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there already a AngelScript engine instance?
 	if (m_pAngelScriptEngine) {
 		// Error!
 		return false;
 	} else {
-		// Add the dynamic function
-		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction  = sFunction;
-		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
-		psDynamicFunction->sNamespace = sNamespace;
-		m_lstDynamicFunctions.Add(psDynamicFunction);
+		// Add the global function
+		GlobalFunction *psGlobalFunction = new GlobalFunction;
+		psGlobalFunction->sFunction  = sFunction;
+		psGlobalFunction->pDynFunc   = cDynFunc.Clone();
+		psGlobalFunction->sNamespace = sNamespace;
+		m_lstGlobalFunctions.Add(psGlobalFunction);
 
 		// Done
 		return true;
 	}
 }
 
-bool Script::RemoveAllDynamicFunctions()
+bool Script::RemoveAllGlobalFunctions()
 {
 	// Is there already a AngelScript engine instance?
 	if (m_pAngelScriptEngine) {
 		// Error!
 		return false;
 	} else {
-		// Destroy the dynamic functions
-		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-			delete m_lstDynamicFunctions[i]->pDynFunc;
-			delete m_lstDynamicFunctions[i];
+		// Destroy the global functions
+		for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+			delete m_lstGlobalFunctions[i]->pDynFunc;
+			delete m_lstGlobalFunctions[i];
 		}
-		m_lstDynamicFunctions.Clear();
+		m_lstGlobalFunctions.Clear();
 
 		// Done
 		return true;
@@ -143,25 +143,25 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 		// Get a AngelScript module instance
 		if (m_pAngelScriptEngine) {
-			// Add the dynamic functions
-			for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-				// Get the dynamic function
-				DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+			// Add the global functions
+			for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+				// Get the global function
+				GlobalFunction *psGlobalFunction = m_lstGlobalFunctions[i];
 
 				// [TODO] It looks like that AngelScript (2.20.2) has currently no support for namespaces... so right now I'am doing
 				// an ugly hack: e.g. "PL.Timing.GetTimeDifference()" is written within scripts as "PL_Timing_GetTimeDifference()"
 				String sFunction;
-				if (psDynamicFunction->sNamespace.GetLength()) {
-					sFunction = psDynamicFunction->sNamespace;
+				if (psGlobalFunction->sNamespace.GetLength()) {
+					sFunction = psGlobalFunction->sNamespace;
 					sFunction.Replace('.', '_');
 					sFunction += '_';
-					sFunction += psDynamicFunction->sFunction;
+					sFunction += psGlobalFunction->sFunction;
 				} else {
-					sFunction = psDynamicFunction->sFunction;
+					sFunction = psGlobalFunction->sFunction;
 				}
 
 				// Get the AngelScript function declaration
-				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunction, psDynamicFunction->pDynFunc->GetSignature(), true);
+				String sFunctionDeclaration = GetAngelScriptFunctionDeclaration(sFunction, psGlobalFunction->pDynFunc->GetSignature(), true);
 
 				// Register global AngelScript function
 				const int nFunctionID = m_pAngelScriptEngine->RegisterGlobalFunction(sFunctionDeclaration, asFUNCTION(AngelScriptFunctionCallback), asCALL_GENERIC);
@@ -187,10 +187,10 @@ bool Script::SetSourceCode(const String &sSourceCode)
 					}
 					LogOutput(Log::Error, "Failed to register the global AngelScript function '" + sFunctionDeclaration + '\'');
 				} else {
-					// Put a pointer to the dynamic function into the user data of the registered AngelScript function
+					// Put a pointer to the global function into the user data of the registered AngelScript function
 					asIScriptFunction *pAngelScriptFunction = m_pAngelScriptEngine->GetFunctionDescriptorById(nFunctionID);
 					if (pAngelScriptFunction)
-						pAngelScriptFunction->SetUserData(psDynamicFunction);
+						pAngelScriptFunction->SetUserData(psGlobalFunction);
 				}
 			}
 
@@ -623,8 +623,8 @@ void Script::GetReturn(String &sValue)
 */
 void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 {
-	// Get the dynamic function
-	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(pAngelScriptGeneric->GetFunctionUserData());
+	// Get the global function
+	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(pAngelScriptGeneric->GetFunctionUserData());
 
 	// Get the number of arguments AngelScript gave to us and transform the arguments into a functor parameters string
 	String sParams;
@@ -658,11 +658,11 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 	}
 
 	// Call the functor
-	const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+	const String sReturn = psGlobalFunction->pDynFunc->CallWithReturn(sParams);
 
 	// Process the functor return
 	if (sReturn.GetLength()) {
-		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+		switch (psGlobalFunction->pDynFunc->GetReturnTypeID()) {
 			case TypeBool:		pAngelScriptGeneric->SetReturnByte(sReturn.GetBool());												break;
 			case TypeDouble:	pAngelScriptGeneric->SetReturnDouble(sReturn.GetDouble());											break;
 			case TypeFloat:		pAngelScriptGeneric->SetReturnFloat(sReturn.GetFloat());											break;
