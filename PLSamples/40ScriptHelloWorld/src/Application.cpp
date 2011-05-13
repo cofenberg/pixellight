@@ -81,6 +81,9 @@ void Application::SayHello(const String &sScriptFilename)
 
 		// Cleanup
 		delete pScript;
+	} else {
+		// Error!
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
 	}
 }
 
@@ -99,8 +102,8 @@ void Application::Main()
 	}
 
 	// Run some scripts
-	SayHello("Data/Scripts/HelloWorld.lua");
-	SayHello("Data/Scripts/HelloWorld.js");
-	SayHello("Data/Scripts/HelloWorld.as");
-	SayHello("Data/Scripts/HelloWorld.py");
+	SayHello("Data/Scripts/40ScriptHelloWorld.lua");
+	SayHello("Data/Scripts/40ScriptHelloWorld.js");
+	SayHello("Data/Scripts/40ScriptHelloWorld.as");
+	SayHello("Data/Scripts/40ScriptHelloWorld.py");
 }

@@ -114,6 +114,9 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 
 		// Print new line
 		System::GetInstance()->GetConsole().Print("--\n\n");
+	} else {
+		// Error!
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
 	}
 }
 
@@ -124,8 +127,8 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 void Application::Main()
 {
 	// Run some scripts
-	DoScriptStuff("Data/Scripts/GlobalVariables.lua");
-	DoScriptStuff("Data/Scripts/GlobalVariables.js");
-	DoScriptStuff("Data/Scripts/GlobalVariables.as");
-	DoScriptStuff("Data/Scripts/GlobalVariables.py");
+	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.lua");
+	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.js");
+	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.as");
+	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.py");
 }

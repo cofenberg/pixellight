@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_41_SCRIPTHELLOWORLD_H__
-#define __PLSAMPLE_41_SCRIPTHELLOWORLD_H__
+#ifndef __PLSAMPLE_40_SCRIPTHELLOWORLD_H__
+#define __PLSAMPLE_40_SCRIPTHELLOWORLD_H__
 #pragma once
 
 
@@ -82,4 +82,4 @@ class Application : public PLCore::ConsoleApplication {
 };
 
 
-#endif // __PLSAMPLE_41_SCRIPTHELLOWORLD_H__
+#endif // __PLSAMPLE_40_SCRIPTHELLOWORLD_H__

@@ -182,6 +182,9 @@ float Application::DoCalculation(const String &sScriptFilename, float fFirst, fl
 			// Print new line
 			System::GetInstance()->GetConsole().Print("--\n\n");
 		}
+	} else {
+		// Error!
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
 	}
 
 	// Done
@@ -226,8 +229,8 @@ String Application::StaticStringMethod(String sFirst)
 void Application::Main()
 {
 	// Run some scripts
-	DoCalculation("Data/Scripts/Functors.lua", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Functors.js",  42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Functors.as",  42.0f, 5.0f);
-	DoCalculation("Data/Scripts/Functors.py",  42.0f, 5.0f);
+	DoCalculation("Data/Scripts/42ScriptFunctors.lua", 42.0f, 5.0f);
+	DoCalculation("Data/Scripts/42ScriptFunctors.js",  42.0f, 5.0f);
+	DoCalculation("Data/Scripts/42ScriptFunctors.as",  42.0f, 5.0f);
+	DoCalculation("Data/Scripts/42ScriptFunctors.py",  42.0f, 5.0f);
 }
