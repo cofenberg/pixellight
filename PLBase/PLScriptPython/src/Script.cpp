@@ -212,6 +212,26 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Fill the list of all global variables right now?
+	if (m_lstGlobalVariables.IsEmpty() && m_pPythonDictionary) {
+		// Iterate through the global dictionary of the Python module (results in borrowed references, don't use Py_DECREF on them)
+		PyObject *pPythonKey = nullptr, *pPythonValue = nullptr;
+		Py_ssize_t nPos = 0;
+		while (PyDict_Next(m_pPythonDictionary, &nPos, &pPythonKey, &pPythonValue)) {
+			// Is this Python object a global variable? (something like "__name__" is passing this test as well, but that's probably ok because it's just a Python build in global variable)
+			if (PyString_Check(pPythonValue) || PyInt_Check(pPythonValue) || PyFloat_Check(pPythonValue)) {
+				// Add the global variable to the list
+				m_lstGlobalVariables.Add(PyString_AsString(pPythonKey));
+			}
+		}
+	}
+
+	// Return a reference to the list of all global variables
+	return m_lstGlobalVariables;
+}
+
 bool Script::IsGlobalVariable(const String &sName)
 {
 	return m_pPythonModule ? (PyObject_HasAttrString(m_pPythonModule, sName) != 0) : false;
@@ -411,12 +431,16 @@ bool Script::EndCall()
 		// Call the Python function (results in new reference, use Py_DECREF on the result)
 		m_pPythonFunctionResult = PyObject_CallObject(m_pPythonFunction, m_pPythonTuple);
 		if (!m_pPythonFunctionResult) {
-			// Give some log error output
+			// Give some log error output (results in new reference, use Py_DECREF on the result)
 			PyObject *pPythonFunctionName = PyObject_GetAttrString(m_pPythonFunction, "__name__");
-			if (pPythonFunctionName)
+			if (pPythonFunctionName) {
 				LogOutputWithErrorDescription(Log::Error, String("The call of the function '") + PyString_AsString(pPythonFunctionName) + "' failed", GetPythonErrorDescription());
-			else
+
+				// Remove our reference of from Python function name
+				Py_DECREF(pPythonFunctionName);
+			} else {
 				LogOutputWithErrorDescription(Log::Error, "Function call failed", GetPythonErrorDescription());
+			}
 
 			// Error!
 			return false;
@@ -638,6 +662,9 @@ void Script::Clear()
 			delete [] m_pPythonTableOfFunctions;
 			m_pPythonTableOfFunctions = nullptr;
 		}
+
+		// Clear the list of all global variables
+		m_lstGlobalVariables.Clear();
 	}
 }
 

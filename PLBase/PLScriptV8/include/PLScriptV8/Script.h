@@ -90,6 +90,7 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
+		PLSCRIPTV8_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
 		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
 		PLSCRIPTV8_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
@@ -239,6 +240,7 @@ class Script : public PLScript::Script {
 		v8::Persistent<v8::Value>					 m_cV8CurrentResult;	/**< Current V8 function */
 		PLGeneral::Array<v8::Persistent<v8::Value> > m_lstV8Arguments;		/**< Current V8 arguments */
 		PLGeneral::Array<DynamicFunction*>			 m_lstDynamicFunctions;	/**< List of dynamic functions */
+		PLGeneral::Array<PLGeneral::String>			 m_lstGlobalVariables;	/**< List of all global variables */
 
 
 };

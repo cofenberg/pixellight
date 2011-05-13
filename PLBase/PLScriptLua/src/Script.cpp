@@ -210,6 +210,43 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Fill the list of all global variables right now?
+	if (m_lstGlobalVariables.IsEmpty() && m_pLuaState) {
+		// Push the global Lua table onto the stack
+		lua_getglobal(m_pLuaState, "_G");
+		if (lua_istable(m_pLuaState, -1)) {
+			// Push the first key onto the Lua stack
+			lua_pushnil(m_pLuaState);
+
+			// Iterate through the Lua table
+			while (lua_next(m_pLuaState, 1) != 0) {
+				// Lua stack content: The 'key' is at index -2 and the 'value' at index -1
+
+				// Check the 'key' type (at index -2) - must be a string
+				if (lua_isstring(m_pLuaState, -2)) {
+					// Check whether or not the 'value' (at index -1) is a global variable
+					// (something like "_VERSION" is passing this test as well, but that's probably ok because it's just a Lua build in global variable)
+					if (lua_isnumber(m_pLuaState, -1) || lua_isstring(m_pLuaState, -1)) {
+						// Add the global variable to our list
+						m_lstGlobalVariables.Add(lua_tostring(m_pLuaState, -2));
+					}
+				}
+
+				// Next, please (removes 'value'; keeps 'key' for next iteration)
+				lua_pop(m_pLuaState, 1);
+			}
+		}
+
+		// Pop the global Lua table from the stack
+		lua_pop(m_pLuaState, 1);
+	}
+
+	// Return a reference to the list of all global variables
+	return m_lstGlobalVariables;
+}
+
 bool Script::IsGlobalVariable(const String &sName)
 {
 	bool bGlobalVariable = false;
@@ -717,6 +754,9 @@ void Script::Clear()
 		m_sCurrentFunction = "";
 		m_bFunctionResult  = false;
 		m_nCurrentArgument = 0;
+
+		// Clear the list of all global variables
+		m_lstGlobalVariables.Clear();
 	}
 }
 

@@ -184,6 +184,39 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Fill the list of all global variables right now?
+	if (m_lstGlobalVariables.IsEmpty() && !m_cV8Context.IsEmpty()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Get all V8 property names of the global V8 object
+		v8::Local<v8::Array> cV8PropertyNames = m_cV8Context->Global()->GetPropertyNames();
+		if (!cV8PropertyNames.IsEmpty()) {
+			// Iterate through all V8 property names
+			const uint32_t nNumOfElements = cV8PropertyNames->Length();
+			for (uint32_t i=0; i<nNumOfElements; i++) {
+				// Get the current V8 property name and check whether or not it's a variable
+				v8::Local<v8::Value> cV8PropertyName = cV8PropertyNames->Get(i);
+				if (!cV8PropertyName.IsEmpty()) {
+					const String sName = *v8::String::AsciiValue(cV8PropertyName->ToString());
+					if (IsGlobalVariable(sName)) {
+						// Add the global variable to the list
+						m_lstGlobalVariables.Add(sName);
+					}
+				}
+			}
+		}
+	}
+
+	// Return a reference to the list of all global variables
+	return m_lstGlobalVariables;
+}
+
 bool Script::IsGlobalVariable(const String &sName)
 {
 	return (GetGlobalVariableType(sName) != TypeInvalid);
@@ -565,6 +598,9 @@ void Script::Clear()
 
 	// Clear the V8 arguments list
 	m_lstV8Arguments.Clear();
+
+	// Clear the list of all global variables
+	m_lstGlobalVariables.Clear();
 }
 
 /**

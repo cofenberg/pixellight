@@ -151,6 +151,14 @@ float Application::DoCalculation(const PLGeneral::String &sScriptFilename, float
 				FuncScriptPtr<void, float>(pScript, "setFactor").Call(Params<void, float>(fFactor + 1.0f));
 
 				{ // Global variable usage example
+					{ // Enumerate all global variables
+						// Get a list of all global variables
+						const Array<String> &lstGlobalVariables = pScript->GetGlobalVariables();
+						System::GetInstance()->GetConsole().Print(String("Number of global variables: ") + lstGlobalVariables.GetNumOfElements() + '\n');
+						for (uint32 i=0; i<lstGlobalVariables.GetNumOfElements(); i++)
+							System::GetInstance()->GetConsole().Print(String("- Global variable ") + i + ": \"" + lstGlobalVariables[i] + "\"\n");
+					}
+
 					// Check whether or not "g_Factor" is a global variable
 					if (pScript->IsGlobalVariable("g_Factor")) {
 						// Get the type of the global variable

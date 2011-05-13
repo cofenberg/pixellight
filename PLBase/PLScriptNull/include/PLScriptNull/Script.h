@@ -89,6 +89,7 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
+		PLSCRIPTNULL_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTNULL_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
 		PLSCRIPTNULL_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
 		PLSCRIPTNULL_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
@@ -145,7 +146,8 @@ class Script : public PLScript::Script {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sSourceCode;	/**< Script source code */
+		PLGeneral::String					m_sSourceCode;			/**< Script source code */
+		PLGeneral::Array<PLGeneral::String>	m_lstGlobalVariables;	/**< List of all global variables */
 
 
 };

@@ -90,6 +90,7 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
+		PLSCRIPTPYTHON_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTPYTHON_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
 		PLSCRIPTPYTHON_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
 		PLSCRIPTPYTHON_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
@@ -252,6 +253,7 @@ class Script : public PLScript::Script {
 		PyObject						   *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
 		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;		/**< List of dynamic functions */
 		PyMethodDef						   *m_pPythonTableOfFunctions;	/**< Python table of functions, can be a null pointer */
+		PLGeneral::Array<PLGeneral::String> m_lstGlobalVariables;		/**< List of all global variables */
 
 
 };

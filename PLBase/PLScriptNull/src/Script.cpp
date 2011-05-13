@@ -95,6 +95,12 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Return a reference to the list of all global variables - we never fill the list
+	return m_lstGlobalVariables;
+}
+
 bool Script::IsGlobalVariable(const String &sName)
 {
 	// Nothing to do in here

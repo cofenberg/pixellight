@@ -98,6 +98,7 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
+		PLSCRIPTANGELSCRIPT_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
 		PLSCRIPTANGELSCRIPT_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
 		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
@@ -211,6 +212,7 @@ class Script : public PLScript::Script {
 		asIScriptContext				   *m_pAngelScriptContext;	/**< AngelScript context instance, can be a null pointer */
 		PLGeneral::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
 		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;	/**< List of dynamic functions */
+		PLGeneral::Array<PLGeneral::String> m_lstGlobalVariables;	/**< List of all global variables */
 
 
 };

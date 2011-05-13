@@ -95,6 +95,7 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
+		PLSCRIPTLUA_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTLUA_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
 		PLSCRIPTLUA_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
 		PLSCRIPTLUA_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
@@ -250,6 +251,7 @@ class Script : public PLScript::Script {
 		bool								m_bFunctionResult;		/**< Has the current function a result? */
 		PLGeneral::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
 		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;	/**< List of dynamic functions */
+		PLGeneral::Array<PLGeneral::String> m_lstGlobalVariables;	/**< List of all global variables */
 
 
 };

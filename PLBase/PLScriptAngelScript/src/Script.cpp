@@ -237,6 +237,26 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Fill the list of all global variables right now?
+	if (m_lstGlobalVariables.IsEmpty() && m_pAngelScriptEngine && m_pAngelScriptModule) {
+		// Get the number of global variables
+		const int nNumOfGlobalVariables = m_pAngelScriptModule->GetGlobalVarCount();
+
+		// Enumerate all global variables
+		for (int i=0; i<nNumOfGlobalVariables; i++) {
+			// Get the information about the global variable
+			const char *pszGlobalVariableName = nullptr;
+			if (m_pAngelScriptModule->GetGlobalVar(i, &pszGlobalVariableName, nullptr, nullptr) >= 0 && pszGlobalVariableName)
+				m_lstGlobalVariables.Add(pszGlobalVariableName);
+		}
+	}
+
+	// Return a reference to the list of all global variables
+	return m_lstGlobalVariables;
+}
+
 bool Script::IsGlobalVariable(const String &sName)
 {
 	return m_pAngelScriptModule ? (m_pAngelScriptModule->GetGlobalVarIndexByName(sName) >= 0) : false;
@@ -652,6 +672,9 @@ void Script::Clear()
 
 	// Reset the current argument
 	m_nCurrentArgument = 0;
+
+	// Clear the list of all global variables
+	m_lstGlobalVariables.Clear();
 }
 
 /**

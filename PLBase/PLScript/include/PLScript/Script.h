@@ -182,6 +182,15 @@ class Script : public PLCore::Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
+		*    Returns a list of all global variables
+		*
+		*  @return
+		*    A list of all global variables
+		*/
+		virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables() = 0;
+
+		/**
+		*  @brief
 		*    Returns whether or not the given name belongs to a global variable
 		*
 		*  @param[in] sName
