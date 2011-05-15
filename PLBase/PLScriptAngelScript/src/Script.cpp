@@ -317,21 +317,21 @@ String Script::GetGlobalVariable(const String &sName)
 			if (pGlobalVarAddress) {
 				// Process the global variable depending on it's type
 				switch (nGlobalVarTypeID) {
-					case asTYPEID_BOOL:		return *((bool*)  pGlobalVarAddress);
-					case asTYPEID_INT8:		return *((int8*)  pGlobalVarAddress);
-					case asTYPEID_INT16:	return *((int16*) pGlobalVarAddress);
-					case asTYPEID_INT32:	return *((int32*) pGlobalVarAddress);
-					case asTYPEID_INT64:	return *((int64*) pGlobalVarAddress);
-					case asTYPEID_UINT8:	return *((uint8 *)pGlobalVarAddress);
-					case asTYPEID_UINT16:	return *((uint16*)pGlobalVarAddress);
-					case asTYPEID_UINT32:	return *((uint32*)pGlobalVarAddress);
-					case asTYPEID_UINT64:	return *((uint64*)pGlobalVarAddress);
-					case asTYPEID_FLOAT:	return *((float *)pGlobalVarAddress);
-					case asTYPEID_DOUBLE:	return *((double*)pGlobalVarAddress);
+					case asTYPEID_BOOL:		return *static_cast<bool*>  (pGlobalVarAddress);
+					case asTYPEID_INT8:		return *static_cast<int8*>  (pGlobalVarAddress);
+					case asTYPEID_INT16:	return *static_cast<int16*> (pGlobalVarAddress);
+					case asTYPEID_INT32:	return *static_cast<int32*> (pGlobalVarAddress);
+					case asTYPEID_INT64:	return *static_cast<int64*> (pGlobalVarAddress);
+					case asTYPEID_UINT8:	return *static_cast<uint8*> (pGlobalVarAddress);
+					case asTYPEID_UINT16:	return *static_cast<uint16*>(pGlobalVarAddress);
+					case asTYPEID_UINT32:	return *static_cast<uint32*>(pGlobalVarAddress);
+					case asTYPEID_UINT64:	return *static_cast<uint64*>(pGlobalVarAddress);
+					case asTYPEID_FLOAT:	return *static_cast<float*> (pGlobalVarAddress);
+					case asTYPEID_DOUBLE:	return *static_cast<double*>(pGlobalVarAddress);
 
 					default:
 						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
-							return ((std::string*)pGlobalVarAddress)->c_str();
+							return static_cast<std::string*>(pGlobalVarAddress)->c_str();
 						break;
 				}
 			}
@@ -357,21 +357,21 @@ void Script::SetGlobalVariable(const String &sName, const String &sValue)
 			if (pGlobalVarAddress) {
 				// Process the global variable depending on it's type
 				switch (nGlobalVarTypeID) {
-					case asTYPEID_BOOL:		*((bool*)  pGlobalVarAddress) = sValue.GetBool();						break;
-					case asTYPEID_INT8:		*((int8*)  pGlobalVarAddress) = static_cast<int8>(sValue.GetInt());		break;
-					case asTYPEID_INT16:	*((int16*) pGlobalVarAddress) = static_cast<int16>(sValue.GetInt());	break;
-					case asTYPEID_INT32:	*((int32*) pGlobalVarAddress) = sValue.GetInt();						break;
-					case asTYPEID_INT64:	*((int64*) pGlobalVarAddress) = sValue.GetInt64();						break;
-					case asTYPEID_UINT8:	*((uint8 *)pGlobalVarAddress) = sValue.GetUInt8();						break;
-					case asTYPEID_UINT16:	*((uint16*)pGlobalVarAddress) = sValue.GetUInt16();						break;
-					case asTYPEID_UINT32:	*((uint32*)pGlobalVarAddress) = sValue.GetUInt32();						break;
-					case asTYPEID_UINT64:	*((uint64*)pGlobalVarAddress) = sValue.GetUInt64();						break;
-					case asTYPEID_FLOAT:	*((float *)pGlobalVarAddress) = sValue.GetFloat();						break;
-					case asTYPEID_DOUBLE:	*((double*)pGlobalVarAddress) = sValue.GetDouble();						break;
+					case asTYPEID_BOOL:		*static_cast<bool*>  (pGlobalVarAddress) = sValue.GetBool();					break;
+					case asTYPEID_INT8:		*static_cast<int8*>  (pGlobalVarAddress) = static_cast<int8>(sValue.GetInt());	break;
+					case asTYPEID_INT16:	*static_cast<int16*> (pGlobalVarAddress) = static_cast<int16>(sValue.GetInt());	break;
+					case asTYPEID_INT32:	*static_cast<int32*> (pGlobalVarAddress) = sValue.GetInt();						break;
+					case asTYPEID_INT64:	*static_cast<int64*> (pGlobalVarAddress) = sValue.GetInt64();					break;
+					case asTYPEID_UINT8:	*static_cast<uint8*> (pGlobalVarAddress) = sValue.GetUInt8();					break;
+					case asTYPEID_UINT16:	*static_cast<uint16*>(pGlobalVarAddress) = sValue.GetUInt16();					break;
+					case asTYPEID_UINT32:	*static_cast<uint32*>(pGlobalVarAddress) = sValue.GetUInt32();					break;
+					case asTYPEID_UINT64:	*static_cast<uint64*>(pGlobalVarAddress) = sValue.GetUInt64();					break;
+					case asTYPEID_FLOAT:	*static_cast<float*> (pGlobalVarAddress) = sValue.GetFloat();					break;
+					case asTYPEID_DOUBLE:	*static_cast<double*>(pGlobalVarAddress) = sValue.GetDouble();					break;
 
 					default:
 						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
-							*((std::string*)pGlobalVarAddress) = sValue;
+							*static_cast<std::string*>(pGlobalVarAddress) = sValue;
 						break;
 				}
 			}
