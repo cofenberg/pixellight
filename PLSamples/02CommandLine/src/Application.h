@@ -59,7 +59,7 @@ class Application : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual ConsoleApplication functions          ]
+	//[ Private virtual PLCore::ConsoleApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void Main();

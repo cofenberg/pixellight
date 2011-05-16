@@ -82,25 +82,55 @@ class Script : public PLScript::Script {
 	//[ Public virtual PLScript::Script functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPTPYTHON_API virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual bool RemoveAllDynamicFunctions();
+		//[-------------------------------------------------------]
+		//[ Global functions                                      ]
+		//[-------------------------------------------------------]
+		PLSCRIPTPYTHON_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual bool RemoveAllGlobalFunctions();
+
+		//[-------------------------------------------------------]
+		//[ Script source code                                    ]
+		//[-------------------------------------------------------]
 		PLSCRIPTPYTHON_API virtual PLGeneral::String GetSourceCode() const;
 		PLSCRIPTPYTHON_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+
+		//[-------------------------------------------------------]
+		//[ Global variables                                      ]
+		//[-------------------------------------------------------]
+		PLSCRIPTPYTHON_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
+		PLSCRIPTPYTHON_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
+		PLSCRIPTPYTHON_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
+		PLSCRIPTPYTHON_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
+		PLSCRIPTPYTHON_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+
+		//[-------------------------------------------------------]
+		//[ Global function call, used by "FuncScriptPtr"         ]
+		//[-------------------------------------------------------]
 		PLSCRIPTPYTHON_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
-		PLSCRIPTPYTHON_API virtual void PushArgument(int nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(bool bValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(float fValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(double fValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int8 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int16 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int32 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int64 nValue);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint8 nValue);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint16 nValue);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(float fValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(double fValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTPYTHON_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTPYTHON_API virtual bool EndCall();
-		PLSCRIPTPYTHON_API virtual void GetReturn(int &nValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(bool &bValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(float &fValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(double &fValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int8 &nValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int16 &nValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int32 &nValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int64 &nValue);
 		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint8 &nValue);
 		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint16 &nValue);
 		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(float &fValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(double &fValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint64 &nValue);
 		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::String &sValue);
 
 
@@ -218,10 +248,10 @@ class Script : public PLScript::Script {
 	private:
 		/**
 		*  @brief
-		*    A dynamic function
+		*    A global function
 		*/
-		struct DynamicFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the dynamic function */
+		struct GlobalFunction {
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
 			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
 			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
@@ -238,8 +268,9 @@ class Script : public PLScript::Script {
 		PyObject						   *m_pPythonTuple;				/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
 		PLGeneral::uint32					m_nCurrentArgument;			/**< Current argument, used during function call */
 		PyObject						   *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
-		PLGeneral::Array<DynamicFunction*>  m_lstDynamicFunctions;		/**< List of dynamic functions */
+		PLGeneral::Array<GlobalFunction*>   m_lstGlobalFunctions;		/**< List of global functions */
 		PyMethodDef						   *m_pPythonTableOfFunctions;	/**< Python table of functions, can be a null pointer */
+		PLGeneral::Array<PLGeneral::String> m_lstGlobalVariables;		/**< List of all global variables */
 
 
 };

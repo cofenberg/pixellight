@@ -28,8 +28,7 @@ add_sources(
 	src/Picking/MousePicking.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
-	src/Script/ScriptBindingLog.cpp
-	src/Script/ScriptBindingTiming.cpp
+	src/Script/ScriptBindingScene.cpp
 	src/Script/SNMScript.cpp
 	src/PLEngine.cpp
 )

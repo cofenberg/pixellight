@@ -82,6 +82,26 @@ int DynFunc::GetReturnTypeID() const
 
 /**
 *  @brief
+*    Return the number of parameters
+*/
+uint32 DynFunc::GetNumOfParameters() const
+{
+	// No function
+	return 0;
+}
+
+/**
+*  @brief
+*    Get a parameter type ID
+*/
+int DynFunc::GetParameterTypeID(uint32 nIndex) const
+{
+	// No function
+	return Type<void>::TypeID;
+}
+
+/**
+*  @brief
 *    Call function
 */
 void DynFunc::Call(DynParams &cParams)

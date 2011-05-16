@@ -53,7 +53,8 @@ FrameBufferObject::FrameBufferObject() :
 	m_nMultisampleFrameBufferIndex(0),
 	m_nColorBufferIndex(0),
 	m_nDepthBufferIndex(0),
-	m_nStencilBufferIndex(0)
+	m_nStencilBufferIndex(0),
+	m_nDepthBufferAttachment(GL_DEPTH_ATTACHMENT_EXT)
 {
 }
 
@@ -156,9 +157,11 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			if (m_nColorBufferIndex)
 				glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_EXT, m_nColorBufferIndex);
 			if (m_nDepthBufferIndex) {
-				glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);
-				if ((nFormat & Stencil) && !m_nStencilBufferIndex)
-					glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);
+				// Get depth buffer attachment
+				m_nDepthBufferAttachment = ((nFormat & Stencil) && !m_nStencilBufferIndex) ? GL_DEPTH_STENCIL_ATTACHMENT : GL_DEPTH_ATTACHMENT_EXT;
+
+				// Attach depth buffer
+				glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, m_nDepthBufferAttachment, GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);
 			}
 			if (m_nStencilBufferIndex)
 				glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, m_nStencilBufferIndex);
@@ -228,7 +231,7 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nFrameBufferIndex);
 			PLRenderer::TextureBuffer::EPixelFormat nFormat = cTextureBuffer.GetFormat();
 			if (nFormat == PLRenderer::TextureBuffer::D16 || nFormat == PLRenderer::TextureBuffer::D24 || nFormat == PLRenderer::TextureBuffer::D32) {
-				glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, nTarget, nOpenGLID, 0);
+				glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, m_nDepthBufferAttachment, nTarget, nOpenGLID, 0);
 			} else {
 				glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT+nAttachIndex, nTarget, nOpenGLID, 0);
 			}
@@ -310,20 +313,23 @@ void FrameBufferObject::TakeDepthBufferFromFBO(FrameBufferObject &cFBO)
 		GLint nFrameBufferT;
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING_EXT, &nFrameBufferT);
 
+		// [TODO] Test this/clean this up: May flacker on NVIDIA systems if we just attach to GL_DEPTH_ATTACHMENT
+		GLuint nDepthBufferAttachment = GL_DEPTH_STENCIL_ATTACHMENT;
+
 		// If we have a depth buffer, we destroy it because the depth buffer of the other FBO is much better *g*
 		if (m_nDepthBufferIndex) {
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex);
-			glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, 0);
+			glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, nDepthBufferAttachment, GL_RENDERBUFFER_EXT, 0);
 			glDeleteRenderbuffersEXT(1, &m_nDepthBufferIndex);
 		}
 
 		// Take away the ownership of the depth buffer
 		m_nDepthBufferIndex = cFBO.m_nDepthBufferIndex;
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, cFBO.m_nMultisampleFrameBufferIndex ? cFBO.m_nMultisampleFrameBufferIndex : cFBO.m_nFrameBufferIndex);
-		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, 0);
+		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, nDepthBufferAttachment, GL_RENDERBUFFER_EXT, 0);
 		cFBO.m_nDepthBufferIndex = 0;
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex);
-		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);
+		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, nDepthBufferAttachment, GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);
 
 		// Reset current bound FBO
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, nFrameBufferT);

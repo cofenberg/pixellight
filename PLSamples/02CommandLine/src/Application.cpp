@@ -67,7 +67,7 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual ConsoleApplication functions          ]
+//[ Private virtual PLCore::ConsoleApplication functions  ]
 //[-------------------------------------------------------]
 void Application::Main()
 {

@@ -30,6 +30,13 @@
 
 
 //[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4127) // "conditional expression is constant" (within "Py_XDECREF()" and "Py_DECREF()")
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
@@ -72,8 +79,8 @@ Script::~Script()
 	// Clear the script
 	Clear();
 
-	// Remove all dynamic functions
-	RemoveAllDynamicFunctions();
+	// Remove all global functions
+	RemoveAllGlobalFunctions();
 
 	// Release a context reference
 	PythonContext::ReleaseContextReference();
@@ -83,38 +90,38 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
+bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Error!
 		return false;
 	} else {
-		// Add the dynamic function
-		DynamicFunction *psDynamicFunction = new DynamicFunction;
-		psDynamicFunction->sFunction  = sFunction;
-		psDynamicFunction->pDynFunc   = cDynFunc.Clone();
-		psDynamicFunction->sNamespace = sNamespace;
-		m_lstDynamicFunctions.Add(psDynamicFunction);
+		// Add the global function
+		GlobalFunction *psGlobalFunction = new GlobalFunction;
+		psGlobalFunction->sFunction  = sFunction;
+		psGlobalFunction->pDynFunc   = cDynFunc.Clone();
+		psGlobalFunction->sNamespace = sNamespace;
+		m_lstGlobalFunctions.Add(psGlobalFunction);
 
 		// Done
 		return true;
 	}
 }
 
-bool Script::RemoveAllDynamicFunctions()
+bool Script::RemoveAllGlobalFunctions()
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Error!
 		return false;
 	} else {
-		// Destroy the dynamic functions
-		for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-			delete m_lstDynamicFunctions[i]->pDynFunc;
-			delete m_lstDynamicFunctions[i];
+		// Destroy the global functions
+		for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+			delete m_lstGlobalFunctions[i]->pDynFunc;
+			delete m_lstGlobalFunctions[i];
 		}
-		m_lstDynamicFunctions.Clear();
+		m_lstGlobalFunctions.Clear();
 
 		// Done
 		return true;
@@ -145,32 +152,32 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			// Get the dictionary of our module (results in borrowed reference, don't use Py_DECREF on it)
 			m_pPythonDictionary = PyModule_GetDict(m_pPythonModule);
 			if (m_pPythonDictionary) {
-				// Are there any dynamic functions?
-				if (m_lstDynamicFunctions.GetNumOfElements()) {
+				// Are there any global functions?
+				if (m_lstGlobalFunctions.GetNumOfElements()) {
 					// Allocate the Python table of functions
-					m_pPythonTableOfFunctions = new PyMethodDef[m_lstDynamicFunctions.GetNumOfElements()];
+					m_pPythonTableOfFunctions = new PyMethodDef[m_lstGlobalFunctions.GetNumOfElements()];
 
-					// Add the dynamic functions
-					for (uint32 i=0; i<m_lstDynamicFunctions.GetNumOfElements(); i++) {
-						// Get the dynamic function
-						DynamicFunction *psDynamicFunction = m_lstDynamicFunctions[i];
+					// Add the global functions
+					for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
+						// Get the global function
+						GlobalFunction *psGlobalFunction = m_lstGlobalFunctions[i];
 
 						// Get the current Python method definition
 						PyMethodDef *pPythonMethodDefinition = &m_pPythonTableOfFunctions[i];
 
 						// Setup the current Python method definition
-						pPythonMethodDefinition->ml_name  = psDynamicFunction->sFunction;	// The name of the built-in function/method
+						pPythonMethodDefinition->ml_name  = psGlobalFunction->sFunction;	// The name of the built-in function/method
 						pPythonMethodDefinition->ml_meth  = PythonFunctionCallback;			// The C function that implements it
 						pPythonMethodDefinition->ml_flags = METH_VARARGS;					// Combination of METH_xxx flags, which mostly describe the args expected by the C func
 						pPythonMethodDefinition->ml_doc   = nullptr;						// The __doc__ attribute, or NULL
 
 						// Create the new Python function object
-						PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psDynamicFunction, nullptr, nullptr));
+						PyObject *pPythonFunction = PyCFunction_New(pPythonMethodDefinition, PyCapsule_New(psGlobalFunction, nullptr, nullptr));
 
 						// Add the new Python function
-						if (!AddPythonFunction(m_pPythonDictionary, psDynamicFunction->sFunction, pPythonFunction, psDynamicFunction->sNamespace)) {
+						if (!AddPythonFunction(m_pPythonDictionary, psGlobalFunction->sFunction, pPythonFunction, psGlobalFunction->sNamespace)) {
 							// Error!
-							LogOutput(Log::Error, "Failed to add the function '" + psDynamicFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');
+							LogOutput(Log::Error, "Failed to add the function '" + psGlobalFunction->sFunction + "\' to the Python module '" + sModuleName + '\'');
 						}
 
 						// Remove our reference from the Python function object
@@ -210,6 +217,88 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 	// Error!
 	return false;
+}
+
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Fill the list of all global variables right now?
+	if (m_lstGlobalVariables.IsEmpty() && m_pPythonDictionary) {
+		// Iterate through the global dictionary of the Python module (results in borrowed references, don't use Py_DECREF on them)
+		PyObject *pPythonKey = nullptr, *pPythonValue = nullptr;
+		Py_ssize_t nPos = 0;
+		while (PyDict_Next(m_pPythonDictionary, &nPos, &pPythonKey, &pPythonValue)) {
+			// Is this Python object a global variable? (something like "__name__" is passing this test as well, but that's probably ok because it's just a Python build in global variable)
+			if (PyString_Check(pPythonValue) || PyInt_Check(pPythonValue) || PyFloat_Check(pPythonValue)) {
+				// Add the global variable to the list
+				m_lstGlobalVariables.Add(PyString_AsString(pPythonKey));
+			}
+		}
+	}
+
+	// Return a reference to the list of all global variables
+	return m_lstGlobalVariables;
+}
+
+bool Script::IsGlobalVariable(const String &sName)
+{
+	return m_pPythonModule ? (PyObject_HasAttrString(m_pPythonModule, sName) != 0) : false;
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	// Is there a Python module?
+	if (m_pPythonModule) {
+		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
+		if (pPythonAttribute) {
+			if (PyString_Check(pPythonAttribute))
+				return TypeString;
+			else if (PyInt_Check(pPythonAttribute))
+				return TypeInt32;
+			else if (PyFloat_Check(pPythonAttribute))
+				return TypeFloat;
+		}
+	}
+
+	// Error!
+	return TypeInvalid;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	// Is there a Python module?
+	if (m_pPythonModule) {
+		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
+		if (pPythonAttribute) {
+			if (PyString_Check(pPythonAttribute))
+				return PyString_AsString(pPythonAttribute);
+			else if (PyInt_Check(pPythonAttribute))
+				return PyInt_AsLong(pPythonAttribute);
+			else if (PyFloat_Check(pPythonAttribute))
+				return PyFloat_AsDouble(pPythonAttribute);
+		}
+	}
+
+	// Error!
+	return "";
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// Is there a Python module?
+	if (m_pPythonModule) {
+		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
+		if (pPythonAttribute) {
+			if (PyString_Check(pPythonAttribute))
+				PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(sValue));
+			else if (PyInt_Check(pPythonAttribute))
+				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(sValue.GetInt()));
+			else if (PyFloat_Check(pPythonAttribute))
+				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(sValue.GetDouble()));
+		}
+	}
 }
 
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
@@ -258,7 +347,43 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return false;
 }
 
-void Script::PushArgument(int nValue)
+void Script::PushArgument(bool bValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(bValue));
+	}
+}
+
+void Script::PushArgument(float fValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
+	}
+}
+
+void Script::PushArgument(double fValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
+	}
+}
+
+void Script::PushArgument(int8 nValue)
 {
 	// Is there a current Python function?
 	if (m_pPythonFunction) {
@@ -267,6 +392,43 @@ void Script::PushArgument(int nValue)
 
 		// Set the current tuple item
 		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(nValue));
+	}
+}
+
+void Script::PushArgument(int16 nValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(nValue));
+	}
+}
+
+void Script::PushArgument(int32 nValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(nValue));
+	}
+}
+
+void Script::PushArgument(int64 nValue)
+{
+	// Is there a current Python function?
+	if (m_pPythonFunction) {
+		// Increases the number of arguments
+		IncreaseNumOfArguments();
+
+		// Set the current tuple item
+		// [TODO] There's no int64 support in Python (?)
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(static_cast<long>(nValue)));
 	}
 }
 
@@ -306,7 +468,7 @@ void Script::PushArgument(uint32 nValue)
 	}
 }
 
-void Script::PushArgument(float fValue)
+void Script::PushArgument(uint64 nValue)
 {
 	// Is there a current Python function?
 	if (m_pPythonFunction) {
@@ -314,19 +476,8 @@ void Script::PushArgument(float fValue)
 		IncreaseNumOfArguments();
 
 		// Set the current tuple item
-		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
-	}
-}
-
-void Script::PushArgument(double fValue)
-{
-	// Is there a current Python function?
-	if (m_pPythonFunction) {
-		// Increases the number of arguments
-		IncreaseNumOfArguments();
-
-		// Set the current tuple item
-		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyFloat_FromDouble(fValue));
+		// [TODO] There's no uint64 support in Python (?)
+		PyTuple_SetItem(m_pPythonTuple, m_nCurrentArgument - 1, PyInt_FromLong(static_cast<long>(nValue)));
 	}
 }
 
@@ -349,12 +500,16 @@ bool Script::EndCall()
 		// Call the Python function (results in new reference, use Py_DECREF on the result)
 		m_pPythonFunctionResult = PyObject_CallObject(m_pPythonFunction, m_pPythonTuple);
 		if (!m_pPythonFunctionResult) {
-			// Give some log error output
+			// Give some log error output (results in new reference, use Py_DECREF on the result)
 			PyObject *pPythonFunctionName = PyObject_GetAttrString(m_pPythonFunction, "__name__");
-			if (pPythonFunctionName)
+			if (pPythonFunctionName) {
 				LogOutputWithErrorDescription(Log::Error, String("The call of the function '") + PyString_AsString(pPythonFunctionName) + "' failed", GetPythonErrorDescription());
-			else
+
+				// Remove our reference of from Python function name
+				Py_DECREF(pPythonFunctionName);
+			} else {
 				LogOutputWithErrorDescription(Log::Error, "Function call failed", GetPythonErrorDescription());
+			}
 
 			// Error!
 			return false;
@@ -365,8 +520,39 @@ bool Script::EndCall()
 	return true;
 }
 
-void Script::GetReturn(int &nValue)
+void Script::GetReturn(bool &bValue)
 {
+	bValue = m_pPythonFunctionResult ? (PyInt_AsLong(m_pPythonFunctionResult) != 0): false;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	fValue = m_pPythonFunctionResult ? static_cast<float>(PyFloat_AsDouble(m_pPythonFunctionResult)) : 0.0f;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	fValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
+}
+
+void Script::GetReturn(int8 &nValue)
+{
+	nValue = m_pPythonFunctionResult ? static_cast<uint8>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+}
+
+void Script::GetReturn(int16 &nValue)
+{
+	nValue = m_pPythonFunctionResult ? static_cast<uint16>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+}
+
+void Script::GetReturn(int32 &nValue)
+{
+	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
+}
+
+void Script::GetReturn(int64 &nValue)
+{
+	// [TODO] There's no int64 support in Python (?)
 	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
@@ -385,14 +571,10 @@ void Script::GetReturn(uint32 &nValue)
 	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(uint64 &nValue)
 {
-	fValue = m_pPythonFunctionResult ? static_cast<float>(PyFloat_AsDouble(m_pPythonFunctionResult)) : 0.0f;
-}
-
-void Script::GetReturn(double &fValue)
-{
-	fValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
+	// [TODO] There's no uint64 support in Python (?)
+	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
 void Script::GetReturn(String &sValue)
@@ -410,9 +592,9 @@ void Script::GetReturn(String &sValue)
 */
 PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPythonArguments)
 {
-	// Get the dynamic function and ensure that the Python arguments are in fact a tuple
-	DynamicFunction *psDynamicFunction = reinterpret_cast<DynamicFunction*>(PyCapsule_GetPointer(pPythonSelf, nullptr));
-	if (psDynamicFunction && PyTuple_Check(pPythonArguments)) {
+	// Get the global function and ensure that the Python arguments are in fact a tuple
+	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(PyCapsule_GetPointer(pPythonSelf, nullptr));
+	if (psGlobalFunction && PyTuple_Check(pPythonArguments)) {
 		// Get the number of arguments Python gave to us
 		String sParams;
 		const Py_ssize_t nNumOfArguments = PyTuple_Size(pPythonArguments);
@@ -434,10 +616,10 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 		}
 
 		// Call the functor
-		const String sReturn = psDynamicFunction->pDynFunc->CallWithReturn(sParams);
+		const String sReturn = psGlobalFunction->pDynFunc->CallWithReturn(sParams);
 
 		// Process the functor return
-		switch (psDynamicFunction->pDynFunc->GetReturnTypeID()) {
+		switch (psGlobalFunction->pDynFunc->GetReturnTypeID()) {
 			case TypeBool:		return PyInt_FromLong	  (sReturn.GetBool());
 			case TypeDouble:	return PyFloat_FromDouble (sReturn.GetDouble());
 			case TypeFloat:		return PyFloat_FromDouble (sReturn.GetFloat());
@@ -449,7 +631,7 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 			case TypeString:	return PyString_FromString(sReturn);
 			case TypeUInt16:	return PyInt_FromLong	  (sReturn.GetUInt16());
 			case TypeUInt32:	return PyInt_FromLong	  (sReturn.GetUInt32());
-			case TypeUInt64:	return PyInt_FromLong	  (sReturn.GetUInt64());	// [TODO] TypeUInt64 is currently handled just as long
+			case TypeUInt64:	return PyInt_FromLong	  (static_cast<long>(sReturn.GetUInt64()));	// [TODO] TypeUInt64 is currently handled just as long
 			case TypeUInt8:		return PyInt_FromLong	  (sReturn.GetUInt8());
 			default:			return Py_None;// TypeVoid, TypeNull, TypeObjectPtr, -1
 		}
@@ -576,6 +758,9 @@ void Script::Clear()
 			delete [] m_pPythonTableOfFunctions;
 			m_pPythonTableOfFunctions = nullptr;
 		}
+
+		// Clear the list of all global variables
+		m_lstGlobalVariables.Clear();
 	}
 }
 
@@ -664,3 +849,9 @@ bool Script::AddPythonFunction(PyObject *pPythonDictionary, const String &sFunct
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScriptPython
+
+
+//[-------------------------------------------------------]
+//[ Compiler settings                                     ]
+//[-------------------------------------------------------]
+PL_WARNING_POP

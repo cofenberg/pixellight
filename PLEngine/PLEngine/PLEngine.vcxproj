@@ -266,8 +266,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Gui\RenderWindow.cpp" />
     <ClCompile Include="src\Gui\WindowConnection.cpp" />
     <ClCompile Include="src\Config\RendererConfigGroup.cpp" />
-    <ClCompile Include="src\Script\ScriptBindingLog.cpp" />
-    <ClCompile Include="src\Script\ScriptBindingTiming.cpp" />
+    <ClCompile Include="src\Script\ScriptBindingScene.cpp" />
     <ClCompile Include="src\Script\SNMScript.cpp" />
     <ClCompile Include="src\Tools\SceneRendererTool.cpp" />
     <ClCompile Include="src\Tools\Screenshot.cpp" />
@@ -288,8 +287,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLEngine\Gui\RenderWindow.h" />
     <ClInclude Include="include\PLEngine\Gui\WindowConnection.h" />
     <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h" />
-    <ClInclude Include="include\PLEngine\Script\ScriptBindingLog.h" />
-    <ClInclude Include="include\PLEngine\Script\ScriptBindingTiming.h" />
+    <ClInclude Include="include\PLEngine\Script\ScriptBindingScene.h" />
     <ClInclude Include="include\PLEngine\Script\SNMScript.h" />
     <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h" />
     <ClInclude Include="include\PLEngine\Tools\Screenshot.h" />

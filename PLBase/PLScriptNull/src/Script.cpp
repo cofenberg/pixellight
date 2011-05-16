@@ -63,7 +63,7 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
 //[-------------------------------------------------------]
-bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
+bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Nothing to do in here
 
@@ -71,7 +71,7 @@ bool Script::AddDynamicFunction(const String &sFunction, const DynFunc &cDynFunc
 	return true;
 }
 
-bool Script::RemoveAllDynamicFunctions()
+bool Script::RemoveAllGlobalFunctions()
 {
 	// Nothing to do in here
 
@@ -95,6 +95,35 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
+const Array<String> &Script::GetGlobalVariables()
+{
+	// Return a reference to the list of all global variables - we never fill the list
+	return m_lstGlobalVariables;
+}
+
+bool Script::IsGlobalVariable(const String &sName)
+{
+	// Nothing to do in here
+	return false;
+}
+
+ETypeID Script::GetGlobalVariableType(const String &sName)
+{
+	// Nothing to do in here
+	return TypeInvalid;
+}
+
+String Script::GetGlobalVariable(const String &sName)
+{
+	// Nothing to do in here
+	return "";
+}
+
+void Script::SetGlobalVariable(const String &sName, const String &sValue)
+{
+	// Nothing to do in here
+}
+
 bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
 {
 	// Nothing to do in here
@@ -103,7 +132,37 @@ bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSigna
 	return true;
 }
 
-void Script::PushArgument(int nValue)
+void Script::PushArgument(bool bValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(float fValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(double fValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(int8 nValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(int16 nValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(int32 nValue)
+{
+	// Nothing to do in here
+}
+
+void Script::PushArgument(int64 nValue)
 {
 	// Nothing to do in here
 }
@@ -123,12 +182,7 @@ void Script::PushArgument(uint32 nValue)
 	// Nothing to do in here
 }
 
-void Script::PushArgument(float fValue)
-{
-	// Nothing to do in here
-}
-
-void Script::PushArgument(double fValue)
+void Script::PushArgument(uint64 nValue)
 {
 	// Nothing to do in here
 }
@@ -146,7 +200,43 @@ bool Script::EndCall()
 	return true;
 }
 
-void Script::GetReturn(int &nValue)
+void Script::GetReturn(bool &bValue)
+{
+	// Nothing to do in here
+	bValue = false;
+}
+
+void Script::GetReturn(float &fValue)
+{
+	// Nothing to do in here
+	fValue = 0.0f;
+}
+
+void Script::GetReturn(double &fValue)
+{
+	// Nothing to do in here
+	fValue = 0.0;
+}
+
+void Script::GetReturn(int8 &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
+}
+
+void Script::GetReturn(int16 &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
+}
+
+void Script::GetReturn(int32 &nValue)
+{
+	// Nothing to do in here
+	nValue = 0;
+}
+
+void Script::GetReturn(int64 &nValue)
 {
 	// Nothing to do in here
 	nValue = 0;
@@ -170,16 +260,10 @@ void Script::GetReturn(uint32 &nValue)
 	nValue = 0;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(uint64 &nValue)
 {
 	// Nothing to do in here
-	fValue = 0.0f;
-}
-
-void Script::GetReturn(double &fValue)
-{
-	// Nothing to do in here
-	fValue = 0.0;
+	nValue = 0;
 }
 
 void Script::GetReturn(String &sValue)

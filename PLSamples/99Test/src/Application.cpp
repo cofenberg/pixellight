@@ -1083,16 +1083,16 @@ void Application::TestDebug()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual ConsoleApplication functions          ]
+//[ Private virtual PLCore::ConsoleApplication functions  ]
 //[-------------------------------------------------------]
 void Application::Main()
 {
 	// Get all classes derived from PLCore::Object
-	PLGeneral::List<const PLCore::Class*> lstClasses;
+	List<const PLCore::Class*> lstClasses;
 	PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::Object", PLCore::NonRecursive, PLCore::NoBase, PLCore::IncludeAbstract);
 
 	// Iterate through the found classes
-	PLGeneral::Iterator<const PLCore::Class*> cIterator = lstClasses.GetIterator();
+	Iterator<const PLCore::Class*> cIterator = lstClasses.GetIterator();
 	while (cIterator.HasNext()) {
 		// Get the class
 		const PLCore::Class *pClass = cIterator.Next();

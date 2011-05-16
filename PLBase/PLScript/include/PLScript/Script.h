@@ -47,8 +47,18 @@ namespace PLScript {
 *
 *  @remarks
 *    Each script should have the followig properties:
-*    - "Language": Shader language (for example: "JavaScript")
-*    - "Formats":  File format extensions this script can load in (for example: "js")
+*    - "Language": Script language (for example: "JavaScript" or "Lua")
+*    - "Formats":  File format extensions this script can load in (for example: "js" or "lua")
+*
+*    Supported script features:
+*    - Global variables
+*    - Global functions
+*      - C++ calls script
+*      - Script calls C++ (with namespace support)
+*
+*    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64
+*    Please note that not each script language/API may make such a detailed data type distinction.
+*    Because strings are fundamental within scripts, PLGeneral::String is supported as well.
 *
 *  @note
 *    - [TODO] Script support is currently under construction
@@ -104,20 +114,38 @@ class Script : public PLCore::Object {
 		*    RTTI class instance, must stay valid as long as this script lives
 		*  @param[in] sNamespace
 		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
+		*
+		*  @note
+		*    - The added RTTI class instance methods will be available to the script as simple global functions
 		*/
 		PLSCRIPT_API void AddBinding(PLCore::Object &cObject, const PLGeneral::String &sNamespace = "");
+
+		/**
+		*  @brief
+		*    Add all script bindings to this script
+		*
+		*  @remarks
+		*    Iterates over all available script binding instances and adds them to this script.
+		*
+		*  @note
+		*    - The added RTTI class instance methods will be available to the script as simple global functions
+		*/
+		PLSCRIPT_API void AddBindings();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Script functions                       ]
 	//[-------------------------------------------------------]
 	public:
+		//[-------------------------------------------------------]
+		//[ Global functions                                      ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Adds a dynamic function to the script
+		*    Adds a global function to the script
 		*
 		*  @param[in] sFunction
-		*    Function name used inside the script to call the dynamic function
+		*    Function name used inside the script to call the global function
 		*  @param[in] cDynFunc
 		*    Dynamic function
 		*  @param[in] sNamespace
@@ -129,11 +157,11 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool AddDynamicFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
-		*    Removes all dynamic functions from the script
+		*    Removes all global functions from the script
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe a script is already set?)
@@ -141,8 +169,11 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool RemoveAllDynamicFunctions() = 0;
+		virtual bool RemoveAllGlobalFunctions() = 0;
 
+		//[-------------------------------------------------------]
+		//[ Script source code                                    ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Returns the script source code
@@ -164,22 +195,142 @@ class Script : public PLCore::Object {
 		*/
 		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode) = 0;
 
-		// [TODO] Comment those methods when done
+		//[-------------------------------------------------------]
+		//[ Global variables                                      ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns a list of all global variables
+		*
+		*  @return
+		*    A list of all global variables
+		*/
+		virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables() = 0;
+
+		/**
+		*  @brief
+		*    Returns whether or not the given name belongs to a global variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*
+		*  @return
+		*    'true' if the given name belongs to a global variable, else 'false'
+		*/
+		virtual bool IsGlobalVariable(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Returns the type a gobal variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*
+		*  @return
+		*    The type of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
+		*/
+		virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Returns the current value of a gobal variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*
+		*  @return
+		*    The current value of the global variable
+		*/
+		virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
+		*    Sets the current value of a gobal variable
+		*
+		*  @param[in] sName
+		*    Name of the global variable
+		*  @param[in] sValue
+		*    New value of the global variable
+		*/
+		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue) = 0;
+
+		//[-------------------------------------------------------]
+		//[ Global function call, used by "FuncScriptPtr"         ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Starts a function call
+		*
+		*  @param[in] sFunctionName
+		*    Name of the function to call
+		*  @param[in] sFunctionSignature
+		*    Signature of the function to call (e.g. "void(int,float)")
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*/
 		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
-		virtual void PushArgument(int nValue) = 0;
+
+		/**
+		*  @brief
+		*    Pushes an argument required for the current function call
+		*
+		*  @param[in] nValue
+		*    Argument value
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*/
+		virtual void PushArgument(bool bValue) = 0;
+		virtual void PushArgument(float fValue) = 0;
+		virtual void PushArgument(double fValue) = 0;
+		virtual void PushArgument(PLGeneral::int8 nValue) = 0;
+		virtual void PushArgument(PLGeneral::int16 nValue) = 0;
+		virtual void PushArgument(PLGeneral::int32 nValue) = 0;
+		virtual void PushArgument(PLGeneral::int64 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint8 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint16 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
-		virtual void PushArgument(float fValue) = 0;
-		virtual void PushArgument(double fValue) = 0;
+		virtual void PushArgument(PLGeneral::uint64 nValue) = 0;
 		virtual void PushArgument(const PLGeneral::String &sString) = 0;
+
+		/**
+		*  @brief
+		*    Ends a function call
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*    - This actually performs the prepared function call
+		*/
 		virtual bool EndCall() = 0;
-		virtual void GetReturn(int &nValue) = 0;
+
+		/**
+		*  @brief
+		*    Returns the result of a function call
+		*
+		*  @param[out] nValue
+		*    Receives the result of a function call
+		*
+		*  @note
+		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*/
+		virtual void GetReturn(bool &bValue) = 0;
+		virtual void GetReturn(float &fValue) = 0;
+		virtual void GetReturn(double &fValue) = 0;
+		virtual void GetReturn(PLGeneral::int8 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::int16 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::int32 &nValue) = 0;
+		virtual void GetReturn(PLGeneral::int64 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint8 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint16 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::uint32 &nValue) = 0;
-		virtual void GetReturn(float &fValue) = 0;
-		virtual void GetReturn(double &fValue) = 0;
+		virtual void GetReturn(PLGeneral::uint64 &nValue) = 0;
 		virtual void GetReturn(PLGeneral::String &sValue) = 0;
 
 

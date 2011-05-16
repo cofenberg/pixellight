@@ -49,6 +49,13 @@ namespace PLScript {
 *    This is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
 *    derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class
 *    instance to a script - but usually it's useful to have such an abstract base class.
+*
+*    Usually the RTTI script binding class instance methods will be available to the script as simple
+*    global functions. So, this has nothing to do with using OOP within scripts. It's just adding global
+*    functions to scripts.
+*
+*    Each script binding should have the followig property:
+*    - "Namespace": Namespace to use inside scripts (for example: "PL.Log")
 */
 class ScriptBinding : public PLCore::Object {
 
@@ -57,6 +64,9 @@ class ScriptBinding : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBinding, "PLScript", PLCore::Object, "Abstract script binding class")
+		pl_properties
+			pl_property("Namespace", "")
+		pl_properties_end
 	pl_class_end
 
 

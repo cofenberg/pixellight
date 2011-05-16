@@ -200,6 +200,7 @@ class String {
 		*/
 		PLGENERAL_API String(bool bValue);
 		PLGENERAL_API String(int nValue);
+		PLGENERAL_API String(int64 nValue);
 		PLGENERAL_API String(uint8 nValue);
 		PLGENERAL_API String(uint16 nValue);
 		PLGENERAL_API String(uint32 nValue);
@@ -931,6 +932,7 @@ class String {
 		PLGENERAL_API char     GetChar()     const;
 		PLGENERAL_API wchar_t  GetWideChar() const;
 		PLGENERAL_API int      GetInt()      const;
+		PLGENERAL_API int64    GetInt64()    const;
 		PLGENERAL_API uint8    GetUInt8()    const;
 		PLGENERAL_API uint16   GetUInt16()   const;
 		PLGENERAL_API uint32   GetUInt32()   const;
@@ -945,6 +947,7 @@ class String {
 		PLGENERAL_API String &operator =(char     nValue);
 		PLGENERAL_API String &operator =(wchar_t  nValue);
 		PLGENERAL_API String &operator =(int      nValue);
+		PLGENERAL_API String &operator =(int64    nValue);
 		PLGENERAL_API String &operator =(uint8    nValue);
 		PLGENERAL_API String &operator =(uint16   nValue);
 		PLGENERAL_API String &operator =(uint32   nValue);
@@ -958,6 +961,7 @@ class String {
 		PLGENERAL_API String operator +(char    nValue) const;
 		PLGENERAL_API String operator +(wchar_t nValue) const;
 		PLGENERAL_API String operator +(int     nValue) const;
+		PLGENERAL_API String operator +(int64   nValue) const;
 		PLGENERAL_API String operator +(uint8   nValue) const;
 		PLGENERAL_API String operator +(uint16  nValue) const;
 		PLGENERAL_API String operator +(uint32  nValue) const;
@@ -968,6 +972,7 @@ class String {
 		PLGENERAL_API friend String operator +(char     nValue, const String &sString);
 		PLGENERAL_API friend String operator +(wchar_t  nValue, const String &sString);
 		PLGENERAL_API friend String operator +(int      nValue, const String &sString);
+		PLGENERAL_API friend String operator +(int64    nValue, const String &sString);
 		PLGENERAL_API friend String operator +(uint8    nValue, const String &sString);
 		PLGENERAL_API friend String operator +(uint16   nValue, const String &sString);
 		PLGENERAL_API friend String operator +(uint32   nValue, const String &sString);
@@ -978,6 +983,7 @@ class String {
 		PLGENERAL_API String &operator +=(char     nValue);
 		PLGENERAL_API String &operator +=(wchar_t  nValue);
 		PLGENERAL_API String &operator +=(int      nValue);
+		PLGENERAL_API String &operator +=(int64    nValue);
 		PLGENERAL_API String &operator +=(uint8    nValue);
 		PLGENERAL_API String &operator +=(uint16   nValue);
 		PLGENERAL_API String &operator +=(uint32   nValue);

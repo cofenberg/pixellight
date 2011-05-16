@@ -180,6 +180,7 @@ class FrameBufferObject {
 		GLuint			 m_nColorBufferIndex;
 		GLuint			 m_nDepthBufferIndex;
 		GLuint			 m_nStencilBufferIndex;
+		GLuint			 m_nDepthBufferAttachment;	/**< Depth buffer attachment (GL_DEPTH_ATTACHMENT_EXT or GL_DEPTH_STENCIL_ATTACHMENT) */
 
 
 };

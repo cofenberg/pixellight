@@ -373,6 +373,12 @@ String::String(int nValue)
 	#endif
 }
 
+String::String(int64 nValue) :
+	m_pStringBuffer(nullptr)
+{
+	*this = nValue;
+}
+
 String::String(uint8 nValue) :
 	m_pStringBuffer(nullptr)
 {
@@ -2312,6 +2318,26 @@ int String::GetInt() const
 	return 0;
 }
 
+int64 String::GetInt64() const
+{
+	if (m_pStringBuffer) {
+		switch (m_pStringBuffer->GetFormat()) {
+			case ASCII:
+				return _atoi64(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+
+			case Unicode:
+				#ifdef LINUX
+					return wcstoumax(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10);
+				#elif defined(WIN32)
+					return _wtoi64(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
+				#endif
+		}
+	}
+
+	// Error!
+	return 0;
+}
+
 uint8 String::GetUInt8() const
 {
 	if (m_pStringBuffer) {
@@ -2581,6 +2607,25 @@ String &String::operator =(int nValue)
 	return *this;
 }
 
+String &String::operator =(int64 nValue)
+{
+	// Set data
+	#ifdef WIN32
+		*this = Format("%I64", nValue);
+	#else
+		// [TODO] Is this working correctly on Linux or do we need something like
+		/*
+		#include <inttypes.h>
+		int64_t var;
+		sprintf (buf, "%" PRId64, var);
+		*/
+		*this = Format("%ll", nValue);
+	#endif
+
+	// Return a reference to this instance
+	return *this;
+}
+
 String &String::operator =(uint8 nValue)
 {
 	// Set data
@@ -2730,6 +2775,22 @@ String String::operator +(int nValue) const
 	return *this + String(nValue);
 }
 
+String String::operator +(int64 nValue) const
+{
+	// Set data
+	#ifdef WIN32
+		return (GetFormat() == Unicode) ? *this + Format(L"%I64", nValue) : *this + Format("%I64", nValue);
+	#else
+		// [TODO] Is this working correctly on Linux or do we need something like
+		/*
+		#include <inttypes.h>
+		int64_t var;
+		sprintf (buf, "%" PRId64, var);
+		*/
+		return (GetFormat() == Unicode) ? *this + Format(L"%ll", nValue) : *this + Format("%ll", nValue);
+	#endif
+}
+
 String String::operator +(uint8 nValue) const
 {
 	#ifdef WIN32
@@ -2828,6 +2889,21 @@ String operator +(wchar_t nValue, const String &sString)
 String operator +(int nValue, const String &sString)
 {
 	return (sString.GetFormat() == String::Unicode) ? String::Format(L"%d", nValue) + sString : String::Format("%d", nValue) + sString;
+}
+
+String operator +(int64 nValue, const String &sString)
+{
+	#ifdef WIN32
+		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%I64", nValue) + sString : String::Format("%I64", nValue) + sString;
+	#else
+		// [TODO] Is this working correctly on Linux or do we need something like
+		/*
+		#include <inttypes.h>
+		int64_t var;
+		sprintf (buf, "%" PRId64, var);
+		*/
+		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%ll", nValue) + sString : String::Format("%ll", nValue) + sString;
+	#endif
 }
 
 String operator +(uint8 nValue, const String &sString)
@@ -2960,6 +3036,29 @@ String &String::operator +=(wchar_t nValue)
 String &String::operator +=(int nValue)
 {
 	*this += String(nValue);
+	return *this;
+}
+
+String &String::operator +=(int64 nValue)
+{
+	// Set data
+	#ifdef WIN32
+		if (GetFormat() == Unicode)
+			*this += Format(L"%I64", nValue);
+		else
+			*this += Format("%I64", nValue);
+	#else
+		// [TODO] Is this working correctly on Linux or do we need something like
+		/*
+		#include <inttypes.h>
+		int64_t var;
+		sprintf (buf, "%" PRId64, var);
+		*/
+		if (GetFormat() == Unicode)
+			*this += Format(L"%ll", nValue);
+		else
+			*this += Format("%ll", nValue);
+	#endif
 	return *this;
 }
 

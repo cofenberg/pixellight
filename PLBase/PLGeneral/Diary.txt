@@ -1,3 +1,9 @@
+>> 13.05.2011
+[CO]
+- "String": Added "int64"-support
+
+
+
 >> 08.05.2011
 [CO]
 - A while ago, Stephan reported me an issue with double slashes within filenames - finally I found some time to have a look into it.

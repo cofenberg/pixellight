@@ -28,6 +28,7 @@
 #include <PLCore/Base/ClassManager.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLScript/Script.h"
+#include "PLScript/ScriptBinding.h"
 #include "PLScript/ScriptManager.h"
 
 
@@ -73,15 +74,34 @@ bool ScriptManager::IsSupported(const String &sScriptLanguage)
 
 /**
 *  @brief
+*    Returns a list of all script binding instances
+*/
+const Array<ScriptBinding*> &ScriptManager::GetScriptBindings()
+{
+	RegisterClasses();
+	return m_lstScriptBindings;
+}
+
+/**
+*  @brief
 *    Creates a script instance
 */
-Script *ScriptManager::Create(const String &sScriptLanguage)
+Script *ScriptManager::Create(const String &sScriptLanguage, bool bAddBindings)
 {
-	// Get the proper script class and create an instance of it
+	// Get the proper script class
 	RegisterClasses();
 	const Class *pClass = m_mapScriptLanguages.Get(sScriptLanguage);
-	if (pClass)
-		return reinterpret_cast<Script*>(pClass->Create());
+	if (pClass) {
+		// Create an instance of the script class
+		Script *pScript = reinterpret_cast<Script*>(pClass->Create());
+
+		// Bind all available script bindings at once?
+		if (bAddBindings)
+			pScript->AddBindings();
+
+		// Return the created script instance
+		return pScript;
+	}
 
 	// Error!
 	return nullptr;
@@ -91,10 +111,10 @@ Script *ScriptManager::Create(const String &sScriptLanguage)
 *  @brief
 *    Creates a script instance by using a given filename
 */
-Script *ScriptManager::CreateFromFile(const String &sFilename)
+Script *ScriptManager::CreateFromFile(const String &sFilename, bool bAddBindings)
 {
 	// Create the script instance by using the extension of the given filename to detect the script language
-	Script *pScript = Create(GetScriptLanguageByExtension(Url(sFilename).GetExtension()));
+	Script *pScript = Create(GetScriptLanguageByExtension(Url(sFilename).GetExtension()), bAddBindings);
 	if (pScript) {
 		// Get the script source code
 		const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
@@ -125,12 +145,21 @@ ScriptManager::ScriptManager() :
 	// The script manager MUST be informed if new classes are registered in order to register new script languages!
 	ClassManager::GetInstance()->EventClassLoaded.Connect(&SlotClassLoaded);
 
-	// Register all script languages
-	List<const Class*> lstClasses;
-	ClassManager::GetInstance()->GetClasses(lstClasses, "PLScript::Script", Recursive, NoBase, NoAbstract);
-	Iterator<const Class*> cIterator = lstClasses.GetIterator();
-	while (cIterator.HasNext())
-		m_lstNewClasses.Add(cIterator.Next());
+	{ // Register all script languages
+		List<const Class*> lstClasses;
+		ClassManager::GetInstance()->GetClasses(lstClasses, "PLScript::Script", Recursive, NoBase, NoAbstract);
+		Iterator<const Class*> cIterator = lstClasses.GetIterator();
+		while (cIterator.HasNext())
+			m_lstNewClasses.Add(cIterator.Next());
+	}
+
+	{ // Register all script bindings
+		List<const Class*> lstClasses;
+		ClassManager::GetInstance()->GetClasses(lstClasses, "PLScript::ScriptBinding", Recursive, NoBase, NoAbstract);
+		Iterator<const Class*> cIterator = lstClasses.GetIterator();
+		while (cIterator.HasNext())
+			m_lstNewClasses.Add(cIterator.Next());
+	}
 }
 
 /**
@@ -139,6 +168,9 @@ ScriptManager::ScriptManager() :
 */
 ScriptManager::~ScriptManager()
 {
+	// Destroy all script binding instances
+	for (uint32 i=0; i<m_lstScriptBindings.GetNumOfElements(); i++)
+		delete m_lstScriptBindings[i];
 }
 
 
@@ -170,8 +202,9 @@ void ScriptManager::RegisterClasses()
 			const Class *pClass = cIterator.Next();
 
 			// Check parameter and base class
-			static const String sClassString = "PLScript::Script";
-			if (pClass->IsDerivedFrom(sClassString)) {
+			static const String sScriptClassString = "PLScript::Script";
+			static const String sScriptBindingClassString = "PLScript::ScriptBinding";
+			if (pClass->IsDerivedFrom(sScriptClassString)) {
 				// Register script language
 				const String sLanguage = pClass->GetProperties().Get("Language");
 				if (sLanguage.GetLength() && !m_mapScriptLanguages.Get(sLanguage)) {
@@ -193,6 +226,9 @@ void ScriptManager::RegisterClasses()
 						cTokenizer.Stop();
 					}
 				}
+			} else if (pClass->IsDerivedFrom(sScriptBindingClassString)) {
+				// Create an script binding instance
+				m_lstScriptBindings.Add(static_cast<ScriptBinding*>(pClass->Create()));
 			}
 		}
 		m_lstNewClasses.Clear();

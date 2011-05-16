@@ -44,7 +44,7 @@ class Type< InvalidType<T> > {
 		typedef T _Type;
 
 		// Type ID
-		static const int TypeID = -1;
+		static const int TypeID = TypeInvalid;
 
 		// Get type name
 		static PLGeneral::String GetTypeName()
@@ -68,7 +68,7 @@ class Type< InvalidType< InvalidType<T> > > {
 		typedef T _Type;
 
 		// Type ID
-		static const int TypeID = -1;
+		static const int TypeID = TypeInvalid;
 
 		// Get type name
 		static PLGeneral::String GetTypeName()

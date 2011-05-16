@@ -28,14 +28,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-// Ensure that we never need a debug version of Python
-#ifdef _DEBUG
-	#undef _DEBUG
-	#include <Python/Python.h>
-	#define _DEBUG
-#else
-	#include <Python/Python.h>
-#endif
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4211) // "nonstandard extension used : redefined extern to static"
+	// Ensure that we never need a debug version of Python
+	#ifdef _DEBUG
+		#undef _DEBUG
+		#include <Python/Python.h>
+		#define _DEBUG
+	#else
+		#include <Python/Python.h>
+	#endif
+PL_WARNING_POP
 
 
 #endif // __PLSCRIPTPYTHON_PYTHON_H__

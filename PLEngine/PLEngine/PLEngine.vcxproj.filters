@@ -72,10 +72,7 @@
     <ClCompile Include="src\Script\SNMScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="src\Script\ScriptBindingTiming.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Script\ScriptBindingLog.cpp">
+    <ClCompile Include="src\Script\ScriptBindingScene.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,10 +131,7 @@
     <ClInclude Include="include\PLEngine\Script\SNMScript.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Script\ScriptBindingTiming.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Script\ScriptBindingLog.h">
+    <ClInclude Include="include\PLEngine\Script\ScriptBindingScene.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>

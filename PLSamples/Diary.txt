@@ -1,3 +1,34 @@
+>> 15.05.2011
+[CO]
+- Added "44ScriptOOP" (work in progress)
+  -> Right now the sample just runs a simple script function... but this script function is using OOP within the script itself.
+	 Took me some hours to figure out how to program OOP in Lua, Python, AngelScript and JavaScript. AngelScript was actually the
+	 most simple one because this language is quite similar to C++. OOP in Python works quite good - except that there's no support
+	 for private stuff, just a common naming convention. Lua and JavaScript gave me some headaches, especially JavaScript. Both languages
+	 have no native class support and therefore this feature has to be emulated by using the stuff the language is providing. In the
+	 end the Lua OOP source code was working quite well and was also still somewhat readable. I'am not really happy with OOP in JavaScript,
+	 there are a lot of "solutions", but one is more complicated and unreable than the other when it comes to define a class. Especially
+	 the "privileged method" thingy for private attributes is somewhat annoying.
+	 Ok, this was the first "OOP in scripts" session and I'am starting to get a feeling how to work with OOP in the different script
+	 languages.
+
+
+
+>> 13.05.2011
+[CO]
+- Renamed "41ScriptFunctors" into "42ScriptFunctors" (no, the reason for this rename wasn't the 42 itself)
+- Added "41ScriptGlobalVariables"
+- Added "43ScriptBindings"
+
+
+
+>> 11.05.2011
+[CO]
+- Renamed "40Script" into "41ScriptFunctors"
+- Added "40ScriptHelloWorld"
+
+
+
 >> 26.04.2011
 [CO]
 - Added "40Script"

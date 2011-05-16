@@ -1,4 +1,27 @@
-﻿>> 08.05.2011
+﻿>> 13.05.2011
+[CO]
+- "Script:" Added support for global variables. At first I thought about adding "GetGlobalVariable()" & "SetGlobalVariable()" versions
+  for the supported primitive data types - but this would result in a total copy'n'past overkill within the internal implementations. Those
+  string methods should do the job (the internal implementations try to don't change the script variable type).
+- Renamed "Script::AddDynamicFunction()" into "Script::AddGlobalFunction()" and "Script::RemoveAllDynamicFunctions()" into "Script::RemoveAllGlobalFunctions()"
+
+
+
+>> 12.05.2011
+[CO]
+- Added "PLScriptLua::Script::LuaStackDump()" which writes the current Lua stack content into the log
+
+
+
+>> 11.05.2011
+[CO]
+- The "ScriptManager" creates now instances of all found "ScriptBinding" classes
+- Added "Script::AddBindings()" to bind all available "ScriptBinding" instances at once
+- By default, "ScriptManager::Create()" and "ScriptManager::CreateFromFile()" binds all available "ScriptBinding" instances at once
+
+
+
+>> 08.05.2011
 [CO]
 - The AngelScript add on source codes are now within "External\Optional\AngelScript\add_on" directory instead within the to download external package. CMake told
   me that it wasn't able to find those add on source codes... because it was checking BEFORE downloading and extracting the external package. Maybe it's
