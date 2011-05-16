@@ -274,7 +274,7 @@ String Script::GetGlobalVariable(const String &sName)
 			if (PyString_Check(pPythonAttribute))
 				return PyString_AsString(pPythonAttribute);
 			else if (PyInt_Check(pPythonAttribute))
-				return PyInt_AsLong(pPythonAttribute);
+				return static_cast<int32>(PyInt_AsLong(pPythonAttribute));	// [TODO] Use int32 or int64? (currently int32 is used)
 			else if (PyFloat_Check(pPythonAttribute))
 				return PyFloat_AsDouble(pPythonAttribute);
 		}
@@ -607,7 +607,7 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 			if (PyString_Check(pPythonArgument))
 				sValue = PyString_AsString(pPythonArgument);
 			else if (PyInt_Check(pPythonArgument))
-				sValue = PyInt_AsLong(pPythonArgument);
+				sValue = static_cast<int32>(PyInt_AsLong(pPythonArgument));	// [TODO] Use int32 or int64? (currently int32 is used)
 			else if (PyFloat_Check(pPythonArgument))
 				sValue = PyFloat_AsDouble(pPythonArgument);
 
