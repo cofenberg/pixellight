@@ -108,7 +108,8 @@ MyRTTIClass::MyRTTIClass() :
 	MySignal(this),
 	SlotOnMyEvent(this),
 	Name(this),
-	Level(this)
+	Level(this),
+	m_sName("Bob")
 {
 }
 

@@ -522,6 +522,11 @@ void Script::PushArgument(const String &sString)
 	}
 }
 
+void Script::PushArgument(Object *pObject)
+{
+	// [TODO] Implement me
+}
+
 bool Script::EndCall()
 {
 	if (m_sCurrentFunction.GetLength()) {

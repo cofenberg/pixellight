@@ -9,6 +9,8 @@ define_project(PLScriptLua)
 add_sources(
 	src/PLScriptLua.cpp
 	src/LuaContext.cpp
+	src/LuaUserData.cpp
+	src/RTTIObjectPointer.cpp
 	src/Script.cpp
 )
 

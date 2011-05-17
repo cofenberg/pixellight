@@ -29,6 +29,7 @@
 #include <PLScript/Script.h>
 #include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
+#include "MyRTTIClass.h"
 #include "Application.h"
 
 
@@ -85,6 +86,18 @@ void Application::OOP(const String &sScriptFilename)
 
 		// Call the script function "OOP"
 		FuncScriptPtr<void>(pScript, "OOP").Call(Params<void>());
+
+		{ // RTTI object usage
+			// [TODO] Just a first test, using RTTI objects within scripts is still heavily work in progress
+			// Create the RTTI object instance
+			MyRTTIClass *pMyRTTIClass = new MyRTTIClass();
+
+			// Call the script function "UseCppRTTIObject"
+			FuncScriptPtr<void, Object*>(pScript, "UseCppRTTIObject").Call(Params<void, Object*>(pMyRTTIClass));
+
+			// Destroy the RTTI object instance
+			delete pMyRTTIClass;
+		}
 
 		// Cleanup
 		delete pScript;

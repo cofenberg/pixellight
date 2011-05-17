@@ -82,6 +82,24 @@ class Script : public PLScript::Script {
 		*/
 		PLSCRIPTLUA_API virtual ~Script();
 
+		/**
+		*  @brief
+		*    Returns the Lua state
+		*
+		*  @return
+		*    Lua state, can be a null pointer
+		*/
+		PLSCRIPTLUA_API lua_State *GetLuaState() const;
+
+		/**
+		*  @brief
+		*    Writes the current Lua stack content into the log
+		*
+		*  @note
+		*    - For debugging
+		*/
+		PLSCRIPTLUA_API void LuaStackDump();
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLScript::Script functions             ]
@@ -124,6 +142,7 @@ class Script : public PLScript::Script {
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTLUA_API virtual bool EndCall();
 		PLSCRIPTLUA_API virtual void GetReturn(bool &bValue);
 		PLSCRIPTLUA_API virtual void GetReturn(float &fValue);
@@ -207,15 +226,6 @@ class Script : public PLScript::Script {
 		*    - Do only call this method if m_pLuaState is valid and there was in fact an error
 		*/
 		void ReportErrors();
-
-		/**
-		*  @brief
-		*    Writes the current Lua stack content into the log
-		*
-		*  @note
-		*    - For debugging
-		*/
-		void LuaStackDump();
 
 		/**
 		*  @brief

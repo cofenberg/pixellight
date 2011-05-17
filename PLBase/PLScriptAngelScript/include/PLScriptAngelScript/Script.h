@@ -127,6 +127,7 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(bool &bValue);
 		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float &fValue);

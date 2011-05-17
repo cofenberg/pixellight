@@ -265,11 +265,15 @@ copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\LuaContext.cpp" />
+    <ClCompile Include="src\LuaUserData.cpp" />
+    <ClCompile Include="src\RTTIObjectPointer.cpp" />
     <ClCompile Include="src\Script.cpp" />
     <ClCompile Include="src\PLScriptLua.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScriptLua\LuaContext.h" />
+    <ClInclude Include="include\PLScriptLua\LuaUserData.h" />
+    <ClInclude Include="include\PLScriptLua\RTTIObjectPointer.h" />
     <ClInclude Include="include\PLScriptLua\Script.h" />
     <ClInclude Include="include\PLScriptLua\PLScriptLua.h" />
     <ClInclude Include="include\PLScriptLua\PLScriptLuaLinux.h" />

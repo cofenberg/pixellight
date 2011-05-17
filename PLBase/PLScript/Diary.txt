@@ -1,4 +1,11 @@
-﻿>> 13.05.2011
+﻿>> 17.05.2011
+[CO]
+- Added "Script::PushArgument(PLCore::Object *pObject)" and an experimental Lua implementation to get an idea how to access RTTI objects
+  directly within scripts *work in progress*
+
+
+
+>> 13.05.2011
 [CO]
 - "Script:" Added support for global variables. At first I thought about adding "GetGlobalVariable()" & "SetGlobalVariable()" versions
   for the supported primitive data types - but this would result in a total copy'n'past overkill within the internal implementations. Those

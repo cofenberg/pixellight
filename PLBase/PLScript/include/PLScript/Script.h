@@ -296,6 +296,7 @@ class Script : public PLCore::Object {
 		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint64 nValue) = 0;
 		virtual void PushArgument(const PLGeneral::String &sString) = 0;
+		virtual void PushArgument(PLCore::Object *pObject) = 0;
 
 		/**
 		*  @brief

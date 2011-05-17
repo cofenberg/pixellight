@@ -102,3 +102,15 @@ function OOP()
 	secondObject.b = 2
 	PL.System.Console.Print("secondObject.GetPrivateX() = " .. secondObject.GetPrivateX() .. "\n")
 end
+
+function UseCppRTTIObject(cppRTTIObject)
+	-- [TODO] Just a first test
+	PL.System.Console.Print("Property: cppRTTIObject.MyProperty = " .. cppRTTIObject.MyProperty .. "\n")
+	PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
+	PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
+	cppRTTIObject.Name = "Timmy!"
+	PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
+	PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
+	cppRTTIObject:SaySomethingWise()
+--	cppRTTIObject:IgnoreTheParameter(5) -- [TODO]
+end

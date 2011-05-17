@@ -30,6 +30,7 @@ extern "C" {
 }
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptLua/LuaContext.h"
+#include "PLScriptLua/RTTIObjectPointer.h"
 #include "PLScriptLua/Script.h"
 
 
@@ -77,6 +78,79 @@ Script::~Script()
 
 	// Release a context reference
 	LuaContext::ReleaseContextReference();
+}
+
+/**
+*  @brief
+*    Returns the Lua state
+*/
+lua_State *Script::GetLuaState() const
+{
+	return m_pLuaState;
+}
+
+/**
+*  @brief
+*    Writes the current Lua stack content into the log
+*/
+void Script::LuaStackDump()
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Get the number of elements on the Lua stack
+		const int nNumOfStackElements = lua_gettop(m_pLuaState);
+
+		// Write this number into the log
+		LogOutput(Log::Info, String("Number of elements on the Lua stack: ") + nNumOfStackElements);
+
+		// Iterate through the Lua stack
+		for (int i=1; i<=nNumOfStackElements; i++) {
+			const int nLuaType = lua_type(m_pLuaState, i);
+			String sValue;
+			switch (nLuaType) {
+				case LUA_TNIL:
+					sValue = "nil";
+					break;
+
+				case LUA_TNUMBER:
+					sValue = lua_tonumber(m_pLuaState, i);
+					break;
+
+				case LUA_TBOOLEAN:
+					sValue = lua_toboolean(m_pLuaState, i) ? "true" : "false";
+					break;
+
+				case LUA_TSTRING:
+					sValue = lua_tostring(m_pLuaState, i);
+					break;
+
+				case LUA_TTABLE:
+					sValue = "Table";
+					break;
+
+				case LUA_TFUNCTION:
+					sValue = "Function";
+					break;
+
+				case LUA_TUSERDATA:
+					sValue = "User data";
+					break;
+
+				case LUA_TTHREAD:
+					sValue = "Thread";
+					break;
+
+				case LUA_TLIGHTUSERDATA:
+					sValue = "Light user data";
+					break;
+
+				default:
+					sValue = "?";
+					break;
+			}
+			LogOutput(Log::Info, String("Lua stack element ") + (i-1) + ": \"" + sValue + "\" (Lua type name: \"" + lua_typename(m_pLuaState, nLuaType) + "\")");
+		}
+	}
 }
 
 
@@ -145,6 +219,9 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 			// Open all standard Lua libraries into the given state
 			luaL_openlibs(m_pLuaState);
+
+			// Create the metatable for LuaUserData events
+			LuaUserData::CreateMetatable(m_pLuaState);
 
 			// Add the global functions
 			for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
@@ -479,6 +556,13 @@ void Script::PushArgument(const String &sString)
 	}
 }
 
+void Script::PushArgument(Object *pObject)
+{
+	// The destruction of the new RTTIObjectPointer instance is done by the Lua garbage collector
+	new RTTIObjectPointer(*this, pObject);
+	m_nCurrentArgument++;
+}
+
 bool Script::EndCall()
 {
 	// Is there a Lua state?
@@ -786,70 +870,6 @@ void Script::ReportErrors()
 
 /**
 *  @brief
-*    Writes the current Lua stack content into the log
-*/
-void Script::LuaStackDump()
-{
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		// Get the number of elements on the Lua stack
-		const int nNumOfStackElements = lua_gettop(m_pLuaState);
-
-		// Write this number into the log
-		LogOutput(Log::Info, String("Number of elements on the Lua stack: ") + nNumOfStackElements);
-
-		// Iterate through the Lua stack
-		for (int i=1; i<=nNumOfStackElements; i++) {
-			const int nLuaType = lua_type(m_pLuaState, i);
-			String sValue;
-			switch (nLuaType) {
-				case LUA_TNIL:
-					sValue = "nil";
-					break;
-
-				case LUA_TNUMBER:
-					sValue = lua_tonumber(m_pLuaState, i);
-					break;
-
-				case LUA_TBOOLEAN:
-					sValue = lua_toboolean(m_pLuaState, i) ? "true" : "false";
-					break;
-
-				case LUA_TSTRING:
-					sValue = lua_tostring(m_pLuaState, i);
-					break;
-
-				case LUA_TTABLE:
-					sValue = "Table";
-					break;
-
-				case LUA_TFUNCTION:
-					sValue = "Function";
-					break;
-
-				case LUA_TUSERDATA:
-					sValue = "User data";
-					break;
-
-				case LUA_TTHREAD:
-					sValue = "Thread";
-					break;
-
-				case LUA_TLIGHTUSERDATA:
-					sValue = "Light user data";
-					break;
-
-				default:
-					sValue = "?";
-					break;
-			}
-			LogOutput(Log::Info, String("Lua stack element ") + (i-1) + ": \"" + sValue + "\" (Lua type name: \"" + lua_typename(m_pLuaState, nLuaType) + "\")");
-		}
-	}
-}
-
-/**
-*  @brief
 *    Clears the script
 */
 void Script::Clear()
@@ -864,6 +884,22 @@ void Script::Clear()
 			LogOutput(Log::Warning, "Script termination, but the stack is not empty");
 			LuaStackDump();
 		}
+
+		// Clear all global variables
+		while (true) {
+			lua_pushnil(m_pLuaState);
+			if (!lua_next(m_pLuaState, LUA_GLOBALSINDEX))
+				break;
+			lua_pop(m_pLuaState, 1);
+			lua_pushnil(m_pLuaState);
+			lua_rawset(m_pLuaState, LUA_GLOBALSINDEX);
+		}
+
+		// Force the garbage collector to cleanup right now... because required stuff like the LuaUserData metatable are still there at the moment...
+		lua_gc(m_pLuaState, LUA_GCCOLLECT, 0);
+
+		// Destroy the metatable for LuaUserData events
+		LuaUserData::DestroyMetatable(m_pLuaState);
 
 		// Close the Lua state
 		lua_close(m_pLuaState);

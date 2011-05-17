@@ -192,6 +192,11 @@ void Script::PushArgument(const String &sString)
 	// Nothing to do in here
 }
 
+void Script::PushArgument(Object *pObject)
+{
+	// Nothing to do in here
+}
+
 bool Script::EndCall()
 {
 	// Nothing to do in here

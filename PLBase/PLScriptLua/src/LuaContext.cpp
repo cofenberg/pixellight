@@ -74,4 +74,4 @@ void LuaContext::ReleaseContextReference()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScriptAngelScript
+} // PLScriptLua
