@@ -30,10 +30,11 @@ extern "C" {
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
+#include "PLScriptLua/RTTIObjectSignalPointer.h"
 #include "PLScriptLua/RTTIObjectPointer.h"
 
 
-// [TODO] Signal, Slot, Enum
+// [TODO] Slot, Enum
 
 
 //[-------------------------------------------------------]
@@ -49,7 +50,7 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Constructor
 */
 RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject) : LuaUserData(cScript),
 	m_pRTTIObject(pRTTIObject)
@@ -109,8 +110,11 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 				// Done
 				return 1;
 			} else {
+
+				// [TODO] Currently methods and signals may have name conflicts because their usage is identical (but that's a general 'problem'...)
+
 				// Is it a method?
-				DynFunc *pDynFunc = m_pRTTIObject->GetMethod(lua_tostring(pLuaState, 2));
+				DynFunc *pDynFunc = m_pRTTIObject->GetMethod(sName);
 				if (pDynFunc) {
 					// It's a method... just put another user data instance on the Lua stack...
 					// The destruction of the new RTTIObjectMethodPointer instance is done by the Lua garbage collector
@@ -118,6 +122,17 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 
 					// Done
 					return 1;
+				} else {
+					// Is it a signal?
+					DynEvent *pDynEvent = m_pRTTIObject->GetSignal(sName);
+					if (pDynEvent) {
+						// It's a signal... just put another user data instance on the Lua stack...
+						// The destruction of the new RTTIObjectSignalPointer instance is done by the Lua garbage collector
+						new RTTIObjectSignalPointer(*m_pScript, m_pRTTIObject, pDynEvent);
+
+						// Done
+						return 1;
+					}
 				}
 			}
 		}

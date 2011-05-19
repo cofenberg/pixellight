@@ -105,12 +105,21 @@ end
 
 function UseCppRTTIObject(cppRTTIObject)
 	-- [TODO] Just a first test
+
+	-- Access RTTI object property
 	PL.System.Console.Print("Property: cppRTTIObject.MyProperty = " .. cppRTTIObject.MyProperty .. "\n")
+
+	-- Access RTTI object attributes
 	PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
 	PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
 	cppRTTIObject.Name = "Timmy!"
 	PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
 	PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
+
+	-- Call RTTI object methods
 	cppRTTIObject:SaySomethingWise()
 	cppRTTIObject:IgnoreTheParameter(5)
+
+	-- Emit RTTI object signal
+	cppRTTIObject:MySignal("Lua")
 end

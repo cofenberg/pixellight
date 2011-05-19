@@ -48,7 +48,8 @@ using namespace PLScript;
 *  @brief
 *    Constructor
 */
-Application::Application() : ConsoleApplication()
+Application::Application() : ConsoleApplication(),
+	EventHandlerMySignal(&Application::NotifyMySignal, this)
 {
 	// Set application name and title
 	SetName("44ScriptOOP");
@@ -92,6 +93,9 @@ void Application::OOP(const String &sScriptFilename)
 			// Create the RTTI object instance
 			MyRTTIClass *pMyRTTIClass = new MyRTTIClass();
 
+			// Connect event handler
+			pMyRTTIClass->MySignal.Connect(&EventHandlerMySignal);
+
 			// Call the script function "UseCppRTTIObject"
 			FuncScriptPtr<void, Object*>(pScript, "UseCppRTTIObject").Call(Params<void, Object*>(pMyRTTIClass));
 
@@ -108,6 +112,15 @@ void Application::OOP(const String &sScriptFilename)
 		// Error!
 		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
 	}
+}
+
+/**
+*  @brief
+*    Called on MySignal signal
+*/
+void Application::NotifyMySignal(String sParameter)
+{
+	System::GetInstance()->GetConsole().Print(sParameter + " emitted MySignal signal\n");
 }
 
 

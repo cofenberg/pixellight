@@ -56,7 +56,7 @@ class MyRTTIClass : public PLCore::Object {
 		pl_method_1(IgnoreTheParameter,	void, float,	"Ignores the provided parameter",	"")
 		pl_method_0(SaySomethingWise,	void,			"Says something wise",				"")
 		// Signals
-		pl_signal_0(MySignal, "My signal, automatically emitted after the name was changed", "")
+		pl_signal_1(MySignal, PLGeneral::String, "My signal, automatically emitted after the name was changed", "")
 		// Slots
 		pl_slot_0(OnMyEvent, "My slot", "")
 		// Attributes

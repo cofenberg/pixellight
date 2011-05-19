@@ -31,6 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 using namespace PLGeneral;
 
 
@@ -90,7 +91,7 @@ void MyRTTIClass::SetName(const String &sName)
 	m_sName = sName;
 
 	// Emit the signal
-	MySignal.Emit();
+	MySignal("C++");
 }
 
 

@@ -71,12 +71,28 @@ class Application : public PLCore::ConsoleApplication {
 		*/
 		void OOP(const PLGeneral::String &sScriptFilename);
 
+		/**
+		*  @brief
+		*    Called on MySignal signal
+		*
+		*  @param[in] sParameter
+		*    Signal parameter
+		*/
+		void NotifyMySignal(PLGeneral::String sParameter);
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ConsoleApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void Main();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLGeneral::String> EventHandlerMySignal;
 
 
 };

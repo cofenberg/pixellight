@@ -67,10 +67,10 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*    The owner script instance
 		*  @param[in] pRTTIObject
 		*    Pointer the the RTTI object to wrap, can be a null pointer
-		*  @param[in] pDynVar
+		*  @param[in] pDynFunc
 		*    Pointer the the RTTI object method to wrap, can be a null pointer
 		*/
-		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFunc *pDynVar);
+		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFunc *pDynFunc);
 
 		/**
 		*  @brief
@@ -90,7 +90,7 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::DynFunc *m_pDynFunc;	/**< Pointer the the RTTI object method to wrap, always valid! */
+		PLCore::DynFunc *m_pDynFunc;	/**< Pointer the the RTTI object method to wrap, can be a null pointer */
 
 
 };

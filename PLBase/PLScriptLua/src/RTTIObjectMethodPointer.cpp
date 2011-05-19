@@ -45,7 +45,7 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Constructor
 */
 RTTIObjectMethodPointer::RTTIObjectMethodPointer(Script &cScript, Object *pRTTIObject, DynFunc *pDynFunc) : RTTIObjectPointer(cScript, pRTTIObject),
 	m_pDynFunc(pDynFunc)
@@ -66,9 +66,7 @@ RTTIObjectMethodPointer::~RTTIObjectMethodPointer()
 //[-------------------------------------------------------]
 void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 {
-	m_pScript->LuaStackDump();
-
-	// Is there a RTTI object and a RTTI method?
+	// Is there a RTTI object and a RTTI object method?
 	if (m_pRTTIObject && m_pDynFunc) {
 		// Get the number of arguments Lua gave to us
 		String sParams;
