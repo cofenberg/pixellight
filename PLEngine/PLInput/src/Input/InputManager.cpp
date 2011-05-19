@@ -90,7 +90,7 @@ void InputManager::DetectDevices(bool bReset)
 	if (bReset) Clear();
 
 	// Send event that device detection has started
-	EventOnDetectDevices.Emit(true);
+	EventOnDetectDevices(true);
 
 	// [HACK] ProviderWindowsJoystick must be detected after InputHID, otherwise everything will be detected just as joysticks
 	bool bWindowsJoystick = false;
@@ -113,7 +113,7 @@ void InputManager::DetectDevices(bool bReset)
 	if (bWindowsJoystick) DetectProvider("PLInput::LegacyJoystickProvider", bReset);
 
 	// Send event that device detection has stopped
-	EventOnDetectDevices.Emit(false);
+	EventOnDetectDevices(false);
 
 	// Done
 	PL_LOG(Info, "InputManager: Detecting done.")

@@ -197,7 +197,7 @@ bool BTDeviceLinux::Open(uint16 nOutputPort, uint16 nInputPort)
 			InitThread();
 
 			// Device connected
-			EventOnConnect.Emit();
+			EventOnConnect();
 
 			return true;
 		}
@@ -213,7 +213,7 @@ bool BTDeviceLinux::Close()
 	StopThread();
 
 	// Device disconnected
-	EventOnDisconnect.Emit();
+	EventOnDisconnect();
 
 	// Close sockets
 	close(m_nCtrlSocket);
@@ -237,7 +237,7 @@ bool BTDeviceLinux::Read(uint8 *pBuffer, uint32 nSize)
 		if (nTemp[0] == (TransData | ParamInput)) {
 			memcpy(pBuffer, &nTemp[1], nRes-1);
 			UnlockMutex();
-			EventOnRead.Emit();
+			EventOnRead();
 			return true;
 		}
 	}

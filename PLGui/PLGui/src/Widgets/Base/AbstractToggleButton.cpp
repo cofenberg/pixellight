@@ -176,7 +176,7 @@ void AbstractToggleButton::Toggle()
 void AbstractToggleButton::OnButtonToggled(ECheckState nChecked)
 {
 	// Send toggled-event
-	EventToggled.Emit(nChecked);
+	EventToggled(nChecked);
 }
 
 

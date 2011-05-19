@@ -132,12 +132,12 @@ void Surface::Update()
 	// Is this surface active and is there a surface painter?
 	if (m_bActive && m_pPainter) {
 		// Emit paint begin event
-		EventPaintBegin.Emit();
+		EventPaintBegin();
 
 		// Begin paint
 		if (m_pPainter->OnPaintBegin(*this)) {
 			// Emit paint event
-			EventPaint.Emit();
+			EventPaint();
 
 			// Paint
 			m_pPainter->OnPaint(*this);
@@ -147,7 +147,7 @@ void Surface::Update()
 		}
 
 		// Emit paint end event
-		EventPaintEnd.Emit();
+		EventPaintEnd();
 	}
 }
 

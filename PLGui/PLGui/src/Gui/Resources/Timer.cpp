@@ -151,7 +151,7 @@ void Timer::Start(uint64 nTimeout)
 	m_pThread->Start();
 
 	// Emit Start-Event
-	EventStart.Emit();
+	EventStart();
 }
 
 /**
@@ -173,7 +173,7 @@ void Timer::StartOnce(uint64 nTimeout)
 	m_pThread->Start();
 
 	// Emit Start-Event
-	EventStart.Emit();
+	EventStart();
 }
 
 /**
@@ -190,7 +190,7 @@ void Timer::Stop()
 		m_pThread = nullptr;
 
 		// Emit Stop-Event
-		EventStop.Emit();
+		EventStop();
 
 		// Timer stopped
 		m_bActive = false;
@@ -208,7 +208,7 @@ void Timer::Stop()
 void Timer::Fire()
 {
 	// Emit event
-	EventFire.Emit();
+	EventFire();
 }
 
 

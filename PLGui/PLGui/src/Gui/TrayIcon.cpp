@@ -197,7 +197,7 @@ void TrayIcon::ShowNotification(const String &sTitle, const String &sText)
 void TrayIcon::OnMouseMove(const Vector2i &vPos)
 {
 	// Call event
-	EventMouseMove.Emit(vPos);
+	EventMouseMove(vPos);
 }
 
 /**
@@ -207,7 +207,7 @@ void TrayIcon::OnMouseMove(const Vector2i &vPos)
 void TrayIcon::OnMouseButtonDown(uint32 nButton, const Vector2i &vPos)
 {
 	// Call event
-	EventMouseButtonDown.Emit(nButton, vPos);
+	EventMouseButtonDown(nButton, vPos);
 }
 
 /**
@@ -217,7 +217,7 @@ void TrayIcon::OnMouseButtonDown(uint32 nButton, const Vector2i &vPos)
 void TrayIcon::OnMouseButtonUp(uint32 nButton, const Vector2i &vPos)
 {
 	// Call event
-	EventMouseButtonUp.Emit(nButton, vPos);
+	EventMouseButtonUp(nButton, vPos);
 }
 
 /**
@@ -227,7 +227,7 @@ void TrayIcon::OnMouseButtonUp(uint32 nButton, const Vector2i &vPos)
 void TrayIcon::OnMouseButtonClick(uint32 nButton, const Vector2i &vPos)
 {
 	// Call event
-	EventMouseButtonClick.Emit(nButton, vPos);
+	EventMouseButtonClick(nButton, vPos);
 }
 
 /**
@@ -237,7 +237,7 @@ void TrayIcon::OnMouseButtonClick(uint32 nButton, const Vector2i &vPos)
 void TrayIcon::OnMouseButtonDoubleClick(uint32 nButton, const Vector2i &vPos)
 {
 	// Call event
-	EventMouseButtonDoubleClick.Emit(nButton, vPos);
+	EventMouseButtonDoubleClick(nButton, vPos);
 }
 
 

@@ -223,7 +223,7 @@ bool SceneNode::SetContainer(SceneContainer &cSceneContainer)
 		cSceneContainer.Add(*this, GetName(), false);
 
 		// Emit event
-		EventContainer.Emit();
+		EventContainer();
 	}
 
 	// Done
@@ -362,7 +362,7 @@ void SceneNode::SetActive(bool bActive)
 			OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
 
 			// Emit event
-			EventActive.Emit();
+			EventActive();
 		}
 	}
 }
@@ -394,7 +394,7 @@ void SceneNode::SetVisible(bool bVisible)
 			m_nFlags |=  Invisible;
 
 		// Emit event
-		EventVisible.Emit();
+		EventVisible();
 	}
 }
 
@@ -579,7 +579,7 @@ void SceneNode::SetAABoundingBox(const AABoundingBox &cAABoundingBox)
 	}
 
 	// Emit event
-	EventAABoundingBox.Emit();
+	EventAABoundingBox();
 }
 
 /**
@@ -868,7 +868,7 @@ PLInput::Controller *SceneNode::GetInputController() const
 void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Emit event
-	EventDrawPre.Emit(cRenderer, pVisNode);
+	EventDrawPre(cRenderer, pVisNode);
 }
 
 /**
@@ -878,7 +878,7 @@ void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Emit event
-	EventDrawSolid.Emit(cRenderer, pVisNode);
+	EventDrawSolid(cRenderer, pVisNode);
 }
 
 /**
@@ -888,7 +888,7 @@ void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Emit event
-	EventDrawTransparent.Emit(cRenderer, pVisNode);
+	EventDrawTransparent(cRenderer, pVisNode);
 }
 
 /**
@@ -900,7 +900,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 	// Inform listeners?
 	if (!(m_nDebugFlags & DebugNoDrawEvent)) {
 		// Emit event
-		EventDrawDebug.Emit(cRenderer, pVisNode);
+		EventDrawDebug(cRenderer, pVisNode);
 	}
 
 	// Draw
@@ -1061,7 +1061,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 void SceneNode::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Emit event
-	EventDrawPost.Emit(cRenderer, pVisNode);
+	EventDrawPost(cRenderer, pVisNode);
 }
 
 
@@ -1132,7 +1132,7 @@ void SceneNode::InitFunction()
 		m_nInternalFlags |= Initialized;
 
 		// Emit event
-		EventInit.Emit();
+		EventInit();
 
 		// Call the "OnActivate()"-method
 		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
@@ -1149,7 +1149,7 @@ void SceneNode::DeInitFunction()
 	m_nInternalFlags &= ~Initialized;
 
 	// Emit event
-	EventDeInit.Emit();
+	EventDeInit();
 
 	// Clear modifiers
 	ClearModifiers();
@@ -1239,7 +1239,7 @@ void SceneNode::GetContainerBoundingSphere(Sphere &cSphere)
 void SceneNode::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
 	// Emit event
-	EventAddedToVisibilityTree.Emit(cVisNode);
+	EventAddedToVisibilityTree(cVisNode);
 }
 
 
@@ -1346,7 +1346,7 @@ bool SceneNode::Delete(bool bProtectedToo)
 		m_nInternalFlags |= DestroyThis;
 
 		// Emit event
-		EventDestroy.Emit();
+		EventDestroy();
 
 		// Is this scene node within a container?
 		if (GetContainer()) {

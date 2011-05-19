@@ -79,7 +79,7 @@ class Event : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -141,11 +141,11 @@ class Event : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-					 cP.Param15);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
+						cP.Param15);
 			}
 		}
 
@@ -156,11 +156,11 @@ class Event : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-					 cP.Param15);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
+						cP.Param15);
 			}
 		}
 
@@ -214,7 +214,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -275,10 +275,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
 			}
 		}
 
@@ -289,10 +289,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
 			}
 		}
 
@@ -345,7 +345,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -405,10 +405,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
 			}
 		}
 
@@ -419,10 +419,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
 			}
 		}
 
@@ -474,7 +474,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -533,10 +533,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12);
 			}
 		}
 
@@ -547,10 +547,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12);
 			}
 		}
 
@@ -601,7 +601,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -659,10 +659,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11);
 			}
 		}
 
@@ -673,10 +673,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11);
 			}
 		}
 
@@ -726,7 +726,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -783,10 +783,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10);
 			}
 		}
 
@@ -797,10 +797,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10);
 			}
 		}
 
@@ -849,7 +849,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -905,9 +905,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
 			}
 		}
 
@@ -918,9 +918,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
 			}
 		}
 
@@ -968,7 +968,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1023,9 +1023,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
 			}
 		}
 
@@ -1036,9 +1036,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
 			}
 		}
 
@@ -1085,7 +1085,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1139,9 +1139,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7);
 			}
 		}
 
@@ -1152,9 +1152,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7);
 			}
 		}
 
@@ -1200,7 +1200,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1253,9 +1253,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6);
 			}
 		}
 
@@ -1266,9 +1266,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6);
 			}
 		}
 
@@ -1313,7 +1313,7 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1365,9 +1365,9 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5);
 			}
 		}
 
@@ -1378,9 +1378,9 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5);
 			}
 		}
 
@@ -1424,7 +1424,7 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1475,8 +1475,8 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
 			}
 		}
 
@@ -1487,8 +1487,8 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
 			}
 		}
 
@@ -1531,7 +1531,7 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1581,8 +1581,8 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
 			}
 		}
 
@@ -1593,8 +1593,8 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
 			}
 		}
 
@@ -1636,7 +1636,7 @@ class Event<T0, T1, T2> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1685,8 +1685,8 @@ class Event<T0, T1, T2> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
 			}
 		}
 
@@ -1697,8 +1697,8 @@ class Event<T0, T1, T2> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
 			}
 		}
 
@@ -1739,7 +1739,7 @@ class Event<T0, T1> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1) const
+		virtual void operator ()(_T0 t0, _T1 t1) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1787,8 +1787,8 @@ class Event<T0, T1> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1);
 			}
 		}
 
@@ -1799,8 +1799,8 @@ class Event<T0, T1> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1);
 			}
 		}
 
@@ -1842,7 +1842,7 @@ class Event<T0> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0) const
+		virtual void operator ()(_T0 t0) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1889,8 +1889,8 @@ class Event<T0> : public DynEvent {
 				// Get typed params
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0);
+				// Emit event
+				(*this)(cP.Param0);
 			}
 		}
 
@@ -1901,8 +1901,8 @@ class Event<T0> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0);
+				// Emit event
+				(*this)(cP.Param0);
 			}
 		}
 
@@ -1941,7 +1941,7 @@ class Event<> : public DynEvent {
 		{
 		}
 
-		virtual void Emit() const
+		virtual void operator ()() const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1983,8 +1983,8 @@ class Event<> : public DynEvent {
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
-				// Call function
-				Emit();
+				// Emit event
+				(*this)();
 			}
 		}
 
@@ -1992,8 +1992,8 @@ class Event<> : public DynEvent {
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
-				// Call function
-				Emit();
+				// Emit event
+				(*this)();
 			}
 		}
 

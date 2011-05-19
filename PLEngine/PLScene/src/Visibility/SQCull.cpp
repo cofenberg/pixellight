@@ -772,7 +772,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					m_bSetIdentityWorldMatrix = true;
 
 					// Emit event
-					EventSceneNode.Emit(*this, *pSceneNode);
+					EventSceneNode(*this, *pSceneNode);
 					if (m_nFlags & StopQuery) {
 						m_lstNodeDistanceQueue.Clear();
 
@@ -1096,7 +1096,7 @@ bool SQCull::PerformQuery()
 /*		Iterator<SceneNode*> cIterator = m_lstVisibleSceneNodes.GetIterator();
 		while (cIterator.HasNext()) {
 			// Emit event
-			EventSceneNode.Emit(*this, **cIterator.Next());
+			EventSceneNode(*this, **cIterator.Next());
 
 			InformOnSceneNode(**cIterator.Next());
 		}*/

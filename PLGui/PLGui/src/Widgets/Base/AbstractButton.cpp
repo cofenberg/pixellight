@@ -391,7 +391,7 @@ void AbstractButton::PressButton()
 		m_bPressed = true;
 
 		// Send pressed-event
-		EventPressed.Emit();
+		EventPressed();
 
 		// Call virtual function
 		OnButtonPressed();
@@ -418,7 +418,7 @@ void AbstractButton::ReleaseButton(bool bClick)
 		m_bPressed = false;
 
 		// Send released-event
-		EventReleased.Emit();
+		EventReleased();
 
 		// Call virtual function
 		OnButtonReleased();
@@ -429,7 +429,7 @@ void AbstractButton::ReleaseButton(bool bClick)
 		// Button clicked
 		if (bClick) {
 			// Send clicked-event
-			EventClicked.Emit();
+			EventClicked();
 
 			// Call virtual function
 			OnButtonClicked();
@@ -453,7 +453,7 @@ void AbstractButton::OnTimer()
 	}
 
 	// Send clicked-event
-	EventClicked.Emit();
+	EventClicked();
 
 	// Call virtual function
 	OnButtonClicked();

@@ -483,13 +483,13 @@ void Application::TestEvents()
 	System::GetInstance()->GetConsole().Print("Calling events:\n");
 
 	System::GetInstance()->GetConsole().Print("- MyEvent(0, 0):        ");
-	MyEvent.Emit(0, 0);
+	MyEvent(0, 0);
 
 	System::GetInstance()->GetConsole().Print("- MyEvent(10, 20):      ");
-	MyEvent.Emit(10, 20);
+	MyEvent(10, 20);
 
 	System::GetInstance()->GetConsole().Print("- MyEvent(100, 1):      ");
-	MyEvent.Emit(100, 1);
+	MyEvent(100, 1);
 
 	System::GetInstance()->GetConsole().Print("- MyEvent(100, 101):    ");
 	MyEvent.Emit(PLCore::Params<void, int, int>(100, 101));
@@ -499,7 +499,7 @@ void Application::TestEvents()
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("- MyEvent2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1): ");
-	MyEvent2.Emit(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+	MyEvent2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 	System::GetInstance()->GetConsole().Print('\n');
 
@@ -760,7 +760,7 @@ void Application::TestObjects()
 
 		// Emit directly (accessing the actual Signal)
 	System::GetInstance()->GetConsole().Print("Emitting cObject.Event1(100, 200): ");
-	cObject.Event1.Emit(100, 200);
+	cObject.Event1(100, 200);
 	System::GetInstance()->GetConsole().Print('\n');
 
 		// Emit dynamically (accessing the signal only indirectly by DynSignal)

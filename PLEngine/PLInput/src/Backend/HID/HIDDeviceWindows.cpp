@@ -174,7 +174,7 @@ bool HIDDeviceWindows::Open(uint16 nOutputPort, uint16 nInputPort)
 		InitThread();
 
 		// Call event
-		EventOnConnect.Emit();
+		EventOnConnect();
 
 		// Done
 		return true;
@@ -192,7 +192,7 @@ bool HIDDeviceWindows::Close()
 		StopThread();
 
 		// Call event
-		EventOnDisconnect.Emit();
+		EventOnDisconnect();
 
 		// Close handle
 		bool bResult = (CloseHandle(m_hDevice) != 0);
@@ -265,7 +265,7 @@ void CALLBACK HIDDeviceWindows::OnReadComplete(DWORD nErrorCode, DWORD nNumberOf
 	HIDDeviceWindows *pThis = reinterpret_cast<ExtendedOverlapped*>(pOverlapped)->pDevice;
 	if (pThis) {
 		// Data has been read
-		pThis->EventOnRead.Emit();
+		pThis->EventOnRead();
 	}
 }
 

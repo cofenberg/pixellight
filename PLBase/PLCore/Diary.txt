@@ -3,6 +3,12 @@
 - DynEvent: Added "void Emit(const PLGeneral::String &sParams)" and "void Emit(const PLGeneral::XmlElement &cElement)" to make it possible to emit
   events when one just has a DynEvent pointer
 - Added "GetNumOfParameters()" and "GetParameterTypeID()" to "DynEvent" to make it possible to request some more information about the dynamic function
+- Warning, breaking event change: I had to change "void Emit(_T0 t0, _T1 t1)" into "void operator ()(_T0 t0, _T1 t1)" etc. because when not doing so, the compiler
+  failed to see the difference between e.g. "Emit(String)" and "Emit(String)", ok, maybe there isn't one. This issue has to do with the
+  "void Emit(const PLGeneral::String &sParams)" change above - but those non typed call methods are really required. I don't wanted to rename those methods
+  into e.g. "void EmitString(const PLGeneral::String &sParams)" because it felt unnatural to me and by the way, "DynEvent" is quite similar to "DynFunc" -
+  at least within the usage. Whenever possible I try to avoid such breaking changes, but sometimes they are required to avoid that stuff gets uggly.
+  So, to call e.g. an event named "MyEvent" call "MyEvent()" (if you have ever used boost, you are already familiar with this way :) instead of "MyEvent.Emit()".
 
 
 

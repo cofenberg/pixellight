@@ -590,7 +590,7 @@ void World::UpdateSimulation()
 				PLPhysics::Body *pBody = (PLPhysics::Body*)pActors[i].userData;
 				if (pBody) {
 					// Emit event
-					pBody->EventTransform.Emit();
+					pBody->EventTransform();
 				}
 			}
 
@@ -633,7 +633,7 @@ bool World::onContactConstraint(NxU32 &nChangeFlags, const NxShape *pShape0, con
 					PLPhysics::ContactInformation cContactInformation(*pBody0, *pBody1);
 
 					// Emit event
-					EventContact.Emit(cContactInformation);
+					EventContact(cContactInformation);
 
 					// Use this contact?
 					return !cContactInformation.IsContactIgnored();

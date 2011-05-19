@@ -310,7 +310,7 @@ void TrayIconWidgetLinux::OnMouseMove(const Vector2i &vPos)
 {
 	// Issue tray icon event
 	if (m_pTrayIcon) {
-		m_pTrayIcon->EventMouseMove.Emit(vPos);
+		m_pTrayIcon->EventMouseMove(vPos);
 	}
 }
 
@@ -318,7 +318,7 @@ void TrayIconWidgetLinux::OnMouseButtonDown(uint32 nButton, const Vector2i &vPos
 {
 	// Issue tray icon event
 	if (m_pTrayIcon) {
-		m_pTrayIcon->EventMouseButtonDown.Emit(nButton, vPos);
+		m_pTrayIcon->EventMouseButtonDown(nButton, vPos);
 	}
 }
 
@@ -326,7 +326,7 @@ void TrayIconWidgetLinux::OnMouseButtonUp(uint32 nButton, const Vector2i &vPos)
 {
 	// Issue tray icon event
 	if (m_pTrayIcon) {
-		m_pTrayIcon->EventMouseButtonUp.Emit(nButton, vPos);
+		m_pTrayIcon->EventMouseButtonUp(nButton, vPos);
 	}
 }
 
@@ -334,7 +334,7 @@ void TrayIconWidgetLinux::OnMouseButtonClick(uint32 nButton, const Vector2i &vPo
 {
 	// Issue tray icon event
 	if (m_pTrayIcon) {
-		m_pTrayIcon->EventMouseButtonClick.Emit(nButton, vPos);
+		m_pTrayIcon->EventMouseButtonClick(nButton, vPos);
 	}
 }
 
@@ -342,7 +342,7 @@ void TrayIconWidgetLinux::OnMouseButtonDoubleClick(uint32 nButton, const Vector2
 {
 	// Issue tray icon event
 	if (m_pTrayIcon) {
-		m_pTrayIcon->EventMouseButtonDoubleClick.Emit(nButton, vPos);
+		m_pTrayIcon->EventMouseButtonDoubleClick(nButton, vPos);
 	}
 }
 

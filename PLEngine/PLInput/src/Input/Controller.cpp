@@ -129,7 +129,7 @@ void Controller::SetActive(bool bActive)
 		m_bActive = bActive;
 
 		// Emit event
-		OnActivate.Emit(m_bActive);
+		OnActivate(m_bActive);
 	}
 }
 
@@ -357,7 +357,7 @@ void Controller::InformControl(Control *pControl)
 		}
 
 		// Emit event
-		OnControl.Emit(pControl);
+		OnControl(pControl);
 
 		// Check connections
 		for (uint32 i=0; i<m_lstConnections.GetNumOfElements(); i++) {

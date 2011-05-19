@@ -503,7 +503,7 @@ void LayoutHints::SetSpacing(uint32 nSpacing)
 void LayoutHints::Update()
 {
 	// Call event
-	EventUpdate.Emit();
+	EventUpdate();
 }
 
 

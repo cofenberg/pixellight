@@ -85,7 +85,7 @@ void ButtonGroup::Activate(AbstractToggleButton &cButton)
 		m_pButton = &cButton;
 
 		// Send event that a new button is active
-		EventActivate.Emit(m_pButton);
+		EventActivate(m_pButton);
 	}
 }
 

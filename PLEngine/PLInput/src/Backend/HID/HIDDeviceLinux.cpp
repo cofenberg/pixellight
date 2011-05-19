@@ -73,7 +73,7 @@ bool HIDDeviceLinux::Open(uint16 nOutputPort, uint16 nInputPort)
 	InitThread();
 
 	// Call event
-	EventOnConnect.Emit();
+	EventOnConnect();
 
 	// Done
 	return true;
@@ -92,7 +92,7 @@ bool HIDDeviceLinux::Close()
 		StopThread();
 
 		// Call event
-		EventOnDisconnect.Emit();
+		EventOnDisconnect();
 
 		// Disconnect
 

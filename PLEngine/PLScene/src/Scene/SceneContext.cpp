@@ -177,7 +177,7 @@ void SceneContext::Update()
 		cStopwatch.Start();
 
 		// Emit event
-		EventUpdate.Emit();
+		EventUpdate();
 
 		// Stop the stopwatch
 		cStopwatch.Stop();
@@ -187,7 +187,7 @@ void SceneContext::Update()
 		pProfiling->Set("Scene context", "Update time",		 String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
 	} else {
 		// Emit event
-		EventUpdate.Emit();
+		EventUpdate();
 	}
 }
 

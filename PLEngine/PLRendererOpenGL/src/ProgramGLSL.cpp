@@ -169,7 +169,7 @@ void ProgramGLSL::RelinkRequired()
 		DestroyUniformBlockInformation();
 
 		// The program is now dirty
-		EventDirty.Emit(this);
+		EventDirty(this);
 	}
 }
 

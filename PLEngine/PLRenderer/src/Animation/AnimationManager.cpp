@@ -83,7 +83,7 @@ Animation *AnimationManager::CreateElement(const String &sName)
 void AnimationManager::NotifyFrameChange()
 {
 	// Emit own event
-	EventAnimationFrameChange.Emit();
+	EventAnimationFrameChange();
 }
 
 

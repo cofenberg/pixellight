@@ -135,7 +135,7 @@ void RendererContext::Update()
 	cStopwatch.Start();
 
 	// Emit the update event
-	EventUpdate.Emit();
+	EventUpdate();
 
 	// Update renderer
 	if (m_pRenderer)
