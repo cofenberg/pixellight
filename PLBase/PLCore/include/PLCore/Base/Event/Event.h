@@ -106,6 +106,21 @@ class Event : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
+					 cP.Param15);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -119,6 +134,18 @@ class Event : public DynEvent {
 					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
 					 cP.Param15);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -186,6 +213,20 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -198,6 +239,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -264,6 +317,20 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+					 cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -276,6 +343,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 					 cP.Param10, cP.Param11, cP.Param12, cP.Param13);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -341,6 +420,20 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+					 cP.Param10, cP.Param11, cP.Param12);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -353,6 +446,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 					 cP.Param10, cP.Param11, cP.Param12);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -417,6 +522,20 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+					 cP.Param10, cP.Param11);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -429,6 +548,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 					 cP.Param10, cP.Param11);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -492,6 +623,20 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+					 cP.Param10);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -504,6 +649,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
 					 cP.Param10);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -566,6 +723,19 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -577,6 +747,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -638,6 +820,19 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -649,6 +844,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -709,6 +916,19 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6,  cP.Param7);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -720,6 +940,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 					 cP.Param5,  cP.Param6,  cP.Param7);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -779,6 +1011,19 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5,  cP.Param6);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -790,6 +1035,18 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 					 cP.Param5,  cP.Param6);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -848,6 +1105,19 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+					 cP.Param5);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -859,6 +1129,18 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
 					 cP.Param5);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -916,6 +1198,18 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -926,6 +1220,18 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -982,6 +1288,18 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -992,6 +1310,18 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1047,6 +1377,18 @@ class Event<T0, T1, T2> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1,  cP.Param2);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1057,6 +1399,18 @@ class Event<T0, T1, T2> : public DynEvent {
 				// Call function
 				Emit(cP.Param0,  cP.Param1,  cP.Param2);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1111,6 +1465,18 @@ class Event<T0, T1> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0,  cP.Param1);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1121,6 +1487,18 @@ class Event<T0, T1> : public DynEvent {
 				// Call function
 				Emit(cP.Param0,  cP.Param1);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1176,6 +1554,18 @@ class Event<T0> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Call function
+				Emit(cP.Param0);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1186,6 +1576,18 @@ class Event<T0> : public DynEvent {
 				// Call function
 				Emit(cP.Param0);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0> cParams = Params<void, T0>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0> cParams = Params<void, T0>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1238,6 +1640,15 @@ class Event<> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Call function
+				Emit();
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1245,6 +1656,18 @@ class Event<> : public DynEvent {
 				// Call function
 				Emit();
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void> cParams = Params<void>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void> cParams = Params<void>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 

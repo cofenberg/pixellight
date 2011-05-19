@@ -34,17 +34,22 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class XmlElement;
+}
+namespace PLCore {
+	class DynParams;
+	class DynEventHandler;
+	class EventDesc;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class DynParams;
-class DynEventHandler;
-class EventDesc;
 
 
 //[-------------------------------------------------------]
@@ -140,7 +145,34 @@ class DynEvent {
 		*  @param[in] cParams
 		*    Parameters
 		*/
+		PLCORE_API virtual void Emit(DynParams &cParams) const;
+
+		/**
+		*  @brief
+		*    Emit event
+		*
+		*  @param[in] cParams
+		*    Parameters
+		*/
 		PLCORE_API virtual void Emit(const DynParams &cParams) const;
+
+		/**
+		*  @brief
+		*    Emit event
+		*
+		*  @param[in] sParams
+		*    Parameters as string
+		*/
+		PLCORE_API virtual void Emit(const PLGeneral::String &sParams) const;
+
+		/**
+		*  @brief
+		*    Emit event
+		*
+		*  @param[in] cElement
+		*    Parameters as XML
+		*/
+		PLCORE_API virtual void Emit(const PLGeneral::XmlElement &cElement) const;
 
 
 	//[-------------------------------------------------------]

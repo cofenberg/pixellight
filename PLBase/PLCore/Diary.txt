@@ -1,3 +1,10 @@
+>> 19.05.2011
+[CO]
+- DynEvent: Added "void Emit(const PLGeneral::String &sParams)" and "void Emit(const PLGeneral::XmlElement &cElement)" to make it possible to emit
+  events when one just has a DynEvent pointer
+
+
+
 >> 13.05.2011
 [CO]
 - "PLCoreDefinitions.h": Added "TypeInvalid"

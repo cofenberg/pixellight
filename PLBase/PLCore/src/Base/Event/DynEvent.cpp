@@ -127,7 +127,34 @@ String DynEvent::GetSignature() const
 *  @brief
 *    Call function
 */
+void DynEvent::Emit(DynParams &cParams) const
+{
+	// No function
+}
+
+/**
+*  @brief
+*    Call function
+*/
 void DynEvent::Emit(const DynParams &cParams) const
+{
+	// No function
+}
+
+/**
+*  @brief
+*    Emit event
+*/
+void DynEvent::Emit(const String &sParams) const
+{
+	// No function
+}
+
+/**
+*  @brief
+*    Emit event
+*/
+void DynEvent::Emit(const XmlElement &cElement) const
 {
 	// No function
 }
