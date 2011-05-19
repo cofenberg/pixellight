@@ -29,10 +29,11 @@ extern "C" {
 #include <PLGeneral/String/String.h>
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
+#include "PLScriptLua/RTTIObjectMethodPointer.h"
 #include "PLScriptLua/RTTIObjectPointer.h"
 
 
-// [TODO] Method, Signal, Slot, Enum
+// [TODO] Signal, Slot, Enum
 
 
 //[-------------------------------------------------------]
@@ -69,57 +70,61 @@ RTTIObjectPointer::~RTTIObjectPointer()
 //[-------------------------------------------------------]
 int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 {
-	// Get the indexed name
-	const String sName = lua_tostring(pLuaState, 2);
+	// Valid RTTI object?
+	if (m_pRTTIObject) {
+		// Get the indexed name
+		const String sName = lua_tostring(pLuaState, 2);
 
-	// [TODO] Currently we can use within Lua the dot operator to access RTTI attributes and properties, but there may occure name conflicts...
+		// [TODO] Currently we can use within Lua the dot operator to access RTTI attributes and properties, but there may occure name conflicts...
 
-	// Is it an attribute or a property?
-	DynVar *pDynVar = m_pRTTIObject->GetAttribute(sName);
-	if (pDynVar) {
-		// It's an attribute
-		switch (pDynVar->GetType().GetTypeID()) {
-			case TypeBool:		lua_pushboolean(pLuaState, pDynVar->GetBool());								break;
-			case TypeDouble:	lua_pushnumber (pLuaState, pDynVar->GetDouble());							break;
-			case TypeFloat:		lua_pushnumber (pLuaState, pDynVar->GetFloat());							break;
-			case TypeInt:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
-			case TypeInt16:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
-			case TypeInt32:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
-			case TypeInt64:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;	// [TODO] TypeInt64 is currently handled just as long
-			case TypeInt8:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
-			case TypeString:	lua_pushstring (pLuaState, pDynVar->GetString());							break;
-			case TypeUInt16:	lua_pushinteger(pLuaState, pDynVar->GetUInt16());							break;
-			case TypeUInt32:	lua_pushinteger(pLuaState, pDynVar->GetUInt32());							break;
-			case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(pDynVar->GetUInt64()));	break;	// [TODO] TypeUInt64 is currently handled just as long
-			case TypeUInt8:		lua_pushinteger(pLuaState, pDynVar->GetUInt8());							break;
-			default:			lua_pushstring (pLuaState, pDynVar->GetString());							break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
-		}
-
-		// Done
-		return 1;
-	} else {
-		// Is it a property?
-		const String sValue = m_pRTTIObject->GetClass()->GetProperties().Get(sName);
-		if (sValue.GetLength()) {
-			lua_pushstring(pLuaState, sValue);
+		// Is it an attribute or a property?
+		DynVar *pDynVar = m_pRTTIObject->GetAttribute(sName);
+		if (pDynVar) {
+			// It's an attribute
+			switch (pDynVar->GetType().GetTypeID()) {
+				case TypeBool:		lua_pushboolean(pLuaState, pDynVar->GetBool());								break;
+				case TypeDouble:	lua_pushnumber (pLuaState, pDynVar->GetDouble());							break;
+				case TypeFloat:		lua_pushnumber (pLuaState, pDynVar->GetFloat());							break;
+				case TypeInt:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
+				case TypeInt16:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
+				case TypeInt32:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
+				case TypeInt64:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;	// [TODO] TypeInt64 is currently handled just as long
+				case TypeInt8:		lua_pushinteger(pLuaState, pDynVar->GetInt());								break;
+				case TypeString:	lua_pushstring (pLuaState, pDynVar->GetString());							break;
+				case TypeUInt16:	lua_pushinteger(pLuaState, pDynVar->GetUInt16());							break;
+				case TypeUInt32:	lua_pushinteger(pLuaState, pDynVar->GetUInt32());							break;
+				case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(pDynVar->GetUInt64()));	break;	// [TODO] TypeUInt64 is currently handled just as long
+				case TypeUInt8:		lua_pushinteger(pLuaState, pDynVar->GetUInt8());							break;
+				default:			lua_pushstring (pLuaState, pDynVar->GetString());							break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
+			}
 
 			// Done
 			return 1;
 		} else {
+			// Is it a property?
+			const String sValue = m_pRTTIObject->GetClass()->GetProperties().Get(sName);
+			if (sValue.GetLength()) {
+				lua_pushstring(pLuaState, sValue);
 
-			// [TODO] I'am not sure whether or not this is the right way to deal with member methods... because I don't
-			// get any parameters (possibly I have to return in here another Lua user data with the member method to call...?)
+				// Done
+				return 1;
+			} else {
+				// Is it a method?
+				DynFunc *pDynFunc = m_pRTTIObject->GetMethod(lua_tostring(pLuaState, 2));
+				if (pDynFunc) {
+					// It's a method... just put another user data instance on the Lua stack...
+					// The destruction of the new RTTIObjectMethodPointer instance is done by the Lua garbage collector
+					new RTTIObjectMethodPointer(*m_pScript, m_pRTTIObject, pDynFunc);
 
-			// Get the current top of the Lua stack
-			const int nLuaStackTop = lua_gettop(pLuaState);
-
-			// Maybe it's a method?
-			CallMetamethod(pLuaState);
-
-			// Done, inform Lua what's on the stack
-			return lua_gettop(pLuaState) - nLuaStackTop;
+					// Done
+					return 1;
+				}
+			}
 		}
 	}
+
+	// Error!
+	return 0;
 }
 
 int RTTIObjectPointer::NewIndexMetamethod(lua_State *pLuaState)
@@ -138,36 +143,7 @@ void RTTIObjectPointer::CGMetamethod(lua_State *pLuaState)
 
 void RTTIObjectPointer::CallMetamethod(lua_State *pLuaState)
 {
-	// Get the number of arguments Lua gave to us
-	String sParams;
-	const int nNumOfArguments = lua_gettop(pLuaState) - 2;
-	for (int i=3; i<=2+nNumOfArguments; i++)
-		sParams += String("Param") + (i-3) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
-
-	// Get the method
-	DynFunc *pDynFunc = m_pRTTIObject->GetMethod(lua_tostring(pLuaState, 2));
-	if (pDynFunc) {
-		const String sReturn = pDynFunc->CallWithReturn(sParams);
-		if (sReturn.GetLength()) {
-			// Process the functor return
-			switch (pDynFunc->GetReturnTypeID()) {
-				case TypeBool:		lua_pushboolean(pLuaState, sReturn.GetBool());								break;
-				case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());							break;
-				case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());								break;
-				case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-				case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-				case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-				case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;	// [TODO] TypeInt64 is currently handled just as long
-				case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-				case TypeString:	lua_pushstring (pLuaState, sReturn);										break;
-				case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());							break;
-				case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());							break;
-				case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(sReturn.GetUInt64()));	break;	// [TODO] TypeUInt64 is currently handled just as long
-				case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());								break;
-				default:			lua_pushstring (pLuaState, sReturn);										break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
-			}
-		}
-	}
+	// Nothing to do in here
 }
 
 

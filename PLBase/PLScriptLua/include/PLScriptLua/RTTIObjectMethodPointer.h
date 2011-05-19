@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RTTIObjectPointer.h                            *
+ *  File: RTTIObjectMethodPointer.h                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
-#define __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
+#ifndef __PLSCRIPTLUA_RTTIOBJECTMETHODPOINTER_H__
+#define __PLSCRIPTLUA_RTTIOBJECTMETHODPOINTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScriptLua/LuaUserData.h"
+#include "PLScriptLua/RTTIObjectPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	class Object;
+	class DynFunc;
 }
 
 
@@ -50,9 +50,9 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    RTTI object pointer
+*    RTTI object method pointer
 */
-class RTTIObjectPointer : public LuaUserData {
+class RTTIObjectMethodPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
@@ -67,23 +67,22 @@ class RTTIObjectPointer : public LuaUserData {
 		*    The owner script instance
 		*  @param[in] pRTTIObject
 		*    Pointer the the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynVar
+		*    Pointer the the RTTI object method to wrap, can be a null pointer
 		*/
-		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject);
+		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFunc *pDynVar);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~RTTIObjectPointer();
+		virtual ~RTTIObjectMethodPointer();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual int IndexMetamethod(lua_State *pLuaState);
-		virtual int NewIndexMetamethod(lua_State *pLuaState);
-		virtual void CGMetamethod(lua_State *pLuaState);
 		virtual void CallMetamethod(lua_State *pLuaState);
 
 
@@ -91,7 +90,7 @@ class RTTIObjectPointer : public LuaUserData {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::Object *m_pRTTIObject;	/**< Pointer the the RTTI object to wrap, can be a null pointer */
+		PLCore::DynFunc *m_pDynFunc;	/**< Pointer the the RTTI object method to wrap, always valid! */
 
 
 };
@@ -103,4 +102,4 @@ class RTTIObjectPointer : public LuaUserData {
 } // PLScriptLua
 
 
-#endif // __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
+#endif // __PLSCRIPTLUA_RTTIOBJECTMETHODPOINTER_H__

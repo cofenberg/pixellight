@@ -112,5 +112,5 @@ function UseCppRTTIObject(cppRTTIObject)
 	PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
 	PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
 	cppRTTIObject:SaySomethingWise()
---	cppRTTIObject:IgnoreTheParameter(5) -- [TODO]
+	cppRTTIObject:IgnoreTheParameter(5)
 end

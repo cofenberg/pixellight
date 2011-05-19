@@ -11,6 +11,7 @@ add_sources(
 	src/LuaContext.cpp
 	src/LuaUserData.cpp
 	src/RTTIObjectPointer.cpp
+	src/RTTIObjectMethodPointer.cpp
 	src/Script.cpp
 )
 

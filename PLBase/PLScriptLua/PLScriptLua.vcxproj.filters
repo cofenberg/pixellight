@@ -22,6 +22,9 @@
     <ClCompile Include="src\RTTIObjectPointer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RTTIObjectMethodPointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScriptLua\Script.h">
@@ -43,6 +46,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptLua\RTTIObjectPointer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptLua\RTTIObjectMethodPointer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

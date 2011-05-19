@@ -1,4 +1,11 @@
-﻿>> 17.05.2011
+﻿>> 19.05.2011
+[CO]
+- PLScriptLua: Calling RTTI object methods within Lua scripts is working... currently only slow progress because the university is using most of my available
+  time. But I still try to get the script support up and running until the next scheduled PixelLight release. :D
+
+
+
+>> 17.05.2011
 [CO]
 - Added "Script::PushArgument(PLCore::Object *pObject)" and an experimental Lua implementation to get an idea how to access RTTI objects
   directly within scripts *work in progress*
