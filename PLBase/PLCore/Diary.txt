@@ -2,6 +2,7 @@
 [CO]
 - DynEvent: Added "void Emit(const PLGeneral::String &sParams)" and "void Emit(const PLGeneral::XmlElement &cElement)" to make it possible to emit
   events when one just has a DynEvent pointer
+- Added "GetNumOfParameters()" and "GetParameterTypeID()" to "DynEvent" to make it possible to request some more information about the dynamic function
 
 
 
