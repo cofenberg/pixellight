@@ -55,8 +55,7 @@ class Type<T*> {
 		// Convert var to pointer
 		static T *ConvertFromVar(const DynVar *pValue)
 		{
-			// [TODO] Should be as big as possible (uint32/uint64)
-			return static_cast<T*>(pValue->GetInt());
+			return static_cast<T*>(pValue->GetUIntPtr());
 		}
 
 		// Convert pointer to bool

@@ -61,8 +61,7 @@ class Type<Object*> {
 		// Convert var to pointer
 		static Object *ConvertFromVar(const DynVar *pValue)
 		{
-			// [TODO] Should be as big as possible (uint32/uint64)
-			return reinterpret_cast<Object*>(pValue->GetInt());
+			return reinterpret_cast<Object*>(pValue->GetUIntPtr());
 		}
 
 		// Convert pointer to bool

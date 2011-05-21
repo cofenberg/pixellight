@@ -1,3 +1,9 @@
+>> 21.05.2011
+[CO]
+- "TypeObjectPtr" & "TypePtr" & "TypeRef": "ConvertFromVar()" is now using "GetUIntPtr()" instead of "GetInt()" (this was a [TODO] point)
+
+
+
 >> 19.05.2011
 [CO]
 - DynEvent: Added "void Emit(const PLGeneral::String &sParams)" and "void Emit(const PLGeneral::XmlElement &cElement)" to make it possible to emit
