@@ -90,12 +90,13 @@ class Application : public PLCore::ConsoleApplication {
 		*  @brief
 		*    Returns the MyRTTIClass instance
 		*
+		*  @param[in] pObject
+		*    RTTI class instance, can be a null pointer
+		*
 		*  @return
 		*    MyRTTIClass instance, always valid!
 		*/
-		// [TODO] "MyRTTIClass*" instead of "PLCore::Object*"
-		PLCore::Object *GetMyRTTIClassInstance();
-//		MyRTTIClass *GetMyRTTIClassInstance();
+		PLCore::Object *GetMyRTTIClassInstance(PLCore::Object *pObject);
 
 
 	//[-------------------------------------------------------]

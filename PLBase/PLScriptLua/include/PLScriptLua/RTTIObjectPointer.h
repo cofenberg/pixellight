@@ -56,6 +56,25 @@ class RTTIObjectPointer : public LuaUserData {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Pushes an RTTI class instance onto the Lua stack
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, in case of a null pointer nil is pushed onto the Lua stack
+		*
+		*  @note
+		*    - The destruction of the new RTTIObjectPointer instance is done by the Lua garbage collector
+		*/
+		static void LuaStackPush(Script &cScript, PLCore::Object *pRTTIObject);
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

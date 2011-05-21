@@ -560,8 +560,7 @@ void Script::PushArgument(const String &sString)
 
 void Script::PushArgument(Object *pObject)
 {
-	// The destruction of the new RTTIObjectPointer instance is done by the Lua garbage collector
-	new RTTIObjectPointer(*this, pObject);
+	RTTIObjectPointer::LuaStackPush(*this, pObject);
 	m_nCurrentArgument++;
 }
 
@@ -605,9 +604,15 @@ void Script::GetReturn(bool *pbValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isboolean(m_pLuaState, -1))
+		// Must be a boolean
+		if (lua_isboolean(m_pLuaState, -1)) {
+			// Get the result
+			*pbValue = (lua_toboolean(m_pLuaState, -1) != 0);
+		} else {
+			// Error!
+			*pbValue = false;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a boolean");
-		*pbValue = (lua_toboolean(m_pLuaState, -1) != 0);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -619,9 +624,15 @@ void Script::GetReturn(float *pfValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pfValue = static_cast<float>(lua_tonumber(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pfValue = 0.0f;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pfValue = static_cast<float>(lua_tonumber(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -633,9 +644,15 @@ void Script::GetReturn(double *pfValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pfValue = lua_tonumber(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pfValue = 0.0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pfValue = lua_tonumber(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -647,9 +664,15 @@ void Script::GetReturn(int8 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pnValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -661,9 +684,15 @@ void Script::GetReturn(int16 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pnValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -675,9 +704,15 @@ void Script::GetReturn(int32 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the value
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pnValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -689,10 +724,16 @@ void Script::GetReturn(int64 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// [TODO] There's no int64 support in Lua (?)
+			// Get the result
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		// [TODO] There's no int64 support in Lua (?)
-		*pnValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -704,9 +745,15 @@ void Script::GetReturn(uint8 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pnValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -718,9 +765,15 @@ void Script::GetReturn(uint16 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pnValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -732,9 +785,15 @@ void Script::GetReturn(uint32 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		*pnValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -746,10 +805,16 @@ void Script::GetReturn(uint64 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// [TODO] There's no uint64 support in Lua (?)
+			// Get the result
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		// [TODO] There's no uint64 support in Lua (?)
-		*pnValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -761,9 +826,15 @@ void Script::GetReturn(String *psValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isstring(m_pLuaState, -1))
+		// Must be a string
+		if (lua_isstring(m_pLuaState, -1)) {
+			// Get the result
+			*psValue = lua_tostring(m_pLuaState, -1);
+		} else {
+			// Error!
+			*psValue = "";
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a string");
-		*psValue = lua_tostring(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
@@ -775,12 +846,20 @@ void Script::GetReturn(Object **ppObject)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isuserdata(m_pLuaState, -1))
-			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return user data");
-
-		// Get user data from the top of the Lua stack and removes it from the Lua stack
-		// [TODO] Do any type tests in here?
-		*ppObject = reinterpret_cast<RTTIObjectPointer*>(LuaUserData::PopUserDataFromLuaStack(m_pLuaState))->GetObject();
+		// Must be user data or nil
+		if (lua_isuserdata(m_pLuaState, -1)) {
+			// Get user data from the top of the Lua stack and removes it from the Lua stack
+			// [TODO] Do any type tests in here?
+			*ppObject = reinterpret_cast<RTTIObjectPointer*>(LuaUserData::PopUserDataFromLuaStack(m_pLuaState))->GetObject();
+		} else {
+			// Nil is fine, too
+			*ppObject = nullptr;
+			if (!lua_isnil(m_pLuaState, -1)) {
+				// Error!
+				LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return user data");
+			}
+			lua_pop(m_pLuaState, 1);
+		}
 	} else {
 		// Error!
 		*ppObject = nullptr;

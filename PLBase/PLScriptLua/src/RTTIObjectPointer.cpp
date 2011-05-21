@@ -46,6 +46,23 @@ namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
+//[ Public static functions                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Pushes an RTTI class instance onto the Lua stack
+*/
+void RTTIObjectPointer::LuaStackPush(Script &cScript, Object *pRTTIObject)
+{
+	// Valid RTTI object given?
+	if (pRTTIObject)
+		new RTTIObjectPointer(cScript, pRTTIObject);
+	else
+		lua_pushnil(cScript.GetLuaState());
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
