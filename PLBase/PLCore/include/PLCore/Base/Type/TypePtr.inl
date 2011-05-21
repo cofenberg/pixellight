@@ -222,7 +222,7 @@ class Type<T*> {
 		// Convert pointer to string
 		static PLGeneral::String ConvertToString(T *pValue)
 		{
-			return PLGeneral::String() + static_cast<PLGeneral::uint_ptr>(pValue);
+			return PLGeneral::String() + reinterpret_cast<PLGeneral::uint_ptr>(pValue);
 		}
 
 		// Convert string to pointer

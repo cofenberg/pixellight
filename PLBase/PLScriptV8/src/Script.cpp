@@ -560,66 +560,72 @@ bool Script::EndCall()
 	return false;
 }
 
-void Script::GetReturn(bool &bValue)
+void Script::GetReturn(bool *pbValue)
 {
-	bValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsBoolean()) ? m_cV8CurrentResult->BooleanValue() : false;
+	*pbValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsBoolean()) ? m_cV8CurrentResult->BooleanValue() : false;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(float *pfValue)
 {
-	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
+	*pfValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? static_cast<float>(m_cV8CurrentResult->NumberValue()) : 0.0f;
 }
 
-void Script::GetReturn(double &fValue)
+void Script::GetReturn(double *pfValue)
 {
-	fValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? m_cV8CurrentResult->NumberValue() : 0.0;
+	*pfValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsNumber()) ? m_cV8CurrentResult->NumberValue() : 0.0;
 }
 
-void Script::GetReturn(int8 &nValue)
+void Script::GetReturn(int8 *pnValue)
 {
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
-void Script::GetReturn(int16 &nValue)
+void Script::GetReturn(int16 *pnValue)
 {
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
-void Script::GetReturn(int32 &nValue)
+void Script::GetReturn(int32 *pnValue)
 {
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
-void Script::GetReturn(int64 &nValue)
+void Script::GetReturn(int64 *pnValue)
 {
 	// [TODO] There's no int64 support in v8 (?)
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
-void Script::GetReturn(uint8 &nValue)
+void Script::GetReturn(uint8 *pnValue)
 {
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint8>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
-void Script::GetReturn(uint16 &nValue)
+void Script::GetReturn(uint16 *pnValue)
 {
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? static_cast<uint16>(m_cV8CurrentResult->Uint32Value()) : 0;
 }
 
-void Script::GetReturn(uint32 &nValue)
+void Script::GetReturn(uint32 *pnValue)
 {
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
-void Script::GetReturn(uint64 &nValue)
+void Script::GetReturn(uint64 *pnValue)
 {
 	// [TODO] There's no uint64 support in v8 (?)
-	nValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
+	*pnValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsUint32()) ? m_cV8CurrentResult->Uint32Value() : 0;
 }
 
-void Script::GetReturn(String &sValue)
+void Script::GetReturn(String *psValue)
 {
-	sValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsString()) ? *v8::String::AsciiValue(m_cV8CurrentResult->ToString()) : "";
+	*psValue = (!m_cV8CurrentResult.IsEmpty() && m_cV8CurrentResult->IsString()) ? *v8::String::AsciiValue(m_cV8CurrentResult->ToString()) : "";
+}
+
+void Script::GetReturn(Object **ppObject)
+{
+	// [TODO] Implement me
+	*ppObject = nullptr;
 }
 
 

@@ -32,6 +32,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declaration                                   ]
+//[-------------------------------------------------------]
+class MyRTTIClass;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -80,6 +86,17 @@ class Application : public PLCore::ConsoleApplication {
 		*/
 		void NotifyMySignal(PLGeneral::String sParameter);
 
+		/**
+		*  @brief
+		*    Returns the MyRTTIClass instance
+		*
+		*  @return
+		*    MyRTTIClass instance, always valid!
+		*/
+		// [TODO] "MyRTTIClass*" instead of "PLCore::Object*"
+		PLCore::Object *GetMyRTTIClassInstance();
+//		MyRTTIClass *GetMyRTTIClassInstance();
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ConsoleApplication functions  ]
@@ -93,6 +110,13 @@ class Application : public PLCore::ConsoleApplication {
 	//[-------------------------------------------------------]
 	private:
 		PLCore::EventHandler<PLGeneral::String> EventHandlerMySignal;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		MyRTTIClass *m_pMyRTTIClass;	/**< MyRTTIClass instance, always valid! */
 
 
 };

@@ -23,9 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/File/Url.h>
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include <PLScript/Script.h>
 #include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
@@ -49,12 +51,16 @@ using namespace PLScript;
 *    Constructor
 */
 Application::Application() : ConsoleApplication(),
-	EventHandlerMySignal(&Application::NotifyMySignal, this)
+	EventHandlerMySignal(&Application::NotifyMySignal, this),
+	m_pMyRTTIClass(new MyRTTIClass())
 {
 	// Set application name and title
 	SetName("44ScriptOOP");
 	SetTitle(PLT("PLSample 44 - Script OOP"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
+
+	// Connect event handler
+	m_pMyRTTIClass->MySignal.Connect(&EventHandlerMySignal);
 }
 
 /**
@@ -63,6 +69,8 @@ Application::Application() : ConsoleApplication(),
 */
 Application::~Application()
 {
+	// Destroy the RTTI object instance
+	delete m_pMyRTTIClass;
 }
 
 
@@ -75,39 +83,40 @@ Application::~Application()
 */
 void Application::OOP(const String &sScriptFilename)
 {
-	// [TODO] Tell the script about MyRTTIClass
-	// [TODO] Create MyRTTIClass instance from within a script
-	// [TODO] Use an already existing MyRTTIClass instance within a script
+	// Get the script source code
+	const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sScriptFilename);
+	if (sSourceCode.GetLength()) {
+		// Create the script instance by using the extension of the given filename to detect the script language
+		Script *pScript = ScriptManager::GetInstance()->Create(ScriptManager::GetInstance()->GetScriptLanguageByExtension(Url(sScriptFilename).GetExtension()));
+		if (pScript) {
+			// Tell the script about "Application::GetMyRTTIClassInstance"
+			// [TODO] "MyRTTIClass*" instead of "PLCore::Object*"
+			pScript->AddGlobalFunction("GetMyRTTIClassInstance", Functor<Object*>(&Application::GetMyRTTIClassInstance, this));
+//			pScript->AddGlobalFunction("GetMyRTTIClassInstance", Functor<MyRTTIClass*>(&Application::GetMyRTTIClassInstance, this));
 
-	// Create the script instance
-	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
-	if (pScript) {
-		// Print the name of the used script language
-		System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
+			// Set the script source code
+			if (pScript->SetSourceCode(sSourceCode)) {
+				// Print the name of the used script language
+				System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
 
-		// Call the script function "OOP"
-		FuncScriptPtr<void>(pScript, "OOP").Call(Params<void>());
+				// Call the script function "OOP"
+				FuncScriptPtr<void>(pScript, "OOP").Call(Params<void>());
 
-		{ // RTTI object usage
-			// [TODO] Just a first test, using RTTI objects within scripts is still heavily work in progress
-			// Create the RTTI object instance
-			MyRTTIClass *pMyRTTIClass = new MyRTTIClass();
+				{ // Call the script function "UseCppRTTIObject"
+					// [TODO] "MyRTTIClass*" instead of "PLCore::Object*"
+					Params<Object*, Object*> cParams(m_pMyRTTIClass);
+					FuncScriptPtr<Object*, Object*>(pScript, "UseCppRTTIObject").Call(cParams);
+					if (cParams.Return != m_pMyRTTIClass)
+						System::GetInstance()->GetConsole().Print("Error, script returned invalid RTTI object instance!\n");
+				}
 
-			// Connect event handler
-			pMyRTTIClass->MySignal.Connect(&EventHandlerMySignal);
+				// Cleanup
+				delete pScript;
 
-			// Call the script function "UseCppRTTIObject"
-			FuncScriptPtr<void, Object*>(pScript, "UseCppRTTIObject").Call(Params<void, Object*>(pMyRTTIClass));
-
-			// Destroy the RTTI object instance
-			delete pMyRTTIClass;
+				// Print new line
+				System::GetInstance()->GetConsole().Print("--\n\n");
+			}
 		}
-
-		// Cleanup
-		delete pScript;
-
-		// Print new line
-		System::GetInstance()->GetConsole().Print("--\n\n");
 	} else {
 		// Error!
 		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
@@ -121,6 +130,17 @@ void Application::OOP(const String &sScriptFilename)
 void Application::NotifyMySignal(String sParameter)
 {
 	System::GetInstance()->GetConsole().Print(sParameter + " emitted MySignal signal\n");
+}
+
+/**
+*  @brief
+*    Returns the MyRTTIClass instance
+*/
+// [TODO] "MyRTTIClass*" instead of "PLCore::Object*"
+Object *Application::GetMyRTTIClassInstance()
+//MyRTTIClass *Application::GetMyRTTIClassInstance()
+{
+	return m_pMyRTTIClass;
 }
 
 

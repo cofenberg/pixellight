@@ -65,6 +65,15 @@ RTTIObjectPointer::~RTTIObjectPointer()
 {
 }
 
+/**
+*  @brief
+*    Returns the pointer to the RTTI object to wrap
+*/
+Object *RTTIObjectPointer::GetObject() const
+{
+	return m_pRTTIObject;
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual LuaUserData functions               ]

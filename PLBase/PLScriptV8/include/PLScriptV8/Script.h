@@ -125,18 +125,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTV8_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTV8_API virtual bool EndCall();
-		PLSCRIPTV8_API virtual void GetReturn(bool &bValue);
-		PLSCRIPTV8_API virtual void GetReturn(float &fValue);
-		PLSCRIPTV8_API virtual void GetReturn(double &fValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int8 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int16 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int32 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int64 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint8 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint16 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint64 &nValue);
-		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::String &sValue);
+		PLSCRIPTV8_API virtual void GetReturn(bool *pbValue);
+		PLSCRIPTV8_API virtual void GetReturn(float *pfValue);
+		PLSCRIPTV8_API virtual void GetReturn(double *pfValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int8 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int16 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int32 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::int64 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLGeneral::String *psValue);
+		PLSCRIPTV8_API virtual void GetReturn(PLCore::Object **ppObject);
 
 
 	//[-------------------------------------------------------]

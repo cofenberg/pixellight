@@ -56,6 +56,25 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Calls the current Lua stack dynamic function
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] cDynFunc
+		*    Dynamic function to be called
+		*
+		*  @return
+		*    Number of results on the Lua stack
+		*/
+		static int CallDynFunc(Script &cScript, PLCore::DynFunc &cDynFunc);
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -66,9 +85,9 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*  @param[in] cScript
 		*    The owner script instance
 		*  @param[in] pRTTIObject
-		*    Pointer the the RTTI object to wrap, can be a null pointer
+		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*  @param[in] pDynFunc
-		*    Pointer the the RTTI object method to wrap, can be a null pointer
+		*    Pointer to the RTTI object method to wrap, can be a null pointer
 		*/
 		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFunc *pDynFunc);
 
@@ -90,7 +109,7 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::DynFunc *m_pDynFunc;	/**< Pointer the the RTTI object method to wrap, can be a null pointer */
+		PLCore::DynFunc *m_pDynFunc;	/**< Pointer to the RTTI object method to wrap, can be a null pointer */
 
 
 };

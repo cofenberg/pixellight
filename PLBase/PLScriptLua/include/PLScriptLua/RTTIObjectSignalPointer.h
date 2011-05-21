@@ -66,9 +66,9 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 		*  @param[in] cScript
 		*    The owner script instance
 		*  @param[in] pRTTIObject
-		*    Pointer the the RTTI object to wrap, can be a null pointer
+		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*  @param[in] pDynEvent
-		*    Pointer the the RTTI object signal to wrap, can be a null pointer
+		*    Pointer to the RTTI object signal to wrap, can be a null pointer
 		*/
 		RTTIObjectSignalPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent);
 
@@ -90,7 +90,7 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::DynEvent *m_pDynEvent;	/**< Pointer the the RTTI object signal to wrap, can be a null pointer */
+		PLCore::DynEvent *m_pDynEvent;	/**< Pointer to the RTTI object signal to wrap, can be a null pointer */
 
 
 };

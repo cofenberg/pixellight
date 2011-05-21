@@ -549,73 +549,79 @@ bool Script::EndCall()
 	return false;
 }
 
-void Script::GetReturn(bool &bValue)
+void Script::GetReturn(bool *pbValue)
 {
-	bValue = m_pAngelScriptContext ? (m_pAngelScriptContext->GetReturnByte() != 0) : false;
+	*pbValue = m_pAngelScriptContext ? (m_pAngelScriptContext->GetReturnByte() != 0) : false;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(float *pfValue)
 {
-	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnFloat() : 0;
+	*pfValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnFloat() : 0;
 }
 
-void Script::GetReturn(double &fValue)
+void Script::GetReturn(double *pfValue)
 {
-	fValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDouble() : 0;
+	*pfValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDouble() : 0;
 }
 
-void Script::GetReturn(int8 &nValue)
+void Script::GetReturn(int8 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnByte() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnByte() : 0;
 }
 
-void Script::GetReturn(int16 &nValue)
+void Script::GetReturn(int16 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnWord() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnWord() : 0;
 }
 
-void Script::GetReturn(int32 &nValue)
+void Script::GetReturn(int32 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
 }
 
-void Script::GetReturn(int64 &nValue)
+void Script::GetReturn(int64 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnQWord() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnQWord() : 0;
 }
 
-void Script::GetReturn(uint8 &nValue)
+void Script::GetReturn(uint8 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnByte() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnByte() : 0;
 }
 
-void Script::GetReturn(uint16 &nValue)
+void Script::GetReturn(uint16 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnWord() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnWord() : 0;
 }
 
-void Script::GetReturn(uint32 &nValue)
+void Script::GetReturn(uint32 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnDWord() : 0;
 }
 
-void Script::GetReturn(uint64 &nValue)
+void Script::GetReturn(uint64 *pnValue)
 {
-	nValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnQWord() : 0;
+	*pnValue = m_pAngelScriptContext ? m_pAngelScriptContext->GetReturnQWord() : 0;
 }
 
-void Script::GetReturn(String &sValue)
+void Script::GetReturn(String *psValue)
 {
 	// Ensure that we always return a well defined result, even if something went wrong
-	sValue = "";
+	*psValue = "";
 
 	// There must be a valid AngelScript engine and context instance
 	if (m_pAngelScriptEngine && m_pAngelScriptContext) {
 		// Get the current AngelScript function and check the function return type
 		asIScriptFunction *pAngelScriptFunction = m_pAngelScriptContext->GetFunction();
 		if (pAngelScriptFunction && pAngelScriptFunction->GetReturnTypeId() == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
-			sValue = m_pAngelScriptContext ? static_cast<std::string*>(m_pAngelScriptContext->GetReturnObject())->c_str() : "";
+			*psValue = m_pAngelScriptContext ? static_cast<std::string*>(m_pAngelScriptContext->GetReturnObject())->c_str() : "";
 	}
+}
+
+void Script::GetReturn(Object **ppObject)
+{
+	// [TODO] Implement me
+	*ppObject = nullptr;
 }
 
 

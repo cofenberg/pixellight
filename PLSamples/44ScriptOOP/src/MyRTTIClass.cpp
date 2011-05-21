@@ -59,6 +59,11 @@ void MyRTTIClass::SaySomethingWise()
 	System::GetInstance()->GetConsole().Print(String(Return42()) + " - wise enough?\n");
 }
 
+Object *MyRTTIClass::GetSelf()
+{
+	return this;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public RTTI slot methods                              ]
@@ -106,6 +111,7 @@ MyRTTIClass::MyRTTIClass() :
 	MethodReturn42(this),
 	MethodIgnoreTheParameter(this),
 	MethodSaySomethingWise(this),
+	MethodGetSelf(this),
 	MySignal(this),
 	SlotOnMyEvent(this),
 	Name(this),

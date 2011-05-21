@@ -129,18 +129,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(bool &bValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float &fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double &fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int8 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int16 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int32 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int64 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint8 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint16 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint64 &nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::String &sValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(bool *pbValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float *pfValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double *pfValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int8 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int16 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int32 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int64 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::String *psValue);
+		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLCore::Object **ppObject);
 
 
 	//[-------------------------------------------------------]

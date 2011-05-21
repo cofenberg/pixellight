@@ -104,8 +104,6 @@ function OOP()
 end
 
 function UseCppRTTIObject(cppRTTIObject)
-	-- [TODO] Just a first test
-
 	-- Access RTTI object property
 	PL.System.Console.Print("Property: cppRTTIObject.MyProperty = " .. cppRTTIObject.MyProperty .. "\n")
 
@@ -122,4 +120,10 @@ function UseCppRTTIObject(cppRTTIObject)
 
 	-- Emit RTTI object signal
 	cppRTTIObject:MySignal("Lua")
+
+	-- Get an RTTI object by using a C++ functor
+	local object = GetMyRTTIClassInstance()
+	object:MySignal("Lua GetMyRTTIClassInstance() worked\n")
+	object:GetSelf():MySignal("Lua GetSelf():GetMyRTTIClassInstance() worked\n")
+	return object
 end

@@ -66,7 +66,7 @@ class RTTIObjectPointer : public LuaUserData {
 		*  @param[in] cScript
 		*    The owner script instance
 		*  @param[in] pRTTIObject
-		*    Pointer the the RTTI object to wrap, can be a null pointer
+		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*/
 		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject);
 
@@ -75,6 +75,15 @@ class RTTIObjectPointer : public LuaUserData {
 		*    Destructor
 		*/
 		virtual ~RTTIObjectPointer();
+
+		/**
+		*  @brief
+		*    Returns the pointer to the RTTI object to wrap
+		*
+		*  @return
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*/
+		PLCore::Object *GetObject() const;
 
 
 	//[-------------------------------------------------------]
@@ -91,7 +100,7 @@ class RTTIObjectPointer : public LuaUserData {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::Object *m_pRTTIObject;	/**< Pointer the the RTTI object to wrap, can be a null pointer */
+		PLCore::Object *m_pRTTIObject;	/**< Pointer to the RTTI object to wrap, can be a null pointer */
 
 
 };

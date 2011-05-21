@@ -56,7 +56,7 @@ namespace PLScript {
 *      - C++ calls script
 *      - Script calls C++ (with namespace support)
 *
-*    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64
+*    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*
 *    Please note that not each script language/API may make such a detailed data type distinction.
 *    Because strings are fundamental within scripts, PLGeneral::String is supported as well.
 *
@@ -315,24 +315,25 @@ class Script : public PLCore::Object {
 		*  @brief
 		*    Returns the result of a function call
 		*
-		*  @param[out] nValue
-		*    Receives the result of a function call
+		*  @param[out] pnValue
+		*    Receives the result of a function call, the given pointer must be valid! (there's no security check!)
 		*
 		*  @note
 		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
 		*/
-		virtual void GetReturn(bool &bValue) = 0;
-		virtual void GetReturn(float &fValue) = 0;
-		virtual void GetReturn(double &fValue) = 0;
-		virtual void GetReturn(PLGeneral::int8 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::int16 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::int32 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::int64 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::uint8 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::uint16 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::uint32 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::uint64 &nValue) = 0;
-		virtual void GetReturn(PLGeneral::String &sValue) = 0;
+		virtual void GetReturn(bool *pbValue) = 0;
+		virtual void GetReturn(float *pfValue) = 0;
+		virtual void GetReturn(double *pfValue) = 0;
+		virtual void GetReturn(PLGeneral::int8 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::int16 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::int32 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::int64 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::uint8 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::uint16 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::uint32 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::uint64 *pnValue) = 0;
+		virtual void GetReturn(PLGeneral::String *psValue) = 0;
+		virtual void GetReturn(PLCore::Object **ppObject) = 0;
 
 
 	//[-------------------------------------------------------]

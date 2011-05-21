@@ -121,18 +121,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTPYTHON_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTPYTHON_API virtual bool EndCall();
-		PLSCRIPTPYTHON_API virtual void GetReturn(bool &bValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(float &fValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(double &fValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int8 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int16 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int32 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int64 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint8 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint16 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint64 &nValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::String &sValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(bool *pbValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(float *pfValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(double *pfValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int8 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int16 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int32 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int64 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::String *psValue);
+		PLSCRIPTPYTHON_API virtual void GetReturn(PLCore::Object **ppObject);
 
 
 	//[-------------------------------------------------------]
