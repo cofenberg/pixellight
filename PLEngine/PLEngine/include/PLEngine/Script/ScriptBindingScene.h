@@ -56,10 +56,10 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, ScriptBindingScene, "PLEngine", PLScript::ScriptBinding, "Scene script binding class")
 		pl_properties
-			pl_property("Namespace", "PL.Scene")
+			pl_property("Namespace", "PL.Application.Scene")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(Get, void, PLGeneral::String, "Returns the scene node with the given name",   "")
+		pl_method_1(Get, PLCore::Object*, PLGeneral::String, "Returns the scene node with the given absolute name", "")
 	pl_class_end
 
 
@@ -67,7 +67,7 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API void Get(PLGeneral::String sText);
+		PL_API PLCore::Object *Get(PLGeneral::String sName);
 
 
 	//[-------------------------------------------------------]

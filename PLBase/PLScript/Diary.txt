@@ -1,4 +1,12 @@
-﻿>> 21.05.2011
+﻿>> 22.05.2011
+[CO]
+- Woho, the demo "Scripts.scene" comes to live... "ScriptsScene.lua" is already up and running and is manipulating a scene
+  node by using a Lua script. It's still everything experimental to see what's possible and how it may work as a whole
+  system.
+
+
+
+>> 21.05.2011
 [CO]
 - Worked on "PLCore::Object*" support
 

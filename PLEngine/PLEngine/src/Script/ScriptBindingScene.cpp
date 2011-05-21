@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLScene/Scene/SceneContainer.h>
+#include "PLEngine/Application/SceneApplication.h"
 #include "PLEngine/Script/ScriptBindingScene.h"
 
 
@@ -30,6 +32,8 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
+using namespace PLScene;
 namespace PLEngine {
 
 
@@ -42,8 +46,20 @@ pl_implement_class(ScriptBindingScene)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-void ScriptBindingScene::Get(String sText)
+Object *ScriptBindingScene::Get(String sName)
 {
+	// [TODO] Do any type checks?
+	// Get the scene application instance
+	SceneApplication *pSceneApplication = static_cast<SceneApplication*>(SceneApplication::GetApplication());
+	if (pSceneApplication) {
+		// Get the root scene container
+		SceneContainer *pSceneContainer = pSceneApplication->GetRootScene();
+		if (pSceneContainer)
+			return pSceneContainer->Get(sName);
+	}
+
+	// Error!
+	return nullptr;
 }
 
 
