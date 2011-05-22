@@ -67,11 +67,13 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*    The owner script instance
 		*  @param[in] cDynFunc
 		*    Dynamic function to be called
+		*  @param[in] bIsMethod
+		*    'true' if the dynamic function is a method, 'false' if it's a global function
 		*
 		*  @return
 		*    Number of results on the Lua stack
 		*/
-		static int CallDynFunc(Script &cScript, PLCore::DynFunc &cDynFunc);
+		static int CallDynFunc(Script &cScript, PLCore::DynFunc &cDynFunc, bool bIsMethod);
 
 
 	//[-------------------------------------------------------]

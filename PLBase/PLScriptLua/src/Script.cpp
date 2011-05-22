@@ -894,7 +894,7 @@ int Script::LuaFunctionCallback(lua_State *pLuaState)
 	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(lua_touserdata(pLuaState, lua_upvalueindex(1)));
 
 	// Call the dynamic function
-	return psGlobalFunction ? RTTIObjectMethodPointer::CallDynFunc(*psGlobalFunction->pScript, *psGlobalFunction->pDynFunc) : 0;
+	return psGlobalFunction ? RTTIObjectMethodPointer::CallDynFunc(*psGlobalFunction->pScript, *psGlobalFunction->pDynFunc, false) : 0;
 }
 
 

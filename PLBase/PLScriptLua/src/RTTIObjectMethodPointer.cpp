@@ -47,15 +47,16 @@ namespace PLScriptLua {
 *  @brief
 *    Calls the current Lua stack dynamic function
 */
-int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc)
+int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, bool bIsMethod)
 {
 	// Get the Lua state
 	lua_State *pLuaState = cScript.GetLuaState();
 
 	// Get the number of arguments Lua gave to us
 	String sParams;
-	const int nNumOfArguments = lua_gettop(pLuaState);
-	for (int i=1; i<=nNumOfArguments; i++) {
+	const int nOffset = bIsMethod ? 2 : 0;
+	const int nNumOfArguments = lua_gettop(pLuaState) - nOffset;
+	for (int i=1+nOffset; i<=nOffset+nNumOfArguments; i++) {
 		String sValue;
 
 		// Is it user data?
@@ -81,7 +82,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc)
 		}
 
 		// Add the Lua argument to the parameter string
-		sParams += String("Param") + (i-1) + "=\"" + sValue + "\" ";
+		sParams += String("Param") + (i-1+nOffset) + "=\"" + sValue + "\" ";
 	}
 
 	// Get the global function
@@ -145,7 +146,7 @@ void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 	// Is there a RTTI object and a RTTI object method?
 	if (m_pRTTIObject && m_pDynFunc) {
 		// Call the dynamic function
-		CallDynFunc(*m_pScript, *m_pDynFunc);
+		CallDynFunc(*m_pScript, *m_pDynFunc, true);
 	}
 }
 

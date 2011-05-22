@@ -3,6 +3,7 @@
 #[-------------------------------------------------------]
 # The "MyScriptClass"-class declaration
 class MyScriptClass(object):
+	"My script class"
 
 	# The default constructor - In Python, we can only have one constructor
 
@@ -25,6 +26,7 @@ class MyScriptClass(object):
 
 # A derived class named "MyDerivedScriptClass"
 class MyDerivedScriptClass(MyScriptClass):
+	"My derived script class"
 
 	# The default constructor
 	def __init__(this):
