@@ -56,6 +56,11 @@ install(FILES ${CMAKE_SOURCE_DIR}/Bin/PLSamples/WhereIsTheLog.txt
 	DESTINATION ${PL_INSTALL_SAMPLES}/Bin	COMPONENT SDK
 )
 
+# Data
+install(DIRECTORY ${PL_BIN_DIR}/PLSamples/Data
+	DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK	PATTERN ".svn" EXCLUDE
+)
+
 # Microsoft Visual Studio Solution
 if(WIN32)
 	install(FILES ${CMAKE_SOURCE_DIR}/PLSamples/PLSamples.sln

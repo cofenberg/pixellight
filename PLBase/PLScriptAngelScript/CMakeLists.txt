@@ -95,21 +95,6 @@ if(WIN32)
 	add_linker_flags(
 		${WIN32_LINKER_FLAGS}
 	)
-    if(CMAKE_BUILD_TYPE MATCHES Debug)
-		##################################################
-		## Debug
-		##################################################
-		add_linker_flags(
-			/NODEFAULTLIB:MSVCRTD					# Ignore libraries
-		)
-    elseif(CMAKE_BUILD_TYPE MATCHES Release)
-		##################################################
-		## Release
-		##################################################
-		add_linker_flags(
-			/NODEFAULTLIB:MSVCRT					# Ignore libraries
-		)
-    endif()
 elseif(LINUX)
 	##################################################
 	## GCC Compiler
@@ -159,7 +144,7 @@ endif()
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLScript/lua51.dll   "${PL_BIN_DIR}/PLRuntime/Plugins/PLScript/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Plugins/PLScript/angelscript.dll   "${PL_BIN_DIR}/PLRuntime/Plugins/PLScript/"
 		)
 	endif()
 #endif()
@@ -189,7 +174,7 @@ install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript/${CMAKETOOLS_CURRENT_PLUG
 # [TODO] Uncomment this as soon as there's support for system-libs
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
-		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript/lua51.dll
+		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript/angelscript.dll
 			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScript		COMPONENT Runtime
 		)
 	endif()
